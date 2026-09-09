@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 91810ffb6fb0c40dba9b329a17fea1eeada9ba670bf3f8624a84782810375c61
+# schema-hash: 2c88ffe3c5efc3c42f0621bb4d52489fb6a032792f10f81fda902e362f4a850c
 
 from __future__ import annotations
 
@@ -60,6 +60,7 @@ __all__ = [
     "ComplexColorItem",
     "ComputedAttribute",
     "ComputedAttribute1",
+    "ComputedAttributeIdentifier",
     "Condition",
     "Condition1",
     "Condition2",
@@ -73,6 +74,7 @@ __all__ = [
     "ConditionalFormatting",
     "Config",
     "Constraints",
+    "Constraints1",
     "CustomTooltip",
     "Dashboard",
     "Dashboard1",
@@ -161,6 +163,7 @@ __all__ = [
     "Metric",
     "Metric1",
     "MetricIdentifier",
+    "MetricType",
     "Metrics",
     "MinSize",
     "Mode",
@@ -170,6 +173,7 @@ __all__ = [
     "MvfCondition1",
     "MvfCondition2",
     "MvfCondition3",
+    "NumberParameterDefinition",
     "OpenUrl",
     "Operator",
     "Operator1",
@@ -308,7 +312,7 @@ __all__ = [
     "Type53",
     "Type54",
     "Type55",
-    "Type58",
+    "Type56",
     "Type59",
     "Type60",
     "Type61",
@@ -337,6 +341,7 @@ __all__ = [
     "Type82",
     "Type83",
     "Type84",
+    "Type85",
     "Type9",
     "Using",
     "Using1",
@@ -345,6 +350,8 @@ __all__ = [
     "Value1",
     "Value2",
     "ValueType",
+    "ValueType1",
+    "ValueType2",
     "Version",
     "Viewport",
     "Visualisation",
@@ -427,6 +434,17 @@ class LabelIdentifier(RootModel[str]):
         ...,
         description='A label identifier in the form of label/{id}.',
         title='Label Identifier',
+    )
+
+
+class ComputedAttributeIdentifier(RootModel[str]):
+    model_config = ConfigDict(
+        regex_engine="python-re",
+    )
+    root: constr(pattern=r'^computed_attribute/(?!\.)[.A-Za-z0-9_-]{1,255}$') = Field(
+        ...,
+        description='A computed attribute identifier in the form of computed_attribute/{id}.',
+        title='Computed Attribute Identifier',
     )
 
 
@@ -525,7 +543,7 @@ class DashboardAttributeFilter1(BaseModel):
     )
     title: str | None = Field(None, description='Optional title of the filter')
     type: Type3
-    using: AttributeIdentifier | LabelIdentifier = Field(
+    using: AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier = Field(
         ..., description='Attribute or label to use in this filter.'
     )
     multiselect: bool | None = Field(
@@ -560,7 +578,7 @@ class DashboardAttributeFilter2(BaseModel):
     )
     title: str | None = Field(None, description='Optional title of the filter')
     type: Type3
-    using: AttributeIdentifier | LabelIdentifier = Field(
+    using: AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier = Field(
         ..., description='Attribute or label to use in this filter.'
     )
     multiselect: bool | None = Field(
@@ -613,7 +631,7 @@ class DashboardTextFilter1(BaseModel):
         regex_engine="python-re",
     )
     title: str | None = Field(None, description='Optional title of the filter')
-    using: AttributeIdentifier | LabelIdentifier = Field(
+    using: AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier = Field(
         ..., description='Attribute or label to use in this filter.'
     )
     case_sensitive: bool | None = None
@@ -656,7 +674,7 @@ class DashboardTextFilter2(BaseModel):
         regex_engine="python-re",
     )
     title: str | None = Field(None, description='Optional title of the filter')
-    using: AttributeIdentifier | LabelIdentifier = Field(
+    using: AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier = Field(
         ..., description='Attribute or label to use in this filter.'
     )
     case_sensitive: bool | None = None
@@ -828,7 +846,7 @@ class QueryAttributeFilter(BaseModel):
         regex_engine="python-re",
     )
     type: Type11
-    using: AttributeIdentifier | LabelIdentifier = Field(
+    using: AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier = Field(
         ..., description='Attribute or label to use in this filter.'
     )
     display_as: constr(pattern=r'^label/(?!\.)[.A-Za-z0-9_-]{1,255}$') | None = Field(
@@ -854,7 +872,7 @@ class QueryTextFilter1(BaseModel):
         regex_engine="python-re",
     )
     type: Type12
-    using: AttributeIdentifier | LabelIdentifier = Field(
+    using: AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier = Field(
         ..., description='Attribute or label to use in this filter.'
     )
     case_sensitive: bool | None = None
@@ -881,7 +899,7 @@ class QueryTextFilter2(BaseModel):
         regex_engine="python-re",
     )
     type: Type12
-    using: AttributeIdentifier | LabelIdentifier = Field(
+    using: AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier = Field(
         ..., description='Attribute or label to use in this filter.'
     )
     case_sensitive: bool | None = None
@@ -914,9 +932,11 @@ class QueryMetricValueFilter1(BaseModel):
     null_values_as_zero: bool | None = Field(
         None, description='Null values will be treated as zero.'
     )
-    dimensionality: list[LabelIdentifier | str] | None = Field(
-        None,
-        description='Optional array of attribute or label references or local identifiers to apply dimensionality to the filter.',
+    dimensionality: list[LabelIdentifier | ComputedAttributeIdentifier | str] | None = (
+        Field(
+            None,
+            description='Optional array of attribute or label references or local identifiers to apply dimensionality to the filter.',
+        )
     )
 
 
@@ -942,9 +962,11 @@ class QueryMetricValueFilter2(BaseModel):
     null_values_as_zero: bool | None = Field(
         None, description='Null values will be treated as zero.'
     )
-    dimensionality: list[LabelIdentifier | str] | None = Field(
-        None,
-        description='Optional array of attribute or label references or local identifiers to apply dimensionality to the filter.',
+    dimensionality: list[LabelIdentifier | ComputedAttributeIdentifier | str] | None = (
+        Field(
+            None,
+            description='Optional array of attribute or label references or local identifiers to apply dimensionality to the filter.',
+        )
     )
 
 
@@ -969,9 +991,11 @@ class QueryMetricValueFilter3(BaseModel):
     null_values_as_zero: bool | None = Field(
         None, description='Null values will be treated as zero.'
     )
-    dimensionality: list[LabelIdentifier | str] | None = Field(
-        None,
-        description='Optional array of attribute or label references or local identifiers to apply dimensionality to the filter.',
+    dimensionality: list[LabelIdentifier | ComputedAttributeIdentifier | str] | None = (
+        Field(
+            None,
+            description='Optional array of attribute or label references or local identifiers to apply dimensionality to the filter.',
+        )
     )
 
 
@@ -987,9 +1011,11 @@ class QueryMetricValueFilter4(BaseModel):
         None,
         description='Optional list of conditions for this filter. Conditions are applied as AND during execution.',
     )
-    dimensionality: list[LabelIdentifier | str] | None = Field(
-        None,
-        description='Optional array of attribute or label references or local identifiers to apply dimensionality to the filter.',
+    dimensionality: list[LabelIdentifier | ComputedAttributeIdentifier | str] | None = (
+        Field(
+            None,
+            description='Optional array of attribute or label references or local identifiers to apply dimensionality to the filter.',
+        )
     )
 
 
@@ -1022,7 +1048,7 @@ class QueryRankingFilter1(BaseModel):
     using: MetricIdentifier | str = Field(
         ..., description='Metric identifier to use for this filter.'
     )
-    attribute: LabelIdentifier | str | None = Field(
+    attribute: LabelIdentifier | ComputedAttributeIdentifier | str | None = Field(
         None, description='Label reference or local identifier to use for this filter.'
     )
     bottom: float = Field(
@@ -1045,7 +1071,7 @@ class QueryRankingFilter2(BaseModel):
     using: MetricIdentifier | str = Field(
         ..., description='Metric identifier to use for this filter.'
     )
-    attribute: LabelIdentifier | str | None = Field(
+    attribute: LabelIdentifier | ComputedAttributeIdentifier | str | None = Field(
         None, description='Label reference or local identifier to use for this filter.'
     )
     bottom: float | None = Field(
@@ -1064,6 +1090,34 @@ class QueryRankingFilter(RootModel[QueryRankingFilter1 | QueryRankingFilter2]):
 
 class Type20(Enum):
     computed_attribute = 'computed_attribute'
+
+
+class MetricType(Enum):
+    UNSPECIFIED = 'UNSPECIFIED'
+    CURRENCY = 'CURRENCY'
+
+
+class DataType(Enum):
+    INT = 'INT'
+    STRING = 'STRING'
+    DATE = 'DATE'
+    NUMERIC = 'NUMERIC'
+    TIMESTAMP = 'TIMESTAMP'
+    TIMESTAMP_TZ = 'TIMESTAMP_TZ'
+    BOOLEAN = 'BOOLEAN'
+    HLL = 'HLL'
+
+
+class ValueType(Enum):
+    TEXT = 'TEXT'
+    HYPERLINK = 'HYPERLINK'
+    GEO = 'GEO'
+    GEO_LONGITUDE = 'GEO_LONGITUDE'
+    GEO_LATITUDE = 'GEO_LATITUDE'
+    GEO_AREA = 'GEO_AREA'
+    GEO_ICON = 'GEO_ICON'
+    IMAGE = 'IMAGE'
+    HYPERLOGLOG = 'HYPERLOGLOG'
 
 
 class Using(BaseModel):
@@ -1357,25 +1411,7 @@ class SourceColumn(RootModel[constr(max_length=255)]):
     root: constr(max_length=255)
 
 
-class DataType(Enum):
-    INT = 'INT'
-    STRING = 'STRING'
-    DATE = 'DATE'
-    NUMERIC = 'NUMERIC'
-    TIMESTAMP = 'TIMESTAMP'
-    TIMESTAMP_TZ = 'TIMESTAMP_TZ'
-    BOOLEAN = 'BOOLEAN'
-    HLL = 'HLL'
-
-
-class Locale(RootModel[constr(pattern=r'^[a-zA-Z]{2,3}(-[a-zA-Z0-9]{1,8})*$')]):
-    root: constr(pattern=r'^[a-zA-Z]{2,3}(-[a-zA-Z0-9]{1,8})*$') = Field(
-        ...,
-        description='Locale string in BCP 47 format (for example en-US or cs-CZ-u-kn-true).',
-    )
-
-
-class ValueType(Enum):
+class ValueType1(Enum):
     TEXT = 'TEXT'
     HYPERLINK = 'HYPERLINK'
     GEO = 'GEO'
@@ -1400,19 +1436,6 @@ class GeoAreaConfig(BaseModel):
         extra='forbid',
     )
     collection: Collection
-
-
-class LabelTranslation(BaseModel):
-    model_config = ConfigDict(
-        extra='forbid',
-    )
-    source_column: SourceColumn = Field(
-        ..., description='Column that stores the localized label values.'
-    )
-    locale: Locale = Field(
-        ...,
-        description='Locale string in BCP 47 format that identifies the translation.',
-    )
 
 
 class Source(BaseModel):
@@ -1446,6 +1469,37 @@ class Type31(Enum):
     STRING = 'STRING'
 
 
+class Type32(Enum):
+    NUMBER = 'NUMBER'
+
+
+class Constraints1(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    min: float | None = Field(
+        None, description='The smallest accepted value, inclusive.'
+    )
+    max: float | None = Field(
+        None, description='The largest accepted value, inclusive.'
+    )
+
+
+class NumberParameterDefinition(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    type: Type32
+    defaultValue: float = Field(
+        ..., description='The value used whenever the parameter is not overridden.'
+    )
+    constraints: Constraints1 | None = Field(
+        None,
+        description='Optional bounds the parameter value must satisfy.',
+        title='Number Parameter Constraints',
+    )
+
+
 class ParameterAllowedValue(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
@@ -1459,7 +1513,7 @@ class ParameterAllowedValue(BaseModel):
     )
 
 
-class Type32(Enum):
+class Type33(Enum):
     plugin = 'plugin'
 
 
@@ -1482,7 +1536,7 @@ class Operator(Enum):
     CHANGE = 'CHANGE'
 
 
-class Type33(Enum):
+class Type34(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
 
@@ -1519,7 +1573,7 @@ class Operator1(Enum):
     CHANGE_1 = 'CHANGE'
 
 
-class Type34(Enum):
+class Type35(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
     PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
@@ -1535,7 +1589,7 @@ class QueryField2(BaseModel):
     operator: Operator1 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type34 | None = Field(
+    type: Type35 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -1580,7 +1634,7 @@ class Operator2(Enum):
     CHANGE = 'CHANGE'
 
 
-class Type35(Enum):
+class Type36(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
 
@@ -1617,7 +1671,7 @@ class Operator3(Enum):
     CHANGE_1 = 'CHANGE'
 
 
-class Type36(Enum):
+class Type37(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
     PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
@@ -1633,7 +1687,7 @@ class QueryField4(BaseModel):
     operator: Operator3 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type36 | None = Field(
+    type: Type37 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -1650,7 +1704,7 @@ class Operator4(Enum):
     CHANGE = 'CHANGE'
 
 
-class Type37(Enum):
+class Type38(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
 
@@ -1668,7 +1722,7 @@ class Operator5(Enum):
     CHANGE_1 = 'CHANGE'
 
 
-class Type38(Enum):
+class Type39(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
     PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
@@ -1684,7 +1738,7 @@ class QueryField6(BaseModel):
     operator: Operator5 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type38 | None = Field(
+    type: Type39 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -1712,7 +1766,7 @@ class Operator6(Enum):
     CHANGE = 'CHANGE'
 
 
-class Type39(Enum):
+class Type40(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
 
@@ -1749,7 +1803,7 @@ class Operator7(Enum):
     CHANGE_1 = 'CHANGE'
 
 
-class Type40(Enum):
+class Type41(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
     PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
@@ -1765,7 +1819,7 @@ class QueryField8(BaseModel):
     operator: Operator7 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type40 | None = Field(
+    type: Type41 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -1785,7 +1839,7 @@ class Aggregation8(Enum):
     RUNSUM = 'RUNSUM'
 
 
-class Type41(Enum):
+class Type42(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
 
@@ -1809,7 +1863,7 @@ class Aggregation9(Enum):
     RUNSUM_1 = 'RUNSUM'
 
 
-class Type42(Enum):
+class Type43(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
     PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
@@ -1825,7 +1879,7 @@ class QueryField10(BaseModel):
     operator: Operator7 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type42 | None = Field(
+    type: Type43 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -1853,7 +1907,7 @@ class Operator10(Enum):
     CHANGE = 'CHANGE'
 
 
-class Type43(Enum):
+class Type44(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
     PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
@@ -1891,7 +1945,7 @@ class Operator11(Enum):
     CHANGE_1 = 'CHANGE'
 
 
-class Type44(Enum):
+class Type45(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
     PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
@@ -1907,7 +1961,7 @@ class QueryField12(BaseModel):
     operator: Operator11 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type44 | None = Field(
+    type: Type45 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -1935,7 +1989,7 @@ class Operator12(Enum):
     CHANGE = 'CHANGE'
 
 
-class Type45(Enum):
+class Type46(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
     PREVIOUS_PERIOD_1 = 'PREVIOUS_PERIOD'
@@ -1973,7 +2027,7 @@ class Operator13(Enum):
     CHANGE_1 = 'CHANGE'
 
 
-class Type46(Enum):
+class Type47(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
     PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
@@ -1989,7 +2043,7 @@ class QueryField14(BaseModel):
     operator: Operator13 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type46 | None = Field(
+    type: Type47 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -1998,7 +2052,7 @@ class QueryField14(BaseModel):
     )
 
 
-class Type47(Enum):
+class Type48(Enum):
     attribute_sort = 'attribute_sort'
 
 
@@ -2011,7 +2065,7 @@ class Aggregation14(Enum):
     SUM = 'SUM'
 
 
-class Type48(Enum):
+class Type49(Enum):
     metric_sort = 'metric_sort'
 
 
@@ -2054,7 +2108,7 @@ class BucketGeoAreaItem(RootModel[str]):
     root: str = Field(..., title='Geo Area Bucket')
 
 
-class Type49(Enum):
+class Type50(Enum):
     SUM = 'SUM'
     AVG = 'AVG'
     MAX = 'MAX'
@@ -2067,17 +2121,29 @@ class BucketLocationItem(RootModel[str]):
     root: str = Field(..., title='Location Bucket')
 
 
-class Type50(Enum):
+class Type51(Enum):
     pushpin = 'pushpin'
     area = 'area'
 
 
-class Type51(Enum):
+class Type52(Enum):
     attribute_hierarchy = 'attribute_hierarchy'
 
 
-class Type52(Enum):
+class Type53(Enum):
     computed_attribute = 'computed_attribute'
+
+
+class ValueType2(Enum):
+    TEXT = 'TEXT'
+    HYPERLINK = 'HYPERLINK'
+    GEO = 'GEO'
+    GEO_LONGITUDE = 'GEO_LONGITUDE'
+    GEO_LATITUDE = 'GEO_LATITUDE'
+    GEO_AREA = 'GEO_AREA'
+    GEO_ICON = 'GEO_ICON'
+    IMAGE = 'IMAGE'
+    HYPERLOGLOG = 'HYPERLOGLOG'
 
 
 class DataLabelsStyle(Enum):
@@ -2085,7 +2151,7 @@ class DataLabelsStyle(Enum):
     backplate = 'backplate'
 
 
-class Type53(Enum):
+class Type54(Enum):
     solid = 'solid'
     pattern = 'pattern'
     outline = 'outline'
@@ -2119,7 +2185,7 @@ class PatternNameMapping(Enum):
 
 
 class ChartFill(BaseModel):
-    type: Type53 | None = None
+    type: Type54 | None = None
     pattern_name_mapping: dict[str, PatternNameMapping] | None = None
 
 
@@ -2452,11 +2518,11 @@ class ConditionalFormatting(BaseModel):
     )
 
 
-class Type54(Enum):
+class Type55(Enum):
     dashboard = 'dashboard'
 
 
-class Type55(Enum):
+class Type56(Enum):
     dataset = 'dataset'
     dataset_1 = 'dataset'
 
@@ -2473,7 +2539,7 @@ class DatasetType5(Enum):
     auxiliary = 'auxiliary'
 
 
-class Type58(Enum):
+class Type59(Enum):
     date = 'date'
 
 
@@ -2513,15 +2579,23 @@ class Description(RootModel[constr(max_length=10000)]):
     root: constr(max_length=10000)
 
 
-class Type59(Enum):
-    metric = 'metric'
+class Locale(RootModel[constr(pattern=r'^[a-zA-Z]{2,3}(-[a-zA-Z0-9]{1,8})*$')]):
+    root: constr(pattern=r'^[a-zA-Z]{2,3}(-[a-zA-Z0-9]{1,8})*$') = Field(
+        ...,
+        description='Locale string in BCP 47 format (for example en-US or cs-CZ-u-kn-true).',
+        title='Locale',
+    )
 
 
 class Type60(Enum):
-    parameter = 'parameter'
+    metric = 'metric'
 
 
 class Type61(Enum):
+    parameter = 'parameter'
+
+
+class Type62(Enum):
     plugin = 'plugin'
 
 
@@ -2529,95 +2603,95 @@ class Title(RootModel[constr(max_length=255)]):
     root: constr(max_length=255)
 
 
-class Type62(Enum):
+class Type63(Enum):
     table = 'table'
 
 
-class Type63(Enum):
+class Type64(Enum):
     bar_chart = 'bar_chart'
 
 
-class Type64(Enum):
+class Type65(Enum):
     column_chart = 'column_chart'
 
 
-class Type65(Enum):
+class Type66(Enum):
     line_chart = 'line_chart'
 
 
-class Type66(Enum):
+class Type67(Enum):
     area_chart = 'area_chart'
 
 
-class Type67(Enum):
+class Type68(Enum):
     scatter_chart = 'scatter_chart'
 
 
-class Type68(Enum):
+class Type69(Enum):
     bubble_chart = 'bubble_chart'
 
 
-class Type69(Enum):
+class Type70(Enum):
     pie_chart = 'pie_chart'
 
 
-class Type70(Enum):
+class Type71(Enum):
     donut_chart = 'donut_chart'
 
 
-class Type71(Enum):
+class Type72(Enum):
     treemap_chart = 'treemap_chart'
 
 
-class Type72(Enum):
+class Type73(Enum):
     pyramid_chart = 'pyramid_chart'
 
 
-class Type73(Enum):
+class Type74(Enum):
     funnel_chart = 'funnel_chart'
 
 
-class Type74(Enum):
+class Type75(Enum):
     heatmap_chart = 'heatmap_chart'
 
 
-class Type75(Enum):
+class Type76(Enum):
     bullet_chart = 'bullet_chart'
 
 
-class Type76(Enum):
+class Type77(Enum):
     waterfall_chart = 'waterfall_chart'
 
 
-class Type77(Enum):
+class Type78(Enum):
     dependency_wheel_chart = 'dependency_wheel_chart'
 
 
-class Type78(Enum):
+class Type79(Enum):
     sankey_chart = 'sankey_chart'
 
 
-class Type79(Enum):
+class Type80(Enum):
     headline_chart = 'headline_chart'
 
 
-class Type80(Enum):
+class Type81(Enum):
     combo_chart = 'combo_chart'
 
 
-class Type81(Enum):
+class Type82(Enum):
     geo_chart = 'geo_chart'
 
 
-class Type82(Enum):
+class Type83(Enum):
     geo_area_chart = 'geo_area_chart'
 
 
-class Type83(Enum):
+class Type84(Enum):
     repeater_chart = 'repeater_chart'
 
 
-class Type84(Enum):
+class Type85(Enum):
     radar_chart = 'radar_chart'
 
 
@@ -2715,9 +2789,9 @@ class DashboardMetricValueFilter(BaseModel):
         None,
         description='OR-ed list of conditions. Empty or omitted means "All" (no filtering).',
     )
-    dimensionality: list[LabelIdentifier] | None = Field(
+    dimensionality: list[LabelIdentifier | ComputedAttributeIdentifier] | None = Field(
         None,
-        description='Optional array of label references to apply dimensionality to the filter.',
+        description='Optional array of label or computed attribute references to apply dimensionality to the filter.',
     )
     null_values_as_zero: bool | None = Field(
         None, description='Null values will be treated as zero during comparisons.'
@@ -2859,9 +2933,37 @@ class ComputedAttribute1(BaseModel):
         ...,
         description='Define MAQL syntax for the computed attribute. Values are assigned with break points written as CASE WHEN branches over a metric, and the first matching branch wins.',
     )
-    locale: str | None = Field(
+    format: str | None = Field(
         None,
-        description='An optional locale whose collation order the computed values are sorted by.',
+        description='An optional Excel-like format string applied to the computed values.',
+    )
+    metric_type: MetricType | None = Field(
+        None,
+        description='An optional categorization of the computed values semantics, for example currency.',
+    )
+    data_type: DataType | None = Field(
+        None,
+        description='An optional data type of the computed values. Defaults to STRING on the backend.',
+    )
+    value_type: ValueType | None = Field(
+        None,
+        description='An optional specific type of the computed values. Defaults to TEXT on the backend.',
+    )
+    is_nullable: bool | None = Field(
+        None,
+        description='Optional flag to indicate if the computed attribute can contain null values.',
+    )
+    null_value_join_replacement: str | None = Field(
+        None,
+        description='Optional value which can be used as replacement for NULL in join conditions.',
+    )
+    show_in_ai_results: bool | None = Field(
+        None,
+        description='Optional flag to indicate if the computed attribute should be shown in AI results. When omitted, the computed attribute is visible.',
+    )
+    locale: Locale | None = Field(
+        None,
+        description='An optional locale in BCP 47 format (for example en-US) whose collation order the computed values are sorted by.',
     )
 
 
@@ -2939,11 +3041,15 @@ class InteractionOpenPlainUrl(BaseModel):
 
 
 class OpenUrl(BaseModel):
-    href: AttributeIdentifier | LabelIdentifier | None = Field(
-        None,
-        description='An ID of the attribute that holds the url to be opened on interaction',
+    href: AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier | None = (
+        Field(
+            None,
+            description='An ID of the attribute that holds the url to be opened on interaction',
+        )
     )
-    label: AttributeIdentifier | LabelIdentifier | None = Field(
+    label: (
+        AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier | None
+    ) = Field(
         None,
         description='An id of the attribute that holds the label for the url to be opened on interaction',
     )
@@ -3105,52 +3211,16 @@ class AggregatedFact(BaseModel):
     )
 
 
-class Label(BaseModel):
+class LabelTranslation(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    source_column: SourceColumn | None = Field(
-        None, description='A column name in the physical database.'
+    source_column: SourceColumn = Field(
+        ..., description='Column that stores the localized label values.'
     )
-    data_type: DataType | None = Field(
-        None, description='A column data type in the physical database.'
-    )
-    title: Title | None = Field(
-        None, description='An optional human readable title for the label.'
-    )
-    description: Description | None = Field(
-        None, description='An optional description of the label.'
-    )
-    tags: Tags | None = Field(
-        None, description='A list of strings - metadata tags of this label.'
-    )
-    value_type: ValueType | None = None
-    geo_area_config: GeoAreaConfig | None = Field(
-        None, description='Configuration required for GEO_AREA labels.'
-    )
-    show_in_ai_results: bool | None = Field(
-        None,
-        description='Optional flag to indicate if the label should be shown in AI results. When omitted, the label is visible.',
-    )
-    is_hidden: bool | None = Field(
-        None,
-        deprecated=True,
-        description="Deprecated. Use 'show_in_ai_results' instead.",
-    )
-    locale: Locale | None = Field(
-        None,
-        description='Locale string in BCP 47 format used for default label sorting.',
-    )
-    translations: list[LabelTranslation] | None = Field(
-        None, description='Optional list of localized source columns for this label.'
-    )
-    is_nullable: bool | None = Field(
-        None,
-        description='Optional flag to indicate if the label can contain null values.',
-    )
-    null_value_join_replacement: str | None = Field(
-        None,
-        description='Optional value which can be used as replacement for NULL in join conditions.',
+    locale: Locale = Field(
+        ...,
+        description='Locale string in BCP 47 format that identifies the translation.',
     )
 
 
@@ -3220,7 +3290,7 @@ class Plugin1(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the plugin.')
-    type: Type32
+    type: Type33
     title: Title | None = Field(
         None,
         description='An optional human readable title for the plugin. Will be derived from id if not provided explicitly.',
@@ -3249,13 +3319,14 @@ class QueryField1(BaseModel):
         | list[str]
         | constr(pattern=r'^attribute/(?!\.)[.A-Za-z0-9_-]{1,255}$')
         | constr(pattern=r'^label/(?!\.)[.A-Za-z0-9_-]{1,255}$')
+        | constr(pattern=r'^computed_attribute/(?!\.)[.A-Za-z0-9_-]{1,255}$')
         | constr(pattern=r'^fact/(?!\.)[.A-Za-z0-9_-]{1,255}$')
     ) = Field(..., description='Attribute or label identifier to use for this field.')
     maql: str | None = Field(None, description='Define MAQL syntax for metric.')
     operator: Operator | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type33 | None = Field(
+    type: Type34 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -3281,7 +3352,7 @@ class QueryField7(BaseModel):
     operator: Operator6 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type39 | None = Field(
+    type: Type40 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -3303,7 +3374,7 @@ class QueryField9(BaseModel):
     operator: Operator7 = Field(
         ..., description='Arithmetic operator to use for this field.'
     )
-    type: Type41 | None = Field(
+    type: Type42 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -3325,7 +3396,7 @@ class QueryField11(BaseModel):
     operator: Operator10 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type43 = Field(
+    type: Type44 = Field(
         ...,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -3345,7 +3416,7 @@ class QueryField13(BaseModel):
     operator: Operator12 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type45 = Field(
+    type: Type46 = Field(
         ...,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -3360,9 +3431,9 @@ class QueryAttributeSort(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type47
-    by: str | AttributeIdentifier | LabelIdentifier = Field(
-        ..., description='Local attribute or label to use in this sort.'
+    type: Type48
+    by: str | AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier = (
+        Field(..., description='Local attribute or label to use in this sort.')
     )
     direction: Direction = Field(..., description='Sort direction.')
     aggregation: Aggregation14 | None = Field(
@@ -3374,8 +3445,8 @@ class Metrics(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    by: str | AttributeIdentifier | LabelIdentifier = Field(
-        ..., description='Local attribute or label to use in this sort.'
+    by: str | AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier = (
+        Field(..., description='Local attribute or label to use in this sort.')
     )
     element: str | None = Field(
         None, description='Value of attribute or label to use for this sort.'
@@ -3389,7 +3460,7 @@ class QueryMetricSort(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type48
+    type: Type49
     direction: Direction = Field(..., description='Sort direction.')
     metrics: list[str | Metrics] = Field(..., min_length=1)
 
@@ -3405,7 +3476,7 @@ class TotalItem(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type49
+    type: Type50
     title: Title | None = Field(None, description='A total title.')
     using: str = Field(
         ..., description='Local metric identifier to use for this total.'
@@ -3419,7 +3490,7 @@ class AttributeHierarchy(BaseModel):
     id: Identifier = Field(
         ..., description='A unique identifier of the attribute hierarchy.'
     )
-    type: Type51
+    type: Type52
     title: Title | None = Field(
         None,
         description='An optional human readable title for the attribute hierarchy. Will be derived from id if not provided explicitly.',
@@ -3446,7 +3517,7 @@ class ComputedAttribute(BaseModel):
         ...,
         description='A unique identifier of the computed attribute. Must not collide with the identifier of an attribute or a label.',
     )
-    type: Type52
+    type: Type53
     title: Title | None = Field(
         None,
         description='An optional human readable title for the computed attribute. Will be derived from id if not provided explicitly.',
@@ -3462,9 +3533,37 @@ class ComputedAttribute(BaseModel):
         ...,
         description='Define MAQL syntax for the computed attribute. Values are assigned with break points written as CASE WHEN branches over a metric, and the first matching branch wins.',
     )
-    locale: str | None = Field(
+    format: str | None = Field(
         None,
-        description='An optional locale whose collation order the computed values are sorted by.',
+        description='An optional Excel-like format string applied to the computed values.',
+    )
+    metric_type: MetricType | None = Field(
+        None,
+        description='An optional categorization of the computed values semantics, for example currency.',
+    )
+    data_type: DataType | None = Field(
+        None,
+        description='An optional data type of the computed values. Defaults to STRING on the backend.',
+    )
+    value_type: ValueType2 | None = Field(
+        None,
+        description='An optional specific type of the computed values. Defaults to TEXT on the backend.',
+    )
+    is_nullable: bool | None = Field(
+        None,
+        description='Optional flag to indicate if the computed attribute can contain null values.',
+    )
+    null_value_join_replacement: str | None = Field(
+        None,
+        description='Optional value which can be used as replacement for NULL in join conditions.',
+    )
+    show_in_ai_results: bool | None = Field(
+        None,
+        description='Optional flag to indicate if the computed attribute should be shown in AI results. When omitted, the computed attribute is visible.',
+    )
+    locale: Locale | None = Field(
+        None,
+        description='An optional locale in BCP 47 format (for example en-US) whose collation order the computed values are sorted by.',
     )
 
 
@@ -3617,7 +3716,7 @@ class DateDataset(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the date instance.')
-    type: Type58
+    type: Type59
     title: Title | None = Field(
         None,
         description='An optional human readable title for the date instance. Will be derived from id if not provided explicitly.',
@@ -3642,7 +3741,7 @@ class Metric(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the metric.')
-    type: Type59
+    type: Type60
     title: Title | None = Field(
         None,
         description='An optional human readable title for the metric. Will be derived from id if not provided explicitly.',
@@ -3671,7 +3770,7 @@ class Plugin(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the plugin.')
-    type: Type61
+    type: Type62
     title: Title | None = Field(
         None,
         description='An optional human readable title for the plugin. Will be derived from id if not provided explicitly.',
@@ -3781,6 +3880,198 @@ class VisualizationWidget(BaseModel):
     )
 
 
+class Label(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    source_column: SourceColumn | None = Field(
+        None, description='A column name in the physical database.'
+    )
+    data_type: DataType | None = Field(
+        None, description='A column data type in the physical database.'
+    )
+    title: Title | None = Field(
+        None, description='An optional human readable title for the label.'
+    )
+    description: Description | None = Field(
+        None, description='An optional description of the label.'
+    )
+    tags: Tags | None = Field(
+        None, description='A list of strings - metadata tags of this label.'
+    )
+    value_type: ValueType1 | None = None
+    geo_area_config: GeoAreaConfig | None = Field(
+        None, description='Configuration required for GEO_AREA labels.'
+    )
+    show_in_ai_results: bool | None = Field(
+        None,
+        description='Optional flag to indicate if the label should be shown in AI results. When omitted, the label is visible.',
+    )
+    is_hidden: bool | None = Field(
+        None,
+        deprecated=True,
+        description="Deprecated. Use 'show_in_ai_results' instead.",
+    )
+    locale: Locale | None = Field(
+        None,
+        description='Locale string in BCP 47 format used for default label sorting.',
+    )
+    translations: list[LabelTranslation] | None = Field(
+        None, description='Optional list of localized source columns for this label.'
+    )
+    is_nullable: bool | None = Field(
+        None,
+        description='Optional flag to indicate if the label can contain null values.',
+    )
+    null_value_join_replacement: str | None = Field(
+        None,
+        description='Optional value which can be used as replacement for NULL in join conditions.',
+    )
+
+
+class ParameterDefinition(
+    RootModel[StringParameterDefinition | NumberParameterDefinition]
+):
+    root: StringParameterDefinition | NumberParameterDefinition = Field(
+        ...,
+        description='A typed parameter definition: textual or numeric.',
+        title='Parameter Definition',
+    )
+
+
+class QuerySort(RootModel[QueryAttributeSort | QueryMetricSort]):
+    root: QueryAttributeSort | QueryMetricSort = Field(..., title='Sort')
+
+
+class BucketItem1(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    field: str | None = Field(None, description='A field name in the report.')
+    format: str | None = Field(None, description='Metric value default format')
+    axis: Axis | None = Field(
+        None,
+        description='Axis to use for this bucket. Only applicable for "combo" charts.',
+    )
+    display_as: DisplayAs | None = Field(
+        None,
+        description='Chart type to use for this bucket. Only applicable for "repeater" charts.',
+    )
+    totals: list[TotalItem] | None = Field(
+        None, description='A list of totals in this bucket.'
+    )
+
+
+class BucketItem(RootModel[str | BucketItem1]):
+    root: str | BucketItem1 = Field(..., title='Bucket')
+
+
+class LayerItemBase(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    id: Identifier = Field(
+        ..., description='A unique identifier of the visualization data layer.'
+    )
+    title: Title | None = Field(
+        None,
+        description='An optional human readable title for the layer. Will be derived from id if not provided explicitly.',
+    )
+    type: Type51 | None = Field(
+        None, description='Type of visualisation for this layer.'
+    )
+    config: Config | None = Field(
+        None, description='Configuration of layer of defined type.'
+    )
+    metrics: list[BucketItem | BucketEmptyItem] | None = Field(
+        None, description='A list of metrics in this layer.'
+    )
+    view_by: list[BucketLocationItem] | None = Field(
+        None, description='A list of view by locations in this layer.'
+    )
+    segment_by: list[BucketItem] | None = Field(
+        None, description='A list of segment by attributes in this layer.'
+    )
+
+
+class DashboardFilters(
+    RootModel[
+        dict[
+            str,
+            DashboardAbsoluteDateFilter
+            | DashboardRelativeDateFilter
+            | DashboardAttributeFilter
+            | DashboardTextFilter
+            | DashboardMetricValueFilter
+            | DashboardFilterGroup,
+        ]
+    ]
+):
+    model_config = ConfigDict(
+        regex_engine="python-re",
+    )
+    root: dict[
+        constr(pattern=r'^(?!\.)[.A-Za-z0-9_-]{1,255}$'),
+        DashboardAbsoluteDateFilter
+        | DashboardRelativeDateFilter
+        | DashboardAttributeFilter
+        | DashboardTextFilter
+        | DashboardMetricValueFilter
+        | DashboardFilterGroup,
+    ] = Field(..., title='Dashboard Filters')
+
+
+class Parameter(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    id: Identifier = Field(..., description='A unique identifier of the parameter.')
+    type: Type61
+    title: Title | None = Field(
+        None,
+        description='An optional human readable title for the parameter. Will be derived from id if not provided explicitly.',
+    )
+    description: Description | None = Field(
+        None, description='An optional description of the parameter.'
+    )
+    tags: Tags | None = Field(
+        None, description='A list of strings - metadata tags of this parameter.'
+    )
+    definition: ParameterDefinition = Field(
+        ...,
+        description='The typed definition of the parameter - its data type, default value and constraints.',
+    )
+
+
+class QueryFilters(RootModel[dict[str, QueryFilter]]):
+    model_config = ConfigDict(
+        regex_engine="python-re",
+    )
+    root: dict[constr(pattern=r'^(?!\.)[.A-Za-z0-9_-]{1,255}$'), QueryFilter] = Field(
+        ..., title='Query Filters'
+    )
+
+
+class Widget2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    id: Identifier | None = Field(
+        None, description='A unique identifier of the widget.'
+    )
+    columns: Columns | None = Field(
+        None,
+        description='An optional width of the widget in the grid, total width being 12 columns',
+    )
+    rows: float | None = Field(
+        None,
+        description='An optional height of the widget in the grid, each row being ~20px high',
+    )
+    visualizations: list[VisualizationWidget] = Field(
+        ..., description='A list of visualizations to be rendered with the widget'
+    )
+
+
 class Attribute(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
@@ -3833,157 +4124,6 @@ class Attribute(BaseModel):
     labels: dict[constr(pattern=r'^(?!\.)[.A-Za-z0-9_-]{1,255}$'), Label] | None = None
 
 
-class ParameterDefinition(RootModel[StringParameterDefinition]):
-    root: StringParameterDefinition = Field(
-        ...,
-        description='A typed parameter definition. Only textual parameters are supported as code.',
-        title='Parameter Definition',
-    )
-
-
-class QuerySort(RootModel[QueryAttributeSort | QueryMetricSort]):
-    root: QueryAttributeSort | QueryMetricSort = Field(..., title='Sort')
-
-
-class BucketItem1(BaseModel):
-    model_config = ConfigDict(
-        extra='forbid',
-    )
-    field: str | None = Field(None, description='A field name in the report.')
-    format: str | None = Field(None, description='Metric value default format')
-    axis: Axis | None = Field(
-        None,
-        description='Axis to use for this bucket. Only applicable for "combo" charts.',
-    )
-    display_as: DisplayAs | None = Field(
-        None,
-        description='Chart type to use for this bucket. Only applicable for "repeater" charts.',
-    )
-    totals: list[TotalItem] | None = Field(
-        None, description='A list of totals in this bucket.'
-    )
-
-
-class BucketItem(RootModel[str | BucketItem1]):
-    root: str | BucketItem1 = Field(..., title='Bucket')
-
-
-class LayerItemBase(BaseModel):
-    model_config = ConfigDict(
-        extra='forbid',
-    )
-    id: Identifier = Field(
-        ..., description='A unique identifier of the visualization data layer.'
-    )
-    title: Title | None = Field(
-        None,
-        description='An optional human readable title for the layer. Will be derived from id if not provided explicitly.',
-    )
-    type: Type50 | None = Field(
-        None, description='Type of visualisation for this layer.'
-    )
-    config: Config | None = Field(
-        None, description='Configuration of layer of defined type.'
-    )
-    metrics: list[BucketItem | BucketEmptyItem] | None = Field(
-        None, description='A list of metrics in this layer.'
-    )
-    view_by: list[BucketLocationItem] | None = Field(
-        None, description='A list of view by locations in this layer.'
-    )
-    segment_by: list[BucketItem] | None = Field(
-        None, description='A list of segment by attributes in this layer.'
-    )
-
-
-class DashboardFilters(
-    RootModel[
-        dict[
-            str,
-            DashboardAbsoluteDateFilter
-            | DashboardRelativeDateFilter
-            | DashboardAttributeFilter
-            | DashboardTextFilter
-            | DashboardMetricValueFilter
-            | DashboardFilterGroup,
-        ]
-    ]
-):
-    model_config = ConfigDict(
-        regex_engine="python-re",
-    )
-    root: dict[
-        constr(pattern=r'^(?!\.)[.A-Za-z0-9_-]{1,255}$'),
-        DashboardAbsoluteDateFilter
-        | DashboardRelativeDateFilter
-        | DashboardAttributeFilter
-        | DashboardTextFilter
-        | DashboardMetricValueFilter
-        | DashboardFilterGroup,
-    ] = Field(..., title='Dashboard Filters')
-
-
-class Parameter(BaseModel):
-    model_config = ConfigDict(
-        extra='forbid',
-    )
-    id: Identifier = Field(..., description='A unique identifier of the parameter.')
-    type: Type60
-    title: Title | None = Field(
-        None,
-        description='An optional human readable title for the parameter. Will be derived from id if not provided explicitly.',
-    )
-    description: Description | None = Field(
-        None, description='An optional description of the parameter.'
-    )
-    tags: Tags | None = Field(
-        None, description='A list of strings - metadata tags of this parameter.'
-    )
-    definition: ParameterDefinition = Field(
-        ...,
-        description='The typed definition of the parameter - its data type, default value and constraints.',
-    )
-
-
-class QueryFilters(RootModel[dict[str, QueryFilter]]):
-    model_config = ConfigDict(
-        regex_engine="python-re",
-    )
-    root: dict[constr(pattern=r'^(?!\.)[.A-Za-z0-9_-]{1,255}$'), QueryFilter] = Field(
-        ..., title='Query Filters'
-    )
-
-
-class Widget2(BaseModel):
-    model_config = ConfigDict(
-        extra='forbid',
-    )
-    id: Identifier | None = Field(
-        None, description='A unique identifier of the widget.'
-    )
-    columns: Columns | None = Field(
-        None,
-        description='An optional width of the widget in the grid, total width being 12 columns',
-    )
-    rows: float | None = Field(
-        None,
-        description='An optional height of the widget in the grid, each row being ~20px high',
-    )
-    visualizations: list[VisualizationWidget] = Field(
-        ..., description='A list of visualizations to be rendered with the widget'
-    )
-
-
-class Fields(RootModel[dict[str, Attribute | Fact | AggregatedFact]]):
-    model_config = ConfigDict(
-        regex_engine="python-re",
-    )
-    root: dict[
-        constr(pattern=r'^(?!\.)[.A-Za-z0-9_-]{1,255}$'),
-        Attribute | Fact | AggregatedFact,
-    ] = Field(..., title='Fields')
-
-
 class Parameter1(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
@@ -4026,7 +4166,7 @@ class QueryField3(BaseModel):
     operator: Operator2 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type35 | None = Field(
+    type: Type36 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -4061,7 +4201,7 @@ class QueryField5(BaseModel):
     operator: Operator4 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type37 | None = Field(
+    type: Type38 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -4081,6 +4221,7 @@ class QueryField(
     RootModel[
         AttributeIdentifier
         | LabelIdentifier
+        | ComputedAttributeIdentifier
         | MetricIdentifier
         | FactIdentifier
         | QueryField1
@@ -4102,6 +4243,7 @@ class QueryField(
     root: (
         AttributeIdentifier
         | LabelIdentifier
+        | ComputedAttributeIdentifier
         | MetricIdentifier
         | FactIdentifier
         | QueryField1
@@ -4125,13 +4267,32 @@ class LayerItem(RootModel[LayerItemBase | LayerItem1 | LayerItem2]):
     root: LayerItemBase | LayerItem1 | LayerItem2
 
 
+class Fields(RootModel[dict[str, Attribute | Fact | AggregatedFact]]):
+    model_config = ConfigDict(
+        regex_engine="python-re",
+    )
+    root: dict[
+        constr(pattern=r'^(?!\.)[.A-Za-z0-9_-]{1,255}$'),
+        Attribute | Fact | AggregatedFact,
+    ] = Field(..., title='Fields')
+
+
+class QueryFields(RootModel[dict[str, QueryField]]):
+    model_config = ConfigDict(
+        regex_engine="python-re",
+    )
+    root: dict[constr(pattern=r'^(?!\.)[.A-Za-z0-9_-]{1,255}$'), QueryField] = Field(
+        ..., title='Fields'
+    )
+
+
 class Dataset5(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
         regex_engine="python-re",
     )
     id: Identifier = Field(..., description='A unique identifier of the dataset.')
-    type: Type55
+    type: Type56
     title: Title | None = Field(
         None,
         description='An optional human readable title for the dataset. Will be derived from id if not provided explicitly.',
@@ -4177,7 +4338,7 @@ class Dataset6(BaseModel):
         regex_engine="python-re",
     )
     id: Identifier = Field(..., description='A unique identifier of the dataset.')
-    type: Type55
+    type: Type56
     title: Title | None = Field(
         None,
         description='An optional human readable title for the dataset. Will be derived from id if not provided explicitly.',
@@ -4223,7 +4384,7 @@ class Dataset7(BaseModel):
         regex_engine="python-re",
     )
     id: Identifier = Field(..., description='A unique identifier of the dataset.')
-    type: Type55
+    type: Type56
     title: Title | None = Field(
         None,
         description='An optional human readable title for the dataset. Will be derived from id if not provided explicitly.',
@@ -4257,6 +4418,19 @@ class Dataset7(BaseModel):
 
 class Dataset(RootModel[Dataset5 | Dataset6 | Dataset7]):
     root: Dataset5 | Dataset6 | Dataset7 = Field(..., title='Dataset')
+
+
+class Query(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    fields: QueryFields = Field(..., description='A list of fields in this query.')
+    filter_by: QueryFilters | None = Field(
+        None, description='A list of filters in this query.'
+    )
+    sort_by: QuerySorts | None = Field(
+        None, description='A list of sorting in this query.'
+    )
 
 
 class Dataset2(BaseModel):
@@ -4393,33 +4567,11 @@ class Dataset1(RootModel[Dataset2 | Dataset3 | Dataset4]):
     root: Dataset2 | Dataset3 | Dataset4 = Field(..., title='Dataset')
 
 
-class QueryFields(RootModel[dict[str, QueryField]]):
-    model_config = ConfigDict(
-        regex_engine="python-re",
-    )
-    root: dict[constr(pattern=r'^(?!\.)[.A-Za-z0-9_-]{1,255}$'), QueryField] = Field(
-        ..., title='Fields'
-    )
-
-
-class Query(BaseModel):
-    model_config = ConfigDict(
-        extra='forbid',
-    )
-    fields: QueryFields = Field(..., description='A list of fields in this query.')
-    filter_by: QueryFilters | None = Field(
-        None, description='A list of filters in this query.'
-    )
-    sort_by: QuerySorts | None = Field(
-        None, description='A list of sorting in this query.'
-    )
-
-
 class Visualisation1(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type62 = Field(..., description='Type of visualisation.')
+    type: Type63 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -4465,7 +4617,7 @@ class Visualisation2(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type63 = Field(..., description='Type of visualisation.')
+    type: Type64 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -4508,7 +4660,7 @@ class Visualisation3(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type64 = Field(..., description='Type of visualisation.')
+    type: Type65 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -4551,7 +4703,7 @@ class Visualisation4(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type65 = Field(..., description='Type of visualisation.')
+    type: Type66 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -4594,7 +4746,7 @@ class Visualisation5(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type66 = Field(..., description='Type of visualisation.')
+    type: Type67 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -4637,7 +4789,7 @@ class Visualisation6(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type67 = Field(..., description='Type of visualisation.')
+    type: Type68 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -4680,7 +4832,7 @@ class Visualisation7(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type68 = Field(..., description='Type of visualisation.')
+    type: Type69 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -4723,7 +4875,7 @@ class Visualisation8(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type69 = Field(..., description='Type of visualisation.')
+    type: Type70 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -4763,7 +4915,7 @@ class Visualisation9(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type70 = Field(..., description='Type of visualisation.')
+    type: Type71 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -4803,7 +4955,7 @@ class Visualisation10(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type71 = Field(..., description='Type of visualisation.')
+    type: Type72 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -4843,7 +4995,7 @@ class Visualisation11(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type72 = Field(..., description='Type of visualisation.')
+    type: Type73 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -4883,7 +5035,7 @@ class Visualisation12(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type73 = Field(..., description='Type of visualisation.')
+    type: Type74 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -4923,7 +5075,7 @@ class Visualisation13(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type74 = Field(..., description='Type of visualisation.')
+    type: Type75 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -4969,7 +5121,7 @@ class Visualisation14(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type75 = Field(..., description='Type of visualisation.')
+    type: Type76 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5009,7 +5161,7 @@ class Visualisation15(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type76 = Field(..., description='Type of visualisation.')
+    type: Type77 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5046,52 +5198,6 @@ class Visualisation15(BaseModel):
 
 
 class Visualisation16(BaseModel):
-    model_config = ConfigDict(
-        extra='forbid',
-    )
-    type: Type77 = Field(..., description='Type of visualisation.')
-    id: Identifier = Field(..., description='A unique identifier of the visualisation.')
-    title: Title | None = Field(
-        None,
-        description='An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.',
-    )
-    description: Description | None = Field(
-        None, description='An optional description of the visualisation.'
-    )
-    tags: Tags | None = Field(
-        None, description='A list of strings - metadata tags of this visualisation.'
-    )
-    show_in_ai_results: bool | None = Field(
-        None,
-        description='Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible.',
-    )
-    is_hidden: bool | None = Field(
-        None,
-        deprecated=True,
-        description="Deprecated. Use 'show_in_ai_results' instead.",
-    )
-    query: Query = Field(..., description='Query definition of visualisation.')
-    config: Config | None = Field(
-        None, description='Configuration of visualisation of defined type.'
-    )
-    metrics: list[BucketItem] | None = Field(
-        None, description='A list of metrics in this visualisation.'
-    )
-    view_by: list[BucketItem | BucketEmptyItem] | None = Field(
-        None, description='A list of view by attributes in this visualisation.'
-    )
-    from_: BucketItem | None = Field(
-        None, alias='from', description='A from attribute in this visualisation.'
-    )
-    to: BucketItem | None = Field(
-        None, description='A to attribute in this visualisation.'
-    )
-    segment_by: list[Any] | None = Field(
-        None, description='Not used in this graph type.'
-    )
-
-
-class Visualisation17(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
@@ -5137,11 +5243,57 @@ class Visualisation17(BaseModel):
     )
 
 
-class Visualisation18(BaseModel):
+class Visualisation17(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
     type: Type79 = Field(..., description='Type of visualisation.')
+    id: Identifier = Field(..., description='A unique identifier of the visualisation.')
+    title: Title | None = Field(
+        None,
+        description='An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.',
+    )
+    description: Description | None = Field(
+        None, description='An optional description of the visualisation.'
+    )
+    tags: Tags | None = Field(
+        None, description='A list of strings - metadata tags of this visualisation.'
+    )
+    show_in_ai_results: bool | None = Field(
+        None,
+        description='Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible.',
+    )
+    is_hidden: bool | None = Field(
+        None,
+        deprecated=True,
+        description="Deprecated. Use 'show_in_ai_results' instead.",
+    )
+    query: Query = Field(..., description='Query definition of visualisation.')
+    config: Config | None = Field(
+        None, description='Configuration of visualisation of defined type.'
+    )
+    metrics: list[BucketItem] | None = Field(
+        None, description='A list of metrics in this visualisation.'
+    )
+    view_by: list[BucketItem | BucketEmptyItem] | None = Field(
+        None, description='A list of view by attributes in this visualisation.'
+    )
+    from_: BucketItem | None = Field(
+        None, alias='from', description='A from attribute in this visualisation.'
+    )
+    to: BucketItem | None = Field(
+        None, description='A to attribute in this visualisation.'
+    )
+    segment_by: list[Any] | None = Field(
+        None, description='Not used in this graph type.'
+    )
+
+
+class Visualisation18(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    type: Type80 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5179,7 +5331,7 @@ class Visualisation19(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type80 = Field(..., description='Type of visualisation.')
+    type: Type81 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5219,7 +5371,7 @@ class Visualisation20(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type81 = Field(..., description='Type of visualisation.')
+    type: Type82 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5263,7 +5415,7 @@ class Visualisation21(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type82 = Field(..., description='Type of visualisation.')
+    type: Type83 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5307,7 +5459,7 @@ class Visualisation22(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type83 = Field(..., description='Type of visualisation.')
+    type: Type84 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5353,7 +5505,7 @@ class Visualisation23(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type84 = Field(..., description='Type of visualisation.')
+    type: Type85 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5575,7 +5727,7 @@ class Dashboard(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the dashboard.')
-    type: Type54
+    type: Type55
     version: Version | None = Field(
         None,
         description='Dashboard model version. "2" (default if omitted) — legacy shape: root-level sections/filters are also mirrored into a default tab, producing a declarative model with duplicated content for backward compatibility with older SDK readers. "3" — clean shape: tabs are the sole source of layout and filters; root sections/filters in YAML are still allowed as an authoring shortcut but are wrapped into a single synthetic tab without duplication. Use "3" for new dashboards; "2" exists to keep existing files round-trippable.',

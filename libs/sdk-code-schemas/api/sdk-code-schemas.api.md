@@ -31,7 +31,7 @@ type All = All1;
 // @public
 interface All1 {
     conditions?: MetricValueFilterCondition[];
-    dimensionality?: (LabelIdentifier10 | string)[];
+    dimensionality?: (LabelIdentifier10 | ComputedAttributeIdentifier10 | string)[];
     // (undocumented)
     type: "metric_value_filter";
     using: MetricIdentifier3;
@@ -121,7 +121,8 @@ interface Attribute {
     labels?: {
         [k: string]: Label;
     };
-    locale?: string;
+    // (undocumented)
+    locale?: Locale;
     null_value_join_replacement?: string;
     show_in_ai_results?: boolean;
     sort_column?: string;
@@ -141,7 +142,7 @@ interface Attribute {
 interface AttributeField {
     show_all_values?: boolean;
     title?: string;
-    using: (AttributeIdentifier8 | LabelIdentifier6 | FactIdentifier) & string;
+    using: (AttributeIdentifier8 | LabelIdentifier6 | ComputedAttributeIdentifier6 | FactIdentifier) & string;
 }
 
 // Warning: (ae-missing-release-tag) "AttributeFieldGuard" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -174,7 +175,7 @@ interface AttributeFilter {
     state?: State;
     // (undocumented)
     type: "attribute_filter";
-    using: AttributeIdentifier9 | LabelIdentifier7;
+    using: AttributeIdentifier9 | LabelIdentifier7 | ComputedAttributeIdentifier7;
 }
 
 // Warning: (ae-missing-release-tag) "AttributeFilter1" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -187,7 +188,7 @@ interface AttributeFilter1 {
     state?: State;
     // (undocumented)
     type: "attribute_filter";
-    using: AttributeIdentifier9 | LabelIdentifier7;
+    using: AttributeIdentifier9 | LabelIdentifier7 | ComputedAttributeIdentifier7;
 }
 
 // Warning: (ae-missing-release-tag) "AttributeHierarchy" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -285,7 +286,7 @@ type AttributeIdentifier9 = string;
 // @public (undocumented)
 interface AttributeSort {
     aggregation?: "SUM";
-    by: string | AttributeIdentifier13 | LabelIdentifier14;
+    by: string | AttributeIdentifier13 | LabelIdentifier14 | ComputedAttributeIdentifier13;
     direction: "ASC" | "DESC";
     // (undocumented)
     type: "attribute_sort";
@@ -357,7 +358,7 @@ interface BarChart {
 //
 // @public (undocumented)
 interface BOTTOM {
-    attribute?: LabelIdentifier11;
+    attribute?: LabelIdentifier11 | ComputedAttributeIdentifier11;
     bottom: number;
     strict_limit_of_rows?: boolean;
     top?: number;
@@ -571,7 +572,7 @@ type Comparison = Comparison1;
 // @public (undocumented)
 interface Comparison1 {
     condition: "GREATER_THAN" | "GREATER_THAN_OR_EQUAL_TO" | "LESS_THAN" | "LESS_THAN_OR_EQUAL_TO" | "EQUAL_TO" | "NOT_EQUAL_TO";
-    dimensionality?: (LabelIdentifier10 | string)[];
+    dimensionality?: (LabelIdentifier10 | ComputedAttributeIdentifier10 | string)[];
     null_values_as_zero?: boolean;
     // (undocumented)
     type: "metric_value_filter";
@@ -623,17 +624,100 @@ type CompositePrimaryKey2 = Id5[];
 //
 // @public (undocumented)
 interface ComputedAttribute {
+    data_type?: "INT" | "STRING" | "DATE" | "NUMERIC" | "TIMESTAMP" | "TIMESTAMP_TZ" | "BOOLEAN" | "HLL";
     description?: string;
+    format?: string;
     // (undocumented)
     id: Id8;
-    locale?: string;
+    is_nullable?: boolean;
+    // (undocumented)
+    locale?: Locale3;
     maql: string;
+    metric_type?: "UNSPECIFIED" | "CURRENCY";
+    null_value_join_replacement?: string;
+    show_in_ai_results?: boolean;
     // (undocumented)
     tags?: Tags9;
     title?: string;
     // (undocumented)
     type: "computed_attribute";
+    value_type?: "TEXT" | "HYPERLINK" | "GEO" | "GEO_LONGITUDE" | "GEO_LATITUDE" | "GEO_AREA" | "GEO_ICON" | "IMAGE" | "HYPERLOGLOG";
 }
+
+// Warning: (ae-missing-release-tag) "ComputedAttributeIdentifier" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ComputedAttributeIdentifier = string;
+
+// Warning: (ae-missing-release-tag) "ComputedAttributeIdentifier1" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ComputedAttributeIdentifier1 = string;
+
+// Warning: (ae-missing-release-tag) "ComputedAttributeIdentifier10" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ComputedAttributeIdentifier10 = string;
+
+// Warning: (ae-missing-release-tag) "ComputedAttributeIdentifier11" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ComputedAttributeIdentifier11 = string;
+
+// Warning: (ae-missing-release-tag) "ComputedAttributeIdentifier12" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ComputedAttributeIdentifier12 = string;
+
+// Warning: (ae-missing-release-tag) "ComputedAttributeIdentifier13" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ComputedAttributeIdentifier13 = string;
+
+// Warning: (ae-missing-release-tag) "ComputedAttributeIdentifier14" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ComputedAttributeIdentifier14 = string;
+
+// Warning: (ae-missing-release-tag) "ComputedAttributeIdentifier2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ComputedAttributeIdentifier2 = string;
+
+// Warning: (ae-missing-release-tag) "ComputedAttributeIdentifier3" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ComputedAttributeIdentifier3 = string;
+
+// Warning: (ae-missing-release-tag) "ComputedAttributeIdentifier4" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ComputedAttributeIdentifier4 = string;
+
+// Warning: (ae-missing-release-tag) "ComputedAttributeIdentifier5" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ComputedAttributeIdentifier5 = string;
+
+// Warning: (ae-missing-release-tag) "ComputedAttributeIdentifier6" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ComputedAttributeIdentifier6 = string;
+
+// Warning: (ae-missing-release-tag) "ComputedAttributeIdentifier7" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ComputedAttributeIdentifier7 = string;
+
+// Warning: (ae-missing-release-tag) "ComputedAttributeIdentifier8" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ComputedAttributeIdentifier8 = string;
+
+// Warning: (ae-missing-release-tag) "ComputedAttributeIdentifier9" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ComputedAttributeIdentifier9 = string;
 
 // Warning: (ae-missing-release-tag) "ContainerWidget" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
@@ -711,7 +795,7 @@ type DashboardAttributeFilter = DashboardAttributeFilter1;
 type DashboardAttributeFilter1 = {
     title?: string;
     type?: "attribute_filter";
-    using?: AttributeIdentifier2 | LabelIdentifier2;
+    using?: AttributeIdentifier2 | LabelIdentifier2 | ComputedAttributeIdentifier2;
     multiselect?: boolean;
     mode?: "readonly" | "hidden" | "active";
     display_as?: DisplayAsLabelIdentifier;
@@ -725,7 +809,7 @@ type DashboardAttributeFilter1 = {
 } | {
     title?: string;
     type?: "attribute_filter";
-    using?: AttributeIdentifier3 | LabelIdentifier3;
+    using?: AttributeIdentifier3 | LabelIdentifier3 | ComputedAttributeIdentifier3;
     multiselect?: boolean;
     mode?: "readonly" | "hidden" | "active";
     display_as?: DisplayAsLabelIdentifier1;
@@ -804,7 +888,7 @@ interface DashboardTextFilter1 {
     title?: string;
     // (undocumented)
     type: "text_filter";
-    using: AttributeIdentifier4 | LabelIdentifier4;
+    using: AttributeIdentifier4 | LabelIdentifier4 | ComputedAttributeIdentifier4;
     // (undocumented)
     values: (string | null)[];
 }
@@ -826,7 +910,7 @@ interface DashboardTextFilter2 {
     title?: string;
     // (undocumented)
     type: "text_filter";
-    using: AttributeIdentifier5 | LabelIdentifier5;
+    using: AttributeIdentifier5 | LabelIdentifier5 | ComputedAttributeIdentifier5;
     // (undocumented)
     value: string;
 }
@@ -989,7 +1073,7 @@ type FactIdentifier1 = string;
 // Warning: (ae-missing-release-tag) "Field" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public
-type Field = AttributeIdentifier7 | Field1 | Field2 | Field3 | StructuredField;
+type Field = AttributeIdentifier7 | Field1 | Field2 | Field3 | Field4 | StructuredField;
 
 // Warning: (ae-missing-release-tag) "Field1" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
@@ -1005,6 +1089,11 @@ type Field2 = string;
 //
 // @public
 type Field3 = string;
+
+// Warning: (ae-missing-release-tag) "Field4" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Field4 = string;
 
 // Warning: (ae-missing-release-tag) "Fields" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
@@ -1624,8 +1713,8 @@ interface InteractionOpenParamUrl {
     ignored_intersection_attributes?: InteractionIgnoredIntersectionAttributes;
     // (undocumented)
     open_url: {
-        href?: AttributeIdentifier | LabelIdentifier;
-        label?: AttributeIdentifier1 | LabelIdentifier1;
+        href?: AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier;
+        label?: AttributeIdentifier1 | LabelIdentifier1 | ComputedAttributeIdentifier1;
         [k: string]: unknown;
     };
 }
@@ -1667,7 +1756,8 @@ interface Label {
     // @deprecated (undocumented)
     is_hidden?: boolean;
     is_nullable?: boolean;
-    locale?: string;
+    // (undocumented)
+    locale?: Locale1;
     null_value_join_replacement?: string;
     show_in_ai_results?: boolean;
     source_column?: string;
@@ -1763,7 +1853,8 @@ type LabelIdentifier9 = string;
 //
 // @public (undocumented)
 interface LabelTranslation {
-    locale: string;
+    // (undocumented)
+    locale: Locale2;
     source_column: string;
 }
 
@@ -1870,6 +1961,26 @@ interface LocalDateFilter2 {
     date?: string;
     using: string;
 }
+
+// Warning: (ae-missing-release-tag) "Locale" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Locale = string;
+
+// Warning: (ae-missing-release-tag) "Locale1" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Locale1 = string;
+
+// Warning: (ae-missing-release-tag) "Locale2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Locale2 = string;
+
+// Warning: (ae-missing-release-tag) "Locale3" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Locale3 = string;
 
 // Warning: (ae-missing-release-tag) "LocationBucket" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
@@ -2480,8 +2591,39 @@ export const metadata_v1: {
                             type: string;
                         };
                     };
-                    locale: {
+                    format: {
                         type: string;
+                        description: string;
+                    };
+                    metric_type: {
+                        type: string;
+                        enum: string[];
+                        description: string;
+                    };
+                    data_type: {
+                        type: string;
+                        enum: string[];
+                        description: string;
+                    };
+                    value_type: {
+                        type: string;
+                        enum: string[];
+                        description: string;
+                    };
+                    is_nullable: {
+                        type: string;
+                        description: string;
+                    };
+                    null_value_join_replacement: {
+                        type: string;
+                        description: string;
+                    };
+                    show_in_ai_results: {
+                        type: string;
+                        description: string;
+                    };
+                    locale: {
+                        $ref: string;
                         description: string;
                     };
                 };
@@ -4021,6 +4163,12 @@ export const metadata_v1: {
                     typePrefix: boolean;
                 };
             };
+            locale: {
+                title: string;
+                type: string;
+                pattern: string;
+                description: string;
+            };
             dashboardFilters: {
                 title: string;
                 type: string;
@@ -4117,6 +4265,17 @@ export const metadata_v1: {
                 };
             };
             labelIdentifier: {
+                title: string;
+                description: string;
+                type: string;
+                pattern: string;
+                $semantic: {
+                    type: string;
+                    source: string;
+                    typePrefix: boolean;
+                };
+            };
+            computedAttributeIdentifier: {
                 title: string;
                 description: string;
                 type: string;
@@ -4974,6 +5133,17 @@ export const metadata_v1: {
                 typePrefix: boolean;
             };
         };
+        computedAttributeIdentifier: {
+            title: string;
+            description: string;
+            type: string;
+            pattern: string;
+            $semantic: {
+                type: string;
+                source: string;
+                typePrefix: boolean;
+            };
+        };
         displayAsLabelIdentifier: {
             title: string;
             description: string;
@@ -5791,7 +5961,9 @@ export const metadata_v1: {
                     type: string;
                     description: string;
                     items: {
-                        $ref: string;
+                        oneOf: {
+                            $ref: string;
+                        }[];
                     };
                 };
                 null_values_as_zero: {
@@ -6784,8 +6956,39 @@ export const metadata_v1: {
                         type: string;
                     };
                 };
-                locale: {
+                format: {
                     type: string;
+                    description: string;
+                };
+                metric_type: {
+                    type: string;
+                    enum: string[];
+                    description: string;
+                };
+                data_type: {
+                    type: string;
+                    enum: string[];
+                    description: string;
+                };
+                value_type: {
+                    type: string;
+                    enum: string[];
+                    description: string;
+                };
+                is_nullable: {
+                    type: string;
+                    description: string;
+                };
+                null_value_join_replacement: {
+                    type: string;
+                    description: string;
+                };
+                show_in_ai_results: {
+                    type: string;
+                    description: string;
+                };
+                locale: {
+                    $ref: string;
                     description: string;
                 };
             };
@@ -8443,11 +8646,6 @@ export const metadata_v1: {
                 code: string;
             };
         };
-        locale: {
-            type: string;
-            pattern: string;
-            description: string;
-        };
         label: {
             title: string;
             type: string;
@@ -8761,6 +8959,42 @@ export const metadata_v1: {
                         anyOf: {
                             required: string[];
                         }[];
+                    };
+                };
+            };
+            required: string[];
+            $semantic: {
+                type: string;
+            };
+        };
+        numberParameterDefinition: {
+            title: string;
+            description: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                defaultValue: {
+                    type: string;
+                    description: string;
+                };
+                constraints: {
+                    title: string;
+                    type: string;
+                    additionalProperties: boolean;
+                    description: string;
+                    properties: {
+                        min: {
+                            type: string;
+                            description: string;
+                        };
+                        max: {
+                            type: string;
+                            description: string;
+                        };
                     };
                 };
             };
@@ -9809,12 +10043,12 @@ interface MetricSort {
     // (undocumented)
     metrics: [
     (string | {
-        by: string | AttributeIdentifier14 | LabelIdentifier15;
+        by: string | AttributeIdentifier14 | LabelIdentifier15 | ComputedAttributeIdentifier14;
         element?: string;
         function?: "SUM" | "AVG" | "MIN" | "MAX" | "MED" | "NAT";
     }),
     ...(string | {
-        by: string | AttributeIdentifier14 | LabelIdentifier15;
+        by: string | AttributeIdentifier14 | LabelIdentifier15 | ComputedAttributeIdentifier14;
         element?: string;
         function?: "SUM" | "AVG" | "MIN" | "MAX" | "MED" | "NAT";
     })[]
@@ -9844,7 +10078,7 @@ type MultipleConditions = MultipleConditions1;
 interface MultipleConditions1 {
     // (undocumented)
     conditions: [MetricValueFilterCondition, ...MetricValueFilterCondition[]];
-    dimensionality?: (LabelIdentifier10 | string)[];
+    dimensionality?: (LabelIdentifier10 | ComputedAttributeIdentifier10 | string)[];
     null_values_as_zero?: boolean;
     // (undocumented)
     type: "metric_value_filter";
@@ -9876,6 +10110,25 @@ interface NormalDataset {
     workspace_data_filters?: WorkspaceDataFilter[];
 }
 
+// Warning: (ae-missing-release-tag) "NumberParameterConstraints" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface NumberParameterConstraints {
+    max?: number;
+    min?: number;
+}
+
+// Warning: (ae-missing-release-tag) "NumberParameterDefinition" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface NumberParameterDefinition {
+    // (undocumented)
+    constraints?: NumberParameterConstraints;
+    defaultValue: number;
+    // (undocumented)
+    type: "NUMBER";
+}
+
 // Warning: (ae-missing-release-tag) "Parameter" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
@@ -9903,12 +10156,17 @@ interface ParameterAllowedValue {
 // Warning: (ae-missing-release-tag) "ParameterDefinition" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public
-type ParameterDefinition = ParameterDefinition1;
+type ParameterDefinition = ParameterDefinition1 | ParameterDefinition2;
 
 // Warning: (ae-missing-release-tag) "ParameterDefinition1" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public
 type ParameterDefinition1 = StringParameterDefinition;
+
+// Warning: (ae-missing-release-tag) "ParameterDefinition2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ParameterDefinition2 = NumberParameterDefinition;
 
 // Warning: (ae-missing-release-tag) "Permission" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
@@ -10417,7 +10675,7 @@ interface RadarChart {
 // @public (undocumented)
 interface Range1 {
     condition: "BETWEEN" | "NOT_BETWEEN";
-    dimensionality?: (LabelIdentifier10 | string)[];
+    dimensionality?: (LabelIdentifier10 | ComputedAttributeIdentifier10 | string)[];
     from: number;
     null_values_as_zero?: boolean;
     to: number;
@@ -10906,7 +11164,7 @@ interface TextFilter1 {
     display_as?: DisplayAsLabelIdentifier5;
     // (undocumented)
     type: "text_filter";
-    using: AttributeIdentifier10 | LabelIdentifier8;
+    using: AttributeIdentifier10 | LabelIdentifier8 | ComputedAttributeIdentifier8;
     // (undocumented)
     values: (string | null)[];
 }
@@ -10925,7 +11183,7 @@ interface TextFilter2 {
     display_as?: DisplayAsLabelIdentifier6;
     // (undocumented)
     type: "text_filter";
-    using: AttributeIdentifier11 | LabelIdentifier9;
+    using: AttributeIdentifier11 | LabelIdentifier9 | ComputedAttributeIdentifier9;
     // (undocumented)
     value: string;
 }
@@ -10943,7 +11201,7 @@ interface TimezoneConfig {
 //
 // @public (undocumented)
 interface TOP {
-    attribute?: LabelIdentifier12;
+    attribute?: LabelIdentifier12 | ComputedAttributeIdentifier12;
     bottom?: number;
     strict_limit_of_rows?: boolean;
     top: number;
@@ -11016,7 +11274,10 @@ declare namespace v1 {
         Id1,
         CompositePrimaryKey,
         Tags1,
+        Locale,
         Tags2,
+        Locale1,
+        Locale2,
         Tags3,
         Tags4,
         SourceColumn,
@@ -11042,6 +11303,7 @@ declare namespace v1 {
         Metadata14,
         Id8,
         Tags9,
+        Locale3,
         Metadata15,
         Metadata17,
         Id9,
@@ -11057,8 +11319,10 @@ declare namespace v1 {
         Interaction2,
         AttributeIdentifier,
         LabelIdentifier,
+        ComputedAttributeIdentifier,
         AttributeIdentifier1,
         LabelIdentifier1,
+        ComputedAttributeIdentifier1,
         Interaction3,
         InteractionIgnoredDashboardFilters,
         InteractionIncludedSourceInsightFilters,
@@ -11078,19 +11342,23 @@ declare namespace v1 {
         DashboardAttributeFilter1,
         AttributeIdentifier2,
         LabelIdentifier2,
+        ComputedAttributeIdentifier2,
         DisplayAsLabelIdentifier,
         LocalAttributeFilter,
         AttributeIdentifier3,
         LabelIdentifier3,
+        ComputedAttributeIdentifier3,
         DisplayAsLabelIdentifier1,
         LocalAttributeFilter1,
         DashboardTextFilter,
         AttributeIdentifier4,
         LabelIdentifier4,
+        ComputedAttributeIdentifier4,
         DisplayAsLabelIdentifier2,
         LocalAttributeFilter2,
         AttributeIdentifier5,
         LabelIdentifier5,
+        ComputedAttributeIdentifier5,
         DisplayAsLabelIdentifier3,
         Id15,
         Id16,
@@ -11110,6 +11378,7 @@ declare namespace v1 {
         Tags13,
         ParameterDefinition,
         ParameterDefinition1,
+        ParameterDefinition2,
         Metadata27,
         Metadata29,
         Visualisation,
@@ -11121,10 +11390,12 @@ declare namespace v1 {
         Field1,
         Field2,
         Field3,
+        Field4,
         StructuredField,
         AttributeFieldGuard,
         AttributeIdentifier8,
         LabelIdentifier6,
+        ComputedAttributeIdentifier6,
         FactIdentifier,
         MetricFieldGuard,
         Filter,
@@ -11133,6 +11404,7 @@ declare namespace v1 {
         DateFilter1,
         AttributeIdentifier9,
         LabelIdentifier7,
+        ComputedAttributeIdentifier7,
         DisplayAsLabelIdentifier4,
         DateFilter2,
         Filter2,
@@ -11140,9 +11412,11 @@ declare namespace v1 {
         TextFilter,
         AttributeIdentifier10,
         LabelIdentifier8,
+        ComputedAttributeIdentifier8,
         DisplayAsLabelIdentifier5,
         AttributeIdentifier11,
         LabelIdentifier9,
+        ComputedAttributeIdentifier9,
         DisplayAsLabelIdentifier6,
         Filter4,
         MetricValueFilter,
@@ -11153,6 +11427,7 @@ declare namespace v1 {
         ComparisonCondition,
         RangeCondition,
         LabelIdentifier10,
+        ComputedAttributeIdentifier10,
         Comparison,
         MetricIdentifier1,
         Range_2 as Range,
@@ -11163,8 +11438,10 @@ declare namespace v1 {
         RankingFilter,
         MetricIdentifier4,
         LabelIdentifier11,
+        ComputedAttributeIdentifier11,
         MetricIdentifier5,
         LabelIdentifier12,
+        ComputedAttributeIdentifier12,
         Filter6,
         MetricIdentifier6,
         CalculatedMetricFieldGuard,
@@ -11179,9 +11456,11 @@ declare namespace v1 {
         Sort1,
         AttributeIdentifier13,
         LabelIdentifier14,
+        ComputedAttributeIdentifier13,
         Sort2,
         AttributeIdentifier14,
         LabelIdentifier15,
+        ComputedAttributeIdentifier14,
         Sort3,
         Sorts,
         WidthValueOrAuto,
@@ -11336,6 +11615,8 @@ declare namespace v1 {
         StringParameterDefinition,
         StringParameterConstraints,
         ParameterAllowedValue,
+        NumberParameterDefinition,
+        NumberParameterConstraints,
         Metadata28,
         Table,
         Query,

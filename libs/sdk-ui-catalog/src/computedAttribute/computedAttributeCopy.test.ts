@@ -23,6 +23,8 @@ const loaded: IComputedAttributeMetadataObject = {
     updated: "2024-01-02",
     expression: MAQL,
     dataType: "STRING",
+    valueType: "HYPERLINK",
+    isHidden: true,
     locale: "en-US",
     displayForms: [],
 };
@@ -44,6 +46,8 @@ describe("createCopiedComputedAttribute", () => {
         expect(createCopiedComputedAttribute(loaded)).toMatchObject({
             expression: MAQL,
             dataType: "STRING",
+            valueType: "HYPERLINK",
+            isHidden: true,
             locale: "en-US",
             tags: ["sales"],
         });

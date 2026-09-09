@@ -406,6 +406,9 @@ export type ComparisonConditionOperator = "GREATER_THAN" | "GREATER_THAN_OR_EQUA
 export type ComputedAttributeDataType = "INT" | "STRING" | "DATE" | "NUMERIC" | "TIMESTAMP" | "TIMESTAMP_TZ" | "BOOLEAN" | "HLL";
 
 // @public
+export type ComputedAttributeValueType = "TEXT" | "HYPERLINK" | "GEO" | "GEO_LONGITUDE" | "GEO_LATITUDE" | "GEO_AREA" | "GEO_ICON" | "IMAGE" | "HYPERLOGLOG";
+
+// @public
 export enum ComputeRatioRule {
     ANY_MEASURE = 2,
     NEVER = 0,
@@ -1897,6 +1900,7 @@ export interface IComputedAttributeMetadataObjectBase {
     nullValue?: string;
     // (undocumented)
     type: "computedAttribute";
+    valueType?: ComputedAttributeValueType;
 }
 
 // @public
@@ -3113,7 +3117,6 @@ export interface IFeatureFlags {
     enableSemanticSearch?: boolean;
     enableShellApplication?: boolean;
     enableShellApplication_analyticalDesigner?: boolean;
-    enableShellApplication_catalog?: boolean;
     enableShellApplication_dashboards?: boolean;
     // (undocumented)
     enableSingleStoreDataSource?: boolean;

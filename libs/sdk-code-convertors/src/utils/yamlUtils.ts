@@ -246,13 +246,40 @@ export function getIdentifier(
         return idRef.localIdentifier;
     }
     if (isIdentifierRef(idRef) && !untype) {
-        const type = idRef.type === "measure" ? "metric" : idRef.type;
+        const type = declarativeTypeToReferencePrefix(idRef.type);
         return `${type}/${idRef.identifier}`;
     }
     if (isIdentifierRef(idRef) && untype) {
         return idRef.identifier;
     }
     throw newError(CoreErrorCode.ReferenceTypeNotSupported, [JSON.stringify(obj)], errorContext);
+}
+
+/**
+ * Maps the yaml reference prefix (`metric/`, `computed_attribute/`, ...) to the object type the
+ * declarative API uses for the same object.
+ */
+function referencePrefixToDeclarativeType(prefix: string, forceMetric?: boolean) {
+    if (prefix === "metric" && !forceMetric) {
+        return "measure";
+    }
+    if (prefix === "computed_attribute") {
+        return "computedAttribute";
+    }
+    return prefix;
+}
+
+/**
+ * Inverse of {@link referencePrefixToDeclarativeType}.
+ */
+function declarativeTypeToReferencePrefix(type: string | undefined) {
+    if (type === "measure") {
+        return "metric";
+    }
+    if (type === "computedAttribute") {
+        return "computed_attribute";
+    }
+    return type;
 }
 
 /** @public */
@@ -285,9 +312,10 @@ export function createIdentifier<T = AfmObjectIdentifier>(
             identifier: {
                 type:
                     forceType ||
-                    ((type === "metric" && !forceMetric
-                        ? "measure"
-                        : type) as AfmObjectIdentifierIdentifierTypeEnum),
+                    (referencePrefixToDeclarativeType(
+                        type,
+                        forceMetric,
+                    ) as AfmObjectIdentifierIdentifierTypeEnum),
                 id: objId,
             },
         } as T;

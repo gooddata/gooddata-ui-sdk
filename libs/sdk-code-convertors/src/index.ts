@@ -42,7 +42,14 @@ export {
 export { yamlDateDatesetToDeclarative } from "./to/yamlDateDatasetToDeclarative.js";
 export { yamlMetricToDeclarative } from "./to/yamlMetricToDeclarative.js";
 export { yamlParameterToDeclarative } from "./to/yamlParameterToDeclarative.js";
-export { isDeclarativeStringParameter, type DeclarativeStringParameter } from "./utils/parameterUtils.js";
+export {
+    isDeclarativeCodeParameter,
+    isDeclarativeNumberParameter,
+    isDeclarativeStringParameter,
+    type DeclarativeCodeParameter,
+    type DeclarativeNumberParameter,
+    type DeclarativeStringParameter,
+} from "./utils/parameterUtils.js";
 export { yamlComputedAttributeToDeclarative } from "./to/yamlComputedAttributeToDeclarative.js";
 export {
     yamlVisualisationToDeclarative,

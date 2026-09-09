@@ -142,7 +142,7 @@ describe("computedAttributeDescriptor", () => {
         });
     });
 
-    it("reconcile overlays the parsed YAML onto the base definition, keeping non-YAML fields", () => {
+    it("reconcile overlays the parsed YAML onto the base definition; a dropped value-shaping line clears its value", () => {
         const base: IComputedAttributeMetadataObjectDefinition = {
             id: "rep_performance",
             type: "computedAttribute",
@@ -151,6 +151,7 @@ describe("computedAttributeDescriptor", () => {
             tags: [],
             expression: "SELECT 1",
             dataType: "STRING",
+            valueType: "HYPERLINK",
         };
         const parsed: IComputedAttributeMetadataObjectDefinition = {
             id: "rep_performance",
@@ -159,16 +160,20 @@ describe("computedAttributeDescriptor", () => {
             description: "",
             tags: [],
             expression: "SELECT 2",
+            valueType: "IMAGE",
         };
         const { result } = renderHook(() => computedAttributeDescriptor.useEditing(), {
             wrapper: EditingWrapper,
         });
-        expect(result.current?.reconcile?.(base, parsed)).toMatchObject({
+        const merged = result.current?.reconcile?.(base, parsed);
+        expect(merged).toMatchObject({
             id: "rep_performance",
             title: "Edited",
             expression: "SELECT 2",
-            dataType: "STRING",
+            valueType: "IMAGE",
         });
+        // the YAML owns data_type too, so removing the line drops the base's value
+        expect(merged?.dataType).toBeUndefined();
     });
 });
 

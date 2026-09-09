@@ -78,6 +78,38 @@ maql: `);
         expect(result.isValid && result.computedAttribute).not.toHaveProperty("id");
     });
 
+    it("renders the value-shaping fields between tags and maql, in the canonical order", () => {
+        const yaml = serializeComputedAttributeToYaml({
+            type: "computed_attribute",
+            id: "rep_performance",
+            title: "Rep Performance",
+            maql: MAQL,
+            format: "#,##0.00",
+            metric_type: "CURRENCY",
+            data_type: "NUMERIC",
+            value_type: "HYPERLINK",
+            is_nullable: true,
+            null_value_join_replacement: "N/A",
+            show_in_ai_results: false,
+            locale: "en-US",
+        });
+
+        expect(yaml).toBe(`id: rep_performance
+type: computed_attribute
+title: Rep Performance
+description: ""
+format: "#,##0.00"
+metric_type: CURRENCY
+data_type: NUMERIC
+value_type: HYPERLINK
+is_nullable: true
+null_value_join_replacement: N/A
+show_in_ai_results: false
+locale: en-US
+maql: ${MAQL}`);
+        expect(validateComputedAttributeYaml(yaml).isValid).toBe(true);
+    });
+
     it("emits locale only when one is set", () => {
         expect(
             serializeComputedAttributeToYaml({

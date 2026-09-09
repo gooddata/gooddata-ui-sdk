@@ -27,9 +27,28 @@ function toHashHostUrl(
     return `${prefix}/workspace/${workspaceId}/${app}/${search}${hash}`;
 }
 
+// Where the standalone home-ui pages live inside the host: the gdc-home-ui module is mounted
+// on the organization scope under this route base, and keeps the legacy path shape below it.
+const HOME_UI_ROUTE_BASE = "/organization/settings";
+
+// Top-level paths the standalone home-ui served from the root. `/workspaces/{id}/catalog` is
+// deliberately NOT special-cased onto the catalog application: the module's own route already
+// checks that the catalog is enabled for the workspace before handing off, and rewriting straight
+// to `/workspace/{id}/catalog` would reach the host with no such check and render "app not found".
+const LEGACY_HOME_PATHS = [
+    "/workspaces",
+    "/data-sources",
+    "/users-and-groups",
+    "/settings",
+    "/configuration",
+    "/automations",
+    "/ai-hub",
+    "/getting-started",
+];
+
 /**
- * Maps a legacy KD/AD/modeler/metrics URL (embedded or standalone) to its host equivalent, or
- * `null` when it is not a recognized legacy URL. Mirrors the standalone→host redirects that live
+ * Maps a legacy KD/AD/modeler/metrics/home-ui URL (embedded or standalone) to its host equivalent,
+ * or `null` when it is not a recognized legacy URL. Mirrors the standalone→host redirects that live
  * in the legacy apps; runs client-side because the workspace id is in the (server-invisible) hash.
  *
  * @alpha
@@ -74,6 +93,16 @@ export function mapLegacyUrlToHost(location: ILegacyLocation): string | null {
         }
         const editMode = /displayEditMode/.test(hash + search) ? "?displayEditMode" : "";
         return `/workspace/${match[1]}/modeler${editMode}`;
+    }
+
+    // `/settings#ai[...]` is a supported AI Hub deeplink, but the module's `/settings` route
+    // redirects to `/configuration` without the hash, so the deeplink must be resolved here.
+    if (isUnder(pathname, "/settings") && (hash === "#ai" || hash.startsWith("#ai/"))) {
+        return `${HOME_UI_ROUTE_BASE}/ai-hub${search}${hash}`;
+    }
+
+    if (LEGACY_HOME_PATHS.some((prefix) => isUnder(pathname, prefix))) {
+        return `${HOME_UI_ROUTE_BASE}${pathname}${search}${hash}`;
     }
 
     return null;

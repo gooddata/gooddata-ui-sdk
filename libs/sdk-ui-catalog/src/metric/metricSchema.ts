@@ -2,6 +2,9 @@
 
 import * as z from "zod/mini";
 
+import type { AacSchemaParity, AssertAacParity } from "../asCode/aacParity.js";
+import type { ObjectTypes } from "../objectType/constants.js";
+
 /**
  * Zod schema for the analytics-as-code (AAC) metric YAML shape.
  *
@@ -25,6 +28,9 @@ export const metricSchema = z.strictObject({
 
 export type MetricSchemaInput = z.input<typeof metricSchema>;
 export type MetricSchema = z.infer<typeof metricSchema>;
+
+/** Fails the build when this schema drifts from the AAC `metric` document type. */
+export type MetricAacParity = AssertAacParity<AacSchemaParity<typeof ObjectTypes.METRIC, MetricSchema>>;
 
 /**
  * Allowed YAML property names keyed by parent mapping, used to power editor autocompletion.

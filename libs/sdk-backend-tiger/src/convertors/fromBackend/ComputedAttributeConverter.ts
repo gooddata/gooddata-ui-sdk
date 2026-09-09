@@ -2,6 +2,7 @@
 
 import {
     type JsonApiComputedAttributeOut,
+    type JsonApiComputedAttributeOutAttributesValueTypeEnum,
     type JsonApiComputedAttributeOutDocument,
     type JsonApiComputedAttributeOutIncludes,
     type JsonApiComputedAttributeOutList,
@@ -13,7 +14,10 @@ import {
     idRef,
 } from "@gooddata/sdk-model";
 
+import { definedOnly } from "../../utils/definedOnly.js";
+
 import { convertCertificationFromBackend } from "./CertificationConverter.js";
+import { convertLabelType } from "./LabelTypeConverter.js";
 import { isInheritedObject } from "./ObjectInheritance.js";
 import { convertUserIdentifier } from "./UsersConverter.js";
 
@@ -22,13 +26,17 @@ import { convertUserIdentifier } from "./UsersConverter.js";
  *
  * A computed attribute has no real labels on the backend. To mimic the structure of a normal
  * attribute (and thus be usable in the same UI places), exactly one display form is fabricated
- * client-side: it shares the id and title with the computed attribute itself.
+ * client-side: it shares the id and title with the computed attribute itself and carries the
+ * display form type derived from the value type, so a hyperlink or image computed attribute
+ * renders the same way a label of that type does.
  */
 export function fabricateComputedAttributeDisplayForm(
     id: string,
     title: string,
     description: string,
+    valueType?: JsonApiComputedAttributeOutAttributesValueTypeEnum,
 ): IAttributeDisplayFormMetadataObject {
+    const displayFormType = convertLabelType(valueType);
     return {
         type: "displayForm",
         // The ref carries the COMPUTED ATTRIBUTE type, not "displayForm": this ref is what ends up
@@ -46,6 +54,7 @@ export function fabricateComputedAttributeDisplayForm(
         attribute: idRef(id, "computedAttribute"),
         isDefault: true,
         isPrimary: true,
+        ...(displayFormType ? { displayFormType } : {}),
     };
 }
 
@@ -73,24 +82,29 @@ export function convertComputedAttributeFromBackend(
         production: true,
         deprecated: false,
         unlisted: false,
-        isHidden: attributes.isHidden,
         isLocked: isInheritedObject(object),
         expression: attributes.content.maql,
-        format: attributes.content.format ?? undefined,
-        metricType: attributes.content.metricType,
-        dataType: attributes.dataType,
-        isNullable: attributes.isNullable,
-        nullValue: attributes.nullValue,
-        locale: attributes.locale,
-        displayForms: [fabricateComputedAttributeDisplayForm(id, title, description)],
-        created: attributes.createdAt ?? undefined,
-        createdBy: convertUserIdentifier(relationships?.createdBy, included),
-        updated: attributes.modifiedAt ?? undefined,
-        updatedBy: convertUserIdentifier(relationships?.modifiedBy, included),
-        certification: convertCertificationFromBackend(
-            attributes,
-            convertUserIdentifier(relationships?.certifiedBy, included),
-        ),
+        displayForms: [fabricateComputedAttributeDisplayForm(id, title, description, attributes.valueType)],
+        // Optional fields are kept only when the backend returned them, so the metadata object
+        // carries no explicit undefined keys.
+        ...definedOnly({
+            isHidden: attributes.isHidden,
+            format: attributes.content.format ?? undefined,
+            metricType: attributes.content.metricType,
+            dataType: attributes.dataType,
+            valueType: attributes.valueType,
+            isNullable: attributes.isNullable,
+            nullValue: attributes.nullValue,
+            locale: attributes.locale,
+            created: attributes.createdAt ?? undefined,
+            createdBy: convertUserIdentifier(relationships?.createdBy, included),
+            updated: attributes.modifiedAt ?? undefined,
+            updatedBy: convertUserIdentifier(relationships?.modifiedBy, included),
+            certification: convertCertificationFromBackend(
+                attributes,
+                convertUserIdentifier(relationships?.certifiedBy, included),
+            ),
+        }),
     };
 }
 

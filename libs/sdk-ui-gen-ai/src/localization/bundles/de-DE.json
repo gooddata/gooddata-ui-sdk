@@ -106,6 +106,8 @@
     "gd.gen-ai.alert-proposal.summary.condition-comparison": "Vergleich",
     "gd.gen-ai.alert-proposal.summary.condition-relative": "Relativ",
     "gd.gen-ai.alert-proposal.summary.condition-anomalyDetection": "Anomalieerkennung",
+    "gd.gen-ai.clarification-question.skip-button": "Überspringen",
+    "gd.gen-ai.clarification-question.of": "{index} von {total}",
     "sdk.ui.genAi.alertProposal.operator.lessThan": "<",
     "sdk.ui.genAi.alertProposal.operator.lessThanOrEqualTo": "<=",
     "sdk.ui.genAi.alertProposal.operator.greaterThan": ">",

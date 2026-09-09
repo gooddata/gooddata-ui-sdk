@@ -115,8 +115,14 @@ const CURRENT_USER_REF = idRef("self");
 // uriRef (never comparable to the access list's idRefs), the user id lives in
 // `login` — the controller must resolve the current user from `login`, or nothing
 // self-related matches. A spy so tests can anchor on the profile having actually
-// resolved (an unmarked row is also just its unresolved default).
+// resolved (an unmarked row is also just its unresolved default). This is the
+// IDENTITY read; `getUserDetailsMock` answers the separate display-details read.
 const getUserMock = vi.fn(async (): Promise<Pick<IUser, "ref" | "login" | "fullName" | "email">> => ({
+    ref: uriRef("/api/v1/profile"),
+    login: "self",
+}));
+// The display-details read (entity first/last name). Default: knows no more than the identity.
+const getUserDetailsMock = vi.fn(async (): Promise<Pick<IUser, "ref" | "login" | "fullName" | "email">> => ({
     ref: uriRef("/api/v1/profile"),
     login: "self",
 }));
@@ -131,8 +137,8 @@ function makeBackend(svc: IMockService, manage: ManagePermission = false): IAnal
     return {
         ...base,
         // Self-row identity resolves from the profile; the dummy backend doesn't
-        // implement currentUser, so stub getUser here.
-        currentUser: () => ({ getUser: getUserMock }),
+        // implement currentUser, so stub both reads here.
+        currentUser: () => ({ getUser: getUserMock, getUserWithDetails: getUserDetailsMock }),
         workspace: (id: string) => ({
             ...base.workspace(id),
             objectPermissions: () => svc as unknown as IWorkspaceObjectPermissionsService,
@@ -277,6 +283,7 @@ describe("useObjectShareController", () => {
         // Not just hygiene: the gate tests anchor on getUserMock having resolved,
         // which would trivially hold from a previous test's call.
         getUserMock.mockClear();
+        getUserDetailsMock.mockClear();
     });
 
     it("derives grantee rows and summary from the fetched access list", async () => {
@@ -3351,19 +3358,50 @@ describe("useObjectShareController row classification", () => {
         expect(result.current.state.granteeControlsLocked).toBe(false);
     });
 
-    it("synthesizes the admin self row when the list loaded empty", async () => {
-        const { result } = renderController(makeService([]), TARGET);
+    it("synthesizes the admin self row for a workspace manager without a grant of their own", async () => {
+        const { result } = renderController(makeService([]), TARGET, undefined, { canManageProject: true });
         await waitFor(() => expect(result.current.state.status).toBe("success"));
         // The default profile mock knows only the login — the display pair falls
         // back to the user id, mirroring grantee rows.
         await waitFor(() => expect(result.current.state.adminSelfRow).toEqual({ name: "self" }));
     });
 
-    it("shows the admin self row only while no other permissions are set", async () => {
-        // Per the design the synthesized "(you)" row is an EMPTY-STATE row: adding a
-        // grantee hides it, and removing that grantee brings it back (the caller is
-        // still an admin whose access is grant-independent).
-        const { result } = renderController(makeService([]), TARGET);
+    it("names the admin self row from the detailed profile", async () => {
+        // The plain profile carries the auth-claim name, which an API-created user has
+        // none of — the row then showed the raw user id. The detailed read merges the
+        // entity's first and last name, as the catalog and dashboards already do.
+        getUserDetailsMock.mockResolvedValueOnce({
+            ref: uriRef("/api/v1/profile"),
+            login: "self",
+            fullName: "Self Person",
+            email: "self@example.com",
+        });
+        const { result } = renderController(makeService([]), TARGET, undefined, { canManageProject: true });
+        await waitFor(() =>
+            expect(result.current.state.adminSelfRow).toEqual({
+                name: "Self Person",
+                email: "self@example.com",
+            }),
+        );
+    });
+
+    it("keeps the identity when the detailed read fails", async () => {
+        // The details ride on an extra, uncached entity read; the identity and every policy
+        // hanging off it (the row lock, the self-restriction confirm) must not depend on it.
+        getUserDetailsMock.mockRejectedValueOnce(new Error("entity read failed"));
+        const { result } = renderController(makeService([USER_GRANT]), TARGET, undefined, {
+            canManageProject: true,
+        });
+        await waitFor(() => expect(result.current.state.adminSelfRow).toEqual({ name: "self" }));
+        expect(result.current.state.granteeControlsLocked).toBe(false);
+    });
+
+    it("keeps the admin self row while other grantees are listed", async () => {
+        // The admin is not a grantee, so sharing with someone must not hide them: the
+        // row reflects their role, not the empty state of the list.
+        const { result } = renderController(makeService([USER_GRANT]), TARGET, undefined, {
+            canManageProject: true,
+        });
         await waitFor(() => expect(result.current.state.status).toBe("success"));
         await waitFor(() => expect(result.current.state.adminSelfRow).toEqual({ name: "self" }));
 
@@ -3383,52 +3421,118 @@ describe("useObjectShareController row classification", () => {
             await result.current.actions.confirmAddGrantees();
         });
         expect(result.current.state.grantees.some((g) => g.id === "group:g1")).toBe(true);
-        expect(result.current.state.adminSelfRow).toBeUndefined();
+        expect(result.current.state.adminSelfRow).toEqual({ name: "self" });
 
         await act(async () => {
             await result.current.actions.removeGrantee("group:g1");
+            await result.current.actions.removeGrantee("user:u1");
         });
         expect(result.current.state.grantees).toEqual([]);
         expect(result.current.state.adminSelfRow).toEqual({ name: "self" });
     });
 
-    it("suppresses the admin row when a workspace-wide SHARE rule explains the access", async () => {
-        const RULE: AccessGranteeDetail = {
+    it("yields the admin self row to the manager's own grant row", async () => {
+        // One "(you)" row at a time: a manager who holds a grant gets the real row with
+        // a menu, and removing that grant brings the synthesized one back.
+        const { result } = renderController(makeService([SELF_GRANT]), TARGET, undefined, {
+            canManageProject: true,
+        });
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        await waitFor(() => expect(result.current.state.grantees.some((g) => g.isSelf)).toBe(true));
+        expect(result.current.state.adminSelfRow).toBeUndefined();
+
+        await act(async () => {
+            await result.current.actions.removeGrantee("user:self");
+        });
+        expect(result.current.state.grantees).toEqual([]);
+        expect(result.current.state.adminSelfRow).toEqual({ name: "self" });
+    });
+
+    it("yields the admin self row to a row of the caller's own that appears mid-session", async () => {
+        // Tiger's picker excludes the caller, so this stands for the other routes to a
+        // manager's own row: a grant another manager makes for them, a backend that lists
+        // the caller. Modelled through the add flow; one "(you)" row at a time either way.
+        const { result } = renderController(makeService([]), TARGET, undefined, { canManageProject: true });
+        await waitFor(() => expect(result.current.state.adminSelfRow).toEqual({ name: "self" }));
+
+        act(() => result.current.actions.openAddGrantee());
+        act(() =>
+            result.current.actions.setPendingGrantees([
+                {
+                    id: "user:self",
+                    ref: CURRENT_USER_REF,
+                    kind: "user",
+                    name: "self",
+                    permissionLevel: "VIEW",
+                },
+            ]),
+        );
+        await act(async () => {
+            await result.current.actions.confirmAddGrantees();
+        });
+        expect(result.current.state.grantees.some((g) => g.isSelf)).toBe(true);
+        expect(result.current.state.adminSelfRow).toBeUndefined();
+    });
+
+    it("keeps a manager's inherited-only own row in place of the admin self row", async () => {
+        // One row per person: an own row inherited from a parent workspace or a group is
+        // still theirs, so no synthesized row sits next to it (its level then understates a
+        // manager's access — a design question, pinned here as the current behavior).
+        const INHERITED_SELF: AccessGranteeDetail = {
+            type: "granularUser",
+            user: { ref: idRef("self"), uri: "/self", login: "self", email: "self", fullName: "self" },
+            permissions: [],
+            inheritedPermissions: ["VIEW"],
+        } as AccessGranteeDetail;
+        const { result } = renderController(makeService([INHERITED_SELF]), TARGET, undefined, {
+            canManageProject: true,
+        });
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        await waitFor(() => expect(result.current.state.grantees.some((g) => g.isSelf)).toBe(true));
+        expect(result.current.state.grantees[0]!.directLevel).toBeUndefined();
+        expect(result.current.state.adminSelfRow).toBeUndefined();
+    });
+
+    it("shows the admin self row whatever the workspace rule grants", async () => {
+        // A share-capable rule used to read as an alternative way in and suppress the
+        // row; the manager permission decides now, so the rule is irrelevant.
+        const SHARE_RULE: AccessGranteeDetail = {
             type: "allWorkspaceUsers",
             permissions: ["SHARE", "VIEW"],
             inheritedPermissions: [],
         };
-        const { result } = renderController(makeService([RULE]), TARGET);
-        await waitFor(() => expect(result.current.state.status).toBe("success"));
-        expect(result.current.state.adminSelfRow).toBeUndefined();
-    });
-
-    it("suppresses the admin row when a workspace-wide EDIT rule explains the access", async () => {
-        // EDIT includes share capability, so it passes the manage gate like SHARE.
-        const RULE: AccessGranteeDetail = {
-            type: "allWorkspaceUsers",
-            permissions: ["EDIT", "VIEW"],
-            inheritedPermissions: [],
-        };
-        const { result } = renderController(makeService([RULE]), TARGET);
-        await waitFor(() => expect(result.current.state.status).toBe("success"));
-        expect(result.current.state.adminSelfRow).toBeUndefined();
-    });
-
-    it("keeps the admin row under a view-only workspace rule (not share-capable)", async () => {
-        const RULE: AccessGranteeDetail = {
-            type: "allWorkspaceUsers",
-            permissions: ["VIEW"],
-            inheritedPermissions: [],
-        };
-        const { result } = renderController(makeService([RULE]), TARGET);
+        const { result } = renderController(makeService([SHARE_RULE]), TARGET, undefined, {
+            canManageProject: true,
+        });
         await waitFor(() => expect(result.current.state.status).toBe("success"));
         await waitFor(() => expect(result.current.state.adminSelfRow).toEqual({ name: "self" }));
     });
 
-    it("shows no admin row when the caller's own grant was the way in (removed locally)", async () => {
-        // A grant-holder who removes their own sole grant empties the list, but the
-        // SEED held their grant — they have no grant-independent access to badge.
+    const NON_MANAGER_SEEDS: [string, AccessGranteeDetail[]][] = [
+        ["an empty list", []],
+        ["an others-only list", [USER_GRANT]],
+        [
+            "a share-capable workspace rule",
+            [{ type: "allWorkspaceUsers", permissions: ["SHARE", "VIEW"], inheritedPermissions: [] }],
+        ],
+    ];
+
+    it.each(NON_MANAGER_SEEDS)(
+        "never synthesizes the admin self row for a non-manager with %s",
+        async (_seed, grants) => {
+            // A SHARE holder can reach the list through a group grant or a workspace rule,
+            // neither of which shows up as their own row; none of these must brand them Admin.
+            getUserMock.mockClear();
+            const { result } = renderController(makeService(grants), TARGET);
+            await waitFor(() => expect(result.current.state.status).toBe("success"));
+            await waitFor(() => expect(getUserMock).toHaveResolved());
+            await act(async () => {});
+            expect(result.current.state.adminSelfRow).toBeUndefined();
+        },
+    );
+
+    it("shows no admin self row for a non-manager who removes their own grant", async () => {
+        // Emptying the list by revoking your own grant leaves nothing to badge.
         const { result } = renderController(makeService([SELF_GRANT]), TARGET);
         await waitFor(() => expect(result.current.state.status).toBe("success"));
         await act(async () => {
@@ -3438,44 +3542,13 @@ describe("useObjectShareController row classification", () => {
         expect(result.current.state.adminSelfRow).toBeUndefined();
     });
 
-    it("shows the admin row after removing the last grantee from an others-only seed", async () => {
-        // Regression (found in browser): an admin opened a list holding only OTHER
-        // people's grants and removed the last one — the empty-state "(you)" row must
-        // appear in the SAME session, not only after a fresh reopen.
-        const { result } = renderController(makeService([USER_GRANT]), TARGET);
+    it("shows no admin self row while the manager permission is unknown", async () => {
+        // Fail-safe in the branding direction: an unread MANAGE permission must not
+        // read as "is a manager".
+        const { result } = renderController(makeService([]), TARGET, undefined, "reject");
         await waitFor(() => expect(result.current.state.status).toBe("success"));
         await waitFor(() => expect(getUserMock).toHaveResolved());
-        expect(result.current.state.adminSelfRow).toBeUndefined(); // list non-empty
-
-        await act(async () => {
-            await result.current.actions.removeGrantee("user:u1");
-        });
-
-        expect(result.current.state.grantees).toEqual([]);
-        expect(result.current.state.adminSelfRow).toEqual({ name: "self" });
-    });
-
-    it("does not brand the caller Admin after they restrict workspace access in-session", async () => {
-        // Reproduced in browser: a caller whose way in was a share-capable rule and
-        // who then restricts access must not be rebranded as an Admin.
-        const SHARE_RULE: AccessGranteeDetail = {
-            type: "allWorkspaceUsers",
-            permissions: ["SHARE", "VIEW"],
-            inheritedPermissions: [],
-        };
-        const { result } = renderController(makeService([SHARE_RULE]), TARGET);
-        await waitFor(() => expect(result.current.state.status).toBe("success"));
-        await waitFor(() => expect(getUserMock).toHaveResolved());
-        expect(result.current.state.adminSelfRow).toBeUndefined(); // rule was the way in
-
-        act(() => result.current.actions.requestGeneralAccessChange("RESTRICTED"));
-        await act(async () => {
-            await result.current.actions.confirmGeneralAccessChange();
-        });
-
-        expect(result.current.state.generalAccess).toBe("RESTRICTED");
-        expect(result.current.state.grantees).toEqual([]);
-        // Still no badge: the SEED said the rule was share-capable.
+        await act(async () => {});
         expect(result.current.state.adminSelfRow).toBeUndefined();
     });
 });

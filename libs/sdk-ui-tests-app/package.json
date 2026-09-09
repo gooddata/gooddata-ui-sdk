@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-tests-app",
-    "version": "11.56.0-alpha.6",
+    "version": "11.56.0-alpha.7",
     "private": true,
     "description": "GoodData SDK e2e tests",
     "license": "LicenseRef-LICENSE",
@@ -69,7 +69,7 @@
         "react": "19.1.1",
         "react-dom": "19.1.1",
         "rolldown": "1.0.3",
-        "sass": "1.80.0",
+        "sass": "1.100.0",
         "typescript": "7.0.2",
         "vite": "8.0.16"
     },

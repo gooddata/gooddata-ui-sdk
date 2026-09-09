@@ -855,6 +855,22 @@
         "text": "Tags must be a list of text values.",
         "crowdinContext": "Validation error shown when the computed attribute tags are not a list of strings."
     },
+    "analyticsCatalog.computedAttribute.validation.invalidLocale": {
+        "text": "The locale must be a BCP 47 language tag, for example en-US.",
+        "crowdinContext": "Validation error shown when the computed attribute locale is not a valid BCP 47 language tag. en-US is a literal example value and must not be translated."
+    },
+    "analyticsCatalog.computedAttribute.validation.invalidDataType": {
+        "text": "The data type must be one of INT, STRING, DATE, NUMERIC, TIMESTAMP, TIMESTAMP_TZ, BOOLEAN or HLL.",
+        "crowdinContext": "Validation error shown when the computed attribute data_type is not one of the allowed values. The uppercase values are literals and must not be translated."
+    },
+    "analyticsCatalog.computedAttribute.validation.invalidValueType": {
+        "text": "The value type must be one of TEXT, HYPERLINK, IMAGE, GEO, GEO_LONGITUDE, GEO_LATITUDE, GEO_AREA, GEO_ICON or HYPERLOGLOG.",
+        "crowdinContext": "Validation error shown when the computed attribute value_type is not one of the allowed values. The uppercase values are literals and must not be translated."
+    },
+    "analyticsCatalog.computedAttribute.validation.invalidMetricType": {
+        "text": "The metric type must be UNSPECIFIED or CURRENCY.",
+        "crowdinContext": "Validation error shown when the computed attribute metric_type is not one of the allowed values. The uppercase values are literals and must not be translated."
+    },
     "analyticsCatalog.computedAttribute.create.defaultTitle": {
         "text": "My computed attribute",
         "crowdinContext": "Default placeholder title seeded into the new computed attribute as-code editor before the user types their own."

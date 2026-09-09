@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-pluggable-host",
-    "version": "11.56.0-alpha.6",
+    "version": "11.56.0-alpha.7",
     "description": "GoodData SDK runtime for hosting pluggable applications — registry, loader, routing, platform context, default UI chrome",
     "license": "MIT",
     "author": "GoodData Corporation",
@@ -95,7 +95,7 @@
         "react-intl": "10.1.25",
         "react-router": "7.18.1",
         "rolldown": "1.0.3",
-        "sass": "1.80.0",
+        "sass": "1.100.0",
         "tslib": "2.8.1",
         "typescript": "7.0.2",
         "vite": "8.0.16",

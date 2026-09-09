@@ -46,7 +46,7 @@ export const DefaultApplicationId: {
 export function documentTitleChanged(pageTitle: string | undefined): IDocumentTitleChangedEvent;
 
 // @alpha
-export type EmbeddingMode = "none" | "iframe" | "export";
+export type EmbeddingMode = "none" | "iframe";
 
 // @alpha
 export type HostUiMount = (options: IHostUiMountOptions) => IHostUiMountHandle;

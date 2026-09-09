@@ -1003,14 +1003,6 @@ export interface IFeatureFlags {
 
     /**
      * Per-app sub-flag under enableShellApplication. When true (and
-     * enableShellApplication is also true), the catalog runs as a pluggable
-     * app inside the host. When false, the legacy in-app catalog at
-     * `/workspaces/{id}/catalog/*` is rendered instead.
-     */
-    enableShellApplication_catalog?: boolean;
-
-    /**
-     * Per-app sub-flag under enableShellApplication. When true (and
      * enableShellApplication is also true), KPI Dashboards runs as a pluggable
      * app inside the host. When false, the legacy standalone app at
      * `/dashboards/#/workspace/{id}/...` is rendered instead.

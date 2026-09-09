@@ -452,7 +452,7 @@
                     "deprecated": true
                 },
                 "locale": {
-                    "$ref": "#/$defs/locale",
+                    "$ref": "/gaac/locale",
                     "description": "Locale string in BCP 47 format used for default label sorting."
                 },
                 "is_nullable": {
@@ -668,7 +668,7 @@
                     "deprecated": true
                 },
                 "locale": {
-                    "$ref": "#/$defs/locale",
+                    "$ref": "/gaac/locale",
                     "description": "Locale string in BCP 47 format used for default label sorting."
                 },
                 "translations": {
@@ -695,11 +695,6 @@
                 }
             ]
         },
-        "locale": {
-            "type": "string",
-            "pattern": "^[a-zA-Z]{2,3}(-[a-zA-Z0-9]{1,8})*$",
-            "description": "Locale string in BCP 47 format (for example en-US or cs-CZ-u-kn-true)."
-        },
         "labelTranslation": {
             "title": "LabelTranslation",
             "type": "object",
@@ -710,7 +705,7 @@
                     "description": "Column that stores the localized label values."
                 },
                 "locale": {
-                    "$ref": "#/$defs/locale",
+                    "$ref": "/gaac/locale",
                     "description": "Locale string in BCP 47 format that identifies the translation."
                 }
             },

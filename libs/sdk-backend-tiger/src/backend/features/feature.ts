@@ -803,13 +803,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableShellApplicationCatalog,
-            "enableShellApplication_catalog",
-            "BOOLEAN",
-            FeatureFlagsValues.enableShellApplication_catalog,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableShellApplicationDashboards,
             "enableShellApplication_dashboards",
             "BOOLEAN",

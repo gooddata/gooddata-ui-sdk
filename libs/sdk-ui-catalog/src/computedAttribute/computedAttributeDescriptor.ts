@@ -66,6 +66,10 @@ const errorMessages = defineMessages({
     missingMaql: { id: "analyticsCatalog.computedAttribute.validation.missingMaql" },
     invalidType: { id: "analyticsCatalog.computedAttribute.validation.invalidType" },
     invalidTags: { id: "analyticsCatalog.computedAttribute.validation.invalidTags" },
+    invalidLocale: { id: "analyticsCatalog.computedAttribute.validation.invalidLocale" },
+    invalidDataType: { id: "analyticsCatalog.computedAttribute.validation.invalidDataType" },
+    invalidValueType: { id: "analyticsCatalog.computedAttribute.validation.invalidValueType" },
+    invalidMetricType: { id: "analyticsCatalog.computedAttribute.validation.invalidMetricType" },
 });
 
 function useComputedAttributeEditing(): IAsCodeEditing<IComputedAttributeMetadataObjectDefinition> {
@@ -118,9 +122,9 @@ export const computedAttributeDescriptor = defineAsCodeDescriptor<
         }),
     // The catalog item carries no MAQL, so the full object is fetched for editing.
     seed: { load: loadComputedAttribute, loadError: capabilityMessages.loadError },
-    // Refuses the deletion while a visualization, metric, or dashboard still references it,
-    // and names those objects. The backend currently allows the delete (it would break the
-    // dependents silently), so the catalog is the guard.
+    // Refuses the deletion while a visualization, metric, dashboard, or another computed
+    // attribute still references it, and names those objects. The backend currently allows the
+    // delete (it would break the dependents silently), so the catalog is the guard.
     referenceCounted: {
         load: listComputedAttributeReferences,
         usageWarning: capabilityMessages.deleteUsageWarning,

@@ -43,7 +43,7 @@ function grantLimitTooltips(
 }
 
 // Static Admin badge on the synthesized administrator self row — the tooltip
-// explains the grant-independent access; the focusable span keeps it
+// explains the manager's role-based access; the focusable span keeps it
 // keyboard-reachable (UiTag itself is not interactive).
 function AdminSelfTag() {
     const intl = useIntl();
@@ -277,8 +277,8 @@ function ObjectShareDialogSession({
         };
     };
 
-    // Synthesized by the controller, not granted. The tag explains a FETCHED list the
-    // caller reached without a grant of their own; a draft needs no explaining.
+    // Synthesized by the controller, not granted. The tag marks a workspace manager's
+    // role-based access on a FETCHED list; a draft's author needs no explaining.
     const rows: IUiObjectShareDialogGrantee[] = [
         ...(state.adminSelfRow
             ? [

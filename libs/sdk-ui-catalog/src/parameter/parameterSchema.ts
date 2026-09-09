@@ -5,6 +5,9 @@ import * as z from "zod/mini";
 
 import type { ParameterType } from "@gooddata/sdk-model";
 
+import type { AacSchemaParity, AssertAacParity } from "../asCode/aacParity.js";
+import type { ObjectTypes } from "../objectType/constants.js";
+
 /**
  * Codes carried by schema issues via `issue.message`; `classifySchemaError` routes each to the
  * equally named validation error code, so every entry needs a localized message wired up.
@@ -24,6 +27,11 @@ export type SchemaErrorCode = (typeof schemaErrorCodes)[number];
 
 export type ParameterSchemaInput = z.input<typeof parameterSchema>;
 export type ParameterSchema = z.infer<typeof parameterSchema>;
+
+/** Fails the build when this schema drifts from the AAC `parameter` document type. */
+export type ParameterAacParity = AssertAacParity<
+    AacSchemaParity<typeof ObjectTypes.PARAMETER, ParameterSchema>
+>;
 
 export type ParameterSchemaKeys = Record<string, SchemaKeysEntry>;
 
@@ -71,12 +79,17 @@ const allowedValueSchema = z
         rule("invalidAllowedValueTitle", ({ value, title }) => (title ?? value).trim() !== ""),
     );
 
-const allowedValuesSchema = z.array(allowedValueSchema).check(
-    rule("emptyAllowedValues", (entries) => entries.length > 0),
-    rule("duplicateAllowedValues", (entries) => allUnique(entries.map((entry) => entry.value))),
-    rule("duplicateAllowedValues", (entries) =>
-        allUnique(entries.map((entry) => entry.title ?? entry.value)),
+// The array carries the editor's own error codes; the tuple it pipes into types the result as non-empty,
+// the shape the AAC schema's `minItems: 1` generates, so the two stay assignable.
+const allowedValuesSchema = z.pipe(
+    z.array(allowedValueSchema).check(
+        rule("emptyAllowedValues", (entries) => entries.length > 0),
+        rule("duplicateAllowedValues", (entries) => allUnique(entries.map((entry) => entry.value))),
+        rule("duplicateAllowedValues", (entries) =>
+            allUnique(entries.map((entry) => entry.title ?? entry.value)),
+        ),
     ),
+    z.tuple([allowedValueSchema], allowedValueSchema),
 );
 
 const stringConstraintsSchema = z

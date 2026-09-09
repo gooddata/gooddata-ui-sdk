@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-dashboard: The alerting and scheduled email dialog context decorator seams now warn in the console (once per dialog open) when a decorator forces isLoading false while the dialog's data still loads or drops context keys the connector provided, instead of failing silently downstream.",
+            "type": "patch",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

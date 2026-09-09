@@ -6,7 +6,13 @@ import type { Parameter } from "@gooddata/sdk-code-schemas/v1";
 
 import { declarativeParameterToYaml } from "./from/declarativeParameterToYaml.js";
 import { yamlParameterToDeclarative } from "./to/yamlParameterToDeclarative.js";
-import { type DeclarativeStringParameter, isDeclarativeStringParameter } from "./utils/parameterUtils.js";
+import {
+    type DeclarativeNumberParameter,
+    type DeclarativeStringParameter,
+    isDeclarativeCodeParameter,
+    isDeclarativeNumberParameter,
+    isDeclarativeStringParameter,
+} from "./utils/parameterUtils.js";
 
 describe("parameter conversion", () => {
     const freeTextParameter: Parameter = {
@@ -117,7 +123,7 @@ describe("parameter conversion", () => {
             ).toBe(true);
         });
 
-        it("rejects a numeric parameter, which has no code representation", () => {
+        it("rejects a numeric parameter", () => {
             expect(
                 isDeclarativeStringParameter({
                     id: "target_margin",
@@ -125,6 +131,82 @@ describe("parameter conversion", () => {
                     content: { type: "NUMBER", defaultValue: 10 },
                 }),
             ).toBe(false);
+        });
+    });
+
+    describe("isDeclarativeCodeParameter", () => {
+        it("accepts textual and numeric parameters, the types code can represent", () => {
+            const textual = { id: "a", title: "A", content: { type: "STRING" as const, defaultValue: "x" } };
+            const numeric = { id: "b", title: "B", content: { type: "NUMBER" as const, defaultValue: 1 } };
+            expect(isDeclarativeCodeParameter(textual)).toBe(true);
+            expect(isDeclarativeCodeParameter(numeric)).toBe(true);
+            expect(isDeclarativeNumberParameter(numeric)).toBe(true);
+            expect(isDeclarativeNumberParameter(textual)).toBe(false);
+        });
+    });
+
+    describe("numeric parameters", () => {
+        const numericParameter: Parameter = {
+            type: "parameter",
+            id: "target_margin",
+            title: "Target margin",
+            description: "",
+            tags: [],
+            definition: { type: "NUMBER", defaultValue: 10, constraints: { min: 0, max: 100 } },
+        };
+
+        it("should convert a bounded numeric parameter to declarative format", () => {
+            expect(yamlParameterToDeclarative(numericParameter)).toEqual({
+                id: "target_margin",
+                title: "Target margin",
+                description: "",
+                tags: [],
+                content: { type: "NUMBER", defaultValue: 10, constraints: { min: 0, max: 100 } },
+            });
+        });
+
+        it("should carry only the bound that is set, with no phantom keys", () => {
+            const { content } = yamlParameterToDeclarative({
+                ...numericParameter,
+                definition: { type: "NUMBER", defaultValue: 10, constraints: { max: 100 } },
+            });
+            expect(content).toEqual({ type: "NUMBER", defaultValue: 10, constraints: { max: 100 } });
+        });
+
+        it("should not emit constraints for an unbounded numeric parameter", () => {
+            const { content } = yamlParameterToDeclarative({
+                ...numericParameter,
+                definition: { type: "NUMBER", defaultValue: 0 },
+            });
+            expect(content).toEqual({ type: "NUMBER", defaultValue: 0 });
+        });
+
+        it("should round-trip a numeric parameter through YAML", () => {
+            const declarative: DeclarativeNumberParameter = {
+                id: "target_margin",
+                title: "Target margin",
+                description: "",
+                tags: [],
+                content: { type: "NUMBER", defaultValue: 10.5, constraints: { min: -1, max: 100 } },
+            };
+            const { content, json } = declarativeParameterToYaml(declarative);
+            expect(content).toContain("type: NUMBER");
+            expect(content).toContain("defaultValue: 10.5");
+            expect(json.definition).toEqual({
+                type: "NUMBER",
+                defaultValue: 10.5,
+                constraints: { min: -1, max: 100 },
+            });
+            expect(yamlParameterToDeclarative(json)).toEqual(declarative);
+        });
+
+        it("should omit an empty constraints mapping the server may send", () => {
+            const { json } = declarativeParameterToYaml({
+                id: "n",
+                title: "N",
+                content: { type: "NUMBER", defaultValue: 1, constraints: {} },
+            });
+            expect(json.definition).toEqual({ type: "NUMBER", defaultValue: 1 });
         });
     });
 

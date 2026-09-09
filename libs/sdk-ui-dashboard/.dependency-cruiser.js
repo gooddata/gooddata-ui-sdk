@@ -243,6 +243,7 @@ export default {
             "src/presentation/automations/contexts/*",
             "src/presentation/automations/shared/automationFilters/*",
             "src/presentation/automations/shared/filters",
+            "src/presentation/automations/shared/hooks/*",
             "src/presentation/automations/shared/slots/*",
             "src/presentation/automations/shared/types.ts",
             "src/presentation/automations/shared/utils/*",

@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-pivot",
-    "version": "11.56.0-alpha.6",
+    "version": "11.56.0-alpha.7",
     "description": "GoodData.UI SDK - Pivot Table",
     "license": "MIT",
     "author": "GoodData Corporation",
@@ -110,7 +110,7 @@
         "raf": "3.4.1",
         "react": "19.1.1",
         "react-dom": "19.1.1",
-        "sass": "1.80.0",
+        "sass": "1.100.0",
         "stylelint": "16.26.1",
         "typescript": "7.0.2",
         "vitest": "4.1.8",

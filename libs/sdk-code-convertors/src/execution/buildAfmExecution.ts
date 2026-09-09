@@ -35,6 +35,7 @@ import {
     isAttributeField,
     isAttributeSort,
     isCalculatedMetricField,
+    isComputedAttributeReference,
     isInlineMetricField,
     isMatchTextFilter,
     isMetricAllValueFilter,
@@ -108,7 +109,10 @@ function buildExecution(entities: ExportEntities, query: Query): AFM {
                 if (isAttributeField(fieldDef)) {
                     return {
                         localIdentifier: field,
-                        label: createIdentifier(fieldDef.using, { forceType: "label" }),
+                        // a computed attribute keeps its own type, everything else is asked for as a label
+                        label: isComputedAttributeReference(fieldDef.using)
+                            ? createIdentifier(fieldDef.using)
+                            : createIdentifier(fieldDef.using, { forceType: "label" }),
                         showAllValues: fieldDef.show_all_values,
                     };
                 }

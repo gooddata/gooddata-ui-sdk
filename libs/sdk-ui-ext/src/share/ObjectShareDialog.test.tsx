@@ -436,11 +436,11 @@ describe("ObjectShareDialog self row", () => {
         );
 
         expect(captured.addGrantee.at(-1)?.disabledLevels).toEqual(["EDIT"]);
-        expect(captured.addGrantee.at(-1)?.disabledTooltip).toMatch(/only grant permissions/i);
+        expect(captured.addGrantee.at(-1)?.disabledTooltip).toMatch(/higher than your own/i);
         // Other grantees' rows carry the same limit, with the same reason.
         const other = captured.controls.find((c) => c.permissionLevel === "VIEW");
         expect(other?.disabledLevels).toContain("EDIT");
-        expect(other?.disabledLevelTooltips?.EDIT).toMatch(/only grant permissions/i);
+        expect(other?.disabledLevelTooltips?.EDIT).toMatch(/higher than your own/i);
     });
 
     it("caps the workspace rule at the caller's own level too", () => {
@@ -454,7 +454,7 @@ describe("ObjectShareDialog self row", () => {
 
         const rule = captured.controls.at(-1)!;
         expect(rule.disabledLevels).toContain("EDIT");
-        expect(rule.disabledLevelTooltips?.EDIT).toMatch(/only grant permissions/i);
+        expect(rule.disabledLevelTooltips?.EDIT).toMatch(/higher than your own/i);
     });
 
     it("disables nothing when the caller's own level is unknown", () => {

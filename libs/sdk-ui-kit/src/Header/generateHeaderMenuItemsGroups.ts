@@ -201,15 +201,12 @@ const withBaseUrl = (baseUrl: string, uri: string): string =>
     `${baseUrl.endsWith("/") ? baseUrl.substring(0, baseUrl.length - 2) : baseUrl}${uri}`;
 
 function catalogItemUrl(workspaceId: string, featureFlags: ISettings): string {
-    // When the host app and the catalog pluggable-app migration are both on,
-    // link directly to the singular host route. Otherwise fall back to the
-    // legacy plural URL owned by gdc-home-ui, which re-redirects to the host
-    // route on arrival. Skipping the indirection avoids a double redirect when
-    // switching from Dashboards/Analyze/Metrics/Data to Catalog. See LX-2426.
-    if (featureFlags.enableShellApplication && featureFlags.enableShellApplication_catalog) {
-        return `/workspace/${workspaceId}/catalog`;
+    // Without the host shell the hosted route cannot boot (HostApplicationDisabledError),
+    // so standalone deployments keep the legacy plural URL gdc-home-ui still serves.
+    if (!featureFlags.enableShellApplication) {
+        return `/workspaces/${workspaceId}/catalog`;
     }
-    return `/workspaces/${workspaceId}/catalog`;
+    return `/workspace/${workspaceId}/catalog`;
 }
 function canShowCatalogItem(featureFlags: ISettings, workspacePermissions: IWorkspacePermissions): boolean {
     return (

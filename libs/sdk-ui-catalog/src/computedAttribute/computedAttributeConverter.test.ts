@@ -68,6 +68,40 @@ describe("computedAttributeYamlToDefinition", () => {
             computedAttributeYamlToDefinition({ type: "computed_attribute", maql: MAQL }),
         ).not.toHaveProperty("locale");
     });
+
+    it("maps the value-shaping fields and reads show_in_ai_results as the hidden flag", () => {
+        expect(
+            computedAttributeYamlToDefinition({
+                type: "computed_attribute",
+                maql: MAQL,
+                format: "#,##0.00",
+                metric_type: "CURRENCY",
+                data_type: "NUMERIC",
+                value_type: "HYPERLINK",
+                is_nullable: true,
+                null_value_join_replacement: "N/A",
+                show_in_ai_results: false,
+            }),
+        ).toMatchObject({
+            format: "#,##0.00",
+            metricType: "CURRENCY",
+            dataType: "NUMERIC",
+            valueType: "HYPERLINK",
+            isNullable: true,
+            nullValue: "N/A",
+            isHidden: true,
+        });
+        expect(
+            computedAttributeYamlToDefinition({
+                type: "computed_attribute",
+                maql: MAQL,
+                show_in_ai_results: true,
+            }),
+        ).toMatchObject({ isHidden: false });
+        expect(
+            computedAttributeYamlToDefinition({ type: "computed_attribute", maql: MAQL }),
+        ).not.toHaveProperty("isHidden");
+    });
 });
 
 describe("definitionToComputedAttributeYaml", () => {
@@ -104,6 +138,34 @@ describe("definitionToComputedAttributeYaml", () => {
             }),
         ).toEqual({ type: "computed_attribute", title: "Copy", maql: MAQL });
     });
+
+    it("writes the value-shaping fields and a hidden flag as show_in_ai_results: false", () => {
+        expect(
+            definitionToComputedAttributeYaml({
+                ...computedAttribute,
+                format: "#,##0.00",
+                metricType: "CURRENCY",
+                dataType: "NUMERIC",
+                valueType: "HYPERLINK",
+                isNullable: true,
+                nullValue: "N/A",
+                isHidden: true,
+                locale: "en-US",
+            }),
+        ).toMatchObject({
+            format: "#,##0.00",
+            metric_type: "CURRENCY",
+            data_type: "NUMERIC",
+            value_type: "HYPERLINK",
+            is_nullable: true,
+            null_value_join_replacement: "N/A",
+            show_in_ai_results: false,
+            locale: "en-US",
+        });
+        expect(
+            definitionToComputedAttributeYaml({ ...computedAttribute, isHidden: false }),
+        ).not.toHaveProperty("show_in_ai_results");
+    });
 });
 
 describe("round trip", () => {
@@ -121,17 +183,22 @@ describe("round trip", () => {
 });
 
 describe("reconcileComputedAttributeDefinition", () => {
-    it("overlays the YAML fields, keeping the fields the YAML cannot express", () => {
-        const base: IComputedAttributeMetadataObject = {
-            ...computedAttribute,
-            format: "#,##0",
-            metricType: "CURRENCY",
-            dataType: "STRING",
-            isNullable: true,
-            nullValue: "N/A",
-        };
+    const shaped: IComputedAttributeMetadataObject = {
+        ...computedAttribute,
+        isLocked: true,
+        format: "#,##0",
+        metricType: "CURRENCY",
+        dataType: "NUMERIC",
+        valueType: "HYPERLINK",
+        isNullable: true,
+        nullValue: "N/A",
+        isHidden: true,
+        locale: "en-US",
+    };
+
+    it("overlays the YAML fields, keeping only identity and server-managed state from the base", () => {
         const merged = reconcileComputedAttributeDefinition(
-            base,
+            shaped,
             computedAttributeYamlToDefinition({
                 type: "computed_attribute",
                 id: "rep_performance",
@@ -141,17 +208,59 @@ describe("reconcileComputedAttributeDefinition", () => {
         );
 
         expect(merged).toMatchObject({
+            id: "rep_performance",
+            ref: shaped.ref,
+            uri: shaped.uri,
+            isLocked: true,
             title: "Renamed",
             expression: "SELECT 2",
-            format: "#,##0",
-            metricType: "CURRENCY",
+            isHidden: false,
+        });
+        // every value-shaping line was removed from the YAML, so the base's values do not leak through
+        for (const key of [
+            "format",
+            "metricType",
+            "dataType",
+            "valueType",
+            "isNullable",
+            "nullValue",
+            "locale",
+        ]) {
+            expect(merged[key as keyof typeof merged]).toBeUndefined();
+        }
+    });
+
+    it("takes the value-shaping fields from the YAML", () => {
+        const merged = reconcileComputedAttributeDefinition(
+            shaped,
+            computedAttributeYamlToDefinition({
+                type: "computed_attribute",
+                id: "rep_performance",
+                maql: MAQL,
+                format: "0.0",
+                metric_type: "UNSPECIFIED",
+                data_type: "STRING",
+                value_type: "IMAGE",
+                is_nullable: false,
+                null_value_join_replacement: "-",
+                show_in_ai_results: true,
+                locale: "cs-CZ",
+            }),
+        );
+
+        expect(merged).toMatchObject({
+            format: "0.0",
+            metricType: "UNSPECIFIED",
             dataType: "STRING",
-            isNullable: true,
-            nullValue: "N/A",
+            valueType: "IMAGE",
+            isNullable: false,
+            nullValue: "-",
+            isHidden: false,
+            locale: "cs-CZ",
         });
     });
 
-    // A copied source carrying fields the YAML cannot represent.
+    // A copied source carrying its identity and a value type.
     const copied: IComputedAttributeMetadataObjectDefinition = {
         type: "computedAttribute",
         id: "rep_performance_2",
@@ -159,7 +268,7 @@ describe("reconcileComputedAttributeDefinition", () => {
         description: "Sales rep performance band",
         tags: ["sales"],
         expression: MAQL,
-        dataType: "STRING",
+        valueType: "HYPERLINK",
         locale: "en-US",
     };
 
@@ -170,10 +279,11 @@ describe("reconcileComputedAttributeDefinition", () => {
                 type: "computed_attribute",
                 id: "renamed_id",
                 maql: MAQL,
+                value_type: "HYPERLINK",
             }),
         );
         expect(merged.id).toBe("renamed_id");
-        expect(merged.dataType).toBe("STRING");
+        expect(merged.valueType).toBe("HYPERLINK");
     });
 
     it("drops the id when removed from the YAML so the server derives one", () => {
@@ -182,7 +292,6 @@ describe("reconcileComputedAttributeDefinition", () => {
             computedAttributeYamlToDefinition({ type: "computed_attribute", maql: MAQL }),
         );
         expect(merged).not.toHaveProperty("id");
-        expect(merged.dataType).toBe("STRING");
     });
 
     it("clears the collation when the locale line is removed", () => {

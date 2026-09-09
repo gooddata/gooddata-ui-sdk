@@ -463,9 +463,59 @@
                         "description": "Define MAQL syntax for the computed attribute. Values are assigned with break points written as CASE WHEN branches over a metric, and the first matching branch wins.",
                         "$semantic": { "type": "maql" }
                     },
-                    "locale": {
+                    "format": {
                         "type": "string",
-                        "description": "An optional locale whose collation order the computed values are sorted by."
+                        "description": "An optional Excel-like format string applied to the computed values."
+                    },
+                    "metric_type": {
+                        "type": "string",
+                        "enum": ["UNSPECIFIED", "CURRENCY"],
+                        "description": "An optional categorization of the computed values semantics, for example currency."
+                    },
+                    "data_type": {
+                        "type": "string",
+                        "enum": [
+                            "INT",
+                            "STRING",
+                            "DATE",
+                            "NUMERIC",
+                            "TIMESTAMP",
+                            "TIMESTAMP_TZ",
+                            "BOOLEAN",
+                            "HLL"
+                        ],
+                        "description": "An optional data type of the computed values. Defaults to STRING on the backend."
+                    },
+                    "value_type": {
+                        "type": "string",
+                        "enum": [
+                            "TEXT",
+                            "HYPERLINK",
+                            "GEO",
+                            "GEO_LONGITUDE",
+                            "GEO_LATITUDE",
+                            "GEO_AREA",
+                            "GEO_ICON",
+                            "IMAGE",
+                            "HYPERLOGLOG"
+                        ],
+                        "description": "An optional specific type of the computed values. Defaults to TEXT on the backend."
+                    },
+                    "is_nullable": {
+                        "type": "boolean",
+                        "description": "Optional flag to indicate if the computed attribute can contain null values."
+                    },
+                    "null_value_join_replacement": {
+                        "type": "string",
+                        "description": "Optional value which can be used as replacement for NULL in join conditions."
+                    },
+                    "show_in_ai_results": {
+                        "type": "boolean",
+                        "description": "Optional flag to indicate if the computed attribute should be shown in AI results. When omitted, the computed attribute is visible."
+                    },
+                    "locale": {
+                        "$ref": "#/$global/gaac/locale",
+                        "description": "An optional locale in BCP 47 format (for example en-US) whose collation order the computed values are sorted by."
                     }
                 },
                 "$semantic": { "type": "snippet", "snippets": ["computed_attribute"] },
@@ -2565,6 +2615,12 @@
                 "pattern": "^attribute/(?!\\.)[.A-Za-z0-9_-]{1,255}$",
                 "$semantic": { "type": "reference", "source": "attribute.id", "typePrefix": true }
             },
+            "locale": {
+                "title": "Locale",
+                "type": "string",
+                "pattern": "^[a-zA-Z]{2,3}(-[a-zA-Z0-9]{1,8})*$",
+                "description": "Locale string in BCP 47 format (for example en-US or cs-CZ-u-kn-true)."
+            },
             "dashboardFilters": {
                 "title": "Dashboard Filters",
                 "type": "object",
@@ -2645,6 +2701,13 @@
                 "type": "string",
                 "pattern": "^label/(?!\\.)[.A-Za-z0-9_-]{1,255}$",
                 "$semantic": { "type": "reference", "source": "label.id", "typePrefix": true }
+            },
+            "computedAttributeIdentifier": {
+                "title": "Computed Attribute Identifier",
+                "description": "A computed attribute identifier in the form of computed_attribute/{id}.",
+                "type": "string",
+                "pattern": "^computed_attribute/(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                "$semantic": { "type": "reference", "source": "computedAttribute.id", "typePrefix": true }
             },
             "queryFilters": {
                 "title": "Query Filters",
@@ -3243,6 +3306,13 @@
             "pattern": "^label/(?!\\.)[.A-Za-z0-9_-]{1,255}$",
             "$semantic": { "type": "reference", "source": "label.id", "typePrefix": true }
         },
+        "computedAttributeIdentifier": {
+            "title": "Computed Attribute Identifier",
+            "description": "A computed attribute identifier in the form of computed_attribute/{id}.",
+            "type": "string",
+            "pattern": "^computed_attribute/(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+            "$semantic": { "type": "reference", "source": "computedAttribute.id", "typePrefix": true }
+        },
         "displayAsLabelIdentifier": {
             "title": "Display As Label Identifier",
             "description": "Configures the label used for representing attribute filter elements in UI.",
@@ -3423,7 +3493,8 @@
                     "description": "Attribute or label to use in this filter.",
                     "oneOf": [
                         { "$ref": "#/$defs/attributeIdentifier" },
-                        { "$ref": "#/$defs/labelIdentifier" }
+                        { "$ref": "#/$defs/labelIdentifier" },
+                        { "$ref": "#/$defs/computedAttributeIdentifier" }
                     ],
                     "$semantic": { "type": "one_attribute_item_only" }
                 },
@@ -3501,7 +3572,8 @@
                                 "description": "Attribute or label to use in this filter.",
                                 "oneOf": [
                                     { "$ref": "#/$defs/attributeIdentifier" },
-                                    { "$ref": "#/$defs/labelIdentifier" }
+                                    { "$ref": "#/$defs/labelIdentifier" },
+                                    { "$ref": "#/$defs/computedAttributeIdentifier" }
                                 ]
                             },
                             "multiselect": {
@@ -3595,7 +3667,8 @@
                                 "description": "Attribute or label to use in this filter.",
                                 "oneOf": [
                                     { "$ref": "#/$defs/attributeIdentifier" },
-                                    { "$ref": "#/$defs/labelIdentifier" }
+                                    { "$ref": "#/$defs/labelIdentifier" },
+                                    { "$ref": "#/$defs/computedAttributeIdentifier" }
                                 ]
                             },
                             "multiselect": {
@@ -3700,7 +3773,8 @@
                     "description": "Attribute or label to use in this filter.",
                     "oneOf": [
                         { "$ref": "#/$defs/attributeIdentifier" },
-                        { "$ref": "#/$defs/labelIdentifier" }
+                        { "$ref": "#/$defs/labelIdentifier" },
+                        { "$ref": "#/$defs/computedAttributeIdentifier" }
                     ],
                     "$semantic": { "type": "one_attribute_item_only" }
                 },
@@ -3789,7 +3863,8 @@
                             "description": "Attribute or label to use in this filter.",
                             "oneOf": [
                                 { "$ref": "#/$defs/attributeIdentifier" },
-                                { "$ref": "#/$defs/labelIdentifier" }
+                                { "$ref": "#/$defs/labelIdentifier" },
+                                { "$ref": "#/$defs/computedAttributeIdentifier" }
                             ],
                             "$semantic": { "type": "one_attribute_item_only" }
                         },
@@ -3884,7 +3959,8 @@
                             "description": "Attribute or label to use in this filter.",
                             "oneOf": [
                                 { "$ref": "#/$defs/attributeIdentifier" },
-                                { "$ref": "#/$defs/labelIdentifier" }
+                                { "$ref": "#/$defs/labelIdentifier" },
+                                { "$ref": "#/$defs/computedAttributeIdentifier" }
                             ],
                             "$semantic": { "type": "one_attribute_item_only" }
                         },
@@ -3947,8 +4023,13 @@
                 },
                 "dimensionality": {
                     "type": "array",
-                    "description": "Optional array of label references to apply dimensionality to the filter.",
-                    "items": { "$ref": "#/$defs/labelIdentifier" }
+                    "description": "Optional array of label or computed attribute references to apply dimensionality to the filter.",
+                    "items": {
+                        "oneOf": [
+                            { "$ref": "#/$defs/labelIdentifier" },
+                            { "$ref": "#/$defs/computedAttributeIdentifier" }
+                        ]
+                    }
                 },
                 "null_values_as_zero": {
                     "type": "boolean",
@@ -4393,7 +4474,8 @@
                     "description": "Attribute or label to use in this filter.",
                     "oneOf": [
                         { "$ref": "#/$defs/attributeIdentifier" },
-                        { "$ref": "#/$defs/labelIdentifier" }
+                        { "$ref": "#/$defs/labelIdentifier" },
+                        { "$ref": "#/$defs/computedAttributeIdentifier" }
                     ]
                 },
                 "display_as": {
@@ -4446,7 +4528,8 @@
                     "description": "Attribute or label to use in this filter.",
                     "oneOf": [
                         { "$ref": "#/$defs/attributeIdentifier" },
-                        { "$ref": "#/$defs/labelIdentifier" }
+                        { "$ref": "#/$defs/labelIdentifier" },
+                        { "$ref": "#/$defs/computedAttributeIdentifier" }
                     ]
                 },
                 "case_sensitive": { "type": "boolean" },
@@ -4464,7 +4547,8 @@
                             "description": "Attribute or label to use in this filter.",
                             "oneOf": [
                                 { "$ref": "#/$defs/attributeIdentifier" },
-                                { "$ref": "#/$defs/labelIdentifier" }
+                                { "$ref": "#/$defs/labelIdentifier" },
+                                { "$ref": "#/$defs/computedAttributeIdentifier" }
                             ]
                         },
                         "condition": { "enum": ["is", "isNot"] },
@@ -4485,7 +4569,8 @@
                             "description": "Attribute or label to use in this filter.",
                             "oneOf": [
                                 { "$ref": "#/$defs/attributeIdentifier" },
-                                { "$ref": "#/$defs/labelIdentifier" }
+                                { "$ref": "#/$defs/labelIdentifier" },
+                                { "$ref": "#/$defs/computedAttributeIdentifier" }
                             ]
                         },
                         "condition": {
@@ -4584,6 +4669,7 @@
                                 "items": {
                                     "oneOf": [
                                         { "$ref": "#/$defs/labelIdentifier" },
+                                        { "$ref": "#/$defs/computedAttributeIdentifier" },
                                         {
                                             "type": "string",
                                             "$semantic": {
@@ -4658,6 +4744,7 @@
                                 "items": {
                                     "oneOf": [
                                         { "$ref": "#/$defs/labelIdentifier" },
+                                        { "$ref": "#/$defs/computedAttributeIdentifier" },
                                         {
                                             "type": "string",
                                             "$semantic": {
@@ -4718,6 +4805,7 @@
                                 "items": {
                                     "oneOf": [
                                         { "$ref": "#/$defs/labelIdentifier" },
+                                        { "$ref": "#/$defs/computedAttributeIdentifier" },
                                         {
                                             "type": "string",
                                             "$semantic": {
@@ -4766,6 +4854,7 @@
                                 "items": {
                                     "oneOf": [
                                         { "$ref": "#/$defs/labelIdentifier" },
+                                        { "$ref": "#/$defs/computedAttributeIdentifier" },
                                         {
                                             "type": "string",
                                             "$semantic": {
@@ -4808,6 +4897,7 @@
                     "description": "Label reference or local identifier to use for this filter.",
                     "oneOf": [
                         { "$ref": "#/$defs/labelIdentifier" },
+                        { "$ref": "#/$defs/computedAttributeIdentifier" },
                         {
                             "type": "string",
                             "$semantic": { "type": "reference", "source": "current.query.attribute.localId" }
@@ -4870,9 +4960,59 @@
                     "description": "Define MAQL syntax for the computed attribute. Values are assigned with break points written as CASE WHEN branches over a metric, and the first matching branch wins.",
                     "$semantic": { "type": "maql" }
                 },
-                "locale": {
+                "format": {
                     "type": "string",
-                    "description": "An optional locale whose collation order the computed values are sorted by."
+                    "description": "An optional Excel-like format string applied to the computed values."
+                },
+                "metric_type": {
+                    "type": "string",
+                    "enum": ["UNSPECIFIED", "CURRENCY"],
+                    "description": "An optional categorization of the computed values semantics, for example currency."
+                },
+                "data_type": {
+                    "type": "string",
+                    "enum": [
+                        "INT",
+                        "STRING",
+                        "DATE",
+                        "NUMERIC",
+                        "TIMESTAMP",
+                        "TIMESTAMP_TZ",
+                        "BOOLEAN",
+                        "HLL"
+                    ],
+                    "description": "An optional data type of the computed values. Defaults to STRING on the backend."
+                },
+                "value_type": {
+                    "type": "string",
+                    "enum": [
+                        "TEXT",
+                        "HYPERLINK",
+                        "GEO",
+                        "GEO_LONGITUDE",
+                        "GEO_LATITUDE",
+                        "GEO_AREA",
+                        "GEO_ICON",
+                        "IMAGE",
+                        "HYPERLOGLOG"
+                    ],
+                    "description": "An optional specific type of the computed values. Defaults to TEXT on the backend."
+                },
+                "is_nullable": {
+                    "type": "boolean",
+                    "description": "Optional flag to indicate if the computed attribute can contain null values."
+                },
+                "null_value_join_replacement": {
+                    "type": "string",
+                    "description": "Optional value which can be used as replacement for NULL in join conditions."
+                },
+                "show_in_ai_results": {
+                    "type": "boolean",
+                    "description": "Optional flag to indicate if the computed attribute should be shown in AI results. When omitted, the computed attribute is visible."
+                },
+                "locale": {
+                    "$ref": "#/$global/gaac/locale",
+                    "description": "An optional locale in BCP 47 format (for example en-US) whose collation order the computed values are sorted by."
                 }
             },
             "$semantic": { "type": "snippet", "snippets": ["computed_attribute"] },
@@ -5572,10 +5712,16 @@
                     "description": "A list of dashboard filters to be ignored for this widget",
                     "items": {
                         "type": "string",
-                        "description": "An id of the dashboard label, attribute, metric or date to be ignored",
+                        "description": "An id of the dashboard label, attribute, computed attribute, metric or date to be ignored",
                         "$semantic": {
                             "type": "reference",
-                            "sources": ["dateDataset.id", "attribute.id", "label.id", "metric.id"],
+                            "sources": [
+                                "dateDataset.id",
+                                "attribute.id",
+                                "label.id",
+                                "computedAttribute.id",
+                                "metric.id"
+                            ],
                             "typePrefix": true
                         }
                     }
@@ -5628,14 +5774,16 @@
                             "description": "An ID of the attribute that holds the url to be opened on interaction",
                             "oneOf": [
                                 { "$ref": "#/$global/gaac/attributeIdentifier" },
-                                { "$ref": "#/$global/gaac/labelIdentifier" }
+                                { "$ref": "#/$global/gaac/labelIdentifier" },
+                                { "$ref": "#/$global/gaac/computedAttributeIdentifier" }
                             ]
                         },
                         "label": {
                             "description": "An id of the attribute that holds the label for the url to be opened on interaction",
                             "oneOf": [
                                 { "$ref": "#/$global/gaac/attributeIdentifier" },
-                                { "$ref": "#/$global/gaac/labelIdentifier" }
+                                { "$ref": "#/$global/gaac/labelIdentifier" },
+                                { "$ref": "#/$global/gaac/computedAttributeIdentifier" }
                             ]
                         }
                     }
@@ -6138,7 +6286,7 @@
                     "deprecated": true
                 },
                 "locale": {
-                    "$ref": "#/$defs/locale",
+                    "$ref": "#/$global/gaac/locale",
                     "description": "Locale string in BCP 47 format used for default label sorting."
                 },
                 "is_nullable": {
@@ -6292,11 +6440,6 @@
                 "code": "core.reference.table.column.dataType"
             }
         },
-        "locale": {
-            "type": "string",
-            "pattern": "^[a-zA-Z]{2,3}(-[a-zA-Z0-9]{1,8})*$",
-            "description": "Locale string in BCP 47 format (for example en-US or cs-CZ-u-kn-true)."
-        },
         "label": {
             "title": "Label",
             "type": "object",
@@ -6350,7 +6493,7 @@
                     "deprecated": true
                 },
                 "locale": {
-                    "$ref": "#/$defs/locale",
+                    "$ref": "#/$global/gaac/locale",
                     "description": "Locale string in BCP 47 format used for default label sorting."
                 },
                 "translations": {
@@ -6403,7 +6546,7 @@
                     "description": "Column that stores the localized label values."
                 },
                 "locale": {
-                    "$ref": "#/$defs/locale",
+                    "$ref": "#/$global/gaac/locale",
                     "description": "Locale string in BCP 47 format that identifies the translation."
                 }
             },
@@ -6526,14 +6669,18 @@
         },
         "parameterDefinition": {
             "title": "Parameter Definition",
-            "description": "A typed parameter definition. Only textual parameters are supported as code.",
+            "description": "A typed parameter definition: textual or numeric.",
             "allOf": [
                 {
                     "if": { "properties": { "type": { "const": "STRING" } }, "required": ["type"] },
                     "then": { "$ref": "#/$defs/stringParameterDefinition" }
+                },
+                {
+                    "if": { "properties": { "type": { "const": "NUMBER" } }, "required": ["type"] },
+                    "then": { "$ref": "#/$defs/numberParameterDefinition" }
                 }
             ],
-            "properties": { "type": { "type": "string", "enum": ["STRING"] } },
+            "properties": { "type": { "type": "string", "enum": ["STRING", "NUMBER"] } },
             "required": ["type"]
         },
         "stringParameterDefinition": {
@@ -6575,6 +6722,31 @@
                             { "required": ["allowedValues", "minLength"] },
                             { "required": ["allowedValues", "maxLength"] }
                         ]
+                    }
+                }
+            },
+            "required": ["type", "defaultValue"],
+            "$semantic": { "type": "parameter_constraints" }
+        },
+        "numberParameterDefinition": {
+            "title": "Number Parameter Definition",
+            "description": "A numeric parameter definition. Without 'constraints' the parameter accepts any number.",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": { "type": "string", "enum": ["NUMBER"] },
+                "defaultValue": {
+                    "type": "number",
+                    "description": "The value used whenever the parameter is not overridden."
+                },
+                "constraints": {
+                    "title": "Number Parameter Constraints",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "description": "Optional bounds the parameter value must satisfy.",
+                    "properties": {
+                        "min": { "type": "number", "description": "The smallest accepted value, inclusive." },
+                        "max": { "type": "number", "description": "The largest accepted value, inclusive." }
                     }
                 }
             },
@@ -6640,6 +6812,7 @@
             "oneOf": [
                 { "$ref": "#/$global/gaac/attributeIdentifier" },
                 { "$ref": "#/$global/gaac/labelIdentifier" },
+                { "$ref": "#/$global/gaac/computedAttributeIdentifier" },
                 { "$ref": "#/$global/gaac/metricIdentifier" },
                 { "$ref": "#/$global/gaac/factIdentifier" },
                 {
@@ -6731,6 +6904,7 @@
                                         "oneOf": [
                                             { "$ref": "#/$global/gaac/attributeIdentifier" },
                                             { "$ref": "#/$global/gaac/labelIdentifier" },
+                                            { "$ref": "#/$global/gaac/computedAttributeIdentifier" },
                                             { "$ref": "#/$global/gaac/factIdentifier" }
                                         ]
                                     }
@@ -7051,7 +7225,8 @@
                             "$semantic": { "type": "reference", "source": "current.query.attribute.localId" }
                         },
                         { "$ref": "#/$global/gaac/attributeIdentifier" },
-                        { "$ref": "#/$global/gaac/labelIdentifier" }
+                        { "$ref": "#/$global/gaac/labelIdentifier" },
+                        { "$ref": "#/$global/gaac/computedAttributeIdentifier" }
                     ]
                 },
                 "direction": { "type": "string", "enum": ["ASC", "DESC"], "description": "Sort direction." },
@@ -7094,7 +7269,8 @@
                                                 }
                                             },
                                             { "$ref": "#/$global/gaac/attributeIdentifier" },
-                                            { "$ref": "#/$global/gaac/labelIdentifier" }
+                                            { "$ref": "#/$global/gaac/labelIdentifier" },
+                                            { "$ref": "#/$global/gaac/computedAttributeIdentifier" }
                                         ]
                                     },
                                     "element": {

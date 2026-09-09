@@ -3,6 +3,7 @@
 import { type AfmObjectIdentifier } from "@gooddata/api-client-tiger";
 import type {
     Attribute,
+    ComputedAttribute,
     DateDataset,
     Fact,
     Label,
@@ -526,6 +527,15 @@ function findObjectProps(entities: ExportEntities, item: AfmObjectIdentifier): {
                 title:
                     found?.fact.title ??
                     firstLetterUpperCase(convertIdToTitle(item.identifier.id).toLowerCase()),
+            };
+        }
+        case "computedAttribute": {
+            const found = entities.find(
+                (entity) => entity.type === "computed_attribute" && entity.id === item.identifier.id,
+            );
+            const title = found ? (found.data as ComputedAttribute).title : undefined;
+            return {
+                title: title ?? firstLetterUpperCase(convertIdToTitle(item.identifier.id).toLowerCase()),
             };
         }
         case "label":

@@ -19,8 +19,10 @@ export function createCopiedComputedAttribute(
         ...(computedAttribute.format === undefined ? {} : { format: computedAttribute.format }),
         ...(computedAttribute.metricType === undefined ? {} : { metricType: computedAttribute.metricType }),
         ...(computedAttribute.dataType === undefined ? {} : { dataType: computedAttribute.dataType }),
+        ...(computedAttribute.valueType === undefined ? {} : { valueType: computedAttribute.valueType }),
         ...(computedAttribute.isNullable === undefined ? {} : { isNullable: computedAttribute.isNullable }),
         ...(computedAttribute.nullValue === undefined ? {} : { nullValue: computedAttribute.nullValue }),
         ...(computedAttribute.locale === undefined ? {} : { locale: computedAttribute.locale }),
+        ...(computedAttribute.isHidden === undefined ? {} : { isHidden: computedAttribute.isHidden }),
     };
 }

@@ -3,7 +3,7 @@
 import { type ComponentType, type ReactElement, type ReactNode, useMemo } from "react";
 
 import { render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { type MockInstance, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type INotificationChannelIdentifier } from "@gooddata/sdk-model";
 
@@ -135,6 +135,40 @@ function SeededChannelProbe() {
     return <div data-testid="draft-channel">{editedAutomation.notificationChannel ?? "NONE"}</div>;
 }
 
+/**
+ * Stands in for a buggy decorator: forces `isLoading` false while the connector still reports
+ * loading — the contract violation that corrupts the draft seed.
+ */
+function ForcedFalseDecorator({ children }: { children?: ReactNode }) {
+    const ctx = useScheduledEmailDialogContext();
+    const decorated = useMemo(() => ({ ...ctx, isLoading: false }), [ctx]);
+    return (
+        <ScheduledEmailDialogContextProvider value={decorated}>
+            {children}
+        </ScheduledEmailDialogContextProvider>
+    );
+}
+
+/**
+ * Stands in for a buggy decorator that builds a fresh object instead of spreading the read
+ * value, losing the `insight` key. `insight` is the safe key to drop: everything downstream
+ * treats it as optional (a dashboard export has none), so the probe's warning is observable
+ * without a crash. The cast is the point: it reproduces a plain-JS consumer (or a stale spread)
+ * shipping a structurally incomplete value past the compiler.
+ */
+function KeyDroppingDecorator({ children }: { children?: ReactNode }) {
+    const ctx = useScheduledEmailDialogContext();
+    const decorated = useMemo(() => {
+        const { insight: _dropped, ...rest } = ctx;
+        return rest as IScheduledEmailDialogContextValue;
+    }, [ctx]);
+    return (
+        <ScheduledEmailDialogContextProvider value={decorated}>
+            {children}
+        </ScheduledEmailDialogContextProvider>
+    );
+}
+
 let resolvedDecorator: ComponentType<{ children?: ReactNode }>;
 
 function renderSeam(value: IScheduledEmailDialogContextValue) {
@@ -221,5 +255,60 @@ describe("ScheduledEmailDialog context-decorator slot", () => {
 
         expect(screen.getByTestId("direct-channel")).toHaveTextContent(SENTINEL_CHANNEL.id);
         expect(screen.getByTestId("draft-channel")).toHaveTextContent(SENTINEL_CHANNEL.id);
+    });
+});
+
+describe("ScheduledEmailDialog decorator contract check", () => {
+    let warnSpy: MockInstance<typeof console.warn>;
+
+    beforeEach(() => {
+        warnSpy = vi.spyOn(console, "warn").mockImplementation(() => undefined);
+    });
+
+    afterEach(() => {
+        warnSpy.mockRestore();
+    });
+
+    it("warns once, naming the seam, when the decorator forces isLoading false during loading", () => {
+        resolvedDecorator = ForcedFalseDecorator;
+
+        const { rerender } = renderSeam({ ...BASE_CONTEXT, isLoading: true });
+
+        expect(warnSpy).toHaveBeenCalledTimes(1);
+        expect(warnSpy.mock.calls[0][0]).toContain("ScheduledEmailDialogContextDecoratorComponent");
+        expect(warnSpy.mock.calls[0][0]).toContain("isLoading");
+
+        rerenderSeam(rerender, { ...BASE_CONTEXT, isLoading: true });
+        expect(warnSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it("warns naming the dropped key when the decorator loses keys the connector provided", () => {
+        resolvedDecorator = KeyDroppingDecorator;
+
+        // Rendered while loading: the check sits above the state provider, so it warns even
+        // though the gated model never mounts — and nothing below dereferences the dropped key.
+        renderSeam({ ...BASE_CONTEXT, isLoading: true });
+
+        expect(warnSpy).toHaveBeenCalledTimes(1);
+        expect(warnSpy.mock.calls[0][0]).toContain("ScheduledEmailDialogContextDecoratorComponent");
+        expect(warnSpy.mock.calls[0][0]).toContain("insight");
+    });
+
+    it("is silent for the passthrough default", () => {
+        resolvedDecorator = DefaultDialogContextDecorator;
+
+        const { rerender } = renderSeam({ ...BASE_CONTEXT, isLoading: true });
+        rerenderSeam(rerender, BASE_CONTEXT);
+
+        expect(warnSpy).not.toHaveBeenCalled();
+    });
+
+    it("is silent for a compliant decorator that overrides members and passes isLoading through", () => {
+        resolvedDecorator = DecoratingDecorator;
+
+        const { rerender } = renderSeam({ ...BASE_CONTEXT, isLoading: true });
+        rerenderSeam(rerender, BASE_CONTEXT);
+
+        expect(warnSpy).not.toHaveBeenCalled();
     });
 });

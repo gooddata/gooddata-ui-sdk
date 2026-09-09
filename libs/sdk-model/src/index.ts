@@ -866,6 +866,7 @@ export {
 } from "./ldm/metadata/attributeHierarchy/index.js";
 export {
     type ComputedAttributeDataType,
+    type ComputedAttributeValueType,
     type IComputedAttributeMetadataObject,
     type IComputedAttributeMetadataObjectBase,
     type IComputedAttributeMetadataObjectDefinition,

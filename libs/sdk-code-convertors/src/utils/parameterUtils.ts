@@ -1,20 +1,52 @@
 // (C) 2026 GoodData Corporation
 
-import { type DeclarativeParameter, type StringParameterDefinition } from "@gooddata/api-client-tiger";
+import {
+    type DeclarativeParameter,
+    type NumberParameterDefinition,
+    type StringParameterDefinition,
+} from "@gooddata/api-client-tiger";
 
 /**
- * A parameter AAC can represent as code. Only textual parameters are supported, so anything else
- * has to stay under whatever tool created it.
+ * A textual parameter as the declarative API carries it.
  *
  * @public
  */
 export type DeclarativeStringParameter = DeclarativeParameter & { content: StringParameterDefinition };
+
+/**
+ * A numeric parameter as the declarative API carries it.
+ *
+ * @public
+ */
+export type DeclarativeNumberParameter = DeclarativeParameter & { content: NumberParameterDefinition };
+
+/**
+ * A parameter AAC can represent as code: textual or numeric. Anything else has to stay under
+ * whatever tool created it.
+ *
+ * @public
+ */
+export type DeclarativeCodeParameter = DeclarativeStringParameter | DeclarativeNumberParameter;
 
 /** @public */
 export function isDeclarativeStringParameter(
     parameter: DeclarativeParameter,
 ): parameter is DeclarativeStringParameter {
     return parameter.content.type === "STRING";
+}
+
+/** @public */
+export function isDeclarativeNumberParameter(
+    parameter: DeclarativeParameter,
+): parameter is DeclarativeNumberParameter {
+    return parameter.content.type === "NUMBER";
+}
+
+/** @public */
+export function isDeclarativeCodeParameter(
+    parameter: DeclarativeParameter,
+): parameter is DeclarativeCodeParameter {
+    return isDeclarativeStringParameter(parameter) || isDeclarativeNumberParameter(parameter);
 }
 
 /** Same keys, each narrowed to its defined type — what remains after dropping undefined values. */

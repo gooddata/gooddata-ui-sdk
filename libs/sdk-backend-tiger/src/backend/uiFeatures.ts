@@ -110,7 +110,6 @@ export enum TigerFeaturesNames {
     EnableDashboardTimezone = "enableDashboardTimezone",
     EnableMeasureValueFilterKD = "enableMeasureValueFilterKD",
     EnableShellApplication = "enableShellApplication",
-    EnableShellApplicationCatalog = "enableShellApplication_catalog",
     EnableShellApplicationDashboards = "enableShellApplication_dashboards",
     EnableNullableJoins = "enableNullableJoins",
     EnableLogicalModelExtensionsFromParentsCall = "enableLogicalModelExtensionsFromParentsCall",
@@ -245,7 +244,6 @@ export type ITigerFeatureFlags = {
     enableDashboardTimezone: (typeof FeatureFlagsValues)["enableDashboardTimezone"][number];
     enableMeasureValueFilterKD: (typeof FeatureFlagsValues)["enableMeasureValueFilterKD"][number];
     enableShellApplication: (typeof FeatureFlagsValues)["enableShellApplication"][number];
-    enableShellApplication_catalog: (typeof FeatureFlagsValues)["enableShellApplication_catalog"][number];
     enableShellApplication_dashboards: (typeof FeatureFlagsValues)["enableShellApplication_dashboards"][number];
     enableNullableJoins: (typeof FeatureFlagsValues)["enableNullableJoins"][number];
     enableLogicalModelExtensionsFromParentsCall: (typeof FeatureFlagsValues)["enableLogicalModelExtensionsFromParentsCall"][number];
@@ -377,8 +375,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDashboardTimezone: false,
     enableMeasureValueFilterKD: true,
     enableShellApplication: true,
-    enableShellApplication_catalog: false,
-    enableShellApplication_dashboards: false,
+    enableShellApplication_dashboards: true,
     enableNullableJoins: false,
     enableLogicalModelExtensionsFromParentsCall: false,
     enableDashboardDensitySetting: false,
@@ -394,7 +391,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableUserDataFiltersUi: false,
     enableEnhancedInsightPicker: false,
     enableAiLlmAnthropicProvider: false,
-    enableShellApplication_analyticalDesigner: false,
+    enableShellApplication_analyticalDesigner: true,
     enableDashboardSidebarResize: true,
     enableExportTimeoutFix: false,
     enableDashboardPersistentFiltersAcrossTabs: false,
@@ -509,7 +506,6 @@ export const FeatureFlagsValues = {
     enableMeasureValueFilterKD: [false, true] as const,
     enableDashboardTimezone: [true, false] as const,
     enableShellApplication: [true, false] as const,
-    enableShellApplication_catalog: [false, true] as const,
     enableShellApplication_dashboards: [false, true] as const,
     enableNullableJoins: [true, false] as const,
     enableLogicalModelExtensionsFromParentsCall: [true, false] as const,

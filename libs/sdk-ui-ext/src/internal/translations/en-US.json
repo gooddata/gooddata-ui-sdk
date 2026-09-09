@@ -2552,8 +2552,8 @@
         "crowdinContext": "Toast shown when an access change fails."
     },
     "objectShare.toast.escalationRefused": {
-        "text": "You can only grant permissions that you have yourself.",
-        "crowdinContext": "Error toast shown when a permission change was refused because the user tried to grant a higher permission level than they hold themselves."
+        "text": "You can't set permissions higher than your own.",
+        "crowdinContext": "Shown as an error toast when a permission change was refused because the user tried to grant a higher permission level than they hold, and as the tooltip of permission levels disabled for the same reason."
     },
     "objectShare.toast.labelScopePartial": {
         "text": "Some label access could not be saved.",
