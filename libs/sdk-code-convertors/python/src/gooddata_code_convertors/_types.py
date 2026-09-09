@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 91810ffb6fb0c40dba9b329a17fea1eeada9ba670bf3f8624a84782810375c61
+# schema-hash: 2c88ffe3c5efc3c42f0621bb4d52489fb6a032792f10f81fda902e362f4a850c
 
 from __future__ import annotations
 
@@ -26,10 +26,12 @@ __all__ = [
     "ColumnOverride",
     "ComplexColorItem",
     "ComputedAttribute",
+    "ComputedAttributeIdentifier",
     "Condition",
     "ConditionalFormatting",
     "Config",
     "Constraints",
+    "Constraints1",
     "CustomTooltip",
     "Dashboard",
     "Dashboard1",
@@ -100,6 +102,7 @@ __all__ = [
     "MvfCondition1",
     "MvfCondition2",
     "MvfCondition3",
+    "NumberParameterDefinition",
     "OpenUrl",
     "Parameter",
     "ParameterAllowedValue",
@@ -219,6 +222,9 @@ AttributeIdentifier: TypeAlias = str
 LabelIdentifier: TypeAlias = str
 
 
+ComputedAttributeIdentifier: TypeAlias = str
+
+
 DisplayAsLabelIdentifier: TypeAlias = str
 
 
@@ -243,7 +249,7 @@ class Parents(TypedDict):
 class DashboardAttributeFilter1(TypedDict):
     title: NotRequired[str]
     type: Literal['attribute_filter']
-    using: AttributeIdentifier | LabelIdentifier
+    using: AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier
     multiselect: NotRequired[bool]
     mode: NotRequired[
         Literal['readonly', 'hidden', 'active']
@@ -260,7 +266,7 @@ class DashboardAttributeFilter1(TypedDict):
 class DashboardAttributeFilter2(TypedDict):
     title: NotRequired[str]
     type: Literal['attribute_filter']
-    using: AttributeIdentifier | LabelIdentifier
+    using: AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier
     multiselect: NotRequired[bool]
     mode: NotRequired[
         Literal['readonly', 'hidden', 'active']
@@ -281,7 +287,7 @@ DashboardAttributeFilter: TypeAlias = (
 
 class DashboardTextFilter1(TypedDict):
     title: NotRequired[str]
-    using: AttributeIdentifier | LabelIdentifier
+    using: AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier
     case_sensitive: NotRequired[bool]
     display_as: NotRequired[str]
     mode: NotRequired[
@@ -299,7 +305,7 @@ class DashboardTextFilter1(TypedDict):
 
 class DashboardTextFilter2(TypedDict):
     title: NotRequired[str]
-    using: AttributeIdentifier | LabelIdentifier
+    using: AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier
     case_sensitive: NotRequired[bool]
     display_as: NotRequired[str]
     mode: NotRequired[
@@ -352,14 +358,14 @@ class State(TypedDict):
 
 class QueryAttributeFilter(TypedDict):
     type: Literal['attribute_filter']
-    using: AttributeIdentifier | LabelIdentifier
+    using: AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier
     display_as: NotRequired[str]
     state: NotRequired[State]
 
 
 class QueryTextFilter1(TypedDict):
     type: Literal['text_filter']
-    using: AttributeIdentifier | LabelIdentifier
+    using: AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier
     case_sensitive: NotRequired[bool]
     display_as: NotRequired[str]
     condition: Literal['is', 'isNot']
@@ -368,7 +374,7 @@ class QueryTextFilter1(TypedDict):
 
 class QueryTextFilter2(TypedDict):
     type: Literal['text_filter']
-    using: AttributeIdentifier | LabelIdentifier
+    using: AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier
     case_sensitive: NotRequired[bool]
     display_as: NotRequired[str]
     condition: Literal['contains', 'doesNotContain', 'startsWith', 'doesNotStartWith', 'endsWith', 'doesNotEndWith']
@@ -383,7 +389,9 @@ class QueryMetricValueFilter1(TypedDict):
     using: MetricIdentifier | str
     conditions: list[MvfCondition]
     null_values_as_zero: NotRequired[bool]
-    dimensionality: NotRequired[list[LabelIdentifier | str]]
+    dimensionality: NotRequired[
+        list[LabelIdentifier | ComputedAttributeIdentifier | str]
+    ]
 
 
 class QueryMetricValueFilter2(TypedDict):
@@ -392,7 +400,9 @@ class QueryMetricValueFilter2(TypedDict):
     condition: Literal['GREATER_THAN', 'GREATER_THAN_OR_EQUAL_TO', 'LESS_THAN', 'LESS_THAN_OR_EQUAL_TO', 'EQUAL_TO', 'NOT_EQUAL_TO']
     value: float
     null_values_as_zero: NotRequired[bool]
-    dimensionality: NotRequired[list[LabelIdentifier | str]]
+    dimensionality: NotRequired[
+        list[LabelIdentifier | ComputedAttributeIdentifier | str]
+    ]
 
 
 QueryMetricValueFilter3 = TypedDict(
@@ -404,7 +414,9 @@ QueryMetricValueFilter3 = TypedDict(
         'from': float,
         'to': float,
         'null_values_as_zero': NotRequired[bool],
-        'dimensionality': NotRequired[list[LabelIdentifier | str]],
+        'dimensionality': NotRequired[
+            list[LabelIdentifier | ComputedAttributeIdentifier | str]
+        ],
     },
 )
 
@@ -413,7 +425,9 @@ class QueryMetricValueFilter4(TypedDict):
     type: Literal['metric_value_filter']
     using: MetricIdentifier | str
     conditions: NotRequired[list[MvfCondition]]
-    dimensionality: NotRequired[list[LabelIdentifier | str]]
+    dimensionality: NotRequired[
+        list[LabelIdentifier | ComputedAttributeIdentifier | str]
+    ]
 
 
 QueryMetricValueFilter: TypeAlias = (
@@ -427,7 +441,7 @@ QueryMetricValueFilter: TypeAlias = (
 class QueryRankingFilter1(TypedDict):
     type: Literal['ranking_filter']
     using: MetricIdentifier | str
-    attribute: NotRequired[LabelIdentifier | str]
+    attribute: NotRequired[LabelIdentifier | ComputedAttributeIdentifier | str]
     bottom: float
     top: NotRequired[float]
     strict_limit_of_rows: NotRequired[bool]
@@ -436,7 +450,7 @@ class QueryRankingFilter1(TypedDict):
 class QueryRankingFilter2(TypedDict):
     type: Literal['ranking_filter']
     using: MetricIdentifier | str
-    attribute: NotRequired[LabelIdentifier | str]
+    attribute: NotRequired[LabelIdentifier | ComputedAttributeIdentifier | str]
     bottom: NotRequired[float]
     top: float
     strict_limit_of_rows: NotRequired[bool]
@@ -531,9 +545,6 @@ SourceColumn: TypeAlias = str
 DataType: TypeAlias = Literal['INT', 'STRING', 'DATE', 'NUMERIC', 'TIMESTAMP', 'TIMESTAMP_TZ', 'BOOLEAN', 'HLL']
 
 
-Locale: TypeAlias = str
-
-
 class Collection(TypedDict):
     id: str
 
@@ -542,17 +553,23 @@ class GeoAreaConfig(TypedDict):
     collection: Collection
 
 
-class LabelTranslation(TypedDict):
-    source_column: SourceColumn
-    locale: Locale
-
-
 class Source(TypedDict):
     source_column: SourceColumn
     data_type: DataType
     target: str
     is_nullable: NotRequired[bool]
     null_value_join_replacement: NotRequired[str]
+
+
+class Constraints1(TypedDict):
+    min: NotRequired[float]
+    max: NotRequired[float]
+
+
+class NumberParameterDefinition(TypedDict):
+    type: Literal['NUMBER']
+    defaultValue: float
+    constraints: NotRequired[Constraints1]
 
 
 class ParameterAllowedValue(TypedDict):
@@ -712,6 +729,9 @@ class ConditionalFormatting(TypedDict):
     suppressed_targets: NotRequired[list[SuppressedTargets | SuppressedTargets1]]
 
 
+Locale: TypeAlias = str
+
+
 class AttributeHierarchy(TypedDict):
     id: Identifier
     type: Literal['attribute_hierarchy']
@@ -756,7 +776,7 @@ class DashboardMetricValueFilter(TypedDict):
     title: NotRequired[str]
     using: MetricIdentifier
     conditions: NotRequired[list[MvfCondition]]
-    dimensionality: NotRequired[list[LabelIdentifier]]
+    dimensionality: NotRequired[list[LabelIdentifier | ComputedAttributeIdentifier]]
     null_values_as_zero: NotRequired[bool]
     mode: NotRequired[Literal['readonly', 'hidden', 'active']]
 
@@ -808,7 +828,18 @@ class ComputedAttribute(TypedDict):
     description: NotRequired[Description]
     tags: NotRequired[Tags]
     maql: str
-    locale: NotRequired[str]
+    format: NotRequired[str]
+    metric_type: NotRequired[Literal['UNSPECIFIED', 'CURRENCY']]
+    data_type: NotRequired[
+        Literal['INT', 'STRING', 'DATE', 'NUMERIC', 'TIMESTAMP', 'TIMESTAMP_TZ', 'BOOLEAN', 'HLL']
+    ]
+    value_type: NotRequired[
+        Literal['TEXT', 'HYPERLINK', 'GEO', 'GEO_LONGITUDE', 'GEO_LATITUDE', 'GEO_AREA', 'GEO_ICON', 'IMAGE', 'HYPERLOGLOG']
+    ]
+    is_nullable: NotRequired[bool]
+    null_value_join_replacement: NotRequired[str]
+    show_in_ai_results: NotRequired[bool]
+    locale: NotRequired[Locale]
 
 
 ColorItems: TypeAlias = dict[str, ComplexColorItem]
@@ -853,8 +884,12 @@ class InteractionOpenPlainUrl(TypedDict):
 
 
 class OpenUrl(TypedDict):
-    href: NotRequired[AttributeIdentifier | LabelIdentifier]
-    label: NotRequired[AttributeIdentifier | LabelIdentifier]
+    href: NotRequired[
+        AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier
+    ]
+    label: NotRequired[
+        AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier
+    ]
 
 
 class InteractionOpenParamUrl(TypedDict):
@@ -930,22 +965,9 @@ class AggregatedFact(TypedDict):
     null_value_join_replacement: NotRequired[str]
 
 
-class Label(TypedDict):
-    source_column: NotRequired[SourceColumn]
-    data_type: NotRequired[DataType]
-    title: NotRequired[Title]
-    description: NotRequired[Description]
-    tags: NotRequired[Tags]
-    value_type: NotRequired[
-        Literal['TEXT', 'HYPERLINK', 'GEO', 'GEO_LONGITUDE', 'GEO_LATITUDE', 'GEO_ICON', 'IMAGE', 'GEO_AREA']
-    ]
-    geo_area_config: NotRequired[GeoAreaConfig]
-    show_in_ai_results: NotRequired[bool]
-    is_hidden: NotRequired[bool]
-    locale: NotRequired[Locale]
-    translations: NotRequired[list[LabelTranslation]]
-    is_nullable: NotRequired[bool]
-    null_value_join_replacement: NotRequired[str]
+class LabelTranslation(TypedDict):
+    source_column: SourceColumn
+    locale: Locale
 
 
 class Metric(TypedDict):
@@ -1053,13 +1075,13 @@ class QueryField13(TypedDict):
 
 class QueryAttributeSort(TypedDict):
     type: Literal['attribute_sort']
-    by: str | AttributeIdentifier | LabelIdentifier
+    by: str | AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier
     direction: Literal['ASC', 'DESC']
     aggregation: NotRequired[Literal['SUM']]
 
 
 class Metrics(TypedDict):
-    by: str | AttributeIdentifier | LabelIdentifier
+    by: str | AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier
     element: NotRequired[str]
     function: NotRequired[Literal['SUM', 'AVG', 'MIN', 'MAX', 'MED', 'NAT']]
 
@@ -1249,25 +1271,25 @@ class VisualizationWidget(TypedDict):
     ignored_cross_filtering: NotRequired[bool]
 
 
-class Attribute(TypedDict):
-    type: Literal['attribute']
+class Label(TypedDict):
+    source_column: NotRequired[SourceColumn]
+    data_type: NotRequired[DataType]
     title: NotRequired[Title]
     description: NotRequired[Description]
     tags: NotRequired[Tags]
-    source_column: NotRequired[SourceColumn]
-    data_type: DataType
-    default_view: NotRequired[str]
-    sort_column: NotRequired[str]
-    sort_direction: NotRequired[Literal['ASC', 'DESC']]
+    value_type: NotRequired[
+        Literal['TEXT', 'HYPERLINK', 'GEO', 'GEO_LONGITUDE', 'GEO_LATITUDE', 'GEO_ICON', 'IMAGE', 'GEO_AREA']
+    ]
+    geo_area_config: NotRequired[GeoAreaConfig]
     show_in_ai_results: NotRequired[bool]
     is_hidden: NotRequired[bool]
     locale: NotRequired[Locale]
+    translations: NotRequired[list[LabelTranslation]]
     is_nullable: NotRequired[bool]
     null_value_join_replacement: NotRequired[str]
-    labels: NotRequired[dict[str, Label]]
 
 
-ParameterDefinition: TypeAlias = StringParameterDefinition
+ParameterDefinition: TypeAlias = StringParameterDefinition | NumberParameterDefinition
 
 
 QuerySort: TypeAlias = QueryAttributeSort | QueryMetricSort
@@ -1324,7 +1346,22 @@ class Widget2(TypedDict):
     visualizations: list[VisualizationWidget]
 
 
-Fields: TypeAlias = dict[str, Attribute | Fact | AggregatedFact]
+class Attribute(TypedDict):
+    type: Literal['attribute']
+    title: NotRequired[Title]
+    description: NotRequired[Description]
+    tags: NotRequired[Tags]
+    source_column: NotRequired[SourceColumn]
+    data_type: DataType
+    default_view: NotRequired[str]
+    sort_column: NotRequired[str]
+    sort_direction: NotRequired[Literal['ASC', 'DESC']]
+    show_in_ai_results: NotRequired[bool]
+    is_hidden: NotRequired[bool]
+    locale: NotRequired[Locale]
+    is_nullable: NotRequired[bool]
+    null_value_join_replacement: NotRequired[str]
+    labels: NotRequired[dict[str, Label]]
 
 
 QuerySorts: TypeAlias = list[QuerySort]
@@ -1363,6 +1400,7 @@ class QueryField5(TypedDict):
 QueryField: TypeAlias = (
     AttributeIdentifier
     | LabelIdentifier
+    | ComputedAttributeIdentifier
     | MetricIdentifier
     | FactIdentifier
     | QueryField1
@@ -1383,6 +1421,12 @@ QueryField: TypeAlias = (
 
 
 LayerItem: TypeAlias = LayerItemBase | LayerItem1 | LayerItem2
+
+
+Fields: TypeAlias = dict[str, Attribute | Fact | AggregatedFact]
+
+
+QueryFields: TypeAlias = dict[str, QueryField]
 
 
 class Dataset5(TypedDict):
@@ -1439,6 +1483,12 @@ class Dataset7(TypedDict):
 Dataset: TypeAlias = Dataset5 | Dataset6 | Dataset7
 
 
+class Query(TypedDict):
+    fields: QueryFields
+    filter_by: NotRequired[QueryFilters]
+    sort_by: NotRequired[QuerySorts]
+
+
 class Dataset2(TypedDict):
     id: Identifier
     type: Literal['dataset']
@@ -1491,15 +1541,6 @@ class Dataset4(TypedDict):
 
 
 Dataset1: TypeAlias = Dataset2 | Dataset3 | Dataset4
-
-
-QueryFields: TypeAlias = dict[str, QueryField]
-
-
-class Query(TypedDict):
-    fields: QueryFields
-    filter_by: NotRequired[QueryFilters]
-    sort_by: NotRequired[QuerySorts]
 
 
 class Visualisation1(TypedDict):

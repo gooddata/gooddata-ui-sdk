@@ -35,12 +35,31 @@ function throwIfAborted(signal?: AbortSignal) {
     }
 }
 
-function detectExportMode(): boolean {
+/**
+ * This approach is not correct - the host app should only care about the first part of the URL,
+ * and the module should only care about the second part.
+ * Here we are crossing the boundaries, and the host app is checking the full URL.
+ * The proper fix requires larger changes not only here, but in gdc-nas as well.
+ * This is scheduled to happen with the gdc-reports module.
+ *
+ * @internal - exported for testing
+ */
+export function detectExportMode(): boolean {
     if (typeof window === "undefined") {
         return false;
     }
     const hash = window.location.hash;
-    return /[?&]displaymode=export(&|$)/i.test(hash) || /[?&]mode=export(&|$)/i.test(hash);
+    const query = hash.indexOf("?");
+    if (query === -1) {
+        return false;
+    }
+    for (const [key, value] of new URLSearchParams(hash.slice(query + 1))) {
+        const name = key.toLowerCase();
+        if ((name === "mode" || name === "displaymode") && value.toLowerCase() === "export") {
+            return true;
+        }
+    }
+    return false;
 }
 
 export async function loadPlatformContext(

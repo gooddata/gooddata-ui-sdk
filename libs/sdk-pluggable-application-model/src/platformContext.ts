@@ -15,11 +15,11 @@ import {
 } from "@gooddata/sdk-model";
 
 /**
- * Plˍuggable application embedding mode.
+ * Pluggable application embedding mode.
  *
  * @alpha
  */
-export type EmbeddingMode = "none" | "iframe" | "export";
+export type EmbeddingMode = "none" | "iframe";
 
 /**
  * Panther tier.

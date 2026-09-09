@@ -118,6 +118,55 @@ locale: en-US
         });
     });
 
+    it("accepts the value-shaping fields the analytics-as-code schema defines", () => {
+        expect(
+            validateComputedAttributeYaml(`maql: SELECT 1
+format: "#,##0.00"
+metric_type: CURRENCY
+data_type: NUMERIC
+value_type: HYPERLINK
+is_nullable: true
+null_value_join_replacement: N/A
+show_in_ai_results: false
+locale: cs-CZ-u-kn-true`),
+        ).toEqual({
+            isValid: true,
+            computedAttribute: {
+                type: "computedAttribute",
+                title: "",
+                description: "",
+                tags: [],
+                expression: "SELECT 1",
+                format: "#,##0.00",
+                metricType: "CURRENCY",
+                dataType: "NUMERIC",
+                valueType: "HYPERLINK",
+                isNullable: true,
+                nullValue: "N/A",
+                isHidden: true,
+                locale: "cs-CZ-u-kn-true",
+            },
+        });
+    });
+
+    it.each(["not a locale", "e", "en_US"])("rejects a locale that is not BCP 47 (%s)", (locale) => {
+        expect(validateComputedAttributeYaml(`maql: SELECT 1\nlocale: ${locale}`)).toEqual({
+            isValid: false,
+            errorCode: "invalidLocale",
+        });
+    });
+
+    it.each([
+        ["data_type", "TEXT", "invalidDataType"],
+        ["value_type", "STRING", "invalidValueType"],
+        ["metric_type", "MONEY", "invalidMetricType"],
+    ])("names the field when %s has a value outside its enum", (key, value, errorCode) => {
+        expect(validateComputedAttributeYaml(`maql: SELECT 1\n${key}: ${value}`)).toEqual({
+            isValid: false,
+            errorCode,
+        });
+    });
+
     it("rejects changing a fixed identifier in edit mode", () => {
         expect(
             validateComputedAttributeYaml(`id: changed\nmaql: SELECT 1`, {

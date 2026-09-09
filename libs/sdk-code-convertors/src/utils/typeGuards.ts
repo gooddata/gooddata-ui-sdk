@@ -40,6 +40,7 @@ export type ReferenceObject = {
     type:
         | "fact"
         | "label"
+        | "computed_attribute"
         | "metric"
         | "dataset"
         | "attribute"
@@ -52,7 +53,24 @@ export type ReferenceObject = {
 
 export type TextFilterCondition = TextFilter["condition"];
 
-export const SupportedReferenceTypes = ["fact", "label", "metric", "dataset", "attribute"] as const;
+export const SupportedReferenceTypes = [
+    "fact",
+    "label",
+    "computed_attribute",
+    "metric",
+    "dataset",
+    "attribute",
+] as const;
+
+/**
+ * Reference prefixes that stand for an attribute-like object a query field, an attribute filter
+ * or a drill can use. A computed attribute behaves as a label with computed values.
+ */
+export const AttributeLikeReferenceTypes: ReferenceObject["type"][] = [
+    "attribute",
+    "label",
+    "computed_attribute",
+];
 
 export function parseReferenceObject(obj: string): ReferenceObject | null {
     const [t, identifier] = obj?.split("/") ?? [];
@@ -85,9 +103,16 @@ export function isAttributeField(obj: unknown): obj is AttributeField {
         !("aggregation" in obj)
     ) {
         const id = parseReferenceObject(obj.using);
-        return Boolean(id && ["attribute", "label", "fact"].includes(id.type));
+        return Boolean(id && [...AttributeLikeReferenceTypes, "fact"].includes(id.type));
     }
     return false;
+}
+
+/**
+ * Whether the reference names a computed attribute (`computed_attribute/{id}`).
+ */
+export function isComputedAttributeReference(reference: string): boolean {
+    return parseReferenceObject(reference)?.type === "computed_attribute";
 }
 
 export function isInlineMetricField(obj: unknown): obj is InlineMetricField {
@@ -184,7 +209,7 @@ export function isAttributeFilter(obj: unknown): obj is AttributeFilter {
         obj.type === "attribute_filter"
     ) {
         const id = parseReferenceObject(obj.using as string);
-        return Boolean(id && ["attribute", "label"].includes(id.type));
+        return Boolean(id && AttributeLikeReferenceTypes.includes(id.type));
     }
     return false;
 }

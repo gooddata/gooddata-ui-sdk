@@ -83,6 +83,7 @@ import type { ListOfColors } from '@gooddata/sdk-code-schemas/v1';
 import type { Metadata } from '@gooddata/sdk-code-schemas/v1';
 import type { Metric } from '@gooddata/sdk-code-schemas/v1';
 import type { MetricField } from '@gooddata/sdk-code-schemas/v1';
+import { NumberParameterDefinition } from '@gooddata/api-client-tiger';
 import { ObjRef } from '@gooddata/sdk-model';
 import { ObjRefInScope } from '@gooddata/sdk-model';
 import { Pair } from 'yaml';
@@ -1360,6 +1361,9 @@ export function declarativeAttributeToYaml(def: IAttributeBody, errorContext?: I
 // @internal (undocumented)
 export function declarativeBucketsToYaml(entities: FromEntities, buckets: IBucket[], errorContext?: IErrorContext): YamlBuckets;
 
+// @public
+export type DeclarativeCodeParameter = DeclarativeStringParameter | DeclarativeNumberParameter;
+
 // @public (undocumented)
 export function declarativeComputedAttributeToYaml(computedAttribute: DeclarativeComputedAttribute): {
     content: string;
@@ -1429,8 +1433,13 @@ export function declarativeNegativeAttributeFilterToYaml(entities: FromEntities,
 // @internal (undocumented)
 export function declarativeNormalMetricToYaml(def: IMeasureBody, metricDefinition: IMeasureDefinition, postProcessors: YamlPostProcessors, errorContext?: IErrorContext): YAMLMap;
 
+// @public
+export type DeclarativeNumberParameter = DeclarativeParameter & {
+    content: NumberParameterDefinition;
+};
+
 // @public (undocumented)
-export function declarativeParameterToYaml(parameter: DeclarativeStringParameter): {
+export function declarativeParameterToYaml(parameter: DeclarativeCodeParameter): {
     content: string;
     json: Parameter;
 };
@@ -2648,6 +2657,12 @@ export interface IScatterChartConfig {
     // (undocumented)
     save: typeof scatterChartSave;
 }
+
+// @public (undocumented)
+export function isDeclarativeCodeParameter(parameter: DeclarativeParameter): parameter is DeclarativeCodeParameter;
+
+// @public (undocumented)
+export function isDeclarativeNumberParameter(parameter: DeclarativeParameter): parameter is DeclarativeNumberParameter;
 
 // @public (undocumented)
 export function isDeclarativeStringParameter(parameter: DeclarativeParameter): parameter is DeclarativeStringParameter;
@@ -4291,7 +4306,7 @@ export function yamlInteractionToDeclarative(entities: ExportEntities, visualisa
 export function yamlMetricToDeclarative(input: Metric): DeclarativeMetric;
 
 // @public (undocumented)
-export function yamlParameterToDeclarative(input: Parameter): DeclarativeStringParameter;
+export function yamlParameterToDeclarative(input: Parameter): DeclarativeCodeParameter;
 
 // @internal (undocumented)
 export function yamlPluginsToDeclarative(plugins: Dashboard["plugins"]): IDashboardPluginLink[] | undefined;

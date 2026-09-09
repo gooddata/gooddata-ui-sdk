@@ -21,6 +21,9 @@
         "labelIdentifier": {
             "$ref": "#/$defs/labelIdentifier"
         },
+        "computedAttributeIdentifier": {
+            "$ref": "#/$defs/computedAttributeIdentifier"
+        },
         "displayAsLabelIdentifier": {
             "$ref": "#/$defs/displayAsLabelIdentifier"
         },
@@ -86,6 +89,18 @@
                 "typePrefix": true
             }
         },
+        "computedAttributeIdentifier": {
+            "$id": "/gaac/computedAttributeIdentifier",
+            "title": "Computed Attribute Identifier",
+            "description": "A computed attribute identifier in the form of computed_attribute/{id}.",
+            "type": "string",
+            "pattern": "^computed_attribute/(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+            "$semantic": {
+                "type": "reference",
+                "source": "computedAttribute.id",
+                "typePrefix": true
+            }
+        },
         "displayAsLabelIdentifier": {
             "$id": "/gaac/displayAsLabelIdentifier",
             "title": "Display As Label Identifier",
@@ -97,6 +112,13 @@
                 "source": "current.attribute_filter.display_as.id",
                 "typePrefix": true
             }
+        },
+        "locale": {
+            "$id": "/gaac/locale",
+            "title": "Locale",
+            "type": "string",
+            "pattern": "^[a-zA-Z]{2,3}(-[a-zA-Z0-9]{1,8})*$",
+            "description": "Locale string in BCP 47 format (for example en-US or cs-CZ-u-kn-true)."
         },
         "factIdentifier": {
             "$id": "/gaac/factIdentifier",
@@ -506,6 +528,9 @@
                         },
                         {
                             "$ref": "#/$defs/labelIdentifier"
+                        },
+                        {
+                            "$ref": "#/$defs/computedAttributeIdentifier"
                         }
                     ],
                     "$semantic": {
@@ -557,7 +582,10 @@
                                     "date": {
                                         "type": "string",
                                         "description": "Date dataset the common date filter is applied through. Only valid when common is true; ignored and stripped on both import and export when common is false.",
-                                        "$semantic": { "type": "reference", "source": "dateDataset.id" }
+                                        "$semantic": {
+                                            "type": "reference",
+                                            "source": "dateDataset.id"
+                                        }
                                     }
                                 },
                                 "required": ["using", "common"]
@@ -603,6 +631,9 @@
                                     },
                                     {
                                         "$ref": "#/$defs/labelIdentifier"
+                                    },
+                                    {
+                                        "$ref": "#/$defs/computedAttributeIdentifier"
                                     }
                                 ]
                             },
@@ -709,6 +740,9 @@
                                     },
                                     {
                                         "$ref": "#/$defs/labelIdentifier"
+                                    },
+                                    {
+                                        "$ref": "#/$defs/computedAttributeIdentifier"
                                     }
                                 ]
                             },
@@ -823,6 +857,9 @@
                         },
                         {
                             "$ref": "#/$defs/labelIdentifier"
+                        },
+                        {
+                            "$ref": "#/$defs/computedAttributeIdentifier"
                         }
                     ],
                     "$semantic": {
@@ -885,7 +922,10 @@
                                     "date": {
                                         "type": "string",
                                         "description": "Date dataset the common date filter is applied through. Only valid when common is true; ignored and stripped on both import and export when common is false.",
-                                        "$semantic": { "type": "reference", "source": "dateDataset.id" }
+                                        "$semantic": {
+                                            "type": "reference",
+                                            "source": "dateDataset.id"
+                                        }
                                     }
                                 },
                                 "required": ["using", "common"]
@@ -926,6 +966,9 @@
                                 },
                                 {
                                     "$ref": "#/$defs/labelIdentifier"
+                                },
+                                {
+                                    "$ref": "#/$defs/computedAttributeIdentifier"
                                 }
                             ],
                             "$semantic": {
@@ -1042,6 +1085,9 @@
                                 },
                                 {
                                     "$ref": "#/$defs/labelIdentifier"
+                                },
+                                {
+                                    "$ref": "#/$defs/computedAttributeIdentifier"
                                 }
                             ],
                             "$semantic": {
@@ -1116,9 +1162,16 @@
                 },
                 "dimensionality": {
                     "type": "array",
-                    "description": "Optional array of label references to apply dimensionality to the filter.",
+                    "description": "Optional array of label or computed attribute references to apply dimensionality to the filter.",
                     "items": {
-                        "$ref": "#/$defs/labelIdentifier"
+                        "oneOf": [
+                            {
+                                "$ref": "#/$defs/labelIdentifier"
+                            },
+                            {
+                                "$ref": "#/$defs/computedAttributeIdentifier"
+                            }
+                        ]
                     }
                 },
                 "null_values_as_zero": {
@@ -1165,7 +1218,10 @@
                             "type": "array",
                             "items": {
                                 "type": "string",
-                                "$semantic": { "type": "values", "from": "current.filter.using" }
+                                "$semantic": {
+                                    "type": "values",
+                                    "from": "current.filter.using"
+                                }
                             }
                         }
                     },
@@ -1178,7 +1234,10 @@
                             "type": "array",
                             "items": {
                                 "type": "string",
-                                "$semantic": { "type": "values", "from": "current.filter.using" }
+                                "$semantic": {
+                                    "type": "values",
+                                    "from": "current.filter.using"
+                                }
                             }
                         }
                     },
@@ -1194,7 +1253,10 @@
                     "type": "array",
                     "items": {
                         "type": "string",
-                        "$semantic": { "type": "values", "from": "current.filter.using" }
+                        "$semantic": {
+                            "type": "values",
+                            "from": "current.filter.using"
+                        }
                     },
                     "minItems": 1,
                     "maxItems": 1
@@ -1554,6 +1616,9 @@
                         },
                         {
                             "$ref": "#/$defs/labelIdentifier"
+                        },
+                        {
+                            "$ref": "#/$defs/computedAttributeIdentifier"
                         }
                     ]
                 },
@@ -1581,6 +1646,9 @@
                                 },
                                 {
                                     "$ref": "#/$defs/labelIdentifier"
+                                },
+                                {
+                                    "$ref": "#/$defs/computedAttributeIdentifier"
                                 }
                             ]
                         },
@@ -1618,6 +1686,9 @@
                                 },
                                 {
                                     "$ref": "#/$defs/labelIdentifier"
+                                },
+                                {
+                                    "$ref": "#/$defs/computedAttributeIdentifier"
                                 }
                             ]
                         },
@@ -1677,6 +1748,9 @@
                         },
                         {
                             "$ref": "#/$defs/labelIdentifier"
+                        },
+                        {
+                            "$ref": "#/$defs/computedAttributeIdentifier"
                         }
                     ]
                 },
@@ -1810,6 +1884,9 @@
                                             "$ref": "#/$defs/labelIdentifier"
                                         },
                                         {
+                                            "$ref": "#/$defs/computedAttributeIdentifier"
+                                        },
+                                        {
                                             "type": "string",
                                             "$semantic": {
                                                 "type": "reference",
@@ -1891,6 +1968,9 @@
                                             "$ref": "#/$defs/labelIdentifier"
                                         },
                                         {
+                                            "$ref": "#/$defs/computedAttributeIdentifier"
+                                        },
+                                        {
                                             "type": "string",
                                             "$semantic": {
                                                 "type": "reference",
@@ -1962,6 +2042,9 @@
                                             "$ref": "#/$defs/labelIdentifier"
                                         },
                                         {
+                                            "$ref": "#/$defs/computedAttributeIdentifier"
+                                        },
+                                        {
                                             "type": "string",
                                             "$semantic": {
                                                 "type": "reference",
@@ -2026,6 +2109,9 @@
                                     "oneOf": [
                                         {
                                             "$ref": "#/$defs/labelIdentifier"
+                                        },
+                                        {
+                                            "$ref": "#/$defs/computedAttributeIdentifier"
                                         },
                                         {
                                             "type": "string",
@@ -2180,6 +2266,9 @@
                     "oneOf": [
                         {
                             "$ref": "#/$defs/labelIdentifier"
+                        },
+                        {
+                            "$ref": "#/$defs/computedAttributeIdentifier"
                         },
                         {
                             "type": "string",

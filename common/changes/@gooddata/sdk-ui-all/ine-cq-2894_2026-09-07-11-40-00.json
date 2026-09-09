@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-code-schemas: Computed attribute locale is validated against the shared BCP 47 pattern instead of accepting any string",
+            "type": "patch",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

@@ -47,6 +47,9 @@
                     "$ref": "/gaac/labelIdentifier"
                 },
                 {
+                    "$ref": "/gaac/computedAttributeIdentifier"
+                },
+                {
                     "$ref": "/gaac/metricIdentifier"
                 },
                 {
@@ -172,6 +175,9 @@
                                             },
                                             {
                                                 "$ref": "/gaac/labelIdentifier"
+                                            },
+                                            {
+                                                "$ref": "/gaac/computedAttributeIdentifier"
                                             },
                                             {
                                                 "$ref": "/gaac/factIdentifier"
@@ -608,6 +614,9 @@
                         },
                         {
                             "$ref": "/gaac/labelIdentifier"
+                        },
+                        {
+                            "$ref": "/gaac/computedAttributeIdentifier"
                         }
                     ]
                 },
@@ -669,6 +678,9 @@
                                             },
                                             {
                                                 "$ref": "/gaac/labelIdentifier"
+                                            },
+                                            {
+                                                "$ref": "/gaac/computedAttributeIdentifier"
                                             }
                                         ]
                                     },

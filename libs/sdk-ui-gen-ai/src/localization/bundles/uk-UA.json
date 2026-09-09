@@ -106,6 +106,8 @@
     "gd.gen-ai.alert-proposal.summary.condition-comparison": "Порівняння",
     "gd.gen-ai.alert-proposal.summary.condition-relative": "Відносний",
     "gd.gen-ai.alert-proposal.summary.condition-anomalyDetection": "Виявлення аномалій",
+    "gd.gen-ai.clarification-question.skip-button": "Пропустити",
+    "gd.gen-ai.clarification-question.of": "{index} з {total}",
     "sdk.ui.genAi.alertProposal.operator.lessThan": "<",
     "sdk.ui.genAi.alertProposal.operator.lessThanOrEqualTo": "<=",
     "sdk.ui.genAi.alertProposal.operator.greaterThan": ">",

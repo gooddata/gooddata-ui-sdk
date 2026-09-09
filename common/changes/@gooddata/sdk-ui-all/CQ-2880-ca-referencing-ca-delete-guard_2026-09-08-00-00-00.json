@@ -1,0 +1,20 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-backend-spi: Add computedAttributes to IComputedAttributeReferencing, reporting other computed attributes that reference a computed attribute in their MAQL",
+            "type": "minor",
+            "packageName": "@gooddata/sdk-ui-all"
+        },
+        {
+            "comment": "sdk-backend-tiger: Include other computed attributes referencing a computed attribute in getComputedAttributeReferencingObjects",
+            "type": "patch",
+            "packageName": "@gooddata/sdk-ui-all"
+        },
+        {
+            "comment": "sdk-ui-catalog: Warn about referencing computed attributes, not just insights/metrics/dashboards, before deleting a computed attribute",
+            "type": "patch",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

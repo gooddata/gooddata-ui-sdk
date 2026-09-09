@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/playground",
-    "version": "11.56.0-alpha.6",
+    "version": "11.56.0-alpha.7",
     "private": true,
     "description": "GoodData.UI SDK - Developer Playground",
     "license": "LicenseRef-LICENSE",
@@ -72,7 +72,7 @@
         "react": "19.1.1",
         "react-dom": "19.1.1",
         "rolldown": "1.0.3",
-        "sass": "1.80.0",
+        "sass": "1.100.0",
         "ts-invariant": "0.10.3",
         "tslib": "2.8.1",
         "typescript": "7.0.2",

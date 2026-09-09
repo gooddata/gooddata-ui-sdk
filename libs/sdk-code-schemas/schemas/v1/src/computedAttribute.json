@@ -69,9 +69,59 @@
                         "type": "maql"
                     }
                 },
-                "locale": {
+                "format": {
                     "type": "string",
-                    "description": "An optional locale whose collation order the computed values are sorted by."
+                    "description": "An optional Excel-like format string applied to the computed values."
+                },
+                "metric_type": {
+                    "type": "string",
+                    "enum": ["UNSPECIFIED", "CURRENCY"],
+                    "description": "An optional categorization of the computed values semantics, for example currency."
+                },
+                "data_type": {
+                    "type": "string",
+                    "enum": [
+                        "INT",
+                        "STRING",
+                        "DATE",
+                        "NUMERIC",
+                        "TIMESTAMP",
+                        "TIMESTAMP_TZ",
+                        "BOOLEAN",
+                        "HLL"
+                    ],
+                    "description": "An optional data type of the computed values. Defaults to STRING on the backend."
+                },
+                "value_type": {
+                    "type": "string",
+                    "enum": [
+                        "TEXT",
+                        "HYPERLINK",
+                        "GEO",
+                        "GEO_LONGITUDE",
+                        "GEO_LATITUDE",
+                        "GEO_AREA",
+                        "GEO_ICON",
+                        "IMAGE",
+                        "HYPERLOGLOG"
+                    ],
+                    "description": "An optional specific type of the computed values. Defaults to TEXT on the backend."
+                },
+                "is_nullable": {
+                    "type": "boolean",
+                    "description": "Optional flag to indicate if the computed attribute can contain null values."
+                },
+                "null_value_join_replacement": {
+                    "type": "string",
+                    "description": "Optional value which can be used as replacement for NULL in join conditions."
+                },
+                "show_in_ai_results": {
+                    "type": "boolean",
+                    "description": "Optional flag to indicate if the computed attribute should be shown in AI results. When omitted, the computed attribute is visible."
+                },
+                "locale": {
+                    "$ref": "/gaac/locale",
+                    "description": "An optional locale in BCP 47 format (for example en-US) whose collation order the computed values are sorted by."
                 }
             },
             "$semantic": {

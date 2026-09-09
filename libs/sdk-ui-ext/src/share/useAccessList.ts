@@ -20,7 +20,6 @@ import {
 import { type GeneralAccessValue, type IUiGranteeAsyncOptions, useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import {
-    accessListToSummary,
     composeEffectiveWorkspaceAccess,
     deriveGeneralAccess,
     deriveInheritedWorkspaceLevel,
@@ -59,21 +58,6 @@ export interface IAccessList {
     hasList: boolean;
     /** Display rows: the fetched list composed with the local edit overlay. */
     grantees: IObjectShareGrantee[];
-    /**
-     * Whether the fetched list held no grant for the SIGNED-IN user — they reached
-     * this manage-gated list without a grant of their own (grant-independent access:
-     * admin/manager rights, or a workspace rule reported separately). Derived from
-     * the immutable seed, never the live overlay: a caller whose own grant was the
-     * way in must not read as grant-independent after locally removing it.
-     */
-    seededWithoutSelfGrant: boolean;
-    /**
-     * Whether the SEED's workspace rule was share-capable (SHARE or EDIT, own or
-     * inherited). Load-time fact like {@link seededWithoutSelfGrant}: the Admin badge
-     * infers how the caller ENTERED, so restricting the rule mid-session must not
-     * start reading as admin access.
-     */
-    seededRuleShareCapable: boolean;
     /** Signed-in user's identity facts + login id, once the profile resolves. */
     selfIdentity: ISelfIdentity | undefined;
     /**
@@ -84,7 +68,7 @@ export interface IAccessList {
      * self-restriction confirm, the row lock) may treat undefined as "not a manager",
      * since a needless confirm is harmless. A restrictive one (a limit on what may be
      * granted) must require an explicit `false`, or a failed read would block a caller
-     * the backend would allow.
+     * the backend would allow. The Admin self row needs an explicit `true`.
      */
     isWorkspaceManager: boolean | undefined;
     /**
@@ -225,11 +209,22 @@ export function useAccessList(
     );
 
     // The profile identifies the caller's own row (self-managed classification, the
-    // admin empty-state row). The session exists only while the dialog is open, so
-    // fetch it once per session; the client caches it across sessions.
+    // Admin self row). Fetched once per dialog session.
     const { result: currentUser, status: currentUserStatus } = useCancelablePromise<IUser>(
         {
             promise: () => backend.currentUser().getUser(),
+            onError: () => {},
+        },
+        [backend],
+    );
+    // Display details for that row: the plain profile's name is the auth-claim name, which an
+    // API-created user has none of, so the Admin row showed the raw user id. The detailed
+    // read adds the user entity's first and last name, as the catalog and dashboards show.
+    // Kept apart from the identity: it costs an uncached entity read, and its failure must
+    // not gate a policy.
+    const { result: currentUserDetails } = useCancelablePromise<IUser>(
+        {
+            promise: () => backend.currentUser().getUserWithDetails(),
             onError: () => {},
         },
         [backend],
@@ -252,15 +247,6 @@ export function useAccessList(
 
     const selfId = currentUser ? granteeId("user", selfGranteeRef(currentUser)) : undefined;
 
-    // Derived from the immutable SEED (see the interface doc): a caller whose own
-    // grant was the way in must not read as grant-independent after removing it.
-    const seededWithoutSelfGrant = hasList && selfIdentityResolved && !base.some((g) => g.id === selfId);
-
-    // Seed only, never the rule overlay; `accessListToSummary` so this cannot drift.
-    const seededSummary = hasList ? accessListToSummary(fetchedList) : undefined;
-    const seededRuleShareCapable =
-        seededSummary?.generalAccess === "WORKSPACE" && seededSummary.workspaceLevel !== "VIEW";
-
     // De-collapsed like every listing fact — on tiger the user id is often the email.
     const selfIdentity = useMemo<ISelfIdentity | undefined>(
         () =>
@@ -268,13 +254,13 @@ export function useAccessList(
                 ? {
                       ...userIdentityFacts(
                           selfGranteeRef(currentUser),
-                          currentUser.fullName,
-                          currentUser.email,
+                          currentUserDetails?.fullName ?? currentUser.fullName,
+                          currentUserDetails?.email ?? currentUser.email,
                       ),
                       id: currentUser.login,
                   }
                 : undefined,
-        [currentUser],
+        [currentUser, currentUserDetails],
     );
 
     const grantees = useMemo<IObjectShareGrantee[]>(
@@ -520,8 +506,6 @@ export function useAccessList(
         draft: draftValue,
         hasList,
         grantees,
-        seededWithoutSelfGrant,
-        seededRuleShareCapable,
         selfIdentity,
         isWorkspaceManager,
         selfIdentityResolved,

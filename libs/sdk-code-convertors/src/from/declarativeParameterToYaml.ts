@@ -2,11 +2,15 @@
 
 import { Document } from "yaml";
 
-import { type StringParameterDefinition } from "@gooddata/api-client-tiger";
-import type { Parameter } from "@gooddata/sdk-code-schemas/v1";
+import { type NumberParameterDefinition, type StringParameterDefinition } from "@gooddata/api-client-tiger";
+import type {
+    Parameter,
+    NumberParameterDefinition as YamlNumberDefinition,
+    StringParameterDefinition as YamlStringDefinition,
+} from "@gooddata/sdk-code-schemas/v1";
 
 import {
-    type DeclarativeStringParameter,
+    type DeclarativeCodeParameter,
     optionalConstraints,
     toAllowedValue,
 } from "../utils/parameterUtils.js";
@@ -14,7 +18,7 @@ import { PARAMETER_COMMENT } from "../utils/texts.js";
 import { entryWithSpace, fillOptionalMetaFields } from "../utils/yamlUtils.js";
 
 /** @public */
-export function declarativeParameterToYaml(parameter: DeclarativeStringParameter): {
+export function declarativeParameterToYaml(parameter: DeclarativeCodeParameter): {
     content: string;
     json: Parameter;
 } {
@@ -44,8 +48,14 @@ export function declarativeParameterToYaml(parameter: DeclarativeStringParameter
 }
 
 function declarativeParameterDefinitionToYaml(
-    definition: StringParameterDefinition,
+    definition: DeclarativeCodeParameter["content"],
 ): Parameter["definition"] {
+    return definition.type === "NUMBER"
+        ? declarativeNumberDefinitionToYaml(definition)
+        : declarativeStringDefinitionToYaml(definition);
+}
+
+function declarativeStringDefinitionToYaml(definition: StringParameterDefinition): YamlStringDefinition {
     const { minLength, maxLength, allowedValues } = definition.constraints ?? {};
     // The schema requires a non-empty list, so an empty one from the server means "free text".
     const [first, ...rest] = allowedValues ?? [];
@@ -58,5 +68,15 @@ function declarativeParameterDefinitionToYaml(
             maxLength,
             allowedValues: first ? [toAllowedValue(first), ...rest.map(toAllowedValue)] : undefined,
         }),
+    };
+}
+
+function declarativeNumberDefinitionToYaml(definition: NumberParameterDefinition): YamlNumberDefinition {
+    const { min, max } = definition.constraints ?? {};
+
+    return {
+        type: "NUMBER",
+        defaultValue: definition.defaultValue,
+        ...optionalConstraints({ min, max }),
     };
 }

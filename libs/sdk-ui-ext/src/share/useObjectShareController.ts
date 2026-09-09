@@ -78,8 +78,6 @@ export function useObjectShareController(
     const {
         hasList,
         grantees,
-        seededWithoutSelfGrant,
-        seededRuleShareCapable,
         selfIdentity,
         isWorkspaceManager,
         selfIdentityResolved,
@@ -797,7 +795,8 @@ export function useObjectShareController(
         // The policy follows the self row however many others are listed: what makes
         // it special is that the access is THEIRS. A manager is exempt, their access
         // comes from the role, so there is no ceiling to cap and no lockout to warn of.
-        const selfRow = isWorkspaceManager ? undefined : grantees.find((g) => g.isSelf);
+        const ownRow = grantees.find((g) => g.isSelf);
+        const selfRow = isWorkspaceManager ? undefined : ownRow;
         const selfManagedGranteeId = selfRow?.id;
         // The caller cannot grant above what they hold, and the server refuses such a
         // write. Proven from their own row only: with no row their access may come from
@@ -811,21 +810,10 @@ export function useObjectShareController(
             isWorkspaceManager === false && selfRow ? levelsAbove(selfRow.level) : undefined;
         const granteeControlsLocked =
             !selfIdentityResolved && !isWorkspaceManager && grantees.some((g) => g.kind === "user");
-        // The synthesized Admin row shows only while NO other permissions are set:
-        // the caller must have reached the list without a grant of their own
-        // (`seededWithoutSelfGrant` — a non-admin who locally removes their own
-        // grant must not gain the badge) and the list must currently be empty, so
-        // adding a grantee hides it and removing the last one brings it back.
-        // A share-capable rule also passes the gate, judged from the SEED. A group
-        // grant is another way in this cannot see: the heuristic's accepted blind spot.
-        //
-        // The heuristic infers how the caller reached a FETCHED list; a draft has none.
-        const explainsAccessWithoutAGrant =
-            !draft && status === "success" && seededWithoutSelfGrant && !seededRuleShareCapable;
-        // A draft always shows the row — whoever drafts an object will own it — and unlike
-        // the empty-state case it holds as grantees are added.
+        // Policy in `IObjectShareControllerState.adminSelfRow`. `!ownRow`, not `!selfRow`: a
+        // manager's real row must not get the synthesized one next to it.
         const adminSelfRow =
-            (draft || (explainsAccessWithoutAGrant && grantees.length === 0)) && selfIdentity
+            (draft || (status === "success" && isWorkspaceManager === true)) && !ownRow && selfIdentity
                 ? userDisplayPair(selfIdentity, selfIdentity.id)
                 : undefined;
         return {
@@ -866,8 +854,6 @@ export function useObjectShareController(
         selfIdentityResolved,
         isWorkspaceManager,
         draft,
-        seededWithoutSelfGrant,
-        seededRuleShareCapable,
         grantees,
         sortedGrantees,
         effectiveWorkspace,

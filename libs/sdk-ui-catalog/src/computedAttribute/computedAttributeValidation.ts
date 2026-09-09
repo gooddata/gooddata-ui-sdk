@@ -26,7 +26,11 @@ export type ComputedAttributeValidationErrorCode =
     | "idImmutable"
     | "missingMaql"
     | "invalidType"
-    | "invalidTags";
+    | "invalidTags"
+    | "invalidLocale"
+    | "invalidDataType"
+    | "invalidValueType"
+    | "invalidMetricType";
 
 type ValidateComputedAttributeYamlOptions = {
     fixedIdentifier?: string;
@@ -56,7 +60,7 @@ export function validateComputedAttributeYaml(
 function classifyComputedAttributeError(
     error: z.core.$ZodError,
     parsed: unknown,
-): "invalidStructure" | "missingMaql" | "invalidType" | "invalidTags" {
+): Exclude<ComputedAttributeValidationErrorCode, "empty" | "syntax" | "idImmutable"> {
     // A blank `maql:` / `maql: ` line parses to null - the seeded template's state - and counts as unwritten,
     // not as a value of the wrong type.
     const maqlProvided =
@@ -78,6 +82,20 @@ function classifyComputedAttributeError(
         }
         if (path === "tags" || path.startsWith("tags.")) {
             return "invalidTags";
+        }
+        // The value-shaping fields each get a message naming what they accept; a generic structure
+        // error would leave the author guessing which of several optional lines is wrong.
+        if (path === "locale") {
+            return "invalidLocale";
+        }
+        if (path === "data_type") {
+            return "invalidDataType";
+        }
+        if (path === "value_type") {
+            return "invalidValueType";
+        }
+        if (path === "metric_type") {
+            return "invalidMetricType";
         }
     }
 

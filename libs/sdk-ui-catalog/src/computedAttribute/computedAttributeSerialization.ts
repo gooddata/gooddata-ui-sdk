@@ -8,8 +8,8 @@ import type { ComputedAttributeYaml } from "./computedAttributeConverter.js";
  * Serializes a canonical AAC computed attribute object to YAML.
  *
  * The document is a flat, gap-free list of lines in the order the design prescribes: `id`, `type`,
- * `title`, `description`, then `maql` last, so the expression the author came to write sits at the
- * bottom with the room below it. The `id` line is always rendered, empty when the computed attribute
+ * `title`, `description`, `tags`, the optional value-shaping fields, then `maql` last, so the
+ * expression the author came to write sits at the bottom with the room below it. The `id` line is always rendered, empty when the computed attribute
  * has none, so an author who wants to choose the identity has the key waiting; left blank it is
  * dropped on validation and the server derives one on create.
  *
@@ -25,6 +25,28 @@ export function serializeComputedAttributeToYaml(computedAttribute: ComputedAttr
     doc.add(doc.createPair("description", computedAttribute.description ?? ""));
     if (computedAttribute.tags && computedAttribute.tags.length > 0) {
         doc.add(doc.createPair("tags", computedAttribute.tags));
+    }
+    // Value-shaping fields are rendered only when set, as the analytics-as-code tooling does.
+    if (computedAttribute.format) {
+        doc.add(doc.createPair("format", computedAttribute.format));
+    }
+    if (computedAttribute.metric_type !== undefined) {
+        doc.add(doc.createPair("metric_type", computedAttribute.metric_type));
+    }
+    if (computedAttribute.data_type !== undefined) {
+        doc.add(doc.createPair("data_type", computedAttribute.data_type));
+    }
+    if (computedAttribute.value_type !== undefined) {
+        doc.add(doc.createPair("value_type", computedAttribute.value_type));
+    }
+    if (computedAttribute.is_nullable !== undefined) {
+        doc.add(doc.createPair("is_nullable", computedAttribute.is_nullable));
+    }
+    if (computedAttribute.null_value_join_replacement !== undefined) {
+        doc.add(doc.createPair("null_value_join_replacement", computedAttribute.null_value_join_replacement));
+    }
+    if (computedAttribute.show_in_ai_results === false) {
+        doc.add(doc.createPair("show_in_ai_results", false));
     }
     if (computedAttribute.locale) {
         doc.add(doc.createPair("locale", computedAttribute.locale));

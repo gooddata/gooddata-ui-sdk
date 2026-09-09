@@ -1,49 +1,109 @@
 # GoodData.UI SDK - Developer's Guide for managing localisations files
 
-## 1. `en-US.json` is one and only file used for localisation
+## 1. `en-US.json` is the only file you edit for new or changed strings
 
-There are two folders for localisation files `libs/sdk-ui/src/base/localization/bundles` and `libs/sdk-ui-dashboard/src/presentation/localization/bundles`. In these folders there are all localisation files for more languages. **For updating locales, we must do changes only into `en-US.json` file.** Others files are automatically update by company, that create translations.
+Localisation bundles live next to the code that uses them, for example
+`sdk/libs/sdk-ui/src/base/localization/bundles`,
+`sdk/libs/sdk-ui-dashboard/src/presentation/localization/bundles`,
+`libs/<app>/src/translations` and `modules/<module>/module/src/translations`.
+Each folder holds `en-US.json` plus one file per target locale. `crowdin.yml`
+in the repo root is the authoritative list of source files.
+
+**Only `en-US.json` is hand-written.** Every other locale file is generated
+output of the post-merge translation pipeline:
+
+1. You add or change a key in `en-US.json` and merge the PR to `master`.
+2. A daily workflow uploads the changed strings to Crowdin, harvests context
+   for them and pre-translates them.
+3. A second workflow downloads the approved translations and opens its own PR
+   against `master`, usually within the next business day.
+
+What follows from this:
+
+- **Never copy a new key into `de-DE.json`, `fr-FR.json`, ... in a feature
+  PR.** The next translation download overwrites those files, so the copied
+  English is discarded. It also hides the missing string from Crowdin coverage
+  reports in the meantime.
+- **A new key present only in `en-US.json` is the expected state of a feature
+  PR.** Until the translation PR lands, a non-English UI shows the message id
+  (or its `defaultMessage`) for that one string. This is accepted; it is not a
+  review finding, and editing locale files does not fix it. If a string must be
+  translated sooner, request an on-demand pipeline run — see
+  [`.claude/l10n-workflow.md`](../../.claude/l10n-workflow.md).
+- **The single exception is moving an already-translated key** between bundles
+  (renaming or splitting a bundle file). Crowdin sees only a deletion plus a
+  brand-new string, so it cannot carry the translation over. Move such keys in
+  every locale file of the same PR.
+- `*.localization-bundle.ts` files are generated at build time. Do not edit
+  them; changes are lost on the next build.
 
 ## 2. Structure of localisation json file
 
-Localisation `*.json` has defined schema and properties what needs to be defined for every message in json file. There is example of file with one location message.
+Write every new message as a key mapped to an object — in every bundle whose
+loader calls `removeMetadata`, which is all of them bar the one exception noted
+below. The schema is enforced by
+`@gooddata/i18n-toolkit`
+([`sdk/tools/i18n-toolkit/src/schema/localization.ts`](../tools/i18n-toolkit/src/schema/localization.ts)),
+which rejects unknown properties, so only the three below are valid.
 
 ```json
 {
-  "id.of.local.message": {
-    //REQUIRED. This is value of message, that will shows in gui.
-    "value": "value",
-    //REQUIRED. Some comment and explanation what this message means. Read more info bellow.
-    "comment": "comment",
-    //Mark for translate by external company. Read more info bellow
-    "translate": false
-  },
-  ...
+    "id.of.local.message": {
+        "text": "Save",
+        "crowdinContext": "Label of the primary save button in the toolbar. Keep it short.",
+        "translate": false
+    }
 }
 ```
 
-### Property `comment`
+| Property         | Required | Purpose                                                                   |
+| ---------------- | -------- | ------------------------------------------------------------------------- |
+| `text`           | Yes      | The English string shown in the GUI. Use ICU MessageFormat for variables. |
+| `crowdinContext` | Yes      | Context for the external translators. See the caveat below.               |
+| `translate`      | No       | Defaults to `true`. Set `false` to keep a string out of translation.      |
 
-Comment property is intended to use for some explanation, describing of context or other message for external translators. It is necessary to use this comment property to describe where is this string used, in which context and similar important descriptions. External translators
-can easily understand context of message and will be easy to them translate it correctly.
+A value may also be a **bare string**, and tooling has to accept that. It is the
+form of every exported target locale file, and a few legacy entries in
+`en-US.json` still use it (3 in `libs/gdc-analytical-designer-runtime`, 1 in
+`sdk/libs/sdk-ui`). Those carry no `crowdinContext` and get no `.text` suffix in
+Crowdin.
 
-> **Caveats about `comment`**
+Which form to **write** depends on how the bundle is consumed. A loader that
+calls `removeMetadata` unwraps the object into a plain message map, so the
+object form is required there — that is every bundle registered in
+`crowdin.yml`. `libs/gdc-datasource-management` is the exception: its
+`src/with-intl.tsx` passes the imported JSON straight to `IntlProvider` as
+`messages`, with no `removeMetadata`, so its entries must be bare strings or
+React Intl cannot read them. Match the bundle you are editing; do not
+introduce the bare-string form into a bundle whose loader unwraps metadata.
+
+### Property `crowdinContext`
+
+Use this property to explain where the string is used and in which context.
+External translators read it to translate the string correctly.
+
+> **Caveats about `crowdinContext`**
 >
-> Always fill this property and try to describe usage very precisely. External translators can raise some questions if they are not sure how to correctly translate message and took long time and lots of effort to communicate this context!
+> Always fill this property, and describe the usage precisely. Otherwise the
+> external translators raise questions, which takes a long time to answer.
 
 ### Property `translate`
 
-Translate property is used for marking text that are not intended for translation. Can be for example some private thing used for errors that we want to translate for user or translations that are not approved yet.
+Use this property to mark strings that must not be translated, for example an
+internal error message, or a string that is not final yet.
 
-**Default value `true`** True is a default value and don't need to be specified. Use only `translate: false` if you don't want to translate this specific message.
+**Default value `true`.** True is the default and you do not need to specify it.
+Use `translate: false` only if you do not want to translate the message.
 
 > **Caveats about `translate`**
 >
-> Use this property for translations that are not final! If you don't do this, external company start translating this string, and it's a waste of effort and money to translate something that is not final!
+> Use this property for strings that are not final. Otherwise the external
+> company starts to translate a string that can still change, which wastes
+> effort and money.
 
 ## 3. Using right intl wrapper
 
-Because there are two localisation bundles, we need to import right intl wrapper from right module.
+Because the SDK has two localisation bundles, we need to import right intl wrapper from right module.
 
 ### Working inside `sdk-ui-dashboard` module?
 

@@ -8,6 +8,7 @@ import {
     DashboardsApi_GetAllEntitiesAnalyticalDashboards,
     EntitiesApi_CreateEntityComputedAttributes,
     EntitiesApi_DeleteEntityComputedAttributes,
+    EntitiesApi_GetAllEntitiesComputedAttributes,
     EntitiesApi_GetAllEntitiesMetrics,
     EntitiesApi_GetAllEntitiesVisualizationObjects,
     EntitiesApi_GetEntityComputedAttributes,
@@ -195,9 +196,10 @@ export class TigerWorkspaceComputedAttributes implements IWorkspaceComputedAttri
     public async getComputedAttributeReferencingObjects(ref: ObjRef): Promise<IComputedAttributeReferencing> {
         const id = objRefToIdentifier(ref, this.authCall);
 
-        // Visualizations grouping by the computed attribute, metrics that reference it, and
-        // dashboards that filter by it or embed those visualizations. The backend allows the
-        // delete; the catalog refuses it and lists these titles instead.
+        // Visualizations grouping by the computed attribute, metrics that reference it,
+        // dashboards that filter by it or embed those visualizations, and other computed
+        // attributes whose MAQL references it. The backend allows the delete; the catalog
+        // refuses it and lists these titles instead.
         const insights = this.authCall((client) =>
             MetadataUtilities.getAllPagesOf(client, EntitiesApi_GetAllEntitiesVisualizationObjects, {
                 workspaceId: this.workspace,
@@ -223,7 +225,25 @@ export class TigerWorkspaceComputedAttributes implements IWorkspaceComputedAttri
                 ),
         );
 
-        const [insightList, measureList] = await Promise.all([insights, measures]);
+        // Other computed attributes whose own MAQL references this one.
+        const computedAttributes = this.authCall((client) =>
+            MetadataUtilities.getAllPagesOf(client, EntitiesApi_GetAllEntitiesComputedAttributes, {
+                workspaceId: this.workspace,
+                filter: `computedAttributes.id==${id}`,
+            })
+                .then(MetadataUtilities.mergeEntitiesResults)
+                .then((computedAttributes) =>
+                    computedAttributes.data.map((computedAttribute) =>
+                        convertComputedAttributeFromBackend(computedAttribute, computedAttributes.included),
+                    ),
+                ),
+        );
+
+        const [insightList, measureList, computedAttributeList] = await Promise.all([
+            insights,
+            measures,
+            computedAttributes,
+        ]);
 
         const dashboardFilterParts = [`labels.id==${id}`];
         if (insightList.length > 0) {
@@ -245,7 +265,12 @@ export class TigerWorkspaceComputedAttributes implements IWorkspaceComputedAttri
                 ),
         );
 
-        return { insights: insightList, measures: measureList, analyticalDashboards };
+        return {
+            insights: insightList,
+            measures: measureList,
+            analyticalDashboards,
+            computedAttributes: computedAttributeList,
+        };
     }
 
     public getComputedAttributesQuery(): ComputedAttributesQuery {

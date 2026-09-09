@@ -547,8 +547,18 @@ rushx build
 ## Adding translations
 
 1. Add keys to \`src/translations/en-US.json\` with \`{ "text": "...", "crowdinContext": "..." }\` format.
-2. Copy the new keys to all other locale JSON files (they start as en-US copies; translators update them later).
-3. The \`translations.ts\` async loader and \`Record<ILocale, ...>\` type ensure every locale is covered at build time.
+2. Do **not** add the keys to the other locale JSON files. They are owned by the
+   post-merge Crowdin pipeline, which overwrites any manual edit on its next
+   download. A key that exists only in \`en-US.json\` is the expected state of a
+   feature PR; the translation PR adds the other locales, usually within the
+   next business day. See \`sdk/dev_docs/localisation.md\` and
+   \`.claude/l10n-workflow.md\`.
+3. Make sure the module's \`en-US.json\` is listed in the root \`crowdin.yml\`, or
+   its strings are never uploaded for translation.
+4. The \`translations.ts\` async loader and \`Record<ILocale, ...>\` type ensure a
+   JSON file exists for every locale at build time. They do not check that each
+   file contains every key — missing keys fall back to the message id until the
+   pipeline fills them.
 
 ## Localization enforcement
 

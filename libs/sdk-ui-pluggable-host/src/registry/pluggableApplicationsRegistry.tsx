@@ -176,10 +176,11 @@ function toPluggableApplicationOrganizationPermissions(
     };
 }
 
-// Embedded mode forces the shell flags on so each remote becomes eligible and its legacy-external
-// twin (which requires the flag false) drops out — exactly one survives. Non-embedded is untouched.
+// Forces the two shell flags on. A flag source that cannot be reached resolves them false, which
+// leaves only the legacy external twin eligible; route matching skips external apps, so an embedded
+// or export URL would then match nothing.
 function settingsForRequirements(ctx: IPlatformContext): IPlatformContext["settings"] {
-    if (ctx.embeddingMode !== "iframe") {
+    if (ctx.embeddingMode !== "iframe" && ctx.isExportMode !== true) {
         return ctx.settings;
     }
     return {
@@ -248,8 +249,8 @@ function filterByScope(
 }
 
 /**
- * Returns true when the platform context indicates that access to the standard (local) apps is not
- * restricted. Otherwise, the user must have BASE_UI_ACCESS organization permission.
+ * Drops the standard (local) applications when `restrictBaseUi` is set and the user lacks the
+ * BASE_UI_ACCESS organization permission.
  *
  * BASE_UI_ACCESS is a platform-wide organization permission that gates visibility of all
  * standard (local) applications. Remote applications are not subject to this check because
@@ -294,7 +295,7 @@ interface IResolveApplicationsOptions {
  * 4. Apply overrides from the remote registry to the merged list
  * 5. Filter out disabled applications (isEnabled: false)
  * 6. Filter by application scope - keep only apps whose applicationScope matches scope; if scope is undefined, no apps pass through
- * 7. Filter by requirements - check requiredSettings, requiredWorkspacePermissions, requiredOrganizationPermissions, and requiredEntitlements
+ * 7. Filter by requirements - check requiredSettings, requiredWorkspacePermissions, requiredOrganizationPermissions, and requiredEntitlements (embedded and export modes force the shell application flags on)
  * 8. Sort by menuOrder (ascending)
  *
  * @param options - Resolution options; see {@link IResolveApplicationsOptions}

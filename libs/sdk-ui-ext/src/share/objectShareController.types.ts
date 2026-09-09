@@ -136,12 +136,14 @@ export interface IObjectShareControllerState {
     granteeControlsLocked: boolean;
     /**
      * Display pair for the synthesized administrator self row, or undefined when
-     * no such row applies. Set while the DISPLAYED list is empty for a caller whose
-     * list loaded without a grant of their own and no workspace-wide share-capable
-     * rule explains the access — they can only have passed the backend's gate
-     * through administrator/manager rights. Adding a grantee hides the row;
-     * removing the last one brings it back. (Derived from the immutable seed:
-     * removing your own grant empties the list but never synthesizes this row.)
+     * no such row applies. Set for a confirmed workspace manager with no row of their
+     * own in the list — their access comes from the role, and the row shows it however
+     * many other grantees are listed. Any row of theirs takes its place, whether granted
+     * here (by another manager, or listed by the backend) or inherited from a group or a
+     * parent workspace; once no such row remains, the synthesized one returns. Never set
+     * while the manager permission is unknown: a badge that guesses wrong brands a plain
+     * SHARE holder an administrator, so a failed read shows no row (on an unshared
+     * object, an empty list).
      *
      * Also set for the whole of a draft, where the caller will own what they create — the
      * list is theirs either way, so the row holds as grantees are added.

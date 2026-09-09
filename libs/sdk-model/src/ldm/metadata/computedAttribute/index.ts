@@ -22,6 +22,22 @@ export type ComputedAttributeDataType =
     | "HLL";
 
 /**
+ * Specific type of the computed attribute values, the counterpart of a label value type.
+ *
+ * @public
+ */
+export type ComputedAttributeValueType =
+    | "TEXT"
+    | "HYPERLINK"
+    | "GEO"
+    | "GEO_LONGITUDE"
+    | "GEO_LATITUDE"
+    | "GEO_AREA"
+    | "GEO_ICON"
+    | "IMAGE"
+    | "HYPERLOGLOG";
+
+/**
  * @public
  */
 export interface IComputedAttributeMetadataObjectBase {
@@ -47,6 +63,11 @@ export interface IComputedAttributeMetadataObjectBase {
      * Data type of the computed values.
      */
     dataType?: ComputedAttributeDataType;
+
+    /**
+     * Specific type of the computed values (hyperlink, image, geo, ...).
+     */
+    valueType?: ComputedAttributeValueType;
 
     /**
      * Whether the computed values may contain nulls.

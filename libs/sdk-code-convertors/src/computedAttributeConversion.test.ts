@@ -29,15 +29,13 @@ function makeDeclarative(
         description: "",
         tags: [],
         content: { maql: BUCKETING_MAQL },
-        dataType: "STRING",
-        valueType: "TEXT",
         ...overrides,
     } as DeclarativeComputedAttribute;
 }
 
 describe("computed attribute conversion", () => {
     describe("yamlComputedAttributeToDeclarative", () => {
-        it("should convert the minimal definition and default the value type", () => {
+        it("should convert the minimal definition and leave the typing to the backend defaults", () => {
             const result = yamlComputedAttributeToDeclarative(makeYaml());
 
             expect(result).toEqual({
@@ -47,9 +45,40 @@ describe("computed attribute conversion", () => {
                 description: "",
                 tags: [],
                 content: { maql: BUCKETING_MAQL },
-                dataType: "STRING",
-                valueType: "TEXT",
             });
+        });
+
+        it("should pass through the typing, formatting and nullability fields", () => {
+            const result = yamlComputedAttributeToDeclarative(
+                makeYaml({
+                    format: "#,##0.00",
+                    metric_type: "CURRENCY",
+                    data_type: "NUMERIC",
+                    value_type: "HYPERLINK",
+                    is_nullable: true,
+                    null_value_join_replacement: "N/A",
+                }),
+            );
+
+            expect(result).toMatchObject({
+                content: { maql: BUCKETING_MAQL, format: "#,##0.00", metricType: "CURRENCY" },
+                dataType: "NUMERIC",
+                valueType: "HYPERLINK",
+                isNullable: true,
+                nullValue: "N/A",
+            });
+        });
+
+        it("should map show_in_ai_results onto isHidden", () => {
+            expect(yamlComputedAttributeToDeclarative(makeYaml({ show_in_ai_results: false }))).toMatchObject(
+                {
+                    isHidden: true,
+                },
+            );
+            expect(yamlComputedAttributeToDeclarative(makeYaml({ show_in_ai_results: true }))).toMatchObject({
+                isHidden: false,
+            });
+            expect(yamlComputedAttributeToDeclarative(makeYaml())).not.toHaveProperty("isHidden");
         });
 
         it("should keep the explicit title, description, tags and locale", () => {
@@ -86,11 +115,48 @@ describe("computed attribute conversion", () => {
             expect(json.maql).toEqual(BUCKETING_MAQL);
         });
 
-        it("should not write out the data and value type defaults", () => {
+        it("should not write out the typing and formatting fields the backend did not set", () => {
             const { content } = declarativeComputedAttributeToYaml(makeDeclarative());
 
-            expect(content).not.toContain("dataType");
-            expect(content).not.toContain("valueType");
+            expect(content).not.toContain("data_type");
+            expect(content).not.toContain("value_type");
+            expect(content).not.toContain("format");
+            expect(content).not.toContain("metric_type");
+            expect(content).not.toContain("is_nullable");
+            expect(content).not.toContain("null_value_join_replacement");
+            expect(content).not.toContain("show_in_ai_results");
+        });
+
+        it("should write out the typing, formatting and nullability fields", () => {
+            const { json } = declarativeComputedAttributeToYaml(
+                makeDeclarative({
+                    content: { maql: BUCKETING_MAQL, format: "#,##0.00", metricType: "CURRENCY" },
+                    dataType: "NUMERIC",
+                    valueType: "HYPERLINK",
+                    isNullable: false,
+                    nullValue: "N/A",
+                }),
+            );
+
+            expect(json).toMatchObject({
+                format: "#,##0.00",
+                metric_type: "CURRENCY",
+                data_type: "NUMERIC",
+                value_type: "HYPERLINK",
+                is_nullable: false,
+                null_value_join_replacement: "N/A",
+            });
+        });
+
+        it("should write show_in_ai_results only when hidden", () => {
+            expect(
+                declarativeComputedAttributeToYaml(makeDeclarative({ isHidden: true })).json,
+            ).toMatchObject({
+                show_in_ai_results: false,
+            });
+            expect(
+                declarativeComputedAttributeToYaml(makeDeclarative({ isHidden: false })).json,
+            ).not.toHaveProperty("show_in_ai_results");
         });
 
         it("should write out locale when the backend has one", () => {
@@ -106,6 +172,23 @@ describe("computed attribute conversion", () => {
     describe("round trip", () => {
         it("should survive declarative -> yaml -> declarative unchanged", () => {
             const original = makeDeclarative({ description: "Reps bucketed", tags: ["Sales"] });
+
+            const { json } = declarativeComputedAttributeToYaml(original);
+            const result = yamlComputedAttributeToDeclarative(json);
+
+            expect(result).toEqual(original);
+        });
+
+        it("should survive declarative -> yaml -> declarative with every optional field set", () => {
+            const original = makeDeclarative({
+                content: { maql: BUCKETING_MAQL, format: "#,##0.00", metricType: "CURRENCY" },
+                dataType: "NUMERIC",
+                valueType: "HYPERLINK",
+                isNullable: true,
+                nullValue: "N/A",
+                isHidden: true,
+                locale: "cs-CZ",
+            });
 
             const { json } = declarativeComputedAttributeToYaml(original);
             const result = yamlComputedAttributeToDeclarative(json);

@@ -75,7 +75,7 @@
         },
         "parameterDefinition": {
             "title": "Parameter Definition",
-            "description": "A typed parameter definition. Only textual parameters are supported as code.",
+            "description": "A typed parameter definition: textual or numeric.",
             "allOf": [
                 {
                     "if": {
@@ -89,15 +89,64 @@
                     "then": {
                         "$ref": "#/$defs/stringParameterDefinition"
                     }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "const": "NUMBER"
+                            }
+                        },
+                        "required": ["type"]
+                    },
+                    "then": {
+                        "$ref": "#/$defs/numberParameterDefinition"
+                    }
                 }
             ],
             "properties": {
                 "type": {
                     "type": "string",
-                    "enum": ["STRING"]
+                    "enum": ["STRING", "NUMBER"]
                 }
             },
             "required": ["type"]
+        },
+        "numberParameterDefinition": {
+            "title": "Number Parameter Definition",
+            "description": "A numeric parameter definition. Without 'constraints' the parameter accepts any number.",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["NUMBER"]
+                },
+                "defaultValue": {
+                    "type": "number",
+                    "description": "The value used whenever the parameter is not overridden."
+                },
+                "constraints": {
+                    "title": "Number Parameter Constraints",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "description": "Optional bounds the parameter value must satisfy.",
+                    "properties": {
+                        "min": {
+                            "type": "number",
+                            "description": "The smallest accepted value, inclusive."
+                        },
+                        "max": {
+                            "type": "number",
+                            "description": "The largest accepted value, inclusive."
+                        }
+                    }
+                }
+            },
+            "required": ["type", "defaultValue"],
+            "$semantic": {
+                "type": "parameter_constraints"
+            }
         },
         "stringParameterDefinition": {
             "title": "String Parameter Definition",

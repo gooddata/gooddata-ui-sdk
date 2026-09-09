@@ -22,8 +22,9 @@ import type { IMeasureExpressionToken } from "../measures/measure.js";
  * {@link IWorkspaceComputedAttributesService.getComputedAttributeReferencingObjects}.
  *
  * @remarks
- * Insights that group by the computed attribute, metrics that reference it, and dashboards that
- * filter by it or embed those insights are reported when the backend can resolve them.
+ * Insights that group by the computed attribute, metrics that reference it, dashboards that
+ * filter by it or embed those insights, and other computed attributes whose MAQL references it
+ * are reported when the backend can resolve them.
  *
  * @public
  */
@@ -32,6 +33,10 @@ export interface IComputedAttributeReferencing {
      * Dashboards that filter by the computed attribute or embed a visualization that uses it.
      */
     analyticalDashboards?: IMetadataObject[];
+    /**
+     * Other computed attributes whose MAQL definition references the computed attribute.
+     */
+    computedAttributes?: IMetadataObject[];
     /**
      * Visualizations that group by the computed attribute.
      */

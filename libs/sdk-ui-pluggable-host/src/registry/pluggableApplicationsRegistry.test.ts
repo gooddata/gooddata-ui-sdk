@@ -465,9 +465,12 @@ describe("resolveApplications", () => {
         // affected by the BASE_UI_ACCESS gate.
         function ctxWith(overrides: {
             userSettings?: Record<string, unknown>;
+            settings?: Record<string, unknown>;
             workspacePermissions?: Record<string, unknown>;
             organizationPermissions?: Partial<IOrganizationPermissions> | null;
             entitlements?: Array<{ name: string; value?: string }>;
+            embeddingMode?: EmbeddingMode;
+            isExportMode?: boolean;
         }): IPlatformContext {
             const orgPermissions: IOrganizationPermissions | undefined =
                 overrides.organizationPermissions === null
@@ -488,13 +491,14 @@ describe("resolveApplications", () => {
                     ref: { identifier: "test-user", type: "user" },
                 },
                 userSettings,
-                settings: userSettings,
+                settings: { ...userSettings, ...overrides.settings },
                 workspacePermissions:
                     overrides.workspacePermissions as IPlatformContext["workspacePermissions"],
                 organizationPermissions: orgPermissions,
                 entitlements: overrides.entitlements as IPlatformContext["entitlements"],
                 whiteLabeling: undefined,
-                embeddingMode: "none" as EmbeddingMode,
+                embeddingMode: overrides.embeddingMode ?? "none",
+                isExportMode: overrides.isExportMode,
             };
         }
 
@@ -709,6 +713,23 @@ describe("resolveApplications", () => {
                 expect(result).toHaveLength(0);
             });
 
+            it("drops an app whose workspace permission is missing even on an export", () => {
+                const result = resolveApplications({
+                    localApps: [
+                        externalApp({
+                            id: "a",
+                            menuOrder: 1,
+                            requiredWorkspacePermissions: { canViewWorkspace: true },
+                        }),
+                    ],
+                    remoteRegistry: undefined,
+                    ctx: ctxWith({ isExportMode: true }),
+                    scope: "workspace",
+                });
+
+                expect(result).toHaveLength(0);
+            });
+
             it("excludes app when required permission is false", () => {
                 const local = [
                     externalApp({
@@ -909,6 +930,118 @@ describe("resolveApplications", () => {
                 });
 
                 expect(result.map((a) => a.id)).toEqual(["remote-x"]);
+            });
+        });
+
+        describe("shell flag exemptions", () => {
+            function dashboardsPair() {
+                return [
+                    externalApp({
+                        id: "dashboards",
+                        menuOrder: 1,
+                        requiredSettings: { enableShellApplication_dashboards: true },
+                    }),
+                    externalApp({
+                        id: "dashboards-legacy",
+                        menuOrder: 1,
+                        requiredSettings: { enableShellApplication_dashboards: false },
+                    }),
+                ];
+            }
+
+            function analyticalDesignerPair() {
+                return [
+                    externalApp({
+                        id: "analytical-designer",
+                        menuOrder: 1,
+                        requiredSettings: { enableShellApplication_analyticalDesigner: true },
+                    }),
+                    externalApp({
+                        id: "analytical-designer-legacy",
+                        menuOrder: 1,
+                        requiredSettings: { enableShellApplication_analyticalDesigner: false },
+                    }),
+                ];
+            }
+
+            it("keeps the legacy app when the flag is absent on an ordinary page", () => {
+                const result = resolveApplications({
+                    localApps: dashboardsPair(),
+                    remoteRegistry: undefined,
+                    ctx: ctxWith({ userSettings: {} }),
+                    scope: "workspace",
+                });
+
+                expect(result.map((a) => a.id)).toEqual(["dashboards-legacy"]);
+            });
+
+            it("keeps the shell app when the flag is absent and the page is an export", () => {
+                const result = resolveApplications({
+                    localApps: dashboardsPair(),
+                    remoteRegistry: undefined,
+                    ctx: ctxWith({ userSettings: {}, isExportMode: true }),
+                    scope: "workspace",
+                });
+
+                expect(result.map((a) => a.id)).toEqual(["dashboards"]);
+            });
+
+            it("keeps the shell app when the flag is false and the page is an export", () => {
+                const result = resolveApplications({
+                    localApps: dashboardsPair(),
+                    remoteRegistry: undefined,
+                    ctx: ctxWith({
+                        userSettings: { enableShellApplication_dashboards: true },
+                        settings: { enableShellApplication_dashboards: false },
+                        isExportMode: true,
+                    }),
+                    scope: "workspace",
+                });
+
+                expect(result.map((a) => a.id)).toEqual(["dashboards"]);
+            });
+
+            it("keeps the shell app when the flag is absent and the page is embedded", () => {
+                const result = resolveApplications({
+                    localApps: dashboardsPair(),
+                    remoteRegistry: undefined,
+                    ctx: ctxWith({ userSettings: {}, embeddingMode: "iframe" }),
+                    scope: "workspace",
+                });
+
+                expect(result.map((a) => a.id)).toEqual(["dashboards"]);
+            });
+
+            it("keeps the shell analytical designer when its flag is absent on an export", () => {
+                const result = resolveApplications({
+                    localApps: analyticalDesignerPair(),
+                    remoteRegistry: undefined,
+                    ctx: ctxWith({ userSettings: {}, isExportMode: true }),
+                    scope: "workspace",
+                });
+
+                expect(result.map((a) => a.id)).toEqual(["analytical-designer"]);
+            });
+
+            it("preserves workspace settings for flags it does not force", () => {
+                const result = resolveApplications({
+                    localApps: [
+                        externalApp({
+                            id: "a",
+                            menuOrder: 1,
+                            requiredSettings: { enableDataSection: true },
+                        }),
+                    ],
+                    remoteRegistry: undefined,
+                    ctx: ctxWith({
+                        userSettings: {},
+                        settings: { enableDataSection: true },
+                        isExportMode: true,
+                    }),
+                    scope: "workspace",
+                });
+
+                expect(result.map((a) => a.id)).toEqual(["a"]);
             });
         });
 

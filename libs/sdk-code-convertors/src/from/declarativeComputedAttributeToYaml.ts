@@ -26,10 +26,35 @@ export function declarativeComputedAttributeToYaml(computedAttribute: Declarativ
     fillOptionalMetaFields(doc, computedAttribute);
 
     // Add MAQL field
-    doc.add(entryWithSpace("maql", (computedAttribute.content as any).maql ?? ""));
+    doc.add(entryWithSpace("maql", computedAttribute.content.maql ?? ""));
 
-    // dataType and valueType are deliberately not written out - they are backend defaults the YAML
-    // shape does not expose (see yamlComputedAttributeToDeclarative)
+    // Add formatting of the computed values
+    if (computedAttribute.content.format) {
+        doc.add(doc.createPair("format", computedAttribute.content.format));
+    }
+    if (computedAttribute.content.metricType) {
+        doc.add(doc.createPair("metric_type", computedAttribute.content.metricType));
+    }
+
+    // Add typing of the computed values
+    if (computedAttribute.dataType) {
+        doc.add(doc.createPair("data_type", computedAttribute.dataType));
+    }
+    if (computedAttribute.valueType) {
+        doc.add(doc.createPair("value_type", computedAttribute.valueType));
+    }
+    if (computedAttribute.isNullable !== undefined) {
+        doc.add(doc.createPair("is_nullable", computedAttribute.isNullable));
+    }
+    if (computedAttribute.nullValue !== undefined) {
+        doc.add(doc.createPair("null_value_join_replacement", computedAttribute.nullValue));
+    }
+
+    // Add visibility flag only when hidden
+    if (computedAttribute.isHidden === true) {
+        doc.add(doc.createPair("show_in_ai_results", false));
+    }
+
     if (computedAttribute.locale) {
         doc.add(doc.createPair("locale", computedAttribute.locale));
     }

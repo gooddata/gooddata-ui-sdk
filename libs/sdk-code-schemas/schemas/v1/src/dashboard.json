@@ -348,10 +348,16 @@
                     "description": "A list of dashboard filters to be ignored for this widget",
                     "items": {
                         "type": "string",
-                        "description": "An id of the dashboard label, attribute, metric or date to be ignored",
+                        "description": "An id of the dashboard label, attribute, computed attribute, metric or date to be ignored",
                         "$semantic": {
                             "type": "reference",
-                            "sources": ["dateDataset.id", "attribute.id", "label.id", "metric.id"],
+                            "sources": [
+                                "dateDataset.id",
+                                "attribute.id",
+                                "label.id",
+                                "computedAttribute.id",
+                                "metric.id"
+                            ],
                             "typePrefix": true
                         }
                     }
@@ -869,6 +875,9 @@
                                 },
                                 {
                                     "$ref": "/gaac/labelIdentifier"
+                                },
+                                {
+                                    "$ref": "/gaac/computedAttributeIdentifier"
                                 }
                             ]
                         },
@@ -880,6 +889,9 @@
                                 },
                                 {
                                     "$ref": "/gaac/labelIdentifier"
+                                },
+                                {
+                                    "$ref": "/gaac/computedAttributeIdentifier"
                                 }
                             ]
                         }

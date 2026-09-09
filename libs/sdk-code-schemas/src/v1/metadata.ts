@@ -47,9 +47,21 @@ export type Id1 = string;
 export type CompositePrimaryKey = Id1[];
 export type Tags1 = string[];
 /**
+ * Locale string in BCP 47 format used for default label sorting.
+ */
+export type Locale = string;
+/**
  * A list of strings - metadata tags of this label.
  */
 export type Tags2 = string[];
+/**
+ * Locale string in BCP 47 format used for default label sorting.
+ */
+export type Locale1 = string;
+/**
+ * Locale string in BCP 47 format that identifies the translation.
+ */
+export type Locale2 = string;
 export type Tags3 = string[];
 export type Tags4 = string[];
 export type SourceColumn = string;
@@ -127,6 +139,10 @@ export type Id8 = string;
  */
 export type Tags9 = string[];
 /**
+ * An optional locale in BCP 47 format (for example en-US) whose collation order the computed values are sorted by.
+ */
+export type Locale3 = string;
+/**
  * JSON schema for Gooddata Analytics
  */
 export type Metadata15 = Metadata16 & Metadata17;
@@ -186,6 +202,10 @@ export type AttributeIdentifier = string;
  */
 export type LabelIdentifier = string;
 /**
+ * An ID of the attribute that holds the url to be opened on interaction
+ */
+export type ComputedAttributeIdentifier = string;
+/**
  * An id of the attribute that holds the label for the url to be opened on interaction
  */
 export type AttributeIdentifier1 = string;
@@ -193,6 +213,10 @@ export type AttributeIdentifier1 = string;
  * An id of the attribute that holds the label for the url to be opened on interaction
  */
 export type LabelIdentifier1 = string;
+/**
+ * An id of the attribute that holds the label for the url to be opened on interaction
+ */
+export type ComputedAttributeIdentifier1 = string;
 /**
  * An interaction for current widget.
  */
@@ -289,7 +313,7 @@ export type DashboardAttributeFilter1 =
           /**
            * Attribute or label to use in this filter.
            */
-          using?: AttributeIdentifier2 | LabelIdentifier2;
+          using?: AttributeIdentifier2 | LabelIdentifier2 | ComputedAttributeIdentifier2;
           /**
            * Whether the filter should allow multiple selection
            */
@@ -325,7 +349,7 @@ export type DashboardAttributeFilter1 =
           /**
            * Attribute or label to use in this filter.
            */
-          using?: AttributeIdentifier3 | LabelIdentifier3;
+          using?: AttributeIdentifier3 | LabelIdentifier3 | ComputedAttributeIdentifier3;
           /**
            * Whether the filter should allow multiple selection
            */
@@ -361,6 +385,10 @@ export type AttributeIdentifier2 = string;
  */
 export type LabelIdentifier2 = string;
 /**
+ * Attribute or label to use in this filter.
+ */
+export type ComputedAttributeIdentifier2 = string;
+/**
  * Configures the label used for representing attribute filter elements in UI.
  */
 export type DisplayAsLabelIdentifier = string;
@@ -376,6 +404,10 @@ export type AttributeIdentifier3 = string;
  * Attribute or label to use in this filter.
  */
 export type LabelIdentifier3 = string;
+/**
+ * Attribute or label to use in this filter.
+ */
+export type ComputedAttributeIdentifier3 = string;
 /**
  * If specified, the attribute filter will display the elements in selected label form.
  */
@@ -397,6 +429,10 @@ export type AttributeIdentifier4 = string;
  */
 export type LabelIdentifier4 = string;
 /**
+ * Attribute or label to use in this filter.
+ */
+export type ComputedAttributeIdentifier4 = string;
+/**
  * Configures the label used for representing attribute filter elements in UI.
  */
 export type DisplayAsLabelIdentifier2 = string;
@@ -412,6 +448,10 @@ export type AttributeIdentifier5 = string;
  * Attribute or label to use in this filter.
  */
 export type LabelIdentifier5 = string;
+/**
+ * Attribute or label to use in this filter.
+ */
+export type ComputedAttributeIdentifier5 = string;
 /**
  * Configures the label used for representing attribute filter elements in UI.
  */
@@ -474,11 +514,15 @@ export type Tags13 = string[];
 /**
  * The typed definition of the parameter - its data type, default value and constraints.
  */
-export type ParameterDefinition = ParameterDefinition1;
+export type ParameterDefinition = ParameterDefinition1 | ParameterDefinition2;
 /**
- * A typed parameter definition. Only textual parameters are supported as code.
+ * A typed parameter definition: textual or numeric.
  */
 export type ParameterDefinition1 = StringParameterDefinition;
+/**
+ * A typed parameter definition: textual or numeric.
+ */
+export type ParameterDefinition2 = NumberParameterDefinition;
 /**
  * JSON schema for Gooddata Analytics
  */
@@ -527,7 +571,7 @@ export type Tags14 = string[];
  * This interface was referenced by `Fields3`'s JSON-Schema definition
  * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
  */
-export type Field = AttributeIdentifier7 | Field1 | Field2 | Field3 | StructuredField;
+export type Field = AttributeIdentifier7 | Field1 | Field2 | Field3 | Field4 | StructuredField;
 /**
  * A attribute identifier in the form of attribute/\{id\}.
  */
@@ -537,13 +581,17 @@ export type AttributeIdentifier7 = string;
  */
 export type Field1 = string;
 /**
- * A metric identifier in the form of metric/\{id\}.
+ * A computed attribute identifier in the form of computed_attribute/\{id\}.
  */
 export type Field2 = string;
 /**
- * A fact identifier in the form of fact/\{id\}.
+ * A metric identifier in the form of metric/\{id\}.
  */
 export type Field3 = string;
+/**
+ * A fact identifier in the form of fact/\{id\}.
+ */
+export type Field4 = string;
 export type StructuredField =
     | AttributeFieldGuard
     | MetricFieldGuard
@@ -561,6 +609,10 @@ export type AttributeIdentifier8 = string;
  * Attribute or label identifier to use for this field.
  */
 export type LabelIdentifier6 = string;
+/**
+ * Attribute or label identifier to use for this field.
+ */
+export type ComputedAttributeIdentifier6 = string;
 /**
  * Attribute or label identifier to use for this field.
  */
@@ -639,6 +691,10 @@ export type AttributeIdentifier9 = string;
  */
 export type LabelIdentifier7 = string;
 /**
+ * Attribute or label to use in this filter.
+ */
+export type ComputedAttributeIdentifier7 = string;
+/**
  * Configures the label used for representing attribute filter elements in UI.
  */
 export type DisplayAsLabelIdentifier4 = string;
@@ -680,6 +736,10 @@ export type AttributeIdentifier10 = string;
  */
 export type LabelIdentifier8 = string;
 /**
+ * Attribute or label to use in this filter.
+ */
+export type ComputedAttributeIdentifier8 = string;
+/**
  * Configures the label used for representing attribute filter elements in UI.
  */
 export type DisplayAsLabelIdentifier5 = string;
@@ -691,6 +751,10 @@ export type AttributeIdentifier11 = string;
  * Attribute or label to use in this filter.
  */
 export type LabelIdentifier9 = string;
+/**
+ * Attribute or label to use in this filter.
+ */
+export type ComputedAttributeIdentifier9 = string;
 /**
  * Configures the label used for representing attribute filter elements in UI.
  */
@@ -710,6 +774,10 @@ export type RangeCondition = RangeCondition1;
  * A label identifier in the form of label/\{id\}.
  */
 export type LabelIdentifier10 = string;
+/**
+ * A computed attribute identifier in the form of computed_attribute/\{id\}.
+ */
+export type ComputedAttributeIdentifier10 = string;
 export type Comparison = Comparison1;
 /**
  * Metric or local metric to use in this filter.
@@ -739,6 +807,10 @@ export type MetricIdentifier4 = string;
  */
 export type LabelIdentifier11 = string;
 /**
+ * A computed attribute identifier in the form of computed_attribute/\{id\}.
+ */
+export type ComputedAttributeIdentifier11 = string;
+/**
  * Metric identifier to use for this filter.
  */
 export type MetricIdentifier5 = string;
@@ -746,6 +818,10 @@ export type MetricIdentifier5 = string;
  * A label identifier in the form of label/\{id\}.
  */
 export type LabelIdentifier12 = string;
+/**
+ * A computed attribute identifier in the form of computed_attribute/\{id\}.
+ */
+export type ComputedAttributeIdentifier12 = string;
 export type Filter6 = {
     [k: string]: unknown;
 };
@@ -780,6 +856,10 @@ export type AttributeIdentifier13 = string;
  * Local attribute or label to use in this sort.
  */
 export type LabelIdentifier14 = string;
+/**
+ * Local attribute or label to use in this sort.
+ */
+export type ComputedAttributeIdentifier13 = string;
 export type Sort2 = MetricSort;
 /**
  * A attribute identifier in the form of attribute/\{id\}.
@@ -789,6 +869,10 @@ export type AttributeIdentifier14 = string;
  * Local attribute or label to use in this sort.
  */
 export type LabelIdentifier15 = string;
+/**
+ * Local attribute or label to use in this sort.
+ */
+export type ComputedAttributeIdentifier14 = string;
 export type Sort3 = {
     [k: string]: unknown;
 };
@@ -1296,10 +1380,7 @@ export interface Attribute {
      * Deprecated. Use 'show_in_ai_results' instead.
      */
     is_hidden?: boolean;
-    /**
-     * Locale string in BCP 47 format used for default label sorting.
-     */
-    locale?: string;
+    locale?: Locale;
     /**
      * Optional flag to indicate if the attribute can contain null values.
      */
@@ -1353,10 +1434,7 @@ export interface Label {
      * Deprecated. Use 'show_in_ai_results' instead.
      */
     is_hidden?: boolean;
-    /**
-     * Locale string in BCP 47 format used for default label sorting.
-     */
-    locale?: string;
+    locale?: Locale1;
     /**
      * Optional list of localized source columns for this label.
      */
@@ -1386,10 +1464,7 @@ export interface LabelTranslation {
      * Column that stores the localized label values.
      */
     source_column: string;
-    /**
-     * Locale string in BCP 47 format that identifies the translation.
-     */
-    locale: string;
+    locale: Locale2;
 }
 export interface Fact {
     type: "fact";
@@ -1826,9 +1901,43 @@ export interface ComputedAttribute {
      */
     maql: string;
     /**
-     * An optional locale whose collation order the computed values are sorted by.
+     * An optional Excel-like format string applied to the computed values.
      */
-    locale?: string;
+    format?: string;
+    /**
+     * An optional categorization of the computed values semantics, for example currency.
+     */
+    metric_type?: "UNSPECIFIED" | "CURRENCY";
+    /**
+     * An optional data type of the computed values. Defaults to STRING on the backend.
+     */
+    data_type?: "INT" | "STRING" | "DATE" | "NUMERIC" | "TIMESTAMP" | "TIMESTAMP_TZ" | "BOOLEAN" | "HLL";
+    /**
+     * An optional specific type of the computed values. Defaults to TEXT on the backend.
+     */
+    value_type?:
+        | "TEXT"
+        | "HYPERLINK"
+        | "GEO"
+        | "GEO_LONGITUDE"
+        | "GEO_LATITUDE"
+        | "GEO_AREA"
+        | "GEO_ICON"
+        | "IMAGE"
+        | "HYPERLOGLOG";
+    /**
+     * Optional flag to indicate if the computed attribute can contain null values.
+     */
+    is_nullable?: boolean;
+    /**
+     * Optional value which can be used as replacement for NULL in join conditions.
+     */
+    null_value_join_replacement?: string;
+    /**
+     * Optional flag to indicate if the computed attribute should be shown in AI results. When omitted, the computed attribute is visible.
+     */
+    show_in_ai_results?: boolean;
+    locale?: Locale3;
 }
 export interface Metadata16 {
     type:
@@ -2024,11 +2133,11 @@ export interface InteractionOpenParamUrl {
         /**
          * An ID of the attribute that holds the url to be opened on interaction
          */
-        href?: AttributeIdentifier | LabelIdentifier;
+        href?: AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier;
         /**
          * An id of the attribute that holds the label for the url to be opened on interaction
          */
-        label?: AttributeIdentifier1 | LabelIdentifier1;
+        label?: AttributeIdentifier1 | LabelIdentifier1 | ComputedAttributeIdentifier1;
         [k: string]: unknown;
     };
     ignored_intersection_attributes?: InteractionIgnoredIntersectionAttributes;
@@ -2258,7 +2367,7 @@ export interface DashboardTextFilter1 {
     /**
      * Attribute or label to use in this filter.
      */
-    using: AttributeIdentifier4 | LabelIdentifier4;
+    using: AttributeIdentifier4 | LabelIdentifier4 | ComputedAttributeIdentifier4;
     condition: "is" | "isNot";
     values: (string | null)[];
     case_sensitive?: boolean;
@@ -2308,7 +2417,7 @@ export interface DashboardTextFilter2 {
     /**
      * Attribute or label to use in this filter.
      */
-    using: AttributeIdentifier5 | LabelIdentifier5;
+    using: AttributeIdentifier5 | LabelIdentifier5 | ComputedAttributeIdentifier5;
     condition:
         | "contains"
         | "doesNotContain"
@@ -2572,6 +2681,30 @@ export interface ParameterAllowedValue {
      */
     title?: string;
 }
+/**
+ * A numeric parameter definition. Without 'constraints' the parameter accepts any number.
+ */
+export interface NumberParameterDefinition {
+    type: "NUMBER";
+    /**
+     * The value used whenever the parameter is not overridden.
+     */
+    defaultValue: number;
+    constraints?: NumberParameterConstraints;
+}
+/**
+ * Optional bounds the parameter value must satisfy.
+ */
+export interface NumberParameterConstraints {
+    /**
+     * The smallest accepted value, inclusive.
+     */
+    min?: number;
+    /**
+     * The largest accepted value, inclusive.
+     */
+    max?: number;
+}
 export interface Metadata28 {
     type:
         | "dataset"
@@ -2680,7 +2813,7 @@ export interface AttributeField {
     /**
      * Attribute or label identifier to use for this field.
      */
-    using: (AttributeIdentifier8 | LabelIdentifier6 | FactIdentifier) & string;
+    using: (AttributeIdentifier8 | LabelIdentifier6 | ComputedAttributeIdentifier6 | FactIdentifier) & string;
 }
 export interface AttributeFieldGuard1 {
     /**
@@ -2735,7 +2868,7 @@ export interface AttributeFilter {
     /**
      * Attribute or label to use in this filter.
      */
-    using: AttributeIdentifier9 | LabelIdentifier7;
+    using: AttributeIdentifier9 | LabelIdentifier7 | ComputedAttributeIdentifier7;
     display_as?: DisplayAsLabelIdentifier4;
     state?: State;
 }
@@ -2748,7 +2881,7 @@ export interface AttributeFilter1 {
     /**
      * Attribute or label to use in this filter.
      */
-    using: AttributeIdentifier9 | LabelIdentifier7;
+    using: AttributeIdentifier9 | LabelIdentifier7 | ComputedAttributeIdentifier7;
     display_as?: DisplayAsLabelIdentifier4;
     state?: State;
 }
@@ -2757,7 +2890,7 @@ export interface TextFilter1 {
     /**
      * Attribute or label to use in this filter.
      */
-    using: AttributeIdentifier10 | LabelIdentifier8;
+    using: AttributeIdentifier10 | LabelIdentifier8 | ComputedAttributeIdentifier8;
     condition: "is" | "isNot";
     values: (string | null)[];
     case_sensitive?: boolean;
@@ -2769,7 +2902,7 @@ export interface TextFilter2 {
     /**
      * Attribute or label to use in this filter.
      */
-    using: AttributeIdentifier11 | LabelIdentifier9;
+    using: AttributeIdentifier11 | LabelIdentifier9 | ComputedAttributeIdentifier9;
     condition:
         | "contains"
         | "doesNotContain"
@@ -2799,7 +2932,7 @@ export interface MultipleConditions1 {
     /**
      * Optional array of attribute or label references or local identifiers to apply dimensionality to the filter.
      */
-    dimensionality?: (LabelIdentifier10 | string)[];
+    dimensionality?: (LabelIdentifier10 | ComputedAttributeIdentifier10 | string)[];
 }
 export interface AllNoCondition1 {}
 export interface ComparisonCondition1 {
@@ -2853,7 +2986,7 @@ export interface Comparison1 {
     /**
      * Optional array of attribute or label references or local identifiers to apply dimensionality to the filter.
      */
-    dimensionality?: (LabelIdentifier10 | string)[];
+    dimensionality?: (LabelIdentifier10 | ComputedAttributeIdentifier10 | string)[];
 }
 export interface Range1 {
     type: "metric_value_filter";
@@ -2880,7 +3013,7 @@ export interface Range1 {
     /**
      * Optional array of attribute or label references or local identifiers to apply dimensionality to the filter.
      */
-    dimensionality?: (LabelIdentifier10 | string)[];
+    dimensionality?: (LabelIdentifier10 | ComputedAttributeIdentifier10 | string)[];
 }
 /**
  * For MVF with operator "All" (no filtering). Such filter can be present without a condition and is treated as a no-op.
@@ -2898,7 +3031,7 @@ export interface All1 {
     /**
      * Optional array of attribute or label references or local identifiers to apply dimensionality to the filter.
      */
-    dimensionality?: (LabelIdentifier10 | string)[];
+    dimensionality?: (LabelIdentifier10 | ComputedAttributeIdentifier10 | string)[];
 }
 export interface BOTTOM {
     type: "ranking_filter";
@@ -2909,7 +3042,7 @@ export interface BOTTOM {
     /**
      * Label reference or local identifier to use for this filter.
      */
-    attribute?: LabelIdentifier11;
+    attribute?: LabelIdentifier11 | ComputedAttributeIdentifier11;
     /**
      * Number of bottom N values to use in this filter.
      */
@@ -2932,7 +3065,7 @@ export interface TOP {
     /**
      * Label reference or local identifier to use for this filter.
      */
-    attribute?: LabelIdentifier12;
+    attribute?: LabelIdentifier12 | ComputedAttributeIdentifier12;
     /**
      * Number of bottom N values to use in this filter.
      */
@@ -3191,7 +3324,7 @@ export interface AttributeSort {
     /**
      * Local attribute or label to use in this sort.
      */
-    by: string | AttributeIdentifier13 | LabelIdentifier14;
+    by: string | AttributeIdentifier13 | LabelIdentifier14 | ComputedAttributeIdentifier13;
     /**
      * Sort direction.
      */
@@ -3217,7 +3350,7 @@ export interface MetricSort {
                   /**
                    * Local attribute or label to use in this sort.
                    */
-                  by: string | AttributeIdentifier14 | LabelIdentifier15;
+                  by: string | AttributeIdentifier14 | LabelIdentifier15 | ComputedAttributeIdentifier14;
                   /**
                    * Value of attribute or label to use for this sort.
                    */
@@ -3234,7 +3367,7 @@ export interface MetricSort {
                   /**
                    * Local attribute or label to use in this sort.
                    */
-                  by: string | AttributeIdentifier14 | LabelIdentifier15;
+                  by: string | AttributeIdentifier14 | LabelIdentifier15 | ComputedAttributeIdentifier14;
                   /**
                    * Value of attribute or label to use for this sort.
                    */
