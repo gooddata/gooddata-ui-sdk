@@ -1,12 +1,12 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 import cx from "classnames";
 import { compact, sortBy } from "lodash-es";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { Typography } from "@gooddata/sdk-ui-kit";
+import { Typography, UiIconButton } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectSupportsRichTextWidgets } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
@@ -25,6 +25,8 @@ import {
 } from "../../dragAndDrop/types.js";
 
 import { DraggableInsightList } from "./DraggableInsightList/DraggableInsightList.js";
+import { SidebarCollapseToggle } from "./SidebarCollapseToggle.js";
+import { useResizableSidebar } from "./SidebarResizeContext.js";
 
 interface ICreationPanelProps {
     className?: string;
@@ -39,9 +41,12 @@ interface ICreationPanelProps {
 
 export function CreationPanel(props: ICreationPanelProps) {
     const { className, WrapCreatePanelItemWithDragComponent, WrapInsightListItemWithDragComponent } = props;
+    const intl = useIntl();
     const supportsRichText = useDashboardSelector(selectSupportsRichTextWidgets);
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
     const isAiGenerating = useDashboardSelector(selectIsAiGenerating);
+    const { canCollapse, isCollapsed, setCollapsed } = useResizableSidebar();
+    const [focusSearch, setFocusSearch] = useState<boolean | undefined>(undefined);
     const AttributeFilterComponentSet = props.AttributeFilterComponentSet!;
     const InsightWidgetComponentSet = props.InsightWidgetComponentSet!;
     const RichTextWidgetComponentSet = props.RichTextWidgetComponentSet!;
@@ -80,23 +85,54 @@ export function CreationPanel(props: ICreationPanelProps) {
     return (
         <div className={cx("configuration-panel creation-panel", className)}>
             <div className="configuration-panel-content">
-                <Typography tagName="h2" className="flex-panel-item-nostretch">
-                    <FormattedMessage id="visualizationsList.dragToAdd" />
-                </Typography>
-                <div className="configuration-category drag-to-add">
-                    <Typography tagName="h3">
-                        <FormattedMessage id="addPanel.newItem" />
+                <div className="gd-creation-panel-header flex-panel-item-nostretch">
+                    <Typography tagName="h2">
+                        <FormattedMessage id="visualizationsList.dragToAdd" />
                     </Typography>
+                    {canCollapse ? (
+                        <SidebarCollapseToggle
+                            isCollapsed={isCollapsed}
+                            onToggle={() => {
+                                setFocusSearch(false);
+                                setCollapsed(!isCollapsed);
+                            }}
+                        />
+                    ) : null}
+                </div>
+                <div
+                    className="configuration-category drag-to-add"
+                    role="group"
+                    aria-label={intl.formatMessage({ id: "addPanel.newItem" })}
+                >
                     <div className="add-item-panel">{addItemPanelItems}</div>
                 </div>
-                <div className="configuration-category configuration-category-vis drag-to-add flex-panel-item-stretch">
-                    <Typography tagName="h3">
-                        <FormattedMessage id="visualizationsList.savedVisualizations" />
-                    </Typography>
+                <div
+                    className="configuration-category configuration-category-vis drag-to-add flex-panel-item-stretch"
+                    role="group"
+                    aria-label={intl.formatMessage({ id: "visualizationsList.savedVisualizations" })}
+                >
+                    {canCollapse ? (
+                        <div className="gd-sidebar-rail-search">
+                            <UiIconButton
+                                icon="search"
+                                label={intl.formatMessage({ id: "sidebar.search" })}
+                                size="medium"
+                                variant="tertiary"
+                                dataTestId="s-dashboard-sidebar-rail-search"
+                                accessibilityConfig={{
+                                    ariaLabel: intl.formatMessage({ id: "sidebar.search" }),
+                                }}
+                                onClick={() => {
+                                    setFocusSearch(true);
+                                    setCollapsed(false);
+                                }}
+                            />
+                        </div>
+                    ) : null}
                     <DraggableInsightList
                         WrapInsightListItemWithDragComponent={WrapInsightListItemWithDragComponent}
                         recalculateSizeReference={className}
-                        searchAutofocus={!isNewDashboard}
+                        searchAutofocus={!isCollapsed && (focusSearch ?? !isNewDashboard)}
                         disabled={isAiGenerating}
                     />
                 </div>

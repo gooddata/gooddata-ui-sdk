@@ -3,18 +3,28 @@
 import type { IObjectPermissionsObject } from "@gooddata/sdk-backend-spi";
 import { idRef } from "@gooddata/sdk-model";
 
-import { isCatalogItemAttribute, isCatalogItemFact, isCatalogItemMeasure } from "../../catalogItem/guards.js";
+import {
+    isCatalogItemAttribute,
+    isCatalogItemComputedAttribute,
+    isCatalogItemFact,
+    isCatalogItemMeasure,
+} from "../../catalogItem/guards.js";
 import type { ICatalogItem } from "../../catalogItem/types.js";
 
 import type { ShareableCatalogItem } from "./types.js";
 
 /**
- * Catalog items the share dialog can target: attributes, facts and measures. Labels
- * are not first-class catalog items; they appear inside the labels picker when
- * sharing an attribute.
+ * Catalog items the share dialog can target: attributes, facts, measures and computed
+ * attributes. Labels are not first-class catalog items; they appear inside the labels
+ * picker when sharing an attribute.
  */
 export function isShareableCatalogItem(item: ICatalogItem): item is ShareableCatalogItem {
-    return isCatalogItemAttribute(item) || isCatalogItemFact(item) || isCatalogItemMeasure(item);
+    return (
+        isCatalogItemAttribute(item) ||
+        isCatalogItemFact(item) ||
+        isCatalogItemMeasure(item) ||
+        isCatalogItemComputedAttribute(item)
+    );
 }
 
 /**

@@ -3,22 +3,14 @@
 import { fireEvent, render, within } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { type IAutomationMetadataObject, idRef } from "@gooddata/sdk-model";
-import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { type ISlotProps } from "@gooddata/sdk-ui-kit";
 
-import { IntlWrapper } from "../../../localization/IntlWrapper.js";
-import { AlertingDialogContextProvider } from "../../contexts/AlertingDialogContext.js";
-import { AutomationsContextProvider } from "../../contexts/AutomationsContext.js";
+import { type useValidateExistingAutomationFilters } from "../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
 import { type IAutomationDialogActionBarProps } from "../../shared/slots/types.js";
-import { AlertingDialogStateProvider } from "../state/AlertingDialogStateProvider.js";
-import {
-    ALERTING_DIALOG_CONTEXT,
-    AUTOMATIONS_CONTEXT,
-    SENTINEL_MEASURE,
-} from "../tests/alerting.test.helpers.js";
-import { VALID_FILTERS_RESULT } from "../tests/alertingBlocks.test.helpers.js";
+import { type useAlertSupportedMetrics } from "../state/useAlertSupportedMetrics.js";
+import { ALERTING_DIALOG_CONTEXT, SENTINEL_MEASURE } from "../tests/alerting.test.helpers.js";
+import { BlockProviders, VALID_FILTERS_RESULT } from "../tests/alertingBlocks.test.helpers.js";
 import { type AlertAttribute, type IDefaultAlertingDialogProps } from "../types.js";
 
 import { DefaultAlertingDialog } from "./DefaultAlertingDialog.js";
@@ -35,8 +27,8 @@ vi.hoisted(() => {
 // useAlertSupportedMetrics resolves measures from an execution result, useValidateExistingAutomationFilters
 // computes staleness against the dashboard's current filters — neither is read by the assertions below.
 const { mockUseAlertSupportedMetrics, mockUseValidateExistingAutomationFilters } = vi.hoisted(() => ({
-    mockUseAlertSupportedMetrics: vi.fn(),
-    mockUseValidateExistingAutomationFilters: vi.fn(),
+    mockUseAlertSupportedMetrics: vi.fn<typeof useAlertSupportedMetrics>(),
+    mockUseValidateExistingAutomationFilters: vi.fn<typeof useValidateExistingAutomationFilters>(),
 }));
 
 vi.mock("../state/useAlertSupportedMetrics.js", () => ({
@@ -85,19 +77,9 @@ beforeEach(() => {
 
 function renderDialog(props?: Partial<IDefaultAlertingDialogProps>, dialogContext = ALERTING_DIALOG_CONTEXT) {
     return render(
-        <BackendProvider backend={dummyBackend()}>
-            <WorkspaceProvider workspace="ws-1">
-                <IntlWrapper>
-                    <AutomationsContextProvider value={AUTOMATIONS_CONTEXT}>
-                        <AlertingDialogContextProvider value={dialogContext}>
-                            <AlertingDialogStateProvider>
-                                <DefaultAlertingDialog onCancel={() => {}} {...props} />
-                            </AlertingDialogStateProvider>
-                        </AlertingDialogContextProvider>
-                    </AutomationsContextProvider>
-                </IntlWrapper>
-            </WorkspaceProvider>
-        </BackendProvider>,
+        <BlockProviders dialogContext={dialogContext}>
+            <DefaultAlertingDialog onCancel={() => {}} {...props} />
+        </BlockProviders>,
     );
 }
 

@@ -154,18 +154,7 @@ export const getAppliedWidgetFilters = (
     const resolvedFilters = resolveFilterDimensionalityLocalRefs(filtersToUse, insight);
 
     // Strip noop filters - they have no effect on execution.
-    return resolvedFilters.filter((filter) => {
-        // Strip noop "All time" date filters (implicit default with no extra configuration).
-        if (isDateFilter(filter)) {
-            return !isNoopAllTimeDateFilterFixed(filter);
-        }
-        // Strip noop "All" measure value filters (no conditions).
-        if (isMeasureValueFilter(filter)) {
-            return hasMeasureValueFilterConditions(filter);
-        }
-        // Strip noop "All values" attribute filters (negative filter with empty exclusion list).
-        return !isAllValuesAttributeFilter(filter);
-    });
+    return resolvedFilters.filter((filter) => !isNoopExecutionFilter(filter));
 };
 
 /**
@@ -184,18 +173,7 @@ export const getAppliedDashboardFilters = (
     const selectedFiltersWithHiddenFilters = [...selectedAutomationFilters, ...dashboardHiddenFilters];
 
     // Strip noop filters - they have no effect on execution.
-    return selectedFiltersWithHiddenFilters.filter((filter) => {
-        // Strip noop "All time" date filters (implicit default with no extra configuration).
-        if (isDashboardDateFilter(filter)) {
-            return !isNoopAllTimeDashboardDateFilter(filter);
-        }
-        // Strip noop "All" measure value filters (no/empty conditions).
-        if (isDashboardMeasureValueFilter(filter)) {
-            return !isAllDashboardMeasureValueFilter(filter);
-        }
-        // Strip noop "All values" attribute filters.
-        return !isAllValuesDashboardAttributeFilter(filter);
-    });
+    return selectedFiltersWithHiddenFilters.filter((filter) => !isNoopDashboardFilter(filter));
 };
 
 export function dashboardFilterToFilterContextItem(
@@ -364,6 +342,34 @@ function resolveDimensionalityItems(
 
     const changed = dimensionality.some((item, i) => item !== resolved[i]);
     return changed ? resolved : undefined;
+}
+
+/** A filter with no effect on a widget execution: all-time date, condition-less MVF, all-values attribute. */
+export function isNoopExecutionFilter(filter: IFilter): boolean {
+    // Strip noop "All time" date filters (implicit default with no extra configuration).
+    if (isDateFilter(filter)) {
+        return isNoopAllTimeDateFilterFixed(filter);
+    }
+    // Strip noop "All" measure value filters (no conditions).
+    if (isMeasureValueFilter(filter)) {
+        return !hasMeasureValueFilterConditions(filter);
+    }
+    // Strip noop "All values" attribute filters (negative filter with empty exclusion list).
+    return isAllValuesAttributeFilter(filter);
+}
+
+/** The FilterContextItem form of {@link isNoopExecutionFilter}. */
+export function isNoopDashboardFilter(filter: FilterContextItem): boolean {
+    // Strip noop "All time" date filters (implicit default with no extra configuration).
+    if (isDashboardDateFilter(filter)) {
+        return isNoopAllTimeDashboardDateFilter(filter);
+    }
+    // Strip noop "All" measure value filters (no/empty conditions).
+    if (isDashboardMeasureValueFilter(filter)) {
+        return isAllDashboardMeasureValueFilter(filter);
+    }
+    // Strip noop "All values" attribute filters.
+    return isAllValuesDashboardAttributeFilter(filter);
 }
 
 /**

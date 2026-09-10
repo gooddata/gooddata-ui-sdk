@@ -2,31 +2,13 @@
 
 import {
     type IAttributeMetadataObject,
-    type IComputedAttributeMetadataObject,
     type ObjRef,
+    computedAttributeAsAttributeMetadataObject,
     isComputedAttributeRef,
 } from "@gooddata/sdk-model";
 import { convertError } from "@gooddata/sdk-ui";
 
 import { type IAttributeFilterHandlerStoreContext } from "../store/types.js";
-
-/**
- * Adapts a computed attribute to the attribute-like surface this handler works with.
- *
- * Only the `type` discriminator is rewritten - the ref, the fabricated display form and the rest of
- * the metadata are kept verbatim. The result therefore CLAIMS to be a plain attribute while its
- * `ref.type` still says `computedAttribute`; `ref` is the honest signal, not `type`. The rewrite
- * lives here, in the one consumer that wants the fiction, so the backend's
- * `getAttributeByDisplayForm` contract stays truthful for everyone else.
- */
-function asAttributeMetadataObject(
-    computedAttribute: IComputedAttributeMetadataObject,
-): IAttributeMetadataObject {
-    return {
-        ...computedAttribute,
-        type: "attribute",
-    };
-}
 
 /**
  * @internal
@@ -43,7 +25,7 @@ export async function loadAttributeByDisplayForm(
         return workspace
             .computedAttributes()
             .getComputedAttribute(displayFormRef)
-            .then(asAttributeMetadataObject)
+            .then(computedAttributeAsAttributeMetadataObject)
             .catch((err) => {
                 // Convert from AnalyticalBackendError to GoodDataSdkError
                 throw convertError(err);

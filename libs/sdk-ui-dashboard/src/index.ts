@@ -168,6 +168,12 @@ export {
     useDashboardQueryProcessing,
 } from "./model/react/useDashboardQueryProcessing.js";
 export { useDashboardUserInteraction } from "./model/react/useDashboardUserInteraction.js";
+export { useIsWidgetRestricted } from "./model/react/useIsWidgetRestricted.js";
+export {
+    type IRestrictedPlaceholderContentProps,
+    type IRestrictedPlaceholderProps,
+    RestrictedPlaceholderContent,
+} from "./presentation/widget/common/RestrictedPlaceholder.js";
 export {
     type UseDashboardAsyncRender,
     useDashboardAsyncRender,
@@ -1225,14 +1231,20 @@ export {
 } from "./model/queries/connectingAttributes.js";
 export {
     type IQueryConnectedAttributes,
+    type IQueryConnectedAttributesOptions,
     queryConnectedAttributes,
 } from "./model/queries/connectedAttributes.js";
+export { isComputedAttributesUnavailableError } from "./_staging/catalog/computedAttributes.js";
 export {
     type IQueryAttributeByDisplayForm,
     queryAttributeByDisplayForm,
 } from "./model/queries/attributes.js";
 export { type IQueryAttributeDataSet, queryAttributeDataSet } from "./model/queries/attributeDataSet.js";
 export { type IQueryAttributeElements, queryAttributeElements } from "./model/queries/attributeElements.js";
+export {
+    type IQueryComputedAttributeExpression,
+    queryComputedAttributeExpression,
+} from "./model/queries/computedAttributeExpression.js";
 export {
     type IQueryMetricsAndFacts,
     type IMetricsAndFacts,
@@ -1305,6 +1317,7 @@ export {
     selectEnableUnavailableItemsVisibility,
     selectEnableKDDependentFilters,
     selectIsKDDependentFiltersEnabled,
+    selectEnableComputedAttributes,
     selectEnableMeasureValueFilterKD,
     selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
     selectIsDisabledCrossFiltering,
@@ -1617,6 +1630,8 @@ export {
     selectCatalogIsLoaded,
     selectAttributesWithDrillDown,
     selectCatalogAttributes,
+    selectCatalogAttributesWithComputed,
+    selectCatalogComputedAttributes,
     selectCatalogAttributeDisplayForms,
     selectCatalogDateDatasets,
     selectCatalogFacts,
@@ -1731,6 +1746,7 @@ export {
     selectInaccessibleDashboardsMap,
 } from "./model/store/inaccessibleDashboards/inaccessibleDashboardsSelectors.js";
 export {
+    selectRestrictedInsightsMap,
     selectUnavailableObjects,
     selectUnavailableObjectsMapByType,
 } from "./model/store/unavailableObjects/unavailableObjectsSelectors.js";
@@ -2003,6 +2019,9 @@ export type {
     InsightMenuItemsProvider,
     RichTextMenuItemsProvider,
     RichTextComponentProvider,
+    OptionalRestrictedPlaceholderComponentProvider,
+    RestrictedPlaceholderComponentProvider,
+    CustomRestrictedPlaceholderComponent,
     OptionalRichTextComponentProvider,
     ShowAsTableButtonComponentProvider,
     OptionalShowAsTableButtonComponentProvider,

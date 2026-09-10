@@ -637,7 +637,7 @@
     "objectShare.toast.accessUpdated": "Uspešno! Dostop je bil posodobljen.",
     "objectShare.toast.generalAccessUpdated": "Uspešno! Splošni dostop je bil posodobljen.",
     "objectShare.toast.error": "Dostopa ni bilo mogoče posodobiti.",
-    "objectShare.toast.escalationRefused": "Dodelite lahko samo dovoljenja, ki jih imate sami.",
+    "objectShare.toast.escalationRefused": "Ne morete nastaviti dovoljenj, višjih od svojih.",
     "objectShare.toast.labelScopePartial": "Nekaterih dostopov do oznak ni bilo mogoče shraniti.",
     "objectShare.loadError": "Nastavitev deljenja ni bilo mogoče naložiti. Zaprite in poskusite znova.",
     "properties.conditionalFormatting.title": "Pogojno oblikovanje",

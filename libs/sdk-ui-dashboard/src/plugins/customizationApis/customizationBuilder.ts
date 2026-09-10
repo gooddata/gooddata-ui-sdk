@@ -177,6 +177,7 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
         const props: IDashboardExtensionProps = {
             InsightComponentProvider: this.insightCustomizer.getInsightProvider(),
             InsightBodyComponentProvider: this.insightCustomizer.getInsightBodyComponentProvider(),
+            RestrictedPlaceholderComponentProvider: this.insightCustomizer.getRestrictedPlaceholderProvider(),
             DashboardContentComponentProvider: this.dashboardContentCustomizer.getDashboardContentProvider(),
             WidgetComponentProvider: this.widgetCustomizer.getWidgetComponentProvider(),
             DashboardAttributeFilterComponentProvider: this.filtersCustomizer

@@ -5,9 +5,7 @@ import { type ReactNode, createRef } from "react";
 import { fireEvent, render, renderHook, within } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { type INotificationChannelIdentifier } from "@gooddata/sdk-model";
-import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 
 import { IntlWrapper } from "../../../localization/IntlWrapper.js";
 import {
@@ -18,8 +16,8 @@ import {
     type IScheduledEmailDialogContextValue,
     ScheduledEmailDialogContextProvider,
 } from "../../contexts/ScheduledEmailDialogContext.js";
+import { type useValidateExistingAutomationFilters } from "../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
 import { type IAutomationDialogActionBarProps } from "../../shared/slots/types.js";
-import { ScheduledEmailDialogStateProvider } from "../state/ScheduledEmailDialogStateProvider.js";
 import { useScheduledExportActions } from "../state/ScheduledExportActionsContext.js";
 import { useScheduledExportDraft } from "../state/ScheduledExportDraftContext.js";
 import { useSaveScheduledEmailToBackend } from "../state/useSaveScheduledEmailToBackend.js";
@@ -38,6 +36,7 @@ import {
     SCHEDULED_EMAIL_DIALOG_CONTEXT,
     SENTINEL_CHANNEL,
 } from "../tests/scheduledEmail.test.helpers.js";
+import { BlockProviders } from "../tests/scheduledEmailBlocks.test.helpers.js";
 import { type ScheduledEmailDialogHeaderDefaultProps } from "../types.js";
 
 import { ScheduledEmailDialogActionBar } from "./ScheduledEmailDialogActionBar.js";
@@ -56,7 +55,7 @@ vi.hoisted(() => {
 });
 
 const { mockUseValidateExistingAutomationFilters } = vi.hoisted(() => ({
-    mockUseValidateExistingAutomationFilters: vi.fn(),
+    mockUseValidateExistingAutomationFilters: vi.fn<typeof useValidateExistingAutomationFilters>(),
 }));
 
 vi.mock("../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js", () => ({
@@ -161,39 +160,15 @@ function BlocksShell({
     );
 }
 
-function Providers({
-    children,
-    dialogContext = TWO_CHANNEL_CONTEXT,
-    automationsContext = AUTOMATIONS_CONTEXT,
-}: {
-    children: ReactNode;
-    dialogContext?: IScheduledEmailDialogContextValue;
-    automationsContext?: IAutomationsContextValue;
-}) {
-    return (
-        <BackendProvider backend={dummyBackend()}>
-            <WorkspaceProvider workspace="ws-1">
-                <IntlWrapper>
-                    <AutomationsContextProvider value={automationsContext}>
-                        <ScheduledEmailDialogContextProvider value={dialogContext}>
-                            <ScheduledEmailDialogStateProvider>{children}</ScheduledEmailDialogStateProvider>
-                        </ScheduledEmailDialogContextProvider>
-                    </AutomationsContextProvider>
-                </IntlWrapper>
-            </WorkspaceProvider>
-        </BackendProvider>
-    );
-}
-
 function renderShell(
     shellProps?: Parameters<typeof BlocksShell>[0],
     dialogContext = TWO_CHANNEL_CONTEXT,
     automationsContext = AUTOMATIONS_CONTEXT,
 ) {
     return render(
-        <Providers dialogContext={dialogContext} automationsContext={automationsContext}>
+        <BlockProviders dialogContext={dialogContext} automationsContext={automationsContext}>
             <BlocksShell {...shellProps} />
-        </Providers>,
+        </BlockProviders>,
     );
 }
 

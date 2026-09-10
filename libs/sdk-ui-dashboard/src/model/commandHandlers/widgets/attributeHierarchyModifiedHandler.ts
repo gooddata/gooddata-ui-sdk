@@ -11,6 +11,7 @@ import {
     type IAttributeHierarchyModifiedEvent,
     attributeHierarchyModifiedEvent,
 } from "../../events/insight.js";
+import { selectCatalogComputedAttributes } from "../../store/catalog/catalogSelectors.js";
 import { catalogActions } from "../../store/catalog/index.js";
 import { selectObjectAvailabilityConfig } from "../../store/config/configSelectors.js";
 import { type DashboardContext, type ObjectAvailabilityConfig } from "../../types/commonTypes.js";
@@ -63,6 +64,13 @@ export function* attributeHierarchyModifiedHandler(
         ctx,
     );
 
+    // setCatalogItems replaces the whole catalog, but this reload does not ask for computed
+    // attributes (a hierarchy cannot contain one, so their state cannot have changed) - the
+    // already-loaded slice is carried over so it is not wiped by the hierarchy refresh
+    const computedAttributes: ReturnType<typeof selectCatalogComputedAttributes> = yield select(
+        selectCatalogComputedAttributes,
+    );
+
     yield put(
         catalogActions.setCatalogItems({
             attributes: catalog.attributes(),
@@ -70,6 +78,7 @@ export function* attributeHierarchyModifiedHandler(
             facts: catalog.facts(),
             measures: catalog.measures(),
             attributeHierarchies: catalog.attributeHierarchies(),
+            computedAttributes,
             dateHierarchyTemplates,
         }),
     );

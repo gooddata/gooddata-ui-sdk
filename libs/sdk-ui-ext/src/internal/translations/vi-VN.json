@@ -637,7 +637,7 @@
     "objectShare.toast.accessUpdated": "Thành công! Quyền truy cập đã được cập nhật.",
     "objectShare.toast.generalAccessUpdated": "Thành công! Quyền truy cập chung đã được cập nhật.",
     "objectShare.toast.error": "Không thể cập nhật quyền truy cập.",
-    "objectShare.toast.escalationRefused": "Bạn chỉ có thể cấp các quyền mà bạn tự có.",
+    "objectShare.toast.escalationRefused": "Bạn không thể đặt quyền cao hơn quyền của chính mình.",
     "objectShare.toast.labelScopePartial": "Không thể lưu một số quyền truy cập vào nhãn.",
     "objectShare.loadError": "Không thể tải cài đặt chia sẻ. Vui lòng đóng và thử lại.",
     "properties.conditionalFormatting.title": "Định dạng có điều kiện",

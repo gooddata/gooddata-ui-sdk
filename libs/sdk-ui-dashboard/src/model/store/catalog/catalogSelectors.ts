@@ -7,6 +7,7 @@ import {
     type IAttributeDisplayFormMetadataObject,
     type ICatalogAttribute,
     type ICatalogAttributeHierarchy,
+    type ICatalogComputedAttribute,
     type ICatalogDateAttribute,
     type ICatalogDateAttributeHierarchy,
     type ICatalogDateDataset,
@@ -23,6 +24,7 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
+import { mergeAttributesWithComputed } from "../../../_staging/catalog/computedAttributes.js";
 import {
     type CatalogDateAttributeWithDataset,
     newCatalogDateAttributeWithDatasetMap,
@@ -39,6 +41,7 @@ import {
     selectBackendCapabilities,
     selectSupportsAttributeHierarchies,
 } from "../backendCapabilities/backendCapabilitiesSelectors.js";
+import { selectLocale } from "../config/configSelectors.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
 
 import { type CatalogMeasureParametersStatus, type CatalogParametersStatus } from "./catalogState.js";
@@ -56,6 +59,37 @@ export const selectCatalogAttributes: DashboardSelector<ICatalogAttribute[]> = c
     (state) => {
         return state.attributes ?? [];
     },
+);
+
+/**
+ * Returns the computed attributes loaded into the dashboard catalog. Computed attributes are
+ * loaded only when the `enableComputedAttributes` setting is on; otherwise this is empty.
+ *
+ * @beta
+ */
+export const selectCatalogComputedAttributes: DashboardSelector<ICatalogComputedAttribute[]> = createSelector(
+    selectSelf,
+    (state) => {
+        return state.computedAttributes ?? [];
+    },
+);
+
+/**
+ * Returns catalog attributes together with computed attributes adapted to the catalog attribute
+ * shape. The adapted items keep their honest `computedAttribute`-typed refs; use
+ * {@link @gooddata/sdk-model#isComputedAttributeRef} on the attribute or display form ref to tell
+ * them apart. This is the list to offer wherever an attribute can be picked (e.g. for filtering).
+ *
+ * The merged list is sorted alphabetically by title: the catalog holds attributes and computed
+ * attributes as separate lists, each sorted on its own, and a plain concatenation would strand
+ * every computed attribute at the tail of a picker instead of filing it in among the attributes.
+ *
+ * @beta
+ */
+export const selectCatalogAttributesWithComputed: DashboardSelector<ICatalogAttribute[]> = createSelector(
+    [selectCatalogAttributes, selectCatalogComputedAttributes, selectLocale],
+    (attributes, computedAttributes, locale) =>
+        mergeAttributesWithComputed(attributes, computedAttributes, locale),
 );
 
 /**
@@ -345,7 +379,7 @@ export const selectAllCatalogDateDatasetsMap: DashboardSelector<ObjRefMap<ICatal
 export const selectAllCatalogDisplayFormsMap: DashboardSelector<
     ObjRefMap<IAttributeDisplayFormMetadataObject>
 > = createSelector(
-    [selectCatalogAttributes, selectCatalogDateDatasets, selectBackendCapabilities],
+    [selectCatalogAttributesWithComputed, selectCatalogDateDatasets, selectBackendCapabilities],
     (attributes, dateDatasets, capabilities) => {
         return createDisplayFormMap(attributes, dateDatasets, capabilities.hasTypeScopedIdentifiers);
     },
@@ -361,7 +395,7 @@ export const selectAllCatalogDisplayFormsMap: DashboardSelector<
 export const selectAllCatalogAttributesMap: DashboardSelector<
     ObjRefMap<ICatalogAttribute | ICatalogDateAttribute>
 > = createSelector(
-    [selectCatalogAttributes, selectCatalogDateDatasets, selectBackendCapabilities],
+    [selectCatalogAttributesWithComputed, selectCatalogDateDatasets, selectBackendCapabilities],
     (attributes, dateDatasets, capabilities) => {
         const dateAttributes = dateDatasets.flatMap((d) => d.dateAttributes);
 

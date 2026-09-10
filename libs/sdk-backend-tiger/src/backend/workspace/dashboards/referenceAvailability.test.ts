@@ -109,17 +109,17 @@ describe("resolveUnavailableReferences", () => {
         ]);
     });
 
-    it("classifies a missing filter context as forbidden even when not in requested types", () => {
+    it("classifies a missing filter context as notFound even when not in requested types", () => {
         const doc = dashboardDocument({
-            relationships: { filterContexts: { data: [{ id: "fc1", type: "filterContext" }] } },
-            restricted: [{ id: "fc1", type: "filterContext" }],
+            relationships: { filterContexts: { data: [] } },
+            content: { filterContextRef: { identifier: { id: "fc1", type: "filterContext" } } },
         });
 
         expect(resolveUnavailableReferences(doc, [])).toEqual([
             {
                 ref: { identifier: "fc1", type: "filterContext" },
                 type: "filterContext",
-                reason: "forbidden",
+                reason: "notFound",
             },
         ]);
     });
@@ -291,25 +291,21 @@ describe("resolveUnavailableReferences", () => {
 });
 
 describe("resolveUnavailableDashboardReferences", () => {
-    const forbiddenStoredContext = dashboardDocument({
+    const missingStoredContext = dashboardDocument({
         relationships: {
-            filterContexts: { data: [{ id: "fcStored", type: "filterContext" }] },
             visualizationObjects: { data: [{ id: "vis1", type: "visualizationObject" }] },
         },
         content: { filterContextRef: { identifier: { id: "fcStored", type: "filterContext" } } },
-        restricted: [
-            { id: "fcStored", type: "filterContext" },
-            { id: "vis1", type: "visualizationObject" },
-        ],
+        restricted: [{ id: "vis1", type: "visualizationObject" }],
     });
     const withContext = (ref: unknown): IDashboard => ({ filterContext: { ref } }) as unknown as IDashboard;
 
     it("keeps the stored filter context when the dashboard could not resolve it (no override)", () => {
-        expect(resolveUnavailableDashboardReferences(forbiddenStoredContext, {} as IDashboard, [])).toEqual([
+        expect(resolveUnavailableDashboardReferences(missingStoredContext, {} as IDashboard, [])).toEqual([
             {
                 ref: { identifier: "fcStored", type: "filterContext" },
                 type: "filterContext",
-                reason: "forbidden",
+                reason: "notFound",
             },
         ]);
     });
@@ -337,7 +333,7 @@ describe("resolveUnavailableDashboardReferences", () => {
     it("drops stored filter-context entries when a filterContextRef override is in use, keeping the rest", () => {
         expect(
             resolveUnavailableDashboardReferences(
-                forbiddenStoredContext,
+                missingStoredContext,
                 withContext(idRef("fcOverride", "filterContext")),
                 ["insight"],
             ),
@@ -348,16 +344,9 @@ describe("resolveUnavailableDashboardReferences", () => {
         const twoStoredContexts = dashboardDocument({
             relationships: {
                 filterContexts: {
-                    data: [
-                        { id: "fcKept", type: "filterContext" },
-                        { id: "fcReplaced", type: "filterContext" },
-                    ],
+                    data: [],
                 },
             },
-            restricted: [
-                { id: "fcKept", type: "filterContext" },
-                { id: "fcReplaced", type: "filterContext" },
-            ],
             content: {
                 tabs: [
                     { filterContextRef: { identifier: { id: "fcKept", type: "filterContext" } } },
@@ -376,7 +365,7 @@ describe("resolveUnavailableDashboardReferences", () => {
             {
                 ref: { identifier: "fcKept", type: "filterContext" },
                 type: "filterContext",
-                reason: "forbidden",
+                reason: "notFound",
             },
         ]);
     });
@@ -385,13 +374,9 @@ describe("resolveUnavailableDashboardReferences", () => {
         const twoStoredContexts = dashboardDocument({
             relationships: {
                 filterContexts: {
-                    data: [
-                        { id: "fcKept", type: "filterContext" },
-                        { id: "fcReplaced", type: "filterContext" },
-                    ],
+                    data: [{ id: "fcKept", type: "filterContext" }],
                 },
             },
-            restricted: [{ id: "fcReplaced", type: "filterContext" }],
             content: {
                 tabs: [
                     { filterContextRef: { identifier: { id: "fcKept", type: "filterContext" } } },
@@ -413,7 +398,7 @@ describe("resolveUnavailableDashboardReferences", () => {
     it("drops stored filter-context entries when the export override context is in use", () => {
         expect(
             resolveUnavailableDashboardReferences(
-                forbiddenStoredContext,
+                missingStoredContext,
                 { filterContext: buildExportOverrideFilterContext("export-1", []) } as unknown as IDashboard,
                 [],
             ),

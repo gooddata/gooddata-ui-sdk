@@ -18,7 +18,10 @@ export interface IDrillTargetType {
     documentUrl?: string;
 }
 
-export const useDrillTargetTypeItems = (disableDrillDown?: boolean): IDrillTargetType[] => {
+export const useDrillTargetTypeItems = (
+    disableDrillDown?: boolean,
+    disableDrillDownTooltip?: string,
+): IDrillTargetType[] => {
     const intl = useIntl();
 
     const supportsAttributeHierarchies = useDashboardSelector(selectSupportsAttributeHierarchies);
@@ -46,7 +49,7 @@ export const useDrillTargetTypeItems = (disableDrillDown?: boolean): IDrillTarge
             title: intl.formatMessage(messages.drillDownConfig),
             disabled: disableDrillDown,
             disableTooltipMessage: disableDrillDown
-                ? intl.formatMessage(messages.disableDrillDownToolTip)
+                ? (disableDrillDownTooltip ?? intl.formatMessage(messages.disableDrillDownToolTip))
                 : undefined,
             tooltipMessage: uiMessages["drilldownTooltip"].id,
             documentUrl:

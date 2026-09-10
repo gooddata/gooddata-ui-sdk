@@ -182,6 +182,68 @@ describe("useSaveScheduledEmailToBackend — create path", () => {
 });
 
 // ---------------------------------------------------------------------------
+// Tests — In-flight guard
+// ---------------------------------------------------------------------------
+
+describe("useSaveScheduledEmailToBackend — in-flight guard", () => {
+    it("ignores a second save while one is in flight (create path)", async () => {
+        let resolveCreate!: (value: IAutomationMetadataObject) => void;
+        createScheduledEmailMock.mockReturnValue(
+            new Promise<IAutomationMetadataObject>((resolve) => {
+                resolveCreate = resolve;
+            }),
+        );
+
+        const { result } = renderSaveHook(newAutomation, {});
+
+        act(() => {
+            result.current.handleSaveScheduledEmail();
+            result.current.handleSaveScheduledEmail();
+        });
+
+        expect(createScheduledEmailMock).toHaveBeenCalledTimes(1);
+
+        await act(async () => {
+            resolveCreate(createdAutomation);
+        });
+
+        act(() => {
+            result.current.handleSaveScheduledEmail();
+        });
+
+        expect(createScheduledEmailMock).toHaveBeenCalledTimes(2);
+    });
+
+    it("ignores a second save while one is in flight (update path)", async () => {
+        let resolveUpdate!: (value: IAutomationMetadataObject) => void;
+        saveScheduledEmailMock.mockReturnValue(
+            new Promise<IAutomationMetadataObject>((resolve) => {
+                resolveUpdate = resolve;
+            }),
+        );
+
+        const { result } = renderSaveHook(existingAutomation, {});
+
+        act(() => {
+            result.current.handleSaveScheduledEmail();
+            result.current.handleSaveScheduledEmail();
+        });
+
+        expect(saveScheduledEmailMock).toHaveBeenCalledTimes(1);
+
+        await act(async () => {
+            resolveUpdate(existingAutomation);
+        });
+
+        act(() => {
+            result.current.handleSaveScheduledEmail();
+        });
+
+        expect(saveScheduledEmailMock).toHaveBeenCalledTimes(2);
+    });
+});
+
+// ---------------------------------------------------------------------------
 // Tests — Update path
 // ---------------------------------------------------------------------------
 

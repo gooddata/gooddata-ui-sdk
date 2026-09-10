@@ -17,6 +17,7 @@ import type {
 import type { IFilterBaseOptions } from "../../common/filtering.js";
 import type { IPagedResource } from "../../common/paging.js";
 import type { QueryMethod } from "../../common/query.js";
+import type { IConnectedAttributesOptions } from "../attributes/index.js";
 
 import type { IMeasureExpressionToken } from "./measure.js";
 
@@ -198,8 +199,13 @@ export interface IWorkspaceMeasuresService {
      *
      * @param definition - definition of measure
      * @param auxMeasures - optional aux measures
+     * @param options - options influencing which objects count as connected
      */
-    getConnectedAttributes(definition: IMeasure, auxMeasures?: IMeasure[]): Promise<ObjRef[]>;
+    getConnectedAttributes(
+        definition: IMeasure,
+        auxMeasures?: IMeasure[],
+        options?: IConnectedAttributesOptions,
+    ): Promise<ObjRef[]>;
 }
 
 /**

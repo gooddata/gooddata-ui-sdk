@@ -19,6 +19,7 @@ import {
     newMeasure,
 } from "@gooddata/sdk-model";
 
+import { EMPTY_PARAMETER_VALUES } from "../tests/alerting.test.helpers.js";
 import { type AlertAttribute, type AlertMetric, AlertMetricComparatorType } from "../types.js";
 
 // ---------------------------------------------------------------------------
@@ -253,7 +254,7 @@ const DEFAULT_ALERTING_DIALOG_CONTEXT_VALUE = {
     hiddenFilters: [] as FilterContextItem[],
     commonDateFilterId: undefined,
     dashboardEvaluationFrequency: undefined,
-    parameterValues: [] as unknown[],
+    parameterValues: EMPTY_PARAMETER_VALUES,
     dashboardParameters: SENTINEL_DASHBOARD_PARAMETERS,
 };
 

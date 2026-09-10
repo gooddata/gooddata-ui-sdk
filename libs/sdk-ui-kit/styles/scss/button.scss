@@ -20,7 +20,7 @@
 
 .gd-button-primary,
 .gd-button-secondary {
-    @extend %btn;
+    @extend %btn !optional;
 
     box-shadow: button-variables.$button-box-shadow-x-offset button-variables.$button-shadow-darker;
     color: button-variables.$button-normal-color;
@@ -91,7 +91,7 @@
     box-shadow: button-variables.$button-box-shadow-x-offset button-variables.$button-shadow-lighter;
     background: variables.$gd-palette-success-base;
 
-    @extend %btn;
+    @extend %btn !optional;
 
     &:hover {
         box-shadow:
@@ -122,7 +122,7 @@
     box-shadow: button-variables.$button-box-shadow-x-offset button-variables.$button-shadow-lighter;
     background: variables.$gd-palette-error-base;
 
-    @extend %btn;
+    @extend %btn !optional;
 
     &:hover {
         box-shadow:
@@ -153,7 +153,7 @@
     box-shadow: button-variables.$button-action-box-shadow-x-offset button-variables.$button-shadow-lighter;
     background: button-variables.$button-action-color;
 
-    @extend %btn;
+    @extend %btn !optional;
 
     &:hover {
         box-shadow:

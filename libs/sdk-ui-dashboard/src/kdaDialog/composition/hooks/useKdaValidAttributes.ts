@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import { type ICatalogAttribute, areObjRefsEqual } from "@gooddata/sdk-model";
 
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
-import { selectCatalogAttributes } from "../../../model/store/catalog/catalogSelectors.js";
+import { selectCatalogAttributesWithComputed } from "../../../model/store/catalog/catalogSelectors.js";
 import { useSummaryDrivers } from "../../hooks/useSummaryDrivers.js";
 import { type IKdaItemGroup } from "../../internalTypes.js";
 import { useKdaState } from "../../providers/KdaState.js";
@@ -15,7 +15,7 @@ const SEARCH_BAR_THRESHOLD = 7;
 export function useKdaValidAttributes() {
     const { state } = useKdaState();
     const list = useSummaryDrivers();
-    const allAttributes = useDashboardSelector(selectCatalogAttributes);
+    const allAttributes = useDashboardSelector(selectCatalogAttributesWithComputed);
 
     const { validAttributes, mapAttributes } = useMemo(() => {
         const mapAttributes = new Map<string, IKdaItemGroup | undefined>();

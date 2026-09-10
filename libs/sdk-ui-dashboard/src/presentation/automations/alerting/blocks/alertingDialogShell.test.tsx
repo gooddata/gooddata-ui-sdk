@@ -135,7 +135,7 @@ describe("AlertingDialogShell", () => {
         const dialog = baseElement.querySelector(DIALOG_SELECTOR) as HTMLElement;
         expect(dialog).not.toBeNull();
         expect(baseElement.querySelector("#alerting-dialog")).not.toBeNull();
-        expect(within(dialog).getByText("Alert", { selector: ".sr-only", exact: false })).toBeInTheDocument();
+        expect(within(dialog).getByText("Alert name", { selector: ".sr-only" })).toBeInTheDocument();
         expect(baseElement.querySelector(TITLE_INPUT_SELECTOR)).not.toBeNull();
         const footer = baseElement.querySelector(FOOTER_SELECTOR) as HTMLElement;
         expect(within(footer).getByText("Cancel")).toBeInTheDocument();

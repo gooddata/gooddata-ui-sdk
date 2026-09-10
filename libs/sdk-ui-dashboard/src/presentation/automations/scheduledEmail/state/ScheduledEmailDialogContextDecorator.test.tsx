@@ -23,7 +23,7 @@ const {
 } = vi.hoisted(() => ({
     mockUseAutomationsContext: vi.fn(),
     mockUseAutomationFiltersSelect: vi.fn(),
-    mockUseValidateExistingAutomationFilters: vi.fn(),
+    mockUseValidateExistingAutomationFilters: vi.fn<typeof useValidateExistingAutomationFilters>(),
     mockUseAutomationExportParameters: vi.fn(),
 }));
 
@@ -70,12 +70,14 @@ import {
     ScheduledEmailDialogContextProvider,
     useScheduledEmailDialogContext,
 } from "../../contexts/ScheduledEmailDialogContext.js";
+import { type useValidateExistingAutomationFilters } from "../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
 import { ScheduledEmailDialog } from "../ScheduledEmailDialog.js";
 import {
     AUTOMATIONS_CONTEXT,
     SCHEDULED_EMAIL_DIALOG_CONTEXT,
     SENTINEL_CHANNEL,
 } from "../tests/scheduledEmail.test.helpers.js";
+import { VALID_FILTERS_RESULT } from "../tests/scheduledEmailBlocks.test.helpers.js";
 
 import { useScheduledExportDraft } from "./ScheduledExportDraftContext.js";
 
@@ -209,7 +211,7 @@ beforeEach(() => {
         setEditedAutomationFiltersByTab: vi.fn(),
         availableFiltersAsVisibleFiltersByTab: undefined,
     });
-    mockUseValidateExistingAutomationFilters.mockReturnValue({ isValid: true, filtersAreStale: false });
+    mockUseValidateExistingAutomationFilters.mockReturnValue(VALID_FILTERS_RESULT);
     mockUseAutomationExportParameters.mockReturnValue({
         parametersEnabled: false,
         visibleParametersByTab: {},

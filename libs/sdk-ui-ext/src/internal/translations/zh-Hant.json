@@ -637,7 +637,7 @@
     "objectShare.toast.accessUpdated": "成功！已更新存取權。",
     "objectShare.toast.generalAccessUpdated": "成功！已更新一般存取權。",
     "objectShare.toast.error": "無法更新存取權。",
-    "objectShare.toast.escalationRefused": "您只能授予您自己擁有的權限。",
+    "objectShare.toast.escalationRefused": "您無法設定高於自身權限的權限。",
     "objectShare.toast.labelScopePartial": "無法儲存某些標籤存取權。",
     "objectShare.loadError": "無法載入共用設定。請關閉並再試一次。",
     "properties.conditionalFormatting.title": "條件式格式設定",

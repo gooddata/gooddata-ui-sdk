@@ -1,5 +1,6 @@
-// (C) 2022-2025 GoodData Corporation
-import { type ObjRef, areObjRefsEqual, idRef, uriRef } from "@gooddata/sdk-model";
+// (C) 2022-2026 GoodData Corporation
+
+import { type ObjRef, areObjRefsEqual, idRef, isComputedAttributeRef, uriRef } from "@gooddata/sdk-model";
 
 import { type DashboardContext } from "../../../../types/commonTypes.js";
 
@@ -20,6 +21,13 @@ export async function validateFilterDisplayForm(
 
     const { backend, workspace } = ctx;
 
+    // A computed attribute has exactly one fabricated display form that shares the computed
+    // attribute's own ref, so the validation needs no backend roundtrip - and the attributes
+    // service could not resolve such a ref anyway.
+    if (isComputedAttributeRef(filterAttribute)) {
+        return areObjRefsEqual(filterAttribute, displayForm) ? "VALID" : "INVALID_ATTRIBUTE_DISPLAY_FORM";
+    }
+
     const attributeDisplayForms = (
         await backend.workspace(workspace).attributes().getAttribute(filterAttribute)
     ).displayForms;
@@ -29,6 +37,7 @@ export async function validateFilterDisplayForm(
     if (
         attributeDisplayForms.some(
             (df) =>
+                areObjRefsEqual(df.ref, displayForm) ||
                 areObjRefsEqual(idRef(df.id, "displayForm"), displayForm) ||
                 areObjRefsEqual(uriRef(df.uri), displayForm),
         )

@@ -21,6 +21,7 @@ import {
 } from "@gooddata/api-client-tiger/endpoints/smartFunctions";
 import { ActionsApi_ComputeValidObjects } from "@gooddata/api-client-tiger/endpoints/validObjects";
 import type {
+    IConnectedAttributesOptions,
     IGetMeasureOptions,
     IMeasureExpressionToken,
     IMeasureKeyDrivers,
@@ -296,11 +297,18 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
         return convertMetricFromBackend(result.data, result.data.included);
     }
 
-    public async getConnectedAttributes(definition: IMeasure, auxMeasures?: IMeasure[]): Promise<ObjRef[]> {
+    public async getConnectedAttributes(
+        definition: IMeasure,
+        auxMeasures?: IMeasure[],
+        options?: IConnectedAttributesOptions,
+    ): Promise<ObjRef[]> {
         const measureItem = convertMeasure(definition);
 
         const afmValidObjectsQuery: AfmValidObjectsQuery = {
-            types: ["attributes"],
+            // computed attributes are attribute-like: they can sit in dashboard filters and slice
+            // a metric, so they count among the connected attributes when the caller opts in (the
+            // option keeps the request unchanged for callers unaware of computed attributes)
+            types: options?.includeComputedAttributes ? ["attributes", "computedAttributes"] : ["attributes"],
             afm: {
                 attributes: [],
                 measures: [measureItem],
@@ -317,7 +325,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
         );
 
         return connectedItemsResponse.data.items
-            .filter((item) => item.type === "attribute")
+            .filter((item) => item.type === "attribute" || item.type === "computedAttribute")
             .map(jsonApiIdToObjRef);
     }
 }

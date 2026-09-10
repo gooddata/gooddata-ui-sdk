@@ -10,6 +10,11 @@ import type { ICatalogItem } from "./types.js";
 const metricFlag: ISettings = { enableMetricPermissions: true };
 const columnFlag: ISettings = { enableColumnLevelPermissions: true };
 const bothFlags: ISettings = { enableMetricPermissions: true, enableColumnLevelPermissions: true };
+const computedAttributeFlag: ISettings = { enableComputedAttributes: true };
+const columnAndComputedAttributeFlags: ISettings = {
+    enableColumnLevelPermissions: true,
+    enableComputedAttributes: true,
+};
 
 function buildPermissions(overrides: Partial<IWorkspacePermissions> = {}): IWorkspacePermissions {
     return {
@@ -182,6 +187,25 @@ describe("canShareCatalogItem", () => {
         expect(canShareCatalogItem(perms, buildItem({ type: "attribute" }), columnFlag)).toBe(true);
         expect(canShareCatalogItem(perms, buildItem({ type: "fact" }))).toBe(false);
         expect(canShareCatalogItem(perms, buildItem({ type: "attribute" }))).toBe(false);
+    });
+
+    it("gates a computed attribute on both the column-level and the computed-attributes flag", () => {
+        const perms = buildPermissions();
+        const computedAttribute = buildItem({ type: "computedAttribute" });
+
+        expect(canShareCatalogItem(perms, computedAttribute, columnAndComputedAttributeFlags)).toBe(true);
+        // either flag alone is not enough — the entity is gated as a whole by its own flag
+        expect(canShareCatalogItem(perms, computedAttribute, columnFlag)).toBe(false);
+        expect(canShareCatalogItem(perms, computedAttribute, computedAttributeFlag)).toBe(false);
+        expect(canShareCatalogItem(perms, computedAttribute, bothFlags)).toBe(false);
+        expect(canShareCatalogItem(perms, computedAttribute)).toBe(false);
+        // the metric flag plays no role
+        expect(
+            canShareCatalogItem(buildPermissions({ canManageProject: true }), computedAttribute, {
+                ...metricFlag,
+                ...computedAttributeFlag,
+            }),
+        ).toBe(false);
     });
 
     it("keeps the two flags independent", () => {

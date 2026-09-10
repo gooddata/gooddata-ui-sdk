@@ -55,7 +55,7 @@ export function SidebarResizeChrome({
         pointerId: number;
     } | null>(null);
 
-    const { width, min, max, canResize, setWidth } = useResizableSidebar();
+    const { width, min, max, canResize, setWidth, isCollapsed } = useResizableSidebar();
 
     const isDragging = dragWidth !== null;
 
@@ -129,7 +129,9 @@ export function SidebarResizeChrome({
             style={{ width }}
         >
             <div
-                className="col gd-flex-item gd-sidebar-container gd-sidebar-container--resizable"
+                className={cx("col gd-flex-item gd-sidebar-container gd-sidebar-container--resizable", {
+                    "gd-sidebar-container--collapsed": isCollapsed,
+                })}
                 onClick={onContainerClick}
             >
                 {children}

@@ -28,6 +28,7 @@ import type {
     OptionalLayoutComponentProvider,
     OptionalLoadingComponentProvider,
     OptionalMeasureValueFilterComponentProvider,
+    OptionalRestrictedPlaceholderComponentProvider,
     OptionalRichTextComponentProvider,
     OptionalTitleComponentProvider,
     OptionalTopBarComponentProvider,
@@ -84,6 +85,22 @@ export interface IDashboardInsightCustomizer {
      * @returns self, for call chaining sakes
      */
     withCustomProvider(provider: OptionalInsightComponentProvider): IDashboardInsightCustomizer;
+
+    /**
+     * Register a provider for the component standing in for an insight widget the current user is
+     * not allowed to see.
+     *
+     * @remarks
+     * The insight is deliberately not passed to the provider — it is the object being withheld.
+     * Returning undefined keeps the default placeholder for that widget.
+     *
+     * @param provider - provider of the replacement component
+     * @returns self, for call chaining
+     * @alpha
+     */
+    withRestrictedPlaceholderProvider(
+        provider: OptionalRestrictedPlaceholderComponentProvider,
+    ): IDashboardInsightCustomizer;
 
     /**
      * Register a provider for React components to render insight body inside of the {@link DefaultDashboardInsight}.

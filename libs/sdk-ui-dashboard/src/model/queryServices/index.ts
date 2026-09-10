@@ -4,6 +4,7 @@ import { QueryAttributeByDisplayFormService } from "./queryAttributeByDisplayFor
 import { QueryAttributeDataSetService } from "./queryAttributeDataset.js";
 import { QueryAttributeElementsService } from "./queryAttributeElements.js";
 import { QueryAvailableDatasetForItemsService } from "./queryAvailableDatasetsForItems.js";
+import { QueryComputedAttributeExpressionService } from "./queryComputedAttributeExpression.js";
 import { QueryConnectedAttributesService } from "./queryConnectedAttributes.js";
 import { QueryConnectingAttributesService } from "./queryConnectingAttributes.js";
 import { QueryInsightAttributesMetaService } from "./queryInsightAttributesMeta.js";
@@ -25,6 +26,7 @@ export const AllQueryServices = [
     QueryAttributeByDisplayFormService,
     QueryAttributeDataSetService,
     QueryAttributeElementsService,
+    QueryComputedAttributeExpressionService,
     QueryConnectedAttributesService,
     QueryMetricsAndFactsService,
     QueryAvailableDatasetForItemsService,

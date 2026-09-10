@@ -1145,6 +1145,11 @@ export interface IComputedAttributesQuery {
 // @public
 export type IComputedAttributesQueryResult = IPagedResource<IComputedAttributeMetadataObject>;
 
+// @public
+export interface IConnectedAttributesOptions {
+    includeComputedAttributes?: boolean;
+}
+
 // @internal
 export interface ICreateKnowledgeDocumentRequest {
     // (undocumented)
@@ -2866,7 +2871,7 @@ export interface IWorkspaceAttributesService {
     getAttributesWithReferences(displayFormRefs: ObjRef[]): Promise<IAttributeWithReferences[]>;
     getCommonAttributes(attributeRefs: ObjRef[]): Promise<ObjRef[]>;
     getCommonAttributesBatch(attributesRefsBatch: ObjRef[][]): Promise<ObjRef[][]>;
-    getConnectedAttributesByDisplayForm(ref: ObjRef): Promise<ObjRef[]>;
+    getConnectedAttributesByDisplayForm(ref: ObjRef, options?: IConnectedAttributesOptions): Promise<ObjRef[]>;
     updateAttributeMeta(updatedAttribute: Partial<IMetadataObjectBase> & IMetadataObjectIdentity): Promise<IAttributeMetadataObject>;
 }
 
@@ -3143,7 +3148,7 @@ export interface IWorkspaceMeasuresService {
     }) => Promise<IMeasureKeyDrivers>;
     createMeasure(measure: IMeasureMetadataObjectDefinition, options?: ISaveMeasureOptions): Promise<IMeasureMetadataObject>;
     deleteMeasure(measureRef: ObjRef): Promise<void>;
-    getConnectedAttributes(definition: IMeasure, auxMeasures?: IMeasure[]): Promise<ObjRef[]>;
+    getConnectedAttributes(definition: IMeasure, auxMeasures?: IMeasure[], options?: IConnectedAttributesOptions): Promise<ObjRef[]>;
     getMeasure(ref: ObjRef, options?: IGetMeasureOptions): Promise<IMeasureMetadataObject>;
     getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;
     getMeasureReferencingObjects(measureRef: ObjRef): Promise<IMeasureReferencing>;

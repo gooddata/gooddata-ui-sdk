@@ -4,6 +4,7 @@ import { type IQueryAttributeDataSet } from "./attributeDataSet.js";
 import { type IQueryAttributeElements } from "./attributeElements.js";
 import { type IQueryAttributeByDisplayForm } from "./attributes.js";
 import { type IQueryAvailableDatasetsForItems } from "./availableDatasetsForItems.js";
+import { type IQueryComputedAttributeExpression } from "./computedAttributeExpression.js";
 import { type IQueryConnectedAttributes } from "./connectedAttributes.js";
 import { type IQueryConnectingAttributes } from "./connectingAttributes.js";
 import { type IQueryInsightAttributesMeta, type IQueryInsightDateDatasets } from "./insights.js";
@@ -29,6 +30,7 @@ export type DashboardQueries =
     | IQueryAttributeByDisplayForm
     | IQueryAttributeDataSet
     | IQueryAttributeElements
+    | IQueryComputedAttributeExpression
     | IQueryConnectedAttributes
     | IQueryMetricsAndFacts
     | IQueryAvailableDatasetsForItems;

@@ -63,7 +63,7 @@ export function useConversationClarifyingQuestions(props: IUseConversationClarif
                 ...(option === -1
                     ? {}
                     : {
-                          [question.text]: question.control.options[option].label,
+                          [question.text]: question.control.options[option].text,
                       }),
             };
             setAnswers(newAnswers);

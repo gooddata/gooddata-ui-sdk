@@ -304,6 +304,7 @@ export type {
     IAttributesQuery,
     IAttributesQueryFilterOptions,
     IAttributesQueryResult,
+    IConnectedAttributesOptions,
 } from "./workspace/attributes/index.js";
 
 export type {

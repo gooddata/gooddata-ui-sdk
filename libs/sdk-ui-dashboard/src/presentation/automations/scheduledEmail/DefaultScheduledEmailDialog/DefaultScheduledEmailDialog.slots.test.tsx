@@ -8,8 +8,10 @@ import { type ISlotProps } from "@gooddata/sdk-ui-kit";
 import { IntlWrapper } from "../../../localization/IntlWrapper.js";
 import { AutomationsContextProvider } from "../../contexts/AutomationsContext.js";
 import { ScheduledEmailDialogContextProvider } from "../../contexts/ScheduledEmailDialogContext.js";
+import { type useValidateExistingAutomationFilters } from "../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
 import { ScheduledEmailDialogStateProvider } from "../state/ScheduledEmailDialogStateProvider.js";
 import { AUTOMATIONS_CONTEXT, SCHEDULED_EMAIL_DIALOG_CONTEXT } from "../tests/scheduledEmail.test.helpers.js";
+import { VALID_FILTERS_RESULT } from "../tests/scheduledEmailBlocks.test.helpers.js";
 import {
     type IDefaultScheduledEmailDialogProps,
     type IScheduledEmailDialogFiltersProps,
@@ -32,7 +34,7 @@ vi.hoisted(() => {
 });
 
 const { mockUseValidateExistingAutomationFilters } = vi.hoisted(() => ({
-    mockUseValidateExistingAutomationFilters: vi.fn(),
+    mockUseValidateExistingAutomationFilters: vi.fn<typeof useValidateExistingAutomationFilters>(),
 }));
 
 vi.mock("../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js", () => ({
@@ -144,20 +146,7 @@ beforeEach(() => {
     vi.clearAllMocks();
     capturedFiltersProps.length = 0;
 
-    mockUseValidateExistingAutomationFilters.mockReturnValue({
-        isValid: true,
-        hiddenFilterIsMissingInSavedFilters: false,
-        hiddenFilterHasDifferentValueInSavedFilter: false,
-        lockedFilterIsMissingInSavedFilters: false,
-        lockedFilterHasDifferentValueInSavedFilter: false,
-        ignoredFilterIsAppliedInSavedFilters: false,
-        removedFilterIsAppliedInSavedFilters: false,
-        commonDateFilterIsMissingInSavedVisibleFilters: false,
-        visibleFilterIsMissingInSavedFilters: false,
-        visibleFiltersAreMissing: false,
-        incompatibleSelectionTypeIsAppliedInSavedFilters: false,
-        filtersAreStale: false,
-    });
+    mockUseValidateExistingAutomationFilters.mockReturnValue(VALID_FILTERS_RESULT);
 });
 
 function renderDialog(

@@ -637,7 +637,7 @@
     "objectShare.toast.accessUpdated": "Başarılı! Erişim güncellendi.",
     "objectShare.toast.generalAccessUpdated": "Başarılı! Genel erişim güncellendi.",
     "objectShare.toast.error": "Erişim güncellenemedi.",
-    "objectShare.toast.escalationRefused": "Yalnızca kendinizde bulunan izinleri verebilirsiniz.",
+    "objectShare.toast.escalationRefused": "Kendi izinlerinizden daha yüksek izinler ayarlayamazsınız.",
     "objectShare.toast.labelScopePartial": "Bazı etiket erişimleri kaydedilemedi.",
     "objectShare.loadError": "Paylaşım ayarları yüklenemedi. Lütfen kapatıp yeniden deneyin.",
     "properties.conditionalFormatting.title": "Koşullu biçimlendirme",

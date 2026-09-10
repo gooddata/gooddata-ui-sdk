@@ -770,8 +770,9 @@ function buildDashboardReferences(
         ? convertFilterContextFromBackend(buildFilterContextWrapper(data.filterContext))
         : undefined;
 
+    const vis = [...(references?.visualizations ?? []), ...(references?.new_visualizations ?? [])];
     const insights =
-        references?.visualizations.map((vis) => {
+        vis.map((vis) => {
             return visualizationObjectsItemToInsight(
                 yamlVisualisationToMetadataObject(entities, vis as AacVisualisation),
             );

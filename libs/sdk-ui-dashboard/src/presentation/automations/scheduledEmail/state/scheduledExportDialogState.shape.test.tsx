@@ -34,7 +34,7 @@ const {
     mockUseAutomationExportParameters,
 } = vi.hoisted(() => ({
     mockUseAutomationFiltersSelect: vi.fn(),
-    mockUseValidateExistingAutomationFilters: vi.fn(),
+    mockUseValidateExistingAutomationFilters: vi.fn<typeof useValidateExistingAutomationFilters>(),
     mockUseAutomationExportParameters: vi.fn(),
 }));
 
@@ -77,6 +77,7 @@ import {
     type IScheduledEmailDialogContextValue,
     ScheduledEmailDialogContextProvider,
 } from "../../contexts/ScheduledEmailDialogContext.js";
+import { type useValidateExistingAutomationFilters } from "../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
 import {
     AUTOMATIONS_CONTEXT,
     SCHEDULED_EMAIL_DIALOG_CONTEXT,

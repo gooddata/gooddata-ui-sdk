@@ -79,6 +79,7 @@ vi.mock("../../../../model/store/catalog/catalogSelectors.js", () => ({
     selectAllCatalogAttributesMap: () => selectors.emptyMap,
     selectAllCatalogDisplayFormsMap: () => selectors.emptyMap,
     selectCatalogAttributes: () => selectors.emptyArray,
+    selectCatalogAttributesWithComputed: () => selectors.emptyArray,
     selectCatalogDateDatasets: () => selectors.emptyArray,
     selectCatalogMeasures: () => selectors.emptyArray,
     selectCatalogParameters: () => selectors.parameterCatalog,

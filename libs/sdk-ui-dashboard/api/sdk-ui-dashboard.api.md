@@ -83,6 +83,7 @@ import { IBackendCapabilities } from '@gooddata/sdk-backend-spi';
 import { IBaseWidget } from '@gooddata/sdk-model';
 import { ICatalogAttribute } from '@gooddata/sdk-model';
 import { ICatalogAttributeHierarchy } from '@gooddata/sdk-model';
+import { ICatalogComputedAttribute } from '@gooddata/sdk-model';
 import { ICatalogDateAttribute } from '@gooddata/sdk-model';
 import { ICatalogDateAttributeHierarchy } from '@gooddata/sdk-model';
 import { ICatalogDateDataset } from '@gooddata/sdk-model';
@@ -589,6 +590,7 @@ export type CatalogState = {
     dateDatasets?: ICatalogDateDataset[];
     facts?: ICatalogFact[];
     attributeHierarchies?: ICatalogAttributeHierarchy[];
+    computedAttributes?: ICatalogComputedAttribute[];
     dateHierarchyTemplates?: IDateHierarchyTemplate[];
     parameters: ICatalogParametersState;
     measureParameters: ICatalogMeasureParametersState;
@@ -973,6 +975,9 @@ export type CustomInsightBodyComponent = ComponentType<IInsightBodyProps>;
 
 // @alpha (undocumented)
 export type CustomMenuButtonComponent = ComponentType<IMenuButtonProps>;
+
+// @alpha
+export type CustomRestrictedPlaceholderComponent = ComponentType<IRestrictedPlaceholderContentProps>;
 
 // @alpha (undocumented)
 export type CustomSaveAsDialogComponent = ComponentType<ISaveAsDialogProps>;
@@ -1390,10 +1395,10 @@ export abstract class DashboardPluginV1 implements IDashboardPluginContract_V1 {
 }
 
 // @alpha (undocumented)
-export type DashboardQueries = IQueryInsightDateDatasets | IQueryMeasureDateDatasets | IQueryInsightAttributesMeta | IQueryWidgetFilters | IQueryWidgetBrokenAlerts | IQueryWidgetAlertCount | IQueryConnectingAttributes | IQueryAttributeByDisplayForm | IQueryAttributeDataSet | IQueryAttributeElements | IQueryConnectedAttributes | IQueryMetricsAndFacts | IQueryAvailableDatasetsForItems;
+export type DashboardQueries = IQueryInsightDateDatasets | IQueryMeasureDateDatasets | IQueryInsightAttributesMeta | IQueryWidgetFilters | IQueryWidgetBrokenAlerts | IQueryWidgetAlertCount | IQueryConnectingAttributes | IQueryAttributeByDisplayForm | IQueryAttributeDataSet | IQueryAttributeElements | IQueryComputedAttributeExpression | IQueryConnectedAttributes | IQueryMetricsAndFacts | IQueryAvailableDatasetsForItems;
 
 // @beta (undocumented)
-export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS" | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META" | "GDC.DASH/QUERY.MEASURE.DATE.DATASETS" | "GDC.DASH/QUERY.WIDGET.FILTERS" | "GDC.DASH/QUERY.WIDGET.BROKEN_ALERTS" | "GDC.DASH/QUERY.WIDGET.ALERT_COUNT" | "GDC.DASH/QUERY.CONNECTING.ATTRIBUTES" | "GDC.DASH/QUERY.DISPLAY.FORM.ATTRIBUTE" | "GDC.DASH/QUERY.DATA.SET.ATTRIBUTE" | "GDC.DASH/QUERY.ELEMENTS.ATTRIBUTE" | "GDC.DASH/QUERY.CONNECTED.ATTRIBUTES" | "GDC.DASH/QUERY.METRICS_AND_FACTS" | "GDC.DASH/QUERY.AVAILABLE.DATA.SETS.FOR.ITEMS";
+export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS" | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META" | "GDC.DASH/QUERY.MEASURE.DATE.DATASETS" | "GDC.DASH/QUERY.WIDGET.FILTERS" | "GDC.DASH/QUERY.WIDGET.BROKEN_ALERTS" | "GDC.DASH/QUERY.WIDGET.ALERT_COUNT" | "GDC.DASH/QUERY.CONNECTING.ATTRIBUTES" | "GDC.DASH/QUERY.DISPLAY.FORM.ATTRIBUTE" | "GDC.DASH/QUERY.DATA.SET.ATTRIBUTE" | "GDC.DASH/QUERY.ELEMENTS.ATTRIBUTE" | "GDC.DASH/QUERY.CONNECTED.ATTRIBUTES" | "GDC.DASH/QUERY.COMPUTED.ATTRIBUTE.EXPRESSION" | "GDC.DASH/QUERY.METRICS_AND_FACTS" | "GDC.DASH/QUERY.AVAILABLE.DATA.SETS.FOR.ITEMS";
 
 // @alpha (undocumented)
 export type DashboardRelatedFilter = {
@@ -4174,6 +4179,8 @@ export interface IDashboardCustomComponentProps {
     LoadingComponent?: ComponentType<ILoadingProps>;
     // @alpha
     MenuButtonComponent?: CustomMenuButtonComponent;
+    // @alpha
+    RestrictedPlaceholderComponentProvider?: OptionalRestrictedPlaceholderComponentProvider;
     RichTextComponentProvider?: OptionalRichTextComponentProvider;
     // @alpha
     RichTextMenuComponentProvider?: OptionalRichTextMenuComponentProvider;
@@ -4832,6 +4839,8 @@ export interface IDashboardInsightCustomizer {
     // @alpha
     withCustomInsightBodyProvider(provider: OptionalInsightBodyComponentProvider): IDashboardInsightCustomizer;
     withCustomProvider(provider: OptionalInsightComponentProvider): IDashboardInsightCustomizer;
+    // @alpha
+    withRestrictedPlaceholderProvider(provider: OptionalRestrictedPlaceholderComponentProvider): IDashboardInsightCustomizer;
     withTag(tag: string, component: CustomDashboardInsightComponent): IDashboardInsightCustomizer;
 }
 
@@ -7797,14 +7806,30 @@ export interface IQueryAvailableDatasetsForItems extends IDashboardQuery {
     type: "GDC.DASH/QUERY.AVAILABLE.DATA.SETS.FOR.ITEMS";
 }
 
-// @alpha (undocumented)
-export interface IQueryConnectedAttributes extends IDashboardQuery {
+// @internal (undocumented)
+export interface IQueryComputedAttributeExpression extends IDashboardQuery {
     // (undocumented)
     payload: {
         readonly ref: ObjRef;
     };
     // (undocumented)
+    type: "GDC.DASH/QUERY.COMPUTED.ATTRIBUTE.EXPRESSION";
+}
+
+// @alpha (undocumented)
+export interface IQueryConnectedAttributes extends IDashboardQuery {
+    // (undocumented)
+    payload: {
+        readonly ref: ObjRef;
+        readonly includeComputedAttributes?: boolean;
+    };
+    // (undocumented)
     type: "GDC.DASH/QUERY.CONNECTED.ATTRIBUTES";
+}
+
+// @alpha
+export interface IQueryConnectedAttributesOptions {
+    includeComputedAttributes?: boolean;
 }
 
 // @alpha (undocumented)
@@ -8254,6 +8279,21 @@ export interface IResolvedFilterValues {
     };
     // (undocumented)
     dateFilters: ResolvedDateFilterValues;
+}
+
+// @alpha
+export interface IRestrictedPlaceholderContentProps {
+    height?: number;
+    width?: number;
+}
+
+// @alpha
+export interface IRestrictedPlaceholderProps {
+    // (undocumented)
+    dashboardItemClasses: string;
+    exportData?: WidgetExportData;
+    // (undocumented)
+    screen: ScreenSize;
 }
 
 // @public
@@ -8766,6 +8806,9 @@ export interface IScheduleTimezoneSelection {
     id: string | undefined;
     shouldSave: boolean;
 }
+
+// @internal
+export function isComputedAttributesUnavailableError(reason: unknown): boolean;
 
 // @internal
 export const isCreateAttributeHierarchyRequested: (obj: unknown) => obj is ICreateAttributeHierarchyRequested;
@@ -10954,6 +10997,9 @@ export type OptionalMeasureValueFilterComponentProvider = OptionalProvider<Measu
 // @public (undocumented)
 export type OptionalProvider<T> = T extends (...args: infer TArgs) => infer TRes ? (...args: TArgs) => TRes | undefined : never;
 
+// @alpha (undocumented)
+export type OptionalRestrictedPlaceholderComponentProvider = OptionalProvider<RestrictedPlaceholderComponentProvider>;
+
 // @public (undocumented)
 export type OptionalRichTextComponentProvider = OptionalProvider<RichTextComponentProvider>;
 
@@ -11053,8 +11099,11 @@ export type QueryCacheEntryResult<TResult> = {
 // @internal
 export type QueryCacheReducer<TQuery extends IDashboardQuery, TResult, TPayload> = CaseReducer<EntityState<QueryCacheEntry<TQuery, TResult>, EntityId>, PayloadAction<TPayload>>;
 
+// @internal
+export function queryComputedAttributeExpression(ref: ObjRef, correlationId?: string): IQueryComputedAttributeExpression;
+
 // @alpha
-export function queryConnectedAttributes(ref: ObjRef, correlationId?: string): IQueryConnectedAttributes;
+export function queryConnectedAttributes(ref: ObjRef, options?: IQueryConnectedAttributesOptions, correlationId?: string): IQueryConnectedAttributes;
 
 // @alpha
 export function queryConnectingAttributes(refs: [ObjRef, ObjRef][], correlationId?: string): IQueryConnectingAttributes;
@@ -11331,6 +11380,12 @@ export function resolveFilterValues(filters: ResolvableFilter[], backend?: IAnal
 
 // @internal
 export const resolveMessages: (locale: string) => Promise<ITranslations>;
+
+// @alpha
+export type RestrictedPlaceholderComponentProvider = (widget: IInsightWidget) => CustomRestrictedPlaceholderComponent;
+
+// @alpha
+export function RestrictedPlaceholderContent(input: IRestrictedPlaceholderContentProps): JSX.Element;
 
 // @alpha
 export function revertLastLayoutChange(correlationId?: string): IUndoLayoutChanges;
@@ -11767,6 +11822,12 @@ export const selectCatalogAttributeHierarchies: DashboardSelector<ICatalogAttrib
 // @public (undocumented)
 export const selectCatalogAttributes: DashboardSelector<ICatalogAttribute[]>;
 
+// @beta
+export const selectCatalogAttributesWithComputed: DashboardSelector<ICatalogAttribute[]>;
+
+// @beta
+export const selectCatalogComputedAttributes: DashboardSelector<ICatalogComputedAttribute[]>;
+
 // @public (undocumented)
 export const selectCatalogDateAttributes: DashboardSelector<ICatalogDateAttribute[]>;
 
@@ -12066,6 +12127,9 @@ export const selectEnableAnomalyDetectionAlert: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableAutomationEvaluationMode: DashboardSelector<boolean>;
+
+// @alpha
+export const selectEnableComputedAttributes: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableDashboardDensitySetting: DashboardSelector<boolean>;
@@ -12876,6 +12940,9 @@ export const selectRawExportOverridesForInsightByRef: (ref: ObjRef | undefined) 
 // @internal (undocumented)
 export const selectRenderMode: DashboardSelector<RenderMode>;
 
+// @alpha
+export const selectRestrictedInsightsMap: DashboardSelector<ObjRefMap<IUnavailableDashboardReference>>;
+
 // @internal
 export const selectSaveAsVisible: DashboardSelector<boolean>;
 
@@ -13105,6 +13172,7 @@ export type SetCatalogItemsPayload = {
     facts?: ICatalogFact[];
     dateDatasets?: ICatalogDateDataset[];
     attributeHierarchies?: ICatalogAttributeHierarchy[];
+    computedAttributes?: ICatalogComputedAttribute[];
     dateHierarchyTemplates?: IDateHierarchyTemplate[];
 };
 
@@ -14298,6 +14366,9 @@ export function useInsightWidgetDataView(input: IUseInsightWidgetDataView & UseI
 
 // @public
 export type UseInsightWidgetInsightDataViewCallbacks = UseCancelablePromiseCallbacks<DataViewFacade, GoodDataSdkError>;
+
+// @alpha
+export function useIsWidgetRestricted(widget: ExtendedDashboardWidget): boolean;
 
 // @alpha (undocumented)
 export const useMetaExportData: () => MetaExportData | undefined;

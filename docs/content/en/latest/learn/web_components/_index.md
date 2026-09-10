@@ -109,7 +109,7 @@ Specifically, you will need to add `script-src`, `style-src`, `font-src` and `im
 For example, if your GoodData server is hosted at `example.gooddata.com`, the CSP policy could look something like this:
 
 ```
-script-src 'self' 'unsafe-inline' 'unsafe-eval' example.gooddata.com;
+script-src 'self' 'unsafe-inline' example.gooddata.com;
 img-src 'self' data: blob: example.gooddata.com;
 style-src 'self' 'unsafe-inline' example.gooddata.com;
 font-src 'self' data: example.gooddata.com;

@@ -2,8 +2,8 @@
 
 import { type IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import { type IAttributeMetadataObject, filterObjRef } from "@gooddata/sdk-model";
-import { convertError } from "@gooddata/sdk-ui";
 
+import { loadAttributeByDisplayForm } from "../loadAttribute/loadAttributeByDisplayForm.js";
 import { type IAttributeFilterHandlerStoreContext } from "../store/types.js";
 
 /**
@@ -17,15 +17,10 @@ export async function loadLimitingAttributeFiltersAttributes(
         filterObjRef(limitingAttributeFilter.attributeFilter),
     );
 
+    // loadAttributeByDisplayForm resolves a computed-attribute-typed display form through the
+    // computedAttributes service (a computed attribute has no real label to look up) and converts
+    // backend errors to GoodDataSdkError
     return Promise.all(
-        displayFormRefs.map((displayFormRef) =>
-            context.backend
-                .workspace(context.workspace)
-                .attributes()
-                .getAttributeByDisplayForm(displayFormRef),
-        ),
-    ).catch((err) => {
-        // Convert from AnalyticalBackendError to GoodDataSdkError
-        throw convertError(err);
-    });
+        displayFormRefs.map((displayFormRef) => loadAttributeByDisplayForm(context, displayFormRef)),
+    );
 }

@@ -143,9 +143,13 @@ export interface IWorkspaceAttributesService {
      * Request list of attributes that have a connection with specified display form in the data model.
      *
      * @param ref - attribute display form reference whose connections we need to find
+     * @param options - options influencing which objects count as connected
      * @returns promise of array of connected attribute references
      */
-    getConnectedAttributesByDisplayForm(ref: ObjRef): Promise<ObjRef[]>;
+    getConnectedAttributesByDisplayForm(
+        ref: ObjRef,
+        options?: IConnectedAttributesOptions,
+    ): Promise<ObjRef[]>;
 
     /**
      * Attributes query factory.
@@ -249,4 +253,17 @@ export interface IAttributesQueryFilterOptions extends IFilterBaseOptions {
      * @beta
      */
     excludeDateAttributes?: boolean;
+}
+
+/**
+ * Options influencing which objects count as connected attributes.
+ *
+ * @public
+ */
+export interface IConnectedAttributesOptions {
+    /**
+     * Also count computed attributes among the connected attributes. Off by default; turn on when
+     * the computed attributes feature is enabled for the workspace.
+     */
+    includeComputedAttributes?: boolean;
 }

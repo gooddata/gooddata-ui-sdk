@@ -2997,7 +2997,7 @@
     },
     "shareDialog.olp.generalAccess.restricted.description.inherited": {
         "text": "Access for all workspace members is granted from a parent workspace and cannot be restricted here.",
-        "crowdinContext": "Description of the disabled Restricted general-access option on the OLP share dialog, shown when workspace-wide access is inherited from a parent workspace and therefore cannot be revoked in the current workspace."
+        "crowdinContext": "Tooltip on the disabled Restricted general-access option on the OLP share dialog, shown when workspace-wide access is inherited from a parent workspace and therefore cannot be revoked in the current workspace."
     },
     "shareDialog.olp.generalAccess.workspace.title": {
         "text": "All workspace members",

@@ -82,14 +82,18 @@ describe("UiGeneralAccessRadio", () => {
         expect(workspace.disabled).toBe(false);
     });
 
-    it("explains the disabled Restricted row when workspace access is inherited", () => {
+    it("keeps the Restricted description and explains the inherited lock separately", () => {
         renderWithIntl(
             <UiGeneralAccessRadio value="WORKSPACE" onChange={() => {}} workspaceAccessInherited />,
         );
-        expect(screen.getByText(/parent workspace/)).toBeInTheDocument();
-        expect(
-            screen.queryByText("Only people and groups added above can access this object."),
-        ).not.toBeInTheDocument();
+        const description = screen.getByText("Only people and groups added above can access this object.");
+        expect(description).toBeInTheDocument();
+
+        const restricted = screen.getByRole("radio", { name: /Restricted/ });
+        const describedBy = restricted.getAttribute("aria-describedby")?.split(" ") ?? [];
+        const inherited = screen.getByText(/parent workspace/);
+        expect(describedBy).toContain(description.id);
+        expect(describedBy).toContain(inherited.id);
     });
 
     it("forwards dataTestId to the root element", () => {

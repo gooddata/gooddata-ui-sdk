@@ -11,6 +11,10 @@
         "text": "empty value",
         "crowdinContext": "Display text when a value is empty or not available"
     },
+    "deleted_value": {
+        "text": "deleted value",
+        "crowdinContext": "Label displayed for data fields that have been deleted"
+    },
     "gs.list.cancel": {
         "text": "Cancel",
         "crowdinContext": "Button label to cancel the current action"
@@ -1483,6 +1487,14 @@
         "text": "This visualization has been removed or is no longer accessible. Please contact your administrator or remove it from the dashboard.",
         "crowdinContext": "Detailed error message explaining that a visualization is missing and suggesting actions to resolve the issue"
     },
+    "widget.error.restricted_insight.message": {
+        "text": "You don't have access to this visualization",
+        "crowdinContext": "Error message shown in place of a dashboard visualization the user is not permitted to see"
+    },
+    "widget.error.restricted_insight.description": {
+        "text": "Contact your administrator to request access.",
+        "crowdinContext": "Detailed error message telling the user how to obtain access to a restricted visualization"
+    },
     "widget.drill.dialog.exportToXLSX": {
         "text": "Formatted (.xlsx)",
         "crowdinContext": "Button label for exporting widget data to XLSX format from the drill dialog"
@@ -1658,6 +1670,10 @@
     "attributesDropdown.details.values": {
         "text": "Values",
         "crowdinContext": "Label for the values section in attribute filter details"
+    },
+    "attributesDropdown.details.definedAs": {
+        "text": "Defined as",
+        "crowdinContext": "Label for the MAQL definition section shown in the details tooltip of a computed attribute"
     },
     "attributesDropdown.details.shortening_decoration": {
         "text": "…and {count} more",
@@ -1839,6 +1855,18 @@
         "text": "Learn more",
         "crowdinContext": "Link text for documentation about container component"
     },
+    "sidebar.collapse": {
+        "text": "Collapse panel",
+        "crowdinContext": "Tooltip of the button that collapses the dashboard edit mode left panel"
+    },
+    "sidebar.search": {
+        "text": "Search visualizations",
+        "crowdinContext": "Tooltip of the button that expands the collapsed dashboard edit mode left panel to its visualization search"
+    },
+    "sidebar.expand": {
+        "text": "Expand panel",
+        "crowdinContext": "Tooltip of the button that expands the collapsed dashboard edit mode left panel"
+    },
     "visualizationsList.dragToAdd": {
         "text": "Drag to add",
         "crowdinContext": "Instruction to drag visualization to dashboard"
@@ -1915,6 +1943,10 @@
         "text": "The visualization cannot be filtered by Date. Unselect the check box.",
         "crowdinContext": "Warning message when attempting to apply date filter to incompatible visualization"
     },
+    "configurationPanel.dateDatasetsLoadFailed": {
+        "text": "Related date data could not be loaded. Close the configuration panel and try again.",
+        "crowdinContext": "Error message shown in widget configuration when the query for the widget's related date datasets fails, as opposed to succeeding with an empty result"
+    },
     "configurationPanel.vizCantBeFilteredByMeasureValueFilter": {
         "text": "Filter is not applicable to this visualization.",
         "crowdinContext": "Warning message when attempting to apply measure value filter to incompatible visualization"
@@ -1990,6 +2022,10 @@
     "configurationPanel.drillConfig.disableDrillDownTooltip": {
         "text": "Drill down is turned off in this visualization's configuration.",
         "crowdinContext": "Tooltip explaining why drill down option is disabled"
+    },
+    "configurationPanel.drillConfig.computedAttributeDrillDownTooltip": {
+        "text": "Drill down is not available for computed attributes.",
+        "crowdinContext": "Tooltip explaining why the drill down interaction option is disabled when the selected drill origin is a computed attribute"
     },
     "configurationPanel.drillConfig.drillIntoUrl": {
         "text": "Drill into URL",
@@ -2498,6 +2534,10 @@
     "richText.emptyContent": {
         "text": "No rich text content",
         "crowdinContext": "Message shown when rich text component has no content"
+    },
+    "visualizationSwitcher.restrictedEntry": {
+        "text": "Restricted",
+        "crowdinContext": "Stands in for the title of a visualization switcher entry the user is not permitted to see; the real title would name the restricted object"
     },
     "visualizationSwitcher.emptyContent": {
         "text": "No visualization in switcher",

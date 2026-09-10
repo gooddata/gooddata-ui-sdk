@@ -28,6 +28,7 @@ import { getItemIndex } from "../../_staging/layout/coordinates.js";
 import { calculateWidgetMinHeight, getSizeInfo } from "../../_staging/layout/sizing.js";
 import { type ObjRefMap } from "../../_staging/metadata/objRefMap.js";
 import { useDashboardDispatch, useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
+import { useIsWidgetRestricted } from "../../model/react/useIsWidgetRestricted.js";
 import { useWidgetSelection } from "../../model/react/useWidgetSelection.js";
 import {
     selectEnableSnapshotExportAccessibility,
@@ -147,6 +148,7 @@ export function DashboardLayoutWidget({
     const { isSelected } = useWidgetSelection(widget.ref);
     const isRichTextWidgetInEditState = isSelected && isRichTextWidget(widget);
     const isNestedLayout = isExtendedDashboardLayoutWidget(widget);
+    const isRestricted = useIsWidgetRestricted(widget);
     const exportData = useWidgetExportData(widget);
     const { enableRowEndHotspot } = useShouldShowRowEndHotspot(item, rowIndex);
     const { direction } = getLayoutConfiguration(item.section().layout().raw());
@@ -191,6 +193,9 @@ export function DashboardLayoutWidget({
     const isStandardWidget = isNotPlaceholder && !isCustomWidget(widget);
     const canShowWidgetHotspots = canShowHotspot && isStandardWidget;
     const canShowResizeOverlay = canShowHotspot && isNotPlaceholder && isActive;
+    // min/max size of a restricted widget come from a visualization type the editor cannot read, so it
+    // can be moved but not resized
+    const canShowWidthResizer = canShowWidgetHotspots && !isRestricted;
 
     const className = cx({
         "custom-height": true,
@@ -272,7 +277,7 @@ export function DashboardLayoutWidget({
                     />
                 ) : null}
             </div>
-            {canShowWidgetHotspots ? (
+            {canShowWidthResizer ? (
                 <WidthResizerHotspot
                     item={item}
                     getGridColumnHeightInPx={getHeightInPx}

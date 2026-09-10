@@ -84,3 +84,12 @@
     overflow: hidden;
     visibility: hidden;
 }
+
+// keeps the lock of a restricted entry on the same line as its title
+.gd-visualization-switcher-widget-header-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    min-width: 0;
+}

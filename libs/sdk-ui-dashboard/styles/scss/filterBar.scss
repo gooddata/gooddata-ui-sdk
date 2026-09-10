@@ -4,6 +4,7 @@
 @use "zIndexes";
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/variables" as button-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/maqlPalette" as maql-palette;
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins" as mixins;
 
 $attribute-filter-drag-handle-left: 10px;
@@ -471,6 +472,43 @@ $attribute-filter-drag-handle-left: 10px;
         .attribute-tooltip-elements-more {
             color: kit-variables.$gd-color-state-blank;
             text-transform: lowercase;
+        }
+
+        .gd-maql-token-object,
+        .gd-maql-token-attribute-element {
+            font-weight: bold;
+            color: kit-variables.$gd-color-text;
+        }
+
+        .gd-maql-token-fact {
+            color: maql-palette.$maql-fact;
+        }
+
+        .gd-maql-token-measure,
+        .gd-maql-token-metric {
+            color: maql-palette.$maql-metric;
+        }
+
+        .gd-maql-token-attribute,
+        .gd-maql-token-computedAttribute {
+            color: maql-palette.$maql-attribute;
+        }
+
+        .gd-maql-token-displayForm,
+        .gd-maql-token-attributeDisplayForm {
+            color: maql-palette.$maql-attribute-display-form;
+        }
+
+        .gd-maql-token-attribute-element {
+            color: maql-palette.$maql-attribute-element;
+        }
+
+        .gd-maql-token-dataSet {
+            color: maql-palette.$maql-dataset;
+        }
+
+        .gd-maql-token-parameter {
+            color: maql-palette.$maql-parameter;
         }
     }
 }

@@ -2,11 +2,13 @@
 
 import { describe, expect, it } from "vitest";
 
+import { type ResultDimension } from "@gooddata/api-client-tiger";
 import {
     MeasureGroupIdentifier,
     defWithDimensions,
     emptyDef,
     idRef,
+    newAttribute,
     newDefForItems,
     newDimension,
     newMeasure,
@@ -64,6 +66,42 @@ describe("transformResultDimensions", () => {
             attributeHeader: {
                 geoAreaConfig: {
                     collectionId: "regions",
+                },
+            },
+        });
+    });
+
+    it("should keep the computedAttribute ref type on computed attribute descriptors", () => {
+        const computedAttributeDimensions: ResultDimension[] = [
+            {
+                headers: [
+                    {
+                        attributeHeader: {
+                            label: { id: "ca_1", type: "label" },
+                            localIdentifier: "caLocal",
+                            labelName: "Computed",
+                            primaryLabel: { id: "ca_1", type: "label" },
+                            attribute: { id: "ca_1", type: "attribute" },
+                            attributeName: "Computed",
+                            valueType: "TEXT",
+                        },
+                    },
+                ],
+                localIdentifier: "headers1",
+            },
+        ];
+        const def = newDefForItems("test", [
+            newAttribute(idRef("ca_1", "computedAttribute"), (a) => a.localId("caLocal")),
+        ]);
+
+        const [dimension] = transformResultDimensions(computedAttributeDimensions, def);
+
+        expect(dimension.headers[0]).toMatchObject({
+            attributeHeader: {
+                ref: idRef("ca_1", "computedAttribute"),
+                primaryLabel: idRef("ca_1", "computedAttribute"),
+                formOf: {
+                    ref: idRef("ca_1", "computedAttribute"),
                 },
             },
         });

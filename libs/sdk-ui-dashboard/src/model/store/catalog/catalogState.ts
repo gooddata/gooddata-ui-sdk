@@ -3,6 +3,7 @@
 import {
     type ICatalogAttribute,
     type ICatalogAttributeHierarchy,
+    type ICatalogComputedAttribute,
     type ICatalogDateDataset,
     type ICatalogFact,
     type ICatalogMeasure,
@@ -61,6 +62,13 @@ export type CatalogState = {
     facts?: ICatalogFact[];
     /** @beta */
     attributeHierarchies?: ICatalogAttributeHierarchy[];
+    /**
+     * Computed attributes of the workspace; loaded only when the `enableComputedAttributes`
+     * setting is on, empty otherwise.
+     *
+     * @beta
+     */
+    computedAttributes?: ICatalogComputedAttribute[];
     /** @beta */
     dateHierarchyTemplates?: IDateHierarchyTemplate[];
     /** @alpha */
@@ -75,6 +83,7 @@ export const catalogInitialState: CatalogState = {
     dateDatasets: undefined,
     facts: undefined,
     attributeHierarchies: undefined,
+    computedAttributes: undefined,
     dateHierarchyTemplates: undefined,
     parameters: { status: "uninitialized", parameters: [] },
     measureParameters: { status: "uninitialized", byMetric: {} },

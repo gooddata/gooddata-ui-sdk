@@ -336,7 +336,7 @@ export function useAlertFormState({
             comparisonType: AlertMetricComparatorType,
             granularity?: DateAttributeGranularity,
         ) => {
-            if (!measure || !relativeOperator || !relativeOperator) {
+            if (!measure || !relativeOperator) {
                 return;
             }
             const [relativeOperatorValue, arithmeticOperator] = relativeOperator;

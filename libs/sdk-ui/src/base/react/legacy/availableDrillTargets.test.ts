@@ -21,7 +21,7 @@ describe("getAvailableDrillTargets", () => {
         expect(getAvailableDrillTargets(DataViewFacade.for(dataView))).toMatchSnapshot();
     });
 
-    it("should exclude computed attributes from drill targets", () => {
+    it("should offer computed attributes among drill targets", () => {
         const dataView = Scenarios.map(([, view]) => view).find(
             (view) => view.definition.attributes.length > 0,
         );
@@ -52,6 +52,6 @@ describe("getAvailableDrillTargets", () => {
             result.attributes?.some(
                 (item) => item.attribute.attributeHeader.localIdentifier === localIdentifier,
             ),
-        ).toBe(false);
+        ).toBe(true);
     });
 });

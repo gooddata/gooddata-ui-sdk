@@ -372,6 +372,7 @@ export type CachingConfiguration = {
     maxCommonAttributesPerWorkspace?: number;
     maxConnectedAttributesPerWorkspace?: number;
     maxAttributeElementResultsPerWorkspace?: number;
+    maxAttributeElementsForLocalFiltering?: number;
     maxWorkspaceSettings?: number;
     cacheGeoStyles?: boolean;
 };

@@ -57,6 +57,7 @@ export function InsightDateDataSetFilter({ widget }: IConfigurationPanelProps) {
             dateFilterCheckboxDisabled={false}
             isDatasetsLoading={status === "running" || status === "pending" || isLoadingAdditionalData}
             relatedDateDatasets={result?.dateDatasetsOrdered}
+            datasetsLoadFailed={status === "error"}
             isLoadingAdditionalData={isLoadingAdditionalData}
             shouldOpenDateDatasetPicker={shouldOpenDateDatasetPicker}
             onDateDatasetChanged={handleDateDatasetChanged}

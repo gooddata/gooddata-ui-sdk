@@ -1,8 +1,11 @@
 // (C) 2019-2026 GoodData Corporation
 
+import { useIntl } from "react-intl";
+
 import { type InsightDrillDefinition } from "@gooddata/sdk-model";
 import { ScrollableItem } from "@gooddata/sdk-ui-kit";
 
+import { messages } from "../../../../locales.js";
 import { type IDrillConfigItem, type IDrillDownAttributeHierarchyDefinition } from "../../../drill/types.js";
 
 import { DrillConfigItem } from "./InsightDrillConfigItem.js";
@@ -17,16 +20,34 @@ export interface IDrillConfigListProps {
     ) => void;
     onIncompleteChange: (changedItem: IDrillConfigItem) => void;
     disableDrillDown?: boolean;
+    /**
+     * Local identifiers of insight attributes that are computed attributes. Drill down is not
+     * available for them - a computed attribute cannot be part of an attribute hierarchy.
+     */
+    computedAttributeOriginLocalIds?: string[];
 }
 
 export function InsightDrillConfigList({
     drillConfigItems = [],
     disableDrillDown,
+    computedAttributeOriginLocalIds = [],
     onDelete,
     onSetup,
     onIncompleteChange,
 }: IDrillConfigListProps) {
+    const intl = useIntl();
     const enabledDrillTargetTypeItems = useDrillTargetTypeItems(disableDrillDown);
+    const computedAttributeDrillTargetTypeItems = useDrillTargetTypeItems(
+        true,
+        intl.formatMessage(messages.computedAttributeDrillDownToolTip),
+    );
+
+    const getDrillTargetTypeItems = (item: IDrillConfigItem) => {
+        return item.type === "attribute" &&
+            computedAttributeOriginLocalIds.includes(item.originLocalIdentifier)
+            ? computedAttributeDrillTargetTypeItems
+            : enabledDrillTargetTypeItems;
+    };
 
     const shouldScrollToContainer = (item: IDrillConfigItem, isLast: boolean): boolean => {
         return !item.complete && isLast;
@@ -51,7 +72,7 @@ export function InsightDrillConfigList({
                             onDelete={onDelete}
                             onSetup={onSetup}
                             onIncompleteChange={onIncompleteChange}
-                            enabledDrillTargetTypeItems={enabledDrillTargetTypeItems}
+                            enabledDrillTargetTypeItems={getDrillTargetTypeItems(item)}
                         />
                     </ScrollableItem>
                 );

@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type IdentifierRef, idRef, newMeasure } from "@gooddata/sdk-model";
+import { type IInsightParameterValue, type IdentifierRef, idRef, newMeasure } from "@gooddata/sdk-model";
 
 import { type IAlertingDialogContextValue } from "../../contexts/AlertingDialogContext.js";
 import {
@@ -30,6 +30,13 @@ export const SENTINEL_MEASURE: AlertMetric = {
 // survives `reconstructAutomationParametersFromValues` instead of being dropped as unresolvable.
 export const PARAMETER_REF: IdentifierRef = idRef("param-1", "parameter");
 
+/**
+ * The dialog's effective widget parameter values (`IAlertingDialogContextValue.parameterValues`,
+ * also read as `useAutomationAlertParameters`'s `widgetParameterValues`) — empty, for the common
+ * case of no stored parameter overrides.
+ */
+export const EMPTY_PARAMETER_VALUES: IInsightParameterValue[] = [];
+
 export const ALERTING_DIALOG_CONTEXT: IAlertingDialogContextValue = {
     mode: "create",
     widget: SENTINEL_WIDGET,
@@ -39,7 +46,7 @@ export const ALERTING_DIALOG_CONTEXT: IAlertingDialogContextValue = {
     dashboardFilters: [],
     hiddenFilters: [],
     executionResultByRef: () => undefined,
-    parameterValues: [],
+    parameterValues: EMPTY_PARAMETER_VALUES,
     dashboardParameters: [],
     commonDateFilterId: undefined,
     dashboardEvaluationFrequency: undefined,

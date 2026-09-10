@@ -637,7 +637,7 @@
     "objectShare.toast.accessUpdated": "Успішно! Доступ оновлено.",
     "objectShare.toast.generalAccessUpdated": "Успішно! Загальний доступ оновлено.",
     "objectShare.toast.error": "Не вдалося оновити доступ.",
-    "objectShare.toast.escalationRefused": "Ви можете надавати лише ті дозволи, які маєте самі.",
+    "objectShare.toast.escalationRefused": "Ви не можете встановити дозволи вищого рівня, ніж ваші власні.",
     "objectShare.toast.labelScopePartial": "Не вдалося зберегти доступ до деяких міток.",
     "objectShare.loadError": "Не вдалося завантажити налаштування спільного доступу. Закрийте й повторіть спробу.",
     "properties.conditionalFormatting.title": "Умовне форматування",

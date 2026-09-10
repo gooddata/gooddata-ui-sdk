@@ -637,7 +637,7 @@
     "objectShare.toast.accessUpdated": "Succes! Toegang is bijgewerkt.",
     "objectShare.toast.generalAccessUpdated": "Succes! Algemene toegang is bijgewerkt.",
     "objectShare.toast.error": "Toegang kon niet worden bijgewerkt.",
-    "objectShare.toast.escalationRefused": "U kunt alleen machtigingen verlenen die u zelf hebt.",
+    "objectShare.toast.escalationRefused": "U kunt geen machtigingen instellen die hoger zijn dan uw eigen machtigingen.",
     "objectShare.toast.labelScopePartial": "Toegang tot sommige labels kon niet worden opgeslagen.",
     "objectShare.loadError": "Instellingen voor delen konden niet worden geladen. Sluit dit venster en probeer het opnieuw.",
     "properties.conditionalFormatting.title": "Conditionele formattering",

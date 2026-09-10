@@ -637,7 +637,7 @@
     "objectShare.toast.accessUpdated": "Onnistui! Käyttöoikeus päivitettiin.",
     "objectShare.toast.generalAccessUpdated": "Onnistui! Yleinen käyttöoikeus päivitettiin.",
     "objectShare.toast.error": "Käyttöoikeutta ei voitu päivittää.",
-    "objectShare.toast.escalationRefused": "Voit myöntää vain käyttöoikeuksia, jotka sinulla itselläsi on.",
+    "objectShare.toast.escalationRefused": "Et voi määrittää omia käyttöoikeuksiasi korkeampia käyttöoikeuksia.",
     "objectShare.toast.labelScopePartial": "Joitakin merkinnän käyttöoikeuksia ei voitu tallentaa.",
     "objectShare.loadError": "Jakamisasetuksia ei voitu ladata. Sulje ja yritä uudelleen.",
     "properties.conditionalFormatting.title": "Ehdollinen muotoilu",

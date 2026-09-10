@@ -519,7 +519,8 @@ export interface IFeatureFlags {
 
     /**
      * Enables column-level (object-level) permissions: the backend enforces per-object
-     * access rules on attributes, facts and labels, and the UI for managing that access
+     * access rules on attributes, facts, labels and (with `enableComputedAttributes`) computed
+     * attributes, and the UI for managing that access
      * (e.g. the catalog share dialog) becomes available.
      */
     enableColumnLevelPermissions?: boolean;
@@ -627,6 +628,16 @@ export interface IFeatureFlags {
      * Enable GenAI catalog quality checker in Analytics Catalog.
      */
     enableGenAICatalogQualityChecker?: boolean;
+
+    /**
+     * Enable the GenAI dashboard builder skill.
+     */
+    enableGenAiDashboardBuilderSkill?: boolean;
+
+    /**
+     * Enable the GenAI right panel, including the dashboard edit mode UI that goes with it.
+     */
+    enableGenAiRightPanel?: boolean;
 
     /**
      * Enable trending and recommended object tabs in Analytics Catalog.

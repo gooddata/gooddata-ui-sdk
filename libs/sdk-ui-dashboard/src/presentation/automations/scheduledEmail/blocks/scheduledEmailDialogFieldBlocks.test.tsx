@@ -13,6 +13,7 @@ import {
 } from "@gooddata/sdk-model";
 import { getTimezoneDisplayLabel } from "@gooddata/sdk-ui-kit";
 
+import { type useValidateExistingAutomationFilters } from "../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
 import { useScheduledExportDraft } from "../state/ScheduledExportDraftContext.js";
 import { useIsInPlatformChannel } from "../state/useIsInPlatformChannel.js";
 import {
@@ -28,7 +29,7 @@ import {
     SENTINEL_WIDGET,
     makeWidgetExportDefinition,
 } from "../tests/scheduledEmail.test.helpers.js";
-import { BlockProviders } from "../tests/scheduledEmailBlocks.test.helpers.js";
+import { BlockProviders, VALID_FILTERS_RESULT } from "../tests/scheduledEmailBlocks.test.helpers.js";
 import { getDefaultCronExpression } from "../utils/cron.js";
 import { TIMEZONE_DEFAULT } from "../utils/timezone.js";
 
@@ -48,27 +49,12 @@ vi.hoisted(() => {
 });
 
 const { mockUseValidateExistingAutomationFilters } = vi.hoisted(() => ({
-    mockUseValidateExistingAutomationFilters: vi.fn(),
+    mockUseValidateExistingAutomationFilters: vi.fn<typeof useValidateExistingAutomationFilters>(),
 }));
 
 vi.mock("../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js", () => ({
     useValidateExistingAutomationFilters: mockUseValidateExistingAutomationFilters,
 }));
-
-const VALID_FILTERS_RESULT = {
-    isValid: true,
-    hiddenFilterIsMissingInSavedFilters: false,
-    hiddenFilterHasDifferentValueInSavedFilter: false,
-    lockedFilterIsMissingInSavedFilters: false,
-    lockedFilterHasDifferentValueInSavedFilter: false,
-    ignoredFilterIsAppliedInSavedFilters: false,
-    removedFilterIsAppliedInSavedFilters: false,
-    commonDateFilterIsMissingInSavedVisibleFilters: false,
-    visibleFilterIsMissingInSavedFilters: false,
-    visibleFiltersAreMissing: false,
-    incompatibleSelectionTypeIsAppliedInSavedFilters: false,
-    filtersAreStale: false,
-};
 
 beforeEach(() => {
     vi.clearAllMocks();

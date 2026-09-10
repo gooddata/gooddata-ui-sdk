@@ -6,6 +6,7 @@ import { castDraft } from "immer";
 import {
     type ICatalogAttribute,
     type ICatalogAttributeHierarchy,
+    type ICatalogComputedAttribute,
     type ICatalogDateDataset,
     type ICatalogFact,
     type ICatalogMeasure,
@@ -29,18 +30,27 @@ export type SetCatalogItemsPayload = {
     facts?: ICatalogFact[];
     dateDatasets?: ICatalogDateDataset[];
     attributeHierarchies?: ICatalogAttributeHierarchy[];
+    computedAttributes?: ICatalogComputedAttribute[];
     dateHierarchyTemplates?: IDateHierarchyTemplate[];
 };
 
 const setCatalogItems: CatalogReducer<PayloadAction<SetCatalogItemsPayload>> = (state, action) => {
-    const { attributes, measures, dateDatasets, facts, attributeHierarchies, dateHierarchyTemplates } =
-        action.payload;
+    const {
+        attributes,
+        measures,
+        dateDatasets,
+        facts,
+        attributeHierarchies,
+        computedAttributes,
+        dateHierarchyTemplates,
+    } = action.payload;
 
     state.attributes = attributes;
     state.measures = castDraft(measures);
     state.facts = facts;
     state.dateDatasets = dateDatasets;
     state.attributeHierarchies = attributeHierarchies;
+    state.computedAttributes = computedAttributes;
     state.dateHierarchyTemplates = dateHierarchyTemplates;
 };
 

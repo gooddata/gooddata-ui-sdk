@@ -77,7 +77,11 @@ export function DefaultAlertingDialog(props: IDefaultAlertingDialogProps): React
     const { isLoading, alertToEdit } = useAlertingDialogContext();
 
     if (isLoading) {
-        return <DefaultLoadingAlertingDialog onCancel={onCancel} alertToEdit={alertToEdit} />;
+        return (
+            <IntlWrapper locale={locale}>
+                <DefaultLoadingAlertingDialog onCancel={onCancel} alertToEdit={alertToEdit} />
+            </IntlWrapper>
+        );
     }
 
     return (

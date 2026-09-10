@@ -3511,6 +3511,9 @@
                     },
                     "value": {
                         "type": "string"
+                    },
+                    "valueTitle": {
+                        "type": "string"
                     }
                 }
             },
@@ -3611,6 +3614,11 @@
                         "type": "string",
                         "description": "Value to use for this parameter when executing the export.",
                         "example": "2026"
+                    },
+                    "valueTitle": {
+                        "type": "string",
+                        "description": "Human-readable form of `value` (e.g. a constrained string's allowedValues title). Never used to drive execution. Falls back to `value` when absent.",
+                        "example": "year 2026"
                     }
                 },
                 "additionalProperties": true,

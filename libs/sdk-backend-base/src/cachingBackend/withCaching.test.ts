@@ -9,12 +9,17 @@ import {
     type ICollectionItemsConfig,
     type ICollectionItemsResult,
     type IDataView,
+    type IElementsQuery,
+    type IElementsQueryAttributeFilter,
+    type IElementsQueryFactory,
+    type IElementsQueryOptions,
     type IElementsQueryResult,
     type IExecutionResult,
     type IGeoService,
     type IGetInsightOptions,
     type IMeasureExpressionToken,
     type IMeasureReferencing,
+    type IPagedResource,
     type IPreparedExecution,
     type IWorkspaceAttributesService,
     type IWorkspaceComputedAttributesService,
@@ -25,7 +30,9 @@ import {
     type IWorkspaceMeasuresService,
 } from "@gooddata/sdk-backend-spi";
 import {
+    type IAbsoluteDateFilter,
     type IAttributeDisplayFormMetadataObject,
+    type IAttributeElement,
     type IAttributeMetadataObject,
     type IAttributeOrMeasure,
     type IBucket,
@@ -36,7 +43,9 @@ import {
     type IFactMetadataObject,
     type IGeoJsonFeature,
     type IInsight,
+    type IMeasure,
     type IMetadataObject,
+    type IRelativeDateFilter,
     type ObjRef,
     areObjRefsEqual,
     geoFeatureId,
@@ -316,6 +325,165 @@ function makeCountingBackend(
     }
 
     return backend;
+}
+
+const ELEMENTS_DF_REF: ObjRef = idRef("df.account.name", "displayForm");
+
+const ELEMENTS: IAttributeElement[] = [
+    { title: "Alpha", uri: "/alpha" },
+    { title: "alphabet", uri: "/alphabet" },
+    { title: "Beta", uri: "/beta" },
+    { title: null, uri: "/unknown" },
+];
+
+type ElementsCall = {
+    limit?: number;
+    offset?: number;
+    options?: IElementsQueryOptions;
+};
+
+function elementsPage(
+    all: IAttributeElement[],
+    limit: number,
+    offset: number,
+    cacheId?: string,
+): IElementsQueryResult {
+    return {
+        items: all.slice(offset, offset + limit),
+        limit,
+        offset,
+        totalCount: all.length,
+        cacheId,
+        next: () => Promise.resolve(elementsPage(all, limit, offset + limit, cacheId)),
+        goTo: (pageIndex: number) => Promise.resolve(elementsPage(all, limit, pageIndex * limit, cacheId)),
+        all: () => Promise.resolve(all),
+        allSorted: (compareFn) => Promise.resolve([...all].sort(compareFn)),
+    };
+}
+
+/**
+ * Elements query that matches the way the backend evaluates a pattern filter - a case-insensitive substring
+ * match on the title, negated by `complement` - and records every call that reached it.
+ */
+class RecordingElementsQuery implements IElementsQuery {
+    private limit = 100;
+    private offset = 0;
+    private options: IElementsQueryOptions | undefined;
+
+    constructor(
+        private readonly allElements: IAttributeElement[],
+        private readonly calls: ElementsCall[],
+        private readonly cacheId: string | undefined,
+    ) {}
+
+    public withLimit(limit: number): IElementsQuery {
+        this.limit = limit;
+        return this;
+    }
+
+    public withOffset(offset: number): IElementsQuery {
+        this.offset = offset;
+        return this;
+    }
+
+    public withOptions(options: IElementsQueryOptions): IElementsQuery {
+        this.options = options;
+        return this;
+    }
+
+    public withAttributeFilters(_filters: IElementsQueryAttributeFilter[]): IElementsQuery {
+        return this;
+    }
+
+    public withMeasures(_measures: IMeasure[]): IElementsQuery {
+        return this;
+    }
+
+    public withAvailableElementsOnly(_validateBy: ObjRef[]): IElementsQuery {
+        return this;
+    }
+
+    public withDateFilters(_filters: (IRelativeDateFilter | IAbsoluteDateFilter)[]): IElementsQuery {
+        return this;
+    }
+
+    public withSignal(_signal: AbortSignal): IElementsQuery {
+        return this;
+    }
+
+    public query = async (): Promise<IElementsQueryResult> => {
+        this.calls.push({ limit: this.limit, offset: this.offset, options: this.options });
+
+        const filter = this.options?.filter;
+        const complement = this.options?.complement ?? false;
+        const matching = filter
+            ? this.allElements.filter(
+                  (element) =>
+                      element.title !== null &&
+                      element.title.toLowerCase().includes(filter.toLowerCase()) !== complement,
+              )
+            : this.allElements;
+
+        return elementsPage(matching, this.limit, this.offset, this.cacheId);
+    };
+}
+
+class RecordingElementsService extends DecoratedWorkspaceAttributesService {
+    constructor(
+        decorated: IWorkspaceAttributesService,
+        private readonly allElements: IAttributeElement[],
+        private readonly calls: ElementsCall[],
+        private readonly cacheId?: string,
+    ) {
+        super(decorated);
+    }
+
+    public override elements(): IElementsQueryFactory {
+        return {
+            forDisplayForm: () => new RecordingElementsQuery(this.allElements, this.calls, this.cacheId),
+            forFilter: () => {
+                throw new Error("not supported");
+            },
+        };
+    }
+}
+
+function makeElementsBackend(
+    calls: ElementsCall[],
+    allElements: IAttributeElement[] = ELEMENTS,
+    cacheId?: string,
+): IAnalyticalBackend {
+    return decoratedBackend(dummyBackendEmptyData(), {
+        attributes: (attributes) => new RecordingElementsService(attributes, allElements, calls, cacheId),
+    });
+}
+
+function queryElements(
+    backend: IAnalyticalBackend,
+    limit: number,
+    offset: number,
+    options?: IElementsQueryOptions,
+    signal?: AbortSignal,
+): Promise<IElementsQueryResult> {
+    let query = backend
+        .workspace("test")
+        .attributes()
+        .elements()
+        .forDisplayForm(ELEMENTS_DF_REF)
+        .withLimit(limit)
+        .withOffset(offset);
+
+    if (options) {
+        query = query.withOptions(options);
+    }
+
+    if (signal) {
+        // The return value is dropped on purpose - that is how the attribute filter passes its signal, and
+        // it is what keeps the caching decorator in the chain.
+        query.withSignal(signal);
+    }
+
+    return query.query();
 }
 
 type CollectionItemsProvider = (config: ICollectionItemsConfig) => ICollectionItemsResult;
@@ -2025,6 +2193,304 @@ describe("withCaching", () => {
 
                 expect(second).not.toBe(first);
             });
+
+            describe("locally filtered search", () => {
+                const localFilteringConfig: Partial<CachingConfiguration> = {
+                    maxAttributeElementResultsPerWorkspace: 10,
+                    maxAttributeElementsForLocalFiltering: 500,
+                };
+
+                const titles = (result: IPagedResource<IAttributeElement>) =>
+                    result.items.map((element) => element.title);
+
+                it("answers a search from the complete list loaded earlier", async () => {
+                    const calls: ElementsCall[] = [];
+                    const backend = withCachingForTests(
+                        makeElementsBackend(calls),
+                        undefined,
+                        localFilteringConfig,
+                    );
+
+                    await queryElements(backend, 500, 0);
+                    const search = await queryElements(backend, 500, 0, { filter: "alpha" });
+
+                    expect(titles(search)).toEqual(["Alpha", "alphabet"]);
+                    expect(search.totalCount).toBe(2);
+                    expect(search.limit).toBe(500);
+                    expect(search.offset).toBe(0);
+                    expect(calls).toHaveLength(1);
+                });
+
+                it("negates the match for a complement search", async () => {
+                    const calls: ElementsCall[] = [];
+                    const backend = withCachingForTests(
+                        makeElementsBackend(calls),
+                        undefined,
+                        localFilteringConfig,
+                    );
+
+                    await queryElements(backend, 500, 0);
+                    const search = await queryElements(backend, 500, 0, {
+                        filter: "alpha",
+                        complement: true,
+                    });
+
+                    expect(titles(search)).toEqual(["Beta"]);
+                    expect(calls).toHaveLength(1);
+                });
+
+                it("pages the local matches without going to the backend", async () => {
+                    const calls: ElementsCall[] = [];
+                    const backend = withCachingForTests(
+                        makeElementsBackend(calls),
+                        undefined,
+                        localFilteringConfig,
+                    );
+
+                    await queryElements(backend, 500, 0);
+                    const first = await queryElements(backend, 1, 0, { filter: "alpha" });
+                    const second = await first.next();
+
+                    expect(titles(first)).toEqual(["Alpha"]);
+                    expect(titles(second)).toEqual(["alphabet"]);
+                    expect(second.totalCount).toBe(2);
+                    expect(calls).toHaveLength(1);
+                });
+
+                it("pages by the requested limit however full the current page is", async () => {
+                    const calls: ElementsCall[] = [];
+                    const elements = ["a1", "a2", "a3", "a4", "a5"].map((title) => ({
+                        title,
+                        uri: `/${title}`,
+                    }));
+                    const backend = withCachingForTests(
+                        makeElementsBackend(calls, elements),
+                        undefined,
+                        localFilteringConfig,
+                    );
+
+                    await queryElements(backend, 500, 0);
+                    const first = await queryElements(backend, 2, 0, { filter: "a" });
+                    const last = await (await first.next()).next();
+
+                    expect(titles(last)).toEqual(["a5"]);
+                    expect(titles(await last.goTo(1))).toEqual(["a3", "a4"]);
+                    expect(calls).toHaveLength(1);
+                });
+
+                it("answers a search on a query that carries an abort signal", async () => {
+                    const calls: ElementsCall[] = [];
+                    const backend = withCachingForTests(
+                        makeElementsBackend(calls),
+                        undefined,
+                        localFilteringConfig,
+                    );
+                    const { signal } = new AbortController();
+
+                    await queryElements(backend, 500, 0, undefined, signal);
+                    const search = await queryElements(backend, 500, 0, { filter: "alpha" }, signal);
+
+                    expect(titles(search)).toEqual(["Alpha", "alphabet"]);
+                    expect(calls).toHaveLength(1);
+                });
+
+                it("answers a cleared search from the same list", async () => {
+                    const calls: ElementsCall[] = [];
+                    const backend = withCachingForTests(
+                        makeElementsBackend(calls, ELEMENTS, "result-1"),
+                        undefined,
+                        localFilteringConfig,
+                    );
+
+                    // The attribute filter threads the cacheId of the previous result back into the next
+                    // query, which is the only thing that tells a cleared search from the initial load.
+                    const initial = await queryElements(backend, 500, 0, { cacheId: undefined });
+                    const search = await queryElements(backend, 500, 0, {
+                        cacheId: initial.cacheId,
+                        filter: "alpha",
+                    });
+                    const cleared = await queryElements(backend, 500, 0, { cacheId: search.cacheId });
+
+                    expect(titles(cleared)).toEqual(["Alpha", "alphabet", "Beta", null]);
+                    expect(cleared.totalCount).toBe(4);
+                    expect(calls).toHaveLength(1);
+                });
+
+                it("goes to the backend when a different result snapshot is asked for", async () => {
+                    const calls: ElementsCall[] = [];
+                    const backend = withCachingForTests(
+                        makeElementsBackend(calls, ELEMENTS, "result-1"),
+                        undefined,
+                        localFilteringConfig,
+                    );
+
+                    await queryElements(backend, 500, 0);
+                    await queryElements(backend, 500, 0, { cacheId: "result-2", filter: "alpha" });
+
+                    expect(calls).toHaveLength(2);
+                });
+
+                it.each([
+                    ["a non-positive limit", 0, 0],
+                    ["a negative offset", 500, -1],
+                ])("leaves a query with %s to the backend", async (_name, limit, offset) => {
+                    const calls: ElementsCall[] = [];
+                    const backend = withCachingForTests(
+                        makeElementsBackend(calls),
+                        undefined,
+                        localFilteringConfig,
+                    );
+
+                    await queryElements(backend, 500, 0);
+                    await queryElements(backend, limit, offset, { filter: "alpha" });
+
+                    expect(calls).toHaveLength(2);
+                });
+
+                it("treats an element with no title the way it treats a null one", async () => {
+                    const calls: ElementsCall[] = [];
+                    // IAttributeElement declares title as string | null, but a backend that omits the field
+                    // must not crash the local match.
+                    const elements = [
+                        { title: "Alpha", uri: "/alpha" },
+                        { uri: "/untitled" } as IAttributeElement,
+                    ];
+                    const backend = withCachingForTests(
+                        makeElementsBackend(calls, elements),
+                        undefined,
+                        localFilteringConfig,
+                    );
+
+                    await queryElements(backend, 500, 0);
+                    const search = await queryElements(backend, 500, 0, { filter: "alpha" });
+                    const complement = await queryElements(backend, 500, 0, {
+                        filter: "alpha",
+                        complement: true,
+                    });
+
+                    expect(titles(search)).toEqual(["Alpha"]);
+                    expect(complement.items).toEqual([]);
+                    expect(calls).toHaveLength(1);
+                });
+
+                it("carries the cacheId of the result the list came from", async () => {
+                    const calls: ElementsCall[] = [];
+                    const backend = withCachingForTests(
+                        makeElementsBackend(calls, ELEMENTS, "result-1"),
+                        undefined,
+                        localFilteringConfig,
+                    );
+
+                    await queryElements(backend, 500, 0);
+                    const search = await queryElements(backend, 500, 0, { filter: "alpha" });
+
+                    expect(search.cacheId).toBe("result-1");
+                    expect(calls).toHaveLength(1);
+                });
+
+                it("goes to the backend when no complete list was loaded yet", async () => {
+                    const calls: ElementsCall[] = [];
+                    const backend = withCachingForTests(
+                        makeElementsBackend(calls),
+                        undefined,
+                        localFilteringConfig,
+                    );
+
+                    const search = await queryElements(backend, 500, 0, { filter: "alpha" });
+
+                    expect(titles(search)).toEqual(["Alpha", "alphabet"]);
+                    expect(calls).toHaveLength(1);
+                    expect(calls[0]?.options?.filter).toBe("alpha");
+                });
+
+                it("goes to the backend when only a page of a larger list was loaded", async () => {
+                    const calls: ElementsCall[] = [];
+                    const backend = withCachingForTests(
+                        makeElementsBackend(calls),
+                        undefined,
+                        localFilteringConfig,
+                    );
+
+                    await queryElements(backend, 2, 0);
+                    await queryElements(backend, 500, 0, { filter: "alpha" });
+
+                    expect(calls).toHaveLength(2);
+                });
+
+                it("goes to the backend when the complete list is over the configured maximum", async () => {
+                    const calls: ElementsCall[] = [];
+                    const backend = withCachingForTests(makeElementsBackend(calls), undefined, {
+                        ...localFilteringConfig,
+                        maxAttributeElementsForLocalFiltering: 3,
+                    });
+
+                    await queryElements(backend, 500, 0);
+                    await queryElements(backend, 500, 0, { filter: "alpha" });
+
+                    expect(calls).toHaveLength(2);
+                });
+
+                it("goes to the backend when local filtering is not configured", async () => {
+                    const calls: ElementsCall[] = [];
+                    const backend = withCachingForTests(makeElementsBackend(calls), undefined, {
+                        maxAttributeElementResultsPerWorkspace: 10,
+                    });
+
+                    await queryElements(backend, 500, 0);
+                    await queryElements(backend, 500, 0, { filter: "alpha" });
+
+                    expect(calls).toHaveLength(2);
+                });
+
+                it("goes to the backend when the pattern contains a LIKE wildcard", async () => {
+                    const calls: ElementsCall[] = [];
+                    const backend = withCachingForTests(
+                        makeElementsBackend(calls),
+                        undefined,
+                        localFilteringConfig,
+                    );
+
+                    await queryElements(backend, 500, 0);
+                    await queryElements(backend, 500, 0, { filter: "alph%" });
+
+                    expect(calls).toHaveLength(2);
+                });
+
+                it("goes to the backend when a different ordering was loaded", async () => {
+                    const calls: ElementsCall[] = [];
+                    const backend = withCachingForTests(
+                        makeElementsBackend(calls),
+                        undefined,
+                        localFilteringConfig,
+                    );
+
+                    await queryElements(backend, 500, 0, { order: "asc" });
+                    await queryElements(backend, 500, 0, { order: "desc", filter: "alpha" });
+
+                    expect(calls).toHaveLength(2);
+                });
+
+                it.each([
+                    ["a selection of specific elements", { elements: { values: ["Alpha"] } }],
+                    ["a match against the primary label", { filterByPrimaryLabel: true }],
+                    ["the total count without filters", { includeTotalCountWithoutFilters: true }],
+                ] as [string, IElementsQueryOptions][])(
+                    "goes to the backend for a search asking for %s",
+                    async (_name, options) => {
+                        const calls: ElementsCall[] = [];
+                        const backend = withCachingForTests(
+                            makeElementsBackend(calls),
+                            undefined,
+                            localFilteringConfig,
+                        );
+
+                        await queryElements(backend, 500, 0, options);
+                        await queryElements(backend, 500, 0, { ...options, filter: "alpha" });
+
+                        expect(calls).toHaveLength(2);
+                    },
+                );
+            });
         });
     });
 
@@ -2582,5 +3048,80 @@ describe("withCaching computed attributes", () => {
         await expect(service.getComputedAttribute(ref)).rejects.toThrow("boom");
 
         expect(counts.getComputedAttribute).toEqual(2);
+    });
+
+    describe("expression tokens", () => {
+        function tokensService(counts: { getTokens: number }, onUpdate?: () => void) {
+            return {
+                getComputedAttributeExpressionTokens(): Promise<IMeasureExpressionToken[]> {
+                    counts.getTokens++;
+                    return Promise.resolve([{ type: "text", value: "SELECT 1" }]);
+                },
+                updateComputedAttribute(
+                    computedAttribute: IComputedAttributeMetadataObject,
+                ): Promise<IComputedAttributeMetadataObject> {
+                    onUpdate?.();
+                    return Promise.resolve(computedAttribute);
+                },
+            } as unknown as IWorkspaceComputedAttributesService;
+        }
+
+        function makeTokensBackend(counts: { getTokens: number }) {
+            return withCaching(backendWithComputedAttributes(tokensService(counts)), {
+                maxAttributeDisplayFormsPerWorkspace: 4,
+                maxAttributesPerWorkspace: 4,
+                maxAttributeElementResultsPerWorkspace: 1,
+                maxAttributeWorkspaces: 1,
+            })
+                .workspace("ws")
+                .computedAttributes();
+        }
+
+        it("should serve repeated getComputedAttributeExpressionTokens from the cache", async () => {
+            const counts = { getTokens: 0 };
+            const service = makeTokensBackend(counts);
+            const ref = idRef("shared_id", "computedAttribute");
+
+            await service.getComputedAttributeExpressionTokens(ref);
+            await service.getComputedAttributeExpressionTokens(ref);
+
+            expect(counts.getTokens).toEqual(1);
+        });
+
+        it("should serve fresh tokens after an update", async () => {
+            const counts = { getTokens: 0 };
+            const service = makeTokensBackend(counts);
+            const ref = idRef("shared_id", "computedAttribute");
+
+            await service.getComputedAttributeExpressionTokens(ref);
+            await service.updateComputedAttribute(makeComputedAttribute(ref));
+            await service.getComputedAttributeExpressionTokens(ref);
+
+            expect(counts.getTokens).toEqual(2);
+        });
+
+        it("should not cache rejected token loads", async () => {
+            const counts = { getTokens: 0 };
+            const failing = {
+                getComputedAttributeExpressionTokens(): Promise<IMeasureExpressionToken[]> {
+                    counts.getTokens++;
+                    return Promise.reject(new Error("boom"));
+                },
+            } as unknown as IWorkspaceComputedAttributesService;
+            const service = withCaching(backendWithComputedAttributes(failing), {
+                maxAttributeDisplayFormsPerWorkspace: 4,
+                maxAttributesPerWorkspace: 4,
+                maxAttributeElementResultsPerWorkspace: 1,
+                maxAttributeWorkspaces: 1,
+            })
+                .workspace("ws")
+                .computedAttributes();
+            const ref = idRef("shared_id", "computedAttribute");
+
+            await expect(service.getComputedAttributeExpressionTokens(ref)).rejects.toThrow("boom");
+            await expect(service.getComputedAttributeExpressionTokens(ref)).rejects.toThrow("boom");
+
+            expect(counts.getTokens).toEqual(2);
+        });
     });
 });

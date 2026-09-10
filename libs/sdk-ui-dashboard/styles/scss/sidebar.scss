@@ -5,29 +5,244 @@
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/variables" as button-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
+$sidebar-collapsed-width: 48px;
+$sidebar-icon-size: 18px;
+$sidebar-header-height: 48px;
+$sidebar-item-size: 32px;
+$sidebar-rail-divider-offset: 10px;
+$sidebar-rail-search-gap: 10px;
+$sidebar-rail-search-offset: $sidebar-rail-divider-offset + variables.$nav-border-size +
+    $sidebar-rail-search-gap;
+$sidebar-fade-length: 0.2s;
+$sidebar-fade-delay: 0.3s;
+
 .gd-sidebar-container {
+    --sidebar-fade-duration: #{$sidebar-fade-length};
+    --sidebar-fade-delay: #{$sidebar-fade-delay};
+    --sidebar-slide-duration: #{variables.$sidebar-transition-length};
+
     position: sticky;
     top: 0;
     width: 230px;
     height: 100vh;
     border-right: variables.$nav-border;
+    transition: width var(--sidebar-slide-duration);
 
     &--resizable {
         min-width: 230px;
         width: 100%;
     }
+
+    &--collapsed {
+        min-width: $sidebar-collapsed-width;
+        width: $sidebar-collapsed-width;
+    }
+
+    &--resizable#{&}--collapsed {
+        width: 100%;
+    }
+}
+
+.gd-creation-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.gd-sidebar-collapse-toggle {
+    display: flex;
+    margin: 0 10px;
+}
+
+.gd-sidebar-panel {
+    height: 100%;
+
+    &--collapsible {
+        overflow: hidden;
+
+        .add-item-placeholder {
+            box-sizing: border-box;
+            height: $sidebar-item-size;
+            white-space: nowrap;
+            transition: color var(--sidebar-fade-duration) var(--sidebar-fade-delay);
+        }
+
+        .add-item-placeholder svg {
+            flex: 0 0 auto;
+            width: $sidebar-icon-size;
+            height: $sidebar-icon-size;
+            transition: transform var(--sidebar-slide-duration);
+        }
+
+        .add-item-placeholder::before {
+            background-size: $sidebar-icon-size auto;
+            transition: width var(--sidebar-slide-duration);
+        }
+
+        .gd-visualizations-list {
+            transition: opacity var(--sidebar-fade-duration) var(--sidebar-fade-delay);
+        }
+
+        .configuration-panel {
+            padding-top: 0;
+        }
+
+        .gd-creation-panel-header {
+            height: $sidebar-header-height;
+            border-bottom: variables.$nav-border;
+
+            h2 {
+                margin-bottom: 0;
+                color: var(--gd-palette-complementary-8, #464e56);
+                transition: opacity var(--sidebar-fade-duration) var(--sidebar-fade-delay);
+            }
+        }
+
+        .add-item-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 0 (($sidebar-collapsed-width - $sidebar-item-size) * 0.5);
+        }
+
+        .configuration-category {
+            margin-bottom: 0;
+            padding-top: 10px;
+        }
+
+        .configuration-category:not(.flex-panel-item-stretch) {
+            flex: 0 0 auto;
+        }
+
+        .configuration-category-vis {
+            position: relative;
+
+            &::before {
+                content: "";
+                position: absolute;
+                top: $sidebar-rail-divider-offset;
+                left: 0;
+                right: 0;
+                border-top: variables.$nav-border;
+                opacity: 0;
+                visibility: hidden;
+                transition:
+                    opacity var(--sidebar-fade-duration),
+                    visibility 0s linear var(--sidebar-fade-duration);
+            }
+        }
+
+        .gd-sidebar-container--collapsed & {
+            .gd-creation-panel-header h2,
+            .gd-creation-panel-header .gd-sidebar-collapse-toggle,
+            .gd-visualizations-list {
+                opacity: 0;
+                visibility: hidden;
+                transition:
+                    opacity var(--sidebar-fade-duration),
+                    visibility 0s linear var(--sidebar-fade-duration);
+            }
+
+            .add-item-panel {
+                align-items: flex-start;
+            }
+
+            .add-item-placeholder {
+                width: $sidebar-item-size;
+                padding: 0;
+                overflow: hidden;
+                color: transparent;
+                transition:
+                    color var(--sidebar-fade-duration),
+                    padding 0s linear var(--sidebar-fade-duration);
+            }
+
+            .add-item-placeholder.add-panel-item svg {
+                transform: translateX(calc(-50% + 1px));
+            }
+
+            .add-item-placeholder::before {
+                width: $sidebar-collapsed-width - 16px;
+            }
+
+            .add-item-placeholder.add-panel-item .gd-add-item-placeholder-help-trigger {
+                display: none;
+            }
+
+            .configuration-category-vis::before,
+            .gd-sidebar-rail-search {
+                opacity: 1;
+                visibility: visible;
+                transition: opacity var(--sidebar-fade-duration) var(--sidebar-fade-delay);
+            }
+        }
+    }
+}
+
+.gd-sidebar-rail-search {
+    position: absolute;
+    top: $sidebar-rail-search-offset;
+    left: ($sidebar-collapsed-width - $sidebar-item-size) * 0.5;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+        opacity var(--sidebar-fade-duration),
+        visibility 0s linear var(--sidebar-fade-duration);
+}
+
+.gd-sidebar-rail {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: $sidebar-collapsed-width;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+        opacity var(--sidebar-fade-duration),
+        visibility 0s linear var(--sidebar-fade-duration);
+
+    .gd-sidebar-container--collapsed & {
+        opacity: 1;
+        visibility: visible;
+        transition: opacity var(--sidebar-fade-duration) var(--sidebar-fade-delay);
+    }
+
+    .gd-sidebar-collapse-toggle {
+        align-items: center;
+        height: $sidebar-header-height;
+        margin: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gd-sidebar-container,
+    .gd-resizable-sidebar {
+        --sidebar-fade-duration: 0s;
+        --sidebar-fade-delay: 0s;
+        --sidebar-slide-duration: 0s;
+    }
 }
 
 .gd-resizable-sidebar {
+    --sidebar-fade-duration: #{$sidebar-fade-length};
+    --sidebar-fade-delay: #{$sidebar-fade-delay};
+    --sidebar-slide-duration: #{variables.$sidebar-transition-length};
+
     display: flex;
     flex-direction: column;
     flex: 0 0 auto;
+    transition: width var(--sidebar-slide-duration);
 
     // Lift the wrapper above sibling main-content during drag so the indicator
     // rail isn't covered by widgets/charts with their own stacking context.
     &--dragging,
     &:has(.gd-resizable-sidebar__handle:focus) {
         z-index: 9999;
+        transition: none;
     }
 
     &__handle {

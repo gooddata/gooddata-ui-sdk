@@ -8133,6 +8133,7 @@
                                     "datasets",
                                     "filterContexts",
                                     "dashboardPlugins",
+                                    "computedAttributes",
                                     "createdBy",
                                     "modifiedBy",
                                     "certifiedBy",
@@ -8140,7 +8141,7 @@
                                 ]
                             }
                         },
-                        "example": "createdBy,modifiedBy,certifiedBy,visualizationObjects,analyticalDashboards,labels,metrics,parameters,datasets,filterContexts,dashboardPlugins"
+                        "example": "createdBy,modifiedBy,certifiedBy,visualizationObjects,analyticalDashboards,labels,metrics,parameters,datasets,filterContexts,dashboardPlugins,computedAttributes"
                     },
                     {
                         "$ref": "#/components/parameters/page"
@@ -8248,6 +8249,7 @@
                                     "datasets",
                                     "filterContexts",
                                     "dashboardPlugins",
+                                    "computedAttributes",
                                     "createdBy",
                                     "modifiedBy",
                                     "certifiedBy",
@@ -8255,7 +8257,7 @@
                                 ]
                             }
                         },
-                        "example": "createdBy,modifiedBy,certifiedBy,visualizationObjects,analyticalDashboards,labels,metrics,parameters,datasets,filterContexts,dashboardPlugins"
+                        "example": "createdBy,modifiedBy,certifiedBy,visualizationObjects,analyticalDashboards,labels,metrics,parameters,datasets,filterContexts,dashboardPlugins,computedAttributes"
                     },
                     {
                         "name": "metaInclude",
@@ -8457,6 +8459,7 @@
                                     "datasets",
                                     "filterContexts",
                                     "dashboardPlugins",
+                                    "computedAttributes",
                                     "createdBy",
                                     "modifiedBy",
                                     "certifiedBy",
@@ -8464,7 +8467,7 @@
                                 ]
                             }
                         },
-                        "example": "createdBy,modifiedBy,certifiedBy,visualizationObjects,analyticalDashboards,labels,metrics,parameters,datasets,filterContexts,dashboardPlugins"
+                        "example": "createdBy,modifiedBy,certifiedBy,visualizationObjects,analyticalDashboards,labels,metrics,parameters,datasets,filterContexts,dashboardPlugins,computedAttributes"
                     },
                     {
                         "name": "X-GDC-VALIDATE-RELATIONS",
@@ -8579,6 +8582,7 @@
                                     "datasets",
                                     "filterContexts",
                                     "dashboardPlugins",
+                                    "computedAttributes",
                                     "createdBy",
                                     "modifiedBy",
                                     "certifiedBy",
@@ -8586,7 +8590,7 @@
                                 ]
                             }
                         },
-                        "example": "createdBy,modifiedBy,certifiedBy,visualizationObjects,analyticalDashboards,labels,metrics,parameters,datasets,filterContexts,dashboardPlugins"
+                        "example": "createdBy,modifiedBy,certifiedBy,visualizationObjects,analyticalDashboards,labels,metrics,parameters,datasets,filterContexts,dashboardPlugins,computedAttributes"
                     }
                 ],
                 "requestBody": {
@@ -8721,6 +8725,7 @@
                                     "datasets",
                                     "filterContexts",
                                     "dashboardPlugins",
+                                    "computedAttributes",
                                     "createdBy",
                                     "modifiedBy",
                                     "certifiedBy",
@@ -8728,7 +8733,7 @@
                                 ]
                             }
                         },
-                        "example": "createdBy,modifiedBy,certifiedBy,visualizationObjects,analyticalDashboards,labels,metrics,parameters,datasets,filterContexts,dashboardPlugins"
+                        "example": "createdBy,modifiedBy,certifiedBy,visualizationObjects,analyticalDashboards,labels,metrics,parameters,datasets,filterContexts,dashboardPlugins,computedAttributes"
                     }
                 ],
                 "requestBody": {
@@ -13366,11 +13371,12 @@
                                     "attributes",
                                     "datasets",
                                     "labels",
+                                    "computedAttributes",
                                     "ALL"
                                 ]
                             }
                         },
-                        "example": "attributes,datasets,labels"
+                        "example": "attributes,datasets,labels,computedAttributes"
                     },
                     {
                         "$ref": "#/components/parameters/page"
@@ -13470,11 +13476,12 @@
                                     "attributes",
                                     "datasets",
                                     "labels",
+                                    "computedAttributes",
                                     "ALL"
                                 ]
                             }
                         },
-                        "example": "attributes,datasets,labels"
+                        "example": "attributes,datasets,labels,computedAttributes"
                     },
                     {
                         "name": "metaInclude",
@@ -13668,11 +13675,12 @@
                                     "attributes",
                                     "datasets",
                                     "labels",
+                                    "computedAttributes",
                                     "ALL"
                                 ]
                             }
                         },
-                        "example": "attributes,datasets,labels"
+                        "example": "attributes,datasets,labels,computedAttributes"
                     },
                     {
                         "name": "X-GDC-VALIDATE-RELATIONS",
@@ -13779,11 +13787,12 @@
                                     "attributes",
                                     "datasets",
                                     "labels",
+                                    "computedAttributes",
                                     "ALL"
                                 ]
                             }
                         },
-                        "example": "attributes,datasets,labels"
+                        "example": "attributes,datasets,labels,computedAttributes"
                     }
                 ],
                 "requestBody": {
@@ -13912,11 +13921,12 @@
                                     "attributes",
                                     "datasets",
                                     "labels",
+                                    "computedAttributes",
                                     "ALL"
                                 ]
                             }
                         },
-                        "example": "attributes,datasets,labels"
+                        "example": "attributes,datasets,labels,computedAttributes"
                     }
                 ],
                 "requestBody": {
@@ -38086,12 +38096,16 @@
                     "level": {
                         "type": "string",
                         "description": "Level of permission",
-                        "example": "VIEW, SHARE, EDIT"
+                        "example": "VIEW"
                     },
                     "source": {
                         "type": "string",
                         "description": "Source of permission",
-                        "example": "direct/indirect"
+                        "example": "indirect",
+                        "enum": [
+                            "direct",
+                            "indirect"
+                        ]
                     }
                 },
                 "description": "Permissions granted to the user group"
@@ -39588,6 +39602,17 @@
                                     }
                                 }
                             },
+                            "computedAttributes": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiComputedAttributeToManyLinkage"
+                                    }
+                                }
+                            },
                             "createdBy": {
                                 "required": [
                                     "data"
@@ -39739,6 +39764,9 @@
                 "oneOf": [
                     {
                         "$ref": "#/components/schemas/JsonApiAnalyticalDashboardOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiComputedAttributeOutWithLinks"
                     },
                     {
                         "$ref": "#/components/schemas/JsonApiDashboardPluginOutWithLinks"
@@ -47698,6 +47726,17 @@
                                     }
                                 }
                             },
+                            "computedAttributes": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiComputedAttributeToManyLinkage"
+                                    }
+                                }
+                            },
                             "datasets": {
                                 "required": [
                                     "data"
@@ -47772,6 +47811,9 @@
                 "oneOf": [
                     {
                         "$ref": "#/components/schemas/JsonApiAttributeOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiComputedAttributeOutWithLinks"
                     },
                     {
                         "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
@@ -62093,6 +62135,11 @@
                         "type": "string",
                         "description": "Value to use for this parameter when executing the export.",
                         "example": "2026"
+                    },
+                    "valueTitle": {
+                        "type": "string",
+                        "description": "Human-readable form of `value` (e.g. a constrained string's allowedValues title). Never used to drive execution. Falls back to `value` when absent.",
+                        "example": "year 2026"
                     }
                 },
                 "additionalProperties": true,
@@ -63187,7 +63234,6 @@
                             "attributeHierarchy",
                             "computedAttribute",
                             "fact",
-                            "filterContext",
                             "label",
                             "metric",
                             "userDataFilter",

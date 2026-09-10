@@ -13,6 +13,7 @@ import {
     unavailableObjectsSliceReducer,
 } from "./index.js";
 import {
+    selectRestrictedInsightsMap,
     selectUnavailableObjects,
     selectUnavailableObjectsMapByType,
 } from "./unavailableObjectsSelectors.js";
@@ -104,6 +105,32 @@ describe("unavailableObjects store", () => {
             expect(
                 selectUnavailableObjectsMapByType("analyticalDashboard")(state).get(idRef("x")),
             ).toBeUndefined();
+        });
+    });
+
+    describe("selectRestrictedInsightsMap", () => {
+        const missingInsight: IUnavailableDashboardReference = {
+            ref: idRef("gone", "insight"),
+            type: "insight",
+            reason: "notFound",
+        };
+
+        it("resolves a forbidden insight", () => {
+            const state = stateWith(forbiddenInsight);
+
+            expect(selectRestrictedInsightsMap(state).get(idRef("x", "insight"))).toEqual(forbiddenInsight);
+        });
+
+        it("omits an insight that is merely not found", () => {
+            const state = stateWith(missingInsight);
+
+            expect(selectRestrictedInsightsMap(state).get(idRef("gone", "insight"))).toBeUndefined();
+        });
+
+        it("omits forbidden objects of other types", () => {
+            const state = stateWith(forbiddenDashboardByUri);
+
+            expect(selectRestrictedInsightsMap(state).get(uriRef("/gdc/md/dash-1"))).toBeUndefined();
         });
     });
 });

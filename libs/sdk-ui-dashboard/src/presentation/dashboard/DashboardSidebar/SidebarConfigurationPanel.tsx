@@ -2,13 +2,17 @@
 
 import { type ReactElement } from "react";
 
+import cx from "classnames";
+
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { useWidgetSelection } from "../../../model/react/useWidgetSelection.js";
 import { selectSettings } from "../../../model/store/config/configSelectors.js";
 
 import { CreationPanel } from "./CreationPanel.js";
 import { FloatingToolbar } from "./FloatingToolbar.js";
+import { SidebarCollapseToggle } from "./SidebarCollapseToggle.js";
 import { SidebarResizeChrome } from "./SidebarResizeChrome.js";
+import { useResizableSidebar } from "./SidebarResizeContext.js";
 import { type ISidebarProps } from "./types.js";
 
 /**
@@ -30,6 +34,7 @@ export function SidebarConfigurationPanel(props: Omit<ISidebarProps, "DefaultSid
     const settings = useDashboardSelector(selectSettings);
     const enableEnhancedInsightPicker = settings?.enableEnhancedInsightPicker ?? false;
     const enableDashboardSidebarResize = settings?.enableDashboardSidebarResize ?? false;
+    const { isCollapsed, canCollapse, setCollapsed, expandedWidth } = useResizableSidebar();
 
     if (enableEnhancedInsightPicker) {
         return <FloatingToolbar />;
@@ -37,17 +42,30 @@ export function SidebarConfigurationPanel(props: Omit<ISidebarProps, "DefaultSid
 
     const content = (
         <>
-            <div className="flex-panel-full-height">
-                <CreationPanel
-                    className={configurationPanelClassName}
-                    WrapCreatePanelItemWithDragComponent={WrapCreatePanelItemWithDragComponent}
-                    WrapInsightListItemWithDragComponent={WrapInsightListItemWithDragComponent}
-                    AttributeFilterComponentSet={AttributeFilterComponentSet}
-                    InsightWidgetComponentSet={InsightWidgetComponentSet}
-                    RichTextWidgetComponentSet={RichTextWidgetComponentSet}
-                    VisualizationSwitcherWidgetComponentSet={VisualizationSwitcherWidgetComponentSet}
-                    DashboardLayoutWidgetComponentSet={DashboardLayoutWidgetComponentSet}
-                />
+            {canCollapse ? (
+                <div className="gd-sidebar-rail">
+                    <SidebarCollapseToggle
+                        isCollapsed={isCollapsed}
+                        onToggle={() => setCollapsed(!isCollapsed)}
+                    />
+                </div>
+            ) : null}
+            <div className={cx("gd-sidebar-panel", { "gd-sidebar-panel--collapsible": canCollapse })}>
+                <div
+                    className="flex-panel-full-height"
+                    style={canCollapse ? { width: expandedWidth } : undefined}
+                >
+                    <CreationPanel
+                        className={configurationPanelClassName}
+                        WrapCreatePanelItemWithDragComponent={WrapCreatePanelItemWithDragComponent}
+                        WrapInsightListItemWithDragComponent={WrapInsightListItemWithDragComponent}
+                        AttributeFilterComponentSet={AttributeFilterComponentSet}
+                        InsightWidgetComponentSet={InsightWidgetComponentSet}
+                        RichTextWidgetComponentSet={RichTextWidgetComponentSet}
+                        VisualizationSwitcherWidgetComponentSet={VisualizationSwitcherWidgetComponentSet}
+                        DashboardLayoutWidgetComponentSet={DashboardLayoutWidgetComponentSet}
+                    />
+                </div>
             </div>
             <DeleteDropZoneComponent />
         </>
@@ -58,7 +76,12 @@ export function SidebarConfigurationPanel(props: Omit<ISidebarProps, "DefaultSid
     }
 
     return (
-        <div className="col gd-flex-item gd-sidebar-container" onClick={deselectWidgets}>
+        <div
+            className={cx("col gd-flex-item gd-sidebar-container", {
+                "gd-sidebar-container--collapsed": isCollapsed,
+            })}
+            onClick={deselectWidgets}
+        >
             {content}
         </div>
     );

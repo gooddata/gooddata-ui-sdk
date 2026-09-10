@@ -9,13 +9,15 @@ import {
     type ICatalogAttribute,
     type ObjRef,
     areObjRefsEqual,
+    computedAttributeAsAttributeMetadataObject,
+    isComputedAttributeRef,
     serializeObjRef,
 } from "@gooddata/sdk-model";
 
 import { invalidQueryArguments } from "../events/general.js";
 import { type IQueryAttributeByDisplayForm } from "../queries/attributes.js";
 import { createCachedQueryService } from "../store/_infra/queryService.js";
-import { selectCatalogAttributes } from "../store/catalog/catalogSelectors.js";
+import { selectCatalogAttributesWithComputed } from "../store/catalog/catalogSelectors.js";
 import { selectPreloadedAttributesWithReferences } from "../store/tabs/filterContext/filterContextSelectors.js";
 import { type DashboardContext } from "../types/commonTypes.js";
 
@@ -59,6 +61,16 @@ async function loadAttributeByDisplayForm(
         return attribute;
     }
 
+    // A computed-attribute-typed display form ref resolves through the computedAttributes service;
+    // the fabricated display form shares the computed attribute's own ref.
+    if (isComputedAttributeRef(displayFormRef)) {
+        return backend
+            .workspace(workspace)
+            .computedAttributes()
+            .getComputedAttribute(displayFormRef)
+            .then(computedAttributeAsAttributeMetadataObject);
+    }
+
     // If attribute is not in preloaded filters or catalog attributes, fetch it from backend
     return backend.workspace(workspace).attributes().getAttributeByDisplayForm(displayFormRef);
 }
@@ -86,8 +98,9 @@ function* queryService(
     } = query;
     const preloadedAttributesWithReferences: ReturnType<typeof selectPreloadedAttributesWithReferences> =
         yield select(selectPreloadedAttributesWithReferences);
-    const catalogAttributes: ReturnType<typeof selectCatalogAttributes> =
-        yield select(selectCatalogAttributes);
+    const catalogAttributes: ReturnType<typeof selectCatalogAttributesWithComputed> = yield select(
+        selectCatalogAttributesWithComputed,
+    );
 
     const attributes: SagaReturnType<typeof loadAttributes> = yield call(
         loadAttributes,

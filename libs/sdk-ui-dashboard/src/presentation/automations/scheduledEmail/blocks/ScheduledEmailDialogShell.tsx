@@ -310,27 +310,26 @@ function LoadedScheduledEmailDialogShell({
                             <h2 className={"sr-only"} id={titleElementId}>
                                 {intl.formatMessage({ id: "dialogs.schedule.email.accessibilityTitle" })}
                             </h2>
-                            {tabs.length > 1 ? (
-                                <UiTabs
-                                    tabs={tabs}
-                                    selectedTabId={selectedTabId}
-                                    onTabSelect={handleTabSelect}
-                                    size="medium"
-                                    accessibilityConfig={{
-                                        role: "tablist",
-                                        tabRole: "tab",
-                                        ariaLabel: intl.formatMessage({
-                                            id: "dialogs.schedule.email.accessibilityTitle",
-                                        }),
-                                    }}
-                                    disableBottomBorder
-                                />
-                            ) : null}
+                            <UiTabs
+                                tabs={tabs}
+                                selectedTabId={selectedTabId}
+                                onTabSelect={handleTabSelect}
+                                size="medium"
+                                accessibilityConfig={{
+                                    role: "tablist",
+                                    tabRole: "tab",
+                                    ariaLabel: intl.formatMessage({
+                                        id: "dialogs.schedule.email.accessibilityTitle",
+                                    }),
+                                }}
+                                disableBottomBorder
+                            />
                             <ScrollablePanel
-                                className={cx("gd-notifications-channel-dialog-content-wrapper", {
-                                    "gd-notification-channel-dialog-with-automation-filters": true,
-                                    "gd-notification-channel-dialog-with-tabs": tabs.length > 1,
-                                })}
+                                className={cx(
+                                    "gd-notifications-channel-dialog-content-wrapper",
+                                    "gd-notification-channel-dialog-with-automation-filters",
+                                    "gd-notification-channel-dialog-with-tabs",
+                                )}
                             >
                                 {topContent}
                                 <div className="gd-divider-with-margin" />

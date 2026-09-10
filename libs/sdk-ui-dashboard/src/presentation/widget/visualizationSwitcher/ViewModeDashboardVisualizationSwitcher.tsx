@@ -21,6 +21,7 @@ import { useDashboardAlerts } from "../../../model/react/useDashboardAlerting/us
 import { useDashboardCommand } from "../../../model/react/useDashboardCommand.js";
 import { selectInsightsMap } from "../../../model/store/insights/insightsSelectors.js";
 import { selectVisualizationSwitcherActiveVisualizationByWidgetRef } from "../../../model/store/ui/uiSelectors.js";
+import { selectRestrictedInsightsMap } from "../../../model/store/unavailableObjects/unavailableObjectsSelectors.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 import { DashboardItem } from "../../presentationComponents/DashboardItems/DashboardItem.js";
 import { DashboardItemVisualization } from "../../presentationComponents/DashboardItems/DashboardItemVisualization.js";
@@ -37,6 +38,7 @@ import { VisualizationSwitcherNavigationHeader } from "../widget/VisualizationSw
 import { AllVisualizationsDashInsights } from "./AllVisualizationsDashInsights.js";
 import { type IDashboardVisualizationSwitcherProps } from "./types.js";
 import { useExecutionProgress } from "./useExecutionProgress.js";
+import { ViewModeDashboardVisualizationSwitcherRestricted } from "./ViewModeDashboardVisualizationSwitcherRestricted.js";
 
 /**
  * @internal
@@ -71,7 +73,22 @@ export function ViewModeDashboardVisualizationSwitcher({
         widget.visualizations[0];
 
     const insights = useDashboardSelector(selectInsightsMap);
+    const restrictedInsights = useDashboardSelector(selectRestrictedInsightsMap);
     const insight = activeVisualization ? insights.get(activeVisualization.insight) : undefined;
+
+    // a restricted insight is withheld from the insights map, so this must be decided before the
+    // missing-insight branch below, which would otherwise render the empty switcher
+    if (activeVisualization && restrictedInsights.has(activeVisualization.insight)) {
+        return (
+            <ViewModeDashboardVisualizationSwitcherRestricted
+                widget={widget}
+                activeVisualization={activeVisualization}
+                screen={screen}
+                exportData={exportData}
+                onActiveVisualizationChange={setActiveVisualizationId}
+            />
+        );
+    }
 
     if (!activeVisualization || !insight) {
         return <ViewModeDashboardVisualizationSwitcherEmpty />;

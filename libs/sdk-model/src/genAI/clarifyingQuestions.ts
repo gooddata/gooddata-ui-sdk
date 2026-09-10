@@ -39,7 +39,7 @@ export interface IGenAiSingleChoiceControl {
  */
 export interface IGenAiClarifyingChoiceOption {
     /**
-     * Label of the option.
+     * Text of the option.
      */
-    label: string;
+    text: string;
 }

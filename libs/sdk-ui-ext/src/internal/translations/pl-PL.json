@@ -637,7 +637,7 @@
     "objectShare.toast.accessUpdated": "Sukces! Zaktualizowano dostęp.",
     "objectShare.toast.generalAccessUpdated": "Sukces! Zaktualizowano dostęp ogólny.",
     "objectShare.toast.error": "Nie udało się zaktualizować dostępu.",
-    "objectShare.toast.escalationRefused": "Możesz przyznawać tylko uprawnienia, które posiadasz.",
+    "objectShare.toast.escalationRefused": "Nie możesz ustawić uprawnień wyższych niż własne.",
     "objectShare.toast.labelScopePartial": "Nie udało się zapisać części dostępu do etykiet.",
     "objectShare.loadError": "Nie udało się wczytać ustawień udostępniania. Zamknij i spróbuj ponownie.",
     "properties.conditionalFormatting.title": "Formatowanie warunkowe",

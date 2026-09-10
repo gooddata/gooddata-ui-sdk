@@ -12,6 +12,7 @@ import {
 import { useDashboardSelector } from "../../../../../../model/react/DashboardStoreProvider.js";
 import { useDashboardQueryProcessing } from "../../../../../../model/react/useDashboardQueryProcessing.js";
 import { selectSupportsSettingConnectingAttributes } from "../../../../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
+import { selectEnableComputedAttributes } from "../../../../../../model/store/config/configSelectors.js";
 import { selectAttributeFilterDisplayFormsMap } from "../../../../../../model/store/tabs/filterContext/filterContextSelectors.js";
 
 interface IUseValidNeighbourAttributesResult {
@@ -32,6 +33,7 @@ export const useValidNeighbourAttributes = (
     const supportsSettingConnectingAttributes = useDashboardSelector(
         selectSupportsSettingConnectingAttributes,
     );
+    const includeComputedAttributes = useDashboardSelector(selectEnableComputedAttributes);
     const shouldValidateNeighbourAttributes = !supportsSettingConnectingAttributes;
     const neighbourFilterDisplayFormsMap = useDashboardSelector(selectAttributeFilterDisplayFormsMap);
 
@@ -50,9 +52,17 @@ export const useValidNeighbourAttributes = (
 
     useEffect(() => {
         if (shouldValidateNeighbourAttributes) {
-            getValidAttributes(attributeFilterDisplayForm);
+            // computed attributes count among the valid neighbours; asking for them is gated by
+            // the enableComputedAttributes setting because a backend with the setting off refuses
+            // the computed-attributes flavour of the request outright
+            getValidAttributes(attributeFilterDisplayForm, { includeComputedAttributes });
         }
-    }, [attributeFilterDisplayForm, getValidAttributes, shouldValidateNeighbourAttributes]);
+    }, [
+        attributeFilterDisplayForm,
+        getValidAttributes,
+        shouldValidateNeighbourAttributes,
+        includeComputedAttributes,
+    ]);
 
     const validAttributesLoading = useMemo(() => {
         return validAttributesStatus === "pending" || validAttributesStatus === "running";

@@ -3,9 +3,9 @@
 import { uniqBy } from "lodash-es";
 import { type BatchAction, batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
-import { type SagaReturnType, all, call, put, spawn } from "redux-saga/effects";
+import { type SagaReturnType, all, call, put, select, spawn } from "redux-saga/effects";
 
-import { type IDashboardWithReferences, type IWorkspaceCatalog, walkLayout } from "@gooddata/sdk-backend-spi";
+import { type IDashboardWithReferences, walkLayout } from "@gooddata/sdk-backend-spi";
 import {
     type IDashboard,
     type IDashboardAttributeFilterConfig,
@@ -37,6 +37,7 @@ import { accessibleDashboardsActions } from "../../../store/accessibleDashboards
 import { automationsActions } from "../../../store/automations/index.js";
 import { backendCapabilitiesActions } from "../../../store/backendCapabilities/index.js";
 import { catalogActions } from "../../../store/catalog/index.js";
+import { selectEnableComputedAttributes } from "../../../store/config/configSelectors.js";
 import { configActions } from "../../../store/config/index.js";
 import { dashboardPermissionsActions } from "../../../store/dashboardPermissions/index.js";
 import { entitlementsActions } from "../../../store/entitlements/index.js";
@@ -424,10 +425,10 @@ function* initializeNewDashboard(
         {
             resolvedConfig: config,
             additionalData: { notificationChannelsCount, workspaceAutomationsCount },
+            loadedCatalog,
         },
         permissions,
         entitlements,
-        catalog,
         user,
         listedDashboards,
         dateHierarchyTemplates,
@@ -437,17 +438,17 @@ function* initializeNewDashboard(
         SagaReturnType<typeof resolveDashboardConfigAndFeatureFlagDependentCalls>,
         SagaReturnType<typeof resolvePermissions>,
         PromiseFnReturnType<typeof resolveEntitlements>,
-        PromiseFnReturnType<typeof loadCatalog>,
         PromiseFnReturnType<typeof loadUser>,
         PromiseFnReturnType<typeof loadDashboardList>,
         PromiseFnReturnType<typeof loadDateHierarchyTemplates>,
         PromiseFnReturnType<typeof loadFilterViews>,
         PromiseFnReturnType<typeof loadExportTimezone>,
     ] = yield all([
-        call(resolveDashboardConfigAndFeatureFlagDependentCalls, ctx, cmd),
+        // the catalog load rides along with the config resolution because its computed-attributes
+        // part is feature-flag dependent - see resolveDashboardConfigAndFeatureFlagDependentCalls
+        call(resolveDashboardConfigAndFeatureFlagDependentCalls, ctx, cmd, { loadCatalog: true }),
         call(resolvePermissions, ctx, cmd),
         call(resolveEntitlements, ctx, cmd),
-        call(loadCatalog, ctx, cmd),
         call(loadUser, ctx, cmd),
         call(loadDashboardList, ctx),
         call(loadDateHierarchyTemplates, ctx),
@@ -473,7 +474,9 @@ function* initializeNewDashboard(
             ctx,
             config.settings,
             dateFilterConfig,
-            catalog ? createDisplayFormMapFromCatalog(catalog) : createDisplayFormMap([], []),
+            loadedCatalog
+                ? createDisplayFormMapFromCatalog(loadedCatalog.catalog, loadedCatalog.computedAttributes)
+                : createDisplayFormMap([], []),
             cmd.payload.initialTabId,
             workspaceParametersList,
         );
@@ -494,11 +497,12 @@ function* initializeNewDashboard(
             userActions.setUser(user),
             permissionsActions.setPermissions(permissions),
             catalogActions.setCatalogItems({
-                attributes: catalog.attributes(),
-                dateDatasets: catalog.dateDatasets(),
-                facts: catalog.facts(),
-                measures: catalog.measures(),
-                attributeHierarchies: catalog.attributeHierarchies(),
+                attributes: loadedCatalog?.catalog.attributes() ?? [],
+                dateDatasets: loadedCatalog?.catalog.dateDatasets() ?? [],
+                facts: loadedCatalog?.catalog.facts() ?? [],
+                measures: loadedCatalog?.catalog.measures() ?? [],
+                attributeHierarchies: loadedCatalog?.catalog.attributeHierarchies() ?? [],
+                computedAttributes: loadedCatalog?.computedAttributes ?? [],
                 dateHierarchyTemplates: dateHierarchyTemplates,
             }),
             catalogActions.setCatalogParameters(makeCatalogParametersPayload(workspaceParameters)),
@@ -537,18 +541,27 @@ function* initializeNewDashboard(
 }
 
 export function* requestCatalog(ctx: DashboardContext, cmd: InitializeDashboard) {
-    const [catalog, dateHierarchyTemplates]: [IWorkspaceCatalog, IDateHierarchyTemplate[]] = yield all([
-        call(loadCatalog, ctx, cmd),
+    // this deferred load runs after the init batch, so the resolved settings are already in the
+    // store - the computed-attributes part of the catalog load is gated by them
+    const enableComputedAttributes: ReturnType<typeof selectEnableComputedAttributes> = yield select(
+        selectEnableComputedAttributes,
+    );
+    const [loadedCatalog, dateHierarchyTemplates]: [
+        PromiseFnReturnType<typeof loadCatalog>,
+        IDateHierarchyTemplate[],
+    ] = yield all([
+        call(loadCatalog, ctx, cmd, enableComputedAttributes),
         call(loadDateHierarchyTemplates, ctx),
     ]);
 
     yield put(
         catalogActions.setCatalogItems({
-            attributes: catalog.attributes(),
-            dateDatasets: catalog.dateDatasets(),
-            facts: catalog.facts(),
-            measures: catalog.measures(),
-            attributeHierarchies: catalog.attributeHierarchies(),
+            attributes: loadedCatalog.catalog.attributes(),
+            dateDatasets: loadedCatalog.catalog.dateDatasets(),
+            facts: loadedCatalog.catalog.facts(),
+            measures: loadedCatalog.catalog.measures(),
+            attributeHierarchies: loadedCatalog.catalog.attributeHierarchies(),
+            computedAttributes: loadedCatalog.computedAttributes,
             dateHierarchyTemplates: dateHierarchyTemplates,
         }),
     );

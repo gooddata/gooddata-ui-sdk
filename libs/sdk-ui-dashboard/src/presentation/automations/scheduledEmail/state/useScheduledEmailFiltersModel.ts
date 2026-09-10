@@ -1,37 +1,25 @@
 // (C) 2026 GoodData Corporation
 
-import { type Dispatch, type SetStateAction, useCallback, useRef } from "react";
+import { useCallback } from "react";
 
 import {
     type FilterContextItem,
     type IAutomationMetadataObject,
-    type IAutomationMetadataObjectDefinition,
-    type IAutomationVisibleFilter,
     type IDashboardExportParameter,
     type IInsight,
     type IWidget,
-    isExportDefinitionDashboardRequestPayload,
-    isExportDefinitionVisualizationObjectRequestPayload,
-    isInsightWidget,
 } from "@gooddata/sdk-model";
-import { shallowEqualObjects } from "@gooddata/util";
 
 import type { IAutomationFiltersTab } from "../../../../model/store/filtering/types.js";
 import { useScheduledEmailDialogContext } from "../../contexts/ScheduledEmailDialogContext.js";
 import { useValidateExistingAutomationFilters } from "../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
 import { useAutomationExportParameters } from "../../shared/automationFilters/useAutomationExportParameters.js";
 import { getDefaultSelectedFiltersFromFiltersByTab } from "../../shared/automationFilters/useAutomationFiltersSelect.js";
-import {
-    getAppliedDashboardFilters,
-    getAppliedWidgetFilters,
-    getVisibleFiltersByFilters,
-    getVisibleFiltersByFiltersByTab,
-} from "../../shared/filters/index.js";
+import { useShallowStable } from "../../shared/hooks/useShallowStable.js";
 
 import { type IScheduledExportFiltersContextValue } from "./types.js";
 
 export interface IUseScheduledEmailFiltersModelProps {
-    setEditedAutomation: Dispatch<SetStateAction<IAutomationMetadataObjectDefinition>>;
     scheduledExportToEdit?: IAutomationMetadataObject;
     widget?: IWidget;
     insight?: IInsight;
@@ -40,13 +28,16 @@ export interface IUseScheduledEmailFiltersModelProps {
     editedAutomationFiltersByTab?: Record<string, FilterContextItem[]>;
     setEditedAutomationFiltersByTab?: (filters: Record<string, FilterContextItem[]>) => void;
     availableFilters?: FilterContextItem[];
-    availableFiltersAsVisibleFilters?: IAutomationVisibleFilter[] | undefined;
-    availableFiltersAsVisibleFiltersByTab?: Record<string, IAutomationVisibleFilter[]>;
     filtersByTab?: IAutomationFiltersTab[] | undefined;
     storeFilters: boolean;
     setStoreFilters: (storeFilters: boolean) => void;
     filtersForNewAutomation: FilterContextItem[];
     setParametersWire: (wire: Record<string, IDashboardExportParameter[]> | undefined) => void;
+    applyFiltersToDraft: (filters: FilterContextItem[], storeFiltersParam?: boolean) => void;
+    applyFiltersByTabToDraft: (
+        newFiltersByTab: Record<string, FilterContextItem[]>,
+        storeFiltersParam?: boolean,
+    ) => void;
 }
 
 /**
@@ -64,7 +55,6 @@ export interface IUseScheduledEmailFiltersModelProps {
  * @internal
  */
 export function useScheduledEmailFiltersModel({
-    setEditedAutomation,
     scheduledExportToEdit,
     widget,
     insight,
@@ -73,214 +63,32 @@ export function useScheduledEmailFiltersModel({
     editedAutomationFiltersByTab,
     setEditedAutomationFiltersByTab,
     availableFilters,
-    availableFiltersAsVisibleFilters,
-    availableFiltersAsVisibleFiltersByTab,
     filtersByTab,
     storeFilters,
     setStoreFilters,
     filtersForNewAutomation,
     setParametersWire,
+    applyFiltersToDraft,
+    applyFiltersByTabToDraft,
 }: IUseScheduledEmailFiltersModelProps): IScheduledExportFiltersContextValue {
-    const {
-        hiddenFilters: dashboardHiddenFilters,
-        commonDateFilterId,
-        exportParametersByTab,
-    } = useScheduledEmailDialogContext();
-    // Re-derived locally (not passed as a prop) so that the `if (isWidget)` branch below narrows
-    // `widget`/`insight` via TS's aliased-condition control-flow analysis — this requires the boolean
-    // to be declared from those exact variables in this same scope, same as in the parent.
-    const isWidget = !!widget && !!insight;
+    const { exportParametersByTab } = useScheduledEmailDialogContext();
 
     const onFiltersChange = useCallback(
         (filters: FilterContextItem[], storeFiltersParam?: boolean) => {
             setEditedAutomationFilters(filters);
-            const shouldStoreFilters = storeFiltersParam ?? storeFilters;
-
-            if (isWidget) {
-                if (!isInsightWidget(widget)) {
-                    return;
-                }
-
-                setEditedAutomation((s) => {
-                    const appliedDashboardFilters = getAppliedDashboardFilters(
-                        filters,
-                        dashboardHiddenFilters,
-                        true,
-                    );
-                    const appliedWidgetFiltersWithInsight = getAppliedWidgetFilters(
-                        filters,
-                        dashboardHiddenFilters,
-                        widget,
-                        insight,
-                        commonDateFilterId,
-                        true,
-                    );
-
-                    const appliedWidgetFiltersWithoutInsight = getAppliedWidgetFilters(
-                        filters,
-                        dashboardHiddenFilters,
-                        widget,
-                        insight,
-                        commonDateFilterId,
-                        false,
-                    );
-                    const visibleFilters = getVisibleFiltersByFilters(
-                        filters,
-                        availableFiltersAsVisibleFilters,
-                        true,
-                    );
-
-                    return {
-                        ...s,
-                        exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
-                            if (
-                                isExportDefinitionVisualizationObjectRequestPayload(
-                                    exportDefinition.requestPayload,
-                                )
-                            ) {
-                                const format = exportDefinition.requestPayload.format;
-                                const shouldUseWidgetFiltersWithInsight = format === "CSV";
-                                const shouldUseWidgetFiltersWithoutInsight = format === "CSV_RAW";
-                                const appliedFilters = shouldUseWidgetFiltersWithInsight
-                                    ? appliedWidgetFiltersWithInsight
-                                    : shouldUseWidgetFiltersWithoutInsight
-                                      ? appliedWidgetFiltersWithoutInsight
-                                      : appliedDashboardFilters;
-                                return {
-                                    ...exportDefinition,
-                                    requestPayload: {
-                                        ...exportDefinition.requestPayload,
-                                        content: {
-                                            ...exportDefinition.requestPayload.content,
-                                            filters: appliedFilters,
-                                        },
-                                    },
-                                };
-                            } else {
-                                return exportDefinition;
-                            }
-                        }),
-                        metadata: {
-                            ...s.metadata,
-                            visibleFilters,
-                        },
-                    };
-                });
-            } else {
-                setEditedAutomation((s) => {
-                    const appliedFilters = getAppliedDashboardFilters(
-                        filters,
-                        dashboardHiddenFilters,
-                        shouldStoreFilters,
-                    );
-                    const visibleFilters = getVisibleFiltersByFilters(
-                        filters,
-                        availableFiltersAsVisibleFilters,
-                        shouldStoreFilters,
-                    );
-
-                    return {
-                        ...s,
-                        exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
-                            if (isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload)) {
-                                return {
-                                    ...exportDefinition,
-                                    requestPayload: {
-                                        ...exportDefinition.requestPayload,
-                                        content: {
-                                            ...exportDefinition.requestPayload.content,
-                                            filters: appliedFilters,
-                                        },
-                                    },
-                                };
-                            } else {
-                                return exportDefinition;
-                            }
-                        }),
-                        metadata: {
-                            ...s.metadata,
-                            visibleFilters,
-                        },
-                    };
-                });
-            }
+            applyFiltersToDraft(filters, storeFiltersParam);
         },
-        [
-            setEditedAutomationFilters,
-            setEditedAutomation,
-            dashboardHiddenFilters,
-            availableFiltersAsVisibleFilters,
-            storeFilters,
-            widget,
-            insight,
-            isWidget,
-            commonDateFilterId,
-        ],
+        [setEditedAutomationFilters, applyFiltersToDraft],
     );
 
-    // Callback for per-tab filter changes - updates state AND syncs to export definitions
+    // Callback for per-tab filter changes - updates state and forwards the draft write
     const onFiltersByTabChange = useCallback(
         (newFiltersByTab: Record<string, FilterContextItem[]>, storeFiltersParam?: boolean) => {
             // Update the editedFiltersByTab state
             setEditedAutomationFiltersByTab?.(newFiltersByTab);
-            const shouldStoreFilters = storeFiltersParam ?? storeFilters;
-
-            const newEffectiveFiltersByTab = shouldStoreFilters
-                ? Object.entries(newFiltersByTab).reduce<Record<string, FilterContextItem[]>>(
-                      (acc, [tabId, filters]) => {
-                          const tabHiddenFilters =
-                              filtersByTab?.find((tab) => tab.tabId === tabId)?.hiddenFilters ?? [];
-                          const appliedFilters = getAppliedDashboardFilters(
-                              filters ?? [],
-                              tabHiddenFilters,
-                              true,
-                          );
-                          if (appliedFilters) {
-                              acc[tabId] = appliedFilters;
-                          }
-                          return acc;
-                      },
-                      {},
-                  )
-                : undefined;
-
-            const newVisibleFiltersByTab = getVisibleFiltersByFiltersByTab(
-                newFiltersByTab,
-                availableFiltersAsVisibleFiltersByTab,
-                shouldStoreFilters,
-            );
-
-            // Sync to export definitions AND metadata
-            setEditedAutomation((s) => ({
-                ...s,
-                exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
-                    if (isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload)) {
-                        return {
-                            ...exportDefinition,
-                            requestPayload: {
-                                ...exportDefinition.requestPayload,
-                                content: {
-                                    ...exportDefinition.requestPayload.content,
-                                    filtersByTab: newEffectiveFiltersByTab,
-                                },
-                            },
-                        };
-                    }
-                    return exportDefinition;
-                }),
-                metadata: {
-                    ...s.metadata,
-                    visibleFiltersByTab: newVisibleFiltersByTab,
-                },
-            }));
+            applyFiltersByTabToDraft(newFiltersByTab, storeFiltersParam);
         },
-        [
-            setEditedAutomationFiltersByTab,
-            storeFilters,
-            setEditedAutomation,
-            availableFiltersAsVisibleFiltersByTab,
-            filtersByTab,
-        ],
+        [setEditedAutomationFiltersByTab, applyFiltersByTabToDraft],
     );
 
     const onApplyCurrentFilters = useCallback(() => {
@@ -353,20 +161,4 @@ export function useScheduledEmailFiltersModel({
         filtersAreStale,
         ...parameters,
     });
-}
-
-/**
- * Returns the previous object while every member keeps its identity, so a caller can hold a whole
- * model stable without naming its members. Preferred over `useMemo` here because the roster is the
- * hook's return shape: a dependency array would have to restate all of it, and a missed entry would
- * serve a stale member rather than fail loudly.
- */
-function useShallowStable<T extends object>(value: T): T {
-    const previous = useRef(value);
-
-    if (!shallowEqualObjects(previous.current, value)) {
-        previous.current = value;
-    }
-
-    return previous.current;
 }

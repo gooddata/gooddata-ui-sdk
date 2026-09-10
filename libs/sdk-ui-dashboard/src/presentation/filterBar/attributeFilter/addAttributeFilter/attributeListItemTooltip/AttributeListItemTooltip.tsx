@@ -2,11 +2,12 @@
 
 import { type ReactNode, useState } from "react";
 
-import { type ICatalogAttribute } from "@gooddata/sdk-model";
+import { type ICatalogAttribute, isComputedAttributeRef } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, type IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 import { useAttributeDataSet } from "../../dashboardDropdownBody/configuration/hooks/useAttributeDataSet.js";
 import { useAttributeElements } from "../../dashboardDropdownBody/configuration/hooks/useAttributeElements.js";
+import { useComputedAttributeExpression } from "../../dashboardDropdownBody/configuration/hooks/useComputedAttributeExpression.js";
 
 import { AttributeListItemTooltipContent } from "./AttributeListItemTooltipContent.js";
 
@@ -31,7 +32,17 @@ export function AttributeListItemTooltip({ item }: IAttributeListItemTooltipProp
         ATTR_ELEMENTS_LIMIT,
         isHover,
     );
-    const { attributeDataSet, attributesDataSetLoading } = useAttributeDataSet(item.attribute.ref, isHover);
+    // a computed attribute belongs to no dataset and additionally shows its MAQL definition,
+    // after the values
+    const isComputedAttribute = isComputedAttributeRef(item.attribute.ref);
+    const { attributeDataSet, attributesDataSetLoading } = useAttributeDataSet(
+        item.attribute.ref,
+        isHover && !isComputedAttribute,
+    );
+    const { expressionTokens, expressionTokensLoading } = useComputedAttributeExpression(
+        item.attribute.ref,
+        isHover && isComputedAttribute,
+    );
 
     return (
         <div>
@@ -52,10 +63,13 @@ export function AttributeListItemTooltip({ item }: IAttributeListItemTooltipProp
                 >
                     <AttributeListItemTooltipContent
                         item={item}
+                        hideDataSet={isComputedAttribute}
                         attributesDataSetLoading={attributesDataSetLoading}
                         attributesElementsLoading={attributesElementsLoading}
                         attributeDataSet={attributeDataSet}
                         attributeElements={attributeElements}
+                        expressionTokens={isComputedAttribute ? expressionTokens : undefined}
+                        expressionTokensLoading={isComputedAttribute ? expressionTokensLoading : undefined}
                     />
                 </Bubble>
             </BubbleHoverTrigger>

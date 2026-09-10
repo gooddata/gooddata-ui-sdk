@@ -7,7 +7,7 @@ import { type AccessGranteeDetail } from "./index.js";
  *
  * @alpha
  */
-export type ObjectPermissionsObjectKind = "attribute" | "fact" | "label" | "measure";
+export type ObjectPermissionsObjectKind = "attribute" | "fact" | "label" | "measure" | "computedAttribute";
 
 /**
  * Tests whether the provided value is an {@link ObjectPermissionsObjectKind}.
@@ -16,7 +16,7 @@ export type ObjectPermissionsObjectKind = "attribute" | "fact" | "label" | "meas
  * @alpha
  */
 export const isObjectPermissionsObjectKind = (k: unknown): k is ObjectPermissionsObjectKind => {
-    return k === "attribute" || k === "fact" || k === "label" || k === "measure";
+    return k === "attribute" || k === "fact" || k === "label" || k === "measure" || k === "computedAttribute";
 };
 
 /**

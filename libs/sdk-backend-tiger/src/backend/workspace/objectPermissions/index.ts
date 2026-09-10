@@ -10,11 +10,13 @@ import {
 } from "@gooddata/api-client-tiger";
 import {
     ActionsApi_AttributePermissions,
+    ActionsApi_ComputedAttributePermissions,
     ActionsApi_FactPermissions,
     ActionsApi_LabelPermissions,
     ActionsApi_ListWorkspaceUserGroups,
     ActionsApi_ListWorkspaceUsers,
     ActionsApi_ManageAttributePermissions,
+    ActionsApi_ManageComputedAttributePermissions,
     ActionsApi_ManageFactPermissions,
     ActionsApi_ManageLabelPermissions,
     ActionsApi_ManageMetricPermissions,
@@ -172,6 +174,11 @@ const fetchPermissionsByKind = (
             return ActionsApi_LabelPermissions(axios, basePath, { workspaceId, labelId: objectId });
         case "measure":
             return ActionsApi_MetricPermissions(axios, basePath, { workspaceId, metricId: objectId });
+        case "computedAttribute":
+            return ActionsApi_ComputedAttributePermissions(axios, basePath, {
+                workspaceId,
+                computedAttributeId: objectId,
+            });
     }
 };
 
@@ -207,6 +214,12 @@ const manageByKind = (
                 workspaceId,
                 metricId: objectId,
                 manageMetricPermissionsRequestInner: manageLabelPermissionsRequestInner,
+            });
+        case "computedAttribute":
+            return ActionsApi_ManageComputedAttributePermissions(axios, basePath, {
+                workspaceId,
+                computedAttributeId: objectId,
+                manageComputedAttributePermissionsRequestInner: manageLabelPermissionsRequestInner,
             });
     }
 };

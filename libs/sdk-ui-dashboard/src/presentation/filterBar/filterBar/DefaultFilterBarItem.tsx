@@ -20,7 +20,7 @@ import { convertDashboardAttributeFilterElementsUrisToValues } from "../../../_s
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectSupportsElementUris } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 import {
-    selectCatalogAttributes,
+    selectCatalogAttributesWithComputed,
     selectCatalogDateDatasets,
     selectCatalogMeasures,
 } from "../../../model/store/catalog/catalogSelectors.js";
@@ -97,7 +97,7 @@ export function DefaultFilterBarItem(props: IFilterBarItemProps): ReactNode {
     const measureValueFiltersModeMap = useDashboardSelector(selectEffectiveMeasureValueFiltersModeMap);
     const dateFiltersModeMap = useDashboardSelector(selectEffectiveDateFiltersModeMap);
     const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
-    const attributes = useDashboardSelector(selectCatalogAttributes);
+    const attributes = useDashboardSelector(selectCatalogAttributesWithComputed);
     const measures = useDashboardSelector(selectCatalogMeasures);
 
     const {

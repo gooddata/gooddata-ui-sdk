@@ -12,14 +12,14 @@ import {
 import { setDashboardAttributeFilterConfigDisplayAsLabel } from "../../../../../../model/commands/dashboard.js";
 import { useDashboardSelector } from "../../../../../../model/react/DashboardStoreProvider.js";
 import { useDashboardCommandProcessing } from "../../../../../../model/react/useDashboardCommandProcessing.js";
-import { selectCatalogAttributes } from "../../../../../../model/store/catalog/catalogSelectors.js";
+import { selectCatalogAttributesWithComputed } from "../../../../../../model/store/catalog/catalogSelectors.js";
 
 export function useDisplayFormConfiguration(
     currentFilter: IDashboardAttributeFilter,
     attributes: IAttributeMetadataObject[],
     displayAsLabel?: ObjRef,
 ) {
-    const catalogAttributes = useDashboardSelector(selectCatalogAttributes);
+    const catalogAttributes = useDashboardSelector(selectCatalogAttributesWithComputed);
 
     const { run: changeDisplayAsLabel, status: displayAsLabelChangeStatus } = useDashboardCommandProcessing({
         commandCreator: setDashboardAttributeFilterConfigDisplayAsLabel,

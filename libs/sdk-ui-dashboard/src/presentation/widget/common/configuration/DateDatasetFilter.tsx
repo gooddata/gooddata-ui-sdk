@@ -30,6 +30,11 @@ interface IDateDatasetFilterProps {
     shouldOpenDateDatasetPicker?: boolean;
     isLoadingAdditionalData?: boolean;
     onDateDatasetChanged?: (id: string) => void;
+    /**
+     * Signals that the related date datasets query failed, so the missing result must not be
+     * presented as "cannot be filtered by date".
+     */
+    datasetsLoadFailed?: boolean;
 }
 
 export function DateDatasetFilter({
@@ -42,6 +47,7 @@ export function DateDatasetFilter({
     shouldOpenDateDatasetPicker,
     onDateDatasetChanged,
     isLoadingAdditionalData,
+    datasetsLoadFailed,
 }: IDateDatasetFilterProps) {
     const enableUnrelatedItemsVisibility = useDashboardSelector(selectEnableUnavailableItemsVisibility);
     const catalogDatasetsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
@@ -106,6 +112,7 @@ export function DateDatasetFilter({
                 selectedDateDatasetHidden={selectedDateDatasetHiddenByObjectAvailability}
                 onDateDatasetFilterEnabled={handleDateFilterEnabled}
                 enableUnrelatedItemsVisibility={enableUnrelatedItemsVisibility}
+                datasetsLoadFailed={datasetsLoadFailed}
             />
             {!!shouldRenderDateDataSetsDropdown && (
                 <DateDatasetPicker
