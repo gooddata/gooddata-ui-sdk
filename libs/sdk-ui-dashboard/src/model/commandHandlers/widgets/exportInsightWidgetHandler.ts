@@ -32,7 +32,7 @@ import {
     insightWidgetExportRequested,
     insightWidgetExportResolved,
 } from "../../events/insight.js";
-import { selectCatalogAttributes } from "../../store/catalog/catalogSelectors.js";
+import { selectCatalogAttributesWithComputed } from "../../store/catalog/catalogSelectors.js";
 import { selectExportResultPollingTimeout, selectSettings } from "../../store/config/configSelectors.js";
 import {
     selectExecutionResultByRef,
@@ -153,8 +153,9 @@ export function* exportInsightWidgetHandler(
     const insight: ReturnType<ReturnType<typeof selectInsightByWidgetRef>> =
         payloadInsight ?? (yield select(selectInsightByWidgetRef(ref)));
     const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
-    const catalogAttributes: ReturnType<typeof selectCatalogAttributes> =
-        yield select(selectCatalogAttributes);
+    const catalogAttributes: ReturnType<typeof selectCatalogAttributesWithComputed> = yield select(
+        selectCatalogAttributesWithComputed,
+    );
     const preloadedAttributesWithReferences: ReturnType<typeof selectPreloadedAttributesWithReferences> =
         yield select(selectPreloadedAttributesWithReferences);
     const widget: ReturnType<ReturnType<typeof selectWidgetByRef>> = yield select(selectWidgetByRef(ref));

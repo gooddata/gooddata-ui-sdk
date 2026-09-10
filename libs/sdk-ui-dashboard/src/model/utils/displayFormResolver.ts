@@ -4,6 +4,10 @@ import { call, select } from "redux-saga/effects";
 
 import { type IAttributeDisplayFormMetadataObject, type ObjRef } from "@gooddata/sdk-model";
 
+import {
+    loadComputedAttributesByRefs,
+    partitionComputedAttributeRefs,
+} from "../../_staging/catalog/computedAttributes.js";
 import { type ObjRefMap, newDisplayFormMap } from "../../_staging/metadata/objRefMap.js";
 import { selectAllCatalogDisplayFormsMap } from "../store/catalog/catalogSelectors.js";
 import { type DashboardContext } from "../types/commonTypes.js";
@@ -17,7 +21,18 @@ async function loadDisplayFormsMetadata(
         return [];
     }
 
-    return ctx.backend.workspace(ctx.workspace).attributes().getAttributeDisplayForms(refs);
+    // a computed-attribute-typed display form ref never matches a label; it must resolve through
+    // the computedAttributes service, which carries the fabricated display form in its metadata
+    const { computedAttributeRefs, otherRefs } = partitionComputedAttributeRefs(refs);
+
+    const [computedAttributes, displayForms] = await Promise.all([
+        loadComputedAttributesByRefs(ctx.backend, ctx.workspace, computedAttributeRefs),
+        otherRefs.length
+            ? ctx.backend.workspace(ctx.workspace).attributes().getAttributeDisplayForms(otherRefs)
+            : Promise.resolve([]),
+    ]);
+
+    return [...displayForms, ...computedAttributes.flatMap((ca) => ca.displayForms)];
 }
 
 export type DisplayFormResolutionResult = {

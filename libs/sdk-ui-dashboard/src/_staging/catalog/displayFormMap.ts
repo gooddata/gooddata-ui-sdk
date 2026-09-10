@@ -1,10 +1,12 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type IWorkspaceCatalog } from "@gooddata/sdk-backend-spi";
 import {
     type IAttributeDisplayFormMetadataObject,
     type ICatalogAttribute,
+    type ICatalogComputedAttribute,
     type ICatalogDateDataset,
+    catalogComputedAttributeAsCatalogAttribute,
 } from "@gooddata/sdk-model";
 
 import { type ObjRefMap, newDisplayFormMap } from "../metadata/objRefMap.js";
@@ -40,12 +42,19 @@ export function createDisplayFormMap(
  * The lookups into the map can be done by any type of ObjRef.
  *
  * @param catalog - workspace catalog
+ * @param computedAttributes - computed attributes loaded alongside the catalog, if any
  * @param strictTypeChecking - indicate whether strict type checking should be done using 'type' property of input `idRef`; default is false - the type information will be ignored
  * @alpha
  */
 export function createDisplayFormMapFromCatalog(
     catalog: IWorkspaceCatalog,
+    computedAttributes: ICatalogComputedAttribute[] = [],
     strictTypeChecking: boolean = false,
 ): ObjRefMap<IAttributeDisplayFormMetadataObject> {
-    return createDisplayFormMap(catalog.attributes(), catalog.dateDatasets(), strictTypeChecking);
+    const attributes = [
+        ...catalog.attributes(),
+        ...computedAttributes.map(catalogComputedAttributeAsCatalogAttribute),
+    ];
+
+    return createDisplayFormMap(attributes, catalog.dateDatasets(), strictTypeChecking);
 }

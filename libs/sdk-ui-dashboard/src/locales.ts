@@ -103,6 +103,9 @@ export const messages = defineMessages({
     drillDownConfig: { id: "configurationPanel.drillConfig.drillDown" },
     drillToUrlConfig: { id: "configurationPanel.drillConfig.drillIntoUrl" },
     disableDrillDownToolTip: { id: "configurationPanel.drillConfig.disableDrillDownTooltip" },
+    computedAttributeDrillDownToolTip: {
+        id: "configurationPanel.drillConfig.computedAttributeDrillDownTooltip",
+    },
     disableUsedDrillDownTooltip: { id: "configurationPanel.drillConfig.alreadyUsedTooltip" },
     respectCrossFilteringConfig: { id: "configurationPanel.respectCrossFiltering" },
     respectCrossFilteringTooltip: { id: "configurationPanel.respectCrossFiltering.tooltip" },

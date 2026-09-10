@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import { InsightRenderer } from "@gooddata/sdk-ui-ext";
 
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
-import { selectCatalogAttributes } from "../../../../model/store/catalog/catalogSelectors.js";
+import { selectCatalogAttributesWithComputed } from "../../../../model/store/catalog/catalogSelectors.js";
 import { selectSettings } from "../../../../model/store/config/configSelectors.js";
 import { selectPreloadedAttributesWithReferences } from "../../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import { useShowAsTable } from "../../showAsTableButton/useShowAsTable.js";
@@ -23,7 +23,7 @@ export function DefaultInsightBody(props: IInsightBodyProps) {
     const { insight, layerTables: providedLayerTables } = props;
     const { isWidgetAsTable } = useShowAsTable(props.widget);
     const settings = useDashboardSelector(selectSettings);
-    const catalogAttributes = useDashboardSelector(selectCatalogAttributes);
+    const catalogAttributes = useDashboardSelector(selectCatalogAttributesWithComputed);
     const preloadedAttributesWithReferences = useDashboardSelector(selectPreloadedAttributesWithReferences);
 
     const computedLayerTables = useMemo(

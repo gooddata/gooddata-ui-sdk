@@ -12,7 +12,7 @@ import { useId } from "@gooddata/sdk-ui-kit";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { useDashboardScheduledEmails } from "../../../../model/react/useDasboardScheduledEmails/useDashboardScheduledEmails.js";
 import { useDashboardAlerts } from "../../../../model/react/useDashboardAlerting/useDashboardAlerts.js";
-import { selectCatalogAttributes } from "../../../../model/store/catalog/catalogSelectors.js";
+import { selectCatalogAttributesWithComputed } from "../../../../model/store/catalog/catalogSelectors.js";
 import { selectSettings } from "../../../../model/store/config/configSelectors.js";
 import { selectRenderMode } from "../../../../model/store/renderMode/renderModeSelectors.js";
 import { selectPreloadedAttributesWithReferences } from "../../../../model/store/tabs/filterContext/filterContextSelectors.js";
@@ -60,7 +60,7 @@ function DefaultDashboardInsightWidgetCore({
 }: IDefaultDashboardInsightWidgetProps & { insight?: IInsight }) {
     const intl = useIntl();
     const settings = useDashboardSelector(selectSettings);
-    const catalogAttributes = useDashboardSelector(selectCatalogAttributes);
+    const catalogAttributes = useDashboardSelector(selectCatalogAttributesWithComputed);
     const preloadedAttributesWithReferences = useDashboardSelector(selectPreloadedAttributesWithReferences);
     const renderMode = useDashboardSelector(selectRenderMode);
     const isExportMode = renderMode === "export";

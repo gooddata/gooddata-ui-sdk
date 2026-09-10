@@ -1354,6 +1354,7 @@ export interface AutomationNotificationParameter {
     'id': string;
     'title'?: string;
     'value': string;
+    'valueTitle'?: string;
 }
 
 export interface AutomationNotifications {
@@ -1405,6 +1406,10 @@ export interface AutomationParameterValue {
      * Value to use for this parameter when executing the export.
      */
     'value': string;
+    /**
+     * Human-readable form of `value` (e.g. a constrained string\'s allowedValues title). Never used to drive execution. Falls back to `value` when absent.
+     */
+    'valueTitle'?: string;
 }
 
 /**

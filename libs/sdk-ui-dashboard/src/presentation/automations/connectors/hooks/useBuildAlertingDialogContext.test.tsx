@@ -64,12 +64,13 @@ vi.mock("../../../../model/store/meta/metaSelectors.js", () => ({
 }));
 
 const parameterSentinels = vi.hoisted(() => ({
-    parameterValues: [] as never[],
+    // Kept as a shared reference: the "forwards the widget's effective dashboard
+    // parameters" test below asserts identity against this exact array.
     dashboardParameters: [] as never[],
 }));
 
 vi.mock("../../../../model/store/tabs/parameters/parametersSelectors.js", () => ({
-    selectEffectiveParameterValuesForWidget: () => () => parameterSentinels.parameterValues,
+    selectEffectiveParameterValuesForWidget: () => () => [],
     selectEffectiveDashboardParametersForWidget: () => () => parameterSentinels.dashboardParameters,
 }));
 

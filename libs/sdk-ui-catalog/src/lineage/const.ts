@@ -10,7 +10,6 @@ export const HIDDEN_ITEMS: ObjectType[] = [
     "workspaceDataFilter",
     "attribute",
     "attributeHierarchy",
-    "computedAttribute",
     "automation",
     "colorPalette",
     "dashboardPlugin",

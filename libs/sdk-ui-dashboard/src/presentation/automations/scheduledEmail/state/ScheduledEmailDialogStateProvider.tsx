@@ -1,10 +1,11 @@
 // (C) 2026 GoodData Corporation
 
-import { type ReactNode, useMemo, useState } from "react";
+import { type ReactNode, useState } from "react";
 
 import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
 import { useScheduledEmailDialogContext } from "../../contexts/ScheduledEmailDialogContext.js";
 import { useAutomationFiltersSelect } from "../../shared/automationFilters/useAutomationFiltersSelect.js";
+import { useShallowStable } from "../../shared/hooks/useShallowStable.js";
 import { useScheduleTimezone } from "../hooks/useScheduleTimezone.js";
 import { getDefaultPdfPageSize } from "../utils/pdfPageSize.js";
 
@@ -17,6 +18,7 @@ import {
     type IScheduledExportDataContextValue,
     type IScheduledExportDraftContextValue,
 } from "./types.js";
+import { useScheduledEmailDraftFilterWrites } from "./useScheduledEmailDraftFilterWrites.js";
 import { useScheduledEmailEffectiveFilters } from "./useScheduledEmailEffectiveFilters.js";
 import { useScheduledEmailExportSettings } from "./useScheduledEmailExportSettings.js";
 import { useScheduledEmailFiltersModel } from "./useScheduledEmailFiltersModel.js";
@@ -135,8 +137,17 @@ function LoadedScheduledEmailDialogState({ children }: { children: ReactNode }) 
         scheduleTimezone: scheduleTimezoneState.scheduleTimezone,
     });
 
-    const filtersModel = useScheduledEmailFiltersModel({
+    const { applyFiltersToDraft, applyFiltersByTabToDraft } = useScheduledEmailDraftFilterWrites({
         setEditedAutomation: formState.setEditedAutomation,
+        widget,
+        insight,
+        storeFilters,
+        availableFiltersAsVisibleFilters,
+        availableFiltersAsVisibleFiltersByTab,
+        filtersByTab,
+    });
+
+    const filtersModel = useScheduledEmailFiltersModel({
         scheduledExportToEdit,
         widget,
         insight,
@@ -145,91 +156,54 @@ function LoadedScheduledEmailDialogState({ children }: { children: ReactNode }) 
         editedAutomationFiltersByTab,
         setEditedAutomationFiltersByTab,
         availableFilters,
-        availableFiltersAsVisibleFilters,
-        availableFiltersAsVisibleFiltersByTab,
         filtersByTab,
         storeFilters,
         setStoreFilters,
         filtersForNewAutomation,
         setParametersWire: exportSettings.setParametersWire,
+        applyFiltersToDraft,
+        applyFiltersByTabToDraft,
     });
 
-    const draft = useMemo<IScheduledExportDraftContextValue>(
-        () => ({
-            editedAutomation: formState.editedAutomation,
-            originalAutomation: formState.originalAutomation,
-            startDate: formState.startDate,
-            isCronValid: formState.isCronValid,
-            isTitleValid: formState.isTitleValid,
-            isSubjectValid: formState.isSubjectValid,
-            isOnMessageValid: formState.isOnMessageValid,
-            isTimezoneFeatureEnabled: scheduleTimezoneState.isTimezoneFeatureEnabled,
-            canSelectScheduleTimezone: scheduleTimezoneState.canSelectScheduleTimezone,
-            scheduleTimezoneSelection: scheduleTimezoneState.scheduleTimezoneSelection,
-            defaultResolvedTimezone: scheduleTimezoneState.defaultResolvedTimezone,
-            scheduleTimezoneIsStale: scheduleTimezoneState.scheduleTimezoneIsStale,
-        }),
-        [
-            formState.editedAutomation,
-            formState.originalAutomation,
-            formState.startDate,
-            formState.isCronValid,
-            formState.isTitleValid,
-            formState.isSubjectValid,
-            formState.isOnMessageValid,
-            scheduleTimezoneState.isTimezoneFeatureEnabled,
-            scheduleTimezoneState.canSelectScheduleTimezone,
-            scheduleTimezoneState.scheduleTimezoneSelection,
-            scheduleTimezoneState.defaultResolvedTimezone,
-            scheduleTimezoneState.scheduleTimezoneIsStale,
-        ],
-    );
+    const draft = useShallowStable<IScheduledExportDraftContextValue>({
+        editedAutomation: formState.editedAutomation,
+        originalAutomation: formState.originalAutomation,
+        startDate: formState.startDate,
+        isCronValid: formState.isCronValid,
+        isTitleValid: formState.isTitleValid,
+        isSubjectValid: formState.isSubjectValid,
+        isOnMessageValid: formState.isOnMessageValid,
+        isTimezoneFeatureEnabled: scheduleTimezoneState.isTimezoneFeatureEnabled,
+        canSelectScheduleTimezone: scheduleTimezoneState.canSelectScheduleTimezone,
+        scheduleTimezoneSelection: scheduleTimezoneState.scheduleTimezoneSelection,
+        defaultResolvedTimezone: scheduleTimezoneState.defaultResolvedTimezone,
+        scheduleTimezoneIsStale: scheduleTimezoneState.scheduleTimezoneIsStale,
+    });
 
-    const actions = useMemo<IScheduledExportActionsContextValue>(
-        () => ({
-            setEditedAutomation: formState.setEditedAutomation,
-            onTitleChange: formState.onTitleChange,
-            onRecurrenceChange: formState.onRecurrenceChange,
-            onEvaluationModeChange: formState.onEvaluationModeChange,
-            onDestinationChange: formState.onDestinationChange,
-            onRecipientsChange: formState.onRecipientsChange,
-            onSubjectChange: formState.onSubjectChange,
-            onMessageChange: formState.onMessageChange,
-            onDashboardAttachmentsChange: exportSettings.onDashboardAttachmentsChange,
-            onWidgetAttachmentsChange: exportSettings.onWidgetAttachmentsChange,
-            onXlsxSettingsChange: exportSettings.onXlsxSettingsChange,
-            onPdfSettingsChange: exportSettings.onPdfSettingsChange,
-            onCsvSettingsChange: exportSettings.onCsvSettingsChange,
-            onCsvRawSettingsChange: exportSettings.onCsvRawSettingsChange,
-            onSlidesTemplateIdChange: exportSettings.onSlidesTemplateIdChange,
-            onScheduleTimezoneChange: scheduleTimezoneState.onScheduleTimezoneChange,
-            applyCurrentScheduleTimezone: scheduleTimezoneState.applyCurrentScheduleTimezone,
-        }),
-        [
-            formState.setEditedAutomation,
-            formState.onTitleChange,
-            formState.onRecurrenceChange,
-            formState.onEvaluationModeChange,
-            formState.onDestinationChange,
-            formState.onRecipientsChange,
-            formState.onSubjectChange,
-            formState.onMessageChange,
-            exportSettings.onDashboardAttachmentsChange,
-            exportSettings.onWidgetAttachmentsChange,
-            exportSettings.onXlsxSettingsChange,
-            exportSettings.onPdfSettingsChange,
-            exportSettings.onCsvSettingsChange,
-            exportSettings.onCsvRawSettingsChange,
-            exportSettings.onSlidesTemplateIdChange,
-            scheduleTimezoneState.onScheduleTimezoneChange,
-            scheduleTimezoneState.applyCurrentScheduleTimezone,
-        ],
-    );
+    const actions = useShallowStable<IScheduledExportActionsContextValue>({
+        setEditedAutomation: formState.setEditedAutomation,
+        onTitleChange: formState.onTitleChange,
+        onRecurrenceChange: formState.onRecurrenceChange,
+        onEvaluationModeChange: formState.onEvaluationModeChange,
+        onDestinationChange: formState.onDestinationChange,
+        onRecipientsChange: formState.onRecipientsChange,
+        onSubjectChange: formState.onSubjectChange,
+        onMessageChange: formState.onMessageChange,
+        onDashboardAttachmentsChange: exportSettings.onDashboardAttachmentsChange,
+        onWidgetAttachmentsChange: exportSettings.onWidgetAttachmentsChange,
+        onXlsxSettingsChange: exportSettings.onXlsxSettingsChange,
+        onPdfSettingsChange: exportSettings.onPdfSettingsChange,
+        onCsvSettingsChange: exportSettings.onCsvSettingsChange,
+        onCsvRawSettingsChange: exportSettings.onCsvRawSettingsChange,
+        onSlidesTemplateIdChange: exportSettings.onSlidesTemplateIdChange,
+        onScheduleTimezoneChange: scheduleTimezoneState.onScheduleTimezoneChange,
+        applyCurrentScheduleTimezone: scheduleTimezoneState.applyCurrentScheduleTimezone,
+    });
 
-    const data = useMemo<IScheduledExportDataContextValue>(
-        () => ({ defaultUser: formState.defaultUser, defaultRecipient: formState.defaultRecipient }),
-        [formState.defaultUser, formState.defaultRecipient],
-    );
+    const data = useShallowStable<IScheduledExportDataContextValue>({
+        defaultUser: formState.defaultUser,
+        defaultRecipient: formState.defaultRecipient,
+    });
 
     return (
         <ScheduledExportDraftContextProvider value={draft}>

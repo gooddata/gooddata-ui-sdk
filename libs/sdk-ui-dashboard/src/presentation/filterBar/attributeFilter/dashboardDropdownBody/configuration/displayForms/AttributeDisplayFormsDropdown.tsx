@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import {
     type IAttributeDisplayFormMetadataObject,
@@ -39,6 +39,7 @@ export function AttributeDisplayFormsDropdown({
     // try matching both uri and id in case the type of ref is different from what is in the ref field
     const selectedDisplayFormTitle = displayForms.find(
         (df) =>
+            areObjRefsEqual(df.ref, selectedDisplayForm) ||
             areObjRefsEqual(idRef(df.id, "displayForm"), selectedDisplayForm) ||
             areObjRefsEqual(uriRef(df.uri), selectedDisplayForm),
     )!.title;

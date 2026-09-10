@@ -43,6 +43,7 @@ import {
     type OptionalInsightMenuComponentProvider,
     type OptionalInsightMenuTitleComponentProvider,
     type OptionalMeasureValueFilterComponentProvider,
+    type OptionalRestrictedPlaceholderComponentProvider,
     type OptionalRichTextComponentProvider,
     type OptionalRichTextMenuComponentProvider,
     type OptionalRichTextMenuTitleComponentProvider,
@@ -252,6 +253,20 @@ export interface IDashboardCustomComponentProps {
      * @public
      */
     RichTextComponentProvider?: OptionalRichTextComponentProvider;
+
+    /**
+     * Specify function to obtain a custom component standing in for an insight widget the current
+     * user is not allowed to see.
+     *
+     * @remarks
+     * -  If not provided, the default access placeholder is used.
+     * -  If the factory function returns undefined, the default is used for that widget. This is
+     *    useful to customize the placeholder for particular widgets only.
+     * -  The insight is deliberately not passed to the factory: it is the object being withheld.
+     *
+     * @alpha
+     */
+    RestrictedPlaceholderComponentProvider?: OptionalRestrictedPlaceholderComponentProvider;
 
     /**
      * Specify function to obtain custom component to use for rendering a visualization switcher.

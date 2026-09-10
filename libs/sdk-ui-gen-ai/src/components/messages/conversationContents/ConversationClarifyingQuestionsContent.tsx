@@ -56,14 +56,14 @@ export function ConversationClarifyingQuestionsContent(props: ConversationClarif
                     id={`${labelId}-option-${i}`}
                     className={bem.e("option", { focused: index === i })}
                     aria-selected={index === i}
-                    aria-label={option.label}
+                    aria-label={option.text}
                     aria-describedby={labelId}
                     onClick={() => onSelectOption(question, i)}
                 >
                     <div className={bem.e("option-index")}>{i + 1}</div>
                     <div className={bem.e("option-content")}>
                         <MarkdownComponent allowMarkdown={useMarkdown} references={objects}>
-                            {option.label}
+                            {option.text}
                         </MarkdownComponent>
                     </div>
                     <div className={bem.e("option-select")}>

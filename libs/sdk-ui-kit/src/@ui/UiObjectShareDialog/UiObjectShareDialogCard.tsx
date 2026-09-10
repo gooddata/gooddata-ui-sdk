@@ -75,7 +75,8 @@ export interface IUiObjectShareDialogCardProps {
     isGeneralAccessDisabled?: boolean;
     /**
      * When true, workspace-wide access is inherited from a parent workspace and
-     * cannot be revoked here: the Restricted option is disabled and explains why.
+     * cannot be revoked here: the Restricted option is disabled and a tooltip
+     * explains why.
      */
     workspaceAccessInherited?: boolean;
     /**

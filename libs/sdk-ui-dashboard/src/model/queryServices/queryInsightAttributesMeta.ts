@@ -13,6 +13,7 @@ import {
     type IInsightDefinition,
     type InsightDisplayFormUsage,
     type ObjRef,
+    computedAttributeAsAttributeMetadataObject,
     insightDisplayFormUsage,
     insightRef,
     isObjRef,
@@ -20,6 +21,10 @@ import {
     serializeObjRef,
 } from "@gooddata/sdk-model";
 
+import {
+    loadComputedAttributesByRefs,
+    partitionComputedAttributeRefs,
+} from "../../_staging/catalog/computedAttributes.js";
 import { type ObjRefMap } from "../../_staging/metadata/objRefMap.js";
 import { invalidQueryArguments } from "../events/general.js";
 import { type IInsightAttributesMeta, type IQueryInsightAttributesMeta } from "../queries/insights.js";
@@ -74,18 +79,27 @@ export const selectInsightAttributesMeta: selectInsightAttributesMetaType =
 async function loadDisplayFormsAndAttributes(ctx: DashboardContext, displayFormRefs: ObjRef[]) {
     const { backend, workspace } = ctx;
 
-    const loadedDisplayForms = await backend
-        .workspace(workspace)
-        .attributes()
-        .getAttributeDisplayForms(displayFormRefs);
-    const loadedAttributes = await backend
-        .workspace(workspace)
-        .attributes()
-        .getAttributes(loadedDisplayForms.map((df) => df.attribute));
+    // computed-attribute-typed display form refs never match labels; the computed attribute
+    // resolves through its own service and doubles as both the display form and the attribute
+    const { computedAttributeRefs, otherRefs } = partitionComputedAttributeRefs(displayFormRefs);
+    const computedAttributes = await loadComputedAttributesByRefs(backend, workspace, computedAttributeRefs);
+
+    const loadedDisplayForms = otherRefs.length
+        ? await backend.workspace(workspace).attributes().getAttributeDisplayForms(otherRefs)
+        : [];
+    const loadedAttributes = loadedDisplayForms.length
+        ? await backend
+              .workspace(workspace)
+              .attributes()
+              .getAttributes(loadedDisplayForms.map((df) => df.attribute))
+        : [];
 
     return {
-        loadedDisplayForms,
-        loadedAttributes,
+        loadedDisplayForms: [...loadedDisplayForms, ...computedAttributes.flatMap((ca) => ca.displayForms)],
+        loadedAttributes: [
+            ...loadedAttributes,
+            ...computedAttributes.map(computedAttributeAsAttributeMetadataObject),
+        ],
     };
 }
 

@@ -11,6 +11,7 @@ import { type ISlotProps } from "@gooddata/sdk-ui-kit";
 import { IntlWrapper } from "../../../localization/IntlWrapper.js";
 import { AutomationsContextProvider } from "../../contexts/AutomationsContext.js";
 import { ScheduledEmailDialogContextProvider } from "../../contexts/ScheduledEmailDialogContext.js";
+import { type useValidateExistingAutomationFilters } from "../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
 import { type IAutomationDialogDestinationProps } from "../../shared/slots/types.js";
 import { ScheduledEmailDialogStateProvider } from "../state/ScheduledEmailDialogStateProvider.js";
 import {
@@ -18,6 +19,7 @@ import {
     SCHEDULED_EMAIL_DIALOG_CONTEXT,
     SENTINEL_CHANNEL,
 } from "../tests/scheduledEmail.test.helpers.js";
+import { VALID_FILTERS_RESULT } from "../tests/scheduledEmailBlocks.test.helpers.js";
 import {
     type IDefaultScheduledEmailDialogProps,
     type IScheduledEmailDialogRecipientsProps,
@@ -37,7 +39,7 @@ vi.hoisted(() => {
 // useValidateExistingAutomationFilters computes staleness against the dashboard's current filters and is
 // not read by the assertions below.
 const { mockUseValidateExistingAutomationFilters } = vi.hoisted(() => ({
-    mockUseValidateExistingAutomationFilters: vi.fn(),
+    mockUseValidateExistingAutomationFilters: vi.fn<typeof useValidateExistingAutomationFilters>(),
 }));
 
 vi.mock("../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js", () => ({
@@ -126,20 +128,7 @@ beforeEach(() => {
     vi.clearAllMocks();
     capturedRecipientsProps.length = 0;
 
-    mockUseValidateExistingAutomationFilters.mockReturnValue({
-        isValid: true,
-        hiddenFilterIsMissingInSavedFilters: false,
-        hiddenFilterHasDifferentValueInSavedFilter: false,
-        lockedFilterIsMissingInSavedFilters: false,
-        lockedFilterHasDifferentValueInSavedFilter: false,
-        ignoredFilterIsAppliedInSavedFilters: false,
-        removedFilterIsAppliedInSavedFilters: false,
-        commonDateFilterIsMissingInSavedVisibleFilters: false,
-        visibleFilterIsMissingInSavedFilters: false,
-        visibleFiltersAreMissing: false,
-        incompatibleSelectionTypeIsAppliedInSavedFilters: false,
-        filtersAreStale: false,
-    });
+    mockUseValidateExistingAutomationFilters.mockReturnValue(VALID_FILTERS_RESULT);
 });
 
 function renderDialog(

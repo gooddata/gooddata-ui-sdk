@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-catalog: Enable the Lineage tab for computed attributes in the Analytics Catalog, and stop collapsing computed-attribute nodes out of other objects' lineage graphs",
+            "type": "patch",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

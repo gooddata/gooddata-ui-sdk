@@ -128,6 +128,74 @@ describe("insight customizer", () => {
         );
     });
 
+    describe("restricted placeholder", () => {
+        function DefaultPlaceholder() {
+            return <div>default placeholder</div>;
+        }
+
+        function CustomPlaceholder() {
+            return <div>custom placeholder</div>;
+        }
+
+        function customizerWithPlaceholderDefault() {
+            return new DefaultInsightCustomizer(
+                new DashboardCustomizationLogger(),
+                mutationContext,
+                DefaultTestComponentProvider,
+                undefined,
+                () => DefaultPlaceholder,
+            );
+        }
+
+        it("falls back to the default placeholder when nothing is registered", () => {
+            const customizer = customizerWithPlaceholderDefault();
+
+            expect(customizer.getRestrictedPlaceholderProvider()(DummyInsightWidget)).toBe(
+                DefaultPlaceholder,
+            );
+        });
+
+        it("uses a registered provider instead of the default", () => {
+            const customizer = customizerWithPlaceholderDefault();
+            customizer.withRestrictedPlaceholderProvider(() => CustomPlaceholder);
+
+            expect(customizer.getRestrictedPlaceholderProvider()(DummyInsightWidget)).toBe(CustomPlaceholder);
+        });
+
+        it("keeps the default for widgets a provider opts out of", () => {
+            const customizer = customizerWithPlaceholderDefault();
+            customizer.withRestrictedPlaceholderProvider(() => undefined);
+
+            expect(customizer.getRestrictedPlaceholderProvider()(DummyInsightWidget)).toBe(
+                DefaultPlaceholder,
+            );
+        });
+
+        it("records no insight mutation, so available widgets keep no plugin overlay", () => {
+            const customizer = customizerWithPlaceholderDefault();
+            customizer.withRestrictedPlaceholderProvider(() => CustomPlaceholder);
+
+            // getWidgetsOverlayFn marks EVERY insight widget once mutations.insight is non-empty,
+            // and a placeholder for inaccessible widgets modifies none of the editable ones
+            expect(mutationContext).toEqual(EMPTY_MUTATIONS);
+        });
+
+        it("ignores registration once the customizer is sealed", () => {
+            const customizer = customizerWithPlaceholderDefault();
+            customizer.sealCustomizer();
+
+            suppressConsole(
+                () => customizer.withRestrictedPlaceholderProvider(() => CustomPlaceholder),
+                "warn",
+                [{ type: "startsWith", value: "Attempting to customize insight rendering" }],
+            );
+
+            expect(customizer.getRestrictedPlaceholderProvider()(DummyInsightWidget)).toBe(
+                DefaultPlaceholder,
+            );
+        });
+    });
+
     it("should fallback to rendering default component", () => {
         expect(renderToHtml(Customizer, TestInsight)).toMatchSnapshot();
     });

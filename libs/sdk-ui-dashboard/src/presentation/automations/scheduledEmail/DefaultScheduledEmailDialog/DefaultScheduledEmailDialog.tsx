@@ -74,10 +74,12 @@ export function DefaultScheduledEmailDialog(props: IDefaultScheduledEmailDialogP
     const { isLoading, scheduledExportToEdit } = useScheduledEmailDialogContext();
     if (isLoading) {
         return (
-            <DefaultLoadingScheduledEmailDialog
-                onCancel={onCancel}
-                scheduledExportToEdit={scheduledExportToEdit}
-            />
+            <IntlWrapper locale={locale}>
+                <DefaultLoadingScheduledEmailDialog
+                    onCancel={onCancel}
+                    scheduledExportToEdit={scheduledExportToEdit}
+                />
+            </IntlWrapper>
         );
     }
     return (

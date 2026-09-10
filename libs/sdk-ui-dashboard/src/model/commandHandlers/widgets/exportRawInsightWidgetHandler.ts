@@ -25,7 +25,7 @@ import {
     type IDashboardInsightWidgetExportResolved,
     insightWidgetExportResolved,
 } from "../../events/insight.js";
-import { selectCatalogAttributes } from "../../store/catalog/catalogSelectors.js";
+import { selectCatalogAttributesWithComputed } from "../../store/catalog/catalogSelectors.js";
 import {
     selectExportResultPollingTimeout,
     selectLocale,
@@ -89,7 +89,7 @@ export function* exportRawInsightWidgetHandler(
     const locale = yield select(selectLocale);
     const filledInsight = yield call(fillMissingTitles, selectedInsight, locale, undefined);
     const settings = yield select(selectSettings);
-    const catalogAttributes = yield select(selectCatalogAttributes);
+    const catalogAttributes = yield select(selectCatalogAttributesWithComputed);
     const preloadedAttributesWithReferences = yield select(selectPreloadedAttributesWithReferences);
     const baseExecutionDefinition = executionEnvelope?.executionResult?.definition ?? definition;
     const { executionDefinition: preparedExecutionDefinition, filledInsight: preparedFilledInsight } =

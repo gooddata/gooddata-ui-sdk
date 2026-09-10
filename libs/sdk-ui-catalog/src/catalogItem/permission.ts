@@ -8,7 +8,14 @@ import {
     canShareMetric,
 } from "@gooddata/sdk-model";
 
-import { isCatalogItemAttribute, isCatalogItemFact, isCatalogItemMeasure } from "./guards.js";
+import { COMPUTED_ATTRIBUTE_FEATURE_FLAG } from "../computedAttribute/gate.js";
+
+import {
+    isCatalogItemAttribute,
+    isCatalogItemComputedAttribute,
+    isCatalogItemFact,
+    isCatalogItemMeasure,
+} from "./guards.js";
 import type { ICatalogItem } from "./types.js";
 
 export function canEditCatalogItem(
@@ -60,7 +67,9 @@ export function canEditCatalogItem(
  * Whether the user may share the item. Metrics are gated by the metric-permissions flag and then by
  * their own SHARE, deliberately not derived from EDIT. Attributes and facts have no object-level
  * permissions, so their column-level-permissions flag decides and the backend refuses the access
- * list to anyone who may not manage them. The two flags are independent.
+ * list to anyone who may not manage them. The two flags are independent. A computed
+ * attribute follows the attribute rule and additionally needs the computed-attributes
+ * flag, which gates the whole entity in the catalog.
  */
 export function canShareCatalogItem(
     workspacePermissions?: IWorkspacePermissions,
@@ -81,6 +90,13 @@ export function canShareCatalogItem(
 
     if (isCatalogItemAttribute(item) || isCatalogItemFact(item)) {
         return Boolean(settings?.enableColumnLevelPermissions);
+    }
+
+    if (isCatalogItemComputedAttribute(item)) {
+        return (
+            Boolean(settings?.enableColumnLevelPermissions) &&
+            Boolean(settings?.[COMPUTED_ATTRIBUTE_FEATURE_FLAG])
+        );
     }
 
     return false;

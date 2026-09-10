@@ -296,6 +296,36 @@ describe("storedFilterConverter", () => {
             expect(sdkItem[0]).toHaveProperty("attributeFilter");
         });
 
+        it("keeps the computedAttribute ref type through a filter round trip", () => {
+            const sdkItem: FilterContextItem = {
+                attributeFilter: {
+                    displayForm: idRef("co2_band", "computedAttribute"),
+                    negativeSelection: true,
+                    attributeElements: { uris: [] },
+                    localIdentifier: "caFilter1",
+                },
+            };
+
+            const tigerItems = convertSdkFiltersToTiger([sdkItem]) ?? [];
+            const tigerItem = tigerItems[0] as ITigerFilterContextItem;
+            expect(tigerItem).toHaveProperty("attributeFilter");
+            if ("attributeFilter" in tigerItem) {
+                expect(tigerItem.attributeFilter.displayForm).toEqual({
+                    identifier: { id: "co2_band", type: "computedAttribute" },
+                });
+            }
+
+            const sdkItems = convertTigerToSdkFilters(tigerItems) ?? [];
+            expect(sdkItems).toHaveLength(1);
+            const roundTripped = sdkItems[0];
+            expect(roundTripped).toHaveProperty("attributeFilter");
+            if ("attributeFilter" in roundTripped) {
+                expect(roundTripped.attributeFilter.displayForm).toEqual(
+                    idRef("co2_band", "computedAttribute"),
+                );
+            }
+        });
+
         it("handles undefined FilterContextItem arrays", () => {
             expect(convertSdkFiltersToTiger(undefined)).toBeUndefined();
             expect(convertTigerToSdkFilters(undefined)).toBeUndefined();

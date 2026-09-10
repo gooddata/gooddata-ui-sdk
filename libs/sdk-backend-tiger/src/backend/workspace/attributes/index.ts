@@ -19,6 +19,7 @@ import {
 import { ActionsApi_ComputeValidObjects } from "@gooddata/api-client-tiger/endpoints/validObjects";
 import {
     type IAttributeWithReferences,
+    type IConnectedAttributesOptions,
     type IElementsQueryFactory,
     type IWorkspaceAttributesService,
     NotSupported,
@@ -228,14 +229,20 @@ export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
         });
     }
 
-    public async getConnectedAttributesByDisplayForm(ref: ObjRef): Promise<ObjRef[]> {
+    public async getConnectedAttributesByDisplayForm(
+        ref: ObjRef,
+        options?: IConnectedAttributesOptions,
+    ): Promise<ObjRef[]> {
         const attributeItem: AttributeItem = {
             localIdentifier: objRefToString(ref),
             label: toLabelQualifier(ref),
         };
 
         const afmValidObjectsQuery: AfmValidObjectsQuery = {
-            types: ["attributes"],
+            // computed attributes are attribute-like: they can sit in dashboard filters, so they
+            // count among the connected attributes when the caller opts in (the option keeps the
+            // request unchanged for callers unaware of computed attributes)
+            types: options?.includeComputedAttributes ? ["attributes", "computedAttributes"] : ["attributes"],
             afm: {
                 attributes: [attributeItem],
                 measures: [],
@@ -251,7 +258,7 @@ export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
         );
 
         return connectedItemsResponse.data.items
-            .filter((item) => item.type === "attribute")
+            .filter((item) => item.type === "attribute" || item.type === "computedAttribute")
             .map(jsonApiIdToObjRef);
     }
 }

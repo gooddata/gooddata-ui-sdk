@@ -1,6 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import {
+    type IConnectedAttributesOptions,
     type IGetMeasureOptions,
     type IMeasureExpressionToken,
     type IMeasureKeyDrivers,
@@ -72,7 +73,11 @@ export abstract class DecoratedWorkspaceMeasuresService implements IWorkspaceMea
         return this.decorated.getMeasure(ref, options);
     }
 
-    getConnectedAttributes(definition: IMeasure, auxMeasures?: IMeasure[]): Promise<ObjRef[]> {
-        return this.decorated.getConnectedAttributes(definition, auxMeasures);
+    getConnectedAttributes(
+        definition: IMeasure,
+        auxMeasures?: IMeasure[],
+        options?: IConnectedAttributesOptions,
+    ): Promise<ObjRef[]> {
+        return this.decorated.getConnectedAttributes(definition, auxMeasures, options);
     }
 }

@@ -3960,16 +3960,16 @@
             },
             "ClarifyingChoiceOption": {
                 "properties": {
-                    "label": {
+                    "text": {
                         "type": "string",
-                        "title": "Label",
-                        "description": "Option caption to render and to submit as the answer, e.g. `Net Sales`."
+                        "title": "Text",
+                        "description": "The answer itself, rendered as the option and submitted verbatim, e.g. `Net Sales`."
                     }
                 },
                 "additionalProperties": false,
                 "type": "object",
                 "required": [
-                    "label"
+                    "text"
                 ],
                 "title": "ClarifyingChoiceOption"
             },
@@ -7114,6 +7114,15 @@
                         "type": "array",
                         "title": "Datedatasets",
                         "description": "Full AAC body of every date dataset the chart uses."
+                    },
+                    "new_visualizations": {
+                        "items": {
+                            "additionalProperties": true,
+                            "type": "object"
+                        },
+                        "type": "array",
+                        "title": "New Visualizations",
+                        "description": "Full AAC body of every widget-referenced visualization the workspace does NOT hold yet, which saving must create — under the id each body carries, which the widgets point at. Everything in `visualizations` already exists and must not be recreated."
                     },
                     "visualizations": {
                         "items": {

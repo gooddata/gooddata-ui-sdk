@@ -11,7 +11,7 @@ import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import { simplifyText } from "@gooddata/util";
 
 import { useDashboardSelector } from "../../../../../../model/react/DashboardStoreProvider.js";
-import { selectCatalogAttributes } from "../../../../../../model/store/catalog/catalogSelectors.js";
+import { selectCatalogAttributesWithComputed } from "../../../../../../model/store/catalog/catalogSelectors.js";
 import { selectAttributeFilterDisplayFormByLocalId } from "../../../../../../model/store/tabs/filterContext/filterContextSelectors.js";
 interface IParentFiltersDisabledItemProps {
     itemTitle: string;
@@ -34,7 +34,7 @@ export function ParentFiltersDisabledItem({
     const itemDisplayForm = useDashboardSelector(
         selectAttributeFilterDisplayFormByLocalId(itemLocalId || ""),
     );
-    const attributes = useDashboardSelector(selectCatalogAttributes);
+    const attributes = useDashboardSelector(selectCatalogAttributesWithComputed);
 
     const itemAttribute = attributes.find((attr) =>
         attr.displayForms.some((df) => areObjRefsEqual(df.ref, itemDisplayForm)),

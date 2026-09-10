@@ -9,6 +9,7 @@ import { IntlWrapper } from "../../../localization/IntlWrapper.js";
 import { AlertingDialogContextProvider } from "../../contexts/AlertingDialogContext.js";
 import { AutomationsContextProvider } from "../../contexts/AutomationsContext.js";
 import { setAlertExecutionParameters } from "../../shared/automationFilters/automationParameters.js";
+import { type useValidateExistingAutomationFilters } from "../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
 import {
     ALERTING_DIALOG_CONTEXT,
     AUTOMATIONS_CONTEXT,
@@ -21,6 +22,7 @@ import { type AlertAttribute } from "../types.js";
 import { useAlertActions } from "./AlertActionsContext.js";
 import { useAlertFilters } from "./AlertFiltersContext.js";
 import { AlertingDialogStateProvider } from "./AlertingDialogStateProvider.js";
+import { type useAlertSupportedMetrics } from "./useAlertSupportedMetrics.js";
 
 // ---------------------------------------------------------------------------
 // Mocks — vi.mock calls are hoisted; factories must not reference top-level
@@ -46,8 +48,8 @@ vi.hoisted(() => {
 });
 
 const { mockUseAlertSupportedMetrics, mockUseValidateExistingAutomationFilters } = vi.hoisted(() => ({
-    mockUseAlertSupportedMetrics: vi.fn(),
-    mockUseValidateExistingAutomationFilters: vi.fn(),
+    mockUseAlertSupportedMetrics: vi.fn<typeof useAlertSupportedMetrics>(),
+    mockUseValidateExistingAutomationFilters: vi.fn<typeof useValidateExistingAutomationFilters>(),
 }));
 
 vi.mock("./useAlertSupportedMetrics.js", () => ({

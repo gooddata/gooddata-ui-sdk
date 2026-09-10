@@ -31,6 +31,7 @@ import { type CustomFilterBarComponent, type IFilterBarProps } from "../filterBa
 import { type CustomDashboardMeasureValueFilterComponent } from "../filterBar/measureValueFilter/types.js";
 import { type CustomTitleComponent, type ITitleProps } from "../topBar/title/types.js";
 import { type CustomTopBarComponent, type ITopBarProps } from "../topBar/topBar/types.js";
+import { type IRestrictedPlaceholderContentProps } from "../widget/common/RestrictedPlaceholder.js";
 import {
     type CustomDashboardLayoutComponent,
     type CustomDashboardLayoutComponent as CustomDashboardNestedLayoutComponent,
@@ -180,6 +181,31 @@ export type RichTextComponentProvider = (widget: IRichTextWidget) => CustomDashb
  * @public
  */
 export type OptionalRichTextComponentProvider = OptionalProvider<RichTextComponentProvider>;
+
+/**
+ * Content shown inside a restricted placeholder. The dashboard owns the surrounding tile, and for a
+ * visualization switcher also its entry list, so this component supplies only the inner content and
+ * is therefore usable in both places.
+ *
+ * @alpha
+ */
+export type CustomRestrictedPlaceholderComponent = ComponentType<IRestrictedPlaceholderContentProps>;
+
+/**
+ * Provides the content shown in place of a widget the current user may not see. The insight itself
+ * is deliberately not passed — it is the object being withheld.
+ *
+ * @alpha
+ */
+export type RestrictedPlaceholderComponentProvider = (
+    widget: IInsightWidget,
+) => CustomRestrictedPlaceholderComponent;
+
+/**
+ * @alpha
+ */
+export type OptionalRestrictedPlaceholderComponentProvider =
+    OptionalProvider<RestrictedPlaceholderComponentProvider>;
 
 /**
  * @alpha

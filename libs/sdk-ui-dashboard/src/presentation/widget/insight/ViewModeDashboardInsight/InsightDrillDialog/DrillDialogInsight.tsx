@@ -25,7 +25,7 @@ import {
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import { useWidgetExecConfig } from "../../../../../model/react/useWidgetExecConfig.js";
 import { useWidgetFilters } from "../../../../../model/react/useWidgetFilters.js";
-import { selectCatalogAttributes } from "../../../../../model/store/catalog/catalogSelectors.js";
+import { selectCatalogAttributesWithComputed } from "../../../../../model/store/catalog/catalogSelectors.js";
 import {
     selectAgGridToken,
     selectColorPalette,
@@ -112,7 +112,7 @@ export function DrillDialogInsight({
     const { locale, settings, colorPalette } = useDashboardSelector(selectCommonDashboardInsightProps);
     const permissions = useDashboardSelector(selectPermissions);
     const chartConfig = useDashboardSelector(selectChartConfig);
-    const catalogAttributes = useDashboardSelector(selectCatalogAttributes);
+    const catalogAttributes = useDashboardSelector(selectCatalogAttributesWithComputed);
     const preloadedAttributesWithReferences = useDashboardSelector(selectPreloadedAttributesWithReferences);
 
     // Loading and rendering

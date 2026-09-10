@@ -637,7 +637,7 @@
     "objectShare.toast.accessUpdated": "成功しました！アクセスが更新されました。",
     "objectShare.toast.generalAccessUpdated": "成功しました！一般アクセスが更新されました。",
     "objectShare.toast.error": "アクセスを更新できませんでした。",
-    "objectShare.toast.escalationRefused": "自分が持つ権限のみを付与できます。",
+    "objectShare.toast.escalationRefused": "自分より高い権限を設定することはできません。",
     "objectShare.toast.labelScopePartial": "一部のラベルアクセスを保存できませんでした。",
     "objectShare.loadError": "共有設定を読み込めませんでした。閉じてからもう一度お試しください。",
     "properties.conditionalFormatting.title": "条件付き書式",

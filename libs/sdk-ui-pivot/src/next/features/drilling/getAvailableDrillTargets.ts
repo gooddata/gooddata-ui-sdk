@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type IMeasureDescriptor, attributeLocalId, isComputedAttribute } from "@gooddata/sdk-model";
+import { type IMeasureDescriptor } from "@gooddata/sdk-model";
 import {
     type DataViewFacade,
     type IAvailableDrillTargetAttribute,
@@ -33,9 +33,6 @@ export function getAvailableDrillTargets(
             attributes: dv.meta().attributeDescriptors(),
         }));
 
-    const computedAttributeLocalIds = new Set(
-        dv.def().attributes().filter(isComputedAttribute).map(attributeLocalId),
-    );
     const dimensionIndex = measureGroupDimension === "rows" && columnHeadersPosition === "left" ? 1 : 0;
     const attributeItems: IAvailableDrillTargetAttribute[] = dv
         .meta()
@@ -43,8 +40,7 @@ export function getAvailableDrillTargets(
         .map((attribute, _index, attributes) => ({
             attribute,
             intersectionAttributes: getIntersectionAttributes(attribute, attributes),
-        }))
-        .filter((item) => !computedAttributeLocalIds.has(item.attribute.attributeHeader.localIdentifier));
+        }));
 
     return {
         measures: measureDescriptors,

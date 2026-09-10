@@ -2,12 +2,7 @@
 
 import { uniqBy } from "lodash-es";
 
-import {
-    type IAttributeDescriptor,
-    type IMeasureDescriptor,
-    attributeLocalId,
-    isComputedAttribute,
-} from "@gooddata/sdk-model";
+import { type IAttributeDescriptor, type IMeasureDescriptor } from "@gooddata/sdk-model";
 
 import { type DataViewFacade } from "../../results/facade.js";
 import {
@@ -35,13 +30,7 @@ export function getIntersectionAttributes(
     return attributes.slice(0, indexOfFromAttribute + 1);
 }
 
-function getComputedAttributeLocalIds(dv: DataViewFacade): Set<string> {
-    return new Set(dv.def().attributes().filter(isComputedAttribute).map(attributeLocalId));
-}
-
 function getAvailableDrillAttributes(dv: DataViewFacade): IAvailableDrillTargetAttribute[] {
-    const computedAttributeLocalIds = getComputedAttributeLocalIds(dv);
-
     return dv
         .meta()
         .dimensions()
@@ -52,10 +41,7 @@ function getAvailableDrillAttributes(dv: DataViewFacade): IAvailableDrillTargetA
                 .map((attribute, _index, attributes) => ({
                     attribute,
                     intersectionAttributes: getIntersectionAttributes(attribute, attributes),
-                }))
-                .filter(
-                    (item) => !computedAttributeLocalIds.has(item.attribute.attributeHeader.localIdentifier),
-                );
+                }));
         });
 }
 

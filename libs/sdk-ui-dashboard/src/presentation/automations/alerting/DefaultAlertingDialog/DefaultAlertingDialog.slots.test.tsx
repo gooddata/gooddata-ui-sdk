@@ -5,16 +5,10 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type ISlotProps } from "@gooddata/sdk-ui-kit";
 
-import { IntlWrapper } from "../../../localization/IntlWrapper.js";
-import { AlertingDialogContextProvider } from "../../contexts/AlertingDialogContext.js";
-import { AutomationsContextProvider } from "../../contexts/AutomationsContext.js";
-import { AlertingDialogStateProvider } from "../state/AlertingDialogStateProvider.js";
-import {
-    ALERTING_DIALOG_CONTEXT,
-    AUTOMATIONS_CONTEXT,
-    NEXT_FILTER,
-    SENTINEL_MEASURE,
-} from "../tests/alerting.test.helpers.js";
+import { type useValidateExistingAutomationFilters } from "../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
+import { type useAlertSupportedMetrics } from "../state/useAlertSupportedMetrics.js";
+import { ALERTING_DIALOG_CONTEXT, NEXT_FILTER, SENTINEL_MEASURE } from "../tests/alerting.test.helpers.js";
+import { BlockProviders, VALID_FILTERS_RESULT } from "../tests/alertingBlocks.test.helpers.js";
 import {
     type AlertAttribute,
     type AlertingDialogHeaderDefaultProps,
@@ -37,8 +31,8 @@ vi.hoisted(() => {
 });
 
 const { mockUseAlertSupportedMetrics, mockUseValidateExistingAutomationFilters } = vi.hoisted(() => ({
-    mockUseAlertSupportedMetrics: vi.fn(),
-    mockUseValidateExistingAutomationFilters: vi.fn(),
+    mockUseAlertSupportedMetrics: vi.fn<typeof useAlertSupportedMetrics>(),
+    mockUseValidateExistingAutomationFilters: vi.fn<typeof useValidateExistingAutomationFilters>(),
 }));
 
 vi.mock("../state/useAlertSupportedMetrics.js", () => ({
@@ -153,33 +147,14 @@ beforeEach(() => {
         getMetricValue: vi.fn(),
     });
 
-    mockUseValidateExistingAutomationFilters.mockReturnValue({
-        isValid: true,
-        hiddenFilterIsMissingInSavedFilters: false,
-        hiddenFilterHasDifferentValueInSavedFilter: false,
-        lockedFilterIsMissingInSavedFilters: false,
-        lockedFilterHasDifferentValueInSavedFilter: false,
-        ignoredFilterIsAppliedInSavedFilters: false,
-        removedFilterIsAppliedInSavedFilters: false,
-        commonDateFilterIsMissingInSavedVisibleFilters: false,
-        visibleFilterIsMissingInSavedFilters: false,
-        visibleFiltersAreMissing: false,
-        incompatibleSelectionTypeIsAppliedInSavedFilters: false,
-        filtersAreStale: false,
-    });
+    mockUseValidateExistingAutomationFilters.mockReturnValue(VALID_FILTERS_RESULT);
 });
 
 function renderDialog(props?: Partial<IDefaultAlertingDialogProps>, dialogContext = ALERTING_DIALOG_CONTEXT) {
     return render(
-        <IntlWrapper>
-            <AutomationsContextProvider value={AUTOMATIONS_CONTEXT}>
-                <AlertingDialogContextProvider value={dialogContext}>
-                    <AlertingDialogStateProvider>
-                        <DefaultAlertingDialog onCancel={() => {}} {...props} />
-                    </AlertingDialogStateProvider>
-                </AlertingDialogContextProvider>
-            </AutomationsContextProvider>
-        </IntlWrapper>,
+        <BlockProviders dialogContext={dialogContext}>
+            <DefaultAlertingDialog onCancel={() => {}} {...props} />
+        </BlockProviders>,
     );
 }
 
@@ -290,18 +265,8 @@ describe("DefaultAlertingDialog slots.Filters", () => {
 
     it("does not render the slot while the stale-filters confirmation is shown", () => {
         mockUseValidateExistingAutomationFilters.mockReturnValue({
+            ...VALID_FILTERS_RESULT,
             isValid: false,
-            hiddenFilterIsMissingInSavedFilters: false,
-            hiddenFilterHasDifferentValueInSavedFilter: false,
-            lockedFilterIsMissingInSavedFilters: false,
-            lockedFilterHasDifferentValueInSavedFilter: false,
-            ignoredFilterIsAppliedInSavedFilters: false,
-            removedFilterIsAppliedInSavedFilters: false,
-            commonDateFilterIsMissingInSavedVisibleFilters: false,
-            visibleFilterIsMissingInSavedFilters: false,
-            visibleFiltersAreMissing: false,
-            incompatibleSelectionTypeIsAppliedInSavedFilters: false,
-            filtersAreStale: false,
         });
         const { baseElement } = renderDialog({ slots: { Filters: CustomFilters } });
 

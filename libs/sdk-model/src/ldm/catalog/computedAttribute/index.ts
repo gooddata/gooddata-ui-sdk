@@ -2,8 +2,10 @@
 
 import { isEmpty } from "lodash-es";
 
+import { type IAttributeMetadataObject } from "../../metadata/attribute/index.js";
 import { type IAttributeDisplayFormMetadataObject } from "../../metadata/attributeDisplayForm/index.js";
 import { type IComputedAttributeMetadataObject } from "../../metadata/computedAttribute/index.js";
+import { type ICatalogAttribute } from "../attribute/index.js";
 import { type IGroupableCatalogItemBase } from "../group/index.js";
 
 /**
@@ -45,4 +47,47 @@ export interface ICatalogComputedAttribute extends IGroupableCatalogItemBase {
  */
 export function isCatalogComputedAttribute(obj: unknown): obj is ICatalogComputedAttribute {
     return !isEmpty(obj) && (obj as ICatalogComputedAttribute).type === "computedAttribute";
+}
+
+/**
+ * Adapts a computed attribute to the attribute metadata surface.
+ *
+ * @remarks
+ * Only the `type` discriminator is rewritten - the ref, the fabricated display form and the rest of
+ * the metadata are kept verbatim. The result therefore CLAIMS to be a plain attribute while its
+ * `ref.type` still says `computedAttribute`; the ref is the honest signal, not the `type`. Use it
+ * where attribute-shaped consumers must also handle computed attributes.
+ *
+ * @beta
+ */
+export function computedAttributeAsAttributeMetadataObject(
+    computedAttribute: IComputedAttributeMetadataObject,
+): IAttributeMetadataObject {
+    return {
+        ...computedAttribute,
+        type: "attribute",
+    };
+}
+
+/**
+ * Adapts a catalog computed attribute to a catalog attribute so it can enter attribute-shaped
+ * resolution maps and listings.
+ *
+ * @remarks
+ * Refs stay honest (typed `computedAttribute`); only the catalog item and metadata object `type`
+ * discriminators are rewritten. See {@link computedAttributeAsAttributeMetadataObject}.
+ *
+ * @beta
+ */
+export function catalogComputedAttributeAsCatalogAttribute(
+    item: ICatalogComputedAttribute,
+): ICatalogAttribute {
+    return {
+        type: "attribute",
+        attribute: computedAttributeAsAttributeMetadataObject(item.computedAttribute),
+        defaultDisplayForm: item.defaultDisplayForm,
+        displayForms: item.displayForms,
+        geoPinDisplayForms: [],
+        groups: item.groups,
+    };
 }

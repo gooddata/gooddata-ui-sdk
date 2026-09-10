@@ -9,8 +9,10 @@ import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { IntlWrapper } from "../../../localization/IntlWrapper.js";
 import { AutomationsContextProvider } from "../../contexts/AutomationsContext.js";
 import { ScheduledEmailDialogContextProvider } from "../../contexts/ScheduledEmailDialogContext.js";
+import { type useValidateExistingAutomationFilters } from "../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
 import { ScheduledEmailDialogStateProvider } from "../state/ScheduledEmailDialogStateProvider.js";
 import { AUTOMATIONS_CONTEXT, SCHEDULED_EMAIL_DIALOG_CONTEXT } from "../tests/scheduledEmail.test.helpers.js";
+import { VALID_FILTERS_RESULT } from "../tests/scheduledEmailBlocks.test.helpers.js";
 import { type IDefaultScheduledEmailDialogProps } from "../types.js";
 
 import { DefaultScheduledEmailDialog } from "./DefaultScheduledEmailDialog.js";
@@ -27,7 +29,7 @@ vi.hoisted(() => {
 // useValidateExistingAutomationFilters computes staleness against the dashboard's current filters and is
 // not read by the assertions below.
 const { mockUseValidateExistingAutomationFilters } = vi.hoisted(() => ({
-    mockUseValidateExistingAutomationFilters: vi.fn(),
+    mockUseValidateExistingAutomationFilters: vi.fn<typeof useValidateExistingAutomationFilters>(),
 }));
 
 vi.mock("../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js", () => ({
@@ -47,21 +49,6 @@ vi.mock("../../../filterBar/attributeFilter/DefaultDashboardAttributeFilter.js",
 // RecipientsSelect renders for real under this harness; it reaches the backend through
 // useBackendStrict/useWorkspaceStrict, so the harness provides a real (dummy) backend and
 // workspace — the search never activates in these tests, so the backend is never queried.
-
-const VALID_FILTERS_RESULT = {
-    isValid: true,
-    hiddenFilterIsMissingInSavedFilters: false,
-    hiddenFilterHasDifferentValueInSavedFilter: false,
-    lockedFilterIsMissingInSavedFilters: false,
-    lockedFilterHasDifferentValueInSavedFilter: false,
-    ignoredFilterIsAppliedInSavedFilters: false,
-    removedFilterIsAppliedInSavedFilters: false,
-    commonDateFilterIsMissingInSavedVisibleFilters: false,
-    visibleFilterIsMissingInSavedFilters: false,
-    visibleFiltersAreMissing: false,
-    incompatibleSelectionTypeIsAppliedInSavedFilters: false,
-    filtersAreStale: false,
-};
 
 beforeEach(() => {
     vi.clearAllMocks();

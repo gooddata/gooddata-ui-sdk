@@ -637,7 +637,7 @@
     "objectShare.toast.accessUpdated": "Success! Access was updated.",
     "objectShare.toast.generalAccessUpdated": "Success! General access was updated.",
     "objectShare.toast.error": "Access could not be updated.",
-    "objectShare.toast.escalationRefused": "You may only grant permissions that you have yourself.",
+    "objectShare.toast.escalationRefused": "You cannot set permissions higher than your own.",
     "objectShare.toast.labelScopePartial": "Some label access could not be saved.",
     "objectShare.loadError": "Sharing settings could not be loaded. Please close and try again.",
     "properties.conditionalFormatting.title": "Conditional formatting",

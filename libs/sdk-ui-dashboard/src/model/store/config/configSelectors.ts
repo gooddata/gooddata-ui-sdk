@@ -476,6 +476,23 @@ export const selectEnableImmediateAttributeFilterDisplayAsLabelMigration: Dashbo
     });
 
 /**
+ * Returns whether computed attributes are enabled. When on, computed attributes are loaded into
+ * the dashboard catalog and offered wherever an attribute can be picked (e.g. attribute filters).
+ *
+ * Unlike most config selectors this one tolerates an uninitialized config and answers false: it
+ * is read by the KDA dialog, which can render (e.g. from the chatbot) while its dashboard store
+ * is still initializing.
+ *
+ * @alpha
+ */
+export const selectEnableComputedAttributes: DashboardSelector<boolean> = createSelector(
+    selectSelf,
+    (configState) => {
+        return configState.config?.settings?.enableComputedAttributes ?? false;
+    },
+);
+
+/**
  * Returns whether measure value (numeric) filter is enabled in dashboards.
  *
  * @alpha

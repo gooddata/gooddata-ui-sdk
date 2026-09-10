@@ -91,14 +91,15 @@ export function DashboardInner(props: IDashboardProps) {
 
     const resizableSidebar = useResizableSidebarState();
 
-    // When the sidebar can be resized, expose its live width so the sibling content area can subtract
-    // it (see `--gd-dashboard-sidebar-width` in sdk-dashboard.scss). Otherwise leave it unset so the
-    // content falls back to the static sidebar width.
-    const dashboardsRootStyle = resizableSidebar.canResize
-        ? ({
-              "--gd-dashboard-sidebar-width": `${resizableSidebar.width}px`,
-          } as CSSProperties)
-        : undefined;
+    // When the sidebar can be resized or is collapsed to the icon rail, expose its live width so the
+    // sibling content area can subtract it (see `--gd-dashboard-sidebar-width` in sdk-dashboard.scss).
+    // Otherwise leave it unset so the content falls back to the static per-breakpoint sidebar width.
+    const dashboardsRootStyle =
+        resizableSidebar.canResize || resizableSidebar.isCollapsed
+            ? ({
+                  "--gd-dashboard-sidebar-width": `${resizableSidebar.width}px`,
+              } as CSSProperties)
+            : undefined;
 
     return (
         <IntlWrapper locale={locale}>

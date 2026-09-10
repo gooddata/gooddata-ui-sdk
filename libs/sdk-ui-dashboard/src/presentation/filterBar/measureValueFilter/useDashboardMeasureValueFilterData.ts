@@ -8,6 +8,7 @@ import {
     type DateAttributeGranularity,
     type IAttributeOrMeasure,
     type ICatalogAttribute,
+    type ICatalogComputedAttribute,
     type ICatalogDateDataset,
     type ICatalogMeasure,
     type IDashboardMeasureValueFilter,
@@ -24,14 +25,19 @@ import {
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { type IDimensionalityItem, getMeasureValueFilterConditionLabel } from "@gooddata/sdk-ui-filters";
 
+import {
+    isComputedAttributesUnavailableError,
+    mergeAttributesWithComputed,
+} from "../../../_staging/catalog/computedAttributes.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import {
-    selectCatalogAttributes,
+    selectCatalogAttributesWithComputed,
     selectCatalogDateDatasets,
     selectCatalogIsLoaded,
     selectCatalogMeasures,
 } from "../../../model/store/catalog/catalogSelectors.js";
 import {
+    selectEnableComputedAttributes,
     selectLocale,
     selectObjectAvailabilityConfig,
     selectSeparators,
@@ -141,20 +147,58 @@ async function loadValidDimensionalityAttributes(
     items: IAttributeOrMeasure[],
     includeObjectsWithTags: string[] | undefined,
     excludeObjectsWithTags: string[] | undefined,
+    locale: string,
+    includeComputedAttributes: boolean,
 ): Promise<ICatalogAttribute[]> {
-    const catalog = await backend
-        .workspace(workspace)
-        .catalog()
-        .withOptions({
-            types: ["attribute"],
-            includeTags: (includeObjectsWithTags ?? []).map((tag) => idRef(tag)),
-            excludeTags: (excludeObjectsWithTags ?? []).map((tag) => idRef(tag)),
-            loadGroups: false,
-        })
-        .load();
+    const tagOptions = {
+        includeTags: (includeObjectsWithTags ?? []).map((tag) => idRef(tag)),
+        excludeTags: (excludeObjectsWithTags ?? []).map((tag) => idRef(tag)),
+    };
 
-    const availableCatalog = await catalog.availableItems().withOptions({ items }).load();
-    return availableCatalog.availableAttributes();
+    const loadAvailableAttributes = async (): Promise<ICatalogAttribute[]> => {
+        const catalog = await backend
+            .workspace(workspace)
+            .catalog()
+            .withOptions({ ...tagOptions, types: ["attribute"], loadGroups: false })
+            .load();
+        const availableCatalog = await catalog.availableItems().withOptions({ items }).load();
+        return availableCatalog.availableAttributes();
+    };
+
+    // Computed attributes count among the valid dimensionality. Their load is separate so it can
+    // never throw away the plain attributes loaded above, and it is skipped when the
+    // enableComputedAttributes setting is off - the backend then refuses the listing outright
+    // (400) and asking would only produce console noise. With the setting on, only an
+    // "unavailable" refusal degrades to none; a genuine failure is rethrown.
+    const loadAvailableComputedAttributes = async (): Promise<ICatalogComputedAttribute[]> => {
+        if (!includeComputedAttributes) {
+            return [];
+        }
+        try {
+            const catalog = await backend
+                .workspace(workspace)
+                .catalog()
+                .withOptions({ ...tagOptions, types: ["computedAttribute"], loadGroups: false })
+                .load();
+            const availableCatalog = await catalog.availableItems().withOptions({ items }).load();
+            return availableCatalog.availableComputedAttributes();
+        } catch (error) {
+            // degrade only when computed attributes are not available (setting off refuses the
+            // listing outright); a genuine failure is rethrown so it is not silenced - and the
+            // plain attributes load above never swallows errors either
+            if (isComputedAttributesUnavailableError(error)) {
+                return [];
+            }
+            throw error;
+        }
+    };
+
+    const [availableAttributes, availableComputedAttributes] = await Promise.all([
+        loadAvailableAttributes(),
+        loadAvailableComputedAttributes(),
+    ]);
+
+    return mergeAttributesWithComputed(availableAttributes, availableComputedAttributes, locale);
 }
 
 async function loadAvailableDateDatasets(
@@ -188,6 +232,8 @@ async function loadCatalogDimensionalityItems(
     allCatalogDimensionality: IDimensionalityItem[],
     includeObjectsWithTags: string[] | undefined,
     excludeObjectsWithTags: string[] | undefined,
+    locale: string,
+    includeComputedAttributes: boolean,
 ): Promise<IDimensionalityItem[]> {
     const availabilityItems = buildMeasureValueFilterAvailabilityItems(measure, dimensionality);
     const [attributes, dateDatasets] = await Promise.all([
@@ -197,6 +243,8 @@ async function loadCatalogDimensionalityItems(
             availabilityItems,
             includeObjectsWithTags,
             excludeObjectsWithTags,
+            locale,
+            includeComputedAttributes,
         ),
         loadAvailableDateDatasets(
             backend,
@@ -279,12 +327,13 @@ export function useDashboardMeasureValueFilterData(
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
     const measures = useDashboardSelector(selectCatalogMeasures);
-    const attributes = useDashboardSelector(selectCatalogAttributes);
+    const attributes = useDashboardSelector(selectCatalogAttributesWithComputed);
     const dateDatasets = useDashboardSelector(selectCatalogDateDatasets);
     const isCatalogLoaded = useDashboardSelector(selectCatalogIsLoaded);
     const objectAvailability = useDashboardSelector(selectObjectAvailabilityConfig);
     const separators = useDashboardSelector(selectSeparators);
     const locale = useDashboardSelector(selectLocale);
+    const includeComputedAttributes = useDashboardSelector(selectEnableComputedAttributes);
     const intl = useIntl();
 
     const {
@@ -324,6 +373,8 @@ export function useDashboardMeasureValueFilterData(
                 allCatalogDimensionality,
                 objectAvailability?.includeObjectsWithTags,
                 objectAvailability?.excludeObjectsWithTags,
+                locale,
+                includeComputedAttributes,
             ),
         [
             allCatalogDimensionality,
@@ -332,6 +383,8 @@ export function useDashboardMeasureValueFilterData(
             objectAvailability?.excludeObjectsWithTags,
             objectAvailability?.includeObjectsWithTags,
             workspace,
+            locale,
+            includeComputedAttributes,
         ],
     );
 

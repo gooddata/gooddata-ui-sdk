@@ -4,10 +4,17 @@
 
 import { describe, expect, it } from "vitest";
 
-import { type IParameterMetadataObject, idRef } from "@gooddata/sdk-model";
+import {
+    type IAttributeDisplayFormMetadataObject,
+    type ICatalogAttribute,
+    type ICatalogComputedAttribute,
+    type IParameterMetadataObject,
+    idRef,
+} from "@gooddata/sdk-model";
 
 import {
     selectAdhocDateHierarchies,
+    selectCatalogAttributesWithComputed,
     selectCatalogMeasureParameters,
     selectCatalogMeasureParametersStatus,
     selectCatalogParameters,
@@ -113,6 +120,86 @@ describe("catalogSelectors", () => {
         it("returns uninitialized status by default", () => {
             const state = stateWith({ status: "uninitialized", byMetric: {} });
             expect(selectCatalogMeasureParametersStatus(state)).toBe("uninitialized");
+        });
+    });
+
+    describe("selectCatalogAttributesWithComputed", () => {
+        const displayForm = (id: string, type: "displayForm" | "computedAttribute", attributeId: string) =>
+            ({
+                type: "displayForm",
+                ref: idRef(id, type),
+                id,
+                uri: id,
+                title: id,
+                description: "",
+                production: true,
+                deprecated: false,
+                unlisted: false,
+                attribute: idRef(attributeId, type === "displayForm" ? "attribute" : "computedAttribute"),
+            }) satisfies IAttributeDisplayFormMetadataObject;
+        const attribute = (id: string, title: string): ICatalogAttribute => ({
+            type: "attribute",
+            attribute: {
+                type: "attribute",
+                ref: idRef(id, "attribute"),
+                id,
+                uri: id,
+                title,
+                description: "",
+                production: true,
+                deprecated: false,
+                unlisted: false,
+                displayForms: [displayForm(`${id}.label`, "displayForm", id)],
+            },
+            defaultDisplayForm: displayForm(`${id}.label`, "displayForm", id),
+            displayForms: [displayForm(`${id}.label`, "displayForm", id)],
+            geoPinDisplayForms: [],
+            groups: [],
+        });
+        const computedAttribute = (id: string, title: string): ICatalogComputedAttribute => ({
+            type: "computedAttribute",
+            computedAttribute: {
+                type: "computedAttribute",
+                ref: idRef(id, "computedAttribute"),
+                id,
+                uri: id,
+                title,
+                description: "",
+                production: true,
+                deprecated: false,
+                unlisted: false,
+                expression: "SELECT 1",
+                displayForms: [displayForm(id, "computedAttribute", id)],
+            },
+            defaultDisplayForm: displayForm(id, "computedAttribute", id),
+            displayForms: [displayForm(id, "computedAttribute", id)],
+            groups: [],
+        });
+        const stateWith = (
+            attributes: ICatalogAttribute[],
+            computedAttributes: ICatalogComputedAttribute[],
+        ): any => ({
+            catalog: { attributes, computedAttributes },
+            config: { config: {} },
+        });
+
+        it("returns the plain attributes array untouched when there are no computed attributes", () => {
+            const attributes = [attribute("account", "Account")];
+            const state = stateWith(attributes, []);
+            expect(selectCatalogAttributesWithComputed(state)).toBe(attributes);
+        });
+
+        it("interleaves computed attributes into one title-sorted list", () => {
+            const state = stateWith(
+                [attribute("account", "Account"), attribute("zebra", "Zebra")],
+                [computedAttribute("ca_1", "bucketed accounts")],
+            );
+
+            expect(selectCatalogAttributesWithComputed(state).map((item) => item.attribute.title)).toEqual([
+                "Account",
+                "bucketed accounts",
+                "Zebra",
+            ]);
         });
     });
 });

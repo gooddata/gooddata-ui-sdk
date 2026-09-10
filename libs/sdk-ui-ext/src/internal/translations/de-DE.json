@@ -637,7 +637,7 @@
     "objectShare.toast.accessUpdated": "Erfolgreich! Zugriff wurde aktualisiert.",
     "objectShare.toast.generalAccessUpdated": "Erfolgreich! Allgemeiner Zugriff wurde aktualisiert.",
     "objectShare.toast.error": "Zugriff konnte nicht aktualisiert werden.",
-    "objectShare.toast.escalationRefused": "Sie können nur Berechtigungen erteilen, über die Sie selbst verfügen.",
+    "objectShare.toast.escalationRefused": "Sie können keine höheren Berechtigungen vergeben, als Sie selbst besitzen.",
     "objectShare.toast.labelScopePartial": "Einiger Zugriff auf Beschriftungen konnte nicht gespeichert werden.",
     "objectShare.loadError": "Freigabeeinstellungen konnten nicht geladen werden. Bitte schließen und erneut versuchen.",
     "properties.conditionalFormatting.title": "Bedingte Formatierung",

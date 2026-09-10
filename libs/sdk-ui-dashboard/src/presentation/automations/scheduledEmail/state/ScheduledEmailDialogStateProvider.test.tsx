@@ -34,7 +34,7 @@ const {
     mockUseAutomationsContext: vi.fn(),
     mockUseScheduledEmailDialogContext: vi.fn(),
     mockUseAutomationFiltersSelect: vi.fn(),
-    mockUseValidateExistingAutomationFilters: vi.fn(),
+    mockUseValidateExistingAutomationFilters: vi.fn<typeof useValidateExistingAutomationFilters>(),
     mockUseAutomationExportParameters: vi.fn(),
 }));
 
@@ -86,12 +86,14 @@ function PassthroughDecoratorComponent({ children }: { children?: ReactNode }) {
 
 import { IntlWrapper } from "../../../localization/IntlWrapper.js";
 import { useScheduledEmailDialogContext } from "../../contexts/ScheduledEmailDialogContext.js";
+import { type useValidateExistingAutomationFilters } from "../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
 import { ScheduledEmailDialog } from "../ScheduledEmailDialog.js";
 import {
     AUTOMATIONS_CONTEXT,
     CURRENT_USER,
     SCHEDULED_EMAIL_DIALOG_CONTEXT,
 } from "../tests/scheduledEmail.test.helpers.js";
+import { VALID_FILTERS_RESULT } from "../tests/scheduledEmailBlocks.test.helpers.js";
 
 import { useScheduledExportActions } from "./ScheduledExportActionsContext.js";
 import { useScheduledExportData } from "./ScheduledExportDataContext.js";
@@ -239,7 +241,7 @@ beforeEach(() => {
     resolvedSlotComponent = StubScheduledEmailDialogComponent;
     notificationChannels = SCHEDULED_EMAIL_DIALOG_CONTEXT.notificationChannels;
     mockContexts();
-    mockUseValidateExistingAutomationFilters.mockReturnValue({ isValid: true, filtersAreStale: false });
+    mockUseValidateExistingAutomationFilters.mockReturnValue(VALID_FILTERS_RESULT);
     mockUseAutomationExportParameters.mockReturnValue({
         parametersEnabled: false,
         visibleParametersByTab: {},

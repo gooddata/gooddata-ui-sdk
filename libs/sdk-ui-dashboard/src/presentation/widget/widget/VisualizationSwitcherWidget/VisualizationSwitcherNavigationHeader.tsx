@@ -3,6 +3,7 @@
 import { type RefObject, forwardRef, useCallback, useMemo } from "react";
 
 import cx from "classnames";
+import { useIntl } from "react-intl";
 
 import { type IInsightWidget, type IVisualizationSwitcherWidget } from "@gooddata/sdk-model";
 import {
@@ -10,10 +11,13 @@ import {
     type IDropdownButtonRenderProps,
     type IUiListboxInteractiveItem,
     type IUiListboxItem,
+    UiIcon,
     UiListbox,
 } from "@gooddata/sdk-ui-kit";
 
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { useDashboardUserInteraction } from "../../../../model/react/useDashboardUserInteraction.js";
+import { selectRestrictedInsightsMap } from "../../../../model/store/unavailableObjects/unavailableObjectsSelectors.js";
 import { type CommonExportDataAttributes } from "../../../export/types.js";
 import { DashboardItemHeadline } from "../../../presentationComponents/DashboardItems/DashboardItemHeadline.js";
 
@@ -49,14 +53,23 @@ export function VisualizationSwitcherNavigationHeader({
 }: IVisualizationSwitcherNavigationHeaderProps) {
     const userInteraction = useDashboardUserInteraction();
 
+    const intl = useIntl();
+    const restrictedInsights = useDashboardSelector(selectRestrictedInsightsMap);
+    const restrictedEntryTitle = intl.formatMessage({ id: "visualizationSwitcher.restrictedEntry" });
+
     const items = useMemo<IUiListboxItem<IInsightWidget>[]>(() => {
-        return widget.visualizations.map((visualization) => ({
-            type: "interactive",
-            id: visualization.identifier,
-            stringTitle: visualization.title,
-            data: visualization,
-        }));
-    }, [widget.visualizations]);
+        return widget.visualizations.map((visualization) => {
+            // a stored entry title names the visualization, so a restricted entry must never show it
+            const isRestricted = restrictedInsights.has(visualization.insight);
+            return {
+                type: "interactive",
+                id: visualization.identifier,
+                stringTitle: isRestricted ? restrictedEntryTitle : visualization.title,
+                icon: isRestricted ? ("lock" as const) : undefined,
+                data: visualization,
+            };
+        });
+    }, [widget.visualizations, restrictedInsights, restrictedEntryTitle]);
 
     const handleSelectVisualization = useCallback(
         (item: IUiListboxInteractiveItem<IInsightWidget>) => {
@@ -85,7 +98,12 @@ export function VisualizationSwitcherNavigationHeader({
             )}
             renderButton={({ toggleDropdown, isOpen, ariaAttributes, buttonRef }) => (
                 <VisualizationSwitcherNavigationHeaderButton
-                    title={activeVisualization.title}
+                    isRestricted={restrictedInsights.has(activeVisualization.insight)}
+                    title={
+                        restrictedInsights.has(activeVisualization.insight)
+                            ? restrictedEntryTitle
+                            : activeVisualization.title
+                    }
                     isOpen={isOpen}
                     toggleDropdown={toggleDropdown}
                     clientHeight={clientHeight}
@@ -101,6 +119,7 @@ export function VisualizationSwitcherNavigationHeader({
 
 type VisualizationSwitcherNavigationHeaderButtonProps = {
     title: string;
+    isRestricted: boolean;
     isOpen: boolean;
     toggleDropdown: (desiredState?: unknown) => void;
     clientHeight?: number;
@@ -113,7 +132,7 @@ const VisualizationSwitcherNavigationHeaderButton = forwardRef<
     HTMLElement,
     VisualizationSwitcherNavigationHeaderButtonProps
 >(function VisualizationSwitcherNavigationHeaderButton(
-    { isOpen, toggleDropdown, title, clientHeight, ariaAttributes, exportData, titleId },
+    { isOpen, toggleDropdown, title, isRestricted, clientHeight, ariaAttributes, exportData, titleId },
     ref,
 ) {
     const classNames = cx("gd-visualization-switcher-widget-header s-visualization-switcher-widget-header", {
@@ -128,7 +147,10 @@ const VisualizationSwitcherNavigationHeaderButton = forwardRef<
             {...exportData}
             {...ariaAttributes}
         >
-            <DashboardItemHeadline clientHeight={clientHeight} title={title} titleId={titleId} />
+            <div className="gd-visualization-switcher-widget-header-title">
+                {isRestricted ? <UiIcon type="lock" size={14} color="complementary-7" /> : null}
+                <DashboardItemHeadline clientHeight={clientHeight} title={title} titleId={titleId} />
+            </div>
         </div>
     );
 });

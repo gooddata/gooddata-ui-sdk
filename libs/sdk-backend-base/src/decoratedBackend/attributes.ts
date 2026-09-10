@@ -1,8 +1,9 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import {
     type IAttributeWithReferences,
     type IAttributesQuery,
+    type IConnectedAttributesOptions,
     type IElementsQueryFactory,
     type IWorkspaceAttributesService,
 } from "@gooddata/sdk-backend-spi";
@@ -70,8 +71,11 @@ export abstract class DecoratedWorkspaceAttributesService implements IWorkspaceA
         return this.decorated.getAttributesWithReferences(refs);
     }
 
-    public getConnectedAttributesByDisplayForm(ref: ObjRef): Promise<ObjRef[]> {
-        return this.decorated.getConnectedAttributesByDisplayForm(ref);
+    public getConnectedAttributesByDisplayForm(
+        ref: ObjRef,
+        options?: IConnectedAttributesOptions,
+    ): Promise<ObjRef[]> {
+        return this.decorated.getConnectedAttributesByDisplayForm(ref, options);
     }
 
     public getAttributesQuery(): IAttributesQuery {

@@ -24,7 +24,7 @@ import { useDashboardSelector } from "../../../../../../../model/react/Dashboard
 import {
     selectAllCatalogDateDatasetsMap,
     selectAllCatalogDisplayFormsMap,
-    selectCatalogAttributes,
+    selectCatalogAttributesWithComputed,
     selectCatalogFacts,
     selectCatalogMeasures,
 } from "../../../../../../../model/store/catalog/catalogSelectors.js";
@@ -72,7 +72,7 @@ const findTitleForCatalogItem = (
     if (item.type === "fact") {
         return facts.find((fact) => areObjRefsEqual(fact.fact.ref, item))?.fact.title;
     }
-    if (item.type === "attribute") {
+    if (item.type === "attribute" || item.type === "computedAttribute") {
         return attributes.find((attribute) => areObjRefsEqual(attribute.attribute.ref, item))?.attribute
             .title;
     }
@@ -98,6 +98,7 @@ const getTypeOrder = (item: ValuesLimitingItem): number => {
         case "measure":
             return 1;
         case "attribute":
+        case "computedAttribute":
             return 2;
         case "fact":
             return 3;
@@ -148,7 +149,7 @@ export const useLimitingItems = (
     isSelected: boolean,
     intl: IntlShape,
 ): IValuesLimitingItemWithTitle[] => {
-    const attributes = useDashboardSelector(selectCatalogAttributes);
+    const attributes = useDashboardSelector(selectCatalogAttributesWithComputed);
     const labels = useDashboardSelector(selectAllCatalogDisplayFormsMap);
     const dateDataSetsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
     const filterConfig = useDashboardSelector(selectDateFilterConfigOverrides);
@@ -204,7 +205,7 @@ export const useLimitingItems = (
 export const useSearchableLimitingItems = (
     currentlySelectedItems: ObjRef[],
 ): IValuesLimitingItemWithTitle[] => {
-    const attributes = useDashboardSelector(selectCatalogAttributes);
+    const attributes = useDashboardSelector(selectCatalogAttributesWithComputed);
     const measures = useDashboardSelector(selectCatalogMeasures);
     const facts = useDashboardSelector(selectCatalogFacts);
 
@@ -238,7 +239,7 @@ export const useFilterItems = (
     intl: IntlShape,
 ): IValuesLimitingItemWithTitle[] => {
     const labels = useDashboardSelector(selectAllCatalogDisplayFormsMap);
-    const attributes = useDashboardSelector(selectCatalogAttributes);
+    const attributes = useDashboardSelector(selectCatalogAttributesWithComputed);
     const dateDataSetsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
     const filterConfig = useDashboardSelector(selectDateFilterConfigOverrides);
     const filterConfigByDimension = useDashboardSelector(selectDateFilterConfigsOverrides);

@@ -4,8 +4,11 @@ import { type ReactNode, useId } from "react";
 
 import { bem } from "../@utils/bem.js";
 import { UiRadio } from "../UiRadio/UiRadio.js";
+import { UiTooltip } from "../UiTooltip/UiTooltip.js";
 
 const { b, e } = bem("gd-ui-kit-radio-row");
+
+const TOOLTIP_WIDTH = 300;
 
 /**
  * @internal
@@ -26,6 +29,12 @@ export interface IUiRadioRowProps {
     title: string;
     /** Optional descriptive subline, regular complementary-6. */
     description?: string;
+    /**
+     * Optional explanation shown on hover over the whole row. Use it for the
+     * reason a row is disabled — a disabled radio cannot take focus, so the
+     * text is also linked as the radio's accessible description.
+     */
+    tooltip?: string;
     /** Optional trailing content rendered after the text (e.g. row controls). */
     trailing?: ReactNode;
     disabled?: boolean;
@@ -46,13 +55,19 @@ export function UiRadioRow({
     value,
     title,
     description,
+    tooltip,
     trailing,
     disabled,
     dataTestId,
 }: IUiRadioRowProps) {
     const inputId = useId();
     const descriptionId = useId();
-    return (
+    const tooltipId = useId();
+    const describedBy =
+        [description ? descriptionId : undefined, tooltip ? tooltipId : undefined]
+            .filter(Boolean)
+            .join(" ") || undefined;
+    const row = (
         <div className={b({ disabled: disabled ?? false })} data-testid={dataTestId}>
             <UiRadio
                 id={inputId}
@@ -61,7 +76,7 @@ export function UiRadioRow({
                 name={name}
                 value={value}
                 disabled={disabled}
-                accessibilityConfig={description ? { ariaDescribedBy: descriptionId } : undefined}
+                accessibilityConfig={describedBy ? { ariaDescribedBy: describedBy } : undefined}
             />
             <span className={e("text")}>
                 <label className={e("title")} htmlFor={inputId}>
@@ -72,8 +87,27 @@ export function UiRadioRow({
                         {description}
                     </span>
                 ) : null}
+                {tooltip ? (
+                    <span id={tooltipId} className="sr-only">
+                        {tooltip}
+                    </span>
+                ) : null}
             </span>
             {trailing ? <span className={e("trailing")}>{trailing}</span> : null}
         </div>
+    );
+
+    return tooltip ? (
+        <UiTooltip
+            anchor={row}
+            content={tooltip}
+            triggerBy={["hover"]}
+            width={TOOLTIP_WIDTH}
+            optimalPlacement
+            accessibilityHidden
+            anchorWrapperStyles={{ width: "100%" }}
+        />
+    ) : (
+        row
     );
 }

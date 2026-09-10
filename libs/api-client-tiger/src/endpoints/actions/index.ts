@@ -57,7 +57,7 @@ export {
     type ActionsApiWorkspaceResolveSettingsRequest,
     ActionsApi_ListWorkspaceUserGroups,
     type ActionsApiListWorkspaceUserGroupsRequest,
-    // Per-object access for catalog attributes, facts, labels and metrics.
+    // Per-object access for catalog attributes, facts, labels, metrics and computed attributes.
     type LdmObjectPermissions,
     type ManageLabelPermissionsRequestInner,
     ActionsApi_AttributePermissions,
@@ -76,14 +76,18 @@ export {
     type ActionsApiManageLabelPermissionsRequest,
     ActionsApi_ManageMetricPermissions,
     type ActionsApiManageMetricPermissionsRequest,
+    ActionsApi_ComputedAttributePermissions,
+    type ActionsApiComputedAttributePermissionsRequest,
+    ActionsApi_ManageComputedAttributePermissions,
+    type ActionsApiManageComputedAttributePermissionsRequest,
 } from "../../generated/metadata-json-api/index.js";
 
 // Execution Result API
 export {
     ActionsApi_ResolveLlmEndpoints,
     type ActionsApiResolveLlmEndpointsRequest,
-    ActionsApi_ResolveLlmProviders,
-    type ActionsApiResolveLlmProvidersRequest,
+    ActionsApi_TestLlmProvider,
+    type ActionsApiTestLlmProviderRequest,
     ActionsApi_GenerateDescription,
     type ActionsApiGenerateDescriptionRequest,
     ActionsApi_GenerateTitle,

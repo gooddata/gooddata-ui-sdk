@@ -186,4 +186,6 @@ export type IconType =
     | "unpin"
     | "speechBubble"
     | "pieChart"
-    | "timezone";
+    | "timezone"
+    | "sidePanelCollapse"
+    | "sidePanelExpand";

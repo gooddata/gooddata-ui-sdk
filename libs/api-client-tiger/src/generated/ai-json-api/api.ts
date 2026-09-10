@@ -752,9 +752,9 @@ export interface AiChartFill {
 
 export interface AiClarifyingChoiceOption {
     /**
-     * Option caption to render and to submit as the answer, e.g. `Net Sales`.
+     * The answer itself, rendered as the option and submitted verbatim, e.g. `Net Sales`.
      */
-    'label': string;
+    'text': string;
 }
 
 /**
@@ -1502,6 +1502,10 @@ export interface AiDashboardPatchReferences {
      */
     'datedatasets'?: Array<object>;
     /**
+     * Full AAC body of every widget-referenced visualization the workspace does NOT hold yet, which saving must create — under the id each body carries, which the widgets point at. Everything in `visualizations` already exists and must not be recreated.
+     */
+    'new_visualizations'?: Array<object>;
+    /**
      * Full AAC body of every widget-referenced visualization that has one available.
      */
     'visualizations': Array<object>;
@@ -1529,6 +1533,10 @@ export interface AiDashboardReferences {
      * Full AAC body of every date dataset the chart uses.
      */
     'datedatasets'?: Array<object | null>;
+    /**
+     * Full AAC body of every widget-referenced visualization the workspace does NOT hold yet, which saving must create — under the id each body carries, which the widgets point at. Everything in `visualizations` already exists and must not be recreated.
+     */
+    'new_visualizations'?: Array<object | null>;
     /**
      * Full AAC body of every widget-referenced visualization that has one available.
      */

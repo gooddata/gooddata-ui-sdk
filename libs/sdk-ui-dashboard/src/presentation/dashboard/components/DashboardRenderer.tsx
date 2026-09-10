@@ -139,6 +139,7 @@ export function DashboardRenderer(props: IDashboardProps) {
         attributeFilterComponentSet,
         dateFilterComponentSet,
         richTextProvider,
+        restrictedPlaceholderProvider,
         visualizationSwitcherProvider,
         richTextWidgetComponentSet,
         visualizationSwitcherWidgetComponentSet,
@@ -196,6 +197,9 @@ export function DashboardRenderer(props: IDashboardProps) {
                                                     visualizationSwitcherToolbarComponentProvider
                                                 }
                                                 RichTextComponentProvider={richTextProvider}
+                                                RestrictedPlaceholderComponentProvider={
+                                                    restrictedPlaceholderProvider
+                                                }
                                                 RichTextMenuComponentProvider={richTextMenuProvider}
                                                 RichTextMenuTitleComponentProvider={richTextMenuTitleProvider}
                                                 VisualizationSwitcherComponentProvider={

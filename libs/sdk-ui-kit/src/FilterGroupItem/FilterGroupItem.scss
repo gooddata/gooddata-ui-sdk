@@ -1,6 +1,11 @@
 @use "sass:list";
 @use "sass:map";
-@use "../../styles/scss/button";
+// Do not `@use "../../styles/scss/button"` here: no member of it is referenced, and the only
+// consumer of this file (styles/scss/main.scss) loads button.scss long before it, so the load
+// added nothing to the output. It did, however, put button.scss in a second module context, and
+// dart-sass (1.80-1.104) then mis-reports button.scss's own `@extend %btn` as unsatisfied for any
+// consumer that compiles main.scss from source with a downstream `@extend .gd-button-link` - which
+// is exactly what the modeler dev server does (see gdc-ldm-modeler-runtime/src/styles/app.scss).
 @use "../../styles/scss/mixins";
 @use "../../styles/scss/typo-mixins";
 @use "../../styles/scss/variables" as variables;

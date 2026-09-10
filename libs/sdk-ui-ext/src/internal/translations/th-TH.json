@@ -637,7 +637,7 @@
     "objectShare.toast.accessUpdated": "สำเร็จ! อัปเดตการเข้าถึงแล้ว",
     "objectShare.toast.generalAccessUpdated": "สำเร็จ! อัปเดตการเข้าถึงทั่วไปแล้ว",
     "objectShare.toast.error": "ไม่สามารถอัปเดตสิทธิ์การเข้าถึงได้",
-    "objectShare.toast.escalationRefused": "คุณสามารถให้สิทธิ์ได้เฉพาะสิทธิ์ที่คุณมีอยู่เท่านั้น",
+    "objectShare.toast.escalationRefused": "คุณไม่สามารถกำหนดสิทธิ์ให้สูงกว่าสิทธิ์ของคุณเองได้",
     "objectShare.toast.labelScopePartial": "ไม่สามารถบันทึกการเข้าถึงป้ายกำกับบางรายการได้",
     "objectShare.loadError": "ไม่สามารถโหลดการตั้งค่าการแชร์ได้ โปรดปิดแล้วลองอีกครั้ง",
     "properties.conditionalFormatting.title": "การจัดรูปแบบตามเงื่อนไข",

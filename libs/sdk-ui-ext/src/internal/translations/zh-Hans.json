@@ -637,7 +637,7 @@
     "objectShare.toast.accessUpdated": "成功！已更新访问权限。",
     "objectShare.toast.generalAccessUpdated": "成功！已更新常规访问权限。",
     "objectShare.toast.error": "无法更新访问权限。",
-    "objectShare.toast.escalationRefused": "您只能授予自己拥有的权限。",
+    "objectShare.toast.escalationRefused": "您无法设置高于自身权限级别的权限。",
     "objectShare.toast.labelScopePartial": "无法保存某些标签访问权限。",
     "objectShare.loadError": "无法加载共享设置。请关闭并重试。",
     "properties.conditionalFormatting.title": "条件格式设置",

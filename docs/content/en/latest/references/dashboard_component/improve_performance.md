@@ -29,6 +29,7 @@ You can find the recommended caching options in `RecommendedCachingConfiguration
 | maxAttributeDisplayFormsPerWorkspace   | Maximum number of attribute display forms to cache per workspace.                                                                                                    | 100                 |
 | maxAttributesPerWorkspace              | Maximum number of attributes to cache per workspace.                                                                                                                 | 100                 |
 | maxAttributeElementResultsPerWorkspace | Maximum number of attributes element results to cache per workspace. Note that not all the queries are cached (e.g. queries with `filter` value).                    | 100                 |
+| maxAttributeElementsForLocalFiltering  | Maximum number of elements in an element list that may be searched locally instead of by the backend. Requires `maxAttributeElementResultsPerWorkspace` to be set.   | 500                 |
 | maxWorkspaceSettings                   | Maximum number of settings for a workspace and for a user to cache per workspace.                                                                                    | 1                   |
 
 ### Example on how to use the caching backend

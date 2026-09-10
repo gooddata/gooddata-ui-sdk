@@ -27,7 +27,7 @@ import { createMemoizedSelector } from "../_infra/selectors.js";
 import { selectBackendCapabilities } from "../backendCapabilities/backendCapabilitiesSelectors.js";
 import {
     selectCatalogAttributeDisplayForms,
-    selectCatalogAttributes,
+    selectCatalogAttributesWithComputed,
     selectCatalogDateDatasets,
     selectCatalogMeasures,
 } from "../catalog/catalogSelectors.js";
@@ -266,7 +266,7 @@ const selectRawExportDisplayFormOverridesForInsight: (
         return createSelector(
             selectCatalogAttributeDisplayForms,
             selectCatalogDateDatasets,
-            selectCatalogAttributes,
+            selectCatalogAttributesWithComputed,
             (catalogAttributeDisplayForms, catalogDateDatasets, catalogAttributes) => {
                 if (!insight) {
                     return undefined;
@@ -343,7 +343,7 @@ const selectRawExportDisplayFormOverridesForInsightByRef: (
             selectInsightByRef(ref),
             selectCatalogAttributeDisplayForms,
             selectCatalogDateDatasets,
-            selectCatalogAttributes,
+            selectCatalogAttributesWithComputed,
             (insight, catalogAttributeDisplayForms, catalogDateDatasets, catalogAttributes) => {
                 if (!insight) {
                     return undefined;

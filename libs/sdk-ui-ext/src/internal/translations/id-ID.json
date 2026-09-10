@@ -637,7 +637,7 @@
     "objectShare.toast.accessUpdated": "Berhasil! Akses diperbarui.",
     "objectShare.toast.generalAccessUpdated": "Berhasil! Akses umum diperbarui.",
     "objectShare.toast.error": "Akses tidak dapat diperbarui.",
-    "objectShare.toast.escalationRefused": "Anda hanya dapat memberikan izin yang Anda miliki sendiri.",
+    "objectShare.toast.escalationRefused": "Anda tidak dapat menetapkan izin yang lebih tinggi daripada izin Anda sendiri.",
     "objectShare.toast.labelScopePartial": "Beberapa akses label tidak dapat disimpan.",
     "objectShare.loadError": "Pengaturan berbagi tidak dapat dimuat. Harap tutup dan coba lagi.",
     "properties.conditionalFormatting.title": "Pemformatan bersyarat",

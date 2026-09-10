@@ -30,6 +30,7 @@
     &__app-container {
         flex: 1;
         min-height: 0;
+        position: relative;
     }
 
     // In export mode the document itself must be the scroller: Chromium's

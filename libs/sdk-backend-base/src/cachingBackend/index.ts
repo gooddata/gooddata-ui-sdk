@@ -16,6 +16,7 @@ import {
     type IBackendCapabilities,
     type ICollectionItemsConfig,
     type ICollectionItemsResult,
+    type IConnectedAttributesOptions,
     type IDataView,
     type IElementsQuery,
     type IElementsQueryAttributeFilter,
@@ -67,6 +68,7 @@ import {
     type IAiRateLimit,
     type IAlertDefault,
     type IAttributeDisplayFormMetadataObject,
+    type IAttributeElement,
     type IAttributeMetadataObject,
     type IAutomationMetadataObject,
     type IAutomationMetadataObjectDefinition,
@@ -144,6 +146,7 @@ import {
 import { DecoratedWorkspaceExportTemplatesService } from "../decoratedBackend/workspaceExportTemplates.js";
 import { DecoratedWorkspaceSettingsService } from "../decoratedBackend/workspaceSettings.js";
 import { mergeBbox } from "../toolkit/geoItems.js";
+import { InMemoryPaging } from "../toolkit/paging.js";
 
 //
 // Supporting types
@@ -169,6 +172,7 @@ type AttributeCacheEntry = {
     commonAttributesBatch: LRUCache<string, Promise<ObjRef[][]>>;
     connectedAttributes: LRUCache<string, Promise<ObjRef[]>>;
     attributeElementResults?: LRUCache<string, Promise<IElementsQueryResult>>;
+    completeAttributeElements?: LRUCache<string, CompleteAttributeElements>;
     dataSetsMeta: LRUCache<string, Promise<IMetadataObject>>;
     // keyed by display-form identifier; holds in-flight/settled getAttributesWithReferences results so
     // concurrent callers for the same display form share a single underlying bulk request (in-flight dedupe)
@@ -176,6 +180,17 @@ type AttributeCacheEntry = {
     // keyed by the SERIALIZED ref, so a computed attribute can never collide with a label or an
     // attribute that happens to share its identifier - unlike the identifier-keyed maps above
     computedAttributes: LRUCache<string, Promise<IComputedAttributeMetadataObject>>;
+    // keyed by the serialized ref, same collision reasoning as computedAttributes above
+    computedAttributeExpressionTokens: LRUCache<string, Promise<IMeasureExpressionToken[]>>;
+};
+
+/**
+ * An element list that the backend returned in full, kept so that a later search over the same elements can be
+ * answered locally. The cacheId is the one the backend issued for that result.
+ */
+type CompleteAttributeElements = {
+    items: IAttributeElement[];
+    cacheId?: string;
 };
 
 type AutomationCacheEntry = {
@@ -1087,6 +1102,76 @@ function elementsCacheKey(
 }
 
 /**
+ * Cache key of the complete element list a search over the same elements can be answered from. Paging and the
+ * options that only narrow an already loaded list are left out, so that a search finds what the unfiltered
+ * load stored; everything that decides which elements exist at all stays in.
+ */
+function completeElementsCacheKey(
+    ref: ObjRef,
+    settings: {
+        limit?: number;
+        offset?: number;
+        options?: IElementsQueryOptions;
+        attributeFilters?: IElementsQueryAttributeFilter[];
+        dateFilters?: (IRelativeDateFilter | IAbsoluteDateFilter)[];
+        measures?: IMeasure[];
+        validateBy?: ObjRef[];
+        signal?: AbortSignal;
+    },
+): string {
+    const { limit: _limit, offset: _offset, signal: _signal, options, ...rest } = settings;
+    const { filter: _filter, complement: _complement, cacheId: _cacheId, ...restOptions } = options ?? {};
+
+    return elementsCacheKey(ref, { ...rest, options: restOptions });
+}
+
+/**
+ * Options that make the backend match against something other than the loaded titles, or return more than the
+ * elements themselves, cannot be honored locally.
+ */
+function canFilterLocally(options: IElementsQueryOptions | undefined): boolean {
+    return !options?.elements && !options?.filterByPrimaryLabel && !options?.includeTotalCountWithoutFilters;
+}
+
+/**
+ * Pages over locally filtered elements. Carries the cacheId of the backend result the elements came from, so
+ * that a later backend query can still reuse the same server-side result.
+ */
+class LocallyFilteredElements extends InMemoryPaging<IAttributeElement> {
+    constructor(
+        allItems: IAttributeElement[],
+        limit: number,
+        offset: number,
+        public readonly cacheId?: string,
+    ) {
+        super(allItems, limit, offset);
+    }
+
+    public override async next(): Promise<IElementsQueryResult> {
+        if (this.items.length === 0) {
+            return this;
+        }
+
+        return new LocallyFilteredElements(
+            this.allItems,
+            this.limit,
+            this.offset + this.items.length,
+            this.cacheId,
+        );
+    }
+
+    public override async goTo(pageIndex: number): Promise<IElementsQueryResult> {
+        if (this.items.length === 0) {
+            return this;
+        }
+
+        // Paged by the requested limit, the way a server-backed result pages, rather than by how full the
+        // current page happens to be.
+        return new LocallyFilteredElements(this.allItems, this.limit, pageIndex * this.limit, this.cacheId);
+    }
+}
+
+/**
  * Returns the identifier- and uri-based cache keys for the given ref. A ref yields at most one of the two.
  */
 function refCacheKeys(ref: ObjRef): { idCacheKey?: string; uriCacheKey?: string } {
@@ -1138,11 +1223,23 @@ function getOrCreateAttributeCache(ctx: CachingContext, workspace: string): Attr
             computedAttributes: new LRUCache<string, Promise<IComputedAttributeMetadataObject>>({
                 max: ctx.config.maxAttributesPerWorkspace!,
             }),
+            computedAttributeExpressionTokens: new LRUCache<string, Promise<IMeasureExpressionToken[]>>({
+                max: ctx.config.maxAttributesPerWorkspace!,
+            }),
             attributeElementResults: cachingEnabled(ctx.config.maxAttributeElementResultsPerWorkspace)
                 ? new LRUCache<string, Promise<IElementsQueryResult>>({
                       max: ctx.config.maxAttributeElementResultsPerWorkspace!,
                   })
                 : undefined,
+            // Bounded by the same limit as the element results it is populated from, and only ever reached
+            // through the element result cache, so it is off whenever that one is.
+            completeAttributeElements:
+                cachingEnabled(ctx.config.maxAttributeElementsForLocalFiltering) &&
+                cachingEnabled(ctx.config.maxAttributeElementResultsPerWorkspace)
+                    ? new LRUCache<string, CompleteAttributeElements>({
+                          max: ctx.config.maxAttributeElementResultsPerWorkspace!,
+                      })
+                    : undefined,
         };
         cache.set(workspace, cacheEntry);
     }
@@ -1170,11 +1267,107 @@ class CachedElementsQuery extends DecoratedElementsQuery {
     }
 
     public override query = async (): Promise<IElementsQueryResult> => {
-        const canCache = !this.settings.options?.filter;
-        if (!canCache) {
+        const local = this.queryLocally();
+        if (local) {
+            return local;
+        }
+
+        if (this.settings.options?.filter) {
             return super.query();
         }
 
+        const result = await this.queryCached();
+        this.rememberCompleteElements(result);
+
+        return result;
+    };
+
+    /**
+     * Answers from an element list already loaded in full, without asking the backend. Covers both a search
+     * over that list and the unfiltered query a cleared search makes, which is the same query the list came
+     * from. Returns undefined when there is no such list, or when the query asks for something it cannot
+     * answer.
+     */
+    private queryLocally(): IElementsQueryResult | undefined {
+        const { limit, offset = 0, options } = this.settings;
+        const filter = options?.filter;
+        const maxElements = this.ctx.config.maxAttributeElementsForLocalFiltering;
+
+        // A page the local path cannot represent is left to the backend to accept or reject, so that the
+        // decorator never turns a backend's answer into a local failure. Without an explicit limit there is
+        // no page size to honor either - the backend's own default is not known here.
+        if (limit === undefined || limit <= 0 || offset < 0) {
+            return undefined;
+        }
+
+        if (!cachingEnabled(maxElements) || !canFilterLocally(options)) {
+            return undefined;
+        }
+
+        // `%` and `_` are wildcards in the pattern the backend matches with and are deliberately left
+        // unescaped there, so a pattern containing either means something a substring match would get wrong.
+        if (filter?.includes("%") || filter?.includes("_")) {
+            return undefined;
+        }
+
+        const cache = getOrCreateAttributeCache(this.ctx, this.workspace).completeAttributeElements;
+        const complete = cache?.get(completeElementsCacheKey(this.ref, this.settings));
+
+        if (!complete || complete.items.length > maxElements!) {
+            return undefined;
+        }
+
+        // A caller naming a result keeps the elements of that result, not of whichever one happens to be
+        // loaded. The list can still answer the query that has yet to be given a result to hold on to.
+        if (options?.cacheId !== undefined && options.cacheId !== complete.cacheId) {
+            return undefined;
+        }
+
+        return new LocallyFilteredElements(this.matching(complete.items), limit, offset, complete.cacheId);
+    }
+
+    private matching(elements: IAttributeElement[]): IAttributeElement[] {
+        const { filter, complement = false } = this.settings.options ?? {};
+
+        if (!filter) {
+            return elements;
+        }
+
+        const needle = filter.toLowerCase();
+        // Matching goes against the title even where formattedTitle is what the user reads, because that is
+        // what the backend matches. An element without a title matches neither the pattern nor its negation,
+        // the same as SQL NULL against (NOT) ILIKE.
+        return elements.filter(
+            (element) =>
+                typeof element.title === "string" &&
+                element.title.toLowerCase().includes(needle) !== complement,
+        );
+    }
+
+    /**
+     * Keeps an element list the backend returned in full, so that a later search over it can be answered
+     * locally. A page of a longer list says nothing about the elements it does not contain.
+     */
+    private rememberCompleteElements(result: IElementsQueryResult): void {
+        const maxElements = this.ctx.config.maxAttributeElementsForLocalFiltering;
+
+        if (
+            !cachingEnabled(maxElements) ||
+            result.offset !== 0 ||
+            result.items.length !== result.totalCount ||
+            result.items.length > maxElements!
+        ) {
+            return;
+        }
+
+        const cache = getOrCreateAttributeCache(this.ctx, this.workspace).completeAttributeElements;
+        cache?.set(completeElementsCacheKey(this.ref, this.settings), {
+            items: result.items,
+            cacheId: result.cacheId,
+        });
+    }
+
+    private async queryCached(): Promise<IElementsQueryResult> {
         const cache = getOrCreateAttributeCache(this.ctx, this.workspace).attributeElementResults;
         invariant(cache, "inconsistent attribute element cache config");
         const cacheKey = elementsCacheKey(this.ref, this.settings);
@@ -1207,7 +1400,7 @@ class CachedElementsQuery extends DecoratedElementsQuery {
             return promise;
         }
         return result;
-    };
+    }
 
     protected createNew(
         decorated: IElementsQuery,
@@ -1594,31 +1787,27 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
         return result;
     };
 
-    public override getConnectedAttributesByDisplayForm = (ref: ObjRef): Promise<ObjRef[]> => {
+    public override getConnectedAttributesByDisplayForm = (
+        ref: ObjRef,
+        options?: IConnectedAttributesOptions,
+    ): Promise<ObjRef[]> => {
         const cache = getOrCreateAttributeCache(this.ctx, this.workspace).connectedAttributes;
 
-        const { idCacheKey, uriCacheKey } = refCacheKeys(ref);
+        // The ref is serialized rather than reduced to its identifier: a computed attribute's
+        // display form and a label may share an id, and this cache must not conflate them. The
+        // option changes the result set, so it is part of the key too.
+        const optionsSuffix = options?.includeComputedAttributes ? ":withComputedAttributes" : "";
+        const cacheKey = `${serializeObjRef(ref)}${optionsSuffix}`;
 
-        let cacheItem = firstDefined([idCacheKey, uriCacheKey].map((key) => key && cache.get(key)));
+        let cacheItem = cache.get(cacheKey);
 
         if (!cacheItem) {
-            cacheItem = super.getConnectedAttributesByDisplayForm(ref).catch((e) => {
-                if (idCacheKey) {
-                    cache.delete(idCacheKey);
-                }
-                if (uriCacheKey) {
-                    cache.delete(uriCacheKey);
-                }
+            cacheItem = super.getConnectedAttributesByDisplayForm(ref, options).catch((e) => {
+                cache.delete(cacheKey);
                 throw e;
             });
 
-            if (idCacheKey) {
-                cache.set(idCacheKey, cacheItem);
-            }
-
-            if (uriCacheKey) {
-                cache.set(uriCacheKey, cacheItem);
-            }
+            cache.set(cacheKey, cacheItem);
         }
 
         return cacheItem;
@@ -2791,7 +2980,9 @@ class WithComputedAttributesCaching extends DecoratedWorkspaceComputedAttributes
     // (loadUserData), and computed-attribute writes are rare management actions, so one refetch
     // beats chasing every key shape. Same stance as the automations caching above.
     private invalidateComputedAttributes = (): void => {
-        getOrCreateAttributeCache(this.ctx, this.workspace).computedAttributes.clear();
+        const cacheEntry = getOrCreateAttributeCache(this.ctx, this.workspace);
+        cacheEntry.computedAttributes.clear();
+        cacheEntry.computedAttributeExpressionTokens.clear();
     };
 
     public override createComputedAttribute = async (
@@ -2838,6 +3029,26 @@ class WithComputedAttributesCaching extends DecoratedWorkspaceComputedAttributes
 
         if (!cacheItem) {
             cacheItem = super.getComputedAttribute(ref, options).catch((e) => {
+                cache.delete(cacheKey);
+                throw e;
+            });
+
+            cache.set(cacheKey, cacheItem);
+        }
+
+        return cacheItem;
+    };
+
+    public override getComputedAttributeExpressionTokens = async (
+        ref: ObjRef,
+    ): Promise<IMeasureExpressionToken[]> => {
+        const cache = getOrCreateAttributeCache(this.ctx, this.workspace).computedAttributeExpressionTokens;
+        const cacheKey = serializeObjRef(ref);
+
+        let cacheItem = cache.get(cacheKey);
+
+        if (!cacheItem) {
+            cacheItem = super.getComputedAttributeExpressionTokens(ref).catch((e) => {
                 cache.delete(cacheKey);
                 throw e;
             });
@@ -3474,6 +3685,22 @@ export type CachingConfiguration = {
     maxAttributeElementResultsPerWorkspace?: number;
 
     /**
+     * Maximum number of elements in an element list that may be searched locally.
+     *
+     * A query with a `filter` normally always goes to the backend. When the elements of the same attribute
+     * were already loaded in full and there are no more than this many of them, the filter is instead applied
+     * to that list in memory, which spares the backend a request per keystroke. Clearing the filter is
+     * answered from the same list. Above this many elements the query goes to the backend as before.
+     *
+     * The number of lists kept is bounded by `maxAttributeElementResultsPerWorkspace`, and local filtering is
+     * only done when that cache is enabled too.
+     *
+     * When no maximum number is specified, or the specified number is non-positive, then no local filtering
+     * will be done.
+     */
+    maxAttributeElementsForLocalFiltering?: number;
+
+    /**
      * Maximum number of settings for a workspace and for a user to cache per workspace.
      *
      * When limit is reached, cache entries will be evicted using LRU policy.
@@ -3530,6 +3757,7 @@ export const RecommendedCachingConfiguration: CachingConfiguration = {
     maxCommonAttributesPerWorkspace: 500,
     maxConnectedAttributesPerWorkspace: 500,
     maxAttributeElementResultsPerWorkspace: 100,
+    maxAttributeElementsForLocalFiltering: 500,
     maxWorkspaceSettings: 1,
     maxAutomationsWorkspaces: 1,
     maxInsightsPerWorkspace: 50,

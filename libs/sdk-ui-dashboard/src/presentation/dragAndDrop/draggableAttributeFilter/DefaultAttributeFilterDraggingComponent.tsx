@@ -15,18 +15,19 @@ import { IconDragHandle, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
-import { selectCatalogAttributes } from "../../../model/store/catalog/catalogSelectors.js";
+import { selectCatalogAttributesWithComputed } from "../../../model/store/catalog/catalogSelectors.js";
 import { type IAttributeFilterDraggingComponentProps } from "../../componentDefinition/types.js";
 
 function isDisplayFormEqual(displayForm: IAttributeDisplayFormMetadataObject, identifierOrUriRef: ObjRef) {
     return (
+        areObjRefsEqual(displayForm.ref, identifierOrUriRef) ||
         areObjRefsEqual(idRef(displayForm.id, displayForm.type), identifierOrUriRef) ||
         areObjRefsEqual(uriRef(displayForm.uri), identifierOrUriRef)
     );
 }
 
 const selectFilterAttribute = (filter: DashboardAttributeFilterItem) =>
-    createSelector(selectCatalogAttributes, (attributes) =>
+    createSelector(selectCatalogAttributesWithComputed, (attributes) =>
         attributes.find((attribute) =>
             attribute.displayForms.some((displayForm) =>
                 isDisplayFormEqual(displayForm, dashboardAttributeFilterItemDisplayForm(filter)!),

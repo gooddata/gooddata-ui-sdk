@@ -378,6 +378,9 @@ export function canEditMetric(metricPermissions: AccessGranularPermission[] | un
 // @alpha
 export function canShareMetric(metricPermissions: AccessGranularPermission[] | undefined, workspacePermissions: IWorkspacePermissions, areMetricPermissionsEnabled: boolean): boolean;
 
+// @beta
+export function catalogComputedAttributeAsCatalogAttribute(item: ICatalogComputedAttribute): ICatalogAttribute;
+
 // @public
 export type CatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact | ICatalogDateDataset | ICatalogAttributeHierarchy | ICatalogComputedAttribute;
 
@@ -401,6 +404,9 @@ export type ComparatorDirection = "asc" | "desc";
 
 // @public (undocumented)
 export type ComparisonConditionOperator = "GREATER_THAN" | "GREATER_THAN_OR_EQUAL_TO" | "LESS_THAN" | "LESS_THAN_OR_EQUAL_TO" | "EQUAL_TO" | "NOT_EQUAL_TO";
+
+// @beta
+export function computedAttributeAsAttributeMetadataObject(computedAttribute: IComputedAttributeMetadataObject): IAttributeMetadataObject;
 
 // @public
 export type ComputedAttributeDataType = "INT" | "STRING" | "DATE" | "NUMERIC" | "TIMESTAMP" | "TIMESTAMP_TZ" | "BOOLEAN" | "HLL";
@@ -3058,12 +3064,14 @@ export interface IFeatureFlags {
     enableGenAiAgentSwitching?: boolean;
     enableGenAICatalogQualityChecker?: boolean;
     enableGenAIChat?: boolean;
+    enableGenAiDashboardBuilderSkill?: boolean;
     enableGenAiInteractionIntelligence?: boolean;
     enableGenAiInteractionIntelligence_timeline?: boolean;
     enableGenAIMemory?: boolean;
     enableGenAiObservability?: boolean;
     enableGenAiReasoningEffort?: boolean;
     enableGenAIReasoningVisibility?: boolean;
+    enableGenAiRightPanel?: boolean;
     enableGeoArea?: boolean;
     enableGeoBasemapConfig?: boolean;
     enableGeoChartA11yImprovements?: boolean;
@@ -3237,7 +3245,7 @@ export interface IGenAIChatRouting {
 
 // @alpha
 export interface IGenAiClarifyingChoiceOption {
-    label: string;
+    text: string;
 }
 
 // @alpha
@@ -7476,7 +7484,7 @@ export type NotificationType = "alertNotification" | "scheduleNotification" | "t
 export type ObjectOrigin = "ALL" | "PARENTS" | "NATIVE";
 
 // @alpha
-export type ObjectPermissionsObjectKind = "attribute" | "fact" | "label" | "measure";
+export type ObjectPermissionsObjectKind = "attribute" | "fact" | "label" | "measure" | "computedAttribute";
 
 // @public
 export type ObjectType = "measure" | "fact" | "attribute" | "computedAttribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "workspaceTheme" | "workspaceColorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy" | "exportDefinition" | "automation" | "filterView" | "workspaceDataFilter" | "workspaceDataFilterSetting" | "userDataFilter" | "notificationChannel" | "memoryItem" | "parameter" | "reportPageLayout" | "reportTemplate" | "report";

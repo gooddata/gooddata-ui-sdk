@@ -99,10 +99,20 @@ export class ObjRefMap<T> {
 
         const uri = uriExtract(item);
         const identifier = idExtract(item);
+        const ref = refExtract(item);
 
         this.itemsByUri[uri] = item;
+        // The item is indexed under the map's canonical type AND under its own ref type when they
+        // differ. This matters for computed attributes: their fabricated display forms are stored
+        // among plain display forms but carry a `computedAttribute`-typed ref, and
+        // strict-type-checking lookups come in with that same type - while lookups by the map's
+        // canonical type must keep working for every other item.
         this.itemsByIdentifier[this.idRefToKey(identifier, this.config.type)] = item;
-        this.items.push([refExtract(item), item]);
+        const ownRefType = isIdentifierRef(ref) ? ref.type : undefined;
+        if (ownRefType && ownRefType !== this.config.type) {
+            this.itemsByIdentifier[this.idRefToKey(identifier, ownRefType)] = item;
+        }
+        this.items.push([ref, item]);
         this.size++;
     };
 

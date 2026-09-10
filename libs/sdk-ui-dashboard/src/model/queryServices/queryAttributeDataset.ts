@@ -4,7 +4,13 @@ import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, select } from "redux-saga/effects";
 
 import { type IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
-import { type IMetadataObject, type ObjRef, areObjRefsEqual, serializeObjRef } from "@gooddata/sdk-model";
+import {
+    type IMetadataObject,
+    type ObjRef,
+    areObjRefsEqual,
+    isComputedAttributeRef,
+    serializeObjRef,
+} from "@gooddata/sdk-model";
 
 import { invalidQueryArguments } from "../events/general.js";
 import { type IQueryAttributeDataSet } from "../queries/attributeDataSet.js";
@@ -28,7 +34,7 @@ async function loadAttributeDataSetMeta(
     ctx: DashboardContext,
     attributeRef: ObjRef,
     preloadedAttributesWithReferences?: IAttributeWithReferences[],
-): Promise<IMetadataObject> {
+): Promise<IMetadataObject | undefined> {
     const { backend, workspace } = ctx;
 
     // First try to get the dataSet from preloaded filters
@@ -38,6 +44,16 @@ async function loadAttributeDataSetMeta(
 
     if (dataSet) {
         return dataSet;
+    }
+
+    // A computed attribute never matches a label; take the dataset from its own metadata (if any)
+    if (isComputedAttributeRef(attributeRef)) {
+        const computedAttribute = await backend
+            .workspace(workspace)
+            .computedAttributes()
+            .getComputedAttribute(attributeRef);
+
+        return computedAttribute.dataSet;
     }
 
     // If dataSet is not in preloaded filters, fetch it from backend

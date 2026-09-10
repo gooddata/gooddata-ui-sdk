@@ -11,7 +11,9 @@ import {
     type ITotalDescriptor,
     type Identifier,
     type ObjRef,
+    attributeLocalId,
     idRef,
+    isComputedAttribute,
     isIdentifierRef,
     isSimpleMeasure,
     measureItem,
@@ -28,6 +30,7 @@ function transformDimension(
     dim: ResultDimension,
     simpleMeasureRefs: Record<string, ObjRef>,
     attrTotals: AttrTotals,
+    computedAttributeLocalIds: Set<string>,
 ): IDimensionDescriptor {
     return {
         headers: dim.headers.map((header): IDimensionItemDescriptor => {
@@ -41,18 +44,28 @@ function transformDimension(
                           kind: h.attributeHeader.geoAreaConfig.collection.kind,
                       }
                     : undefined;
+                // A computed attribute has no real labels; its fabricated display form shares the
+                // computed attribute's own ref. The descriptor refs must keep the honest
+                // `computedAttribute` type so consumers (filters, cross-filtering, drills) resolve
+                // them through the computedAttributes service instead of labels.
+                const isComputedAttributeHeader = computedAttributeLocalIds.has(
+                    h.attributeHeader.localIdentifier,
+                );
+                const labelRefType = isComputedAttributeHeader ? "computedAttribute" : "displayForm";
+                const attributeRefType = isComputedAttributeHeader ? "computedAttribute" : "attribute";
+
                 return {
                     attributeHeader: {
                         // TODO: TIGER-HACK: Tiger provides no uri
                         uri: "",
                         identifier: h.attributeHeader.label.id,
-                        ref: idRef(h.attributeHeader.label.id, "displayForm"),
+                        ref: idRef(h.attributeHeader.label.id, labelRefType),
                         formOf: {
                             identifier: h.attributeHeader.attribute.id,
                             name: h.attributeHeader.attributeName,
                             // TODO: TIGER-HACK: Tiger provides no uri
                             uri: "",
-                            ref: idRef(h.attributeHeader.attribute.id, "attribute"),
+                            ref: idRef(h.attributeHeader.attribute.id, attributeRefType),
                         },
                         localIdentifier: h.attributeHeader.localIdentifier,
                         name: h.attributeHeader.labelName,
@@ -60,7 +73,7 @@ function transformDimension(
                         granularity: h.attributeHeader.granularity,
                         format: h.attributeHeader.format,
                         labelType: convertLabelType(h.attributeHeader.valueType),
-                        primaryLabel: idRef(h.attributeHeader.primaryLabel.id, "displayForm"),
+                        primaryLabel: idRef(h.attributeHeader.primaryLabel.id, labelRefType),
                         geoAreaConfig,
                     },
                 };
@@ -132,6 +145,11 @@ export function transformResultDimensions(
     const measureRefs: Record<string, ObjRef> = mapValues(keyBy(simpleMeasures, measureLocalId), (m) =>
         measureItem(m),
     );
+    const computedAttributeLocalIds = new Set(
+        def.attributes.filter(isComputedAttribute).map(attributeLocalId),
+    );
 
-    return dimensions.map((dim) => transformDimension(dim, measureRefs, getAttrTotals(def)));
+    return dimensions.map((dim) =>
+        transformDimension(dim, measureRefs, getAttrTotals(def), computedAttributeLocalIds),
+    );
 }

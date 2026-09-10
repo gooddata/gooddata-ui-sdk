@@ -637,7 +637,7 @@
     "objectShare.toast.accessUpdated": "Успешно! Доступ обновлен.",
     "objectShare.toast.generalAccessUpdated": "Успешно! Общий доступ обновлен.",
     "objectShare.toast.error": "Не удалось обновить доступ.",
-    "objectShare.toast.escalationRefused": "Вы можете предоставлять только те разрешения, которыми обладаете сами.",
+    "objectShare.toast.escalationRefused": "Вы не можете назначить уровень разрешений выше собственного.",
     "objectShare.toast.labelScopePartial": "Не удалось сохранить доступ к некоторым меткам.",
     "objectShare.loadError": "Не удалось загрузить настройки общего доступа. Закройте диалоговое окно и повторите попытку.",
     "properties.conditionalFormatting.title": "Условное форматирование",

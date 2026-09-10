@@ -637,7 +637,7 @@
     "objectShare.toast.accessUpdated": "Succès ! L’accès a été mis à jour.",
     "objectShare.toast.generalAccessUpdated": "Succès ! L’accès général a été mis à jour.",
     "objectShare.toast.error": "L’accès n’a pas pu être mis à jour.",
-    "objectShare.toast.escalationRefused": "Vous ne pouvez accorder que les autorisations que vous possédez vous-même.",
+    "objectShare.toast.escalationRefused": "Vous ne pouvez pas définir des autorisations supérieures aux vôtres.",
     "objectShare.toast.labelScopePartial": "Certains accès aux libellés n’ont pas pu être enregistrés.",
     "objectShare.loadError": "Les paramètres de partage n’ont pas pu être chargés. Veuillez fermer et réessayer.",
     "properties.conditionalFormatting.title": "Formatage conditionnel",

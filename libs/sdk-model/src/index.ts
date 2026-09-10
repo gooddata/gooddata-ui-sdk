@@ -835,6 +835,8 @@ export { type ICatalogAttribute, isCatalogAttribute } from "./ldm/catalog/attrib
 
 export {
     type ICatalogComputedAttribute,
+    catalogComputedAttributeAsCatalogAttribute,
+    computedAttributeAsAttributeMetadataObject,
     isCatalogComputedAttribute,
 } from "./ldm/catalog/computedAttribute/index.js";
 

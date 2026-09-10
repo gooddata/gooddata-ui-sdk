@@ -1,8 +1,10 @@
 // (C) 2019-2026 GoodData Corporation
 
+import { useMemo } from "react";
+
 import { FormattedMessage } from "react-intl";
 
-import { type ObjRef } from "@gooddata/sdk-model";
+import { type ObjRef, attributeLocalId, insightAttributes, isComputedAttribute } from "@gooddata/sdk-model";
 import { Typography } from "@gooddata/sdk-ui-kit";
 
 import { DrillFiltersConfig } from "../DrillFilters/DrillFiltersConfig.js";
@@ -38,6 +40,12 @@ export function InsightDrillConfigPanel({ widgetRef }: IDrillConfigPanelProps) {
         onDeleteItem,
     } = useInsightDrillConfigPanel({ widgetRef });
 
+    // drill down is never available for computed attributes: they cannot be part of an attribute hierarchy
+    const computedAttributeOriginLocalIds = useMemo(
+        () => (insight ? insightAttributes(insight).filter(isComputedAttribute).map(attributeLocalId) : []),
+        [insight],
+    );
+
     if (selectedDrillItem) {
         return <DrillFiltersConfig item={selectedDrillItem} onUpdateDrillItem={onUpdateDrillItem} />;
     }
@@ -53,6 +61,7 @@ export function InsightDrillConfigPanel({ widgetRef }: IDrillConfigPanelProps) {
                 </Typography>
                 <InsightDrillConfigList
                     disableDrillDown={insight?.insight?.properties?.["controls"]?.disableDrillDown}
+                    computedAttributeOriginLocalIds={computedAttributeOriginLocalIds}
                     drillConfigItems={drillConfigItems}
                     onDelete={onDeleteItem}
                     onSetup={onSetupItem}

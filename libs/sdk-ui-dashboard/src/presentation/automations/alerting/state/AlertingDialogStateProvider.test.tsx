@@ -12,6 +12,7 @@ import {
     newMeasure,
 } from "@gooddata/sdk-model";
 
+import { EMPTY_PARAMETER_VALUES } from "../tests/alerting.test.helpers.js";
 import { type AlertAttribute, type AlertMetric } from "../types.js";
 
 // ---------------------------------------------------------------------------
@@ -189,7 +190,7 @@ const DEFAULT_ALERTING_DIALOG_CONTEXT_VALUE = {
     insight: undefined,
     dashboardId: undefined,
     dashboardEvaluationFrequency: undefined,
-    parameterValues: [] as unknown[],
+    parameterValues: EMPTY_PARAMETER_VALUES,
     dashboardParameters: [],
     isLoading: false,
 };

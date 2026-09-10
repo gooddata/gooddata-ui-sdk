@@ -10,7 +10,10 @@ import {
     type InsightComponentProvider,
     type OptionalInsightBodyComponentProvider,
     type OptionalInsightComponentProvider,
+    type OptionalRestrictedPlaceholderComponentProvider,
+    type RestrictedPlaceholderComponentProvider,
 } from "../../presentation/dashboardContexts/types.js";
+import { RestrictedPlaceholderContent } from "../../presentation/widget/common/RestrictedPlaceholder.js";
 import { DefaultDashboardInsight } from "../../presentation/widget/insight/DefaultDashboardInsight.js";
 import { DefaultInsightBody } from "../../presentation/widget/insight/DefaultInsightBody/DefaultInsightBody.js";
 import { type CustomDashboardInsightComponent } from "../../presentation/widget/insight/types.js";
@@ -27,12 +30,18 @@ const DefaultInsightBodyComponentProvider: InsightBodyComponentProvider = () => 
     return DefaultInsightBody;
 };
 
+const DefaultRestrictedPlaceholderProvider: RestrictedPlaceholderComponentProvider = () => {
+    return RestrictedPlaceholderContent;
+};
+
 interface IInsightCustomizerState {
     addTagProvider(tag: string, provider: OptionalInsightComponentProvider): void;
     addCustomProvider(provider: OptionalInsightComponentProvider): void;
     addInsightBodyProvider(provider: OptionalInsightBodyComponentProvider): void;
+    addRestrictedPlaceholderProvider(provider: OptionalRestrictedPlaceholderComponentProvider): void;
     getRootProvider(): InsightComponentProvider;
     getInsightBodyComponentProvider(): InsightBodyComponentProvider;
+    getRestrictedPlaceholderProvider(): RestrictedPlaceholderComponentProvider;
     switchRootProvider(provider: InsightComponentProvider): void;
 }
 
@@ -58,6 +67,9 @@ class DefaultInsightCustomizerState implements IInsightCustomizerState {
      * something to decorate. See constructor.
      */
     private readonly insightBodyProviderChain: InsightBodyComponentProvider[];
+
+    /* Chain of restricted-placeholder providers; primed with the default, like the body chain. */
+    private readonly restrictedPlaceholderProviderChain: RestrictedPlaceholderComponentProvider[];
 
     /*
      * Maintains index between tag and the position within coreProviderChain where the provider
@@ -104,6 +116,21 @@ class DefaultInsightCustomizerState implements IInsightCustomizerState {
         throw new InvariantError();
     };
 
+    private readonly restrictedPlaceholderProvider: RestrictedPlaceholderComponentProvider = (widget) => {
+        const providerStack = [...this.restrictedPlaceholderProviderChain].reverse();
+
+        for (const provider of providerStack) {
+            const Component = provider(widget);
+
+            if (Component) {
+                return Component;
+            }
+        }
+
+        // the chain is primed with the default provider, which never returns undefined
+        throw new InvariantError();
+    };
+
     /*
      * Root provider is THE provider that should be used in the dashboard extension properties. The
      * provider function included here will reflect the setup where there may be N registered decorators
@@ -120,10 +147,12 @@ class DefaultInsightCustomizerState implements IInsightCustomizerState {
         logger: IDashboardCustomizationLogger,
         defaultCoreProvider: InsightComponentProvider,
         defaultInsightBodyProvider: InsightBodyComponentProvider,
+        defaultRestrictedPlaceholderProvider: RestrictedPlaceholderComponentProvider,
     ) {
         this.logger = logger;
         this.coreProviderChain = [defaultCoreProvider];
         this.insightBodyProviderChain = [defaultInsightBodyProvider];
+        this.restrictedPlaceholderProviderChain = [defaultRestrictedPlaceholderProvider];
     }
 
     addTagProvider(tag: string, provider: InsightComponentProvider): void {
@@ -151,12 +180,20 @@ class DefaultInsightCustomizerState implements IInsightCustomizerState {
         this.insightBodyProviderChain.push(provider);
     }
 
+    addRestrictedPlaceholderProvider(provider: RestrictedPlaceholderComponentProvider): void {
+        this.restrictedPlaceholderProviderChain.push(provider);
+    }
+
     getRootProvider(): InsightComponentProvider {
         return this.rootProvider;
     }
 
     getInsightBodyComponentProvider(): InsightBodyComponentProvider {
         return this.insightRendererProvider;
+    }
+
+    getRestrictedPlaceholderProvider(): RestrictedPlaceholderComponentProvider {
+        return this.restrictedPlaceholderProvider;
     }
 
     switchRootProvider(provider: InsightComponentProvider): void {
@@ -191,6 +228,12 @@ class SealedInsightCustomizerState implements IInsightCustomizerState {
         );
     };
 
+    public addRestrictedPlaceholderProvider = (): void => {
+        this.logger.warn(
+            `Attempting to customize insight rendering outside of plugin registration. Ignoring.`,
+        );
+    };
+
     public addTagProvider = (_tag: string): void => {
         this.logger.warn(
             `Attempting to customize insight rendering outside of plugin registration. Ignoring.`,
@@ -209,6 +252,10 @@ class SealedInsightCustomizerState implements IInsightCustomizerState {
 
     public getInsightBodyComponentProvider = (): InsightBodyComponentProvider => {
         return this.state.getInsightBodyComponentProvider();
+    };
+
+    public getRestrictedPlaceholderProvider = (): RestrictedPlaceholderComponentProvider => {
+        return this.state.getRestrictedPlaceholderProvider();
     };
 }
 
@@ -233,6 +280,7 @@ export class DefaultInsightCustomizer implements IDashboardInsightCustomizer {
         mutationContext: CustomizerMutationsContext,
         defaultCoreProvider: InsightComponentProvider = DefaultDashboardInsightComponentProvider,
         defaultInsightBodyProvider: InsightBodyComponentProvider = DefaultInsightBodyComponentProvider,
+        defaultRestrictedPlaceholderProvider: RestrictedPlaceholderComponentProvider = DefaultRestrictedPlaceholderProvider,
     ) {
         this.logger = logger;
         this.mutationContext = mutationContext;
@@ -240,6 +288,7 @@ export class DefaultInsightCustomizer implements IDashboardInsightCustomizer {
             logger,
             defaultCoreProvider,
             defaultInsightBodyProvider,
+            defaultRestrictedPlaceholderProvider,
         );
     }
 
@@ -278,6 +327,15 @@ export class DefaultInsightCustomizer implements IDashboardInsightCustomizer {
         return this;
     }
 
+    withRestrictedPlaceholderProvider(provider: OptionalRestrictedPlaceholderComponentProvider): this {
+        this.state.addRestrictedPlaceholderProvider(provider);
+        // deliberately not recorded as an insight mutation: getWidgetsOverlayFn puts a
+        // "modified by plugin" overlay on EVERY insight widget once mutations.insight is non-empty,
+        // and this provider only affects widgets the user cannot see in the first place
+
+        return this;
+    }
+
     public withCustomDecorator = (
         providerFactory: (next: InsightComponentProvider) => OptionalInsightComponentProvider,
     ): this => {
@@ -312,6 +370,10 @@ export class DefaultInsightCustomizer implements IDashboardInsightCustomizer {
 
     public getInsightBodyComponentProvider = (): InsightBodyComponentProvider => {
         return this.state.getInsightBodyComponentProvider();
+    };
+
+    public getRestrictedPlaceholderProvider = (): RestrictedPlaceholderComponentProvider => {
+        return this.state.getRestrictedPlaceholderProvider();
     };
 
     public sealCustomizer = (): void => {

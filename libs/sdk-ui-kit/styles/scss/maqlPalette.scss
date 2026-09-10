@@ -1,0 +1,13 @@
+// (C) 2026 GoodData Corporation
+@use "./variables" as kit-variables;
+
+// MAQL code highlighting palette. Shared by every surface that renders a tokenized MAQL
+// expression with referenced objects resolved to titles (the Analytical Designer catalog details
+// bubble, the dashboard filter picker tooltip), so the colors cannot drift between them.
+$maql-fact: kit-variables.$gd-color-positive;
+$maql-metric: kit-variables.$gd-color-positive;
+$maql-attribute: #ab55a3;
+$maql-attribute-display-form: #ab55a3;
+$maql-attribute-element: kit-variables.$gd-color-object-type-attribute;
+$maql-dataset: #952f8e;
+$maql-parameter: #94a1ad;

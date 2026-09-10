@@ -8,7 +8,7 @@ import { useDashboardSelector } from "../../../../model/react/DashboardStoreProv
 import {
     selectAllCatalogAttributesMap,
     selectAllCatalogDisplayFormsMap,
-    selectCatalogAttributes,
+    selectCatalogAttributesWithComputed,
     selectCatalogDateDatasets,
     selectCatalogMeasures,
     selectCatalogParameters,
@@ -99,7 +99,7 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
     const locale = useDashboardSelector(selectLocale);
     const separators = useDashboardSelector(selectSeparators);
     const settings = useDashboardSelector(selectSettings);
-    const catalogAttributes = useDashboardSelector(selectCatalogAttributes);
+    const catalogAttributes = useDashboardSelector(selectCatalogAttributesWithComputed);
     const catalogDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
 
     const availableGranularities = useDashboardSelector(selectEffectiveDateFilterAvailableGranularities);

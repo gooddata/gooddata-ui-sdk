@@ -1,10 +1,11 @@
 // (C) 2026 GoodData Corporation
 
-import { type ReactNode, useMemo, useState } from "react";
+import { type ReactNode, useState } from "react";
 
 import { useAlertingDialogContext } from "../../contexts/AlertingDialogContext.js";
 import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
 import { useAutomationFiltersSelect } from "../../shared/automationFilters/useAutomationFiltersSelect.js";
+import { useShallowStable } from "../../shared/hooks/useShallowStable.js";
 
 import { AlertActionsContextProvider } from "./AlertActionsContext.js";
 import { AlertDataContextProvider } from "./AlertDataContext.js";
@@ -16,6 +17,7 @@ import {
     type IAlertDraftContextValue,
     type IAlertFiltersContextValue,
 } from "./types.js";
+import { useAlertDraftFilterWrites } from "./useAlertDraftFilterWrites.js";
 import { useAlertFiltersModel } from "./useAlertFiltersModel.js";
 import { useAlertFormState } from "./useAlertFormState.js";
 import { getAlertSelectedValues } from "./useAlertSelectedValues.js";
@@ -100,18 +102,13 @@ function LoadedAlertingDialogState({ children }: { children: ReactNode }) {
         notificationChannels,
     });
 
-    const filtersModel = useAlertFiltersModel({
+    const { applyFiltersToDraft } = useAlertDraftFilterWrites({
         setEditedAutomation: formState.setEditedAutomation,
-        alertToEdit,
-        editedAutomationFilters,
-        setEditedAutomationFilters,
-        availableFilters,
-        filtersForNewAutomation,
-        availableFiltersAsVisibleFilters,
         dashboardHiddenFilters,
         commonDateFilterId,
         widget,
         insight,
+        availableFiltersAsVisibleFilters,
         supportedMeasures,
         supportedAttributes,
         measureFormatMap,
@@ -122,109 +119,66 @@ function LoadedAlertingDialogState({ children }: { children: ReactNode }) {
         timezone,
     });
 
-    const draft = useMemo<IAlertDraftContextValue>(
-        () => ({
-            editedAutomation: formState.editedAutomation,
-            originalAutomation: formState.originalAutomation,
-            warningMessage: formState.warningMessage,
-            isTitleValid: formState.isTitleValid,
-        }),
-        [
-            formState.editedAutomation,
-            formState.originalAutomation,
-            formState.warningMessage,
-            formState.isTitleValid,
-        ],
-    );
+    const filtersModel = useAlertFiltersModel({
+        alertToEdit,
+        editedAutomationFilters,
+        setEditedAutomationFilters,
+        availableFilters,
+        filtersForNewAutomation,
+        widget,
+        insight,
+        applyFiltersToDraft,
+    });
 
-    const actions = useMemo<IAlertActionsContextValue>(
-        () => ({
-            setEditedAutomation: formState.setEditedAutomation,
-            onTitleChange: formState.onTitleChange,
-            onMeasureChange: formState.onMeasureChange,
-            onAttributeChange: formState.onAttributeChange,
-            onComparisonOperatorChange: formState.onComparisonOperatorChange,
-            onRelativeOperatorChange: formState.onRelativeOperatorChange,
-            onAnomalyDetectionChange: formState.onAnomalyDetectionChange,
-            onComparisonTypeChange: formState.onComparisonTypeChange,
-            onSensitivityChange: formState.onSensitivityChange,
-            onTriggerIntervalChange: formState.onTriggerIntervalChange,
-            onGranularityChange: formState.onGranularityChange,
-            onDestinationChange: formState.onDestinationChange,
-            onTriggerModeChange: formState.onTriggerModeChange,
-            onRecipientsChange: formState.onRecipientsChange,
-        }),
-        [
-            formState.setEditedAutomation,
-            formState.onTitleChange,
-            formState.onMeasureChange,
-            formState.onAttributeChange,
-            formState.onComparisonOperatorChange,
-            formState.onRelativeOperatorChange,
-            formState.onAnomalyDetectionChange,
-            formState.onComparisonTypeChange,
-            formState.onSensitivityChange,
-            formState.onTriggerIntervalChange,
-            formState.onGranularityChange,
-            formState.onDestinationChange,
-            formState.onTriggerModeChange,
-            formState.onRecipientsChange,
-        ],
-    );
+    const draft = useShallowStable<IAlertDraftContextValue>({
+        editedAutomation: formState.editedAutomation,
+        originalAutomation: formState.originalAutomation,
+        warningMessage: formState.warningMessage,
+        isTitleValid: formState.isTitleValid,
+    });
 
-    const data = useMemo<IAlertDataContextValue>(
-        () => ({
-            supportedMeasures,
-            supportedAttributes,
-            measureFormatMap,
-            isResultLoading,
-            getAttributeValues,
-            getMetricValue,
-            defaultUser: formState.defaultUser,
-            defaultRecipient: formState.defaultRecipient,
-        }),
-        [
-            supportedMeasures,
-            supportedAttributes,
-            measureFormatMap,
-            isResultLoading,
-            getAttributeValues,
-            getMetricValue,
-            formState.defaultUser,
-            formState.defaultRecipient,
-        ],
-    );
+    const actions = useShallowStable<IAlertActionsContextValue>({
+        setEditedAutomation: formState.setEditedAutomation,
+        onTitleChange: formState.onTitleChange,
+        onMeasureChange: formState.onMeasureChange,
+        onAttributeChange: formState.onAttributeChange,
+        onComparisonOperatorChange: formState.onComparisonOperatorChange,
+        onRelativeOperatorChange: formState.onRelativeOperatorChange,
+        onAnomalyDetectionChange: formState.onAnomalyDetectionChange,
+        onComparisonTypeChange: formState.onComparisonTypeChange,
+        onSensitivityChange: formState.onSensitivityChange,
+        onTriggerIntervalChange: formState.onTriggerIntervalChange,
+        onGranularityChange: formState.onGranularityChange,
+        onDestinationChange: formState.onDestinationChange,
+        onTriggerModeChange: formState.onTriggerModeChange,
+        onRecipientsChange: formState.onRecipientsChange,
+    });
 
-    const filters = useMemo<IAlertFiltersContextValue>(
-        () => ({
-            selectedFilters: filtersModel.selectedFilters,
-            availableFilters: filtersModel.availableFilters,
-            onFiltersChange: filtersModel.onFiltersChange,
-            onApplyCurrentFilters: filtersModel.onApplyCurrentFilters,
-            automationIsValid: filtersModel.automationIsValid,
-            filtersAreStale: filtersModel.filtersAreStale,
-            automationParameters: formState.automationParameters,
-            availableParameters: formState.availableParameters,
-            onParameterChange: formState.onParameterChange,
-            onParameterDelete: formState.onParameterDelete,
-            onParameterAdd: formState.onParameterAdd,
-            dropStaleParameters: formState.dropStaleParameters,
-        }),
-        [
-            filtersModel.selectedFilters,
-            filtersModel.availableFilters,
-            filtersModel.onFiltersChange,
-            filtersModel.onApplyCurrentFilters,
-            filtersModel.automationIsValid,
-            filtersModel.filtersAreStale,
-            formState.automationParameters,
-            formState.availableParameters,
-            formState.onParameterChange,
-            formState.onParameterDelete,
-            formState.onParameterAdd,
-            formState.dropStaleParameters,
-        ],
-    );
+    const data = useShallowStable<IAlertDataContextValue>({
+        supportedMeasures,
+        supportedAttributes,
+        measureFormatMap,
+        isResultLoading,
+        getAttributeValues,
+        getMetricValue,
+        defaultUser: formState.defaultUser,
+        defaultRecipient: formState.defaultRecipient,
+    });
+
+    const filters = useShallowStable<IAlertFiltersContextValue>({
+        selectedFilters: filtersModel.selectedFilters,
+        availableFilters: filtersModel.availableFilters,
+        onFiltersChange: filtersModel.onFiltersChange,
+        onApplyCurrentFilters: filtersModel.onApplyCurrentFilters,
+        automationIsValid: filtersModel.automationIsValid,
+        filtersAreStale: filtersModel.filtersAreStale,
+        automationParameters: formState.automationParameters,
+        availableParameters: formState.availableParameters,
+        onParameterChange: formState.onParameterChange,
+        onParameterDelete: formState.onParameterDelete,
+        onParameterAdd: formState.onParameterAdd,
+        dropStaleParameters: formState.dropStaleParameters,
+    });
 
     return (
         <AlertDraftContextProvider value={draft}>

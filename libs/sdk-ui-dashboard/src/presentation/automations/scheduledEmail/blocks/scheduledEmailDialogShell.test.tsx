@@ -12,7 +12,7 @@ import {
     SCHEDULED_EMAIL_DIALOG_CONTEXT,
     SENTINEL_WIDGET,
 } from "../tests/scheduledEmail.test.helpers.js";
-import { BlockProviders } from "../tests/scheduledEmailBlocks.test.helpers.js";
+import { BlockProviders, VALID_FILTERS_RESULT } from "../tests/scheduledEmailBlocks.test.helpers.js";
 import {
     type IScheduledEmailDialogFiltersProps,
     type IScheduledEmailDialogShellProps,
@@ -72,21 +72,6 @@ const FOOTER_SELECTOR = ".gd-dialog-footer";
 const FILTERS_SELECTOR = ".s-gd-notifications-channels-dialog-automation-filters";
 const ERROR_MESSAGE_SELECTOR = ".gd-notifications-channels-dialog-error";
 const TAB_INFO_SELECTOR = ".gd-schedule-dialog-tab-content-info";
-
-const VALID_FILTERS_RESULT = {
-    isValid: true,
-    hiddenFilterIsMissingInSavedFilters: false,
-    hiddenFilterHasDifferentValueInSavedFilter: false,
-    lockedFilterIsMissingInSavedFilters: false,
-    lockedFilterHasDifferentValueInSavedFilter: false,
-    ignoredFilterIsAppliedInSavedFilters: false,
-    removedFilterIsAppliedInSavedFilters: false,
-    commonDateFilterIsMissingInSavedVisibleFilters: false,
-    visibleFilterIsMissingInSavedFilters: false,
-    visibleFiltersAreMissing: false,
-    incompatibleSelectionTypeIsAppliedInSavedFilters: false,
-    filtersAreStale: false,
-};
 
 const SCHEDULE_TO_EDIT: IAutomationMetadataObject = {
     type: "automation",
@@ -253,6 +238,30 @@ describe("ScheduledEmailDialogShell", () => {
         expect(queryByTestId("custom-filters")).toBeNull();
     });
 
+    it("suppresses the Filters tab content but keeps the tab strip when filtersTabContent is null", async () => {
+        const { baseElement, queryByTestId } = renderShell({ filtersTabContent: null });
+        expect(await within(baseElement).findByRole("tab", { name: /filters/i })).toBeInTheDocument();
+        await selectTab(baseElement, /filters/i);
+        expect(baseElement.querySelector(FILTERS_SELECTOR)).toBeNull();
+        expect(queryByTestId("child")).toBeNull();
+        const tab = baseElement.querySelector(".gd-schedule-dialog-tab-content") as HTMLElement;
+        expect(tab).not.toBeNull();
+        expect(tab).toBeEmptyDOMElement();
+    });
+
+    it("keeps topContent and bottomContent visible on the Filters tab", async () => {
+        const { baseElement } = renderShell({
+            topContent: <div data-testid="top" />,
+            bottomContent: <div data-testid="bottom" />,
+            filtersTabContent: <div data-testid="filters-tab" />,
+        });
+        await selectTab(baseElement, /filters/i);
+        const content = baseElement.querySelector(CONTENT_SELECTOR) as HTMLElement;
+        expect((content.firstElementChild as HTMLElement).dataset["testid"]).toBe("top");
+        expect((content.lastElementChild as HTMLElement).dataset["testid"]).toBe("bottom");
+        expect(within(content).getByTestId("filters-tab")).toBeInTheDocument();
+    });
+
     it("routes the Header slot with the live default props", () => {
         const onSubmit = vi.fn();
         const onBack = vi.fn();
@@ -334,6 +343,22 @@ describe("ScheduledEmailDialogShell", () => {
         expect(onDeleteSuccess).toHaveBeenCalledTimes(1);
         expect(onDeleteSuccess).toHaveBeenCalledWith(expect.objectContaining({ id: SCHEDULE_TO_EDIT.id }));
         expect(queryByTestId("delete-confirm")).toBeNull();
+    });
+
+    it("closes the delete confirmation on cancel without firing the delete success route", () => {
+        const onDeleteSuccess = vi.fn();
+        const { baseElement, getByTestId, queryByTestId } = renderShell(
+            { onDeleteSuccess },
+            EDIT_MODE_CONTEXT,
+        );
+        const footer = baseElement.querySelector(FOOTER_SELECTOR) as HTMLElement;
+        fireEvent.click(within(footer).getByText("Delete"));
+        expect(getByTestId("delete-confirm")).toBeInTheDocument();
+        fireEvent.click(getByTestId("cancel-delete"));
+        expect(queryByTestId("delete-confirm")).toBeNull();
+        expect(onDeleteSuccess).not.toHaveBeenCalled();
+        expect(getByTestId("child")).toBeInTheDocument();
+        expect(within(footer).getByText("Save")).toBeInTheDocument();
     });
 
     it("throws outside the scheduled-email dialog providers", () => {

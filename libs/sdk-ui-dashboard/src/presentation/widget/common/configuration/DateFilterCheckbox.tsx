@@ -25,6 +25,11 @@ interface IDateFilterCheckboxProps {
     dateFilterCheckboxDisabled?: boolean;
     onDateDatasetFilterEnabled: (enabled: boolean, dateDatasetRef: ObjRef | undefined) => void;
     enableUnrelatedItemsVisibility?: boolean;
+    /**
+     * When the related date datasets query failed, the empty result must not be presented
+     * as "cannot be filtered by date" - the related date datasets are unknown, not absent.
+     */
+    datasetsLoadFailed?: boolean;
 }
 
 export function DateFilterCheckbox({
@@ -38,6 +43,7 @@ export function DateFilterCheckbox({
     widget,
     onDateDatasetFilterEnabled,
     enableUnrelatedItemsVisibility,
+    datasetsLoadFailed,
 }: IDateFilterCheckboxProps) {
     const unrelatedDateDataset =
         relatedDateDatasets &&
@@ -47,14 +53,23 @@ export function DateFilterCheckbox({
 
     const showNoRelatedDate =
         !hasRelatedDateDataSets &&
+        !datasetsLoadFailed &&
         !selectedDateDatasetHidden &&
         dateFilterEnabled &&
         !isDropdownLoading &&
         !dateFilterCheckboxDisabled &&
         !enableUnrelatedItemsVisibility;
 
+    const showLoadFailed =
+        !!datasetsLoadFailed &&
+        !hasRelatedDateDataSets &&
+        !selectedDateDatasetHidden &&
+        dateFilterEnabled &&
+        !isDropdownLoading &&
+        !dateFilterCheckboxDisabled;
+
     const showError =
-        (!!unrelatedDateDataset || showNoRelatedDate) &&
+        (!!unrelatedDateDataset || showNoRelatedDate || showLoadFailed) &&
         !isDropdownLoading &&
         !isFilterLoading &&
         dateFilterEnabled &&
@@ -98,6 +113,11 @@ export function DateFilterCheckbox({
                 </span>
                 {isFilterLoading ? <div className="gd-spinner small" /> : null}
             </label>
+            {!isFilterLoading && showLoadFailed ? (
+                <div className="gd-message error s-date-datasets-load-failed">
+                    <FormattedMessage id="configurationPanel.dateDatasetsLoadFailed" />
+                </div>
+            ) : null}
             {!isFilterLoading && showNoRelatedDate ? (
                 <div className="gd-message error s-no-related-date">
                     {isInsightWidget(widget) ? (

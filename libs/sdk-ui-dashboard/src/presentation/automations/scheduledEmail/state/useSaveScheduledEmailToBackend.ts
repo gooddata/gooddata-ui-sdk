@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 import { omit } from "lodash-es";
 import { type IntlShape, useIntl } from "react-intl";
@@ -43,16 +43,21 @@ export function useSaveScheduledEmailToBackend({
 
     const { createScheduledEmail, saveScheduledEmail } = useScheduledEmailDialogContext();
     const { editedAutomation } = useScheduledExportDraft();
+    const submitInFlight = useRef(false);
 
     const handleCreateScheduledEmail = useCallback(
         async (scheduledEmail: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => {
-            const sanitizedAutomation = sanitizeAutomation(
-                scheduledEmail,
-                intl,
-            ) as IAutomationMetadataObjectDefinition;
+            if (submitInFlight.current) {
+                return;
+            }
+            submitInFlight.current = true;
             setSavingErrorMessage(undefined);
             setIsSavingScheduledEmail(true);
             try {
+                const sanitizedAutomation = sanitizeAutomation(
+                    scheduledEmail,
+                    intl,
+                ) as IAutomationMetadataObjectDefinition;
                 const created = await createScheduledEmail(sanitizedAutomation);
                 onCreateSuccess?.(created);
             } catch (error: any) {
@@ -66,6 +71,7 @@ export function useSaveScheduledEmailToBackend({
                     onCreateError?.(error as GoodDataSdkError);
                 }
             } finally {
+                submitInFlight.current = false;
                 setIsSavingScheduledEmail(false);
             }
         },
@@ -74,10 +80,17 @@ export function useSaveScheduledEmailToBackend({
 
     const handleUpdateScheduledEmail = useCallback(
         async (scheduledEmail: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => {
-            const sanitizedAutomation = sanitizeAutomation(scheduledEmail, intl) as IAutomationMetadataObject;
+            if (submitInFlight.current) {
+                return;
+            }
+            submitInFlight.current = true;
             setSavingErrorMessage(undefined);
             setIsSavingScheduledEmail(true);
             try {
+                const sanitizedAutomation = sanitizeAutomation(
+                    scheduledEmail,
+                    intl,
+                ) as IAutomationMetadataObject;
                 const saved = await saveScheduledEmail(sanitizedAutomation);
                 onUpdateSuccess?.(saved);
             } catch (error: any) {
@@ -91,6 +104,7 @@ export function useSaveScheduledEmailToBackend({
                     onUpdateError?.(error as GoodDataSdkError);
                 }
             } finally {
+                submitInFlight.current = false;
                 setIsSavingScheduledEmail(false);
             }
         },

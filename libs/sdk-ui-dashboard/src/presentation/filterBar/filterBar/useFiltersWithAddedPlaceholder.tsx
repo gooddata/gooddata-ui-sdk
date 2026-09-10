@@ -30,7 +30,7 @@ import { useDashboardDispatch, useDashboardSelector } from "../../../model/react
 import { dispatchAndWaitFor } from "../../../model/store/_infra/dispatchAndWaitFor.js";
 import {
     selectAllCatalogDateDatasetsMap,
-    selectCatalogAttributes,
+    selectCatalogAttributesWithComputed,
 } from "../../../model/store/catalog/catalogSelectors.js";
 import { getFilterIdentifier } from "../../../model/store/tabs/filterContext/filterContextUtils.js";
 import { uiActions } from "../../../model/store/ui/index.js";
@@ -185,7 +185,7 @@ export function useFiltersWithAddedPlaceholder(
 ] {
     const dispatch = useDashboardDispatch();
     const selectedFilterIndex = useDashboardSelector(selectSelectedFilterIndex);
-    const allAttributes = useDashboardSelector(selectCatalogAttributes);
+    const allAttributes = useDashboardSelector(selectCatalogAttributesWithComputed);
     const dateDatasetsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
 
     const commonWorkingDateFilter = workingFilters?.find(isDashboardCommonDateFilter);

@@ -768,6 +768,7 @@ export const selectFilterContextAttributeFilterByDisplayForm: (
                 // try matching both uri and id in case the type of ref is different from what is in the ref field
                 return attributeFilters.find(
                     (filter) =>
+                        areObjRefsEqual(filter.attributeFilter.displayForm, df.ref) ||
                         areObjRefsEqual(filter.attributeFilter.displayForm, idRef(df.id, "displayForm")) ||
                         areObjRefsEqual(filter.attributeFilter.displayForm, uriRef(df.uri)),
                 );
@@ -799,6 +800,7 @@ export const selectFilterContextAttributeFilterItemByDisplayForm: (
                 return attributeFilters.find((filter) => {
                     const filterDf = dashboardAttributeFilterItemDisplayForm(filter);
                     return (
+                        areObjRefsEqual(filterDf, df.ref) ||
                         areObjRefsEqual(filterDf, idRef(df.id, "displayForm")) ||
                         areObjRefsEqual(filterDf, uriRef(df.uri))
                     );
@@ -906,6 +908,7 @@ export const selectFilterContextAttributeFilterByDisplayFormForTab: (
                 // try matching both uri and id in case the type of ref is different from what is in the ref field
                 return attributeFilters.find(
                     (filter) =>
+                        areObjRefsEqual(filter.attributeFilter.displayForm, df.ref) ||
                         areObjRefsEqual(filter.attributeFilter.displayForm, idRef(df.id, "displayForm")) ||
                         areObjRefsEqual(filter.attributeFilter.displayForm, uriRef(df.uri)),
                 );
@@ -939,6 +942,7 @@ export const selectFilterContextAttributeFilterItemByDisplayFormForTab: (
                 return attributeFilters.find((filter) => {
                     const filterDf = dashboardAttributeFilterItemDisplayForm(filter);
                     return (
+                        areObjRefsEqual(filterDf, df.ref) ||
                         areObjRefsEqual(filterDf, idRef(df.id, "displayForm")) ||
                         areObjRefsEqual(filterDf, uriRef(df.uri))
                     );

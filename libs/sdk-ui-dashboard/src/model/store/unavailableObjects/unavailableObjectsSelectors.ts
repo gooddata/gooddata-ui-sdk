@@ -43,3 +43,18 @@ export const selectUnavailableObjectsMapByType: (
             ),
         ),
 );
+
+/**
+ * Selects the insights the current user is not allowed to see, in a mapping of obj ref to the
+ * unavailability entry. Insights that are merely deleted are not included — those keep rendering the
+ * missing-visualization tile instead of the restricted placeholder.
+ *
+ * @alpha
+ */
+export const selectRestrictedInsightsMap: DashboardSelector<ObjRefMap<IUnavailableDashboardReference>> =
+    createSelector(selectUnavailableObjects, (objects) =>
+        newMapForObjectWithRef(
+            objects.filter((object) => object.type === "insight" && object.reason === "forbidden"),
+            "insight",
+        ),
+    );

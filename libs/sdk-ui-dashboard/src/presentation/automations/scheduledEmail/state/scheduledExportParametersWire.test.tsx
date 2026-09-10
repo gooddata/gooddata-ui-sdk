@@ -29,7 +29,7 @@ vi.hoisted(() => {
 });
 
 const { mockUseValidateExistingAutomationFilters } = vi.hoisted(() => ({
-    mockUseValidateExistingAutomationFilters: vi.fn(),
+    mockUseValidateExistingAutomationFilters: vi.fn<typeof useValidateExistingAutomationFilters>(),
 }));
 
 vi.mock("../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js", () => ({
@@ -49,6 +49,7 @@ import {
     type IScheduledEmailDialogContextValue,
     ScheduledEmailDialogContextProvider,
 } from "../../contexts/ScheduledEmailDialogContext.js";
+import { type useValidateExistingAutomationFilters } from "../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
 import { dashboardParameter } from "../../tests/parameterFixtures.test.helpers.js";
 import {
     AUTOMATIONS_CONTEXT,
@@ -57,6 +58,7 @@ import {
     SENTINEL_WIDGET,
     WORKSPACE_PARAMETER,
 } from "../tests/scheduledEmail.test.helpers.js";
+import { VALID_FILTERS_RESULT } from "../tests/scheduledEmailBlocks.test.helpers.js";
 
 import { ScheduledEmailDialogStateProvider } from "./ScheduledEmailDialogStateProvider.js";
 import { useScheduledExportActions } from "./ScheduledExportActionsContext.js";
@@ -95,7 +97,7 @@ const WIDGET_DIALOG_CONTEXT: IScheduledEmailDialogContextValue = {
 
 beforeEach(() => {
     vi.clearAllMocks();
-    mockUseValidateExistingAutomationFilters.mockReturnValue({ isValid: true, filtersAreStale: false });
+    mockUseValidateExistingAutomationFilters.mockReturnValue(VALID_FILTERS_RESULT);
 });
 
 function Wrapper({ children }: PropsWithChildren) {

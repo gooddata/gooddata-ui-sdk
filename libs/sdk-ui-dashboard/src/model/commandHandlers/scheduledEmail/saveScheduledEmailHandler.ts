@@ -27,7 +27,7 @@ import {
 import { type ISaveScheduledEmail } from "../../commands/scheduledEmail.js";
 import { type IDashboardScheduledEmailSaved, scheduledEmailSaved } from "../../events/scheduledEmail.js";
 import { queryWithInsight } from "../../queryServices/queryWidgetFilters.js";
-import { selectCatalogAttributes } from "../../store/catalog/catalogSelectors.js";
+import { selectCatalogAttributesWithComputed } from "../../store/catalog/catalogSelectors.js";
 import {
     selectEnableStringParameters,
     selectLocale,
@@ -133,7 +133,7 @@ export function* saveScheduledEmailHandler(
         commonDateFilterId,
     });
     const settings = yield select(selectSettings);
-    const catalogAttributes = yield select(selectCatalogAttributes);
+    const catalogAttributes = yield select(selectCatalogAttributesWithComputed);
     const preloadedAttributesWithReferences = yield select(selectPreloadedAttributesWithReferences);
     const preparedGeoRawExport =
         lookupInsight && filledInsight && preparedExecutionDefinitionWithFilters

@@ -30,6 +30,7 @@ import {
 import { type PromiseFnReturnType } from "../../../types/sagas.js";
 import { loadAutomationsData } from "../common/loadAutomationsData.js";
 
+import { type ILoadedCatalog, loadCatalog } from "./loadCatalog.js";
 import { onDateFilterConfigValidationError } from "./onDateFilterConfigValidationError.js";
 import { sanitizeUnfinishedFeatureSettings } from "./sanitizeUnfinishedFeatureSettings.js";
 
@@ -283,23 +284,36 @@ function applyConfigDefaults<T extends DashboardConfig>(config: T) {
 }
 
 /**
- * Resolves dashboard config
+ * Resolves dashboard config, followed by the backend calls whose shape depends on the resolved
+ * feature flags.
  */
 export function* resolveDashboardConfigAndFeatureFlagDependentCalls(
     ctx: DashboardContext,
     cmd: InitializeDashboard,
+    options?: { loadCatalog?: boolean },
 ): SagaIterator<{
     resolvedConfig: ResolvedDashboardConfig;
     additionalData: {
         notificationChannelsCount: number;
         workspaceAutomationsCount: number;
     };
+    loadedCatalog: ILoadedCatalog | undefined;
 }> {
-    const resolvedConfig = yield call(resolveDashboardConfig, ctx, cmd);
-    const additionalData = yield call(loadAutomationsData, ctx, resolvedConfig.settings);
+    const resolvedConfig: ResolvedDashboardConfig = yield call(resolveDashboardConfig, ctx, cmd);
+    const [additionalData, loadedCatalog] = yield all([
+        call(loadAutomationsData, ctx, resolvedConfig.settings),
+        // The catalog load sits here, after the config resolution, only because its
+        // computed-attributes part must know the enableComputedAttributes setting before issuing
+        // the request (a backend with the setting off refuses the listing with a 400). Once the
+        // setting is removed, move loadCatalog back to the init handler's parallel batch.
+        ...(options?.loadCatalog
+            ? [call(loadCatalog, ctx, cmd, resolvedConfig.settings?.enableComputedAttributes ?? false)]
+            : []),
+    ]);
 
     return {
         resolvedConfig,
         additionalData,
+        loadedCatalog,
     };
 }

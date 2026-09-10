@@ -18,7 +18,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
-import { selectCatalogAttributes } from "../../model/store/catalog/catalogSelectors.js";
+import { selectCatalogAttributesWithComputed } from "../../model/store/catalog/catalogSelectors.js";
 import { selectInsightByWidgetRef } from "../../model/store/insights/insightsSelectors.js";
 import { selectIsInExportMode } from "../../model/store/renderMode/renderModeSelectors.js";
 import type { ExtendedDashboardWidget } from "../../model/types/layoutTypes.js";
@@ -165,7 +165,7 @@ export const useSectionDescriptionExportData = (
 export const useWidgetExportData = (widget: ExtendedDashboardWidget): WidgetExportData | undefined => {
     const insight = useDashboardSelector(selectInsightByWidgetRef(widget.ref));
     const isExportMode = useDashboardSelector(selectIsInExportMode);
-    const catalogAttributes = useDashboardSelector(selectCatalogAttributes);
+    const catalogAttributes = useDashboardSelector(selectCatalogAttributesWithComputed);
 
     if (!isExportMode) {
         return undefined;

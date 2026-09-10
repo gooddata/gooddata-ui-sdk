@@ -12,6 +12,7 @@ export function getIconData(type: string) {
         measure: "metric",
         fact: "fact",
         attribute: "ldmAttribute",
+        computedAttribute: "ldmAttribute",
         displayForm: "ldmAttribute",
     };
 

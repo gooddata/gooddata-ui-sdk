@@ -58,12 +58,6 @@
     }
 }
 
-.creation-panel {
-    h3 {
-        padding-left: 15px;
-    }
-}
-
 // sdk-edit-mode-on is in selector to override same classes in KD.
 // Can be removed when old implementation in KD removed
 .gd-configuration-bubble-wrapper.overlay-wrapper.sdk-edit-mode-on {
@@ -300,7 +294,7 @@
         }
 
         .gd-input-search {
-            margin: 0 15px 10px;
+            margin: 10px 15px 10px;
         }
 
         .attribute-select {

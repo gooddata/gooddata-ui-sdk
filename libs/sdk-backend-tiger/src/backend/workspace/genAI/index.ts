@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { ActionsApi_ResolveLlmProviders } from "@gooddata/api-client-tiger/endpoints/actions";
+import { SmartFunctionsAi_ResolveLlmProviders } from "@gooddata/api-client-tiger";
 import {
     type GenAiApiSummarizeRequest,
     GenAiApi_SummarizeDashboard,
@@ -50,7 +50,7 @@ export class GenAIService implements IGenAIService {
 
     async getLlmConfigured(): Promise<boolean> {
         const result = await this.authCall((client) =>
-            ActionsApi_ResolveLlmProviders(client.axios, client.basePath, {
+            SmartFunctionsAi_ResolveLlmProviders(client.axios, client.basePath, {
                 workspaceId: this.workspaceId,
             }),
         );
