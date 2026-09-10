@@ -2,6 +2,202 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.56.0",
+            "tag": "@gooddata/sdk-ui-all_v11.56.0",
+            "date": "Thu, 10 Sep 2026 06:58:30 GMT",
+            "comments": {
+                "minor": [
+                    {
+                        "comment": "sdk-backend-spi: Add computedAttributes to IComputedAttributeReferencing, reporting other computed attributes that reference a computed attribute in their MAQL"
+                    },
+                    {
+                        "comment": "sdk-backend-base: search small attribute element lists locally instead of asking the backend."
+                    }
+                ],
+                "patch": [
+                    {
+                        "comment": "sdk-backend-tiger: Include other computed attributes referencing a computed attribute in getComputedAttributeReferencingObjects"
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Warn about referencing computed attributes, not just insights/metrics/dashboards, before deleting a computed attribute"
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Enable the Lineage tab for computed attributes in the Analytics Catalog, and stop collapsing computed-attribute nodes out of other objects' lineage graphs"
+                    },
+                    {
+                        "comment": "sdk-ui-filters: Add isAbsoluteDateFilterGranularityEnabled prop to DateFilter for granularity switching (with localized quarter labels) in the static period form; corrects stale/unavailable granularities"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Add `displayMode` for GenAI components."
+                    },
+                    {
+                        "comment": "sdk-code-schemas, sdk-code-convertors: Numeric parameters can be written as code (type NUMBER with defaultValue and min/max constraints); clone and deploy carry them like textual ones"
+                    },
+                    {
+                        "comment": "sdk-code-schemas, sdk-code-convertors: A computed attribute written as code can be referenced as computed_attribute/{id} from visualization fields, attribute, text and ranking filters, metric value filter dimensionality, dashboard filters and drills to URL"
+                    },
+                    {
+                        "comment": "sdk-code-schemas: Computed attribute locale is validated against the shared BCP 47 pattern instead of accepting any string"
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: The computed attribute YAML editor accepts, shows and saves format, metric_type, data_type, value_type, is_nullable, null_value_join_replacement and show_in_ai_results, validates locale as BCP 47, names the offending field for enum and locale errors, and keeps the value type when duplicating"
+                    },
+                    {
+                        "comment": "sdk-model, sdk-backend-tiger: Computed attribute carries valueType; the fabricated display form derives its displayFormType from it, so hyperlink and image computed attributes render like labels of that type"
+                    },
+                    {
+                        "comment": "sdk-code-schemas, sdk-code-convertors: Computed attribute as code carries data_type, value_type, format, metric_type, is_nullable, null_value_join_replacement and show_in_ai_results, so deploy no longer overrides or drops them"
+                    },
+                    {
+                        "comment": "sdk-backend-spi: Export DefaultWorkspaceCatalogTypes, the catalog item types loaded when forTypes does not narrow them; the tiger catalog factories reuse it as their default"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Unified automation dialog lifecycle callbacks (breaking, all affected symbols @alpha): onCreateSuccess/onCreateError/onUpdateSuccess/onUpdateError replace onSuccess/onError/onSaveSuccess/onSaveError; scheduled email onSubmit/onSave observers removed; management dialog delete/pause callbacks removed; useDashboardAlerts/useDashboardScheduledEmails Save members renamed to Update."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: The alerting and scheduled email dialog context decorator seams now warn in the console (once per dialog open) when a decorator forces isLoading false while the dialog's data still loads or drops context keys the connector provided, instead of failing silently downstream."
+                    },
+                    {
+                        "comment": "Fix: a scheduled export save no longer starts twice when submitted again while a save is in flight."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: The automation dialog state providers now keep the dialog state model mounted once the dialog's data has first loaded, so an automations refresh under an open alerting or scheduled email dialog no longer discards the in-flight draft (in the default dialogs and in custom replacements)."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: The workspace catalog header item always links to the hosted /workspace/{id}/catalog route"
+                    },
+                    {
+                        "comment": "sdk-model, sdk-backend-tiger: Remove the enableShellApplication_catalog feature flag; the catalog is always served by the host application"
+                    },
+                    {
+                        "comment": "sdk-ui-pluggable-host: mapLegacyUrlToHost also maps the legacy standalone home-ui paths (/workspaces, /data-sources, /users-and-groups, /settings, /configuration, /automations, /ai-hub, /getting-started) onto the host, resolving the /settings#ai AI Hub deeplink to the AI Hub route"
+                    }
+                ],
+                "none": [
+                    {
+                        "comment": "sdk-ui-dashboard: Pass through absolute date filter granularity data, seed its baseline from the feature flag at dashboard initialization, and let dateFilterConfig.hideGranularities restrict the absolute (static) date filter"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Introduce clarifying questions support in GenAI conversations."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Enhance label matching logic, dataset references in dashboard copilot."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Update provider resolution and vis mapping logic, client update."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Added bold and italic icons."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Added the RichText allowedMarkdown prop, which narrows the recognised markdown to a chosen set of features."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Turn the enableConditionalFormatting feature flag on by default"
+                    },
+                    {
+                        "comment": "sdk-ui-pluggable-host: Showed the contract-expired lock screen when the backend denies requests because the organization's contract or the deployment license expired, instead of a generic \"Failed to load\" page naming the tier."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Recognized a deployment-wide license expiry (`license_expired`) as a contract-expired error alongside `contract_expired`, instead of surfacing it as an unexpected error on login."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Sort computed attributes alphabetically among attributes in the metric attribute filter and measure value filter dimensionality pickers."
+                    },
+                    {
+                        "comment": "Computed attributes can now be used on Dashboards: they are loaded into the dashboard catalog and work in attribute filters (including parent filters), drill interactions, cross-filtering, Key Driver Analysis and measure value filters; their detail tooltips show the values and the MAQL definition."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Allow computed attributes in insight metric buckets."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Keep the computed attribute type of a catalog computed attribute used in the measure value filter dimensionality in Analytical Designer, so the backend no longer resolves it as a label."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: The label elements request now states whether it targets a label or a computed attribute, so an id shared by both no longer resolves ambiguously."
+                    },
+                    {
+                        "comment": "gdc-home-ui: Restricted the clickable area of the \"Allow users to change timezone\" toggle in the timezone settings dialog to the switch itself instead of the whole row, matching the standard toggle behavior across the app."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Computed attributes can be shared from the catalog detail (object-level permissions)."
+                    },
+                    {
+                        "comment": "sdk-ui-ext: Fix useObjectAccessLevel matching the caller's own grant, which never hit because the profile ref is a URI while access list grants carry the user id."
+                    },
+                    {
+                        "comment": "sdk-ui-ext: Add the selfGranteeRef and summaryOtherGranteeCount helpers, so a consumer fetching its own access list can discount the caller's grant the same way the share dialog does."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Read forbidden dashboard references from the metadata API meta.restricted signal while retaining deleted-reference detection."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Create a reset conversation with the agent selected in the picker, so the agent's personality applies to the first message instead of only after an explicit switch."
+                    },
+                    {
+                        "comment": "sdk-ui-ext: Add draftToSummary and summaryToShareLevel, so a consumer can show an object's access level without opening the share dialog."
+                    },
+                    {
+                        "comment": "sdk-ui-ext: Show the caller as the creator in the object share dialog's draft mode, so access for an object that does not exist yet is not presented as an empty list."
+                    },
+                    {
+                        "comment": "sdk-ui-ext: Reword the object share dialog's confirmation toasts to match the object-level permissions design."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Show the inherited-workspace-access explanation as a tooltip on the disabled Restricted general-access option instead of a permanent inline description."
+                    },
+                    {
+                        "comment": "sdk-ui-ext: Add the useObjectAccessLevel hook, which reads an object's access level for display outside the share dialog."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Dashboard insight widgets the user may not see now render an access placeholder instead of the visualization."
+                    },
+                    {
+                        "comment": "sdk-ui-all: A visualization switcher entry whose visualization the user cannot access stays in the list, labelled as restricted, and shows an access placeholder instead of an empty widget."
+                    },
+                    {
+                        "comment": "chore: Upgrade react-intl to 10.1.25"
+                    },
+                    {
+                        "comment": "maql-language-server: Resolve the parameters a visualisation as code depends on — through inline MAQL and referenced metrics — to the default values it executes with, and show them in the visualisation preview"
+                    },
+                    {
+                        "comment": "sdk-ui-all: Allow attribute filters based on computed attributes."
+                    },
+                    {
+                        "comment": "api-client-tiger: Regenerate the client from the latest metadata and gen-ai OpenAPI specs. The report, reportTemplate and reportPageLayout entities gain createdAt and modifiedAt attributes, createdBy and modifiedBy relationships and an include parameter on their CRUD endpoints."
+                    },
+                    {
+                        "comment": "sdk-model: Add the dashboard_builder and dashboard_editor values to AgentCustomSkill, keeping it in sync with the backend skill enum."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Drop the new clarifyingQuestions chat part instead of failing the chat item, as it has no model representation yet."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Populate created, updated, createdBy and updatedBy on the reports, report templates and report page layouts returned by IWorkspaceReportsService, requesting the createdBy and modifiedBy relationships on every read and write."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Gate the edit-mode left panel on enableGenAiRightPanel and focus the search when the rail expands it."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Refresh the edit-mode left panel including collapse/expand chrome and side-panel icons."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Metric detail gains a Conditional Formatting row for authoring semantic-layer rules (behind enableSemanticConditionalFormatting)."
+                    },
+                    {
+                        "comment": "sdk-ui-ext: the share dialog shows the administrator's display name instead of the raw user id."
+                    },
+                    {
+                        "comment": "sdk-ui-ext: share dialog explains disabled levels with \"You can't set permissions higher than your own.\""
+                    },
+                    {
+                        "comment": "sdk-ui-ext: the share dialog keeps showing a workspace administrator's own row when the object is shared with others."
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.55.0",
             "tag": "@gooddata/sdk-ui-all_v11.55.0",
             "date": "Thu, 03 Sep 2026 06:58:27 GMT",
