@@ -52,6 +52,7 @@ import { tabsActions } from "../../../store/tabs/index.js";
 import { DEFAULT_TAB_ID } from "../../../store/tabs/tabsState.js";
 import { uiActions } from "../../../store/ui/index.js";
 import { unavailableObjectsActions } from "../../../store/unavailableObjects/index.js";
+import { selectUnavailableObjects } from "../../../store/unavailableObjects/unavailableObjectsSelectors.js";
 import { userActions } from "../../../store/user/index.js";
 import {
     type DashboardContext,
@@ -600,8 +601,10 @@ function makeCatalogParametersPayload(result: IParameterMetadataObject[] | "gate
 }
 
 export function* preloadAttributeFiltersData(ctx: DashboardContext, dashboard: IDashboard) {
+    const unavailableObjects: ReturnType<typeof selectUnavailableObjects> =
+        yield select(selectUnavailableObjects);
     const attributesWithReferences: PromiseFnReturnType<typeof preloadAttributeFiltersDataFromBackend> =
-        yield call(preloadAttributeFiltersDataFromBackend, ctx, dashboard);
+        yield call(preloadAttributeFiltersDataFromBackend, ctx, dashboard, unavailableObjects);
 
     yield put(tabsActions.setPreloadedAttributesWithReferences(attributesWithReferences));
 }

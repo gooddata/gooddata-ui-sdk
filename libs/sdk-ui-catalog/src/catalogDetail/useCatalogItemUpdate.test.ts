@@ -105,6 +105,14 @@ function createWrapper(
     return { wrapper, getParameter, getMeasure };
 }
 
+// `useCatalogItemUpdate` mirrors the loaded item into its own state from an effect, so `item` and
+// `status` do not settle in the same commit: for a fetched item `status` flips to "success" one
+// commit before `item` follows, and for an item taken straight from `objectDefinition` it is the
+// other way round. `waitFor` resolves on whichever commit satisfied it and only lets the other one
+// land through its trailing `setTimeout(0)` drain, which under load loses the race with React's
+// passive-effect flush — that was the flake. So every wait below gates on BOTH, and never asserts
+// on hook state it has not waited for.
+
 describe("useCatalogItemUpdate – objectDefinition resync", () => {
     it("item updates immediately when parent provides a newer loaded objectDefinition with the same identity", async () => {
         const { wrapper, getParameter } = createWrapper();
@@ -117,6 +125,7 @@ describe("useCatalogItemUpdate – objectDefinition resync", () => {
 
         // An already-loaded objectDefinition is reused as-is; nothing is fetched.
         await waitFor(() => {
+            expect(result.current.status).toBe("success");
             expect(result.current.item).toEqual(itemA);
         });
         expect(getParameter).not.toHaveBeenCalled();
@@ -139,6 +148,7 @@ describe("useCatalogItemUpdate – objectDefinition resync", () => {
         );
 
         await waitFor(() => {
+            expect(result.current.status).toBe("success");
             expect(result.current.item).toEqual(itemA);
         });
 
@@ -149,6 +159,7 @@ describe("useCatalogItemUpdate – objectDefinition resync", () => {
 
         expect(result.current.item).not.toEqual(ref);
         await waitFor(() => {
+            expect(result.current.status).toBe("success");
             expect(result.current.item).toEqual(itemA);
         });
     });
@@ -171,6 +182,7 @@ describe("useCatalogItemUpdate – applyItemUpdate / applyItemDelete", () => {
         );
 
         await waitFor(() => {
+            expect(result.current.status).toBe("success");
             expect(result.current.item).toEqual(itemA);
         });
 
@@ -199,8 +211,8 @@ describe("useCatalogItemUpdate – applyItemUpdate / applyItemDelete", () => {
         // the load settles the item once more, so acting sooner would race it
         await waitFor(() => {
             expect(result.current.status).toBe("success");
+            expect(result.current.item).toEqual(measureWithPermissions);
         });
-        expect(result.current.item).toEqual(measureWithPermissions);
 
         const saved: ICatalogItemMeasure = { ...measureWithPermissions, title: "Metric B" };
         delete saved.permissions;
@@ -229,8 +241,8 @@ describe("useCatalogItemUpdate – applyItemUpdate / applyItemDelete", () => {
         // the load settles the item once more, so acting sooner would race it
         await waitFor(() => {
             expect(result.current.status).toBe("success");
+            expect(result.current.item).toEqual(measureWithPermissions);
         });
-        expect(result.current.item).toEqual(measureWithPermissions);
 
         const saved: ICatalogItemMeasure = { ...measureWithPermissions, permissions: ["VIEW"] };
         act(() => {
@@ -256,6 +268,7 @@ describe("useCatalogItemUpdate – applyItemUpdate / applyItemDelete", () => {
         );
 
         await waitFor(() => {
+            expect(result.current.status).toBe("success");
             expect(result.current.item).toEqual(itemA);
         });
 
@@ -306,15 +319,16 @@ describe("useCatalogItemUpdate – a supplied metric that carries no permissions
             { wrapper },
         );
 
+        // the supplied metric stays the item until the fetch lands, so wait for the fetched one
         await waitFor(() => {
             expect(result.current.status).toBe("success");
+            expect(result.current.item).toMatchObject({ permissions: ["EDIT"] });
         });
 
         expect(getMeasure).toHaveBeenCalledWith(
             expect.anything(),
             expect.objectContaining({ loadPermissions: true }),
         );
-        expect(result.current.item).toMatchObject({ permissions: ["EDIT"] });
     });
 
     it("is reused as it is when they are disabled", async () => {
@@ -331,10 +345,10 @@ describe("useCatalogItemUpdate – a supplied metric that carries no permissions
 
         await waitFor(() => {
             expect(result.current.status).toBe("success");
+            expect(result.current.item).toEqual(measureWithoutPermissions);
         });
 
         expect(getMeasure).not.toHaveBeenCalled();
-        expect(result.current.item).toEqual(measureWithoutPermissions);
     });
 });
 
@@ -407,8 +421,10 @@ describe("useCatalogItemUpdate – updateItemConditionalFormatting", () => {
             { wrapper },
         );
 
+        // updateItemConditionalFormatting is a no-op until `item` holds the loaded metric
         await waitFor(() => {
             expect(result.current.status).toBe("success");
+            expect(result.current.item).toMatchObject({ identifier: "measure.id" });
         });
 
         act(() => {
@@ -439,8 +455,10 @@ describe("useCatalogItemUpdate – updateItemConditionalFormatting", () => {
             { wrapper },
         );
 
+        // updateItemConditionalFormatting is a no-op until `item` holds the loaded metric
         await waitFor(() => {
             expect(result.current.status).toBe("success");
+            expect(result.current.item).toMatchObject({ identifier: "measure.id" });
         });
 
         act(() => {
@@ -476,8 +494,10 @@ describe("useCatalogItemUpdate – updateItemConditionalFormatting", () => {
             { wrapper },
         );
 
+        // updateItemConditionalFormatting is a no-op until `item` holds the loaded metric
         await waitFor(() => {
             expect(result.current.status).toBe("success");
+            expect(result.current.item).toMatchObject({ identifier: "measure.id" });
         });
         const itemBeforeEdit = result.current.item;
 

@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactNode } from "react";
+
 import { fireEvent, render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 import { describe, expect, it, vi } from "vitest";
@@ -9,7 +11,7 @@ import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
 import { UiDialogFooter } from "./UiDialogFooter.js";
 import { UiDialogHeader } from "./UiDialogHeader.js";
 
-const renderWithIntl = (ui: React.ReactNode) =>
+const renderWithIntl = (ui: ReactNode) =>
     render(
         <IntlProvider locale={DEFAULT_LANGUAGE} messages={DEFAULT_MESSAGES[DEFAULT_LANGUAGE]}>
             {ui}

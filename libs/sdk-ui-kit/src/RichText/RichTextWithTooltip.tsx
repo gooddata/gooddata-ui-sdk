@@ -57,6 +57,7 @@ function RichTextWithTooltipCore({
     allowedMarkdown,
     filters,
     separators,
+    restrictedReferences,
     onLoadingChanged,
     onError,
     LoadingComponent,
@@ -81,6 +82,7 @@ function RichTextWithTooltipCore({
                 allowedMarkdown={allowedMarkdown}
                 filters={filters}
                 separators={separators}
+                restrictedReferences={restrictedReferences}
                 LoadingComponent={LoadingComponent}
                 onLoadingChanged={onLoadingChanged}
                 onError={onError}
@@ -105,6 +107,7 @@ function RichTextWithTooltipCore({
         referencesEnabled,
         allowedMarkdown,
         filters,
+        restrictedReferences,
         LoadingComponent,
         onLoadingChanged,
         onError,

@@ -364,6 +364,7 @@ const chatWindowSlice = createSlice({
     extraReducers: (builder) => {
         const resetContextToAmbient = (state: ChatWindowSliceState) => {
             state.context.active = mergeContexts(state.context.ambient);
+            state.context = selectContextReferences(state.context, state.context.ambientSelected);
         };
 
         builder

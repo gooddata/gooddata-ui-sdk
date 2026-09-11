@@ -8,6 +8,7 @@ import { type DataPoint, createIntlMock } from "@gooddata/sdk-ui";
 import { type EvaluatedMetric } from "../hooks/useEvaluatedMetricsAndAttributes.js";
 
 import { rehypeReferences } from "./rehype-references.js";
+import { type HtmlNode } from "./types.js";
 
 describe("testing rehype plugin to extract references", () => {
     const intl = createIntlMock();
@@ -169,6 +170,41 @@ describe("testing rehype plugin to extract references", () => {
         const updated = walk(htmlTreeImageText as Root);
 
         expect(updated).toMatchSnapshot();
+    });
+
+    it("marks a restricted reference instead of asking for its value", () => {
+        const walk = rehypeReferences(
+            createIntlMock({ "richText.restricted": "restricted" }),
+            metrics,
+            undefined,
+            [{ type: "measure", identifier: "metric_1" }],
+        )();
+        // a tree of its own: the trees above are transformed in place by the tests that use them
+        const tree = {
+            type: "root",
+            children: [
+                {
+                    type: "element",
+                    tagName: "p",
+                    properties: {},
+                    children: [
+                        { type: "text", value: "{metric/metric_1}" },
+                        { type: "text", value: " and " },
+                        { type: "text", value: "{metric/metric_2}" },
+                    ],
+                },
+            ],
+        };
+        const updated = walk(tree as Root) as Root;
+
+        const spans = ((updated.children[0] as unknown as HtmlNode).children as any[]).filter(
+            (child) => child.tagName === "span",
+        );
+        const [restricted, readable] = spans;
+        expect(restricted.properties.className).toContain("gd-rich-text-metric-restricted");
+        expect(restricted.children[0].value).toEqual("restricted");
+        // the other reference in the same text keeps its value
+        expect(readable.properties.className).toContain("gd-rich-text-metric-value");
     });
 
     it("replace references ids for not formatted values in text", () => {

@@ -95,8 +95,8 @@ function AlertingConnectorWithData({ alerts }: { alerts: AlertsProps }): ReactEl
         onAlertingManagementClose,
         onAlertingManagementAdd,
         onAlertingManagementEdit,
-        onAlertingManagementDeleteSuccess,
-        onAlertingManagementDeleteError,
+        onAlertingDeleteSuccess,
+        onAlertingDeleteError,
         widget,
         insight,
     } = alerts;
@@ -128,8 +128,8 @@ function AlertingConnectorWithData({ alerts }: { alerts: AlertsProps }): ReactEl
                     onCreateSuccess={onAlertingCreateSuccess}
                     onUpdateError={onAlertingUpdateError}
                     onUpdateSuccess={onAlertingUpdateSuccess}
-                    onDeleteSuccess={onAlertingManagementDeleteSuccess}
-                    onDeleteError={onAlertingManagementDeleteError}
+                    onDeleteSuccess={onAlertingDeleteSuccess}
+                    onDeleteError={onAlertingDeleteError}
                 />
             ) : null}
         </AlertingManagementDialogContextProvider>

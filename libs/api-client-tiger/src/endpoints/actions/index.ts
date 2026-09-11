@@ -58,7 +58,11 @@ export {
     ActionsApi_ListWorkspaceUserGroups,
     type ActionsApiListWorkspaceUserGroupsRequest,
     // Per-object access for catalog attributes, facts, labels, metrics and computed attributes.
-    type LdmObjectPermissions,
+    type AttributePermissions,
+    type FactPermissions,
+    type LabelPermissions,
+    type ManageAttributePermissionsRequestInner,
+    type ManageFactPermissionsRequestInner,
     type ManageLabelPermissionsRequestInner,
     ActionsApi_AttributePermissions,
     type ActionsApiAttributePermissionsRequest,

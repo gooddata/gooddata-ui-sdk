@@ -84,7 +84,7 @@ export type AbstractMeasureValueFilter = AfmComparisonMeasureValueFilter | AfmCo
 export class ActionsApi extends MetadataBaseApi implements ActionsApiInterface {
     addTargets(requestParameters: ActionsApiAddTargetsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     allPlatformUsage(options?: AxiosRequestConfig): AxiosPromise<PlatformUsage[]>;
-    attributePermissions(requestParameters: ActionsApiAttributePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<LdmObjectPermissions>;
+    attributePermissions(requestParameters: ActionsApiAttributePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<AttributePermissions>;
     availableAssignees(requestParameters: ActionsApiAvailableAssigneesRequest, options?: AxiosRequestConfig): AxiosPromise<AvailableAssignees>;
     checkEntityOverrides(requestParameters: ActionsApiCheckEntityOverridesRequest, options?: AxiosRequestConfig): AxiosPromise<IdentifierDuplications[]>;
     cleanTranslations(requestParameters: ActionsApiCleanTranslationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -93,14 +93,14 @@ export class ActionsApi extends MetadataBaseApi implements ActionsApiInterface {
     dashboardPermissions(requestParameters: ActionsApiDashboardPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<DashboardPermissions>;
     deleteOrganizationAutomations(requestParameters: ActionsApiDeleteOrganizationAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteWorkspaceAutomations(requestParameters: ActionsApiDeleteWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    factPermissions(requestParameters: ActionsApiFactPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<LdmObjectPermissions>;
+    factPermissions(requestParameters: ActionsApiFactPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<FactPermissions>;
     generateLogicalModel(requestParameters: ActionsApiGenerateLogicalModelRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeModel>;
     getDependentEntitiesGraph(requestParameters: ActionsApiGetDependentEntitiesGraphRequest, options?: AxiosRequestConfig): AxiosPromise<DependentEntitiesResponse>;
     getDependentEntitiesGraphFromEntryPoints(requestParameters: ActionsApiGetDependentEntitiesGraphFromEntryPointsRequest, options?: AxiosRequestConfig): AxiosPromise<DependentEntitiesResponse>;
     getTranslationTags(requestParameters: ActionsApiGetTranslationTagsRequest, options?: AxiosRequestConfig): AxiosPromise<string[]>;
     inheritedEntityConflicts(requestParameters: ActionsApiInheritedEntityConflictsRequest, options?: AxiosRequestConfig): AxiosPromise<IdentifierDuplications[]>;
     inheritedEntityPrefixes(requestParameters: ActionsApiInheritedEntityPrefixesRequest, options?: AxiosRequestConfig): AxiosPromise<string[]>;
-    labelPermissions(requestParameters: ActionsApiLabelPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<LdmObjectPermissions>;
+    labelPermissions(requestParameters: ActionsApiLabelPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<LabelPermissions>;
     // (undocumented)
     listWorkspaceUserGroups(requestParameters: ActionsApiListWorkspaceUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<WorkspaceUserGroups>;
     // (undocumented)
@@ -701,7 +701,7 @@ export interface ActionsApiInheritedEntityPrefixesRequest {
 export interface ActionsApiInterface {
     addTargets(requestParameters: ActionsApiAddTargetsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     allPlatformUsage(options?: AxiosRequestConfig): AxiosPromise<Array<PlatformUsage>>;
-    attributePermissions(requestParameters: ActionsApiAttributePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<LdmObjectPermissions>;
+    attributePermissions(requestParameters: ActionsApiAttributePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<AttributePermissions>;
     availableAssignees(requestParameters: ActionsApiAvailableAssigneesRequest, options?: AxiosRequestConfig): AxiosPromise<AvailableAssignees>;
     checkEntityOverrides(requestParameters: ActionsApiCheckEntityOverridesRequest, options?: AxiosRequestConfig): AxiosPromise<Array<IdentifierDuplications>>;
     cleanTranslations(requestParameters: ActionsApiCleanTranslationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -710,14 +710,14 @@ export interface ActionsApiInterface {
     dashboardPermissions(requestParameters: ActionsApiDashboardPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<DashboardPermissions>;
     deleteOrganizationAutomations(requestParameters: ActionsApiDeleteOrganizationAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteWorkspaceAutomations(requestParameters: ActionsApiDeleteWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    factPermissions(requestParameters: ActionsApiFactPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<LdmObjectPermissions>;
+    factPermissions(requestParameters: ActionsApiFactPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<FactPermissions>;
     generateLogicalModel(requestParameters: ActionsApiGenerateLogicalModelRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeModel>;
     getDependentEntitiesGraph(requestParameters: ActionsApiGetDependentEntitiesGraphRequest, options?: AxiosRequestConfig): AxiosPromise<DependentEntitiesResponse>;
     getDependentEntitiesGraphFromEntryPoints(requestParameters: ActionsApiGetDependentEntitiesGraphFromEntryPointsRequest, options?: AxiosRequestConfig): AxiosPromise<DependentEntitiesResponse>;
     getTranslationTags(requestParameters: ActionsApiGetTranslationTagsRequest, options?: AxiosRequestConfig): AxiosPromise<Array<string>>;
     inheritedEntityConflicts(requestParameters: ActionsApiInheritedEntityConflictsRequest, options?: AxiosRequestConfig): AxiosPromise<Array<IdentifierDuplications>>;
     inheritedEntityPrefixes(requestParameters: ActionsApiInheritedEntityPrefixesRequest, options?: AxiosRequestConfig): AxiosPromise<Array<string>>;
-    labelPermissions(requestParameters: ActionsApiLabelPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<LdmObjectPermissions>;
+    labelPermissions(requestParameters: ActionsApiLabelPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<LabelPermissions>;
     // (undocumented)
     listWorkspaceUserGroups(requestParameters: ActionsApiListWorkspaceUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<WorkspaceUserGroups>;
     // (undocumented)
@@ -10322,6 +10322,35 @@ export interface AttributeNegativeFilter {
     // (undocumented)
     'using': string;
 }
+
+// @public (undocumented)
+export interface AttributePermissions {
+    'rules': Array<RulePermission>;
+    'userGroups': Array<UserGroupPermission>;
+    'users': Array<UserPermission>;
+}
+
+// @public
+export interface AttributePermissionsForAssignee {
+    // (undocumented)
+    'assigneeIdentifier': AssigneeIdentifier;
+    // (undocumented)
+    'permissions': Array<AttributePermissionsForAssigneePermissionsEnum>;
+}
+
+// @public (undocumented)
+export type AttributePermissionsForAssigneePermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
+
+// @public
+export interface AttributePermissionsForAssigneeRule {
+    // (undocumented)
+    'assigneeRule': AssigneeRule;
+    // (undocumented)
+    'permissions': Array<AttributePermissionsForAssigneeRulePermissionsEnum>;
+}
+
+// @public (undocumented)
+export type AttributePermissionsForAssigneeRulePermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
 
 // @public (undocumented)
 export interface AttributePositiveFilter {
@@ -24525,6 +24554,35 @@ export interface FactControllerApiSearchEntitiesFactsRequest {
     readonly workspaceId: string;
     readonly xGDCVALIDATERELATIONS?: boolean;
 }
+
+// @public (undocumented)
+export interface FactPermissions {
+    'rules': Array<RulePermission>;
+    'userGroups': Array<UserGroupPermission>;
+    'users': Array<UserPermission>;
+}
+
+// @public
+export interface FactPermissionsForAssignee {
+    // (undocumented)
+    'assigneeIdentifier': AssigneeIdentifier;
+    // (undocumented)
+    'permissions': Array<FactPermissionsForAssigneePermissionsEnum>;
+}
+
+// @public (undocumented)
+export type FactPermissionsForAssigneePermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
+
+// @public
+export interface FactPermissionsForAssigneeRule {
+    // (undocumented)
+    'assigneeRule': AssigneeRule;
+    // (undocumented)
+    'permissions': Array<FactPermissionsForAssigneeRulePermissionsEnum>;
+}
+
+// @public (undocumented)
+export type FactPermissionsForAssigneeRulePermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
 
 // @public
 export class FactsApi extends MetadataBaseApi implements FactsApiInterface {
@@ -39253,6 +39311,35 @@ export interface LabelIdentifier {
 // @public (undocumented)
 export type LabelIdentifierTypeEnum = 'label';
 
+// @public (undocumented)
+export interface LabelPermissions {
+    'rules': Array<RulePermission>;
+    'userGroups': Array<UserGroupPermission>;
+    'users': Array<UserPermission>;
+}
+
+// @public
+export interface LabelPermissionsForAssignee {
+    // (undocumented)
+    'assigneeIdentifier': AssigneeIdentifier;
+    // (undocumented)
+    'permissions': Array<LabelPermissionsForAssigneePermissionsEnum>;
+}
+
+// @public (undocumented)
+export type LabelPermissionsForAssigneePermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
+
+// @public
+export interface LabelPermissionsForAssigneeRule {
+    // (undocumented)
+    'assigneeRule': AssigneeRule;
+    // (undocumented)
+    'permissions': Array<LabelPermissionsForAssigneeRulePermissionsEnum>;
+}
+
+// @public (undocumented)
+export type LabelPermissionsForAssigneeRulePermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
+
 // @public
 export class LabelsApi extends MetadataBaseApi implements LabelsApiInterface {
     getAllEntitiesLabels(requestParameters: LabelsApiGetAllEntitiesLabelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLabelOutList>;
@@ -39978,35 +40065,6 @@ export interface LDMDeclarativeAPIsApiSetLogicalModelRequest {
 }
 
 // @public (undocumented)
-export interface LdmObjectPermissions {
-    'rules': Array<RulePermission>;
-    'userGroups': Array<UserGroupPermission>;
-    'users': Array<UserPermission>;
-}
-
-// @public
-export interface LdmObjectPermissionsForAssignee {
-    // (undocumented)
-    'assigneeIdentifier': AssigneeIdentifier;
-    // (undocumented)
-    'permissions': Array<LdmObjectPermissionsForAssigneePermissionsEnum>;
-}
-
-// @public (undocumented)
-export type LdmObjectPermissionsForAssigneePermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
-
-// @public
-export interface LdmObjectPermissionsForAssigneeRule {
-    // (undocumented)
-    'assigneeRule': AssigneeRule;
-    // (undocumented)
-    'permissions': Array<LdmObjectPermissionsForAssigneeRulePermissionsEnum>;
-}
-
-// @public (undocumented)
-export type LdmObjectPermissionsForAssigneeRulePermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
-
-// @public (undocumented)
 export interface ListLinks {
     'next'?: string;
     'self': string;
@@ -40302,7 +40360,7 @@ export type LocationStyleApiInterface = {
 export type LocationStyleDocument = Record<string, unknown>;
 
 // @public
-export type ManageAttributePermissionsRequestInner = LdmObjectPermissionsForAssignee | LdmObjectPermissionsForAssigneeRule;
+export type ManageAttributePermissionsRequestInner = AttributePermissionsForAssignee | AttributePermissionsForAssigneeRule;
 
 // @public
 export type ManageComputedAttributePermissionsRequestInner = ComputedAttributePermissionsForAssignee | ComputedAttributePermissionsForAssigneeRule;
@@ -40311,10 +40369,10 @@ export type ManageComputedAttributePermissionsRequestInner = ComputedAttributePe
 export type ManageDashboardPermissionsRequestInner = PermissionsForAssignee | PermissionsForAssigneeRule;
 
 // @public
-export type ManageFactPermissionsRequestInner = LdmObjectPermissionsForAssignee | LdmObjectPermissionsForAssigneeRule;
+export type ManageFactPermissionsRequestInner = FactPermissionsForAssignee | FactPermissionsForAssigneeRule;
 
 // @public
-export type ManageLabelPermissionsRequestInner = LdmObjectPermissionsForAssignee | LdmObjectPermissionsForAssigneeRule;
+export type ManageLabelPermissionsRequestInner = LabelPermissionsForAssignee | LabelPermissionsForAssigneeRule;
 
 // @public
 export type ManageMetricPermissionsRequestInner = MetricPermissionsForAssignee | MetricPermissionsForAssigneeRule;
@@ -42475,16 +42533,16 @@ export interface PdmSql {
 
 // @public
 export class PermissionsApi extends MetadataBaseApi implements PermissionsApiInterface {
-    attributePermissions(requestParameters: PermissionsApiAttributePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<LdmObjectPermissions>;
+    attributePermissions(requestParameters: PermissionsApiAttributePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<AttributePermissions>;
     availableAssignees(requestParameters: PermissionsApiAvailableAssigneesRequest, options?: AxiosRequestConfig): AxiosPromise<AvailableAssignees>;
     computedAttributePermissions(requestParameters: PermissionsApiComputedAttributePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<ComputedAttributePermissions>;
     dashboardPermissions(requestParameters: PermissionsApiDashboardPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<DashboardPermissions>;
-    factPermissions(requestParameters: PermissionsApiFactPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<LdmObjectPermissions>;
+    factPermissions(requestParameters: PermissionsApiFactPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<FactPermissions>;
     getOrganizationPermissions(options?: AxiosRequestConfig): AxiosPromise<DeclarativeOrganizationPermission[]>;
     getUserGroupPermissions(requestParameters: PermissionsApiGetUserGroupPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeUserGroupPermissions>;
     getUserPermissions(requestParameters: PermissionsApiGetUserPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeUserPermissions>;
     getWorkspacePermissions(requestParameters: PermissionsApiGetWorkspacePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeWorkspacePermissions>;
-    labelPermissions(requestParameters: PermissionsApiLabelPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<LdmObjectPermissions>;
+    labelPermissions(requestParameters: PermissionsApiLabelPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<LabelPermissions>;
     manageAttributePermissions(requestParameters: PermissionsApiManageAttributePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageComputedAttributePermissions(requestParameters: PermissionsApiManageComputedAttributePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageDashboardPermissions(requestParameters: PermissionsApiManageDashboardPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -42632,16 +42690,16 @@ export interface PermissionsApiGetWorkspacePermissionsRequest {
 
 // @public
 export interface PermissionsApiInterface {
-    attributePermissions(requestParameters: PermissionsApiAttributePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<LdmObjectPermissions>;
+    attributePermissions(requestParameters: PermissionsApiAttributePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<AttributePermissions>;
     availableAssignees(requestParameters: PermissionsApiAvailableAssigneesRequest, options?: AxiosRequestConfig): AxiosPromise<AvailableAssignees>;
     computedAttributePermissions(requestParameters: PermissionsApiComputedAttributePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<ComputedAttributePermissions>;
     dashboardPermissions(requestParameters: PermissionsApiDashboardPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<DashboardPermissions>;
-    factPermissions(requestParameters: PermissionsApiFactPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<LdmObjectPermissions>;
+    factPermissions(requestParameters: PermissionsApiFactPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<FactPermissions>;
     getOrganizationPermissions(options?: AxiosRequestConfig): AxiosPromise<Array<DeclarativeOrganizationPermission>>;
     getUserGroupPermissions(requestParameters: PermissionsApiGetUserGroupPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeUserGroupPermissions>;
     getUserPermissions(requestParameters: PermissionsApiGetUserPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeUserPermissions>;
     getWorkspacePermissions(requestParameters: PermissionsApiGetWorkspacePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeWorkspacePermissions>;
-    labelPermissions(requestParameters: PermissionsApiLabelPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<LdmObjectPermissions>;
+    labelPermissions(requestParameters: PermissionsApiLabelPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<LabelPermissions>;
     manageAttributePermissions(requestParameters: PermissionsApiManageAttributePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageComputedAttributePermissions(requestParameters: PermissionsApiManageComputedAttributePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageDashboardPermissions(requestParameters: PermissionsApiManageDashboardPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;

@@ -17,6 +17,7 @@ import { type DescriptionTooltipOpenedData } from "../../../../model/events/user
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { useDashboardUserInteraction } from "../../../../model/react/useDashboardUserInteraction.js";
 import { selectSettings } from "../../../../model/store/config/configSelectors.js";
+import { selectRestrictedRichTextReferences } from "../../../../model/store/unavailableObjects/unavailableObjectsSelectors.js";
 import { useDashboardComponentsContext } from "../../../dashboardContexts/DashboardComponentsContext.js";
 import { InsightList } from "../../../insightList/InsightList.js";
 import { InsightListDivider } from "../../../insightList/InsightListDivider.js";
@@ -31,6 +32,7 @@ export function DraggableInsightListCore({
 }: IInsightListProps) {
     const userInteraction = useDashboardUserInteraction();
     const settings = useDashboardSelector(selectSettings);
+    const restrictedReferences = useDashboardSelector(selectRestrictedRichTextReferences);
     const { LoadingComponent } = useDashboardComponentsContext();
 
     return (
@@ -77,6 +79,7 @@ export function DraggableInsightListCore({
                         }}
                         metadataTimeZone={settings?.metadataTimeZone}
                         useReferences
+                        restrictedReferences={restrictedReferences}
                         LoadingComponent={LoadingComponent}
                         disabled={disabled}
                     />

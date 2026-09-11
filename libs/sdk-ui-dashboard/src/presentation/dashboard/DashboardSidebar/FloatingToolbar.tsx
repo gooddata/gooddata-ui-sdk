@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type KeyboardEvent, type Ref, useCallback, useState } from "react";
+import { type KeyboardEvent, type ReactElement, type Ref, useCallback, useState } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -103,7 +103,7 @@ function DraggableToolbarButton({
     onMouseDown,
     onActivate,
 }: {
-    icon: React.ReactElement;
+    icon: ReactElement;
     label: string;
     dragItem: DraggableItem;
     testSelector: string;

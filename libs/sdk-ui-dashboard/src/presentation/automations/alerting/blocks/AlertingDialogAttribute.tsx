@@ -21,7 +21,7 @@ import { WhenAlertingDialogLoaded } from "./WhenAlertingDialogLoaded.js";
  * is nothing to slice by; the gate reads the `attributes` prop, so an override is honoured), and
  * nothing while `useAlertingDialogContext().isLoading` is true.
  *
- * @alpha
+ * @beta
  */
 export function AlertingDialogAttribute(overrides: Partial<IAlertingDialogAttributeProps>): ReactElement {
     return (

@@ -11,7 +11,7 @@ import { DashboardAttachments } from "./Attachments/DashboardAttachments.js";
  * Props-driven — reads no context. The default dialog and {@link ScheduledEmailDialogDashboardAttachments}
  * render it with {@link useScheduledEmailDialogDashboardAttachmentsProps}.
  *
- * @alpha
+ * @beta
  */
 export function DefaultScheduledEmailDialogDashboardAttachments(
     props: IScheduledEmailDialogDashboardAttachmentsProps,

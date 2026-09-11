@@ -58,7 +58,7 @@ const DEFAULT_MEASURE_FORMAT = "#,##0.00";
  * Number formats of the widget's measures keyed by measure local identifier, read from the
  * execution result.
  *
- * @alpha
+ * @beta
  */
 export type IMeasureFormatMap = { [key: string]: string };
 

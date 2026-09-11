@@ -11,7 +11,7 @@ import { type IAutomationDialogFormFieldProps } from "./types.js";
  * that wants its own label renders a field's `Default*` control inside its own
  * `AutomationDialogFormField`.
  *
- * @alpha
+ * @beta
  */
 export function AutomationDialogFormField({
     label,

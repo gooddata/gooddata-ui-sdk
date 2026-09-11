@@ -36,6 +36,7 @@ import { useDashboardExecConfig } from "../../../../../model/react/useWidgetExec
 import { useWidgetExecutionsHandler } from "../../../../../model/react/useWidgetExecutionsHandler.js";
 import { selectSeparators } from "../../../../../model/store/config/configSelectors.js";
 import { DRILL_MODAL_EXECUTION_PSEUDO_REF } from "../../../../../model/store/executionResults/constants.js";
+import { selectRestrictedRichTextReferences } from "../../../../../model/store/unavailableObjects/unavailableObjectsSelectors.js";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../../constants/zIndex.js";
 import { useDashboardComponentsContext } from "../../../../dashboardContexts/DashboardComponentsContext.js";
 import { WithDrillSelect } from "../../../../drill/DrillSelect/WithDrillSelect.js";
@@ -374,6 +375,7 @@ function InsightDrillDialogDescriptionContent({
     LoadingComponent,
 }: IInsightDrillDialogDescriptionContentProps) {
     const separators = useDashboardSelector(selectSeparators);
+    const restrictedReferences = useDashboardSelector(selectRestrictedRichTextReferences);
     const execConfig = useDashboardExecConfig();
 
     return (
@@ -392,6 +394,7 @@ function InsightDrillDialogDescriptionContent({
                     referencesEnabled
                     filters={widgetFilters}
                     separators={separators}
+                    restrictedReferences={restrictedReferences}
                     LoadingComponent={LoadingComponent}
                 />
             </div>

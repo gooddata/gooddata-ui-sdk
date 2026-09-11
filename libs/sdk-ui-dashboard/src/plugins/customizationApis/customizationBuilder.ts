@@ -178,6 +178,8 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
             InsightComponentProvider: this.insightCustomizer.getInsightProvider(),
             InsightBodyComponentProvider: this.insightCustomizer.getInsightBodyComponentProvider(),
             RestrictedPlaceholderComponentProvider: this.insightCustomizer.getRestrictedPlaceholderProvider(),
+            RestrictedFiltersPlaceholderComponentProvider:
+                this.filterBarCustomizer.getRestrictedPlaceholderProvider(),
             DashboardContentComponentProvider: this.dashboardContentCustomizer.getDashboardContentProvider(),
             WidgetComponentProvider: this.widgetCustomizer.getWidgetComponentProvider(),
             DashboardAttributeFilterComponentProvider: this.filtersCustomizer

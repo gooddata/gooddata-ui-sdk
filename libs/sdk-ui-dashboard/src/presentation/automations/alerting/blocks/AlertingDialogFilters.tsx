@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactElement } from "react";
+
 import { DefaultAlertingDialogFilters } from "../DefaultAlertingDialog/DefaultAlertingDialogFilters.js";
 import { useAlertingDialogFiltersProps } from "../state/useAlertingDialogRegionProps.js";
 import { type IAlertingDialogFiltersProps } from "../types.js";
@@ -17,9 +19,9 @@ import { WhenAlertingDialogLoaded } from "./WhenAlertingDialogLoaded.js";
  * its stale-filters confirmation step; a shell that wants that step builds it from
  * {@link useAlertFilters}.
  *
- * @alpha
+ * @beta
  */
-export function AlertingDialogFilters(overrides: Partial<IAlertingDialogFiltersProps>) {
+export function AlertingDialogFilters(overrides: Partial<IAlertingDialogFiltersProps>): ReactElement {
     return (
         <WhenAlertingDialogLoaded>
             <ConnectedAlertingDialogFilters {...overrides} />

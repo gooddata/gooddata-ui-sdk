@@ -21,7 +21,7 @@ const noop = () => {};
  * `useScheduledEmailDialogContext().isLoading` is true and for an in-platform notification channel
  * (which has no e-mail subject), the same visibility the default dialog gives the field.
  *
- * @alpha
+ * @beta
  */
 export function ScheduledEmailDialogSubject(props: Partial<IScheduledEmailDialogSubjectProps>): ReactElement {
     return (

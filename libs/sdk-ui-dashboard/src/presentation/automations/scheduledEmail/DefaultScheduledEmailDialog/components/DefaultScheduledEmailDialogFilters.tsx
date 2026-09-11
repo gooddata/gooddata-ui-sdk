@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactElement } from "react";
+
 import { AutomationFiltersSelect } from "../../../shared/automationFilters/components/AutomationFiltersSelect.js";
 import { type IScheduledEmailDialogFiltersProps } from "../../types.js";
 
@@ -12,9 +14,9 @@ const OVERLAY_POSITION_TYPE = "sameAsTarget";
  * {@link ScheduledEmailDialogFilters} render it with {@link useScheduledEmailDialogFiltersProps}; a
  * `slots.Filters` slot receives it as `Default`.
  *
- * @alpha
+ * @beta
  */
-export function DefaultScheduledEmailDialogFilters(props: IScheduledEmailDialogFiltersProps) {
+export function DefaultScheduledEmailDialogFilters(props: IScheduledEmailDialogFiltersProps): ReactElement {
     return (
         <AutomationFiltersSelect
             {...props}

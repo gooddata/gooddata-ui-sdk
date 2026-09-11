@@ -41,7 +41,7 @@ import {
 ///
 
 /**
- * @alpha
+ * @beta
  */
 export interface IScheduledEmailDialogProps extends IAutomationDialogCallbacks {
     /**
@@ -138,7 +138,7 @@ export interface IScheduledEmailDialogProps extends IAutomationDialogCallbacks {
 /**
  * Props of the default scheduled email dialog's header region (the title input row).
  *
- * @alpha
+ * @beta
  */
 export interface IScheduledEmailDialogHeaderProps extends IAutomationDialogHeaderProps {
     /**
@@ -156,7 +156,7 @@ export interface IScheduledEmailDialogHeaderProps extends IAutomationDialogHeade
  * The exact props the default dialog renders its header with, including the dialog's
  * initial-focus ref.
  *
- * @alpha
+ * @beta
  */
 export type ScheduledEmailDialogHeaderDefaultProps = IScheduledEmailDialogHeaderProps & {
     ref?: Ref<HTMLInputElement>;
@@ -171,7 +171,7 @@ export type ScheduledEmailDialogHeaderDefaultProps = IScheduledEmailDialogHeader
  * handlers are unused; otherwise the flat members drive it and the by-tab members are unused.
  * `defaultProps` always carries both families so a wrap stays faithful in either mode.
  *
- * @alpha
+ * @beta
  */
 export interface IScheduledEmailDialogFiltersProps extends IAutomationDialogFiltersProps {
     /**
@@ -255,7 +255,7 @@ export interface IScheduledEmailDialogFiltersProps extends IAutomationDialogFilt
  * derive is saved: the view-mode override and browser resolution always, the dashboard's stored
  * configuration for widget schedules, and any timezone picked manually in the dropdown.
  *
- * @alpha
+ * @beta
  */
 export interface IScheduleTimezoneSelection {
     /**
@@ -274,7 +274,7 @@ export interface IScheduleTimezoneSelection {
  * Props of the default scheduled email dialog's "Time zone" section (the export-content timezone
  * picker on the General tab; unrelated to the schedule cron timezone).
  *
- * @alpha
+ * @beta
  */
 export interface IScheduledEmailDialogTimezoneProps {
     /**
@@ -303,14 +303,14 @@ export interface IScheduledEmailDialogTimezoneProps {
 /**
  * The exact props the default dialog renders its "Time zone" section with.
  *
- * @alpha
+ * @beta
  */
 export type ScheduledEmailDialogTimezoneDefaultProps = IScheduledEmailDialogTimezoneProps;
 
 /**
  * Props of the default scheduled email dialog's recipients region.
  *
- * @alpha
+ * @beta
  */
 export interface IScheduledEmailDialogRecipientsProps extends IAutomationDialogRecipientsProps {
     /**
@@ -322,7 +322,7 @@ export interface IScheduledEmailDialogRecipientsProps extends IAutomationDialogR
 /**
  * Props of the scheduled-export dialog's recurrence field.
  *
- * @alpha
+ * @beta
  */
 export interface IScheduledEmailDialogRecurrenceProps {
     /**
@@ -378,7 +378,7 @@ export interface IScheduledEmailDialogRecurrenceProps {
 /**
  * Props of the scheduled-export dialog's subject field.
  *
- * @alpha
+ * @beta
  */
 export interface IScheduledEmailDialogSubjectProps {
     /**
@@ -406,7 +406,7 @@ export interface IScheduledEmailDialogSubjectProps {
 /**
  * Props of the scheduled-export dialog's message field.
  *
- * @alpha
+ * @beta
  */
 export interface IScheduledEmailDialogMessageProps {
     /**
@@ -422,7 +422,7 @@ export interface IScheduledEmailDialogMessageProps {
 /**
  * Props of the scheduled-export dialog's evaluation-mode checkbox.
  *
- * @alpha
+ * @beta
  */
 export interface IScheduledEmailDialogEvaluationModeProps {
     /**
@@ -438,7 +438,7 @@ export interface IScheduledEmailDialogEvaluationModeProps {
 /**
  * Props of the scheduled-export dialog's dashboard-attachments field.
  *
- * @alpha
+ * @beta
  */
 export interface IScheduledEmailDialogDashboardAttachmentsProps {
     /**
@@ -494,7 +494,7 @@ export interface IScheduledEmailDialogDashboardAttachmentsProps {
 /**
  * Props of the scheduled-export dialog's widget-attachments field.
  *
- * @alpha
+ * @beta
  */
 export interface IScheduledEmailDialogWidgetAttachmentsProps {
     /**
@@ -567,7 +567,10 @@ export interface IScheduledEmailDialogWidgetAttachmentsProps {
 /**
  * Section-level overrides of the default scheduled email dialog.
  *
- * @alpha
+ * Define slot components at module scope, not inline in a render — an inline component remounts
+ * on every render.
+ *
+ * @beta
  */
 export interface IScheduledEmailDialogSlots {
     /**
@@ -651,7 +654,7 @@ export interface IScheduledEmailDialogSlots {
  * additionally renders only while the Filters tab is selected; the Destination and Recipients
  * slots only while the General tab is — see {@link IScheduledEmailDialogSlots}.
  *
- * @alpha
+ * @beta
  */
 export interface IDefaultScheduledEmailDialogProps extends IScheduledEmailDialogProps {
     /**
@@ -701,7 +704,7 @@ export interface IDefaultScheduledEmailDialogProps extends IScheduledEmailDialog
 /**
  * Props of {@link ScheduledEmailDialogShell}.
  *
- * @alpha
+ * @beta
  */
 export interface IScheduledEmailDialogShellProps extends Pick<
     IScheduledEmailDialogProps,
@@ -767,7 +770,7 @@ export interface IScheduledEmailDialogShellProps extends Pick<
 
 /**
  *
- * @alpha
+ * @beta
  */
 export interface IScheduledEmailManagementDialogProps extends IAutomationManagementDialogCallbacks {
     /**
@@ -806,7 +809,7 @@ export interface IScheduledEmailManagementDialogProps extends IAutomationManagem
 ///
 
 /**
- * @alpha
+ * @beta
  */
 export type CustomScheduledEmailDialogComponent = ComponentType<IScheduledEmailDialogProps>;
 
@@ -845,14 +848,14 @@ export type CustomScheduledEmailDialogComponent = ComponentType<IScheduledEmailD
  * members pass through. Wrap functions instead of replacing them. Do not touch members marked as
  * internal machinery.
  *
- * @alpha
+ * @beta
  */
 export type CustomScheduledEmailDialogContextDecoratorComponent = ComponentType<{
     children?: ReactNode;
 }>;
 
 /**
- * @alpha
+ * @beta
  */
 export type CustomScheduledEmailManagementDialogComponent =
     ComponentType<IScheduledEmailManagementDialogProps>;
@@ -898,7 +901,7 @@ export type CustomScheduledEmailManagementDialogComponent =
  * members pass through. Wrap functions instead of replacing them. Do not touch members marked as
  * internal machinery.
  *
- * @alpha
+ * @beta
  */
 export type CustomScheduledEmailManagementDialogContextDecoratorComponent = ComponentType<{
     children?: ReactNode;

@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { version as reactVersion } from "react";
+import { type ReactElement, version as reactVersion } from "react";
 
 import { cleanup, render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
@@ -31,7 +31,7 @@ function createMockCtx(): IClientPlatformContext {
     } as IClientPlatformContext;
 }
 
-function renderWithProviders(ui: React.ReactElement) {
+function renderWithProviders(ui: ReactElement) {
     const ctx = createMockCtx();
     return render(
         <PlatformContextProvider value={ctx}>

@@ -1,7 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import { type AxiosPromise } from "axios";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
     EntitiesApi_GetEntityMetrics,
@@ -12,7 +12,7 @@ import { idRef } from "@gooddata/sdk-model";
 
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
-import { TigerWorkspaceMeasures } from "./index.js";
+import { type TigerWorkspaceMeasures as TigerWorkspaceMeasuresClass } from "./index.js";
 
 vi.mock("@gooddata/api-client-tiger/endpoints/entitiesObjects", () => ({
     EntitiesApi_CreateEntityMetrics: vi.fn(),
@@ -23,6 +23,15 @@ vi.mock("@gooddata/api-client-tiger/endpoints/entitiesObjects", () => ({
     EntitiesApi_PatchEntityMetrics: vi.fn(),
     EntitiesApi_UpdateEntityMetrics: vi.fn(),
 }));
+
+// The service is imported dynamically from a fresh module registry so that it picks up the mock
+// above even when another (non-isolated) test file already imported it with a mock of its own.
+let TigerWorkspaceMeasures: typeof TigerWorkspaceMeasuresClass;
+
+beforeAll(async () => {
+    vi.resetModules();
+    ({ TigerWorkspaceMeasures } = await import("./index.js"));
+});
 
 const WORKSPACE = "ws-1";
 

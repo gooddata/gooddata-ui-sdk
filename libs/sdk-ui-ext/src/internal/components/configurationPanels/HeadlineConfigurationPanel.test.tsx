@@ -10,10 +10,10 @@ import { type HeadlineControlProperties } from "../../interfaces/ControlProperti
 import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { createTestProperties, newInsight } from "../../testDataProvider.js";
 import { InternalIntlWrapper } from "../../utils/internalIntlProvider.js";
-import type * as ComparisonSectionModule from "../configurationControls/comparison/ComparisonSection.js";
+import type { ComparisonSection as ComparisonSectionType } from "../configurationControls/comparison/ComparisonSection.js";
 
 import { type IConfigurationPanelContentProps } from "./ConfigurationPanelContent.js";
-import type * as HeadlineConfigurationPanelModule from "./HeadlineConfigurationPanel.js";
+import type { HeadlineConfigurationPanel as HeadlineConfigurationPanelType } from "./HeadlineConfigurationPanel.js";
 
 vi.mock("../configurationControls/comparison/ComparisonSection.js", async (importOriginal) => {
     const actual =
@@ -31,8 +31,8 @@ vi.mock("../configurationControls/comparison/ComparisonSection.js", async (impor
  * another test file, and the mocked graph this file builds must not outlive it. Re-import both modules up
  * front so this file always observes the mocked one, and drop the mocked graph again on the way out.
  */
-let ComparisonSection: typeof ComparisonSectionModule.ComparisonSection;
-let HeadlineConfigurationPanel: typeof HeadlineConfigurationPanelModule.HeadlineConfigurationPanel;
+let ComparisonSection: typeof ComparisonSectionType;
+let HeadlineConfigurationPanel: typeof HeadlineConfigurationPanelType;
 
 beforeAll(async () => {
     vi.resetModules();

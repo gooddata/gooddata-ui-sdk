@@ -24,7 +24,7 @@ import { isChangeOrDifferenceOperator } from "../utils/guards.js";
  * render it with {@link useAlertingDialogComparisonPeriodProps} inside
  * {@link AutomationDialogFormField}.
  *
- * @alpha
+ * @beta
  */
 export function DefaultAlertingDialogComparisonPeriod({
     alert,

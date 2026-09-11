@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { type InsightPickerSortBy, type InsightPickerSortDirection } from "./types.js";
 
@@ -20,10 +20,10 @@ export function useInsightPickerState(author?: string) {
     const [tagFilter, setTagFilter] = useState<string[]>([]);
     // Latches to true on first user change and stays latched — once the user picks their own
     // filter, we never re-apply the "Me" default, even if `author` arrives late.
-    const isAuthorFilterModified = useRef(false);
+    const [isAuthorFilterModified, setIsAuthorFilterModified] = useState(false);
 
     useEffect(() => {
-        if (!author || isAuthorFilterModified.current) {
+        if (!author || isAuthorFilterModified) {
             return;
         }
 
@@ -31,10 +31,10 @@ export function useInsightPickerState(author?: string) {
         if (!isAuthorFilterInSync) {
             setAuthorFilter([author]);
         }
-    }, [author, authorFilter]);
+    }, [author, authorFilter, isAuthorFilterModified]);
 
     const onAuthorFilterChange = useCallback((nextAuthorFilter: string[]) => {
-        isAuthorFilterModified.current = true;
+        setIsAuthorFilterModified(true);
         setAuthorFilter(nextAuthorFilter);
     }, []);
 
@@ -54,6 +54,7 @@ export function useInsightPickerState(author?: string) {
         onSortChange,
         authorFilter,
         onAuthorFilterChange,
+        isAuthorFilterModified,
         tagFilter,
         onTagFilterChange: setTagFilter,
     };

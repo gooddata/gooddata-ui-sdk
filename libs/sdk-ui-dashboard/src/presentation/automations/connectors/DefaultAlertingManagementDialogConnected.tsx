@@ -14,7 +14,7 @@ import { useBuildAutomationsContext } from "./hooks/useBuildAutomationsContext.j
  * Redux store. Use this export when mounting the management dialog outside of
  * AlertingConnector (e.g. embedding scenarios, storybooks, or custom dashboard shells).
  *
- * @alpha
+ * @beta
  */
 export function DefaultAlertingManagementDialogNew(props: IAlertingManagementDialogProps) {
     const automationsCtx = useBuildAutomationsContext();

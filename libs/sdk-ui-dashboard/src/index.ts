@@ -26,6 +26,9 @@ export {
 // TODO remove export after values resolver call from KD is obsolete
 export { resolveFilterValues } from "./model/commandHandlers/drill/common/filterValuesResolver.js";
 
+// exported for hosts that preload the dashboard themselves (KD)
+export { getDashboardLoadReferenceTypes } from "./model/commandHandlers/dashboard/initializeDashboardHandler/loadUnavailableReferences.js";
+
 /*
  * The public API of the Dashboard model is exported from here.
  *
@@ -174,6 +177,7 @@ export {
     type IRestrictedPlaceholderProps,
     RestrictedPlaceholderContent,
 } from "./presentation/widget/common/RestrictedPlaceholder.js";
+export type { IRestrictedFiltersPlaceholderProps } from "./presentation/filterBar/filterBar/RestrictedFiltersPlaceholder.js";
 export {
     type UseDashboardAsyncRender,
     useDashboardAsyncRender,
@@ -195,6 +199,11 @@ export {
     selectDashboardFiltersWithoutCrossFiltering,
     selectDashboardHiddenFilters,
     selectDashboardLockedFilters,
+    selectExecutableDashboardFilters,
+    selectExecutableDashboardFiltersByTab,
+    selectRestrictedDashboardFilterCount,
+    selectRestrictedDashboardFilterLocalIdentifiers,
+    selectRestrictedDashboardFilterLocalIdentifiersForTab,
 } from "./model/store/filtering/dashboardFilterSelectors.js";
 export type { IAutomationFiltersTab } from "./model/store/filtering/types.js";
 
@@ -1747,6 +1756,7 @@ export {
 } from "./model/store/inaccessibleDashboards/inaccessibleDashboardsSelectors.js";
 export {
     selectRestrictedInsightsMap,
+    selectRestrictedRichTextReferences,
     selectUnavailableObjects,
     selectUnavailableObjectsMapByType,
 } from "./model/store/unavailableObjects/unavailableObjectsSelectors.js";
@@ -2022,6 +2032,9 @@ export type {
     OptionalRestrictedPlaceholderComponentProvider,
     RestrictedPlaceholderComponentProvider,
     CustomRestrictedPlaceholderComponent,
+    OptionalRestrictedFiltersPlaceholderComponentProvider,
+    RestrictedFiltersPlaceholderComponentProvider,
+    CustomRestrictedFiltersPlaceholderComponent,
     OptionalRichTextComponentProvider,
     ShowAsTableButtonComponentProvider,
     OptionalShowAsTableButtonComponentProvider,

@@ -22,96 +22,96 @@ export type IBreakpointsConfig = {
  *
  * @internal
  */
-export interface IMediaQueries {
+export interface IMediaQueries<T> {
     /**
      * Is screen classified as smaller than 'sm'?
      */
-    "<sm": string;
+    "<sm": T;
 
     /**
      * Is screen classified as 'sm' or larger?
      */
-    ">=sm": string;
+    ">=sm": T;
 
     /**
      * Is screen classified as 'sm'?
      */
-    sm: string;
+    sm: T;
 
     /**
      * Is screen classified as 'md' or larger?
      */
-    ">=md": string;
+    ">=md": T;
 
     /**
      * Is screen classified as 'md' or smaller?
      */
-    "<=md": string;
+    "<=md": T;
 
     /**
      * Is screen classified as 'md'?
      */
-    md: string;
+    md: T;
 
     /**
      * Is screen classified as 'lg' or larger?
      */
-    ">=lg": string;
+    ">=lg": T;
 
     /**
      * Is screen classified as 'lg' or smaller?
      */
-    "<=lg": string;
+    "<=lg": T;
 
     /**
      * Is screen classified as 'lg'?
      */
-    lg: string;
+    lg: T;
 
     /**
      * Is screen classified as 'xl' or smaller?
      */
-    "<=xl": string;
+    "<=xl": T;
 
     /**
      * Is screen classified as 'xl' or larger?
      */
-    ">=xl": string;
+    ">=xl": T;
 
     /**
      * Is screen classified as 'xl'?
      */
-    xl: string;
+    xl: T;
 
     /**
      * Is screen classified as 'xxl' or larger?
      */
-    ">=xxl": string;
+    ">=xxl": T;
 
     /**
      * Is screen classified as 'xxl'?
      */
-    xxl: string;
+    xxl: T;
 
     /**
      * Is screen classified as a mobile device?
      */
-    mobileDevice: string;
+    mobileDevice: T;
 
     /**
      * Is screen classified as other than mobile device?
      */
-    "!mobileDevice": string;
+    "!mobileDevice": T;
 
     /**
      * Is screen classified as a desktop device?
      */
-    desktop: string;
+    desktop: T;
 
     /**
      * Is screen classified as smaller than desktop device?
      */
-    "<desktop": string;
+    "<desktop": T;
 }
 
 /**

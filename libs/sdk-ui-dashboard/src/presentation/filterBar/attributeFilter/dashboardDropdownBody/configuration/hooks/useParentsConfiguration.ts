@@ -83,7 +83,10 @@ export function useParentsConfiguration(
     const onParentFiltersChange = useCallback(() => {
         // dispatch the command only if the configuration changed
         if (configurationChanged) {
-            const parentFilters: IDashboardAttributeFilterParent[] = [];
+            // the command replaces the whole list, so carry over parents the panel cannot show
+            const parentFilters: IDashboardAttributeFilterParent[] = (filterElementsBy ?? []).filter(
+                (parent) => !parents.some((item) => item.localIdentifier === parent.filterLocalIdentifier),
+            );
             parents.forEach((parentItem) => {
                 if (!parentItem.isSelected) {
                     return;
@@ -112,6 +115,7 @@ export function useParentsConfiguration(
         }
     }, [
         parents,
+        filterElementsBy,
         configurationChanged,
         currentFilter,
         saveParentFilterCommand,

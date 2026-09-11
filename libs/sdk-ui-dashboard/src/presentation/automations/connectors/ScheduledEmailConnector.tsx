@@ -110,8 +110,8 @@ function ScheduledEmailConnectorWithData({ se }: { se: ScheduledEmailsProps }): 
         onScheduleEmailingManagementClose,
         onScheduleEmailingManagementAdd,
         onScheduleEmailingManagementEdit,
-        onScheduleEmailingManagementDeleteSuccess,
-        onScheduleEmailingManagementDeleteError,
+        onScheduleEmailingDeleteSuccess,
+        onScheduleEmailingDeleteError,
         widget,
         insight,
     } = se;
@@ -164,8 +164,8 @@ function ScheduledEmailConnectorWithData({ se }: { se: ScheduledEmailsProps }): 
                     onCreateSuccess={onScheduleEmailingCreateSuccess}
                     onUpdateError={onScheduleEmailingUpdateError}
                     onUpdateSuccess={onScheduleEmailingUpdateSuccess}
-                    onDeleteSuccess={onScheduleEmailingManagementDeleteSuccess}
-                    onDeleteError={onScheduleEmailingManagementDeleteError}
+                    onDeleteSuccess={onScheduleEmailingDeleteSuccess}
+                    onDeleteError={onScheduleEmailingDeleteError}
                 />
             ) : null}
         </ScheduledEmailManagementDialogContextProvider>

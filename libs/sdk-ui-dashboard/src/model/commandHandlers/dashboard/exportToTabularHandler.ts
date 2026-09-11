@@ -14,16 +14,17 @@ import {
 } from "../../events/dashboard.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { selectExportResultPollingTimeout } from "../../store/config/configSelectors.js";
+import {
+    selectExecutableDashboardFilters,
+    selectExecutableDashboardFiltersByTab,
+    selectHasRestrictedDashboardFilters,
+} from "../../store/filtering/dashboardFilterSelectors.js";
 import { selectFilterViews } from "../../store/filterViews/filterViewsReducersSelectors.js";
 import {
     selectDashboardRef,
     selectEffectiveDashboardTimezone,
     selectIsFiltersChanged,
 } from "../../store/meta/metaSelectors.js";
-import {
-    selectFilterContextFilters,
-    selectFiltersByTab,
-} from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectExportEffectiveParameters } from "../../store/tabs/parameters/parametersSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type PromiseFnReturnType } from "../../types/sagas.js";
@@ -83,9 +84,15 @@ export function* exportToTabularHandler(
         yield select(selectIsFiltersChanged);
     const filterViews: SagaReturnType<typeof selectFilterViews> = yield select(selectFilterViews);
     const hasDefaultFilterViewApplied = filterViews.some((filterView) => filterView.isDefault);
-    const filterContextFilters: SagaReturnType<typeof selectFilterContextFilters> =
-        yield select(selectFilterContextFilters);
-    const filtersByTab: ReturnType<typeof selectFiltersByTab> = yield select(selectFiltersByTab);
+    const hasRestrictedFilters: SagaReturnType<typeof selectHasRestrictedDashboardFilters> = yield select(
+        selectHasRestrictedDashboardFilters,
+    );
+    const filterContextFilters: SagaReturnType<typeof selectExecutableDashboardFilters> = yield select(
+        selectExecutableDashboardFilters,
+    );
+    const filtersByTab: ReturnType<typeof selectExecutableDashboardFiltersByTab> = yield select(
+        selectExecutableDashboardFiltersByTab,
+    );
     const parametersByTab: Record<string, IDashboardExportParameter[]> = yield select(
         selectExportEffectiveParameters(widgetIds),
     );
@@ -106,8 +113,12 @@ export function* exportToTabularHandler(
         mergeHeaders,
         exportInfo,
         widgetIds,
-        isFilterContextChanged || hasDefaultFilterViewApplied ? filterContextFilters : undefined,
-        isFilterContextChanged || hasDefaultFilterViewApplied ? filtersByTab : undefined,
+        isFilterContextChanged || hasDefaultFilterViewApplied || hasRestrictedFilters
+            ? filterContextFilters
+            : undefined,
+        isFilterContextChanged || hasDefaultFilterViewApplied || hasRestrictedFilters
+            ? filtersByTab
+            : undefined,
         parametersByTab,
         format,
         pdfConfiguration,

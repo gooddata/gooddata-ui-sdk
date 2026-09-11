@@ -23,7 +23,7 @@ import type {
  * hooks read it instead of reaching into the dashboard store. That direction is enforced by the
  * `no-model-imports-in-clean-alerting` rule in `.dependency-cruiser.js`.
  *
- * @alpha
+ * @beta
  */
 export interface IAlertingDialogContextValue {
     mode: "create" | "edit";
@@ -64,7 +64,7 @@ const AlertingDialogContext = createContext<IAlertingDialogContextValue | undefi
  * component (`CustomAlertingDialogContextDecoratorComponent`) can re-provide a decorated value
  * read from `useAlertingDialogContext()`; it is not a way to run the dialog outside a dashboard.
  *
- * @alpha
+ * @beta
  */
 export const AlertingDialogContextProvider = AlertingDialogContext.Provider;
 
@@ -78,7 +78,7 @@ export const AlertingDialogContextProvider = AlertingDialogContext.Provider;
  * Some members exist to wire internal machinery (`executionResultByRef`, `parameterValues`,
  * `dashboardParameters`) and are not intended as a customization surface.
  *
- * @alpha
+ * @beta
  */
 export function useAlertingDialogContext(): IAlertingDialogContextValue {
     const ctx = useContext(AlertingDialogContext);

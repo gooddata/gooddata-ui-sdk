@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type Ref, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { type FocusEvent, type Ref, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { type ObjRef } from "@gooddata/sdk-model";
 
@@ -173,7 +173,7 @@ const useAsyncTableBodyKeyboardNavigation = (
     ]);
 
     const handleFocus = useCallback(
-        (e: React.FocusEvent) => {
+        (e: FocusEvent) => {
             if (focusedRowIndex === undefined && e.target.matches(":focus-visible")) {
                 setFocusedRowIndex(0);
             }

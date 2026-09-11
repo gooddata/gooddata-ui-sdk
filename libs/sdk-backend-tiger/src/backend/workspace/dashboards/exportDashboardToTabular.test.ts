@@ -3,11 +3,11 @@
 import { type AxiosResponse } from "axios";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
-import * as exportApi from "@gooddata/api-client-tiger/endpoints/export";
+import { ExportApi_CreateDashboardExportRequest } from "@gooddata/api-client-tiger/endpoints/export";
 import { idRef } from "@gooddata/sdk-model";
 
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
-import * as exportPolling from "../../../utils/exportPolling.js";
+import { handleExportResultPolling } from "../../../utils/exportPolling.js";
 
 import { type TigerWorkspaceDashboards } from "./index.js";
 
@@ -46,8 +46,8 @@ describe("TigerWorkspaceDashboards.exportDashboardToTabular — dashboardTabsPar
 
     beforeEach(() => {
         vi.clearAllMocks();
-        vi.mocked(exportApi.ExportApi_CreateDashboardExportRequest).mockResolvedValue(FAKE_AXIOS_RESPONSE);
-        vi.mocked(exportPolling.handleExportResultPolling).mockResolvedValue({
+        vi.mocked(ExportApi_CreateDashboardExportRequest).mockResolvedValue(FAKE_AXIOS_RESPONSE);
+        vi.mocked(handleExportResultPolling).mockResolvedValue({
             uri: "result-uri",
             objectUrl: "blob:result",
         });
@@ -55,7 +55,7 @@ describe("TigerWorkspaceDashboards.exportDashboardToTabular — dashboardTabsPar
 
     async function callExport(options?: Parameters<TigerWorkspaceDashboards["exportDashboardToTabular"]>[1]) {
         await service.exportDashboardToTabular(dashboardRef, { ...options, title: "T" });
-        return vi.mocked(exportApi.ExportApi_CreateDashboardExportRequest).mock.calls[0][2]
+        return vi.mocked(ExportApi_CreateDashboardExportRequest).mock.calls[0][2]
             .exportDashboardTabularExportRequest;
     }
 

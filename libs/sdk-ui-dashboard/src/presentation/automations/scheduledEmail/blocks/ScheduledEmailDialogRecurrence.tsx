@@ -20,7 +20,7 @@ const noop = () => {};
  * while `useScheduledEmailDialogContext().isLoading` is true; otherwise ungated, unlike the other
  * General-tab fields.
  *
- * @alpha
+ * @beta
  */
 export function ScheduledEmailDialogRecurrence(
     props: Partial<IScheduledEmailDialogRecurrenceProps>,

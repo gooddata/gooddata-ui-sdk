@@ -3,7 +3,7 @@
 import { createSelector } from "@reduxjs/toolkit";
 
 import type { IUnavailableDashboardReference } from "@gooddata/sdk-backend-spi";
-import type { ObjectType } from "@gooddata/sdk-model";
+import type { ObjRef, ObjectType } from "@gooddata/sdk-model";
 
 import { type ObjRefMap, newMapForObjectWithRef } from "../../../_staging/metadata/objRefMap.js";
 import { createMemoizedSelector } from "../_infra/selectors.js";
@@ -58,3 +58,25 @@ export const selectRestrictedInsightsMap: DashboardSelector<ObjRefMap<IUnavailab
             "insight",
         ),
     );
+
+/**
+ * Object types a rich text widget can reference: `{metric/id}` and `{label/id}`.
+ */
+const RICH_TEXT_REFERENCE_TYPES: ObjectType[] = ["measure", "displayForm"];
+
+/**
+ * Selects the refs a rich text widget references but the current user is not allowed to read. A
+ * reference that is merely deleted is not included — that keeps rendering today's error value,
+ * while these are replaced by the restricted marker and left out of the widget's execution.
+ *
+ * @alpha
+ */
+export const selectRestrictedRichTextReferences: DashboardSelector<ObjRef[]> = createSelector(
+    selectUnavailableObjects,
+    (objects) =>
+        objects
+            .filter(
+                (object) => object.reason === "forbidden" && RICH_TEXT_REFERENCE_TYPES.includes(object.type),
+            )
+            .map((object) => object.ref),
+);

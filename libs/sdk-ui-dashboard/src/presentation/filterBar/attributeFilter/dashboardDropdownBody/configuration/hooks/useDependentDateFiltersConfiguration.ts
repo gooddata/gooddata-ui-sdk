@@ -109,6 +109,15 @@ export function useDependentDateFiltersConfiguration(
             const commonDateLocalId =
                 commonDateFilter?.dateFilter.localIdentifier ?? generateDateFilterLocalIdentifier(0);
 
+            // the command replaces the whole list, so carry over date filters the panel cannot show
+            const shownLocalIds = new Set([
+                commonDateLocalId,
+                ...dependentDateFilters.map((filter) => filter.localIdentifier),
+            ]);
+            const hiddenDateFilters = (filterElementsByDate ?? []).filter(
+                (by) => !shownLocalIds.has(by.filterLocalIdentifier),
+            );
+
             const dateFilters: IDashboardAttributeFilterByDate[] = dependentDateFilters
                 .filter((filter) => filter.isSelected)
                 .map((filter) =>
@@ -124,10 +133,14 @@ export function useDependentDateFiltersConfiguration(
                           },
                 );
 
-            saveDependentDateFilterCommand(currentFilter.attributeFilter.localIdentifier!, dateFilters);
+            saveDependentDateFilterCommand(currentFilter.attributeFilter.localIdentifier!, [
+                ...hiddenDateFilters,
+                ...dateFilters,
+            ]);
         }
     }, [
         dependentDateFilters,
+        filterElementsByDate,
         onDependentDateFiltersConfigurationChanged,
         currentFilter,
         commonDateFilter,

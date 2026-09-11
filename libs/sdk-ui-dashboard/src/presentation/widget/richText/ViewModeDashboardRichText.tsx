@@ -11,6 +11,7 @@ import { selectSeparators } from "../../../model/store/config/configSelectors.js
 import { DASHBOARD_SUMMARY_MACRO } from "../../../model/store/dashboardSummaryWorkflow/constants.js";
 import { selectCurrentDashboardSummaryWorkflowStatus } from "../../../model/store/dashboardSummaryWorkflow/dashboardSummaryWorkflowSelectors.js";
 import { selectCurrentDashboardSummary } from "../../../model/store/listedDashboards/listedDashboardsSummarySelectors.js";
+import { selectRestrictedRichTextReferences } from "../../../model/store/unavailableObjects/unavailableObjectsSelectors.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 
 import { type IDashboardRichTextProps } from "./types.js";
@@ -27,6 +28,7 @@ export function ViewModeDashboardRichText({
     const intl = useIntl();
     const { filters } = useRichTextWidgetFilters(widget);
     const separators = useDashboardSelector(selectSeparators);
+    const restrictedReferences = useDashboardSelector(selectRestrictedRichTextReferences);
     const { LoadingComponent } = useDashboardComponentsContext();
     const dashboardSummary = useDashboardSelector(selectCurrentDashboardSummary);
     const summaryWorkflowStatus = useDashboardSelector(selectCurrentDashboardSummaryWorkflowStatus);
@@ -66,6 +68,7 @@ export function ViewModeDashboardRichText({
             value={value}
             filters={filters}
             separators={separators}
+            restrictedReferences={restrictedReferences}
             renderMode="view"
             rawContent={{
                 show: !!richTextExportData,

@@ -24,7 +24,7 @@ import { type IScheduleTimezoneSelection, type IScheduledEmailDialogProps } from
  *
  * Changes on every keystroke; consumers re-render by design.
  *
- * @alpha
+ * @beta
  */
 export interface IScheduledExportDraftContextValue {
     /**
@@ -84,7 +84,7 @@ export interface IScheduledExportDraftContextValue {
  *
  * Changes rarely.
  *
- * @alpha
+ * @beta
  */
 export interface IScheduledExportActionsContextValue {
     /**
@@ -163,7 +163,7 @@ export interface IScheduledExportActionsContextValue {
  *
  * Changes when the current user or the override changes, so not while the draft is edited.
  *
- * @alpha
+ * @beta
  */
 export interface IScheduledExportDataContextValue {
     /**
@@ -183,7 +183,7 @@ export interface IScheduledExportDataContextValue {
  *
  * Changes when a filter, a parameter or the store-filters toggle is edited; never per keystroke.
  *
- * @alpha
+ * @beta
  */
 export interface IScheduledExportFiltersContextValue {
     /**
@@ -364,7 +364,7 @@ export type IScheduleTimezoneState = Pick<
 /**
  * The scheduled-export dialog's validity.
  *
- * @alpha
+ * @beta
  */
 export interface IScheduledExportDialogValidity {
     /**
@@ -394,7 +394,7 @@ export interface IScheduledExportDialogValidity {
  * What the scheduled-export dialog's attachment section displays, derived from the draft's export
  * definitions with the defaults applied.
  *
- * @alpha
+ * @beta
  */
 export interface IScheduledExportAttachments {
     /**
@@ -440,7 +440,7 @@ export interface IScheduledExportAttachments {
  * Lifecycle callbacks of {@link useSaveScheduledEmailToBackend}: `onCreateSuccess`/`onCreateError`
  * (create) and `onUpdateSuccess`/`onUpdateError` (edit).
  *
- * @alpha
+ * @beta
  */
 export type IUseSaveScheduledEmailCallbacks = Pick<
     IScheduledEmailDialogProps,
@@ -450,7 +450,7 @@ export type IUseSaveScheduledEmailCallbacks = Pick<
 /**
  * The scheduled-export dialog's save path.
  *
- * @alpha
+ * @beta
  */
 export interface IScheduledEmailSaveState {
     /**

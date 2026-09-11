@@ -27,7 +27,7 @@ import { WhenAlertingDialogLoaded } from "./WhenAlertingDialogLoaded.js";
  * <AlertingDialogComparisonOperator enableAnomalyDetectionAlert={false} />
  * ```
  *
- * @alpha
+ * @beta
  */
 export function AlertingDialogComparisonOperator(
     overrides: Partial<IAlertingDialogComparisonOperatorProps>,

@@ -42,7 +42,7 @@ const options: {
  * dialog context (only `useIntl`). The default dialog and {@link AlertingDialogSensitivity} render
  * it with {@link useAlertingDialogSensitivityProps} inside {@link AutomationDialogFormField}.
  *
- * @alpha
+ * @beta
  */
 export function DefaultAlertingDialogSensitivity({
     id,

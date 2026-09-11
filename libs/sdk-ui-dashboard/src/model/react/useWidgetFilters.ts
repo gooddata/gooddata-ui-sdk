@@ -26,8 +26,8 @@ import { usePrevious } from "@gooddata/sdk-ui";
 import { safeSerializeObjRef } from "../../_staging/metadata/safeSerializeObjRef.js";
 import { type IQueryWidgetFilters, queryWidgetFilters } from "../queries/widgets.js";
 import { selectCrossFilteringFiltersLocalIdentifiersByWidgetRef } from "../store/drill/drillSelectors.js";
+import { selectExecutableDashboardFilters } from "../store/filtering/dashboardFilterSelectors.js";
 import { selectIsInEditMode } from "../store/renderMode/renderModeSelectors.js";
-import { selectFilterContextFilters } from "../store/tabs/filterContext/filterContextSelectors.js";
 import { type FilterableDashboardWidget } from "../types/layoutTypes.js";
 
 import { useDashboardSelector } from "./DashboardStoreProvider.js";
@@ -135,7 +135,7 @@ function useWidgetFiltersImpl(
  * @param widget - widget to get the non-ignored filters for
  */
 function useNonIgnoredFilters(widget: FilterableDashboardWidget | undefined | null) {
-    const dashboardFilters = useDashboardSelector(selectFilterContextFilters);
+    const dashboardFilters = useDashboardSelector(selectExecutableDashboardFilters);
     const crossFilteringLocalIdentifiersForThisWidget = useDashboardSelector(
         selectCrossFilteringFiltersLocalIdentifiersByWidgetRef(widget?.ref),
     );

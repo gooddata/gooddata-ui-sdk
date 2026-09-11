@@ -112,6 +112,12 @@ export interface IInsightPickerProps {
     /** Selected author IDs. Empty array = "All". */
     authorFilter: string[];
     onAuthorFilterChange: (authorIds: string[]) => void;
+    /**
+     * Whether the user has changed the author filter. The picker replaces its own "Me" default
+     * with "All" when that default matches nothing, and this tells it apart from the same value
+     * chosen by the user. Owned by the caller, so it outlives the picker being closed and reopened.
+     */
+    isAuthorFilterModified: boolean;
 
     // --- Controlled tag filter ---
     /** Selected tag values. Empty array = "All". */

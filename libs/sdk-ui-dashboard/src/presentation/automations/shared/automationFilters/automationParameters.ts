@@ -27,7 +27,7 @@ import {
  * dialog. The `value` is the current effective value the headless run will capture; `definition`
  * picks which control renders.
  *
- * @alpha
+ * @beta
  */
 export interface IAutomationParameter {
     /**

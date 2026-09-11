@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactNode } from "react";
+
 import { render } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -22,6 +24,8 @@ const fixtures = vi.hoisted(() => {
     const onScheduleEmailingCreateError = vi.fn();
     const onScheduleEmailingUpdateSuccess = vi.fn();
     const onScheduleEmailingUpdateError = vi.fn();
+    const onScheduleEmailingDeleteSuccess = vi.fn();
+    const onScheduleEmailingDeleteError = vi.fn();
     let managementDialogProps: Record<string, unknown> | undefined;
     let dialogProps: Record<string, unknown> | undefined;
     let automationsError: Error | undefined;
@@ -38,6 +42,8 @@ const fixtures = vi.hoisted(() => {
         onScheduleEmailingCreateError,
         onScheduleEmailingUpdateSuccess,
         onScheduleEmailingUpdateError,
+        onScheduleEmailingDeleteSuccess,
+        onScheduleEmailingDeleteError,
         seState,
         get managementDialogProps() {
             return managementDialogProps;
@@ -97,8 +103,8 @@ vi.mock("../../../model/react/useDasboardScheduledEmails/useDashboardScheduledEm
         onScheduleEmailingManagementClose: vi.fn(),
         onScheduleEmailingManagementAdd: vi.fn(),
         onScheduleEmailingManagementEdit: fixtures.onScheduleEmailingManagementEdit,
-        onScheduleEmailingManagementDeleteSuccess: vi.fn(),
-        onScheduleEmailingManagementDeleteError: vi.fn(),
+        onScheduleEmailingDeleteSuccess: fixtures.onScheduleEmailingDeleteSuccess,
+        onScheduleEmailingDeleteError: fixtures.onScheduleEmailingDeleteError,
         widget: { type: "insight", ref: { identifier: "widget-1" } },
         insight: { insight: { identifier: "insight-1", title: "Insight" } },
     }),
@@ -153,15 +159,15 @@ vi.mock("../scheduledEmail/ScheduledEmailManagementDialog.js", () => ({
 }));
 
 vi.mock("../contexts/AutomationsContext.js", () => ({
-    AutomationsContextProvider: ({ children }: { children: React.ReactNode }) => children,
+    AutomationsContextProvider: ({ children }: { children: ReactNode }) => children,
 }));
 
 vi.mock("../contexts/ScheduledEmailDialogContext.js", () => ({
-    ScheduledEmailDialogContextProvider: ({ children }: { children: React.ReactNode }) => children,
+    ScheduledEmailDialogContextProvider: ({ children }: { children: ReactNode }) => children,
 }));
 
 vi.mock("../contexts/ScheduledEmailManagementDialogContext.js", () => ({
-    ScheduledEmailManagementDialogContextProvider: ({ children }: { children: React.ReactNode }) => children,
+    ScheduledEmailManagementDialogContextProvider: ({ children }: { children: ReactNode }) => children,
 }));
 
 vi.mock("./hooks/useBuildAutomationsContext.js", () => ({
@@ -272,6 +278,8 @@ describe("ScheduledEmailConnector", () => {
         expect(fixtures.dialogProps?.["onCreateError"]).toBe(fixtures.onScheduleEmailingCreateError);
         expect(fixtures.dialogProps?.["onUpdateSuccess"]).toBe(fixtures.onScheduleEmailingUpdateSuccess);
         expect(fixtures.dialogProps?.["onUpdateError"]).toBe(fixtures.onScheduleEmailingUpdateError);
+        expect(fixtures.dialogProps?.["onDeleteSuccess"]).toBe(fixtures.onScheduleEmailingDeleteSuccess);
+        expect(fixtures.dialogProps?.["onDeleteError"]).toBe(fixtures.onScheduleEmailingDeleteError);
     });
 
     it("does not supply the deprecated data props to the management dialog", () => {

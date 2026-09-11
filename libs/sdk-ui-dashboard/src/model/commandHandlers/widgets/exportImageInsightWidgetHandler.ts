@@ -14,8 +14,8 @@ import {
     insightWidgetExportResolved,
 } from "../../events/insight.js";
 import { selectExportResultPollingTimeout } from "../../store/config/configSelectors.js";
+import { selectExecutableDashboardFilters } from "../../store/filtering/dashboardFilterSelectors.js";
 import { selectDashboardRef, selectEffectiveDashboardTimezone } from "../../store/meta/metaSelectors.js";
-import { selectFilterContextFilters } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectExportEffectiveParameters } from "../../store/tabs/parameters/parametersSelectors.js";
 import { selectActiveTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
@@ -33,7 +33,7 @@ export function* exportImageInsightWidgetHandler(
         throw invalidArgumentsProvided(ctx, cmd, "Dashboard to export to image must have an ObjRef.");
     }
 
-    const filterContextFilters = yield select(selectFilterContextFilters);
+    const filterContextFilters = yield select(selectExecutableDashboardFilters);
     const effectiveFilters = ensureAllTimeFilterForExport(filterContextFilters);
     const activeTabLocalIdentifier: ReturnType<typeof selectActiveTabLocalIdentifier> = yield select(
         selectActiveTabLocalIdentifier,

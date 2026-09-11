@@ -37,9 +37,21 @@ vi.mock("../../contexts/AlertingDialogContext.js", () => ({
     useAlertingDialogContext: vi.fn(),
 }));
 
-import * as AlertingDialogContextModule from "../../contexts/AlertingDialogContext.js";
+import {
+    type IAlertingDialogContextValue,
+    useAlertingDialogContext,
+} from "../../contexts/AlertingDialogContext.js";
 import { type AlertAttribute, type AlertMetric } from "../types.js";
-import * as gettersModule from "../utils/getters.js";
+import {
+    getAlertAiOperator,
+    getAlertAttribute,
+    getAlertCompareOperator,
+    getAlertComparison,
+    getAlertGranularity,
+    getAlertMeasure,
+    getAlertRelativeOperator,
+    getAlertSensitivity,
+} from "../utils/getters.js";
 
 import { AlertDataContextProvider } from "./AlertDataContext.js";
 import { AlertDraftContextProvider } from "./AlertDraftContext.js";
@@ -52,15 +64,15 @@ import {
 
 // Typed spy references (resolved after import)
 
-const getAlertMeasureSpy = vi.mocked(gettersModule.getAlertMeasure);
-const getAlertCompareOperatorSpy = vi.mocked(gettersModule.getAlertCompareOperator);
-const getAlertRelativeOperatorSpy = vi.mocked(gettersModule.getAlertRelativeOperator);
-const getAlertAiOperatorSpy = vi.mocked(gettersModule.getAlertAiOperator);
-const getAlertComparisonSpy = vi.mocked(gettersModule.getAlertComparison);
-const getAlertSensitivitySpy = vi.mocked(gettersModule.getAlertSensitivity);
-const getAlertGranularitySpy = vi.mocked(gettersModule.getAlertGranularity);
-const getAlertAttributeSpy = vi.mocked(gettersModule.getAlertAttribute);
-const useAlertingDialogContextSpy = vi.mocked(AlertingDialogContextModule.useAlertingDialogContext);
+const getAlertMeasureSpy = vi.mocked(getAlertMeasure);
+const getAlertCompareOperatorSpy = vi.mocked(getAlertCompareOperator);
+const getAlertRelativeOperatorSpy = vi.mocked(getAlertRelativeOperator);
+const getAlertAiOperatorSpy = vi.mocked(getAlertAiOperator);
+const getAlertComparisonSpy = vi.mocked(getAlertComparison);
+const getAlertSensitivitySpy = vi.mocked(getAlertSensitivity);
+const getAlertGranularitySpy = vi.mocked(getAlertGranularity);
+const getAlertAttributeSpy = vi.mocked(getAlertAttribute);
+const useAlertingDialogContextSpy = vi.mocked(useAlertingDialogContext);
 
 // Fixtures
 
@@ -360,7 +372,7 @@ const DATA_FIXTURE: IAlertDataContextValue = {
     defaultRecipient: { id: "user1", type: "user" },
 };
 
-const DIALOG_FIXTURE: AlertingDialogContextModule.IAlertingDialogContextValue = {
+const DIALOG_FIXTURE: IAlertingDialogContextValue = {
     mode: "create",
     widget: undefined,
     insight: undefined,

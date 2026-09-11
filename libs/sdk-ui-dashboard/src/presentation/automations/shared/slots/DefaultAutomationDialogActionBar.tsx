@@ -49,7 +49,7 @@ export function AutomationDialogFooterLeft({
  * {@link AlertingDialogActionBar} and {@link ScheduledEmailDialogActionBar} render it with the
  * tree's action-bar props hook; a `slots.ActionBar` slot receives it as `Default`.
  *
- * @alpha
+ * @beta
  */
 export function DefaultAutomationDialogActionBar({
     cancelButtonText,

@@ -14,11 +14,11 @@ import {
     insightWidgetExportResolved,
 } from "../../events/insight.js";
 import { selectExportResultPollingTimeout } from "../../store/config/configSelectors.js";
-import { selectDashboardRef, selectEffectiveDashboardTimezone } from "../../store/meta/metaSelectors.js";
 import {
-    selectFilterContextFilters,
-    selectFiltersByTab,
-} from "../../store/tabs/filterContext/filterContextSelectors.js";
+    selectExecutableDashboardFilters,
+    selectExecutableDashboardFiltersByTab,
+} from "../../store/filtering/dashboardFilterSelectors.js";
+import { selectDashboardRef, selectEffectiveDashboardTimezone } from "../../store/meta/metaSelectors.js";
 import { selectExportEffectiveParameters } from "../../store/tabs/parameters/parametersSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type PromiseFnReturnType } from "../../types/sagas.js";
@@ -34,9 +34,11 @@ export function* exportSlidesInsightWidgetHandler(
     if (!dashboardRef) {
         throw invalidArgumentsProvided(ctx, cmd, "Dashboard to export to slides must have an ObjRef.");
     }
-    const filterContextFilters = yield select(selectFilterContextFilters);
+    const filterContextFilters = yield select(selectExecutableDashboardFilters);
     const effectiveFilters = ensureAllTimeFilterForExport(filterContextFilters);
-    const filtersByTab: ReturnType<typeof selectFiltersByTab> = yield select(selectFiltersByTab);
+    const filtersByTab: ReturnType<typeof selectExecutableDashboardFiltersByTab> = yield select(
+        selectExecutableDashboardFiltersByTab,
+    );
     const effectiveFiltersByTab: FiltersByTab = Object.entries(filtersByTab).reduce(
         (acc, [tabId, filters]) => {
             acc[tabId] = ensureAllTimeFilterForExport(filters);

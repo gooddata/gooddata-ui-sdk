@@ -72,10 +72,13 @@ vi.mock("../../contexts/AlertingDialogContext.js", () => ({
 // Imports placed AFTER vi.mock() calls to pick up mocked versions
 // ---------------------------------------------------------------------------
 
-import * as sdkUi from "@gooddata/sdk-ui";
+import { fillMissingTitles } from "@gooddata/sdk-ui";
 
-import * as gettersModule from "../utils/getters.js";
-import * as itemsModule from "../utils/items.js";
+import { getMeasureFormatsFromExecution } from "../utils/getters.js";
+import {
+    getSupportedInsightAttributesByInsight,
+    getSupportedInsightMeasuresByInsight,
+} from "../utils/items.js";
 
 import { useAlertSupportedMetrics, type IUseAlertSupportedMetricsProps } from "./useAlertSupportedMetrics.js";
 
@@ -83,12 +86,10 @@ import { useAlertSupportedMetrics, type IUseAlertSupportedMetricsProps } from ".
 // Typed spy references (resolved after import)
 // ---------------------------------------------------------------------------
 
-const fillMissingTitlesSpy = vi.mocked(sdkUi.fillMissingTitles);
-const getSupportedInsightMeasuresByInsightSpy = vi.mocked(itemsModule.getSupportedInsightMeasuresByInsight);
-const getSupportedInsightAttributesByInsightSpy = vi.mocked(
-    itemsModule.getSupportedInsightAttributesByInsight,
-);
-const getMeasureFormatsFromExecutionSpy = vi.mocked(gettersModule.getMeasureFormatsFromExecution);
+const fillMissingTitlesSpy = vi.mocked(fillMissingTitles);
+const getSupportedInsightMeasuresByInsightSpy = vi.mocked(getSupportedInsightMeasuresByInsight);
+const getSupportedInsightAttributesByInsightSpy = vi.mocked(getSupportedInsightAttributesByInsight);
+const getMeasureFormatsFromExecutionSpy = vi.mocked(getMeasureFormatsFromExecution);
 
 // ---------------------------------------------------------------------------
 // Fixtures

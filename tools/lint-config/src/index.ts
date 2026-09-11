@@ -5,6 +5,7 @@ export type { IPackage, GlobalValue, Rules } from "./types.js";
 export { chaiFriendlyPlugin, chaiFriendlyRules } from "./configurations/chai-friendly.js";
 export {
     eslintOverrides,
+    eslintOverridesNativeSupported,
     eslintRules,
     eslintRulesNativeSupported,
     eslintRulesNativeNotSupported,

@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 export const DefaultLocale = "en-US.json";
 
@@ -18,7 +18,7 @@ export type ToolkitOptions = {
     debug?: boolean;
 };
 
-export const DefaultConfigName = ".i18nrc.cjs";
+export const DefaultConfigFileNames = [".i18nrc.js", ".i18nrc.mjs", ".i18nrc.cjs"];
 
 export type ToolkitConfigFile = Omit<ToolkitOptions, "cwd"> & {
     source?: string;

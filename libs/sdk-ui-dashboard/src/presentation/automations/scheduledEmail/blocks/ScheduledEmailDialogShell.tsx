@@ -62,8 +62,8 @@ const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z
  * shell itself. The shell does not own the save: call {@link useSaveScheduledEmailToBackend} and pass its
  * `handleSaveScheduledEmail`, `isSavingScheduledEmail` and `savingErrorMessage`; build Enter handlers for
  * the blocks you place with {@link useScheduledEmailSubmitOnEnter} over the same `handleSaveScheduledEmail`.
- * Call that hook only once `useScheduledEmailDialogContext().isLoading` is first false — the state hooks
- * throw until the dialog's data has first loaded (after that they stay available through a refresh) —
+ * Call that hook once `useScheduledEmailDialogContext().isLoading` is false for the first time — the state
+ * hooks throw until the dialog's data has first loaded (after that they stay available through a refresh) —
  * and render the shell alone (any `onSubmit`, `isSaving: false`) until then, as the example does.
  *
  * Needs an ambient `IntlProvider`; inside a `Dashboard` the dashboard's provider covers it.
@@ -100,7 +100,7 @@ const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z
  * }
  * ```
  *
- * @alpha
+ * @beta
  */
 export function ScheduledEmailDialogShell(props: IScheduledEmailDialogShellProps): ReactElement {
     const { isLoading, scheduledExportToEdit } = useScheduledEmailDialogContext();

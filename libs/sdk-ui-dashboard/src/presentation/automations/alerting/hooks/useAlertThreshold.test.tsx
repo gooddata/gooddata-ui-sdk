@@ -42,17 +42,17 @@ vi.mock("../utils/transformation.js", async (importOriginal: () => Promise<Recor
 // Imports placed AFTER vi.mock() calls to pick up mocked versions
 // ---------------------------------------------------------------------------
 
-import * as transformationModule from "../utils/transformation.js";
+import { transformAlertByValue } from "../utils/transformation.js";
 
 import { useAlertThreshold, type IUseAlertThresholdProps } from "./useAlertThreshold.js";
-import * as useThresholdValueModule from "./useThresholdValue.js";
+import { useThresholdValue } from "./useThresholdValue.js";
 
 // ---------------------------------------------------------------------------
 // Typed spy references (resolved after import)
 // ---------------------------------------------------------------------------
 
-const useThresholdValueSpy = vi.mocked(useThresholdValueModule.useThresholdValue);
-const transformAlertByValueSpy = vi.mocked(transformationModule.transformAlertByValue);
+const useThresholdValueSpy = vi.mocked(useThresholdValue);
+const transformAlertByValueSpy = vi.mocked(transformAlertByValue);
 
 // ---------------------------------------------------------------------------
 // Fixtures

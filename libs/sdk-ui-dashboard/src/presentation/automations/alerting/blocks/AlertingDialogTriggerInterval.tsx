@@ -25,7 +25,7 @@ const INTERVAL_TOOLTIP = defineMessage({ id: "insightAlert.config.interval.toolt
  * the hook's value for that prop wholesale. Renders nothing unless the draft's trigger mode is
  * `ONCE_PER_INTERVAL`, and nothing while `useAlertingDialogContext().isLoading` is true.
  *
- * @alpha
+ * @beta
  */
 export function AlertingDialogTriggerInterval(
     overrides: Partial<IAlertingDialogTriggerIntervalProps>,

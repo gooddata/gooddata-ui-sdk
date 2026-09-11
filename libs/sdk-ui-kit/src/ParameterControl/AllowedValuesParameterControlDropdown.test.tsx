@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ComponentProps } from "react";
+
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
@@ -24,7 +26,7 @@ const manyAllowedValues: IParameterAllowedValue[] = Array.from({ length: 8 }, (_
 }));
 
 const renderDropdown = (
-    props: Partial<React.ComponentProps<typeof AllowedValuesParameterControlDropdown>> = {},
+    props: Partial<ComponentProps<typeof AllowedValuesParameterControlDropdown>> = {},
 ) => {
     return render(
         <WrappedAllowedValuesParameterControlDropdown

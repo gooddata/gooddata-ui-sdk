@@ -12,7 +12,7 @@ import { useScheduledExportDialogValidity } from "./useScheduledExportDialogVali
  * Inputs of {@link useScheduledEmailSubmitOnEnter} — the dialog's single save, from one
  * {@link useSaveScheduledEmailToBackend} instance.
  *
- * @alpha
+ * @beta
  */
 export interface IUseScheduledEmailSubmitOnEnterInput {
     /**
@@ -35,7 +35,7 @@ export interface IUseScheduledEmailSubmitOnEnterInput {
  *
  * Throws outside the scheduled-export dialog's state providers.
  *
- * @alpha
+ * @beta
  */
 export function useScheduledEmailSubmitOnEnter({
     onSubmit,

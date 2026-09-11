@@ -22,7 +22,7 @@ export const ScheduledExportFiltersContextProvider = ScheduledExportFiltersConte
  * widget export renders while its filters load. An automations refresh flips `isLoading` back
  * without unmounting the model, so the draft survives and this accessor keeps serving through it.
  *
- * @alpha
+ * @beta
  */
 export function useScheduledExportFilters(): IScheduledExportFiltersContextValue {
     return (

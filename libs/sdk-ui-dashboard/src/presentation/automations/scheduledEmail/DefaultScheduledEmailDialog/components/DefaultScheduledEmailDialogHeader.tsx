@@ -20,7 +20,7 @@ import { type IScheduledEmailDialogHeaderProps } from "../../types.js";
  * {@link ScheduledEmailDialogHeader} render it with {@link useScheduledEmailDialogHeaderProps}; a
  * `slots.Header` slot receives it as `Default`.
  *
- * @alpha
+ * @beta
  */
 export const DefaultScheduledEmailDialogHeader = forwardRef<
     HTMLInputElement,
@@ -29,12 +29,12 @@ export const DefaultScheduledEmailDialogHeader = forwardRef<
     const {
         title,
         placeholder,
+        isSecondaryTitleVisible,
         secondaryTitle,
         secondaryTitleIcon,
-        isSecondaryTitleVisible,
         onChange,
-        onBack,
         onTitleKeyDown,
+        onBack,
     } = props;
 
     const { formatMessage } = useIntl();

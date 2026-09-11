@@ -50,8 +50,8 @@ vi.mock("../utils/transformation.js", async (importOriginal: () => Promise<Recor
 // Imports placed AFTER vi.mock() calls to pick up mocked versions
 // ---------------------------------------------------------------------------
 
-import * as utilsModule from "../../shared/filters/index.js";
-import * as transformationModule from "../utils/transformation.js";
+import { getAppliedWidgetFilters, getVisibleFiltersByFilters } from "../../shared/filters/index.js";
+import { transformAlertByAttribute, transformAlertByMetric } from "../utils/transformation.js";
 
 import {
     useAlertDraftFilterWrites,
@@ -62,10 +62,10 @@ import {
 // Typed spy references (resolved after import)
 // ---------------------------------------------------------------------------
 
-const getAppliedWidgetFiltersSpy = vi.mocked(utilsModule.getAppliedWidgetFilters);
-const getVisibleFiltersByFiltersSpy = vi.mocked(utilsModule.getVisibleFiltersByFilters);
-const transformAlertByAttributeSpy = vi.mocked(transformationModule.transformAlertByAttribute);
-const transformAlertByMetricSpy = vi.mocked(transformationModule.transformAlertByMetric);
+const getAppliedWidgetFiltersSpy = vi.mocked(getAppliedWidgetFilters);
+const getVisibleFiltersByFiltersSpy = vi.mocked(getVisibleFiltersByFilters);
+const transformAlertByAttributeSpy = vi.mocked(transformAlertByAttribute);
+const transformAlertByMetricSpy = vi.mocked(transformAlertByMetric);
 
 // ---------------------------------------------------------------------------
 // Fixtures

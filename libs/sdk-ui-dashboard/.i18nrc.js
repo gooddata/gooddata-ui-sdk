@@ -1,7 +1,7 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
-module.exports = {
-    paths: ["./src/localization/bundles"],
+export default {
+    paths: ["./src/presentation/localization/bundles"],
     structure: true,
     intl: true,
     html: true,
@@ -16,13 +16,8 @@ module.exports = {
         },
         // some messages are used from kit components so the validator does not "see" them
         {
-            dir: /src\/localization\/bundles/,
+            dir: /src\/presentation\/localization\/bundles/,
             pattern: /^(gs\.date\.(today|tomorrow|yesterday))$/,
-            ignore: true,
-        },
-        {
-            dir: /src\/localization\/bundles/,
-            pattern: /^(drill\.)/,
             ignore: true,
         },
     ],

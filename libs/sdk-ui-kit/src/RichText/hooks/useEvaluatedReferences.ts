@@ -2,19 +2,26 @@
 
 import { useMemo } from "react";
 
-import { type IExecutionConfig, type IFilter } from "@gooddata/sdk-model";
+import { type IExecutionConfig, type IFilter, type ObjRef } from "@gooddata/sdk-model";
 
-import { collectReferences } from "../helpers/references.js";
+import { collectReferences, excludeReferences } from "../helpers/references.js";
 
 import { useEvaluatedMetricsAndAttributes } from "./useEvaluatedMetricsAndAttributes.js";
+
+/** A stable default, so a caller that has nothing restricted does not churn the memo below. */
+const NO_RESTRICTED_REFERENCES: ObjRef[] = [];
 
 export function useEvaluatedReferences(
     value: string,
     filters: IFilter[],
     config: IExecutionConfig & { enabled: boolean; isFiltersLoading?: boolean },
+    restrictedReferences: ObjRef[] = NO_RESTRICTED_REFERENCES,
 ) {
     const isEmptyValue = useMemo(() => !value?.replace(/\s/g, ""), [value]);
-    const references = useMemo(() => collectReferences(value), [value]);
+    const references = useMemo(
+        () => excludeReferences(collectReferences(value), restrictedReferences),
+        [value, restrictedReferences],
+    );
 
     const {
         loading,

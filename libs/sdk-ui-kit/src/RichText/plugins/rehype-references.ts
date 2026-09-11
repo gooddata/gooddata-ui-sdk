@@ -6,23 +6,38 @@ import { type IntlShape } from "react-intl";
 import { type Parent } from "unist";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
-import { type ISeparators, type IdentifierRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import { type ISeparators, type IdentifierRef, type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
 import { createReference } from "../helpers/references.js";
 import { type EvaluatedMetric } from "../hooks/useEvaluatedMetricsAndAttributes.js";
 
 import { type HtmlNode, REFERENCE_REGEX_MATCH, REFERENCE_REGEX_SPLIT, type TextNode } from "./types.js";
 
-export function rehypeReferences(intl: IntlShape, metrics?: EvaluatedMetric[], separators?: ISeparators) {
+export function rehypeReferences(
+    intl: IntlShape,
+    metrics?: EvaluatedMetric[],
+    separators?: ISeparators,
+    restrictedReferences?: ObjRef[],
+) {
+    const isRestricted = (ref: IdentifierRef) =>
+        !!restrictedReferences?.some((restricted) => areObjRefsEqual(restricted, ref));
+
     return function () {
         return function (tree: Root) {
             iterateTree(tree as HtmlNode, {
                 onTextNodeReference: (text, ref) => {
+                    if (isRestricted(ref)) {
+                        return [createRestrictedMarker(intl, text)];
+                    }
                     const metric = metrics?.find((m) => areObjRefsEqual(m.ref, ref));
                     const { metricDef } = createMetricValue(intl, text, metric!, separators);
                     return [metricDef];
                 },
                 onTextRawReference: (ref) => {
+                    // markup cannot be nested in a URL or an alt text, so the marker is its word alone
+                    if (isRestricted(ref)) {
+                        return intl.formatMessage({ id: "richText.restricted" });
+                    }
                     const metric = metrics?.find((m) => areObjRefsEqual(m.ref, ref));
                     const { value, formattedValue } = createMetricValue(intl, null, metric!, separators);
                     return value === null ? "" : formattedValue;
@@ -30,6 +45,22 @@ export function rehypeReferences(intl: IntlShape, metrics?: EvaluatedMetric[], s
             });
             return tree;
         };
+    };
+}
+
+/**
+ * Stands in for a reference the user is not allowed to read. It never names the object, because the
+ * reference is the object's identifier; the rest of the text keeps its own values.
+ */
+function createRestrictedMarker(intl: IntlShape, text: TextNode | null) {
+    return {
+        type: "element",
+        tagName: "span",
+        properties: {
+            className: "gd-rich-text-metric-restricted gd-icon-lock",
+        },
+        position: text?.position ?? undefined,
+        children: [{ type: "text", value: intl.formatMessage({ id: "richText.restricted" }) }],
     };
 }
 

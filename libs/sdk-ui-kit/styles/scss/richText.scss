@@ -36,6 +36,17 @@
     .gd-rich-text-metric-multiple {
         color: variables.$gd-palette-error-base;
     }
+
+    .gd-rich-text-metric-restricted {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 4px;
+        color: variables.$gd-color-state-blank;
+
+        &::before {
+            font-size: 12px;
+        }
+    }
 }
 
 .gd-rich-text-content-view {

@@ -6,9 +6,12 @@ import { InvariantError } from "ts-invariant";
 import {
     type FilterBarComponentProvider,
     type OptionalFilterBarComponentProvider,
+    type OptionalRestrictedFiltersPlaceholderComponentProvider,
+    type RestrictedFiltersPlaceholderComponentProvider,
 } from "../../presentation/dashboardContexts/types.js";
 import { HiddenFilterBar } from "../../presentation/filterBar/filterBar/HiddenFilterBar.js";
 import { RenderModeAwareFilterBar } from "../../presentation/filterBar/filterBar/RenderModeAwareFilterBar.js";
+import { RestrictedFiltersPlaceholder } from "../../presentation/filterBar/filterBar/RestrictedFiltersPlaceholder.js";
 import { type CustomFilterBarComponent } from "../../presentation/filterBar/filterBar/types.js";
 import { type FilterBarRenderingMode, type IFilterBarCustomizer } from "../customizer.js";
 
@@ -19,11 +22,17 @@ const DefaultFilterBarRendererProvider: FilterBarComponentProvider = () => {
     return RenderModeAwareFilterBar;
 };
 
+const DefaultRestrictedFiltersPlaceholderProvider: RestrictedFiltersPlaceholderComponentProvider = () => {
+    return RestrictedFiltersPlaceholder;
+};
+
 interface IFilterBarCustomizerState {
     setRenderingMode(mode: FilterBarRenderingMode): void;
     getRenderingMode(): FilterBarRenderingMode;
     addCustomProvider(provider: OptionalFilterBarComponentProvider): void;
+    addRestrictedPlaceholderProvider(provider: OptionalRestrictedFiltersPlaceholderComponentProvider): void;
     getRootProvider(): FilterBarComponentProvider;
+    getRestrictedPlaceholderProvider(): RestrictedFiltersPlaceholderComponentProvider;
     switchRootProvider(provider: FilterBarComponentProvider): void;
 }
 
@@ -72,11 +81,33 @@ class FilterBarCustomizerState implements IFilterBarCustomizerState {
      */
     private rootProvider: FilterBarComponentProvider = this.coreProvider;
 
+    private readonly restrictedPlaceholderProviderChain: RestrictedFiltersPlaceholderComponentProvider[];
+
+    private readonly restrictedPlaceholderProvider: RestrictedFiltersPlaceholderComponentProvider = () => {
+        const providerStack = [...this.restrictedPlaceholderProviderChain].reverse();
+
+        for (const provider of providerStack) {
+            const Component = provider();
+
+            if (Component) {
+                return Component;
+            }
+        }
+
+        // the chain is primed with the default provider, which never returns undefined
+        throw new InvariantError();
+    };
+
     private renderingMode: FilterBarRenderingMode | undefined = undefined;
     private logger: IDashboardCustomizationLogger;
 
-    constructor(defaultProvider: FilterBarComponentProvider, logger: IDashboardCustomizationLogger) {
+    constructor(
+        defaultProvider: FilterBarComponentProvider,
+        logger: IDashboardCustomizationLogger,
+        defaultRestrictedPlaceholderProvider: RestrictedFiltersPlaceholderComponentProvider,
+    ) {
         this.coreProviderChain = [defaultProvider];
+        this.restrictedPlaceholderProviderChain = [defaultRestrictedPlaceholderProvider];
         this.logger = logger;
     }
 
@@ -97,8 +128,16 @@ class FilterBarCustomizerState implements IFilterBarCustomizerState {
         this.coreProviderChain.push(provider);
     }
 
+    addRestrictedPlaceholderProvider(provider: RestrictedFiltersPlaceholderComponentProvider): void {
+        this.restrictedPlaceholderProviderChain.push(provider);
+    }
+
     getRootProvider(): FilterBarComponentProvider {
         return this.rootProvider;
+    }
+
+    getRestrictedPlaceholderProvider(): RestrictedFiltersPlaceholderComponentProvider {
+        return this.restrictedPlaceholderProvider;
     }
 
     switchRootProvider(provider: FilterBarComponentProvider): void {
@@ -134,8 +173,20 @@ class SealedFilterBarCustomizerState implements IFilterBarCustomizerState {
         );
     };
 
+    public addRestrictedPlaceholderProvider = (
+        _provider: RestrictedFiltersPlaceholderComponentProvider,
+    ): void => {
+        this.logger.warn(
+            `Attempting to customize the restricted filters placeholder outside of plugin registration. Ignoring.`,
+        );
+    };
+
     public getRootProvider = (): FilterBarComponentProvider => {
         return this.state.getRootProvider();
+    };
+
+    public getRestrictedPlaceholderProvider = (): RestrictedFiltersPlaceholderComponentProvider => {
+        return this.state.getRestrictedPlaceholderProvider();
     };
 }
 
@@ -152,10 +203,15 @@ export class DefaultFilterBarCustomizer implements IFilterBarCustomizer {
         logger: IDashboardCustomizationLogger,
         mutationContext: CustomizerMutationsContext,
         defaultProvider: FilterBarComponentProvider = DefaultFilterBarRendererProvider,
+        defaultRestrictedPlaceholderProvider: RestrictedFiltersPlaceholderComponentProvider = DefaultRestrictedFiltersPlaceholderProvider,
     ) {
         this.logger = logger;
         this.mutationContext = mutationContext;
-        this.state = new FilterBarCustomizerState(defaultProvider, logger);
+        this.state = new FilterBarCustomizerState(
+            defaultProvider,
+            logger,
+            defaultRestrictedPlaceholderProvider,
+        );
     }
 
     setRenderingMode = (mode: FilterBarRenderingMode): this => {
@@ -170,6 +226,21 @@ export class DefaultFilterBarCustomizer implements IFilterBarCustomizer {
         this.updated = true;
 
         return this;
+    };
+
+    public withRestrictedPlaceholderProvider = (
+        provider: OptionalRestrictedFiltersPlaceholderComponentProvider,
+    ): IFilterBarCustomizer => {
+        this.state.addRestrictedPlaceholderProvider(provider);
+        // deliberately not recorded as a filter bar mutation: that would replace the filter bar
+        // component with a wrapper, while this provider only changes what stands in for filters the
+        // user cannot see anyway
+
+        return this;
+    };
+
+    public getRestrictedPlaceholderProvider = (): RestrictedFiltersPlaceholderComponentProvider => {
+        return this.state.getRestrictedPlaceholderProvider();
     };
 
     public withCustomDecorator(

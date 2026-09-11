@@ -23,7 +23,7 @@ import { type IAlertSubmitState, type IUseAlertSubmitCallbacks } from "./types.j
  * Reads the draft, the supported measures, the edited alert and the separators from the alerting
  * contexts, so it throws outside the alerting dialog's state providers.
  *
- * @alpha
+ * @beta
  */
 export function useAlertSubmit({
     onCreateSuccess,

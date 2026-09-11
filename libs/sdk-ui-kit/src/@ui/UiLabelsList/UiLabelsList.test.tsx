@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactNode } from "react";
+
 import { render, screen, within } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 import { describe, expect, it } from "vitest";
@@ -15,7 +17,7 @@ const ITEMS: IUiLabelsListItem[] = [
     { id: "ssn", label: "Customer SSN" },
 ];
 
-const renderWithIntl = (ui: React.ReactNode) =>
+const renderWithIntl = (ui: ReactNode) =>
     render(
         <IntlProvider locale={DEFAULT_LANGUAGE} messages={DEFAULT_MESSAGES[DEFAULT_LANGUAGE]}>
             {ui}

@@ -263,6 +263,7 @@ export type SupportedDashboardReferenceTypes =
     | "dashboardPlugin"
     | "dataSet"
     | "displayForm"
+    | "measure"
     | "analyticalDashboard";
 
 /**

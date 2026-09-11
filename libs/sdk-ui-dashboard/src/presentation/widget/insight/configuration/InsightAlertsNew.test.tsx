@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactNode } from "react";
+
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
@@ -43,8 +45,8 @@ vi.mock("@gooddata/sdk-ui-kit", async () => {
     return {
         ...actual,
         OverlayController: { getInstance: () => ({}) },
-        OverlayControllerProvider: ({ children }: { children: React.ReactNode }) => children,
-        ScrollablePanel: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+        OverlayControllerProvider: ({ children }: { children: ReactNode }) => children,
+        ScrollablePanel: ({ children }: { children: ReactNode }) => <div>{children}</div>,
         useToastMessage: () => ({ addSuccess: vi.fn(), addError: vi.fn() }),
     };
 });
@@ -120,12 +122,12 @@ vi.mock("../../../automations/alerting/utils/items.js", () => ({
 
 vi.mock("../../../automations/contexts/AutomationsContext.js", () => ({
     useAutomationsContext: () => fixtures.automationsContext,
-    AutomationsContextProvider: ({ children }: { children: React.ReactNode }) => children,
+    AutomationsContextProvider: ({ children }: { children: ReactNode }) => children,
 }));
 
 vi.mock("../../../automations/contexts/AlertingManagementDialogContext.js", () => ({
     useAlertingManagementDialogContext: () => fixtures.managementContext,
-    AlertingManagementDialogContextProvider: ({ children }: { children: React.ReactNode }) => children,
+    AlertingManagementDialogContextProvider: ({ children }: { children: ReactNode }) => children,
 }));
 
 vi.mock("./InsightAlertConfig/hooks/useSaveAlertToBackend.js", () => ({

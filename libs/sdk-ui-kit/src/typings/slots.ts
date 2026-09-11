@@ -15,7 +15,7 @@ import { type ComponentType } from "react";
  * replace it; a slot that does not spread `defaultProps` onto `Default` loses the default
  * behavior wired through them (including the host's initial-focus ref).
  *
- * @alpha
+ * @beta
  */
 export interface ISlotProps<TProps> {
     /**

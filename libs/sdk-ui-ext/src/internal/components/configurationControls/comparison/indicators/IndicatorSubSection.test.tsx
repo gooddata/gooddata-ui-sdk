@@ -9,9 +9,9 @@ import { type IComparisonControlProperties } from "../../../../interfaces/Contro
 import { createTestProperties } from "../../../../testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider.js";
 
-import type * as ArrowControlModule from "./ArrowControl.js";
-import type * as ColorsControlModule from "./colorsControl/ColorsControl.js";
-import type * as IndicatorSubSectionModule from "./IndicatorSubSection.js";
+import type { ArrowControl as ArrowControlType } from "./ArrowControl.js";
+import type { ColorsControl as ColorsControlType } from "./colorsControl/ColorsControl.js";
+import type { IndicatorSubSection as IndicatorSubSectionType } from "./IndicatorSubSection.js";
 
 vi.mock("./ArrowControl.js", async (importOriginal) => {
     // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
@@ -34,9 +34,9 @@ vi.mock("./colorsControl/ColorsControl.js", async (importOriginal) => {
  * file, and the mocked graph this file builds must not outlive it. Re-import all three modules up front so
  * this file always observes the mocked ones, and drop the mocked graph again on the way out.
  */
-let ArrowControl: typeof ArrowControlModule.ArrowControl;
-let ColorsControl: typeof ColorsControlModule.ColorsControl;
-let IndicatorSubSection: typeof IndicatorSubSectionModule.IndicatorSubSection;
+let ArrowControl: typeof ArrowControlType;
+let ColorsControl: typeof ColorsControlType;
+let IndicatorSubSection: typeof IndicatorSubSectionType;
 
 beforeAll(async () => {
     vi.resetModules();

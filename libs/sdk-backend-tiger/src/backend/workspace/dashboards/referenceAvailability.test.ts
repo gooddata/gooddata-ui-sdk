@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import type {
     JsonApiAnalyticalDashboardOutDocument,
@@ -9,8 +9,11 @@ import type {
 import type { RestrictedObject } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import { type IDashboard, type IFilterContext, idRef } from "@gooddata/sdk-model";
 
+import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
+
 import { buildExportOverrideFilterContext } from "./index.js";
 import {
+    fetchUnavailableFilterDisplayForms,
     inspectableFilterContextIds,
     resolveUnavailableDashboardReferences,
     resolveUnavailableFilterContextReferences,
@@ -51,6 +54,25 @@ const insightWidgetContent = (ids: string[]) => ({
 });
 
 describe("resolveUnavailableReferences", () => {
+    it("reports a restricted metric of the dashboard as forbidden", () => {
+        const doc = dashboardDocument({
+            relationships: { metrics: { data: [{ id: "m1", type: "metric" }] } },
+            restricted: [{ id: "m1", type: "metric" }],
+        });
+
+        expect(resolveUnavailableReferences(doc, ["measure"])).toEqual([
+            { ref: idRef("m1", "measure"), type: "measure", reason: "forbidden" },
+        ]);
+    });
+
+    it("reports nothing for a metric the user can read", () => {
+        const doc = dashboardDocument({
+            relationships: { metrics: { data: [{ id: "m1", type: "metric" }] } },
+        });
+
+        expect(resolveUnavailableReferences(doc, ["measure"])).toEqual([]);
+    });
+
     it("reports nothing when the response has no relationships for inspected types", () => {
         const doc = dashboardDocument({
             content: {},
@@ -435,5 +457,111 @@ describe("inspectableFilterContextIds", () => {
         } as unknown as IDashboard;
 
         expect(inspectableFilterContextIds(dashboard)).toEqual([]);
+    });
+});
+
+describe("fetchUnavailableFilterDisplayForms", () => {
+    // The real client runs against a fake axios, so the request it builds is what is asserted.
+    let request: ReturnType<typeof vi.fn>;
+    let authCall: TigerAuthenticatedCallGuard;
+
+    const respondWith = (data: unknown[], restricted?: RestrictedObject[]) => {
+        request.mockResolvedValue({ data: { data, ...(restricted ? { meta: { restricted } } : {}) } });
+    };
+
+    const requestedQuery = () => new URL(request.mock.calls[0][0].url).searchParams;
+
+    const dashboardWithContexts = (...ids: string[]) =>
+        ({
+            filterContext: { ref: idRef(ids[0], "filterContext") },
+            tabs: ids.slice(1).map((id) => ({ filterContext: { ref: idRef(id, "filterContext") } })),
+        }) as unknown as IDashboard;
+
+    const contextWithLabels = (id: string, labelIds: string[]) => ({
+        id,
+        type: "filterContext",
+        attributes: {
+            content: {
+                filters: labelIds.map((labelId) => ({
+                    attributeFilter: { displayForm: { identifier: { id: labelId, type: "label" } } },
+                })),
+            },
+        },
+        relationships: { labels: { data: labelIds.map((labelId) => ({ id: labelId, type: "label" })) } },
+    });
+
+    beforeEach(() => {
+        request = vi.fn();
+        authCall = ((call: (client: unknown) => unknown) =>
+            call({ axios: { request }, basePath: "https://example.com" })) as TigerAuthenticatedCallGuard;
+    });
+
+    it("does not ask the backend when display forms were not requested", async () => {
+        await expect(
+            fetchUnavailableFilterDisplayForms(authCall, "ws", dashboardWithContexts("fc1"), ["insight"]),
+        ).resolves.toEqual([]);
+        expect(request).not.toHaveBeenCalled();
+    });
+
+    it("does not ask the backend for a dashboard with no persisted filter context", async () => {
+        await expect(
+            fetchUnavailableFilterDisplayForms(authCall, "ws", {} as IDashboard, ["displayForm"]),
+        ).resolves.toEqual([]);
+        expect(request).not.toHaveBeenCalled();
+    });
+
+    it("asks for the labels of every persisted context in one request", async () => {
+        respondWith([]);
+
+        await fetchUnavailableFilterDisplayForms(authCall, "ws", dashboardWithContexts("fcRoot", "fcTab"), [
+            "displayForm",
+        ]);
+
+        expect(request).toHaveBeenCalledTimes(1);
+        expect(request.mock.calls[0][0].url).toContain("/workspaces/ws/filterContexts");
+        expect(requestedQuery().get("filter")).toEqual("id==fcRoot,id==fcTab");
+        expect(requestedQuery().get("include")).toEqual("labels");
+        expect(requestedQuery().get("size")).toEqual("2");
+    });
+
+    it("reports the labels the response withholds, each against the context that uses it", async () => {
+        respondWith(
+            [contextWithLabels("fcRoot", ["label1", "label2"]), contextWithLabels("fcTab", ["label3"])],
+            [
+                { id: "label2", type: "label" },
+                { id: "label3", type: "label" },
+            ],
+        );
+
+        await expect(
+            fetchUnavailableFilterDisplayForms(authCall, "ws", dashboardWithContexts("fcRoot", "fcTab"), [
+                "displayForm",
+            ]),
+        ).resolves.toEqual([
+            { ref: { identifier: "label2", type: "displayForm" }, type: "displayForm", reason: "forbidden" },
+            { ref: { identifier: "label3", type: "displayForm" }, type: "displayForm", reason: "forbidden" },
+        ]);
+    });
+
+    it("reports nothing when the response withholds nothing", async () => {
+        respondWith([contextWithLabels("fcRoot", ["label1"])]);
+
+        await expect(
+            fetchUnavailableFilterDisplayForms(authCall, "ws", dashboardWithContexts("fcRoot"), [
+                "displayForm",
+            ]),
+        ).resolves.toEqual([]);
+    });
+
+    it("keeps the dashboard loading when the request fails", async () => {
+        const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+        request.mockRejectedValue(new Error("403"));
+
+        await expect(
+            fetchUnavailableFilterDisplayForms(authCall, "ws", dashboardWithContexts("fcRoot"), [
+                "displayForm",
+            ]),
+        ).resolves.toEqual([]);
+        expect(warn).toHaveBeenCalled();
     });
 });

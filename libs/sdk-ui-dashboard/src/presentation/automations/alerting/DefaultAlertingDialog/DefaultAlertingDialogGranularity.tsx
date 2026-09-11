@@ -54,7 +54,7 @@ const options: {
  * dialog context (only `useIntl`). The default dialog and {@link AlertingDialogGranularity} render
  * it with {@link useAlertingDialogGranularityProps} inside {@link AutomationDialogFormField}.
  *
- * @alpha
+ * @beta
  */
 export function DefaultAlertingDialogGranularity({
     id,

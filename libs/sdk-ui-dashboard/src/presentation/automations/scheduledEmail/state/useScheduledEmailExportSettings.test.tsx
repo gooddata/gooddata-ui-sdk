@@ -57,14 +57,21 @@ vi.mock("../../../../_staging/automation/index.js", () => ({
 // Imports placed AFTER vi.mock() calls to pick up mocked versions
 // ---------------------------------------------------------------------------
 
-import * as stagingAutomationModule from "../../../../_staging/automation/index.js";
+import {
+    getAutomationExportParametersByTab,
+    setExportParametersByTab,
+} from "../../../../_staging/automation/index.js";
 import {
     makeAutomation,
     makeDashboardExportDefinition,
     makeWidgetExportDefinition,
 } from "../tests/scheduledEmail.test.helpers.js";
 
-import * as exportDefinitionsUtilsModule from "./exportDefinitions.js";
+import {
+    newDashboardExportDefinitionMetadataObjectDefinition,
+    newWidgetExportDefinitionMetadataObjectDefinition,
+    withRebuiltExportDefinitions,
+} from "./exportDefinitions.js";
 import {
     type IUseScheduledEmailExportSettingsProps,
     useScheduledEmailExportSettings,
@@ -74,17 +81,15 @@ import {
 // Typed spy references (resolved after import)
 // ---------------------------------------------------------------------------
 
-const withRebuiltExportDefinitionsSpy = vi.mocked(exportDefinitionsUtilsModule.withRebuiltExportDefinitions);
+const withRebuiltExportDefinitionsSpy = vi.mocked(withRebuiltExportDefinitions);
 const newDashboardExportDefinitionMetadataObjectDefinitionSpy = vi.mocked(
-    exportDefinitionsUtilsModule.newDashboardExportDefinitionMetadataObjectDefinition,
+    newDashboardExportDefinitionMetadataObjectDefinition,
 );
 const newWidgetExportDefinitionMetadataObjectDefinitionSpy = vi.mocked(
-    exportDefinitionsUtilsModule.newWidgetExportDefinitionMetadataObjectDefinition,
+    newWidgetExportDefinitionMetadataObjectDefinition,
 );
-const getAutomationExportParametersByTabSpy = vi.mocked(
-    stagingAutomationModule.getAutomationExportParametersByTab,
-);
-const setExportParametersByTabSpy = vi.mocked(stagingAutomationModule.setExportParametersByTab);
+const getAutomationExportParametersByTabSpy = vi.mocked(getAutomationExportParametersByTab);
+const setExportParametersByTabSpy = vi.mocked(setExportParametersByTab);
 
 // ---------------------------------------------------------------------------
 // Fixtures

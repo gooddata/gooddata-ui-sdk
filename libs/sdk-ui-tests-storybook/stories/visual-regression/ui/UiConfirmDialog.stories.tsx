@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactNode } from "react";
+
 import { IntlProvider } from "react-intl";
 import { action } from "storybook/actions";
 
@@ -11,7 +13,7 @@ import { wrapWithTheme } from "../themeWrapper.js";
 
 interface IConfirmExampleProps {
     title: string;
-    description: React.ReactNode;
+    description: ReactNode;
     confirmLabel: string;
     confirmVariant?: ConfirmDialogVariant;
     label: string;

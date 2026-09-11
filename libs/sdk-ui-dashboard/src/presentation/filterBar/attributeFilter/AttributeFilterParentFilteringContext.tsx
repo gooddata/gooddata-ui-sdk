@@ -19,6 +19,7 @@ import {
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardAttributeFilterItemTitle,
     dashboardAttributeFilterItemToAttributeFilter,
+    dashboardFilterLocalIdentifier,
     filterObjRef,
     isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
@@ -29,6 +30,7 @@ import { replaceAttributeFilterItemSelection } from "../../../model/commands/fil
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { useDashboardCommandProcessing } from "../../../model/react/useDashboardCommandProcessing.js";
 import { selectAllCatalogDisplayFormsMap } from "../../../model/store/catalog/catalogSelectors.js";
+import { selectRestrictedDashboardFilterLocalIdentifiers } from "../../../model/store/filtering/dashboardFilterSelectors.js";
 import {
     selectFilterContextDateFilter,
     selectFilterContextDateFiltersWithDimension,
@@ -125,12 +127,33 @@ export function AttributeFilterParentFilteringProvider({
         return filterObjRef(attributeFilter);
     }, [attributeFilter]);
 
-    const neighborFilters: DashboardAttributeFilterItem[] = useDashboardSelector(
+    const allNeighborFilters: DashboardAttributeFilterItem[] = useDashboardSelector(
         selectOtherContextAttributeFilterItems(filterRef),
     );
 
-    const neighborDateFilters: IDashboardDateFilter[] = useDashboardSelector(
+    const allNeighborDateFilters: IDashboardDateFilter[] = useDashboardSelector(
         selectFilterContextDateFiltersWithDimension,
+    );
+    const restrictedFilterLocalIdentifiers = useDashboardSelector(
+        selectRestrictedDashboardFilterLocalIdentifiers,
+    );
+    const neighborFilters = useMemo(
+        () =>
+            allNeighborFilters.filter(
+                (filter) =>
+                    !restrictedFilterLocalIdentifiers.has(
+                        dashboardAttributeFilterItemLocalIdentifier(filter) ?? "",
+                    ),
+            ),
+        [allNeighborFilters, restrictedFilterLocalIdentifiers],
+    );
+    const neighborDateFilters = useMemo(
+        () =>
+            allNeighborDateFilters.filter(
+                (filter) =>
+                    !restrictedFilterLocalIdentifiers.has(dashboardFilterLocalIdentifier(filter) ?? ""),
+            ),
+        [allNeighborDateFilters, restrictedFilterLocalIdentifiers],
     );
 
     const commonDateFilter: IDashboardDateFilter | undefined = useDashboardSelector(

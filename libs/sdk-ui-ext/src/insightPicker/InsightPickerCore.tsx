@@ -39,6 +39,7 @@ export function InsightPickerCore({
     onSortChange,
     authorFilter,
     onAuthorFilterChange,
+    isAuthorFilterModified,
     tagFilter,
     onTagFilterChange,
     enableSemanticSearch = true,
@@ -104,11 +105,49 @@ export function InsightPickerCore({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // Reload when sorting or filters change (after initial load)
     const sortingKey = `${sortBy ?? ""},${sortDirection}`;
     const authorFilterKey = authorFilter.join(",");
     const tagFilterKey = tagFilter.join(",");
+    // Holds the filters the loaded items belong to. The reload effect below advances it.
     const prevKeys = useRef({ sortingKey, authorFilterKey, tagFilterKey });
+
+    // The picker opens filtered to the current user. A user who authored nothing would face an
+    // empty picker, so drop that default and let the reload below fetch every author. The filter
+    // state must change, not just one query: every page is fetched from this state.
+    //
+    // Three things narrow this to the case it is meant for. The default must be untouched, which
+    // only the caller can say — this component remounts every time the picker is reopened, while
+    // the filter it would drop does not. No tag may be selected, so the author default is the only
+    // filter the empty count can be blamed on; widening it under a tag the user chose would answer
+    // a query they did not ask. And the count must belong to the filters now in force: clearing a
+    // tag renders once with the tag gone but the tag query's count still in place, and acting on
+    // that would drop the author before the reload can show it has insights after all.
+    //
+    // This effect must stay ahead of the reload effect, which is what makes the last check work.
+    const isUntouchedAuthorDefault =
+        !isAuthorFilterModified && !!author && authorFilter.length === 1 && authorFilter[0] === author;
+    const mayDropAuthorDefault = isUntouchedAuthorDefault && tagFilter.length === 0;
+    useEffect(() => {
+        const prev = prevKeys.current;
+        const isCountStale =
+            sortingKey !== prev.sortingKey ||
+            authorFilterKey !== prev.authorFilterKey ||
+            tagFilterKey !== prev.tagFilterKey;
+
+        if (!isCountStale && initialLoadCompleted && totalInsightsCount === 0 && mayDropAuthorDefault) {
+            onAuthorFilterChange([]);
+        }
+    }, [
+        initialLoadCompleted,
+        totalInsightsCount,
+        mayDropAuthorDefault,
+        onAuthorFilterChange,
+        sortingKey,
+        authorFilterKey,
+        tagFilterKey,
+    ]);
+
+    // Reload when sorting or filters change (after initial load)
     useEffect(() => {
         const prev = prevKeys.current;
         if (

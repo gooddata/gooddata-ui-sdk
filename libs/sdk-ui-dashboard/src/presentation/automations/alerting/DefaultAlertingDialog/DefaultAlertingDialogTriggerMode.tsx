@@ -42,7 +42,7 @@ const options: {
  * `useIntl`). The default dialog and {@link AlertingDialogTriggerMode} render it with
  * {@link useAlertingDialogTriggerModeProps} inside {@link AutomationDialogFormField}.
  *
- * @alpha
+ * @beta
  */
 export function DefaultAlertingDialogTriggerMode({
     id,

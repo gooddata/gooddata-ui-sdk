@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactElement } from "react";
+
 import { DefaultAutomationDialogActionBar } from "../../shared/slots/DefaultAutomationDialogActionBar.js";
 import { type IAutomationDialogActionBarProps } from "../../shared/slots/types.js";
 import {
@@ -14,7 +16,7 @@ import { WhenAlertingDialogLoaded } from "./WhenAlertingDialogLoaded.js";
  * needs (`onSubmit` and `isSaving` from {@link useAlertSubmit}, the dialog's `onCancel`, `onDelete`
  * for edit mode) plus any {@link IAutomationDialogActionBarProps} member to override.
  *
- * @alpha
+ * @beta
  */
 export type IAlertingDialogActionBarBlockProps = IUseAlertingDialogActionBarPropsInput &
     Partial<IAutomationDialogActionBarProps>;
@@ -35,9 +37,9 @@ export type IAlertingDialogActionBarBlockProps = IUseAlertingDialogActionBarProp
  * <AlertingDialogActionBar onCancel={props.onCancel} onSubmit={() => void submit()} isSaving={isSaving} />;
  * ```
  *
- * @alpha
+ * @beta
  */
-export function AlertingDialogActionBar(props: IAlertingDialogActionBarBlockProps) {
+export function AlertingDialogActionBar(props: IAlertingDialogActionBarBlockProps): ReactElement {
     return (
         <WhenAlertingDialogLoaded>
             <ConnectedAlertingDialogActionBar {...props} />

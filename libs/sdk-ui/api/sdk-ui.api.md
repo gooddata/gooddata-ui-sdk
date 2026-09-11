@@ -236,6 +236,13 @@ export type ComposedPlaceholderResolutionContext<T> = T extends IComposedPlaceho
 // @public
 export function compressForUrl<T>(data: T): string;
 
+// @public
+export class ContractExpiredSdkError extends GoodDataSdkError {
+    constructor(message?: string, cause?: Error,
+    tier?: string | undefined);
+    readonly tier?: string | undefined;
+}
+
 // @internal
 export function convertDataWindowError(error: unknown): GoodDataSdkError;
 
@@ -477,6 +484,7 @@ export const ErrorCodes: {
     FORECAST_NOT_RECEIVED: string;
     CLUSTERING_NOT_RECEIVED: string;
     RESULT_CACHE_MISSING: string;
+    CONTRACT_EXPIRED: string;
 };
 
 // @public
@@ -1551,6 +1559,9 @@ export function isClusteringNotReceived(obj: unknown): obj is ClusteringNotRecei
 
 // @public
 export function isComposedPlaceholder<TReturn, TValue extends any[], TContext>(obj: unknown): obj is IComposedPlaceholder<TReturn, TValue, TContext>;
+
+// @public
+export function isContractExpiredSdkError(obj: unknown): obj is ContractExpiredSdkError;
 
 // @public
 export function isDataTooLargeToCompute(obj: unknown): obj is DataTooLargeToComputeSdkError;

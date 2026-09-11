@@ -5,6 +5,7 @@ import { invariant } from "ts-invariant";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { HiddenFilterBar } from "../../presentation/filterBar/filterBar/HiddenFilterBar.js";
+import { RestrictedFiltersPlaceholder } from "../../presentation/filterBar/filterBar/RestrictedFiltersPlaceholder.js";
 import { type IFilterBarProps } from "../../presentation/filterBar/filterBar/types.js";
 
 import { DefaultFilterBarCustomizer } from "./filterBarCustomizer.js";
@@ -45,6 +46,39 @@ describe("filter bar customizer", () => {
             new TestingDashboardCustomizationLogger({ warn: mockWarn }),
             mutationContext,
         );
+    });
+
+    describe("restricted filters placeholder", () => {
+        function CustomPlaceholder() {
+            return <div />;
+        }
+
+        it("should keep the default with no provider, or one that returns undefined", () => {
+            expect(Customizer.getRestrictedPlaceholderProvider()()).toBe(RestrictedFiltersPlaceholder);
+
+            Customizer.withRestrictedPlaceholderProvider(() => undefined);
+            expect(Customizer.getRestrictedPlaceholderProvider()()).toBe(RestrictedFiltersPlaceholder);
+        });
+
+        it("should use a registered provider over the default", () => {
+            Customizer.withRestrictedPlaceholderProvider(() => CustomPlaceholder);
+            expect(Customizer.getRestrictedPlaceholderProvider()()).toBe(CustomPlaceholder);
+        });
+
+        it("should refuse registration after the customizer is sealed", () => {
+            Customizer.sealCustomizer();
+            Customizer.withRestrictedPlaceholderProvider(() => CustomPlaceholder);
+
+            expect(mockWarn).toHaveBeenCalled();
+            expect(Customizer.getRestrictedPlaceholderProvider()()).toBe(RestrictedFiltersPlaceholder);
+        });
+
+        it("should not replace the filter bar component itself", () => {
+            Customizer.withRestrictedPlaceholderProvider(() => CustomPlaceholder);
+
+            expect(Customizer.getCustomizerResult().FilterBarComponent).toBe(undefined);
+            expect(mutationContext.filterBar).toEqual(EMPTY_MUTATIONS.filterBar);
+        });
     });
 
     describe("filter bar rendering mode", () => {

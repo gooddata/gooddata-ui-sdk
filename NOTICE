@@ -7,9 +7,9 @@
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2026-9-8
+Date generated: 2026-9-10
 
-Revision ID: 1048ca52472a196fef1b2b02d6448cbf7df0a911
+Revision ID: 134c47a0c4df31513dbb70f1253bfcf3a9a37ca9
 
 ================================================================================
 ================================================================================
@@ -38312,7 +38312,7 @@ MIT
 
 Authors: react-core@meta.com
 Package Manager: NPM
-Project URL: https://github.com/facebook/react#readme
+Project URL: https://github.com/react/react#readme
 Package Download URL: https://registry.npmjs.org/use-sync-external-store/-/use-sync-external-store-1.6.0.tgz
 Dependency Path: @react-aria/interactions > react-aria > react-stately > use-sync-external-store > @react-aria/interactions > react-aria > use-sync-external-store > react-redux > use-sync-external-store
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -47906,7 +47906,7 @@ MIT
 
 Authors: tituswormer@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/micromark
+Project URL: https://github.com/micromark/micromark/tree/main#readme
 Package Download URL: https://registry.npmjs.org/micromark/-/micromark-4.0.2.tgz
 Dependency Path: react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-expression > mdast-util-from-markdown > micromark > react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-jsx > mdast-util-from-markdown > micromark > react-markdown > hast-util-to-jsx-runtime > mdast-util-mdxjs-esm > mdast-util-from-markdown > micromark > react-markdown > remark-parse > mdast-util-from-markdown > micromark > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > remark-gfm > mdast-util-gfm > mdast-util-gfm-footnote > mdast-util-from-markdown > micromark > remark-gfm > mdast-util-gfm > mdast-util-gfm-strikethrough > mdast-util-from-markdown > micromark > remark-gfm > mdast-util-gfm > mdast-util-gfm-table > mdast-util-from-markdown > micromark > remark-gfm > mdast-util-gfm > mdast-util-gfm-task-list-item > mdast-util-from-markdown > micromark > remark-parse > mdast-util-from-markdown > micromark
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -48563,7 +48563,7 @@ MIT
 
 Authors: tituswormer@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/micromark-util-types
+Project URL: https://github.com/micromark/micromark/tree/main#readme
 Package Download URL: https://registry.npmjs.org/micromark-util-types/-/micromark-util-types-2.0.2.tgz
 Dependency Path: remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-util-types > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > micromark-util-types > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark-util-types > remark-gfm > micromark-extension-gfm > micromark-extension-gfm-autolink-literal > micromark-util-types > remark-gfm > micromark-extension-gfm > micromark-extension-gfm-footnote > micromark-util-types > remark-gfm > micromark-extension-gfm > micromark-extension-gfm-strikethrough > micromark-util-types > remark-gfm > micromark-extension-gfm > micromark-extension-gfm-table > micromark-util-types > remark-gfm > micromark-extension-gfm > micromark-extension-gfm-tagfilter > micromark-util-types > remark-gfm > micromark-extension-gfm > micromark-extension-gfm-task-list-item > micromark-util-types > remark-gfm > micromark-extension-gfm > micromark-util-types
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -58083,7 +58083,7 @@ MIT
 
 Authors: tituswormer@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/micromark-factory-space
+Project URL: https://github.com/micromark/micromark/tree/main#readme
 Package Download URL: https://registry.npmjs.org/micromark-factory-space/-/micromark-factory-space-2.0.1.tgz
 Dependency Path: remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-space > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-title > micromark-factory-space > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-whitespace > micromark-factory-space > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > micromark-factory-space > remark-gfm > mdast-util-gfm > mdast-util-gfm-footnote > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-whitespace > micromark-factory-space > remark-gfm > mdast-util-gfm > mdast-util-gfm-strikethrough > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-whitespace > micromark-factory-space > remark-gfm > micromark-extension-gfm > micromark-extension-gfm-footnote > micromark-core-commonmark > micromark-factory-whitespace > micromark-factory-space > remark-gfm > micromark-extension-gfm > micromark-extension-gfm-footnote > micromark-factory-space > remark-gfm > micromark-extension-gfm > micromark-extension-gfm-table > micromark-factory-space > remark-gfm > micromark-extension-gfm > micromark-extension-gfm-task-list-item > micromark-factory-space
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -58229,7 +58229,7 @@ MIT
 
 Authors: tituswormer@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/micromark-util-chunked
+Project URL: https://github.com/micromark/micromark/tree/main#readme
 Package Download URL: https://registry.npmjs.org/micromark-util-chunked/-/micromark-util-chunked-2.0.1.tgz
 Dependency Path: remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-util-chunked > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-util-subtokenize > micromark-util-chunked > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > micromark-util-chunked > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > micromark-util-combine-extensions > micromark-util-chunked > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > micromark-util-subtokenize > micromark-util-chunked > remark-gfm > mdast-util-gfm > mdast-util-gfm-footnote > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-util-subtokenize > micromark-util-chunked > remark-gfm > mdast-util-gfm > mdast-util-gfm-strikethrough > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-util-subtokenize > micromark-util-chunked > remark-gfm > mdast-util-gfm > mdast-util-gfm-table > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-util-subtokenize > micromark-util-chunked > remark-gfm > micromark-extension-gfm > micromark-extension-gfm-footnote > micromark-core-commonmark > micromark-util-subtokenize > micromark-util-chunked > remark-gfm > micromark-extension-gfm > micromark-extension-gfm-strikethrough > micromark-util-chunked
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -58302,7 +58302,7 @@ MIT
 
 Authors: tituswormer@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/micromark-util-classify-character
+Project URL: https://github.com/micromark/micromark/tree/main#readme
 Package Download URL: https://registry.npmjs.org/micromark-util-classify-character/-/micromark-util-classify-character-2.0.1.tgz
 Dependency Path: react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-expression > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-util-classify-character > react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-jsx > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-util-classify-character > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-util-classify-character > remark-gfm > mdast-util-gfm > mdast-util-gfm-footnote > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-util-classify-character > remark-gfm > mdast-util-gfm > mdast-util-gfm-strikethrough > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-util-classify-character > remark-gfm > mdast-util-gfm > mdast-util-gfm-table > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-util-classify-character > remark-gfm > mdast-util-gfm > mdast-util-gfm-task-list-item > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-util-classify-character > remark-gfm > mdast-util-gfm > mdast-util-to-markdown > micromark-util-classify-character > remark-gfm > micromark-extension-gfm > micromark-extension-gfm-footnote > micromark-core-commonmark > micromark-util-classify-character > remark-gfm > micromark-extension-gfm > micromark-extension-gfm-strikethrough > micromark-util-classify-character
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -58375,7 +58375,7 @@ MIT
 
 Authors: tituswormer@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/micromark-util-decode-numeric-character-reference
+Project URL: https://github.com/micromark/micromark/tree/main#readme
 Package Download URL: https://registry.npmjs.org/micromark-util-decode-numeric-character-reference/-/micromark-util-decode-numeric-character-reference-2.0.2.tgz
 Dependency Path: react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-expression > mdast-util-to-markdown > micromark-util-decode-string > micromark-util-decode-numeric-character-reference > react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-jsx > mdast-util-to-markdown > micromark-util-decode-string > micromark-util-decode-numeric-character-reference > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > micromark-util-decode-numeric-character-reference > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark-util-decode-numeric-character-reference > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark-util-decode-string > micromark-util-decode-numeric-character-reference > remark-gfm > mdast-util-gfm > mdast-util-gfm-footnote > mdast-util-to-markdown > micromark-util-decode-string > micromark-util-decode-numeric-character-reference > remark-gfm > mdast-util-gfm > mdast-util-gfm-strikethrough > mdast-util-to-markdown > micromark-util-decode-string > micromark-util-decode-numeric-character-reference > remark-gfm > mdast-util-gfm > mdast-util-gfm-table > mdast-util-to-markdown > micromark-util-decode-string > micromark-util-decode-numeric-character-reference > remark-gfm > mdast-util-gfm > mdast-util-gfm-task-list-item > mdast-util-to-markdown > micromark-util-decode-string > micromark-util-decode-numeric-character-reference > remark-gfm > mdast-util-gfm > mdast-util-to-markdown > micromark-util-decode-string > micromark-util-decode-numeric-character-reference
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -58448,7 +58448,7 @@ MIT
 
 Authors: tituswormer@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/micromark-util-decode-string
+Project URL: https://github.com/micromark/micromark/tree/main#readme
 Package Download URL: https://registry.npmjs.org/micromark-util-decode-string/-/micromark-util-decode-string-2.0.1.tgz
 Dependency Path: react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-expression > mdast-util-to-markdown > micromark-util-decode-string > react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-jsx > mdast-util-to-markdown > micromark-util-decode-string > react-markdown > hast-util-to-jsx-runtime > mdast-util-mdxjs-esm > mdast-util-to-markdown > micromark-util-decode-string > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark-util-decode-string > remark-gfm > mdast-util-gfm > mdast-util-gfm-footnote > mdast-util-to-markdown > micromark-util-decode-string > remark-gfm > mdast-util-gfm > mdast-util-gfm-strikethrough > mdast-util-to-markdown > micromark-util-decode-string > remark-gfm > mdast-util-gfm > mdast-util-gfm-table > mdast-util-to-markdown > micromark-util-decode-string > remark-gfm > mdast-util-gfm > mdast-util-gfm-task-list-item > mdast-util-to-markdown > micromark-util-decode-string > remark-gfm > mdast-util-gfm > mdast-util-to-markdown > micromark-util-decode-string > remark-gfm > remark-stringify > mdast-util-to-markdown > micromark-util-decode-string
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -58667,7 +58667,7 @@ MIT
 
 Authors: tituswormer@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/micromark-util-resolve-all
+Project URL: https://github.com/micromark/micromark/tree/main#readme
 Package Download URL: https://registry.npmjs.org/micromark-util-resolve-all/-/micromark-util-resolve-all-2.0.1.tgz
 Dependency Path: react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-expression > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-util-resolve-all > react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-jsx > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-util-resolve-all > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-util-resolve-all > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > micromark-util-resolve-all > remark-gfm > mdast-util-gfm > mdast-util-gfm-footnote > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-util-resolve-all > remark-gfm > mdast-util-gfm > mdast-util-gfm-strikethrough > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-util-resolve-all > remark-gfm > mdast-util-gfm > mdast-util-gfm-table > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-util-resolve-all > remark-gfm > mdast-util-gfm > mdast-util-gfm-task-list-item > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-util-resolve-all > remark-gfm > micromark-extension-gfm > micromark-extension-gfm-footnote > micromark-core-commonmark > micromark-util-resolve-all > remark-gfm > micromark-extension-gfm > micromark-extension-gfm-strikethrough > micromark-util-resolve-all
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -61836,7 +61836,7 @@ MIT
 
 Authors: tituswormer@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/micromark-factory-destination
+Project URL: https://github.com/micromark/micromark/tree/main#readme
 Package Download URL: https://registry.npmjs.org/micromark-factory-destination/-/micromark-factory-destination-2.0.1.tgz
 Dependency Path: react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-expression > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-destination > react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-jsx > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-destination > react-markdown > hast-util-to-jsx-runtime > mdast-util-mdxjs-esm > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-destination > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-destination > remark-gfm > mdast-util-gfm > mdast-util-gfm-footnote > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-destination > remark-gfm > mdast-util-gfm > mdast-util-gfm-strikethrough > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-destination > remark-gfm > mdast-util-gfm > mdast-util-gfm-table > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-destination > remark-gfm > mdast-util-gfm > mdast-util-gfm-task-list-item > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-destination > remark-gfm > micromark-extension-gfm > micromark-extension-gfm-footnote > micromark-core-commonmark > micromark-factory-destination > remark-parse > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-destination
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -61909,7 +61909,7 @@ MIT
 
 Authors: tituswormer@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/micromark-factory-label
+Project URL: https://github.com/micromark/micromark/tree/main#readme
 Package Download URL: https://registry.npmjs.org/micromark-factory-label/-/micromark-factory-label-2.0.1.tgz
 Dependency Path: react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-expression > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-label > react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-jsx > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-label > react-markdown > hast-util-to-jsx-runtime > mdast-util-mdxjs-esm > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-label > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-label > remark-gfm > mdast-util-gfm > mdast-util-gfm-footnote > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-label > remark-gfm > mdast-util-gfm > mdast-util-gfm-strikethrough > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-label > remark-gfm > mdast-util-gfm > mdast-util-gfm-table > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-label > remark-gfm > mdast-util-gfm > mdast-util-gfm-task-list-item > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-label > remark-gfm > micromark-extension-gfm > micromark-extension-gfm-footnote > micromark-core-commonmark > micromark-factory-label > remark-parse > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-label
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -61982,7 +61982,7 @@ MIT
 
 Authors: tituswormer@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/micromark-factory-title
+Project URL: https://github.com/micromark/micromark/tree/main#readme
 Package Download URL: https://registry.npmjs.org/micromark-factory-title/-/micromark-factory-title-2.0.1.tgz
 Dependency Path: react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-expression > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-title > react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-jsx > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-title > react-markdown > hast-util-to-jsx-runtime > mdast-util-mdxjs-esm > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-title > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-title > remark-gfm > mdast-util-gfm > mdast-util-gfm-footnote > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-title > remark-gfm > mdast-util-gfm > mdast-util-gfm-strikethrough > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-title > remark-gfm > mdast-util-gfm > mdast-util-gfm-table > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-title > remark-gfm > mdast-util-gfm > mdast-util-gfm-task-list-item > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-title > remark-gfm > micromark-extension-gfm > micromark-extension-gfm-footnote > micromark-core-commonmark > micromark-factory-title > remark-parse > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-title
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -62201,7 +62201,7 @@ MIT
 
 Authors: tituswormer@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/micromark-util-subtokenize
+Project URL: https://github.com/micromark/micromark/tree/main#readme
 Package Download URL: https://registry.npmjs.org/micromark-util-subtokenize/-/micromark-util-subtokenize-2.1.0.tgz
 Dependency Path: react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-expression > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-util-subtokenize > react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-jsx > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-util-subtokenize > react-markdown > hast-util-to-jsx-runtime > mdast-util-mdxjs-esm > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-util-subtokenize > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-util-subtokenize > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > micromark-util-subtokenize > remark-gfm > mdast-util-gfm > mdast-util-gfm-footnote > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-util-subtokenize > remark-gfm > mdast-util-gfm > mdast-util-gfm-strikethrough > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-util-subtokenize > remark-gfm > mdast-util-gfm > mdast-util-gfm-table > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-util-subtokenize > remark-gfm > mdast-util-gfm > mdast-util-gfm-task-list-item > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-util-subtokenize > remark-gfm > micromark-extension-gfm > micromark-extension-gfm-footnote > micromark-core-commonmark > micromark-util-subtokenize
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -64353,4 +64353,4 @@ File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2026-9-8
+Report Generated by FOSSA on 2026-9-10

@@ -14,6 +14,7 @@ import {
 } from "./index.js";
 import {
     selectRestrictedInsightsMap,
+    selectRestrictedRichTextReferences,
     selectUnavailableObjects,
     selectUnavailableObjectsMapByType,
 } from "./unavailableObjectsSelectors.js";
@@ -131,6 +132,45 @@ describe("unavailableObjects store", () => {
             const state = stateWith(forbiddenDashboardByUri);
 
             expect(selectRestrictedInsightsMap(state).get(uriRef("/gdc/md/dash-1"))).toBeUndefined();
+        });
+    });
+
+    describe("selectRestrictedRichTextReferences", () => {
+        const forbiddenMetric: IUnavailableDashboardReference = {
+            ref: idRef("m1", "measure"),
+            type: "measure",
+            reason: "forbidden",
+        };
+        const forbiddenDisplayForm: IUnavailableDashboardReference = {
+            ref: idRef("df1", "displayForm"),
+            type: "displayForm",
+            reason: "forbidden",
+        };
+        const missingMetric: IUnavailableDashboardReference = {
+            ref: idRef("gone", "measure"),
+            type: "measure",
+            reason: "notFound",
+        };
+
+        it("collects the metric and label refs the user may not read", () => {
+            const state = stateWith(forbiddenMetric, forbiddenDisplayForm);
+
+            expect(selectRestrictedRichTextReferences(state)).toEqual([
+                forbiddenMetric.ref,
+                forbiddenDisplayForm.ref,
+            ]);
+        });
+
+        it("omits a reference that is merely not found, which keeps today's error value", () => {
+            const state = stateWith(missingMetric);
+
+            expect(selectRestrictedRichTextReferences(state)).toEqual([]);
+        });
+
+        it("omits object types a rich text widget cannot reference", () => {
+            const state = stateWith(forbiddenInsight);
+
+            expect(selectRestrictedRichTextReferences(state)).toEqual([]);
         });
     });
 });

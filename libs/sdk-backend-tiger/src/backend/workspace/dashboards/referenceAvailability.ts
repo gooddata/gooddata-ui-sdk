@@ -33,6 +33,12 @@ import { objectTypeToTigerIdType } from "../../../types/refTypeMapping.js";
  * are resolved from each filter context's own document (verified on dev-latest). Display forms
  * referenced elsewhere in dashboard content (e.g. drill-to-URL) are not inspected.
  *
+ * Metrics and labels referenced from a rich text widget live inside markdown text rather than as
+ * structured refs, so the backend does not link them yet (measured on dev-latest: a dashboard GET
+ * with `include=metrics` returns no `metrics` relationship for such a reference, for an
+ * administrator as well). They are inspected here because the backend team agreed to report them
+ * through this same signal; until it does, no metric is reported and the widget behaves as today.
+ *
  * Nothing outside this module may interpret the raw availability metadata or relationships;
  * replacing the mechanism must only change this module.
  */
@@ -50,6 +56,7 @@ const RELATIONSHIP_KEYS = {
     dashboardPlugin: "dashboardPlugins",
     filterContext: "filterContexts",
     displayForm: "labels",
+    measure: "metrics",
     analyticalDashboard: "analyticalDashboards",
 } as const satisfies Record<InspectedType, DashboardInclude>;
 

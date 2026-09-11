@@ -9,7 +9,11 @@ import { type IDashboard, idRef } from "@gooddata/sdk-model";
 
 import { type DashboardContext } from "../../../types/commonTypes.js";
 
-import { dashboardLoadReferenceTypes, loadUnavailableReferences } from "./loadUnavailableReferences.js";
+import {
+    dashboardLoadReferenceTypes,
+    getDashboardLoadReferenceTypes,
+    loadUnavailableReferences,
+} from "./loadUnavailableReferences.js";
 
 const dashboard = { ref: idRef("dash", "analyticalDashboard") } as IDashboard;
 const forbiddenInsight: IUnavailableDashboardReference = {
@@ -58,7 +62,7 @@ describe("loadUnavailableReferences", () => {
         await expect(
             loadUnavailableReferences(createContext(load), dashboard, [forbiddenInsight], true, false),
         ).resolves.toEqual([forbiddenInsight, forbiddenLabel]);
-        expect(load).toHaveBeenCalledWith(dashboard, ["displayForm", "analyticalDashboard"]);
+        expect(load).toHaveBeenCalledWith(dashboard, ["displayForm", "analyticalDashboard", "measure"]);
     });
 
     it("keeps the caller-provided availability of a persisted dashboard without asking the backend", async () => {
@@ -98,6 +102,19 @@ describe("dashboardLoadReferenceTypes", () => {
         ).toEqual(["insight", "dataSet"]);
         expect(
             dashboardLoadReferenceTypes(createContext(vi.fn(), { enableDashboardPartialRendering: true })),
-        ).toEqual(["insight", "dataSet", "displayForm", "analyticalDashboard"]);
+        ).toEqual(["insight", "dataSet", "displayForm", "analyticalDashboard", "measure"]);
+    });
+});
+
+describe("getDashboardLoadReferenceTypes", () => {
+    it("adds the types that need extra side-loads only when partial rendering is enabled", () => {
+        expect(getDashboardLoadReferenceTypes(false)).toEqual(["insight", "dataSet"]);
+        expect(getDashboardLoadReferenceTypes(true)).toEqual([
+            "insight",
+            "dataSet",
+            "displayForm",
+            "analyticalDashboard",
+            "measure",
+        ]);
     });
 });

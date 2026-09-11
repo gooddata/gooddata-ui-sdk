@@ -49,6 +49,10 @@ import { configHasFiscalPresets } from "../../../../_staging/dateFilterConfig/va
 import { type ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
 import { getPrivateContext } from "../../../store/_infra/contexts.js";
 import { drillActions } from "../../../store/drill/index.js";
+import {
+    isDashboardFilterRestricted,
+    isDashboardObjectRestricted,
+} from "../../../store/filtering/restrictedFilterUtils.js";
 import { insightsActions } from "../../../store/insights/index.js";
 import { metaActions } from "../../../store/meta/index.js";
 import { selectIsNewDashboard } from "../../../store/meta/metaSelectors.js";
@@ -61,6 +65,7 @@ import { selectScreen } from "../../../store/tabs/layout/layoutSelectors.js";
 import { layoutInitialState } from "../../../store/tabs/layout/layoutState.js";
 import { DEFAULT_TAB_ID, type ITabState } from "../../../store/tabs/tabsState.js";
 import { uiActions } from "../../../store/ui/index.js";
+import { selectUnavailableObjects } from "../../../store/unavailableObjects/unavailableObjectsSelectors.js";
 import {
     type DashboardContext,
     type IDashboardWidgetOverlay,
@@ -146,13 +151,19 @@ function* processExistingTabFilterContext(
 
     // Get display as labels for display form resolution
     const displayAsLabels = getDisplayAsLabels(tab.attributeFilterConfigs);
+    const unavailableObjects: ReturnType<typeof selectUnavailableObjects> =
+        yield select(selectUnavailableObjects);
 
     // Resolve display forms for filters
     const attributeFilterDisplayForms: IAttributeDisplayFormMetadataObject[] = yield call(
         resolveFilterDisplayForms,
         ctx,
-        migratedFilterContext.filters,
-        displayAsLabels,
+        migratedFilterContext.filters.filter(
+            (filter) => !isDashboardFilterRestricted(filter, unavailableObjects),
+        ),
+        displayAsLabels.filter(
+            (displayForm) => !isDashboardObjectRestricted(displayForm, "displayForm", unavailableObjects),
+        ),
         displayForms,
     );
 
@@ -418,12 +429,18 @@ function* actionsToInitializeOrFillNewDashboard(
         ? dashboardFilterContextIdentity(customizedDashboard)
         : undefined;
     const displayAsLabels = getDisplayAsLabels(effectiveAttributeFilterConfigs);
+    const unavailableObjects: ReturnType<typeof selectUnavailableObjects> =
+        yield select(selectUnavailableObjects);
     // load DFs for both filter refs and displayAsLabels
     const attributeFilterDisplayForms = yield call(
         resolveFilterDisplayForms,
         ctx,
-        filterContextDefinition.filters,
-        displayAsLabels,
+        filterContextDefinition.filters.filter(
+            (filter) => !isDashboardFilterRestricted(filter, unavailableObjects),
+        ),
+        displayAsLabels.filter(
+            (displayForm) => !isDashboardObjectRestricted(displayForm, "displayForm", unavailableObjects),
+        ),
         displayForms,
     );
 
@@ -457,7 +474,11 @@ const keepOnlyFiltersWithValidRef = (
     filter: FilterContextItem,
     availableDfRefs: ObjRef[],
     validDataSetIds: string[],
+    unavailableObjects: ReturnType<typeof selectUnavailableObjects>,
 ) => {
+    if (isDashboardFilterRestricted(filter, unavailableObjects)) {
+        return true;
+    }
     if (!isDashboardAttributeFilter(filter)) {
         if (isDashboardDateFilterWithDimension(filter)) {
             return (
@@ -495,8 +516,12 @@ function* sanitizeFilterContext(
         return filterContext;
     }
 
+    const unavailableObjects: ReturnType<typeof selectUnavailableObjects> =
+        yield select(selectUnavailableObjects);
+
     const usedFilterDisplayForms = filterContext.filters
         .filter(isDashboardAttributeFilter)
+        .filter((filter) => !isDashboardFilterRestricted(filter, unavailableObjects))
         .map((f) => f.attributeFilter.displayForm);
 
     // With enableDashboardPartialRendering on, the unavailableObjects store already knows which of
@@ -532,6 +557,7 @@ function* sanitizeFilterContext(
     const additionalDateFilters = filterContext.filters
         .filter((filter) => !isDashboardAttributeFilter(filter))
         .filter(isDashboardDateFilterWithDimension)
+        .filter((filter) => !isDashboardFilterRestricted(filter, unavailableObjects))
         .map((filter) => filter.dateFilter.dataSet!);
 
     // check which are missing and load them
@@ -544,7 +570,12 @@ function* sanitizeFilterContext(
     const updatedFilterContext = cloneDeep(filterContext);
     update(updatedFilterContext, "filters", (filters: FilterContextItem[]) =>
         filters.filter((filter) => {
-            return keepOnlyFiltersWithValidRef(filter, availableRefs, resolvedDataSetsIds);
+            return keepOnlyFiltersWithValidRef(
+                filter,
+                availableRefs,
+                resolvedDataSetsIds,
+                unavailableObjects,
+            );
         }),
     );
     return updatedFilterContext;

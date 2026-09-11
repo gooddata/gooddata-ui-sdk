@@ -5,7 +5,7 @@ import { type ComponentType } from "react";
 import cx from "classnames";
 import { isEmpty } from "lodash-es";
 
-import { type IExecutionConfig, type IFilter, type ISeparators } from "@gooddata/sdk-model";
+import { type IExecutionConfig, type IFilter, type ISeparators, type ObjRef } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
 import { UiIcon } from "../@ui/UiIcon/UiIcon.js";
@@ -80,6 +80,8 @@ export interface IDescriptionPanelProps {
     LoadingComponent?: ComponentType;
     filters?: IFilter[];
     separators?: ISeparators;
+    /** References the current user is not allowed to read; each renders as a marker in place of its value. */
+    restrictedReferences?: ObjRef[];
     execConfig?: IExecutionConfig;
     id?: string;
 }
@@ -152,6 +154,7 @@ function DescriptionPanelContentCore({
     LoadingComponent,
     filters,
     separators,
+    restrictedReferences,
     execConfig,
     id,
 }: IDescriptionPanelProps) {
@@ -177,6 +180,7 @@ function DescriptionPanelContentCore({
                         referencesEnabled={useReferences}
                         filters={filters}
                         separators={separators}
+                        restrictedReferences={restrictedReferences}
                         LoadingComponent={LoadingComponent}
                         execConfig={execConfig}
                     />

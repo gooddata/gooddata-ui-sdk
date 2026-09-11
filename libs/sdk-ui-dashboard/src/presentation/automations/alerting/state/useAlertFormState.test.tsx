@@ -143,7 +143,16 @@ import {
     convertUserToAutomationRecipient,
 } from "../../shared/utils/automationUtils.js";
 import { createDefaultAlert } from "../utils/convertors.js";
-import * as transformationModule from "../utils/transformation.js";
+import {
+    transformAlertByAnomalyDetection,
+    transformAlertByAttribute,
+    transformAlertByComparisonOperator,
+    transformAlertByDestination,
+    transformAlertByGranularity,
+    transformAlertByMetric,
+    transformAlertByRelativeOperator,
+    transformAlertBySensitivity,
+} from "../utils/transformation.js";
 
 import { useAlertFormState, type IUseAlertFormStateProps } from "./useAlertFormState.js";
 
@@ -151,16 +160,14 @@ import { useAlertFormState, type IUseAlertFormStateProps } from "./useAlertFormS
 // Typed spy references (resolved after import)
 // ---------------------------------------------------------------------------
 
-const transformAlertByMetricSpy = vi.mocked(transformationModule.transformAlertByMetric);
-const transformAlertByAttributeSpy = vi.mocked(transformationModule.transformAlertByAttribute);
-const transformAlertByComparisonOperatorSpy = vi.mocked(
-    transformationModule.transformAlertByComparisonOperator,
-);
-const transformAlertByRelativeOperatorSpy = vi.mocked(transformationModule.transformAlertByRelativeOperator);
-const transformAlertByAnomalyDetectionSpy = vi.mocked(transformationModule.transformAlertByAnomalyDetection);
-const transformAlertBySensitivitySpy = vi.mocked(transformationModule.transformAlertBySensitivity);
-const transformAlertByGranularitySpy = vi.mocked(transformationModule.transformAlertByGranularity);
-const transformAlertByDestinationSpy = vi.mocked(transformationModule.transformAlertByDestination);
+const transformAlertByMetricSpy = vi.mocked(transformAlertByMetric);
+const transformAlertByAttributeSpy = vi.mocked(transformAlertByAttribute);
+const transformAlertByComparisonOperatorSpy = vi.mocked(transformAlertByComparisonOperator);
+const transformAlertByRelativeOperatorSpy = vi.mocked(transformAlertByRelativeOperator);
+const transformAlertByAnomalyDetectionSpy = vi.mocked(transformAlertByAnomalyDetection);
+const transformAlertBySensitivitySpy = vi.mocked(transformAlertBySensitivity);
+const transformAlertByGranularitySpy = vi.mocked(transformAlertByGranularity);
+const transformAlertByDestinationSpy = vi.mocked(transformAlertByDestination);
 const convertUserToAutomationRecipientSpy = vi.mocked(convertUserToAutomationRecipient);
 const convertExternalRecipientToAutomationRecipientSpy = vi.mocked(
     convertExternalRecipientToAutomationRecipient,

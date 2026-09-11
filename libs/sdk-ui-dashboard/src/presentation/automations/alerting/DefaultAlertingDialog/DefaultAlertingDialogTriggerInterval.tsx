@@ -51,7 +51,7 @@ const options: {
  * {@link AlertingDialogTriggerInterval} render it with {@link useAlertingDialogTriggerIntervalProps}
  * inside {@link AutomationDialogFormField}.
  *
- * @alpha
+ * @beta
  */
 export function DefaultAlertingDialogTriggerInterval({
     id,

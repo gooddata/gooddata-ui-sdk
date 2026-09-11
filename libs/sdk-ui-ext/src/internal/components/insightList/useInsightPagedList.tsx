@@ -226,8 +226,16 @@ export function useInsightPagedList({
                 if (!initialLoadCompletedRef.current) {
                     initialLoadCompletedRef.current = true;
                     setInitialLoadCompleted(true);
-                    // When the user has no insights of their own, switch to the All tab
-                    if (tabId === tabsIds.my && result.totalCount === 0) {
+                    // When the user has no insights of their own, switch to the All tab. Only
+                    // the tab's own implicit author filter may be widened this way: createdByFilter
+                    // and includeAuthorInfo both belong to the caller, and widening past either
+                    // would leave every next page filtered by an author this never dropped.
+                    if (
+                        !includeAuthorInfo &&
+                        !createdByFilter?.length &&
+                        tabId === tabsIds.my &&
+                        result.totalCount === 0
+                    ) {
                         setSelectedTabId(tabsIds.all);
                         // Fetch all insights immediately
                         const allQuery = backend

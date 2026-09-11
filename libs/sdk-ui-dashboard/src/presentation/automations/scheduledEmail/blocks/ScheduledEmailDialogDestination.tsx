@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactElement } from "react";
+
 import { type IAutomationDialogDestinationProps } from "../../shared/slots/types.js";
 import { DefaultScheduledEmailDialogDestination } from "../DefaultScheduledEmailDialog/components/DefaultScheduledEmailDialogDestination.js";
 import { useScheduledEmailDialogDestinationProps } from "../state/useScheduledEmailDialogRegionProps.js";
@@ -14,9 +16,11 @@ import { WhenScheduledEmailDialogLoaded } from "./WhenScheduledEmailDialogLoaded
  * {@link useScheduledEmailDialogDestinationProps}; every prop passed here replaces the hook's value
  * for that prop wholesale. Renders nothing while `useScheduledEmailDialogContext().isLoading` is true.
  *
- * @alpha
+ * @beta
  */
-export function ScheduledEmailDialogDestination(overrides: Partial<IAutomationDialogDestinationProps>) {
+export function ScheduledEmailDialogDestination(
+    overrides: Partial<IAutomationDialogDestinationProps>,
+): ReactElement {
     return (
         <WhenScheduledEmailDialogLoaded>
             <ConnectedScheduledEmailDialogDestination {...overrides} />

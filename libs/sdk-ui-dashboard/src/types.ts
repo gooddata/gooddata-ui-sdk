@@ -470,7 +470,7 @@ export interface IAlertDialogContext {
  * members pass through. Wrap functions instead of replacing them. Do not touch members marked as
  * internal machinery.
  *
- * @alpha
+ * @beta
  */
 export type CustomAutomationsContextDecoratorComponent = ComponentType<{
     children?: ReactNode;

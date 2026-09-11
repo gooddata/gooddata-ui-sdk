@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactElement } from "react";
+
 import { FormattedMessage } from "react-intl";
 
 import { AutomationDialogFormField } from "../../shared/slots/AutomationDialogFormField.js";
@@ -16,13 +18,13 @@ const CLOSE_ON_PARENT_SCROLL = true;
  * {@link AlertingDialogDestination} render it with {@link useAlertingDialogDestinationProps}; a
  * `slots.Destination` slot receives it as `Default`.
  *
- * @alpha
+ * @beta
  */
 export function DefaultAlertingDialogDestination({
     notificationChannels,
     selectedNotificationChannelId,
     onChange,
-}: IAutomationDialogDestinationProps) {
+}: IAutomationDialogDestinationProps): ReactElement {
     return (
         <AutomationDialogFormField
             label={<FormattedMessage id="insightAlert.config.action" />}

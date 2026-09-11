@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactNode } from "react";
+
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 import { describe, expect, it, vi } from "vitest";
@@ -20,7 +22,7 @@ const SAMPLE: IUiGranteeAsyncOptions = {
     ],
 };
 
-function renderWithIntl(ui: React.ReactNode) {
+function renderWithIntl(ui: ReactNode) {
     return render(
         <IntlProvider locale={DEFAULT_LANGUAGE} messages={DEFAULT_MESSAGES[DEFAULT_LANGUAGE]}>
             {ui}

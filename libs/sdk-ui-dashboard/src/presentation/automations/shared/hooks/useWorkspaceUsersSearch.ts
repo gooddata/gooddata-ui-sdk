@@ -18,7 +18,7 @@ const SEARCH_DEBOUNCE = 300;
 /**
  * What {@link useWorkspaceUsersSearch} returns.
  *
- * @alpha
+ * @beta
  */
 export interface IUseWorkspaceUsersSearchResult {
     /**
@@ -59,7 +59,7 @@ export interface IUseWorkspaceUsersSearchResult {
  * on it. Pass `enabled: false` to keep it inert (the default select does so when an external
  * recipient override or a logged-user-only constraint removes server search).
  *
- * @alpha
+ * @beta
  */
 export function useWorkspaceUsersSearch({ enabled }: { enabled: boolean }): IUseWorkspaceUsersSearchResult {
     const backend = useBackendStrict();

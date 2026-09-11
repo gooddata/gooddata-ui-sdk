@@ -103,7 +103,6 @@ const eslintRulesCommon: Rules = {
     "no-constant-condition": "error",
     "no-control-regex": "error",
     "no-debugger": "error",
-    "no-dupe-args": "error",
     "no-dupe-class-members": "error",
     "no-dupe-else-if": "error",
     "no-dupe-keys": "error",
@@ -124,7 +123,6 @@ const eslintRulesCommon: Rules = {
     "no-new-native-nonconstructor": "error",
     "no-nonoctal-decimal-escape": "error",
     "no-obj-calls": "error",
-    "no-octal": "error",
     "no-prototype-builtins": "error",
     "no-redeclare": "error",
     "no-regex-spaces": "error",
@@ -162,8 +160,35 @@ const eslintRulesCommon: Rules = {
 
     "no-unneeded-ternary": ["error", { defaultAssignment: false }],
     "no-extra-boolean-cast": "error",
+
+    // security rules
+    "no-caller": "error",
+    "no-eval": "error",
+    "no-delete-var": "error",
+};
+
+export const eslintRulesNativeSupported: Rules = {
+    ...eslintRulesCommon,
+
+    "no-duplicate-imports": "error",
+
+    // todo: maybe leave this here, both linters seem to turn it on by default and conflict
+    "prefer-const": "off",
+};
+
+// todo: https://github.com/oxc-project/oxc/issues/479
+export const eslintRulesNativeNotSupported: Rules = {
+    // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-duplicate-imports
+    "no-duplicate-imports": ["error", { includeExports: true }], // oxlint state: pending fix
+
+    "no-console": ["error", { allow: ["warn", "error"] }],
+
+    "no-octal": "error",
+
+    "no-dupe-args": "error",
+
     "no-restricted-exports": [
-        2,
+        "error",
         {
             restrictDefaultExports: {
                 direct: true,
@@ -175,25 +200,6 @@ const eslintRulesCommon: Rules = {
         },
     ],
 
-    // security rules
-    "no-caller": "error",
-    "no-eval": "error",
-    "no-delete-var": "error",
-    "no-octal-escape": "error",
-};
-
-export const eslintRulesNativeSupported: Rules = {
-    ...eslintRulesCommon,
-    "no-duplicate-imports": "error",
-    "prefer-const": "off", // todo: maybe leave this here, both linters seem to turn it on by default and conflict
-};
-
-// todo: https://github.com/oxc-project/oxc/issues/479
-export const eslintRulesNativeNotSupported: Rules = {
-    // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-duplicate-imports
-    "no-duplicate-imports": ["error", { includeExports: true }], // oxlint state: pending fix
-
-    "no-console": [2, { allow: ["warn", "error"] }],
     "no-restricted-syntax": [
         "error",
         {
@@ -209,7 +215,11 @@ export const eslintRulesNativeNotSupported: Rules = {
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-negated-condition
     "no-negated-condition": "error", // oxlint state: pending fix
 
-    "prefer-const": "off", // todo: maybe leave this here, both linters seem to turn it on by default and conflict
+    // todo: maybe leave this here, both linters seem to turn it on by default and conflict
+    "prefer-const": "off",
+
+    // security rules
+    "no-octal-escape": "error",
 };
 
 export const eslintRules: Rules = {
@@ -217,7 +227,7 @@ export const eslintRules: Rules = {
     ...eslintRulesNativeNotSupported,
 };
 
-export const eslintOverrides = [
+export const eslintOverridesNativeSupported = [
     {
         files: ["**/*.ts", "**/*.tsx"],
         rules: {
@@ -259,11 +269,27 @@ export const eslintOverrides = [
             ],
         } as Rules,
     },
+];
+
+const eslintOverridesNativeNotSupported = [
     {
         // ESLint flat config files & Vite config files require a default export
-        files: ["**/eslint.config.ts", "**/eslint.config.js", "**/vite.config.ts", "**/vite.config.js"],
+        files: [
+            "**/eslint.config.ts",
+            "**/eslint.config.js",
+            "**/vite.config.ts",
+            "**/vite.config.js",
+            "**/vitest.config.ts",
+            "**/vitest.config.js",
+            "**/.dependency-cruiser.ts",
+            "**/.dependency-cruiser.js",
+            "**/.i18nrc.ts",
+            "**/.i18nrc.js",
+        ],
         rules: {
             "no-restricted-exports": "off",
         } as Rules,
     },
 ];
+
+export const eslintOverrides = [...eslintOverridesNativeSupported, ...eslintOverridesNativeNotSupported];

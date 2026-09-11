@@ -43,6 +43,7 @@ import {
     type OptionalInsightMenuComponentProvider,
     type OptionalInsightMenuTitleComponentProvider,
     type OptionalMeasureValueFilterComponentProvider,
+    type OptionalRestrictedFiltersPlaceholderComponentProvider,
     type OptionalRestrictedPlaceholderComponentProvider,
     type OptionalRichTextComponentProvider,
     type OptionalRichTextMenuComponentProvider,
@@ -267,6 +268,18 @@ export interface IDashboardCustomComponentProps {
      * @alpha
      */
     RestrictedPlaceholderComponentProvider?: OptionalRestrictedPlaceholderComponentProvider;
+
+    /**
+     * Specify function to obtain a custom component reporting the filters the current user is not
+     * allowed to see.
+     *
+     * @remarks
+     * The default notice is used when not provided or when the factory returns undefined. The
+     * filters are not passed to the factory: only their number reaches the component.
+     *
+     * @alpha
+     */
+    RestrictedFiltersPlaceholderComponentProvider?: OptionalRestrictedFiltersPlaceholderComponentProvider;
 
     /**
      * Specify function to obtain custom component to use for rendering a visualization switcher.

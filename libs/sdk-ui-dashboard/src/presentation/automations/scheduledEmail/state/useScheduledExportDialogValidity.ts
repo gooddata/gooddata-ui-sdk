@@ -16,7 +16,7 @@ import { useScheduledEmailFormValidity } from "./useScheduledEmailFormValidity.j
  * Derived per consumer rather than published on a context: it is a pure function of the draft, the
  * recipient defaults and the dialog's own context, and no consumer observes its identity.
  *
- * @alpha
+ * @beta
  */
 export function useScheduledExportDialogValidity(): IScheduledExportDialogValidity {
     const { maxAutomationsRecipients } = useAutomationsContext();

@@ -30,6 +30,7 @@ export const ErrorCodes = {
     FORECAST_NOT_RECEIVED: "FORECAST_NOT_RECEIVED",
     CLUSTERING_NOT_RECEIVED: "CLUSTERING_NOT_RECEIVED",
     RESULT_CACHE_MISSING: "RESULT_CACHE_MISSING",
+    CONTRACT_EXPIRED: "CONTRACT_EXPIRED",
 };
 
 /**
@@ -276,6 +277,24 @@ export class ResultCacheMissingSdkError extends GoodDataSdkError {
     }
 }
 
+/**
+ * This error means that the organization's contract or the deployment license has expired.
+ *
+ * @public
+ */
+export class ContractExpiredSdkError extends GoodDataSdkError {
+    constructor(
+        message?: string,
+        cause?: Error,
+        /**
+         * Tier of the expired contract as the backend reported it, for example `TRIAL`.
+         */
+        public readonly tier?: string,
+    ) {
+        super(ErrorCodes.CONTRACT_EXPIRED as SdkErrorType, message, cause);
+    }
+}
+
 //
 //
 //
@@ -440,4 +459,13 @@ export function isDynamicScriptLoadSdkError(obj: unknown): obj is DynamicScriptL
  */
 export function isResultCacheMissingSdkError(obj: unknown): obj is ResultCacheMissingSdkError {
     return !isEmpty(obj) && (obj as GoodDataSdkError).seType === "RESULT_CACHE_MISSING";
+}
+
+/**
+ * Typeguard checking whether input is an instance of {@link ContractExpiredSdkError};
+ *
+ * @public
+ */
+export function isContractExpiredSdkError(obj: unknown): obj is ContractExpiredSdkError {
+    return !isEmpty(obj) && (obj as GoodDataSdkError).seType === "CONTRACT_EXPIRED";
 }

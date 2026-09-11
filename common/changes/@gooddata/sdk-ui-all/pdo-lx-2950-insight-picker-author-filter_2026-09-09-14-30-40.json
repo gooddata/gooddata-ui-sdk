@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-ext: Fix the insight picker showing \"No visualizations\" after the first scroll for a user who authored none of them. The paged list widened only its first query past the author filter, so the next page came back empty and replaced the total count of the widened list. The picker now drops the author filter itself, which every page is fetched from.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

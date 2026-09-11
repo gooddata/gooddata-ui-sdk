@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ComponentProps } from "react";
+
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
@@ -9,7 +11,7 @@ import { ParameterControlDropdown } from "./ParameterControlDropdown.js";
 
 const WrappedParameterControlDropdown = withIntlForTest(ParameterControlDropdown);
 
-const renderDropdown = (props: Partial<React.ComponentProps<typeof ParameterControlDropdown>> = {}) => {
+const renderDropdown = (props: Partial<ComponentProps<typeof ParameterControlDropdown>> = {}) => {
     return render(
         <WrappedParameterControlDropdown
             name="Minimum Deal Size"

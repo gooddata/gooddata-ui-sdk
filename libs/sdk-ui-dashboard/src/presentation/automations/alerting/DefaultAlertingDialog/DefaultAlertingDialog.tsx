@@ -36,15 +36,15 @@ import { DefaultAlertingDialogRecipients } from "./DefaultAlertingDialogRecipien
 /**
  * Default implementation of the alerting create/edit dialog.
  *
- * This component is a pure consumer of `AutomationsContext`, `AlertingDialogContext`, and the
- * alerting dialog state contexts: it reads org/workspace data, per-dialog state, and the alert
- * draft's state from those contexts rather than from the dashboard store. It must therefore be
- * rendered within an `AutomationsContextProvider`, an `AlertingDialogContextProvider` (for the
- * create/edit flow), and an `AlertingDialogStateProvider`. Inside a `Dashboard`, the alerting
- * connector supplies the first two providers above the `AlertingDialogComponent` slot, and mounts
- * `AlertingDialogStateProvider` around the resolved slot component — its state model establishes
- * itself once `useAlertingDialogContext().isLoading` is first false and stays mounted from then
- * on — so the default component, and any wholesale
+ * @remarks
+ * This component is a pure consumer of `AutomationsContext`, `AlertingDialogContext`, and the alerting
+ * dialog state contexts: it reads org/workspace data, per-dialog state, and the alert draft's state from
+ * those contexts rather than from the dashboard store. It must therefore be rendered within an
+ * `AutomationsContextProvider`, an `AlertingDialogContextProvider` (for the create/edit flow), and an
+ * `AlertingDialogStateProvider`. Inside a `Dashboard`, the alerting connector supplies the first two
+ * providers above the `AlertingDialogComponent` slot, and mounts `AlertingDialogStateProvider` around the
+ * resolved slot component — its state model establishes itself once `useAlertingDialogContext().isLoading`
+ * is false for the first time and stays mounted from then on — so the default component, and any wholesale
  * slot replacement, inherit all three contexts automatically and require no extra wiring.
  *
  * The providers are intentionally hoisted above the slot rather than built inside this component:
@@ -69,7 +69,7 @@ import { DefaultAlertingDialogRecipients } from "./DefaultAlertingDialogRecipien
  * Slots render only in the fully rendered dialog: not while the dialog context reports loading,
  * and not while the stale-filters confirmation step is shown.
  *
- * @alpha
+ * @beta
  */
 export function DefaultAlertingDialog(props: IDefaultAlertingDialogProps): ReactElement {
     const { onCancel } = props;

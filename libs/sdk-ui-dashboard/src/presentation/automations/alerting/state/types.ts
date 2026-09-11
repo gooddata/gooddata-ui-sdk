@@ -41,7 +41,7 @@ import { type IMeasureFormatMap } from "../utils/getters.js";
  *
  * Changes on every keystroke; consumers re-render by design.
  *
- * @alpha
+ * @beta
  */
 export interface IAlertDraftContextValue {
     /**
@@ -71,7 +71,7 @@ export interface IAlertDraftContextValue {
  * Changes rarely: `onGranularityChange` is re-created when `triggerIntervalDirty` toggles or the
  * supported measures load.
  *
- * @alpha
+ * @beta
  */
 export interface IAlertActionsContextValue {
     /**
@@ -151,7 +151,7 @@ export interface IAlertActionsContextValue {
  *
  * Changes when an async load resolves, not per keystroke.
  *
- * @alpha
+ * @beta
  */
 export interface IAlertDataContextValue {
     /**
@@ -195,7 +195,7 @@ export interface IAlertDataContextValue {
  *
  * Changes when a filter or a parameter is edited.
  *
- * @alpha
+ * @beta
  */
 export interface IAlertFiltersContextValue {
     /**
@@ -301,7 +301,7 @@ export type IAlertFiltersModel = Pick<
  * The alerting dialog's currently selected form values, derived from the draft and the supported
  * measures and attributes.
  *
- * @alpha
+ * @beta
  */
 export interface IAlertSelectedValues {
     /**
@@ -360,7 +360,7 @@ export interface IAlertSelectedValues {
 /**
  * The alerting dialog's validity.
  *
- * @alpha
+ * @beta
  */
 export interface IAlertDialogValidity {
     /**
@@ -389,7 +389,7 @@ export interface IAlertDialogValidity {
  * Lifecycle callbacks of {@link useAlertSubmit}: the dialog's own `onCreateSuccess`/`onCreateError`
  * (create) and `onUpdateSuccess`/`onUpdateError` (edit).
  *
- * @alpha
+ * @beta
  */
 export type IUseAlertSubmitCallbacks = Pick<
     IAlertingDialogProps,
@@ -399,7 +399,7 @@ export type IUseAlertSubmitCallbacks = Pick<
 /**
  * The alerting dialog's submit path.
  *
- * @alpha
+ * @beta
  */
 export interface IAlertSubmitState {
     /**

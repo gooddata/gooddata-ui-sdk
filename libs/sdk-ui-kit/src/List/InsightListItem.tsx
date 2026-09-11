@@ -5,7 +5,7 @@ import { type ComponentType, type MouseEvent, useCallback, useEffect, useRef } f
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { type IExecutionConfig, type IFilter, type ISeparators } from "@gooddata/sdk-model";
+import { type IExecutionConfig, type IFilter, type ISeparators, type ObjRef } from "@gooddata/sdk-model";
 import { simplifyText } from "@gooddata/util";
 
 import { UiIcon } from "../@ui/UiIcon/UiIcon.js";
@@ -61,6 +61,8 @@ export interface IInsightListItemProps {
 
     showDescriptionPanel?: boolean;
     useReferences?: boolean;
+    /** References the current user is not allowed to read; each renders as a marker in place of its value. */
+    restrictedReferences?: ObjRef[];
     metadataTimeZone?: string;
     richTextExecConfig?: IExecutionConfig;
 
@@ -84,6 +86,7 @@ export function InsightListItem({
     onDescriptionPanelOpen,
     showDescriptionPanel = false,
     useReferences = false,
+    restrictedReferences,
     richTextExecConfig,
     width,
     isLocked,
@@ -142,6 +145,7 @@ export function InsightListItem({
                         useReferences={useReferences}
                         filters={filters}
                         separators={separators}
+                        restrictedReferences={restrictedReferences}
                         LoadingComponent={LoadingComponent}
                         execConfig={richTextExecConfig}
                     />

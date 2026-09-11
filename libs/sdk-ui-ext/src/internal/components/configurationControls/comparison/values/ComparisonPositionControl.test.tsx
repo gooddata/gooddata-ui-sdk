@@ -9,9 +9,9 @@ import { type IComparisonControlProperties } from "../../../../interfaces/Contro
 import { type IVisualizationProperties } from "../../../../interfaces/Visualization.js";
 import { createTestProperties } from "../../../../testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider.js";
-import type * as DropdownControlModule from "../../DropdownControl.js";
+import type { DropdownControl as DropdownControlType } from "../../DropdownControl.js";
 
-import type * as ComparisonPositionControlModule from "./ComparisonPositionControl.js";
+import type { ComparisonPositionControl as ComparisonPositionControlType } from "./ComparisonPositionControl.js";
 
 vi.mock("../../DropdownControl.js", async (importOriginal) => {
     // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
@@ -32,8 +32,8 @@ vi.mock("../../DropdownControl.js", async (importOriginal) => {
  * another test file, and the mocked graph this file builds must not outlive it. Re-import both modules up
  * front so this file always observes the mocked one, and drop the mocked graph again on the way out.
  */
-let DropdownControl: typeof DropdownControlModule.DropdownControl;
-let ComparisonPositionControl: typeof ComparisonPositionControlModule.ComparisonPositionControl;
+let DropdownControl: typeof DropdownControlType;
+let ComparisonPositionControl: typeof ComparisonPositionControlType;
 
 beforeAll(async () => {
     vi.resetModules();

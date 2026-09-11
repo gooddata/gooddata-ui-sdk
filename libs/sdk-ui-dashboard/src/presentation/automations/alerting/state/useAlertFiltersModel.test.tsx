@@ -5,8 +5,6 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type FilterContextItem, type IInsight, type IWidget } from "@gooddata/sdk-model";
 
-import { type useValidateExistingAutomationFilters } from "../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
-
 // ---------------------------------------------------------------------------
 // Mocks — vi.mock calls are hoisted; factories must not reference top-level
 // let/const declared after them. We use vi.fn() inline and retrieve spies via
@@ -30,7 +28,7 @@ vi.mock("../../shared/automationFilters/hooks/useValidateExistingAutomationFilte
 // Imports placed AFTER vi.mock() calls to pick up mocked versions
 // ---------------------------------------------------------------------------
 
-import * as validateExistingAutomationFiltersModule from "../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
+import { useValidateExistingAutomationFilters } from "../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
 
 import { useAlertFiltersModel, type IUseAlertFiltersModelProps } from "./useAlertFiltersModel.js";
 
@@ -38,9 +36,7 @@ import { useAlertFiltersModel, type IUseAlertFiltersModelProps } from "./useAler
 // Typed spy references (resolved after import)
 // ---------------------------------------------------------------------------
 
-const useValidateExistingAutomationFiltersSpy = vi.mocked(
-    validateExistingAutomationFiltersModule.useValidateExistingAutomationFilters,
-);
+const useValidateExistingAutomationFiltersSpy = vi.mocked(useValidateExistingAutomationFilters);
 
 // ---------------------------------------------------------------------------
 // Fixtures

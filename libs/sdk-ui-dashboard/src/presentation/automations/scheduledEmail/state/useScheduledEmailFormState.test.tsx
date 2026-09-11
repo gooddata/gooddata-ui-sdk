@@ -84,7 +84,11 @@ import {
     convertExternalRecipientToAutomationRecipient,
     convertUserToAutomationRecipient,
 } from "../../shared/utils/automationUtils.js";
-import * as dateModule from "../utils/date.js";
+import {
+    toModifiedISOStringToTimezone,
+    toNormalizedFirstRunAndCron,
+    toNormalizedStartDate,
+} from "../utils/date.js";
 
 import {
     newDashboardExportDefinitionMetadataObjectDefinition,
@@ -99,8 +103,8 @@ import {
 // Typed spy references (resolved after import)
 // ---------------------------------------------------------------------------
 
-const toModifiedISOStringToTimezoneSpy = vi.mocked(dateModule.toModifiedISOStringToTimezone);
-const toNormalizedFirstRunAndCronSpy = vi.mocked(dateModule.toNormalizedFirstRunAndCron);
+const toModifiedISOStringToTimezoneSpy = vi.mocked(toModifiedISOStringToTimezone);
+const toNormalizedFirstRunAndCronSpy = vi.mocked(toNormalizedFirstRunAndCron);
 const convertUserToAutomationRecipientSpy = vi.mocked(convertUserToAutomationRecipient);
 const convertExternalRecipientToAutomationRecipientSpy = vi.mocked(
     convertExternalRecipientToAutomationRecipient,
@@ -537,7 +541,7 @@ describe("useScheduledEmailFormState — startDate normalization", () => {
         const { result } = renderFormStateHook({ scheduledExportToEdit });
 
         expect(result.current.startDate).toEqual(
-            dateModule.toNormalizedStartDate("2026-05-01T12:00:00Z", "Europe/Prague"),
+            toNormalizedStartDate("2026-05-01T12:00:00Z", "Europe/Prague"),
         );
     });
 
@@ -550,7 +554,7 @@ describe("useScheduledEmailFormState — startDate normalization", () => {
             const scheduledExportToEdit = makeAutomation({ schedule: { cron: "0 0 * * *" } });
             const { result } = renderFormStateHook({ scheduledExportToEdit });
 
-            expect(result.current.startDate).toEqual(dateModule.toNormalizedStartDate(undefined, undefined));
+            expect(result.current.startDate).toEqual(toNormalizedStartDate(undefined, undefined));
         } finally {
             vi.useRealTimers();
         }

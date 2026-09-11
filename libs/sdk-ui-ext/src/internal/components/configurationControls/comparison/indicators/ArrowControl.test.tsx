@@ -7,10 +7,10 @@ import { type IComparisonControlProperties } from "../../../../interfaces/Contro
 import { type IVisualizationProperties } from "../../../../interfaces/Visualization.js";
 import { createTestProperties } from "../../../../testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider.js";
-import type * as CheckboxControlModule from "../../CheckboxControl.js";
+import type { CheckboxControl as CheckboxControlType } from "../../CheckboxControl.js";
 import { COMPARISON_IS_ARROW_ENABLED_PATH } from "../ComparisonValuePath.js";
 
-import type * as ArrowControlModule from "./ArrowControl.js";
+import type { ArrowControl as ArrowControlType } from "./ArrowControl.js";
 
 vi.mock("../../CheckboxControl.js", async (importOriginal) => {
     // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
@@ -27,8 +27,8 @@ vi.mock("../../CheckboxControl.js", async (importOriginal) => {
  * file, and the mocked graph this file builds must not outlive it. Re-import both modules up front so this
  * file always observes the mocked one, and drop the mocked graph again on the way out.
  */
-let CheckboxControl: typeof CheckboxControlModule.CheckboxControl;
-let ArrowControl: typeof ArrowControlModule.ArrowControl;
+let CheckboxControl: typeof CheckboxControlType;
+let ArrowControl: typeof ArrowControlType;
 
 beforeAll(async () => {
     vi.resetModules();

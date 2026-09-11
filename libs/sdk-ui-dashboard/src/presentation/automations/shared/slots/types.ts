@@ -16,7 +16,7 @@ import { type IAutomationParameter } from "../automationFilters/automationParame
 /**
  * Members shared by both automation dialogs' header regions.
  *
- * @alpha
+ * @beta
  */
 export interface IAutomationDialogHeaderProps {
     /**
@@ -41,8 +41,10 @@ export interface IAutomationDialogHeaderProps {
 
     /**
      * Icon rendered before the secondary title.
+     *
+     * Rendered only while `isSecondaryTitleVisible` is true.
      */
-    secondaryTitleIcon: ReactNode;
+    secondaryTitleIcon?: ReactNode;
 
     /**
      * Called on every title change with the new value. The dialog validates the title itself.
@@ -53,7 +55,7 @@ export interface IAutomationDialogHeaderProps {
 /**
  * Members shared by both automation dialogs' filters regions.
  *
- * @alpha
+ * @beta
  */
 export interface IAutomationDialogFiltersProps {
     /**
@@ -101,7 +103,7 @@ export interface IAutomationDialogFiltersProps {
 /**
  * Members shared by both automation dialogs' destination regions.
  *
- * @alpha
+ * @beta
  */
 export interface IAutomationDialogDestinationProps {
     /**
@@ -123,7 +125,7 @@ export interface IAutomationDialogDestinationProps {
 /**
  * Members shared by both automation dialogs' recipients regions.
  *
- * @alpha
+ * @beta
  */
 export interface IAutomationDialogRecipientsProps {
     /**
@@ -180,7 +182,7 @@ export interface IAutomationDialogRecipientsProps {
 /**
  * Members shared by both automation dialogs' action-bar regions (the footer row).
  *
- * @alpha
+ * @beta
  */
 export interface IAutomationDialogActionBarProps {
     /**
@@ -243,7 +245,7 @@ export interface IAutomationDialogActionBarProps {
 /**
  * Props of {@link AutomationDialogFormField}: a labelled form row of the automation dialogs.
  *
- * @alpha
+ * @beta
  */
 export interface IAutomationDialogFormFieldProps {
     /**

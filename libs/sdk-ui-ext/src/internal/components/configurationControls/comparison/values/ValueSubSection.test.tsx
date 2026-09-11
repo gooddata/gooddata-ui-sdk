@@ -17,9 +17,9 @@ import {
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider.js";
 import { COMPARISON_FORMAT_VALUE_PATH, COMPARISON_SUB_FORMAT_VALUE_PATH } from "../ComparisonValuePath.js";
 
-import type * as ComparisonPositionControlModule from "./ComparisonPositionControl.js";
-import type * as NumberFormatControlModule from "./numberFormat/NumberFormatControl.js";
-import type * as ValueSubSectionModule from "./ValueSubSection.js";
+import type { ComparisonPositionControl as ComparisonPositionControlType } from "./ComparisonPositionControl.js";
+import type { NumberFormatControl as NumberFormatControlType } from "./numberFormat/NumberFormatControl.js";
+import type { ValueSubSection as ValueSubSectionType } from "./ValueSubSection.js";
 
 vi.mock("./ComparisonPositionControl.js", async (importOriginal) => {
     // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
@@ -45,9 +45,9 @@ vi.mock("./numberFormat/NumberFormatControl.js", async (importOriginal) => {
  * and the mocked graph this file builds must not outlive it. Re-import all three modules up front so this
  * file always observes the mocked ones, and drop the mocked graph again on the way out.
  */
-let ComparisonPositionControl: typeof ComparisonPositionControlModule.ComparisonPositionControl;
-let NumberFormatControl: typeof NumberFormatControlModule.NumberFormatControl;
-let ValueSubSection: typeof ValueSubSectionModule.ValueSubSection;
+let ComparisonPositionControl: typeof ComparisonPositionControlType;
+let NumberFormatControl: typeof NumberFormatControlType;
+let ValueSubSection: typeof ValueSubSectionType;
 
 beforeAll(async () => {
     vi.resetModules();

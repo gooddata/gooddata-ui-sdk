@@ -97,15 +97,15 @@ export const useDashboardAlertsManagementDialog = () => {
     );
 
     // Delete
-    const onAlertingManagementDeleteSuccess = useCallback(() => {
+    const onAlertingDeleteSuccess = useCallback(() => {
         closeAlertDialog();
         addSuccess(messages.alertingDeleteSuccess);
         handleRefreshAutomations();
     }, [addSuccess, closeAlertDialog, handleRefreshAutomations]);
 
-    const onAlertingManagementDeleteError = useCallback(() => {
+    const onAlertingDeleteError = useCallback(() => {
         closeAlertDialog();
-        addError(messages.alertingManagementDeleteError);
+        addError(messages.alertingDeleteError);
     }, [closeAlertDialog, addError]);
 
     return {
@@ -115,7 +115,7 @@ export const useDashboardAlertsManagementDialog = () => {
         onAlertingManagementLoadingError,
         onAlertingManagementAdd,
         onAlertingManagementEdit,
-        onAlertingManagementDeleteSuccess,
-        onAlertingManagementDeleteError,
+        onAlertingDeleteSuccess,
+        onAlertingDeleteError,
     };
 };

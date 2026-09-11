@@ -24,7 +24,7 @@ import { type IScheduledExportAttachments } from "./types.js";
  * *change* attachments are on {@link useScheduledExportActions}, because they capture the stored
  * export-parameter wire, which must exist once per dialog.
  *
- * @alpha
+ * @beta
  */
 export function useScheduledExportAttachments(): IScheduledExportAttachments {
     const { settings } = useAutomationsContext();

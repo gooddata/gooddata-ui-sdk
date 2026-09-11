@@ -26,7 +26,7 @@ const GRANULARITY_TOOLTIP = defineMessage({ id: "insightAlert.config.granularity
  * hook's value for that prop wholesale. Renders nothing unless the draft uses anomaly detection,
  * and nothing while `useAlertingDialogContext().isLoading` is true.
  *
- * @alpha
+ * @beta
  */
 export function AlertingDialogGranularity(overrides: Partial<IAlertingDialogGranularityProps>): ReactElement {
     return (

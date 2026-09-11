@@ -9,9 +9,9 @@ import { type IComparisonControlProperties } from "../../../interfaces/ControlPr
 import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { TEST_DEFAULT_SEPARATOR, createTestProperties } from "../../../testDataProvider.js";
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
-import type * as ConfigSectionModule from "../ConfigSection.js";
+import type { ConfigSection as ConfigSectionComponent } from "../ConfigSection.js";
 
-import type * as ComparisonSectionModule from "./ComparisonSection.js";
+import type { ComparisonSection as ComparisonSectionComponent } from "./ComparisonSection.js";
 import { COMPARISON_ENABLED_VALUE_PATH } from "./ComparisonValuePath.js";
 
 vi.mock("../ConfigSection.js", async (importOriginal) => {
@@ -29,8 +29,8 @@ vi.mock("../ConfigSection.js", async (importOriginal) => {
  * file, and the mocked graph this file builds must not outlive it. Re-import both modules up front so this
  * file always observes the mocked one, and drop the mocked graph again on the way out.
  */
-let ConfigSection: typeof ConfigSectionModule.ConfigSection;
-let ComparisonSection: typeof ComparisonSectionModule.ComparisonSection;
+let ConfigSection: typeof ConfigSectionComponent;
+let ComparisonSection: typeof ComparisonSectionComponent;
 
 beforeAll(async () => {
     vi.resetModules();
