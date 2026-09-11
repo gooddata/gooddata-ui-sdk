@@ -19,11 +19,11 @@ import {
 } from "../../events/dashboard.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { selectExportResultPollingTimeout } from "../../store/config/configSelectors.js";
-import { selectDashboardRef, selectEffectiveDashboardTimezone } from "../../store/meta/metaSelectors.js";
 import {
-    selectFilterContextFilters,
-    selectFiltersByTab,
-} from "../../store/tabs/filterContext/filterContextSelectors.js";
+    selectExecutableDashboardFilters,
+    selectExecutableDashboardFiltersByTab,
+} from "../../store/filtering/dashboardFilterSelectors.js";
+import { selectDashboardRef, selectEffectiveDashboardTimezone } from "../../store/meta/metaSelectors.js";
 import { selectExportEffectiveParameters } from "../../store/tabs/parameters/parametersSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type PromiseFnReturnType } from "../../types/sagas.js";
@@ -53,10 +53,13 @@ export function* exportDashboardToPdfHandler(
         throw invalidArgumentsProvided(ctx, cmd, "Dashboard to export to PDF must have an ObjRef.");
     }
 
-    const filterContextFilters: ReturnType<typeof selectFilterContextFilters> =
-        yield select(selectFilterContextFilters);
+    const filterContextFilters: ReturnType<typeof selectExecutableDashboardFilters> = yield select(
+        selectExecutableDashboardFilters,
+    );
 
-    const filtersByTab: ReturnType<typeof selectFiltersByTab> = yield select(selectFiltersByTab);
+    const filtersByTab: ReturnType<typeof selectExecutableDashboardFiltersByTab> = yield select(
+        selectExecutableDashboardFiltersByTab,
+    );
 
     const effectiveFilters = ensureAllTimeFilterForExport(filterContextFilters);
     const effectiveFiltersByTab: FiltersByTab = Object.entries(filtersByTab).reduce(

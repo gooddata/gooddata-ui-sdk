@@ -2124,6 +2124,7 @@ export interface IDescriptionPanelProps {
     locale?: string;
     // (undocumented)
     onBubbleOpen?: () => void;
+    restrictedReferences?: ObjRef[];
     // (undocumented)
     separators?: ISeparators_3;
     // (undocumented)
@@ -3433,6 +3434,7 @@ export interface IInsightListItemProps {
     onDelete?: () => void;
     // (undocumented)
     onDescriptionPanelOpen?: () => void;
+    restrictedReferences?: ObjRef[];
     // (undocumented)
     richTextExecConfig?: IExecutionConfig;
     // (undocumented)
@@ -4217,25 +4219,25 @@ export interface IMeasureNumberFormatOwnProps {
 }
 
 // @internal
-export interface IMediaQueries {
-    "!mobileDevice": string;
-    "<=lg": string;
-    "<=md": string;
-    "<=xl": string;
-    "<desktop": string;
-    "<sm": string;
-    ">=lg": string;
-    ">=md": string;
-    ">=sm": string;
-    ">=xl": string;
-    ">=xxl": string;
-    desktop: string;
-    lg: string;
-    md: string;
-    mobileDevice: string;
-    sm: string;
-    xl: string;
-    xxl: string;
+export interface IMediaQueries<T> {
+    "!mobileDevice": T;
+    "<=lg": T;
+    "<=md": T;
+    "<=xl": T;
+    "<desktop": T;
+    "<sm": T;
+    ">=lg": T;
+    ">=md": T;
+    ">=sm": T;
+    ">=xl": T;
+    ">=xxl": T;
+    desktop: T;
+    lg: T;
+    md: T;
+    mobileDevice: T;
+    sm: T;
+    xl: T;
+    xxl: T;
 }
 
 // @internal (undocumented)
@@ -4911,6 +4913,7 @@ export interface IRichTextProps {
     referencesEnabled?: boolean;
     // (undocumented)
     renderMode?: "view" | "edit";
+    restrictedReferences?: ObjRef[];
     separators?: ISeparators_3;
     // (undocumented)
     value: string;
@@ -5405,7 +5408,7 @@ export interface ISingleSelectListItemProps {
 // @internal
 export const isLabelsChecklistItemChecked: (item: IUiLabelsChecklistItem, selectedIds: ReadonlyArray<string>) => boolean;
 
-// @alpha
+// @beta
 export interface ISlotProps<TProps> {
     Default: ComponentType<TProps>;
     defaultProps: TProps;
@@ -7601,7 +7604,7 @@ export interface IUiPagedVirtualListProps<T> {
     // (undocumented)
     maxHeight: number;
     // (undocumented)
-    onFocus?: (e: React.FocusEvent) => void;
+    onFocus?: (e: FocusEvent_2) => void;
     // (undocumented)
     onKeyDownConfirm?: (item: T) => void;
     // (undocumented)
@@ -9691,7 +9694,7 @@ export function useListWithActionsKeyboardNavigation<Item, Action extends string
 };
 
 // @internal
-export const useMediaQuery: (mediaQueryName: keyof IMediaQueries) => boolean;
+export const useMediaQuery: (mediaQueryName: keyof IMediaQueries<string>, anchor?: number) => boolean;
 
 // @internal
 export function useMetricTypePresets(input: UseMetricTypePresetsConfig): UseMetricTypePresetsResult;

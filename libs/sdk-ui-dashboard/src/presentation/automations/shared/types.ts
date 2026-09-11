@@ -10,7 +10,7 @@ import { type GoodDataSdkError } from "@gooddata/sdk-ui";
  * There is no pre-backend observer callback: the observation seam is the dialog context accessors
  * and the caller-owned submit hook.
  *
- * @alpha
+ * @beta
  */
 export interface IAutomationDialogCallbacks {
     /**
@@ -48,7 +48,7 @@ export interface IAutomationDialogCallbacks {
 /**
  * Callbacks shared by the alerting and scheduled email management dialogs.
  *
- * @alpha
+ * @beta
  */
 export interface IAutomationManagementDialogCallbacks {
     /**

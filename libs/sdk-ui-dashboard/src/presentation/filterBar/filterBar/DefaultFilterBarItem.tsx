@@ -11,6 +11,7 @@ import {
     areObjRefsEqual,
     dashboardAttributeFilterItemDisplayForm,
     dashboardAttributeFilterItemLocalIdentifier,
+    dashboardFilterLocalIdentifier,
     isDashboardAttributeFilter,
     objRefToString,
     serializeObjRef,
@@ -29,6 +30,7 @@ import {
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
 } from "../../../model/store/config/configSelectors.js";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../../model/store/drill/drillSelectors.js";
+import { selectRestrictedDashboardFilterLocalIdentifiers } from "../../../model/store/filtering/dashboardFilterSelectors.js";
 import {
     selectAttributeFilterConfigsDisplayAsLabelMap,
     selectEffectiveAttributeFiltersModeMap,
@@ -113,6 +115,9 @@ export function DefaultFilterBarItem(props: IFilterBarItemProps): ReactNode {
     const isWorkingFilterContextChanged = useDashboardSelector(selectIsWorkingFilterContextChanged);
     const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
     const enableDashboardFilterGroups = useDashboardSelector(selectEnableDashboardFilterGroups);
+    const restrictedFilterLocalIdentifiers = useDashboardSelector(
+        selectRestrictedDashboardFilterLocalIdentifiers,
+    );
 
     const commonDateFilterComponentConfig: IDashboardDateFilterConfig = {
         availableGranularities,
@@ -149,10 +154,20 @@ export function DefaultFilterBarItem(props: IFilterBarItemProps): ReactNode {
         );
     }
 
+    if (restrictedFilterLocalIdentifiers.has(dashboardFilterLocalIdentifier(item.filter) ?? "")) {
+        return null;
+    }
+
     if (isFilterBarAttributeFilter(item)) {
         const { filter, filterIndex, workingFilter } = item;
 
         const filterLocalId = dashboardAttributeFilterItemLocalIdentifier(filter);
+        const attributeFilterMode = attributeFiltersModeMap.get(filterLocalId!);
+
+        if (attributeFilterMode === DashboardAttributeFilterConfigModeValues.HIDDEN) {
+            return null;
+        }
+
         const filterDisplayForm = dashboardAttributeFilterItemDisplayForm(filter);
 
         // URI conversion only applies to standard element-based attribute filters
@@ -162,7 +177,6 @@ export function DefaultFilterBarItem(props: IFilterBarItemProps): ReactNode {
                 : convertDashboardAttributeFilterElementsUrisToValues(filter);
         const CustomAttributeFilterComponent =
             AttributeFilterComponentSet.MainComponentProvider(convertedFilter);
-        const attributeFilterMode = attributeFiltersModeMap.get(filterLocalId!);
         const displayAsLabel = attributeFiltersDisplayAsLabelMap.get(filterLocalId!);
 
         /**
@@ -176,10 +190,6 @@ export function DefaultFilterBarItem(props: IFilterBarItemProps): ReactNode {
         const convertedDisplayForm = dashboardAttributeFilterItemDisplayForm(convertedFilter);
         const displayForm = displayFormsMap.get(convertedDisplayForm!);
         invariant(displayForm, "inconsistent state, display form for a filter was not found");
-
-        if (attributeFilterMode === DashboardAttributeFilterConfigModeValues.HIDDEN) {
-            return null;
-        }
 
         if (
             filterLocalId &&

@@ -8,7 +8,7 @@ import { type IAlertingDialogFormFieldGroupProps } from "../types.js";
  * A heading with a column of field rows under it — the default alerting dialog's "When" (the condition
  * fields) and "Do" (the action fields) groups. Layout only; reads no dialog context.
  *
- * @alpha
+ * @beta
  */
 export function AlertingDialogFormFieldGroup({
     label,

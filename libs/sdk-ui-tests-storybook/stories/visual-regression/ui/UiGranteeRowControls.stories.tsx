@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactNode } from "react";
+
 import { IntlProvider } from "react-intl";
 import { action } from "storybook/actions";
 
@@ -19,7 +21,7 @@ const LABELS: IUiLabelsChecklistItem[] = [
 // Inline mock of a grantee row body — not part of the audited component;
 // used here only to visualize how the controls render in real row context.
 // The real row chrome lands in UiObjectShareDialog.
-function MockRow({ name, email, children }: { name: string; email?: string; children: React.ReactNode }) {
+function MockRow({ name, email, children }: { name: string; email?: string; children: ReactNode }) {
     return (
         <div
             style={{

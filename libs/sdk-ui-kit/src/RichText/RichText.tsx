@@ -15,7 +15,7 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 import Markdown from "react-markdown";
 
-import { type IExecutionConfig, type IFilter, type ISeparators } from "@gooddata/sdk-model";
+import { type IExecutionConfig, type IFilter, type ISeparators, type ObjRef } from "@gooddata/sdk-model";
 import { IntlWrapper, LoadingComponent, type OnError, type OnLoadingChanged } from "@gooddata/sdk-ui";
 
 import { useEvaluatedReferences } from "./hooks/useEvaluatedReferences.js";
@@ -90,6 +90,13 @@ export interface IRichTextProps {
     filters?: IFilter[];
 
     /**
+     * References the current user is not allowed to read. Each of them renders as a marker in place
+     * of its value, and is left out of the execution that resolves the remaining references — one
+     * execution serves them all, and it fails as a whole if it asks for a restricted object.
+     */
+    restrictedReferences?: ObjRef[];
+
+    /**
      * If true, the filters are loading.
      */
     isFiltersLoading?: boolean;
@@ -128,6 +135,7 @@ function RichTextCore({
     filters,
     isFiltersLoading,
     separators,
+    restrictedReferences,
     onLoadingChanged,
     onError,
     LoadingComponent,
@@ -157,6 +165,7 @@ function RichTextCore({
                     filters={filters}
                     isFiltersLoading={isFiltersLoading}
                     separators={separators}
+                    restrictedReferences={restrictedReferences}
                     referencesEnabled={referencesEnabled}
                     allowedMarkdown={allowedMarkdown}
                     LoadingComponent={LoadingComponent}
@@ -241,6 +250,7 @@ interface IRichTextViewProps {
     filters?: IFilter[];
     isFiltersLoading?: boolean;
     separators?: ISeparators;
+    restrictedReferences?: ObjRef[];
     execConfig?: IExecutionConfig;
     onLoadingChanged?: OnLoadingChanged;
     onError?: OnError;
@@ -266,17 +276,23 @@ function RichTextView({
     filters,
     isFiltersLoading,
     separators,
+    restrictedReferences,
     execConfig,
     onError,
     onLoadingChanged,
     LoadingComponent = DefaultLoadingComponent,
 }: IRichTextViewProps) {
     const intl = useIntl();
-    const { loading, metrics, isEmptyValue, error } = useEvaluatedReferences(value, filters ?? [], {
-        enabled: referencesEnabled ?? false,
-        isFiltersLoading,
-        ...execConfig,
-    });
+    const { loading, metrics, isEmptyValue, error } = useEvaluatedReferences(
+        value,
+        filters ?? [],
+        {
+            enabled: referencesEnabled ?? false,
+            isFiltersLoading,
+            ...execConfig,
+        },
+        restrictedReferences,
+    );
 
     useEffect(() => {
         onLoadingChanged?.({
@@ -305,7 +321,9 @@ function RichTextView({
                 ...(allowedMarkdown === undefined ? [] : [remarkMarkdownFeatures(allowedMarkdown)]),
                 ...(referencesEnabled ? [remarkReferences()] : []),
             ]}
-            rehypePlugins={referencesEnabled ? [rehypeReferences(intl, metrics, separators)] : []}
+            rehypePlugins={
+                referencesEnabled ? [rehypeReferences(intl, metrics, separators, restrictedReferences)] : []
+            }
         >
             {value}
         </Markdown>

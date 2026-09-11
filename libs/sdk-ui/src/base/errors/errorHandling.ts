@@ -15,6 +15,7 @@ import { isCancelError } from "../react/CancelablePromise.js";
 import {
     BadRequestSdkError,
     CancelledSdkError,
+    ContractExpiredSdkError,
     DataTooLargeToComputeSdkError,
     ErrorCodes,
     type GoodDataSdkError,
@@ -86,6 +87,11 @@ export function newErrorMapping(intl: IntlShape): IErrorDescriptors {
             message: intl.formatMessage({ id: "visualization.ErrorMessageResultCacheMissing" }),
             description: intl.formatMessage({ id: "visualization.ErrorDescriptionResultCacheMissing" }),
         },
+        [ErrorCodes.CONTRACT_EXPIRED]: {
+            icon: "gd-icon-lock",
+            message: intl.formatMessage({ id: "visualization.ErrorMessageContractExpired" }),
+            description: intl.formatMessage({ id: "visualization.ErrorDescriptionContractExpired" }),
+        },
         [ErrorCodes.BAD_REQUEST]: genericDescriptor,
         [ErrorCodes.UNKNOWN_ERROR]: genericDescriptor,
         [ErrorCodes.VISUALIZATION_CLASS_UNKNOWN]: {
@@ -132,6 +138,8 @@ export function convertError(error: unknown): GoodDataSdkError {
                 return new DataTooLargeToComputeSdkError(ErrorCodes.DATA_TOO_LARGE_TO_COMPUTE, error);
             case AnalyticalBackendErrorTypes.PROTECTED_DATA:
                 return new ProtectedReportSdkError(ErrorCodes.PROTECTED_REPORT, error);
+            case AnalyticalBackendErrorTypes.CONTRACT_EXPIRED:
+                return new ContractExpiredSdkError(ErrorCodes.CONTRACT_EXPIRED, error, error.message);
             case AnalyticalBackendErrorTypes.NOT_AUTHENTICATED: {
                 const sdkError = new UnauthorizedSdkError(ErrorCodes.UNAUTHORIZED, error);
                 sdkError.authenticationFlow = (error as NotAuthenticated).authenticationFlow;

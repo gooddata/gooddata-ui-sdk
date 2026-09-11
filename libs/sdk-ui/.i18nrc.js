@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-module.exports = {
+export default {
     paths: ["./src/base/localization/bundles"],
     structure: true,
     intl: true,

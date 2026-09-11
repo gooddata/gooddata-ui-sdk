@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactElement } from "react";
+
 import { type IAutomationDialogRecipientsProps } from "../../shared/slots/types.js";
 import { DefaultAlertingDialogRecipients } from "../DefaultAlertingDialog/DefaultAlertingDialogRecipients.js";
 import { useAlertingDialogRecipientsProps } from "../state/useAlertingDialogRegionProps.js";
@@ -14,9 +16,9 @@ import { WhenAlertingDialogLoaded } from "./WhenAlertingDialogLoaded.js";
  * that prop wholesale, e.g. `<AlertingDialogRecipients maxRecipients={3} />`. Renders nothing while
  * `useAlertingDialogContext().isLoading` is true.
  *
- * @alpha
+ * @beta
  */
-export function AlertingDialogRecipients(overrides: Partial<IAutomationDialogRecipientsProps>) {
+export function AlertingDialogRecipients(overrides: Partial<IAutomationDialogRecipientsProps>): ReactElement {
     return (
         <WhenAlertingDialogLoaded>
             <ConnectedAlertingDialogRecipients {...overrides} />

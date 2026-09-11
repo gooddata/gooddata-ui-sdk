@@ -8,7 +8,9 @@ import { useIntl } from "react-intl";
 import { type IFilter, type ISeparators } from "@gooddata/sdk-model";
 import { type IAlignPoint, RichTextWithTooltip } from "@gooddata/sdk-ui-kit";
 
+import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import { useDashboardExecConfig } from "../../../../../model/react/useWidgetExecConfig.js";
+import { selectRestrictedRichTextReferences } from "../../../../../model/store/unavailableObjects/unavailableObjectsSelectors.js";
 
 const richTextTooltipAlignPoints: IAlignPoint[] = [
     { align: "bl tl", offset: { x: 4, y: 5 } },
@@ -40,6 +42,7 @@ export function InsightDescription({
     const [richTextValue, setRichTextValue] = useState(description);
 
     const execConfig = useDashboardExecConfig();
+    const restrictedReferences = useDashboardSelector(selectRestrictedRichTextReferences);
 
     useEffect(() => {
         setRichTextValue(description);
@@ -91,6 +94,7 @@ export function InsightDescription({
                     LoadingComponent={LoadingComponent}
                     filters={insightFilters}
                     separators={separators}
+                    restrictedReferences={restrictedReferences}
                     execConfig={execConfig}
                 />
             </div>

@@ -11,7 +11,7 @@ import { SubjectForm } from "./SubjectForm/SubjectForm.js";
  * Props-driven — reads no context. The default dialog and {@link ScheduledEmailDialogSubject}
  * render it with {@link useScheduledEmailDialogSubjectProps}.
  *
- * @alpha
+ * @beta
  */
 export function DefaultScheduledEmailDialogSubject(props: IScheduledEmailDialogSubjectProps): ReactElement {
     return <SubjectForm {...props} />;

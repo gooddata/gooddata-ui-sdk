@@ -5,6 +5,7 @@
 import { describe, expect, it } from "vitest";
 
 import {
+    ContractExpired,
     DataTooLargeError,
     NoDataError,
     NotAuthenticated,
@@ -13,7 +14,12 @@ import {
 } from "@gooddata/sdk-backend-spi";
 
 import { convertError } from "./errorHandling.js";
-import { ErrorCodes, UnexpectedSdkError } from "./GoodDataSdkError.js";
+import {
+    type ContractExpiredSdkError,
+    ErrorCodes,
+    UnexpectedSdkError,
+    isContractExpiredSdkError,
+} from "./GoodDataSdkError.js";
 
 describe("convertErrors", () => {
     const Scenarios: Array<[string, any, string]> = [
@@ -28,12 +34,20 @@ describe("convertErrors", () => {
         ],
         ["protected data", new ProtectedDataError("access denied"), ErrorCodes.PROTECTED_REPORT],
         ["unauthenticated", new NotAuthenticated("access denied"), ErrorCodes.UNAUTHORIZED],
+        ["contract expired", new ContractExpired("TRIAL"), ErrorCodes.CONTRACT_EXPIRED],
         ["bogus object", {}, ErrorCodes.UNKNOWN_ERROR],
         ["bogus string", "fun times", ErrorCodes.UNKNOWN_ERROR],
     ];
 
     it.each(Scenarios)("should convert %s", (_desc, input, output) => {
         expect(convertError(input).message).toBe(output);
+    });
+
+    it("moves the contract tier off the message and onto the error", () => {
+        const converted = convertError(new ContractExpired("TRIAL"));
+
+        expect(isContractExpiredSdkError(converted)).toBe(true);
+        expect((converted as ContractExpiredSdkError).tier).toBe("TRIAL");
     });
 
     it("leaves GoodDataSdkError as is", () => {

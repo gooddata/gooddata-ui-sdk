@@ -7,6 +7,7 @@ import {
     type IFilter,
     type IInsight,
     type IInsightWidget,
+    type ObjRef,
     type ScreenSize,
 } from "@gooddata/sdk-model";
 
@@ -26,6 +27,7 @@ export interface IDescriptionClickTriggerProps {
     useReferences?: boolean;
     LoadingComponent?: ComponentType;
     filters?: IFilter[];
+    restrictedReferences?: ObjRef[];
     execConfig?: IExecutionConfig;
     id?: string;
 }

@@ -77,6 +77,7 @@
     background: var(--gd-palette-complementary-0-from-theme, #fcfcfd);
     display: flex;
     flex-direction: column;
+    width: 100%;
 
     .gd-gen-ai-chat {
         height: auto;

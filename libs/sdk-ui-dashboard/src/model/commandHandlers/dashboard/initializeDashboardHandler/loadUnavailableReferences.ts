@@ -14,7 +14,9 @@ const ALL_TYPES: SupportedDashboardReferenceTypes[] = [
     "dataSet",
     "displayForm",
     "analyticalDashboard",
+    "measure",
 ];
+const ENRICHED_TYPES: SupportedDashboardReferenceTypes[] = ["displayForm", "analyticalDashboard", "measure"];
 
 /**
  * Whether the partial-rendering switch is known before the first request: hosts that supply
@@ -26,15 +28,30 @@ function isPartialRenderingKnownUpfront(ctx: DashboardContext): boolean {
 }
 
 /**
- * Reference types for the dashboard load. Display-form and drill-target availability needs extra
- * side-loads, so they are requested with the dashboard only when the switch is already known to be on.
+ * Reference types to request with a dashboard load.
+ *
+ * @remarks
+ * Display-form, drill-target and rich text reference availability costs extra side-loads, so those
+ * types are included only when partial rendering is enabled.
+ *
+ * @param partialRenderingEnabled - whether the `enableDashboardPartialRendering` switch is on
+ * @internal
  */
-export function dashboardLoadReferenceTypes(ctx: DashboardContext): SupportedDashboardReferenceTypes[] {
-    return isPartialRenderingKnownUpfront(ctx) ? ALL_TYPES : BASE_TYPES;
+export function getDashboardLoadReferenceTypes(
+    partialRenderingEnabled: boolean,
+): SupportedDashboardReferenceTypes[] {
+    return [...(partialRenderingEnabled ? ALL_TYPES : BASE_TYPES)];
 }
 
 /**
- * Completes the availability of display forms and drill targets when the dashboard load could not
+ * Reference types for the dashboard load; the extra types need the switch known before the first request.
+ */
+export function dashboardLoadReferenceTypes(ctx: DashboardContext): SupportedDashboardReferenceTypes[] {
+    return getDashboardLoadReferenceTypes(isPartialRenderingKnownUpfront(ctx));
+}
+
+/**
+ * Completes the availability of display forms, drill targets and rich text references when the dashboard load could not
  * request it (the switch was not known up front), with one more dashboard GET. The extra request is an
  * enrichment: its failure keeps the base result. A persisted dashboard body may differ from the stored
  * one, which is all the backend can inspect, so — like its insights — its availability is left to the
@@ -58,7 +75,7 @@ export async function loadUnavailableReferences(
         const extra = await ctx.backend
             .workspace(ctx.workspace)
             .dashboards()
-            .getDashboardReferencedObjects(dashboard, ["displayForm", "analyticalDashboard"]);
+            .getDashboardReferencedObjects(dashboard, ENRICHED_TYPES);
         return [...base, ...(extra.unavailable ?? [])];
     } catch (error) {
         console.warn("Unable to resolve display form and drill target availability.", error);

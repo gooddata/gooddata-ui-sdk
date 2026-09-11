@@ -58,6 +58,7 @@ import {
     type InsightMenuComponentProvider,
     type InsightMenuTitleComponentProvider,
     type MeasureValueFilterComponentProvider,
+    type RestrictedFiltersPlaceholderComponentProvider,
     type RestrictedPlaceholderComponentProvider,
     type RichTextComponentProvider,
     type RichTextMenuComponentProvider,
@@ -86,6 +87,7 @@ interface IDashboardComponentsContext {
     VisualizationSwitcherToolbarComponentProvider: VisualizationSwitcherToolbarComponentProvider;
     RichTextComponentProvider: RichTextComponentProvider;
     RestrictedPlaceholderComponentProvider: RestrictedPlaceholderComponentProvider;
+    RestrictedFiltersPlaceholderComponentProvider: RestrictedFiltersPlaceholderComponentProvider;
     VisualizationSwitcherComponentProvider: VisualizationSwitcherComponentProvider;
     ButtonBarComponent: CustomButtonBarComponent;
     MenuButtonComponent: CustomMenuButtonComponent;
@@ -146,6 +148,9 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     RichTextMenuTitleComponentProvider: ThrowMissingComponentError("RichTextMenuTitleComponentProvider"),
     RichTextComponentProvider: ThrowMissingComponentError("RichTextComponent"),
     RestrictedPlaceholderComponentProvider: ThrowMissingComponentError("RestrictedPlaceholderComponent"),
+    RestrictedFiltersPlaceholderComponentProvider: ThrowMissingComponentError(
+        "RestrictedFiltersPlaceholderComponent",
+    ),
     VisualizationSwitcherComponentProvider: ThrowMissingComponentError("VisualizationSwitcherComponent"),
     WidgetComponentProvider: ThrowMissingComponentError("WidgetComponent"),
     ButtonBarComponent: ThrowMissingComponentError("ButtonBarComponent"),

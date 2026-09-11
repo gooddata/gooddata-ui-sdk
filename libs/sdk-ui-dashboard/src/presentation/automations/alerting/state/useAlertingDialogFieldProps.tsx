@@ -30,7 +30,7 @@ const CLOSE_ON_PARENT_SCROLL = true;
  *
  * Throws outside the alerting dialog's state providers.
  *
- * @alpha
+ * @beta
  */
 export function useAlertingDialogMeasureProps(): IAlertingDialogMeasureProps {
     const { supportedMeasures } = useAlertData();
@@ -54,7 +54,7 @@ export function useAlertingDialogMeasureProps(): IAlertingDialogMeasureProps {
  *
  * Throws outside the alerting dialog's state providers.
  *
- * @alpha
+ * @beta
  */
 export function useAlertingDialogAttributeProps(): IAlertingDialogAttributeProps {
     const { catalogAttributes, catalogDateDatasets } = useAutomationsContext();
@@ -87,7 +87,7 @@ export function useAlertingDialogAttributeProps(): IAlertingDialogAttributeProps
  *
  * Throws outside the alerting dialog's state providers.
  *
- * @alpha
+ * @beta
  */
 export function useAlertingDialogComparisonOperatorProps(): IAlertingDialogComparisonOperatorProps {
     const {
@@ -122,7 +122,7 @@ export function useAlertingDialogComparisonOperatorProps(): IAlertingDialogCompa
  * in a shell of blocks, or directly, never both. Throws outside the alerting dialog's state
  * providers.
  *
- * @alpha
+ * @beta
  */
 export function useAlertingDialogThresholdProps(): IAlertingDialogThresholdProps {
     const { alertToEdit } = useAlertingDialogContext();
@@ -161,7 +161,7 @@ export function useAlertingDialogThresholdProps(): IAlertingDialogThresholdProps
  *
  * Throws outside the alerting dialog's state providers.
  *
- * @alpha
+ * @beta
  */
 export function useAlertingDialogComparisonPeriodProps(): IAlertingDialogComparisonPeriodProps {
     const { editedAutomation } = useAlertDraft();
@@ -187,7 +187,7 @@ export function useAlertingDialogComparisonPeriodProps(): IAlertingDialogCompari
  *
  * Throws outside the alerting dialog's state providers.
  *
- * @alpha
+ * @beta
  */
 export function useAlertingDialogSensitivityProps(): IAlertingDialogSensitivityProps {
     const { onSensitivityChange } = useAlertActions();
@@ -210,7 +210,7 @@ export function useAlertingDialogSensitivityProps(): IAlertingDialogSensitivityP
  *
  * Throws outside the alerting dialog's state providers.
  *
- * @alpha
+ * @beta
  */
 export function useAlertingDialogGranularityProps(): IAlertingDialogGranularityProps {
     const { allowHourlyRecurrence } = useAutomationsContext();
@@ -234,7 +234,7 @@ export function useAlertingDialogGranularityProps(): IAlertingDialogGranularityP
  *
  * Throws outside the alerting dialog's state providers.
  *
- * @alpha
+ * @beta
  */
 export function useAlertingDialogTriggerModeProps(): IAlertingDialogTriggerModeProps {
     const {
@@ -258,7 +258,7 @@ export function useAlertingDialogTriggerModeProps(): IAlertingDialogTriggerModeP
  *
  * Throws outside the alerting dialog's state providers.
  *
- * @alpha
+ * @beta
  */
 export function useAlertingDialogTriggerIntervalProps(): IAlertingDialogTriggerIntervalProps {
     const { editedAutomation } = useAlertDraft();

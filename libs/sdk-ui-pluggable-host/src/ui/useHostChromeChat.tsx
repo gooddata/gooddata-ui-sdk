@@ -2,7 +2,7 @@
 
 import { type ReactNode, useCallback, useState } from "react";
 
-import { PluggableApplicationRegistryItem, type IGenAIUserContext } from "@gooddata/sdk-model";
+import { type IGenAIUserContext } from "@gooddata/sdk-model";
 import {
     type IPlatformContext,
     type IPluggableAppTelemetryCallbacks,
@@ -70,7 +70,6 @@ export interface IUseHostChromeChatArgs {
     features: IHostChromeWorkspaceFeatures;
     ctx: IPlatformContext;
     telemetry: IPluggableAppTelemetryCallbacks | undefined;
-    activeApplication?: PluggableApplicationRegistryItem;
     /** Where to place the chat (e.g. an embedded dashboard's left/right `showassistant` param). */
     dialogPosition?: "left" | "right";
     /** Whether the active app is embedded; switches the chat to the embedded presentation. */
@@ -97,7 +96,6 @@ export function useHostChromeChat({
     ctx,
     telemetry,
     dialogPosition,
-    activeApplication,
     embedded,
     disabled,
     onAppLinkClick,
@@ -189,7 +187,6 @@ export function useHostChromeChat({
         features.showChat && features.workspaceId ? (
             <GenAIChat
                 workspaceId={features.workspaceId}
-                activeApplication={activeApplication}
                 open={isChatOpen}
                 disabled={disabled}
                 onOpen={open}

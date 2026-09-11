@@ -28,7 +28,7 @@ import { WhenAlertingDialogLoaded } from "./WhenAlertingDialogLoaded.js";
  * switch to anomaly detection and back. Renders nothing while
  * `useAlertingDialogContext().isLoading` is true.
  *
- * @alpha
+ * @beta
  */
 export function AlertingDialogThreshold(overrides: Partial<IAlertingDialogThresholdProps>): ReactElement {
     return (

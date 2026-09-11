@@ -1,8 +1,9 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
+import { existsSync } from "fs";
 import path from "path";
 
-import { DefaultConfigName, type ToolkitConfigFile, type ToolkitOptions } from "./data.js";
+import { DefaultConfigFileNames, type ToolkitConfigFile, type ToolkitOptions } from "./data.js";
 import { fail, message } from "./utils/console.js";
 import { readFile } from "./utils/index.js";
 
@@ -28,8 +29,22 @@ async function loadConfigFile(
     cwd: string,
     providedPath?: string,
 ): Promise<[string, ToolkitConfigFile | null]> {
-    const configPath = path.resolve(cwd, providedPath || `./${DefaultConfigName}`);
+    if (providedPath) {
+        return importConfigFile(path.resolve(cwd, providedPath));
+    }
 
+    for (const configName of DefaultConfigFileNames) {
+        const configPath = path.resolve(cwd, `./${configName}`);
+
+        if (existsSync(configPath)) {
+            return importConfigFile(configPath);
+        }
+    }
+
+    return ["", null];
+}
+
+async function importConfigFile(configPath: string): Promise<[string, ToolkitConfigFile]> {
     try {
         await readFile(configPath);
         const impConfig = await import(configPath);

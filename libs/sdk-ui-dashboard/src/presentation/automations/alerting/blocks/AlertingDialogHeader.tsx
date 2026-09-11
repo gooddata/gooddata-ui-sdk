@@ -29,7 +29,7 @@ import { WhenAlertingDialogLoaded } from "./WhenAlertingDialogLoaded.js";
  * <Dashboard AlertingDialogComponent={MyAlertingDialog} />;
  * ```
  *
- * @alpha
+ * @beta
  */
 export const AlertingDialogHeader = forwardRef<HTMLInputElement, Partial<IAlertingDialogHeaderProps>>(
     function AlertingDialogHeader(props, ref) {

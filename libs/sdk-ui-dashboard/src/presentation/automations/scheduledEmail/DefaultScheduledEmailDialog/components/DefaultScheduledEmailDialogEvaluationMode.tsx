@@ -11,7 +11,7 @@ import { EvaluationModeCheckbox } from "./EvaluationModeCheckbox/EvaluationModeC
  * Props-driven — reads no context. The default dialog and {@link ScheduledEmailDialogEvaluationMode}
  * render it with {@link useScheduledEmailDialogEvaluationModeProps}.
  *
- * @alpha
+ * @beta
  */
 export function DefaultScheduledEmailDialogEvaluationMode(
     props: IScheduledEmailDialogEvaluationModeProps,

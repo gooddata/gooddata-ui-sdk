@@ -49,8 +49,8 @@ vi.mock("react-intl", async () => {
 // ---------------------------------------------------------------------------
 
 import { IntlWrapper } from "../../../localization/IntlWrapper.js";
-import * as useAlertValidationModule from "../hooks/useAlertValidation.js";
-import * as guardsModule from "../utils/guards.js";
+import { useAlertValidation } from "../hooks/useAlertValidation.js";
+import { isAlertValueDefined } from "../utils/guards.js";
 
 import { useAlertFormValidation, type IUseAlertFormValidationProps } from "./useAlertFormValidation.js";
 
@@ -58,8 +58,8 @@ import { useAlertFormValidation, type IUseAlertFormValidationProps } from "./use
 // Typed spy references (resolved after import)
 // ---------------------------------------------------------------------------
 
-const useAlertValidationSpy = vi.mocked(useAlertValidationModule.useAlertValidation);
-const isAlertValueDefinedSpy = vi.mocked(guardsModule.isAlertValueDefined);
+const useAlertValidationSpy = vi.mocked(useAlertValidation);
+const isAlertValueDefinedSpy = vi.mocked(isAlertValueDefined);
 
 // ---------------------------------------------------------------------------
 // Fixtures

@@ -539,6 +539,14 @@
         "text": "The underlying data changed or expired. Refresh the page.",
         "crowdinContext": "Follow-up text shown under the 'result is no longer available' error message, instructing the user to rerun the execution to obtain fresh data."
     },
+    "visualization.ErrorMessageContractExpired": {
+        "text": "Your access is locked.",
+        "crowdinContext": "Error message shown when the organization's contract or the deployment license has expired, so the backend refuses to return any data."
+    },
+    "visualization.ErrorDescriptionContractExpired": {
+        "text": "Contact the account administrator to regain access.",
+        "crowdinContext": "Explanation shown below the 'Your access is locked' error message, telling the user who to turn to in order to get the expired contract renewed."
+    },
     "visualization.ErrorDescriptionMissingMapboxToken": {
         "text": "The Geochart configuration requires a valid API access token.",
         "crowdinContext": "Error message shown when trying to display a geographic visualization without having a valid Mapbox API token configured."
@@ -4390,6 +4398,10 @@
     "richText.no_fetch": {
         "text": "Data could not be retrieved",
         "crowdinContext": "Data could not be retrieved from the server"
+    },
+    "richText.restricted": {
+        "text": "restricted",
+        "crowdinContext": "Stands inline in a sentence in place of a value the user has no access to; keep it lower case, it is not a sentence of its own"
     },
     "recurrence.starts": {
         "text": "Starts on",

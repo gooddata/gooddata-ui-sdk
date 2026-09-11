@@ -8,7 +8,6 @@ import { BackendProvider, resolveLocale } from "@gooddata/sdk-ui";
 import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 
 import { getAppLifecycleCallbacks } from "../loader/pluggableApplicationsLoader.js";
-import { getActiveInternalApplication } from "../loader/routing.js";
 import { getBackend } from "../platformContext/backend.js";
 
 import { GenAIChatEvent } from "./GenAIChat.js";
@@ -108,7 +107,6 @@ export function HostChat({
     onAppEventReceive,
 }: IHostChatProps) {
     const features = useHostChromeWorkspaceFeatures(resolvedApplications, ctx, pathname);
-    const activeApplication = getActiveInternalApplication(resolvedApplications, ctx, pathname);
 
     const shellTelemetry = useMemo(
         () => getAppLifecycleCallbacks()?.createTelemetryCallbacks?.("host-ui"),
@@ -118,7 +116,6 @@ export function HostChat({
     const chat = useHostChromeChat({
         features,
         ctx,
-        activeApplication,
         telemetry: shellTelemetry,
         dialogPosition: context?.dialogPosition,
         embedded: context?.embedded,
@@ -199,7 +196,6 @@ export function HostChat({
     const enablePanel = useGenAiRightPanel(
         features.settings["enableGenAiRightPanel"] as boolean,
         context?.embedded,
-        activeApplication,
     );
     const Wrapper = useCallback(
         ({

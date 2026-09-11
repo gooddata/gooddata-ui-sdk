@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactElement } from "react";
+
 import { FormattedMessage } from "react-intl";
 
 import { RecipientsSelect } from "../../scheduledEmail/DefaultScheduledEmailDialog/components/RecipientsSelect/RecipientsSelect.js";
@@ -12,9 +14,9 @@ import { type IAutomationDialogRecipientsProps } from "../../shared/slots/types.
  * The default dialog and {@link AlertingDialogRecipients} render it with
  * {@link useAlertingDialogRecipientsProps}; a `slots.Recipients` slot receives it as `Default`.
  *
- * @alpha
+ * @beta
  */
-export function DefaultAlertingDialogRecipients(props: IAutomationDialogRecipientsProps) {
+export function DefaultAlertingDialogRecipients(props: IAutomationDialogRecipientsProps): ReactElement {
     return (
         <AutomationDialogFormField
             label={<FormattedMessage id="insightAlert.config.recipients" />}

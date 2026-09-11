@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { useCallback, useMemo, useState } from "react";
+import { type Dispatch, type SetStateAction, useCallback, useMemo, useState } from "react";
 
 import type { IObjectPermissionsObject } from "@gooddata/sdk-backend-spi";
 import type { IGranularAccessGrantee, IObjectAccessList, ObjRef } from "@gooddata/sdk-model";
@@ -127,7 +127,7 @@ export interface ILabelScope {
     labelsInitializing: boolean;
     /** Per-grantee label scope: grantee id → label ids in scope (primary always in). */
     selectedLabelIdsByGrantee: Record<string, string[]>;
-    setSelectedLabelIdsByGrantee: React.Dispatch<React.SetStateAction<Record<string, string[]>>>;
+    setSelectedLabelIdsByGrantee: Dispatch<SetStateAction<Record<string, string[]>>>;
     /**
      * In-scope labels whose access the grantee INHERITS, per grantee id — including ones
      * they also hold a local grant on. Callers render these locked: unchecking cannot take

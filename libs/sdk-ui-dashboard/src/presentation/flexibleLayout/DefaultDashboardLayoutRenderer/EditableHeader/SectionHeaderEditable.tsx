@@ -18,6 +18,7 @@ import {
 import { useDashboardExecConfig } from "../../../../model/react/useWidgetExecConfig.js";
 import { selectSeparators } from "../../../../model/store/config/configSelectors.js";
 import { uiActions } from "../../../../model/store/ui/index.js";
+import { selectRestrictedRichTextReferences } from "../../../../model/store/unavailableObjects/unavailableObjectsSelectors.js";
 import { useDashboardComponentsContext } from "../../../dashboardContexts/DashboardComponentsContext.js";
 
 import { EditableLabelWithBubble } from "./EditableLabelWithBubble.js";
@@ -39,6 +40,7 @@ export function SectionHeaderEditable({
     const { LoadingComponent } = useDashboardComponentsContext();
     const { filters, loading } = useSectionDescriptionFilters();
     const separators = useDashboardSelector(selectSeparators);
+    const restrictedReferences = useDashboardSelector(selectRestrictedRichTextReferences);
 
     const title = getTitle(rawTitle);
     const intl = useIntl();
@@ -148,6 +150,7 @@ export function SectionHeaderEditable({
                         filters={filters}
                         isFiltersLoading={loading}
                         separators={separators}
+                        restrictedReferences={restrictedReferences}
                         LoadingComponent={LoadingComponent}
                         execConfig={execConfig}
                     />

@@ -9,7 +9,7 @@ import { type IScheduledEmailManagementDialogProps } from "../types.js";
 import { DefaultScheduledEmailManagementDialogContent } from "./DefaultScheduledEmailManagementDialogContent.js";
 
 /**
- * @alpha
+ * @beta
  */
 export function ScheduledEmailManagementDialog({
     onAdd,

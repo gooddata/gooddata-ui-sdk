@@ -11,7 +11,7 @@ import { WidgetAttachments } from "./Attachments/WidgetAttachments.js";
  * Props-driven — reads no context. The default dialog and {@link ScheduledEmailDialogWidgetAttachments}
  * render it with {@link useScheduledEmailDialogWidgetAttachmentsProps}.
  *
- * @alpha
+ * @beta
  */
 export function DefaultScheduledEmailDialogWidgetAttachments(
     props: IScheduledEmailDialogWidgetAttachmentsProps,

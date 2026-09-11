@@ -145,7 +145,6 @@ const ENDPOINTS: readonly ICatalogEndpoint[] = [
         type: ObjectTypes.COMPUTED_ATTRIBUTE,
         query: (opts) => getComputedAttributesQuery(opts).query(),
         gatedBy: [COMPUTED_ATTRIBUTE_FEATURE_FLAG],
-        cannotFilterBy: ["certification"],
     },
     {
         type: ObjectTypes.ATTRIBUTE,

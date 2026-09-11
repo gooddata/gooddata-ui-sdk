@@ -10,6 +10,7 @@ import {
     type IDashboardDateFilterConfigItem,
     areObjRefsEqual,
     dashboardAttributeFilterItemLocalIdentifier,
+    dashboardFilterLocalIdentifier,
     isAllDashboardMeasureValueFilter,
     isAllValuesDashboardAttributeFilter,
     isDashboardAttributeFilterItem,
@@ -20,6 +21,7 @@ import {
     newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
+import { createMemoizedSelector } from "../_infra/selectors.js";
 import { selectCrossFilteringItems, selectCrossFilteringItemsByTab } from "../drill/drillSelectors.js";
 import { type ICrossFilteringItem } from "../drill/types.js";
 import {
@@ -38,9 +40,12 @@ import {
     selectFilterContextFilters,
     selectFiltersByTab,
 } from "../tabs/filterContext/filterContextSelectors.js";
+import { selectMeasureValueFilterConfigsOverrides } from "../tabs/measureValueFilterConfigs/measureValueFilterConfigsSelectors.js";
 import { selectTabs } from "../tabs/tabsSelectors.js";
 import { type DashboardSelector } from "../types.js";
+import { selectUnavailableObjects } from "../unavailableObjects/unavailableObjectsSelectors.js";
 
+import { isDashboardFilterRestricted } from "./restrictedFilterUtils.js";
 import { type IAutomationFiltersTab } from "./types.js";
 
 const commonDateFilter: FilterContextItem = newAllTimeDashboardDateFilter(
@@ -48,12 +53,126 @@ const commonDateFilter: FilterContextItem = newAllTimeDashboardDateFilter(
     generateDateFilterLocalIdentifier(0),
 );
 
+function filterLocalIdentifiers(filters: FilterContextItem[]): ReadonlySet<string> {
+    return new Set(
+        filters
+            .map(dashboardFilterLocalIdentifier)
+            .filter((localIdentifier): localIdentifier is string => localIdentifier !== undefined),
+    );
+}
+
+const selectRestrictedDashboardFilters: DashboardSelector<FilterContextItem[]> = createSelector(
+    selectFilterContextFilters,
+    selectUnavailableObjects,
+    (filters, unavailableObjects) =>
+        filters.filter((filter) => isDashboardFilterRestricted(filter, unavailableObjects)),
+);
+
+/**
+ * Selects local identifiers of filters the current user is forbidden to access.
+ *
+ * @alpha
+ */
+export const selectRestrictedDashboardFilterLocalIdentifiers: DashboardSelector<ReadonlySet<string>> =
+    createSelector(selectRestrictedDashboardFilters, filterLocalIdentifiers);
+
+/**
+ * Selects how many filters the current user is forbidden to access, excluding those the author hid.
+ *
+ * @alpha
+ */
+export const selectRestrictedDashboardFilterCount: DashboardSelector<number> = createSelector(
+    selectRestrictedDashboardFilters,
+    selectDateFilterConfigOverrides,
+    selectDateFilterConfigsOverrides,
+    selectAttributeFilterConfigsOverrides,
+    selectMeasureValueFilterConfigsOverrides,
+    (
+        restricted,
+        commonDateFilterConfig,
+        dateFilterWithDimensionConfigs,
+        attributeFilterConfigs,
+        measureValueFilterConfigs,
+    ) =>
+        restricted.filter((filter) =>
+            // isFilterContextItemHidden covers attribute and date filters only
+            isDashboardMeasureValueFilter(filter)
+                ? measureValueFilterConfigs.find(
+                      (config) => config.localIdentifier === dashboardFilterLocalIdentifier(filter),
+                  )?.mode !== "hidden"
+                : !isFilterContextItemHidden(filter, {
+                      commonDateFilterConfig,
+                      dateFilterWithDimensionConfigs,
+                      attributeFilterConfigs,
+                  }),
+        ).length,
+);
+
+/**
+ * Selects dashboard filters that are safe to use in executions and filter-dependent requests.
+ *
+ * @alpha
+ */
+export const selectExecutableDashboardFilters: DashboardSelector<FilterContextItem[]> = createSelector(
+    selectFilterContextFilters,
+    selectUnavailableObjects,
+    (filters, unavailableObjects) =>
+        filters.filter((filter) => !isDashboardFilterRestricted(filter, unavailableObjects)),
+);
+
+const selectRestrictedDashboardFiltersByTab: DashboardSelector<Record<string, FilterContextItem[]>> =
+    createSelector(selectFiltersByTab, selectUnavailableObjects, (filtersByTab, unavailableObjects) =>
+        Object.fromEntries(
+            Object.entries(filtersByTab).map(([tabId, filters]) => [
+                tabId,
+                filters.filter((filter) => isDashboardFilterRestricted(filter, unavailableObjects)),
+            ]),
+        ),
+    );
+
+/**
+ * Whether any filter was left out of the executable ones, on any tab. Callers that let the backend
+ * fall back to the stored filter context must send the filters explicitly in that case.
+ */
+export const selectHasRestrictedDashboardFilters: DashboardSelector<boolean> = createSelector(
+    selectRestrictedDashboardFilters,
+    selectRestrictedDashboardFiltersByTab,
+    (activeTab, byTab) => activeTab.length > 0 || Object.values(byTab).some((filters) => filters.length > 0),
+);
+
+/**
+ * Selects local identifiers of filters the current user is forbidden to access on the given tab.
+ * @alpha
+ */
+export const selectRestrictedDashboardFilterLocalIdentifiersForTab: (
+    tabLocalIdentifier: string,
+) => DashboardSelector<ReadonlySet<string>> = createMemoizedSelector((tabLocalIdentifier: string) =>
+    createSelector(selectRestrictedDashboardFiltersByTab, (filtersByTab) =>
+        filterLocalIdentifiers(filtersByTab[tabLocalIdentifier] ?? []),
+    ),
+);
+
+/**
+ * Selects execution-safe dashboard filters for every tab.
+ *
+ * @alpha
+ */
+export const selectExecutableDashboardFiltersByTab: DashboardSelector<Record<string, FilterContextItem[]>> =
+    createSelector(selectFiltersByTab, selectUnavailableObjects, (filtersByTab, unavailableObjects) =>
+        Object.fromEntries(
+            Object.entries(filtersByTab).map(([tabId, filters]) => [
+                tabId,
+                filters.filter((filter) => !isDashboardFilterRestricted(filter, unavailableObjects)),
+            ]),
+        ),
+    );
+
 /**
  * @alpha
  */
 export const selectDashboardFiltersWithoutCrossFiltering: DashboardSelector<FilterContextItem[]> =
     createSelector(
-        selectFilterContextFilters,
+        selectExecutableDashboardFilters,
         selectCrossFilteringItems,
         (dashboardFilters, crossFilteringItems) => {
             const dashboardFiltersWithCommonDateFilter = dashboardFilters.some(isDashboardCommonDateFilter)
@@ -297,7 +416,7 @@ export const isFilterContextItemLocked = (
  */
 export const selectAutomationFiltersByTab: DashboardSelector<IAutomationFiltersTab[]> = createSelector(
     selectTabs,
-    selectFiltersByTab,
+    selectExecutableDashboardFiltersByTab,
     selectDateFilterConfigOverridesByTab,
     selectDateFilterConfigsOverridesByTab,
     selectAttributeFilterConfigsOverridesByTab,

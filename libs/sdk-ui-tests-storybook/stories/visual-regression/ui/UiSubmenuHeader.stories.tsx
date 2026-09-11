@@ -1,11 +1,13 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactNode } from "react";
+
 import { UiSubmenuHeader } from "@gooddata/sdk-ui-kit";
 
 import { type IStoryParameters, State } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
-function Example({ title, children }: { title: string; children: React.ReactNode }) {
+function Example({ title, children }: { title: string; children: ReactNode }) {
     return (
         <>
             <h4>{title}</h4>

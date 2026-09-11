@@ -35,7 +35,7 @@ import { WhenAlertingDialogLoaded } from "./WhenAlertingDialogLoaded.js";
  * <Dashboard AlertingDialogComponent={MyAlertingDialog} />;
  * ```
  *
- * @alpha
+ * @beta
  */
 export function AlertingDialogMeasure(overrides: Partial<IAlertingDialogMeasureProps>): ReactElement {
     return (

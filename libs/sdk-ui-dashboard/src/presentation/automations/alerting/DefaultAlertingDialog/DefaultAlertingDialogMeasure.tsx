@@ -18,7 +18,7 @@ const measureIcon = <div className="gd-alert-measure-select__icon gd-icon-metric
  * (only `useIntl`). The default dialog and {@link AlertingDialogMeasure} render it with
  * {@link useAlertingDialogMeasureProps} inside {@link AutomationDialogFormField}.
  *
- * @alpha
+ * @beta
  */
 export function DefaultAlertingDialogMeasure({
     id,

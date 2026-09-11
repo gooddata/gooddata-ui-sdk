@@ -1,6 +1,6 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
-module.exports = {
+export default {
     paths: ["./src/localization/bundles"],
     structure: true,
     intl: true,

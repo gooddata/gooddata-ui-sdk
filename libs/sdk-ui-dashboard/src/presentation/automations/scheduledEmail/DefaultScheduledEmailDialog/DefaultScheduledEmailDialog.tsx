@@ -32,17 +32,17 @@ import { DefaultScheduledEmailDialogTimezone } from "./components/DefaultSchedul
 /**
  * Default implementation of the scheduled export create/edit dialog.
  *
+ * @remarks
  * This component is a pure consumer of `AutomationsContext`, `ScheduledEmailDialogContext`, and the
- * scheduled export dialog state contexts: it reads org/workspace data, per-dialog state, and the
- * export draft's state from those contexts rather than from the dashboard store. It must therefore
- * be rendered within an `AutomationsContextProvider`, a `ScheduledEmailDialogContextProvider` (for
- * the create/edit flow), and a `ScheduledEmailDialogStateProvider`, whose state model establishes
- * itself once `useScheduledEmailDialogContext().isLoading` is first false and stays mounted from
- * then on. Inside a `Dashboard`, the
- * scheduled export connector supplies the first two providers above the
- * `ScheduledEmailDialogComponent` slot and mounts `ScheduledEmailDialogStateProvider` around the
- * resolved slot component — so the default component, and any wholesale slot replacement, inherit
- * all three contexts automatically and require no extra wiring.
+ * scheduled export dialog state contexts: it reads org/workspace data, per-dialog state, and the export
+ * draft's state from those contexts rather than from the dashboard store. It must therefore be rendered
+ * within an `AutomationsContextProvider`, a `ScheduledEmailDialogContextProvider` (for the create/edit
+ * flow), and a `ScheduledEmailDialogStateProvider`, whose state model establishes itself once
+ * `useScheduledEmailDialogContext().isLoading` is false for the first time and stays mounted from then on.
+ * Inside a `Dashboard`, the scheduled export connector supplies the first two providers above the
+ * `ScheduledEmailDialogComponent` slot and mounts `ScheduledEmailDialogStateProvider` around the resolved
+ * slot component — so the default component, and any wholesale slot replacement, inherit all three
+ * contexts automatically and require no extra wiring.
  *
  * The providers are intentionally hoisted above the slot rather than built inside this component:
  * that is what lets a wholesale replacement receive the same contexts. Rendering this component
@@ -66,7 +66,7 @@ import { DefaultScheduledEmailDialogTimezone } from "./components/DefaultSchedul
  * and not while the stale-filters confirmation step is shown. The Filters slot additionally
  * renders only while the Filters tab is selected — see {@link IScheduledEmailDialogSlots.Filters}.
  *
- * @alpha
+ * @beta
  */
 export function DefaultScheduledEmailDialog(props: IDefaultScheduledEmailDialogProps): ReactElement {
     const { onCancel } = props;

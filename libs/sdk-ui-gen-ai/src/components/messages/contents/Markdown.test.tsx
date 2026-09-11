@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactElement } from "react";
+
 import { configureStore } from "@reduxjs/toolkit";
 import { render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
@@ -10,7 +12,7 @@ import { chatWindowSliceName, chatWindowSliceReducer } from "../../../store/chat
 
 import { MarkdownComponent } from "./Markdown.js";
 
-const withStoreAndIntl = (component: React.ReactElement) => {
+const withStoreAndIntl = (component: ReactElement) => {
     const store = configureStore({
         reducer: {
             [chatWindowSliceName]: chatWindowSliceReducer,

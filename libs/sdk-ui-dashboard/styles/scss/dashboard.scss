@@ -41,6 +41,14 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
     }
 }
 
+.gd-dashboard-contract-expired {
+    display: flex;
+    flex: 1 0 auto;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
 .sdk-dashboard-generating .sdk-dashboard-skeleton {
     margin: -15px -20px 0 -20px;
     height: 100%;

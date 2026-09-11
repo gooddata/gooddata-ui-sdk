@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactElement } from "react";
+
 import { type IAutomationDialogDestinationProps } from "../../shared/slots/types.js";
 import { DefaultAlertingDialogDestination } from "../DefaultAlertingDialog/DefaultAlertingDialogDestination.js";
 import { useAlertingDialogDestinationProps } from "../state/useAlertingDialogRegionProps.js";
@@ -16,9 +18,11 @@ import { WhenAlertingDialogLoaded } from "./WhenAlertingDialogLoaded.js";
  * default dialog renders this region only when more than one channel exists; the block renders
  * wherever it is placed — a shell decides from `useAlertingDialogContext().notificationChannels`.
  *
- * @alpha
+ * @beta
  */
-export function AlertingDialogDestination(overrides: Partial<IAutomationDialogDestinationProps>) {
+export function AlertingDialogDestination(
+    overrides: Partial<IAutomationDialogDestinationProps>,
+): ReactElement {
     return (
         <WhenAlertingDialogLoaded>
             <ConnectedAlertingDialogDestination {...overrides} />

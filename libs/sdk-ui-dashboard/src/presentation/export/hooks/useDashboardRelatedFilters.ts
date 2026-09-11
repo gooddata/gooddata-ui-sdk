@@ -15,10 +15,10 @@ import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@goo
 
 import { type FilterNaming, useFiltersNamings } from "../../../_staging/sharedHooks/useFiltersNamings.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectExecutableDashboardFilters } from "../../../model/store/filtering/dashboardFilterSelectors.js";
 import { selectAttributeFilterConfigsOverrides } from "../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectDateFilterConfigOverrides } from "../../../model/store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
 import { selectDateFilterConfigsOverrides } from "../../../model/store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
-import { selectFilterContextFilters } from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import { selectMeasureValueFilterConfigsOverrides } from "../../../model/store/tabs/measureValueFilterConfigs/measureValueFilterConfigsSelectors.js";
 
 /**
@@ -45,7 +45,7 @@ export function useDashboardRelatedFilters(run: boolean): {
     const backend = useBackendStrict();
     const workspaceId = useWorkspaceStrict();
 
-    const dashboardFilters = useDashboardSelector(selectFilterContextFilters);
+    const dashboardFilters = useDashboardSelector(selectExecutableDashboardFilters);
     const dateFilterConfig = useDashboardSelector(selectDateFilterConfigOverrides);
     const dateFiltersConfig = useDashboardSelector(selectDateFilterConfigsOverrides);
     const attributeFiltersConfig = useDashboardSelector(selectAttributeFilterConfigsOverrides);

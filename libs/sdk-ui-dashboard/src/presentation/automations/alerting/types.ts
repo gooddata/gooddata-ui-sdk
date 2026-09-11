@@ -47,7 +47,7 @@ import { type AttributeValue } from "./hooks/useAttributeValuesFromExecResults.j
 ///
 
 /**
- * @alpha
+ * @beta
  */
 export interface IAlertingDialogProps extends IAutomationDialogCallbacks {
     /**
@@ -106,7 +106,7 @@ export interface IAlertingDialogProps extends IAutomationDialogCallbacks {
 /**
  * Props of the default alerting dialog's header region (the title input row).
  *
- * @alpha
+ * @beta
  */
 export interface IAlertingDialogHeaderProps extends IAutomationDialogHeaderProps {
     /**
@@ -119,7 +119,7 @@ export interface IAlertingDialogHeaderProps extends IAutomationDialogHeaderProps
  * The exact props the default dialog renders its header with, including the dialog's
  * initial-focus ref.
  *
- * @alpha
+ * @beta
  */
 export type AlertingDialogHeaderDefaultProps = IAlertingDialogHeaderProps & {
     ref?: Ref<HTMLInputElement>;
@@ -129,7 +129,7 @@ export type AlertingDialogHeaderDefaultProps = IAlertingDialogHeaderProps & {
  * Props of the default alerting dialog's filters region (the filter and parameter chips above
  * the form).
  *
- * @alpha
+ * @beta
  */
 export interface IAlertingDialogFiltersProps extends IAutomationDialogFiltersProps {
     /**
@@ -142,13 +142,13 @@ export interface IAlertingDialogFiltersProps extends IAutomationDialogFiltersPro
 /**
  * Props of the default alerting dialog's measure field (the "Metric" row).
  *
- * @alpha
+ * @beta
  */
 export interface IAlertingDialogMeasureProps {
     /**
      * Id of the dropdown button; the form row's label points at it.
      */
-    id?: string;
+    id: string;
     /**
      * Disables the select. The default dialog disables it when the dialog has no insight to pick measures from.
      */
@@ -178,7 +178,7 @@ export interface IAlertingDialogMeasureProps {
 /**
  * Props of the default alerting dialog's attribute field (the "For" row).
  *
- * @alpha
+ * @beta
  */
 export interface IAlertingDialogAttributeProps {
     /**
@@ -235,7 +235,7 @@ export interface IAlertingDialogAttributeProps {
 /**
  * Props of the default alerting dialog's comparison-operator field (the "Condition" row).
  *
- * @alpha
+ * @beta
  */
 export interface IAlertingDialogComparisonOperatorProps {
     /**
@@ -293,7 +293,7 @@ export interface IAlertingDialogComparisonOperatorProps {
 /**
  * Props of the default alerting dialog's threshold field (the "Threshold" row).
  *
- * @alpha
+ * @beta
  */
 export interface IAlertingDialogThresholdProps {
     /**
@@ -325,7 +325,7 @@ export interface IAlertingDialogThresholdProps {
 /**
  * Props of the default alerting dialog's comparison-period field (the "Compared to" row).
  *
- * @alpha
+ * @beta
  */
 export interface IAlertingDialogComparisonPeriodProps {
     /**
@@ -369,7 +369,7 @@ export interface IAlertingDialogComparisonPeriodProps {
 /**
  * Props of the default alerting dialog's sensitivity field (anomaly detection).
  *
- * @alpha
+ * @beta
  */
 export interface IAlertingDialogSensitivityProps {
     /**
@@ -397,7 +397,7 @@ export interface IAlertingDialogSensitivityProps {
 /**
  * Props of the default alerting dialog's granularity field (anomaly detection).
  *
- * @alpha
+ * @beta
  */
 export interface IAlertingDialogGranularityProps {
     /**
@@ -429,7 +429,7 @@ export interface IAlertingDialogGranularityProps {
 /**
  * Props of the default alerting dialog's trigger-mode field (the "Trigger" row).
  *
- * @alpha
+ * @beta
  */
 export interface IAlertingDialogTriggerModeProps {
     /**
@@ -461,7 +461,7 @@ export interface IAlertingDialogTriggerModeProps {
 /**
  * Props of the default alerting dialog's trigger-interval field (the "Interval" row).
  *
- * @alpha
+ * @beta
  */
 export interface IAlertingDialogTriggerIntervalProps {
     /**
@@ -489,7 +489,10 @@ export interface IAlertingDialogTriggerIntervalProps {
 /**
  * Section-level overrides of the default alerting dialog.
  *
- * @alpha
+ * Define slot components at module scope, not inline in a render — an inline component remounts
+ * on every render.
+ *
+ * @beta
  */
 export interface IAlertingDialogSlots {
     /**
@@ -559,7 +562,7 @@ export interface IAlertingDialogSlots {
  * additionally renders only when more than one notification channel exists — see
  * {@link IAlertingDialogSlots.Destination}.
  *
- * @alpha
+ * @beta
  */
 export interface IDefaultAlertingDialogProps extends IAlertingDialogProps {
     /**
@@ -607,7 +610,7 @@ export interface IDefaultAlertingDialogProps extends IAlertingDialogProps {
 /**
  * Props of {@link AlertingDialogFormFieldGroup}.
  *
- * @alpha
+ * @beta
  */
 export interface IAlertingDialogFormFieldGroupProps {
     /**
@@ -622,7 +625,7 @@ export interface IAlertingDialogFormFieldGroupProps {
 }
 
 /**
- * @alpha
+ * @beta
  */
 export interface IAlertingManagementDialogProps extends IAutomationManagementDialogCallbacks {
     /**
@@ -661,7 +664,7 @@ export interface IAlertingManagementDialogProps extends IAutomationManagementDia
 ///
 
 /**
- * @alpha
+ * @beta
  */
 export type CustomAlertingDialogComponent = ComponentType<IAlertingDialogProps>;
 
@@ -695,12 +698,12 @@ export type CustomAlertingDialogComponent = ComponentType<IAlertingDialogProps>;
  * members pass through. Wrap functions instead of replacing them. Do not touch members marked as
  * internal machinery.
  *
- * @alpha
+ * @beta
  */
 export type CustomAlertingDialogContextDecoratorComponent = ComponentType<{ children?: ReactNode }>;
 
 /**
- * @alpha
+ * @beta
  */
 export type CustomAlertingManagementDialogComponent = ComponentType<IAlertingManagementDialogProps>;
 
@@ -743,7 +746,7 @@ export type CustomAlertingManagementDialogComponent = ComponentType<IAlertingMan
  * members pass through. Wrap functions instead of replacing them. Do not touch members marked as
  * internal machinery.
  *
- * @alpha
+ * @beta
  */
 export type CustomAlertingManagementDialogContextDecoratorComponent = ComponentType<{
     children?: ReactNode;
@@ -770,7 +773,7 @@ export interface IAlertDropdownProps {
 /**
  * The period a relative alert condition compares the measure against.
  *
- * @alpha
+ * @beta
  */
 export enum AlertMetricComparatorType {
     PreviousPeriod,
@@ -781,7 +784,7 @@ export enum AlertMetricComparatorType {
  * A comparison the alerting dialog can offer for a measure: the derived period-over-period measure
  * and the date dataset and granularity it is computed over.
  *
- * @alpha
+ * @beta
  */
 export type AlertMetricComparator = {
     /**
@@ -810,7 +813,7 @@ export type AlertMetricComparator = {
  * A measure of the insight the alerting dialog can build a condition on, with the comparisons
  * available for it.
  *
- * @alpha
+ * @beta
  */
 export type AlertMetric = {
     /**
@@ -830,7 +833,7 @@ export type AlertMetric = {
 /**
  * An attribute of the insight the alert can be sliced by (the "for" row of the condition).
  *
- * @alpha
+ * @beta
  */
 export type AlertAttribute = {
     /**
@@ -846,14 +849,14 @@ export type AlertAttribute = {
 /**
  * The operator id of an anomaly-detection condition (`"AI.ANOMALY_DETECTION"`).
  *
- * @alpha
+ * @beta
  */
 export type AlertAiOperator = `${typeof AI_OPERATOR}.${typeof AI_OPERATORS.ANOMALY_DETECTION}`;
 
 /**
  * Props of {@link AlertingDialogShell}.
  *
- * @alpha
+ * @beta
  */
 export interface IAlertingDialogShellProps extends Pick<
     IAlertingDialogProps,

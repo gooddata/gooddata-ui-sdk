@@ -3,12 +3,16 @@
 import { type AxiosResponse } from "axios";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
-import * as entitiesObjects from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
-import * as exportApi from "@gooddata/api-client-tiger/endpoints/export";
+import { DashboardsApi_GetEntityAnalyticalDashboards } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
+import {
+    ExportApi_CreateImageExport,
+    ExportApi_CreatePdfExport,
+    ExportApi_CreateSlidesExport,
+} from "@gooddata/api-client-tiger/endpoints/export";
 import { idRef } from "@gooddata/sdk-model";
 
 import { type IExportMetadata, type TigerAuthenticatedCallGuard } from "../../../types/index.js";
-import * as exportPolling from "../../../utils/exportPolling.js";
+import { handleExportResultPolling } from "../../../utils/exportPolling.js";
 
 import { type TigerWorkspaceDashboards } from "./index.js";
 
@@ -58,13 +62,11 @@ describe("TigerWorkspaceDashboards — non-tabular export parameter overrides", 
 
     beforeEach(() => {
         vi.clearAllMocks();
-        vi.mocked(entitiesObjects.DashboardsApi_GetEntityAnalyticalDashboards).mockResolvedValue(
-            DASHBOARD_DOC,
-        );
-        vi.mocked(exportApi.ExportApi_CreatePdfExport).mockResolvedValue(EXPORT_RESPONSE);
-        vi.mocked(exportApi.ExportApi_CreateSlidesExport).mockResolvedValue(EXPORT_RESPONSE);
-        vi.mocked(exportApi.ExportApi_CreateImageExport).mockResolvedValue(EXPORT_RESPONSE);
-        vi.mocked(exportPolling.handleExportResultPolling).mockResolvedValue({
+        vi.mocked(DashboardsApi_GetEntityAnalyticalDashboards).mockResolvedValue(DASHBOARD_DOC);
+        vi.mocked(ExportApi_CreatePdfExport).mockResolvedValue(EXPORT_RESPONSE);
+        vi.mocked(ExportApi_CreateSlidesExport).mockResolvedValue(EXPORT_RESPONSE);
+        vi.mocked(ExportApi_CreateImageExport).mockResolvedValue(EXPORT_RESPONSE);
+        vi.mocked(handleExportResultPolling).mockResolvedValue({
             uri: "result-uri",
             objectUrl: "blob:result",
         });
@@ -73,8 +75,7 @@ describe("TigerWorkspaceDashboards — non-tabular export parameter overrides", 
     describe("exportDashboardToPdf (dashboard-scoped → parametersByTab)", () => {
         async function callPdf(options?: Parameters<TigerWorkspaceDashboards["exportDashboardToPdf"]>[3]) {
             await service.exportDashboardToPdf(dashboardRef, [], {}, options);
-            const req = vi.mocked(exportApi.ExportApi_CreatePdfExport).mock.calls[0][2]
-                .exportVisualExportRequest;
+            const req = vi.mocked(ExportApi_CreatePdfExport).mock.calls[0][2].exportVisualExportRequest;
             return req.metadata as IExportMetadata;
         }
 
@@ -99,8 +100,7 @@ describe("TigerWorkspaceDashboards — non-tabular export parameter overrides", 
             options?: Parameters<TigerWorkspaceDashboards["exportDashboardToPresentation"]>[4],
         ) {
             await service.exportDashboardToPresentation(dashboardRef, "PPTX", [], {}, options);
-            const req = vi.mocked(exportApi.ExportApi_CreateSlidesExport).mock.calls[0][2]
-                .exportSlidesExportRequest;
+            const req = vi.mocked(ExportApi_CreateSlidesExport).mock.calls[0][2].exportSlidesExportRequest;
             return req.metadata as IExportMetadata;
         }
 
@@ -120,8 +120,7 @@ describe("TigerWorkspaceDashboards — non-tabular export parameter overrides", 
             options?: Parameters<TigerWorkspaceDashboards["exportDashboardToImage"]>[3],
         ) {
             await service.exportDashboardToImage(dashboardRef, [], {}, options);
-            const req = vi.mocked(exportApi.ExportApi_CreateImageExport).mock.calls[0][2]
-                .exportImageExportRequest;
+            const req = vi.mocked(ExportApi_CreateImageExport).mock.calls[0][2].exportImageExportRequest;
             return req.metadata as IExportMetadata;
         }
 

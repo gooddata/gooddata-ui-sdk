@@ -2,7 +2,11 @@
 
 import {
     type ITigerClientBase,
+    type ManageAttributePermissionsRequestInner,
+    type ManageComputedAttributePermissionsRequestInner,
+    type ManageFactPermissionsRequestInner,
     type ManageLabelPermissionsRequestInner,
+    type ManageMetricPermissionsRequestInner,
     type UserAssignee,
     type UserGroupAssignee,
     type WorkspaceUser,
@@ -47,6 +51,14 @@ import { objRefToIdentifier } from "../../../utils/api.js";
 
 const PAGE_SIZE = 1000;
 
+// Every permission family has its own request schema with the same shape, so one payload item
+// must satisfy all of them to be dispatched by kind.
+type PermissionAssignment = ManageAttributePermissionsRequestInner &
+    ManageComputedAttributePermissionsRequestInner &
+    ManageFactPermissionsRequestInner &
+    ManageLabelPermissionsRequestInner &
+    ManageMetricPermissionsRequestInner;
+
 export class TigerWorkspaceObjectPermissionsService implements IWorkspaceObjectPermissionsService {
     constructor(
         private readonly authCall: TigerAuthenticatedCallGuard,
@@ -75,7 +87,7 @@ export class TigerWorkspaceObjectPermissionsService implements IWorkspaceObjectP
         grantees: IGranularAccessGrantee[],
     ): Promise<void> {
         const objectId = objRefToIdentifier(target.ref, this.authCall);
-        const payload: ManageLabelPermissionsRequestInner[] = grantees.map((grantee) => {
+        const payload: PermissionAssignment[] = grantees.map((grantee) => {
             if (grantee.type === "allWorkspaceUsers") {
                 return {
                     assigneeRule: { type: grantee.type },
@@ -187,7 +199,7 @@ const manageByKind = (
     kind: ObjectPermissionsObjectKind,
     workspaceId: string,
     objectId: string,
-    manageLabelPermissionsRequestInner: ManageLabelPermissionsRequestInner[],
+    assignments: PermissionAssignment[],
 ) => {
     const { axios, basePath } = client;
     switch (kind) {
@@ -195,31 +207,31 @@ const manageByKind = (
             return ActionsApi_ManageAttributePermissions(axios, basePath, {
                 workspaceId,
                 attributeId: objectId,
-                manageAttributePermissionsRequestInner: manageLabelPermissionsRequestInner,
+                manageAttributePermissionsRequestInner: assignments,
             });
         case "fact":
             return ActionsApi_ManageFactPermissions(axios, basePath, {
                 workspaceId,
                 factId: objectId,
-                manageFactPermissionsRequestInner: manageLabelPermissionsRequestInner,
+                manageFactPermissionsRequestInner: assignments,
             });
         case "label":
             return ActionsApi_ManageLabelPermissions(axios, basePath, {
                 workspaceId,
                 labelId: objectId,
-                manageLabelPermissionsRequestInner,
+                manageLabelPermissionsRequestInner: assignments,
             });
         case "measure":
             return ActionsApi_ManageMetricPermissions(axios, basePath, {
                 workspaceId,
                 metricId: objectId,
-                manageMetricPermissionsRequestInner: manageLabelPermissionsRequestInner,
+                manageMetricPermissionsRequestInner: assignments,
             });
         case "computedAttribute":
             return ActionsApi_ManageComputedAttributePermissions(axios, basePath, {
                 workspaceId,
                 computedAttributeId: objectId,
-                manageComputedAttributePermissionsRequestInner: manageLabelPermissionsRequestInner,
+                manageComputedAttributePermissionsRequestInner: assignments,
             });
     }
 };

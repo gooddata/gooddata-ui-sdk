@@ -24,5 +24,7 @@ export const vitestRules: Rules = {
     "no-focused-tests": "warn",
     "no-identical-title": "warn",
     "valid-expect": "warn",
-    "valid-expect-in-promise": "error",
+
+    // TODO: Uncomment following line once rule once oxlint bumped adequately
+    // "valid-expect-in-promise": "error",
 };

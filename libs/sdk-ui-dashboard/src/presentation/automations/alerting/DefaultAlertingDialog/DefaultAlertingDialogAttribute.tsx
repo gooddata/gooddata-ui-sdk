@@ -148,7 +148,7 @@ function AttributeValuesSearchContent({
  * {@link AlertingDialogAttribute} render it with {@link useAlertingDialogAttributeProps} inside
  * {@link AutomationDialogFormField}.
  *
- * @alpha
+ * @beta
  */
 export function DefaultAlertingDialogAttribute({
     id,

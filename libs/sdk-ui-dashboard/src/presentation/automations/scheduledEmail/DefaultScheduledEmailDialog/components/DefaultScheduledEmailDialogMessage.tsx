@@ -11,7 +11,7 @@ import { MessageForm } from "./MessageForm/MessageForm.js";
  * Props-driven — reads no context. The default dialog and {@link ScheduledEmailDialogMessage}
  * render it with {@link useScheduledEmailDialogMessageProps}.
  *
- * @alpha
+ * @beta
  */
 export function DefaultScheduledEmailDialogMessage(props: IScheduledEmailDialogMessageProps): ReactElement {
     return <MessageForm {...props} />;

@@ -45,6 +45,7 @@ export {
     GeoTokenMissingSdkError,
     DynamicScriptLoadSdkError,
     ResultCacheMissingSdkError,
+    ContractExpiredSdkError,
     isGoodDataSdkError,
     isBadRequest,
     isCancelledSdkError,
@@ -63,6 +64,7 @@ export {
     isClusteringNotReceived,
     isDynamicScriptLoadSdkError,
     isResultCacheMissingSdkError,
+    isContractExpiredSdkError,
 } from "./base/errors/GoodDataSdkError.js";
 export {
     type IErrorDescriptors,

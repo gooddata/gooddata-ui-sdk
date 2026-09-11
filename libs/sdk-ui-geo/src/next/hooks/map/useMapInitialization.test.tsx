@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type RefObject } from "react";
+import { type ReactNode, type RefObject } from "react";
 
 import { act, renderHook, waitFor } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
@@ -65,7 +65,7 @@ const messages: Record<string, string> = {
     "geochart.map.canvas.static": "Map is static. Keyboard navigation is disabled.",
 };
 
-function wrapper({ children }: { children: React.ReactNode }) {
+function wrapper({ children }: { children: ReactNode }) {
     return (
         <IntlProvider locale="en" messages={messages}>
             {children}

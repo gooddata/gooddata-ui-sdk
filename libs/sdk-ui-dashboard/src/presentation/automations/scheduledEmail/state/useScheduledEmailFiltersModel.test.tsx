@@ -6,7 +6,6 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { type FilterContextItem, type IInsight, type IWidget, idRef } from "@gooddata/sdk-model";
 
 import type { IAutomationFiltersTab } from "../../../../model/store/filtering/types.js";
-import { type useValidateExistingAutomationFilters } from "../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
 
 // ---------------------------------------------------------------------------
 // Mocks — vi.mock calls are hoisted; factories must not reference top-level
@@ -51,8 +50,8 @@ vi.mock("../../shared/automationFilters/useAutomationExportParameters.js", () =>
 // Imports placed AFTER vi.mock() calls to pick up mocked versions
 // ---------------------------------------------------------------------------
 
-import * as validateExistingAutomationFiltersModule from "../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
-import * as automationExportParametersModule from "../../shared/automationFilters/useAutomationExportParameters.js";
+import { useValidateExistingAutomationFilters } from "../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
+import { useAutomationExportParameters } from "../../shared/automationFilters/useAutomationExportParameters.js";
 import { getDefaultSelectedFiltersFromFiltersByTab } from "../../shared/automationFilters/useAutomationFiltersSelect.js";
 
 import {
@@ -65,12 +64,8 @@ import {
 // ---------------------------------------------------------------------------
 
 const getDefaultSelectedFiltersFromFiltersByTabSpy = vi.mocked(getDefaultSelectedFiltersFromFiltersByTab);
-const useValidateExistingAutomationFiltersSpy = vi.mocked(
-    validateExistingAutomationFiltersModule.useValidateExistingAutomationFilters,
-);
-const useAutomationExportParametersSpy = vi.mocked(
-    automationExportParametersModule.useAutomationExportParameters,
-);
+const useValidateExistingAutomationFiltersSpy = vi.mocked(useValidateExistingAutomationFilters);
+const useAutomationExportParametersSpy = vi.mocked(useAutomationExportParameters);
 
 // ---------------------------------------------------------------------------
 // Fixtures

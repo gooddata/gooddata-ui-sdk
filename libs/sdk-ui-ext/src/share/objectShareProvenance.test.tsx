@@ -17,7 +17,7 @@ import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { createTightWaitFor } from "@gooddata/util";
 
 import type { IObjectShareLabel } from "./types.js";
-import type * as UseObjectShareControllerModule from "./useObjectShareController.js";
+import type { useObjectShareController as useObjectShareControllerHook } from "./useObjectShareController.js";
 
 /**
  * State-matrix coverage for per-label access provenance.
@@ -186,7 +186,7 @@ vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
  * and the mocked graph this file builds must not outlive it. Re-import it up front so this file always
  * drives a controller wired to the stubs above, and drop the mocked graph again on the way out.
  */
-let useObjectShareController: typeof UseObjectShareControllerModule.useObjectShareController;
+let useObjectShareController: typeof useObjectShareControllerHook;
 
 beforeAll(async () => {
     vi.resetModules();

@@ -15,15 +15,15 @@ import { type IComparisonControlProperties } from "../../../../interfaces/Contro
 import { type IVisualizationProperties } from "../../../../interfaces/Visualization.js";
 import { createTestProperties } from "../../../../testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider.js";
-import type * as CheckboxControlModule from "../../CheckboxControl.js";
-import type * as InputControlModule from "../../InputControl.js";
+import type { CheckboxControl as CheckboxControlType } from "../../CheckboxControl.js";
+import type { InputControl as InputControlType } from "../../InputControl.js";
 import {
     COMPARISON_LABEL_CONDITIONAL_ENABLED_VALUE_PATH,
     COMPARISON_LABEL_POSITIVE_VALUE_PATH,
     COMPARISON_LABEL_UNCONDITIONAL_VALUE_PATH,
 } from "../ComparisonValuePath.js";
 
-import type * as LabelSubSectionModule from "./LabelSubSection.js";
+import type { LabelSubSection as LabelSubSectionType } from "./LabelSubSection.js";
 
 vi.mock("../../CheckboxControl.js", async (importOriginal) => {
     // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
@@ -46,9 +46,9 @@ vi.mock("../../InputControl.js", async (importOriginal) => {
  * and the mocked graph this file builds must not outlive it. Re-import all three modules up front so this
  * file always observes the mocked ones, and drop the mocked graph again on the way out.
  */
-let CheckboxControl: typeof CheckboxControlModule.CheckboxControl;
-let InputControl: typeof InputControlModule.InputControl;
-let LabelSubSection: typeof LabelSubSectionModule.LabelSubSection;
+let CheckboxControl: typeof CheckboxControlType;
+let InputControl: typeof InputControlType;
+let LabelSubSection: typeof LabelSubSectionType;
 
 beforeAll(async () => {
     vi.resetModules();

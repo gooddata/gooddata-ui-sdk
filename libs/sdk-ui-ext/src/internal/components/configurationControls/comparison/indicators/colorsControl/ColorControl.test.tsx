@@ -15,10 +15,10 @@ import {
     COMPARISON_COLOR_CONFIG_POSITIVE,
 } from "../../ComparisonValuePath.js";
 
-import type * as ColorCheckboxModule from "./ColorCheckbox.js";
-import type * as ColorItemModule from "./ColorItem.js";
-import type * as ColorResetButtonModule from "./ColorResetButton.js";
-import type * as ColorsControlModule from "./ColorsControl.js";
+import type { ColorCheckbox as ColorCheckboxType } from "./ColorCheckbox.js";
+import type { ColorItem as ColorItemType } from "./ColorItem.js";
+import type { ColorResetButton as ColorResetButtonType } from "./ColorResetButton.js";
+import type { ColorsControl as ColorsControlType } from "./ColorsControl.js";
 
 vi.mock("./ColorCheckbox.js", async (importOriginal) => {
     // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
@@ -50,10 +50,10 @@ vi.mock("./ColorResetButton.js", async (importOriginal) => {
  * the mocked graph this file builds must not outlive it. Re-import all four modules up front so this file
  * always observes the mocked ones, and drop the mocked graph again on the way out.
  */
-let ColorCheckbox: typeof ColorCheckboxModule.ColorCheckbox;
-let ColorItem: typeof ColorItemModule.ColorItem;
-let ColorResetButton: typeof ColorResetButtonModule.ColorResetButton;
-let ColorsControl: typeof ColorsControlModule.ColorsControl;
+let ColorCheckbox: typeof ColorCheckboxType;
+let ColorItem: typeof ColorItemType;
+let ColorResetButton: typeof ColorResetButtonType;
+let ColorsControl: typeof ColorsControlType;
 
 beforeAll(async () => {
     vi.resetModules();

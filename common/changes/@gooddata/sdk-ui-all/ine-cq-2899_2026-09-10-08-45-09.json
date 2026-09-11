@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "Allow filtering computed attributes by certification in the analytics catalog",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "ivan.nejezchleb@gooddata.com"
+}

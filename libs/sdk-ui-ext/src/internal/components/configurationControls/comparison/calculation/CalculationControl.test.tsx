@@ -11,10 +11,10 @@ import { type IComparisonControlProperties } from "../../../../interfaces/Contro
 import { type IVisualizationProperties } from "../../../../interfaces/Visualization.js";
 import { createTestProperties } from "../../../../testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider.js";
-import type * as DropdownControlModule from "../../DropdownControl.js";
+import type { DropdownControl as DropdownControlType } from "../../DropdownControl.js";
 
-import type * as CalculationControlModule from "./CalculationControl.js";
-import type * as CalculationListItemModule from "./CalculationListItem.js";
+import type { CalculationControl as CalculationControlType } from "./CalculationControl.js";
+import type { CalculationListItem as CalculationListItemType } from "./CalculationListItem.js";
 
 vi.mock("../../DropdownControl.js", async (importOriginal) => {
     // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
@@ -44,9 +44,9 @@ vi.mock("./CalculationListItem.js", async (importOriginal) => {
  * file, and the mocked graph this file builds must not outlive it. Re-import the whole trio up front so this
  * file always observes the mocked dependencies, and drop the mocked graph again on the way out.
  */
-let DropdownControl: typeof DropdownControlModule.DropdownControl;
-let CalculationControl: typeof CalculationControlModule.CalculationControl;
-let CalculationListItem: typeof CalculationListItemModule.CalculationListItem;
+let DropdownControl: typeof DropdownControlType;
+let CalculationControl: typeof CalculationControlType;
+let CalculationListItem: typeof CalculationListItemType;
 
 beforeAll(async () => {
     vi.resetModules();

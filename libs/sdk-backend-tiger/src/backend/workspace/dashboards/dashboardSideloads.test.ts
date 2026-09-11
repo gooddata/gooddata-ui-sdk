@@ -19,6 +19,10 @@ describe("dashboardSideloadIncludes", () => {
         ]);
     });
 
+    it("side-loads metrics for measure, which is how a rich text reference is linked", () => {
+        expect(dashboardSideloadIncludes(["measure"])).toEqual(["filterContexts", "metrics"]);
+    });
+
     it("does not side-load labels for displayForm because they are resolved from filter contexts", () => {
         expect(dashboardSideloadIncludes(["displayForm"])).toEqual(["filterContexts"]);
     });

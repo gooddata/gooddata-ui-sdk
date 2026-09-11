@@ -149,6 +149,18 @@ describe("useCatalogEndpoints", () => {
         expect(types).not.toContain(ObjectTypes.FACT);
         expect(types).not.toContain(ObjectTypes.DATASET);
     });
+
+    it("keeps computed attributes endpoint when certification filter is on", () => {
+        const { result } = renderHook(() =>
+            useCatalogEndpoints([], makeQueryOptions({ certification: true }), {
+                enableParameters: false,
+                enableComputedAttributes: true,
+            }),
+        );
+
+        const types = result.current.map((e) => e.type);
+        expect(types).toContain(ObjectTypes.COMPUTED_ATTRIBUTE);
+    });
 });
 
 const baseFeedOptions: ICatalogItemFeedOptions = {

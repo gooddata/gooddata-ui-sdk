@@ -23,8 +23,8 @@ import {
 import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
 import { useDashboardQueryProcessing } from "../../model/react/useDashboardQueryProcessing.js";
 import { useWidgetFilters } from "../../model/react/useWidgetFilters.js";
+import { selectExecutableDashboardFilters } from "../../model/store/filtering/dashboardFilterSelectors.js";
 import { selectSectionHeadersDateDataSet } from "../../model/store/meta/metaSelectors.js";
-import { selectFilterContextFilters } from "../../model/store/tabs/filterContext/filterContextSelectors.js";
 
 /**
  * Result of {@link useRichTextWidgetFilters} and {@link useSectionDescriptionFilters} hooks.
@@ -83,7 +83,7 @@ export function useRichTextWidgetFilters(widget: IRichTextWidget | IInsightWidge
  * @internal
  */
 export function useSectionDescriptionFilters(): IRichTextFiltersResult {
-    const dashboardFilters = useDashboardSelector(selectFilterContextFilters);
+    const dashboardFilters = useDashboardSelector(selectExecutableDashboardFilters);
     const sectionHeadersDateDataSet = useDashboardSelector(selectSectionHeadersDateDataSet);
 
     const {

@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import { type IBucketUiConfig } from "../interfaces/Visualization.js";
 
 import { COMPUTED_ATTRIBUTE } from "./bucket.js";
-import * as uiConfigs from "./uiConfig.js";
+import { uiConfigs } from "./uiConfig.js";
 
 type BucketEntry = { config: string; bucket: string; accepts: string[] };
 

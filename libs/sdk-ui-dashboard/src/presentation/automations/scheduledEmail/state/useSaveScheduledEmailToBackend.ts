@@ -29,7 +29,7 @@ import { type IScheduledEmailSaveState, type IUseSaveScheduledEmailCallbacks } f
  *
  * Reads the draft from the scheduled-export state contexts, so it throws outside them.
  *
- * @alpha
+ * @beta
  */
 export function useSaveScheduledEmailToBackend({
     onCreateSuccess,

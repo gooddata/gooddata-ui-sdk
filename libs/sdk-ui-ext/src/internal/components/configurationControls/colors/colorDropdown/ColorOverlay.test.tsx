@@ -6,10 +6,13 @@ import { render, screen } from "@testing-library/react";
 import { cloneDeep } from "lodash-es";
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
-// eslint-disable-next-line no-restricted-imports
-import type * as UiKit from "@gooddata/sdk-ui-kit";
+import type { Overlay as OverlayComponent } from "@gooddata/sdk-ui-kit";
 
-import type * as ColorOverlayModule from "./ColorOverlay.js";
+import type {
+    ColorOverlay as ColorOverlayComponent,
+    DropdownVersionType as DropdownVersionTypeEnum,
+    IColorOverlayProps,
+} from "./ColorOverlay.js";
 
 // Mock the Overlay component
 vi.mock("@gooddata/sdk-ui-kit", async () => {
@@ -28,10 +31,10 @@ vi.mock("@gooddata/sdk-ui-kit", async () => {
  * the mocked graph this file builds must not outlive it. Re-import both modules up front so this file
  * always observes the mocked Overlay, and drop the mocked graph again on the way out.
  */
-let uiKit: typeof UiKit;
-let ColorOverlay: typeof ColorOverlayModule.ColorOverlay;
-let DropdownVersionType: typeof ColorOverlayModule.DropdownVersionType;
-let defaultProps: ColorOverlayModule.IColorOverlayProps;
+let uiKit: { Overlay: typeof OverlayComponent };
+let ColorOverlay: typeof ColorOverlayComponent;
+let DropdownVersionType: typeof DropdownVersionTypeEnum;
+let defaultProps: IColorOverlayProps;
 
 beforeAll(async () => {
     vi.resetModules();
@@ -49,8 +52,8 @@ afterAll(() => {
     vi.resetModules();
 });
 
-function createComponent(customProps: Partial<ColorOverlayModule.IColorOverlayProps> = {}) {
-    const props: ColorOverlayModule.IColorOverlayProps = { ...cloneDeep(defaultProps), ...customProps };
+function createComponent(customProps: Partial<IColorOverlayProps> = {}) {
+    const props: IColorOverlayProps = { ...cloneDeep(defaultProps), ...customProps };
     return render(<ColorOverlay {...props} />);
 }
 

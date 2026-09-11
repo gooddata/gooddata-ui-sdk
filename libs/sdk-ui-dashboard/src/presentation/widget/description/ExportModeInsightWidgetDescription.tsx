@@ -6,6 +6,7 @@ import { useRichTextWidgetFilters } from "../../../_staging/sharedHooks/useRichT
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { useDashboardExecConfig } from "../../../model/react/useWidgetExecConfig.js";
 import { selectSeparators } from "../../../model/store/config/configSelectors.js";
+import { selectRestrictedRichTextReferences } from "../../../model/store/unavailableObjects/unavailableObjectsSelectors.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 
 import { type IInsightWidgetDescriptionTriggerProps } from "./types.js";
@@ -21,6 +22,7 @@ export function ExportModeInsightWidgetDescription(props: IInsightWidgetDescript
     const { isVisible, description } = useInsightWidgetDescription(props);
     const { filters } = useRichTextWidgetFilters(widget);
     const separators = useDashboardSelector(selectSeparators);
+    const restrictedReferences = useDashboardSelector(selectRestrictedRichTextReferences);
     const execConfig = useDashboardExecConfig();
     const { LoadingComponent } = useDashboardComponentsContext();
 
@@ -35,6 +37,7 @@ export function ExportModeInsightWidgetDescription(props: IInsightWidgetDescript
                 useReferences
                 filters={filters}
                 separators={separators}
+                restrictedReferences={restrictedReferences}
                 LoadingComponent={LoadingComponent}
                 execConfig={execConfig}
             />

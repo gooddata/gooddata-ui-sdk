@@ -19,7 +19,7 @@ import { WhenScheduledEmailDialogLoaded } from "./WhenScheduledEmailDialogLoaded
  * (a widget schedule renders {@link ScheduledEmailDialogWidgetAttachments} instead), the same
  * visibility the default dialog gives the field.
  *
- * @alpha
+ * @beta
  */
 export function ScheduledEmailDialogDashboardAttachments(
     props: Partial<IScheduledEmailDialogDashboardAttachmentsProps>,

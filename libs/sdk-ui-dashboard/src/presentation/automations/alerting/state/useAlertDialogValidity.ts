@@ -14,7 +14,7 @@ import { useAlertSelectedValues } from "./useAlertSelectedValues.js";
  * whether the parent widget is still valid, whether the measure may be changed, and whether the
  * saved alert points at a widget whose insight is gone.
  *
- * @alpha
+ * @beta
  */
 export function useAlertDialogValidity(): IAlertDialogValidity {
     const { catalogDateDatasets, maxAutomationsRecipients } = useAutomationsContext();

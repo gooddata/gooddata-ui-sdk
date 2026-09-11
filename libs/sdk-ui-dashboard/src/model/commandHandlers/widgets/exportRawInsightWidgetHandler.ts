@@ -32,15 +32,13 @@ import {
     selectSettings,
 } from "../../store/config/configSelectors.js";
 import { selectExecutionResultByRef } from "../../store/executionResults/executionResultsSelectors.js";
+import { selectExecutableDashboardFilters } from "../../store/filtering/dashboardFilterSelectors.js";
 import {
     selectInsightByRef,
     selectRawExportOverridesForInsight,
 } from "../../store/insights/insightsSelectors.js";
 import { selectEffectiveDashboardTimezone } from "../../store/meta/metaSelectors.js";
-import {
-    selectFilterContextFilters,
-    selectPreloadedAttributesWithReferences,
-} from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { selectPreloadedAttributesWithReferences } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type PromiseFnReturnType } from "../../types/sagas.js";
 import { prepareGeoRawExportDefinition } from "../common/prepareGeoRawExportDefinition.js";
@@ -71,8 +69,9 @@ export function* exportRawInsightWidgetHandler(
         selectExecutionResultByRef(ref),
     );
 
-    const filterContextFilters: ReturnType<typeof selectFilterContextFilters> =
-        yield select(selectFilterContextFilters);
+    const filterContextFilters: ReturnType<typeof selectExecutableDashboardFilters> = yield select(
+        selectExecutableDashboardFilters,
+    );
 
     const dashboardFilters: INullableFilter[] = filterContextItemsToDashboardFiltersByWidget(
         filterContextFilters,

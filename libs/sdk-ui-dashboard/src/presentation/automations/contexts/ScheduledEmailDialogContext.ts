@@ -23,7 +23,7 @@ import type {
  * hooks read it instead of reaching into the dashboard store. That direction is enforced by the
  * `no-model-imports-in-clean-scheduled-email` rule in `.dependency-cruiser.js`.
  *
- * @alpha
+ * @beta
  */
 export interface IScheduledEmailDialogContextValue {
     widget?: IWidget;
@@ -84,7 +84,7 @@ const ScheduledEmailDialogContext = createContext<IScheduledEmailDialogContextVa
  * value read from `useScheduledEmailDialogContext()`; it is not a way to run the dialog outside
  * a dashboard.
  *
- * @alpha
+ * @beta
  */
 export const ScheduledEmailDialogContextProvider = ScheduledEmailDialogContext.Provider;
 
@@ -98,7 +98,7 @@ export const ScheduledEmailDialogContextProvider = ScheduledEmailDialogContext.P
  * Some members exist to wire internal machinery (`exportParametersByTab`, `commonDateFilterMode`,
  * `dateFiltersModeMap`, `attributeFiltersModeMap`) and are not intended as a customization surface.
  *
- * @alpha
+ * @beta
  */
 export function useScheduledEmailDialogContext(): IScheduledEmailDialogContextValue {
     const ctx = useContext(ScheduledEmailDialogContext);

@@ -5,10 +5,10 @@ import { type MockedFunction, afterAll, beforeAll, beforeEach, describe, expect,
 import { newAttribute, newInsightDefinition } from "@gooddata/sdk-model";
 import { type IGeoLayerArea, type IGeoLayerPushpin } from "@gooddata/sdk-ui-geo";
 
-import type * as GeoAreaChartDescriptorModule from "../geoAreaChart/GeoAreaChartDescriptor.js";
+import type { GeoAreaChartDescriptor as GeoAreaChartDescriptorType } from "../geoAreaChart/GeoAreaChartDescriptor.js";
 
-import type * as GeoEmbeddingLayersModule from "./geoEmbeddingLayers.js";
-import type * as GeoPushpinChartNextDescriptorModule from "./GeoPushpinChartNextDescriptor.js";
+import type { buildGeoChartNextLayers as buildGeoChartNextLayersFn } from "./geoEmbeddingLayers.js";
+import type { GeoPushpinChartNextDescriptor as GeoPushpinChartNextDescriptorType } from "./GeoPushpinChartNextDescriptor.js";
 
 vi.mock("./geoEmbeddingLayers.js", () => ({
     buildGeoChartNextLayers: vi.fn(),
@@ -22,9 +22,9 @@ vi.mock("./geoEmbeddingLayers.js", () => ({
  * exercise the same descriptors against the real layer builder). Re-import all three modules up front so
  * this file always observes the mocked one, and drop the mocked graph again on the way out.
  */
-let buildGeoChartNextLayersMock: MockedFunction<typeof GeoEmbeddingLayersModule.buildGeoChartNextLayers>;
-let areaDescriptor: GeoAreaChartDescriptorModule.GeoAreaChartDescriptor;
-let pushpinDescriptor: GeoPushpinChartNextDescriptorModule.GeoPushpinChartNextDescriptor;
+let buildGeoChartNextLayersMock: MockedFunction<typeof buildGeoChartNextLayersFn>;
+let areaDescriptor: GeoAreaChartDescriptorType;
+let pushpinDescriptor: GeoPushpinChartNextDescriptorType;
 
 describe("Geo embedding code layers", () => {
     const dummyInsight = newInsightDefinition("local:geoInsight");
@@ -36,7 +36,7 @@ describe("Geo embedding code layers", () => {
         const { GeoPushpinChartNextDescriptor } = await import("./GeoPushpinChartNextDescriptor.js");
 
         buildGeoChartNextLayersMock = buildGeoChartNextLayers as unknown as MockedFunction<
-            typeof GeoEmbeddingLayersModule.buildGeoChartNextLayers
+            typeof buildGeoChartNextLayersFn
         >;
         areaDescriptor = new GeoAreaChartDescriptor();
         pushpinDescriptor = new GeoPushpinChartNextDescriptor();

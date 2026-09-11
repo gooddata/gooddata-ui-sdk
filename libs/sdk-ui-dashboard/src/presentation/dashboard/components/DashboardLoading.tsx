@@ -1,11 +1,17 @@
 // (C) 2022-2026 GoodData Corporation
 
+import { type ComponentType } from "react";
+
+import { type IErrorProps, convertError, isContractExpiredSdkError } from "@gooddata/sdk-ui";
+
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectDashboardLoading } from "../../../model/store/loading/loadingSelectors.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 import { useDashboardExportData } from "../../export/useExportData.js";
+import { IntlWrapper } from "../../localization/IntlWrapper.js";
 import { type IDashboardProps } from "../types.js";
 
+import { DashboardContractExpired } from "./DashboardContractExpired.js";
 import { DashboardInner } from "./DashboardInner.js";
 
 export function DashboardLoading(props: IDashboardProps) {
@@ -21,7 +27,13 @@ export function DashboardLoading(props: IDashboardProps) {
     );
 
     if (error) {
-        return <ErrorComponent message={error.message} />;
+        // The dashboard did not get far enough to set up its own IntlProvider (that happens in
+        // DashboardInner), so the error rendering brings its own.
+        return (
+            <IntlWrapper locale={props.config?.locale}>
+                <DashboardLoadingError error={error} ErrorComponent={ErrorComponent} />
+            </IntlWrapper>
+        );
     }
 
     if (loading || !result) {
@@ -38,4 +50,20 @@ export function DashboardLoading(props: IDashboardProps) {
     }
 
     return <DashboardInner {...props} />;
+}
+
+function DashboardLoadingError({
+    error,
+    ErrorComponent,
+}: {
+    error: Error;
+    ErrorComponent: ComponentType<IErrorProps>;
+}) {
+    const sdkError = convertError(error);
+
+    if (isContractExpiredSdkError(sdkError)) {
+        return <DashboardContractExpired tier={sdkError.tier} />;
+    }
+
+    return <ErrorComponent message={error.message} />;
 }

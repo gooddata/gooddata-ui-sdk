@@ -4,7 +4,7 @@ import type { FilterContextItem } from "@gooddata/sdk-model";
 
 /**
  * Automation filters grouped by tab, returned by {@link selectAutomationFiltersByTab}.
- * @alpha
+ * @beta
  */
 export interface IAutomationFiltersTab {
     /**

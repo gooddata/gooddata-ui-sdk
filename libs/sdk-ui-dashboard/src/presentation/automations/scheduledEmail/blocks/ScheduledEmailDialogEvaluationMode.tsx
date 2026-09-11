@@ -19,7 +19,7 @@ import { WhenScheduledEmailDialogLoaded } from "./WhenScheduledEmailDialogLoaded
  * `useAutomationsContext().features.enableAutomationEvaluationMode` is off, the same visibility the
  * default dialog gives the field.
  *
- * @alpha
+ * @beta
  */
 export function ScheduledEmailDialogEvaluationMode(
     props: Partial<IScheduledEmailDialogEvaluationModeProps>,

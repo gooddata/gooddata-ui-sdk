@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/app-toolkit",
-    "version": "11.57.0-alpha.0",
+    "version": "11.57.0-alpha.1",
     "description": "CLI with useful tools for creating and maintaining GoodData web applications.",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData",
@@ -72,7 +72,7 @@
         "eslint-plugin-sonarjs": "3.0.6",
         "oxfmt": "0.66.0",
         "oxlint": "1.57.0",
-        "oxlint-tsgolint": "0.15.0",
+        "oxlint-tsgolint": "0.18.1",
         "typescript": "7.0.2",
         "vitest": "4.1.8"
     }

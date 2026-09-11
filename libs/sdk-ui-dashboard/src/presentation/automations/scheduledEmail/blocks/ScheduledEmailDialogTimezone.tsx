@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactElement } from "react";
+
 import { DefaultScheduledEmailDialogTimezone } from "../DefaultScheduledEmailDialog/components/DefaultScheduledEmailDialogTimezone.js";
 import { useScheduledExportDraft } from "../state/ScheduledExportDraftContext.js";
 import { useScheduledEmailDialogTimezoneProps } from "../state/useScheduledEmailDialogRegionProps.js";
@@ -17,9 +19,11 @@ import { WhenScheduledEmailDialogLoaded } from "./WhenScheduledEmailDialogLoaded
  * when `useScheduledExportDraft().canSelectScheduleTimezone` is false — the schedule may not define
  * its own timezone then, exactly as in the default dialog.
  *
- * @alpha
+ * @beta
  */
-export function ScheduledEmailDialogTimezone(overrides: Partial<ScheduledEmailDialogTimezoneDefaultProps>) {
+export function ScheduledEmailDialogTimezone(
+    overrides: Partial<ScheduledEmailDialogTimezoneDefaultProps>,
+): ReactElement {
     return (
         <WhenScheduledEmailDialogLoaded>
             <ConnectedScheduledEmailDialogTimezone {...overrides} />

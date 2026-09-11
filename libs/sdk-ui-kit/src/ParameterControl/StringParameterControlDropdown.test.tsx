@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ComponentProps } from "react";
+
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
@@ -9,10 +11,7 @@ import { StringParameterControlDropdown } from "./StringParameterControlDropdown
 
 const WrappedStringParameterControlDropdown = withIntlForTest(StringParameterControlDropdown);
 
-type CommitModeProps = Extract<
-    React.ComponentProps<typeof StringParameterControlDropdown>,
-    { mode: "commit" }
->;
+type CommitModeProps = Extract<ComponentProps<typeof StringParameterControlDropdown>, { mode: "commit" }>;
 
 const renderDropdown = (props: Partial<CommitModeProps> = {}) => {
     return render(

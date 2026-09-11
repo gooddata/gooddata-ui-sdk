@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactElement } from "react";
+
 import { act, render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 import { beforeAll, describe, expect, it, vi } from "vitest";
@@ -16,7 +18,7 @@ describe("ItemsGroup", () => {
         });
     });
 
-    const renderWithIntl = (ui: React.ReactElement) => {
+    const renderWithIntl = (ui: ReactElement) => {
         return render(
             <IntlProvider
                 locale="en"

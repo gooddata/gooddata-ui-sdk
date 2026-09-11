@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactElement } from "react";
+
 import { type IScheduledEmailDialogRecipientsProps } from "../../types.js";
 
 import { RecipientsSelect } from "./RecipientsSelect/RecipientsSelect.js";
@@ -10,8 +12,10 @@ import { RecipientsSelect } from "./RecipientsSelect/RecipientsSelect.js";
  * render it with {@link useScheduledEmailDialogRecipientsProps}; a `slots.Recipients` slot receives
  * it as `Default`.
  *
- * @alpha
+ * @beta
  */
-export function DefaultScheduledEmailDialogRecipients(props: IScheduledEmailDialogRecipientsProps) {
+export function DefaultScheduledEmailDialogRecipients(
+    props: IScheduledEmailDialogRecipientsProps,
+): ReactElement {
     return <RecipientsSelect id="schedule.email.recipients" {...props} />;
 }

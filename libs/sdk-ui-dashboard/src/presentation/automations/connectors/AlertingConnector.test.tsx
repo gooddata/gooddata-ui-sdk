@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactNode } from "react";
+
 import { render } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -18,6 +20,12 @@ const fixtures = vi.hoisted(() => {
     const buildAutomationUrl = vi.fn(() => "/target-url");
     const navigate = vi.fn();
     const onAlertingManagementEdit = vi.fn();
+    const onAlertingCreateSuccess = vi.fn();
+    const onAlertingCreateError = vi.fn();
+    const onAlertingUpdateSuccess = vi.fn();
+    const onAlertingUpdateError = vi.fn();
+    const onAlertingDeleteSuccess = vi.fn();
+    const onAlertingDeleteError = vi.fn();
     let managementDialogProps: Record<string, unknown> | undefined;
     let dialogProps: Record<string, unknown> | undefined;
     let automationsError: Error | undefined;
@@ -27,6 +35,12 @@ const fixtures = vi.hoisted(() => {
         buildAutomationUrl,
         navigate,
         onAlertingManagementEdit,
+        onAlertingCreateSuccess,
+        onAlertingCreateError,
+        onAlertingUpdateSuccess,
+        onAlertingUpdateError,
+        onAlertingDeleteSuccess,
+        onAlertingDeleteError,
         alertsState,
         get managementDialogProps() {
             return managementDialogProps;
@@ -76,15 +90,15 @@ vi.mock("../../../model/react/useDashboardAlerting/useDashboardAlerts.js", () =>
         automationsLoading: false,
         notificationChannels: [],
         onAlertingCancel: vi.fn(),
-        onAlertingCreateSuccess: vi.fn(),
-        onAlertingCreateError: vi.fn(),
-        onAlertingUpdateSuccess: vi.fn(),
-        onAlertingUpdateError: vi.fn(),
+        onAlertingCreateSuccess: fixtures.onAlertingCreateSuccess,
+        onAlertingCreateError: fixtures.onAlertingCreateError,
+        onAlertingUpdateSuccess: fixtures.onAlertingUpdateSuccess,
+        onAlertingUpdateError: fixtures.onAlertingUpdateError,
         onAlertingManagementClose: vi.fn(),
         onAlertingManagementAdd: vi.fn(),
         onAlertingManagementEdit: fixtures.onAlertingManagementEdit,
-        onAlertingManagementDeleteSuccess: vi.fn(),
-        onAlertingManagementDeleteError: vi.fn(),
+        onAlertingDeleteSuccess: fixtures.onAlertingDeleteSuccess,
+        onAlertingDeleteError: fixtures.onAlertingDeleteError,
         widget: undefined,
         insight: undefined,
     }),
@@ -118,15 +132,15 @@ vi.mock("../alerting/AlertingManagementDialog.js", () => ({
 }));
 
 vi.mock("../contexts/AlertingDialogContext.js", () => ({
-    AlertingDialogContextProvider: ({ children }: { children: React.ReactNode }) => children,
+    AlertingDialogContextProvider: ({ children }: { children: ReactNode }) => children,
 }));
 
 vi.mock("../contexts/AlertingManagementDialogContext.js", () => ({
-    AlertingManagementDialogContextProvider: ({ children }: { children: React.ReactNode }) => children,
+    AlertingManagementDialogContextProvider: ({ children }: { children: ReactNode }) => children,
 }));
 
 vi.mock("../contexts/AutomationsContext.js", () => ({
-    AutomationsContextProvider: ({ children }: { children: React.ReactNode }) => children,
+    AutomationsContextProvider: ({ children }: { children: ReactNode }) => children,
 }));
 
 vi.mock("./hooks/useBuildAlertingDialogContext.js", () => ({
@@ -213,7 +227,7 @@ describe("AlertingConnector", () => {
         });
     });
 
-    it("does not supply the deprecated data props to the create/edit dialog", () => {
+    it("wires the lifecycle callbacks to the create/edit dialog without the deprecated data props", () => {
         fixtures.alertsState.isAlertDialogOpen = true;
         fixtures.alertsState.isAlertManagementDialogOpen = false;
 
@@ -231,6 +245,12 @@ describe("AlertingConnector", () => {
         ]) {
             expect(fixtures.dialogProps?.[prop]).toBeUndefined();
         }
+        expect(fixtures.dialogProps?.["onCreateSuccess"]).toBe(fixtures.onAlertingCreateSuccess);
+        expect(fixtures.dialogProps?.["onCreateError"]).toBe(fixtures.onAlertingCreateError);
+        expect(fixtures.dialogProps?.["onUpdateSuccess"]).toBe(fixtures.onAlertingUpdateSuccess);
+        expect(fixtures.dialogProps?.["onUpdateError"]).toBe(fixtures.onAlertingUpdateError);
+        expect(fixtures.dialogProps?.["onDeleteSuccess"]).toBe(fixtures.onAlertingDeleteSuccess);
+        expect(fixtures.dialogProps?.["onDeleteError"]).toBe(fixtures.onAlertingDeleteError);
     });
 
     it("renders the management dialog without the deprecated data props", () => {

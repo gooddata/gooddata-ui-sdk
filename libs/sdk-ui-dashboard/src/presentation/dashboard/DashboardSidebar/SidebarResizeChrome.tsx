@@ -1,6 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import {
+    type CSSProperties,
     type ReactElement,
     type ReactNode,
     type PointerEvent as ReactPointerEvent,
@@ -141,7 +142,7 @@ export function SidebarResizeChrome({
                     style={
                         {
                             "--drag-x": `${isDragging ? dragWidth : width}px`,
-                        } as React.CSSProperties
+                        } as CSSProperties
                     }
                     className={cx("gd-resizable-sidebar__handle", {
                         "gd-resizable-sidebar__handle--dragging": isDragging,

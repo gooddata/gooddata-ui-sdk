@@ -1,4 +1,24 @@
 {
+    "dashboard.contractExpired.trial.title": {
+        "text": "Your trial has ended.",
+        "crowdinContext": "Title of the lock shown in place of a dashboard when a trial organization's contract has expired."
+    },
+    "dashboard.contractExpired.trial.description": {
+        "text": "Contact us if you would like to continue using GoodData Cloud.",
+        "crowdinContext": "Description under the title of the lock shown in place of a dashboard when a trial organization's contract has expired."
+    },
+    "dashboard.contractExpired.nonTrial.title": {
+        "text": "Your access is locked.",
+        "crowdinContext": "Title of the lock shown in place of a dashboard when the organization's contract or the deployment license has expired."
+    },
+    "dashboard.contractExpired.nonTrial.description": {
+        "text": "Contact the account administrator to regain access.",
+        "crowdinContext": "Description under the title of the lock shown in place of a dashboard when the organization's contract or the deployment license has expired."
+    },
+    "dashboard.contractExpired.buttonTitle": {
+        "text": "Contact us",
+        "crowdinContext": "Label of the button on the expired-trial lock that leads to the GoodData contact form."
+    },
     "loading": {
         "text": "Loading…",
         "crowdinContext": "Text shown during content loading operations"
@@ -98,6 +118,14 @@
     "filterBar.label": {
         "text": "Filters",
         "crowdinContext": "Label for the filter bar section"
+    },
+    "filterBar.restrictedFilters.reason": {
+        "text": "{count, plural, one {You don't have access to # filter.} other {You don't have access to # filters.}}",
+        "crowdinContext": "Tooltip on the filter bar notice, giving the reason why that many dashboard filters were left out. Uses pluralization based on the number of filters."
+    },
+    "filterBar.restrictedFilters": {
+        "text": "{count, plural, one {# filter wasn't applied} other {# filters weren't applied}}",
+        "crowdinContext": "Filter bar notice telling the viewer how many dashboard filters were left out because they are not allowed to access the objects those filters use. Uses pluralization based on the number of filters."
     },
     "filterBar.showAll": {
         "text": "Show all",

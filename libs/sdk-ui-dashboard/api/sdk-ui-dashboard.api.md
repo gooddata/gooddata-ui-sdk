@@ -246,6 +246,7 @@ import { ScreenSize } from '@gooddata/sdk-model';
 import { Selector } from '@reduxjs/toolkit';
 import { SetStateAction } from 'react';
 import { ShareStatus } from '@gooddata/sdk-model';
+import type { SupportedDashboardReferenceTypes } from '@gooddata/sdk-backend-spi';
 import { TypedUseSelectorHook } from 'react-redux';
 import { UnknownAction } from 'redux';
 import { Uri } from '@gooddata/sdk-model';
@@ -314,10 +315,10 @@ export function addTextAttributeFilter(filter: DashboardTextAttributeFilter, ind
 // @beta
 export function addVisualizationToSwitcherWidgetContent(ref: ObjRef, visualization: IInsightWidget, insight: IInsight, sizeInfo: IVisualizationSizeInfo, correlationId?: string): IAddVisualizationToVisualizationSwitcherWidgetContent;
 
-// @alpha
+// @beta
 export type AlertAiOperator = `${typeof AI_OPERATOR}.${typeof AI_OPERATORS.ANOMALY_DETECTION}`;
 
-// @alpha
+// @beta
 export type AlertAttribute = {
     attribute: IAttribute;
     type: "dateAttribute" | "attribute";
@@ -326,60 +327,60 @@ export type AlertAttribute = {
 // @internal
 export function AlertingDialog(props: IAlertingDialogProps): ReactElement;
 
-// @alpha
-export function AlertingDialogActionBar(props: IAlertingDialogActionBarBlockProps): JSX.Element;
+// @beta
+export function AlertingDialogActionBar(props: IAlertingDialogActionBarBlockProps): ReactElement;
 
-// @alpha
+// @beta
 export function AlertingDialogAttribute(overrides: Partial<IAlertingDialogAttributeProps>): ReactElement;
 
-// @alpha
+// @beta
 export function AlertingDialogComparisonOperator(overrides: Partial<IAlertingDialogComparisonOperatorProps>): ReactElement;
 
-// @alpha
+// @beta
 export function AlertingDialogComparisonPeriod(overrides: Partial<IAlertingDialogComparisonPeriodProps>): ReactElement;
 
-// @alpha
+// @beta
 export const AlertingDialogContextProvider: Provider<IAlertingDialogContextValue | undefined>;
 
-// @alpha
-export function AlertingDialogDestination(overrides: Partial<IAutomationDialogDestinationProps>): JSX.Element;
+// @beta
+export function AlertingDialogDestination(overrides: Partial<IAutomationDialogDestinationProps>): ReactElement;
 
-// @alpha
-export function AlertingDialogFilters(overrides: Partial<IAlertingDialogFiltersProps>): JSX.Element;
+// @beta
+export function AlertingDialogFilters(overrides: Partial<IAlertingDialogFiltersProps>): ReactElement;
 
-// @alpha
+// @beta
 export function AlertingDialogFormFieldGroup(input: IAlertingDialogFormFieldGroupProps): ReactElement;
 
-// @alpha
+// @beta
 export function AlertingDialogGranularity(overrides: Partial<IAlertingDialogGranularityProps>): ReactElement;
 
-// @alpha
+// @beta
 export const AlertingDialogHeader: ForwardRefExoticComponent<Partial<IAlertingDialogHeaderProps> & RefAttributes<HTMLInputElement>>;
 
-// @alpha
+// @beta
 export type AlertingDialogHeaderDefaultProps = IAlertingDialogHeaderProps & {
     ref?: Ref<HTMLInputElement>;
 };
 
-// @alpha
+// @beta
 export function AlertingDialogMeasure(overrides: Partial<IAlertingDialogMeasureProps>): ReactElement;
 
-// @alpha
-export function AlertingDialogRecipients(overrides: Partial<IAutomationDialogRecipientsProps>): JSX.Element;
+// @beta
+export function AlertingDialogRecipients(overrides: Partial<IAutomationDialogRecipientsProps>): ReactElement;
 
-// @alpha
+// @beta
 export function AlertingDialogSensitivity(overrides: Partial<IAlertingDialogSensitivityProps>): ReactElement;
 
-// @alpha
+// @beta
 export function AlertingDialogShell(props: IAlertingDialogShellProps): ReactElement;
 
-// @alpha
+// @beta
 export function AlertingDialogThreshold(overrides: Partial<IAlertingDialogThresholdProps>): ReactElement;
 
-// @alpha
+// @beta
 export function AlertingDialogTriggerInterval(overrides: Partial<IAlertingDialogTriggerIntervalProps>): ReactElement;
 
-// @alpha
+// @beta
 export function AlertingDialogTriggerMode(overrides: Partial<IAlertingDialogTriggerModeProps>): ReactElement;
 
 // @internal (undocumented)
@@ -391,14 +392,14 @@ export function AlertingManagementDialog(props: IAlertingManagementDialogProps):
 // @alpha
 export const AlertingManagementDialogContextProvider: Provider<IAlertingManagementDialogContextValue | undefined>;
 
-// @alpha
+// @beta
 export type AlertMetric = {
     measure: IMeasure;
     isPrimary: boolean;
     comparators: AlertMetricComparator[];
 };
 
-// @alpha
+// @beta
 export type AlertMetricComparator = {
     measure: IMeasure;
     isPrimary: boolean;
@@ -407,7 +408,7 @@ export type AlertMetricComparator = {
     granularity?: DateAttributeGranularity;
 };
 
-// @alpha
+// @beta
 export enum AlertMetricComparatorType {
     // (undocumented)
     PreviousPeriod = 0,
@@ -482,14 +483,14 @@ export function attributeHierarchyModified(correlationId?: string): IAttributeHi
 // @internal (undocumented)
 export function AttributesDropdown(input: IAttributesDropdownProps): JSX.Element;
 
-// @alpha
+// @beta
 export type AttributeValue = {
     title: string;
     value: string;
     name: string;
 };
 
-// @alpha
+// @beta
 export function AutomationDialogFormField(input: IAutomationDialogFormFieldProps): ReactElement;
 
 // @alpha (undocumented)
@@ -511,7 +512,7 @@ export type AutomationInteractionPayload = IUserInteractionPayloadWithDataBase<"
 // @alpha (undocumented)
 export type AutomationInteractionType = "scheduledExportInitialized" | "scheduledExportCreated" | "alertInitialized" | "alertCreated";
 
-// @alpha
+// @beta
 export const AutomationsContextProvider: Provider<IAutomationsContextValue | undefined>;
 
 // @public (undocumented)
@@ -838,23 +839,23 @@ export function createScheduledEmail(scheduledEmail: IAutomationMetadataObjectDe
 // @beta
 export function crossFiltering(insight: IInsight, drillDefinition: ICrossFiltering_2, drillEvent: IDashboardDrillEvent, correlationId?: string): ICrossFiltering;
 
-// @alpha (undocumented)
+// @beta (undocumented)
 export type CustomAlertingDialogComponent = ComponentType<IAlertingDialogProps>;
 
-// @alpha
+// @beta
 export type CustomAlertingDialogContextDecoratorComponent = ComponentType<{
     children?: ReactNode;
 }>;
 
-// @alpha (undocumented)
+// @beta (undocumented)
 export type CustomAlertingManagementDialogComponent = ComponentType<IAlertingManagementDialogProps>;
 
-// @alpha
+// @beta
 export type CustomAlertingManagementDialogContextDecoratorComponent = ComponentType<{
     children?: ReactNode;
 }>;
 
-// @alpha
+// @beta
 export type CustomAutomationsContextDecoratorComponent = ComponentType<{
     children?: ReactNode;
 }>;
@@ -900,6 +901,7 @@ export type CustomDashboardInsightListItemComponentProps = {
     filters?: IFilter[];
     useRichText?: boolean;
     useReferences?: boolean;
+    restrictedReferences?: ObjRef[];
     LoadingComponent?: ComponentType;
     width?: number;
     disabled?: boolean;
@@ -977,6 +979,9 @@ export type CustomInsightBodyComponent = ComponentType<IInsightBodyProps>;
 export type CustomMenuButtonComponent = ComponentType<IMenuButtonProps>;
 
 // @alpha
+export type CustomRestrictedFiltersPlaceholderComponent = ComponentType<IRestrictedFiltersPlaceholderProps>;
+
+// @alpha
 export type CustomRestrictedPlaceholderComponent = ComponentType<IRestrictedPlaceholderContentProps>;
 
 // @alpha (undocumented)
@@ -988,18 +993,18 @@ export type CustomSaveAsNewButtonComponent = ComponentType<ISaveAsNewButtonProps
 // @beta (undocumented)
 export type CustomSaveButtonComponent = ComponentType<ISaveButtonProps>;
 
-// @alpha (undocumented)
+// @beta (undocumented)
 export type CustomScheduledEmailDialogComponent = ComponentType<IScheduledEmailDialogProps>;
 
-// @alpha
+// @beta
 export type CustomScheduledEmailDialogContextDecoratorComponent = ComponentType<{
     children?: ReactNode;
 }>;
 
-// @alpha (undocumented)
+// @beta (undocumented)
 export type CustomScheduledEmailManagementDialogComponent = ComponentType<IScheduledEmailManagementDialogProps>;
 
-// @alpha
+// @beta
 export type CustomScheduledEmailManagementDialogContextDecoratorComponent = ComponentType<{
     children?: ReactNode;
 }>;
@@ -1637,52 +1642,52 @@ export const DEFAULT_MESSAGES: Record<string, ITranslations>;
 // @internal
 export const DEFAULT_TAB_ID = "defaultTabId";
 
-// @alpha
+// @beta
 export function DefaultAlertingDialog(props: IDefaultAlertingDialogProps): ReactElement;
 
-// @alpha
+// @beta
 export function DefaultAlertingDialogAttribute(input: IAlertingDialogAttributeProps): ReactElement | null;
 
-// @alpha
+// @beta
 export function DefaultAlertingDialogComparisonOperator(props: IAlertingDialogComparisonOperatorProps): ReactElement | null;
 
-// @alpha
+// @beta
 export function DefaultAlertingDialogComparisonPeriod(input: IAlertingDialogComparisonPeriodProps): ReactElement | null;
 
-// @alpha
-export function DefaultAlertingDialogDestination(input: IAutomationDialogDestinationProps): JSX.Element;
+// @beta
+export function DefaultAlertingDialogDestination(input: IAutomationDialogDestinationProps): ReactElement;
 
-// @alpha
-export function DefaultAlertingDialogFilters(props: IAlertingDialogFiltersProps): JSX.Element;
+// @beta
+export function DefaultAlertingDialogFilters(props: IAlertingDialogFiltersProps): ReactElement;
 
-// @alpha
+// @beta
 export function DefaultAlertingDialogGranularity(input: IAlertingDialogGranularityProps): ReactElement;
 
-// @alpha
+// @beta
 export const DefaultAlertingDialogHeader: ForwardRefExoticComponent<IAlertingDialogHeaderProps & RefAttributes<HTMLInputElement>>;
 
-// @alpha
+// @beta
 export function DefaultAlertingDialogMeasure(input: IAlertingDialogMeasureProps): ReactElement;
 
-// @alpha
-export function DefaultAlertingDialogRecipients(props: IAutomationDialogRecipientsProps): JSX.Element;
+// @beta
+export function DefaultAlertingDialogRecipients(props: IAutomationDialogRecipientsProps): ReactElement;
 
-// @alpha
+// @beta
 export function DefaultAlertingDialogSensitivity(input: IAlertingDialogSensitivityProps): ReactElement;
 
-// @alpha
+// @beta
 export function DefaultAlertingDialogThreshold(input: IAlertingDialogThresholdProps): ReactElement;
 
-// @alpha
+// @beta
 export function DefaultAlertingDialogTriggerInterval(input: IAlertingDialogTriggerIntervalProps): ReactElement;
 
-// @alpha
+// @beta
 export function DefaultAlertingDialogTriggerMode(input: IAlertingDialogTriggerModeProps): ReactElement;
 
-// @alpha
+// @beta
 export function DefaultAlertingManagementDialogNew(props: IAlertingManagementDialogProps): JSX.Element;
 
-// @alpha
+// @beta
 export function DefaultAutomationDialogActionBar(input: IAutomationDialogActionBarProps): JSX.Element;
 
 // @alpha (undocumented)
@@ -1808,43 +1813,43 @@ export function DefaultSaveAsNewButton(input: ISaveAsNewButtonProps): JSX.Elemen
 // @internal (undocumented)
 export function DefaultSaveButton(input: ISaveButtonProps): JSX.Element | null;
 
-// @alpha
+// @beta
 export function DefaultScheduledEmailDialog(props: IDefaultScheduledEmailDialogProps): ReactElement;
 
-// @alpha
+// @beta
 export function DefaultScheduledEmailDialogDashboardAttachments(props: IScheduledEmailDialogDashboardAttachmentsProps): ReactElement;
 
-// @alpha
-export function DefaultScheduledEmailDialogDestination(input: IAutomationDialogDestinationProps): JSX.Element;
+// @beta
+export function DefaultScheduledEmailDialogDestination(input: IAutomationDialogDestinationProps): ReactElement;
 
-// @alpha
+// @beta
 export function DefaultScheduledEmailDialogEvaluationMode(props: IScheduledEmailDialogEvaluationModeProps): ReactElement;
 
-// @alpha
-export function DefaultScheduledEmailDialogFilters(props: IScheduledEmailDialogFiltersProps): JSX.Element;
+// @beta
+export function DefaultScheduledEmailDialogFilters(props: IScheduledEmailDialogFiltersProps): ReactElement;
 
-// @alpha
+// @beta
 export const DefaultScheduledEmailDialogHeader: ForwardRefExoticComponent<IScheduledEmailDialogHeaderProps & RefAttributes<HTMLInputElement>>;
 
-// @alpha
+// @beta
 export function DefaultScheduledEmailDialogMessage(props: IScheduledEmailDialogMessageProps): ReactElement;
 
-// @alpha
-export function DefaultScheduledEmailDialogRecipients(props: IScheduledEmailDialogRecipientsProps): JSX.Element;
+// @beta
+export function DefaultScheduledEmailDialogRecipients(props: IScheduledEmailDialogRecipientsProps): ReactElement;
 
-// @alpha
+// @beta
 export function DefaultScheduledEmailDialogRecurrence(props: IScheduledEmailDialogRecurrenceProps): ReactElement;
 
-// @alpha
+// @beta
 export function DefaultScheduledEmailDialogSubject(props: IScheduledEmailDialogSubjectProps): ReactElement;
 
-// @alpha
-export function DefaultScheduledEmailDialogTimezone(input: IScheduledEmailDialogTimezoneProps): JSX.Element;
+// @beta
+export function DefaultScheduledEmailDialogTimezone(input: IScheduledEmailDialogTimezoneProps): ReactElement;
 
-// @alpha
+// @beta
 export function DefaultScheduledEmailDialogWidgetAttachments(props: IScheduledEmailDialogWidgetAttachmentsProps): ReactElement;
 
-// @alpha (undocumented)
+// @beta (undocumented)
 export function DefaultScheduledEmailManagementDialog(input: IScheduledEmailManagementDialogProps): JSX.Element;
 
 // @internal (undocumented)
@@ -2256,6 +2261,9 @@ export function getAttributeFilters(filters: FilterContextItem[]): DashboardAttr
 // @internal
 export function getAuthor(capabilities: IBackendCapabilities, user: IUser): string | undefined;
 
+// @internal
+export function getDashboardLoadReferenceTypes(partialRenderingEnabled: boolean): SupportedDashboardReferenceTypes[];
+
 // @internal (undocumented)
 export function getDefaultInsightEditMenuItems(widget: IInsightWidget, input: InsightMenuItemDependencies): IInsightMenuItem[];
 
@@ -2554,7 +2562,7 @@ export interface IAddVisualizationToVisualizationSwitcherWidgetContentPayload {
     readonly visualization: IInsightWidget;
 }
 
-// @alpha
+// @beta
 export interface IAlertActionsContextValue {
     onAnomalyDetectionChange: (measure: AlertMetric) => void;
     onAttributeChange: (attribute: AlertAttribute | undefined, value: AttributeValue | undefined) => void;
@@ -2572,7 +2580,7 @@ export interface IAlertActionsContextValue {
     setEditedAutomation: Dispatch_2<SetStateAction<IAutomationMetadataObjectDefinition | undefined>>;
 }
 
-// @alpha
+// @beta
 export interface IAlertDataContextValue {
     defaultRecipient: IAutomationRecipient;
     defaultUser: IAutomationRecipient;
@@ -2590,7 +2598,7 @@ export interface IAlertDialogContext {
     widgetRef?: ObjRef;
 }
 
-// @alpha
+// @beta
 export interface IAlertDialogValidity {
     canChangeMeasure: boolean;
     isInvalidConnectionToInsight: boolean;
@@ -2599,7 +2607,7 @@ export interface IAlertDialogValidity {
     validationErrorMessage: string | undefined;
 }
 
-// @alpha
+// @beta
 export interface IAlertDraftContextValue {
     editedAutomation: IAutomationMetadataObjectDefinition | undefined;
     isTitleValid: boolean;
@@ -2607,7 +2615,7 @@ export interface IAlertDraftContextValue {
     warningMessage: string | undefined;
 }
 
-// @alpha
+// @beta
 export interface IAlertFiltersContextValue {
     automationIsValid: boolean;
     automationParameters: IAutomationParameter[];
@@ -2623,10 +2631,10 @@ export interface IAlertFiltersContextValue {
     selectedFilters: FilterContextItem[];
 }
 
-// @alpha
+// @beta
 export type IAlertingDialogActionBarBlockProps = IUseAlertingDialogActionBarPropsInput & Partial<IAutomationDialogActionBarProps>;
 
-// @alpha
+// @beta
 export interface IAlertingDialogAttributeProps {
     attributes: AlertAttribute[];
     catalogAttributes: ICatalogAttribute[];
@@ -2642,7 +2650,7 @@ export interface IAlertingDialogAttributeProps {
     showLabel?: boolean;
 }
 
-// @alpha
+// @beta
 export interface IAlertingDialogComparisonOperatorProps {
     closeOnParentScroll?: boolean;
     enableAnomalyDetectionAlert: boolean;
@@ -2657,7 +2665,7 @@ export interface IAlertingDialogComparisonOperatorProps {
     selectedRelativeOperator: [IAlertRelativeOperator, IAlertRelativeArithmeticOperator] | undefined;
 }
 
-// @alpha
+// @beta
 export interface IAlertingDialogComparisonPeriodProps {
     alert: IAutomationMetadataObjectDefinition | undefined;
     closeOnParentScroll?: boolean;
@@ -2669,7 +2677,7 @@ export interface IAlertingDialogComparisonPeriodProps {
     selectedGranularity?: DateAttributeGranularity;
 }
 
-// @alpha
+// @beta
 export interface IAlertingDialogContextValue {
     alertToEdit?: IAutomationMetadataObject;
     // (undocumented)
@@ -2706,18 +2714,18 @@ export interface IAlertingDialogContextValue {
     widgetTitle?: string;
 }
 
-// @alpha
+// @beta
 export interface IAlertingDialogFiltersProps extends IAutomationDialogFiltersProps {
     disableDateFilters: boolean;
 }
 
-// @alpha
+// @beta
 export interface IAlertingDialogFormFieldGroupProps {
     children: ReactNode;
     label: ReactNode;
 }
 
-// @alpha
+// @beta
 export interface IAlertingDialogGranularityProps {
     allowHourlyRecurrence: boolean;
     closeOnParentScroll?: boolean;
@@ -2727,23 +2735,23 @@ export interface IAlertingDialogGranularityProps {
     selectedGranularity: IAlertAnomalyDetectionGranularity | undefined;
 }
 
-// @alpha
+// @beta
 export interface IAlertingDialogHeaderProps extends IAutomationDialogHeaderProps {
     onCancel?: () => void;
 }
 
-// @alpha
+// @beta
 export interface IAlertingDialogMeasureProps {
     closeOnParentScroll?: boolean;
     disabled?: boolean;
-    id?: string;
+    id: string;
     measures: AlertMetric[];
     onMeasureChange: (measure: AlertMetric) => void;
     overlayPositionType?: OverlayPositionType;
     selectedMeasure: AlertMetric | undefined;
 }
 
-// @alpha (undocumented)
+// @beta (undocumented)
 export interface IAlertingDialogProps extends IAutomationDialogCallbacks {
     // @deprecated
     alertToEdit?: IAutomationMetadataObject;
@@ -2757,7 +2765,7 @@ export interface IAlertingDialogProps extends IAutomationDialogCallbacks {
     widget?: IWidget;
 }
 
-// @alpha
+// @beta
 export interface IAlertingDialogSensitivityProps {
     closeOnParentScroll?: boolean;
     id: string;
@@ -2766,7 +2774,7 @@ export interface IAlertingDialogSensitivityProps {
     selectedSensitivity: IAlertAnomalyDetectionSensitivity | undefined;
 }
 
-// @alpha
+// @beta
 export interface IAlertingDialogShellProps extends Pick<IAlertingDialogProps, "onCancel" | "onDeleteSuccess" | "onDeleteError"> {
     bottomContent?: ReactNode;
     children?: ReactNode;
@@ -2776,7 +2784,7 @@ export interface IAlertingDialogShellProps extends Pick<IAlertingDialogProps, "o
     topContent?: ReactNode;
 }
 
-// @alpha
+// @beta
 export interface IAlertingDialogSlots {
     ActionBar?: ComponentType<ISlotProps<IAutomationDialogActionBarProps>>;
     Destination?: ComponentType<ISlotProps<IAutomationDialogDestinationProps>>;
@@ -2785,7 +2793,7 @@ export interface IAlertingDialogSlots {
     Recipients?: ComponentType<ISlotProps<IAutomationDialogRecipientsProps>>;
 }
 
-// @alpha
+// @beta
 export interface IAlertingDialogThresholdProps {
     errorMessage?: string;
     id: string;
@@ -2795,7 +2803,7 @@ export interface IAlertingDialogThresholdProps {
     value: number | undefined;
 }
 
-// @alpha
+// @beta
 export interface IAlertingDialogTriggerIntervalProps {
     closeOnParentScroll?: boolean;
     id: string;
@@ -2804,7 +2812,7 @@ export interface IAlertingDialogTriggerIntervalProps {
     selectedTriggerInterval: IAlertTriggerInterval;
 }
 
-// @alpha
+// @beta
 export interface IAlertingDialogTriggerModeProps {
     closeOnParentScroll?: boolean;
     enableAlertOncePerInterval?: boolean;
@@ -2850,7 +2858,7 @@ export interface IAlertingManagementDialogContextValue {
     resumeAlert(alert: IAutomationMetadataObject): Promise<IAutomationMetadataObject>;
 }
 
-// @alpha (undocumented)
+// @beta (undocumented)
 export interface IAlertingManagementDialogProps extends IAutomationManagementDialogCallbacks {
     // @deprecated
     alertDataError?: GoodDataSdkError;
@@ -2862,7 +2870,7 @@ export interface IAlertingManagementDialogProps extends IAutomationManagementDia
     notificationChannels?: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
 }
 
-// @alpha
+// @beta
 export interface IAlertSelectedValues {
     allowExternalRecipients: boolean;
     allowOnlyLoggedUserRecipients: boolean;
@@ -2878,7 +2886,7 @@ export interface IAlertSelectedValues {
     selectedValue: string | null | undefined;
 }
 
-// @alpha
+// @beta
 export interface IAlertSubmitState {
     isSaving: boolean;
     submit: () => Promise<void>;
@@ -2940,7 +2948,7 @@ export interface IAttributesDropdownProps extends IDashboardAttributeFilterPlace
     parameters?: IParameterDropdownListItem[];
 }
 
-// @alpha
+// @beta
 export interface IAutomationDialogActionBarProps {
     cancelButtonText: string;
     deleteButtonText?: string;
@@ -2955,7 +2963,7 @@ export interface IAutomationDialogActionBarProps {
     submitButtonTooltipText?: string;
 }
 
-// @alpha
+// @beta
 export interface IAutomationDialogCallbacks {
     onCancel?: () => void;
     onCreateError?: (error: GoodDataSdkError) => void;
@@ -2966,14 +2974,14 @@ export interface IAutomationDialogCallbacks {
     onUpdateSuccess?: (automation: IAutomationMetadataObject) => void;
 }
 
-// @alpha
+// @beta
 export interface IAutomationDialogDestinationProps {
     notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
     onChange: (notificationChannelId: string) => void;
     selectedNotificationChannelId: string | undefined;
 }
 
-// @alpha
+// @beta
 export interface IAutomationDialogFiltersProps {
     availableFilters: FilterContextItem[] | undefined;
     availableParameters?: IAutomationParameter[];
@@ -2985,7 +2993,7 @@ export interface IAutomationDialogFiltersProps {
     selectedFilters: FilterContextItem[];
 }
 
-// @alpha
+// @beta
 export interface IAutomationDialogFormFieldProps {
     children: ReactNode;
     fullWidth?: boolean;
@@ -2993,17 +3001,17 @@ export interface IAutomationDialogFormFieldProps {
     label: ReactNode;
 }
 
-// @alpha
+// @beta
 export interface IAutomationDialogHeaderProps {
     isSecondaryTitleVisible?: boolean;
     onChange: (value: string) => void;
     placeholder: string;
     secondaryTitle?: string;
-    secondaryTitleIcon: ReactNode;
+    secondaryTitleIcon?: ReactNode;
     title: string;
 }
 
-// @alpha
+// @beta
 export interface IAutomationDialogRecipientsProps {
     allowEmptySelection?: boolean;
     allowExternalRecipients?: boolean;
@@ -3017,7 +3025,7 @@ export interface IAutomationDialogRecipientsProps {
     value: IAutomationRecipient[];
 }
 
-// @alpha
+// @beta
 export interface IAutomationFiltersTab {
     availableFilters: FilterContextItem[];
     defaultSelectedFilters: FilterContextItem[];
@@ -3027,14 +3035,14 @@ export interface IAutomationFiltersTab {
     tabTitle: string;
 }
 
-// @alpha
+// @beta
 export interface IAutomationManagementDialogCallbacks {
     onAdd?: () => void;
     onClose?: () => void;
     onEdit?: (automation: IAutomationMetadataObject) => void;
 }
 
-// @alpha
+// @beta
 export interface IAutomationParameter {
     definition: IParameterDefinition;
     mode: DashboardParameterMode;
@@ -3043,7 +3051,7 @@ export interface IAutomationParameter {
     value: ParameterValue;
 }
 
-// @alpha
+// @beta
 export interface IAutomationsContextValue {
     // (undocumented)
     allowHourlyRecurrence: boolean;
@@ -3140,7 +3148,7 @@ export interface IAutomationsContextValue {
     widgetLocalIdToTabIdMap: Record<string, string>;
 }
 
-// @alpha
+// @beta
 export interface IAutomationsDateFilterConfig {
     // (undocumented)
     availableGranularities: DateFilterGranularity[];
@@ -3152,7 +3160,7 @@ export interface IAutomationsDateFilterConfig {
     getOptionsForTab: (tabId: string) => IDateFilterOptionsByType | undefined;
 }
 
-// @alpha
+// @beta
 export interface IAutomationsParameters {
     catalog: IParameterMetadataObject[];
     catalogIsLoaded: boolean;
@@ -4179,6 +4187,8 @@ export interface IDashboardCustomComponentProps {
     LoadingComponent?: ComponentType<ILoadingProps>;
     // @alpha
     MenuButtonComponent?: CustomMenuButtonComponent;
+    // @alpha
+    RestrictedFiltersPlaceholderComponentProvider?: OptionalRestrictedFiltersPlaceholderComponentProvider;
     // @alpha
     RestrictedPlaceholderComponentProvider?: OptionalRestrictedPlaceholderComponentProvider;
     RichTextComponentProvider?: OptionalRichTextComponentProvider;
@@ -6226,7 +6236,7 @@ export interface IDateFiltersCustomizer {
     withCustomProvider(provider: OptionalDateFilterComponentProvider): IDateFiltersCustomizer;
 }
 
-// @alpha
+// @beta
 export interface IDefaultAlertingDialogProps extends IAlertingDialogProps {
     bottomContent?: ReactNode;
     slots?: IAlertingDialogSlots;
@@ -6261,7 +6271,7 @@ export interface IDefaultDashboardToolbarGroupProps {
     title: string;
 }
 
-// @alpha
+// @beta
 export interface IDefaultScheduledEmailDialogProps extends IScheduledEmailDialogProps {
     bottomContent?: ReactNode;
     slots?: IScheduledEmailDialogSlots;
@@ -6726,6 +6736,8 @@ export interface IFilterBarCustomizer {
     setRenderingMode(mode: FilterBarRenderingMode): IFilterBarCustomizer;
     withCustomDecorator(providerFactory: (next: FilterBarComponentProvider) => OptionalFilterBarComponentProvider): IFilterBarCustomizer;
     withCustomProvider(provider: OptionalFilterBarComponentProvider): IFilterBarCustomizer;
+    // @alpha
+    withRestrictedPlaceholderProvider(provider: OptionalRestrictedFiltersPlaceholderComponentProvider): IFilterBarCustomizer;
 }
 
 // @alpha (undocumented)
@@ -7319,7 +7331,7 @@ export interface IMeasureDateDatasets {
     readonly dateDatasetsOrdered: ReadonlyArray<ICatalogDateDataset>;
 }
 
-// @alpha
+// @beta
 export type IMeasureFormatMap = {
     [key: string]: string;
 };
@@ -8282,6 +8294,11 @@ export interface IResolvedFilterValues {
 }
 
 // @alpha
+export interface IRestrictedFiltersPlaceholderProps {
+    count: number;
+}
+
+// @alpha
 export interface IRestrictedPlaceholderContentProps {
     height?: number;
     width?: number;
@@ -8475,10 +8492,10 @@ export function isBrokenAlertAttributeFilterInfo(item: IBrokenAlertFilterBasicIn
 // @alpha
 export function isBrokenAlertDateFilterInfo(item: IBrokenAlertFilterBasicInfo): item is BrokenAlertDateFilterInfo;
 
-// @alpha
+// @beta
 export type IScheduledEmailDialogActionBarBlockProps = IUseScheduledEmailDialogActionBarPropsInput & Partial<IAutomationDialogActionBarProps>;
 
-// @alpha
+// @beta
 export interface IScheduledEmailDialogContextValue {
     attributeFiltersModeMap: Map<string, DashboardAttributeFilterConfigMode>;
     // (undocumented)
@@ -8512,7 +8529,7 @@ export interface IScheduledEmailDialogContextValue {
     widgetTitle?: string;
 }
 
-// @alpha
+// @beta
 export interface IScheduledEmailDialogDashboardAttachmentsProps {
     dashboardFilters?: FilterContextItem[];
     exportTemplates?: IExportTemplate[];
@@ -8530,13 +8547,13 @@ export interface IScheduledEmailDialogDashboardAttachmentsProps {
     xlsxSettings: IExportDefinitionVisualizationObjectSettings;
 }
 
-// @alpha
+// @beta
 export interface IScheduledEmailDialogEvaluationModeProps {
     isShared: boolean;
     onChange: (isShared: boolean) => void;
 }
 
-// @alpha
+// @beta
 export interface IScheduledEmailDialogFiltersProps extends IAutomationDialogFiltersProps {
     availableParametersByTab?: Record<string, IAutomationParameter[]>;
     editedFiltersByTab?: Record<string, FilterContextItem[]>;
@@ -8552,19 +8569,19 @@ export interface IScheduledEmailDialogFiltersProps extends IAutomationDialogFilt
     storeFilters: boolean;
 }
 
-// @alpha
+// @beta
 export interface IScheduledEmailDialogHeaderProps extends IAutomationDialogHeaderProps {
     onBack?: () => void;
     onTitleKeyDown: (event: KeyboardEvent_2) => void;
 }
 
-// @alpha
+// @beta
 export interface IScheduledEmailDialogMessageProps {
     onChange: (value: string, isValid: boolean) => void;
     value: string;
 }
 
-// @alpha (undocumented)
+// @beta (undocumented)
 export interface IScheduledEmailDialogProps extends IAutomationDialogCallbacks {
     // @deprecated
     dashboardFilters?: FilterContextItem[];
@@ -8583,12 +8600,12 @@ export interface IScheduledEmailDialogProps extends IAutomationDialogCallbacks {
     widgetFilters?: IFilter[];
 }
 
-// @alpha
+// @beta
 export interface IScheduledEmailDialogRecipientsProps extends IAutomationDialogRecipientsProps {
     onKeyDownSubmit: (e: KeyboardEvent_2) => void;
 }
 
-// @alpha
+// @beta
 export interface IScheduledEmailDialogRecurrenceProps {
     allowHourlyRecurrence: boolean;
     closeDropdownsOnParentScroll: boolean;
@@ -8604,7 +8621,7 @@ export interface IScheduledEmailDialogRecurrenceProps {
     weekStart: WeekStart;
 }
 
-// @alpha
+// @beta
 export interface IScheduledEmailDialogShellProps extends Pick<IScheduledEmailDialogProps, "onCancel" | "onBack" | "onDeleteSuccess" | "onDeleteError"> {
     bottomContent?: ReactNode;
     children?: ReactNode;
@@ -8616,7 +8633,7 @@ export interface IScheduledEmailDialogShellProps extends Pick<IScheduledEmailDia
     topContent?: ReactNode;
 }
 
-// @alpha
+// @beta
 export interface IScheduledEmailDialogSlots {
     ActionBar?: ComponentType<ISlotProps<IAutomationDialogActionBarProps>>;
     Destination?: ComponentType<ISlotProps<IAutomationDialogDestinationProps>>;
@@ -8626,7 +8643,7 @@ export interface IScheduledEmailDialogSlots {
     Timezone?: ComponentType<ISlotProps<ScheduledEmailDialogTimezoneDefaultProps>>;
 }
 
-// @alpha
+// @beta
 export interface IScheduledEmailDialogSubjectProps {
     dashboardTitle: string;
     editedAutomation: IAutomationMetadataObjectDefinition;
@@ -8635,7 +8652,7 @@ export interface IScheduledEmailDialogSubjectProps {
     onKeyDownSubmit: () => void;
 }
 
-// @alpha
+// @beta
 export interface IScheduledEmailDialogTimezoneProps {
     defaultResolvedTimezone: string | undefined;
     isWidget: boolean;
@@ -8643,7 +8660,7 @@ export interface IScheduledEmailDialogTimezoneProps {
     selection: IScheduleTimezoneSelection;
 }
 
-// @alpha
+// @beta
 export interface IScheduledEmailDialogWidgetAttachmentsProps {
     csvRawSettings: IExportDefinitionVisualizationObjectSettings;
     csvSettings: IExportDefinitionVisualizationObjectSettings;
@@ -8680,7 +8697,7 @@ export interface IScheduledEmailManagementDialogContextValue {
     unlimitedAutomations: boolean;
 }
 
-// @alpha (undocumented)
+// @beta (undocumented)
 export interface IScheduledEmailManagementDialogProps extends IAutomationManagementDialogCallbacks {
     // @deprecated
     automations?: IAutomationMetadataObject[];
@@ -8692,14 +8709,14 @@ export interface IScheduledEmailManagementDialogProps extends IAutomationManagem
     scheduleDataError?: GoodDataSdkError;
 }
 
-// @alpha
+// @beta
 export interface IScheduledEmailSaveState {
     handleSaveScheduledEmail: () => void;
     isSavingScheduledEmail: boolean;
     savingErrorMessage: string | undefined;
 }
 
-// @alpha
+// @beta
 export interface IScheduledExportActionsContextValue {
     applyCurrentScheduleTimezone: () => void;
     onCsvRawSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
@@ -8720,7 +8737,7 @@ export interface IScheduledExportActionsContextValue {
     setEditedAutomation: Dispatch_2<SetStateAction<IAutomationMetadataObjectDefinition>>;
 }
 
-// @alpha
+// @beta
 export interface IScheduledExportAttachments {
     csvRawSettings: IExportDefinitionVisualizationObjectSettings;
     csvSettings: IExportDefinitionVisualizationObjectSettings;
@@ -8737,13 +8754,13 @@ export interface IScheduledExportAttachments {
     xlsxSettings: IExportDefinitionVisualizationObjectSettings;
 }
 
-// @alpha
+// @beta
 export interface IScheduledExportDataContextValue {
     defaultRecipient: IAutomationRecipient;
     defaultUser: IAutomationRecipient;
 }
 
-// @alpha
+// @beta
 export interface IScheduledExportDialogValidity {
     allowExternalRecipients: boolean;
     allowOnlyLoggedUserRecipients: boolean;
@@ -8752,7 +8769,7 @@ export interface IScheduledExportDialogValidity {
     validationErrorMessage: string | undefined;
 }
 
-// @alpha
+// @beta
 export interface IScheduledExportDraftContextValue {
     canSelectScheduleTimezone: boolean;
     defaultResolvedTimezone: string | undefined;
@@ -8768,7 +8785,7 @@ export interface IScheduledExportDraftContextValue {
     startDate: Date;
 }
 
-// @alpha
+// @beta
 export interface IScheduledExportFiltersContextValue {
     applyLatest: () => void;
     automationIsValid: boolean;
@@ -8801,7 +8818,7 @@ export interface IScheduleEmailContext {
     widgetRef?: ObjRef | undefined;
 }
 
-// @alpha
+// @beta
 export interface IScheduleTimezoneSelection {
     id: string | undefined;
     shouldSave: boolean;
@@ -10211,7 +10228,7 @@ export interface IUpsertExecutionResult extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.EXECUTION_RESULT.UPSERT";
 }
 
-// @alpha
+// @beta
 export interface IUseAlertingDialogActionBarPropsInput {
     isSaving: boolean;
     onCancel?: () => void;
@@ -10219,13 +10236,13 @@ export interface IUseAlertingDialogActionBarPropsInput {
     onSubmit: () => void;
 }
 
-// @alpha
+// @beta
 export interface IUseAlertingDialogHeaderPropsInput {
     onCancel?: () => void;
     ref?: Ref<HTMLInputElement>;
 }
 
-// @alpha
+// @beta
 export type IUseAlertSubmitCallbacks = Pick<IAlertingDialogProps, "onCreateSuccess" | "onCreateError" | "onUpdateSuccess" | "onUpdateError">;
 
 // @internal (undocumented)
@@ -10405,10 +10422,10 @@ export interface IUserInteractionPayloadWithDataBase<TType extends string, TData
     interaction: TType;
 }
 
-// @alpha
+// @beta
 export type IUseSaveScheduledEmailCallbacks = Pick<IScheduledEmailDialogProps, "onCreateSuccess" | "onCreateError" | "onUpdateSuccess" | "onUpdateError">;
 
-// @alpha
+// @beta
 export interface IUseScheduledEmailDialogActionBarPropsInput {
     isSaving: boolean;
     onCancel?: () => void;
@@ -10416,29 +10433,29 @@ export interface IUseScheduledEmailDialogActionBarPropsInput {
     onSubmit: () => void;
 }
 
-// @alpha
+// @beta
 export interface IUseScheduledEmailDialogHeaderPropsInput {
     onBack?: () => void;
     onTitleKeyDown: (event: KeyboardEvent_2) => void;
     ref?: Ref<HTMLInputElement>;
 }
 
-// @alpha
+// @beta
 export interface IUseScheduledEmailDialogRecipientsPropsInput {
     onKeyDownSubmit: (event: KeyboardEvent_2) => void;
 }
 
-// @alpha
+// @beta
 export interface IUseScheduledEmailDialogRecurrencePropsInput {
     onKeyDownSubmit: (event: KeyboardEvent_2) => void;
 }
 
-// @alpha
+// @beta
 export interface IUseScheduledEmailDialogSubjectPropsInput {
     onKeyDownSubmit: () => void;
 }
 
-// @alpha
+// @beta
 export interface IUseScheduledEmailSubmitOnEnterInput {
     isSaving: boolean;
     onSubmit: () => void;
@@ -10454,7 +10471,7 @@ export interface IUseWidgetSelectionResult {
     onSelected: (e?: MouseEvent_2) => void;
 }
 
-// @alpha
+// @beta
 export interface IUseWorkspaceUsersSearchResult {
     isLoading: boolean;
     onActivate: () => void;
@@ -10998,6 +11015,9 @@ export type OptionalMeasureValueFilterComponentProvider = OptionalProvider<Measu
 export type OptionalProvider<T> = T extends (...args: infer TArgs) => infer TRes ? (...args: TArgs) => TRes | undefined : never;
 
 // @alpha (undocumented)
+export type OptionalRestrictedFiltersPlaceholderComponentProvider = OptionalProvider<RestrictedFiltersPlaceholderComponentProvider>;
+
+// @alpha (undocumented)
 export type OptionalRestrictedPlaceholderComponentProvider = OptionalProvider<RestrictedPlaceholderComponentProvider>;
 
 // @public (undocumented)
@@ -11382,6 +11402,9 @@ export function resolveFilterValues(filters: ResolvableFilter[], backend?: IAnal
 export const resolveMessages: (locale: string) => Promise<ITranslations>;
 
 // @alpha
+export type RestrictedFiltersPlaceholderComponentProvider = () => CustomRestrictedFiltersPlaceholderComponent;
+
+// @alpha
 export type RestrictedPlaceholderComponentProvider = (widget: IInsightWidget) => CustomRestrictedPlaceholderComponent;
 
 // @alpha
@@ -11501,54 +11524,54 @@ export type SavingState = {
 // @internal
 export function ScheduledEmailDialog(props: IScheduledEmailDialogProps): ReactElement;
 
-// @alpha
-export function ScheduledEmailDialogActionBar(props: IScheduledEmailDialogActionBarBlockProps): JSX.Element;
+// @beta
+export function ScheduledEmailDialogActionBar(props: IScheduledEmailDialogActionBarBlockProps): ReactElement;
 
-// @alpha
+// @beta
 export const ScheduledEmailDialogContextProvider: Provider<IScheduledEmailDialogContextValue | undefined>;
 
-// @alpha
+// @beta
 export function ScheduledEmailDialogDashboardAttachments(props: Partial<IScheduledEmailDialogDashboardAttachmentsProps>): ReactElement;
 
-// @alpha
-export function ScheduledEmailDialogDestination(overrides: Partial<IAutomationDialogDestinationProps>): JSX.Element;
+// @beta
+export function ScheduledEmailDialogDestination(overrides: Partial<IAutomationDialogDestinationProps>): ReactElement;
 
-// @alpha
+// @beta
 export function ScheduledEmailDialogEvaluationMode(props: Partial<IScheduledEmailDialogEvaluationModeProps>): ReactElement;
 
-// @alpha
-export function ScheduledEmailDialogFilters(overrides: Partial<IScheduledEmailDialogFiltersProps>): JSX.Element;
+// @beta
+export function ScheduledEmailDialogFilters(overrides: Partial<IScheduledEmailDialogFiltersProps>): ReactElement;
 
-// @alpha
+// @beta
 export const ScheduledEmailDialogHeader: ForwardRefExoticComponent<Partial<IScheduledEmailDialogHeaderProps> & RefAttributes<HTMLInputElement>>;
 
-// @alpha
+// @beta
 export type ScheduledEmailDialogHeaderDefaultProps = IScheduledEmailDialogHeaderProps & {
     ref?: Ref<HTMLInputElement>;
 };
 
-// @alpha
+// @beta
 export function ScheduledEmailDialogMessage(props: Partial<IScheduledEmailDialogMessageProps>): ReactElement;
 
-// @alpha
-export function ScheduledEmailDialogRecipients(props: Partial<IScheduledEmailDialogRecipientsProps>): JSX.Element;
+// @beta
+export function ScheduledEmailDialogRecipients(props: Partial<IScheduledEmailDialogRecipientsProps>): ReactElement;
 
-// @alpha
+// @beta
 export function ScheduledEmailDialogRecurrence(props: Partial<IScheduledEmailDialogRecurrenceProps>): ReactElement;
 
-// @alpha
+// @beta
 export function ScheduledEmailDialogShell(props: IScheduledEmailDialogShellProps): ReactElement;
 
-// @alpha
+// @beta
 export function ScheduledEmailDialogSubject(props: Partial<IScheduledEmailDialogSubjectProps>): ReactElement;
 
-// @alpha
-export function ScheduledEmailDialogTimezone(overrides: Partial<ScheduledEmailDialogTimezoneDefaultProps>): JSX.Element;
+// @beta
+export function ScheduledEmailDialogTimezone(overrides: Partial<ScheduledEmailDialogTimezoneDefaultProps>): ReactElement;
 
-// @alpha
+// @beta
 export type ScheduledEmailDialogTimezoneDefaultProps = IScheduledEmailDialogTimezoneProps;
 
-// @alpha
+// @beta
 export function ScheduledEmailDialogWidgetAttachments(props: Partial<IScheduledEmailDialogWidgetAttachmentsProps>): ReactElement;
 
 // @internal
@@ -12220,6 +12243,12 @@ export const selectEntitlementUnlimitedAutomations: DashboardSelector<IEntitleme
 
 // @public
 export const selectEvaluationFrequency: DashboardSelector<string | undefined>;
+
+// @alpha
+export const selectExecutableDashboardFilters: DashboardSelector<FilterContextItem[]>;
+
+// @alpha
+export const selectExecutableDashboardFiltersByTab: DashboardSelector<Record<string, FilterContextItem[]>>;
 
 // @alpha (undocumented)
 export const selectExecutionResult: (state: DashboardState, id: EntityId) => {
@@ -12941,7 +12970,19 @@ export const selectRawExportOverridesForInsightByRef: (ref: ObjRef | undefined) 
 export const selectRenderMode: DashboardSelector<RenderMode>;
 
 // @alpha
+export const selectRestrictedDashboardFilterCount: DashboardSelector<number>;
+
+// @alpha
+export const selectRestrictedDashboardFilterLocalIdentifiers: DashboardSelector<ReadonlySet<string>>;
+
+// @alpha
+export const selectRestrictedDashboardFilterLocalIdentifiersForTab: (tabLocalIdentifier: string) => DashboardSelector<ReadonlySet<string>>;
+
+// @alpha
 export const selectRestrictedInsightsMap: DashboardSelector<ObjRefMap<IUnavailableDashboardReference>>;
+
+// @alpha
+export const selectRestrictedRichTextReferences: DashboardSelector<ObjRef[]>;
 
 // @internal
 export const selectSaveAsVisible: DashboardSelector<boolean>;
@@ -14062,76 +14103,76 @@ export function unignoreFilterOnRichTextWidget(ref: ObjRef, oneOrMoreDisplayForm
 // @beta
 export function updateVisualizationsFromSwitcherWidgetContent(ref: ObjRef, visualizations: IInsightWidget[], correlationId?: string): IUpdateVisualizationsFromVisualizationSwitcherWidgetContent;
 
-// @alpha
+// @beta
 export function useAlertActions(): IAlertActionsContextValue;
 
-// @alpha
+// @beta
 export function useAlertData(): IAlertDataContextValue;
 
-// @alpha
+// @beta
 export function useAlertDialogValidity(): IAlertDialogValidity;
 
-// @alpha
+// @beta
 export function useAlertDraft(): IAlertDraftContextValue;
 
-// @alpha
+// @beta
 export function useAlertFilters(): IAlertFiltersContextValue;
 
-// @alpha
+// @beta
 export function useAlertingDialogActionBarProps(input: IUseAlertingDialogActionBarPropsInput): IAutomationDialogActionBarProps;
 
-// @alpha
+// @beta
 export function useAlertingDialogAttributeProps(): IAlertingDialogAttributeProps;
 
-// @alpha
+// @beta
 export function useAlertingDialogComparisonOperatorProps(): IAlertingDialogComparisonOperatorProps;
 
-// @alpha
+// @beta
 export function useAlertingDialogComparisonPeriodProps(): IAlertingDialogComparisonPeriodProps;
 
-// @alpha
+// @beta
 export function useAlertingDialogContext(): IAlertingDialogContextValue;
 
-// @alpha
+// @beta
 export function useAlertingDialogDestinationProps(): IAutomationDialogDestinationProps;
 
-// @alpha
+// @beta
 export function useAlertingDialogFiltersProps(): IAlertingDialogFiltersProps;
 
-// @alpha
+// @beta
 export function useAlertingDialogGranularityProps(): IAlertingDialogGranularityProps;
 
-// @alpha
+// @beta
 export function useAlertingDialogHeaderProps(input: IUseAlertingDialogHeaderPropsInput): AlertingDialogHeaderDefaultProps;
 
-// @alpha
+// @beta
 export function useAlertingDialogMeasureProps(): IAlertingDialogMeasureProps;
 
-// @alpha
+// @beta
 export function useAlertingDialogRecipientsProps(): IAutomationDialogRecipientsProps;
 
-// @alpha
+// @beta
 export function useAlertingDialogSensitivityProps(): IAlertingDialogSensitivityProps;
 
-// @alpha
+// @beta
 export function useAlertingDialogThresholdProps(): IAlertingDialogThresholdProps;
 
-// @alpha
+// @beta
 export function useAlertingDialogTriggerIntervalProps(): IAlertingDialogTriggerIntervalProps;
 
-// @alpha
+// @beta
 export function useAlertingDialogTriggerModeProps(): IAlertingDialogTriggerModeProps;
 
 // @alpha
 export function useAlertingManagementDialogContext(): IAlertingManagementDialogContextValue;
 
-// @alpha
+// @beta
 export function useAlertSelectedValues(): IAlertSelectedValues;
 
-// @alpha
+// @beta
 export function useAlertSubmit(input: IUseAlertSubmitCallbacks): IAlertSubmitState;
 
-// @alpha
+// @beta
 export function useAutomationsContext(): IAutomationsContextValue;
 
 // @internal (undocumented)
@@ -14185,8 +14226,8 @@ export const useDashboardAlerts: () => {
     onAlertingManagementOpen: (widget?: IWidget) => void;
     onAlertingManagementClose: () => void;
     onAlertingManagementAdd: (targetWidget?: IWidget) => void;
-    onAlertingManagementDeleteError: () => void;
-    onAlertingManagementDeleteSuccess: () => void;
+    onAlertingDeleteError: () => void;
+    onAlertingDeleteSuccess: () => void;
     onAlertingManagementEdit: (alert: IAutomationMetadataObject, widget?: IWidget) => void;
     onAlertingManagementLoadingError: () => void;
 };
@@ -14280,8 +14321,8 @@ export const useDashboardScheduledEmails: () => {
     onScheduleEmailingManagementAdd: (targetWidget?: IWidget) => void;
     onScheduleEmailingManagementClose: () => void;
     onScheduleEmailingManagementLoadingError: () => void;
-    onScheduleEmailingManagementDeleteSuccess: () => void;
-    onScheduleEmailingManagementDeleteError: () => void;
+    onScheduleEmailingDeleteSuccess: () => void;
+    onScheduleEmailingDeleteError: () => void;
 };
 
 // @public
@@ -14424,70 +14465,70 @@ export function useSaveAsNewButtonProps(): ISaveAsNewButtonProps;
 // @internal (undocumented)
 export function useSaveButtonProps(): ISaveButtonProps;
 
-// @alpha
+// @beta
 export function useSaveScheduledEmailToBackend(input: IUseSaveScheduledEmailCallbacks): IScheduledEmailSaveState;
 
-// @alpha
+// @beta
 export function useScheduledEmailDialogActionBarProps(input: IUseScheduledEmailDialogActionBarPropsInput): IAutomationDialogActionBarProps;
 
-// @alpha
+// @beta
 export function useScheduledEmailDialogContext(): IScheduledEmailDialogContextValue;
 
-// @alpha
+// @beta
 export function useScheduledEmailDialogDashboardAttachmentsProps(): IScheduledEmailDialogDashboardAttachmentsProps;
 
-// @alpha
+// @beta
 export function useScheduledEmailDialogDestinationProps(): IAutomationDialogDestinationProps;
 
-// @alpha
+// @beta
 export function useScheduledEmailDialogEvaluationModeProps(): IScheduledEmailDialogEvaluationModeProps;
 
-// @alpha
+// @beta
 export function useScheduledEmailDialogFiltersProps(): IScheduledEmailDialogFiltersProps;
 
-// @alpha
+// @beta
 export function useScheduledEmailDialogHeaderProps(input: IUseScheduledEmailDialogHeaderPropsInput): ScheduledEmailDialogHeaderDefaultProps;
 
-// @alpha
+// @beta
 export function useScheduledEmailDialogMessageProps(): IScheduledEmailDialogMessageProps;
 
-// @alpha
+// @beta
 export function useScheduledEmailDialogRecipientsProps(input: IUseScheduledEmailDialogRecipientsPropsInput): IScheduledEmailDialogRecipientsProps;
 
-// @alpha
+// @beta
 export function useScheduledEmailDialogRecurrenceProps(input: IUseScheduledEmailDialogRecurrencePropsInput): IScheduledEmailDialogRecurrenceProps;
 
-// @alpha
+// @beta
 export function useScheduledEmailDialogSubjectProps(input: IUseScheduledEmailDialogSubjectPropsInput): IScheduledEmailDialogSubjectProps;
 
-// @alpha
+// @beta
 export function useScheduledEmailDialogTimezoneProps(): ScheduledEmailDialogTimezoneDefaultProps;
 
-// @alpha
+// @beta
 export function useScheduledEmailDialogWidgetAttachmentsProps(): IScheduledEmailDialogWidgetAttachmentsProps;
 
 // @alpha
 export function useScheduledEmailManagementDialogContext(): IScheduledEmailManagementDialogContextValue;
 
-// @alpha
+// @beta
 export function useScheduledEmailSubmitOnEnter(input: IUseScheduledEmailSubmitOnEnterInput): (event: KeyboardEvent_2) => void;
 
-// @alpha
+// @beta
 export function useScheduledExportActions(): IScheduledExportActionsContextValue;
 
-// @alpha
+// @beta
 export function useScheduledExportAttachments(): IScheduledExportAttachments;
 
-// @alpha
+// @beta
 export function useScheduledExportData(): IScheduledExportDataContextValue;
 
-// @alpha
+// @beta
 export function useScheduledExportDialogValidity(): IScheduledExportDialogValidity;
 
-// @alpha
+// @beta
 export function useScheduledExportDraft(): IScheduledExportDraftContextValue;
 
-// @alpha
+// @beta
 export function useScheduledExportFilters(): IScheduledExportFiltersContextValue;
 
 // @alpha (undocumented)
@@ -14528,7 +14569,7 @@ export function useWidgetFilters(widget: FilterableDashboardWidget | undefined |
 // @internal (undocumented)
 export function useWidgetSelection(widgetRef?: ObjRef): IUseWidgetSelectionResult;
 
-// @alpha
+// @beta
 export function useWorkspaceUsersSearch(input: {
     enabled: boolean;
 }): IUseWorkspaceUsersSearchResult;

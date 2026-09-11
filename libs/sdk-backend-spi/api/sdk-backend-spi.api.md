@@ -3413,7 +3413,7 @@ export class ProtectedDataError extends AnalyticalBackendError {
 export type QueryMethod = "GET" | "POST";
 
 // @alpha
-export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin" | "dataSet" | "displayForm" | "analyticalDashboard";
+export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin" | "dataSet" | "displayForm" | "measure" | "analyticalDashboard";
 
 // @public
 export type SupportedInsightReferenceTypes = Exclude<InsightReferenceTypes, "displayForm" | "variable">;

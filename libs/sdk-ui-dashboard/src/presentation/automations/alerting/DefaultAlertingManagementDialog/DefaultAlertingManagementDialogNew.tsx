@@ -9,7 +9,7 @@ import { type IAlertingManagementDialogProps } from "../types.js";
 import { DefaultAlertingManagementDialogContent } from "./DefaultAlertingManagementDialogContent.js";
 
 /**
- * @alpha
+ * @beta
  */
 export function DefaultAlertingManagementDialogNew({
     onEdit,

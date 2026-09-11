@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactElement } from "react";
+
 import { type IAutomationDialogDestinationProps } from "../../../shared/slots/types.js";
 
 import { DestinationSelect } from "./DestinationSelect/DestinationSelect.js";
@@ -13,13 +15,13 @@ const CLOSE_ON_PARENT_SCROLL = true;
  * {@link ScheduledEmailDialogDestination} render it with
  * {@link useScheduledEmailDialogDestinationProps}; a `slots.Destination` slot receives it as `Default`.
  *
- * @alpha
+ * @beta
  */
 export function DefaultScheduledEmailDialogDestination({
     notificationChannels,
     selectedNotificationChannelId,
     onChange,
-}: IAutomationDialogDestinationProps) {
+}: IAutomationDialogDestinationProps): ReactElement {
     return (
         <DestinationSelect
             notificationChannels={notificationChannels}

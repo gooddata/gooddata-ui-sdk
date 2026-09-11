@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "The automation dialog customization API is promoted to @beta; the useDashboardAlerts/useDashboardScheduledEmails delete callbacks are renamed (on*ManagementDelete* -> on*Delete*) to match what they observe.",
+            "type": "patch",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

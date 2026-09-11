@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactElement } from "react";
+
 import { DefaultScheduledEmailDialogRecipients } from "../DefaultScheduledEmailDialog/components/DefaultScheduledEmailDialogRecipients.js";
 import { useScheduledEmailDialogRecipientsProps } from "../state/useScheduledEmailDialogRegionProps.js";
 import { type IScheduledEmailDialogRecipientsProps } from "../types.js";
@@ -18,9 +20,11 @@ const noop = () => {};
  * handler over its single {@link useSaveScheduledEmailToBackend} instance; without it Enter does
  * nothing here. Renders nothing while `useScheduledEmailDialogContext().isLoading` is true.
  *
- * @alpha
+ * @beta
  */
-export function ScheduledEmailDialogRecipients(props: Partial<IScheduledEmailDialogRecipientsProps>) {
+export function ScheduledEmailDialogRecipients(
+    props: Partial<IScheduledEmailDialogRecipientsProps>,
+): ReactElement {
     return (
         <WhenScheduledEmailDialogLoaded>
             <ConnectedScheduledEmailDialogRecipients {...props} />

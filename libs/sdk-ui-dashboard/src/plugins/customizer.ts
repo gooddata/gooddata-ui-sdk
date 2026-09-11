@@ -28,6 +28,7 @@ import type {
     OptionalLayoutComponentProvider,
     OptionalLoadingComponentProvider,
     OptionalMeasureValueFilterComponentProvider,
+    OptionalRestrictedFiltersPlaceholderComponentProvider,
     OptionalRestrictedPlaceholderComponentProvider,
     OptionalRichTextComponentProvider,
     OptionalTitleComponentProvider,
@@ -634,6 +635,21 @@ export interface IFilterBarCustomizer {
      * @returns self, for call chaining sakes
      */
     withCustomProvider(provider: OptionalFilterBarComponentProvider): IFilterBarCustomizer;
+
+    /**
+     * Register a provider for the component reporting filters the current user is not allowed to see.
+     *
+     * @remarks
+     * The filters are not passed to the provider: only their number reaches the component. Returning
+     * undefined keeps the default notice.
+     *
+     * @param provider - provider of the replacement component
+     * @returns self, for call chaining
+     * @alpha
+     */
+    withRestrictedPlaceholderProvider(
+        provider: OptionalRestrictedFiltersPlaceholderComponentProvider,
+    ): IFilterBarCustomizer;
 
     /**
      * Register a factory for top bar decorator providers.

@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactNode } from "react";
+
 import { act, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
@@ -84,7 +86,7 @@ const settle = createTightWaitFor(waitFor);
 
 function renderProvider(
     backend: IAnalyticalBackend,
-    children: React.ReactNode,
+    children: ReactNode,
     item: ShareableCatalogItem | undefined = attribute,
     itemTarget = item ? target : undefined,
 ) {

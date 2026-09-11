@@ -46,9 +46,9 @@ import {
     selectCrossFilteringFiltersLocalIdentifiers,
     selectCrossFilteringFiltersLocalIdentifiersByWidgetRef,
 } from "../../drill/drillSelectors.js";
+import { selectExecutableDashboardFilters } from "../../filtering/dashboardFilterSelectors.js";
 import { getWidgetCoordinates, isItemWithBaseWidget } from "../../tabs/layout/layoutUtils.js";
 import { type DashboardSelector } from "../../types.js";
-import { selectFilterContextFilters } from "../filterContext/filterContextSelectors.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../tabsSelectors.js";
 import { DEFAULT_TAB_ID, type ITabState } from "../tabsState.js";
 
@@ -384,7 +384,7 @@ export const selectAllFiltersForWidgetByRef: (
 ) => DashboardSelector<[IDashboardFilter[], IDashboardFilter[]]> = createMemoizedSelector((ref: ObjRef) => {
     return createSelector(
         selectWidgetByRef(ref),
-        selectFilterContextFilters,
+        selectExecutableDashboardFilters,
         selectCrossFilteringFiltersLocalIdentifiersByWidgetRef(ref),
         selectWidgetIgnoreCrossFiltering(ref),
         selectCrossFilteringFiltersLocalIdentifiers,

@@ -40,6 +40,7 @@ import {
 } from "../../model/store/config/configSelectors.js";
 import { selectCanCreateVisualization } from "../../model/store/permissions/permissionsSelectors.js";
 import { selectInsightListLastUpdateRequested } from "../../model/store/ui/uiSelectors.js";
+import { selectRestrictedRichTextReferences } from "../../model/store/unavailableObjects/unavailableObjectsSelectors.js";
 import { selectCurrentUser } from "../../model/store/user/userSelectors.js";
 import { getAuthor } from "../../model/utils/author.js";
 import { useDashboardComponentsContext } from "../dashboardContexts/DashboardComponentsContext.js";
@@ -122,6 +123,7 @@ export function InsightList({
     const allowCreateInsightRequest = useDashboardSelector(selectAllowCreateInsightRequest);
     const settings = useDashboardSelector(selectSettings);
     const execConfig = useDashboardExecConfig();
+    const restrictedReferences = useDashboardSelector(selectRestrictedRichTextReferences);
     const objectAvailability = useDashboardSelector(selectObjectAvailabilityConfig);
     const isFilteringByTagsEnabled = useDashboardSelector(selectEnableVisualizationFilteringByTags);
     const enableCatalogSmartSearchResults = useDashboardSelector(selectEnableCatalogSmartSearchResults);
@@ -312,6 +314,7 @@ export function InsightList({
                             onClick={() => onSelect?.(insight)}
                             metadataTimeZone={settings?.metadataTimeZone}
                             useReferences
+                            restrictedReferences={restrictedReferences}
                             richTextExecConfig={execConfig}
                             LoadingComponent={LoadingComponent}
                         />

@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/oxlint-config",
-    "version": "11.57.0-alpha.0",
+    "version": "11.57.0-alpha.1",
     "license": "MIT",
     "author": "GoodData",
     "repository": {
@@ -70,7 +70,7 @@
         "jiti": "2.6.1",
         "oxfmt": "0.66.0",
         "oxlint": "1.57.0",
-        "oxlint-tsgolint": "0.15.0",
+        "oxlint-tsgolint": "0.18.1",
         "react": "19.1.1",
         "react-dom": "19.1.1",
         "storybook": "^10.5.6",

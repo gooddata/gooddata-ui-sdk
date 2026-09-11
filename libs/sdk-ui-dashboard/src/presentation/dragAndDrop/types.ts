@@ -490,6 +490,7 @@ export type CustomDashboardInsightListItemComponentProps = {
     filters?: IFilter[];
     useRichText?: boolean;
     useReferences?: boolean;
+    restrictedReferences?: ObjRef[];
     LoadingComponent?: ComponentType;
     width?: number;
     disabled?: boolean;

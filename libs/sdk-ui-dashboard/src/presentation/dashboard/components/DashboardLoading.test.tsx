@@ -1,6 +1,9 @@
 // (C) 2026 GoodData Corporation
 
+import { screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
+
+import { ContractExpired, UnexpectedError } from "@gooddata/sdk-backend-spi";
 
 import { render } from "../tests/render.test.utils.js";
 
@@ -45,5 +48,35 @@ describe("DashboardLoading", () => {
         const { container } = render(<DashboardLoading />);
 
         expect(container.querySelector("[data-export-status]")).toBeNull();
+    });
+
+    it("should mirror the trial lock when a trial contract expired", async () => {
+        render(<DashboardLoading />, {
+            state: { loading: { loading: false, error: new ContractExpired("TRIAL") } },
+        });
+
+        expect(await screen.findByText("Your trial has ended.")).toBeTruthy();
+        expect(
+            screen.getByText("Contact us if you would like to continue using GoodData Cloud."),
+        ).toBeTruthy();
+        expect(screen.getByRole("button", { name: "Contact us" })).toBeTruthy();
+    });
+
+    it("should mirror the non-trial lock and offer no way out when a paid contract expired", async () => {
+        render(<DashboardLoading />, {
+            state: { loading: { loading: false, error: new ContractExpired("GROWTH") } },
+        });
+
+        expect(await screen.findByText("Your access is locked.")).toBeTruthy();
+        expect(screen.getByText("Contact the account administrator to regain access.")).toBeTruthy();
+        expect(screen.queryByRole("button", { name: "Contact us" })).toBeNull();
+    });
+
+    it("should keep the message of any other load failure", async () => {
+        render(<DashboardLoading />, {
+            state: { loading: { loading: false, error: new UnexpectedError("Dashboard not found") } },
+        });
+
+        expect(await screen.findByText("Dashboard not found")).toBeTruthy();
     });
 });

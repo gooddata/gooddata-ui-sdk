@@ -22,7 +22,7 @@ const noop = () => {};
  * nothing while `useScheduledEmailDialogContext().isLoading` is true, which on scheduled email is
  * the ordinary path while a widget export's filters load.
  *
- * @alpha
+ * @beta
  */
 export const ScheduledEmailDialogHeader = forwardRef<
     HTMLInputElement,

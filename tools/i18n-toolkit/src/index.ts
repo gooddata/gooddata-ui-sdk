@@ -1,10 +1,10 @@
 #!/usr/bin/env node
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { program } from "commander";
 
 import { configure } from "./config.js";
-import { DefaultConfigName, type ToolkitConfigFile, type ToolkitOptions } from "./data.js";
+import { DefaultConfigFileNames, type ToolkitConfigFile, type ToolkitOptions } from "./data.js";
 import { done, error, fail } from "./utils/console.js";
 import { validate } from "./validate.js";
 
@@ -30,10 +30,12 @@ async function runValidation(cwd: string, config: ToolkitConfigFile) {
     }
 }
 
+const defaultConfigNames = DefaultConfigFileNames.map((name) => `"${name}"`).join(", ");
+
 program
     .option("-w, --cwd <type>", `path to current working directory, default is "${process.cwd()}"`)
     .option("-p, --paths <type...>", "paths to more translations separated by space")
-    .option("-c, --config <type>", `path to config file, default is "${DefaultConfigName}"`)
+    .option("-c, --config <type>", `path to config file, default is one of ${defaultConfigNames}`)
     .option("-s, --structure", "enable structure check")
     .option("-i, --intl", "enable intl check")
     .option("-h, --html", "enable html check")

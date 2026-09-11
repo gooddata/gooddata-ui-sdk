@@ -13,9 +13,17 @@ import { type EmbeddingMode, type IPlatformContext } from "@gooddata/sdk-pluggab
 
 import { type WorkspaceAccess } from "../platformContext/workspaceAccess.js";
 
-import * as lastVisitedAppModule from "./lastVisitedApp.js";
-import * as lastVisitedWorkspaceModule from "./lastVisitedWorkspace.js";
+import { getLastVisitedApp, setLastVisitedApp } from "./lastVisitedApp.js";
+import {
+    clearLastVisitedWorkspace,
+    getLastVisitedWorkspace,
+    setLastVisitedWorkspace,
+} from "./lastVisitedWorkspace.js";
 import { AppNotFoundError, resolveRedirectTarget } from "./redirectLogic.js";
+
+// Auto-spied so the named imports above are the same spies redirectLogic.js calls
+vi.mock("./lastVisitedApp.js", { spy: true });
+vi.mock("./lastVisitedWorkspace.js", { spy: true });
 
 function context(overrides: Partial<IPlatformContext> = {}): IPlatformContext {
     const userSettings = {
@@ -82,11 +90,11 @@ const orgAppAdmin = localApp({
 });
 
 describe("resolveRedirectTarget", () => {
-    const getLastVisitedAppSpy = vi.spyOn(lastVisitedAppModule, "getLastVisitedApp");
-    const setLastVisitedAppSpy = vi.spyOn(lastVisitedAppModule, "setLastVisitedApp");
-    const getLastVisitedWorkspaceSpy = vi.spyOn(lastVisitedWorkspaceModule, "getLastVisitedWorkspace");
-    const setLastVisitedWorkspaceSpy = vi.spyOn(lastVisitedWorkspaceModule, "setLastVisitedWorkspace");
-    const clearLastVisitedWorkspaceSpy = vi.spyOn(lastVisitedWorkspaceModule, "clearLastVisitedWorkspace");
+    const getLastVisitedAppSpy = vi.mocked(getLastVisitedApp);
+    const setLastVisitedAppSpy = vi.mocked(setLastVisitedApp);
+    const getLastVisitedWorkspaceSpy = vi.mocked(getLastVisitedWorkspace);
+    const setLastVisitedWorkspaceSpy = vi.mocked(setLastVisitedWorkspace);
+    const clearLastVisitedWorkspaceSpy = vi.mocked(clearLastVisitedWorkspace);
 
     beforeEach(() => {
         vi.clearAllMocks();

@@ -490,6 +490,50 @@ export interface AttributeItem {
     'showAllValues'?: boolean;
 }
 
+export interface AttributePermissions {
+    /**
+     * List of rules
+     */
+    'rules': Array<RulePermission>;
+    /**
+     * List of user groups
+     */
+    'userGroups': Array<UserGroupPermission>;
+    /**
+     * List of users
+     */
+    'users': Array<UserPermission>;
+}
+
+/**
+ * Desired levels of permissions on an attribute for an assignee.
+ */
+export interface AttributePermissionsAssignment {
+    'permissions': Array<AttributePermissionsAssignmentPermissionsEnum>;
+}
+
+export type AttributePermissionsAssignmentPermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
+
+/**
+ * Desired levels of attribute permissions for an assignee identified by an identifier.
+ */
+export interface AttributePermissionsForAssignee {
+    'permissions': Array<AttributePermissionsForAssigneePermissionsEnum>;
+    'assigneeIdentifier': AssigneeIdentifier;
+}
+
+export type AttributePermissionsForAssigneePermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
+
+/**
+ * Desired levels of attribute permissions for a collection of assignees identified by a rule.
+ */
+export interface AttributePermissionsForAssigneeRule {
+    'permissions': Array<AttributePermissionsForAssigneeRulePermissionsEnum>;
+    'assigneeRule': AssigneeRule;
+}
+
+export type AttributePermissionsForAssigneeRulePermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
+
 export interface AutomationAlert {
     'condition': AlertCondition;
     'execution': AlertAfm;
@@ -3883,6 +3927,50 @@ export interface ExecutionSettings {
  * JSON content to be used as export request payload for /export/tabular and /export/visual endpoints. 
  */
 export type ExportRequest = TabularExportRequest | VisualExportRequest;
+
+export interface FactPermissions {
+    /**
+     * List of rules
+     */
+    'rules': Array<RulePermission>;
+    /**
+     * List of user groups
+     */
+    'userGroups': Array<UserGroupPermission>;
+    /**
+     * List of users
+     */
+    'users': Array<UserPermission>;
+}
+
+/**
+ * Desired levels of permissions on a fact for an assignee.
+ */
+export interface FactPermissionsAssignment {
+    'permissions': Array<FactPermissionsAssignmentPermissionsEnum>;
+}
+
+export type FactPermissionsAssignmentPermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
+
+/**
+ * Desired levels of fact permissions for an assignee identified by an identifier.
+ */
+export interface FactPermissionsForAssignee {
+    'permissions': Array<FactPermissionsForAssigneePermissionsEnum>;
+    'assigneeIdentifier': AssigneeIdentifier;
+}
+
+export type FactPermissionsForAssigneePermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
+
+/**
+ * Desired levels of fact permissions for a collection of assignees identified by a rule.
+ */
+export interface FactPermissionsForAssigneeRule {
+    'permissions': Array<FactPermissionsForAssigneeRulePermissionsEnum>;
+    'assigneeRule': AssigneeRule;
+}
+
+export type FactPermissionsForAssigneeRulePermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
 
 export interface FeatureFlagsContext {
     'earlyAccess': string;
@@ -16355,7 +16443,7 @@ export interface LabelIdentifier {
 
 export type LabelIdentifierTypeEnum = 'label';
 
-export interface LdmObjectPermissions {
+export interface LabelPermissions {
     /**
      * List of rules
      */
@@ -16371,33 +16459,33 @@ export interface LdmObjectPermissions {
 }
 
 /**
- * Desired levels of permissions on an LDM object (attribute, label, fact) for an assignee.
+ * Desired levels of permissions on a label for an assignee.
  */
-export interface LdmObjectPermissionsAssignment {
-    'permissions': Array<LdmObjectPermissionsAssignmentPermissionsEnum>;
+export interface LabelPermissionsAssignment {
+    'permissions': Array<LabelPermissionsAssignmentPermissionsEnum>;
 }
 
-export type LdmObjectPermissionsAssignmentPermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
+export type LabelPermissionsAssignmentPermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
 
 /**
- * Desired levels of LDM-object permissions for an assignee identified by an identifier.
+ * Desired levels of label permissions for an assignee identified by an identifier.
  */
-export interface LdmObjectPermissionsForAssignee {
-    'permissions': Array<LdmObjectPermissionsForAssigneePermissionsEnum>;
+export interface LabelPermissionsForAssignee {
+    'permissions': Array<LabelPermissionsForAssigneePermissionsEnum>;
     'assigneeIdentifier': AssigneeIdentifier;
 }
 
-export type LdmObjectPermissionsForAssigneePermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
+export type LabelPermissionsForAssigneePermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
 
 /**
- * Desired levels of LDM-object permissions for a collection of assignees identified by a rule.
+ * Desired levels of label permissions for a collection of assignees identified by a rule.
  */
-export interface LdmObjectPermissionsForAssigneeRule {
-    'permissions': Array<LdmObjectPermissionsForAssigneeRulePermissionsEnum>;
+export interface LabelPermissionsForAssigneeRule {
+    'permissions': Array<LabelPermissionsForAssigneeRulePermissionsEnum>;
     'assigneeRule': AssigneeRule;
 }
 
-export type LdmObjectPermissionsForAssigneeRulePermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
+export type LabelPermissionsForAssigneeRulePermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
 
 export interface ListLinks {
     /**
@@ -16448,7 +16536,7 @@ export interface LocaleRequest {
 /**
  * @type ManageAttributePermissionsRequestInner
  */
-export type ManageAttributePermissionsRequestInner = LdmObjectPermissionsForAssignee | LdmObjectPermissionsForAssigneeRule;
+export type ManageAttributePermissionsRequestInner = AttributePermissionsForAssignee | AttributePermissionsForAssigneeRule;
 
 /**
  * @type ManageComputedAttributePermissionsRequestInner
@@ -16463,12 +16551,12 @@ export type ManageDashboardPermissionsRequestInner = PermissionsForAssignee | Pe
 /**
  * @type ManageFactPermissionsRequestInner
  */
-export type ManageFactPermissionsRequestInner = LdmObjectPermissionsForAssignee | LdmObjectPermissionsForAssigneeRule;
+export type ManageFactPermissionsRequestInner = FactPermissionsForAssignee | FactPermissionsForAssigneeRule;
 
 /**
  * @type ManageLabelPermissionsRequestInner
  */
-export type ManageLabelPermissionsRequestInner = LdmObjectPermissionsForAssignee | LdmObjectPermissionsForAssigneeRule;
+export type ManageLabelPermissionsRequestInner = LabelPermissionsForAssignee | LabelPermissionsForAssigneeRule;
 
 /**
  * @type ManageMetricPermissionsRequestInner
@@ -22068,7 +22156,7 @@ export async function ActionsApi_AttributePermissions(
     requestParameters: ActionsApiAttributePermissionsRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<LdmObjectPermissions> {
+): AxiosPromise<AttributePermissions> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_AttributePermissions(
         requestParameters.workspaceId, requestParameters.attributeId, 
         options || {},
@@ -22302,7 +22390,7 @@ export async function ActionsApi_FactPermissions(
     requestParameters: ActionsApiFactPermissionsRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<LdmObjectPermissions> {
+): AxiosPromise<FactPermissions> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_FactPermissions(
         requestParameters.workspaceId, requestParameters.factId, 
         options || {},
@@ -22484,7 +22572,7 @@ export async function ActionsApi_LabelPermissions(
     requestParameters: ActionsApiLabelPermissionsRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<LdmObjectPermissions> {
+): AxiosPromise<LabelPermissions> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_LabelPermissions(
         requestParameters.workspaceId, requestParameters.labelId, 
         options || {},
@@ -23561,7 +23649,7 @@ export interface ActionsApiInterface {
      * @throws {RequiredError}
      * @memberof ActionsApiInterface
      */
-    attributePermissions(requestParameters: ActionsApiAttributePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<LdmObjectPermissions>;
+    attributePermissions(requestParameters: ActionsApiAttributePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<AttributePermissions>;
 
     /**
      * 
@@ -23651,7 +23739,7 @@ export interface ActionsApiInterface {
      * @throws {RequiredError}
      * @memberof ActionsApiInterface
      */
-    factPermissions(requestParameters: ActionsApiFactPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<LdmObjectPermissions>;
+    factPermissions(requestParameters: ActionsApiFactPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<FactPermissions>;
 
     /**
      * Generate logical data model (LDM) from physical data model (PDM) stored in data source.
@@ -23721,7 +23809,7 @@ export interface ActionsApiInterface {
      * @throws {RequiredError}
      * @memberof ActionsApiInterface
      */
-    labelPermissions(requestParameters: ActionsApiLabelPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<LdmObjectPermissions>;
+    labelPermissions(requestParameters: ActionsApiLabelPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<LabelPermissions>;
 
     /**
      * 
@@ -157605,7 +157693,7 @@ export async function PermissionsApi_AttributePermissions(
     requestParameters: PermissionsApiAttributePermissionsRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<LdmObjectPermissions> {
+): AxiosPromise<AttributePermissions> {
     const localVarAxiosArgs = await PermissionsApiAxiosParamCreator_AttributePermissions(
         requestParameters.workspaceId, requestParameters.attributeId, 
         options || {},
@@ -157709,7 +157797,7 @@ export async function PermissionsApi_FactPermissions(
     requestParameters: PermissionsApiFactPermissionsRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<LdmObjectPermissions> {
+): AxiosPromise<FactPermissions> {
     const localVarAxiosArgs = await PermissionsApiAxiosParamCreator_FactPermissions(
         requestParameters.workspaceId, requestParameters.factId, 
         options || {},
@@ -157838,7 +157926,7 @@ export async function PermissionsApi_LabelPermissions(
     requestParameters: PermissionsApiLabelPermissionsRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<LdmObjectPermissions> {
+): AxiosPromise<LabelPermissions> {
     const localVarAxiosArgs = await PermissionsApiAxiosParamCreator_LabelPermissions(
         requestParameters.workspaceId, requestParameters.labelId, 
         options || {},
@@ -158226,7 +158314,7 @@ export interface PermissionsApiInterface {
      * @throws {RequiredError}
      * @memberof PermissionsApiInterface
      */
-    attributePermissions(requestParameters: PermissionsApiAttributePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<LdmObjectPermissions>;
+    attributePermissions(requestParameters: PermissionsApiAttributePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<AttributePermissions>;
 
     /**
      * 
@@ -158266,7 +158354,7 @@ export interface PermissionsApiInterface {
      * @throws {RequiredError}
      * @memberof PermissionsApiInterface
      */
-    factPermissions(requestParameters: PermissionsApiFactPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<LdmObjectPermissions>;
+    factPermissions(requestParameters: PermissionsApiFactPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<FactPermissions>;
 
     /**
      * Retrieve organization permissions
@@ -158315,7 +158403,7 @@ export interface PermissionsApiInterface {
      * @throws {RequiredError}
      * @memberof PermissionsApiInterface
      */
-    labelPermissions(requestParameters: PermissionsApiLabelPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<LdmObjectPermissions>;
+    labelPermissions(requestParameters: PermissionsApiLabelPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<LabelPermissions>;
 
     /**
      * 

@@ -49,6 +49,7 @@ import {
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectIsExport,
 } from "../../../model/store/config/configSelectors.js";
+import { selectRestrictedDashboardFilterCount } from "../../../model/store/filtering/dashboardFilterSelectors.js";
 import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
 import { selectEffectiveAttributeFiltersModeMap } from "../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
@@ -356,7 +357,9 @@ export function DefaultFilterBar(props: IFilterBarProps): ReactElement {
     const dashboardParameters = useDashboardSelector(selectDashboardParameters);
 
     const isExport = useDashboardSelector(selectIsExport);
-    const { DashboardDateFilterComponentProvider } = useDashboardComponentsContext();
+    const { DashboardDateFilterComponentProvider, RestrictedFiltersPlaceholderComponentProvider } =
+        useDashboardComponentsContext();
+    const restrictedFilterCount = useDashboardSelector(selectRestrictedDashboardFilterCount);
     const canAddMoreFilters = useDashboardSelector(selectCanAddMoreFilters);
     const haveAllFiltersHidden = areAllFiltersHidden(
         draggableFiltersWithPlaceholder,
@@ -388,9 +391,13 @@ export function DefaultFilterBar(props: IFilterBarProps): ReactElement {
     };
 
     const CustomCommonDateFilterComponent = DashboardDateFilterComponentProvider(commonDateFilter);
+    const CustomRestrictedFiltersPlaceholderComponent = RestrictedFiltersPlaceholderComponentProvider();
 
     return (
         <DefaultFilterBarContainer>
+            {restrictedFilterCount > 0 ? (
+                <CustomRestrictedFiltersPlaceholderComponent count={restrictedFilterCount} />
+            ) : null}
             <div
                 className={classNames("dash-filters-date", {
                     "dash-filter-is-edit-mode": isInEditMode,

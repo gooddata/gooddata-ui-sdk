@@ -53,8 +53,8 @@ export const useDashboardScheduledEmails = () => {
         defaultOnScheduleEmailingManagement,
         onScheduleEmailingManagementAdd,
         onScheduleEmailingManagementClose,
-        onScheduleEmailingManagementDeleteError,
-        onScheduleEmailingManagementDeleteSuccess,
+        onScheduleEmailingDeleteError,
+        onScheduleEmailingDeleteSuccess,
         onScheduleEmailingManagementEdit,
         onScheduleEmailingManagementLoadingError,
         onScheduleEmailingManagementOpen,
@@ -93,7 +93,7 @@ export const useDashboardScheduledEmails = () => {
         onScheduleEmailingManagementAdd,
         onScheduleEmailingManagementClose,
         onScheduleEmailingManagementLoadingError,
-        onScheduleEmailingManagementDeleteSuccess,
-        onScheduleEmailingManagementDeleteError,
+        onScheduleEmailingDeleteSuccess,
+        onScheduleEmailingDeleteError,
     };
 };

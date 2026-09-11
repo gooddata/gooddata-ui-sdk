@@ -45,6 +45,7 @@ export interface IInsightPickerPanelProps {
     onSortChange: (sortBy: InsightPickerSortBy, sortDirection: InsightPickerSortDirection) => void;
     authorFilter: string[];
     onAuthorFilterChange: (authorIds: string[]) => void;
+    isAuthorFilterModified: boolean;
     tagFilter: string[];
     onTagFilterChange: (tagIds: string[]) => void;
 }
@@ -61,6 +62,7 @@ export function InsightPickerPanel({
     onSortChange,
     authorFilter,
     onAuthorFilterChange,
+    isAuthorFilterModified,
     tagFilter,
     onTagFilterChange,
 }: IInsightPickerPanelProps) {
@@ -124,6 +126,7 @@ export function InsightPickerPanel({
                 onSortChange={onSortChange}
                 authorFilter={authorFilter}
                 onAuthorFilterChange={onAuthorFilterChange}
+                isAuthorFilterModified={isAuthorFilterModified}
                 tagFilter={tagFilter}
                 onTagFilterChange={onTagFilterChange}
                 onSelect={handleSelect}

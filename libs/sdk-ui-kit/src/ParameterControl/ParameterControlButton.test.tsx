@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ComponentProps } from "react";
+
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
@@ -26,7 +28,7 @@ const constrainedDefinition: IParameterDefinition = {
     },
 };
 
-const renderButton = (props: Partial<React.ComponentProps<typeof ParameterControlButton>> = {}) => {
+const renderButton = (props: Partial<ComponentProps<typeof ParameterControlButton>> = {}) => {
     return render(
         <WrappedParameterControlButton
             name="Threshold"

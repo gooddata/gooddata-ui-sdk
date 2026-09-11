@@ -45,7 +45,7 @@ vi.mock("react-intl", async () => {
 // ---------------------------------------------------------------------------
 
 import { IntlWrapper } from "../../../localization/IntlWrapper.js";
-import * as useScheduleValidationModule from "../hooks/useScheduleValidation.js";
+import { useScheduleValidation } from "../hooks/useScheduleValidation.js";
 
 import {
     useScheduledEmailFormValidity,
@@ -56,7 +56,7 @@ import {
 // Typed spy references (resolved after import)
 // ---------------------------------------------------------------------------
 
-const useScheduleValidationSpy = vi.mocked(useScheduleValidationModule.useScheduleValidation);
+const useScheduleValidationSpy = vi.mocked(useScheduleValidation);
 
 // ---------------------------------------------------------------------------
 // Fixtures

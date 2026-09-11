@@ -5,8 +5,10 @@ import { simplifyText } from "@gooddata/util";
 
 import { useRichTextWidgetFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
 import { type DescriptionTooltipOpenedData } from "../../../model/events/userInteraction.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { useDashboardUserInteraction } from "../../../model/react/useDashboardUserInteraction.js";
 import { useDashboardExecConfig } from "../../../model/react/useWidgetExecConfig.js";
+import { selectRestrictedRichTextReferences } from "../../../model/store/unavailableObjects/unavailableObjectsSelectors.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 
 import { DescriptionClickTrigger } from "./DescriptionClickTrigger.js";
@@ -22,6 +24,7 @@ export function InsightWidgetDescriptionTrigger(props: IInsightWidgetDescription
 
     const execConfig = useDashboardExecConfig();
     const { filters } = useRichTextWidgetFilters(widget);
+    const restrictedReferences = useDashboardSelector(selectRestrictedRichTextReferences);
     const { LoadingComponent } = useDashboardComponentsContext();
 
     const eventPayload: DescriptionTooltipOpenedData = {
@@ -38,6 +41,7 @@ export function InsightWidgetDescriptionTrigger(props: IInsightWidgetDescription
                 onOpen={() => userInteraction.descriptionTooltipOpened(eventPayload)}
                 useReferences
                 filters={filters}
+                restrictedReferences={restrictedReferences}
                 LoadingComponent={LoadingComponent}
                 execConfig={execConfig}
             />

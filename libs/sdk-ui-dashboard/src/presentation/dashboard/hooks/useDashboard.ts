@@ -28,6 +28,7 @@ import {
     type InsightMenuComponentProvider,
     type InsightMenuTitleComponentProvider,
     type MeasureValueFilterComponentProvider,
+    type RestrictedFiltersPlaceholderComponentProvider,
     type RestrictedPlaceholderComponentProvider,
     type RichTextComponentProvider,
     type RichTextMenuComponentProvider,
@@ -42,6 +43,7 @@ import { DefaultDashboardAttributeFilterComponentSetFactory } from "../../filter
 import { DefaultDashboardDateFilter } from "../../filterBar/dateFilter/DefaultDashboardDateFilter.js";
 import { DefaultDashboardDateFilterComponentSetFactory } from "../../filterBar/dateFilter/DefaultDashboardDateFilterComponentSetFactory.js";
 import { DefaultDashboardFilterGroup } from "../../filterBar/filterBar/DefaultDashboardFilterGroup.js";
+import { RestrictedFiltersPlaceholder } from "../../filterBar/filterBar/RestrictedFiltersPlaceholder.js";
 import { DefaultDashboardMeasureValueFilter } from "../../filterBar/measureValueFilter/DefaultDashboardMeasureValueFilter.js";
 import { RestrictedPlaceholderContent } from "../../widget/common/RestrictedPlaceholder.js";
 import { DefaultDashboardLayout as DefaultDashboardNestedLayout } from "../../widget/dashboardLayout/DefaultDashboardLayout.js";
@@ -88,6 +90,7 @@ interface IUseDashboardResult {
     dateFilterComponentSet: DateFilterComponentSet;
     richTextProvider: RichTextComponentProvider;
     restrictedPlaceholderProvider: RestrictedPlaceholderComponentProvider;
+    restrictedFiltersPlaceholderProvider: RestrictedFiltersPlaceholderComponentProvider;
     richTextWidgetComponentSet: RichTextWidgetComponentSet;
     visualizationSwitcherProvider: VisualizationSwitcherComponentProvider;
     visualizationSwitcherWidgetComponentSet: VisualizationSwitcherWidgetComponentSet;
@@ -114,6 +117,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         InsightComponentSetProvider,
         DashboardContentComponentProvider,
         RichTextComponentProvider,
+        RestrictedFiltersPlaceholderComponentProvider,
         RestrictedPlaceholderComponentProvider,
         RichTextMenuComponentProvider,
         RichTextMenuTitleComponentProvider,
@@ -261,6 +265,12 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         [RestrictedPlaceholderComponentProvider],
     );
 
+    const restrictedFiltersPlaceholderProvider =
+        useCallback<RestrictedFiltersPlaceholderComponentProvider>(() => {
+            const userSpecified = RestrictedFiltersPlaceholderComponentProvider?.();
+            return userSpecified ?? RestrictedFiltersPlaceholder;
+        }, [RestrictedFiltersPlaceholderComponentProvider]);
+
     const richTextMenuProvider = useCallback<RichTextMenuComponentProvider>(
         (richText) => {
             const userSpecified = RichTextMenuComponentProvider?.(richText);
@@ -348,6 +358,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         dateFilterComponentSet,
         richTextProvider,
         restrictedPlaceholderProvider,
+        restrictedFiltersPlaceholderProvider,
         richTextMenuProvider,
         richTextMenuTitleProvider,
         richTextWidgetComponentSet,

@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { type IdentifierRef, type ObjRef, type ObjectType } from "@gooddata/sdk-model";
+import { type IdentifierRef, type ObjRef, type ObjectType, areObjRefsEqual } from "@gooddata/sdk-model";
 
 import { REFERENCE_REGEX_MATCH } from "../plugins/types.js";
 
@@ -30,6 +30,21 @@ export function collectReferences(content: string) {
     }
 
     return map;
+}
+
+/**
+ * The references without those pointing at the given objects. The caller resolves the remaining ones
+ * in a single execution, which fails as a whole if it asks for an object the user may not read.
+ */
+export function excludeReferences(references: ReferenceMap, excluded: ObjRef[]): ReferenceMap {
+    if (excluded.length === 0) {
+        return references;
+    }
+    return Object.fromEntries(
+        Object.entries(references).filter(
+            ([, reference]) => !excluded.some((ref) => areObjRefsEqual(ref, reference.ref)),
+        ),
+    );
 }
 
 export function createReference(parts: RegExpExecArray): { id: string; ref: IdentifierRef | null } {

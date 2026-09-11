@@ -2,6 +2,7 @@
 
 import {
     type ClipboardEvent,
+    type FocusEvent,
     type FocusEventHandler,
     type KeyboardEvent,
     useCallback,
@@ -163,7 +164,7 @@ export function useArbitraryValuesInput({
     );
 
     const handleBlur = useCallback(
-        (e: React.FocusEvent<HTMLInputElement>) => {
+        (e: FocusEvent<HTMLInputElement>) => {
             if (inputValue.trim()) {
                 handleParseAndAdd(inputValue);
                 setInputValue("");

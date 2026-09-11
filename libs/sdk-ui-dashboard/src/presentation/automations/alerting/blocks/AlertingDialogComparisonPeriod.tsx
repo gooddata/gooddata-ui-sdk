@@ -24,7 +24,7 @@ import { WhenAlertingDialogLoaded } from "./WhenAlertingDialogLoaded.js";
  * prop, so an override is honoured), and nothing while `useAlertingDialogContext().isLoading` is
  * true.
  *
- * @alpha
+ * @beta
  */
 export function AlertingDialogComparisonPeriod(
     overrides: Partial<IAlertingDialogComparisonPeriodProps>,

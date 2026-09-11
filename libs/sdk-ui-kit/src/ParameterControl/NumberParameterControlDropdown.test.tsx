@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ComponentProps } from "react";
+
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
@@ -9,10 +11,7 @@ import { NumberParameterControlDropdown } from "./NumberParameterControlDropdown
 
 const WrappedNumberParameterControlDropdown = withIntlForTest(NumberParameterControlDropdown);
 
-type CommitModeProps = Extract<
-    React.ComponentProps<typeof NumberParameterControlDropdown>,
-    { mode: "commit" }
->;
+type CommitModeProps = Extract<ComponentProps<typeof NumberParameterControlDropdown>, { mode: "commit" }>;
 
 const renderDropdown = (props: Partial<CommitModeProps> = {}) => {
     return render(

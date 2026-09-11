@@ -37,7 +37,7 @@ type StaticItemData = SeparatorItem | HeaderItem;
  * (only `useIntl`). The default dialog and {@link AlertingDialogComparisonOperator} render it with
  * {@link useAlertingDialogComparisonOperatorProps} inside {@link AutomationDialogFormField}.
  *
- * @alpha
+ * @beta
  */
 export function DefaultAlertingDialogComparisonOperator(
     props: IAlertingDialogComparisonOperatorProps,

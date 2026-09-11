@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ComponentProps } from "react";
+
 import { fireEvent, render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
@@ -25,7 +27,7 @@ const param = (id: string, title: string, tags: string[] = []): IParameterMetada
 
 const WrappedParameterPicker = withIntlForTest(ParameterPicker);
 
-const renderPicker = (props: Partial<React.ComponentProps<typeof ParameterPicker>> = {}) => {
+const renderPicker = (props: Partial<ComponentProps<typeof ParameterPicker>> = {}) => {
     return render(
         <WrappedParameterPicker
             parameters={[]}

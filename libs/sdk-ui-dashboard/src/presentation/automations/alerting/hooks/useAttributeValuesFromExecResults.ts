@@ -19,7 +19,7 @@ type IExecutionResultEnvelope = { isLoading?: boolean; executionResult?: IExecut
  * One distinct value of an attribute in the widget's execution result, as offered by the alert's
  * attribute-value picker.
  *
- * @alpha
+ * @beta
  */
 export type AttributeValue = {
     /**

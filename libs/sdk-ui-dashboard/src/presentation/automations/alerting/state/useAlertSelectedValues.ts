@@ -89,7 +89,7 @@ export function getAlertSelectedValues({
  * `useCallback` dependency arrays and `useAlertThreshold` arguments, so recomputing them every
  * render is what keeps those consumers behaving correctly.
  *
- * @alpha
+ * @beta
  */
 export function useAlertSelectedValues(): IAlertSelectedValues {
     const { editedAutomation } = useAlertDraft();

@@ -51,7 +51,7 @@ const DASHBOARD_ATTACHMENT_TYPES = new Set<string>(Object.keys(DASHBOARD_ATTACHM
 /**
  * Inputs of {@link useScheduledEmailDialogRecurrenceProps} that come from the dialog rather than its state.
  *
- * @alpha
+ * @beta
  */
 export interface IUseScheduledEmailDialogRecurrencePropsInput {
     /**
@@ -65,7 +65,7 @@ export interface IUseScheduledEmailDialogRecurrencePropsInput {
  *
  * Throws outside the scheduled-export dialog's state providers.
  *
- * @alpha
+ * @beta
  */
 export function useScheduledEmailDialogRecurrenceProps({
     onKeyDownSubmit,
@@ -98,7 +98,7 @@ export function useScheduledEmailDialogRecurrenceProps({
 /**
  * Inputs of {@link useScheduledEmailDialogSubjectProps} that come from the dialog rather than its state.
  *
- * @alpha
+ * @beta
  */
 export interface IUseScheduledEmailDialogSubjectPropsInput {
     /**
@@ -112,7 +112,7 @@ export interface IUseScheduledEmailDialogSubjectPropsInput {
  *
  * Throws outside the scheduled-export dialog's state providers.
  *
- * @alpha
+ * @beta
  */
 export function useScheduledEmailDialogSubjectProps({
     onKeyDownSubmit,
@@ -136,7 +136,7 @@ export function useScheduledEmailDialogSubjectProps({
  *
  * Throws outside the scheduled-export dialog's state providers.
  *
- * @alpha
+ * @beta
  */
 export function useScheduledEmailDialogMessageProps(): IScheduledEmailDialogMessageProps {
     const { editedAutomation } = useScheduledExportDraft();
@@ -153,7 +153,7 @@ export function useScheduledEmailDialogMessageProps(): IScheduledEmailDialogMess
  *
  * Throws outside the scheduled-export dialog's state providers.
  *
- * @alpha
+ * @beta
  */
 export function useScheduledEmailDialogWidgetAttachmentsProps(): IScheduledEmailDialogWidgetAttachmentsProps {
     const {
@@ -198,7 +198,7 @@ export function useScheduledEmailDialogWidgetAttachmentsProps(): IScheduledEmail
  *
  * Throws outside the scheduled-export dialog's state providers.
  *
- * @alpha
+ * @beta
  */
 export function useScheduledEmailDialogDashboardAttachmentsProps(): IScheduledEmailDialogDashboardAttachmentsProps {
     const {
@@ -230,7 +230,7 @@ export function useScheduledEmailDialogDashboardAttachmentsProps(): IScheduledEm
  *
  * Throws outside the scheduled-export dialog's state providers.
  *
- * @alpha
+ * @beta
  */
 export function useScheduledEmailDialogEvaluationModeProps(): IScheduledEmailDialogEvaluationModeProps {
     const { editedAutomation } = useScheduledExportDraft();

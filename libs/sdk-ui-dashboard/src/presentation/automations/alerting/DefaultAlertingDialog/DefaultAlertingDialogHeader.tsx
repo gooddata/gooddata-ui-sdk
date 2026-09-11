@@ -17,18 +17,18 @@ import { type IAlertingDialogHeaderProps } from "../types.js";
  * {@link AlertingDialogHeader} render it with {@link useAlertingDialogHeaderProps}; a `slots.Header`
  * slot receives it as `Default`.
  *
- * @alpha
+ * @beta
  */
 export const DefaultAlertingDialogHeader = forwardRef<HTMLInputElement, IAlertingDialogHeaderProps>(
     (props, ref) => {
         const {
             title,
-            onChange,
-            onCancel,
             placeholder,
             isSecondaryTitleVisible,
             secondaryTitle,
             secondaryTitleIcon,
+            onChange,
+            onCancel,
         } = props;
 
         const { formatMessage } = useIntl();

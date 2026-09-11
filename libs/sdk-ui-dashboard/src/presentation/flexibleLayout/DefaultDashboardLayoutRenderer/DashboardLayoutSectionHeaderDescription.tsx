@@ -11,6 +11,7 @@ import { useSectionDescriptionFilters } from "../../../_staging/sharedHooks/useR
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { useDashboardExecConfig } from "../../../model/react/useWidgetExecConfig.js";
 import { selectSeparators } from "../../../model/store/config/configSelectors.js";
+import { selectRestrictedRichTextReferences } from "../../../model/store/unavailableObjects/unavailableObjectsSelectors.js";
 import { type DescriptionExportData } from "../../export/types.js";
 
 /**
@@ -33,6 +34,7 @@ export function DashboardLayoutSectionHeaderDescription({
 }: IDashboardLayoutSectionHeaderDescriptionProps) {
     const { loading, filters } = useSectionDescriptionFilters();
     const separators = useDashboardSelector(selectSeparators);
+    const restrictedReferences = useDashboardSelector(selectRestrictedRichTextReferences);
     const execConfig = useDashboardExecConfig();
 
     const className = cx("gd-paragraph", "description", "s-fluid-layout-row-description");
@@ -51,6 +53,7 @@ export function DashboardLayoutSectionHeaderDescription({
                 filters={filters}
                 isFiltersLoading={loading}
                 separators={separators}
+                restrictedReferences={restrictedReferences}
                 LoadingComponent={LoadingComponent}
                 onLoadingChanged={onLoadingChanged}
                 onError={onError}

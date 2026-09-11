@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactElement } from "react";
+
 import { DefaultScheduledEmailDialogFilters } from "../DefaultScheduledEmailDialog/components/DefaultScheduledEmailDialogFilters.js";
 import { useScheduledEmailDialogFiltersProps } from "../state/useScheduledEmailDialogRegionProps.js";
 import { type IScheduledEmailDialogFiltersProps } from "../types.js";
@@ -18,9 +20,11 @@ import { WhenScheduledEmailDialogLoaded } from "./WhenScheduledEmailDialogLoaded
  * Filters tab only and hides it behind its stale-filters confirmation step; the block renders wherever
  * it is placed — a shell that wants either builds it from {@link useScheduledExportFilters}.
  *
- * @alpha
+ * @beta
  */
-export function ScheduledEmailDialogFilters(overrides: Partial<IScheduledEmailDialogFiltersProps>) {
+export function ScheduledEmailDialogFilters(
+    overrides: Partial<IScheduledEmailDialogFiltersProps>,
+): ReactElement {
     return (
         <WhenScheduledEmailDialogLoaded>
             <ConnectedScheduledEmailDialogFilters {...overrides} />

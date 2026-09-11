@@ -20,7 +20,7 @@ import { WhenAlertingDialogLoaded } from "./WhenAlertingDialogLoaded.js";
  * hook's value for that prop wholesale. Renders nothing while
  * `useAlertingDialogContext().isLoading` is true.
  *
- * @alpha
+ * @beta
  */
 export function AlertingDialogTriggerMode(overrides: Partial<IAlertingDialogTriggerModeProps>): ReactElement {
     return (

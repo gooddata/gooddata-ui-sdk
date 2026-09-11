@@ -19,7 +19,7 @@ export const AlertActionsContextProvider = AlertActionsContext.Provider;
  * dialog first loads. An automations refresh flips `isLoading` back without unmounting the model,
  * so the draft survives and this accessor keeps serving through it.
  *
- * @alpha
+ * @beta
  */
 export function useAlertActions(): IAlertActionsContextValue {
     return useContext(AlertActionsContext) ?? missingAlertStateProvider("useAlertActions");

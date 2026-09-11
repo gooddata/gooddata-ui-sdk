@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactElement } from "react";
+
 import { FormattedMessage, useIntl } from "react-intl";
 
 import {
@@ -23,14 +25,14 @@ import { type IScheduledEmailDialogTimezoneProps } from "../../types.js";
  * and {@link ScheduledEmailDialogTimezone} render it with {@link useScheduledEmailDialogTimezoneProps};
  * a `slots.Timezone` slot receives it as `Default`.
  *
- * @alpha
+ * @beta
  */
 export function DefaultScheduledEmailDialogTimezone({
     isWidget,
     selection,
     defaultResolvedTimezone,
     onTimezoneChange,
-}: IScheduledEmailDialogTimezoneProps) {
+}: IScheduledEmailDialogTimezoneProps): ReactElement {
     const intl = useIntl();
 
     const selectId = useIdPrefixed("schedule-timezone");

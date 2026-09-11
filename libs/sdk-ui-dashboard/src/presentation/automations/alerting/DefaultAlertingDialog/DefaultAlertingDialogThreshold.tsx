@@ -14,7 +14,7 @@ import { type IAlertingDialogThresholdProps } from "../types.js";
  * reads no dialog context (only `useIntl`). The default dialog and {@link AlertingDialogThreshold}
  * render it with {@link useAlertingDialogThresholdProps} inside {@link AutomationDialogFormField}.
  *
- * @alpha
+ * @beta
  */
 export function DefaultAlertingDialogThreshold({
     id,

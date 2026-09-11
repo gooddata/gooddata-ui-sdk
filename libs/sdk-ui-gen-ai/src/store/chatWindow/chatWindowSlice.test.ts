@@ -86,7 +86,7 @@ describe.each([
     ["startNewConversationAction", startNewConversationAction],
     ["clearThreadAction", clearThreadAction],
 ])("%s", (_name, action) => {
-    it("should drop the explicitly pinned context and keep the ambient one", () => {
+    it("should reset to the ambient context while preserving selected references", () => {
         const state = stateWith(
             contextSetupOn,
             setAmbientUserContextAction({ userContext: ambientContext }),
@@ -94,7 +94,12 @@ describe.each([
             action(),
         );
 
-        expect(state.context.active).toEqual(ambientContext);
+        expect(state.context.active?.view?.dashboard?.ref).toEqual(
+            idRef("ambient-dashboard", "analyticalDashboard"),
+        );
+        expect(state.context.active?.referencedObjects?.[0]?.objects?.[0]?.ref).toEqual(
+            idRef("net-sales-over-time", "insight"),
+        );
         expect(state.context.ambient).toEqual(ambientContext);
     });
 
@@ -126,6 +131,30 @@ describe.each([
         expect(state.context.active).toEqual(ambientContext);
         expect(state.context.active).not.toBe(state.context.ambient);
         expect(state.context.active?.view).not.toBe(state.context.ambient?.view);
+    });
+
+    it("should preserve ambient-selected visualization when context is reset", () => {
+        const dashRef = idRef("ambient-dashboard", "analyticalDashboard");
+        const visRef = idRef("v1", "insight");
+        const userContext: IGenAIUserContext = {
+            referencedObjects: [
+                {
+                    context: { ref: dashRef, title: "2. Sales", type: "DASHBOARD" },
+                    objects: [{ ref: visRef, title: "V1", type: "WIDGET" }],
+                },
+            ],
+        };
+
+        const state = stateWith(
+            contextSetupOn,
+            setAmbientUserContextAction({ userContext: ambientContext }),
+            setUserContextAction({ userContext, replaceUserContext: true }),
+            action(),
+        );
+
+        expect(state.context.ambientSelected?.visualization?.id).toBe("v1");
+        expect(state.context.active?.view?.dashboard?.ref).toEqual(dashRef);
+        expect(state.context.active?.referencedObjects?.[0]?.objects?.[0]?.ref).toEqual(visRef);
     });
 });
 

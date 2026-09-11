@@ -23,6 +23,7 @@ import { useDashboardDispatch, useDashboardSelector } from "../../../model/react
 import { useDashboardExecConfig } from "../../../model/react/useWidgetExecConfig.js";
 import { useWidgetSelection } from "../../../model/react/useWidgetSelection.js";
 import { selectIsWhiteLabeled, selectSeparators } from "../../../model/store/config/configSelectors.js";
+import { selectRestrictedRichTextReferences } from "../../../model/store/unavailableObjects/unavailableObjectsSelectors.js";
 import { DASHBOARD_OVERLAYS_FILTER_Z_INDEX } from "../../../presentation/constants/zIndex.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 
@@ -38,6 +39,7 @@ export function EditModeDashboardRichText({ widget, clientWidth, clientHeight }:
     const { isSelected, hasConfigPanelOpen, closeConfigPanel } = useWidgetSelection(widgetRef(widget));
     const previousIsSelected = usePrevious(isSelected);
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
+    const restrictedReferences = useDashboardSelector(selectRestrictedRichTextReferences);
     const intl = useIntl();
 
     const execConfig = useDashboardExecConfig();
@@ -104,6 +106,7 @@ export function EditModeDashboardRichText({ widget, clientWidth, clientHeight }:
                 referencesEnabled
                 filters={filters}
                 separators={separators}
+                restrictedReferences={restrictedReferences}
                 className="gd-rich-text-widget"
                 value={richText}
                 onChange={setRichText}

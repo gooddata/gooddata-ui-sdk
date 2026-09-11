@@ -27,6 +27,7 @@ import {
     type CustomDashboardFilterGroupComponent,
 } from "../filterBar/attributeFilter/types.js";
 import { type CustomDashboardDateFilterComponent } from "../filterBar/dateFilter/types.js";
+import { type IRestrictedFiltersPlaceholderProps } from "../filterBar/filterBar/RestrictedFiltersPlaceholder.js";
 import { type CustomFilterBarComponent, type IFilterBarProps } from "../filterBar/filterBar/types.js";
 import { type CustomDashboardMeasureValueFilterComponent } from "../filterBar/measureValueFilter/types.js";
 import { type CustomTitleComponent, type ITitleProps } from "../topBar/title/types.js";
@@ -206,6 +207,29 @@ export type RestrictedPlaceholderComponentProvider = (
  */
 export type OptionalRestrictedPlaceholderComponentProvider =
     OptionalProvider<RestrictedPlaceholderComponentProvider>;
+
+/**
+ * Component reporting the dashboard filters the current user is not allowed to see.
+ *
+ * @alpha
+ */
+export type CustomRestrictedFiltersPlaceholderComponent = ComponentType<IRestrictedFiltersPlaceholderProps>;
+
+/**
+ * Provides the component reporting filters left out of the dashboard.
+ *
+ * @remarks
+ * The filters are not passed: only their number reaches the component.
+ *
+ * @alpha
+ */
+export type RestrictedFiltersPlaceholderComponentProvider = () => CustomRestrictedFiltersPlaceholderComponent;
+
+/**
+ * @alpha
+ */
+export type OptionalRestrictedFiltersPlaceholderComponentProvider =
+    OptionalProvider<RestrictedFiltersPlaceholderComponentProvider>;
 
 /**
  * @alpha

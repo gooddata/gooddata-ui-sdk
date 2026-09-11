@@ -725,6 +725,7 @@ export interface IInsightPickerProps {
     enableSemanticSearch?: boolean;
     excludeTags?: string[];
     includeTags?: string[];
+    isAuthorFilterModified: boolean;
     // (undocumented)
     locale?: ILocale;
     // (undocumented)
@@ -1379,6 +1380,7 @@ export function useInsightPickerState(author?: string): {
     onSortChange: (newSortBy: InsightPickerSortBy, newDirection: InsightPickerSortDirection) => void;
     authorFilter: string[];
     onAuthorFilterChange: (nextAuthorFilter: string[]) => void;
+    isAuthorFilterModified: boolean;
     tagFilter: string[];
     onTagFilterChange: Dispatch<SetStateAction<string[]>>;
 };

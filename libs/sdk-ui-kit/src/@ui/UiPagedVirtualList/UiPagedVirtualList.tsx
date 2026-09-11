@@ -3,6 +3,7 @@
 import {
     type CSSProperties,
     type ComponentType,
+    type FocusEvent,
     type KeyboardEvent,
     type ReactNode,
     type Ref,
@@ -77,7 +78,7 @@ export interface IUiPagedVirtualListProps<T> {
     getIsItemSelected?: (item: T) => boolean;
     itemHeightGetter?: (index: number) => number;
     onScroll?: () => void;
-    onFocus?: (e: React.FocusEvent) => void;
+    onFocus?: (e: FocusEvent) => void;
     handleFocusIndexChange?: boolean; // this is internal flag that navigate focused item and trigger pagination default is true
 }
 

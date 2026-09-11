@@ -32,7 +32,7 @@ import type { IAutomationFiltersTab } from "../../../model/store/filtering/types
  * Date filter configuration provided by the dashboard connector so that AutomationDateFilter
  * does not need to read dashboard selectors directly.
  *
- * @alpha
+ * @beta
  */
 export interface IAutomationsDateFilterConfig {
     availableGranularities: DateFilterGranularity[];
@@ -45,7 +45,7 @@ export interface IAutomationsDateFilterConfig {
  * Workspace and dashboard parameter data provided by the dashboard connector so that the shared
  * automationFilters hooks do not need to read dashboard selectors directly.
  *
- * @alpha
+ * @beta
  */
 export interface IAutomationsParameters {
     /** Whether the parameters feature is enabled; from selectEnableParameters. */
@@ -67,7 +67,7 @@ export interface IAutomationsParameters {
  * Main context shared across all automation dialogs.
  * Only fields actively consumed by migrated leaves are listed here — add fields as each leaf migrates.
  *
- * @alpha
+ * @beta
  */
 export interface IAutomationsContextValue {
     locale: ILocale;
@@ -189,7 +189,7 @@ const AutomationsContext = createContext<IAutomationsContextValue | undefined>(u
  * decorated value read from `useAutomationsContext()`; it is not a way to run the dialogs outside
  * a dashboard.
  *
- * @alpha
+ * @beta
  */
 export const AutomationsContextProvider = AutomationsContext.Provider;
 
@@ -200,7 +200,7 @@ export const AutomationsContextProvider = AutomationsContext.Provider;
  * read the workspace catalog, filter configuration, locale, formatting, and other cross-dialog data from
  * here.
  *
- * @alpha
+ * @beta
  */
 export function useAutomationsContext(): IAutomationsContextValue {
     const ctx = useContext(AutomationsContext);

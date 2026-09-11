@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactElement } from "react";
+
 import { DefaultAutomationDialogActionBar } from "../../shared/slots/DefaultAutomationDialogActionBar.js";
 import { type IAutomationDialogActionBarProps } from "../../shared/slots/types.js";
 import {
@@ -15,7 +17,7 @@ import { WhenScheduledEmailDialogLoaded } from "./WhenScheduledEmailDialogLoaded
  * {@link useSaveScheduledEmailToBackend}, the dialog's `onCancel`, `onDelete` for edit mode) plus any
  * {@link IAutomationDialogActionBarProps} member to override.
  *
- * @alpha
+ * @beta
  */
 export type IScheduledEmailDialogActionBarBlockProps = IUseScheduledEmailDialogActionBarPropsInput &
     Partial<IAutomationDialogActionBarProps>;
@@ -41,9 +43,9 @@ export type IScheduledEmailDialogActionBarBlockProps = IUseScheduledEmailDialogA
  * />;
  * ```
  *
- * @alpha
+ * @beta
  */
-export function ScheduledEmailDialogActionBar(props: IScheduledEmailDialogActionBarBlockProps) {
+export function ScheduledEmailDialogActionBar(props: IScheduledEmailDialogActionBarBlockProps): ReactElement {
     return (
         <WhenScheduledEmailDialogLoaded>
             <ConnectedScheduledEmailDialogActionBar {...props} />

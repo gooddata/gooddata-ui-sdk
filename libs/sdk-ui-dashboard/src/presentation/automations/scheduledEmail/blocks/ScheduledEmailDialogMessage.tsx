@@ -18,7 +18,7 @@ import { WhenScheduledEmailDialogLoaded } from "./WhenScheduledEmailDialogLoaded
  * and for an in-platform notification channel (which has no e-mail message), the same visibility
  * the default dialog gives the field.
  *
- * @alpha
+ * @beta
  */
 export function ScheduledEmailDialogMessage(props: Partial<IScheduledEmailDialogMessageProps>): ReactElement {
     return (

@@ -11,7 +11,7 @@ import { type IScheduledEmailDialogRecurrenceProps } from "../../types.js";
  * Props-driven — reads no context. The default dialog and {@link ScheduledEmailDialogRecurrence}
  * render it with {@link useScheduledEmailDialogRecurrenceProps}.
  *
- * @alpha
+ * @beta
  */
 export function DefaultScheduledEmailDialogRecurrence(
     props: IScheduledEmailDialogRecurrenceProps,

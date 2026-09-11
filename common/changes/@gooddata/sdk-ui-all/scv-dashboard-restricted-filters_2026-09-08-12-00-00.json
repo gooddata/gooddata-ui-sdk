@@ -1,0 +1,20 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-dashboard: Preserve restricted dashboard filters for partial rendering, show them as generic chips, and exclude them from executions.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        },
+        {
+            "comment": "sdk-ui-dashboard: Add the getDashboardLoadReferenceTypes helper so hosts that preload the dashboard request the reference types partial rendering needs.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        },
+        {
+            "comment": "sdk-ui-dashboard: Let consumers replace the filter bar notice about filters that were not applied, via filterBar().withRestrictedPlaceholderProvider and the RestrictedFiltersPlaceholderComponentProvider prop.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}
