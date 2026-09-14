@@ -68,7 +68,7 @@ export function newDashboardEngine(): IDashboardEngine {
             const customizationBuilder = new DashboardCustomizationBuilder();
             const eventRegistration = new DefaultDashboardEventHandling();
 
-            // eslint-disable-next-line no-console
+            // oxlint-disable-next-line eslint-js/no-console
             console.debug(
                 `DashboardEngine ${this.version} initializing with plugins: ${plugins
                     .map(pluginDebugStr)

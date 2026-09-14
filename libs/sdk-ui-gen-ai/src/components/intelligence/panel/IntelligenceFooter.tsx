@@ -27,7 +27,6 @@ export function IntelligenceFooter({ traceId }: IIntelligenceFooterProps) {
             <UiTooltip
                 triggerBy={["hover", "focus"]}
                 arrowPlacement="top"
-                width={260}
                 anchor={
                     <span className={e("footer__hint")} tabIndex={0}>
                         {label}

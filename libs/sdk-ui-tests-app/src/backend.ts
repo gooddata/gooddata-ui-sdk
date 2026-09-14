@@ -6,7 +6,7 @@ import tigerFactory, { TigerTokenAuthProvider } from "@gooddata/sdk-backend-tige
 
 export function createBackend(): IAnalyticalBackend {
     // TIGER_API_TOKEN is defined globally by Vite's define configuration
-    // eslint-disable-next-line no-console
+    // oxlint-disable-next-line eslint-js/no-console
     console.log("createBackend", TIGER_API_TOKEN);
 
     return withCaching(

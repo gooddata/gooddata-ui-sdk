@@ -1369,6 +1369,9 @@ export function useCfDateFilterOptions(backend: IAnalyticalBackend | undefined, 
 enabled: boolean): IDateFilterOptionsByType | undefined;
 
 // @internal
+export function useCopyObjectPermissions(): (from: IObjectPermissionsObject, to: IObjectPermissionsObject) => Promise<boolean>;
+
+// @internal
 export function useInsightPagedList(input: IUsePagedDropdownConfig): IUsePagedDropdownResult;
 
 // @internal

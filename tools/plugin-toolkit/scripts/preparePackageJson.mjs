@@ -1,6 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
-/* eslint-disable no-console */
+// oxlint-disable eslint-js/no-console
+
 import fs from "fs";
 import * as path from "path";
 import * as process from "process";
@@ -95,9 +96,7 @@ function removeTs(packageJson) {
     delete packageJson.typings;
 }
 
-if (process.argv.length !== 4) {
-    process.exit(1);
-} else {
+if (process.argv.length === 4) {
     const action = process.argv[2];
     const dir = process.argv[3];
     const packageJsonFile = path.resolve(dir, "package.json");
@@ -118,4 +117,6 @@ if (process.argv.length !== 4) {
     }
 
     fs.writeFileSync(packageJsonFile, JSON.stringify(packageJson, null, 4), { encoding: "utf-8" });
+} else {
+    process.exit(1);
 }

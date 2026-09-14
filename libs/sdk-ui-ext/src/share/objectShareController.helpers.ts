@@ -2,6 +2,7 @@
 
 import {
     type AccessGranteeDetail,
+    type AccessGranularPermission,
     type IAvailableAccessGrantee,
     type IGranularAccessGrantee,
     type IObjectAccessList,
@@ -624,6 +625,42 @@ export function draftToPermissions(draft: IObjectShareDraft): IGranularAccessGra
         permissions.push(granularGranteeFor({ allWorkspaceUsers: true }, ruleEdit.level));
     } else if (ruleEdit?.generalAccess === "RESTRICTED") {
         permissions.push(granularGranteeFor({ allWorkspaceUsers: true }, "none"));
+    }
+    return permissions;
+}
+
+/**
+ * The permissions to POST to reproduce an object's own access elsewhere. Inherited grants are
+ * left out; rule grants are merged, since a hierarchy lists one per granting workspace.
+ */
+export function accessListToPermissions(list: IObjectAccessList): IGranularAccessGrantee[] {
+    const permissions: IGranularAccessGrantee[] = [];
+    const rulePermissions: AccessGranularPermission[] = [];
+    for (const grant of list.grants) {
+        if (isGranularUserAccess(grant) && grant.permissions.length > 0) {
+            permissions.push({
+                type: "granularUser",
+                granteeRef: grant.user.ref,
+                permissions: grant.permissions,
+                inheritedPermissions: [],
+            });
+        } else if (isGranularUserGroupAccess(grant) && grant.permissions.length > 0) {
+            permissions.push({
+                type: "granularGroup",
+                granteeRef: grant.userGroup.ref,
+                permissions: grant.permissions,
+                inheritedPermissions: [],
+            });
+        } else if (grant.type === "allWorkspaceUsers") {
+            rulePermissions.push(...grant.permissions);
+        }
+    }
+    if (rulePermissions.length > 0) {
+        permissions.push({
+            type: "allWorkspaceUsers",
+            permissions: Array.from(new Set(rulePermissions)),
+            inheritedPermissions: [],
+        });
     }
     return permissions;
 }

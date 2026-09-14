@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-all: Anyone who can edit a dashboard can now remove a restricted visualization widget from it, which until now had no menu at all; neither the menu nor the delete confirmation names such a widget.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

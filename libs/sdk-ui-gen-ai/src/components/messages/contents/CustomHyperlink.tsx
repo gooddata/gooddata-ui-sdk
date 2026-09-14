@@ -8,6 +8,7 @@ import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 
 import { settingsSelector } from "../../../store/chatWindow/chatWindowSelectors.js";
 import { type LinkHandlerEvent, useConfig } from "../../ConfigContext.js";
+import { removeMarkdown } from "../../utils/markdownUtils.js";
 
 export type CustomHyperlinkOwnProps = {
     href: string;
@@ -30,13 +31,20 @@ export function CustomHyperlinkComponent({ href, text, settings }: CustomHyperli
     const enableShellApplication_dashboards = Boolean(settings?.enableShellApplication_dashboards);
     const canManageMetrics = canManage || canAnalyze;
     const canManageVisualisations = canManage || canAnalyze;
+    const plainText = removeMarkdown(text);
 
     const parsedRef = useMemo(() => {
         if (!href) {
             return null;
         }
 
-        const url = new URL(href);
+        let url;
+        try {
+            const decodedHref = decodeURIComponent(href);
+            url = new URL(decodedHref);
+        } catch {
+            return null;
+        }
 
         if (url.protocol !== "gooddata:") {
             return null;
@@ -71,7 +79,7 @@ export function CustomHyperlinkComponent({ href, text, settings }: CustomHyperli
     }, [href, enableShellApplication_analyticalDesigner, enableShellApplication_dashboards]);
 
     if (!parsedRef) {
-        return text;
+        return plainText;
     }
 
     const handleLinkClick = (e: MouseEvent) => {
@@ -93,25 +101,25 @@ export function CustomHyperlinkComponent({ href, text, settings }: CustomHyperli
     // If the link is for a metric and the user cannot manage metrics,
     // we do not render the link
     if (parsedRef.type === "metric" && !canManageMetrics) {
-        return text;
+        return plainText;
     }
     // If the link is for a visualization and the user cannot manage visualizations,
     // we do not render the link
     if (parsedRef.type === "visualization" && !canManageVisualisations) {
-        return text;
+        return plainText;
     }
 
     if (allowNativeLinks) {
         return (
             <a className="gd-hyperlink" href={parsedRef.itemUrl} onClick={handleLinkClick}>
-                <span className="gd-hyperlink-text">{text}</span>
+                <span className="gd-hyperlink-text">{plainText}</span>
             </a>
         );
     }
 
     return (
         <span className="gd-hyperlink" onClick={handleLinkClick}>
-            <span className="gd-hyperlink-text">{text}</span>
+            <span className="gd-hyperlink-text">{plainText}</span>
         </span>
     );
 }

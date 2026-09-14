@@ -27,7 +27,22 @@ import {
     type OnExportReady,
     type OnFiredDrillEvent,
 } from "@gooddata/sdk-ui";
-import { BarChart, ColumnChart, Headline, LineChart, PieChart, ScatterPlot } from "@gooddata/sdk-ui-charts";
+import {
+    AreaChart,
+    BarChart,
+    ColumnChart,
+    DonutChart,
+    FunnelChart,
+    Headline,
+    Heatmap,
+    type ITotalConfig,
+    LineChart,
+    PieChart,
+    PyramidChart,
+    RadarChart,
+    ScatterPlot,
+    WaterfallChart,
+} from "@gooddata/sdk-ui-charts";
 import {
     type IDashboardKeyDriverCombinationItem,
     getKdaKeyDriverCombinations,
@@ -71,6 +86,13 @@ const legendTooltipOptions = {
     legend: {
         responsive: "autoPositionWithPopup" as const,
     },
+};
+
+const SLICED_CHARTS: Record<string, typeof PieChart> = {
+    "local:pie": PieChart,
+    "local:donut": DonutChart,
+    "local:pyramid": PyramidChart,
+    "local:funnel": FunnelChart,
 };
 
 export type ConversationVisualisationProps = {
@@ -233,6 +255,24 @@ export function ConversationVisualisation({
         }
 
         switch (visualization.insight.visualizationUrl) {
+            case "local:area":
+                return renderAreaChart(
+                    intl.locale,
+                    visualization,
+                    bucketsData,
+                    filters,
+                    sorts,
+                    colorPalette,
+                    handleSdkError,
+                    handleSuccess,
+                    handlerDrill,
+                    {
+                        drillableItems,
+                        enableAccessibleChartTooltip,
+                        execConfig,
+                        separators,
+                    },
+                );
             case "local:bar":
                 return renderBarChart(
                     intl.locale,
@@ -288,7 +328,11 @@ export function ConversationVisualisation({
                     },
                 );
             case "local:pie":
-                return renderPieChart(
+            case "local:donut":
+            case "local:pyramid":
+            case "local:funnel":
+                return renderSlicedChart(
+                    SLICED_CHARTS[visualization.insight.visualizationUrl],
                     intl.locale,
                     bucketsData,
                     filters,
@@ -342,6 +386,58 @@ export function ConversationVisualisation({
                         separators,
                     },
                 );
+            case "local:radar":
+                return renderRadarChart(
+                    intl.locale,
+                    bucketsData,
+                    filters,
+                    sorts,
+                    colorPalette,
+                    handleSdkError,
+                    handleSuccess,
+                    handlerDrill,
+                    {
+                        drillableItems,
+                        enableAccessibleChartTooltip,
+                        execConfig,
+                        separators,
+                    },
+                );
+            case "local:heatmap":
+                return renderHeatmap(
+                    intl.locale,
+                    bucketsData,
+                    filters,
+                    sorts,
+                    colorPalette,
+                    handleSdkError,
+                    handleSuccess,
+                    handlerDrill,
+                    {
+                        drillableItems,
+                        enableAccessibleChartTooltip,
+                        execConfig,
+                        separators,
+                    },
+                );
+            case "local:waterfall":
+                return renderWaterfallChart(
+                    intl.locale,
+                    visualization,
+                    bucketsData,
+                    filters,
+                    sorts,
+                    colorPalette,
+                    handleSdkError,
+                    handleSuccess,
+                    handlerDrill,
+                    {
+                        drillableItems,
+                        enableAccessibleChartTooltip,
+                        execConfig,
+                        separators,
+                    },
+                );
             case "local:headline":
                 return renderHeadline(
                     intl.locale,
@@ -384,6 +480,53 @@ function useKpiTheme() {
         [theme],
     );
 }
+
+const renderAreaChart = (
+    locale: string,
+    visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>,
+    buckets: ReturnType<typeof useBucketData>,
+    filters: IFilter[],
+    sortBy: ISortItem[],
+    colorPalette: IColorPalette | undefined,
+    onError: OnError,
+    onSuccess: OnExportReady,
+    onDrill: OnFiredDrillEvent,
+    props: {
+        drillableItems?: ExplicitDrill[];
+        enableAccessibleChartTooltip?: boolean;
+        execConfig?: IExecutionConfig;
+        separators?: ISeparators;
+    },
+) => {
+    const { metrics, view, stack } = buckets;
+    const controls = visualization.insight.properties["controls"];
+
+    return (
+        <AreaChart
+            locale={locale}
+            height={VIS_HEIGHT}
+            measures={metrics}
+            viewBy={view}
+            stackBy={stack[0]}
+            filters={filters}
+            sortBy={sortBy}
+            config={{
+                ...visualizationTooltipOptions,
+                ...legendTooltipOptions,
+                colorPalette,
+                separators: props.separators,
+                enableAccessibleTooltip: props.enableAccessibleChartTooltip,
+                stackMeasures: controls?.["stackMeasures"],
+                stackMeasuresToPercent: controls?.["stackMeasuresToPercent"],
+            }}
+            drillableItems={props.drillableItems}
+            onDrill={onDrill}
+            onError={onError}
+            onExportReady={onSuccess}
+            execConfig={props.execConfig}
+        />
+    );
+};
 
 const renderBarChart = (
     locale: string,
@@ -538,7 +681,8 @@ const renderLineChart = (
     );
 };
 
-const renderPieChart = (
+const renderSlicedChart = (
+    Chart: typeof PieChart,
     locale: string,
     buckets: ReturnType<typeof useBucketData>,
     filters: IFilter[],
@@ -558,7 +702,7 @@ const renderPieChart = (
     const { metrics, view } = buckets;
 
     return (
-        <PieChart
+        <Chart
             locale={locale}
             height={VIS_HEIGHT}
             measures={metrics}
@@ -567,6 +711,7 @@ const renderPieChart = (
             sortBy={sortBy}
             config={{
                 ...visualizationTooltipOptions,
+                ...legendTooltipOptions,
                 colorPalette,
                 separators: props.separators,
                 enableAccessibleTooltip: props.enableAccessibleChartTooltip,
@@ -621,6 +766,137 @@ const renderScatterPlot = (
                 separators: props.separators,
                 enableAccessibleTooltip: props.enableAccessibleChartTooltip,
                 ...(clusteringConfig && clustering ? { clustering } : {}),
+            }}
+            drillableItems={props.drillableItems}
+            onDrill={onDrill}
+            onError={onError}
+            onExportReady={onSuccess}
+            execConfig={props.execConfig}
+        />
+    );
+};
+
+const renderRadarChart = (
+    locale: string,
+    buckets: ReturnType<typeof useBucketData>,
+    filters: IFilter[],
+    sortBy: ISortItem[],
+    colorPalette: IColorPalette | undefined,
+    onError: OnError,
+    onSuccess: OnExportReady,
+    onDrill: OnFiredDrillEvent,
+    props: {
+        drillableItems?: ExplicitDrill[];
+        enableAccessibleChartTooltip?: boolean;
+        execConfig?: IExecutionConfig;
+        separators?: ISeparators;
+    },
+) => {
+    const { metrics, trend, segment } = buckets;
+
+    return (
+        <RadarChart
+            locale={locale}
+            height={VIS_HEIGHT}
+            measures={metrics}
+            trendBy={trend[0]}
+            segmentBy={segment[0]}
+            filters={filters}
+            sortBy={sortBy}
+            config={{
+                ...visualizationTooltipOptions,
+                ...legendTooltipOptions,
+                colorPalette,
+                separators: props.separators,
+                enableAccessibleTooltip: props.enableAccessibleChartTooltip,
+            }}
+            drillableItems={props.drillableItems}
+            onDrill={onDrill}
+            onError={onError}
+            onExportReady={onSuccess}
+            execConfig={props.execConfig}
+        />
+    );
+};
+
+const renderHeatmap = (
+    locale: string,
+    buckets: ReturnType<typeof useBucketData>,
+    filters: IFilter[],
+    sortBy: ISortItem[],
+    colorPalette: IColorPalette | undefined,
+    onError: OnError,
+    onSuccess: OnExportReady,
+    onDrill: OnFiredDrillEvent,
+    props: {
+        drillableItems?: ExplicitDrill[];
+        enableAccessibleChartTooltip?: boolean;
+        execConfig?: IExecutionConfig;
+        separators?: ISeparators;
+    },
+) => {
+    const { metrics, view, stack } = buckets;
+
+    return (
+        <Heatmap
+            locale={locale}
+            height={VIS_HEIGHT}
+            measure={metrics[0]}
+            rows={view[0]}
+            columns={stack[0]}
+            filters={filters}
+            sortBy={sortBy.length ? sortBy : undefined}
+            config={{
+                ...visualizationTooltipOptions,
+                ...legendTooltipOptions,
+                colorPalette,
+                separators: props.separators,
+                enableAccessibleTooltip: props.enableAccessibleChartTooltip,
+            }}
+            drillableItems={props.drillableItems}
+            onDrill={onDrill}
+            onError={onError}
+            onExportReady={onSuccess}
+            execConfig={props.execConfig}
+        />
+    );
+};
+
+const renderWaterfallChart = (
+    locale: string,
+    visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>,
+    buckets: ReturnType<typeof useBucketData>,
+    filters: IFilter[],
+    sortBy: ISortItem[],
+    colorPalette: IColorPalette | undefined,
+    onError: OnError,
+    onSuccess: OnExportReady,
+    onDrill: OnFiredDrillEvent,
+    props: {
+        drillableItems?: ExplicitDrill[];
+        enableAccessibleChartTooltip?: boolean;
+        execConfig?: IExecutionConfig;
+        separators?: ISeparators;
+    },
+) => {
+    const { metrics, view } = buckets;
+    const total = visualization.insight.properties["controls"]?.["total"] as ITotalConfig | undefined;
+
+    return (
+        <WaterfallChart
+            locale={locale}
+            height={VIS_HEIGHT}
+            measures={metrics}
+            viewBy={view[0]}
+            filters={filters}
+            sortBy={sortBy}
+            config={{
+                ...visualizationTooltipOptions,
+                ...legendTooltipOptions,
+                colorPalette,
+                separators: props.separators,
+                enableAccessibleTooltip: props.enableAccessibleChartTooltip,
+                ...(total ? { total } : {}),
             }}
             drillableItems={props.drillableItems}
             onDrill={onDrill}

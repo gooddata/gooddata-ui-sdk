@@ -100,7 +100,6 @@ function getProductionAliases() {
 }
 
 // https://vitejs.dev/config/
-// eslint-disable-next-line no-restricted-exports
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, path.resolve(__dirname), "");
     // Fallback to process.env if not found in .env file
@@ -121,7 +120,7 @@ export default defineConfig(({ mode }) => {
     }
 
     if (backendUrl || workspace) {
-        // eslint-disable-next-line no-console
+        // oxlint-disable-next-line eslint-js/no-console
         console.log("Backend URI:", backendUrl, ", ", "Workspace to use:", workspace);
     }
 

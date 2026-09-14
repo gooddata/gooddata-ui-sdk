@@ -64,7 +64,7 @@ const compactParam = (p: unknown): unknown => {
 const logCallback = (name: string, ...params: unknown[]) => {
     const compact = params.map(compactParam);
     const paramsStr = compact.length > 0 ? ` ${JSON.stringify(compact)}` : "";
-    // eslint-disable-next-line no-console
+    // oxlint-disable-next-line eslint-js/no-console
     console.log(`${name}${paramsStr}`);
     action(name)(...params);
 };

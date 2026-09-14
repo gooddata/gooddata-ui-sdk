@@ -60,5 +60,5 @@ if (failed) {
 }
 
 const fileNames = GENERATED_FILES.map((path) => path.split("/").pop()).join(" and ");
-// eslint-disable-next-line no-console -- CLI script with intentional progress logging
+// oxlint-disable-next-line eslint-js/no-console -- CLI script with intentional progress logging
 console.log(`Python types check passed — ${fileNames} are in sync with metadata.json.`);

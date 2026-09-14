@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-/* oxlint-disable no-barrel-files/no-barrel-files */
+// oxlint-disable no-barrel-files/no-barrel-files
 
 /**
  * This package provides the Analytical Backend implementation for GoodData Cloud and GoodData.CN.
@@ -145,5 +145,5 @@ export { convertInsightToVisualizationContent } from "./convertors/toBackend/Ins
 /**
  * @deprecated This will be removed in the next major release, please use the named export "tigerFactory" instead
  */
-// eslint-disable-next-line no-restricted-exports
+// oxlint-disable-next-line eslint-js/no-restricted-exports
 export default tigerFactory;

@@ -138,5 +138,13 @@ function ReadyRoot({ ctx, callbacks }: { ctx: IPlatformContext; callbacks?: IRoo
         );
     }
 
-    return <HostUiContainer ctx={ctx} apps={apps} pathname={pathname} routerNavigate={routerNavigate} />;
+    return (
+        <HostUiContainer
+            ctx={ctx}
+            apps={apps}
+            pathname={pathname}
+            routerNavigate={routerNavigate}
+            onError={callbacks?.onError}
+        />
+    );
 }

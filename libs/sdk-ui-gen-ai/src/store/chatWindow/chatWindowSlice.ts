@@ -97,6 +97,10 @@ type ChatWindowSliceState = {
      */
     context: StoreContext;
     /**
+     * Current unsent input value.
+     */
+    inputValue: string;
+    /**
      * Whether the chat runs against the caller's preview agent. In preview mode the assistant
      * is pinned to that single agent, so agent switching is not applicable.
      */
@@ -143,6 +147,7 @@ const initialState: ChatWindowSliceState = {
         ambient: undefined,
         active: undefined,
     },
+    inputValue: "",
     isPreview: undefined,
     allowInteractionIntelligence: undefined,
 };
@@ -221,6 +226,9 @@ const chatWindowSlice = createSlice({
         },
         setCatalogItemsActions: (state, { payload }: PayloadAction<CatalogItem[] | undefined>) => {
             state.catalogItems = castDraft(payload);
+        },
+        setInputValueAction: (state, { payload: { value } }: PayloadAction<{ value: string }>) => {
+            state.inputValue = value;
         },
         initContextObjectsAction: (state) => state,
         loadContextObjectsNextPageAction: (state, _action: PayloadAction<{ kind: ContextObjectKind }>) =>
@@ -368,8 +376,14 @@ const chatWindowSlice = createSlice({
         };
 
         builder
-            .addCase(startNewConversationAction, resetContextToAmbient)
-            .addCase(clearThreadAction, resetContextToAmbient);
+            .addCase(startNewConversationAction, (state) => {
+                resetContextToAmbient(state);
+                state.inputValue = "";
+            })
+            .addCase(clearThreadAction, (state) => {
+                resetContextToAmbient(state);
+                state.inputValue = "";
+            });
     },
 });
 
@@ -385,6 +399,7 @@ export const {
     setObjectTypesAction,
     setTagsAction,
     setCatalogItemsActions,
+    setInputValueAction,
     initContextObjectsAction,
     loadContextObjectsNextPageAction,
     setContextObjectsAction,

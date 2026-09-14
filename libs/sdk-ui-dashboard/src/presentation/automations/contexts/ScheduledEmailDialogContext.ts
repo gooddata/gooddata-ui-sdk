@@ -26,10 +26,15 @@ import type {
  * @beta
  */
 export interface IScheduledEmailDialogContextValue {
+    /** Widget the scheduled export targets; undefined when scheduling an export for a dashboard rather than a widget. */
     widget?: IWidget;
+    /** Insight of {@link IScheduledEmailDialogContextValue.widget}; undefined when scheduling for a dashboard. */
     insight?: IInsight;
+    /** Title of {@link IScheduledEmailDialogContextValue.widget}; undefined when scheduling for a dashboard. */
     widgetTitle?: string;
+    /** Id of the dashboard the scheduled export belongs to. */
     dashboardId?: string;
+    /** Dashboard title; used as the subject placeholder. */
     dashboardTitle: string;
     /**
      * Dashboard filters the export will use: the saved filters when editing, otherwise the currently
@@ -41,6 +46,7 @@ export interface IScheduledEmailDialogContextValue {
      * getAppliedDashboardFilters/getAppliedWidgetFilters inside the dialog, mirroring the alerting context.
      */
     hiddenFilters: FilterContextItem[];
+    /** Local identifier of the dashboard's common (dashboard-level) date filter, when the automation-available filters include one. */
     commonDateFilterId?: string;
     /**
      * Effective export parameter overrides keyed by tab, scoped to the dialog's widget when present.
@@ -63,8 +69,11 @@ export interface IScheduledEmailDialogContextValue {
     /** Effective mode map for attribute filters (localIdentifier → mode). */
     attributeFiltersModeMap: Map<string, DashboardAttributeFilterConfigMode>;
     // CRUD — observer-hook semantics preserved by the dialog; these are the backend calls.
+    /** Creates a new scheduled export on the backend. */
     createScheduledEmail(se: IAutomationMetadataObjectDefinition): Promise<IAutomationMetadataObject>;
+    /** Saves changes to an existing scheduled export on the backend. */
     saveScheduledEmail(se: IAutomationMetadataObject): Promise<IAutomationMetadataObject>;
+    /** Deletes the scheduled export from the backend. */
     deleteScheduledEmail(se: IAutomationMetadataObject): Promise<void>;
     /** The scheduled export being edited; undefined when creating a new one. */
     scheduledExportToEdit?: IAutomationMetadataObject;

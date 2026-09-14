@@ -1,10 +1,10 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 
 import { type IRegion } from "../typings/domUtilities.js";
 
-import { region, removeFromDom } from "./domUtilities.js";
+import { isElementTextInput, region, removeFromDom } from "./domUtilities.js";
 
 interface IConfig {
     height: number;
@@ -171,5 +171,68 @@ describe("removeFromDom", () => {
         expect(document.body.children).toContain(elem);
         removeFromDom(elem);
         expect(document.body.children).not.toContain(elem);
+    });
+});
+
+describe("isElementTextInput", () => {
+    // The suite runs with `isolate: false`, so anything left in the document leaks into later files.
+    const mounted: HTMLElement[] = [];
+
+    afterEach(() => {
+        mounted.splice(0).forEach((host) => host.remove());
+    });
+
+    function mount(html: string) {
+        const host = document.createElement("div");
+        host.innerHTML = html;
+        document.body.appendChild(host);
+        mounted.push(host);
+        return host;
+    }
+
+    it.each([
+        ["a text input", '<input type="text" />', true],
+        ["a number input", '<input type="number" />', true],
+        ["a textarea", "<textarea></textarea>", true],
+        ["a checkbox", '<input type="checkbox" />', false],
+        ["a button", "<button></button>", false],
+        ["a plain div", "<div></div>", false],
+    ])("reports %s as %s", (_name, html, expected) => {
+        const element = mount(html).firstElementChild as HTMLElement;
+
+        expect(isElementTextInput(element)).toBe(expected);
+    });
+
+    it("reports a contenteditable host as text input", () => {
+        const element = mount('<div contenteditable="true"></div>').firstElementChild as HTMLElement;
+
+        expect(isElementTextInput(element)).toBe(true);
+    });
+
+    it("reports a descendant of a contenteditable host as text input", () => {
+        // The caret in a rich text editor lands on an inner node, not on the editable host itself.
+        const host = mount('<div contenteditable="true"><span class="line">text</span></div>');
+
+        expect(isElementTextInput(host.querySelector(".line"))).toBe(true);
+    });
+
+    it("does not report a read-only contenteditable as text input", () => {
+        const element = mount('<div contenteditable="false"></div>').firstElementChild as HTMLElement;
+
+        expect(isElementTextInput(element)).toBe(false);
+    });
+
+    it("does not report a non-editable island inside a contenteditable host as text input", () => {
+        const host = mount(
+            '<div contenteditable="true"><div contenteditable="false"><button class="widget"></button></div></div>',
+        );
+
+        expect(isElementTextInput(host.querySelector(".widget"))).toBe(false);
+    });
+
+    it("handles missing elements and non-elements", () => {
+        expect(isElementTextInput(null)).toBe(false);
+        expect(isElementTextInput(undefined)).toBe(false);
+        expect(isElementTextInput({} as EventTarget)).toBe(false);
     });
 });

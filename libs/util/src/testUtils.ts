@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-/* eslint-disable no-console */
+// oxlint-disable eslint-js/no-console
 
 /**
  * Returns a promise which will resolve after the provided number of milliseconds.

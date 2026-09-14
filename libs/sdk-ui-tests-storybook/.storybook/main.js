@@ -59,7 +59,7 @@ function makePackageStylesAlias(packageName) {
     };
 }
 
-// eslint-disable-next-line no-restricted-exports
+// oxlint-disable-next-line eslint-js/no-restricted-exports
 export default {
     stories: ["../stories/**/*.stories.@(ts|tsx)"],
     addons: ["@storybook/addon-a11y"],

@@ -204,7 +204,6 @@ function AutomationCheckboxOrNote({
                     arrowPlacement="left"
                     triggerBy={["hover", "focus"]}
                     optimalPlacement
-                    width={300}
                     content={useFiltersTooltip}
                     anchor={
                         <UiIconButton

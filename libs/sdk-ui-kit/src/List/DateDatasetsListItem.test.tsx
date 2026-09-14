@@ -5,7 +5,6 @@ import { type ReactNode, forwardRef, useImperativeHandle } from "react";
 import { render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import type * as ShortenedTextModule from "../ShortenedText/ShortenedText.js";
 import { type IShortenedTextHandle } from "../ShortenedText/ShortenedText.js";
 
 import { DateDatasetsListItem } from "./DateDatasetsListItem.js";
@@ -14,8 +13,8 @@ const { recomputeShorteningSpy } = vi.hoisted(() => ({ recomputeShorteningSpy: v
 
 // ShortenedText exposes recomputeShortening only through its imperative ref handle, so the spy has
 // to be injected in place of the real component.
-vi.mock("../ShortenedText/ShortenedText.js", async (importOriginal) => {
-    const actual = await importOriginal<typeof ShortenedTextModule>();
+vi.mock(import("../ShortenedText/ShortenedText.js"), async (importOriginal) => {
+    const actual = await importOriginal();
 
     return {
         ...actual,

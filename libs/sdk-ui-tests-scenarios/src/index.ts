@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-/* oxlint-disable no-barrel-files/no-barrel-files */
+// oxlint-disable no-barrel-files/no-barrel-files
 
 import { chartScenarios } from "./scenarios/charts/index.js";
 import { executeScenarios } from "./scenarios/execute/base.js";

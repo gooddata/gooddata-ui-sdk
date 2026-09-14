@@ -1,6 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
-/* oxlint-disable no-barrel-files/no-barrel-files */
+// oxlint-disable no-barrel-files/no-barrel-files
 
 // Was a byte-identical copy; re-export the _staging canonical instead.
 export {

@@ -12,7 +12,6 @@ import {
     areObjRefsEqual,
     dashboardAttributeFilterItemToAttributeFilter,
     filterObjRef,
-    idRef,
     isArbitraryAttributeFilter,
     isAttributeFilter,
     isDrillToCustomUrl,
@@ -20,6 +19,7 @@ import {
     isNegativeAttributeFilter,
     widgetRef,
 } from "@gooddata/sdk-model";
+import { displayFormPlaceholderRef } from "@gooddata/sdk-model/internal";
 
 import { type ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
 import { queryWidgetFilters } from "../../queries/widgets.js";
@@ -160,7 +160,7 @@ function sanitizeAttributeFilter(
                 ...filter,
                 negativeAttributeFilter: {
                     ...filter.negativeAttributeFilter,
-                    displayForm: idRef(displayForm.id, "displayForm"),
+                    displayForm: displayFormPlaceholderRef(displayForm),
                 },
             };
         } else if (isArbitraryAttributeFilter(filter)) {
@@ -168,7 +168,7 @@ function sanitizeAttributeFilter(
                 ...filter,
                 arbitraryAttributeFilter: {
                     ...filter.arbitraryAttributeFilter,
-                    displayForm: idRef(displayForm.id, "displayForm"),
+                    displayForm: displayFormPlaceholderRef(displayForm),
                 },
             };
         } else if (isMatchAttributeFilter(filter)) {
@@ -176,7 +176,7 @@ function sanitizeAttributeFilter(
                 ...filter,
                 matchAttributeFilter: {
                     ...filter.matchAttributeFilter,
-                    displayForm: idRef(displayForm.id, "displayForm"),
+                    displayForm: displayFormPlaceholderRef(displayForm),
                 },
             };
         } else {
@@ -184,7 +184,7 @@ function sanitizeAttributeFilter(
                 ...filter,
                 positiveAttributeFilter: {
                     ...filter.positiveAttributeFilter,
-                    displayForm: idRef(displayForm.id, "displayForm"),
+                    displayForm: displayFormPlaceholderRef(displayForm),
                 },
             };
         }

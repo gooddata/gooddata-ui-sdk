@@ -635,9 +635,10 @@ export interface IWorkspaceDashboardsService {
      * Create and save dashboard for the provided dashboard definition
      *
      * @param dashboard - dashboard definition
+     * @param generateId - whether to generate a new identifier for the dashboard, default is true
      * @returns promise of the created dashboard
      */
-    createDashboard(dashboard: IDashboardDefinition): Promise<IDashboard>;
+    createDashboard(dashboard: IDashboardDefinition, generateId?: boolean): Promise<IDashboard>;
 
     /**
      * Update dashboard

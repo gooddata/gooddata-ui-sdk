@@ -71,6 +71,26 @@
         "text": "Dashboard save failed. Remove any unavailable visualizations, then try again, or contact your administrator.",
         "crowdinContext": "Error notification shown when saving a dashboard fails"
     },
+    "insightNotSavedDialog.headline": {
+        "text": "Save dashboard",
+        "crowdinContext": "Headline shown when dashboard save is blocked because it contains draft visualizations"
+    },
+    "insightNotSavedDialog.message": {
+        "text": "The following objects will be saved together with the dashboard.",
+        "crowdinContext": "Message shown when dashboard save is blocked due to draft visualizations"
+    },
+    "insightNotSavedDialog.visualisations": {
+        "text": "Visualizations ({count})",
+        "crowdinContext": "Title of the list of draft visualizations. {count} is the number of draft visualizations."
+    },
+    "insightNotSavedDialog.close": {
+        "text": "Close",
+        "crowdinContext": "Button label used to close the draft-visualization warning dialog"
+    },
+    "insightNotSavedDialog.saveAll": {
+        "text": "Save all",
+        "crowdinContext": "Button label used to save all draft visualizations"
+    },
     "messages.dashboard.incompatibleDefaultFilters.title": {
         "text": "<b>Warning</b> Some dashboard filters couldn’t be applied. Check the filters to make sure you’re viewing the right data.",
         "crowdinContext": "Title of the warning message shown if default filter overrides are incompatible with the current dashboard filters."
@@ -118,6 +138,10 @@
     "filterBar.label": {
         "text": "Filters",
         "crowdinContext": "Label for the filter bar section"
+    },
+    "filterBar.restrictedFilters.remove": {
+        "text": "Remove restricted filters",
+        "crowdinContext": "Action in the filter bar notice tooltip, shown in edit mode. Removes the filters the user is not allowed to access from the dashboard for good."
     },
     "filterBar.restrictedFilters.reason": {
         "text": "{count, plural, one {You don't have access to # filter.} other {You don't have access to # filters.}}",
@@ -472,8 +496,8 @@
         "crowdinContext": "Label of the default time zone picker in the dashboard settings dialog"
     },
     "settingsDashboardDialog.section.timezone.defaultTimezone.tooltip": {
-        "text": "Time zone used for date filters and date values on this dashboard.",
-        "crowdinContext": "Tooltip of the default time zone picker in the dashboard settings dialog"
+        "text": "Time zone used for date filters and date values on this dashboard. <a>Learn more</a>",
+        "crowdinContext": "Tooltip of the default time zone picker in the dashboard settings dialog, with a learn more link to the documentation"
     },
     "settingsDashboardDialog.section.timezone.defaultTimezone.help": {
         "text": "More information",
@@ -582,6 +606,10 @@
     "deleteWidgetDialog.objectsMessage": {
         "text": "Following types objects associated with the widget {title} will no longer work:",
         "crowdinContext": "Warning message about objects that will be affected when deleting a widget. The {title} placeholder shows the specific widget name."
+    },
+    "deleteWidgetDialog.objectsMessage.restricted": {
+        "text": "The following types of objects associated with the widget will no longer work:",
+        "crowdinContext": "The same warning for a widget the user has no access to, which therefore must not be named."
     },
     "deleteWidgetDialog.alerts": {
         "text": "alerts",
@@ -3286,6 +3314,10 @@
     "widget.options.menu.export": {
         "text": "Export",
         "crowdinContext": "Export to file with XLSX extension."
+    },
+    "insightMenu.restrictedWidget.options": {
+        "text": "Restricted visualization options",
+        "crowdinContext": "Accessible name of the menu of a visualization the user has no access to; it must not name the visualization."
     },
     "menu.close": {
         "text": "Close menu",

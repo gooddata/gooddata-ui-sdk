@@ -19,3 +19,10 @@ export type RuleValue = string | number | object | object[];
 export type Rules<Prefix extends string = ""> = {
     [key in RuleKey<Prefix>]: RuleValue;
 };
+
+export type OverrideFiles = string[];
+
+export interface IOverride<RulePrefix extends string = ""> {
+    files: OverrideFiles;
+    rules: Rules<RulePrefix>;
+}

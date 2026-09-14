@@ -125,7 +125,6 @@ export function CatalogDetailTabMetadata({
                                 arrowPlacement="left"
                                 optimalPlacement
                                 offset={10}
-                                width={280}
                                 triggerBy={["hover", "click"]}
                             />
                         </>
@@ -162,7 +161,6 @@ export function CatalogDetailTabMetadata({
                                 arrowPlacement="left"
                                 optimalPlacement
                                 offset={10}
-                                width={280}
                                 triggerBy={["hover", "click"]}
                             />
                         </>

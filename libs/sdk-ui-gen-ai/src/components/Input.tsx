@@ -16,7 +16,11 @@ import {
     makeUserItem,
     makeUserMessage,
 } from "../model.js";
-import { agentSwitchingEnabledSelector } from "../store/chatWindow/chatWindowSelectors.js";
+import {
+    agentSwitchingEnabledSelector,
+    inputValueSelector,
+} from "../store/chatWindow/chatWindowSelectors.js";
+import { setInputValueAction } from "../store/chatWindow/chatWindowSlice.js";
 import {
     asyncProcessSelector,
     conversationMessagesSelector,
@@ -82,7 +86,7 @@ function InputComponent({ autofocus = false, canManage, canAnalyze, targetRef }:
     const isAssistantLoading = isLoading || loading === "restoring";
     const isEmpty = conversation ? !items?.length && !isLoading : !messages?.length && !isLoading;
 
-    const [value, setValue] = useState("");
+    const value = useSelector((state: RootState) => inputValueSelector(state));
     const [areAgentsBusy, setAreAgentsBusy] = useState(true);
     const [hasNoAgents, setHasNoAgents] = useState(false);
     const [editorApi, setApi] = useState<EditorView | null>(null);
@@ -115,7 +119,7 @@ function InputComponent({ autofocus = false, canManage, canAnalyze, targetRef }:
             ]);
         }
         dispatch(newMessageAction(item));
-        setValue("");
+        dispatch(setInputValueAction({ value: "" }));
     };
 
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -188,7 +192,9 @@ function InputComponent({ autofocus = false, canManage, canAnalyze, targetRef }:
                             beforeExtensions={beforeExtensions}
                             extensions={extensions}
                             onApi={setApi}
-                            onChange={setValue}
+                            onChange={(value) => {
+                                dispatch(setInputValueAction({ value }));
+                            }}
                             onFocus={() => {
                                 setFocused(true);
                             }}

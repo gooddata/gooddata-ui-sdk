@@ -5,7 +5,10 @@ import {
     type IDrillToCustomUrl,
     areObjRefsEqual,
 } from "@gooddata/sdk-model";
-import { getAttributeIdentifiersPlaceholdersFromUrl } from "@gooddata/sdk-model/internal";
+import {
+    displayFormPlaceholderRef,
+    getAttributeIdentifiersPlaceholdersFromUrl,
+} from "@gooddata/sdk-model/internal";
 import { type IDrillEvent, isDrillIntersectionAttributeItem } from "@gooddata/sdk-ui";
 
 /**
@@ -38,8 +41,10 @@ export function getDrillToCustomUrlMissingAttributes(
     for (const placeholder of attributePlaceholders) {
         const displayForm = displayFormsMap[placeholder.identifier];
 
-        // Configuration error handled elsewhere
-        if (!displayForm) {
+        // Configuration error handled elsewhere. The map is keyed by bare identifier, which a computed
+        // attribute can share with a label, so the kind of object is checked too rather than reporting
+        // whichever of the two happens to be in the map.
+        if (!displayForm || !areObjRefsEqual(displayFormPlaceholderRef(displayForm), placeholder.ref)) {
             continue;
         }
 

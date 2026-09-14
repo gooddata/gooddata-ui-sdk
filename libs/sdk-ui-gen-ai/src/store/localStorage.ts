@@ -4,6 +4,7 @@ import type { Message } from "../model.js";
 
 const OPENED_KEY = "gd-gen-ai-is-opened";
 const MESSAGES_KEY_PREFIX = "gd-gen-ai-messages";
+const LAST_ACTIVE_KEY_PREFIX = "gd-gen-ai-last-active";
 
 export function getIsOpened() {
     if (typeof localStorage !== "undefined") {
@@ -67,6 +68,31 @@ export function clearCachedMessages(workspaceId: string): void {
     }
     try {
         sessionStorage.removeItem(getMessagesKey(workspaceId));
+    } catch {
+        // Fail silently
+    }
+}
+
+function getLastActiveKey(workspaceId: string): string {
+    return `${LAST_ACTIVE_KEY_PREFIX}-${workspaceId}`;
+}
+
+export function getLastActiveAt(workspaceId: string): number | undefined {
+    try {
+        const raw = globalThis.localStorage?.getItem(getLastActiveKey(workspaceId));
+        if (!raw) {
+            return undefined;
+        }
+        const parsed = Number(raw);
+        return Number.isFinite(parsed) ? parsed : undefined;
+    } catch {
+        return undefined;
+    }
+}
+
+export function setLastActiveAt(workspaceId: string, timestamp: number): void {
+    try {
+        globalThis.localStorage?.setItem(getLastActiveKey(workspaceId), String(timestamp));
     } catch {
         // Fail silently
     }

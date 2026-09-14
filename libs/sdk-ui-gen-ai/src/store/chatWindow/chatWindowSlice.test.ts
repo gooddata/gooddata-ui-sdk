@@ -13,6 +13,8 @@ import {
     selectedContextReferencesAction,
     setAmbientUserContextAction,
     setCatalogItemsActions,
+    setInputValueAction,
+    setOpenAction,
     setUserContextAction,
 } from "./chatWindowSlice.js";
 
@@ -155,6 +157,38 @@ describe.each([
         expect(state.context.ambientSelected?.visualization?.id).toBe("v1");
         expect(state.context.active?.view?.dashboard?.ref).toEqual(dashRef);
         expect(state.context.active?.referencedObjects?.[0]?.objects?.[0]?.ref).toEqual(visRef);
+    });
+});
+
+describe("input value state", () => {
+    it("should preserve input value across unrelated actions", () => {
+        const state = stateWith(
+            contextSetupOn,
+            setInputValueAction({ value: "Revenue by product" }),
+            setOpenAction({ isOpen: true }),
+        );
+
+        expect(state.inputValue).toBe("Revenue by product");
+    });
+
+    it("should clear input value on startNewConversationAction", () => {
+        const state = stateWith(
+            contextSetupOn,
+            setInputValueAction({ value: "Revenue by product" }),
+            startNewConversationAction(),
+        );
+
+        expect(state.inputValue).toBe("");
+    });
+
+    it("should not clear input value on clearThreadAction", () => {
+        const state = stateWith(
+            contextSetupOn,
+            setInputValueAction({ value: "Revenue by product" }),
+            clearThreadAction(),
+        );
+
+        expect(state.inputValue).toBe("");
     });
 });
 

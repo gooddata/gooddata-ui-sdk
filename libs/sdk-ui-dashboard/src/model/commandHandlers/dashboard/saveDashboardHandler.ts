@@ -3,7 +3,7 @@
 import { type AnyAction } from "@reduxjs/toolkit";
 import { type BatchAction, batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
-import { type SagaReturnType, call, put, select } from "redux-saga/effects";
+import { type SagaReturnType, call, put, select, take } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
 import { isUnexpectedResponseError } from "@gooddata/sdk-backend-spi";
@@ -17,7 +17,10 @@ import {
     type IDashboardTab,
     type IFilterContext,
     type IFilterContextDefinition,
+    type IInsight,
     type ITempFilterContext,
+    areObjRefsEqual,
+    insightRef,
     isTempFilterContext,
 } from "@gooddata/sdk-model";
 
@@ -36,6 +39,11 @@ import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
 import { accessibleDashboardsActions } from "../../store/accessibleDashboards/index.js";
 import { selectBackendCapabilities } from "../../store/backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectLocale } from "../../store/config/configSelectors.js";
+import { insightsActions } from "../../store/insights/index.js";
+import {
+    selectDraftInsightsUsedOnDashboard,
+    selectInsights,
+} from "../../store/insights/insightsSelectors.js";
 import { listedDashboardsActions } from "../../store/listedDashboards/index.js";
 import { metaActions } from "../../store/meta/index.js";
 import { selectDashboardDescriptor, selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
@@ -46,11 +54,20 @@ import { selectDateFilterConfigOverridesByTab } from "../../store/tabs/dateFilte
 import { selectDateFilterConfigsOverridesByTab } from "../../store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
 import { selectFilterContextStatesByTab } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
-import { filterOutCustomWidgets, selectBasicLayoutByTab } from "../../store/tabs/layout/layoutSelectors.js";
+import {
+    filterOutCustomWidgets,
+    selectAllInsightWidgetRefsByTab,
+    selectBasicLayoutByTab,
+} from "../../store/tabs/layout/layoutSelectors.js";
 import { selectMeasureValueFilterConfigsOverridesByTab } from "../../store/tabs/measureValueFilterConfigs/measureValueFilterConfigsSelectors.js";
 import { selectSmartPersistedTabsParameters } from "../../store/tabs/parameters/parametersSelectors.js";
 import { selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { DEFAULT_TAB_ID, type ITabState } from "../../store/tabs/tabsState.js";
+import { uiActions } from "../../store/ui/index.js";
+import {
+    selectIsInsightNotSavedDialogOpen,
+    selectIsInsightNotSavedDialogSaveConfirmed,
+} from "../../store/ui/uiSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type ExtendedDashboardWidget } from "../../types/layoutTypes.js";
 import { type PromiseFnReturnType } from "../../types/sagas.js";
@@ -94,6 +111,56 @@ type DashboardSaveResult = {
     dashboard: IDashboard;
     created: boolean;
 };
+
+function* persistDraftInsights(
+    ctx: DashboardContext,
+    cmd: ISaveDashboard,
+    insights: IInsight[],
+): SagaIterator<void> {
+    for (const draftInsight of insights) {
+        const persistedInsight = yield call(async () => {
+            return ctx.backend.workspace(ctx.workspace).insights().createInsight(draftInsight, false);
+        });
+
+        const persistedInsightWithDraftState: IInsight = {
+            ...persistedInsight,
+            insight: {
+                ...persistedInsight.insight,
+                isDraft: false,
+            },
+        };
+
+        const currentInsights: ReturnType<typeof selectInsights> = yield select(selectInsights);
+        const updatedInsights = currentInsights.map((insight) => {
+            if (areObjRefsEqual(insightRef(insight), insightRef(draftInsight))) {
+                return persistedInsightWithDraftState;
+            }
+
+            return insight;
+        });
+
+        const widgetRefsWithDraftInsightByTab: ReturnType<
+            ReturnType<typeof selectAllInsightWidgetRefsByTab>
+        > = yield select(selectAllInsightWidgetRefsByTab(insightRef(draftInsight)));
+
+        for (const { tabId, widgetRef } of widgetRefsWithDraftInsightByTab) {
+            yield put(
+                tabsActions.replaceInsightWidgetInsightForTab({
+                    tabId,
+                    ref: widgetRef,
+                    insightRef: insightRef(persistedInsightWithDraftState),
+                    properties: undefined,
+                    header: undefined,
+                    undo: {
+                        cmd,
+                    },
+                }),
+            );
+        }
+
+        yield put(insightsActions.setInsights(updatedInsights));
+    }
+}
 
 type DashboardSaveFn = (
     ctx: DashboardContext,
@@ -149,7 +216,7 @@ function saveDashboard(
                     return ctx.backend
                         .workspace(ctx.workspace)
                         .dashboards()
-                        .createDashboard(dashboardToSave)
+                        .createDashboard(dashboardToSave, !ctx.config?.isAiMode)
                         .then((dashboard) => ({ dashboard, created: true }));
                 }
                 throw error;
@@ -581,9 +648,47 @@ function* save(
 export function* saveDashboardHandler(
     ctx: DashboardContext,
     cmd: ISaveDashboard,
-): SagaIterator<DashboardSaved> {
+): SagaIterator<DashboardSaved | undefined> {
     try {
+        const isInsightNotSavedDialogSaveConfirmed: ReturnType<
+            typeof selectIsInsightNotSavedDialogSaveConfirmed
+        > = yield select(selectIsInsightNotSavedDialogSaveConfirmed);
+
+        const draftInsightsOnDashboard: ReturnType<typeof selectDraftInsightsUsedOnDashboard> = yield select(
+            selectDraftInsightsUsedOnDashboard,
+        );
+
+        let shouldPersistDraftInsights = isInsightNotSavedDialogSaveConfirmed;
+
+        if (draftInsightsOnDashboard.length > 0 && !shouldPersistDraftInsights) {
+            yield put(uiActions.openInsightNotSavedDialog());
+
+            const draftInsightDialogAction:
+                | ReturnType<typeof uiActions.confirmInsightNotSavedDialogSubmit>
+                | ReturnType<typeof uiActions.closeInsightNotSavedDialog> = yield take([
+                uiActions.confirmInsightNotSavedDialogSubmit.type,
+                uiActions.closeInsightNotSavedDialog.type,
+            ]);
+
+            if (draftInsightDialogAction.type === uiActions.closeInsightNotSavedDialog.type) {
+                return undefined;
+            }
+
+            shouldPersistDraftInsights = true;
+        }
+
         yield put(savingActions.setSavingStart());
+
+        const isInsightNotSavedDialogOpen: ReturnType<typeof selectIsInsightNotSavedDialogOpen> =
+            yield select(selectIsInsightNotSavedDialogOpen);
+
+        if (isInsightNotSavedDialogOpen) {
+            yield put(uiActions.closeInsightNotSavedDialog());
+        }
+
+        if (shouldPersistDraftInsights && draftInsightsOnDashboard.length > 0) {
+            yield call(persistDraftInsights, ctx, cmd, draftInsightsOnDashboard);
+        }
 
         const persistedDashboard: ReturnType<typeof selectPersistedDashboard> =
             yield select(selectPersistedDashboard);

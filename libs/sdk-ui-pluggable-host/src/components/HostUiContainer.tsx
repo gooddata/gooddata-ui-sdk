@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
+import { isEqual, omit } from "lodash-es";
 import { type Root as ReactRoot, createRoot } from "react-dom/client";
 import { type NavigateFunction } from "react-router";
 
@@ -31,6 +32,7 @@ import { PluggableApplicationRenderer } from "../ui/PluggableApplicationRenderer
 import "./HostUiContainer.scss";
 import { resolveHostUiModule } from "../ui/resolveHostUiModule.js";
 
+import { HostErrorBoundary } from "./HostErrorBoundary.js";
 import { runGuardedNavigation } from "./navigationGuard.js";
 
 export interface IHostUiContainerProps {
@@ -38,6 +40,7 @@ export interface IHostUiContainerProps {
     apps: PluggableApplicationRegistryItem[];
     pathname: string;
     routerNavigate: NavigateFunction;
+    onError?: (error: string, context: string) => void;
 }
 
 /**
@@ -45,7 +48,7 @@ export interface IHostUiContainerProps {
  * pluggable application into the host's app slot. Handles all lifecycle
  * updates (context, apps, pathname) via the host mount handle.
  */
-export function HostUiContainer({ ctx, apps, pathname, routerNavigate }: IHostUiContainerProps) {
+export function HostUiContainer({ ctx, apps, pathname, routerNavigate, onError }: IHostUiContainerProps) {
     const activeInternalApplication = useMemo(
         () => getActiveInternalApplication(apps, ctx, pathname),
         [apps, ctx, pathname],
@@ -56,6 +59,30 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate }: IHostUi
     const appRootRef = useRef<ReactRoot>(undefined);
     const [hostReady, setHostReady] = useState(false);
     const latestMountStateRef = useAutoupdateRef({ ctx, apps, pathname });
+    const onErrorRef = useAutoupdateRef(onError);
+    const reportError = useCallback(
+        (error: string, context: string) => onErrorRef.current?.(error, context),
+        [onErrorRef],
+    );
+
+    // Mounted apps hot-apply only auth from updateContext — every other context field
+    // (permissions, settings, entitlements, org permissions, …) is seeded into their stores
+    // at mount only. A refresh that lands ANY content change outside auth must therefore
+    // remount the app. Content comparison, not identity: every refresh produces new objects,
+    // and remounting on each token refresh would defeat keeping the app mounted at all.
+    // The color palette is also excluded: its load is not part of the platform-context gate,
+    // so it legitimately arrives after the first ready context — a styling update, not a
+    // reason to abort the mounted app.
+    const [appContextEpoch, setAppContextEpoch] = useState(0);
+    const prevAppContextRef = useRef(ctx);
+    useEffect(() => {
+        const prev = prevAppContextRef.current;
+        prevAppContextRef.current = ctx;
+        const epochFields = (c: IPlatformContext) => omit(c, ["auth", "colorPalette"]);
+        if (prev !== ctx && !isEqual(epochFields(prev), epochFields(ctx))) {
+            setAppContextEpoch((epoch) => epoch + 1);
+        }
+    }, [ctx]);
 
     const [headerOptions, setHeaderOptions] = useState<IAppHeaderOptions | undefined>(undefined);
     const [pageTitle, setPageTitle] = useState<string | undefined>(undefined);
@@ -189,6 +216,7 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate }: IHostUi
                 replace: navigationMountRef.current.replace,
                 onChatToggleRequested: navigationMountRef.current.onChatToggleRequested,
                 onAskAiAssistant: navigationMountRef.current.onAskAiAssistant,
+                onError: reportError,
             });
 
             handleRef.current = handle;
@@ -222,7 +250,7 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate }: IHostUi
             });
         };
         // Mount only once; updates are pushed via handle
-    }, [latestMountStateRef, navigationMountRef]);
+    }, [latestMountStateRef, navigationMountRef, reportError]);
 
     // Push updates when context, apps, or pathname change after initial mount
     useEffect(() => {
@@ -298,23 +326,33 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate }: IHostUi
 
         if (activeInternalApplication) {
             appRootRef.current.render(
-                <HostIntlProvider locale={resolveLocale(ctx.preferredLocale)}>
-                    <PluggableApplicationRenderer
-                        key={activeInternalApplication.id}
-                        app={activeInternalApplication}
-                        ctx={ctx}
-                        pathname={pathname}
-                        aiAssistantOpen={aiAssistantOpen}
-                        onOpenAiAssistant={requestOpenAi}
-                        onCloseAiAssistant={requestCloseAi}
-                        onAiAssistantContext={setAiAssistantContext}
-                        aiLinkClickHandlerRef={appAiLinkClickRef}
-                        navigationRequestRef={appNavigationRequestRef}
-                        aiEventReceiveRef={appEventReceiveRef}
-                        onHeaderChange={onHeaderChange}
-                        onDocumentTitleChange={onDocumentTitleChange}
-                    />
-                </HostIntlProvider>,
+                // Separate React tree — the host application's boundary cannot catch errors
+                // thrown here, so the app slot carries its own. Keyed by app id: a caught
+                // error would otherwise keep the fallback shown after navigating to another app.
+                <HostErrorBoundary
+                    key={`${activeInternalApplication.id}:${appContextEpoch}`}
+                    resetKey={pathname}
+                    onError={reportError}
+                    locale={resolveLocale(ctx.preferredLocale)}
+                >
+                    <HostIntlProvider locale={resolveLocale(ctx.preferredLocale)}>
+                        <PluggableApplicationRenderer
+                            key={activeInternalApplication.id}
+                            app={activeInternalApplication}
+                            ctx={ctx}
+                            pathname={pathname}
+                            aiAssistantOpen={aiAssistantOpen}
+                            onOpenAiAssistant={requestOpenAi}
+                            onCloseAiAssistant={requestCloseAi}
+                            onAiAssistantContext={setAiAssistantContext}
+                            aiLinkClickHandlerRef={appAiLinkClickRef}
+                            navigationRequestRef={appNavigationRequestRef}
+                            aiEventReceiveRef={appEventReceiveRef}
+                            onHeaderChange={onHeaderChange}
+                            onDocumentTitleChange={onDocumentTitleChange}
+                        />
+                    </HostIntlProvider>
+                </HostErrorBoundary>,
             );
         } else {
             appRootRef.current.render(null);
@@ -322,11 +360,13 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate }: IHostUi
     }, [
         hostReady,
         activeInternalApplication,
+        appContextEpoch,
         ctx,
         onHeaderChange,
         onDocumentTitleChange,
         pathname,
         aiAssistantOpen,
+        reportError,
         requestOpenAi,
         requestCloseAi,
         setAiAssistantContext,

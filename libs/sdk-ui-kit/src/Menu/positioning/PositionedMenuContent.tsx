@@ -6,6 +6,7 @@ import {
     FLOATING_ELEMENT_DATA_ATTR,
     useRegisterFloatingAnchor,
 } from "../../@ui/hooks/useCloseOnOutsideClick.js";
+import { useOverlayZIndexWithRegister } from "../../Overlay/OverlayContext.js";
 import { type IMenuPositionConfig } from "../MenuSharedTypes.js";
 
 import {
@@ -33,6 +34,8 @@ export function PositionedMenuContent(props: IPositionedMenuContentProps) {
     });
 
     const menuElRef = useRef<HTMLDivElement>(null);
+
+    const zIndex = useOverlayZIndexWithRegister();
 
     // The menu portals to <body>, outside whatever opened it, so overlay/dialog outside-click
     // detection cannot attribute its clicks by DOM containment. Mark it as a floating element and
@@ -98,6 +101,7 @@ export function PositionedMenuContent(props: IPositionedMenuContentProps) {
                 position: "absolute",
                 left: state.left,
                 top: state.top,
+                ...(props.topLevelMenu ? { zIndex } : null),
             }}
             ref={setMenuElWithAnchorRegistry}
             {...{ [FLOATING_ELEMENT_DATA_ATTR]: true }}

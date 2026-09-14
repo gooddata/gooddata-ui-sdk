@@ -47,6 +47,7 @@ import {
     type IFilter,
     type IInsight,
     type IInsightDefinition,
+    type IInsightDefinitionWithOptionalIdentity,
     type IMetadataObjectBase,
     type IMetadataObjectIdentity,
     type IObjectCertificationWrite,
@@ -257,12 +258,18 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
         return insight;
     };
 
-    public createInsight = async (insight: IInsightDefinition): Promise<IInsight> => {
+    public createInsight = async (
+        insight: IInsightDefinitionWithOptionalIdentity,
+        generateId = true,
+    ): Promise<IInsight> => {
         const createResponse = await this.authCall((client) => {
             return EntitiesApi_CreateEntityVisualizationObjects(client.axios, client.basePath, {
                 workspaceId: this.workspace,
                 jsonApiVisualizationObjectPostOptionalIdDocument: {
                     data: {
+                        ...(generateId || !insight.insight.identifier
+                            ? {}
+                            : { id: insight.insight.identifier }),
                         type: "visualizationObject",
                         attributes: {
                             description: insightSummary(insight),

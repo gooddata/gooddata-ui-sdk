@@ -127,9 +127,10 @@ export function UiDropdown({
     );
 
     // Button render props
+    const popupRole = accessibilityConfig?.popupRole ?? "dialog";
+
     const buttonRenderProps = useMemo<IUiDropdownButtonRenderProps>(() => {
         const triggerRole = accessibilityConfig?.triggerRole ?? "button";
-        const popupRole = accessibilityConfig?.popupRole ?? "dialog";
 
         return {
             ref: buttonRef as RefObject<HTMLElement>,
@@ -152,7 +153,7 @@ export function UiDropdown({
         closeDropdown,
         toggleDropdown,
         accessibilityConfig?.triggerRole,
-        accessibilityConfig?.popupRole,
+        popupRole,
     ]);
 
     // Body render props
@@ -162,8 +163,9 @@ export function UiDropdown({
             ariaAttributes: {
                 id: dropdownId,
             },
+            triggerId: buttonId,
         }),
-        [closeDropdown, dropdownId],
+        [closeDropdown, dropdownId, buttonId],
     );
 
     return (
@@ -191,10 +193,11 @@ export function UiDropdown({
                 ignoreClicksOn={ignoreClicksOnByClass}
                 zIndex={zIndex}
                 width={width}
-                accessibilityConfig={{
-                    role: accessibilityConfig?.popupRole ?? "dialog",
-                    ariaLabelledBy: buttonId,
-                }}
+                // A dialog is the panel itself. A listbox, menu, tree or grid is the widget the
+                // body renders with its own role, and the same role on the panel would nest it.
+                accessibilityConfig={
+                    popupRole === "dialog" ? { role: popupRole, ariaLabelledBy: buttonId } : undefined
+                }
             >
                 <UiFocusManager
                     tabOutHandler={enableFocusTrap ? undefined : handleTabOut}

@@ -13,6 +13,7 @@ import { internalModelerThemeVariables } from "./internal/modeler.js";
 import { internalSpacingThemeVariables } from "./internal/spacing.js";
 import { internalTableThemeVariables } from "./internal/table.js";
 import { internalTabsThemeVariables } from "./internal/tabs.js";
+import { internalTooltipThemeVariables } from "./internal/tooltip.js";
 import { internalTransitionThemeVariables } from "./internal/transition.js";
 // Derived
 import { derivedPaletteBaseThemeVariables } from "./theme-derived/palette-base-derived.js";
@@ -85,6 +86,7 @@ export const themeInternalCssVariables: ThemeInternalCssVariable[] = [
     ...internalIconThemeVariables,
     ...internalTabsThemeVariables,
     ...internalTableThemeVariables,
+    ...internalTooltipThemeVariables,
     // Modeler
     ...internalModelerThemeVariables,
 ];

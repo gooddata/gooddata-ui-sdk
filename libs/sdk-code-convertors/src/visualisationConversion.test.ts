@@ -569,15 +569,17 @@ describe("visualisation conversion", () => {
                 metrics: [{ field: "m1" }],
             });
 
+            let error: ICoreError | undefined;
             try {
                 yamlVisualisationToDeclarative(emptyEntities, clashing);
-                expect.fail("Should have thrown error");
             } catch (err: unknown) {
-                expect((err as ICoreError).code).toBe(CoreErrorCode.DuplicateFilterName);
-                expect((err as ICoreError).message).toContain("af");
-                // The dashboard wording names a tab and filter groups, neither of which a query has.
-                expect((err as ICoreError).message).not.toContain("dashboard");
+                error = err as ICoreError;
             }
+            expect(error).toBeDefined();
+            expect(error?.code).toBe(CoreErrorCode.DuplicateFilterName);
+            expect(error?.message).toContain("af");
+            // The dashboard wording names a tab and filter groups, neither of which a query has.
+            expect(error?.message).not.toContain("dashboard");
         });
 
         it("leaves a measure's own carried filter unnamed, which must never claim one", () => {
@@ -662,13 +664,15 @@ describe("visualisation conversion", () => {
             }) as Visualisation;
 
         it("refuses one id claimed by two layers, which would name neither", () => {
+            let error: ICoreError | undefined;
             try {
                 yamlVisualisationToDeclarative(emptyEntities, withLayerIds("dup", "dup"));
-                expect.fail("Should have thrown error");
             } catch (err: unknown) {
-                expect((err as ICoreError).code).toBe(CoreErrorCode.DuplicateLayerIdentifier);
-                expect((err as ICoreError).message).toContain('"dup"');
+                error = err as ICoreError;
             }
+            expect(error).toBeDefined();
+            expect(error?.code).toBe(CoreErrorCode.DuplicateLayerIdentifier);
+            expect(error?.message).toContain('"dup"');
         });
 
         it("converts layers whose ids differ", () => {

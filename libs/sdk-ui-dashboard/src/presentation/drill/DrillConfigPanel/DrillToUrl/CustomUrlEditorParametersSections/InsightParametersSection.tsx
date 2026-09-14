@@ -18,6 +18,7 @@ import {
     measureTitle,
     objRefToString,
 } from "@gooddata/sdk-model";
+import { insightAttributeFilterToPlaceholder } from "@gooddata/sdk-model/internal";
 import { MeasureValueFilterDetailsBubble } from "@gooddata/sdk-ui-filters/internal";
 
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
@@ -85,7 +86,7 @@ export function InsightParametersSection({
                             df && (
                                 <DisplayFormParam
                                     item={df}
-                                    onAdd={() => onAdd(`{attribute_filter_selection(${df.id})}`)}
+                                    onAdd={() => onAdd(insightAttributeFilterToPlaceholder(df.ref))}
                                     iconClassName="gd-icon-filter"
                                     key={index}
                                     isFilter

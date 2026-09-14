@@ -18,7 +18,7 @@ const EditableLabelExamples = memo(function EditableLabelExamples() {
         <div className="library-component screenshot-target">
             <h4>Simple example</h4>
             <EditableLabel
-                onSubmit={(val) => console.log(val)} // eslint-disable-line no-console
+                onSubmit={(val) => console.log(val)} // oxlint-disable-line eslint-js/no-console
                 value={"Edit me!"}
             />
 

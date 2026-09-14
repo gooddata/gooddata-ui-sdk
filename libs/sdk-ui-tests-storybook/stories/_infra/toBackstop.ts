@@ -79,7 +79,7 @@ async function processStoryFile(file: string): Promise<IStoryInfo[]> {
 
         const defaultStory = storiesFromFile["default"];
         if (!defaultStory) {
-            // eslint-disable-next-line no-console
+            // oxlint-disable-next-line eslint-js/no-console
             console.log(`No default story, skipping file: ${file}`);
             return [];
         }
@@ -137,7 +137,7 @@ export async function toBackstopJson(filterFiles?: string[]): Promise<IStoryInfo
     storiesGlob[0] = path.join("../", storiesGlob[0]);
 
     let files = await fg(storiesGlob, { cwd: path.resolve(path.join(__dirname)) });
-    // eslint-disable-next-line no-console
+    // oxlint-disable-next-line eslint-js/no-console
     console.log(`Found ${files.length} story files...`);
 
     if (filterFiles && filterFiles.length > 0) {
@@ -148,7 +148,7 @@ export async function toBackstopJson(filterFiles?: string[]): Promise<IStoryInfo
         files = files.filter((file) =>
             normalizedFilter.has(path.normalize(path.join("stories/_infra", file))),
         );
-        // eslint-disable-next-line no-console
+        // oxlint-disable-next-line eslint-js/no-console
         console.log(`Filtered to ${files.length} story files from goodchanges detections`);
     }
 
@@ -167,7 +167,7 @@ export async function toBackstopJson(filterFiles?: string[]): Promise<IStoryInfo
         }
     }
 
-    // eslint-disable-next-line no-console
+    // oxlint-disable-next-line eslint-js/no-console
     console.log(`Processed ${stories.length} stories total`);
 
     return stories.sort((x, y): number => {

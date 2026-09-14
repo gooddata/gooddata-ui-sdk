@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { type AxiosInstance, type AxiosResponse } from "axios";
+import axios, { type AxiosInstance, type AxiosResponse } from "axios";
 import { inRange, isEmpty, isError, omit } from "lodash-es";
 import { invariant } from "ts-invariant";
 
@@ -448,6 +448,12 @@ function interceptBackendErrorsToConsole(client: AxiosInstance): AxiosInstance {
         (v) => v,
         (error) => {
             const response: AxiosResponse = error.response;
+
+            // Cancellations are expected whenever a component aborts its in-flight requests
+            // on unmount; logging them as backend errors only floods the console.
+            if (axios.isCancel(error)) {
+                return Promise.reject(error);
+            }
 
             // If there is no response object (for example for blocked requests), print the whole error.
             if (!response) {

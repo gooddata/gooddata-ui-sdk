@@ -15,6 +15,7 @@ import {
     type InsightDrillDefinition,
     type ObjRef,
     type ScreenSize,
+    areObjRefsEqual,
     dashboardAttributeFilterItemLocalIdentifier,
     filterContextItemsToDashboardFiltersByWidget,
     isDashboardAttributeFilterItem,
@@ -108,6 +109,55 @@ export const selectBasicLayoutByTab: DashboardSelector<
         {},
     );
 });
+
+export type IInsightWidgetRefWithTab = {
+    tabId: string;
+    widgetRef: ObjRef;
+};
+
+/**
+ * Selects refs of all insight widgets with matching insight reference across all tabs,
+ * including owning tab identifiers.
+ *
+ * @internal
+ */
+export const selectAllInsightWidgetRefsByTab: (
+    insight: ObjRef | undefined,
+) => DashboardSelector<IInsightWidgetRefWithTab[]> = createMemoizedSelector((insight: ObjRef | undefined) =>
+    createSelector(selectAllTabsInsightWidgetContexts, (contexts): IInsightWidgetRefWithTab[] => {
+        if (!insight) {
+            return [];
+        }
+
+        return contexts
+            .filter((context) => areObjRefsEqual(context.widget.insight, insight))
+            .map((context) => ({
+                tabId: context.tab.localIdentifier ?? DEFAULT_TAB_ID,
+                widgetRef: context.widget.ref,
+            }))
+            .filter((item, index, allItems) => {
+                return (
+                    allItems.findIndex(
+                        (candidate) =>
+                            candidate.tabId === item.tabId &&
+                            areObjRefsEqual(candidate.widgetRef, item.widgetRef),
+                    ) === index
+                );
+            });
+    }),
+);
+
+/**
+ * Selects refs of all insight widgets with matching insight reference across all tabs.
+ *
+ * @internal
+ */
+export const selectAllInsightWidgetRefs: (insight: ObjRef | undefined) => DashboardSelector<ObjRef[]> =
+    createMemoizedSelector((insight: ObjRef | undefined) =>
+        createSelector(selectAllInsightWidgetRefsByTab(insight), (widgetRefsByTab): ObjRef[] => {
+            return widgetRefsByTab.map(({ widgetRef }) => widgetRef);
+        }),
+    );
 
 /**
  * This selector returns current layout's stash. This stash can contain items that were removed from the layout with the

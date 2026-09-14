@@ -123,6 +123,22 @@ export const selectIsSaveAsDialogOpen: DashboardSelector<boolean> = createSelect
 );
 
 /**
+ * @internal
+ */
+export const selectIsInsightNotSavedDialogOpen: DashboardSelector<boolean> = createSelector(
+    selectSelf,
+    (state) => state.insightNotSavedDialog.open,
+);
+
+/**
+ * @internal
+ */
+export const selectIsInsightNotSavedDialogSaveConfirmed: DashboardSelector<boolean> = createSelector(
+    selectSelf,
+    (state) => state.insightNotSavedDialog.saveConfirmed,
+);
+
+/**
  * @alpha
  */
 export const selectIsShareDialogOpen: DashboardSelector<boolean> = createSelector(

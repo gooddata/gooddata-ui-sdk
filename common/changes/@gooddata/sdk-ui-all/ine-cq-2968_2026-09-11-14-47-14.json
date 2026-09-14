@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "Keep arrow keys inside a rich text editor instead of navigating the surrounding menu",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "ivan.nejezchleb@gooddata.com"
+}

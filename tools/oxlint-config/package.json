@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/oxlint-config",
-    "version": "11.57.0-alpha.1",
+    "version": "11.57.0-alpha.3",
     "license": "MIT",
     "author": "GoodData",
     "repository": {
@@ -48,14 +48,12 @@
         "validate": "npm run lint && npm run format-check"
     },
     "devDependencies": {
-        "@eslint/js": "9.28.0",
         "@gooddata/eslint-config": "workspace:*",
         "@gooddata/lint-config": "workspace:*",
         "@testing-library/dom": "10.4.1",
         "@types/node": "24.12.0",
         "@typescript-eslint/eslint-plugin": "8.58.0",
         "@typescript-eslint/parser": "8.58.0",
-        "@vitest/eslint-plugin": "1.6.19",
         "eslint": "^9.39.2",
         "eslint-plugin-chai-friendly": "1.1.0",
         "eslint-plugin-headers": "1.3.3",
@@ -69,8 +67,9 @@
         "globals": "17.2.0",
         "jiti": "2.6.1",
         "oxfmt": "0.66.0",
-        "oxlint": "1.57.0",
-        "oxlint-tsgolint": "0.18.1",
+        "oxlint": "1.67.0",
+        "oxlint-plugin-eslint": "1.82.0",
+        "oxlint-tsgolint": "0.22.1",
         "react": "19.1.1",
         "react-dom": "19.1.1",
         "storybook": "^10.5.6",
@@ -82,6 +81,7 @@
         "eslint-plugin-no-barrel-files": "1.2.2",
         "eslint-plugin-sonarjs": "3.0.6",
         "oxlint": "^1.57.0",
-        "oxlint-tsgolint": "0.15.0"
+        "oxlint-plugin-eslint": "1.82.0",
+        "oxlint-tsgolint": "0.22.1"
     }
 }

@@ -154,6 +154,19 @@ const closeSaveAsDialog: UiReducer = (state) => {
     state.saveAsDialog.open = false;
 };
 
+const openInsightNotSavedDialog: UiReducer = (state) => {
+    state.insightNotSavedDialog.open = true;
+};
+
+const closeInsightNotSavedDialog: UiReducer = (state) => {
+    state.insightNotSavedDialog.open = false;
+    state.insightNotSavedDialog.saveConfirmed = false;
+};
+
+const confirmInsightNotSavedDialogSubmit: UiReducer = (state) => {
+    state.insightNotSavedDialog.saveConfirmed = true;
+};
+
 const openSettingsDialog: UiReducer = (state) => {
     state.settingsDialog.open = true;
 };
@@ -525,6 +538,9 @@ export const uiReducers = {
     closeAlertingDialog,
     openSaveAsDialog,
     closeSaveAsDialog,
+    openInsightNotSavedDialog,
+    closeInsightNotSavedDialog,
+    confirmInsightNotSavedDialogSubmit,
     setFilterBarExpanded,
     closeKpiAlertDialog,
     openKpiAlertDialog,

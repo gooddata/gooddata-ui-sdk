@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { useCallback, useState, useEffect } from "react";
 
@@ -6,7 +6,6 @@ import { idRef } from "@gooddata/sdk-model";
 import { ErrorComponent, LoadingComponent } from "@gooddata/sdk-ui";
 import { DashboardConfig } from "@gooddata/sdk-ui-dashboard";
 import { IEmbeddedPlugin, useDashboardLoaderWithPluginManipulation } from "@gooddata/sdk-ui-loaders";
-
 
 function addScriptTag(url: string): { element: HTMLScriptElement; promise: Promise<void> } {
     const element = document.createElement("script");
@@ -20,7 +19,7 @@ function addScriptTag(url: string): { element: HTMLScriptElement; promise: Promi
         }
 
         element.onload = () => {
-            // eslint-disable-next-line no-console
+            // oxlint-disable-next-line eslint-js/no-console
             console.log(`Dynamic Script Loaded: ${url}`);
             resolve();
         };
@@ -40,11 +39,7 @@ function addScriptTag(url: string): { element: HTMLScriptElement; promise: Promi
     };
 }
 
-function loadEntry(
-    moduleName: string,
-    __webpack_init_sharing__: any,
-    __webpack_share_scopes__: any,
-) {
+function loadEntry(moduleName: string, __webpack_init_sharing__: any, __webpack_share_scopes__: any) {
     return async () => {
         // Initializes the share scope. This fills it with known provided modules from this build and all remotes
         await __webpack_init_sharing__("default");
@@ -78,15 +73,20 @@ const useDynamicPlugins = () => {
                 const scriptTag = addScriptTag(`https://localhost:8000/plugin/${moduleName}.mjs`);
                 await scriptTag.promise;
 
-                const entry = await loadEntry(moduleName, __webpack_init_sharing__, __webpack_share_scopes__)();
-
+                const entry = await loadEntry(
+                    moduleName,
+                    __webpack_init_sharing__,
+                    __webpack_share_scopes__,
+                )();
 
                 const pluginFactory = await (window as any)[moduleName].get(entry.pluginKey);
                 const plugin = pluginFactory();
                 const resultingFactory = plugin.default;
 
-                if(PLUGIN_PARAMETERS) {
-                    setPlugins([{ factory: resultingFactory , parameters: JSON.stringify(PLUGIN_PARAMETERS) }]);
+                if (PLUGIN_PARAMETERS) {
+                    setPlugins([
+                        { factory: resultingFactory, parameters: JSON.stringify(PLUGIN_PARAMETERS) },
+                    ]);
                 } else {
                     setPlugins([{ factory: resultingFactory }]);
                 }
@@ -122,10 +122,9 @@ export const PluginLoaderWrapper = (props: any) => {
         return <ErrorComponent message={pluginError.message} />;
     }
     return <PluginLoader {...props} plugz={dynamicPlugins} />;
-}
+};
 
 export const PluginLoader = (props: any) => {
-
     const { loaderStatus, reloadPlugins, setExtraPlugins, extraPlugins, hidePluginOverlays } =
         useDashboardLoaderWithPluginManipulation({
             dashboard: DashboardRef,

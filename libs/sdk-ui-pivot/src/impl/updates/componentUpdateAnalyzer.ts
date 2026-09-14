@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { isEqual } from "lodash-es";
 
 import { type IPreparedExecution } from "@gooddata/sdk-backend-spi";
@@ -57,7 +58,7 @@ export class ComponentUpdateAnalyzer {
         );
 
         if (!drillingIsSame) {
-            // eslint-disable-next-line no-console
+            // oxlint-disable-next-line eslint-js/no-console
             console.debug(
                 "drilling is different",
                 prevProps.drillableItems,
@@ -79,7 +80,7 @@ export class ComponentUpdateAnalyzer {
                 );
 
                 if (!initializeForSameExec) {
-                    // eslint-disable-next-line no-console
+                    // oxlint-disable-next-line eslint-js/no-console
                     console.debug(
                         "initializer for different execution",
                         this.context.props.execution,
@@ -93,7 +94,7 @@ export class ComponentUpdateAnalyzer {
                     this.context.props.execution.fingerprint() === prevProps.execution.fingerprint();
 
                 if (!prepExecutionSame) {
-                    // eslint-disable-next-line no-console
+                    // oxlint-disable-next-line eslint-js/no-console
                     console.debug("have to reinit table", this.context.props.execution, prevProps.execution);
                 }
 
@@ -170,7 +171,7 @@ export class ComponentUpdateAnalyzer {
      * Logs reinit debug information.
      */
     public logReinitDebug(prevExecution: IPreparedExecution): void {
-        // eslint-disable-next-line no-console
+        // oxlint-disable-next-line eslint-js/no-console
         console.debug("triggering reinit", this.context.props.execution.definition, prevExecution.definition);
     }
 }

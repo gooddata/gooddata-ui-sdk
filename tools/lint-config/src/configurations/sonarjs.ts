@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import type { IPackage, Rules } from "../types.js";
+import type { IOverride, IPackage, Rules } from "../types.js";
 
 export const sonarjsPlugin: IPackage = {
     name: "eslint-plugin-sonarjs",
@@ -285,12 +285,12 @@ export const sonarjsRules: Rules<"sonarjs"> = {
     "sonarjs/no-control-regex": "off",
 };
 
-export const sonarjsOverrides = [
+export const sonarjsOverrides: IOverride<"sonarjs">[] = [
     {
         files: ["*.test.ts", "*.test.tsx", "*.spec.ts"],
         rules: {
             // we do not care about duplicate functions in test files, they often make sense (e.g. in different describe blocks)
             "sonarjs/no-identical-functions": "off",
-        } as Rules<"sonarjs">,
+        },
     },
 ];

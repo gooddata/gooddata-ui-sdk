@@ -21,8 +21,9 @@ export interface IScheduledEmailManagementDialogContextValue {
      */
     isScheduleEmailDialogOpen: boolean;
     /**
-     * Monotonic counter that increments whenever the automation list is invalidated.
-     * Consumers can use this as a cache-bust key for re-fetching.
+     * Cache-bust counter for the automation list: reset to 0 when a management dialog opens,
+     * incremented on invalidation. 0 means nothing has been invalidated since the dialog opened;
+     * consumers reload when the value changes and is not 0.
      */
     automationsInvalidationId?: number;
     /**

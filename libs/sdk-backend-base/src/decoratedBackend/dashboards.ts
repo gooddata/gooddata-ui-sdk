@@ -103,8 +103,8 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
         return this.decorated.getDashboardReferencedObjects(dashboard, types);
     }
 
-    createDashboard(dashboard: IDashboardDefinition): Promise<IDashboard> {
-        return this.decorated.createDashboard(dashboard);
+    createDashboard(dashboard: IDashboardDefinition, generateId?: boolean): Promise<IDashboard> {
+        return this.decorated.createDashboard(dashboard, generateId);
     }
 
     updateDashboard(dashboard: IDashboard, updatedDashboard: IDashboardDefinition): Promise<IDashboard> {

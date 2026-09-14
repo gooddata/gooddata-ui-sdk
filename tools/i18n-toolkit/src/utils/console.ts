@@ -1,6 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
-/* eslint-disable no-console */
+// oxlint-disable eslint-js/no-console
 
 import * as path from "path";
 

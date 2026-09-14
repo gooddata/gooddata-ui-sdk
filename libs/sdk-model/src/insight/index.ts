@@ -54,8 +54,38 @@ import { type IUser } from "../user/index.js";
  *
  * @public
  */
-export type IInsight = IInsightDefinition & {
-    insight: IAuditable & {
+export type IInsight = IInsightDefinition &
+    IInsightIdentity & {
+        insight: IAuditable & {
+            /**
+             * Insight is locked for editing & deleting
+             */
+            isLocked?: boolean;
+
+            /**
+             * Insight is draft only, its not saved yet
+             */
+            isDraft?: boolean;
+
+            /**
+             * Certification metadata.
+             * @internal
+             */
+            certification?: IObjectCertification;
+        };
+    };
+
+/**
+ * Identity of an Insight. Insight is typically created using Analytical Designer
+ * and can be embedded using UI SDK.
+ *
+ * @remarks
+ * Identity of an Insight contains all metadata needed to reference the Insight.
+ *
+ * @public
+ */
+export type IInsightIdentity = {
+    insight: {
         /**
          * Unique identifier of the Insight
          */
@@ -70,17 +100,6 @@ export type IInsight = IInsightDefinition & {
          * Object to use when referencing insight.
          */
         ref: ObjRef;
-
-        /**
-         * Insight is locked for editing & deleting
-         */
-        isLocked?: boolean;
-
-        /**
-         * Certification metadata.
-         * @internal
-         */
-        certification?: IObjectCertification;
     };
 };
 
@@ -202,6 +221,16 @@ export type IInsightDefinition = {
         /** Whether the insight is hidden; author-owned, so it can be set before the insight is created. */
         isHidden?: boolean;
     };
+};
+
+/**
+ * Insight definition specifies what and how should be visualized by an insight
+ * with optional identity.
+ *
+ * @public
+ */
+export type IInsightDefinitionWithOptionalIdentity = IInsightDefinition & {
+    insight: Partial<IInsightIdentity["insight"]>;
 };
 
 /**

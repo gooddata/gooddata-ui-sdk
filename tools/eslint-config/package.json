@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/eslint-config",
-    "version": "11.57.0-alpha.1",
+    "version": "11.57.0-alpha.3",
     "license": "MIT",
     "author": "GoodData",
     "repository": {
@@ -135,7 +135,7 @@
         "validate": "npm run lint && npm run format-check"
     },
     "devDependencies": {
-        "@eslint/js": "9.28.0",
+        "@eslint/js": "9.39.5",
         "@gooddata/lint-config": "workspace:*",
         "@testing-library/dom": "10.4.1",
         "@types/node": "24.12.0",

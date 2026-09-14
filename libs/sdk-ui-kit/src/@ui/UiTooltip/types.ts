@@ -48,7 +48,11 @@ export interface IUiTooltipProps {
     /** Whether to show the arrow pointer */
     showArrow?: boolean;
 
-    /** Width of the tooltip in pixels, 'same-as-anchor' to match anchor width, if not specified tooltip will be as wide as content */
+    /**
+     * Width of the tooltip in pixels, 'same-as-anchor' to match anchor width. If not specified, the
+     * tooltip is as wide as its content, but no wider than `--gd-tooltip-maxWidth` (300px by default).
+     * A value set here is a fixed width and also removes that cap.
+     */
     width?: number | "same-as-anchor";
 
     /** Distance in pixels between tooltip and anchor element, default is arrow height */

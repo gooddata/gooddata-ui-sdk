@@ -33,7 +33,11 @@ import {
 } from "./pageLayout.js";
 import { isReport, isReportDefinition, isReportTemplate, isReportTemplateDefinition } from "./report.js";
 import { isReportImageSlot, isReportSlot, isReportTextSlot, isReportVisualizationSlot } from "./slot.js";
-import { getReportTextPlaceholders, resolveReportTextPlaceholders } from "./variables.js";
+import {
+    getReportTextPlaceholders,
+    reportTextPlaceholder,
+    resolveReportTextPlaceholders,
+} from "./variables.js";
 
 const body: IReportPageBody = {
     kind: "content",
@@ -53,22 +57,36 @@ const body: IReportPageBody = {
 
 describe("placeholder helpers", () => {
     it("collects distinct placeholders in order of first occurrence", () => {
-        expect(getReportTextPlaceholders("{{periodStart}} to {{periodEnd}} ({{periodStart}})")).toEqual([
+        expect(getReportTextPlaceholders("{periodStart} to {periodEnd} ({periodStart})")).toEqual([
             "periodStart",
             "periodEnd",
         ]);
     });
 
     it("ignores malformed markers", () => {
-        expect(getReportTextPlaceholders("{{1bad}} {{ spaced }} {{}} {{good_1}}")).toEqual(["good_1"]);
+        expect(getReportTextPlaceholders("{1bad} { spaced } {} {good_1}")).toEqual(["good_1"]);
+    });
+
+    it("resolves a marker inside braces, leaving the braces in place", () => {
+        expect(getReportTextPlaceholders("{{periodStart}}")).toEqual(["periodStart"]);
+        expect(resolveReportTextPlaceholders("{{a}}", { a: "1" })).toBe("{1}");
+    });
+
+    it("reads markers written back to back", () => {
+        expect(getReportTextPlaceholders("{a}{b}")).toEqual(["a", "b"]);
+        expect(resolveReportTextPlaceholders("{a}{b}", { a: "1", b: "2" })).toBe("12");
+    });
+
+    it("builds a marker the collector reads back", () => {
+        expect(getReportTextPlaceholders(reportTextPlaceholder("periodStart"))).toEqual(["periodStart"]);
     });
 
     it("resolves known values and keeps unknown markers", () => {
-        expect(resolveReportTextPlaceholders("{{a}} and {{b}}", { a: "1" })).toBe("1 and {{b}}");
+        expect(resolveReportTextPlaceholders("{a} and {b}", { a: "1" })).toBe("1 and {b}");
     });
 
     it("does not expand values recursively", () => {
-        expect(resolveReportTextPlaceholders("{{a}}", { a: "{{b}}", b: "x" })).toBe("{{b}}");
+        expect(resolveReportTextPlaceholders("{a}", { a: "{b}", b: "x" })).toBe("{b}");
     });
 });
 

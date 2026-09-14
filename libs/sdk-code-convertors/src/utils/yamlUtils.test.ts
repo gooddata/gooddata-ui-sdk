@@ -13,31 +13,33 @@ describe("yamlUtils", () => {
 
         it("should throw error with context when reference type is not supported", () => {
             const context = { type: "test", path: ["root"] };
+            let error: ICoreError | undefined;
             try {
                 getIdentifier({ uri: "/foo" }, true, context);
-                expect.fail("Should have thrown error");
             } catch (err: unknown) {
-                const error = err as ICoreError;
-                expect(error.code).toBe(CoreErrorCode.ReferenceTypeNotSupported);
-                expect(error.context).toEqual(context);
-                expect(error.message).toContain("in: root");
+                error = err as ICoreError;
             }
+            expect(error).toBeDefined();
+            expect(error?.code).toBe(CoreErrorCode.ReferenceTypeNotSupported);
+            expect(error?.context).toEqual(context);
+            expect(error?.message).toContain("in: root");
         });
     });
 
     describe("createFilterContextItemKeyName", () => {
         it("should throw error with context for unsupported item", () => {
             const context = { type: "test", path: ["dashboard"] };
+            let error: ICoreError | undefined;
             try {
                 // @ts-expect-error - passing invalid item
                 createFilterContextItemKeyName({ unknown: "item" }, "date", context);
-                expect.fail("Should have thrown error");
             } catch (err: unknown) {
-                const error = err as ICoreError;
-                expect(error.code).toBe(CoreErrorCode.ItemNotSupported);
-                expect(error.context).toEqual(context);
-                expect(error.message).toContain("in: dashboard");
+                error = err as ICoreError;
             }
+            expect(error).toBeDefined();
+            expect(error?.code).toBe(CoreErrorCode.ItemNotSupported);
+            expect(error?.context).toEqual(context);
+            expect(error?.message).toContain("in: dashboard");
         });
 
         it("should propagate context to getIdentifier in date filter", () => {
@@ -48,29 +50,31 @@ describe("yamlUtils", () => {
                     granularity: "GDC.time.year",
                 },
             };
+            let error: ICoreError | undefined;
             try {
                 createFilterContextItemKeyName(item, "date", context);
-                expect.fail("Should have thrown error");
             } catch (err: unknown) {
-                const error = err as ICoreError;
-                expect(error.context?.path).toEqual(["dashboard", "dateFilter", "dataSet"]);
+                error = err as ICoreError;
             }
+            expect(error).toBeDefined();
+            expect(error?.context?.path).toEqual(["dashboard", "dateFilter", "dataSet"]);
         });
     });
 
     describe("createFilterItemKeyName", () => {
         it("should throw error with context for unsupported item", () => {
             const context = { type: "test", path: ["filter"] };
+            let error: ICoreError | undefined;
             try {
                 // @ts-expect-error - passing invalid item
                 createFilterItemKeyName({ unknown: "item" }, "date", context);
-                expect.fail("Should have thrown error");
             } catch (err: unknown) {
-                const error = err as ICoreError;
-                expect(error.code).toBe(CoreErrorCode.ItemNotSupported);
-                expect(error.context).toEqual(context);
-                expect(error.message).toContain("in: filter");
+                error = err as ICoreError;
             }
+            expect(error).toBeDefined();
+            expect(error?.code).toBe(CoreErrorCode.ItemNotSupported);
+            expect(error?.context).toEqual(context);
+            expect(error?.message).toContain("in: filter");
         });
 
         it("should propagate context to getIdentifier in absolute date filter", () => {
@@ -80,13 +84,14 @@ describe("yamlUtils", () => {
                     dataSet: { uri: "/foo" }, // invalid for getIdentifier
                 },
             };
+            let error: ICoreError | undefined;
             try {
                 createFilterItemKeyName(item, "date", context);
-                expect.fail("Should have thrown error");
             } catch (err: unknown) {
-                const error = err as ICoreError;
-                expect(error.context?.path).toEqual(["filter", "absoluteDateFilter", "dataSet"]);
+                error = err as ICoreError;
             }
+            expect(error).toBeDefined();
+            expect(error?.context?.path).toEqual(["filter", "absoluteDateFilter", "dataSet"]);
         });
     });
 });

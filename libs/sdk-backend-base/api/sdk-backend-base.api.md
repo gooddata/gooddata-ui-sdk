@@ -108,6 +108,7 @@ import { IGetVisualizationClassesOptions } from '@gooddata/sdk-backend-spi';
 import { IGroupableCatalogItemBase } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
+import { IInsightDefinitionWithOptionalIdentity } from '@gooddata/sdk-model';
 import { IInsightReferences } from '@gooddata/sdk-backend-spi';
 import { IInsightReferencing } from '@gooddata/sdk-backend-spi';
 import { IInsightsQuery } from '@gooddata/sdk-backend-spi';
@@ -689,7 +690,7 @@ export abstract class DecoratedWorkspaceCatalogFactory implements IWorkspaceCata
 export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceDashboardsService {
     protected constructor(decorated: IWorkspaceDashboardsService, workspace: string);
     // (undocumented)
-    createDashboard(dashboard: IDashboardDefinition): Promise<IDashboard>;
+    createDashboard(dashboard: IDashboardDefinition, generateId?: boolean): Promise<IDashboard>;
     // (undocumented)
     createDashboardPlugin(plugin: IDashboardPluginDefinition): Promise<IDashboardPlugin>;
     // (undocumented)
@@ -803,7 +804,7 @@ export abstract class DecoratedWorkspaceExportTemplatesService implements IWorks
 export abstract class DecoratedWorkspaceInsightsService implements IWorkspaceInsightsService {
     protected constructor(decorated: IWorkspaceInsightsService, workspace: string);
     // (undocumented)
-    createInsight(insight: IInsightDefinition): Promise<IInsight>;
+    createInsight(insight: IInsightDefinitionWithOptionalIdentity, generateId?: boolean): Promise<IInsight>;
     // (undocumented)
     protected readonly decorated: IWorkspaceInsightsService;
     // (undocumented)

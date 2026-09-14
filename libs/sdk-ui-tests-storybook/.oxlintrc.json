@@ -19,6 +19,12 @@
                 "@typescript-eslint/no-unsafe-call": "warn",
                 "@typescript-eslint/no-explicit-any": "warn"
             }
+        },
+        {
+            "files": ["**/*.stories.tsx"],
+            "rules": {
+                "eslint-js/no-restricted-exports": "off"
+            }
         }
     ]
 }

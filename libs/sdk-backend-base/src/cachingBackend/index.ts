@@ -83,7 +83,7 @@ import {
     type IFiscalYear,
     type IGeoJsonFeature,
     type IInsight,
-    type IInsightDefinition,
+    type IInsightDefinitionWithOptionalIdentity,
     type IMeasure,
     type IMeasureDefinitionType,
     type IMetadataObject,
@@ -2367,9 +2367,12 @@ class WithInsightsCaching extends DecoratedWorkspaceInsightsService {
 
     // Insight mutations are not cached, but they must invalidate the read cache so that edits
     // made during a session are never served stale (the SDK has no separate invalidation signal).
-    public override async createInsight(insight: IInsightDefinition): Promise<IInsight> {
+    public override async createInsight(
+        insight: IInsightDefinitionWithOptionalIdentity,
+        generateId?: boolean,
+    ): Promise<IInsight> {
         try {
-            return await super.createInsight(insight);
+            return await super.createInsight(insight, generateId);
         } finally {
             this.invalidateCache();
         }

@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-/* oxlint-disable no-barrel-files/no-barrel-files */
+// oxlint-disable no-barrel-files/no-barrel-files, eslint-js/no-restricted-syntax
 
 import * as ReferenceMdExt from "./md/ext.js";
 import * as ReferenceMd from "./md/full.js";

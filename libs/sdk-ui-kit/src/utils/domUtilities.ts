@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type KeyboardEvent } from "react";
 
@@ -144,7 +144,12 @@ export const isElementTextInput = (element: HTMLElement | EventTarget | null | u
 
     return (
         tagNameInLowercase === "textarea" ||
-        (tagNameInLowercase === "input" && (typeInLowercase === "text" || typeInLowercase === "number"))
+        (tagNameInLowercase === "input" && (typeInLowercase === "text" || typeInLowercase === "number")) ||
+        // A rich text editor (CodeMirror, for one) puts the caret in a contenteditable host rather
+        // than in a form control, and the caret usually sits in a descendant of that host. Read the
+        // editability the browser resolved rather than the attribute: it accounts for inheritance and
+        // stays false for contenteditable="false", so a read-only editor does not count as text entry.
+        (element as HTMLElement).isContentEditable === true
     );
 };
 

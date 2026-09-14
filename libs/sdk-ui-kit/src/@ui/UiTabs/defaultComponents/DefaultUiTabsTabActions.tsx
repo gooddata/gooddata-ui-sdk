@@ -130,14 +130,14 @@ export function DefaultUiTabsTabActions<
                         tabIndex={tabIndex}
                     />
                 )}
-                renderBody={({ ariaAttributes, closeDropdown }) => {
+                renderBody={({ ariaAttributes, closeDropdown, triggerId }) => {
                     return (
                         <UiMenu
                             items={menuItems}
                             onSelect={handleItemSelected}
                             onClose={closeDropdown}
                             shouldCloseOnSelect={false}
-                            ariaAttributes={ariaAttributes}
+                            ariaAttributes={{ ...ariaAttributes, "aria-labelledby": triggerId }}
                             maxWidth={160}
                             maxHeight={400}
                             size={"small"}
@@ -155,7 +155,7 @@ export function DefaultUiTabsTabActions<
                 closeOnOutsideClick
                 accessibilityConfig={{
                     triggerRole: "button",
-                    popupRole: "listbox",
+                    popupRole: "menu",
                 }}
                 isOpen={isOpen}
                 onOpenChange={onToggleOpen}

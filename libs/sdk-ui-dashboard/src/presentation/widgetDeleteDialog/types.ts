@@ -14,6 +14,12 @@ export interface IWidgetDeleteDialogProps {
     onDelete: () => void;
     onCancel: () => void;
     widget: IWidget | undefined;
+
+    /**
+     * Whether the widget renders something the current user is not allowed to see. Such a widget must
+     * not be named: its stored title can be the name of the object they have no access to.
+     */
+    isRestricted?: boolean;
 }
 
 /**

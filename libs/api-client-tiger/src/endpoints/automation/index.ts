@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-/* oxlint-disable no-barrel-files/no-barrel-files */
+// oxlint-disable no-barrel-files/no-barrel-files, eslint-js/no-restricted-syntax
 
 // Automation API - Export ActionsAutomation functions with AutomationApi_ prefix
 export {

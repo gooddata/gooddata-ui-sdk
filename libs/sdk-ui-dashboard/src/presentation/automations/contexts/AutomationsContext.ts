@@ -35,9 +35,23 @@ import type { IAutomationFiltersTab } from "../../../model/store/filtering/types
  * @beta
  */
 export interface IAutomationsDateFilterConfig {
+    /** Granularities from the dashboard's effective (resolved) date-filter configuration; the fallback when no tab-scoped value is available. */
     availableGranularities: DateFilterGranularity[];
+    /** Date-filter options (presets) from the dashboard's effective (resolved) date-filter configuration; the fallback when no tab-scoped value is available. */
     dateFilterOptions: IDateFilterOptionsByType;
+    /**
+     * Granularities from the given dashboard tab's effective (resolved) date-filter configuration —
+     * inherited settings included, not only tab-specific overrides. Empty when the tab has no
+     * effective configuration, in which case the caller falls back to
+     * {@link IAutomationsDateFilterConfig.availableGranularities}.
+     */
     getGranularitiesForTab: (tabId: string) => DateFilterGranularity[];
+    /**
+     * Date-filter options from the given dashboard tab's effective (resolved) date-filter
+     * configuration — inherited settings included, not only tab-specific overrides. Undefined when
+     * the tab has no effective configuration, in which case the caller falls back to
+     * {@link IAutomationsDateFilterConfig.dateFilterOptions}.
+     */
     getOptionsForTab: (tabId: string) => IDateFilterOptionsByType | undefined;
 }
 
@@ -70,37 +84,76 @@ export interface IAutomationsParameters {
  * @beta
  */
 export interface IAutomationsContextValue {
+    /** Workspace locale for message formatting and number/date localization; from selectLocale. */
     locale: ILocale;
+    /** Number formatting separators (decimal/thousands); from selectSeparators. */
     separators: ISeparators;
+    /** Workspace/dashboard feature settings object; from selectSettings. */
     settings?: ISettings;
+    /** Workspace attribute catalog, including computed attributes; from selectCatalogAttributesWithComputed. */
     catalogAttributes: ICatalogAttribute[];
+    /** Workspace date dataset catalog; from selectCatalogDateDatasets. */
     catalogDateDatasets: ICatalogDateDataset[];
+    /** Workspace measure catalog; from selectCatalogMeasures. */
     catalogMeasures: ICatalogMeasure[];
+    /** Date filter granularities and presets for automation date filter chips; see {@link IAutomationsDateFilterConfig}. */
     dateFilterConfig: IAutomationsDateFilterConfig;
+    /**
+     * Persisted common date filter config for the active tab, used for its custom title;
+     * from selectPersistedDashboardFilterContextDateFilterConfig.
+     */
     dateFilterContextConfig: IDashboardDateFilterConfig | undefined;
+    /** Dashboard-level attribute filter config overrides for the active tab; from selectAttributeFilterConfigsOverrides. */
     attributeFilterConfigs: IDashboardAttributeFilterConfig[];
+    /** Same as {@link IAutomationsContextValue.attributeFilterConfigs}, keyed by tab identifier; from selectAttributeFilterConfigsOverridesByTab. */
     attributeFilterConfigsByTab: Record<string, IDashboardAttributeFilterConfig[]>;
+    /** Attribute filter selection type (single/multi) by local identifier for the active tab; from selectAttributeFilterConfigsSelectionTypeMap. */
     attributeFilterSelectionTypeMap: Map<string, DashboardAttributeFilterSelectionType | undefined>;
+    /** Same as {@link IAutomationsContextValue.attributeFilterSelectionTypeMap}, keyed by tab identifier; from selectAttributeFilterConfigsSelectionTypeMapByTab. */
     attributeFilterSelectionTypeMapByTab: Record<
         string,
         Map<string, DashboardAttributeFilterSelectionType | undefined>
     >;
+    /** Per-dataset (dimension) date filter config overrides for the active tab; from selectDateFilterConfigsOverrides. */
     dateFilterConfigs: IDashboardDateFilterConfigItem[];
+    /** Same as {@link IAutomationsContextValue.dateFilterConfigs}, keyed by tab identifier; from selectDateFilterConfigsOverridesByTab. */
     dateFilterConfigsByTab: Record<string, IDashboardDateFilterConfigItem[]>;
+    /** Dashboard-level common (whole-dashboard) date filter config override, keyed by tab identifier; from selectDateFilterConfigOverridesByTab. */
     dateFilterConfigOverridesByTab: Record<string, IDashboardDateFilterConfig | undefined>;
+    /** Dashboard-level measure value filter config overrides for the active tab; from selectMeasureValueFilterConfigsOverrides. */
     measureValueFilterConfigs: IDashboardMeasureValueFilterConfig[];
+    /** Same as {@link IAutomationsContextValue.measureValueFilterConfigs}, keyed by tab identifier; from selectMeasureValueFilterConfigsOverridesByTab. */
     measureValueFilterConfigsByTab: Record<string, IDashboardMeasureValueFilterConfig[]>;
+    /** Local identifier of the dashboard's common date filter, when the automation-available filters include one; from selectAutomationCommonDateFilterId. */
     commonDateFilterId: string | undefined;
+    /** Dashboard filters configured as read-only (locked); from selectDashboardLockedFilters. */
     lockedFilters: FilterContextItem[];
+    /** Dashboard filters configured as hidden; from selectDashboardHiddenFilters. */
     hiddenFilters: FilterContextItem[];
+    /** Dashboard's applied filters with cross-filtering filters removed; from selectDashboardFiltersWithoutCrossFiltering. */
     availableFilters: FilterContextItem[];
+    /** Automation-available filters structured per dashboard tab, for whole-dashboard automations on a tabbed dashboard; from selectAutomationFiltersByTab. */
     automationFiltersByTab: IAutomationFiltersTab[];
+    /** Automation-available filters with empty (all-values) filters removed; preselects filters for a new automation. From selectAutomationDefaultSelectedFilters. */
     defaultSelectedFilters: FilterContextItem[];
+    /** Dashboard filters available to an automation — hidden filters removed, common date filter included; from selectAutomationAvailableDashboardFilters. */
     automationAvailableFilters: FilterContextItem[];
+    /**
+     * Maximum number of recipients allowed on an automation, derived from the recipient-count
+     * entitlement (`Infinity` when the unlimited-recipients entitlement is present); from
+     * selectMaxAutomationRecipients.
+     */
     maxAutomationsRecipients: number;
+    /**
+     * Whether the dashboard is opened at a past execution timestamp (a scheduled run's historical
+     * snapshot); disables create/save actions in the dialogs. Derived from selectExecutionTimestamp.
+     */
     isExecutionTimestampMode: boolean;
+    /** Whether the workspace's minimum-recurrence entitlement permits hourly schedules; derived from selectEntitlementMinimumRecurrenceMinutes. */
     allowHourlyRecurrence: boolean;
+    /** The logged-in user; from selectCurrentUser. */
     currentUser: IUser;
+    /** The workspace's configured first day of the week; from selectWeekStart. */
     weekStart: WeekStart;
     /**
      * Automation timezone to display and compute schedule ("Starts on", alert crons, next-run):
@@ -142,18 +195,30 @@ export interface IAutomationsContextValue {
          */
         scheduledExportTimezone: string | undefined;
     };
+    /** Whether the dashboard is white-labeled (hides GoodData branding and help links); from selectIsWhiteLabeled. */
     isWhiteLabeled: boolean;
+    /** Whether the dialog header renders a secondary title row below the main title; always true in the current hydration. */
     isSecondaryTitleVisible: boolean;
+    /** External (non-workspace) recipient the dialog is scoped to, when opened via an external share link; from selectExternalRecipient. */
     externalRecipient: string | undefined;
+    /** Feature flags and permissions gating automation dialog behavior. */
     features: {
+        /** Whether the current user may create new automations; gates the management dialogs' create button. From selectCanCreateAutomation. */
         canCreateAutomation: boolean;
+        /** Whether the "once per interval" alert trigger option is offered; from selectEnableAlertOncePerInterval. */
         enableAlertOncePerInterval: boolean;
+        /** Whether anomaly-detection alert conditions are offered; from selectEnableAnomalyDetectionAlert. */
         enableAnomalyDetectionAlert: boolean;
+        /** Whether the current user may use the AI assistant; combined with enableAnomalyDetectionAlert to gate anomaly-detection alert conditions. From selectCanUseAiAssistant. */
         canUseAiAssistant: boolean;
+        /** Whether the current user may manage the workspace; from selectCanManageWorkspace. */
         canManageWorkspace: boolean;
+        /** Whether scheduled slideshow (PDF slides) exports are offered; from selectEnableSlideshowExports. */
         enableSlideshowExports: boolean;
+        /** Whether the automation evaluation-mode setting is enabled; from selectEnableAutomationEvaluationMode. */
         enableAutomationEvaluationMode: boolean;
     };
+    /** Workspace parameter catalog and effective dashboard parameter values for automations; see {@link IAutomationsParameters}. */
     parameters: IAutomationsParameters;
     /**
      * Local identifiers of the dashboard's tabs, in layout order; empty when the dashboard has none.
@@ -163,7 +228,13 @@ export interface IAutomationsContextValue {
     tabIds: string[];
     /** Maps a widget's localIdentifier to the localIdentifier of the tab that owns it. */
     widgetLocalIdToTabIdMap: Record<string, string>;
+    /** Looks up a catalog attribute (or date attribute) by ref; backed by selectAllCatalogAttributesMap. Used to resolve attribute names for filter labels. */
     getCatalogAttributeByRef: (ref: ObjRef) => ICatalogAttribute | ICatalogDateAttribute | undefined;
+    /**
+     * Looks up an attribute filter's display form by ref, preferring the dashboard's own attribute
+     * filter display forms before falling back to the workspace catalog; combines
+     * selectAttributeFilterDisplayFormsMap and selectAllCatalogDisplayFormsMap.
+     */
     getAttributeFilterDisplayForm: (displayForm: ObjRef) => IAttributeDisplayFormMetadataObject | undefined;
     /**
      * Element ID to return focus to when the scheduled-email dialog closes.

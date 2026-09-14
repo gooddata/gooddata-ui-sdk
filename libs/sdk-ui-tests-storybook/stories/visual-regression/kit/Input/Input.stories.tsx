@@ -16,7 +16,7 @@ const AutofocsExamples = memo(function AutofocsExamples() {
             <h4>Input without autofocus</h4>
 
             <Input
-                onChange={(val) => console.log(val)} // eslint-disable-line no-console
+                onChange={(val) => console.log(val)} // oxlint-disable-line eslint-js/no-console
                 placeholder="Search attributes..."
                 autofocus={autofocus1}
             />
@@ -26,7 +26,7 @@ const AutofocsExamples = memo(function AutofocsExamples() {
 
             <h4>Input with autofocus</h4>
             <Input
-                onChange={(val) => console.log(val)} // eslint-disable-line no-console
+                onChange={(val) => console.log(val)} // oxlint-disable-line eslint-js/no-console
                 placeholder="Search attributes..."
                 autofocus
             />
@@ -38,7 +38,7 @@ const AutofocsExamples = memo(function AutofocsExamples() {
             </p>
             <div style={{ display: "none" }}>
                 <Input
-                    onChange={(val) => console.log(val)} // eslint-disable-line no-console
+                    onChange={(val) => console.log(val)} // oxlint-disable-line eslint-js/no-console
                     placeholder="Search attributes..."
                     autofocus
                 />

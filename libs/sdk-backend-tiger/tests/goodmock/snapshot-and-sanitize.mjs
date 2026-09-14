@@ -78,5 +78,5 @@ for (const mapping of sanitized) {
 }
 
 writeFileSync(outputPath, JSON.stringify({ mappings: sanitized }, null, 4) + "\n");
-// eslint-disable-next-line no-console
+// oxlint-disable-next-line eslint-js/no-console
 console.log(`Wrote ${sanitized.length} mappings to ${outputPath}`);

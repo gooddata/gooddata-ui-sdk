@@ -9,6 +9,7 @@ import { ConfirmDialog } from "@gooddata/sdk-ui-kit";
 
 import { eagerRemoveSectionItemByWidgetRef } from "../../model/commands/layout.js";
 import { useDashboardDispatch, useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
+import { useIsWidgetRestricted } from "../../model/react/useIsWidgetRestricted.js";
 import { dispatchAndWaitFor } from "../../model/store/_infra/dispatchAndWaitFor.js";
 import {
     selectDashboardUserAutomationAlertsInContext,
@@ -29,6 +30,9 @@ const deleteMessages = defineMessages({
     },
     objects: {
         id: "deleteWidgetDialog.objectsMessage",
+    },
+    objectsRestricted: {
+        id: "deleteWidgetDialog.objectsMessage.restricted",
     },
     alerts: {
         id: "deleteWidgetDialog.alerts",
@@ -62,6 +66,7 @@ export function useWidgetDeleteDialogProps(): IWidgetDeleteDialogProps {
     }, [dispatch, widget]);
 
     const isVisible = useDashboardSelector(selectIsWidgetDeleteDialogOpen);
+    const isRestricted = useIsWidgetRestricted(widget!);
     const alerts = useDashboardSelector(
         selectDashboardUserAutomationAlertsInContext(widget?.localIdentifier),
     );
@@ -76,6 +81,7 @@ export function useWidgetDeleteDialogProps(): IWidgetDeleteDialogProps {
         onCancel,
         onDelete,
         widget,
+        isRestricted,
     };
 }
 
@@ -89,6 +95,7 @@ export function DefaultWidgetDeleteDialog({
     onDelete,
     onCancel,
     widget,
+    isRestricted = false,
 }: IWidgetDeleteDialogProps): ReactElement | null {
     const intl = useIntl();
 
@@ -113,7 +120,11 @@ export function DefaultWidgetDeleteDialog({
             submitButtonText={intl.formatMessage(deleteMessages.delete)}
         >
             <div>
-                <FormattedMessage id={deleteMessages.objects.id} values={{ title: widgetTitle }} />
+                {isRestricted ? (
+                    <FormattedMessage id={deleteMessages.objectsRestricted.id} />
+                ) : (
+                    <FormattedMessage id={deleteMessages.objects.id} values={{ title: widgetTitle }} />
+                )}
                 <ul className="gd-delete-dialog-objects-list">
                     {messages.map((message) => (
                         <li key={message.id}>

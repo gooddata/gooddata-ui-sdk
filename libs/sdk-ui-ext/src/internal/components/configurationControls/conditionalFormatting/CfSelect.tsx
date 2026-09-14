@@ -87,11 +87,11 @@ export function CfSelect<T extends string>({ value, items, onSelect, placeholder
                     accessibilityConfig={{ popupType: "listbox" }}
                 />
             )}
-            renderBody={({ closeDropdown, ariaAttributes }) => (
+            renderBody={({ closeDropdown, ariaAttributes, triggerId }) => (
                 <UiListbox<ISelectItem<T>, null>
                     items={listItems}
                     selectedItemId={value}
-                    ariaAttributes={ariaAttributes}
+                    ariaAttributes={{ ...ariaAttributes, "aria-labelledby": triggerId }}
                     InteractiveItemComponent={CfListItem}
                     onClose={closeDropdown}
                     onSelect={(listItem) => onSelect(listItem.data.value)}

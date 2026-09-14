@@ -4,6 +4,9 @@
     "options": {
         "typeAware": true
     },
+    "rules": {
+        "eslint-js/no-console": "off"
+    },
     "overrides": [
         {
             "files": ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],

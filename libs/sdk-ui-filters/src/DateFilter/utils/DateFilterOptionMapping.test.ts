@@ -49,10 +49,7 @@ describe("matchDateFilterToDateFilterOptionWithPreference", () => {
         );
         expect(excludeCurrentPeriod).toBe(false);
         expect(dateFilterOption.type).toBe("absoluteForm");
-        if (dateFilterOption.type === "absoluteForm") {
-            expect(dateFilterOption.from).toBe("2026-07-01");
-            expect(dateFilterOption.to).toBe("2026-09-30");
-        }
+        expect(dateFilterOption).toMatchObject({ from: "2026-07-01", to: "2026-09-30" });
     });
 });
 

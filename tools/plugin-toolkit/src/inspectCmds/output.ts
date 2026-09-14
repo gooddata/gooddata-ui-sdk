@@ -1,6 +1,7 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
-/* eslint-disable no-console */
+// oxlint-disable eslint-js/no-console
+
 import { isEmpty } from "lodash-es";
 
 export type ObjectSummary = {

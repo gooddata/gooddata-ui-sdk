@@ -30,23 +30,24 @@ describe("error context propagation", () => {
                 },
             };
 
+            let error: ICoreError | undefined;
             try {
                 declarativeDashboardToYaml([], dashboard);
-                expect.fail("Should have thrown error");
             } catch (err: unknown) {
-                const error = err as ICoreError;
-                expect(error.context?.path).toEqual([
-                    "dashboard",
-                    "my_dash",
-                    "layout",
-                    "sections",
-                    "0",
-                    "items",
-                    "0",
-                    "insight",
-                    "visualisation",
-                ]);
+                error = err as ICoreError;
             }
+            expect(error).toBeDefined();
+            expect(error?.context?.path).toEqual([
+                "dashboard",
+                "my_dash",
+                "layout",
+                "sections",
+                "0",
+                "items",
+                "0",
+                "insight",
+                "visualisation",
+            ]);
         });
     });
 
@@ -80,18 +81,14 @@ describe("error context propagation", () => {
                 },
             };
 
+            let error: ICoreError | undefined;
             try {
                 declarativeAttributeHierarchyToYaml(hierarchy);
-                expect.fail("Should have thrown error");
             } catch (err: unknown) {
-                const error = err as ICoreError;
-                expect(error.context?.path).toEqual([
-                    "attribute_hierarchy",
-                    "my_hierarchy",
-                    "attributes",
-                    "0",
-                ]);
+                error = err as ICoreError;
             }
+            expect(error).toBeDefined();
+            expect(error?.context?.path).toEqual(["attribute_hierarchy", "my_hierarchy", "attributes", "0"]);
         });
     });
 });

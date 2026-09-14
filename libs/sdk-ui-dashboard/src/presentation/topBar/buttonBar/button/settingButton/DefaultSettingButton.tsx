@@ -67,7 +67,6 @@ export function DefaultSettingButton({
         <UiTooltip
             arrowPlacement="top-end"
             content={<FormattedMessage {...buttonTitle} />}
-            width={300}
             anchor={
                 <UiIconButton
                     onClick={onSettingClick}

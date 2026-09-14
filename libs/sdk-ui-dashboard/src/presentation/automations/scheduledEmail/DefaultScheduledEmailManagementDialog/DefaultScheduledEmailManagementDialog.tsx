@@ -9,6 +9,9 @@ import { type IScheduledEmailManagementDialogProps } from "../types.js";
 import { DefaultScheduledEmailManagementDialogContent } from "./DefaultScheduledEmailManagementDialogContent.js";
 
 /**
+ * Default implementation of the scheduled-email management dialog: the list of the dashboard's
+ * scheduled exports, with actions to add, edit, or delete one.
+ *
  * @beta
  */
 export function ScheduledEmailManagementDialog({

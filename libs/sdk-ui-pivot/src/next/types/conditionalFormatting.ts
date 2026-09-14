@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-/* oxlint-disable no-barrel-files/no-barrel-files -- re-export shim, types moved to @gooddata/sdk-model */
+// oxlint-disable no-barrel-files/no-barrel-files -- re-export shim, types moved to @gooddata/sdk-model
 
 import type {
     ConditionalFormattingEmptinessOperator,

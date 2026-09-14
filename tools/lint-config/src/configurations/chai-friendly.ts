@@ -7,7 +7,6 @@ export const chaiFriendlyPlugin: IPackage = {
     version: "1.1.0",
 };
 
-export const chaiFriendlyRules: Rules = {
-    "no-unused-expressions": "off",
+export const chaiFriendlyRules: Rules<"chai-friendly"> = {
     "chai-friendly/no-unused-expressions": "error",
 };

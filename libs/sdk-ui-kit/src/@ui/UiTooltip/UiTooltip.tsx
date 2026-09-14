@@ -219,6 +219,10 @@ export function UiTooltip({
                     <ConditionalScopedThemeProvider>
                         <div
                             className={b({
+                                // `max-width` wins over `width` in CSS. Apply the default cap only
+                                // when the caller sets no width, and never to popovers, whose width
+                                // comes from their own content surface.
+                                defaultMaxWidth: behaviour === "tooltip" && width === undefined,
                                 width: width === "same-as-anchor" ? "same-as-anchor" : false,
                                 variant,
                             })}

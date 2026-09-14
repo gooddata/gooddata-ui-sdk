@@ -1,7 +1,8 @@
 // (C) 2022-2026 GoodData Corporation
 
+import { type IAttributeDisplayFormMetadataObject } from "../ldm/metadata/attributeDisplayForm/index.js";
 import { idRef } from "../objRef/factory.js";
-import { type IdentifierRef, isIdentifierRef } from "../objRef/index.js";
+import { type IdentifierRef, type ObjRef, isComputedAttributeRef, isIdentifierRef } from "../objRef/index.js";
 
 /**
  * @internal
@@ -34,12 +35,87 @@ const dashboardMeasureValueFilterMatchRegexp = /\{dash_mvf_condition\((.*?)\)\}/
 const insightAttributeFilterMatchRegexp = /\{attribute_filter_selection\((.*?)\)\}/g;
 const insightMeasureValueFilterMatchRegexp = /\{mvf_condition\((.*?)\)\}/g;
 
-const attributeIdentifierToPlaceholder = (ref: IdentifierRef) => `{attribute_title(${ref.identifier})}`;
+/**
+ * A placeholder names its target by identifier alone, which used to be enough because every target
+ * was a display form. A computed attribute has no labels on the backend and must be referenced by
+ * its own object type, so its identifier carries this type prefix to keep the two apart - both when
+ * a placeholder is turned into a stored reference and when that reference is rendered back into the
+ * URL. A bare identifier keeps meaning a display form, so URLs stored before this existed parse
+ * unchanged; the prefix cannot collide with an identifier because "/" is not a legal identifier
+ * character.
+ */
+const COMPUTED_ATTRIBUTE_PREFIX = "computed_attribute/";
+
+const isComputedAttributePlaceholderIdentifier = (identifier: string): boolean =>
+    identifier.startsWith(COMPUTED_ATTRIBUTE_PREFIX);
+
+/**
+ * The identifier of the object a placeholder points at, without the type prefix.
+ */
+const placeholderIdentifier = (identifier: string): string =>
+    isComputedAttributePlaceholderIdentifier(identifier)
+        ? identifier.slice(COMPUTED_ATTRIBUTE_PREFIX.length)
+        : identifier;
+
+const placeholderToRef = (identifier: string): IdentifierRef =>
+    isComputedAttributePlaceholderIdentifier(identifier)
+        ? idRef(placeholderIdentifier(identifier), "computedAttribute")
+        : idRef(identifier, "displayForm");
+
+/**
+ * The identifier text a placeholder uses to name the given object, exactly as it appears inside the
+ * placeholder in the URL - type-prefixed for a computed attribute, bare for a display form.
+ *
+ * @internal
+ */
+export const placeholderIdentifierText = (ref: ObjRef): string => {
+    const prefix = isComputedAttributeRef(ref) ? COMPUTED_ATTRIBUTE_PREFIX : "";
+    // Tiger references objects by identifier only; the uri branch just keeps the function total.
+    const identifier = isIdentifierRef(ref) ? ref.identifier : ref.uri;
+
+    return `${prefix}${identifier}`;
+};
+
+/**
+ * The reference a placeholder uses to name the given display form.
+ *
+ * The identifier always comes from `id` and only the kind of object is taken from the ref, because a
+ * display form can be described by a uri ref, which a placeholder has no way to express - placeholders
+ * name their target by identifier alone.
+ *
+ * @internal
+ */
+export const displayFormPlaceholderRef = (df: IAttributeDisplayFormMetadataObject): ObjRef =>
+    isComputedAttributeRef(df.ref) ? idRef(df.id, "computedAttribute") : idRef(df.id, "displayForm");
+
+/**
+ * Builds the `{attribute_title(...)}` placeholder text referencing the given object.
+ *
+ * @internal
+ */
+export const attributeIdentifierToPlaceholder = (ref: ObjRef): string =>
+    `{attribute_title(${placeholderIdentifierText(ref)})}`;
+
+/**
+ * Builds the `{dash_attribute_filter_selection(...)}` placeholder text referencing the given object.
+ *
+ * @internal
+ */
+export const dashboardAttributeFilterToPlaceholder = (ref: ObjRef): string =>
+    `{dash_attribute_filter_selection(${placeholderIdentifierText(ref)})}`;
+
+/**
+ * Builds the `{attribute_filter_selection(...)}` placeholder text referencing the given object.
+ *
+ * @internal
+ */
+export const insightAttributeFilterToPlaceholder = (ref: ObjRef): string =>
+    `{attribute_filter_selection(${placeholderIdentifierText(ref)})}`;
 
 const matchToUrlPlaceholder = (match: any): IDrillToUrlPlaceholder => ({
     placeholder: match[0],
-    identifier: match[1],
-    ref: idRef(match[1], "displayForm"),
+    identifier: placeholderIdentifier(match[1]),
+    ref: placeholderToRef(match[1]),
     toBeEncoded: match.index !== 0,
 });
 

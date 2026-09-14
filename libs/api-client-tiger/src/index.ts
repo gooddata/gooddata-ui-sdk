@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-/* oxlint-disable no-barrel-files/no-barrel-files */
+// oxlint-disable no-barrel-files/no-barrel-files, eslint-js/no-restricted-syntax
 
 /**
  * This package provides low-level functions for communication with GoodData Cloud and GoodData.CN.
@@ -6453,5 +6453,5 @@ export const defaultTigerClient: ITigerClient = tigerClientFactory(defaultAxios)
 /**
  * @deprecated This will be removed in the next major release, please use the named export "tigerFactory" instead
  */
-// eslint-disable-next-line no-restricted-exports
+// oxlint-disable-next-line eslint-js/no-restricted-exports
 export default defaultTigerClient;

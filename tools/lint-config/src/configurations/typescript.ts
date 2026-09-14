@@ -1,19 +1,17 @@
 // (C) 2026 GoodData Corporation
 
-import { Rules } from "../types.js";
+import { OverrideFiles, Rules } from "../types.js";
 
-export const typescriptConflicts: Rules = {
+export const typescriptConflictsNativeSupported: Rules = {
     "constructor-super": "off",
     "getter-return": "off",
     "no-class-assign": "off",
     "no-const-assign": "off",
-    "no-dupe-args": "off",
     "no-dupe-class-members": "off",
     "no-dupe-keys": "off",
     "no-func-assign": "off",
     "no-import-assign": "off",
     "no-new-native-nonconstructor": "off",
-    "no-new-symbol": "off",
     "no-obj-calls": "off",
     "no-redeclare": "off",
     "no-setter-return": "off",
@@ -27,11 +25,20 @@ export const typescriptConflicts: Rules = {
     "prefer-rest-params": "error",
     "prefer-spread": "error",
     "no-array-constructor": "off",
-    "no-unused-expressions": "off",
     "no-unused-vars": "off",
 };
 
-const typescriptRulesCommon: Rules = {
+const typescriptConflictsNativeNotSupported: Rules = {
+    "no-dupe-args": "off",
+    "no-new-symbol": "off",
+};
+
+export const typescriptConflicts: Rules = {
+    ...typescriptConflictsNativeSupported,
+    ...typescriptConflictsNativeNotSupported,
+};
+
+const typescriptRulesCommon: Rules<"@typescript-eslint"> = {
     "@typescript-eslint/no-array-constructor": "error",
     "@typescript-eslint/no-duplicate-enum-values": "error",
     "@typescript-eslint/no-empty-object-type": "error",
@@ -43,17 +50,17 @@ const typescriptRulesCommon: Rules = {
     "@typescript-eslint/no-this-alias": "error",
     "@typescript-eslint/no-unnecessary-type-constraint": "error",
     "@typescript-eslint/no-unsafe-declaration-merging": "error",
-    // Covered by chai-friendly/no-unused-expressions, not needed here.
-    // Also causes issues in oxlint, which maps it back to the base eslint rule.
-    // "@typescript-eslint/no-unused-expressions": "error",
     "@typescript-eslint/prefer-as-const": "error",
     "@typescript-eslint/prefer-namespace-keyword": "error",
     "@typescript-eslint/triple-slash-reference": "error",
 
-    "@typescript-eslint/explicit-function-return-type": 0,
-    "@typescript-eslint/no-use-before-define": 0,
-    "@typescript-eslint/no-empty-function": 0,
-    "@typescript-eslint/no-unused-vars": [2, { varsIgnorePattern: "^_.*$", argsIgnorePattern: "^_.*$" }],
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-use-before-define": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/no-unused-vars": [
+        "error",
+        { varsIgnorePattern: "^_.*$", argsIgnorePattern: "^_.*$" },
+    ],
     "@typescript-eslint/no-explicit-any": "error",
 
     "@typescript-eslint/array-type": "off",
@@ -83,36 +90,9 @@ const typescriptRulesCommon: Rules = {
             },
         },
     ],
-    "@typescript-eslint/explicit-member-accessibility": "off",
-    "@typescript-eslint/interface-name-prefix": "off",
-    "@typescript-eslint/member-ordering": "off",
     "@typescript-eslint/no-inferrable-types": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
 
-    "no-restricted-syntax": [
-        "error",
-        {
-            selector: "MemberExpression[object.name='React']",
-            message: "Do not use `React.*`. Use named imports instead.",
-        },
-        {
-            selector: "TSTypeReference[typeName.type='TSQualifiedName'][typeName.left.name='React']",
-            message: "Do not use `React.*` types. Use named imports instead.",
-        },
-        {
-            selector: "ExportNamespaceSpecifier",
-            message: "Usage of 'export * as …' is forbidden.",
-        },
-        {
-            selector: "ExportAllDeclaration",
-            message: "Usage of `export * from` is forbidden.",
-        },
-        {
-            selector:
-                "ImportDeclaration[source.value=/^(?!.*reference_workspace)\\./] ImportNamespaceSpecifier",
-            message: "Do not use `import * as ...` from relative paths.",
-        },
-    ],
     "@typescript-eslint/consistent-type-imports": [
         "error",
         {
@@ -146,9 +126,9 @@ export const typescriptRulesNativeNotSupported: Rules<"@typescript-eslint"> = {
     ],
 };
 
-export const typescriptRules: Rules = {
+export const typescriptRules: Rules<"@typescript-eslint"> = {
     ...typescriptRulesNativeSupported,
     ...typescriptRulesNativeNotSupported,
 };
 
-export const typescriptOverrideFiles = ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"];
+export const typescriptOverrideFiles: OverrideFiles = ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"];

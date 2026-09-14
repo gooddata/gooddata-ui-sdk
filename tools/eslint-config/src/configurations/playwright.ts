@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { playwrightPlugin, playwrightRules } from "@gooddata/lint-config";
+import { playwrightConflicts, playwrightPlugin, playwrightRules } from "@gooddata/lint-config";
 
 import type { IDualConfiguration } from "../types.js";
 
@@ -8,7 +8,10 @@ export const playwright: IDualConfiguration<"playwright"> = {
     v8: {
         packages: [playwrightPlugin],
         plugins: ["playwright"],
-        rules: playwrightRules,
+        rules: {
+            ...playwrightConflicts,
+            ...playwrightRules,
+        },
     },
     v9: {
         packages: [playwrightPlugin],
@@ -21,7 +24,10 @@ export const playwright: IDualConfiguration<"playwright"> = {
                 chai: "readonly" as const,
             },
         },
-        rules: playwrightRules,
+        rules: {
+            ...playwrightConflicts,
+            ...playwrightRules,
+        },
     },
     ox: {},
 };

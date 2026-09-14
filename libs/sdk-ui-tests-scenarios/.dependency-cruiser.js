@@ -6,7 +6,6 @@ import {
     DefaultSdkRules,
 } from "../../common/config/dep-cruiser/default.config.js";
 
-// eslint-disable-next-line no-restricted-exports
 export default {
     forbidden: [
         // not-to-dev-dep: all deps are dev because this package is tooling and its dependencies occurred in FOSSA scan

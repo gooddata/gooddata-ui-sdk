@@ -17,7 +17,7 @@ exports[`Menu snapshot > should match snapshot of menu with config 1`] = `
     <div>
       <div
         data-gd-floating-element="true"
-        style="position: absolute; left: -16px; top: 8px;"
+        style="position: absolute; left: -16px; top: 8px; z-index: 5001;"
       >
         <div
           class="gd-menuOpener"
@@ -65,7 +65,7 @@ exports[`Menu snapshot > should match snapshot of menu with portalTarget 1`] = `
       <div>
         <div
           data-gd-floating-element="true"
-          style="position: absolute; left: 0px; top: 0px;"
+          style="position: absolute; left: 0px; top: 0px; z-index: 5001;"
         >
           <div
             class="gd-menuOpener"
@@ -116,7 +116,7 @@ exports[`Menu snapshot > should match snapshot of nested menus 1`] = `
     <div>
       <div
         data-gd-floating-element="true"
-        style="position: absolute; left: 0px; top: 0px;"
+        style="position: absolute; left: 0px; top: 0px; z-index: 5001;"
       >
         <div
           class="gd-menuOpener"

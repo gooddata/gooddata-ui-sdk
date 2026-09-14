@@ -12,12 +12,6 @@ export default [
         },
     },
     {
-        files: ["**/*.stories.tsx"],
-        rules: {
-            "no-restricted-exports": "off",
-        },
-    },
-    {
         files: ["**/*.generated.stories.tsx"],
         rules: {
             "storybook/prefer-pascal-case": "off",

@@ -42,6 +42,7 @@ import {
 } from "../messages/messagesSlice.js";
 import { createEmptyConversation } from "../utils.js";
 
+import { consumeStaleConversationSession } from "./conversationSession.js";
 import { interactionsToMessages } from "./converters/interactionsToMessages.js";
 import { convertToLocalContent } from "./converters/toLocalContent.js";
 import { notifyDefinitionReceived } from "./onDefinitionReceivedTrigger.js";
@@ -263,6 +264,19 @@ function* fetchCurrentConversation() {
         yield put(
             loadConversationSuccessAction({
                 currentConversation: conversation,
+            }),
+        );
+        return;
+    }
+
+    // Opening after a long idle period starts a fresh conversation instead of resuming the last
+    // one. Applies to an explicit pick too - selecting one refreshes the timer.
+    const staleSession: boolean = yield call(consumeStaleConversationSession);
+    if (staleSession) {
+        yield put(
+            loadConversationSuccessAction({
+                currentConversation: createEmptyConversation(),
+                conversationItems: [],
             }),
         );
         return;

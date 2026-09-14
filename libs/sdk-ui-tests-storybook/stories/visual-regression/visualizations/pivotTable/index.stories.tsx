@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-/* oxlint-disable sonarjs/no-identical-functions */
+// oxlint-disable sonarjs/no-identical-functions
 
 import { action } from "storybook/actions";
 

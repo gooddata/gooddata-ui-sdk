@@ -1,4 +1,5 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import fs from "fs";
 import path from "path";
 
@@ -22,7 +23,7 @@ const copyDeclarationFiles = () => {
     filesToCopy.forEach((file) => {
         if (fs.existsSync(path.join(srcDir, file))) {
             fs.copyFileSync(path.join(srcDir, file), path.join(destDir, file));
-            // eslint-disable-next-line no-console
+            // oxlint-disable-next-line eslint-js/no-console
             console.log(`Copied ${file} to esm directory`);
         } else {
             console.error(`${file} not found in temp directory`);

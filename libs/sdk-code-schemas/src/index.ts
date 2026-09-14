@@ -10,7 +10,8 @@
  * @packageDocumentation
  */
 
-// oxlint-disable no-barrel-files/no-barrel-files
+// oxlint-disable no-barrel-files/no-barrel-files, eslint-js/no-restricted-syntax
+
 export type * as v1 from "./v1/metadata.js";
 
 export { metadata_v1 } from "./v1/schema.js";

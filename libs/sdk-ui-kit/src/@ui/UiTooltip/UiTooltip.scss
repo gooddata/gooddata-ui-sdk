@@ -28,6 +28,11 @@
         margin-top: 5px;
     }
 
+    &--defaultMaxWidth {
+        max-width: var(--gd-tooltip-maxWidth);
+        box-sizing: border-box;
+    }
+
     &--width-same-as-anchor {
         width: auto;
         box-sizing: border-box;
