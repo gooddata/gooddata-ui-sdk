@@ -7,18 +7,33 @@ import { render } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { type IInsight, type ISeparators, idRef, newBucket, newMeasure } from "@gooddata/sdk-model";
+import {
+    type IInsight,
+    type ISeparators,
+    idRef,
+    newAttribute,
+    newBucket,
+    newMeasure,
+} from "@gooddata/sdk-model";
 
 import { IntlWrapper } from "../../../localization/IntlWrapper.js";
 import { type IChatConversationLocalItem } from "../../../model.js";
 
 import { ConversationVisualisation } from "./ConversationVisualisation.js";
 
+type RecordedProps = {
+    config?: { separators?: ISeparators; total?: unknown };
+    measures?: unknown[];
+    viewBy?: unknown;
+};
+
 const rendered: { component: string; separators: ISeparators | undefined }[] = [];
+const lastProps = new Map<string, RecordedProps>();
 
 function recorder(component: string) {
-    return function Recorder({ config }: { config?: { separators?: ISeparators } }) {
-        rendered.push({ component, separators: config?.separators });
+    return function Recorder(props: RecordedProps) {
+        rendered.push({ component, separators: props.config?.separators });
+        lastProps.set(component, props);
         return null;
     };
 }
@@ -30,6 +45,7 @@ vi.mock("@gooddata/sdk-ui-charts", () => ({
     PieChart: recorder("PieChart"),
     ScatterPlot: recorder("ScatterPlot"),
     Headline: recorder("Headline"),
+    WaterfallChart: recorder("WaterfallChart"),
 }));
 
 vi.mock("@gooddata/sdk-ui-pivot", () => ({
@@ -81,13 +97,16 @@ function visualizationOf(visualizationUrl: string): IInsight {
 function renderVisualisation(
     visualizationUrl: string,
     props: { isTable?: boolean; enableNewPivotTable?: boolean } = {},
+    insight: Partial<IInsight["insight"]> = {},
 ) {
+    const base = visualizationOf(visualizationUrl);
+
     return render(
         <Provider store={configureStore({ reducer: () => ({}) })}>
             <IntlWrapper>
                 <ConversationVisualisation
                     message={message}
-                    visualization={visualizationOf(visualizationUrl)}
+                    visualization={{ insight: { ...base.insight, ...insight } }}
                     separators={separators}
                     {...props}
                 />
@@ -99,6 +118,7 @@ function renderVisualisation(
 describe("ConversationVisualisation", () => {
     beforeEach(() => {
         rendered.length = 0;
+        lastProps.clear();
     });
 
     it.each([
@@ -108,6 +128,7 @@ describe("ConversationVisualisation", () => {
         ["local:pie", "PieChart"],
         ["local:scatter", "ScatterPlot"],
         ["local:headline", "Headline"],
+        ["local:waterfall", "WaterfallChart"],
         ["local:table", "PivotTableNext"],
     ])("passes the workspace separators to %s", (visualizationUrl, component) => {
         renderVisualisation(visualizationUrl);
@@ -125,5 +146,37 @@ describe("ConversationVisualisation", () => {
         renderVisualisation("local:table", { enableNewPivotTable: false });
 
         expect(rendered).toEqual([{ component: "PivotTable", separators }]);
+    });
+
+    it("renders a waterfall broken down by an attribute and carries over its total config", () => {
+        const viewAttribute = newAttribute("category");
+
+        renderVisualisation(
+            "local:waterfall",
+            {},
+            {
+                buckets: [newBucket("measures", newMeasure("m1")), newBucket("view", viewAttribute)],
+                properties: { controls: { total: { name: "Total" } } },
+            },
+        );
+
+        expect(lastProps.get("WaterfallChart")).toMatchObject({
+            measures: [newMeasure("m1")],
+            viewBy: viewAttribute,
+            config: { total: { name: "Total" } },
+        });
+    });
+
+    it("renders a waterfall of several measures with no viewBy", () => {
+        renderVisualisation(
+            "local:waterfall",
+            {},
+            { buckets: [newBucket("measures", newMeasure("m1"), newMeasure("m2"))] },
+        );
+
+        expect(lastProps.get("WaterfallChart")).toMatchObject({
+            measures: [newMeasure("m1"), newMeasure("m2")],
+            viewBy: undefined,
+        });
     });
 });

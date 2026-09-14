@@ -82,8 +82,9 @@ export function* removeAttributeFiltersHandler(
                 ...affectedChildren.map((item) =>
                     tabsActions.setAttributeFilterParents({
                         filterLocalId: dashboardAttributeFilterItemLocalIdentifier(item)!,
+                        // affectedChildren is a pre-loop snapshot, so drop every id being removed
                         parentFilters: (dashboardAttributeFilterItemFilterElementsBy(item) ?? []).filter(
-                            (parent) => parent.filterLocalIdentifier !== removedLocalId,
+                            (parent) => !filterLocalIds.includes(parent.filterLocalIdentifier),
                         ),
                     }),
                 ),

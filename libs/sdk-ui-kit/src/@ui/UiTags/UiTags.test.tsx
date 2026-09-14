@@ -242,27 +242,13 @@ function expectVisible(text: string, deletable: boolean) {
     expect(dt.length).toBeGreaterThanOrEqual(1);
     expect(dt[0]).toBeInTheDocument();
 
-    if (deletable) {
-        expect(screen.getByLabelText(`Delete ${text}`)).toBeInTheDocument();
-    } else {
-        expect(screen.queryByLabelText(`Delete ${text}`)).not.toBeInTheDocument();
-    }
+    const deleteButton = screen.queryByLabelText(`Delete ${text}`);
+    expect(deleteButton !== null).toBe(deletable);
 }
 
 function expectAddTag(exists: boolean, short: boolean) {
-    if (exists) {
-        if (short) {
-            expect(screen.getByLabelText(`Add tag`)).toBeInTheDocument();
-        } else {
-            expect(screen.getByText(`Add tag`)).toBeInTheDocument();
-        }
-    } else {
-        if (short) {
-            expect(screen.queryByLabelText(`Add tag`)).not.toBeInTheDocument();
-        } else {
-            expect(screen.queryByText(`Add tag`)).not.toBeInTheDocument();
-        }
-    }
+    const addTag = short ? screen.queryByLabelText(`Add tag`) : screen.queryByText(`Add tag`);
+    expect(addTag !== null).toBe(exists);
 }
 
 function expectNoTags() {

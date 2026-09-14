@@ -123,7 +123,7 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
         const extraPluginsArr = Array.isArray(extraPlugins) ? extraPlugins : compact([extraPlugins]);
         initializeLoader(loader, baseProps, extraPluginsArr, clientWorkspace);
 
-        // eslint-disable-next-line no-console
+        // oxlint-disable-next-line eslint-js/no-console
         console.debug(
             `Dashboard loader initialized in ${loadingMode} mode to load ${
                 dashboardRef ? objRefToString(dashboardRef) : "empty dashboard"
@@ -161,9 +161,9 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
                 });
             },
             onSuccess: (result) => {
-                // eslint-disable-next-line no-console
+                // oxlint-disable-next-line eslint-js/no-console
                 console.debug("Loaded dashboard engine", result.engine.version);
-                // eslint-disable-next-line no-console
+                // oxlint-disable-next-line eslint-js/no-console
                 console.debug(
                     `Dashboard engine ${result.engine.version} initialized with plugins`,
                     result.plugins.map((plugin) => `${plugin.displayName}/${plugin.version}`).join(", "),

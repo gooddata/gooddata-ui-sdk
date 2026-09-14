@@ -64,7 +64,7 @@ export interface IReportVisualizationSlot extends IReportSlotBase {
     insight?: ObjRef;
 
     /**
-     * Optional title rendered above the visualization. Supports `{{variables}}`.
+     * Optional title rendered above the visualization. Supports `{variables}`.
      */
     title?: string;
 
@@ -124,7 +124,7 @@ export interface IReportStaticTextSource {
     type: "static";
 
     /**
-     * Markdown content with `{{variable}}` placeholders. Stored raw — placeholders are
+     * Markdown content with `{variable}` placeholders. Stored raw — placeholders are
      * resolved only at render/export time.
      */
     content: string;
@@ -139,7 +139,7 @@ export interface IReportAiTextSource {
     type: "ai";
 
     /**
-     * Instruction for the generator. Supports `{{variables}}`.
+     * Instruction for the generator. Supports `{variables}`.
      */
     prompt: string;
 
@@ -193,7 +193,7 @@ export type ReportImageSource =
           type: "url";
 
           /**
-           * Image URL. Supports `{{variables}}` — a logo slot uses `{{logo}}`.
+           * Image URL. Supports `{variables}` — a logo slot uses `{logo}`.
            */
           url: string;
       }

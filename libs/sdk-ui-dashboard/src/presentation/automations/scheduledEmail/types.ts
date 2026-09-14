@@ -41,6 +41,11 @@ import {
 ///
 
 /**
+ * Props of the scheduled-email create/edit dialog, accepted by `ScheduledEmailDialogComponent`.
+ *
+ * Extends {@link IAutomationDialogCallbacks} with data props that are all deprecated — the dialog
+ * reads its data from `useScheduledEmailDialogContext()` instead.
+ *
  * @beta
  */
 export interface IScheduledEmailDialogProps extends IAutomationDialogCallbacks {
@@ -769,6 +774,10 @@ export interface IScheduledEmailDialogShellProps extends Pick<
 }
 
 /**
+ * Props of the scheduled-email management dialog, accepted by `ScheduledEmailManagementDialogComponent`.
+ *
+ * Extends {@link IAutomationManagementDialogCallbacks} with data props that are all deprecated —
+ * the dialog reads its data from `useScheduledEmailManagementDialogContext()` instead.
  *
  * @beta
  */
@@ -809,6 +818,9 @@ export interface IScheduledEmailManagementDialogProps extends IAutomationManagem
 ///
 
 /**
+ * Type of a replacement for the scheduled-email create/edit dialog — the shape expected by the
+ * `ScheduledEmailDialogComponent` dashboard prop.
+ *
  * @beta
  */
 export type CustomScheduledEmailDialogComponent = ComponentType<IScheduledEmailDialogProps>;
@@ -855,6 +867,9 @@ export type CustomScheduledEmailDialogContextDecoratorComponent = ComponentType<
 }>;
 
 /**
+ * Type of a replacement for the scheduled-email management dialog — the shape expected by the
+ * `ScheduledEmailManagementDialogComponent` dashboard prop.
+ *
  * @beta
  */
 export type CustomScheduledEmailManagementDialogComponent =

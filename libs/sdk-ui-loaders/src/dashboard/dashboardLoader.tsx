@@ -223,7 +223,7 @@ export class DashboardLoader implements IDashboardLoader {
     ): Promise<[IDashboardEngine, IDashboardPluginContract_V1[]]> => {
         const { engineLoader, pluginLoader, beforeLoad } = config;
 
-        // eslint-disable-next-line no-console
+        // oxlint-disable-next-line eslint-js/no-console
         console.debug("Loading engine and plugins...");
 
         let engine: IDashboardEngine = newDashboardEngine();
@@ -250,7 +250,7 @@ export class DashboardLoader implements IDashboardLoader {
             );
         }
 
-        // eslint-disable-next-line no-console
+        // oxlint-disable-next-line eslint-js/no-console
         console.debug("Initializing the plugins...");
 
         const additionalPlugins = await initializeEmbeddedPlugins(ctx, this.embeddedPlugins);
@@ -289,7 +289,7 @@ export class DashboardLoader implements IDashboardLoader {
         const [workspace, clientWorkspace] = this.resolveWorkspace(backend);
         invariant(workspace, "DashboardLoader is not configured with workspace to use and loader.");
 
-        // eslint-disable-next-line no-console
+        // oxlint-disable-next-line eslint-js/no-console
         console.debug("Loading the dashboard...");
 
         const { config } = this.baseProps;
@@ -326,7 +326,7 @@ export class DashboardLoader implements IDashboardLoader {
             clientId: clientWorkspace?.client,
         };
 
-        // eslint-disable-next-line no-console
+        // oxlint-disable-next-line eslint-js/no-console
         console.debug("Validating the plugins...");
 
         const pluginsAreValid =
@@ -416,7 +416,7 @@ async function initializeLoadedPlugins(
 
         try {
             if (plugin.onPluginLoaded) {
-                // eslint-disable-next-line no-console
+                // oxlint-disable-next-line eslint-js/no-console
                 console.debug(`Calling onPluginLoaded on ${plugin.displayName}...`);
                 const loadPromise = plugin.onPluginLoaded(ctx, parameters);
 

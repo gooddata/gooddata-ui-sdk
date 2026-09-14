@@ -1,5 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 
+// oxlint-disable no-barrel-files/no-barrel-files, eslint-js/no-restricted-syntax
+
 import * as AnalyticalDashboardModelV1 from "./AnalyticalDashboardModelV1.js";
 import * as AnalyticalDashboardModelV2 from "./AnalyticalDashboardModelV2.js";
 import * as AnalyticalDashboardModelV3 from "./AnalyticalDashboardModelV3.js";
@@ -9,36 +11,30 @@ import * as VisualizationObjectModelV2 from "./VisualizationObjectModelV2.js";
 /**
  * @public
  */
-// oxlint-disable-next-line no-barrel-files/no-barrel-files
 export { AnalyticalDashboardModelV1 };
 
 /**
  * @public
  */
-// oxlint-disable-next-line no-barrel-files/no-barrel-files
 export { AnalyticalDashboardModelV2 };
 
 /**
  * @alpha
  */
-// oxlint-disable-next-line no-barrel-files/no-barrel-files
 export { AnalyticalDashboardModelV3 };
 
 /**
  * @public
  */
-// oxlint-disable-next-line no-barrel-files/no-barrel-files
 export { VisualizationObjectModelV1 };
 
 /**
  * @public
  */
-// oxlint-disable-next-line no-barrel-files/no-barrel-files
 export { VisualizationObjectModelV2 };
 
 /**
  * Tiger-specific types for analytical objects
  * @internal
  */
-// oxlint-disable-next-line no-barrel-files/no-barrel-files
 export type * from "./TigerTypes.js";

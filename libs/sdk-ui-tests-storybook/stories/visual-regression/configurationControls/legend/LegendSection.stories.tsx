@@ -1,6 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
-/* oxlint-disable sonarjs/no-identical-functions */
+// oxlint-disable sonarjs/no-identical-functions
 
 import { useState } from "react";
 

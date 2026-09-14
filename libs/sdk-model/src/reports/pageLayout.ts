@@ -19,8 +19,8 @@ import { type IReportBoxStyle, isReportImageBackground } from "./styling.js";
  * embedded in template/report content ({@link IReportContentPage}).
  *
  * There is no header/footer chrome: page title, description, footer, page numbers and
- * logos are ordinary slots in the layout tree (text slots with `{{pageNumber}}`/`{{totalPages}}`,
- * an image slot with `{{logo}}`). Every slot fills its layout area completely.
+ * logos are ordinary slots in the layout tree (text slots with `{currentPageNumber}`/`{totalPages}`,
+ * an image slot with `{logo}`). Every slot fills its layout area completely.
  *
  * @alpha
  */

@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-kit: UiDropdown no longer repeats a listbox, menu, tree or grid popupRole on the floating panel around the body that already carries it",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "petr.dolejsi@gooddata.com"
+}

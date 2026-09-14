@@ -70,7 +70,7 @@ export class Plugin extends DashboardPluginV1 {
             );
         });
         handlers.addEventHandler("GDC.DASH/EVT.INITIALIZED", (evt) => {
-            // eslint-disable-next-line no-console
+            // oxlint-disable-next-line eslint-js/no-console
             console.log("### Dashboard initialized", evt);
         });
     }

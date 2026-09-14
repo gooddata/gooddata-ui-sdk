@@ -1,8 +1,13 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { scopeRules, vitestPlugin, vitestRules } from "@gooddata/lint-config";
+import { type IPackage, scopeRules, vitestRules } from "@gooddata/lint-config";
 
 import type { IDualConfiguration } from "../types.js";
+
+export const vitestPlugin: IPackage = {
+    name: "@vitest/eslint-plugin",
+    version: "1.6.19",
+};
 
 const packages = [vitestPlugin];
 

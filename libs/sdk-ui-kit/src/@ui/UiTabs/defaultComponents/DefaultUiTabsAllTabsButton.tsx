@@ -17,7 +17,7 @@ function DefaultUiTabsAllTabsButtonNotWrapped<
     TTabProps extends Record<any, any> = EmptyObject,
     TTabActionProps extends Record<any, any> = EmptyObject,
 >(
-    { isOpen, onClick }: IUiTabComponentProps<"AllTabsButton", TTabProps, TTabActionProps>,
+    { isOpen, onClick, ariaAttributes }: IUiTabComponentProps<"AllTabsButton", TTabProps, TTabActionProps>,
     ref: Ref<HTMLElement>,
 ) {
     const intl = useIntl();
@@ -32,6 +32,7 @@ function DefaultUiTabsAllTabsButtonNotWrapped<
                 ariaLabel: intl.formatMessage(messages["showAllTabs"]),
                 ariaExpanded: isOpen,
             }}
+            ariaAttributes={ariaAttributes}
             onClick={onClick}
             ref={ref as Ref<HTMLButtonElement>}
             disableAnimation
@@ -44,6 +45,8 @@ function DefaultUiTabsAllTabsButtonNotWrapped<
             accessibilityConfig={{
                 ariaLabel: intl.formatMessage(messages["showAllTabs"]),
                 ariaExpanded: isOpen,
+                ariaHaspopup: ariaAttributes?.["aria-haspopup"],
+                ariaControls: ariaAttributes?.["aria-controls"],
             }}
             onClick={onClick}
             ref={ref as Ref<HTMLButtonElement>}

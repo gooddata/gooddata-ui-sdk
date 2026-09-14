@@ -7659,7 +7659,7 @@ export type RemotePluggableApplicationsRegistry = IRemotePluggableApplicationsRe
 export type ReportBackground = IReportColorBackground | IReportImageBackground;
 
 // @alpha
-export type ReportBuiltInVariable = "reportTitle" | "periodStart" | "periodEnd" | "workspaceName" | "generatedAt" | "pageNumber" | "totalPages" | "logo" | "logoInverse";
+export type ReportBuiltInVariable = "reportName" | "reportDescription" | "periodStart" | "periodEnd" | "reportDateRange" | "reportAttributeFilters" | "exportedAt" | "exportedBy" | "lastModifiedAt" | "lastModifiedBy" | "workspaceName" | "workspaceId" | "totalPages" | "currentPageNumber" | "logo" | "logoInverse";
 
 // @alpha
 export const ReportBuiltInVariables: ReportBuiltInVariable[];
@@ -7705,6 +7705,9 @@ export const ReportsBrandKitImageVariablePrefix = "image_";
 
 // @alpha
 export type ReportSlot = IReportVisualizationSlot | IReportTextSlot | IReportImageSlot;
+
+// @alpha
+export function reportTextPlaceholder(name: string): string;
 
 // @alpha
 export type ReportTextSlotKind = "title" | "subtitle" | "sectionTitle" | "description" | "summary" | "body" | "custom";

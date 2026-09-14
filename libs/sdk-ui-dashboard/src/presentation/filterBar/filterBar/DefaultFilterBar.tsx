@@ -36,11 +36,13 @@ import {
     changeWorkingAttributeFilterSelection,
     changeWorkingMeasureValueFilterCondition,
     clearDateFilterSelection,
+    removeRestrictedFilters,
     replaceAttributeFilterItemSelection,
     replaceWorkingAttributeFilterItemSelection,
     setAttributeFilterDisplayForm,
 } from "../../../model/commands/filters.js";
 import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { useDispatchDashboardCommand } from "../../../model/react/useDispatchDashboardCommand.js";
 import { selectSupportsElementUris } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 import {
     selectEnableDashboardFilterGroups,
@@ -360,6 +362,11 @@ export function DefaultFilterBar(props: IFilterBarProps): ReactElement {
     const { DashboardDateFilterComponentProvider, RestrictedFiltersPlaceholderComponentProvider } =
         useDashboardComponentsContext();
     const restrictedFilterCount = useDashboardSelector(selectRestrictedDashboardFilterCount);
+    const dispatchRemoveRestrictedFilters = useDispatchDashboardCommand(removeRestrictedFilters);
+    const removeRestrictedFiltersFromDashboard = useCallback(
+        () => dispatchRemoveRestrictedFilters(),
+        [dispatchRemoveRestrictedFilters],
+    );
     const canAddMoreFilters = useDashboardSelector(selectCanAddMoreFilters);
     const haveAllFiltersHidden = areAllFiltersHidden(
         draggableFiltersWithPlaceholder,
@@ -396,7 +403,10 @@ export function DefaultFilterBar(props: IFilterBarProps): ReactElement {
     return (
         <DefaultFilterBarContainer>
             {restrictedFilterCount > 0 ? (
-                <CustomRestrictedFiltersPlaceholderComponent count={restrictedFilterCount} />
+                <CustomRestrictedFiltersPlaceholderComponent
+                    count={restrictedFilterCount}
+                    onRemove={isInEditMode ? removeRestrictedFiltersFromDashboard : undefined}
+                />
             ) : null}
             <div
                 className={classNames("dash-filters-date", {

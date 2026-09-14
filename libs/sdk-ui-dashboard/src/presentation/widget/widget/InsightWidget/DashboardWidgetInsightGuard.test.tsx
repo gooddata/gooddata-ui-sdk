@@ -125,6 +125,30 @@ describe("DashboardWidgetInsightGuard", () => {
         vi.clearAllMocks();
     });
 
+    it("hands a restricted widget to the rendering the mode asks for, if any", () => {
+        function RestrictedStandIn() {
+            return <div>the edit mode stand-in</div>;
+        }
+        mockUseDashboardSelector.mockImplementation((selector: (state: DashboardState) => unknown) =>
+            selector(stateWith({ ref: insightRef, type: "insight", reason: "forbidden" })),
+        );
+
+        render(
+            <IntlProvider locale="en-US" messages={messages}>
+                <DashboardWidgetInsightGuard
+                    widget={widget}
+                    screen="xl"
+                    dashboardItemClasses="s-dash-item-0"
+                    Component={WidgetStandIn}
+                    RestrictedComponent={RestrictedStandIn}
+                />
+            </IntlProvider>,
+        );
+
+        expect(screen.getByText("the edit mode stand-in")).toBeInTheDocument();
+        expect(screen.queryByText("the default placeholder")).not.toBeInTheDocument();
+    });
+
     it("renders the widget when its insight is available", () => {
         renderGuard(stateWith());
 

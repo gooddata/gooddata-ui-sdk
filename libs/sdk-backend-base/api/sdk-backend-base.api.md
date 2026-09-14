@@ -689,7 +689,7 @@ export abstract class DecoratedWorkspaceCatalogFactory implements IWorkspaceCata
 export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceDashboardsService {
     protected constructor(decorated: IWorkspaceDashboardsService, workspace: string);
     // (undocumented)
-    createDashboard(dashboard: IDashboardDefinition): Promise<IDashboard>;
+    createDashboard(dashboard: IDashboardDefinition, generateId?: boolean): Promise<IDashboard>;
     // (undocumented)
     createDashboardPlugin(plugin: IDashboardPluginDefinition): Promise<IDashboardPlugin>;
     // (undocumented)

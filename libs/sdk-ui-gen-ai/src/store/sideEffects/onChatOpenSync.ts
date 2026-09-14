@@ -20,14 +20,16 @@ import {
     asyncProcessSelector,
     conversationMessagesSelector,
     conversationSelector,
-    conversationsLoadedSelector,
+    loadedSelector,
 } from "../messages/messagesSelectors.js";
 import {
     loadConversationsSuccessAction,
     setCurrentConversationAction,
     setMessagesAction,
+    startNewConversationAction,
 } from "../messages/messagesSlice.js";
 
+import { consumeStaleConversationSession } from "./conversationSession.js";
 import { convertToLocalContent } from "./converters/toLocalContent.js";
 import { notifyDefinitionReceived } from "./onDefinitionReceivedTrigger.js";
 
@@ -62,9 +64,9 @@ export function* onChatOpenSync({ payload: { isOpen } }: PayloadAction<{ isOpen:
         return;
     }
 
-    // The very first open is handled by the regular thread loading; only re-sync afterwards.
-    const conversationsLoaded: boolean = yield select(conversationsLoadedSelector);
-    if (!conversationsLoaded) {
+    // Initial load is owned by onThreadLoad; skip until it finishes to avoid a double stale check.
+    const loaded: boolean = yield select(loadedSelector);
+    if (!loaded) {
         return;
     }
 
@@ -84,6 +86,15 @@ export function* onChatOpenSync({ payload: { isOpen } }: PayloadAction<{ isOpen:
     const currentItems: IChatConversationLocalItem[] = yield select(conversationMessagesSelector);
     // Keep a brand-new, not-yet-persisted draft conversation as-is.
     if (current && !current.id) {
+        return;
+    }
+
+    // Reopening after a long idle period starts a fresh conversation rather than re-syncing the
+    // previous one. Before the fetches: there is nothing to sync into a conversation
+    // we are about to leave behind.
+    const staleSession: boolean = yield call(consumeStaleConversationSession);
+    if (staleSession) {
+        yield put(startNewConversationAction());
         return;
     }
 

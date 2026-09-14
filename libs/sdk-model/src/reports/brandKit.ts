@@ -10,7 +10,7 @@ import { type IRgbColorValue } from "../colors/index.js";
 export interface IReportsBrandKitImage {
     /**
      * Identifier the image is referenced by from report content, as the
-     * `{{image_<id>}}` variable. Must match /^[a-zA-Z0-9_]+$/.
+     * `{image_<id>}` variable. Must match /^[a-zA-Z0-9_]+$/.
      */
     id: string;
 
@@ -130,18 +130,18 @@ export interface IReportsBrandKitTypography {
  */
 export interface IReportsBrandKitAssets {
     /**
-     * Primary logo URL; resolves the `{{logo}}` report variable, taking precedence over
+     * Primary logo URL; resolves the `{logo}` report variable, taking precedence over
      * the workspace white-labeling logo.
      */
     logo?: string;
 
     /**
-     * Logo variant for dark backgrounds; resolves the `{{logoInverse}}` report variable.
+     * Logo variant for dark backgrounds; resolves the `{logoInverse}` report variable.
      */
     logoInverse?: string;
 
     /**
-     * Additional brand images, each resolving its `{{image_<id>}}` report variable.
+     * Additional brand images, each resolving its `{image_<id>}` report variable.
      */
     images?: IReportsBrandKitImage[];
 }

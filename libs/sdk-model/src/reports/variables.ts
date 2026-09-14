@@ -11,19 +11,26 @@ export type ReportDateString = string;
  * Variables resolved by the rendering runtime; they are never declared or stored.
  *
  * @remarks
- * Referenced from report text as `{{name}}`. Custom variable names must not collide with these;
+ * Referenced from report text as `{name}`. Custom variable names must not collide with these;
  * on collision the built-in wins.
  *
  * @alpha
  */
 export type ReportBuiltInVariable =
-    | "reportTitle"
+    | "reportName"
+    | "reportDescription"
     | "periodStart"
     | "periodEnd"
+    | "reportDateRange"
+    | "reportAttributeFilters"
+    | "exportedAt"
+    | "exportedBy"
+    | "lastModifiedAt"
+    | "lastModifiedBy"
     | "workspaceName"
-    | "generatedAt"
-    | "pageNumber"
+    | "workspaceId"
     | "totalPages"
+    | "currentPageNumber"
     | "logo"
     | "logoInverse";
 
@@ -33,13 +40,20 @@ export type ReportBuiltInVariable =
  * @alpha
  */
 export const ReportBuiltInVariables: ReportBuiltInVariable[] = [
-    "reportTitle",
+    "reportName",
+    "reportDescription",
     "periodStart",
     "periodEnd",
+    "reportDateRange",
+    "reportAttributeFilters",
+    "exportedAt",
+    "exportedBy",
+    "lastModifiedAt",
+    "lastModifiedBy",
     "workspaceName",
-    "generatedAt",
-    "pageNumber",
+    "workspaceId",
     "totalPages",
+    "currentPageNumber",
     "logo",
     "logoInverse",
 ];
@@ -48,14 +62,14 @@ export const ReportBuiltInVariables: ReportBuiltInVariable[] = [
  * A custom variable declared by report content and given a value by a report.
  *
  * @remarks
- * Referenced from text as `{{name}}`. Values come from {@link IReportBase.variableValues},
+ * Referenced from text as `{name}`. Values come from {@link IReportBase.variableValues},
  * falling back to {@link IReportVariableDefinition.defaultValue}.
  *
  * @alpha
  */
 export interface IReportVariableDefinition {
     /**
-     * Variable name as used inside the `{{...}}` marker. Must match /^[a-zA-Z][a-zA-Z0-9_]*$/.
+     * Variable name as used inside the `{...}` marker. Must match /^[a-zA-Z][a-zA-Z0-9_]*$/.
      * Built-in names ({@link ReportBuiltInVariable}) are reserved.
      */
     name: string;
@@ -74,10 +88,19 @@ export interface IReportVariableDefinition {
     defaultValue?: string;
 }
 
-const placeholderRegex = /\{\{([a-zA-Z][a-zA-Z0-9_]*)\}\}/g;
+const placeholderRegex = /\{([a-zA-Z][a-zA-Z0-9_]*)\}/g;
 
 /**
- * Collects the distinct `{{variable}}` names referenced in the text, in order of first occurrence.
+ * The marker referencing the named variable from report text.
+ *
+ * @alpha
+ */
+export function reportTextPlaceholder(name: string): string {
+    return `{${name}}`;
+}
+
+/**
+ * Collects the distinct `{variable}` names referenced in the text, in order of first occurrence.
  *
  * @alpha
  */
@@ -93,8 +116,12 @@ export function getReportTextPlaceholders(text: string): string[] {
 }
 
 /**
- * Replaces `{{variable}}` markers with values. Markers with no value are left as-is.
+ * Replaces `{variable}` markers with values. Markers with no value are left as-is.
  * Values are inserted verbatim — there is no recursive expansion.
+ *
+ * @remarks
+ * A marker resolves wherever it appears, braces around it included, so there is no escape for a
+ * literal `{name}` in report text.
  *
  * @alpha
  */

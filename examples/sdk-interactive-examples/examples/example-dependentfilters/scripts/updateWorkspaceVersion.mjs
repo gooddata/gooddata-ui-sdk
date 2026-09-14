@@ -1,4 +1,5 @@
 // (C) 2026 GoodData Corporation
+
 import fs from "fs";
 
 import packageData from "../package.json" with { type: "json" };
@@ -24,4 +25,5 @@ packageData.devDependencies = updatedDevDependencies;
 
 await fs.promises.writeFile(packageJsonPath, JSON.stringify(packageData, null, 2));
 
+// oxlint-disable-next-line eslint-js/no-console
 console.log("Updated package.json with version:", packageData.version);

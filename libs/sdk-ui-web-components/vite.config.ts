@@ -14,7 +14,6 @@ const sdkModelDependency = npmPackage.dependencies?.["@gooddata/sdk-model"] ?? "
 const sdkModelVersion = sdkModelDependency.replace(/[\^~]/, "");
 
 const projectDir = dirname(fileURLToPath(import.meta.url));
-// eslint-disable-next-line no-restricted-exports
 export default defineConfig(({ command, mode }) => {
     // Load env file based on `mode` in the current working directory.
     const env = loadEnv(mode, projectDir, "");

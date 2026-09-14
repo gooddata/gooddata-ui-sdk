@@ -1,7 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import {
-    typescriptConflicts,
+    typescriptConflictsNativeSupported,
     typescriptOverrideFiles,
     typescriptRulesNativeSupported,
 } from "@gooddata/lint-config";
@@ -12,7 +12,7 @@ export const typescript: IConfiguration = {
     packages: [
         {
             name: "oxlint-tsgolint",
-            version: "0.15.0",
+            version: "0.18.1",
         },
     ],
     plugins: ["typescript"],
@@ -20,7 +20,7 @@ export const typescript: IConfiguration = {
         {
             files: typescriptOverrideFiles,
             rules: {
-                ...typescriptConflicts,
+                ...typescriptConflictsNativeSupported,
                 ...typescriptRulesNativeSupported,
             },
         },

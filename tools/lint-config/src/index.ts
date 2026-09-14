@@ -6,6 +6,7 @@ export { chaiFriendlyPlugin, chaiFriendlyRules } from "./configurations/chai-fri
 export {
     eslintOverrides,
     eslintOverridesNativeSupported,
+    eslintOverridesNativeNotSupported,
     eslintRules,
     eslintRulesNativeSupported,
     eslintRulesNativeNotSupported,
@@ -19,7 +20,7 @@ export {
     noBarrelFilesRules,
 } from "./configurations/no-barrel-files.js";
 export { noOnlyTestsPlugin, noOnlyTestsRules } from "./configurations/no-only-tests.js";
-export { playwrightPlugin, playwrightRules } from "./configurations/playwright.js";
+export { playwrightConflicts, playwrightPlugin, playwrightRules } from "./configurations/playwright.js";
 export { sonarjsOverrides, sonarjsPlugin, sonarjsRules } from "./configurations/sonarjs.js";
 export { storybookOverrides, storybookPackages, storybookPlugin } from "./configurations/storybook.js";
 export {
@@ -30,11 +31,12 @@ export {
 } from "./configurations/testing-library.js";
 export {
     typescriptConflicts,
+    typescriptConflictsNativeSupported,
     typescriptOverrideFiles,
     typescriptRules,
     typescriptRulesNativeNotSupported,
     typescriptRulesNativeSupported,
 } from "./configurations/typescript.js";
-export { vitestPlugin, vitestRules } from "./configurations/vitest.js";
+export { vitestRules } from "./configurations/vitest.js";
 
 export { scopeRules } from "./utils/scopeRules.js";

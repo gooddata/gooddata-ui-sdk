@@ -14,7 +14,7 @@ function NumericInputExamples() {
     const [value, setValue] = useState<string>("400");
 
     const onValueChanged = (e: string) => {
-        // eslint-disable-next-line no-console
+        // oxlint-disable-next-line eslint-js/no-console
         console.log(e);
         setValue(e);
     };

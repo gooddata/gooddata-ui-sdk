@@ -27,7 +27,16 @@ import {
     type OnExportReady,
     type OnFiredDrillEvent,
 } from "@gooddata/sdk-ui";
-import { BarChart, ColumnChart, Headline, LineChart, PieChart, ScatterPlot } from "@gooddata/sdk-ui-charts";
+import {
+    BarChart,
+    ColumnChart,
+    Headline,
+    type ITotalConfig,
+    LineChart,
+    PieChart,
+    ScatterPlot,
+    WaterfallChart,
+} from "@gooddata/sdk-ui-charts";
 import {
     type IDashboardKeyDriverCombinationItem,
     getKdaKeyDriverCombinations,
@@ -342,6 +351,24 @@ export function ConversationVisualisation({
                         separators,
                     },
                 );
+            case "local:waterfall":
+                return renderWaterfallChart(
+                    intl.locale,
+                    visualization,
+                    bucketsData,
+                    filters,
+                    sorts,
+                    colorPalette,
+                    handleSdkError,
+                    handleSuccess,
+                    handlerDrill,
+                    {
+                        drillableItems,
+                        enableAccessibleChartTooltip,
+                        execConfig,
+                        separators,
+                    },
+                );
             case "local:headline":
                 return renderHeadline(
                     intl.locale,
@@ -621,6 +648,51 @@ const renderScatterPlot = (
                 separators: props.separators,
                 enableAccessibleTooltip: props.enableAccessibleChartTooltip,
                 ...(clusteringConfig && clustering ? { clustering } : {}),
+            }}
+            drillableItems={props.drillableItems}
+            onDrill={onDrill}
+            onError={onError}
+            onExportReady={onSuccess}
+            execConfig={props.execConfig}
+        />
+    );
+};
+
+const renderWaterfallChart = (
+    locale: string,
+    visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>,
+    buckets: ReturnType<typeof useBucketData>,
+    filters: IFilter[],
+    sortBy: ISortItem[],
+    colorPalette: IColorPalette | undefined,
+    onError: OnError,
+    onSuccess: OnExportReady,
+    onDrill: OnFiredDrillEvent,
+    props: {
+        drillableItems?: ExplicitDrill[];
+        enableAccessibleChartTooltip?: boolean;
+        execConfig?: IExecutionConfig;
+        separators?: ISeparators;
+    },
+) => {
+    const { metrics, view } = buckets;
+    const total = visualization.insight.properties["controls"]?.["total"] as ITotalConfig | undefined;
+
+    return (
+        <WaterfallChart
+            locale={locale}
+            height={VIS_HEIGHT}
+            measures={metrics}
+            viewBy={view[0]}
+            filters={filters}
+            sortBy={sortBy}
+            config={{
+                ...visualizationTooltipOptions,
+                ...legendTooltipOptions,
+                colorPalette,
+                separators: props.separators,
+                enableAccessibleTooltip: props.enableAccessibleChartTooltip,
+                ...(total ? { total } : {}),
             }}
             drillableItems={props.drillableItems}
             onDrill={onDrill}

@@ -117,7 +117,7 @@ function handleAttributeSort(sortItem: IAttributeSortItem, dims: Dimension[], so
     const dimIdx = dims.findIndex((dim) => dim.itemIdentifiers.includes(attributeIdentifier));
 
     if (dimIdx < 0) {
-        // eslint-disable-next-line no-console
+        // oxlint-disable-next-line eslint-js/no-console
         console.log(
             `attempting to sort by attribute with localId ${attributeIdentifier} but this attribute is not in any dimension.`,
         );

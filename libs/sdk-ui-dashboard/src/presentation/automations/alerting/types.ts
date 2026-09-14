@@ -47,6 +47,11 @@ import { type AttributeValue } from "./hooks/useAttributeValuesFromExecResults.j
 ///
 
 /**
+ * Props of the alerting create/edit dialog, accepted by `AlertingDialogComponent`.
+ *
+ * Extends {@link IAutomationDialogCallbacks} with data props that are all deprecated — the dialog
+ * reads its data from `useAlertingDialogContext()` instead.
+ *
  * @beta
  */
 export interface IAlertingDialogProps extends IAutomationDialogCallbacks {
@@ -625,6 +630,11 @@ export interface IAlertingDialogFormFieldGroupProps {
 }
 
 /**
+ * Props of the alerting management dialog, accepted by `AlertingManagementDialogComponent`.
+ *
+ * Extends {@link IAutomationManagementDialogCallbacks} with data props that are all deprecated —
+ * the dialog reads its data from `useAlertingManagementDialogContext()` instead.
+ *
  * @beta
  */
 export interface IAlertingManagementDialogProps extends IAutomationManagementDialogCallbacks {
@@ -664,6 +674,9 @@ export interface IAlertingManagementDialogProps extends IAutomationManagementDia
 ///
 
 /**
+ * Type of a replacement for the alerting create/edit dialog — the shape expected by the
+ * `AlertingDialogComponent` dashboard prop.
+ *
  * @beta
  */
 export type CustomAlertingDialogComponent = ComponentType<IAlertingDialogProps>;
@@ -703,6 +716,9 @@ export type CustomAlertingDialogComponent = ComponentType<IAlertingDialogProps>;
 export type CustomAlertingDialogContextDecoratorComponent = ComponentType<{ children?: ReactNode }>;
 
 /**
+ * Type of a replacement for the alerting management dialog — the shape expected by the
+ * `AlertingManagementDialogComponent` dashboard prop.
+ *
  * @beta
  */
 export type CustomAlertingManagementDialogComponent = ComponentType<IAlertingManagementDialogProps>;
@@ -776,7 +792,14 @@ export interface IAlertDropdownProps {
  * @beta
  */
 export enum AlertMetricComparatorType {
+    /**
+     * Compares against the immediately preceding period at the alert's selected granularity
+     * (e.g. previous week, previous month).
+     */
     PreviousPeriod,
+    /**
+     * Compares against the same period one year earlier.
+     */
     SamePeriodPreviousYear,
 }
 

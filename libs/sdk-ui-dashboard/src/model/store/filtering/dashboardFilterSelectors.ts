@@ -53,7 +53,7 @@ const commonDateFilter: FilterContextItem = newAllTimeDashboardDateFilter(
     generateDateFilterLocalIdentifier(0),
 );
 
-function filterLocalIdentifiers(filters: FilterContextItem[]): ReadonlySet<string> {
+export function filterLocalIdentifiers(filters: FilterContextItem[]): ReadonlySet<string> {
     return new Set(
         filters
             .map(dashboardFilterLocalIdentifier)
@@ -77,35 +77,45 @@ export const selectRestrictedDashboardFilterLocalIdentifiers: DashboardSelector<
     createSelector(selectRestrictedDashboardFilters, filterLocalIdentifiers);
 
 /**
+ * Selects the filters the current user is forbidden to access that the filter bar reports: the ones
+ * the author hid are left out, so they stay in the filter context and out of every execution.
+ */
+export const selectReportedRestrictedDashboardFilters: DashboardSelector<FilterContextItem[]> =
+    createSelector(
+        selectRestrictedDashboardFilters,
+        selectDateFilterConfigOverrides,
+        selectDateFilterConfigsOverrides,
+        selectAttributeFilterConfigsOverrides,
+        selectMeasureValueFilterConfigsOverrides,
+        (
+            restricted,
+            commonDateFilterConfig,
+            dateFilterWithDimensionConfigs,
+            attributeFilterConfigs,
+            measureValueFilterConfigs,
+        ) =>
+            restricted.filter((filter) =>
+                // isFilterContextItemHidden covers attribute and date filters only
+                isDashboardMeasureValueFilter(filter)
+                    ? measureValueFilterConfigs.find(
+                          (config) => config.localIdentifier === dashboardFilterLocalIdentifier(filter),
+                      )?.mode !== "hidden"
+                    : !isFilterContextItemHidden(filter, {
+                          commonDateFilterConfig,
+                          dateFilterWithDimensionConfigs,
+                          attributeFilterConfigs,
+                      }),
+            ),
+    );
+
+/**
  * Selects how many filters the current user is forbidden to access, excluding those the author hid.
  *
  * @alpha
  */
 export const selectRestrictedDashboardFilterCount: DashboardSelector<number> = createSelector(
-    selectRestrictedDashboardFilters,
-    selectDateFilterConfigOverrides,
-    selectDateFilterConfigsOverrides,
-    selectAttributeFilterConfigsOverrides,
-    selectMeasureValueFilterConfigsOverrides,
-    (
-        restricted,
-        commonDateFilterConfig,
-        dateFilterWithDimensionConfigs,
-        attributeFilterConfigs,
-        measureValueFilterConfigs,
-    ) =>
-        restricted.filter((filter) =>
-            // isFilterContextItemHidden covers attribute and date filters only
-            isDashboardMeasureValueFilter(filter)
-                ? measureValueFilterConfigs.find(
-                      (config) => config.localIdentifier === dashboardFilterLocalIdentifier(filter),
-                  )?.mode !== "hidden"
-                : !isFilterContextItemHidden(filter, {
-                      commonDateFilterConfig,
-                      dateFilterWithDimensionConfigs,
-                      attributeFilterConfigs,
-                  }),
-        ).length,
+    selectReportedRestrictedDashboardFilters,
+    (reported) => reported.length,
 );
 
 /**

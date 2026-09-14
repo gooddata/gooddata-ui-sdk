@@ -125,6 +125,20 @@ export function CustomUiMenuContentComponent({ item }: IUiMenuContentProps<IMenu
     );
 }
 
+/**
+ * The header without the title, for a widget whose title must not be shown. It keeps the submenu
+ * navigation, so the menu behaves the same for everything the header is not about.
+ */
+export function CustomUiMenuHeaderComponentWithoutTitle() {
+    const { useContextStore, createSelector } = typedUiMenuContextStore<IMenuItemData, IMenuData>();
+    const selector = createSelector((ctx) => ({
+        parentItem: ctx.focusedItem ? getItemInteractiveParent(ctx.items, ctx.focusedItem.id) : undefined,
+    }));
+    const { parentItem } = useContextStore(selector);
+
+    return parentItem ? <DefaultUiMenuHeader /> : null;
+}
+
 export function CustomUiMenuHeaderComponent() {
     const { formatMessage } = useIntl();
     const { useContextStore, createSelector } = typedUiMenuContextStore<IMenuItemData, IMenuData>();

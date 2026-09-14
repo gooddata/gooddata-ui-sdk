@@ -2,7 +2,7 @@
 
 // @vitest-environment node
 
-/* oxlint-disable @typescript-eslint/no-empty-object-type */
+// oxlint-disable @typescript-eslint/no-empty-object-type
 
 import { describe, expectTypeOf, it } from "vitest";
 

@@ -113,5 +113,18 @@ describe("UiTabs", () => {
             expect(within(rows[0]).queryAllByRole("gridcell")).toHaveLength(1);
             expect(within(rows[1]).queryAllByRole("gridcell")).toHaveLength(2);
         });
+
+        it("should announce the tab list as the grid the trigger opens", async () => {
+            const { user } = render(<UiTabs {...requiredProps} tabs={[{ id: "1", label: "Tab 1" }]} />);
+
+            const trigger = await screen.findByRole("button", { name: "Show all tabs" });
+            await user.click(trigger);
+
+            const grid = screen.getByRole("grid");
+            expect(trigger).toHaveAttribute("aria-haspopup", "grid");
+            expect(trigger).toHaveAttribute("aria-controls", grid.id);
+            expect(grid).toHaveAttribute("aria-labelledby", trigger.parentElement!.id);
+            expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
+        });
     });
 });

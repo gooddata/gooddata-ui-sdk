@@ -33,7 +33,7 @@ export async function loadMappings(host: string, mappingFilePath: string): Promi
         body: JSON.stringify(json),
     });
 
-    // eslint-disable-next-line no-console
+    // oxlint-disable-next-line eslint-js/no-console
     console.log(`Goodmock mappings loaded from ${mappingFilePath} (status: ${response.status})`);
 }
 
@@ -47,7 +47,7 @@ export async function resetScenarios(host: string): Promise<void> {
     const response = await fetch(`http://${host}/__admin/scenarios/reset`, {
         method: "POST",
     });
-    // eslint-disable-next-line no-console
+    // oxlint-disable-next-line eslint-js/no-console
     console.log(`Goodmock scenarios reset (status: ${response.status})`);
 }
 
@@ -59,7 +59,7 @@ export async function resetMappings(host: string): Promise<void> {
     const response = await fetch(`http://${host}/__admin/reset`, {
         method: "POST",
     });
-    // eslint-disable-next-line no-console
+    // oxlint-disable-next-line eslint-js/no-console
     console.log(`Goodmock mappings reset (status: ${response.status})`);
 }
 
@@ -83,7 +83,7 @@ export async function mockLogRequests(host: string): Promise<void> {
             },
         }),
     });
-    // eslint-disable-next-line no-console
+    // oxlint-disable-next-line eslint-js/no-console
     console.log(`Goodmock log requests mocked (status: ${response.status})`);
 }
 
@@ -119,7 +119,7 @@ export async function startRecording(host: string, backendHost: string): Promise
             response: { proxyBaseUrl: backendHost },
         }),
     });
-    // eslint-disable-next-line no-console
+    // oxlint-disable-next-line eslint-js/no-console
     console.log(`Goodmock recording started, proxying to ${backendHost} (status: ${response.status})`);
 }
 
@@ -219,7 +219,7 @@ function sanitizeWorkspaceId(
     const sanitizedDataString = dataString.split(sourceWorkspaceId).join(targetWorkspaceId);
     const sanitizedData = JSON.parse(sanitizedDataString) as { mappings: IGoodmockMapping[] };
 
-    // eslint-disable-next-line no-console
+    // oxlint-disable-next-line eslint-js/no-console
     console.log(`Sanitized workspaceId in mappings (${sourceWorkspaceId} -> ${targetWorkspaceId})`);
 
     return sanitizedData.mappings;
@@ -402,6 +402,6 @@ export async function snapshotAndSaveRecording(
 
     mkdirSync(dirname(mappingFilePath), { recursive: true });
     writeFileSync(mappingFilePath, output);
-    // eslint-disable-next-line no-console
+    // oxlint-disable-next-line eslint-js/no-console
     console.log(`Recording saved to ${mappingFilePath} (${sanitizedMappings.length} mappings)`);
 }

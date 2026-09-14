@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // (C) 2026 GoodData Corporation
 
-/* oxlint-disable no-barrel-files/no-barrel-files -- this file IS the package's curated public surface */
+// oxlint-disable no-barrel-files/no-barrel-files -- this file IS the package's curated public surface
 
 import { realpathSync } from "fs";
 import { fileURLToPath } from "url";

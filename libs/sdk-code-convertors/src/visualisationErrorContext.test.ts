@@ -12,14 +12,15 @@ describe("declarativeVisualisationToYaml error context", () => {
             // content is empty which is invalid for isInsight
         };
 
+        let error: ICoreError | undefined;
         try {
             declarativeVisualisationToYaml([], visualisation);
-            expect.fail("Should have thrown error");
         } catch (err: unknown) {
-            const error = err as ICoreError;
-            expect(error.context?.type).toBe("visualisation");
-            expect(error.context?.path).toEqual(["visualisation", "my_vis"]);
+            error = err as ICoreError;
         }
+        expect(error).toBeDefined();
+        expect(error?.context?.type).toBe("visualisation");
+        expect(error?.context?.path).toEqual(["visualisation", "my_vis"]);
     });
 
     it("should include full path for invalid attribute in bucket", () => {
@@ -43,23 +44,24 @@ describe("declarativeVisualisationToYaml error context", () => {
             },
         };
 
+        let error: ICoreError | undefined;
         try {
             declarativeVisualisationToYaml([], visualisation);
-            expect.fail("Should have thrown error");
         } catch (err: unknown) {
-            const error = err as ICoreError;
-            expect(error.context?.path).toEqual([
-                "visualisation",
-                "my_vis",
-                "insight",
-                "buckets",
-                "0",
-                "items",
-                "0",
-                "attribute",
-                "displayForm",
-            ]);
+            error = err as ICoreError;
         }
+        expect(error).toBeDefined();
+        expect(error?.context?.path).toEqual([
+            "visualisation",
+            "my_vis",
+            "insight",
+            "buckets",
+            "0",
+            "items",
+            "0",
+            "attribute",
+            "displayForm",
+        ]);
     });
 
     it("should include full path for invalid measure in bucket", () => {
@@ -87,23 +89,24 @@ describe("declarativeVisualisationToYaml error context", () => {
             },
         };
 
+        let error: ICoreError | undefined;
         try {
             declarativeVisualisationToYaml([], visualisation);
-            expect.fail("Should have thrown error");
         } catch (err: unknown) {
-            const error = err as ICoreError;
-            expect(error.context?.path).toEqual([
-                "visualisation",
-                "my_vis",
-                "insight",
-                "buckets",
-                "0",
-                "items",
-                "0",
-                "measure",
-                "item",
-            ]);
+            error = err as ICoreError;
         }
+        expect(error).toBeDefined();
+        expect(error?.context?.path).toEqual([
+            "visualisation",
+            "my_vis",
+            "insight",
+            "buckets",
+            "0",
+            "items",
+            "0",
+            "measure",
+            "item",
+        ]);
     });
 
     it("should include full path for unsupported bucket item type", () => {
@@ -124,22 +127,23 @@ describe("declarativeVisualisationToYaml error context", () => {
             },
         };
 
+        let error: ICoreError | undefined;
         try {
             declarativeVisualisationToYaml([], visualisation);
-            expect.fail("Should have thrown error");
         } catch (err: unknown) {
-            const error = err as ICoreError;
-            // Based on the code, it uses bucketItemErrorContext which has bi and ii
-            expect(error.context?.path).toEqual([
-                "visualisation",
-                "my_vis",
-                "insight",
-                "buckets",
-                "0",
-                "items",
-                "0",
-            ]);
+            error = err as ICoreError;
         }
+        expect(error).toBeDefined();
+        // Based on the code, it uses bucketItemErrorContext which has bi and ii
+        expect(error?.context?.path).toEqual([
+            "visualisation",
+            "my_vis",
+            "insight",
+            "buckets",
+            "0",
+            "items",
+            "0",
+        ]);
     });
 
     it("should include full path for invalid filter", () => {
@@ -158,22 +162,23 @@ describe("declarativeVisualisationToYaml error context", () => {
             },
         };
 
+        let error: ICoreError | undefined;
         try {
             declarativeVisualisationToYaml([], visualisation);
-            expect.fail("Should have thrown error");
         } catch (err: unknown) {
-            const error = err as ICoreError;
-            expect(error.context?.path).toEqual([
-                "visualisation",
-                "my_vis",
-                "insight",
-                "filters",
-                "0",
-                "date",
-                "positiveAttributeFilter",
-                "displayForm",
-            ]);
+            error = err as ICoreError;
         }
+        expect(error).toBeDefined();
+        expect(error?.context?.path).toEqual([
+            "visualisation",
+            "my_vis",
+            "insight",
+            "filters",
+            "0",
+            "date",
+            "positiveAttributeFilter",
+            "displayForm",
+        ]);
     });
 });
 
@@ -221,15 +226,16 @@ describe("declarativeVisualisationToYaml layer overrides", () => {
             { attributeFilterConfigs: { f1: { displayAsLabel: { identifier: "x", type: "displayForm" } } } },
         ],
     ])("refuses a layer carrying its own %s, which the grammar cannot express", (field, override) => {
+        let error: ICoreError | undefined;
         try {
             declarativeVisualisationToYaml([], withLayer(override));
-            expect.fail("Should have thrown error");
         } catch (err: unknown) {
-            const error = err as ICoreError;
-            expect(error.code).toBe(CoreErrorCode.ItemNotSupported);
-            expect(error.message).toContain(`layer "layer1" own ${field}`);
-            expect(error.context?.path).toEqual(["visualisation", "my_map", "insight", "layers", "0", field]);
+            error = err as ICoreError;
         }
+        expect(error).toBeDefined();
+        expect(error?.code).toBe(CoreErrorCode.ItemNotSupported);
+        expect(error?.message).toContain(`layer "layer1" own ${field}`);
+        expect(error?.context?.path).toEqual(["visualisation", "my_map", "insight", "layers", "0", field]);
     });
 
     // Present-but-empty is the shape stored layers carry, and it loses nothing.

@@ -154,7 +154,7 @@ function addScriptTag(url: string): { element: HTMLScriptElement; promise: Promi
         }
 
         element.onload = () => {
-            // eslint-disable-next-line no-console
+            // oxlint-disable-next-line eslint-js/no-console
             console.log(`Dynamic Script Loaded: ${url}`);
             resolve();
         };

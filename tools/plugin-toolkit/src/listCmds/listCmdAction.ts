@@ -24,7 +24,7 @@ export async function listCmdAction(listObjFn: ListObjectsFn, options: ActionOpt
 
         const listEntries = await listObjFn(config, options);
 
-        // eslint-disable-next-line no-console
+        // oxlint-disable-next-line eslint-js/no-console
         console.log(
             columnify(listEntries, {
                 config: {

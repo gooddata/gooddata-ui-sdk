@@ -2980,7 +2980,7 @@ export interface IWorkspaceComputedAttributesService {
 
 // @alpha
 export interface IWorkspaceDashboardsService {
-    createDashboard(dashboard: IDashboardDefinition): Promise<IDashboard>;
+    createDashboard(dashboard: IDashboardDefinition, generateId?: boolean): Promise<IDashboard>;
     createDashboardPlugin(plugin: IDashboardPluginDefinition): Promise<IDashboardPlugin>;
     createFilterView(filterView: IDashboardFilterViewSaveRequest): Promise<IDashboardFilterView>;
     createScheduledMail(scheduledMail: IScheduledMailDefinition, exportFilterContext?: IFilterContextDefinition): Promise<IScheduledMail>;

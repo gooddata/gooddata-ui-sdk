@@ -75,6 +75,7 @@ import { changeMeasureValueFilterDimensionalityHandler } from "./filterContext/m
 import { changeMeasureValueFilterTitleHandler } from "./filterContext/measureValueFilter/changeMeasureValueFilterTitleHandler.js";
 import { moveMeasureValueFilterHandler } from "./filterContext/measureValueFilter/moveMeasureValueFilterHandler.js";
 import { removeMeasureValueFilterHandler } from "./filterContext/measureValueFilter/removeMeasureValueFilterHandler.js";
+import { removeRestrictedFiltersHandler } from "./filterContext/removeRestrictedFiltersHandler.js";
 import { addLayoutSectionHandler } from "./layout/addLayoutSectionHandler.js";
 import { addSectionItemsHandler } from "./layout/addSectionItemsHandler.js";
 import { changeLayoutSectionHeaderHandler } from "./layout/changeLayoutSectionHeaderHandler.js";
@@ -186,6 +187,7 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.MOVE": moveDateFilterHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.MEASURE_VALUE_FILTER.ADD": addMeasureValueFilterHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.MEASURE_VALUE_FILTER.REMOVE": removeMeasureValueFilterHandler,
+    "GDC.DASH/CMD.FILTER_CONTEXT.RESTRICTED_FILTERS.REMOVE": removeRestrictedFiltersHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.MEASURE_VALUE_FILTER.MOVE": moveMeasureValueFilterHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.MEASURE_VALUE_FILTER.CHANGE_CONDITION":
         changeMeasureValueFilterConditionHandler,

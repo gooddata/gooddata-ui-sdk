@@ -463,7 +463,10 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         );
     };
 
-    public createDashboard = async (dashboard: IDashboardDefinition): Promise<IDashboard> => {
+    public createDashboard = async (
+        dashboard: IDashboardDefinition,
+        generateId = true,
+    ): Promise<IDashboard> => {
         // Process filter contexts for each tab first
         const dashboardWithTabFilterContexts = await this.processDashboardTabsFilterContexts(dashboard);
 
@@ -495,6 +498,11 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 workspaceId: this.workspace,
                 jsonApiAnalyticalDashboardPostOptionalIdDocument: {
                     data: {
+                        ...(generateId
+                            ? {}
+                            : {
+                                  id: dashboard.identifier,
+                              }),
                         type: "analyticalDashboard",
                         attributes: {
                             content: dashboardContent,

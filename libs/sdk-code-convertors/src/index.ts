@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-/* oxlint-disable no-barrel-files/no-barrel-files */
+// oxlint-disable no-barrel-files/no-barrel-files
 
 // AAC schema types (curated public surface — isolates api-extractor from generated internals)
 export type {

@@ -232,7 +232,7 @@ export class TableFacade {
             return this.gridApi;
         }
 
-        // eslint-disable-next-line no-console
+        // oxlint-disable-next-line eslint-js/no-console
         console.debug("Attempting to obtain gridApi for a destructed table.");
         return undefined;
     };
@@ -275,7 +275,7 @@ export class TableFacade {
     };
 
     private onExecutionTransformed = (newExecution: IPreparedExecution): void => {
-        // eslint-disable-next-line no-console
+        // oxlint-disable-next-line eslint-js/no-console
         console.debug("onExecutionTransformed", newExecution.definition);
         this.transformedExecution = newExecution;
         this.onExecutionTransformedCallback?.(newExecution);
@@ -812,14 +812,14 @@ export class TableFacade {
         if (this.originalExecution.fingerprint() === other.fingerprint()) {
             return true;
         } else {
-            // eslint-disable-next-line no-console
+            // oxlint-disable-next-line eslint-js/no-console
             console.debug("Original execution fingerprint does not match.");
         }
         if (this.transformedExecution) {
             const matchingTransformed = this.transformedExecution.fingerprint() === other.fingerprint();
 
             if (!matchingTransformed) {
-                // eslint-disable-next-line no-console
+                // oxlint-disable-next-line eslint-js/no-console
                 console.debug(
                     "transformed execution does not match",
                     this.transformedExecution.definition,
@@ -833,7 +833,7 @@ export class TableFacade {
         const matchingCurrentlyRendered = this.currentFingerprint === other.fingerprint();
 
         if (!matchingCurrentlyRendered) {
-            // eslint-disable-next-line no-console
+            // oxlint-disable-next-line eslint-js/no-console
             console.debug("current result does not match", this.currentResult.definition, other.definition);
         }
 

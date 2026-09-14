@@ -149,7 +149,7 @@ function saveDashboard(
                     return ctx.backend
                         .workspace(ctx.workspace)
                         .dashboards()
-                        .createDashboard(dashboardToSave)
+                        .createDashboard(dashboardToSave, !ctx.config?.isAiMode)
                         .then((dashboard) => ({ dashboard, created: true }));
                 }
                 throw error;

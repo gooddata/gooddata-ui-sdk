@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-/* eslint-disable no-console -- CLI script with intentional progress logging */
+// oxlint-disable eslint-js/no-console -- CLI script with intentional progress logging
 
 //
 // Generates TypeScript types and compiled JSON schema from the AAC JSON Schema source files.

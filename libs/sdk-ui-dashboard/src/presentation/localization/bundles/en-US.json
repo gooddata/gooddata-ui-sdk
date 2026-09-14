@@ -119,6 +119,10 @@
         "text": "Filters",
         "crowdinContext": "Label for the filter bar section"
     },
+    "filterBar.restrictedFilters.remove": {
+        "text": "Remove restricted filters",
+        "crowdinContext": "Action in the filter bar notice tooltip, shown in edit mode. Removes the filters the user is not allowed to access from the dashboard for good."
+    },
     "filterBar.restrictedFilters.reason": {
         "text": "{count, plural, one {You don't have access to # filter.} other {You don't have access to # filters.}}",
         "crowdinContext": "Tooltip on the filter bar notice, giving the reason why that many dashboard filters were left out. Uses pluralization based on the number of filters."
@@ -582,6 +586,10 @@
     "deleteWidgetDialog.objectsMessage": {
         "text": "Following types objects associated with the widget {title} will no longer work:",
         "crowdinContext": "Warning message about objects that will be affected when deleting a widget. The {title} placeholder shows the specific widget name."
+    },
+    "deleteWidgetDialog.objectsMessage.restricted": {
+        "text": "The following types of objects associated with the widget will no longer work:",
+        "crowdinContext": "The same warning for a widget the user has no access to, which therefore must not be named."
     },
     "deleteWidgetDialog.alerts": {
         "text": "alerts",
@@ -3286,6 +3294,10 @@
     "widget.options.menu.export": {
         "text": "Export",
         "crowdinContext": "Export to file with XLSX extension."
+    },
+    "insightMenu.restrictedWidget.options": {
+        "text": "Restricted visualization options",
+        "crowdinContext": "Accessible name of the menu of a visualization the user has no access to; it must not name the visualization."
     },
     "menu.close": {
         "text": "Close menu",

@@ -40,7 +40,6 @@ const GeoNextOldSeparationRules = [
     },
 ];
 
-// eslint-disable-next-line no-restricted-exports
 export default {
     forbidden: [...DefaultRules, ...DefaultSdkRules, ...PublicLibraryRules, ...GeoNextOldSeparationRules],
     options: DefaultOptions,

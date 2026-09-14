@@ -2,7 +2,9 @@
 
 // Lodash-es imports that should be replaced with native alternatives
 // Maps import name(s) to the recommended alternative
-import { Rules } from "../types.js";
+import { IOverride, Rules } from "../types.js";
+
+import { typescriptOverrideFiles } from "./typescript.js";
 
 const lodashEsBans: Record<string, string> = {
     "get,getOr": "the ?. and ?? operators",
@@ -187,6 +189,7 @@ export const eslintRulesNativeNotSupported: Rules = {
 
     "no-dupe-args": "error",
 
+    // https://github.com/oxc-project/oxc/releases/tag/apps_v1.77.0
     "no-restricted-exports": [
         "error",
         {
@@ -212,8 +215,8 @@ export const eslintRulesNativeNotSupported: Rules = {
         },
     ],
 
-    // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-negated-condition
-    "no-negated-condition": "error", // oxlint state: pending fix
+    // https://github.com/oxc-project/oxc/releases/tag/apps_v1.72.0
+    "no-negated-condition": "error",
 
     // todo: maybe leave this here, both linters seem to turn it on by default and conflict
     "prefer-const": "off",
@@ -227,7 +230,7 @@ export const eslintRules: Rules = {
     ...eslintRulesNativeNotSupported,
 };
 
-export const eslintOverridesNativeSupported = [
+export const eslintOverridesNativeSupported: IOverride[] = [
     {
         files: ["**/*.ts", "**/*.tsx"],
         rules: {
@@ -244,7 +247,7 @@ export const eslintOverridesNativeSupported = [
                     ],
                 },
             ],
-        } as Rules,
+        },
     },
     {
         files: [
@@ -267,11 +270,11 @@ export const eslintOverridesNativeSupported = [
                     patterns: lodashEsPatterns,
                 },
             ],
-        } as Rules,
+        },
     },
 ];
 
-const eslintOverridesNativeNotSupported = [
+export const eslintOverridesNativeNotSupported: IOverride[] = [
     {
         // ESLint flat config files & Vite config files require a default export
         files: [
@@ -281,6 +284,10 @@ const eslintOverridesNativeNotSupported = [
             "**/vite.config.js",
             "**/vitest.config.ts",
             "**/vitest.config.js",
+            "**/rolldown.config.ts",
+            "**/rolldown.config.js",
+            "**/playwright.config.ts",
+            "**/playwright.config.js",
             "**/.dependency-cruiser.ts",
             "**/.dependency-cruiser.js",
             "**/.i18nrc.ts",
@@ -288,8 +295,40 @@ const eslintOverridesNativeNotSupported = [
         ],
         rules: {
             "no-restricted-exports": "off",
-        } as Rules,
+        },
+    },
+    {
+        files: typescriptOverrideFiles,
+        rules: {
+            "no-restricted-syntax": [
+                "error",
+                {
+                    selector: "MemberExpression[object.name='React']",
+                    message: "Do not use `React.*`. Use named imports instead.",
+                },
+                {
+                    selector: "TSTypeReference[typeName.type='TSQualifiedName'][typeName.left.name='React']",
+                    message: "Do not use `React.*` types. Use named imports instead.",
+                },
+                {
+                    selector: "ExportNamespaceSpecifier",
+                    message: "Usage of 'export * as …' is forbidden.",
+                },
+                {
+                    selector: "ExportAllDeclaration",
+                    message: "Usage of `export * from` is forbidden.",
+                },
+                {
+                    selector:
+                        "ImportDeclaration[source.value=/^(?!.*reference_workspace)\\./] ImportNamespaceSpecifier",
+                    message: "Do not use `import * as ...` from relative paths.",
+                },
+            ],
+        },
     },
 ];
 
-export const eslintOverrides = [...eslintOverridesNativeSupported, ...eslintOverridesNativeNotSupported];
+export const eslintOverrides: IOverride[] = [
+    ...eslintOverridesNativeSupported,
+    ...eslintOverridesNativeNotSupported,
+];

@@ -25,12 +25,11 @@ try {
     };
     // oxlint-disable-next-line @typescript-eslint/no-unused-vars
 } catch (e) {
-    // eslint-disable-next-line no-console
+    // oxlint-disable-next-line eslint-js/no-console
     console.info(`No certificates found in ${certDir}, skipping HTTPS configuration`);
     httpsConfig = undefined;
 }
 
-// eslint-disable-next-line no-restricted-exports
 export default defineConfig(({ mode }): UserConfig => {
     const env = loadEnv(mode, process.cwd(), "");
     const isProduction = mode === "production";

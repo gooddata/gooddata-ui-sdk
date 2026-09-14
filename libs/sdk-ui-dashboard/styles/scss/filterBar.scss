@@ -152,7 +152,6 @@ $attribute-filter-drag-handle-left: 10px;
 .dash-filters-all {
     $default_padding: 10px;
     $default_space: 3px;
-    $filter_item_height: 41px; // `.attribute-filter-button` in sdk-ui-filters, which exports no variable
 
     position: relative;
     width: calc(100% - 150px); // minus filters configuration buttons panel width
@@ -221,8 +220,7 @@ $attribute-filter-drag-handle-left: 10px;
     }
 
     .dash-filters-restricted {
-        display: inline-block;
-        vertical-align: top;
+        display: flex;
         margin: 7px 11px 7px $default_space;
     }
 
@@ -231,23 +229,34 @@ $attribute-filter-drag-handle-left: 10px;
         display: inline-flex;
         align-items: center;
         gap: 5px;
-        min-height: $filter_item_height;
-        padding: 4px 10px;
+        padding: 6px 10px;
+        border: none;
         border-radius: var(--gd-message-warning-borderRadius, 3px);
         background: var(
             --gd-message-warning-backgroundColor,
             var(--gd-palette-warning-base-t85, rgba(241, 134, 0, 0.15))
         );
         color: var(--gd-message-warning-textColor, kit-variables.$gd-palette-warning-base);
+        font-family: inherit;
         font-size: 12px;
         line-height: 16px;
         white-space: nowrap;
         cursor: default;
 
+        &--actionable {
+            cursor: pointer;
+        }
+
         .gd-icon-lock {
             font-size: 14px;
         }
     }
+}
+
+.dash-filters-restricted-tooltip {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 .button-filter-bar-show-all {

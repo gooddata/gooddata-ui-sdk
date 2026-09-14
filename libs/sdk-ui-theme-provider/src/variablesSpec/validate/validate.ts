@@ -322,16 +322,28 @@ function normalizeColorsInValue(value: string): string {
     );
 
     // Normalize rgb()/rgba() values to consistent rgba() format.
-    // Sass 1.79+ no longer rounds color channels, so derived colors are emitted with
-    // fractional channels (e.g. rgb(231.5, 247.3, 252.1)) - round them to integers so
-    // they compare equal to the hex/rgba values in the specification.
+    // Sass 1.79+ no longer rounds color channels, and since 1.104 such fractional-channel colors
+    // are serialized in the CSS Color 4 percentage form (e.g. rgb(90.78%,96.98%,98.86%)) - parse
+    // both numeric and percentage channels and round them to integers so they compare equal to
+    // the hex/rgba values in the specification.
+    // The percentage form prints ~10 decimals, so a channel that is exactly N.5 in 0-255 space
+    // (e.g. 216.5 -> "84.9019607843%") converts back to fractionally BELOW the half (216.4999...)
+    // and would round down where Sass's own serializer rounded up. Snap to 6 decimals first so the
+    // conversion rounds the same way the specification values were derived.
+    const channelTo255 = (channel: string) => {
+        if (!channel.endsWith("%")) {
+            return Math.round(parseFloat(channel));
+        }
+        const raw = (parseFloat(channel) * 255) / 100;
+        return Math.round(Math.round(raw * 1e6) / 1e6);
+    };
     result = result.replace(
-        /rgba?\(([\d.]+),([\d.]+),([\d.]+)(?:,([\d.]+))?\)/g,
+        /rgba?\(([\d.]+%?),([\d.]+%?),([\d.]+%?)(?:,([\d.]+%?))?\)/g,
         (_match, r: string, g: string, b: string, a: string | undefined) => {
-            const red = Math.round(parseFloat(r));
-            const green = Math.round(parseFloat(g));
-            const blue = Math.round(parseFloat(b));
-            const alpha = a === undefined ? 1 : parseFloat(a);
+            const red = channelTo255(r);
+            const green = channelTo255(g);
+            const blue = channelTo255(b);
+            const alpha = a === undefined ? 1 : a.endsWith("%") ? parseFloat(a) / 100 : parseFloat(a);
             // Round alpha to 2 decimal places for consistent comparison
             const alphaRounded = Math.round(alpha * 100) / 100;
             return `rgba(${red},${green},${blue},${alphaRounded})`;

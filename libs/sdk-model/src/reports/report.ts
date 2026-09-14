@@ -63,7 +63,7 @@ export interface IReportBase {
      * @remarks
      * At execution time the period materializes as an absolute date filter on each
      * visualization slot's dateDataSet (lowest precedence, per-slot opt-out via
-     * ignoreReportPeriod). Also available as `{{periodStart}}` in text.
+     * ignoreReportPeriod). Also available as `{periodStart}` in text.
      */
     periodStart: ReportDateString;
 

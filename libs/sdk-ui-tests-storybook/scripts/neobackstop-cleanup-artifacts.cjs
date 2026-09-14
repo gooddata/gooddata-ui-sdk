@@ -15,11 +15,10 @@
 const fs = require("fs");
 const path = require("path");
 
-const currentDir = __dirname;
-const neoBackstopDir = path.join(currentDir, "../neobackstop");
+const neoBackstopDir = path.join(__dirname, "../neobackstop");
 const references = "reference";
 
-// eslint-disable-next-line no-console
+// oxlint-disable-next-line eslint-js/no-console
 console.log(`Cleaning artifacts from ${neoBackstopDir}/output`);
 
 const outputPath = path.join(neoBackstopDir, "output");
@@ -30,7 +29,7 @@ const outputConfig = path.join(htmlReportPath, "config.js");
 const keepPassingScreenshots = process.env.KEEP_ALL_ARTIFACTS === "true";
 
 if (!fs.existsSync(outputConfig)) {
-    // eslint-disable-next-line no-console
+    // oxlint-disable-next-line eslint-js/no-console
     console.log("No backstop output, skipping cleanup of test artifacts");
     process.exit(1);
 }
@@ -67,9 +66,9 @@ if (fs.existsSync(referenceDirectory)) {
     const allFiles = fs.readdirSync(referenceDirectory);
     const pngFiles = allFiles.filter((file) => file.endsWith(".png"));
 
-    // eslint-disable-next-line no-console
+    // oxlint-disable-next-line eslint-js/no-console
     console.log(`Found ${pngFiles.length} PNG files in reference directory`);
-    // eslint-disable-next-line no-console
+    // oxlint-disable-next-line eslint-js/no-console
     console.log(`Config contains ${data.tests.length} test results from this matrix run`);
 
     let removedCount = 0;
@@ -95,7 +94,7 @@ if (fs.existsSync(referenceDirectory)) {
                     // Failed test - keep the file
                     keptCount++;
                 } else if (status !== "pass" && status !== "fail") {
-                    // eslint-disable-next-line no-console
+                    // oxlint-disable-next-line eslint-js/no-console
                     console.log(`File ${file} has unrecognized test status: "${status}"`);
                     keptCount++;
                 }
@@ -105,16 +104,16 @@ if (fs.existsSync(referenceDirectory)) {
                 removedCount++;
             }
         } catch (error) {
-            // eslint-disable-next-line no-console
+            // oxlint-disable-next-line eslint-js/no-console
             console.log(`Warning: Could not process ${file}: ${error.message}`);
             errorCount++;
         }
     });
 
-    // eslint-disable-next-line no-console
+    // oxlint-disable-next-line eslint-js/no-console
     console.log(`Cleanup summary: ${removedCount} removed, ${keptCount} kept, ${errorCount} errors`);
 } else {
-    // eslint-disable-next-line no-console
+    // oxlint-disable-next-line eslint-js/no-console
     console.log("Reference directory does not exist, skipping reference cleanup");
 }
 
@@ -140,7 +139,7 @@ if (fs.existsSync(testDirectory)) {
                 fs.unlinkSync(filePath);
             }
         } catch (error) {
-            // eslint-disable-next-line no-console
+            // oxlint-disable-next-line eslint-js/no-console
             console.log(`Warning: Could not process test file ${file}: ${error.message}`);
         }
     });
@@ -166,7 +165,7 @@ if (fs.existsSync(htmlReportPath)) {
                 fs.unlinkSync(filePath);
             }
         } catch (error) {
-            // eslint-disable-next-line no-console
+            // oxlint-disable-next-line eslint-js/no-console
             console.log(`Warning: Could not process test file ${file}: ${error.message}`);
         }
     });

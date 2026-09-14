@@ -204,4 +204,10 @@ export interface IUiDropdownBodyRenderProps {
     ariaAttributes: {
         id: string;
     };
+
+    /**
+     * Id of the element around the trigger. A body with no name of its own takes it as
+     * `aria-labelledby`; a body that sets `aria-label` leaves it alone.
+     */
+    triggerId: string;
 }

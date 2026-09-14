@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-/* oxlint-disable no-barrel-files/no-barrel-files */
+// oxlint-disable no-barrel-files/no-barrel-files
 
 /**
  * This package provides domain models for GoodData.UI.
@@ -1507,6 +1507,7 @@ export {
     type IReportVariableDefinition,
     ReportBuiltInVariables,
     getReportTextPlaceholders,
+    reportTextPlaceholder,
     resolveReportTextPlaceholders,
 } from "./reports/variables.js";
 

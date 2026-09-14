@@ -2218,3 +2218,30 @@ export function setMeasureValueFilterTitle(
         },
     };
 }
+
+/**
+ * Removes the filters the active tab's filter bar reports as not applied.
+ *
+ * @remarks
+ * Filters the author hid are kept: they are already left out of every execution. Saving the dashboard
+ * makes the removal permanent, for everyone.
+ *
+ * @beta
+ */
+export interface IRemoveRestrictedFilters extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.RESTRICTED_FILTERS.REMOVE";
+}
+
+/**
+ * Creates the {@link IRemoveRestrictedFilters} command.
+ *
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ * @beta
+ */
+export function removeRestrictedFilters(correlationId?: string): IRemoveRestrictedFilters {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.RESTRICTED_FILTERS.REMOVE",
+        correlationId,
+    };
+}
