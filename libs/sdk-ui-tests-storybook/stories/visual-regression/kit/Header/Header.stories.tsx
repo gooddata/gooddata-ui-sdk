@@ -109,11 +109,11 @@ const getPicker = (selectedWorkspace: any) => (
 
 function HeaderExamples() {
     const onHeaderLogoClick = useCallback((...args: any[]) => {
-        console.log("onHeaderLogoClick", ...args); // eslint-disable-line no-console
+        console.log("onHeaderLogoClick", ...args); // oxlint-disable-line eslint-js/no-console
     }, []);
 
     const onMenuClick = useCallback((menuItem: any) => {
-        console.log("onMenuClick: ", menuItem); // eslint-disable-line no-console
+        console.log("onMenuClick: ", menuItem); // oxlint-disable-line eslint-js/no-console
     }, []);
 
     const getDarkBranding = useCallback((): Partial<IAppHeaderProps> => {

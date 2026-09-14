@@ -11,6 +11,7 @@ import {
 import {
     clearThreadAction,
     deleteConversationAction,
+    evaluateMessageCompleteAction,
     evaluateMessageUpdateAction,
     loadThreadAction,
     newMessageAction,
@@ -19,10 +20,12 @@ import {
     saveVisualisationRenderStatusAction,
     saveVisualizationAction,
     saveVisualizationSuccessAction,
+    setCurrentConversationAction,
     setUserFeedback,
     setVerboseAction,
 } from "../messages/messagesSlice.js";
 
+import { onConversationActivity } from "./conversationSession.js";
 import { loadAgents } from "./loadAgents.js";
 import { loadCatalogItems } from "./loadCatalogItems.js";
 import { loadColorPalette } from "./loadColorPalette.js";
@@ -74,6 +77,10 @@ export function* rootSaga() {
     yield takeLatest(setContextObjectsSearchAction.type, reloadContextObjects);
     //others
     yield takeEvery(setVerboseAction.type, onVerboseStore);
+    yield takeEvery(
+        [newMessageAction.type, evaluateMessageCompleteAction.type, setCurrentConversationAction.type],
+        onConversationActivity,
+    );
     yield fork(onEvent);
     yield call(loadColorPalette);
     yield call(loadSettings);

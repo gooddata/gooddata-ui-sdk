@@ -8,7 +8,6 @@ import { GoodmockMode, goodmockMode } from "@gooddata/sdk-e2e-utils";
 
 const isRecording = goodmockMode() === GoodmockMode.Record;
 
-// eslint-disable-next-line no-restricted-exports
 export default defineConfig({
     testDir: "./tests",
     // TODO: remove --pass-with-no-tests flag and fix the workflow logic after integrated test migration to playwright is merged

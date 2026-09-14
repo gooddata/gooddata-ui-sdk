@@ -79,6 +79,16 @@ export interface IHostUiMountOptions {
         appendToChat?: boolean,
         replaceUserContext?: boolean,
     ) => void;
+
+    /**
+     * Reports an error caught inside the host UI module's own React tree.
+     *
+     * @remarks
+     * The host UI renders in a React root separate from the host application's, so the
+     * host's own error boundary cannot observe failures here. Implementations should
+     * route caught errors through this callback to keep them visible in host telemetry.
+     */
+    onError?: (error: string, context: string) => void;
 }
 
 /**

@@ -10,6 +10,12 @@
             "rules": {
                 "@typescript-eslint/no-explicit-any": "warn"
             }
+        },
+        {
+            "files": ["wasm/**/*"],
+            "globals": {
+                "Javy": "readonly"
+            }
         }
     ]
 }

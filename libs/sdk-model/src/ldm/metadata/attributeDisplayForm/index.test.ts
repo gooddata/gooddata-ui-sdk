@@ -11,7 +11,7 @@ import {
     attributeDisplayFormMetadataObjectTitle,
 } from "./index.js";
 
-/* oxlint-disable no-undef */
+// oxlint-disable no-undef
 
 describe("attribute display form", () => {
     const _attributeDisplayFormTitle = "Account";

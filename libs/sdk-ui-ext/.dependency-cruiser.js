@@ -27,7 +27,6 @@ const GeoChartNextSeparationRules = [
     },
 ];
 
-// eslint-disable-next-line no-restricted-exports
 export default {
     forbidden: [
         ...DefaultRules.filter((rule) => rule.name !== "not-to-lodash-get"),

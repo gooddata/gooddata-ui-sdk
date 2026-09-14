@@ -32,7 +32,7 @@ const vizSlot = (localIdentifier: string): IReportVisualizationSlot => ({
 const logoSlot = (localIdentifier: string): IReportImageSlot => ({
     type: "image",
     localIdentifier,
-    source: { type: "url", url: "{{logo}}" },
+    source: { type: "url", url: "{logo}" },
     fit: "contain",
     altText: "Logo",
     style: { horizontalAlign: "start", verticalAlign: "end" },
@@ -64,7 +64,7 @@ const footerSlots = () => [
         ...textSlot({
             localIdentifier: "footerPageNumber",
             kind: "custom",
-            content: "{{pageNumber}} / {{totalPages}}",
+            content: "{currentPageNumber} / {totalPages}",
         }),
         style: { horizontalAlign: "end", verticalAlign: "end" },
     } satisfies IReportTextSlot,
@@ -164,11 +164,11 @@ export const BuiltInReportPageLayoutCover: IReportPageLayout = builtInPage({
         format: "widescreen",
         layout: column([slot("coverTitle", 2), slot("coverSubtitle", 1), footerRow()]),
         slots: [
-            textSlot({ localIdentifier: "coverTitle", kind: "title", content: "{{reportTitle}}" }),
+            textSlot({ localIdentifier: "coverTitle", kind: "title", content: "{reportName}" }),
             textSlot({
                 localIdentifier: "coverSubtitle",
                 kind: "subtitle",
-                content: "{{periodStart}} – {{periodEnd}}",
+                content: "{periodStart} – {periodEnd}",
             }),
             ...footerSlots(),
         ],
@@ -338,11 +338,11 @@ export const BuiltInReportPageLayoutPortraitCover: IReportPageLayout = builtInPa
         format: PORTRAIT_FORMAT,
         layout: column([slot("coverTitle", 2), slot("coverSubtitle", 1), footerRow()]),
         slots: [
-            textSlot({ localIdentifier: "coverTitle", kind: "title", content: "{{reportTitle}}" }),
+            textSlot({ localIdentifier: "coverTitle", kind: "title", content: "{reportName}" }),
             textSlot({
                 localIdentifier: "coverSubtitle",
                 kind: "subtitle",
-                content: "{{periodStart}} – {{periodEnd}}",
+                content: "{periodStart} – {periodEnd}",
             }),
             ...footerSlots(),
         ],

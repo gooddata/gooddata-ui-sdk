@@ -221,7 +221,6 @@ try {
 const serverOptions = httpsOptions ? { https: httpsOptions } : {};
 
 // https://vitejs.dev/config/
-// eslint-disable-next-line no-restricted-exports
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, process.cwd(), "");
     const backendUrl = env["VITE_BACKEND_URL"] ?? "https://staging.dev-latest.stg11.panther.intgdc.com";

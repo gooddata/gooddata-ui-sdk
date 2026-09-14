@@ -1,13 +1,13 @@
 // (C) 2025-2026 GoodData Corporation
 
-/* oxlint-disable no-barrel-files/no-barrel-files */
+// oxlint-disable no-barrel-files/no-barrel-files, eslint-js/no-restricted-syntax
 
 import { type AxiosInstance, type AxiosPromise, type AxiosRequestConfig } from "axios";
 
 import type { GeoJsonFeatureCollection } from "../../generated/result-json-api/api.js";
 
 // Result API - Export ActionsApi functions with ResultApi_ prefix
-// eslint-disable-next-line no-duplicate-imports -- Using both import and export from same module for re-exporting with aliases
+// oxlint-disable-next-line eslint-js/no-duplicate-imports -- Using both import and export from same module for re-exporting with aliases
 export {
     ActionsApi_AnalyzeCsv as ResultApi_AnalyzeCsv,
     type ActionsApiAnalyzeCsvRequest as ResultApiAnalyzeCsvRequest,

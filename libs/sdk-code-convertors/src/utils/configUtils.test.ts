@@ -93,12 +93,14 @@ describe("loadColorDefinitions", () => {
     });
 
     it("refuses a slot it does not name, reporting which", () => {
+        let error: ICoreError | undefined;
         try {
             loadColorDefinitions([{ id: "properties.color.other", color: guid("5") }]);
-            expect.fail("Should have thrown error");
         } catch (err: unknown) {
-            expect((err as ICoreError).code).toBe(CoreErrorCode.ItemNotSupported);
-            expect((err as ICoreError).message).toContain("properties.color.other");
+            error = err as ICoreError;
         }
+        expect(error).toBeDefined();
+        expect(error?.code).toBe(CoreErrorCode.ItemNotSupported);
+        expect(error?.message).toContain("properties.color.other");
     });
 });

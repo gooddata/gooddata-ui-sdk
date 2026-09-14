@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui:Convert aborted executions to CANCELLED instead of UNKNOWN_ERROR; sdk-backend-tiger no longer logs request cancellations as backend errors.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

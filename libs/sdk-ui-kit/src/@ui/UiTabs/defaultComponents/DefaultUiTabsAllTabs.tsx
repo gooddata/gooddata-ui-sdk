@@ -115,7 +115,7 @@ export function DefaultUiTabsAllTabs<
                             ariaAttributes={ariaAttributes}
                         />
                     )}
-                    renderBody={({ ariaAttributes }) => {
+                    renderBody={({ ariaAttributes, triggerId }) => {
                         return (
                             <ScopedIdStore value={scopedIdStoreValue}>
                                 <div
@@ -124,6 +124,7 @@ export function DefaultUiTabsAllTabs<
                                     onKeyDown={onKeyboardNavigation}
                                     tabIndex={-1}
                                     {...ariaAttributes}
+                                    aria-labelledby={triggerId}
                                     role="grid"
                                     aria-rowcount={tabs.length}
                                 >
@@ -146,7 +147,7 @@ export function DefaultUiTabsAllTabs<
                     closeOnEscape
                     accessibilityConfig={{
                         triggerRole: "button",
-                        popupRole: "listbox",
+                        popupRole: "grid",
                     }}
                     onOpenChange={handleOpenChange}
                     isOpen={isOpen}

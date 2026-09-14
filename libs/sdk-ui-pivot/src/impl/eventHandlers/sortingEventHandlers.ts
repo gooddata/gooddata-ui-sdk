@@ -33,7 +33,7 @@ export class SortingEventHandlers {
         const executionDefinition = getExecutionDefinition();
         const totals = sanitizeDefTotals(executionDefinition, sortItems);
 
-        // eslint-disable-next-line no-console
+        // oxlint-disable-next-line eslint-js/no-console
         console.debug("onSortChanged", sortItems);
 
         pushDataGuard({

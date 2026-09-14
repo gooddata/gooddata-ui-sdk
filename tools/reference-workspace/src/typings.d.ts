@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 declare module "*/package.json" {
     export const name: string;
@@ -7,12 +7,12 @@ declare module "*/package.json" {
 
 declare module "*.svg" {
     const value: any;
-    // eslint-disable-next-line no-restricted-exports
+    // oxlint-disable-next-line eslint-js/no-restricted-exports
     export default value;
 }
 
 declare module "*.json" {
     const value: any;
-    // eslint-disable-next-line no-restricted-exports
+    // oxlint-disable-next-line eslint-js/no-restricted-exports
     export default value;
 }

@@ -161,9 +161,9 @@ export function extractDisplayFormIdentifiers(drillDefinitions: InsightDrillDefi
         .flatMap((drillItem) => {
             if (isDrillToCustomUrl(drillItem)) {
                 const params = getAttributeIdentifiersPlaceholdersFromUrl(drillItem.target.url);
-                // normalize ref take the value from state ...
-                // md object has to be identifier
-                return params.map((param) => idRef(param.identifier, "displayForm"));
+                // the placeholder's own ref already names the object by identifier and carries its
+                // type, which a computed attribute needs to resolve as anything other than a label
+                return params.map((param) => param.ref);
             } else {
                 return [drillItem.target.displayForm, drillItem.target.hyperlinkDisplayForm];
             }
@@ -177,11 +177,7 @@ export function extractDashboardFilterDisplayFormIdentifiers(
         const dashboardAttributeFilterPlaceholdersFromUrl = getDashboardAttributeFilterPlaceholdersFromUrl(
             drillItem.target.url,
         );
-        // normalize ref take the value from state ...
-        // md object has to be identifier
-        return dashboardAttributeFilterPlaceholdersFromUrl.map((param) =>
-            idRef(param.identifier, "displayForm"),
-        );
+        return dashboardAttributeFilterPlaceholdersFromUrl.map((param) => param.ref);
     });
 }
 
@@ -192,9 +188,7 @@ export function extractInsightFilterDisplayFormIdentifiers(
         const insightAttributeFilterPlaceholders = getInsightAttributeFilterPlaceholdersFromUrl(
             drillItem.target.url,
         );
-        // normalize ref take the value from state ...
-        // md object has to be identifier
-        return insightAttributeFilterPlaceholders.map((param) => idRef(param.identifier, "displayForm"));
+        return insightAttributeFilterPlaceholders.map((param) => param.ref);
     });
 }
 

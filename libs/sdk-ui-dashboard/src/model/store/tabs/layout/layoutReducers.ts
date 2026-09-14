@@ -56,7 +56,7 @@ import {
 } from "../../../types/layoutTypes.js";
 import { type IWidgetDescription, type IWidgetHeader } from "../../../types/widgetTypes.js";
 import { addArrayElements, removeArrayElement } from "../../../utils/arrayOps.js";
-import { resetUndoReducer, undoReducer, withUndo } from "../../_infra/undoEnhancer.js";
+import { type IUndoPayload, resetUndoReducer, undoReducer, withUndo } from "../../_infra/undoEnhancer.js";
 import { type ITabsState } from "../tabsState.js";
 
 import { type ILayoutState, layoutInitialState } from "./layoutState.js";
@@ -868,6 +868,12 @@ type ReplaceWidgetInsight = {
     newSize?: IVisualizationSizeInfo;
 };
 
+type ReplaceWidgetInsightWithUndo = ReplaceWidgetInsight & IUndoPayload;
+
+type ReplaceWidgetInsightForTab = ReplaceWidgetInsightWithUndo & {
+    tabId: string;
+};
+
 const replaceInsightWidgetInsightCore: CoreLayoutReducer<ReplaceWidgetInsight> = (state, action) => {
     invariant(state.layout);
 
@@ -894,6 +900,29 @@ const replaceInsightWidgetInsightCore: CoreLayoutReducer<ReplaceWidgetInsight> =
 
 // Wrap with undo and adapt to TabsState
 const replaceInsightWidgetInsight = adaptLayoutReducer(withUndo(replaceInsightWidgetInsightCore));
+
+const replaceInsightWidgetInsightForTab: LayoutReducer<ReplaceWidgetInsightForTab> = (state, action) => {
+    if (!state.tabs) {
+        return;
+    }
+
+    const { tabId, ...replacementPayload } = action.payload;
+    const tab = state.tabs.find((item) => item.localIdentifier === tabId);
+
+    if (!tab?.layout) {
+        return;
+    }
+
+    const reduceForTab = withUndo(replaceInsightWidgetInsightCore);
+    const result = reduceForTab(tab.layout, {
+        ...action,
+        payload: replacementPayload,
+    });
+
+    if (result !== undefined) {
+        tab.layout = result;
+    }
+};
 //
 //
 
@@ -1331,6 +1360,7 @@ export const layoutReducers = {
     replaceInsightWidgetVisProperties,
     replaceInsightWidgetVisConfiguration,
     replaceInsightWidgetInsight,
+    replaceInsightWidgetInsightForTab,
     replaceWidgetFilterSettings,
     replaceWidgetDateDataset,
     replaceKpiWidgetMeasure,

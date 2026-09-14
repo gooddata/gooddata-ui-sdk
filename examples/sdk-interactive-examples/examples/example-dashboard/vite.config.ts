@@ -9,6 +9,7 @@ import packageJson from "./package.json" with { type: "json" };
 const backendUrl = packageJson.gooddata.hostname;
 const workspaceId = packageJson.gooddata.workspaceId;
 
+// oxlint-disable-next-line eslint-js/no-console
 console.log("backendUrl: ", backendUrl);
 
 export default defineConfig({

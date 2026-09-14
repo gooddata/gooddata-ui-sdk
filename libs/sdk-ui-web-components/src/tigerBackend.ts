@@ -1,6 +1,6 @@
 // (C) 2022-2026 GoodData Corporation
 
-/* oxlint-disable no-barrel-files/no-barrel-files */
+// oxlint-disable no-barrel-files/no-barrel-files
 
 import { type IAnalyticalBackend, type IAnalyticalBackendConfig } from "@gooddata/sdk-backend-spi";
 import { tigerFactory } from "@gooddata/sdk-backend-tiger";
@@ -20,9 +20,10 @@ export const tigerBackend = (config?: IAnalyticalBackendConfig, implConfig?: any
 /**
  * @deprecated This will be removed in the next major release, please use the named export "tigerFactory" instead
  */
-// eslint-disable-next-line no-restricted-exports
+// oxlint-disable-next-line eslint-js/no-restricted-exports
 export default tigerBackend;
 
 // Re-export Tiger backend, so it can be imported by user as a separate entry point
 // This helps us with chunking and keeping the original entry point slim
+// oxlint-disable-next-line eslint-js/no-restricted-syntax
 export * from "@gooddata/sdk-backend-tiger";

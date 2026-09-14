@@ -36,7 +36,7 @@ const FormExamples = memo(function FormExamples() {
             <h4>Search field with placeholder and autofocus</h4>
 
             <Input
-                onChange={(val) => console.log(val)} // eslint-disable-line no-console
+                onChange={(val) => console.log(val)} // oxlint-disable-line eslint-js/no-console
                 placeholder="Search attributes..."
                 clearOnEsc
                 isSearch

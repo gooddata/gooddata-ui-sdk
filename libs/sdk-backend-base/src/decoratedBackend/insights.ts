@@ -18,6 +18,7 @@ import {
     type IFilter,
     type IInsight,
     type IInsightDefinition,
+    type IInsightDefinitionWithOptionalIdentity,
     type IMetadataObjectBase,
     type IMetadataObjectIdentity,
     type IObjectCertificationWrite,
@@ -68,8 +69,11 @@ export abstract class DecoratedWorkspaceInsightsService implements IWorkspaceIns
         return this.decorated.getInsightsQuery();
     }
 
-    public createInsight(insight: IInsightDefinition): Promise<IInsight> {
-        return this.decorated.createInsight(insight);
+    public createInsight(
+        insight: IInsightDefinitionWithOptionalIdentity,
+        generateId?: boolean,
+    ): Promise<IInsight> {
+        return this.decorated.createInsight(insight, generateId);
     }
 
     public updateInsight(insight: IInsight): Promise<IInsight> {

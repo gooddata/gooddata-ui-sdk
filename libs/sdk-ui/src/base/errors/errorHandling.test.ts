@@ -5,6 +5,7 @@
 import { describe, expect, it } from "vitest";
 
 import {
+    AbortError,
     ContractExpired,
     DataTooLargeError,
     NoDataError,
@@ -15,6 +16,7 @@ import {
 
 import { convertError } from "./errorHandling.js";
 import {
+    CancelledSdkError,
     type ContractExpiredSdkError,
     ErrorCodes,
     UnexpectedSdkError,
@@ -35,6 +37,7 @@ describe("convertErrors", () => {
         ["protected data", new ProtectedDataError("access denied"), ErrorCodes.PROTECTED_REPORT],
         ["unauthenticated", new NotAuthenticated("access denied"), ErrorCodes.UNAUTHORIZED],
         ["contract expired", new ContractExpired("TRIAL"), ErrorCodes.CONTRACT_EXPIRED],
+        ["abort", new AbortError("canceled"), ErrorCodes.CANCELLED],
         ["bogus object", {}, ErrorCodes.UNKNOWN_ERROR],
         ["bogus string", "fun times", ErrorCodes.UNKNOWN_ERROR],
     ];
@@ -48,6 +51,10 @@ describe("convertErrors", () => {
 
         expect(isContractExpiredSdkError(converted)).toBe(true);
         expect((converted as ContractExpiredSdkError).tier).toBe("TRIAL");
+    });
+
+    it("converts abort to CancelledSdkError", () => {
+        expect(convertError(new AbortError("canceled"))).toBeInstanceOf(CancelledSdkError);
     });
 
     it("leaves GoodDataSdkError as is", () => {

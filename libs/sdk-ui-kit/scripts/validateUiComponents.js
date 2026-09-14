@@ -1,5 +1,6 @@
-// (C) 2025 GoodData Corporation
-/* eslint-disable no-console */
+// (C) 2025-2026 GoodData Corporation
+
+// oxlint-disable eslint-js/no-console
 
 import fs from "fs";
 import path from "path";

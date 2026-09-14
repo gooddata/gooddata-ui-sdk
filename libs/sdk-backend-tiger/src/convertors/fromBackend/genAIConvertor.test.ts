@@ -4,11 +4,14 @@ import { describe, expect, it, vi } from "vitest";
 
 import { type AiConversationItemResponse } from "@gooddata/api-client-tiger";
 import {
+    type IChatConversationDashboardContent,
+    type IChatConversationItem,
     type IChatConversationMultipartContent,
     type IChatConversationMultipartPart,
     type IChatConversationWhatIfContent,
     isChatConversationSearchContent,
 } from "@gooddata/sdk-backend-spi";
+import { type IInsightWidget, type IdentifierRef } from "@gooddata/sdk-model";
 
 import {
     convertChatConversationErrorFromBackend,
@@ -354,6 +357,174 @@ describe("genAIConvertor", () => {
             ]);
             expect(errorSpy).toHaveBeenCalled();
             errorSpy.mockRestore();
+        });
+    });
+
+    describe("dashboard patch", () => {
+        const DASHBOARD_ID = "existing_dashboard";
+
+        // Shapes mirror what gen-ai puts on the wire: the base rides ahead of the patch as its
+        // own `dashboard` part, carrying the real dashboard id and no references of its own.
+        const section = (vis: string) => ({
+            widgets: [{ visualization: vis, title: vis, columns: 6, rows: 22 }],
+        });
+
+        const baseDocument = (widgets: string[]) => ({
+            type: "dashboard",
+            id: DASHBOARD_ID,
+            title: "Existing dashboard",
+            version: "3",
+            sections: widgets.map(section),
+        });
+
+        const basePart = (widgets: string[] = ["chart1"]) => ({
+            type: "dashboard",
+            dashboard: baseDocument(widgets),
+            saved_dashboard_id: DASHBOARD_ID,
+            references: null,
+        });
+
+        const patchPart = (vis: string) => ({
+            type: "dashboardPatch",
+            patch: {
+                dashboard_id: DASHBOARD_ID,
+                operations: [{ op: "add", path: "/sections/-", value: section(vis) }],
+                references: null,
+            },
+        });
+
+        const makeItem = (parts: object[], itemIndex = 0): AiConversationItemResponse =>
+            ({
+                conversationId: "conv-1",
+                itemIndex,
+                itemId: `item-${itemIndex}`,
+                role: "assistant",
+                createdAt: "2024-01-01T00:00:00Z",
+                content: { type: "multipart", parts },
+            }) as unknown as AiConversationItemResponse;
+
+        const dashboardParts = (item: IChatConversationItem) =>
+            (item.content as IChatConversationMultipartContent).parts.filter(
+                (part): part is IChatConversationDashboardContent => part.type === "dashboard",
+            );
+
+        /** Ids of the visualizations the dashboard's widgets point at, in layout order. */
+        const widgetVisualizations = (part: IChatConversationDashboardContent) =>
+            (part.dashboard?.layout?.sections ?? []).flatMap((section) =>
+                section.items.map((item) => {
+                    const widget = item.widget as IInsightWidget;
+                    return (widget?.insight as IdentifierRef)?.identifier;
+                }),
+            );
+
+        it("applies a patch against the base sent as a sibling part in the same message", () => {
+            const converted = convertChatConversationItemFromBackend(
+                makeItem([{ type: "text", text: "Added it." }, basePart(), patchPart("chart2")]),
+                [],
+                [],
+                dateNormalizer,
+            )!;
+
+            const parts = dashboardParts(converted);
+
+            // The base part is folded into the patch: a single card, showing the patched draft.
+            expect(parts).toHaveLength(1);
+            expect(widgetVisualizations(parts[0]!)).toEqual(["chart1", "chart2"]);
+        });
+
+        it("does not offer the unchanged base dashboard as a card of its own", () => {
+            const converted = convertChatConversationItemFromBackend(
+                makeItem([basePart(), patchPart("chart2")]),
+                [],
+                [],
+                dateNormalizer,
+            )!;
+
+            const unchanged = dashboardParts(converted).filter(
+                (part) => widgetVisualizations(part).length === 1,
+            );
+
+            expect(unchanged).toEqual([]);
+        });
+
+        it("keeps a standalone dashboard part when no patch accompanies it", () => {
+            const converted = convertChatConversationItemFromBackend(
+                makeItem([basePart()]),
+                [],
+                [],
+                dateNormalizer,
+            )!;
+
+            const parts = dashboardParts(converted);
+
+            expect(parts).toHaveLength(1);
+            expect(widgetVisualizations(parts[0]!)).toEqual(["chart1"]);
+            expect(parts[0]!.saved).toBe(DASHBOARD_ID);
+        });
+
+        it("resolves the base from history for a follow-up patch that carries none", () => {
+            const history: IChatConversationItem[] = [];
+
+            const first = convertChatConversationItemFromBackend(
+                makeItem([basePart(), patchPart("chart2")], 0),
+                [],
+                history,
+                dateNormalizer,
+            )!;
+            history.push(first);
+
+            const second = convertChatConversationItemFromBackend(
+                makeItem([patchPart("chart3")], 1),
+                [],
+                history,
+                dateNormalizer,
+            )!;
+
+            const parts = dashboardParts(second);
+
+            expect(parts).toHaveLength(1);
+            // The operations are defined against the relayed document, so the second proposal
+            // rebases on the same base rather than on the result of the first one.
+            expect(widgetVisualizations(parts[0]!)).toEqual(["chart1", "chart3"]);
+        });
+
+        it("rebases on a base resent in the current message rather than the one in history", () => {
+            const history: IChatConversationItem[] = [];
+
+            const first = convertChatConversationItemFromBackend(
+                makeItem([basePart(), patchPart("chart2")], 0),
+                [],
+                history,
+                dateNormalizer,
+            )!;
+            history.push(first);
+
+            // The user edited the dashboard in between, so gen-ai relays the changed document.
+            const second = convertChatConversationItemFromBackend(
+                makeItem([basePart(["chart1", "edited"]), patchPart("chart3")], 1),
+                [],
+                history,
+                dateNormalizer,
+            )!;
+
+            const parts = dashboardParts(second);
+
+            expect(parts).toHaveLength(1);
+            expect(widgetVisualizations(parts[0]!)).toEqual(["chart1", "edited", "chart3"]);
+        });
+
+        it("renders no dashboard card when a patch has no base to apply to", () => {
+            const converted = convertChatConversationItemFromBackend(
+                makeItem([patchPart("chart2")]),
+                [],
+                [],
+                dateNormalizer,
+            )!;
+
+            const parts = dashboardParts(converted);
+
+            expect(parts).toHaveLength(1);
+            expect(parts[0]!.dashboard).toBeNull();
         });
     });
 });

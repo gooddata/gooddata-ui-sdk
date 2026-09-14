@@ -79,7 +79,6 @@ const devDeps: Record<string, string> = {
     "@types/node": packageJson.devDependencies["@types/node"],
     jiti: "2.6.1", // Required for ESLint to load TypeScript config files
     typescript: packageJson.devDependencies["typescript"],
-    "@typescript/native-preview": "7.0.0-dev.20260202.1",
     "vite-node": packageJson.devDependencies["vite-node"],
 };
 

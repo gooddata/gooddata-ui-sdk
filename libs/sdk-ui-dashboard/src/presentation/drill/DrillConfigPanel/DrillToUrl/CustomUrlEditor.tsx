@@ -4,7 +4,7 @@ import { type ReactElement, useCallback, useMemo, useState } from "react";
 
 import { HighlightStyle, StreamLanguage, type StringStream, syntaxHighlighting } from "@codemirror/language";
 import { Tag } from "@lezer/highlight";
-import { compact, uniqBy } from "lodash-es";
+import { compact, escapeRegExp, uniqBy } from "lodash-es";
 import { FormattedMessage, type IntlShape, useIntl } from "react-intl";
 
 import {
@@ -12,11 +12,9 @@ import {
     type IDashboardAttributeFilterConfig,
     type IDashboardMeasureValueFilter,
     type IMeasureValueFilter,
-    type IdentifierRef,
     type ObjRef,
     dashboardAttributeFilterItemToAttributeFilter,
     filterObjRef,
-    idRef,
     insightFilters as insightDefinitionFilters,
     isArbitraryAttributeFilter,
     isAttributeFilter,
@@ -27,6 +25,12 @@ import {
     objRefToString,
     serializeObjRef,
 } from "@gooddata/sdk-model";
+import {
+    attributeIdentifierToPlaceholder,
+    dashboardAttributeFilterToPlaceholder,
+    displayFormPlaceholderRef,
+    insightAttributeFilterToPlaceholder,
+} from "@gooddata/sdk-model/internal";
 import {
     ConfirmDialogBase,
     FullScreenOverlay,
@@ -167,7 +171,9 @@ const buildValidDisplayFormsFormattingRule = (attributeDisplayForms: IAttributeW
         return undefined;
     }
     const validAttributePlaceholders = attributeDisplayForms
-        .map(({ displayForm }) => `{attribute_title\\(${displayForm.id}\\)}`)
+        .map(({ displayForm }) =>
+            escapeRegExp(attributeIdentifierToPlaceholder(displayFormPlaceholderRef(displayForm))),
+        )
         .join("|");
     return { regex: new RegExp(`^${validAttributePlaceholders}`), token: customTags.attribute.toString() };
 };
@@ -178,12 +184,11 @@ const buildValidInsightFiltersFormattingRule = (attributeFilters: IAttributeFilt
     }
 
     const validInsightAttributeFilterPlaceholders = attributeFilters
-        .map((filter) => {
-            // these filters always come from useSanitizedInsightFilters, which rewrites the display form
-            // ref to idRef(displayForm.id, "displayForm") or drops the filter -> never a uri ref here
-            const { identifier } = filterObjRef(filter) as IdentifierRef;
-            return `{attribute_filter_selection\\(${identifier}\\)}`;
-        })
+        .map((filter) =>
+            // these filters always come from useSanitizedInsightFilters, which rewrites the display
+            // form ref to the canonical placeholder ref or drops the filter -> never a uri ref here
+            escapeRegExp(insightAttributeFilterToPlaceholder(filterObjRef(filter))),
+        )
         .join("|");
     return {
         regex: new RegExp(`^${validInsightAttributeFilterPlaceholders}`),
@@ -199,17 +204,13 @@ const buildValidDashboardFiltersFormattingRule = (
         return undefined;
     }
 
-    const filterPlaceholders = attributeFilters.map((filter) => {
-        const ref = filterObjRef(filter);
-        const id = objRefToString(ref);
-        return `{dash_attribute_filter_selection\\(${id}\\)}`;
-    });
+    const filterPlaceholders = attributeFilters.map((filter) =>
+        escapeRegExp(dashboardAttributeFilterToPlaceholder(filterObjRef(filter))),
+    );
     const configPlaceholders = attributeFilterConfigs
-        .filter((config) => !!config.displayAsLabel)
-        .map((config) => {
-            const id = !!config.displayAsLabel && objRefToString(config.displayAsLabel);
-            return `{dash_attribute_filter_selection\\(${id}\\)}`;
-        });
+        .map((config) => config.displayAsLabel)
+        .filter((displayAsLabel): displayAsLabel is ObjRef => !!displayAsLabel)
+        .map((displayAsLabel) => escapeRegExp(dashboardAttributeFilterToPlaceholder(displayAsLabel)));
 
     const validDashboardAttributeFilterPlaceholders = [...filterPlaceholders, ...configPlaceholders].join(
         "|",
@@ -635,7 +636,7 @@ function useSanitizeAttributeFilter() {
                         ...filter,
                         negativeAttributeFilter: {
                             ...filter.negativeAttributeFilter,
-                            displayForm: idRef(displayForm.id, "displayForm"),
+                            displayForm: displayFormPlaceholderRef(displayForm),
                         },
                     };
                 } else if (isPositiveAttributeFilter(filter)) {
@@ -643,7 +644,7 @@ function useSanitizeAttributeFilter() {
                         ...filter,
                         positiveAttributeFilter: {
                             ...filter.positiveAttributeFilter,
-                            displayForm: idRef(displayForm.id, "displayForm"),
+                            displayForm: displayFormPlaceholderRef(displayForm),
                         },
                     };
                 } else if (isArbitraryAttributeFilter(filter)) {
@@ -651,7 +652,7 @@ function useSanitizeAttributeFilter() {
                         ...filter,
                         arbitraryAttributeFilter: {
                             ...filter.arbitraryAttributeFilter,
-                            label: idRef(displayForm.id, "displayForm"),
+                            label: displayFormPlaceholderRef(displayForm),
                         },
                     };
                 } else if (isMatchAttributeFilter(filter)) {
@@ -659,7 +660,7 @@ function useSanitizeAttributeFilter() {
                         ...filter,
                         matchAttributeFilter: {
                             ...filter.matchAttributeFilter,
-                            label: idRef(displayForm.id, "displayForm"),
+                            label: displayFormPlaceholderRef(displayForm),
                         },
                     };
                 }

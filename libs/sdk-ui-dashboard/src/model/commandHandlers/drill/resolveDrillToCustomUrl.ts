@@ -22,7 +22,6 @@ import {
     dashboardFilterObjRef,
     filterAttributeElements,
     filterObjRef,
-    idRef,
     insightFilters as insightDefinitionFilters,
     insightId,
     isArbitraryAttributeFilter,
@@ -44,6 +43,7 @@ import {
 } from "@gooddata/sdk-model";
 import {
     type IDrillToUrlPlaceholder,
+    displayFormPlaceholderRef,
     getAttributeIdentifiersPlaceholdersFromUrl,
     getDashboardAttributeFilterPlaceholdersFromUrl,
     getDashboardMeasureValueFilterPlaceholdersFromUrl,
@@ -75,6 +75,7 @@ import { selectAnalyticalWidgetByRef } from "../../store/tabs/layout/layoutSelec
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { DRILL_TO_URL_PLACEHOLDER } from "../../types/drillTypes.js";
 import { type PromiseFnReturnType } from "../../types/sagas.js";
+import { resolveDisplayFormMetadata } from "../../utils/displayFormResolver.js";
 import {
     dashboardMeasureValueFilterMatchesIdentifier,
     insightMeasureValueFilterMatchesIdentifier,
@@ -89,13 +90,13 @@ interface IDrillToUrlPlaceholderReplacement {
 }
 
 interface IDrillToUrlElement {
-    identifier: string;
+    ref: ObjRef;
     elementTitle: string | null;
 }
 
 export function* loadElementTitle(
     dfRef: ObjRef,
-    dfIdentifier: string,
+    placeholderRef: ObjRef,
     attrElementUri: string,
     ctx: DashboardContext,
 ): SagaIterator<IDrillToUrlElement> {
@@ -107,7 +108,7 @@ export function* loadElementTitle(
         ctx,
     );
     return {
-        identifier: dfIdentifier,
+        ref: placeholderRef,
         elementTitle,
     };
 }
@@ -276,7 +277,7 @@ export function* loadAttributeElementsForDrillIntersection(
         }
 
         acc.push({
-            identifier: displayForm.id,
+            ref: displayFormPlaceholderRef(displayForm),
             elementTitle: attributeHeaderItem.uri,
         });
         return acc;
@@ -284,8 +285,6 @@ export function* loadAttributeElementsForDrillIntersection(
 
     const loadedElement: IDrillToUrlElement[] = yield all(
         displayFormForValueLoad.reduce((acc: CallEffect[], displayForm) => {
-            const { id: dfIdentifier, ref: dfRef } = displayForm;
-
             const attributeHeaderItem = findDrillIntersectionAttributeHeaderItem(
                 drillIntersectionElements,
                 displayForm,
@@ -294,7 +293,15 @@ export function* loadAttributeElementsForDrillIntersection(
                 return acc;
             }
 
-            acc.push(call(loadElementTitle, dfRef, dfIdentifier, attributeHeaderItem.uri, ctx));
+            acc.push(
+                call(
+                    loadElementTitle,
+                    displayForm.ref,
+                    displayFormPlaceholderRef(displayForm),
+                    attributeHeaderItem.uri,
+                    ctx,
+                ),
+            );
 
             return acc;
         }, []),
@@ -305,14 +312,6 @@ export function* loadAttributeElementsForDrillIntersection(
 
 const encodeParameterIfSet = (parameter: string | undefined | null): string | undefined | null =>
     parameter === null || parameter === undefined ? parameter : encodeURIComponent(parameter);
-
-export function getAttributeDisplayForms(
-    projectId: string,
-    objRefs: ObjRef[],
-    ctx: DashboardContext,
-): Promise<IAttributeDisplayFormMetadataObject[]> {
-    return ctx.backend.workspace(projectId).attributes().getAttributeDisplayForms(objRefs);
-}
 
 export function* getAttributeIdentifiersReplacements(
     url: string,
@@ -325,24 +324,36 @@ export function* getAttributeIdentifiersReplacements(
         return [];
     }
 
-    const displayForms: PromiseFnReturnType<typeof getAttributeDisplayForms> = yield call(
-        getAttributeDisplayForms,
-        ctx.workspace,
-        attributeIdentifiersPlaceholders.map((placeholder) => idRef(placeholder.identifier)),
+    // The placeholder refs carry their own type, so this resolves a label through the labels API and a
+    // computed attribute through the computedAttributes service - the labels API cannot describe one.
+    // It reads the catalog first but falls back to loading, so a computed attribute that the catalog
+    // does not carry (excluded by tags, or created after the dashboard was initialised) still resolves.
+    const { resolved, missing }: SagaReturnType<typeof resolveDisplayFormMetadata> = yield call(
+        resolveDisplayFormMetadata,
         ctx,
+        attributeIdentifiersPlaceholders.map(({ ref }) => ref),
     );
+
+    if (missing.length > 0) {
+        console.warn(
+            "Drill to custom URL: no metadata found for attributes referenced by attribute_title placeholders; those placeholders cannot be resolved.",
+            { missing },
+        );
+    }
 
     const elements: SagaReturnType<typeof loadAttributeElementsForDrillIntersection> = yield call(
         loadAttributeElementsForDrillIntersection,
         drillIntersectionElements,
-        displayForms,
+        [...resolved.values()],
         ctx,
     );
 
     return attributeIdentifiersPlaceholders.map(
-        ({ placeholder: toBeReplaced, identifier, toBeEncoded }): IDrillToUrlPlaceholderReplacement => {
-            const elementTitle = elements.find(
-                (element: IDrillToUrlElement) => element.identifier === identifier,
+        ({ placeholder: toBeReplaced, ref, toBeEncoded }): IDrillToUrlPlaceholderReplacement => {
+            // Matched by reference, not by identifier alone: a computed attribute and a label can
+            // share an identifier, and they must not resolve to each other's element titles.
+            const elementTitle = elements.find((element: IDrillToUrlElement) =>
+                areObjRefsEqual(element.ref, ref),
             )?.elementTitle;
             const replacement = toBeEncoded ? encodeParameterIfSet(elementTitle) : elementTitle;
 
@@ -367,7 +378,7 @@ function* resolveDashboardAttributeFilterReplacement(
             return false;
         }
         const df = catalogDisplayForms.get(dashboardAttributeFilterItemDisplayForm(filter));
-        return df && areObjRefsEqual(idRef(df.id), ref);
+        return df && areObjRefsEqual(displayFormPlaceholderRef(df), ref);
     });
 
     if (textFilter && isDashboardTextAttributeFilter(textFilter)) {
@@ -384,7 +395,7 @@ function* resolveDashboardAttributeFilterReplacement(
 
     let usedFilter = standardFilters.find((filter) => {
         const df = catalogDisplayForms.get(filter.attributeFilter.displayForm);
-        return df && areObjRefsEqual(idRef(df.id), ref);
+        return df && areObjRefsEqual(displayFormPlaceholderRef(df), ref);
     });
     let attributeElementsValues = [];
 
@@ -570,7 +581,7 @@ export function* getInsightAttributeFilterReplacements(
             const usedFilter = insightAttributeFilters.find((filter) => {
                 const filterRef = filterObjRef(filter);
                 const df = filterRef && catalogDisplayForms.get(filterRef);
-                return df && areObjRefsEqual(idRef(df.id), ref);
+                return df && areObjRefsEqual(displayFormPlaceholderRef(df), ref);
             });
 
             let parsedFilter: string | undefined;

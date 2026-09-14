@@ -236,7 +236,7 @@ export function CsvDelimiterPicker({
                             dropdownId={dropdownId}
                             accessibilityConfig={{
                                 ...(label ? {} : { ariaLabel: menuAriaLabel }),
-                                popupType: "listbox",
+                                popupType: "menu",
                             }}
                             isFullWidth={layout === "column"}
                         />
@@ -267,7 +267,7 @@ export function CsvDelimiterPicker({
                     closeOnEscape
                     accessibilityConfig={{
                         triggerRole: "button",
-                        popupRole: "listbox",
+                        popupRole: "menu",
                     }}
                 />
 

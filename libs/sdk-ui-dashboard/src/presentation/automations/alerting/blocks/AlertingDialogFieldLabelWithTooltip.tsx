@@ -33,7 +33,6 @@ export function AlertingDialogFieldLabelWithTooltip({
                 arrowPlacement="left"
                 optimalPlacement
                 offset={10}
-                width={280}
                 triggerBy={["hover", "click"]}
             />
         </div>

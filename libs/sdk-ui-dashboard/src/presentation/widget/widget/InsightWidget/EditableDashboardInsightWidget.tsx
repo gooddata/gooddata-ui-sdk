@@ -20,12 +20,19 @@ import { InsightWidgetWarningPartialResult } from "../warningPartialResult/Insig
 
 import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard.js";
 import { EditableDashboardInsightWidgetHeader } from "./EditableDashboardInsightWidgetHeader.js";
+import { EditableRestrictedInsightWidget } from "./EditableRestrictedInsightWidget.js";
 import { type IDefaultDashboardInsightWidgetProps } from "./types.js";
 import { useEditableInsightMenu } from "./useEditableInsightMenu.js";
 import { useInsightWarning } from "./useInsightWarning.js";
 
 export function EditableDashboardInsightWidget(props: Omit<IDefaultDashboardInsightWidgetProps, "insight">) {
-    return <DashboardWidgetInsightGuard {...props} Component={EditableDashboardInsightWidgetCore} />;
+    return (
+        <DashboardWidgetInsightGuard
+            {...props}
+            Component={EditableDashboardInsightWidgetCore}
+            RestrictedComponent={EditableRestrictedInsightWidget}
+        />
+    );
 }
 
 /**

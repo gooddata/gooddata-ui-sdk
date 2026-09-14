@@ -18,6 +18,7 @@ import { ExportTemplateDialogProvider } from "../../dialogs/ExportTemplateDialog
 import { ExportXlsxDialogProvider } from "../../dialogs/ExportXlsxDialogProvider.js";
 import { useFilterBarProps } from "../../filterBar/filterBar/DefaultFilterBar.js";
 import { FilterBar } from "../../filterBar/filterBar/FilterBar.js";
+import { InsightNotSavedDialog } from "../../insightNotSavedDialog/InsightNotSavedDialog.js";
 import { useKpiDeleteDialogProps } from "../../kpiDeleteDialog/DefaultKpiDeleteDialog.js";
 import { KpiDeleteDialog } from "../../kpiDeleteDialog/KpiDeleteDialog.js";
 import { useSaveAsDialogProps } from "../../saveAs/DefaultSaveAsDialog/index.js";
@@ -55,6 +56,10 @@ function KpiDeleteDialogWrapper() {
 function SaveAsDialogWrapper() {
     const saveAsDialogProps = useSaveAsDialogProps();
     return <SaveAsDialog {...saveAsDialogProps} />;
+}
+
+function InsightNotSavedDialogWrapper() {
+    return <InsightNotSavedDialog />;
 }
 
 function TopBarWrapper() {
@@ -107,6 +112,7 @@ export function DashboardHeader(): ReactElement {
             <WidgetDeleteDialogWrapper />
             <KpiDeleteDialogWrapper />
             <SaveAsDialogWrapper />
+            <InsightNotSavedDialogWrapper />
             <TopBarWrapper />
             <DashboardTabsWrapper />
             <FilterBarWrapper />

@@ -10,6 +10,8 @@ import {
     useState,
 } from "react";
 
+import { useIntl } from "react-intl";
+
 import { type IInsightWidget, objRefToString, widgetRef } from "@gooddata/sdk-model";
 import {
     type IUiMenuContext,
@@ -33,6 +35,7 @@ import {
     CustomUiMenuContentComponent,
     CustomUiMenuContentItemComponent,
     CustomUiMenuHeaderComponent,
+    CustomUiMenuHeaderComponentWithoutTitle,
     CustomUiMenuInteractiveItemComponent,
     type IMenuData,
     type IMenuItemData,
@@ -159,10 +162,17 @@ export function DashboardInsightMenuBody({
     onClose,
     renderMode,
     setSubmenu,
+    showTitle = true,
 }: IDashboardInsightMenuProps & {
     setSubmenu?: Dispatch<SetStateAction<IInsightMenuSubmenu | null>>;
     renderMode: RenderMode;
+    /**
+     * Whether the menu names the widget it belongs to. Off for a widget the user is not allowed to
+     * see, whose stored title can name the object they have no access to.
+     */
+    showTitle?: boolean;
 }) {
+    const intl = useIntl();
     const widgetRefAsString = objRefToString(widgetRef(widget));
     const latestWidgetRef = useRef(widget);
     latestWidgetRef.current = widget;
@@ -202,6 +212,10 @@ export function DashboardInsightMenuBody({
 
     const menuId = `insight-menu-${widgetRefAsString}`;
     const menuLabelId = `${menuId}-label`;
+    // without the title there is no element carrying menuLabelId, so the name goes on the menu itself
+    const menuLabel = showTitle
+        ? undefined
+        : intl.formatMessage({ id: "insightMenu.restrictedWidget.options" });
 
     const getMaxHeight = (context: IUiMenuContext<IMenuItemData, unknown>) => {
         if (getSelectedMenuId(context) === "Alerts") {
@@ -212,7 +226,10 @@ export function DashboardInsightMenuBody({
 
     return (
         <UiFocusManager enableAutofocus={{ initialFocus: menuId }} enableFocusTrap enableReturnFocusOnUnmount>
-            <DashboardInsightMenuContainer ariaLabelledBy={menuLabelId}>
+            <DashboardInsightMenuContainer
+                ariaLabelledBy={menuLabel ? undefined : menuLabelId}
+                ariaLabel={menuLabel}
+            >
                 <UiMenu<IMenuItemData, IMenuData>
                     maxHeight={getMaxHeight}
                     containerBottomPadding="small"
@@ -221,12 +238,15 @@ export function DashboardInsightMenuBody({
                     InteractiveItem={CustomUiMenuInteractiveItemComponent}
                     ContentItem={CustomUiMenuContentItemComponent}
                     Content={CustomUiMenuContentComponent}
-                    MenuHeader={CustomUiMenuHeaderComponent}
+                    MenuHeader={
+                        showTitle ? CustomUiMenuHeaderComponent : CustomUiMenuHeaderComponentWithoutTitle
+                    }
                     shouldCloseOnSelect
-                    ariaAttributes={{
-                        id: menuId,
-                        "aria-labelledby": menuLabelId,
-                    }}
+                    ariaAttributes={
+                        menuLabel
+                            ? { id: menuId, "aria-label": menuLabel }
+                            : { id: menuId, "aria-labelledby": menuLabelId }
+                    }
                     onSelect={handleSelect}
                     onLevelChange={handleSubmenuOpen}
                     menuCtxData={{

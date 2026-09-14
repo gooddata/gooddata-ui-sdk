@@ -1,0 +1,26 @@
+// (C) 2020-2025 GoodData Corporation
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.gdc-insight-not-saved-dialog {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+
+    .gd-ui-kit-button {
+        font-weight: 700;
+    }
+
+    ul {
+        padding: 0;
+        margin: -5px 0 0 18px;
+        list-style: none;
+
+        li {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    }
+}

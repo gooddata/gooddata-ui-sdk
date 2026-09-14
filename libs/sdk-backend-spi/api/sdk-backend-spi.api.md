@@ -108,6 +108,7 @@ import { IGeoJsonFeature } from '@gooddata/sdk-model';
 import { IGranularAccessGrantee } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
+import type { IInsightDefinitionWithOptionalIdentity } from '@gooddata/sdk-model';
 import { IIpAllowlist } from '@gooddata/sdk-model';
 import { IIpAllowlistDefinition } from '@gooddata/sdk-model';
 import type { IListedDashboard } from '@gooddata/sdk-model';
@@ -2980,7 +2981,7 @@ export interface IWorkspaceComputedAttributesService {
 
 // @alpha
 export interface IWorkspaceDashboardsService {
-    createDashboard(dashboard: IDashboardDefinition): Promise<IDashboard>;
+    createDashboard(dashboard: IDashboardDefinition, generateId?: boolean): Promise<IDashboard>;
     createDashboardPlugin(plugin: IDashboardPluginDefinition): Promise<IDashboardPlugin>;
     createFilterView(filterView: IDashboardFilterViewSaveRequest): Promise<IDashboardFilterView>;
     createScheduledMail(scheduledMail: IScheduledMailDefinition, exportFilterContext?: IFilterContextDefinition): Promise<IScheduledMail>;
@@ -3110,7 +3111,7 @@ export interface IWorkspaceFactsService {
 
 // @public
 export interface IWorkspaceInsightsService {
-    createInsight(insight: IInsightDefinition): Promise<IInsight>;
+    createInsight(insight: IInsightDefinitionWithOptionalIdentity, generatedId?: boolean): Promise<IInsight>;
     deleteInsight(ref: ObjRef): Promise<void>;
     getInsight(ref: ObjRef, options?: IGetInsightOptions): Promise<IInsight>;
     getInsightReferencedObjects(insight: IInsight, types?: SupportedInsightReferenceTypes[]): Promise<IInsightReferences>;

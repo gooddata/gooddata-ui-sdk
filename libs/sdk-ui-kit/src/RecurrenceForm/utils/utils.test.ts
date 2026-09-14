@@ -146,7 +146,7 @@ describe("transformCronExpressionToRecurrenceType with date", () => {
     const D2024_01_17_15 = new Date(2024, 0, 17, 15, 0, 0);
     const D2024_01_25_15 = new Date(2024, 0, 25, 15, 0, 0);
 
-    it.each([
+    it.each<[string | undefined, boolean, boolean, Date | undefined, string, string?]>([
         ["0 0 * ? * *", true, false, universal, "hourly"],
         ["0 0 * ? * *", false, false, universal, "cron"],
         ["0 0 1 ? * *", true, false, D2024_01_01_01, "daily"],
@@ -181,27 +181,24 @@ describe("transformCronExpressionToRecurrenceType with date", () => {
         ["", true, true, undefined, "inherit"],
         [undefined, true, true, undefined, "inherit"],
         [undefined, true, false, undefined, "cron"],
-    ])("should correctly identify %s with hourly %s and date %s as %s", ((
-        cronExpression: string | undefined,
-        allowHourly: boolean,
-        allowInherit: boolean,
-        date: Date | undefined,
-        expected: string,
-    ) => {
-        expect(
-            transformCronExpressionToRecurrenceType(
-                date ?? null,
-                cronExpression,
-                allowHourly,
-                allowInherit,
-                "Monday",
-            ),
-        ).toEqual(expected);
-    }) as any);
+    ])(
+        "should correctly identify %s with hourly %s and date %s as %s",
+        (cronExpression, allowHourly, allowInherit, date, expected) => {
+            expect(
+                transformCronExpressionToRecurrenceType(
+                    date ?? null,
+                    cronExpression,
+                    allowHourly,
+                    allowInherit,
+                    "Monday",
+                ),
+            ).toEqual(expected);
+        },
+    );
 });
 
 describe("transformCronExpressionToRecurrenceType without date, default Monday", () => {
-    it.each([
+    it.each<[string | undefined, boolean, boolean, string, string?]>([
         ["0 0 * ? * *", true, false, "hourly"],
         ["0 0 * ? * *", false, false, "cron"],
         ["0 0 1 ? * *", true, false, "daily"],
@@ -237,29 +234,27 @@ describe("transformCronExpressionToRecurrenceType without date, default Monday",
         ["", true, true, "inherit"],
         [undefined, true, true, "inherit"],
         [undefined, true, false, "cron"],
-    ])("should correctly identify %s with hourly %s as %s", ((
-        cronExpression: string | undefined,
-        allowHourly: boolean,
-        allowInherit: boolean,
-        expected: string,
-    ) => {
-        expect(
-            transformCronExpressionToRecurrenceType(
-                null,
-                cronExpression,
-                allowHourly,
-                allowInherit,
-                "Monday",
-            ),
-        ).toEqual(expected);
-    }) as any);
+    ])(
+        "should correctly identify %s with hourly %s as %s",
+        (cronExpression, allowHourly, allowInherit, expected) => {
+            expect(
+                transformCronExpressionToRecurrenceType(
+                    null,
+                    cronExpression,
+                    allowHourly,
+                    allowInherit,
+                    "Monday",
+                ),
+            ).toEqual(expected);
+        },
+    );
 });
 
 describe("transformRecurrenceTypeToDescription", () => {
     const intl = createIntlMock();
     const d1 = new Date(2024, 7, 13, 22, 0, 0);
 
-    it.each([
+    it.each<[string, Date | null, WeekStart, string]>([
         [RECURRENCE_TYPES.HOURLY, null, "Monday", "At start of every hour"],
         [RECURRENCE_TYPES.HOURLY, null, "Sunday", "At start of every hour"],
         [RECURRENCE_TYPES.DAILY, null, "Monday", "At 12 AM every day"],
@@ -283,12 +278,7 @@ describe("transformRecurrenceTypeToDescription", () => {
         [RECURRENCE_TYPES.CRON, d1, "Sunday", ""],
 
         [RECURRENCE_TYPES.INHERIT, d1, "Sunday", ""],
-    ])("should correctly describe %s", ((
-        recurrenceType: string,
-        date: Date | null,
-        weekStart: WeekStart,
-        expected: string,
-    ) => {
+    ])("should correctly describe %s", (recurrenceType, date, weekStart, expected) => {
         expect(transformRecurrenceTypeToDescription(intl, recurrenceType, date, weekStart)).toEqual(expected);
-    }) as any);
+    });
 });

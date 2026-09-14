@@ -15,6 +15,7 @@ import {
     type AiDashboardPatchPart,
     type AiInteractionStepResponse,
     type AiKeyDriverAnalysis,
+    type AiMultipartContentPartsInner,
     type AiSearchObject,
     type AiSearchRelationship,
     type AiSuggestions,
@@ -195,84 +196,7 @@ function convertChatConversationContentFromBackend(
         case "multipart":
             return {
                 type: "multipart",
-                // Unknown parts are dropped rather than failing the whole item, so the rest
-                // of the message (known parts) keeps rendering normally.
-                parts: content.parts
-                    .map((part): IChatConversationMultipartPart | undefined => {
-                        switch (part.type) {
-                            case "text":
-                                return {
-                                    type: "text",
-                                    text: part.text,
-                                };
-                            case "alertProposal":
-                                return {
-                                    type: "alertProposal",
-                                    alertProposal: convertAlertProposalFrom(part.alertProposal),
-                                };
-                            case "visualization":
-                                return {
-                                    type: "visualization",
-                                    visualization: part.visualization
-                                        ? visualizationObjectsItemToInsight(
-                                              yamlVisualisationToMetadataObject(
-                                                  [],
-                                                  part.visualization as AacVisualisation,
-                                              ),
-                                          )
-                                        : null,
-                                };
-                            case "dashboard": {
-                                return {
-                                    type: "dashboard",
-                                    ...applyDashboardDefinition(part),
-                                };
-                            }
-                            case "dashboardPatch": {
-                                if (!part.patch) {
-                                    return undefined;
-                                }
-
-                                return {
-                                    type: "dashboard",
-                                    ...applyDashboardPatch(history, part.patch),
-                                };
-                            }
-                            case "kda":
-                                return {
-                                    type: "kda",
-                                    kda: convertKda(
-                                        part.kda as AiKeyDriverAnalysis,
-                                        dateNormalizer,
-                                        locale,
-                                        timezone,
-                                    ),
-                                };
-                            case "whatIf":
-                                return {
-                                    type: "whatIf",
-                                    whatIf: convertWhatIf(part.whatIf as AiWhatIfScenario),
-                                };
-                            case "searchResults":
-                                return {
-                                    type: "searchResults",
-                                    keywords: part.keywords,
-                                    searchResults: convertSearchResults(part.objects),
-                                    relationships: convertSearchRelationships(part.relationships),
-                                };
-                            case "clarifyingQuestions":
-                                return {
-                                    type: "clarifyingQuestions",
-                                    questions: part.questions,
-                                };
-                            default:
-                                // Unknown part type (e.g. sent by a newer backend): log and drop
-                                // it, do not fail the whole item.
-                                assertNever(part);
-                                return undefined;
-                        }
-                    })
-                    .filter((part): part is IChatConversationMultipartPart => part !== undefined),
+                parts: convertMultipartParts(content.parts, history, dateNormalizer, locale, timezone),
                 suggestions: convertChatSuggestionItemFromBackend(content.suggestions),
             };
         case "toolCall":
@@ -293,6 +217,133 @@ function convertChatConversationContentFromBackend(
             // Unknown content type (e.g. sent by a newer backend): log and drop the item,
             // do not fail the whole conversation stream.
             assertNever(content);
+            return undefined;
+    }
+}
+
+/**
+ * Converts the parts of a single multipart message.
+ *
+ * Parts are converted in order, and each one sees the siblings converted before it. That matters
+ * for `dashboardPatch`: the base document it applies to arrives as a `dashboard` part next to it
+ * in the same message, and `history` only holds the previous messages - the current item is
+ * appended to it after it has been converted, in both the replay and the SSE path.
+ *
+ * A `dashboard` part that only carries the base for a sibling patch is folded into that patch: it
+ * is used as the base but not emitted, so the message renders a single card showing the patched
+ * draft instead of a second card offering the unchanged dashboard.
+ */
+function convertMultipartParts(
+    rawParts: AiMultipartContentPartsInner[],
+    history: IChatConversationItem[],
+    dateNormalizer: DateNormalizer,
+    locale?: FormattingLocale,
+    timezone?: string,
+): IChatConversationMultipartPart[] {
+    const patchedDashboardIds = new Set(
+        rawParts.flatMap((part) =>
+            part.type === "dashboardPatch" && part.patch?.dashboard_id ? [part.patch.dashboard_id] : [],
+        ),
+    );
+
+    const siblings: IChatConversationMultipartPart[] = [];
+    const parts: IChatConversationMultipartPart[] = [];
+
+    rawParts.forEach((rawPart) => {
+        const part = convertMultipartPart(rawPart, history, siblings, dateNormalizer, locale, timezone);
+
+        // Unknown parts are dropped rather than failing the whole item, so the rest
+        // of the message (known parts) keeps rendering normally.
+        if (!part) {
+            return;
+        }
+
+        siblings.push(part);
+
+        const isPatchBase =
+            rawPart.type === "dashboard" &&
+            part.type === "dashboard" &&
+            !!part.dashboard &&
+            patchedDashboardIds.has(part.dashboard.identifier);
+
+        if (!isPatchBase) {
+            parts.push(part);
+        }
+    });
+
+    return parts;
+}
+
+function convertMultipartPart(
+    part: AiMultipartContentPartsInner,
+    history: IChatConversationItem[],
+    siblings: IChatConversationMultipartPart[],
+    dateNormalizer: DateNormalizer,
+    locale?: FormattingLocale,
+    timezone?: string,
+): IChatConversationMultipartPart | undefined {
+    switch (part.type) {
+        case "text":
+            return {
+                type: "text",
+                text: part.text,
+            };
+        case "alertProposal":
+            return {
+                type: "alertProposal",
+                alertProposal: convertAlertProposalFrom(part.alertProposal),
+            };
+        case "visualization":
+            return {
+                type: "visualization",
+                visualization: part.visualization
+                    ? visualizationObjectsItemToInsight(
+                          yamlVisualisationToMetadataObject([], part.visualization as AacVisualisation),
+                      )
+                    : null,
+            };
+        case "dashboard": {
+            return {
+                type: "dashboard",
+                ...applyDashboardDefinition(part),
+            };
+        }
+        case "dashboardPatch": {
+            if (!part.patch) {
+                return undefined;
+            }
+
+            return {
+                type: "dashboard",
+                ...applyDashboardPatch(history, siblings, part.patch),
+            };
+        }
+        case "kda":
+            return {
+                type: "kda",
+                kda: convertKda(part.kda as AiKeyDriverAnalysis, dateNormalizer, locale, timezone),
+            };
+        case "whatIf":
+            return {
+                type: "whatIf",
+                whatIf: convertWhatIf(part.whatIf as AiWhatIfScenario),
+            };
+        case "searchResults":
+            return {
+                type: "searchResults",
+                keywords: part.keywords,
+                searchResults: convertSearchResults(part.objects),
+                relationships: convertSearchRelationships(part.relationships),
+            };
+        case "clarifyingQuestions":
+            return {
+                type: "clarifyingQuestions",
+                questions: part.questions,
+            };
+        default:
+            // Unknown part type (e.g. sent by a newer backend): log and drop
+            // it, do not fail the whole item.
+            assertNever(part);
             return undefined;
     }
 }
@@ -655,7 +706,11 @@ function asNonPersistedFilterContext<T>(
 
 // Apply dashboard patch to the items
 
-function applyDashboardPatch(items: IChatConversationItem[], patch: AiDashboardPatchPart["patch"]) {
+function applyDashboardPatch(
+    items: IChatConversationItem[],
+    siblings: IChatConversationMultipartPart[],
+    patch: AiDashboardPatchPart["patch"],
+) {
     if (!patch?.dashboard_id) {
         return {
             dashboard: null,
@@ -663,13 +718,14 @@ function applyDashboardPatch(items: IChatConversationItem[], patch: AiDashboardP
         };
     }
 
-    const related = collectRelatedItems(items, {
+    const related = collectRelatedItems(items, siblings, {
         identifier: patch.dashboard_id,
         type: "analyticalDashboard",
     });
-    const last = related[related.length - 1];
+    // The most recent card for this dashboard need not carry a base - a patch that failed to
+    // apply resolves to one without. Rebase on the last card that actually has one.
+    const last = related.filter((part) => !!part.base).pop();
     const base = last?.base;
-    const saved = last?.saved;
     const previousInsights = last?.insights ?? [];
 
     if (!base) {
@@ -697,24 +753,43 @@ function applyDashboardPatch(items: IChatConversationItem[], patch: AiDashboardP
         };
     }
 
-    const { dashboard, insights } = buildDashboardReferences(newDocument, patch.references, saved);
+    const { dashboard, insights } = buildDashboardReferences(
+        newDocument,
+        patch.references,
+        patch.dashboard_id,
+    );
+    // `base` is carried over unchanged: the operations are defined against the relayed document,
+    // not against the result of a previous proposal, so a follow-up patch - which arrives without
+    // a base of its own as long as the relayed document has not changed - rebases on the same one.
+    //
+    // `saved` deliberately stays unset. The dashboard does exist saved, but this card describes a
+    // change the user has not accepted yet, so it has to offer the draft and not the saved copy.
     return {
+        base,
         dashboard: convertToTemporaryFilterContexts(dashboard),
         insights: [...previousInsights, ...insights],
     };
 }
 
-function collectRelatedItems(items: IChatConversationItem[], ref: ObjRef) {
+function collectRelatedItems(
+    items: IChatConversationItem[],
+    siblings: IChatConversationMultipartPart[],
+    ref: ObjRef,
+) {
     const related: IChatConversationDashboardContent[] = [];
+    const collect = (part: IChatConversationMultipartPart) => {
+        if (part.type === "dashboard" && part.dashboard && areObjRefsEqual(part.dashboard.ref, ref)) {
+            related.push(part);
+        }
+    };
     items.forEach((item) => {
         if (item.content.type === "multipart") {
-            item.content.parts.forEach((part) => {
-                if (part.type === "dashboard" && part.dashboard && areObjRefsEqual(part.dashboard.ref, ref)) {
-                    related.push(part);
-                }
-            });
+            item.content.parts.forEach(collect);
         }
     });
+    // Siblings come last: a base resent in the current message wins over anything in history,
+    // which is exactly what happens when the user edited the dashboard since the last proposal.
+    siblings.forEach(collect);
     return related;
 }
 
@@ -770,12 +845,19 @@ function buildDashboardReferences(
         ? convertFilterContextFromBackend(buildFilterContextWrapper(data.filterContext))
         : undefined;
 
-    const vis = [...(references?.visualizations ?? []), ...(references?.new_visualizations ?? [])];
-    const insights =
-        vis.map((vis) => {
+    const existingInsights =
+        (references?.visualizations ?? []).map((vis) => {
             return visualizationObjectsItemToInsight(
                 yamlVisualisationToMetadataObject(entities, vis as AacVisualisation),
             );
+        }) ?? [];
+    const newInsights =
+        (references?.new_visualizations ?? []).map((vis) => {
+            const insight = visualizationObjectsItemToInsight(
+                yamlVisualisationToMetadataObject(entities, vis as AacVisualisation),
+            );
+            insight.insight.isDraft = true;
+            return insight;
         }) ?? [];
 
     const dashboard = data
@@ -787,6 +869,6 @@ function buildDashboardReferences(
 
     return {
         dashboard,
-        insights,
+        insights: [...existingInsights, ...newInsights],
     };
 }

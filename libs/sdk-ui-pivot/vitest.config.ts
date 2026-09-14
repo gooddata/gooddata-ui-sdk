@@ -8,7 +8,6 @@ import { defineConfig } from "vitest/config";
  * module that other test files import for real) can get one by calling `vi.resetModules()` and importing
  * the module under test dynamically afterwards.
  */
-// eslint-disable-next-line no-restricted-exports
 export default defineConfig({
     resolve: {
         preserveSymlinks: true,

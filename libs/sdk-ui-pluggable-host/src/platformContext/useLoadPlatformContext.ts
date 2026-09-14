@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { useMemo, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 
 import { useLocation } from "react-router";
 
@@ -56,7 +56,11 @@ export function useLoadPlatformContext(): IPlatformContextLoadResult<IPlatformCo
     const workspaceColorPaletteState = useWorkspaceColorPalette(backend, workspaceId);
     const workspaceThemeState = useWorkspaceTheme(backend, workspaceId);
 
-    return useMemo(() => {
+    const [lastReady, setLastReady] = useState<
+        { workspaceId: string | undefined; result: IPlatformContextLoadResult<IPlatformContext> } | undefined
+    >(undefined);
+
+    const result = useMemo<IPlatformContextLoadResult<IPlatformContext>>(() => {
         if (backendContext.state !== "ready") {
             return backendContext;
         }
@@ -119,6 +123,71 @@ export function useLoadPlatformContext(): IPlatformContextLoadResult<IPlatformCo
         workspaceColorPaletteState,
         workspaceThemeState,
     ]);
+
+    // Remember the last COMMITTED result in state (an effect never runs for a discarded
+    // render, so an abandoned concurrent render cannot leak its context into the fallback).
+    useEffect(() => {
+        if (result.state === "ready") {
+            setLastReady({ workspaceId, result });
+        } else if (result.state === "error") {
+            setLastReady(undefined);
+        }
+    }, [result, workspaceId]);
+
+    // Fallback served while the same workspace's data refreshes: the previous workspace-scoped
+    // values merged over the CURRENT backend context, so a refreshed auth reaches the mounted
+    // app immediately instead of waiting for every workspace request to finish.
+    const refreshingFallback = useMemo<IPlatformContextLoadResult<IPlatformContext> | undefined>(() => {
+        if (
+            backendContext.state !== "ready" ||
+            lastReady === undefined ||
+            lastReady.workspaceId !== workspaceId ||
+            lastReady.result.state !== "ready" ||
+            // A different principal or organization must never see the previous principal's
+            // permissions/settings, even for the duration of the refresh — fall through to
+            // the loader instead of merging across principals.
+            lastReady.result.ctx.user?.login !== backendContext.ctx.user?.login ||
+            lastReady.result.ctx.organization?.id !== backendContext.ctx.organization?.id
+        ) {
+            return undefined;
+        }
+        const {
+            currentApplicationScope,
+            currentWorkspaceId,
+            workspacePermissions,
+            workspaceSettings,
+            colorPalette,
+            settings,
+            preferredLocale,
+            theme,
+        } = lastReady.result.ctx;
+        return {
+            state: "ready",
+            ctx: {
+                ...backendContext.ctx,
+                currentApplicationScope,
+                currentWorkspaceId,
+                workspacePermissions,
+                workspaceSettings,
+                colorPalette,
+                settings,
+                preferredLocale,
+                theme,
+            },
+        };
+    }, [backendContext, lastReady, workspaceId]);
+
+    // Keep the previously rendered context while the same workspace's data refreshes (backend
+    // re-creation after a token refresh, reload-platform-context requests). Returning "loading"
+    // here would swap the whole HostUiContainer for a loader, unmounting the mounted app and
+    // cancelling its in-flight work; the refreshed context is pushed via handle.updateContext
+    // instead. A workspace change must NOT reuse the old context (permissions/theme belong to
+    // the previous workspace), so it still falls through to the loader.
+    if (result.state === "loading" && refreshingFallback !== undefined) {
+        return refreshingFallback;
+    }
+
+    return result;
 }
 
 /**

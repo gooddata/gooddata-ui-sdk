@@ -9,23 +9,31 @@ import {
     asyncProcessSelector,
     conversationMessagesSelector,
     conversationSelector,
-    conversationsLoadedSelector,
+    loadedSelector,
 } from "../messages/messagesSelectors.js";
-import { setCurrentConversationAction, setMessagesAction } from "../messages/messagesSlice.js";
+import {
+    setCurrentConversationAction,
+    setMessagesAction,
+    startNewConversationAction,
+} from "../messages/messagesSlice.js";
 
+import { consumeStaleConversationSession } from "./conversationSession.js";
 import { onChatOpenSync } from "./onChatOpenSync.js";
 
 // Drives the saga generator without redux-saga's runtime: SELECT effects are answered from a
 // per-selector queue (so a selector sampled twice can return different values across the await),
-// CALL effects are answered in order from `callResults`, and PUT actions are collected.
+// CALL effects are answered in order from `callResults`, and PUT actions are collected. The
+// session-staleness CALL is matched by reference, so it stays out of the positional queue.
 function runOnChatOpenSync({
     isOpen,
     selects,
     callResults,
+    staleSession = false,
 }: {
     isOpen: boolean;
     selects: Map<unknown, unknown[]>;
     callResults: unknown[];
+    staleSession?: boolean;
 }): PayloadAction[] {
     // Loosely typed so the manual driver can feed SELECT/CALL results into next() regardless of the
     // saga's inferred effect types.
@@ -49,6 +57,10 @@ function runOnChatOpenSync({
             }
             next = gen.next(queue.shift());
         } else if (effect.type === "CALL") {
+            if (effect.payload.fn === consumeStaleConversationSession) {
+                next = gen.next(staleSession);
+                continue;
+            }
             const result = callResults[callIndex++];
             if (result instanceof Error) {
                 next = gen.throw(result);
@@ -78,7 +90,7 @@ describe("onChatOpenSync", () => {
             callResults: [latest, [{ id: "i1", localId: "i1" }], undefined],
             selects: new Map<unknown, unknown[]>([
                 [settingsSelector, [AGENTIC_SETTINGS]],
-                [conversationsLoadedSelector, [true]],
+                [loadedSelector, [true]],
                 // sampled twice: pre-fetch guard, then post-fetch re-check
                 [asyncProcessSelector, [undefined, undefined]],
                 // current (pre-fetch) then currentNow (post-fetch) — both the persisted conv-a
@@ -99,7 +111,7 @@ describe("onChatOpenSync", () => {
             callResults: [latest, [{ localId: "i1" }]],
             selects: new Map<unknown, unknown[]>([
                 [settingsSelector, [AGENTIC_SETTINGS]],
-                [conversationsLoadedSelector, [true]],
+                [loadedSelector, [true]],
                 [asyncProcessSelector, [undefined, undefined]],
                 // pre-fetch: previous persisted conversation; post-fetch: a fresh unsent draft (no id)
                 [conversationSelector, [conv("conv-b"), conv("", "draft-1")]],
@@ -123,7 +135,7 @@ describe("onChatOpenSync", () => {
             callResults: [current, items, undefined],
             selects: new Map<unknown, unknown[]>([
                 [settingsSelector, [AGENTIC_SETTINGS]],
-                [conversationsLoadedSelector, [true]],
+                [loadedSelector, [true]],
                 [asyncProcessSelector, [undefined, undefined]],
                 [conversationSelector, [current, current]],
                 [conversationMessagesSelector, [[{ id: "i1", localId: "i1" }]]],
@@ -143,7 +155,7 @@ describe("onChatOpenSync", () => {
             callResults: [current, items],
             selects: new Map<unknown, unknown[]>([
                 [settingsSelector, [AGENTIC_SETTINGS]],
-                [conversationsLoadedSelector, [true]],
+                [loadedSelector, [true]],
                 [asyncProcessSelector, [undefined, undefined]],
                 [conversationSelector, [current, current]],
                 [conversationMessagesSelector, [[{ id: "i1", localId: "i1" }]]],
@@ -162,7 +174,7 @@ describe("onChatOpenSync", () => {
             callResults: [latest, [{ id: "i1", localId: "i1" }]],
             selects: new Map<unknown, unknown[]>([
                 [settingsSelector, [AGENTIC_SETTINGS]],
-                [conversationsLoadedSelector, [true]],
+                [loadedSelector, [true]],
                 [asyncProcessSelector, [undefined, "evaluating"]], // process started during fetch
                 [conversationSelector, [conv("conv-a"), conv("conv-a")]],
                 [conversationMessagesSelector, [[]]],
@@ -178,7 +190,7 @@ describe("onChatOpenSync", () => {
             callResults: [new Error("Failed to fetch")],
             selects: new Map<unknown, unknown[]>([
                 [settingsSelector, [AGENTIC_SETTINGS]],
-                [conversationsLoadedSelector, [true]],
+                [loadedSelector, [true]],
                 [asyncProcessSelector, [undefined, undefined]],
                 [conversationSelector, [conv("conv-a"), conv("conv-a")]],
                 [conversationMessagesSelector, [[]]],
@@ -196,7 +208,7 @@ describe("onChatOpenSync", () => {
             callResults: [current, items, undefined],
             selects: new Map<unknown, unknown[]>([
                 [settingsSelector, [AGENTIC_SETTINGS]],
-                [conversationsLoadedSelector, [true]],
+                [loadedSelector, [true]],
                 [asyncProcessSelector, [undefined, undefined]],
                 [conversationSelector, [current, current]],
                 [
@@ -215,6 +227,37 @@ describe("onChatOpenSync", () => {
         expect(types).toContain(setMessagesAction.type);
     });
 
+    it("does not consume the session timer while onThreadLoad is still in flight (GDAI-2142)", () => {
+        const puts = runOnChatOpenSync({
+            isOpen: true,
+            staleSession: true,
+            callResults: [],
+            selects: new Map<unknown, unknown[]>([
+                [settingsSelector, [AGENTIC_SETTINGS]],
+                [loadedSelector, [false]],
+            ]),
+        });
+
+        expect(puts).toHaveLength(0);
+    });
+
+    it("starts a new conversation instead of re-syncing when the session went stale (GDAI-2142)", () => {
+        const puts = runOnChatOpenSync({
+            isOpen: true,
+            staleSession: true,
+            callResults: [],
+            selects: new Map<unknown, unknown[]>([
+                [settingsSelector, [AGENTIC_SETTINGS]],
+                [loadedSelector, [true]],
+                [asyncProcessSelector, [undefined]],
+                [conversationSelector, [conv("conv-a")]],
+                [conversationMessagesSelector, [[]]],
+            ]),
+        });
+
+        expect(puts.map((a) => a.type)).toEqual([startNewConversationAction.type]);
+    });
+
     it("updates messages when conversation switches even if item IDs match", () => {
         const current = conv("conv-a");
         const latest = conv("conv-b");
@@ -224,7 +267,7 @@ describe("onChatOpenSync", () => {
             callResults: [latest, items, undefined],
             selects: new Map<unknown, unknown[]>([
                 [settingsSelector, [AGENTIC_SETTINGS]],
-                [conversationsLoadedSelector, [true]],
+                [loadedSelector, [true]],
                 [asyncProcessSelector, [undefined, undefined]],
                 [conversationSelector, [current, current]],
                 [conversationMessagesSelector, [[{ id: "i1", localId: "i1" }]]],

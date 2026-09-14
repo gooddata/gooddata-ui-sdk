@@ -18,7 +18,6 @@ export function CatalogItemLock({ intl }: Props) {
             triggerBy={["hover"]}
             anchor={<UiIcon type="lock" color="complementary-7" size={16} />}
             content={intl.formatMessage({ id: "analyticsCatalog.catalogItem.lock" })}
-            width={255}
         />
     );
 }

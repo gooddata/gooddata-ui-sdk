@@ -18,10 +18,8 @@ const devDeps: Record<string, string> = {
     "@types/node": packageJson.devDependencies["@types/node"],
     jiti: "2.6.1", // Required for ESLint to load TypeScript config files
     typescript: packageJson.devDependencies["typescript"],
-    "@typescript/native-preview": "7.0.0-dev.20260202.1",
     "vite-node": packageJson.devDependencies["vite-node"],
     "@gooddata/eslint-config": packageJson.devDependencies["@gooddata/eslint-config"],
-    "@eslint/js": packageJson.devDependencies["@eslint/js"],
     "@typescript-eslint/eslint-plugin": packageJson.devDependencies["@typescript-eslint/eslint-plugin"],
     "@typescript-eslint/parser": packageJson.devDependencies["@typescript-eslint/parser"],
     eslint: packageJson.devDependencies["eslint"],

@@ -105,7 +105,7 @@ function createGeoStyleProxy({ backend, origin, cookieDomain, hostHeader }) {
                     res.setHeader("content-type", "application/json");
                     res.end(rewrittenBody);
                 } catch (err) {
-                    // eslint-disable-next-line no-console
+                    // oxlint-disable-next-line eslint-js/no-console
                     console.error("[devServer] Failed to rewrite geo style response", err);
                     res.writeHead(500, { "content-type": "application/json" });
                     res.end(JSON.stringify({ error: "Failed to rewrite geo style response." }));

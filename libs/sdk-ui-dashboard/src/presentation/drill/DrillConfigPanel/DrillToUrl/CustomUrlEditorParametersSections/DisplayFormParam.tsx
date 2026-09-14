@@ -7,6 +7,7 @@ import {
     type IAttributeDisplayFormMetadataObject,
     dashboardAttributeFilterItemTitle,
 } from "@gooddata/sdk-model";
+import { attributeIdentifierToPlaceholder, displayFormPlaceholderRef } from "@gooddata/sdk-model/internal";
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
@@ -52,7 +53,7 @@ export function DisplayFormParam({ item, onAdd, iconClassName, isFilter }: IXPro
             iconClassName={
                 iconClassName ?? getDisplayFormIcon(item.displayFormType as AttributeDisplayFormType)
             }
-            onAdd={() => onAdd(`{attribute_title(${item.id})}`)}
+            onAdd={() => onAdd(attributeIdentifierToPlaceholder(displayFormPlaceholderRef(item)))}
             intl={intl}
         />
     );

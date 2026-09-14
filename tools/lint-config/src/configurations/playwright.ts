@@ -2,13 +2,16 @@
 
 import { IPackage, Rules } from "../types.js";
 
+export const playwrightConflicts: Rules = {
+    "no-empty-pattern": "off",
+};
+
 export const playwrightPlugin: IPackage = {
     name: "eslint-plugin-playwright",
     version: "2.10.1",
 };
 
-export const playwrightRules: Rules = {
-    "no-empty-pattern": "off",
+export const playwrightRules: Rules<"playwright"> = {
     "playwright/consistent-spacing-between-blocks": "warn",
     "playwright/expect-expect": "warn",
     "playwright/max-nested-describe": "warn",

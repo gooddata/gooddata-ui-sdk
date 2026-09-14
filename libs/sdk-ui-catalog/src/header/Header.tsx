@@ -32,7 +32,6 @@ export function Header({ searchNode, createNode }: Props) {
                 arrowPlacement="left"
                 optimalPlacement
                 offset={10}
-                width={300}
                 triggerBy={["hover", "click", "focus"]}
             />
             <div className="gd-analytics-catalog__header__separator" />

@@ -59,6 +59,10 @@ export interface IUiState {
     saveAsDialog: {
         open: boolean;
     };
+    insightNotSavedDialog: {
+        open: boolean;
+        saveConfirmed: boolean;
+    };
     settingsDialog: {
         open: boolean;
     };
@@ -164,6 +168,10 @@ export const uiInitialState: IUiState = {
     },
     saveAsDialog: {
         open: false,
+    },
+    insightNotSavedDialog: {
+        open: false,
+        saveConfirmed: false,
     },
     settingsDialog: {
         open: false,

@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-/* eslint-disable no-console */
+// oxlint-disable eslint-js/no-console
 
 try {
     require.resolve("@gooddata/i18n-toolkit");

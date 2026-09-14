@@ -26,13 +26,21 @@ import type {
  * @beta
  */
 export interface IAlertingDialogContextValue {
+    /** Whether the dialog creates a new alert or edits an existing one. */
     mode: "create" | "edit";
+    /** Widget the alert targets; undefined when alerting for a dashboard rather than a widget. */
     widget?: IWidget;
+    /** Insight of {@link IAlertingDialogContextValue.widget}; undefined when alerting for a dashboard. */
     insight?: IInsight;
+    /** Title of {@link IAlertingDialogContextValue.widget}; undefined when alerting for a dashboard. */
     widgetTitle?: string;
+    /** Id of the dashboard the alert belongs to. */
     dashboardId?: string;
+    /** The dashboard's applied filters available to the alert — cross-filtering, hidden, and empty filters excluded. */
     dashboardFilters: FilterContextItem[];
+    /** Raw dashboard hidden filters (`selectDashboardHiddenFilters`); combined with the edited filters via `getAppliedWidgetFilters` inside the dialog. */
     hiddenFilters: FilterContextItem[];
+    /** Looks up a widget's execution result by ref; used to resolve attribute values for the condition's "for" field. */
     executionResultByRef: (ref: ObjRef | undefined) => { executionResult?: IExecutionResult } | undefined;
     /** Effective widget parameter values for the dialog's widget (replaces direct selectEffectiveParameterValuesForWidget read) */
     parameterValues: IInsightParameterValue[];
@@ -42,10 +50,15 @@ export interface IAlertingDialogContextValue {
      * read in useAutomationAlertParameters).
      */
     dashboardParameters: IDashboardParameter[];
+    /** Local identifier of the dashboard's common (dashboard-level) date filter, when the automation-available filters include one. */
     commonDateFilterId?: string;
+    /** The dashboard's configured evaluation frequency (cron expression); seeds the new alert's trigger interval when set. */
     dashboardEvaluationFrequency?: string;
+    /** Creates a new alert on the backend. */
     createAlert(alert: IAutomationMetadataObjectDefinition): Promise<IAutomationMetadataObject>;
+    /** Saves changes to an existing alert on the backend. */
     saveAlert(alert: IAutomationMetadataObject): Promise<IAutomationMetadataObject>;
+    /** Deletes the alert from the backend. */
     deleteAlert(alert: IAutomationMetadataObject): Promise<void>;
     /** The alert being edited; undefined when creating a new one. */
     alertToEdit?: IAutomationMetadataObject;

@@ -1,5 +1,7 @@
-// (C) 2007-2022 GoodData Corporation
-/* eslint-disable no-console */
+// (C) 2007-2026 GoodData Corporation
+
+// oxlint-disable eslint-js/no-console
+
 import chalk from "chalk";
 
 /**

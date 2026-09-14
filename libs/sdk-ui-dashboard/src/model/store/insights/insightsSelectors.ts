@@ -16,6 +16,7 @@ import {
     insightAttributes,
     insightMeasures,
     insightRef,
+    isDrillToInsight,
     measureAlias,
     measureItem,
     measureLocalId,
@@ -32,7 +33,7 @@ import {
     selectCatalogMeasures,
 } from "../catalog/catalogSelectors.js";
 import { selectLocale } from "../config/configSelectors.js";
-import { selectWidgetByRef } from "../tabs/layout/layoutSelectors.js";
+import { selectAllTabsInsightWidgetContexts, selectWidgetByRef } from "../tabs/layout/layoutSelectors.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
 
 import { insightsAdapter } from "./insightsEntityAdapter.js";
@@ -63,6 +64,35 @@ export const selectInsightRefs: DashboardSelector<ObjRef[]> = createSelector(sel
     return insights.map(insightRef);
 });
 
+const addUniqueInsightRef = (insightRefs: ObjRef[], ref: ObjRef) => {
+    if (!insightRefs.some((existingRef) => areObjRefsEqual(existingRef, ref))) {
+        insightRefs.push(ref);
+    }
+};
+
+/**
+ * Selects refs of insights referenced by dashboard state (widgets, visualization switcher visualizations, and drills).
+ *
+ * @internal
+ */
+export const selectDashboardInsightRefs: DashboardSelector<ObjRef[]> = createSelector(
+    selectAllTabsInsightWidgetContexts,
+    (contexts) => {
+        const insightRefs: ObjRef[] = [];
+
+        contexts.forEach(({ widget }) => {
+            addUniqueInsightRef(insightRefs, widget.insight);
+            widget.drills.forEach((drill) => {
+                if (isDrillToInsight(drill)) {
+                    addUniqueInsightRef(insightRefs, drill.target);
+                }
+            });
+        });
+
+        return insightRefs;
+    },
+);
+
 /**
  * Selects all insights and returns them in a mapping of obj ref to the insight object.
  *
@@ -73,6 +103,45 @@ export const selectInsightsMap: DashboardSelector<ObjRefMap<IInsight>> = createS
     selectBackendCapabilities,
     (insights, capabilities) => {
         return newInsightMap(insights, capabilities.hasTypeScopedIdentifiers);
+    },
+);
+
+/**
+ * Selects insights referenced by dashboard state (widgets, visualization switcher visualizations, and drills).
+ *
+ * @internal
+ */
+export const selectInsightsUsedOnDashboard: DashboardSelector<IInsight[]> = createSelector(
+    selectDashboardInsightRefs,
+    selectInsightsMap,
+    selectInsights,
+    (insightRefs, insightsMap, insights) => {
+        return insightRefs
+            .map((ref) => {
+                return (
+                    insightsMap.get(ref) ??
+                    insights.find((currentInsight) => {
+                        return currentInsight.insight.ref
+                            ? areObjRefsEqual(currentInsight.insight.ref, ref)
+                            : false;
+                    })
+                );
+            })
+            .filter((insight): insight is IInsight => {
+                return Boolean(insight);
+            });
+    },
+);
+
+/**
+ * Selects draft insights referenced by dashboard state (widgets, visualization switcher visualizations, and drills).
+ *
+ * @internal
+ */
+export const selectDraftInsightsUsedOnDashboard: DashboardSelector<IInsight[]> = createSelector(
+    selectInsightsUsedOnDashboard,
+    (insights) => {
+        return insights.filter((insight) => insight.insight.isDraft);
     },
 );
 

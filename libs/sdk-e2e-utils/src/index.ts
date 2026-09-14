@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-/* oxlint-disable no-barrel-files/no-barrel-files */
+// oxlint-disable no-barrel-files/no-barrel-files
 
 export { authHeader, authedRouteFetch, injectAuthHeader } from "./auth.js";
 export {

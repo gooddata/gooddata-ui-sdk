@@ -7,7 +7,6 @@ import { defineConfig } from "rolldown";
 
 const testFiles = globSync("playwright/tests/**/*.spec.ts");
 
-// eslint-disable-next-line no-restricted-exports
 export default defineConfig({
     input: {
         "playwright.config": "playwright/playwright.config.ts",

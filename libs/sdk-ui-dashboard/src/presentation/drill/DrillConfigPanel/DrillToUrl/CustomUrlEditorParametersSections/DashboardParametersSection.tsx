@@ -12,6 +12,7 @@ import {
     filterObjRef,
     objRefToString,
 } from "@gooddata/sdk-model";
+import { dashboardAttributeFilterToPlaceholder } from "@gooddata/sdk-model/internal";
 import { MeasureValueFilterDetailsBubble } from "@gooddata/sdk-ui-filters/internal";
 
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
@@ -72,7 +73,7 @@ export function DashboardParametersSection({
                                 item={df}
                                 iconClassName="gd-icon-filter"
                                 onAdd={() => {
-                                    onAdd(`{dash_attribute_filter_selection(${filterIdentifier})}`);
+                                    onAdd(dashboardAttributeFilterToPlaceholder(df.ref));
                                 }}
                                 isFilter
                             />
@@ -82,7 +83,7 @@ export function DashboardParametersSection({
                                 item={secondaryDf}
                                 iconClassName="gd-icon-filter"
                                 onAdd={() => {
-                                    onAdd(`{dash_attribute_filter_selection(${filterSecondaryIdentifier})}`);
+                                    onAdd(dashboardAttributeFilterToPlaceholder(secondaryDf.ref));
                                 }}
                                 isFilter
                             />

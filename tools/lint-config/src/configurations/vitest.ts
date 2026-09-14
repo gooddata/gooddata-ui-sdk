@@ -1,11 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { IPackage, Rules } from "../types.js";
-
-export const vitestPlugin: IPackage = {
-    name: "@vitest/eslint-plugin",
-    version: "1.6.19",
-};
+import { Rules } from "../types.js";
 
 export const vitestRules: Rules = {
     "no-conditional-expect": "error",

@@ -53,7 +53,17 @@ describe("comparisonHelper", () => {
                 calculationType: CalculateAs.RATIO,
             },
         });
-        const SPECS: any = [
+
+        type Spec = [
+            string,
+            {
+                calculationType: CalculationType | null;
+                props: IVisualizationProperties<IComparisonControlProperties>;
+            },
+            { format: string | null; labels: Record<string, string> },
+        ];
+
+        const SPECS: Spec[] = [
             [
                 "Should use default calculation type [DIFFERENCE]",
                 { calculationType: CalculateAs.DIFFERENCE, props: {} },
@@ -86,20 +96,15 @@ describe("comparisonHelper", () => {
             ],
         ];
 
-        it.each(SPECS)("%s", ((...args: any[]) => {
-            const [_condition, data, expected] = args;
-            const typedData = data as {
-                calculationType: CalculationType;
-                props: IVisualizationProperties<IComparisonControlProperties>;
-            };
+        it.each<Spec>(SPECS)("%s", (_condition, data, expected) => {
             const { defaultFormat, defaultLabelKeys } = getComparisonDefaultValues(
-                typedData.calculationType,
-                typedData.props,
+                data.calculationType as unknown as CalculationType,
+                data.props,
             );
 
             expect(defaultFormat).toEqual(expected.format);
             expect(defaultLabelKeys).toEqual(expected.labels);
-        }) as any);
+        });
     });
 
     describe("getPresets", () => {

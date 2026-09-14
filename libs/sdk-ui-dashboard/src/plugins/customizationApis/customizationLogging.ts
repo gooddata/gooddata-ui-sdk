@@ -28,11 +28,11 @@ export class DashboardCustomizationLogger implements IDashboardCustomizationLogg
         this.currentPlugin = plugin;
     };
     public debug = (message: string, ...optionalParams: any[]): void => {
-        // eslint-disable-next-line no-console
+        // oxlint-disable-next-line eslint-js/no-console
         console.debug(addPluginInfoToMessage(this.currentPlugin, message), optionalParams);
     };
     public log = (message: string, ...optionalParams: any[]): void => {
-        // eslint-disable-next-line no-console
+        // oxlint-disable-next-line eslint-js/no-console
         console.log(addPluginInfoToMessage(this.currentPlugin, message), optionalParams);
     };
     public warn = (message: string, ...optionalParams: any[]): void => {

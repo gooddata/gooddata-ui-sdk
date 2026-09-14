@@ -77,6 +77,13 @@ describe("removeMarkdown", () => {
         expect(removeMarkdown("Word1    Word2")).toBe("Word1 Word2");
     });
 
+    it("should unescape markdown escaped characters", () => {
+        expect(removeMarkdown("http://www\\.seznam\\.cz")).toBe("http://www.seznam.cz");
+        expect(removeMarkdown("Escaped \\#header and \\_value\\_ and \\\\ slash")).toBe(
+            "Escaped #header and _value_ and \\ slash",
+        );
+    });
+
     it("should handle complex markdown", () => {
         const input = `
 # Title

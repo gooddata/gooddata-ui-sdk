@@ -14,6 +14,9 @@ import {
     type IHostUiNotification,
     type IPlatformContext,
 } from "@gooddata/sdk-pluggable-application-model";
+import { resolveLocale } from "@gooddata/sdk-ui";
+
+import { HostErrorBoundary } from "../components/HostErrorBoundary.js";
 
 import { HostChrome } from "./HostChrome.js";
 import { e } from "./hostChromeBem.js";
@@ -43,6 +46,7 @@ interface IHostUiBridgeProps {
         appendToChat?: boolean,
         replaceUserContext?: boolean,
     ) => void;
+    onError?: (error: string, context: string) => void;
     onAppContainerReady: (el: HTMLElement) => void;
     onReady: (
         setCtx: (ctx: IPlatformContext) => void,
@@ -63,6 +67,7 @@ function HostUiBridge({
     replace,
     onChatToggleRequested,
     onAskAiAssistant,
+    onError,
     onAppContainerReady,
     onReady,
 }: IHostUiBridgeProps) {
@@ -88,22 +93,27 @@ function HostUiBridge({
     }, []);
 
     return (
-        <HostChrome
-            ctx={ctx}
-            resolvedApplications={apps}
-            pathname={pathname}
-            onNavigate={navigate}
-            onReplace={replace}
-            headerOptions={headerOptions}
-            notification={notification}
-            showChatItem={chatState.showChatItem}
-            chatIsOpen={chatState.isOpen}
-            onChatToggle={onChatToggleRequested}
-            onAskAiAssistant={onAskAiAssistant}
-            appPageTitle={pageTitle}
-        >
-            <div ref={appContainerRef} className={e("app-container")} />
-        </HostChrome>
+        // Inner boundary tracks the LIVE context locale (updateContext only reaches this
+        // component's state); the mount-level boundary keeps the mount-time locale and
+        // remains the last resort for a crash in this component itself.
+        <HostErrorBoundary onError={onError} locale={resolveLocale(ctx.preferredLocale)}>
+            <HostChrome
+                ctx={ctx}
+                resolvedApplications={apps}
+                pathname={pathname}
+                onNavigate={navigate}
+                onReplace={replace}
+                headerOptions={headerOptions}
+                notification={notification}
+                showChatItem={chatState.showChatItem}
+                chatIsOpen={chatState.isOpen}
+                onChatToggle={onChatToggleRequested}
+                onAskAiAssistant={onAskAiAssistant}
+                appPageTitle={pageTitle}
+            >
+                <div ref={appContainerRef} className={e("app-container")} />
+            </HostChrome>
+        </HostErrorBoundary>
     );
 }
 
@@ -121,6 +131,7 @@ function mountDefaultHostUi(options: IHostUiMountOptions): IHostUiMountHandle {
         replace,
         onChatToggleRequested,
         onAskAiAssistant,
+        onError,
     } = options;
 
     let reactRoot: Root | null = createRoot(container);
@@ -138,35 +149,40 @@ function mountDefaultHostUi(options: IHostUiMountOptions): IHostUiMountHandle {
     // making getAppContainer() safe to call immediately.
     flushSync(() => {
         reactRoot?.render(
-            <HostUiBridge
-                initialCtx={ctx}
-                initialApps={resolvedApplications}
-                initialPathname={pathname}
-                navigate={navigate}
-                replace={replace}
-                onChatToggleRequested={onChatToggleRequested}
-                onAskAiAssistant={onAskAiAssistant}
-                onAppContainerReady={(el) => {
-                    appContainer = el;
-                }}
-                onReady={(
-                    setCtx,
-                    setApps,
-                    setPathname,
-                    setHeaderOptions,
-                    setNotification,
-                    setPageTitle,
-                    setChatState,
-                ) => {
-                    updateCtxFn = setCtx;
-                    updateAppsFn = setApps;
-                    updatePathnameFn = setPathname;
-                    updateHeaderFn = setHeaderOptions;
-                    updateNotificationFn = setNotification;
-                    updateDocumentTitleFn = setPageTitle;
-                    updateChatStateFn = setChatState;
-                }}
-            />,
+            // This root is a separate React tree from the host application's — an error here
+            // never reaches the application-level boundary, so it needs its own.
+            <HostErrorBoundary onError={onError} locale={resolveLocale(ctx.preferredLocale)}>
+                <HostUiBridge
+                    initialCtx={ctx}
+                    initialApps={resolvedApplications}
+                    initialPathname={pathname}
+                    navigate={navigate}
+                    replace={replace}
+                    onChatToggleRequested={onChatToggleRequested}
+                    onAskAiAssistant={onAskAiAssistant}
+                    onError={onError}
+                    onAppContainerReady={(el) => {
+                        appContainer = el;
+                    }}
+                    onReady={(
+                        setCtx,
+                        setApps,
+                        setPathname,
+                        setHeaderOptions,
+                        setNotification,
+                        setPageTitle,
+                        setChatState,
+                    ) => {
+                        updateCtxFn = setCtx;
+                        updateAppsFn = setApps;
+                        updatePathnameFn = setPathname;
+                        updateHeaderFn = setHeaderOptions;
+                        updateNotificationFn = setNotification;
+                        updateDocumentTitleFn = setPageTitle;
+                        updateChatStateFn = setChatState;
+                    }}
+                />
+            </HostErrorBoundary>,
         );
     });
 

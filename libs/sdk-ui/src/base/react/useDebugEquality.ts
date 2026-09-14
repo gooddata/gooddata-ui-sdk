@@ -38,11 +38,11 @@ export const useDebugEquality = <T extends object>(
     const shouldPrint = render === "eachRender" || !previousResults || !isEqual(results, previousResults);
 
     if (shouldPrint) {
-        // eslint-disable-next-line no-console
+        // oxlint-disable-next-line eslint-js/no-console
         console.table(results);
-        // eslint-disable-next-line no-console
+        // oxlint-disable-next-line eslint-js/no-console
         console.log("Previous props:", previousProps);
-        // eslint-disable-next-line no-console
+        // oxlint-disable-next-line eslint-js/no-console
         console.log("Current props:", props);
     }
 };

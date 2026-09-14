@@ -73,14 +73,18 @@ describe("stickyRowHandler", () => {
     }
 
     function assertOnlyListedMethodsHaveBeenCalled(obj: any, exceptMethodNames: string[]) {
-        Object.getOwnPropertyNames(obj).forEach((propName) => {
-            if (typeof obj[propName] === "function") {
-                if (exceptMethodNames.indexOf(propName) >= 0) {
-                    expect(obj[propName]).toHaveBeenCalled();
-                } else {
-                    expect(obj[propName]).not.toHaveBeenCalled();
-                }
-            }
+        const methodNames = Object.getOwnPropertyNames(obj).filter(
+            (propName) => typeof obj[propName] === "function",
+        );
+
+        methodNames.forEach((propName) => {
+            const shouldHaveBeenCalled = exceptMethodNames.indexOf(propName) >= 0;
+            const hasBeenCalled = obj[propName].mock.calls.length > 0;
+
+            expect({ method: propName, hasBeenCalled }).toEqual({
+                method: propName,
+                hasBeenCalled: shouldHaveBeenCalled,
+            });
         });
     }
 

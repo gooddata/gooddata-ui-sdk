@@ -37,7 +37,7 @@ const DialogExamples = memo(function DialogExamples() {
     };
 
     const onExportSubmit = (values: any) => {
-        console.log("values: ", values); // eslint-disable-line no-console
+        console.log("values: ", values); // oxlint-disable-line eslint-js/no-console
         setExportDialogOpen(false);
     };
 

@@ -15,6 +15,11 @@ export { registerAppLifecycleCallbacks } from "./loader/pluggableApplicationsLoa
 export { mapLegacyUrlToHost, type ILegacyLocation } from "./loader/legacyRedirect.js";
 
 export { Root, type IRootCallbacks } from "./components/Root.js";
+export {
+    HostErrorBoundary,
+    type IHostErrorBoundaryProps,
+    type IHostErrorBoundaryState,
+} from "./components/HostErrorBoundary.js";
 export { type IAppLifecycleCallbacks } from "./types/lifecycle.js";
 
 export {

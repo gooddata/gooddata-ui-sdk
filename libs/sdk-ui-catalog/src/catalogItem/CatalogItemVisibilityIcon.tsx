@@ -27,7 +27,6 @@ export function CatalogItemVisibilityIcon({ intl, item, ...htmlProps }: Props) {
                 triggerBy={["hover", "focus"]}
                 anchor={<UiIcon type="hiddenForAi" color="complementary-6" size={14} backgroundSize={26} />}
                 content={intl.formatMessage({ id: "analyticsCatalog.column.isHidden.icon.tooltip" })}
-                width={255}
             />
         </div>
     );

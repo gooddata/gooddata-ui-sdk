@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-/* oxlint-disable no-barrel-files/no-barrel-files */
+// oxlint-disable no-barrel-files/no-barrel-files
 
 /**
  * This is an all-in-one package that has all GoodData.UI packages as dependencies and re-exports their public API.
@@ -12,7 +12,7 @@
  * @packageDocumentation
  */
 
-/* eslint-disable no-duplicate-imports,no-restricted-syntax */
+// oxlint-disable eslint-js/no-duplicate-imports, eslint-js/no-restricted-syntax
 
 export * from "@gooddata/sdk-model";
 export type { IExportResult as IExportResultModel } from "@gooddata/sdk-model";

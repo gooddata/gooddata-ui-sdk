@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { IPackage, Rules } from "../types.js";
+import { IOverride, IPackage, Rules } from "../types.js";
 
 export const noBarrelFilesPlugin: IPackage = {
     name: "eslint-plugin-no-barrel-files",
@@ -11,11 +11,11 @@ export const noBarrelFilesRules: Rules<"no-barrel-files"> = {
     "no-barrel-files/no-barrel-files": "error",
 };
 
-export const noBarrelFilesOverrides = [
+export const noBarrelFilesOverrides: IOverride<"no-barrel-files">[] = [
     {
         files: ["**/eslint.config.ts"],
         rules: {
             "no-barrel-files/no-barrel-files": "off",
-        } as Rules<"no-barrel-files">,
+        },
     },
 ];

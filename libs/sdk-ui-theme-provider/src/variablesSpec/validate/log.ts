@@ -13,7 +13,7 @@ export function logError(message: unknown) {
  * @internal
  */
 export function logSuccess(message: string) {
-    // eslint-disable-next-line no-console
+    // oxlint-disable-next-line eslint-js/no-console
     console.log(chalk.green(message));
 }
 
@@ -21,7 +21,7 @@ export function logSuccess(message: string) {
  * @internal
  */
 export function logInfo(message: string) {
-    // eslint-disable-next-line no-console
+    // oxlint-disable-next-line eslint-js/no-console
     console.log(chalk.gray(message));
 }
 

@@ -11,13 +11,13 @@ import {
     type IMeasureValueFilter,
     areObjRefsEqual,
     filterObjRef,
-    idRef,
 } from "@gooddata/sdk-model";
 import {
     getDashboardAttributeFilterPlaceholdersFromUrl,
     getDashboardMeasureValueFilterPlaceholdersFromUrl,
     getInsightAttributeFilterPlaceholdersFromUrl,
     getInsightMeasureValueFilterPlaceholdersFromUrl,
+    placeholderIdentifierText,
 } from "@gooddata/sdk-model/internal";
 
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
@@ -59,40 +59,42 @@ export function useInvalidFilteringParametersIdentifiers(
             );
 
             const invalidDashboardParameters = dashboardAttributeFilterParameters
-                .filter(({ identifier }) => {
+                // The placeholder's own ref is used rather than a display-form one rebuilt from the
+                // identifier: a computed attribute shares the shape of a display form but not its type,
+                // and the filters are sanitized to that same typed ref.
+                .filter(({ ref }) => {
                     // parameter is invalid if either it points to display form that no longer exists
-                    const relevantDf = displayForms.get(idRef(identifier, "displayForm"));
+                    const relevantDf = displayForms.get(ref);
                     if (!relevantDf) {
                         return true;
                     }
 
                     return (
                         !dashboardFilters?.some((filter) => {
-                            return areObjRefsEqual(filterObjRef(filter), idRef(identifier, "displayForm"));
+                            return areObjRefsEqual(filterObjRef(filter), ref);
                         }) &&
                         !attributeFilterConfigs?.some((config) => {
-                            return (
-                                config.displayAsLabel &&
-                                areObjRefsEqual(config.displayAsLabel, idRef(identifier, "displayForm"))
-                            );
+                            return config.displayAsLabel && areObjRefsEqual(config.displayAsLabel, ref);
                         })
                     );
                 })
-                .map(({ identifier }) => identifier);
+                // named as it is written in the URL, so the warning quotes text the user can find there
+                .map(({ ref }) => placeholderIdentifierText(ref));
 
             const invalidInsightParameters = insightAttributeFilterParameters
-                .filter(({ identifier }) => {
+                .filter(({ ref }) => {
                     // parameter is invalid if either it points to display form that no longer exists
-                    const relevantDf = displayForms.get(idRef(identifier, "displayForm"));
+                    const relevantDf = displayForms.get(ref);
                     if (!relevantDf) {
                         return true;
                     }
 
                     return !insightFilters?.some((filter) => {
-                        return areObjRefsEqual(filterObjRef(filter), idRef(identifier, "displayForm"));
+                        return areObjRefsEqual(filterObjRef(filter), ref);
                     });
                 })
-                .map(({ identifier }) => identifier);
+                // named as it is written in the URL, so the warning quotes text the user can find there
+                .map(({ ref }) => placeholderIdentifierText(ref));
 
             const invalidDashboardMvfParameters = dashboardMeasureValueFilterParameters
                 .filter(({ identifier }) => {

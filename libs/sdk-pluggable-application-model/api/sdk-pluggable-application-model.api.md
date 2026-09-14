@@ -157,6 +157,7 @@ export interface IHostUiMountOptions {
     navigate: (url: string) => void;
     onAskAiAssistant?: (question: string, agentId?: string, userContext?: IGenAIUserContext, appendToChat?: boolean, replaceUserContext?: boolean) => void;
     onChatToggleRequested?: () => void;
+    onError?: (error: string, context: string) => void;
     pathname: string;
     replace: (url: string) => void;
     resolvedApplications: PluggableApplicationRegistryItem[];

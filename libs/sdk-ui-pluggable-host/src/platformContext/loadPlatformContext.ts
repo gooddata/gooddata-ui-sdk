@@ -44,19 +44,25 @@ function throwIfAborted(signal?: AbortSignal) {
  *
  * @internal - exported for testing
  */
+// Dashboards name their export render mode `export`, reports `export_slideshow`; both are what the
+// backend exporter opens.
+const EXPORT_MODE_VALUES = new Set(["export", "export_slideshow"]);
+
 export function detectExportMode(): boolean {
     if (typeof window === "undefined") {
         return false;
     }
-    const hash = window.location.hash;
-    const query = hash.indexOf("?");
-    if (query === -1) {
-        return false;
-    }
-    for (const [key, value] of new URLSearchParams(hash.slice(query + 1))) {
-        const name = key.toLowerCase();
-        if ((name === "mode" || name === "displaymode") && value.toLowerCase() === "export") {
-            return true;
+    // A hash-routed app carries its query inside the fragment; a browser-routed one in the search
+    // string. Either may name an export mode.
+    const { search, hash } = window.location;
+    const hashQuery = hash.indexOf("?");
+    const queries = [search ?? "", hashQuery === -1 ? "" : hash.slice(hashQuery + 1)];
+    for (const query of queries) {
+        for (const [key, value] of new URLSearchParams(query)) {
+            const name = key.toLowerCase();
+            if ((name === "mode" || name === "displaymode") && EXPORT_MODE_VALUES.has(value.toLowerCase())) {
+                return true;
+            }
         }
     }
     return false;

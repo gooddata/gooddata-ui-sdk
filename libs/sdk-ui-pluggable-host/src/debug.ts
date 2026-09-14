@@ -7,7 +7,7 @@ import { isProduction } from "./lib/isProduction.js";
  */
 export function debugLog(message: string, ...args: unknown[]): void {
     if (!isProduction) {
-        // eslint-disable-next-line no-console
+        // oxlint-disable-next-line eslint-js/no-console
         console.debug(message, ...args);
     }
 }

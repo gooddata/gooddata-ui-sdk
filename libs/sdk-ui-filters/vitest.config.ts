@@ -12,7 +12,6 @@ const require = createRequire(import.meta.url);
 // require.resolve picks the exports map's "require" condition, i.e. the lib/ CJS entry.
 const rcPickerLibDir = dirname(realpathSync(require.resolve("@rc-component/picker")));
 
-// eslint-disable-next-line no-restricted-exports
 export default defineConfig({
     resolve: {
         preserveSymlinks: true,

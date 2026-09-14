@@ -9,6 +9,7 @@ import { type FilterContextItem, idRef } from "@gooddata/sdk-model";
 
 import {
     selectExecutableDashboardFilters,
+    selectReportedRestrictedDashboardFilters,
     selectRestrictedDashboardFilterCount,
     selectRestrictedDashboardFilterLocalIdentifiers,
     selectRestrictedDashboardFilterLocalIdentifiersForTab,
@@ -59,9 +60,9 @@ describe("restricted filter selectors", () => {
         expect([...forTab("unknown-tab")]).toEqual([]);
     });
 
-    it("counts the restricted filters the viewer would otherwise see, but not the hidden ones", () => {
-        const count = (attributeFilterConfigs: { localIdentifier: string; mode: string }[]) =>
-            combinerOf(selectRestrictedDashboardFilterCount)(
+    it("reports the restricted filters the viewer would otherwise see, but not the hidden ones", () => {
+        const reported = (attributeFilterConfigs: { localIdentifier: string; mode: string }[]) =>
+            combinerOf(selectReportedRestrictedDashboardFilters)(
                 [forbiddenFilter],
                 undefined,
                 [],
@@ -69,17 +70,17 @@ describe("restricted filter selectors", () => {
                 [],
             );
 
-        expect(count([])).toBe(1);
-        expect(count([{ localIdentifier: "forbidden", mode: "active" }])).toBe(1);
-        expect(count([{ localIdentifier: "forbidden", mode: "hidden" }])).toBe(0);
+        expect(reported([])).toEqual([forbiddenFilter]);
+        expect(reported([{ localIdentifier: "forbidden", mode: "active" }])).toEqual([forbiddenFilter]);
+        expect(reported([{ localIdentifier: "forbidden", mode: "hidden" }])).toEqual([]);
     });
 
-    it("counts a restricted measure value filter unless the author hid that one too", () => {
+    it("reports a restricted measure value filter unless the author hid that one too", () => {
         const forbiddenMeasureValueFilter = {
             dashboardMeasureValueFilter: { measure: idRef("metric"), localIdentifier: "forbidden-mvf" },
         } as FilterContextItem;
-        const count = (measureValueFilterConfigs: { localIdentifier: string; mode: string }[]) =>
-            combinerOf(selectRestrictedDashboardFilterCount)(
+        const reported = (measureValueFilterConfigs: { localIdentifier: string; mode: string }[]) =>
+            combinerOf(selectReportedRestrictedDashboardFilters)(
                 [forbiddenMeasureValueFilter],
                 undefined,
                 [],
@@ -87,7 +88,12 @@ describe("restricted filter selectors", () => {
                 measureValueFilterConfigs,
             );
 
-        expect(count([])).toBe(1);
-        expect(count([{ localIdentifier: "forbidden-mvf", mode: "hidden" }])).toBe(0);
+        expect(reported([])).toEqual([forbiddenMeasureValueFilter]);
+        expect(reported([{ localIdentifier: "forbidden-mvf", mode: "hidden" }])).toEqual([]);
+    });
+
+    it("counts what it reports", () => {
+        expect(combinerOf(selectRestrictedDashboardFilterCount)([forbiddenFilter])).toBe(1);
+        expect(combinerOf(selectRestrictedDashboardFilterCount)([])).toBe(0);
     });
 });

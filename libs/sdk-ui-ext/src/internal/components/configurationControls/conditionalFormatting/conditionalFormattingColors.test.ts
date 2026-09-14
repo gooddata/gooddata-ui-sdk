@@ -38,8 +38,6 @@ describe("colorToHex", () => {
     it("round-trips a preset hex through hexToColor -> colorToHex", () => {
         const color = hexToColor("#3DB36B");
         expect(color).toBeDefined();
-        if (color) {
-            expect(colorToHex(color)).toBe("#3DB36B");
-        }
+        expect(colorToHex(color!)).toBe("#3DB36B");
     });
 });

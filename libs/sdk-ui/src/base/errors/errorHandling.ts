@@ -145,6 +145,8 @@ export function convertError(error: unknown): GoodDataSdkError {
                 sdkError.authenticationFlow = (error as NotAuthenticated).authenticationFlow;
                 return sdkError;
             }
+            case AnalyticalBackendErrorTypes.ABORT:
+                return new CancelledSdkError(ErrorCodes.CANCELLED, error);
             default:
                 return new UnexpectedSdkError(ErrorCodes.UNKNOWN_ERROR, error);
         }

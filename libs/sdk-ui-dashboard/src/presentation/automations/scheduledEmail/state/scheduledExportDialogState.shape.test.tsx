@@ -14,7 +14,6 @@ import {
 } from "@gooddata/sdk-model";
 
 import type { IAutomationFiltersTab } from "../../../../model/store/filtering/types.js";
-import type * as AutomationFiltersSelectModule from "../../shared/automationFilters/useAutomationFiltersSelect.js";
 
 // ---------------------------------------------------------------------------
 // Mocks — vi.mock calls are hoisted; factories must not reference top-level
@@ -47,8 +46,8 @@ vi.hoisted(() => {
     vi.resetModules();
 });
 
-vi.mock("../../shared/automationFilters/useAutomationFiltersSelect.js", async (importOriginal) => {
-    const actual = await importOriginal<typeof AutomationFiltersSelectModule>();
+vi.mock(import("../../shared/automationFilters/useAutomationFiltersSelect.js"), async (importOriginal) => {
+    const actual = await importOriginal();
     return { ...actual, useAutomationFiltersSelect: mockUseAutomationFiltersSelect };
 });
 

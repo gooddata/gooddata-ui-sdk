@@ -4,8 +4,11 @@
 
 ```ts
 
+import { Component } from 'react';
+import { ErrorInfo } from 'react';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IHostUiNotification } from '@gooddata/sdk-pluggable-application-model';
+import { ILocale } from '@gooddata/sdk-model';
 import { IPlatformContext } from '@gooddata/sdk-pluggable-application-model';
 import { IPluggableApp } from '@gooddata/sdk-pluggable-application-model';
 import { IPluggableAppTelemetryCallbacks } from '@gooddata/sdk-pluggable-application-model';
@@ -18,6 +21,20 @@ export function dispatchHostNotification(notification: IHostUiNotification): voi
 
 // @alpha (undocumented)
 export function getBackend(): IAnalyticalBackend;
+
+// @alpha
+export class HostErrorBoundary extends Component<IHostErrorBoundaryProps, IHostErrorBoundaryState> {
+    // (undocumented)
+    componentDidCatch(error: Error, info: ErrorInfo): void;
+    // (undocumented)
+    static getDerivedStateFromError(): Partial<IHostErrorBoundaryState>;
+    // (undocumented)
+    static getDerivedStateFromProps(props: IHostErrorBoundaryProps, state: IHostErrorBoundaryState): Partial<IHostErrorBoundaryState> | null;
+    // (undocumented)
+    render(): ReactNode;
+    // (undocumented)
+    state: IHostErrorBoundaryState;
+}
 
 // @alpha (undocumented)
 export interface IAppLifecycleCallbacks {
@@ -53,6 +70,24 @@ export interface IHostChromePricing {
     expiredDate: string;
     isTrial: boolean;
     onUpsellButtonClick: () => void;
+}
+
+// @alpha
+export interface IHostErrorBoundaryProps {
+    // (undocumented)
+    children: ReactNode;
+    // (undocumented)
+    locale?: ILocale;
+    onError?: (error: string, context: string) => void;
+    resetKey?: string | number;
+}
+
+// @alpha
+export interface IHostErrorBoundaryState {
+    // (undocumented)
+    hasError: boolean;
+    // (undocumented)
+    resetKey?: string | number;
 }
 
 // @alpha (undocumented)

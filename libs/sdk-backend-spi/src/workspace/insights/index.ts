@@ -8,6 +8,7 @@ import type {
     IFilter,
     IInsight,
     IInsightDefinition,
+    IInsightDefinitionWithOptionalIdentity,
     IMetadataObject,
     IMetadataObjectBase,
     IMetadataObjectIdentity,
@@ -96,9 +97,10 @@ export interface IWorkspaceInsightsService {
      * Create and save insight for the provided insight definition
      *
      * @param insight - insight definition
+     * @param generatedId - if true, backend will generate insight id, otherwise the id must be provided in the insight definition, defaults to true
      * @returns promise of created insight
      */
-    createInsight(insight: IInsightDefinition): Promise<IInsight>;
+    createInsight(insight: IInsightDefinitionWithOptionalIdentity, generatedId?: boolean): Promise<IInsight>;
 
     /**
      * Update provided insight

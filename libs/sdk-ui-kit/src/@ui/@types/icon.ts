@@ -83,6 +83,7 @@ export type IconType =
     | "arrowRight"
     | "arrowDown"
     | "arrowLeft"
+    | "levelUp"
     | "undo"
     | "redo"
     | "trendDown"

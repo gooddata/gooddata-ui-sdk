@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-backend-tiger: Copilot adding a chart to an open dashboard now renders the patched draft as a single card, and follow-up proposals in the same conversation keep working after a reload.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

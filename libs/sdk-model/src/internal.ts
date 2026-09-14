@@ -1,10 +1,15 @@
 // (C) 2023-2026 GoodData Corporation
 
-/* oxlint-disable no-barrel-files/no-barrel-files */
+// oxlint-disable no-barrel-files/no-barrel-files
 
 export {
     type IDrillToUrlPlaceholder,
+    attributeIdentifierToPlaceholder,
+    dashboardAttributeFilterToPlaceholder,
+    displayFormPlaceholderRef,
+    insightAttributeFilterToPlaceholder,
     joinDrillUrlParts,
+    placeholderIdentifierText,
     splitDrillUrlParts,
     getAttributeIdentifiersPlaceholdersFromUrl,
     getDashboardAttributeFilterPlaceholdersFromUrl,
