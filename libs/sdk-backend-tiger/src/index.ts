@@ -145,5 +145,5 @@ export { convertInsightToVisualizationContent } from "./convertors/toBackend/Ins
 /**
  * @deprecated This will be removed in the next major release, please use the named export "tigerFactory" instead
  */
-// oxlint-disable-next-line eslint-js/no-restricted-exports
+// oxlint-disable-next-line eslint/no-restricted-exports
 export default tigerFactory;

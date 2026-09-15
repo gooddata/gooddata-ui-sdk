@@ -3358,15 +3358,15 @@ describe("useObjectShareController row classification", () => {
         expect(result.current.state.granteeControlsLocked).toBe(false);
     });
 
-    it("synthesizes the admin self row for a workspace manager without a grant of their own", async () => {
+    it("shows the administrator note for a workspace manager without a grant of their own", async () => {
         const { result } = renderController(makeService([]), TARGET, undefined, { canManageProject: true });
         await waitFor(() => expect(result.current.state.status).toBe("success"));
         // The default profile mock knows only the login — the display pair falls
         // back to the user id, mirroring grantee rows.
-        await waitFor(() => expect(result.current.state.adminSelfRow).toEqual({ name: "self" }));
+        await waitFor(() => expect(result.current.state.showAdminAccessNote).toBe(true));
     });
 
-    it("names the admin self row from the detailed profile", async () => {
+    it("shows the administrator note regardless of the detailed profile read", async () => {
         // The plain profile carries the auth-claim name, which an API-created user has
         // none of — the row then showed the raw user id. The detailed read merges the
         // entity's first and last name, as the catalog and dashboards already do.
@@ -3377,12 +3377,7 @@ describe("useObjectShareController row classification", () => {
             email: "self@example.com",
         });
         const { result } = renderController(makeService([]), TARGET, undefined, { canManageProject: true });
-        await waitFor(() =>
-            expect(result.current.state.adminSelfRow).toEqual({
-                name: "Self Person",
-                email: "self@example.com",
-            }),
-        );
+        await waitFor(() => expect(result.current.state.showAdminAccessNote).toBe(true));
     });
 
     it("keeps the identity when the detailed read fails", async () => {
@@ -3392,18 +3387,18 @@ describe("useObjectShareController row classification", () => {
         const { result } = renderController(makeService([USER_GRANT]), TARGET, undefined, {
             canManageProject: true,
         });
-        await waitFor(() => expect(result.current.state.adminSelfRow).toEqual({ name: "self" }));
+        await waitFor(() => expect(result.current.state.showAdminAccessNote).toBe(true));
         expect(result.current.state.granteeControlsLocked).toBe(false);
     });
 
-    it("keeps the admin self row while other grantees are listed", async () => {
+    it("keeps the administrator note while other grantees are listed", async () => {
         // The admin is not a grantee, so sharing with someone must not hide them: the
         // row reflects their role, not the empty state of the list.
         const { result } = renderController(makeService([USER_GRANT]), TARGET, undefined, {
             canManageProject: true,
         });
         await waitFor(() => expect(result.current.state.status).toBe("success"));
-        await waitFor(() => expect(result.current.state.adminSelfRow).toEqual({ name: "self" }));
+        await waitFor(() => expect(result.current.state.showAdminAccessNote).toBe(true));
 
         act(() => result.current.actions.openAddGrantee());
         act(() =>
@@ -3421,39 +3416,39 @@ describe("useObjectShareController row classification", () => {
             await result.current.actions.confirmAddGrantees();
         });
         expect(result.current.state.grantees.some((g) => g.id === "group:g1")).toBe(true);
-        expect(result.current.state.adminSelfRow).toEqual({ name: "self" });
+        expect(result.current.state.showAdminAccessNote).toBe(true);
 
         await act(async () => {
             await result.current.actions.removeGrantee("group:g1");
             await result.current.actions.removeGrantee("user:u1");
         });
         expect(result.current.state.grantees).toEqual([]);
-        expect(result.current.state.adminSelfRow).toEqual({ name: "self" });
+        expect(result.current.state.showAdminAccessNote).toBe(true);
     });
 
-    it("yields the admin self row to the manager's own grant row", async () => {
-        // One "(you)" row at a time: a manager who holds a grant gets the real row with
-        // a menu, and removing that grant brings the synthesized one back.
+    it("keeps the administrator note alongside the manager's own grant row", async () => {
+        // The note explains the role, not the row: a manager who also holds an explicit
+        // grant sees their real row with a menu, and the note stays before and after it.
         const { result } = renderController(makeService([SELF_GRANT]), TARGET, undefined, {
             canManageProject: true,
         });
         await waitFor(() => expect(result.current.state.status).toBe("success"));
         await waitFor(() => expect(result.current.state.grantees.some((g) => g.isSelf)).toBe(true));
-        expect(result.current.state.adminSelfRow).toBeUndefined();
+        expect(result.current.state.showAdminAccessNote).toBe(true);
 
         await act(async () => {
             await result.current.actions.removeGrantee("user:self");
         });
         expect(result.current.state.grantees).toEqual([]);
-        expect(result.current.state.adminSelfRow).toEqual({ name: "self" });
+        expect(result.current.state.showAdminAccessNote).toBe(true);
     });
 
-    it("yields the admin self row to a row of the caller's own that appears mid-session", async () => {
+    it("keeps the administrator note when a row of the caller's own appears mid-session", async () => {
         // Tiger's picker excludes the caller, so this stands for the other routes to a
         // manager's own row: a grant another manager makes for them, a backend that lists
-        // the caller. Modelled through the add flow; one "(you)" row at a time either way.
+        // the caller. Modelled through the add flow; the note is independent of the row.
         const { result } = renderController(makeService([]), TARGET, undefined, { canManageProject: true });
-        await waitFor(() => expect(result.current.state.adminSelfRow).toEqual({ name: "self" }));
+        await waitFor(() => expect(result.current.state.showAdminAccessNote).toBe(true));
 
         act(() => result.current.actions.openAddGrantee());
         act(() =>
@@ -3471,13 +3466,12 @@ describe("useObjectShareController row classification", () => {
             await result.current.actions.confirmAddGrantees();
         });
         expect(result.current.state.grantees.some((g) => g.isSelf)).toBe(true);
-        expect(result.current.state.adminSelfRow).toBeUndefined();
+        expect(result.current.state.showAdminAccessNote).toBe(true);
     });
 
-    it("keeps a manager's inherited-only own row in place of the admin self row", async () => {
-        // One row per person: an own row inherited from a parent workspace or a group is
-        // still theirs, so no synthesized row sits next to it (its level then understates a
-        // manager's access — a design question, pinned here as the current behavior).
+    it("keeps the administrator note alongside a manager's inherited-only own row", async () => {
+        // An own row inherited from a parent workspace or a group is still theirs and is
+        // listed; its level understates a manager's access, which is what the note covers.
         const INHERITED_SELF: AccessGranteeDetail = {
             type: "granularUser",
             user: { ref: idRef("self"), uri: "/self", login: "self", email: "self", fullName: "self" },
@@ -3490,10 +3484,10 @@ describe("useObjectShareController row classification", () => {
         await waitFor(() => expect(result.current.state.status).toBe("success"));
         await waitFor(() => expect(result.current.state.grantees.some((g) => g.isSelf)).toBe(true));
         expect(result.current.state.grantees[0]!.directLevel).toBeUndefined();
-        expect(result.current.state.adminSelfRow).toBeUndefined();
+        expect(result.current.state.showAdminAccessNote).toBe(true);
     });
 
-    it("shows the admin self row whatever the workspace rule grants", async () => {
+    it("shows the administrator note whatever the workspace rule grants", async () => {
         // A share-capable rule used to read as an alternative way in and suppress the
         // row; the manager permission decides now, so the rule is irrelevant.
         const SHARE_RULE: AccessGranteeDetail = {
@@ -3505,7 +3499,7 @@ describe("useObjectShareController row classification", () => {
             canManageProject: true,
         });
         await waitFor(() => expect(result.current.state.status).toBe("success"));
-        await waitFor(() => expect(result.current.state.adminSelfRow).toEqual({ name: "self" }));
+        await waitFor(() => expect(result.current.state.showAdminAccessNote).toBe(true));
     });
 
     const NON_MANAGER_SEEDS: [string, AccessGranteeDetail[]][] = [
@@ -3518,20 +3512,20 @@ describe("useObjectShareController row classification", () => {
     ];
 
     it.each(NON_MANAGER_SEEDS)(
-        "never synthesizes the admin self row for a non-manager with %s",
+        "never shows the administrator note for a non-manager with %s",
         async (_seed, grants) => {
             // A SHARE holder can reach the list through a group grant or a workspace rule,
-            // neither of which shows up as their own row; none of these must brand them Admin.
+            // neither of which shows up as their own row; none of these must read as administrator.
             getUserMock.mockClear();
             const { result } = renderController(makeService(grants), TARGET);
             await waitFor(() => expect(result.current.state.status).toBe("success"));
             await waitFor(() => expect(getUserMock).toHaveResolved());
             await act(async () => {});
-            expect(result.current.state.adminSelfRow).toBeUndefined();
+            expect(result.current.state.showAdminAccessNote).toBe(false);
         },
     );
 
-    it("shows no admin self row for a non-manager who removes their own grant", async () => {
+    it("shows no administrator note for a non-manager who removes their own grant", async () => {
         // Emptying the list by revoking your own grant leaves nothing to badge.
         const { result } = renderController(makeService([SELF_GRANT]), TARGET);
         await waitFor(() => expect(result.current.state.status).toBe("success"));
@@ -3539,17 +3533,17 @@ describe("useObjectShareController row classification", () => {
             await result.current.actions.removeGrantee("user:self");
         });
         expect(result.current.state.grantees).toEqual([]);
-        expect(result.current.state.adminSelfRow).toBeUndefined();
+        expect(result.current.state.showAdminAccessNote).toBe(false);
     });
 
-    it("shows no admin self row while the manager permission is unknown", async () => {
+    it("shows no administrator note while the manager permission is unknown", async () => {
         // Fail-safe in the branding direction: an unread MANAGE permission must not
         // read as "is a manager".
         const { result } = renderController(makeService([]), TARGET, undefined, "reject");
         await waitFor(() => expect(result.current.state.status).toBe("success"));
         await waitFor(() => expect(getUserMock).toHaveResolved());
         await act(async () => {});
-        expect(result.current.state.adminSelfRow).toBeUndefined();
+        expect(result.current.state.showAdminAccessNote).toBe(false);
     });
 });
 
@@ -3838,10 +3832,11 @@ describe("useObjectShareController draft mode", () => {
         expect(svc.getAvailableAssignees).toHaveBeenCalled();
     });
 
-    it("shows the drafting caller as the creator, and keeps the row as grantees are added", async () => {
+    it("shows no administrator note while drafting, before and after grantees are added", async () => {
+        // The drafting caller will own what they create, which needs no explaining.
         const { result } = await renderDraft();
 
-        expect(result.current.state.adminSelfRow).toEqual({ name: "self" });
+        expect(result.current.state.showAdminAccessNote).toBe(false);
 
         act(() => result.current.actions.setPendingGrantees([PICKED]));
         await act(async () => {
@@ -3849,12 +3844,12 @@ describe("useObjectShareController draft mode", () => {
         });
 
         expect(result.current.state.grantees.map((g) => g.id)).toContain("user:u9");
-        expect(result.current.state.adminSelfRow).toEqual({ name: "self" });
+        expect(result.current.state.showAdminAccessNote).toBe(false);
     });
 
-    it("shows the row for a workspace manager too — drafting makes them the creator", async () => {
+    it("shows no administrator note for a workspace manager while drafting either", async () => {
         const { result } = await renderDraft(makeService(), {}, { canManageProject: true });
 
-        expect(result.current.state.adminSelfRow).toEqual({ name: "self" });
+        expect(result.current.state.showAdminAccessNote).toBe(false);
     });
 });

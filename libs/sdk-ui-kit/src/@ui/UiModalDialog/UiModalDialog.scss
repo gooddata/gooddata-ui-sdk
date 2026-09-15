@@ -32,13 +32,26 @@
 .gd-ui-kit-dialog-header {
     display: flex;
     align-items: center;
-    gap: var(--gd-spacing-15px);
+    // 10px between the leading slot (the back button) and the title, per the design.
+    // The title flexes, so this is also the minimum before the trailing close button.
+    gap: var(--gd-spacing-10px);
     margin-bottom: var(--gd-spacing-20px);
 
     &__leading {
         display: inline-flex;
         align-items: center;
         flex-shrink: 0;
+    }
+
+    // The close button's 32px hit area is taller than the title's 23px line box. Left to
+    // stretch the row it would push the title down and the content below further away than
+    // the design places them, so pull the extra back at both ends. The target size itself
+    // is untouched: only the button's contribution to the row's height changes.
+    &__close {
+        display: inline-flex;
+        align-items: center;
+        flex-shrink: 0;
+        margin-block: calc((23px - 32px) / 2);
     }
 
     &__title {
@@ -52,8 +65,8 @@
         white-space: nowrap;
 
         &--size-default {
-            font-size: 18px;
-            line-height: 26px;
+            font-size: 17px;
+            line-height: 23px;
         }
 
         &--size-large {

@@ -64,7 +64,7 @@ export function RepeaterChart(props: IRepeaterChartProps) {
 
     const dataSource = useMemo(
         () => new AgGridDatasource(dataView, { onError, setRuntimeError }, config),
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
         [dataView.fingerprint(), onError, config],
     );
 
@@ -74,7 +74,7 @@ export function RepeaterChart(props: IRepeaterChartProps) {
         const columnsBucket = bucketsFind(dataView.definition.buckets, BucketNames.COLUMNS);
 
         return columnsBucket?.items ?? [];
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [dataView.fingerprint()]);
 
     const columnDefs = useMemo(() => {
@@ -153,7 +153,7 @@ export function RepeaterChart(props: IRepeaterChartProps) {
                 };
             }
         });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [
         items,
         config?.cellVerticalAlign,

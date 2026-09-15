@@ -56,6 +56,7 @@ export interface IUserEditDialogProps extends IWithTelemetryProps {
     renderDataSourceIcon?: (dataSource: IGrantedDataSource) => ReactElement;
     isSystemAccountFilteringEnabled?: boolean;
     areMetricPermissionsEnabled?: boolean;
+    isCreateVisualizationWorkspacePermissionEnabled?: boolean;
     selectedTab?: UserTabId;
 }
 
@@ -70,6 +71,7 @@ function UserEditDialogComponent({
     renderDataSourceIcon,
     isSystemAccountFilteringEnabled = false,
     areMetricPermissionsEnabled = false,
+    isCreateVisualizationWorkspacePermissionEnabled = false,
     selectedTab = undefined,
 }: IUserEditDialogProps) {
     const intl = useIntl();
@@ -288,6 +290,9 @@ function UserEditDialogComponent({
                                     onClose={onClose}
                                     editWorkspace={workspaceToEdit}
                                     areMetricPermissionsEnabled={areMetricPermissionsEnabled}
+                                    isCreateVisualizationWorkspacePermissionEnabled={
+                                        isCreateVisualizationWorkspacePermissionEnabled
+                                    }
                                 />
                             )}
                             {dialogMode === "USER_GROUPS" && (

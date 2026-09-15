@@ -2,7 +2,7 @@
 
 import { defineConfig } from "vitest/config";
 
-// oxlint-disable-next-line eslint-js/no-restricted-exports
+// oxlint-disable-next-line eslint/no-restricted-exports
 export default defineConfig({
     test: {
         include: ["**/tests/integrated/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],

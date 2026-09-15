@@ -93,8 +93,12 @@ FullFeatured.parameters = {
         "absolute-form": {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelectors: [{ selector: ".s-date-filter-button" }, { selector: ".s-absolute-form-button" }],
+            // With granularity on, the form hosts the period picker, which mounts a beat after
+            // the form itself; 200ms after the click sometimes caught the form without it. A
+            // selector gate would be the precise fix, but the engine does not resolve one for
+            // content inside the filter's overlay, so give the picker the time instead.
             delay: {
-                postOperation: 200,
+                postOperation: 1000,
             },
         },
         "relative-form": {
@@ -306,8 +310,9 @@ GranularitySwitching.parameters = {
         "absolute-form-month": {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelectors: [{ selector: ".s-date-filter-button" }, { selector: ".s-absolute-form-button" }],
+            // The period picker mounts a beat after the form; see the full-featured story.
             delay: {
-                postOperation: 200,
+                postOperation: 1000,
             },
         },
         "absolute-form-quarter": {
@@ -317,8 +322,9 @@ GranularitySwitching.parameters = {
                 { selector: ".s-absolute-form-button" },
                 { selector: ".s-granularity-quarter" },
             ],
+            // The period picker mounts a beat after the form; see the full-featured story.
             delay: {
-                postOperation: 200,
+                postOperation: 1000,
             },
         },
     },

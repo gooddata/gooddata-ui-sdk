@@ -235,6 +235,10 @@
         "text": "Title",
         "crowdinContext": "Title of the column containing the title of the object."
     },
+    "analyticsCatalog.column.title.type": {
+        "text": "Type",
+        "crowdinContext": "Label of the row naming the object's type (Attribute, Fact, Metric, Computed attribute, ...) on the catalog detail's Details tab."
+    },
     "analyticsCatalog.column.title.dataSet": {
         "text": "Dataset",
         "crowdinContext": "Title of the column containing the dataSet of the object."
@@ -683,6 +687,10 @@
         "text": "Edit parameter",
         "crowdinContext": "Title of the dialog for editing an existing parameter."
     },
+    "analyticsCatalog.parameter.dialog.view.title": {
+        "text": "Parameter detail",
+        "crowdinContext": "Title of the dialog showing a parameter's definition to a user who cannot edit it."
+    },
     "analyticsCatalog.parameter.dialog.sectionHeader": {
         "text": "Parameter definition",
         "crowdinContext": "Section header label above the YAML editor in the parameter dialog."
@@ -807,6 +815,10 @@
         "text": "Edit computed attribute",
         "crowdinContext": "Title of the dialog for editing an existing computed attribute."
     },
+    "analyticsCatalog.computedAttribute.dialog.view.title": {
+        "text": "Computed attribute detail",
+        "crowdinContext": "Title of the dialog showing a computed attribute's definition to a user who cannot edit it."
+    },
     "analyticsCatalog.computedAttribute.dialog.edit.duplicate": {
         "text": "Save as new",
         "crowdinContext": "Label for the duplicate action button in the edit computed attribute dialog."
@@ -922,6 +934,10 @@
     "analyticsCatalog.metric.dialog.edit.title": {
         "text": "Edit metric",
         "crowdinContext": "Title of the dialog for editing a metric as code."
+    },
+    "analyticsCatalog.metric.dialog.view.title": {
+        "text": "Metric detail",
+        "crowdinContext": "Title of the dialog showing a metric's definition to a user who cannot edit it."
     },
     "analyticsCatalog.metric.dialog.sectionHeader": {
         "text": "Metric definition",
@@ -1050,6 +1066,10 @@
     "analyticsCatalog.visualization.dialog.edit.title": {
         "text": "Edit visualization",
         "crowdinContext": "Title of the dialog for editing a visualization as code."
+    },
+    "analyticsCatalog.visualization.dialog.view.title": {
+        "text": "Visualization detail",
+        "crowdinContext": "Title of the dialog showing a visualization's definition to a user who cannot edit it."
     },
     "analyticsCatalog.visualization.dialog.sectionHeader": {
         "text": "Visualization definition",

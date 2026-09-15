@@ -455,7 +455,7 @@ export const BaseVisualization = forwardRef<IBaseVisualizationApi, IBaseVisualiz
          * the class lifecycle did; the props diff below decides what actually happens. The visElementId is
          * regenerated only when the visualization class really changes, so there is no update loop.
          */
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
         useLayoutEffect(() => {
             const previousProps = prevPropsRef.current;
             prevPropsRef.current = currentProps;

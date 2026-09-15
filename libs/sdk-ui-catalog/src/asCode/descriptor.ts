@@ -22,6 +22,7 @@ export type AsCodeObjectType =
 export interface IAsCodeMessages {
     createTitle: MessageDescriptor;
     editTitle: MessageDescriptor;
+    viewTitle: MessageDescriptor;
     duplicate: MessageDescriptor;
     createDefaultTitle: MessageDescriptor;
     createSuccess: MessageDescriptor;

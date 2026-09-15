@@ -14,6 +14,7 @@ type Props = {
     initialValue: string;
     onChange: (value: string) => void;
     disabled: boolean;
+    readOnly?: boolean;
     completionSource: YamlCompletionSource;
     syntaxErrorMessage: string;
     /** Accessible name for the editor; the dialog derives it from the entity's section header. */
@@ -34,6 +35,7 @@ export function AsCodeEditorBody({
     initialValue,
     onChange,
     disabled,
+    readOnly,
     completionSource,
     syntaxErrorMessage,
     label,
@@ -53,6 +55,7 @@ export function AsCodeEditorBody({
             completionSource={completionSource}
             label={label}
             disabled={disabled}
+            readOnly={readOnly}
             labels={{
                 autoFormat: intl.formatMessage(messages.autoFormat),
                 syntaxError: syntaxErrorMessage,

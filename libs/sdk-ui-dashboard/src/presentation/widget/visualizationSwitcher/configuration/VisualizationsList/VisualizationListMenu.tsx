@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
@@ -43,7 +43,7 @@ export function VisualizationListMenu({
             onVisualizationPositionChange(visualization.identifier, direction);
             onMenuButtonClick();
         },
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
         [visualization.identifier],
     );
 

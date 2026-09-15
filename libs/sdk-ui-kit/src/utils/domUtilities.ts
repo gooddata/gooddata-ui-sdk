@@ -159,7 +159,10 @@ export const isElementSubmitButton = (event: KeyboardEvent) => {
     return id === CONFIRM_DIALOG_BASE_ID;
 };
 
-const focusableElementsSelector = [
+/**
+ * @internal
+ */
+export const focusableElementsSelector = [
     // Interactive form elements
     "button:not(:disabled)",
     "input:not(:disabled)",

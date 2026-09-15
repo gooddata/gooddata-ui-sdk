@@ -5,14 +5,53 @@
     flex-direction: column;
     gap: var(--gd-spacing-10px);
 
+    // This card spaces its children with a gap of its own, which stacks with the shared
+    // header's bottom margin. Halve the margin so the two together come to the 20px the
+    // design puts between the header and the first content. Cards with no gap of their own
+    // (the confirm dialog, the report dialogs) keep the full margin and need no override.
+    .gd-ui-kit-dialog-header {
+        margin-bottom: var(--gd-spacing-10px);
+    }
+
+    &__note {
+        // Stacks with the card's gap to set the note a design-standard 20px apart from the
+        // section below it, where the gap alone would leave it half that.
+        margin-bottom: var(--gd-spacing-10px);
+        padding: var(--gd-spacing-5px) var(--gd-spacing-10px);
+        border-radius: 3px;
+        background: var(--gd-palette-primary-dimmed);
+        color: var(--gd-palette-primary-base);
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    &__note-prefix {
+        font-weight: 700;
+    }
+
     &__grantees {
         display: flex;
         flex-direction: column;
+        // Stacks with the card's gap to set the list 20px apart from the section that
+        // follows it, while the section heading above it keeps the tighter 10px.
+        padding-bottom: var(--gd-spacing-10px);
+    }
+
+    &__empty {
+        padding-block: var(--gd-spacing-10px);
+        color: var(--gd-palette-complementary-6);
+        font-size: 14px;
+        line-height: 20px;
+        text-align: center;
+
+        p {
+            margin: 0;
+        }
     }
 
     &__error {
         padding-block: var(--gd-spacing-20px);
-        color: var(--gd-palette-complementary-6, #94a1ad);
+        color: var(--gd-palette-complementary-6);
         font-size: 14px;
         text-align: center;
     }

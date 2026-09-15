@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type RefObject, useEffect, useState } from "react";
 
@@ -89,7 +89,7 @@ export function useDashboardDragScroll(
             setScrollingDirection(ScrollingDirection.None);
         });
         // we want to subscribe only once
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useInterval(

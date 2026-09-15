@@ -1,7 +1,7 @@
 // (C) 2026 GoodData Corporation
 
-import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
 
 import type { IObjectAccessSummary } from "@gooddata/sdk-ui-ext";
 
@@ -24,11 +24,11 @@ function summary(overrides: Partial<IObjectAccessSummary>): IObjectAccessSummary
     };
 }
 
-function renderRow(s: IObjectAccessSummary) {
+function renderRow(s: IObjectAccessSummary, onOpenShare?: () => void) {
     return render(
         <TestIntlProvider>
             <dl>
-                <CatalogDetailAccessRow summary={s} />
+                <CatalogDetailAccessRow summary={s} onOpenShare={onOpenShare} />
             </dl>
         </TestIntlProvider>,
     );
@@ -70,5 +70,20 @@ describe("CatalogDetailAccessRow", () => {
 
         expect(screen.queryByRole("button")).not.toBeInTheDocument();
         expect(screen.queryByRole("link")).not.toBeInTheDocument();
+    });
+
+    it("opens the share dialog from the access value when sharing is offered", () => {
+        const onOpenShare = vi.fn();
+        renderRow(summary({ granteeCount: 1, selfIsGrantee: true }), onOpenShare);
+
+        fireEvent.click(screen.getByRole("button", { name: "Private" }));
+        expect(onOpenShare).toHaveBeenCalledOnce();
+    });
+
+    it("renders the access value as plain text when sharing is not offered", () => {
+        renderRow(summary({ granteeCount: 1, selfIsGrantee: true }));
+
+        expect(screen.queryByRole("button")).not.toBeInTheDocument();
+        expect(screen.getByTestId(catalogDetailAccessRowPrivate)).toHaveTextContent("Private");
     });
 });

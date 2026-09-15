@@ -37,6 +37,7 @@ const COMPUTED_ATTRIBUTE_DOCS_URL =
 const messages = defineMessages({
     createTitle: { id: "analyticsCatalog.computedAttribute.dialog.create.title" },
     editTitle: { id: "analyticsCatalog.computedAttribute.dialog.edit.title" },
+    viewTitle: { id: "analyticsCatalog.computedAttribute.dialog.view.title" },
     duplicate: { id: "analyticsCatalog.computedAttribute.dialog.edit.duplicate" },
     createDefaultTitle: { id: "analyticsCatalog.computedAttribute.create.defaultTitle" },
     createSuccess: { id: "analyticsCatalog.computedAttribute.create.success" },

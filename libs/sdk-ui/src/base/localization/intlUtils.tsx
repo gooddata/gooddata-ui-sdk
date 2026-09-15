@@ -35,7 +35,7 @@ export function useResolveMessages(
             setMessages((current) => ({ ...current, [locale]: messages }));
         });
         // we don't want to re-run this effect when the messages change its used as guard
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [locale, resolveMessages]);
 
     return messages;

@@ -28,7 +28,6 @@ function Example({ initialPicked = [] as IUiPickedGrantee[] }) {
             <div className="screenshot-target" style={{ minHeight: 400 }}>
                 <UiAddGranteeDialog
                     isOpen
-                    objectTitle="Customer"
                     loadOptions={loadOptions}
                     selectedGrantees={picked}
                     onSelectedGranteesChange={handleChange}

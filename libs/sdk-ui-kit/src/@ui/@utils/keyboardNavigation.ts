@@ -167,3 +167,13 @@ export const makeLinearKeyboardNavigationWithConfirm = makeKeyboardNavigation({
     onConfirm: [{ code: "Enter" }],
     onClose: [{ code: "Escape" }],
 });
+
+/**
+ * Home and End are left out so they reach an enclosing toolbar.
+ *
+ * @internal
+ */
+export const makeRadioGroupKeyboardNavigation = makeKeyboardNavigation({
+    onFocusPrevious: [{ code: ["ArrowLeft", "ArrowUp"] }],
+    onFocusNext: [{ code: ["ArrowRight", "ArrowDown"] }],
+});

@@ -16,7 +16,7 @@ const GRANTEES: IUiObjectShareDialogGrantee[] = [
 ];
 
 const baseProps = {
-    objectTitle: "Customer",
+    title: "Share attribute",
     onClose: () => {},
     grantees: GRANTEES,
     onAddClick: () => {},

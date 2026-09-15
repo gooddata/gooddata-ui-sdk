@@ -269,7 +269,7 @@ export function Dropdown({
         return () => {
             mountRef.current = true;
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [isOpen]);
     const renderButtonProps = useMemo<Omit<IDropdownButtonRenderProps, "isMobile" | "buttonRef">>(() => {
         const role = accessibilityConfig?.triggerRole ?? "button";

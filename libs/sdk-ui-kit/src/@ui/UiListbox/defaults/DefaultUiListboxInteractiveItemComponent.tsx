@@ -2,11 +2,14 @@
 
 import { type ReactNode } from "react";
 
-import { ShortenedText } from "../../../ShortenedText/ShortenedText.js";
+import { useIsTextTruncated } from "../../hooks/useIsTextTruncated.js";
 import { UiIcon } from "../../UiIcon/UiIcon.js";
 import { UiTooltip } from "../../UiTooltip/UiTooltip.js";
 import { e } from "../listboxBem.js";
 import { type IUiListboxInteractiveItemProps } from "../types.js";
+
+// The tooltip anchor wrapper defaults to fit-content; the title must be allowed to shrink and clip.
+const TITLE_ANCHOR_STYLE = { display: "block", minWidth: 0, flex: "1 1 0%" } as const;
 
 /**
  * @internal
@@ -18,6 +21,13 @@ export function DefaultUiListboxInteractiveItemComponent<T>({
     isCompact,
     onSelect,
 }: IUiListboxInteractiveItemProps<T>): ReactNode {
+    const title = useIsTextTruncated(item.stringTitle);
+    const titleElement = (
+        <span ref={title.ref} className={e("item-title")}>
+            {item.stringTitle}
+        </span>
+    );
+
     return (
         <div
             className={e("item", {
@@ -29,9 +39,21 @@ export function DefaultUiListboxInteractiveItemComponent<T>({
             onClick={item.isDisabled ? undefined : onSelect}
         >
             {item.icon ? <UiIcon type={item.icon} size={14} color="complementary-7" /> : null}
-            <ShortenedText className={e("item-title")} ellipsisPosition={"end"}>
-                {item.stringTitle}
-            </ShortenedText>
+            {title.isTruncated ? (
+                <UiTooltip
+                    anchor={titleElement}
+                    content={item.stringTitle}
+                    triggerBy={["hover"]}
+                    accessibilityHidden
+                    arrowPlacement="left"
+                    optimalPlacement
+                    offset={10}
+                    component="span"
+                    anchorWrapperStyles={TITLE_ANCHOR_STYLE}
+                />
+            ) : (
+                titleElement
+            )}
             {item.tooltip ? (
                 <>
                     <UiTooltip

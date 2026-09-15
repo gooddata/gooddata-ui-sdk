@@ -122,7 +122,7 @@ export function HeightResizerHotspot({ section, items, getLayoutDimensions }: He
         if (isDragging) {
             resizeStart("height", widgetIdentifiers, isItemNested);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps -- we want to run this only when isDragging changes
+        // oxlint-disable-next-line react-hooks/exhaustive-deps -- we want to run this only when isDragging changes
     }, [isDragging]);
 
     const areWidgetsResizing = resizeDirection !== "none";

@@ -63,15 +63,15 @@ export const olpGranteeAvatarMessages = defineMessages({
 });
 
 export const olpObjectShareDialogMessages = defineMessages({
-    title: { id: "shareDialog.olp.objectShareDialog.title" },
     sharedWith: { id: "shareDialog.olp.objectShareDialog.sharedWith" },
     add: { id: "shareDialog.olp.objectShareDialog.add" },
     generalAccess: { id: "shareDialog.olp.objectShareDialog.generalAccess" },
 });
 
 export const olpAddGranteeDialogMessages = defineMessages({
+    title: { id: "shareDialog.olp.addGranteeDialog.title" },
     back: { id: "shareDialog.olp.addGranteeDialog.back" },
-    userOrGroup: { id: "shareDialog.olp.addGranteeDialog.userOrGroup" },
+    remove: { id: "shareDialog.olp.addGranteeDialog.remove" },
     searchPlaceholder: { id: "shareDialog.olp.addGranteeDialog.searchPlaceholder" },
     emptyState: { id: "shareDialog.olp.addGranteeDialog.emptyState" },
     add: { id: "shareDialog.olp.addGranteeDialog.add" },
@@ -102,13 +102,9 @@ export const olpPermissionMessages = defineMessages({
     canViewAndShare: { id: "shareDialog.share.granular.grantee.permission.share" },
     canView: { id: "shareDialog.share.granular.grantee.permission.view" },
     canEditAndShare: { id: "shareDialog.olp.permission.edit" },
-    canEditAndShareTooltip: { id: "shareDialog.olp.permission.tooltip.edit" },
-    canViewAndShareTooltip: { id: "shareDialog.olp.permission.tooltip.share" },
-    canViewTooltip: { id: "shareDialog.olp.permission.tooltip.view" },
     labels: { id: "shareDialog.olp.permission.labels" },
     removeAccess: { id: "shareDialog.olp.permission.removeAccess" },
     menuLabel: { id: "shareDialog.olp.permission.menuLabel" },
-    moreInfoAriaLabel: { id: "shareDialog.olp.permission.moreInfoAriaLabel" },
     effectivePermissionTooltipView: { id: "shareDialog.olp.permission.effective.tooltip.view" },
     effectivePermissionTooltipShare: { id: "shareDialog.olp.permission.effective.tooltip.share" },
     effectivePermissionTooltipEdit: { id: "shareDialog.olp.permission.effective.tooltip.edit" },

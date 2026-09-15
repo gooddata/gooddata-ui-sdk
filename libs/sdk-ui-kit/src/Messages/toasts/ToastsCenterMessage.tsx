@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type MouseEvent, useState } from "react";
 
@@ -103,6 +103,7 @@ export function MessageElement({ message, type }: MessageElementProps) {
     }
 
     return (
+        // oxlint-disable-next-line react/no-danger
         <Component className="s-message-text-header-value" dangerouslySetInnerHTML={{ __html: text || "" }} />
     );
 }

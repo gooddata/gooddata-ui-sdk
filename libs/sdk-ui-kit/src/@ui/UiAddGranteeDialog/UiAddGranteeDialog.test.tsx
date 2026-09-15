@@ -11,7 +11,6 @@ import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
 import { UiAddGranteeDialog } from "./UiAddGranteeDialog.js";
 
 const baseProps = {
-    objectTitle: "Customer",
     loadOptions: () => Promise.resolve({ groups: [], users: [] }),
     selectedGrantees: [] as const,
     onSelectedGranteesChange: () => {},

@@ -20,7 +20,7 @@ export const tigerBackend = (config?: IAnalyticalBackendConfig, implConfig?: any
 /**
  * @deprecated This will be removed in the next major release, please use the named export "tigerFactory" instead
  */
-// oxlint-disable-next-line eslint-js/no-restricted-exports
+// oxlint-disable-next-line eslint/no-restricted-exports
 export default tigerBackend;
 
 // Re-export Tiger backend, so it can be imported by user as a separate entry point

@@ -8,6 +8,7 @@ import type { ISemanticConditionalFormatting, ISeparators, MetricType } from "@g
 import { type IUiTagDef, UiDate, UiIcon, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import {
+    getVisualizationType,
     isCatalogItemAttribute,
     isCatalogItemDataSet,
     isCatalogItemFact,
@@ -15,6 +16,7 @@ import {
     isCatalogItemMeasure,
 } from "../catalogItem/guards.js";
 import { type ICatalogItem } from "../catalogItem/types.js";
+import { getObjectTypeLabel } from "../objectType/labels.js";
 import { useFeatureFlag } from "../permission/PermissionsContext.js";
 
 import { CatalogDetailConditionalFormatting } from "./CatalogDetailConditionalFormatting.js";
@@ -78,6 +80,10 @@ export function CatalogDetailTabMetadata({
 
     return (
         <dl className="gd-analytics-catalog-detail__tab-content">
+            <CatalogDetailContentRow
+                title={<FormattedMessage id="analyticsCatalog.column.title.type" />}
+                content={getObjectTypeLabel(intl, item.type, getVisualizationType(item))}
+            />
             {showDatasetRow && datasetTitle ? (
                 <CatalogDetailContentRow
                     title={<FormattedMessage id="analyticsCatalog.column.title.dataSet" />}

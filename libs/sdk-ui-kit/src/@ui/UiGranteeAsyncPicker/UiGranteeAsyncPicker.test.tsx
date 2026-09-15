@@ -41,6 +41,25 @@ describe("UiGranteeAsyncPicker", () => {
         expect(screen.getByRole("combobox")).toBeInTheDocument();
     });
 
+    it("names the search input by the given aria label, defaulting to the dialog title", () => {
+        const { unmount } = renderWithIntl(
+            <UiGranteeAsyncPicker
+                loadOptions={() => Promise.resolve({ groups: [], users: [] })}
+                onSelect={() => {}}
+                accessibilityConfig={{ ariaLabel: "Pick people" }}
+            />,
+        );
+        expect(screen.getByRole("combobox", { name: "Pick people" })).toBeInTheDocument();
+        unmount();
+        renderWithIntl(
+            <UiGranteeAsyncPicker
+                loadOptions={() => Promise.resolve({ groups: [], users: [] })}
+                onSelect={() => {}}
+            />,
+        );
+        expect(screen.getByRole("combobox", { name: "Add users or groups" })).toBeInTheDocument();
+    });
+
     it("renders the sectioned dropdown on click", async () => {
         renderWithIntl(
             <UiGranteeAsyncPicker loadOptions={() => Promise.resolve(SAMPLE)} onSelect={() => {}} />,

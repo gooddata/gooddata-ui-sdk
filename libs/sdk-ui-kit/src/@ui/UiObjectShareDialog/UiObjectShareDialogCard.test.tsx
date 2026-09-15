@@ -24,7 +24,7 @@ const renderWithIntl = (ui: ReactNode) =>
     );
 
 const baseProps = {
-    objectTitle: "Customer",
+    title: "Share attribute",
     onClose: () => {},
     grantees: GRANTEES,
     onAddClick: () => {},
@@ -33,9 +33,9 @@ const baseProps = {
 };
 
 describe("UiObjectShareDialogCard", () => {
-    it("renders the dialog title with the object name interpolated", () => {
+    it("renders the caller's heading, which names the object's type", () => {
         renderWithIntl(<UiObjectShareDialogCard {...baseProps} />);
-        expect(screen.getByRole("heading", { name: 'Share "Customer"' })).toBeInTheDocument();
+        expect(screen.getByRole("heading", { name: "Share attribute" })).toBeInTheDocument();
     });
 
     it("renders the grantees in order", () => {
@@ -93,6 +93,35 @@ describe("UiObjectShareDialogCard", () => {
         expect(onGeneralAccessChange).toHaveBeenCalledWith("WORKSPACE");
     });
 
+    it("renders the note below the header when provided", () => {
+        renderWithIntl(<UiObjectShareDialogCard {...baseProps} note="Administrators see everything." />);
+        expect(screen.getByRole("note")).toHaveTextContent("Administrators see everything.");
+    });
+
+    it("renders no note element when none is provided", () => {
+        renderWithIntl(<UiObjectShareDialogCard {...baseProps} />);
+        expect(screen.queryByRole("note")).not.toBeInTheDocument();
+    });
+
+    it("shows the empty placeholder instead of rows when there are no grantees", () => {
+        renderWithIntl(<UiObjectShareDialogCard {...baseProps} grantees={[]} emptyMessage="Nobody yet." />);
+        expect(screen.getByText("Nobody yet.")).toBeInTheDocument();
+    });
+
+    it("hides the empty placeholder while loading and when grantees exist", () => {
+        const { rerender } = renderWithIntl(
+            <UiObjectShareDialogCard {...baseProps} grantees={[]} isLoading emptyMessage="Nobody yet." />,
+        );
+        expect(screen.queryByText("Nobody yet.")).not.toBeInTheDocument();
+        rerender(
+            <IntlProvider locale={DEFAULT_LANGUAGE} messages={DEFAULT_MESSAGES[DEFAULT_LANGUAGE]}>
+                <UiObjectShareDialogCard {...baseProps} emptyMessage="Nobody yet." />
+            </IntlProvider>,
+        );
+        expect(screen.queryByText("Nobody yet.")).not.toBeInTheDocument();
+        expect(screen.getByText("Marek Stránský")).toBeInTheDocument();
+    });
+
     it("forwards dataTestId to the root element", () => {
         renderWithIntl(<UiObjectShareDialogCard {...baseProps} dataTestId="share-dialog" />);
         expect(screen.getByTestId("share-dialog")).toBeInTheDocument();
@@ -106,7 +135,7 @@ describe("UiObjectShareDialogCard", () => {
         expect(screen.queryByText("Marek Stránský")).not.toBeInTheDocument();
         expect(screen.queryByRole("radio", { name: /All workspace members/ })).not.toBeInTheDocument();
         // The header title and footer Close still render so the user can dismiss.
-        expect(screen.getByRole("heading", { name: 'Share "Customer"' })).toBeInTheDocument();
+        expect(screen.getByRole("heading", { name: "Share attribute" })).toBeInTheDocument();
         expect(screen.getAllByRole("button", { name: "Close" }).length).toBeGreaterThan(0);
     });
 });

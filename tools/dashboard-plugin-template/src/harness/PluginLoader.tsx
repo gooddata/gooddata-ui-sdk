@@ -48,7 +48,7 @@ export function PluginLoader() {
             setIsHideOverlaysEnabled(false);
             hidePluginOverlays();
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [isPluginEnabled, setExtraPlugins]);
 
     const { status, error, result } = loaderStatus as Omit<DashboardLoadStatus, "error"> & { error?: Error };
@@ -67,7 +67,7 @@ export function PluginLoader() {
         }
 
         return CustomToolbar;
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [isPluginEnabled, reloadPlugins, togglePlugin]);
 
     if (status === "loading") {

@@ -27,6 +27,8 @@
     .gd-dialog-footer {
         display: flex;
         align-items: center;
+        // A lone Close button stays at the trailing edge when there is no footer-left block.
+        justify-content: flex-end;
         margin-top: 0;
         padding: 20px;
         border-top: 1px solid var(--gd-palette-complementary-3);

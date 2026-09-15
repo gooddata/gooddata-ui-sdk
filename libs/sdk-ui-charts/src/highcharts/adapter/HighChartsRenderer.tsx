@@ -351,7 +351,7 @@ export const HighChartsRenderer = memo(function HighChartsRenderer({
             throttledOnWindowResize.cancel();
             window.removeEventListener("resize", throttledOnWindowResize);
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // UNSAFE_componentWillReceiveProps equivalent - handle legend items changes

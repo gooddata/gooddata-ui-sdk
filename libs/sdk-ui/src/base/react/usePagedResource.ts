@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type DependencyList, useEffect, useState } from "react";
 
@@ -68,12 +68,12 @@ export function usePagedResource<TParams, TItem>(
         return () => {
             reset();
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, resetDeps);
 
     useEffect(() => {
         results.forEach(mergeResult);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [results]);
 
     const { items, totalItemsCount } = state;

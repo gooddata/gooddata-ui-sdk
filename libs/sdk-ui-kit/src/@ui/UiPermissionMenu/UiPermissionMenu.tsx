@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type KeyboardEvent, type ReactElement, useCallback, useRef, useState } from "react";
+import { type KeyboardEvent, type ReactElement, useCallback, useId, useRef, useState } from "react";
 
 import { type MessageDescriptor, useIntl } from "react-intl";
 
@@ -8,7 +8,6 @@ import { olpPermissionMessages } from "../../locales.js";
 import { type IconType } from "../@types/icon.js";
 import { bem } from "../@utils/bem.js";
 import { UiIcon } from "../UiIcon/UiIcon.js";
-import { UiIconButton } from "../UiIconButton/UiIconButton.js";
 import { type IUiLabelsChecklistItem, UiLabelsChecklist } from "../UiLabelsChecklist/UiLabelsChecklist.js";
 import { UiPopover } from "../UiPopover/UiPopover.js";
 import { UiTooltip } from "../UiTooltip/UiTooltip.js";
@@ -55,7 +54,7 @@ export interface IUiPermissionMenuProps {
      * the signed-in user may not pick because they exceed their own.
      */
     disabledLevels?: ReadonlyArray<PermissionMenuLevel>;
-    /** Tooltip shown on disabled level rows in place of the level's info text. */
+    /** Tooltip shown on disabled level rows, explaining why the level can't be picked. */
     disabledTooltip?: string;
     /**
      * Per-level override of `disabledTooltip`, for menus whose disabled levels have
@@ -81,6 +80,11 @@ export interface IUiPermissionMenuProps {
     isRemoveDisabled?: boolean;
     /** Tooltip shown on Remove access while it is disabled. */
     removeDisabledTooltip?: string;
+    /**
+     * Label of the remove row. Defaults to "Remove access"; a picker staging a grantee
+     * that holds no access yet passes the shorter "Remove".
+     */
+    removeAccessLabel?: string;
     /** Test id forwarded to the menu body. */
     dataTestId?: string;
 }
@@ -88,9 +92,8 @@ export interface IUiPermissionMenuProps {
 interface IPermissionItem {
     key: string;
     label: string;
+    /** Explanation of a disabled row, shown as a tooltip over the whole row. */
     tooltip?: string;
-    /** Leading icon (action rows only, e.g. the trash icon on Remove access). */
-    icon?: IconType;
     /** Trailing icon (the labels row's drill-in chevron). */
     iconRight?: IconType;
     /**
@@ -109,8 +112,8 @@ interface IPermissionItem {
  * Per-grantee permission popover. Renders a fixed set of rows — three
  * permission levels (Can edit & share / Can view & share / Can view), an
  * optional divider, an optional labels drill-in and an optional Remove access
- * action row. Each level row carries an `infoCircle` tooltip; disabled level
- * rows (`disabledLevels`) swap it for `disabledTooltip`.
+ * action row. Enabled rows carry no tooltip; a disabled row (`disabledLevels`,
+ * `isRemoveDisabled`) shows its explanation as a tooltip over the whole row.
  *
  * @internal
  */
@@ -127,6 +130,7 @@ export function UiPermissionMenu({
     onRemoveAccess,
     isRemoveDisabled,
     removeDisabledTooltip,
+    removeAccessLabel,
     dataTestId,
 }: IUiPermissionMenuProps) {
     const hasLabels = (labels?.length ?? 0) > 0;
@@ -148,6 +152,7 @@ export function UiPermissionMenu({
                     onRemoveAccess={onRemoveAccess}
                     isRemoveDisabled={isRemoveDisabled}
                     removeDisabledTooltip={removeDisabledTooltip}
+                    removeAccessLabel={removeAccessLabel}
                     onClose={onClose}
                     dataTestId={dataTestId}
                 />
@@ -168,6 +173,7 @@ interface IMenuBodyProps {
     onRemoveAccess?: () => void;
     isRemoveDisabled?: boolean;
     removeDisabledTooltip?: string;
+    removeAccessLabel?: string;
     onClose: () => void;
     dataTestId?: string;
 }
@@ -184,6 +190,7 @@ function MenuBody({
     onRemoveAccess,
     isRemoveDisabled,
     removeDisabledTooltip,
+    removeAccessLabel,
     onClose,
     dataTestId,
 }: IMenuBodyProps) {
@@ -205,14 +212,13 @@ function MenuBody({
 
     const hasLabels = (labels?.length ?? 0) > 0;
 
-    const levelItem = (level: PermissionMenuLevel, label: string, tooltip: string): IPermissionItem => {
+    const levelItem = (level: PermissionMenuLevel, label: string): IPermissionItem => {
         const disabled = disabledLevels?.includes(level) ?? false;
         return {
             key: level,
             label,
-            // A disabled level explains why it can't be picked instead of what it does.
-            // `||`, not `??`: an empty explanation must not suppress the info button.
-            tooltip: disabled ? (disabledLevelTooltips?.[level] ?? disabledTooltip) || tooltip : tooltip,
+            // Only a disabled level explains itself — why it can't be picked.
+            tooltip: disabled ? (disabledLevelTooltips?.[level] ?? disabledTooltip) : undefined,
             radioValue: level,
             disabled,
             onClick: disabled ? () => {} : choose(() => onPermissionChange(level)),
@@ -220,21 +226,9 @@ function MenuBody({
     };
 
     const levelItems: IPermissionItem[] = [
-        levelItem(
-            "EDIT",
-            intl.formatMessage(olpPermissionMessages.canEditAndShare),
-            intl.formatMessage(olpPermissionMessages.canEditAndShareTooltip),
-        ),
-        levelItem(
-            "SHARE",
-            intl.formatMessage(olpPermissionMessages.canViewAndShare),
-            intl.formatMessage(olpPermissionMessages.canViewAndShareTooltip),
-        ),
-        levelItem(
-            "VIEW",
-            intl.formatMessage(olpPermissionMessages.canView),
-            intl.formatMessage(olpPermissionMessages.canViewTooltip),
-        ),
+        levelItem("EDIT", intl.formatMessage(olpPermissionMessages.canEditAndShare)),
+        levelItem("SHARE", intl.formatMessage(olpPermissionMessages.canViewAndShare)),
+        levelItem("VIEW", intl.formatMessage(olpPermissionMessages.canView)),
     ];
 
     const actionItems: IPermissionItem[] = [];
@@ -242,7 +236,6 @@ function MenuBody({
         actionItems.push({
             key: "labels",
             label: intl.formatMessage(olpPermissionMessages.labels),
-            icon: "ldmLabel",
             iconRight: "navigateRight",
             // Drill in — the checklist owns Back/Cancel/Apply and closes the menu itself.
             onClick: () => setView({ view: "labels", origin: "nav" }),
@@ -253,8 +246,7 @@ function MenuBody({
         // row can explain why instead of the action silently going missing.
         actionItems.push({
             key: "remove",
-            label: intl.formatMessage(olpPermissionMessages.removeAccess),
-            icon: "trash",
+            label: removeAccessLabel ?? intl.formatMessage(olpPermissionMessages.removeAccess),
             tooltip: isRemoveDisabled ? removeDisabledTooltip : undefined,
             disabled: isRemoveDisabled,
             onClick: isRemoveDisabled ? () => {} : choose(onRemoveAccess),
@@ -344,12 +336,6 @@ interface IPermissionMenuItemProps {
 }
 
 function PermissionMenuItem({ item, selectedLevel, autoFocus }: IPermissionMenuItemProps) {
-    const intl = useIntl();
-    // Tooltip anchor must live OUTSIDE the menu-item button so we don't nest an
-    // interactive element inside a button (invalid HTML, breaks focus). The row
-    // wrapper provides the flex layout; the button covers the label; the
-    // tooltip sits next to the button.
-    //
     // When this row opens as the drill-in return target, focus it as it mounts via
     // a callback ref — no effect, and it can't race the button's mount.
     const focusOnAttach = useCallback(
@@ -362,41 +348,47 @@ function PermissionMenuItem({ item, selectedLevel, autoFocus }: IPermissionMenuI
     );
     const isRadio = !!item.radioValue;
     const isChecked = isRadio && item.radioValue === selectedLevel;
+    // The visual tooltip exists only while open, so the explanation is also kept as a
+    // persistent hidden description the button points at for assistive tech.
+    const descriptionId = useId();
+    const button = (
+        <button
+            type="button"
+            ref={focusOnAttach}
+            role={isRadio ? "menuitemradio" : "menuitem"}
+            aria-checked={isRadio ? isChecked : undefined}
+            // Disabled rows stay focusable so their explanatory tooltip is
+            // keyboard-reachable — aria-disabled, not the disabled attribute.
+            aria-disabled={item.disabled ? true : undefined}
+            aria-describedby={item.tooltip ? descriptionId : undefined}
+            className={e("item", { disabled: Boolean(item.disabled) })}
+            onClick={item.onClick}
+        >
+            <span className={e("item-label")}>{item.label}</span>
+            {item.iconRight ? <UiIcon type={item.iconRight} size={14} color="complementary-7" /> : null}
+        </button>
+    );
     return (
         <div className={e("item-row")}>
-            <button
-                type="button"
-                ref={focusOnAttach}
-                role={isRadio ? "menuitemradio" : "menuitem"}
-                aria-checked={isRadio ? isChecked : undefined}
-                // Disabled rows stay focusable so their explanatory tooltip is
-                // keyboard-reachable — aria-disabled, not the disabled attribute.
-                aria-disabled={item.disabled ? true : undefined}
-                className={e("item", { disabled: Boolean(item.disabled) })}
-                onClick={item.onClick}
-            >
-                {item.icon ? <UiIcon type={item.icon} size={16} color="complementary-7" /> : null}
-                <span className={e("item-label")}>{item.label}</span>
-                {item.iconRight ? <UiIcon type={item.iconRight} size={14} color="complementary-7" /> : null}
-            </button>
             {item.tooltip ? (
-                <UiTooltip
-                    triggerBy={["hover", "focus"]}
-                    content={item.tooltip}
-                    anchor={
-                        <UiIconButton
-                            icon="infoCircle"
-                            variant="tertiary"
-                            size="small"
-                            accessibilityConfig={{
-                                ariaLabel: intl.formatMessage(olpPermissionMessages.moreInfoAriaLabel, {
-                                    label: item.label,
-                                }),
-                            }}
-                        />
-                    }
-                />
-            ) : null}
+                // The whole row is the tooltip anchor: hovering or focusing a disabled row
+                // explains why it can't be picked. The wrapper keeps the row's flex layout.
+                <>
+                    <UiTooltip
+                        triggerBy={["hover", "focus"]}
+                        content={<div className={e("item-tooltip")}>{item.tooltip}</div>}
+                        anchorWrapperStyles={ROW_ANCHOR_STYLES}
+                        anchor={button}
+                    />
+                    <span className="sr-only" id={descriptionId}>
+                        {item.tooltip}
+                    </span>
+                </>
+            ) : (
+                button
+            )}
         </div>
     );
 }
+
+const ROW_ANCHOR_STYLES = { display: "flex", flex: "1 1 auto", minWidth: 0 } as const;

@@ -8,6 +8,7 @@ import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { UiButton } from "@gooddata/sdk-ui-kit";
 
 import { AsCodeDetailActions } from "../asCode/AsCodeDetailActions.js";
+import { AsCodeDetailViewActions } from "../asCode/AsCodeDetailViewActions.js";
 import { getAsCodeDescriptor, useIsAsCodeTypeEditable } from "../asCodeRegistry.js";
 import type { ICatalogItem, ICatalogItemRef } from "../catalogItem/types.js";
 
@@ -49,6 +50,9 @@ export function CatalogDetailActions({
     const share = useCatalogItemShareActions();
     const descriptor = getAsCodeDescriptor(item.type);
     const isTypeEditable = useIsAsCodeTypeEditable(descriptor);
+    // A metric opens in its own editor; a parameter or a computed attribute has none, so the
+    // catalog shows their definition itself.
+    const hasOwnEditor = descriptor?.openAction !== undefined;
 
     if (descriptor && canEdit && isTypeEditable) {
         return (
@@ -59,8 +63,7 @@ export function CatalogDetailActions({
                 descriptor={descriptor}
                 item={item}
                 onOpen={onOpen}
-                canShare={share.active}
-                onShare={share.open}
+                onShare={share.active ? share.open : undefined}
                 onCatalogItemCreate={onCatalogItemCreate}
                 onCatalogItemUpdate={onCatalogItemUpdate}
                 onCatalogItemDelete={onCatalogItemDelete}
@@ -68,10 +71,18 @@ export function CatalogDetailActions({
         );
     }
 
-    // Not inline-editable here. The Open button opens the item in its native editor/view, offered only
-    // for a type that has one: any non-as-code type, or an as-code type that declares an open action
-    // (a metric, not a parameter).
-    const canOpen = !descriptor || descriptor.openAction !== undefined;
+    if (descriptor && isTypeEditable && !hasOwnEditor) {
+        return (
+            <AsCodeDetailViewActions
+                key={descriptor.objectType}
+                descriptor={descriptor}
+                item={item}
+                onShare={share.active ? share.open : undefined}
+            />
+        );
+    }
+
+    const canOpen = !descriptor || hasOwnEditor;
     if (!canOpen) {
         return null;
     }

@@ -20,6 +20,10 @@ const twoMeasures = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withVisualTestConfig({
         groupUnder: "dual axis two measures with slicing",
         viewports: [{ label: "desktop", width: 1464, height: 768 }],
+        // Column data labels are recoloured by a plugin on a fixed 500ms timer after render, which
+        // is longer than the default wait before the shot; the smallest of the three charts on the
+        // story routinely lost the race and was captured with its labels still black.
+        delay: { postOperation: 1000 },
     })
     .addScenarios("dual axis two measures with slicing", ComboChartWithTwoMeasuresAndViewBy, comboVariants);
 
@@ -29,6 +33,10 @@ const twoMeasuresNoSlicing = scenariosFor<IComboChartProps>("ComboChart", ComboC
     .withVisualTestConfig({
         groupUnder: "dual axis two measures without slicing",
         viewports: [{ label: "desktop", width: 1464, height: 768 }],
+        // Column data labels are recoloured by a plugin on a fixed 500ms timer after render, which
+        // is longer than the default wait before the shot; the smallest of the three charts on the
+        // story routinely lost the race and was captured with its labels still black.
+        delay: { postOperation: 1000 },
     })
     .addScenarios(
         "dual axis two measures without slicing",
@@ -42,6 +50,10 @@ const multipleMeasures = scenariosFor<IComboChartProps>("ComboChart", ComboChart
     .withVisualTestConfig({
         groupUnder: "dual axis multiple measures with slicing",
         viewports: [{ label: "desktop", width: 1464, height: 768 }],
+        // Column data labels are recoloured by a plugin on a fixed 500ms timer after render, which
+        // is longer than the default wait before the shot; the smallest of the three charts on the
+        // story routinely lost the race and was captured with its labels still black.
+        delay: { postOperation: 1000 },
     })
     .addScenarios(
         "dual axis multiple measures with slicing",
@@ -55,6 +67,10 @@ const multipleMeasuresNoSlicing = scenariosFor<IComboChartProps>("ComboChart", C
     .withVisualTestConfig({
         groupUnder: "dual axis multiple measures without slicing",
         viewports: [{ label: "desktop", width: 1464, height: 768 }],
+        // Column data labels are recoloured by a plugin on a fixed 500ms timer after render, which
+        // is longer than the default wait before the shot; the smallest of the three charts on the
+        // story routinely lost the race and was captured with its labels still black.
+        delay: { postOperation: 1000 },
     })
     .addScenarios(
         "dual axis multiple measures without slicing",

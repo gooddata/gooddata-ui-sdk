@@ -1,0 +1,12 @@
+// (C) 2026 GoodData Corporation
+
+@use "../UiToolbar/toolbarItem";
+
+.gd-ui-kit-toolbar-icon-select {
+    $root: &;
+
+    @include toolbarItem.toolbar-item-base;
+    @include toolbarItem.toolbar-item-ladder($root);
+
+    flex-shrink: 0;
+}

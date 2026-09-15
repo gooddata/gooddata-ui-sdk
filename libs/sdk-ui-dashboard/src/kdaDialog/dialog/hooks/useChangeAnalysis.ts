@@ -40,7 +40,7 @@ export function useChangeAnalysis() {
 
     const attributes = useMemo(() => {
         return state.selectedAttributes;
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [state.selectedUpdated]);
 
     const filters = useRelevantFilters();

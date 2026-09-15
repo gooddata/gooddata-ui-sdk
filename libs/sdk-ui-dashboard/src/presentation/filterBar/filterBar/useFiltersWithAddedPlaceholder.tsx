@@ -297,7 +297,7 @@ export function useFiltersWithAddedPlaceholder(
         filterObjects.splice(addedAttributeFilter.filterIndex, 0, addedAttributeFilter);
 
         return filterObjects;
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [addedAttributeFilter, draggableFilters, selectedDisplayForm]);
 
     // selects AF, DF with dimension, or MVF

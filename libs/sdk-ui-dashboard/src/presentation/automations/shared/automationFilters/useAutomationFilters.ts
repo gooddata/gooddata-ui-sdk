@@ -259,7 +259,7 @@ export const useAutomationFilters = ({
             const updatedFilters = applyFilterChange(selectedFilters, filter);
             onFiltersChange(updatedFilters);
         },
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
         [onFiltersChange, selectedFilters, allAttributes, allDateDatasets, intl],
     );
 
@@ -277,7 +277,7 @@ export const useAutomationFilters = ({
 
             focusFilterGroup();
         },
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
         [onFiltersChange, focusFilterGroup, selectedFilters, allAttributes, allDateDatasets, intl],
     );
 
@@ -299,7 +299,7 @@ export const useAutomationFilters = ({
                 setTimeout(focusAddFilterButton);
             }
         },
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
         [
             nonSelectedFilters,
             onFiltersChange,

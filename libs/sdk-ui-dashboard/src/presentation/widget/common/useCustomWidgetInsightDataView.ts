@@ -173,7 +173,7 @@ export function useCustomWidgetInsightDataView({
             effectiveInsightTask.result
                 ? insightSetFilters(effectiveInsightTask.result, filterQueryTask.result)
                 : undefined,
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
         [
             effectiveInsightTask.result,
             /**
@@ -181,7 +181,7 @@ export function useCustomWidgetInsightDataView({
              * and expensive re-renders down the line. The stringification is worth it as the filters are usually
              * pretty small thus saving more time than it is taking.
              */
-            // eslint-disable-next-line react-hooks/exhaustive-deps
+            // oxlint-disable-next-line react-hooks/exhaustive-deps
             stringify(filterQueryTask.result),
         ],
     );
@@ -190,7 +190,7 @@ export function useCustomWidgetInsightDataView({
         return insightWithAddedFilters
             ? backend.workspace(workspace).execution().forInsight(insightWithAddedFilters)
             : undefined;
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [backend, workspace, insightWithAddedFilters, widget]);
 
     const dataViewTask = useExecutionDataView({

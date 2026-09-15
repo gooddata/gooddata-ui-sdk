@@ -205,7 +205,7 @@ export function AttributesDropdown({
         [insightWidgets, insightsMap],
     );
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
     const onSearch = useCallback(
         debounce((query: string) => {
             setSearchQuery(query);

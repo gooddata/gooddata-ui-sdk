@@ -94,7 +94,7 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
                 void plugin.onPluginUnload?.(ctx);
             });
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const dashboardLoader = useMemo(() => {
@@ -131,11 +131,11 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
         );
 
         return loader;
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [
         backend,
         workspace,
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
         dashboard && stringify(dashboard),
         filterContextRef,
         config,

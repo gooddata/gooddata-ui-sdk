@@ -149,13 +149,13 @@ export function useDateFilterConfigurationHandling(
                 : (relatedDateDatasets?.at(0)?.dataSet.ref ?? null);
             enable(ref, preselectedRef ?? "default");
         },
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
         [
-            // eslint-disable-next-line react-hooks/exhaustive-deps
+            // oxlint-disable-next-line react-hooks/exhaustive-deps
             isInsightWidget(widget),
-            // eslint-disable-next-line react-hooks/exhaustive-deps
+            // oxlint-disable-next-line react-hooks/exhaustive-deps
             isRichTextWidget(widget),
-            // eslint-disable-next-line react-hooks/exhaustive-deps
+            // oxlint-disable-next-line react-hooks/exhaustive-deps
             safeSerializeObjRef(ref),
             enableInsightDateFilter,
             disableInsightDateFilter,
@@ -258,7 +258,7 @@ export function useDateFilterConfigurationHandling(
                 enableKpiDateFilter(ref, idRef(id, "dataSet"));
             }
         },
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
         [isInsightWidget(widget), isRichTextWidget(widget), safeSerializeObjRef(ref)],
     );
 

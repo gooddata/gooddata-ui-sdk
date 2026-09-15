@@ -49,13 +49,26 @@ export interface IUiObjectShareDialogGrantee {
  * @internal
  */
 export interface IUiObjectShareDialogCardProps {
-    /** Object title shown in the header — wrapped into `Share "\{title\}"`. */
-    objectTitle: string;
+    /**
+     * Dialog heading, composed by the caller — it names the shared object's type
+     * ("Share attribute"), which only the caller knows.
+     */
+    title: string;
     /** Fires when the user clicks the header X button OR the footer Close button. */
     onClose: () => void;
+    /**
+     * Optional informational note rendered right below the header — e.g. a reminder
+     * that administrators have full access regardless of the grants listed.
+     */
+    note?: ReactNode;
 
     /** Grantee rows shown inside the SHARED WITH section, in render order. */
     grantees: IUiObjectShareDialogGrantee[];
+    /**
+     * Placeholder shown inside the SHARED WITH section when `grantees` is empty and the
+     * list is not loading — tells the user nobody has been granted access yet.
+     */
+    emptyMessage?: ReactNode;
     /**
      * When true, skeleton rows stand in for the grantee list and the
      * general-access radio — set it while the access list is loading, so the
@@ -112,9 +125,11 @@ export interface IUiObjectShareDialogCardProps {
  * @internal
  */
 export function UiObjectShareDialogCard({
-    objectTitle,
+    title,
     onClose,
+    note,
     grantees,
+    emptyMessage,
     isLoading,
     onAddClick,
     isAddDisabled,
@@ -128,10 +143,15 @@ export function UiObjectShareDialogCard({
     dataTestId,
 }: IUiObjectShareDialogCardProps) {
     const intl = useIntl();
-    const dialogTitle = intl.formatMessage(olpObjectShareDialogMessages.title, { title: objectTitle });
     return (
         <div className={b()} data-testid={dataTestId}>
-            <UiDialogHeader title={dialogTitle} onClose={onClose} />
+            <UiDialogHeader title={title} onClose={onClose} />
+
+            {note ? (
+                <div className={e("note")} role="note">
+                    {note}
+                </div>
+            ) : null}
 
             {error ? (
                 <div className={e("error")} role="alert">
@@ -155,6 +175,8 @@ export function UiObjectShareDialogCard({
                     <div className={e("grantees")}>
                         {isLoading ? (
                             <UiSkeleton itemsCount={2} itemHeight={40} itemsGap={10} />
+                        ) : grantees.length === 0 && emptyMessage ? (
+                            <div className={e("empty")}>{emptyMessage}</div>
                         ) : (
                             grantees.map((grantee) => (
                                 <UiGranteeRow
