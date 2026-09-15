@@ -110,7 +110,7 @@ export function LegacyList({
         }
         rowVirtualizer.scrollToIndex(Math.min(selectedRowIndex, rowsCount - 1));
         // rowVirtualizer identity is stable; intentionally only react to the selected index changing
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedRowIndex, rowsCount]);
 
     // vertical scroll position is converted to the [first, last] visible item index range,

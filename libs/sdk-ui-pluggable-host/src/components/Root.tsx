@@ -90,7 +90,7 @@ export function Root({ callbacks }: { callbacks?: IRootCallbacks }) {
 function ReadyRoot({ ctx, callbacks }: { ctx: IPlatformContext; callbacks?: IRootCallbacks }) {
     useEffect(() => {
         callbacks?.onReady?.(ctx);
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps -- run once on mount
+    }, []); // oxlint-disable-line react-hooks/exhaustive-deps -- run once on mount
 
     const { pathname, search } = useLocation();
     const routerNavigate = useNavigate();
@@ -104,7 +104,7 @@ function ReadyRoot({ ctx, callbacks }: { ctx: IPlatformContext; callbacks?: IRoo
         } else if (redirect.state === "error") {
             callbacks?.onError?.(redirect.error, "redirect");
         }
-    }, [redirect]); // eslint-disable-line react-hooks/exhaustive-deps -- pathname is intentionally omitted; redirect already encapsulates path evaluation
+    }, [redirect]); // oxlint-disable-line react-hooks/exhaustive-deps -- pathname is intentionally omitted; redirect already encapsulates path evaluation
 
     if (redirect.state === "loading" || redirect.state === "redirect") {
         return <FullScreenLoader />;

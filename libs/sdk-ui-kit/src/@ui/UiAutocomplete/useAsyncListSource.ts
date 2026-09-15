@@ -168,7 +168,7 @@ export function useAsyncListSource<T extends IUiAutocompleteOption>(
     const reset = useCallback(() => {
         setInputValueImmediate("");
         setPagination(null);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return useMemo(

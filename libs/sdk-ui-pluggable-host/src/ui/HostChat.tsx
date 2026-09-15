@@ -190,7 +190,7 @@ export function HostChat({
             chatOpen();
         }
         // `seq` changes on every request, so a repeated identical open/ask/toggle still re-runs this.
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [visibilitySeq, chatAskAiAssistant, chatOpenAiAssistant, chatOpen, chatClose, chatToggle]);
 
     const enablePanel = useGenAiRightPanel(

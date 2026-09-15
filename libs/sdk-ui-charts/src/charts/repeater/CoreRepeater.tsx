@@ -125,7 +125,7 @@ export function CoreRepeaterImpl(props: ICoreRepeaterChartProps) {
                 },
             });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [theme, colorMapping, pushData, result]);
 
     useEffect(() => {

@@ -210,9 +210,17 @@ definition:
                     }),
             ),
         });
-        render(<AsCodeEditDialog descriptor={withParameterPort(port)} item={editItem} onClose={onClose} />, {
-            wrapper: makeWrapper(),
-        });
+        render(
+            <AsCodeEditDialog
+                mode="edit"
+                descriptor={withParameterPort(port)}
+                item={editItem}
+                onClose={onClose}
+            />,
+            {
+                wrapper: makeWrapper(),
+            },
+        );
 
         const editor = (await screen.findByTestId("yaml-editor")) as HTMLTextAreaElement;
         fireEvent.change(editor, {
@@ -236,9 +244,17 @@ definition:
 
     it("rejects an id change on save in edit mode", async () => {
         const port = createTestParameterMutationPort({ update: vi.fn() });
-        render(<AsCodeEditDialog descriptor={withParameterPort(port)} item={editItem} onClose={vi.fn()} />, {
-            wrapper: makeWrapper(),
-        });
+        render(
+            <AsCodeEditDialog
+                mode="edit"
+                descriptor={withParameterPort(port)}
+                item={editItem}
+                onClose={vi.fn()}
+            />,
+            {
+                wrapper: makeWrapper(),
+            },
+        );
 
         const editor = (await screen.findByTestId("yaml-editor")) as HTMLTextAreaElement;
         fireEvent.change(editor, { target: { value: editor.value.replace("id: test", "id: another") } });
@@ -263,9 +279,12 @@ describe("AsCodeEditDialog with a fetching seed", () => {
                 loadError: { id: "analyticsCatalog.metric.load.error" },
             },
         };
-        render(<AsCodeEditDialog descriptor={failingDescriptor} item={editItem} onClose={onClose} />, {
-            wrapper: makeWrapper(),
-        });
+        render(
+            <AsCodeEditDialog mode="edit" descriptor={failingDescriptor} item={editItem} onClose={onClose} />,
+            {
+                wrapper: makeWrapper(),
+            },
+        );
 
         await waitFor(() => expect(onClose).toHaveBeenCalled());
         // The toast renders both a visible message and an aria-live announcement.

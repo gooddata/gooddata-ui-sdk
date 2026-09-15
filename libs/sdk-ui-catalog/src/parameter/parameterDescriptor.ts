@@ -27,6 +27,7 @@ const PARAMETER_DOCS_URL = "https://www.gooddata.ai/docs/cloud/experimental-feat
 const messages = defineMessages({
     createTitle: { id: "analyticsCatalog.parameter.dialog.create.title" },
     editTitle: { id: "analyticsCatalog.parameter.dialog.edit.title" },
+    viewTitle: { id: "analyticsCatalog.parameter.dialog.view.title" },
     duplicate: { id: "analyticsCatalog.parameter.dialog.edit.duplicate" },
     createDefaultTitle: { id: "analyticsCatalog.parameter.create.defaultTitle" },
     createSuccess: { id: "analyticsCatalog.parameter.create.success" },

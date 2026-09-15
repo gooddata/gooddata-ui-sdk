@@ -152,7 +152,7 @@ export function ScrollableSelectMenu<V extends object>({
             scrollToIndex(medianIndex);
         }
         // this must run only once on mount, exactly as componentDidMount did
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // componentDidUpdate: runs after every commit except the initial one

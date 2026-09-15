@@ -4,8 +4,8 @@ import { type KeyboardEvent, type MouseEvent, type ReactNode, useCallback, useSt
 
 import cx from "classnames";
 
-import { ShortenedText } from "../../../../ShortenedText/ShortenedText.js";
 import { useCloseOnEscape } from "../../../hooks/useCloseOnEscape.js";
+import { useIsTextTruncated } from "../../../hooks/useIsTextTruncated.js";
 import { UiTooltip } from "../../../UiTooltip/UiTooltip.js";
 import { typedUiMenuContextStore } from "../../context.js";
 import { e } from "../../menuBem.js";
@@ -15,6 +15,9 @@ import {
     type IUiMenuInteractiveItemWrapperProps,
     type IUiMenuItemData,
 } from "../../types.js";
+
+// The tooltip anchor wrapper defaults to fit-content; the title must be allowed to shrink and clip.
+const TITLE_ANCHOR_STYLE = { display: "block", minWidth: 0, flex: "1 1 0%" } as const;
 
 function hasIconTooltip(item: { tooltip?: ReactNode; iconRight?: ReactNode }): boolean {
     return !!item.tooltip && !!item.iconRight;
@@ -156,6 +159,13 @@ export function DefaultUiMenuInteractiveItem<T extends IUiMenuItemData = object>
     isTooltipOpen,
 }: IUiMenuInteractiveItemProps<T>): ReactNode {
     const useIconTooltip = hasIconTooltip(item);
+    const isRowTooltip = !!item.tooltip && !useIconTooltip;
+    const title = useIsTextTruncated(item.stringTitle);
+    const titleElement = (
+        <span ref={title.ref} className={e("item-title")}>
+            {item.stringTitle}
+        </span>
+    );
 
     const itemInner = (
         <div
@@ -167,9 +177,21 @@ export function DefaultUiMenuInteractiveItem<T extends IUiMenuItemData = object>
             })}
         >
             {item.iconLeft ? item.iconLeft : null}
-            <ShortenedText className={e("item-title")} ellipsisPosition={"end"}>
-                {item.stringTitle}
-            </ShortenedText>
+            {title.isTruncated && !isRowTooltip ? (
+                <UiTooltip
+                    anchor={titleElement}
+                    content={item.stringTitle}
+                    triggerBy={["hover"]}
+                    accessibilityHidden
+                    arrowPlacement="left"
+                    optimalPlacement
+                    offset={10}
+                    component="span"
+                    anchorWrapperStyles={TITLE_ANCHOR_STYLE}
+                />
+            ) : (
+                titleElement
+            )}
 
             {!!item.subItems && <i className="gd-icon-navigateright" />}
             {useIconTooltip ? (

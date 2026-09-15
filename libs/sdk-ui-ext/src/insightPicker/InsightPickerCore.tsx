@@ -102,7 +102,7 @@ export function InsightPickerCore({
     // Fetch on mount
     useEffect(() => {
         loadInitialItems();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const sortingKey = `${sortBy ?? ""},${sortDirection}`;

@@ -5822,7 +5822,6 @@ export interface IUiAddGranteeDialogCardProps {
     initialPermissionLevel?: PermissionMenuLevel;
     labels?: ReadonlyArray<IUiLabelsChecklistItem>;
     loadOptions: (search: string) => Promise<IUiGranteeAsyncOptions>;
-    objectTitle: string;
     onBack: () => void;
     onCancel: () => void;
     onClose: () => void;
@@ -6881,6 +6880,7 @@ export interface IUiGranteeAsyncOptions {
 
 // @internal (undocumented)
 export interface IUiGranteeAsyncPickerProps {
+    accessibilityConfig?: Pick<IAccessibilityConfigBase, "ariaLabel">;
     dataTestId?: string;
     disabledLevels?: ReadonlyArray<PermissionMenuLevel>;
     disabledTooltip?: string;
@@ -7530,16 +7530,18 @@ export interface IUiNavigationItem {
 // @internal (undocumented)
 export interface IUiObjectShareDialogCardProps {
     dataTestId?: string;
+    emptyMessage?: ReactNode;
     error?: ReactNode;
     generalAccess: GeneralAccessValue;
     grantees: IUiObjectShareDialogGrantee[];
     isAddDisabled?: boolean;
     isGeneralAccessDisabled?: boolean;
     isLoading?: boolean;
-    objectTitle: string;
+    note?: ReactNode;
     onAddClick: () => void;
     onClose: () => void;
     onGeneralAccessChange: (value: GeneralAccessValue) => void;
+    title: string;
     workspaceAccessInherited?: boolean;
     workspaceControls?: ReactNode;
     workspaceLevel?: "VIEW" | "SHARE" | "EDIT";
@@ -7664,6 +7666,7 @@ export interface IUiPermissionMenuProps {
     onLabelsChange?: (selectedIds: string[]) => void;
     onPermissionChange: (level: PermissionMenuLevel) => void;
     onRemoveAccess?: () => void;
+    removeAccessLabel?: string;
     removeDisabledTooltip?: string;
     selectedLabelIds?: ReadonlyArray<string>;
     selectedLevel?: PermissionMenuLevel;
@@ -8094,6 +8097,191 @@ export interface IUiToastsContainerProps {
 }
 
 // @internal (undocumented)
+export interface IUiToolbarButtonProps extends IUiToolbarItemBaseProps {
+    // (undocumented)
+    label: string;
+    tooltip?: ReactNode;
+}
+
+// @internal (undocumented)
+export interface IUiToolbarColorSwatchProps {
+    color?: string;
+    glyph?: ReactNode;
+    hasBorder?: boolean;
+    isTransparent?: boolean;
+    variant?: "fill" | "text";
+}
+
+// @internal (undocumented)
+export interface IUiToolbarIconButtonProps extends IUiToolbarItemBaseProps {
+    // (undocumented)
+    hideTooltip?: boolean;
+    icon: IconType | ReactNode;
+    label: string;
+    size?: SizeSmall | SizeMedium;
+}
+
+// @internal (undocumented)
+export interface IUiToolbarIconSelectProps {
+    // (undocumented)
+    accessibilityConfig?: IAccessibilityConfigBase;
+    ariaAttributes?: IUiDropdownButtonRenderProps["ariaAttributes"];
+    // (undocumented)
+    dataId?: string;
+    // (undocumented)
+    dataTestId?: string;
+    // (undocumented)
+    hideTooltip?: boolean;
+    icon?: IconType | ReactNode;
+    // (undocumented)
+    id?: string;
+    // (undocumented)
+    isDisabled?: boolean;
+    isOpen?: boolean;
+    isSelected?: boolean;
+    label: string;
+    // (undocumented)
+    onClick?: (event: MouseEvent_2<HTMLButtonElement>) => void;
+    // (undocumented)
+    onKeyDown?: (event: KeyboardEvent_2<HTMLButtonElement>) => void;
+    popupType?: "listbox" | "menu" | "dialog";
+}
+
+// @internal
+export interface IUiToolbarItemBaseProps {
+    // (undocumented)
+    accessibilityConfig?: IAccessibilityConfigBase;
+    ariaAttributes?: IUiDropdownButtonRenderProps["ariaAttributes"];
+    // (undocumented)
+    dataId?: string;
+    // (undocumented)
+    dataTestId?: string;
+    // (undocumented)
+    id?: string;
+    isActive?: boolean;
+    // (undocumented)
+    isDestructive?: boolean;
+    // (undocumented)
+    isDisabled?: boolean;
+    isSelected?: boolean;
+    // (undocumented)
+    onClick?: (event: MouseEvent_2<HTMLButtonElement>) => void;
+    // (undocumented)
+    onKeyDown?: (event: KeyboardEvent_2<HTMLButtonElement>) => void;
+    value?: string;
+}
+
+// @internal (undocumented)
+export interface IUiToolbarMoreButtonProps {
+    // (undocumented)
+    accessibilityConfig?: IAccessibilityConfigBase;
+    ariaAttributes?: IUiDropdownButtonRenderProps["ariaAttributes"];
+    // (undocumented)
+    dataId?: string;
+    // (undocumented)
+    dataTestId?: string;
+    // (undocumented)
+    icon?: IconType | ReactNode;
+    // (undocumented)
+    id?: string;
+    // (undocumented)
+    isDisabled?: boolean;
+    isOpen?: boolean;
+    label: string;
+    // (undocumented)
+    onClick?: (event: MouseEvent_2<HTMLButtonElement>) => void;
+    // (undocumented)
+    onKeyDown?: (event: KeyboardEvent_2<HTMLButtonElement>) => void;
+}
+
+// @internal (undocumented)
+export interface IUiToolbarProps {
+    accessibilityConfig: UiToolbarNamingConfig;
+    // (undocumented)
+    children: ReactNode;
+    // (undocumented)
+    dataTestId?: string;
+    isDisabledFocusable?: boolean;
+    loop?: boolean;
+    tooltipPlacement?: "below" | "above";
+}
+
+// @internal (undocumented)
+export interface IUiToolbarSegmentedControlProps {
+    accessibilityConfig: UiToolbarNamingConfig;
+    children: ReactNode;
+    // (undocumented)
+    dataTestId?: string;
+    // (undocumented)
+    isDisabled?: boolean;
+    // (undocumented)
+    onChange: (value: string, event: UiToolbarSegmentedControlChangeEvent) => void;
+    // (undocumented)
+    value: string | undefined;
+}
+
+// @internal (undocumented)
+export interface IUiToolbarSelectProps {
+    // (undocumented)
+    accessibilityConfig?: IAccessibilityConfigBase;
+    ariaAttributes?: IUiDropdownButtonRenderProps["ariaAttributes"];
+    // (undocumented)
+    dataId?: string;
+    // (undocumented)
+    dataTestId?: string;
+    // (undocumented)
+    id?: string;
+    // (undocumented)
+    isDisabled?: boolean;
+    isOpen?: boolean;
+    isPlaceholder?: boolean;
+    label: string;
+    // (undocumented)
+    onClick?: (event: MouseEvent_2<HTMLButtonElement>) => void;
+    // (undocumented)
+    onKeyDown?: (event: KeyboardEvent_2<HTMLButtonElement>) => void;
+    tooltip?: ReactNode;
+    width?: "hug" | "fixed";
+}
+
+// @internal (undocumented)
+export interface IUiToolbarStepperAccessibilityConfig {
+    ariaLabel: string;
+    decrementLabel: string;
+    incrementLabel: string;
+}
+
+// @internal (undocumented)
+export interface IUiToolbarStepperProps {
+    // (undocumented)
+    accessibilityConfig: IUiToolbarStepperAccessibilityConfig;
+    ariaAttributes?: IUiDropdownButtonRenderProps["ariaAttributes"];
+    // (undocumented)
+    canStepDown?: boolean;
+    // (undocumented)
+    canStepUp?: boolean;
+    // (undocumented)
+    dataTestId?: string;
+    // (undocumented)
+    decreaseIcon?: IconType;
+    // (undocumented)
+    increaseIcon?: IconType;
+    // (undocumented)
+    inputRef?: Ref<HTMLInputElement>;
+    // (undocumented)
+    isDisabled?: boolean;
+    isOpen?: boolean;
+    // (undocumented)
+    onClick?: (event: MouseEvent_2<HTMLInputElement>) => void;
+    onCommit?: (value: string) => void;
+    onInputKeyDown?: (event: KeyboardEvent_2<HTMLInputElement>) => void;
+    // (undocumented)
+    onStep: (direction: 1 | -1) => void;
+    value: string;
+    variant: "value" | "pagination";
+}
+
+// @internal (undocumented)
 export interface IUiTooltipProps {
     accessibilityConfig?: IAccessibilityConfigBase;
     accessibilityHidden?: boolean;
@@ -8101,11 +8289,13 @@ export interface IUiTooltipProps {
     anchorWrapperStyles?: CSSProperties;
     arrowPlacement?: TooltipArrowPlacement;
     behaviour?: "tooltip" | "popover";
+    closeOnAnchorClick?: boolean;
     component?: "div" | "span";
     content: ReactNode | ((args: {
         onClose: () => void;
         type: "screen-reader" | "live";
     }) => ReactNode);
+    delayGroup?: boolean;
     disabled?: boolean;
     hoverCloseDelay?: number;
     hoverOpenDelay?: number;
@@ -8644,6 +8834,13 @@ export const makeMenuKeyboardNavigation: <T extends KeyboardEvent_2 = KeyboardEv
     onUnhandledKeyDown?: ((event: T) => void) | undefined;
 }, options?: IHandleActionOptions) => (event: T) => void;
 
+// @internal
+export const makeRadioGroupKeyboardNavigation: <T extends KeyboardEvent_2 = KeyboardEvent_2<Element>>(handlers: {
+    onFocusNext?: ((event: T) => void) | undefined;
+    onFocusPrevious?: ((event: T) => void) | undefined;
+    onUnhandledKeyDown?: ((event: T) => void) | undefined;
+}, options?: IHandleActionOptions) => (event: T) => void;
+
 // @internal (undocumented)
 export const makeTabsKeyboardNavigation: <T extends KeyboardEvent_2 = KeyboardEvent_2<Element>>(handlers: {
     onFocusFirst?: ((event: T) => void) | undefined;
@@ -9120,6 +9317,9 @@ export function ToastsCenterContextProvider(input: {
     children: ReactNode;
 }): JSX.Element;
 
+// @internal
+export const TOOLBAR_SKIP_ATTR = "data-gd-toolbar-skip";
+
 // @public
 export const TOOLTIP_WIDTH_MEDIUM = 200;
 
@@ -9523,6 +9723,48 @@ export function UiToastProvider(input: {
 
 // @internal
 export function UiToastsContainer(input: IUiToastsContainerProps): ReactNode;
+
+// @internal
+export const UiToolbar: ForwardRefExoticComponent<IUiToolbarProps & RefAttributes<HTMLDivElement>>;
+
+// @internal
+export const UiToolbarButton: ForwardRefExoticComponent<IUiToolbarButtonProps & RefAttributes<HTMLButtonElement>>;
+
+// @internal
+export function UiToolbarColorSwatch(input: IUiToolbarColorSwatchProps): JSX.Element;
+
+// @internal
+export function UiToolbarDivider(): JSX.Element;
+
+// @internal
+export const UiToolbarIconButton: ForwardRefExoticComponent<IUiToolbarIconButtonProps & RefAttributes<HTMLButtonElement>>;
+
+// @internal
+export const UiToolbarIconSelect: ForwardRefExoticComponent<IUiToolbarIconSelectProps & RefAttributes<HTMLButtonElement>>;
+
+// @internal
+export const UiToolbarMoreButton: ForwardRefExoticComponent<IUiToolbarMoreButtonProps & RefAttributes<HTMLButtonElement>>;
+
+// @internal
+export type UiToolbarNamingConfig = {
+    ariaLabel: NonNullable<IAccessibilityConfigBase["ariaLabel"]>;
+    ariaLabelledBy?: IAccessibilityConfigBase["ariaLabelledBy"];
+} | {
+    ariaLabel?: IAccessibilityConfigBase["ariaLabel"];
+    ariaLabelledBy: NonNullable<IAccessibilityConfigBase["ariaLabelledBy"]>;
+};
+
+// @internal
+export const UiToolbarSegmentedControl: ForwardRefExoticComponent<IUiToolbarSegmentedControlProps & RefAttributes<HTMLDivElement>>;
+
+// @internal (undocumented)
+export type UiToolbarSegmentedControlChangeEvent = MouseEvent_2<HTMLElement> | KeyboardEvent_2<HTMLElement>;
+
+// @internal
+export const UiToolbarSelect: ForwardRefExoticComponent<IUiToolbarSelectProps & RefAttributes<HTMLButtonElement>>;
+
+// @internal
+export const UiToolbarStepper: ForwardRefExoticComponent<IUiToolbarStepperProps & RefAttributes<HTMLDivElement>>;
 
 // @internal (undocumented)
 export function UiTooltip(input: IUiTooltipProps): JSX.Element;

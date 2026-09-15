@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type ReactNode, createContext, useContext, useMemo } from "react";
 
@@ -40,7 +40,7 @@ export function CorrelationProvider({ children, correlationData }: ICorrelationP
 
     const memoizedAdditionalCorrelationData = useMemo(() => {
         return correlationData;
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [JSON.stringify(correlationData)]);
 
     // Merge parent data with our data (newer values override)
@@ -82,7 +82,7 @@ export const useBackendWithCorrelation = (
 
     const memoizedAdditionalCorrelationData = useMemo(() => {
         return correlationMetadata;
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [JSON.stringify(correlationMetadata)]);
 
     // Merge correlation data from context with metadata parameter, giving priority to context data
@@ -141,7 +141,7 @@ export function BackendProviderWithCorrelation({
 
     const memoizedAdditionalCorrelationData = useMemo(() => {
         return correlationData;
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [JSON.stringify(correlationData)]);
 
     const mergedData = useMemo(() => {

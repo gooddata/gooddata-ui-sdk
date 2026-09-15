@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type DependencyList, useEffect, useRef, useState } from "react";
 
@@ -48,13 +48,13 @@ export function usePromiseCache<TParams, TResult, TError>(
     useEffect(() => {
         return () => {
             if (!preventResetPromisesRef.current) {
-                // eslint-disable-next-line react-hooks/exhaustive-deps
+                // oxlint-disable-next-line react-hooks/exhaustive-deps
                 promiseCacheRef.current.reset();
                 setInitialState();
             }
             preventResetPromisesRef.current = false;
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, resetDeps);
 
     useEffect(() => {
@@ -96,7 +96,7 @@ export function usePromiseCache<TParams, TResult, TError>(
                 usedPromiseCache.cancel(newParams[0]);
             }
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, fetchDeps);
 
     return state;

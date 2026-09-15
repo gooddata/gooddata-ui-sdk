@@ -205,7 +205,7 @@ export const IntlInsightView = withAgGridToken(
                 }
 
                 return backend!.withTelemetry("InsightView", telemetryProps);
-                // eslint-disable-next-line react-hooks/exhaustive-deps
+                // oxlint-disable-next-line react-hooks/exhaustive-deps
             }, [currentInsightVisualizationUrl, backend]);
 
             const handleLoadingChanged = useCallback<OnLoadingChanged>(

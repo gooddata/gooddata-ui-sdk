@@ -1,0 +1,15 @@
+// (C) 2026 GoodData Corporation
+
+@use "../UiToolbar/toolbarItem";
+
+.gd-ui-kit-toolbar-button {
+    $root: &;
+
+    @include toolbarItem.toolbar-item-base;
+    @include toolbarItem.toolbar-item-ladder($root);
+
+    &__label {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

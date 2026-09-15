@@ -22,7 +22,7 @@ function MockedRenderChildrenInPortal({ targetElement }: IRenderChildrenInPortal
         return () => {
             portalNode.parentNode?.removeChild(portalNode);
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return createPortal(<div className="child-element">Child Element</div>, portalNodeRef.current);

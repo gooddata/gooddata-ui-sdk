@@ -479,7 +479,7 @@ definition:
     });
 
     describe("parameter items without edit permission", () => {
-        it("renders no action buttons", () => {
+        it("offers Open for the read-only definition, and nothing that changes it", () => {
             render(
                 <CatalogDetailActions
                     item={parameterItem}
@@ -492,7 +492,9 @@ definition:
                 { wrapper: createWrapper() },
             );
 
-            expect(screen.queryByRole("button")).not.toBeInTheDocument();
+            expect(screen.getByRole("button", { name: "Open" })).toBeInTheDocument();
+            expect(screen.queryByRole("button", { name: "Edit" })).not.toBeInTheDocument();
+            expect(screen.queryByRole("button", { name: /delete/i })).not.toBeInTheDocument();
             expect(screen.queryByRole("link")).not.toBeInTheDocument();
         });
     });

@@ -9,6 +9,11 @@
     padding: var(--gd-spacing-5px) 0;
     box-sizing: border-box;
 
+    // Row-wide hover highlight, the same one list items use elsewhere.
+    &:hover {
+        background: var(--gd-palette-complementary-2);
+    }
+
     // Muted while a change for this row is being saved (its controls are disabled too).
     &--pending {
         opacity: 0.6;

@@ -47,6 +47,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableCreateVisualizationWorkspacePermission,
+            "enableCreateVisualizationWorkspacePermission",
+            "BOOLEAN",
+            FeatureFlagsValues.enableCreateVisualizationWorkspacePermission,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableRadarChart,
             "enableRadarChart",
             "BOOLEAN",

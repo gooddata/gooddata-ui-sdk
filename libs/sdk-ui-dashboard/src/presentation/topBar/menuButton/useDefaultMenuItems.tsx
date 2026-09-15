@@ -170,14 +170,14 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
             filterContextTitle: null,
             filterContextText: intl.formatMessage({ id: "options.menu.export.dialog.includeExportInfo" }),
         });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [
         isNewDashboard,
         openDialog,
         intl,
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
         settings?.["cellMergedByDefault"],
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
         settings?.["activeFiltersByDefault"],
         closeDialog,
         exportToTabular,
@@ -467,7 +467,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                 },
             ],
         ]);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [
         isDensitySettingEnabled,
         openDensityDialog,

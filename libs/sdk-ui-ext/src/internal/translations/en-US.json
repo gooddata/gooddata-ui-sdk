@@ -2527,13 +2527,49 @@
         "text": "{name} (you)",
         "crowdinContext": "Display name of the signed-in user's own row in the share dialog grantee list. {name} is the user's full name."
     },
-    "objectShare.adminTag.label": {
-        "text": "Admin",
-        "crowdinContext": "Static badge on the signed-in user's own row in the share dialog when they access the object through administrator rights rather than an explicit grant."
+    "objectShare.adminNote.prefix": {
+        "text": "Note:",
+        "crowdinContext": "Bold lead-in of the informational note shown at the top of the share dialog to workspace administrators. Followed by the note text."
     },
-    "objectShare.adminTag.tooltip": {
-        "text": "You and other administrators have full access to this object.",
-        "crowdinContext": "Tooltip of the Admin badge in the share dialog, explaining why the row has no permission controls."
+    "objectShare.title.attribute": {
+        "text": "Share attribute",
+        "crowdinContext": "Heading of the share dialog when the shared object is an attribute. It names the object's type rather than the object itself."
+    },
+    "objectShare.title.fact": {
+        "text": "Share fact",
+        "crowdinContext": "Heading of the share dialog when the shared object is a fact. It names the object's type rather than the object itself."
+    },
+    "objectShare.title.label": {
+        "text": "Share label",
+        "crowdinContext": "Heading of the share dialog when the shared object is a label. It names the object's type rather than the object itself."
+    },
+    "objectShare.title.measure": {
+        "text": "Share metric",
+        "crowdinContext": "Heading of the share dialog when the shared object is a metric. It names the object's type rather than the object itself."
+    },
+    "objectShare.title.computedAttribute": {
+        "text": "Share computed attribute",
+        "crowdinContext": "Heading of the share dialog when the shared object is a computed attribute. It names the object's type rather than the object itself."
+    },
+    "objectShare.title.insight": {
+        "text": "Share visualization",
+        "crowdinContext": "Heading of the share dialog when the shared object is a visualization. It names the object's type rather than the object itself."
+    },
+    "objectShare.title.other": {
+        "text": "Share object",
+        "crowdinContext": "Heading of the share dialog when the shared object is an object of an unnamed type, or one that does not exist yet. It names the object's type rather than the object itself."
+    },
+    "objectShare.adminNote": {
+        "text": "You and other administrators have full access to all objects.",
+        "crowdinContext": "Informational note at the top of the share dialog, shown to workspace administrators. Preceded by a bold Note: lead-in."
+    },
+    "objectShare.emptyGrantees": {
+        "text": "Object has not been shared with anyone.",
+        "crowdinContext": "First line of the placeholder in the share dialog's Shared with section when no user or group has been granted access yet. Followed by: Add users or user groups."
+    },
+    "objectShare.emptyGrantees.hint": {
+        "text": "Add users or user groups.",
+        "crowdinContext": "Second line of the share dialog's empty 'Shared with' placeholder, pointing the user to the Add action."
     },
     "objectShare.toast.granteeAdded": {
         "text": "Success! Access was granted.",

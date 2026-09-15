@@ -25,6 +25,7 @@ const VISUALIZATION_DOCS_URL =
 const messages = defineMessages({
     createTitle: { id: "analyticsCatalog.visualization.dialog.create.title" },
     editTitle: { id: "analyticsCatalog.visualization.dialog.edit.title" },
+    viewTitle: { id: "analyticsCatalog.visualization.dialog.view.title" },
     duplicate: { id: "analyticsCatalog.visualization.dialog.edit.duplicate" },
     createDefaultTitle: { id: "analyticsCatalog.visualization.create.defaultTitle" },
     createSuccess: { id: "analyticsCatalog.visualization.create.success" },

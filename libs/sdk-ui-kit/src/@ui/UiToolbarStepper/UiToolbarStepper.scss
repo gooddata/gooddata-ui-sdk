@@ -1,0 +1,53 @@
+// (C) 2026 GoodData Corporation
+
+@use "../UiToolbar/toolbarItem";
+
+.gd-ui-kit-toolbar-stepper {
+    $root: &;
+
+    display: inline-flex;
+    align-items: center;
+    gap: toolbarItem.$toolbar-item-gap;
+    box-sizing: border-box;
+    height: toolbarItem.$toolbar-item-size;
+    padding: 0 toolbarItem.$toolbar-item-padding;
+
+    &__value {
+        @include toolbarItem.toolbar-item-base;
+
+        --gd-icon-fill-color: var(--gd-palette-complementary-7);
+
+        min-width: 0;
+        color: var(--gd-palette-complementary-7);
+        text-align: center;
+        cursor: default;
+
+        &--isEditable {
+            // A constant width so the toolbar does not move while the value is typed or stepped.
+            // Fits four characters: percentages up to "100%" and whole numbers up to four digits.
+            width: calc(4.5ch + 2 * #{toolbarItem.$toolbar-item-padding});
+            text-align: center;
+            cursor: text;
+
+            @include toolbarItem.toolbar-focus-ring;
+
+            &:not([aria-disabled="true"]) {
+                &:hover {
+                    color: var(--gd-palette-complementary-8);
+                    background-color: var(--gd-palette-complementary-2);
+                }
+
+                &:active,
+                &#{$root}__value--isActive {
+                    color: var(--gd-palette-complementary-8);
+                    background-color: var(--gd-palette-complementary-4);
+                }
+            }
+
+            &[aria-disabled="true"] {
+                color: var(--gd-palette-complementary-4);
+                cursor: default;
+            }
+        }
+    }
+}

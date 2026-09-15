@@ -99,6 +99,9 @@ DualAxisTwoMeasuresWithSlicingcolumnColumn.parameters = {
         postInteractionWait: {
             delay: 200,
         },
+        delay: {
+            postOperation: 1000,
+        },
         viewports: [
             {
                 label: "desktop",
@@ -190,6 +193,9 @@ DualAxisTwoMeasuresWithSlicingareaArea.parameters = {
         },
         postInteractionWait: {
             delay: 200,
+        },
+        delay: {
+            postOperation: 1000,
         },
         viewports: [
             {
@@ -283,6 +289,9 @@ DualAxisTwoMeasuresWithSlicinglineLine.parameters = {
         postInteractionWait: {
             delay: 200,
         },
+        delay: {
+            postOperation: 1000,
+        },
         viewports: [
             {
                 label: "desktop",
@@ -374,6 +383,9 @@ DualAxisTwoMeasuresWithSlicingcolumnLine.parameters = {
         },
         postInteractionWait: {
             delay: 200,
+        },
+        delay: {
+            postOperation: 1000,
         },
         viewports: [
             {
@@ -467,6 +479,9 @@ DualAxisTwoMeasuresWithSlicinglineColumn.parameters = {
         postInteractionWait: {
             delay: 200,
         },
+        delay: {
+            postOperation: 1000,
+        },
         viewports: [
             {
                 label: "desktop",
@@ -558,6 +573,9 @@ DualAxisTwoMeasuresWithSlicingcolumnArea.parameters = {
         },
         postInteractionWait: {
             delay: 200,
+        },
+        delay: {
+            postOperation: 1000,
         },
         viewports: [
             {
@@ -651,6 +669,9 @@ DualAxisTwoMeasuresWithSlicingareaColumn.parameters = {
         postInteractionWait: {
             delay: 200,
         },
+        delay: {
+            postOperation: 1000,
+        },
         viewports: [
             {
                 label: "desktop",
@@ -743,6 +764,9 @@ DualAxisTwoMeasuresWithSlicinglineArea.parameters = {
         postInteractionWait: {
             delay: 200,
         },
+        delay: {
+            postOperation: 1000,
+        },
         viewports: [
             {
                 label: "desktop",
@@ -834,6 +858,9 @@ DualAxisTwoMeasuresWithSlicingareaLine.parameters = {
         },
         postInteractionWait: {
             delay: 200,
+        },
+        delay: {
+            postOperation: 1000,
         },
         viewports: [
             {

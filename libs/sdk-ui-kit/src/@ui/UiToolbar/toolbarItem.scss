@@ -1,0 +1,133 @@
+// (C) 2026 GoodData Corporation
+
+// Toolbar-only dimensions from the design library. They are not theme variables.
+$toolbar-item-size: 28px;
+$toolbar-item-padding: 4px;
+$toolbar-item-gap: 4px;
+$toolbar-padding: 8px;
+$toolbar-gap: 8px;
+$toolbar-icon-size-medium: 20px;
+$toolbar-icon-size-small: 14px;
+$toolbar-hit-area: 24px;
+
+@mixin toolbar-item-base {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: $toolbar-item-gap;
+    box-sizing: border-box;
+    height: $toolbar-item-size;
+    margin: 0;
+    padding: 0 $toolbar-item-padding;
+    border: 0;
+    border-radius: var(--gd-toolbar-borderRadius);
+    background-color: transparent;
+    font-family: var(--gd-font-family);
+    font-size: 14px;
+    line-height: normal;
+    white-space: nowrap;
+    cursor: pointer;
+    outline: none;
+    transition: var(--gd-transition-all);
+}
+
+@mixin toolbar-focus-ring {
+    &:focus-visible {
+        box-shadow: inset 0 0 0 2px var(--gd-palette-primary-base);
+    }
+}
+
+// The toolbar colour ladder. `$root` is the block selector of the component.
+@mixin toolbar-item-ladder($root) {
+    --gd-icon-fill-color: var(--gd-palette-complementary-7);
+
+    color: var(--gd-palette-complementary-7);
+
+    @include toolbar-focus-ring;
+
+    &:not([aria-disabled="true"]) {
+        &:hover {
+            --gd-icon-fill-color: var(--gd-palette-complementary-8);
+
+            color: var(--gd-palette-complementary-8);
+            background-color: var(--gd-palette-complementary-2);
+        }
+
+        &:active,
+        &#{$root}--isActive {
+            --gd-icon-fill-color: var(--gd-palette-complementary-8);
+
+            color: var(--gd-palette-complementary-8);
+            background-color: var(--gd-palette-complementary-4);
+        }
+
+        &#{$root}--isSelected {
+            --gd-icon-fill-color: var(--gd-palette-primary-base);
+
+            color: var(--gd-palette-primary-base);
+            background-color: transparent;
+
+            &:hover {
+                --gd-icon-fill-color: var(--gd-palette-primary-base-d12);
+
+                color: var(--gd-palette-primary-base-d12);
+                background-color: var(--gd-palette-primary-dimmed);
+            }
+
+            &:active,
+            &#{$root}--isActive {
+                --gd-icon-fill-color: var(--gd-palette-primary-base-d12);
+
+                color: var(--gd-palette-primary-base-d12);
+                background-color: var(--gd-palette-primary-base-dimmed-darken03);
+            }
+        }
+
+        &#{$root}--isDestructive {
+            &:hover {
+                --gd-icon-fill-color: var(--gd-palette-error-base);
+
+                color: var(--gd-palette-error-base);
+                background-color: var(--gd-palette-error-dimmed);
+            }
+
+            &:active,
+            &#{$root}--isActive {
+                --gd-icon-fill-color: var(--gd-palette-error-base-d10);
+
+                color: var(--gd-palette-error-base-d10);
+                background-color: var(--gd-palette-error-disabled);
+            }
+
+            &#{$root}--isSelected {
+                --gd-icon-fill-color: var(--gd-palette-error-base);
+
+                color: var(--gd-palette-error-base);
+                background-color: transparent;
+
+                &:hover {
+                    --gd-icon-fill-color: var(--gd-palette-error-base);
+
+                    color: var(--gd-palette-error-base);
+                    background-color: var(--gd-palette-error-dimmed);
+                }
+
+                &:active,
+                &#{$root}--isActive {
+                    --gd-icon-fill-color: var(--gd-palette-error-base-d10);
+
+                    color: var(--gd-palette-error-base-d10);
+                    background-color: var(--gd-palette-error-disabled);
+                }
+            }
+        }
+    }
+
+    &[aria-disabled="true"] {
+        --gd-icon-fill-color: var(--gd-palette-complementary-4);
+
+        color: var(--gd-palette-complementary-5);
+        background-color: transparent;
+        cursor: default;
+    }
+}

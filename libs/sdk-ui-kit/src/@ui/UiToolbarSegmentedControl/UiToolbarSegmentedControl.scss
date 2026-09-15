@@ -1,0 +1,10 @@
+// (C) 2026 GoodData Corporation
+
+@use "../UiToolbar/toolbarItem";
+
+.gd-ui-kit-toolbar-segmented-control {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    height: toolbarItem.$toolbar-item-size;
+}

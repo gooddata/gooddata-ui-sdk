@@ -2,11 +2,7 @@
 
 import { useIntl } from "react-intl";
 
-import {
-    commonDialogMessages,
-    olpAddGranteeDialogMessages,
-    olpObjectShareDialogMessages,
-} from "../../locales.js";
+import { commonDialogMessages, olpAddGranteeDialogMessages } from "../../locales.js";
 import { bem } from "../@utils/bem.js";
 import { UiButton } from "../UiButton/UiButton.js";
 import {
@@ -28,9 +24,6 @@ const { b } = bem("gd-ui-kit-add-grantee-dialog");
  * @internal
  */
 export interface IUiAddGranteeDialogCardProps {
-    /** Object title shown in the header — wrapped into `Share "\{title\}"`. */
-    objectTitle: string;
-
     /** Loader passed straight through to the embedded `UiGranteeAsyncPicker`. */
     loadOptions: (search: string) => Promise<IUiGranteeAsyncOptions>;
     /**
@@ -81,9 +74,9 @@ export interface IUiAddGranteeDialogCardProps {
 }
 
 /**
- * Add-grantee dialog card — header + grantee picker (search input with
- * sectioned Groups/Users dropdown and picked-rows list) + footer with Cancel
- * and Share. Renders inline as a plain card. For modal behavior (portal,
+ * Add-grantee dialog card — header ("Add users or groups", which also names the
+ * search input) + grantee picker (search input with sectioned Groups/Users
+ * dropdown and picked-rows list) + footer with Cancel and Add. Renders inline as a plain card. For modal behavior (portal,
  * backdrop, focus trap, dismiss), use `UiAddGranteeDialog` which wraps this
  * in `UiModalDialog`.
  *
@@ -94,7 +87,6 @@ export interface IUiAddGranteeDialogCardProps {
  * @internal
  */
 export function UiAddGranteeDialogCard({
-    objectTitle,
     loadOptions,
     disabledLevels,
     disabledTooltip,
@@ -109,11 +101,13 @@ export function UiAddGranteeDialogCard({
     dataTestId,
 }: IUiAddGranteeDialogCardProps) {
     const intl = useIntl();
-    const dialogTitle = intl.formatMessage(olpObjectShareDialogMessages.title, { title: objectTitle });
+    // The title doubles as the accessible name of the picker's search input, which has
+    // no visible label of its own.
+    const dialogTitle = intl.formatMessage(olpAddGranteeDialogMessages.title);
     const backButton = (
         <UiIconButton
             icon="chevronLeft"
-            variant="tertiary"
+            variant="secondary"
             size="small"
             onClick={onBack}
             accessibilityConfig={{ ariaLabel: intl.formatMessage(olpAddGranteeDialogMessages.back) }}
@@ -128,9 +122,10 @@ export function UiAddGranteeDialogCard({
 
     return (
         <div className={b()} data-testid={dataTestId}>
-            <UiDialogHeader title={dialogTitle} titleSize="large" onClose={onClose} leading={backButton} />
+            <UiDialogHeader title={dialogTitle} onClose={onClose} leading={backButton} />
 
             <UiGranteeAsyncPicker
+                accessibilityConfig={{ ariaLabel: dialogTitle }}
                 loadOptions={loadOptions}
                 disabledLevels={disabledLevels}
                 disabledTooltip={disabledTooltip}

@@ -388,6 +388,8 @@ export interface IAddWorkspaceToSubjectsProps extends IWithTelemetryProps {
     // (undocumented)
     ids: string[];
     // (undocumented)
+    isCreateVisualizationWorkspacePermissionEnabled?: boolean;
+    // (undocumented)
     onClose: () => void;
     // (undocumented)
     onSuccess: () => void;
@@ -1226,6 +1228,8 @@ export interface IUserEditDialogProps extends IWithTelemetryProps {
     // (undocumented)
     isAdmin: boolean;
     // (undocumented)
+    isCreateVisualizationWorkspacePermissionEnabled?: boolean;
+    // (undocumented)
     isSystemAccountFilteringEnabled?: boolean;
     // (undocumented)
     onClose: () => void;
@@ -1249,6 +1253,8 @@ export interface IUserGroupEditDialogProps extends IWithTelemetryProps {
     initialView?: UserGroupEditDialogMode;
     // (undocumented)
     isAdmin: boolean;
+    // (undocumented)
+    isCreateVisualizationWorkspacePermissionEnabled?: boolean;
     // (undocumented)
     onClose: () => void;
     // (undocumented)

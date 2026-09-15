@@ -234,7 +234,7 @@ export function withExecutionLoading<TProps>({
                     onLoadingStart,
                     onExportReady,
                 };
-                // eslint-disable-next-line react-hooks/exhaustive-deps
+                // oxlint-disable-next-line react-hooks/exhaustive-deps
             }, [events]);
 
             const startLoading = useCallback(() => {
@@ -290,7 +290,7 @@ export function withExecutionLoading<TProps>({
                         result,
                     }));
                 },
-                // eslint-disable-next-line react-hooks/exhaustive-deps
+                // oxlint-disable-next-line react-hooks/exhaustive-deps
                 [getEvents, exportTitle],
             );
 
@@ -336,7 +336,7 @@ export function withExecutionLoading<TProps>({
                         setError(sdkError);
                     }
                 }
-                // eslint-disable-next-line react-hooks/exhaustive-deps
+                // oxlint-disable-next-line react-hooks/exhaustive-deps
             }, [window, enableExecutionCancelling, promiseFactory]);
 
             const isStaleResult = useCallback((): boolean => {
@@ -346,7 +346,7 @@ export function withExecutionLoading<TProps>({
                     effectivePropsRef.current !== undefined &&
                     shouldRefetch(effectivePropsRef.current, latestPropsRef.current)
                 );
-                // eslint-disable-next-line react-hooks/exhaustive-deps
+                // oxlint-disable-next-line react-hooks/exhaustive-deps
             }, [shouldRefetch]);
 
             // ComponentDidMount equivalent
@@ -360,7 +360,7 @@ export function withExecutionLoading<TProps>({
                     // fetch will use latest props via latestPropsRef
                     void fetch();
                 }
-                // eslint-disable-next-line react-hooks/exhaustive-deps
+                // oxlint-disable-next-line react-hooks/exhaustive-deps
             }, []); // Empty dependency array for mount only
 
             // ComponentDidUpdate equivalent

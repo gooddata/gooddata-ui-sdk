@@ -186,7 +186,7 @@ export function useHybridSearch<I extends SearchItem, G extends SearchItemGroup<
             excludeTags,
             includeTags,
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [objectTypes?.join(), includeTags?.join(), excludeTags?.join()]);
 
     const effectiveBackend = useBackendStrict(backend);

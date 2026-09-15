@@ -22,6 +22,7 @@ DualAxisTwoMeasuresWithSlicing.parameters = {
     kind: "dual axis two measures with slicing",
     screenshot: {
         readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached },
+        delay: { postOperation: 1000 },
         viewports: [{ label: "desktop", width: 1464, height: 768 }],
     },
 } satisfies IStoryParameters;
@@ -35,6 +36,7 @@ DualAxisTwoMeasuresWithoutSlicing.parameters = {
     kind: "dual axis two measures without slicing",
     screenshot: {
         readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached },
+        delay: { postOperation: 1000 },
         viewports: [{ label: "desktop", width: 1464, height: 768 }],
     },
 } satisfies IStoryParameters;
@@ -48,6 +50,7 @@ DualAxisMultipleMeasuresWithSlicing.parameters = {
     kind: "dual axis multiple measures with slicing",
     screenshot: {
         readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached },
+        delay: { postOperation: 1000 },
         viewports: [{ label: "desktop", width: 1464, height: 768 }],
     },
 } satisfies IStoryParameters;
@@ -61,6 +64,7 @@ DualAxisMultipleMeasuresWithoutSlicing.parameters = {
     kind: "dual axis multiple measures without slicing",
     screenshot: {
         readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached },
+        delay: { postOperation: 1000 },
         viewports: [{ label: "desktop", width: 1464, height: 768 }],
     },
 } satisfies IStoryParameters;

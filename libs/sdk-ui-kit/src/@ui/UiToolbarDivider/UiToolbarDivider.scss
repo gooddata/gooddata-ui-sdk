@@ -1,0 +1,11 @@
+// (C) 2026 GoodData Corporation
+
+@use "../UiToolbar/toolbarItem";
+
+.gd-ui-kit-toolbar-divider {
+    flex-shrink: 0;
+    box-sizing: border-box;
+    width: 1px;
+    height: toolbarItem.$toolbar-item-size;
+    background-color: var(--gd-palette-complementary-3);
+}

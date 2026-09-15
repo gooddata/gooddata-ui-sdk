@@ -1,6 +1,11 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type IPackage } from "@gooddata/lint-config";
+import {
+    type IPackage,
+    reactHooksRules,
+    reactRules,
+    reactRulesNativeNotSupported,
+} from "@gooddata/lint-config";
 
 import type { IDualConfiguration } from "../types.js";
 
@@ -14,50 +19,35 @@ const reactHooksPlugin: IPackage = {
     version: "5.2.0",
 };
 
-const commonConfiguration = {
-    packages: [reactPlugin, reactHooksPlugin],
-    rules: {
-        "react/no-danger": "error",
-        "react/prop-types": "off",
-        "react/function-component-definition": [
-            "error",
-            {
-                namedComponents: "function-declaration",
-                unnamedComponents: "arrow-function",
-            },
-        ],
-        /**
-         * jsx-no-leaked-render is set to warning only because it's not working properly for the AND operator
-         * within component's properties.
-         */
-        "react/jsx-no-leaked-render": ["warn", { validStrategies: ["ternary", "coerce"] }],
-
-        // turn exampleProps={true} into exampleProp
-        "react/jsx-boolean-value": ["error", "never"],
-
-        // no longer needed with new react transform
-        "react/react-in-jsx-scope": "off",
-
-        "react-hooks/rules-of-hooks": "error",
-        "react-hooks/exhaustive-deps": "error",
+const settings = {
+    react: {
+        version: "detect",
     },
-    settings: {
-        react: {
-            version: "detect",
+};
+
+export const react: IDualConfiguration<"react" | "react-hooks"> = {
+    v8: {
+        packages: [reactPlugin, reactHooksPlugin],
+        plugins: ["react", "react-hooks"],
+        settings,
+        rules: {
+            ...reactRules,
+            ...reactHooksRules,
         },
     },
-};
-
-const v9 = {
-    ...commonConfiguration,
-    plugins: { react: reactPlugin, "react-hooks": reactHooksPlugin },
-};
-
-export const react: IDualConfiguration = {
-    v8: {
-        ...commonConfiguration,
-        plugins: ["react", "react-hooks"],
+    v9: {
+        packages: [reactPlugin, reactHooksPlugin],
+        plugins: { react: reactPlugin, "react-hooks": reactHooksPlugin },
+        settings,
+        rules: {
+            ...reactRules,
+            ...reactHooksRules,
+        },
     },
-    v9,
-    ox: v9,
+    ox: {
+        packages: [reactPlugin],
+        plugins: { react: reactPlugin },
+        settings,
+        rules: reactRulesNativeNotSupported,
+    },
 };

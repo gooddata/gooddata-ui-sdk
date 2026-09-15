@@ -146,7 +146,7 @@ export const DefaultDashboardWidget: NamedExoticComponent<IDashboardWidgetProps>
                     onError(error, executionId);
                 },
             });
-            // eslint-disable-next-line react-hooks/exhaustive-deps
+            // oxlint-disable-next-line react-hooks/exhaustive-deps
         }, [effectiveBackend, dispatchEvent, safeSerializeObjRef(ref)]);
 
         if (isWidget(widget)) {

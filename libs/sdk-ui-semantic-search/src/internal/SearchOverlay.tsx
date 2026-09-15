@@ -308,7 +308,7 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
         onSearch?.(searchTerm, searchResults);
         // I don't want to report on search string change, only on results
         // But I do need searchTerm, it will update with results anyway
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [onSearch, searchResults]);
 
     useEffect(() => {

@@ -40,7 +40,7 @@ function renderWithIntl(ui: ReactNode) {
 const openPickedMenu = () => fireEvent.click(screen.getByRole("button", { name: /^Can view$/ }));
 
 describe("UiGranteeAsyncPicker picked-row menu", () => {
-    it("offers Remove access in the picked row's permission menu and fires onRemove with the grantee", () => {
+    it("offers Remove in the picked row's permission menu and fires onRemove with the grantee", () => {
         const onRemove = vi.fn();
         renderWithIntl(
             <UiGranteeAsyncPicker
@@ -51,7 +51,7 @@ describe("UiGranteeAsyncPicker picked-row menu", () => {
             />,
         );
         openPickedMenu();
-        fireEvent.click(screen.getByRole("menuitem", { name: /remove access/i }));
+        fireEvent.click(screen.getByRole("menuitem", { name: /^remove$/i }));
         expect(onRemove).toHaveBeenCalledTimes(1);
         expect(onRemove.mock.calls[0][0].id).toBe("u1");
     });
@@ -66,9 +66,10 @@ describe("UiGranteeAsyncPicker picked-row menu", () => {
             />,
         );
         openPickedMenu();
-        // The only Remove affordance is the menu item, not a separate icon button.
-        expect(screen.queryByRole("button", { name: /remove access/i })).not.toBeInTheDocument();
-        expect(screen.getByRole("menuitem", { name: /remove access/i })).toBeInTheDocument();
+        // The only Remove affordance is the menu item, not a separate icon button. The
+        // label is the short 'Remove' — nothing is granted to a staged candidate yet.
+        expect(screen.queryByRole("button", { name: /^remove$/i })).not.toBeInTheDocument();
+        expect(screen.getByRole("menuitem", { name: /^remove$/i })).toBeInTheDocument();
     });
 
     it("omits Remove access from the menu when onRemove is not provided", () => {
@@ -80,7 +81,7 @@ describe("UiGranteeAsyncPicker picked-row menu", () => {
             />,
         );
         openPickedMenu();
-        expect(screen.queryByRole("menuitem", { name: /remove access/i })).not.toBeInTheDocument();
+        expect(screen.queryByRole("menuitem", { name: /^remove$/i })).not.toBeInTheDocument();
     });
 
     it("offers no label drill-in when no labels are passed", () => {

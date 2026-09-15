@@ -21,6 +21,12 @@ export {
 } from "./configurations/no-barrel-files.js";
 export { noOnlyTestsPlugin, noOnlyTestsRules } from "./configurations/no-only-tests.js";
 export { playwrightConflicts, playwrightPlugin, playwrightRules } from "./configurations/playwright.js";
+export {
+    reactHooksRules,
+    reactRules,
+    reactRulesNativeNotSupported,
+    reactRulesNativeSupported,
+} from "./configurations/react.js";
 export { sonarjsOverrides, sonarjsPlugin, sonarjsRules } from "./configurations/sonarjs.js";
 export { storybookOverrides, storybookPackages, storybookPlugin } from "./configurations/storybook.js";
 export {

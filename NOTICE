@@ -9,7 +9,7 @@ The following 3rd-party software packages may be used by or distributed with goo
 
 Date generated: 2026-9-14
 
-Revision ID: 2ddc75aa28e022016649b61c0188b349322c1327
+Revision ID: b22f44aea3e618f71ec62f6853d9310a210cb741
 
 ================================================================================
 ================================================================================
@@ -22305,7 +22305,7 @@ MIT
 
 Authors: ljharb@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/call-bind
+Project URL: https://github.com/ljharb/call-bind#readme
 Package Download URL: https://registry.npmjs.org/call-bind/-/call-bind-1.0.9.tgz
 Dependency Path: @formatjs/cli-lib > @formatjs/ts-transformer > @types/json-stable-stringify > json-stable-stringify > call-bind > @formatjs/cli-lib > @formatjs/ts-transformer > json-stable-stringify > call-bind > @formatjs/cli-lib > @types/json-stable-stringify > json-stable-stringify > call-bind > @formatjs/cli-lib > json-stable-stringify > call-bind > json-stable-stringify > call-bind
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml

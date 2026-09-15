@@ -113,6 +113,7 @@ export class ActionsApi extends MetadataBaseApi implements ActionsApiInterface {
     manageLabelPermissions(requestParameters: ActionsApiManageLabelPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageMetricPermissions(requestParameters: ActionsApiManageMetricPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageOrganizationPermissions(requestParameters: ActionsApiManageOrganizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    manageVisualizationPermissions(requestParameters: ActionsApiManageVisualizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageWorkspacePermissions(requestParameters: ActionsApiManageWorkspacePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     metricPermissions(requestParameters: ActionsApiMetricPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<MetricPermissions>;
     overriddenChildEntities(requestParameters: ActionsApiOverriddenChildEntitiesRequest, options?: AxiosRequestConfig): AxiosPromise<IdentifierDuplications[]>;
@@ -141,6 +142,7 @@ export class ActionsApi extends MetadataBaseApi implements ActionsApiInterface {
     unsubscribeOrganizationAutomations(requestParameters: ActionsApiUnsubscribeOrganizationAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     unsubscribeSelectedWorkspaceAutomations(requestParameters: ActionsApiUnsubscribeSelectedWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     unsubscribeWorkspaceAutomations(requestParameters: ActionsApiUnsubscribeWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    visualizationPermissions(requestParameters: ActionsApiVisualizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<VisualizationPermissions>;
     workspaceResolveAllSettings(requestParameters: ActionsApiWorkspaceResolveAllSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<ResolvedSetting[]>;
     workspaceResolveSettings(requestParameters: ActionsApiWorkspaceResolveSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<ResolvedSetting[]>;
 }
@@ -730,6 +732,7 @@ export interface ActionsApiInterface {
     manageLabelPermissions(requestParameters: ActionsApiManageLabelPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageMetricPermissions(requestParameters: ActionsApiManageMetricPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageOrganizationPermissions(requestParameters: ActionsApiManageOrganizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    manageVisualizationPermissions(requestParameters: ActionsApiManageVisualizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageWorkspacePermissions(requestParameters: ActionsApiManageWorkspacePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     metricPermissions(requestParameters: ActionsApiMetricPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<MetricPermissions>;
     overriddenChildEntities(requestParameters: ActionsApiOverriddenChildEntitiesRequest, options?: AxiosRequestConfig): AxiosPromise<Array<IdentifierDuplications>>;
@@ -758,6 +761,7 @@ export interface ActionsApiInterface {
     unsubscribeOrganizationAutomations(requestParameters: ActionsApiUnsubscribeOrganizationAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     unsubscribeSelectedWorkspaceAutomations(requestParameters: ActionsApiUnsubscribeSelectedWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     unsubscribeWorkspaceAutomations(requestParameters: ActionsApiUnsubscribeWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    visualizationPermissions(requestParameters: ActionsApiVisualizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<VisualizationPermissions>;
     workspaceResolveAllSettings(requestParameters: ActionsApiWorkspaceResolveAllSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ResolvedSetting>>;
     workspaceResolveSettings(requestParameters: ActionsApiWorkspaceResolveSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ResolvedSetting>>;
 }
@@ -865,6 +869,13 @@ export interface ActionsApiManageMetricPermissionsRequest {
 // @public
 export interface ActionsApiManageOrganizationPermissionsRequest {
     readonly organizationPermissionAssignment: Array<OrganizationPermissionAssignment>;
+}
+
+// @public
+export interface ActionsApiManageVisualizationPermissionsRequest {
+    readonly manageVisualizationPermissionsRequestInner: Array<ManageVisualizationPermissionsRequestInner>;
+    readonly visualizationObjectId: string;
+    readonly workspaceId: string;
 }
 
 // @public
@@ -1123,6 +1134,12 @@ interface ActionsApiValidateLLMEndpointByIdRequest {
 }
 export { ActionsApiValidateLLMEndpointByIdRequest }
 export { ActionsApiValidateLLMEndpointByIdRequest as GenAiApiValidateLLMEndpointByIdRequest }
+
+// @public
+export interface ActionsApiVisualizationPermissionsRequest {
+    readonly visualizationObjectId: string;
+    readonly workspaceId: string;
+}
 
 // @public
 export interface ActionsApiWorkspaceResolveAllSettingsRequest {
@@ -17080,7 +17097,7 @@ export interface DeclarativeSingleWorkspacePermission {
 }
 
 // @public (undocumented)
-export type DeclarativeSingleWorkspacePermissionNameEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'VIEW';
+export type DeclarativeSingleWorkspacePermissionNameEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'CREATE_VISUALIZATION' | 'VIEW';
 
 // @public
 export interface DeclarativeSourceReference {
@@ -17357,7 +17374,7 @@ export interface DeclarativeWorkspaceHierarchyPermission {
 }
 
 // @public (undocumented)
-export type DeclarativeWorkspaceHierarchyPermissionNameEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'VIEW';
+export type DeclarativeWorkspaceHierarchyPermissionNameEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'CREATE_VISUALIZATION' | 'VIEW';
 
 // @public
 export interface DeclarativeWorkspaceModel {
@@ -38130,7 +38147,7 @@ export interface JsonApiWorkspaceOutMetaHierarchy {
 }
 
 // @public (undocumented)
-export type JsonApiWorkspaceOutMetaPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'VIEW';
+export type JsonApiWorkspaceOutMetaPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'CREATE_VISUALIZATION' | 'VIEW';
 
 // @public (undocumented)
 export interface JsonApiWorkspaceOutRelationships {
@@ -40427,6 +40444,9 @@ export interface ManagePermissionsApiSetDataSourcePermissionsRequest {
 }
 
 // @public
+export type ManageVisualizationPermissionsRequestInner = VisualizationPermissionsForAssignee | VisualizationPermissionsForAssigneeRule;
+
+// @public
 export interface MatchAttributeFilter {
     // (undocumented)
     'matchAttributeFilter': MatchAttributeFilterMatchAttributeFilter;
@@ -42551,12 +42571,14 @@ export class PermissionsApi extends MetadataBaseApi implements PermissionsApiInt
     manageLabelPermissions(requestParameters: PermissionsApiManageLabelPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageMetricPermissions(requestParameters: PermissionsApiManageMetricPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageOrganizationPermissions(requestParameters: PermissionsApiManageOrganizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    manageVisualizationPermissions(requestParameters: PermissionsApiManageVisualizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageWorkspacePermissions(requestParameters: PermissionsApiManageWorkspacePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     metricPermissions(requestParameters: PermissionsApiMetricPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<MetricPermissions>;
     setOrganizationPermissions(requestParameters: PermissionsApiSetOrganizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     setUserGroupPermissions(requestParameters: PermissionsApiSetUserGroupPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     setUserPermissions(requestParameters: PermissionsApiSetUserPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     setWorkspacePermissions(requestParameters: PermissionsApiSetWorkspacePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    visualizationPermissions(requestParameters: PermissionsApiVisualizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<VisualizationPermissions>;
 }
 
 // @public
@@ -42708,12 +42730,14 @@ export interface PermissionsApiInterface {
     manageLabelPermissions(requestParameters: PermissionsApiManageLabelPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageMetricPermissions(requestParameters: PermissionsApiManageMetricPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageOrganizationPermissions(requestParameters: PermissionsApiManageOrganizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    manageVisualizationPermissions(requestParameters: PermissionsApiManageVisualizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageWorkspacePermissions(requestParameters: PermissionsApiManageWorkspacePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     metricPermissions(requestParameters: PermissionsApiMetricPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<MetricPermissions>;
     setOrganizationPermissions(requestParameters: PermissionsApiSetOrganizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     setUserGroupPermissions(requestParameters: PermissionsApiSetUserGroupPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     setUserPermissions(requestParameters: PermissionsApiSetUserPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     setWorkspacePermissions(requestParameters: PermissionsApiSetWorkspacePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    visualizationPermissions(requestParameters: PermissionsApiVisualizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<VisualizationPermissions>;
 }
 
 // @public
@@ -42776,6 +42800,13 @@ export interface PermissionsApiManageOrganizationPermissionsRequest {
 }
 
 // @public
+export interface PermissionsApiManageVisualizationPermissionsRequest {
+    readonly manageVisualizationPermissionsRequestInner: Array<ManageVisualizationPermissionsRequestInner>;
+    readonly visualizationObjectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface PermissionsApiManageWorkspacePermissionsRequest {
     readonly workspaceId: string;
     readonly workspacePermissionAssignment: Array<WorkspacePermissionAssignment>;
@@ -42807,6 +42838,12 @@ export interface PermissionsApiSetUserPermissionsRequest {
 // @public
 export interface PermissionsApiSetWorkspacePermissionsRequest {
     readonly declarativeWorkspacePermissions: DeclarativeWorkspacePermissions;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface PermissionsApiVisualizationPermissionsRequest {
+    readonly visualizationObjectId: string;
     readonly workspaceId: string;
 }
 
@@ -45613,10 +45650,10 @@ export interface UserManagementWorkspacePermissionAssignment {
 export type UserManagementWorkspacePermissionAssignmentAccessSourceEnum = 'DIRECT' | 'GROUP' | 'HIERARCHY';
 
 // @public (undocumented)
-export type UserManagementWorkspacePermissionAssignmentHierarchyPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'VIEW';
+export type UserManagementWorkspacePermissionAssignmentHierarchyPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'CREATE_VISUALIZATION' | 'VIEW';
 
 // @public (undocumented)
-export type UserManagementWorkspacePermissionAssignmentPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'VIEW';
+export type UserManagementWorkspacePermissionAssignmentPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'CREATE_VISUALIZATION' | 'VIEW';
 
 // @public
 export interface UserPermission {
@@ -46362,6 +46399,44 @@ declare namespace VisualizationObjectModelV2 {
 }
 export { VisualizationObjectModelV2 }
 
+// @public (undocumented)
+export interface VisualizationPermissions {
+    'rules': Array<RulePermission>;
+    'userGroups': Array<UserGroupPermission>;
+    'users': Array<UserPermission>;
+}
+
+// @public
+export interface VisualizationPermissionsAssignment {
+    // (undocumented)
+    'permissions': Array<VisualizationPermissionsAssignmentPermissionsEnum>;
+}
+
+// @public (undocumented)
+export type VisualizationPermissionsAssignmentPermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
+
+// @public
+export interface VisualizationPermissionsForAssignee {
+    // (undocumented)
+    'assigneeIdentifier': AssigneeIdentifier;
+    // (undocumented)
+    'permissions': Array<VisualizationPermissionsForAssigneePermissionsEnum>;
+}
+
+// @public (undocumented)
+export type VisualizationPermissionsForAssigneePermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
+
+// @public
+export interface VisualizationPermissionsForAssigneeRule {
+    // (undocumented)
+    'assigneeRule': AssigneeRule;
+    // (undocumented)
+    'permissions': Array<VisualizationPermissionsForAssigneeRulePermissionsEnum>;
+}
+
+// @public (undocumented)
+export type VisualizationPermissionsForAssigneeRulePermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
+
 // @public
 export interface Webhook {
     'hasSecretKey'?: boolean | null;
@@ -46954,10 +47029,10 @@ export interface WorkspacePermissionAssignment {
 }
 
 // @public (undocumented)
-export type WorkspacePermissionAssignmentHierarchyPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'VIEW';
+export type WorkspacePermissionAssignmentHierarchyPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'CREATE_VISUALIZATION' | 'VIEW';
 
 // @public (undocumented)
-export type WorkspacePermissionAssignmentPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'VIEW';
+export type WorkspacePermissionAssignmentPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'CREATE_VISUALIZATION' | 'VIEW';
 
 // @public
 export class WorkspacesDeclarativeAPIsApi extends MetadataBaseApi implements WorkspacesDeclarativeAPIsApiInterface {

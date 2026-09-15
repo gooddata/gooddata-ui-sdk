@@ -90,7 +90,7 @@ function UiObjectShareDialogExample() {
             <div className="screenshot-target" style={{ minHeight: 400 }}>
                 <UiObjectShareDialog
                     isOpen
-                    objectTitle="Customer"
+                    title="Share attribute"
                     onClose={action("close")}
                     grantees={buildGrantees()}
                     onAddClick={action("add")}
@@ -126,7 +126,7 @@ function UiObjectShareDialogLoadingExample() {
                 <UiObjectShareDialog
                     isOpen
                     isLoading
-                    objectTitle="Customer"
+                    title="Share attribute"
                     onClose={action("close")}
                     grantees={[]}
                     onAddClick={action("add")}

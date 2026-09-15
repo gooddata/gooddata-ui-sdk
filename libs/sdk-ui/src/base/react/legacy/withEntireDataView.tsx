@@ -504,7 +504,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                 hasUnmounted.current = true;
                 refreshAbortController();
             };
-            // eslint-disable-next-line react-hooks/exhaustive-deps
+            // oxlint-disable-next-line react-hooks/exhaustive-deps
         }, []);
 
         // UNSAFE_componentWillReceiveProps; the props are compared with custom equality, hence the effect runs

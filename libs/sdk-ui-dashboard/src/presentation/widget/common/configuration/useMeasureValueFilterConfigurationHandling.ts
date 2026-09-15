@@ -93,15 +93,15 @@ export function useMeasureValueFilterConfigurationHandling(
                 ignore(ref, measureRef);
             }
         },
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
         [
-            // eslint-disable-next-line react-hooks/exhaustive-deps
+            // oxlint-disable-next-line react-hooks/exhaustive-deps
             isInsightWidget(widget),
-            // eslint-disable-next-line react-hooks/exhaustive-deps
+            // oxlint-disable-next-line react-hooks/exhaustive-deps
             isRichTextWidget(widget),
-            // eslint-disable-next-line react-hooks/exhaustive-deps
+            // oxlint-disable-next-line react-hooks/exhaustive-deps
             safeSerializeObjRef(measureRef),
-            // eslint-disable-next-line react-hooks/exhaustive-deps
+            // oxlint-disable-next-line react-hooks/exhaustive-deps
             safeSerializeObjRef(ref),
             ignoreInsightFilter,
             ignoreRichTextFilter,

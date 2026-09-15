@@ -120,7 +120,7 @@ export const useWidgetHighlighting = (widget: IWidget) => {
             }
         }
         // We intentionally exclude keepHighlight
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [isHighlighted, automationId, visualizationId, widgetId, retries]);
 
     // Remove highlight on outside click

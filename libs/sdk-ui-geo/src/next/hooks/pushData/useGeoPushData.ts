@@ -143,7 +143,7 @@ export function useGeoPushData<TProps extends IPushDataProps, TLegendContext ext
 
         // Enhance drill targets with geo-specific display form preference
         return enhanceDrillTargetsWithGeoDisplayForm(normalizedDrillTargets, geoLayerType);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [fingerprintsKey, initialDataView, geoLayerType]);
 
     const isGeoSegmentConflictRecommended = useMemo(() => {

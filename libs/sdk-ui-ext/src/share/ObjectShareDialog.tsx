@@ -11,11 +11,9 @@ import {
     UiConfirmDialog,
     UiGranteeRowControls,
     UiObjectShareDialog,
-    UiTag,
-    UiTooltip,
 } from "@gooddata/sdk-ui-kit";
 
-import { objectShareMessages } from "./messages.js";
+import { objectShareMessages, objectShareTitleMessages } from "./messages.js";
 import { granteeDisplayPair } from "./objectShareController.helpers.js";
 import type {
     IObjectShareDraft,
@@ -40,28 +38,6 @@ function grantLimitTooltips(
         map[level] = tooltip;
     }
     return map;
-}
-
-// Static Admin badge on the synthesized administrator self row — the tooltip
-// explains the manager's role-based access; the focusable span keeps it
-// keyboard-reachable (UiTag itself is not interactive).
-function AdminSelfTag() {
-    const intl = useIntl();
-    return (
-        <UiTooltip
-            triggerBy={["hover", "focus"]}
-            content={intl.formatMessage(objectShareMessages.adminTagTooltip)}
-            anchor={
-                <span tabIndex={0}>
-                    <UiTag
-                        label={intl.formatMessage(objectShareMessages.adminTagLabel)}
-                        size="small"
-                        variant="solid"
-                    />
-                </span>
-            }
-        />
-    );
 }
 
 /**
@@ -277,32 +253,39 @@ function ObjectShareDialogSession({
         };
     };
 
-    // Synthesized by the controller, not granted. The tag marks a workspace manager's
-    // role-based access on a FETCHED list; a draft's author needs no explaining.
-    const rows: IUiObjectShareDialogGrantee[] = [
-        ...(state.adminSelfRow
-            ? [
-                  {
-                      id: "self-admin",
-                      kind: "user" as const,
-                      name: intl.formatMessage(objectShareMessages.granteeYou, {
-                          name: state.adminSelfRow.name,
-                      }),
-                      email: state.adminSelfRow.email,
-                      controls: draft ? undefined : <AdminSelfTag />,
-                  },
-              ]
-            : []),
-        ...state.grantees.map(toGranteeRow),
-    ];
+    const rows: IUiObjectShareDialogGrantee[] = state.grantees.map(toGranteeRow);
+
+    // The heading names the shared object's type, one message per kind; a draft has no
+    // target yet and falls back to the generic variant. The note and the placeholder
+    // stay generic, so they carry no kind of their own.
+    const kind = target?.kind ?? "other";
+    const dialogTitle = intl.formatMessage(objectShareTitleMessages[kind]);
+    // A workspace manager's role-based access is explained by a note above the list
+    // rather than by a synthesized grantee row, which read as an explicit grant.
+    const note = state.showAdminAccessNote ? (
+        <>
+            <span className="gd-ui-kit-object-share-dialog__note-prefix">
+                {intl.formatMessage(objectShareMessages.adminNotePrefix)}
+            </span>{" "}
+            {intl.formatMessage(objectShareMessages.adminNote)}
+        </>
+    ) : undefined;
+    const emptyMessage = (
+        <>
+            <p>{intl.formatMessage(objectShareMessages.emptyGrantees)}</p>
+            <p>{intl.formatMessage(objectShareMessages.emptyGranteesHint)}</p>
+        </>
+    );
 
     return (
         <>
             <UiObjectShareDialog
                 isOpen={isShareViewOpen}
-                objectTitle={objectTitle}
+                title={dialogTitle}
                 onClose={closeDialog}
+                note={note}
                 grantees={rows}
+                emptyMessage={emptyMessage}
                 isLoading={isLoading}
                 onAddClick={actions.openAddGrantee}
                 isAddDisabled={!isMutable}
@@ -361,7 +344,6 @@ function ObjectShareDialogSession({
 
             <UiAddGranteeDialog
                 isOpen={isAddGranteeOpen}
-                objectTitle={objectTitle}
                 loadOptions={actions.loadOptions}
                 // The caller cannot grant above their own level; the server refuses it.
                 disabledLevels={grantableDisabledLevels}

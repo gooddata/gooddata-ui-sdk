@@ -1,4 +1,5 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import { useCallback, useRef } from "react";
 
 import { type IExportResult, isProtectedDataError } from "@gooddata/sdk-backend-spi";
@@ -40,6 +41,6 @@ export const useImageExportHandler = (): ExportImageHandler => {
                 addError(messages.messagesExportResultError);
             }
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 };

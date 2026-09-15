@@ -8,6 +8,8 @@ import {
     type Middleware,
     safePolygon,
     useClick,
+    useDelayGroup,
+    useDismiss,
     useFocus,
     useHover,
     useInteractions,
@@ -63,6 +65,8 @@ export function UiTooltip({
     component = "div",
     inlineAnchor = false,
     anchorWrapperStyles,
+    closeOnAnchorClick = false,
+    delayGroup = false,
 }: IUiTooltipProps) {
     const [isOpenInternal, setIsOpen] = useState(false);
     const isControlled = isOpenProp !== undefined;
@@ -129,7 +133,7 @@ export function UiTooltip({
     const triggerDimensions = useMemo(() => {
         const rect = refs.reference.current?.getBoundingClientRect?.();
         return getDimensionsFromRect(rect ?? null);
-    }, [refs.reference, isOpen]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [refs.reference, isOpen]); // oxlint-disable-line react-hooks/exhaustive-deps
 
     // Use state + layoutEffect to get dimensions AFTER DOM paints
     // This fixes arrow positioning for *-end placements on initial render
@@ -148,14 +152,18 @@ export function UiTooltip({
     // triggers are suppressed — otherwise an anchor that is shared with another
     // popover (e.g. the labels picker reusing the permission-menu button) would
     // toggle both.
+    // useHover does not read the group delay on its own; it has to be passed in.
+    const group = useDelayGroup(context, { enabled: delayGroup });
     const hover = useHover(context, {
         enabled: !isControlled && triggerBy.includes("hover"),
         move: false,
         handleClose: safePolygon({ requireIntent: true }),
-        delay: {
-            open: hoverOpenDelay,
-            close: hoverCloseDelay,
-        },
+        delay: delayGroup
+            ? group.delay
+            : {
+                  open: hoverOpenDelay,
+                  close: hoverCloseDelay,
+              },
     });
 
     const focus = useFocus(context, {
@@ -164,6 +172,16 @@ export function UiTooltip({
 
     const click = useClick(context, {
         enabled: !isControlled && triggerBy.includes("click"),
+    });
+
+    // Outside press and Escape stay with the DOM-based hooks below. Stays enabled while closed:
+    // the close it emits cancels a hover open that is still waiting on its delay.
+    const anchorPressDismiss = useDismiss(context, {
+        enabled: closeOnAnchorClick && !isControlled,
+        referencePress: true,
+        referencePressEvent: "click",
+        outsidePress: false,
+        escapeKey: false,
     });
 
     // Read the anchor lazily — floating-ui's `refs.reference` is a mutable
@@ -188,7 +206,12 @@ export function UiTooltip({
     });
     useCloseOnEscape(isOpen, handleClose);
 
-    const { getReferenceProps, getFloatingProps } = useInteractions([hover, focus, click]);
+    const { getReferenceProps, getFloatingProps } = useInteractions([
+        hover,
+        focus,
+        click,
+        anchorPressDismiss,
+    ]);
 
     const Component = component === "div" ? "div" : "span";
 

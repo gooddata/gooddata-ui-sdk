@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-catalog, sdk-ui-ext, sdk-ui-kit: Reworked object sharing in the Analytics Catalog to follow the reviewed design — the share and add-grantee dialogs, the permission menu, and the catalog detail's type row, clickable access value and read-only definition view.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

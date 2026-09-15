@@ -425,7 +425,7 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
         }
 
         return DropdownActions;
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [
         isConfigurationOpen,
         cancelText,

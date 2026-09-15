@@ -133,7 +133,7 @@ export function useCodemirror({
             onApi?.(null);
             view.destroy();
         };
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, []); // oxlint-disable-line react-hooks/exhaustive-deps
 
     // Handle external value changes
     useCodemirrorChange(viewRef, value, externalChangeSelection);

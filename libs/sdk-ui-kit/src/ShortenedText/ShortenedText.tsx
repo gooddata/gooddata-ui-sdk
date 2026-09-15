@@ -153,7 +153,7 @@ export const ShortenedText = forwardRef<IShortenedTextHandle, IShortenedTextProp
     useLayoutEffect(() => {
         checkTitle();
         // measure once on mount; later commits are handled by the effect below
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // Runs after every commit but only measures while the text is not shortened yet. Shortening

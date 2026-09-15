@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type RefObject,
@@ -196,9 +196,10 @@ export const usePagination = (hasTertiaryItem: boolean) => {
     // Clean up any pending timeouts on component unmount
     useEffect(() => {
         return () => {
+            // oxlint-disable-next-line react-hooks/exhaustive-deps
             if (resizeTimeoutId.current) {
                 // we want to clear the timeout during component unmount, not matter what
-                // eslint-disable-next-line react-hooks/exhaustive-deps
+                // oxlint-disable-next-line react-hooks/exhaustive-deps
                 clearTimeout(resizeTimeoutId.current);
             }
         };

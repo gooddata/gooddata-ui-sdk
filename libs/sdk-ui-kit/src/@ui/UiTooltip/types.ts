@@ -121,6 +121,20 @@ export interface IUiTooltipProps {
      * Custom styles for the anchor wrapper element
      */
     anchorWrapperStyles?: CSSProperties;
+
+    /**
+     * Close the tooltip when the anchor is clicked. Uncontrolled mode only.
+     * @defaultValue false
+     */
+    closeOnAnchorClick?: boolean;
+
+    /**
+     * Take the hover delays from an enclosing floating-ui `FloatingDelayGroup` instead of
+     * `hoverOpenDelay` / `hoverCloseDelay`. Sibling tooltips in the group open instantly while one
+     * of them was recently open.
+     * @defaultValue false
+     */
+    delayGroup?: boolean;
 }
 
 export type Dimensions = { width: number; height: number };

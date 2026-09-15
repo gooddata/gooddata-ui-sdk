@@ -5,13 +5,16 @@ import { type KeyboardEvent } from "react";
 /**
  * Checks if the given keyboard event is an action key = Enter or Space.
  *
+ * Both the produced character and the physical key are accepted, so it agrees with the navigation
+ * helpers in `@ui`, which match on `code`.
+ *
  * @param event - The keyboard event to check.
  * @returns `true` if the event is an action key, `false` otherwise.
  *
  * @internal
  */
 export const isActionKey = (event: KeyboardEvent): boolean => {
-    return event.key === "Enter" || event.key === " ";
+    return event.key === "Enter" || event.key === " " || event.code === "Enter" || event.code === "Space";
 };
 
 /**

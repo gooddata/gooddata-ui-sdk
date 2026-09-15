@@ -51,12 +51,12 @@ export const useDashboardAsyncRender = (id: string): UseDashboardAsyncRender => 
 
     const onRequestAsyncRender = useCallback(() => {
         requestDashboardAsyncRender(id);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
 
     const onResolveAsyncRender = useCallback(() => {
         resolveDashboardAsyncRender(id);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
 
     return {

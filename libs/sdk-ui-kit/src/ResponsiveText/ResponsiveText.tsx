@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactNode, useCallback, useLayoutEffect, useRef, useState } from "react";
 
@@ -67,7 +67,7 @@ export function ResponsiveText({
 
             setFontSize(minFontSize ? Math.max(size, minFontSize) : size);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [includeHeightCheck]);
 
     useLayoutEffect(() => {
@@ -79,7 +79,7 @@ export function ResponsiveText({
         windowInstance.addEventListener("resize", handleWindowResize);
 
         return () => windowInstance.removeEventListener("resize", handleWindowResize);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [windowResizeRefreshDelay]);
 
     useLayoutEffect(() => {

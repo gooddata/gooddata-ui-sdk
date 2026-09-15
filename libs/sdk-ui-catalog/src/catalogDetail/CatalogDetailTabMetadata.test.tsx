@@ -144,4 +144,12 @@ describe("CatalogDetailTabMetadata", () => {
         expect(screen.queryByText("Use for key driver analysis")).not.toBeInTheDocument();
         expect(screen.getByText("Granularities")).toBeInTheDocument();
     });
+
+    it("names the object's type in the first row", () => {
+        renderComponent();
+
+        const terms = screen.getAllByRole("term").map((el) => el.textContent);
+        expect(terms[0]).toBe("Type");
+        expect(screen.getByText("Metric")).toBeInTheDocument();
+    });
 });
