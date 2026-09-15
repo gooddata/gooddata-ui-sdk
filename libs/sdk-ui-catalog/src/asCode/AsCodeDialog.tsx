@@ -15,6 +15,7 @@ import type {
     AsCodeValidationContext,
     IAsCodeDescriptor,
     IAsCodeEditing,
+    IAsCodeMessages,
 } from "./descriptor.js";
 import { useAsCodeLoadFailure } from "./useAsCodeLoadFailure.js";
 
@@ -39,17 +40,43 @@ const messages = defineMessages({
     createSubmit: { id: "analyticsCatalog.asCode.dialog.create.submit" },
     editSubmit: { id: "analyticsCatalog.asCode.dialog.edit.submit" },
     cancel: { id: "analyticsCatalog.asCode.dialog.cancel" },
+    close: { id: "analyticsCatalog.catalogItem.closeButtonLabel" },
     unrepresentable: { id: "analyticsCatalog.asCode.dialog.unrepresentable" },
 });
+
+type Mode = "create" | "edit" | "view";
+
+type Submitting = {
+    onSubmit: (definition: unknown) => Promise<void>;
+    onDuplicate?: (definition: unknown) => void;
+};
 
 type Props = {
     descriptor: IAsCodeDescriptor;
     initialDefinition?: unknown;
     isLoading?: boolean;
     onClose: () => void;
-    onSubmit: (definition: unknown) => Promise<void>;
-    onDuplicate?: (definition: unknown) => void;
-} & ({ mode: "create"; fixedIdentifier?: undefined } | { mode: "edit"; fixedIdentifier: string });
+} & (
+    | ({ mode: "create"; fixedIdentifier?: undefined } & Submitting)
+    | ({ mode: "edit"; fixedIdentifier: string } & Submitting)
+    | {
+          /**
+           * Shows the definition without allowing edits: the view title, Close instead of Cancel,
+           * no Save and no footer. No duplication either — the copy could not be renamed, since
+           * the document it would come from is not editable.
+           */
+          mode: "view";
+          fixedIdentifier?: undefined;
+          onSubmit?: never;
+          onDuplicate?: never;
+      }
+);
+
+const TITLE_BY_MODE: Record<Mode, keyof IAsCodeMessages> = {
+    create: "createTitle",
+    edit: "editTitle",
+    view: "viewTitle",
+};
 
 /** @internal */
 export function AsCodeDialog(props: Props) {
@@ -57,6 +84,7 @@ export function AsCodeDialog(props: Props) {
     const { onClose, onSubmit, onDuplicate } = props;
     const intl = useIntl();
     const isEdit = mode === "edit";
+    const isView = mode === "view";
     const isWhiteLabeled = useIsWhiteLabeled();
     // Descriptor is fixed per mount, so these hook calls are unconditional (rules of hooks). `useEditing`
     // returns `null` while the async editing brain loads.
@@ -101,11 +129,9 @@ export function AsCodeDialog(props: Props) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isDirty, setIsDirty] = useState(false);
 
-    const headlineMessage = intl.formatMessage(
-        isEdit ? descriptor.messages.editTitle : descriptor.messages.createTitle,
-    );
+    const headlineMessage = intl.formatMessage(descriptor.messages[TITLE_BY_MODE[mode]]);
     const submitMessage = intl.formatMessage(isEdit ? messages.editSubmit : messages.createSubmit);
-    const cancelMessage = intl.formatMessage(messages.cancel);
+    const cancelMessage = intl.formatMessage(isView ? messages.close : messages.cancel);
 
     const handleClose = useCallback(() => {
         if (!isSubmitting) {
@@ -130,7 +156,7 @@ export function AsCodeDialog(props: Props) {
     );
 
     const handleSubmit = useCallback(async () => {
-        if (!editing || initialYaml === null) {
+        if (!editing || initialYaml === null || !onSubmit) {
             return;
         }
         const context: AsCodeValidationContext =
@@ -223,6 +249,7 @@ export function AsCodeDialog(props: Props) {
             cancelButtonText={cancelMessage}
             submitButtonText={submitMessage}
             isPositive
+            hideSubmitButton={isView}
             isSubmitDisabled={isSubmitting || loading || isBaseUnrepresentable || (isEdit && !isDirty)}
             isCancelDisabled={isSubmitting}
             shouldCloseOnEscape={!isSubmitting}
@@ -230,7 +257,7 @@ export function AsCodeDialog(props: Props) {
             onClose={handleClose}
             onSubmit={handleSubmit}
             displayCloseButton={!isSubmitting}
-            footerLeftRenderer={footerLeftRenderer}
+            footerLeftRenderer={isView ? undefined : footerLeftRenderer}
         >
             <div className="gd-ascode-dialog-content">
                 {/* One spinner for both phases: the object fetch (isLoading) and the editor chunk
@@ -257,6 +284,7 @@ export function AsCodeDialog(props: Props) {
                             ) : null}
                             <div className="gd-ascode-dialog-editor">
                                 <AsCodeEditorBody
+                                    readOnly={isView}
                                     initialValue={initialYaml}
                                     label={intl.formatMessage(descriptor.messages.sectionHeader)}
                                     onChange={handleChange}

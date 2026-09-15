@@ -1142,7 +1142,7 @@ export function CorePivotTableAgImpl(props: ICorePivotTableProps) {
             internalRef.current.destroy();
         };
         // the table must be initialized on mount only; all the functions used here are stable
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // componentDidUpdate

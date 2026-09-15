@@ -1159,6 +1159,7 @@ export type {
 
 export type { IWorkspacePermissions, WorkspacePermission } from "./permissions/index.js";
 export { canCreateMetric, canEditMetric, canShareMetric } from "./permissions/metric.js";
+export { canEditVisualization, canShareVisualization } from "./permissions/visualization.js";
 
 export {
     type DataValue,

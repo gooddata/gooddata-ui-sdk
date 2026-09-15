@@ -401,7 +401,7 @@ export const DateFilter: NamedExoticComponent<IDateFilterProps> = memo(function 
 
     useEffect(() => {
         checkInitialFilterOption(originalSelectedFilterOption);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const normalizeEmptyValueHandling = (selectedFilterOption: DateFilterOption): DateFilterOption => {

@@ -128,7 +128,7 @@ export const useInitializeDashboardStore = (
         }
     }, [dashboardStore, props.config?.isAiMode]);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         if (!shallowEqualObjects(previousInitProps, currentInitProps) || !dashboardStore) {
             if (dashboardStore) {

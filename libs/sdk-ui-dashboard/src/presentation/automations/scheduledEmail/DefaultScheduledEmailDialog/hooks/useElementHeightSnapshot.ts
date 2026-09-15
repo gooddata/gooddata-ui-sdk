@@ -46,7 +46,7 @@ export function useElementHeightSnapshot(
         },
         // resubscribeKey is not read in the body, but must force a resubscribe once the ref
         // points to a newly mounted node.
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
         [ref, resubscribeKey],
     );
 

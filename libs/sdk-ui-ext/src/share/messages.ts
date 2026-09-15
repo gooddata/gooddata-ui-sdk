@@ -41,12 +41,31 @@ export const objectShareMessages = defineMessages({
      */
     toastEscalationRefused: { id: "objectShare.toast.escalationRefused" },
     granteeYou: { id: "objectShare.grantee.you" },
-    adminTagLabel: { id: "objectShare.adminTag.label" },
-    adminTagTooltip: { id: "objectShare.adminTag.tooltip" },
+    adminNotePrefix: { id: "objectShare.adminNote.prefix" },
+    adminNote: { id: "objectShare.adminNote" },
+    emptyGrantees: { id: "objectShare.emptyGrantees" },
+    emptyGranteesHint: { id: "objectShare.emptyGrantees.hint" },
     toastGranteeAdded: { id: "objectShare.toast.granteeAdded" },
     toastAccessUpdated: { id: "objectShare.toast.accessUpdated" },
     toastGeneralAccessUpdated: { id: "objectShare.toast.generalAccessUpdated" },
     toastError: { id: "objectShare.toast.error" },
     toastLabelScopePartial: { id: "objectShare.toast.labelScopePartial" },
     loadError: { id: "objectShare.loadError" },
+});
+
+/**
+ * The dialog heading, one whole sentence per shared object kind rather than one message
+ * branching on the kind: a translator then sees short titles they can inflect freely,
+ * which interpolating the type name into a template would not allow.
+ *
+ * @internal
+ */
+export const objectShareTitleMessages = defineMessages({
+    attribute: { id: "objectShare.title.attribute" },
+    fact: { id: "objectShare.title.fact" },
+    label: { id: "objectShare.title.label" },
+    measure: { id: "objectShare.title.measure" },
+    computedAttribute: { id: "objectShare.title.computedAttribute" },
+    insight: { id: "objectShare.title.insight" },
+    other: { id: "objectShare.title.other" },
 });

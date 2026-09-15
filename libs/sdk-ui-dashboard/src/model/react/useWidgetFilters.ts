@@ -107,11 +107,11 @@ function useWidgetFiltersImpl(
                 runFiltersQuery(widget.ref, insight);
             }
         },
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
         [
-            // eslint-disable-next-line react-hooks/exhaustive-deps
+            // oxlint-disable-next-line react-hooks/exhaustive-deps
             safeSerializeObjRef(widget?.ref),
-            // eslint-disable-next-line react-hooks/exhaustive-deps
+            // oxlint-disable-next-line react-hooks/exhaustive-deps
             fullFiltersDigest(nonIgnoredFilters),
             insight,
             nonIgnoredFiltersStatus,
@@ -213,13 +213,13 @@ function useNonIgnoredFilters(widget: FilterableDashboardWidget | undefined | nu
             // force ignore the insight -> this way we get only the dashboard level filters even for InsightWidgets
             run(widget.ref, null);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
         safeSerializeObjRef(widget?.ref),
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
         stringify(widget?.ignoreDashboardFilters),
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
         filtersDigest(usedFilters, widgetIgnoresDateFilter, isInEditMode),
     ]);
 

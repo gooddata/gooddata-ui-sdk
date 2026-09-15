@@ -97,21 +97,41 @@ describe("UiPermissionMenu", () => {
         expect(screen.getByRole("menuitemradio", { name: "Can view" })).not.toHaveAttribute("aria-disabled");
     });
 
-    it("swaps the disabled level's info tooltip for the disabled explanation", async () => {
+    it("explains a disabled level with a tooltip over the whole row", async () => {
         renderMenu({
             selectedLevel: "VIEW",
             disabledLevels: ["SHARE", "EDIT"],
             disabledTooltip: "You can't set higher permissions for yourself.",
         });
         openMenu();
-        const infoButtons = screen.getAllByRole("button", { name: /More information about/ });
         // Real focus, so floating-ui's focus trigger fires (fireEvent.focus would bypass it).
         act(() => {
-            infoButtons[0]!.focus();
+            screen.getByRole("menuitemradio", { name: /Can edit & share/ }).focus();
         });
-        expect(await screen.findByRole("tooltip")).toHaveTextContent(
+        const tooltip = await screen.findByRole("tooltip");
+        expect(tooltip).toHaveTextContent("You can't set higher permissions for yourself.");
+        // The width cap lives on the content wrapper's class (see the SCSS).
+        expect(tooltip.querySelector(".gd-ui-kit-permission-menu__item-tooltip")).not.toBeNull();
+        // The explanation is also a persistent accessible description of the row, so
+        // assistive tech gets it without the (transient) tooltip.
+        expect(screen.getByRole("menuitemradio", { name: /Can edit & share/ })).toHaveAccessibleDescription(
             "You can't set higher permissions for yourself.",
         );
+        expect(screen.getByRole("menuitemradio", { name: "Can view" })).not.toHaveAccessibleDescription();
+    });
+
+    it("carries no tooltip and no info button on enabled rows", async () => {
+        renderMenu({ selectedLevel: "VIEW", onRemoveAccess: () => {} });
+        openMenu();
+        expect(screen.queryByRole("button", { name: /More information about/ })).not.toBeInTheDocument();
+        act(() => {
+            screen.getByRole("menuitemradio", { name: /Can edit & share/ }).focus();
+        });
+        // Nothing to explain on an enabled row.
+        await act(async () => {
+            await new Promise((resolve) => setTimeout(resolve, 50));
+        });
+        expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
     });
 
     it("prefers a per-level disabled tooltip over the shared one", async () => {
@@ -122,18 +142,18 @@ describe("UiPermissionMenu", () => {
             disabledLevelTooltips: { SHARE: "Covered by inherited access." },
         });
         openMenu();
-        // Info buttons render in EDIT, SHARE, VIEW order.
-        const infoButtons = screen.getAllByRole("button", { name: /More information about/ });
+        const share = screen.getByRole("menuitemradio", { name: /Can view & share/ });
+        const view = screen.getByRole("menuitemradio", { name: "Can view" });
         act(() => {
-            infoButtons[1]!.focus();
+            share.focus();
         });
         expect(await screen.findByRole("tooltip")).toHaveTextContent("Covered by inherited access.");
         act(() => {
-            infoButtons[1]!.blur();
+            share.blur();
         });
         await waitFor(() => expect(screen.queryByRole("tooltip")).not.toBeInTheDocument());
         act(() => {
-            infoButtons[2]!.focus();
+            view.focus();
         });
         // No per-level entry for VIEW — falls back to the shared tooltip.
         expect(await screen.findByRole("tooltip")).toHaveTextContent(
@@ -190,17 +210,5 @@ describe("UiPermissionMenu", () => {
         renderMenu({ dataTestId: "perm-menu" });
         openMenu();
         expect(screen.getByTestId("perm-menu")).toBeInTheDocument();
-    });
-
-    it("renders tooltip anchors as accessible icon buttons next to level rows", () => {
-        renderMenu();
-        openMenu();
-        const infoButtons = screen.getAllByRole("button", { name: /More information about/ });
-        // One per level row (EDIT + SHARE + VIEW)
-        expect(infoButtons.length).toBe(3);
-        for (const btn of infoButtons) {
-            // Not nested inside the menuitemradio button
-            expect(btn.closest('[role="menuitemradio"]')).toBeNull();
-        }
     });
 });

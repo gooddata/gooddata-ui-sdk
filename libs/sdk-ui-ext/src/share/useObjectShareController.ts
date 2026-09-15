@@ -19,7 +19,6 @@ import {
     mergeDisabledLevels,
     sortGrantees,
     toGranularGrantee,
-    userDisplayPair,
 } from "./objectShareController.helpers.js";
 import {
     type IObjectShareController,
@@ -78,7 +77,6 @@ export function useObjectShareController(
     const {
         hasList,
         grantees,
-        selfIdentity,
         isWorkspaceManager,
         selfIdentityResolved,
         generalAccess,
@@ -810,12 +808,10 @@ export function useObjectShareController(
             isWorkspaceManager === false && selfRow ? levelsAbove(selfRow.level) : undefined;
         const granteeControlsLocked =
             !selfIdentityResolved && !isWorkspaceManager && grantees.some((g) => g.kind === "user");
-        // Policy in `IObjectShareControllerState.adminSelfRow`. `!ownRow`, not `!selfRow`: a
-        // manager's real row must not get the synthesized one next to it.
-        const adminSelfRow =
-            (draft || (status === "success" && isWorkspaceManager === true)) && !ownRow && selfIdentity
-                ? userDisplayPair(selfIdentity, selfIdentity.id)
-                : undefined;
+        // Policy in `IObjectShareControllerState.showAdminAccessNote`: role-based access is
+        // explained by a note, not a grantee row, so it does not depend on the caller having
+        // (or lacking) a row of their own.
+        const showAdminAccessNote = !draft && status === "success" && isWorkspaceManager === true;
         return {
             subview,
             status,
@@ -832,7 +828,7 @@ export function useObjectShareController(
             ),
             grantableDisabledLevels,
             granteeControlsLocked,
-            adminSelfRow,
+            showAdminAccessNote,
             ...effectiveWorkspace,
             workspaceInheritedLevel: workspaceInheritedLevel,
             workspaceLevelLocked: generalAccess !== "WORKSPACE" || workspaceInheritedLevel === "EDIT",
@@ -850,7 +846,6 @@ export function useObjectShareController(
         status,
         loadError,
         summary,
-        selfIdentity,
         selfIdentityResolved,
         isWorkspaceManager,
         draft,

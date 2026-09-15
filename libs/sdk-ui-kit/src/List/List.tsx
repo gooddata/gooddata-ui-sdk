@@ -148,7 +148,7 @@ export function List<T>({
         }
         rowVirtualizer.scrollToIndex(Math.min(Math.max(scrollToItemRowIndex, 0), rowsCount - 1));
         // rowVirtualizer identity is stable; intentionally only react to the target index changing
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [scrollToItemRowIndex, rowsCount]);
 
     // converts vertical scroll position to the [first, last] visible item index range,

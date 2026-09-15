@@ -1,0 +1,29 @@
+// (C) 2026 GoodData Corporation
+
+@use "../UiToolbar/toolbarItem";
+
+.gd-ui-kit-toolbar-select {
+    $root: &;
+    $fixed-width: 240px;
+
+    @include toolbarItem.toolbar-item-base;
+    @include toolbarItem.toolbar-item-ladder($root);
+
+    justify-content: flex-start;
+
+    &--width-fixed {
+        width: $fixed-width;
+    }
+
+    &__label {
+        flex: 1 1 auto;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: left;
+    }
+
+    &--isPlaceholder:not([aria-disabled="true"]) #{$root}__label {
+        color: var(--gd-palette-complementary-6);
+    }
+}

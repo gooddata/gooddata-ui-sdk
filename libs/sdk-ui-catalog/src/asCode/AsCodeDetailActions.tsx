@@ -31,7 +31,7 @@ export interface IAsCodeDetailActionsProps {
     descriptor: IAsCodeDescriptor;
     item: ICatalogItem;
     onOpen?: (event: MouseEvent, openEvent: OpenHandlerEvent) => void;
-    canShare?: boolean;
+    /** Sharing is offered when present. */
     onShare?: () => void;
     onCatalogItemCreate?: (item: ICatalogItem) => void;
     onCatalogItemUpdate?: (item: ICatalogItem) => void;
@@ -43,7 +43,6 @@ export function AsCodeDetailActions({
     descriptor,
     item,
     onOpen,
-    canShare,
     onShare,
     onCatalogItemCreate,
     onCatalogItemUpdate,
@@ -112,7 +111,7 @@ export function AsCodeDetailActions({
                 item={item}
                 workspaceId={workspaceId}
                 actionGroups={actionGroups}
-                leadingActions={canShare && onShare ? <ShareButton onClick={onShare} /> : null}
+                leadingActions={onShare ? <ShareButton onClick={onShare} /> : null}
                 onEditClick={canEditAsCode ? handleEditOpen : undefined}
                 onActionsMenuSelect={handleActionsMenuSelect}
             />
@@ -120,6 +119,7 @@ export function AsCodeDetailActions({
                 <AsCodeEditDialog
                     descriptor={descriptor}
                     item={dialog.item}
+                    mode="edit"
                     onClose={closeDialog}
                     onSaved={onCatalogItemUpdate}
                     onDuplicate={handleEditDuplicate}

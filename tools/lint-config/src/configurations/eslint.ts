@@ -167,6 +167,21 @@ const eslintRulesCommon: Rules = {
     "no-caller": "error",
     "no-eval": "error",
     "no-delete-var": "error",
+
+    "no-restricted-exports": [
+        "error",
+        {
+            restrictDefaultExports: {
+                direct: true,
+                named: true,
+                defaultFrom: true,
+                namedFrom: true,
+                namespaceFrom: true,
+            },
+        },
+    ],
+
+    "no-negated-condition": "error",
 };
 
 export const eslintRulesNativeSupported: Rules = {
@@ -189,20 +204,6 @@ export const eslintRulesNativeNotSupported: Rules = {
 
     "no-dupe-args": "error",
 
-    // https://github.com/oxc-project/oxc/releases/tag/apps_v1.77.0
-    "no-restricted-exports": [
-        "error",
-        {
-            restrictDefaultExports: {
-                direct: true,
-                named: true,
-                defaultFrom: true,
-                namedFrom: true,
-                namespaceFrom: true,
-            },
-        },
-    ],
-
     "no-restricted-syntax": [
         "error",
         {
@@ -215,14 +216,11 @@ export const eslintRulesNativeNotSupported: Rules = {
         },
     ],
 
-    // https://github.com/oxc-project/oxc/releases/tag/apps_v1.72.0
-    "no-negated-condition": "error",
+    // security rules
+    "no-octal-escape": "error",
 
     // todo: maybe leave this here, both linters seem to turn it on by default and conflict
     "prefer-const": "off",
-
-    // security rules
-    "no-octal-escape": "error",
 };
 
 export const eslintRules: Rules = {
@@ -272,9 +270,6 @@ export const eslintOverridesNativeSupported: IOverride[] = [
             ],
         },
     },
-];
-
-export const eslintOverridesNativeNotSupported: IOverride[] = [
     {
         // ESLint flat config files & Vite config files require a default export
         files: [
@@ -297,6 +292,9 @@ export const eslintOverridesNativeNotSupported: IOverride[] = [
             "no-restricted-exports": "off",
         },
     },
+];
+
+export const eslintOverridesNativeNotSupported: IOverride[] = [
     {
         files: typescriptOverrideFiles,
         rules: {

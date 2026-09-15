@@ -18571,9 +18571,9 @@
                 },
                 "x-gdc-security-info": {
                     "permissions": [
-                        "ANALYZE"
+                        "CREATE_VISUALIZATION"
                     ],
-                    "description": "Contains minimal permission level required to manage this object type."
+                    "description": "Contains minimal permission level required to create Visualizations"
                 }
             }
         },
@@ -29698,6 +29698,101 @@
                     "description": "Permissions required to add an invitation."
                 }
             }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/visualizationObjects/{visualizationObjectId}/managePermissions": {
+            "post": {
+                "tags": [
+                    "Permissions",
+                    "actions"
+                ],
+                "summary": "(BETA) Manage Permissions for a Visualization",
+                "operationId": "manageVisualizationPermissions",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "visualizationObjectId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "description": "An array of visualization-permission assignments.",
+                                "items": {
+                                    "oneOf": [
+                                        {
+                                            "$ref": "#/components/schemas/VisualizationPermissionsForAssignee"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/VisualizationPermissionsForAssigneeRule"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/visualizationObjects/{visualizationObjectId}/permissions": {
+            "get": {
+                "tags": [
+                    "Permissions",
+                    "actions"
+                ],
+                "summary": "(BETA) Get Visualization Permissions",
+                "operationId": "visualizationPermissions",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "visualizationObjectId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VisualizationPermissions"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -30780,97 +30875,97 @@
                 }
             },
             "AttributePermissions": {
-                "properties": {
-                    "rules": {
-                        "description": "List of rules",
-                        "items": {
-                            "$ref": "#/components/schemas/RulePermission"
-                        },
-                        "type": "array"
-                    },
-                    "userGroups": {
-                        "description": "List of user groups",
-                        "items": {
-                            "$ref": "#/components/schemas/UserGroupPermission"
-                        },
-                        "type": "array"
-                    },
-                    "users": {
-                        "description": "List of users",
-                        "items": {
-                            "$ref": "#/components/schemas/UserPermission"
-                        },
-                        "type": "array"
-                    }
-                },
                 "required": [
                     "rules",
                     "userGroups",
                     "users"
                 ],
-                "type": "object"
+                "type": "object",
+                "properties": {
+                    "rules": {
+                        "type": "array",
+                        "description": "List of rules",
+                        "items": {
+                            "$ref": "#/components/schemas/RulePermission"
+                        }
+                    },
+                    "userGroups": {
+                        "type": "array",
+                        "description": "List of user groups",
+                        "items": {
+                            "$ref": "#/components/schemas/UserGroupPermission"
+                        }
+                    },
+                    "users": {
+                        "type": "array",
+                        "description": "List of users",
+                        "items": {
+                            "$ref": "#/components/schemas/UserPermission"
+                        }
+                    }
+                }
             },
             "AttributePermissionsAssignment": {
-                "description": "Desired levels of permissions on an attribute for an assignee.",
+                "required": [
+                    "permissions"
+                ],
+                "type": "object",
                 "properties": {
                     "permissions": {
+                        "type": "array",
                         "items": {
+                            "type": "string",
                             "enum": [
                                 "EDIT",
                                 "SHARE",
                                 "VIEW"
-                            ],
-                            "type": "string"
-                        },
-                        "type": "array"
+                            ]
+                        }
                     }
                 },
-                "required": [
-                    "permissions"
-                ],
-                "type": "object"
+                "description": "Desired levels of permissions on an attribute for an assignee."
             },
             "AttributePermissionsForAssignee": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/AttributePermissionsAssignment"
-                    },
-                    {
-                        "properties": {
-                            "assigneeIdentifier": {
-                                "$ref": "#/components/schemas/AssigneeIdentifier"
-                            }
-                        },
-                        "type": "object"
-                    }
-                ],
-                "description": "Desired levels of attribute permissions for an assignee identified by an identifier.",
                 "required": [
                     "assigneeIdentifier",
                     "permissions"
                 ],
-                "type": "object"
-            },
-            "AttributePermissionsForAssigneeRule": {
+                "type": "object",
+                "description": "Desired levels of attribute permissions for an assignee identified by an identifier.",
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/AttributePermissionsAssignment"
                     },
                     {
+                        "type": "object",
                         "properties": {
-                            "assigneeRule": {
-                                "$ref": "#/components/schemas/AssigneeRule"
+                            "assigneeIdentifier": {
+                                "$ref": "#/components/schemas/AssigneeIdentifier"
                             }
-                        },
-                        "type": "object"
+                        }
                     }
-                ],
-                "description": "Desired levels of attribute permissions for a collection of assignees identified by a rule.",
+                ]
+            },
+            "AttributePermissionsForAssigneeRule": {
                 "required": [
                     "assigneeRule",
                     "permissions"
                 ],
-                "type": "object"
+                "type": "object",
+                "description": "Desired levels of attribute permissions for a collection of assignees identified by a rule.",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/AttributePermissionsAssignment"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "assigneeRule": {
+                                "$ref": "#/components/schemas/AssigneeRule"
+                            }
+                        }
+                    }
+                ]
             },
             "AutomationAlert": {
                 "required": [
@@ -36476,6 +36571,7 @@
                             "READ_KNOWLEDGE_DOCUMENTS",
                             "CREATE_FILTER_VIEW",
                             "CREATE_METRIC",
+                            "CREATE_VISUALIZATION",
                             "VIEW"
                         ]
                     }
@@ -37379,6 +37475,7 @@
                             "READ_KNOWLEDGE_DOCUMENTS",
                             "CREATE_FILTER_VIEW",
                             "CREATE_METRIC",
+                            "CREATE_VISUALIZATION",
                             "VIEW"
                         ]
                     }
@@ -37803,97 +37900,97 @@
                 ]
             },
             "FactPermissions": {
-                "properties": {
-                    "rules": {
-                        "description": "List of rules",
-                        "items": {
-                            "$ref": "#/components/schemas/RulePermission"
-                        },
-                        "type": "array"
-                    },
-                    "userGroups": {
-                        "description": "List of user groups",
-                        "items": {
-                            "$ref": "#/components/schemas/UserGroupPermission"
-                        },
-                        "type": "array"
-                    },
-                    "users": {
-                        "description": "List of users",
-                        "items": {
-                            "$ref": "#/components/schemas/UserPermission"
-                        },
-                        "type": "array"
-                    }
-                },
                 "required": [
                     "rules",
                     "userGroups",
                     "users"
                 ],
-                "type": "object"
+                "type": "object",
+                "properties": {
+                    "rules": {
+                        "type": "array",
+                        "description": "List of rules",
+                        "items": {
+                            "$ref": "#/components/schemas/RulePermission"
+                        }
+                    },
+                    "userGroups": {
+                        "type": "array",
+                        "description": "List of user groups",
+                        "items": {
+                            "$ref": "#/components/schemas/UserGroupPermission"
+                        }
+                    },
+                    "users": {
+                        "type": "array",
+                        "description": "List of users",
+                        "items": {
+                            "$ref": "#/components/schemas/UserPermission"
+                        }
+                    }
+                }
             },
             "FactPermissionsAssignment": {
-                "description": "Desired levels of permissions on a fact for an assignee.",
+                "required": [
+                    "permissions"
+                ],
+                "type": "object",
                 "properties": {
                     "permissions": {
+                        "type": "array",
                         "items": {
+                            "type": "string",
                             "enum": [
                                 "EDIT",
                                 "SHARE",
                                 "VIEW"
-                            ],
-                            "type": "string"
-                        },
-                        "type": "array"
+                            ]
+                        }
                     }
                 },
-                "required": [
-                    "permissions"
-                ],
-                "type": "object"
+                "description": "Desired levels of permissions on a fact for an assignee."
             },
             "FactPermissionsForAssignee": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/FactPermissionsAssignment"
-                    },
-                    {
-                        "properties": {
-                            "assigneeIdentifier": {
-                                "$ref": "#/components/schemas/AssigneeIdentifier"
-                            }
-                        },
-                        "type": "object"
-                    }
-                ],
-                "description": "Desired levels of fact permissions for an assignee identified by an identifier.",
                 "required": [
                     "assigneeIdentifier",
                     "permissions"
                 ],
-                "type": "object"
-            },
-            "FactPermissionsForAssigneeRule": {
+                "type": "object",
+                "description": "Desired levels of fact permissions for an assignee identified by an identifier.",
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/FactPermissionsAssignment"
                     },
                     {
+                        "type": "object",
                         "properties": {
-                            "assigneeRule": {
-                                "$ref": "#/components/schemas/AssigneeRule"
+                            "assigneeIdentifier": {
+                                "$ref": "#/components/schemas/AssigneeIdentifier"
                             }
-                        },
-                        "type": "object"
+                        }
                     }
-                ],
-                "description": "Desired levels of fact permissions for a collection of assignees identified by a rule.",
+                ]
+            },
+            "FactPermissionsForAssigneeRule": {
                 "required": [
                     "assigneeRule",
                     "permissions"
                 ],
-                "type": "object"
+                "type": "object",
+                "description": "Desired levels of fact permissions for a collection of assignees identified by a rule.",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/FactPermissionsAssignment"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "assigneeRule": {
+                                "$ref": "#/components/schemas/AssigneeRule"
+                            }
+                        }
+                    }
+                ]
             },
             "FeatureFlagsContext": {
                 "required": [
@@ -60458,6 +60555,7 @@
                                         "READ_KNOWLEDGE_DOCUMENTS",
                                         "CREATE_FILTER_VIEW",
                                         "CREATE_METRIC",
+                                        "CREATE_VISUALIZATION",
                                         "VIEW"
                                     ]
                                 }
@@ -61445,97 +61543,97 @@
                 "description": "A label identifier."
             },
             "LabelPermissions": {
-                "properties": {
-                    "rules": {
-                        "description": "List of rules",
-                        "items": {
-                            "$ref": "#/components/schemas/RulePermission"
-                        },
-                        "type": "array"
-                    },
-                    "userGroups": {
-                        "description": "List of user groups",
-                        "items": {
-                            "$ref": "#/components/schemas/UserGroupPermission"
-                        },
-                        "type": "array"
-                    },
-                    "users": {
-                        "description": "List of users",
-                        "items": {
-                            "$ref": "#/components/schemas/UserPermission"
-                        },
-                        "type": "array"
-                    }
-                },
                 "required": [
                     "rules",
                     "userGroups",
                     "users"
                 ],
-                "type": "object"
+                "type": "object",
+                "properties": {
+                    "rules": {
+                        "type": "array",
+                        "description": "List of rules",
+                        "items": {
+                            "$ref": "#/components/schemas/RulePermission"
+                        }
+                    },
+                    "userGroups": {
+                        "type": "array",
+                        "description": "List of user groups",
+                        "items": {
+                            "$ref": "#/components/schemas/UserGroupPermission"
+                        }
+                    },
+                    "users": {
+                        "type": "array",
+                        "description": "List of users",
+                        "items": {
+                            "$ref": "#/components/schemas/UserPermission"
+                        }
+                    }
+                }
             },
             "LabelPermissionsAssignment": {
-                "description": "Desired levels of permissions on a label for an assignee.",
+                "required": [
+                    "permissions"
+                ],
+                "type": "object",
                 "properties": {
                     "permissions": {
+                        "type": "array",
                         "items": {
+                            "type": "string",
                             "enum": [
                                 "EDIT",
                                 "SHARE",
                                 "VIEW"
-                            ],
-                            "type": "string"
-                        },
-                        "type": "array"
+                            ]
+                        }
                     }
                 },
-                "required": [
-                    "permissions"
-                ],
-                "type": "object"
+                "description": "Desired levels of permissions on a label for an assignee."
             },
             "LabelPermissionsForAssignee": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/LabelPermissionsAssignment"
-                    },
-                    {
-                        "properties": {
-                            "assigneeIdentifier": {
-                                "$ref": "#/components/schemas/AssigneeIdentifier"
-                            }
-                        },
-                        "type": "object"
-                    }
-                ],
-                "description": "Desired levels of label permissions for an assignee identified by an identifier.",
                 "required": [
                     "assigneeIdentifier",
                     "permissions"
                 ],
-                "type": "object"
-            },
-            "LabelPermissionsForAssigneeRule": {
+                "type": "object",
+                "description": "Desired levels of label permissions for an assignee identified by an identifier.",
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/LabelPermissionsAssignment"
                     },
                     {
+                        "type": "object",
                         "properties": {
-                            "assigneeRule": {
-                                "$ref": "#/components/schemas/AssigneeRule"
+                            "assigneeIdentifier": {
+                                "$ref": "#/components/schemas/AssigneeIdentifier"
                             }
-                        },
-                        "type": "object"
+                        }
                     }
-                ],
-                "description": "Desired levels of label permissions for a collection of assignees identified by a rule.",
+                ]
+            },
+            "LabelPermissionsForAssigneeRule": {
                 "required": [
                     "assigneeRule",
                     "permissions"
                 ],
-                "type": "object"
+                "type": "object",
+                "description": "Desired levels of label permissions for a collection of assignees identified by a rule.",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/LabelPermissionsAssignment"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "assigneeRule": {
+                                "$ref": "#/components/schemas/AssigneeRule"
+                            }
+                        }
+                    }
+                ]
             },
             "ListLinks": {
                 "allOf": [
@@ -64589,6 +64687,7 @@
                                 "READ_KNOWLEDGE_DOCUMENTS",
                                 "CREATE_FILTER_VIEW",
                                 "CREATE_METRIC",
+                                "CREATE_VISUALIZATION",
                                 "VIEW"
                             ]
                         }
@@ -64616,6 +64715,7 @@
                                 "READ_KNOWLEDGE_DOCUMENTS",
                                 "CREATE_FILTER_VIEW",
                                 "CREATE_METRIC",
+                                "CREATE_VISUALIZATION",
                                 "VIEW"
                             ]
                         }
@@ -64734,6 +64834,99 @@
                     }
                 },
                 "description": "Export request object describing the export properties and metadata for dashboard PDF exports."
+            },
+            "VisualizationPermissions": {
+                "required": [
+                    "rules",
+                    "userGroups",
+                    "users"
+                ],
+                "type": "object",
+                "properties": {
+                    "rules": {
+                        "type": "array",
+                        "description": "List of rules",
+                        "items": {
+                            "$ref": "#/components/schemas/RulePermission"
+                        }
+                    },
+                    "userGroups": {
+                        "type": "array",
+                        "description": "List of user groups",
+                        "items": {
+                            "$ref": "#/components/schemas/UserGroupPermission"
+                        }
+                    },
+                    "users": {
+                        "type": "array",
+                        "description": "List of users",
+                        "items": {
+                            "$ref": "#/components/schemas/UserPermission"
+                        }
+                    }
+                }
+            },
+            "VisualizationPermissionsAssignment": {
+                "required": [
+                    "permissions"
+                ],
+                "type": "object",
+                "properties": {
+                    "permissions": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "EDIT",
+                                "SHARE",
+                                "VIEW"
+                            ]
+                        }
+                    }
+                },
+                "description": "Desired levels of permissions on a visualization for an assignee."
+            },
+            "VisualizationPermissionsForAssignee": {
+                "required": [
+                    "assigneeIdentifier",
+                    "permissions"
+                ],
+                "type": "object",
+                "description": "Desired levels of visualization permissions for an assignee identified by an identifier.",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/VisualizationPermissionsAssignment"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "assigneeIdentifier": {
+                                "$ref": "#/components/schemas/AssigneeIdentifier"
+                            }
+                        }
+                    }
+                ]
+            },
+            "VisualizationPermissionsForAssigneeRule": {
+                "required": [
+                    "assigneeRule",
+                    "permissions"
+                ],
+                "type": "object",
+                "description": "Desired levels of visualization permissions for a collection of assignees identified by a rule.",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/VisualizationPermissionsAssignment"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "assigneeRule": {
+                                "$ref": "#/components/schemas/AssigneeRule"
+                            }
+                        }
+                    }
+                ]
             },
             "Webhook": {
                 "required": [
@@ -64958,6 +65151,7 @@
                                 "READ_KNOWLEDGE_DOCUMENTS",
                                 "CREATE_FILTER_VIEW",
                                 "CREATE_METRIC",
+                                "CREATE_VISUALIZATION",
                                 "VIEW"
                             ]
                         }
@@ -64978,6 +65172,7 @@
                                 "READ_KNOWLEDGE_DOCUMENTS",
                                 "CREATE_FILTER_VIEW",
                                 "CREATE_METRIC",
+                                "CREATE_VISUALIZATION",
                                 "VIEW"
                             ]
                         }

@@ -22,6 +22,6 @@ export const useResolveDashboardInsightProperties = (
 ): IInsight => {
     const { widget, insight } = props;
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
     return useMemo(() => mergeInsightWithWidgetProperties(insight, widget), [insight, widget.properties]);
 };

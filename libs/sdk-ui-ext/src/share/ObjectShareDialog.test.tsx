@@ -1,6 +1,9 @@
 // (C) 2026 GoodData Corporation
 
-import { act, render, screen } from "@testing-library/react";
+import { type ReactNode } from "react";
+
+import { act, render } from "@testing-library/react";
+import { renderToStaticMarkup } from "react-dom/server";
 import { IntlProvider } from "react-intl";
 import { afterAll, describe, expect, it, vi } from "vitest";
 
@@ -41,6 +44,12 @@ vi.mock("./useObjectShareController.js", () => ({
 
 // Real English strings, so copy-sensitive behavior ("(you)" suffix, the shared
 // self-restrict warning) is asserted against what users actually see.
+/** Plain text of a rendered slot, or undefined when the slot is empty. */
+const textOf = (node: ReactNode): string | undefined =>
+    node === undefined || node === null
+        ? undefined
+        : renderToStaticMarkup(<>{node}</>).replace(/<[^>]+>/g, "");
+
 const MESSAGES = Object.fromEntries(Object.entries(en_US).map(([id, message]) => [id, message.text]));
 const SELF_RESTRICT_TITLE = MESSAGES["objectShare.selfRestrict.title"]!;
 const SELF_RESTRICT_WARNING = MESSAGES["objectShare.selfRestrict.warning"]!;
@@ -54,6 +63,9 @@ const captured = vi.hoisted(() => ({
     controls: [] as Array<Partial<IUiGranteeRowControlsProps>>,
     addGrantee: [] as Array<Partial<IUiAddGranteeDialogProps>>,
     close: [] as Array<() => void>,
+    titles: [] as string[],
+    notes: [] as Array<string | undefined>,
+    emptyMessages: [] as Array<string | undefined>,
     confirms: [] as Array<{
         title: string;
         isOpen: boolean | undefined;
@@ -81,6 +93,9 @@ vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
             // Snapshot of the LAST render only — re-renders replace, not append,
             // so whole-array assertions stay stable.
             captured.rows.length = 0;
+            captured.titles.push(props.title);
+            captured.notes.push(textOf(props.note));
+            captured.emptyMessages.push(textOf(props.emptyMessage));
             return (
                 <div>
                     {props.grantees.map((g) => {
@@ -179,7 +194,7 @@ function makeController(
         workspaceDisabledLevels: undefined,
         grantableDisabledLevels: undefined,
         granteeControlsLocked: false,
-        adminSelfRow: undefined,
+        showAdminAccessNote: false,
         generalAccess: "RESTRICTED",
         workspaceLevel: "VIEW",
         workspaceInheritedLevel: undefined,
@@ -208,6 +223,9 @@ function renderDialog(
     captured.confirms.length = 0;
     captured.addGrantee.length = 0;
     captured.close.length = 0;
+    captured.titles.length = 0;
+    captured.notes.length = 0;
+    captured.emptyMessages.length = 0;
     injected.controller = controller;
     return render(
         <IntlProvider locale="en-US" messages={MESSAGES}>
@@ -626,62 +644,66 @@ describe("ObjectShareDialog self row", () => {
     });
 });
 
-describe("ObjectShareDialog administrator empty state", () => {
-    // WHEN the synthesized row applies is the controller's concern (see the
-    // row-classification tests on useObjectShareController) — these only cover
-    // rendering the classification.
-    it("renders the admin self row with the (you) suffix and the Admin tag", () => {
-        renderDialog(
-            makeController({
-                grantees: [],
-                adminSelfRow: { name: "Marek Stránský", email: "marek@example.com" },
-            }),
-        );
-
-        expect(captured.rows).toEqual([
-            { id: "self-admin", name: "Marek Stránský (you)", email: "marek@example.com" },
-        ]);
-        // The Admin tag is a real UiTag rendered into the row's controls slot.
-        expect(screen.getByText(MESSAGES["objectShare.adminTag.label"]!)).toBeInTheDocument();
-    });
-
-    it("renders no rows when the controller classifies no admin row", () => {
-        renderDialog(makeController({ grantees: [], adminSelfRow: undefined }));
+describe("ObjectShareDialog administrator note", () => {
+    // WHEN the note applies is the controller's concern (see the classification tests on
+    // useObjectShareController) — these only cover rendering the classification.
+    it("renders the administrator note instead of a synthesized grantee row", () => {
+        renderDialog(makeController({ grantees: [], showAdminAccessNote: true }));
 
         expect(captured.rows).toEqual([]);
+        expect(captured.notes.at(-1)).toContain(
+            "You and other administrators have full access to all objects.",
+        );
     });
 
-    it("prepends the admin self row above added grantees rather than replacing them", () => {
-        // A caller with no grant of their own keeps the Admin badge even after
-        // adding grantees for others — the badge is not a zero-grantees empty state.
-        renderDialog(
-            makeController({
-                grantees: [OTHER_GRANTEE],
-                adminSelfRow: { name: "Marek Stránský", email: "marek@example.com" },
-            }),
-        );
+    it("renders no note when the controller does not classify the caller as administrator", () => {
+        renderDialog(makeController({ grantees: [], showAdminAccessNote: false }));
 
-        expect(captured.rows.map((r) => r.id)).toEqual(["self-admin", "user:u1"]);
+        expect(captured.rows).toEqual([]);
+        expect(captured.notes.at(-1)).toBeUndefined();
+    });
+
+    it("keeps the note above added grantees rather than replacing it", () => {
+        // The note reflects the caller's role, not the empty state of the list.
+        renderDialog(makeController({ grantees: [OTHER_GRANTEE], showAdminAccessNote: true }));
+
+        expect(captured.rows.map((r) => r.id)).toEqual(["user:u1"]);
+        expect(captured.notes.at(-1)).toContain("full access to all objects.");
     });
 });
 
-describe("ObjectShareDialog creator row", () => {
-    const DRAFTING = { target: undefined, draft: true, onDraftChange: () => {} };
-    const SELF = { name: "Marek Stránský", email: "marek@example.com" };
+describe("ObjectShareDialog heading", () => {
+    it("names the shared object's type rather than the object", () => {
+        renderDialog(makeController({}));
 
-    it("carries no tag while drafting — the caller is the creator, not an administrator", () => {
-        renderDialog(makeController({ grantees: [], adminSelfRow: SELF }), undefined, DRAFTING);
-
-        expect(captured.rows).toEqual([
-            { id: "self-admin", name: "Marek Stránský (you)", email: "marek@example.com" },
-        ]);
-        expect(screen.queryByText(MESSAGES["objectShare.adminTag.label"]!)).toBeNull();
+        expect(captured.titles.at(-1)).toBe("Share label");
     });
 
-    it("keeps the row once grantees are added", () => {
-        renderDialog(makeController({ grantees: [OTHER_GRANTEE], adminSelfRow: SELF }), undefined, DRAFTING);
+    it("words the heading by the kind of the shared object", () => {
+        renderDialog(makeController({}), undefined, {
+            target: { kind: "measure", ref: idRef("metric.revenue", "measure") },
+        });
 
-        expect(captured.rows.map((r) => r.id)).toEqual(["self-admin", OTHER_GRANTEE.id]);
+        expect(captured.titles.at(-1)).toBe("Share metric");
+    });
+
+    it("falls back to the generic heading while drafting, where no target exists yet", () => {
+        renderDialog(makeController({}), undefined, {
+            target: undefined,
+            draft: true,
+            onDraftChange: () => {},
+        });
+
+        expect(captured.titles.at(-1)).toBe("Share object");
+    });
+});
+
+describe("ObjectShareDialog empty grantee list", () => {
+    it("offers a placeholder for the empty grantee list", () => {
+        renderDialog(makeController({ grantees: [] }));
+
+        expect(captured.emptyMessages.at(-1)).toContain("Object has not been shared with anyone.");
+        expect(captured.emptyMessages.at(-1)).toContain("Add users or user groups.");
     });
 });
 

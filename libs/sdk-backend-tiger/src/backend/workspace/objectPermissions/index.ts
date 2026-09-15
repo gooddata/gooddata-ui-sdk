@@ -7,6 +7,7 @@ import {
     type ManageFactPermissionsRequestInner,
     type ManageLabelPermissionsRequestInner,
     type ManageMetricPermissionsRequestInner,
+    type ManageVisualizationPermissionsRequestInner,
     type UserAssignee,
     type UserGroupAssignee,
     type WorkspaceUser,
@@ -24,7 +25,9 @@ import {
     ActionsApi_ManageFactPermissions,
     ActionsApi_ManageLabelPermissions,
     ActionsApi_ManageMetricPermissions,
+    ActionsApi_ManageVisualizationPermissions,
     ActionsApi_MetricPermissions,
+    ActionsApi_VisualizationPermissions,
 } from "@gooddata/api-client-tiger/endpoints/actions";
 import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/endpoints/profile";
 import {
@@ -57,7 +60,8 @@ type PermissionAssignment = ManageAttributePermissionsRequestInner &
     ManageComputedAttributePermissionsRequestInner &
     ManageFactPermissionsRequestInner &
     ManageLabelPermissionsRequestInner &
-    ManageMetricPermissionsRequestInner;
+    ManageMetricPermissionsRequestInner &
+    ManageVisualizationPermissionsRequestInner;
 
 export class TigerWorkspaceObjectPermissionsService implements IWorkspaceObjectPermissionsService {
     constructor(
@@ -186,6 +190,11 @@ const fetchPermissionsByKind = (
             return ActionsApi_LabelPermissions(axios, basePath, { workspaceId, labelId: objectId });
         case "measure":
             return ActionsApi_MetricPermissions(axios, basePath, { workspaceId, metricId: objectId });
+        case "insight":
+            return ActionsApi_VisualizationPermissions(axios, basePath, {
+                workspaceId,
+                visualizationObjectId: objectId,
+            });
         case "computedAttribute":
             return ActionsApi_ComputedAttributePermissions(axios, basePath, {
                 workspaceId,
@@ -220,6 +229,12 @@ const manageByKind = (
                 workspaceId,
                 labelId: objectId,
                 manageLabelPermissionsRequestInner: assignments,
+            });
+        case "insight":
+            return ActionsApi_ManageVisualizationPermissions(axios, basePath, {
+                workspaceId,
+                visualizationObjectId: objectId,
+                manageVisualizationPermissionsRequestInner: assignments,
             });
         case "measure":
             return ActionsApi_ManageMetricPermissions(axios, basePath, {

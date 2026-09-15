@@ -94,14 +94,14 @@ function renderActions(props: Partial<Parameters<typeof AsCodeDetailActions>[0]>
 describe("AsCodeDetailActions (metric)", () => {
     it("renders the Share button and fires onShare when shareable", () => {
         const onShare = vi.fn();
-        renderActions({ onOpen: vi.fn(), canShare: true, onShare });
+        renderActions({ onOpen: vi.fn(), onShare });
 
         fireEvent.click(screen.getByRole("button", { name: /^share$/i }));
         expect(onShare).toHaveBeenCalledTimes(1);
     });
 
     it("hides the Share button when not shareable", () => {
-        renderActions({ onOpen: vi.fn(), canShare: false });
+        renderActions({ onOpen: vi.fn() });
 
         expect(screen.queryByRole("button", { name: /^share$/i })).toBeNull();
     });

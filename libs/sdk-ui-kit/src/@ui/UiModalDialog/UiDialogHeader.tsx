@@ -48,15 +48,20 @@ export function UiDialogHeader({ title, titleSize = "default", onClose, leading 
                 {title}
             </h2>
             {onClose ? (
-                <UiIconButton
-                    icon="cross"
-                    variant="tertiary"
-                    size="small"
-                    onClick={onClose}
-                    accessibilityConfig={{
-                        ariaLabel: intl.formatMessage(commonDialogMessages.close),
-                    }}
-                />
+                // Wrapped like the leading slot so the row can be styled around it.
+                <span className={e("close")}>
+                    <UiIconButton
+                        icon="cross"
+                        variant="tertiary"
+                        // 18px cross, matching the design; the tertiary box has no fill or
+                        // border of its own, so only the icon size shows.
+                        size="medium"
+                        onClick={onClose}
+                        accessibilityConfig={{
+                            ariaLabel: intl.formatMessage(commonDialogMessages.close),
+                        }}
+                    />
+                </span>
             ) : null}
         </div>
     );

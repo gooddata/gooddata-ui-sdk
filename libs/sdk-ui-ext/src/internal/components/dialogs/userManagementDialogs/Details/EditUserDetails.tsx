@@ -53,7 +53,7 @@ export function EditUserDetails({
         if (changeUserMembership) {
             onChange(updatedUser!, !isUpdatedAdmin);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const backButtonRenderer = useCallback(() => {

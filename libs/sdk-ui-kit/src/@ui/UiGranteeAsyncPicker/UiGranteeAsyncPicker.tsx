@@ -7,6 +7,7 @@ import { useIntl } from "react-intl";
 import { type ObjRef } from "@gooddata/sdk-model";
 
 import { olpAddGranteeDialogMessages, uiGranteeAsyncPickerMessages } from "../../locales.js";
+import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { bem } from "../@utils/bem.js";
 import { type IUiAutocompleteOption, type IUiAutocompleteSection } from "../UiAutocomplete/types.js";
 import { UiAutocomplete } from "../UiAutocomplete/UiAutocomplete.js";
@@ -107,6 +108,12 @@ export interface IUiGranteeAsyncPickerProps {
      * stays hidden rather than offering an Apply that discards it.
      */
     labels?: ReadonlyArray<IUiLabelsChecklistItem>;
+    /**
+     * Accessible name of the search input, which has no visible label of its own — the
+     * surrounding dialog's title names it, so pass that title here. Defaults to the
+     * add-grantee dialog title.
+     */
+    accessibilityConfig?: Pick<IAccessibilityConfigBase, "ariaLabel">;
     /** Fires with the applied label scope of a picked row. Enables `labels`. */
     onLabelsChange?: (grantee: IUiPickedGrantee, selectedLabelIds: string[]) => void;
     /** Test id forwarded to the root element. */
@@ -137,6 +144,7 @@ export function UiGranteeAsyncPicker({
     onRemove,
     labels,
     onLabelsChange,
+    accessibilityConfig,
     dataTestId,
 }: IUiGranteeAsyncPickerProps) {
     const intl = useIntl();
@@ -192,7 +200,9 @@ export function UiGranteeAsyncPicker({
         [intl],
     );
 
-    const fieldLabel = intl.formatMessage(olpAddGranteeDialogMessages.userOrGroup);
+    // `||`, not `??`: an empty custom label must not leave the combobox unnamed.
+    const fieldLabel =
+        accessibilityConfig?.ariaLabel || intl.formatMessage(olpAddGranteeDialogMessages.title);
 
     // A row with no scope of its own covers every label (see `labelIds`). The drill-in is
     // offered only when the pick has somewhere to go — otherwise Apply would silently
@@ -203,7 +213,6 @@ export function UiGranteeAsyncPicker({
     return (
         <div className={b()} data-testid={dataTestId}>
             <div className={e("field")}>
-                <div className={e("field-label")}>{fieldLabel}</div>
                 <UiAutocomplete<IGranteeAutocompleteOption>
                     loadOptions={adaptedLoadOptions}
                     selectedIds={selectedIds}
@@ -241,6 +250,11 @@ export function UiGranteeAsyncPicker({
                                             selectedLabelIds={g.labelIds ?? allLabelIds}
                                             onLabelsChange={(ids) => onLabelsChange?.(g, ids)}
                                             onRemoveAccess={onRemove ? () => onRemove(g) : undefined}
+                                            // Nothing is granted yet, so the row drops the
+                                            // candidate rather than revoking access.
+                                            removeAccessLabel={intl.formatMessage(
+                                                olpAddGranteeDialogMessages.remove,
+                                            )}
                                             anchor={
                                                 <UiButton
                                                     label={triggerLabel}

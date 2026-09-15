@@ -236,7 +236,7 @@ export function InsightList({
         e.stopPropagation();
 
         eventDispatch(createInsightRequested());
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const TABS_AND_SEARCHFIELD_HEIGHT = 70;

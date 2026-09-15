@@ -499,7 +499,7 @@ function useInitOrReload(
         handler.init(undefined, isTextMode);
 
         // Change of the parent filters is resolved in the useEffect below, it does not need full reinit.
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [handler]);
 
     useEffect(() => {
@@ -869,7 +869,7 @@ function useCallbacks(
     );
 
     // Rule is not working with debounce
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
     const onSearch = useCallback(
         debounce((search: string) => {
             if (handler.getSearch() !== search) {

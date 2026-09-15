@@ -3055,10 +3055,6 @@
         "text": "Certified by",
         "crowdinContext": "Certification user label shown in the certification tooltip when audit details are available."
     },
-    "shareDialog.olp.objectShareDialog.title": {
-        "text": "Share \"{title}\"",
-        "crowdinContext": "Title of the OLP share dialog. {title} is the human-readable name of the shared object (e.g. an attribute or dataset). Sentence case."
-    },
     "shareDialog.olp.objectShareDialog.sharedWith": {
         "text": "Shared with",
         "crowdinContext": "Section heading above the list of grantees inside the OLP share dialog. Rendered in upper case by the UI."
@@ -3071,16 +3067,20 @@
         "text": "General access",
         "crowdinContext": "Section heading above the general-access radio inside the OLP share dialog. Rendered in upper case by the UI."
     },
+    "shareDialog.olp.addGranteeDialog.remove": {
+        "text": "Remove",
+        "crowdinContext": "Menu item that drops a user or group from the list of candidates staged on the OLP add-grantee screen. Shorter than 'Remove access' because nothing has been granted yet."
+    },
     "shareDialog.olp.addGranteeDialog.back": {
         "text": "Back",
         "crowdinContext": "Accessibility label for the back-arrow button on the OLP share dialog's add-grantee screen. Returns the user to the main share dialog."
     },
-    "shareDialog.olp.addGranteeDialog.userOrGroup": {
-        "text": "User or group",
-        "crowdinContext": "Label of the search input on the OLP add-grantee screen. The author types a user or group name to grant access to."
+    "shareDialog.olp.addGranteeDialog.title": {
+        "text": "Add users or groups",
+        "crowdinContext": "Title of the OLP share dialog's add-grantee screen. It also serves as the accessible label of the search input below it."
     },
     "shareDialog.olp.addGranteeDialog.searchPlaceholder": {
-        "text": "Search",
+        "text": "Search and select users and groups…",
         "crowdinContext": "Placeholder text shown inside the search input on the OLP add-grantee screen when no query has been entered yet."
     },
     "shareDialog.olp.addGranteeDialog.emptyState": {
@@ -3107,10 +3107,6 @@
         "text": "Permissions",
         "crowdinContext": "Accessibility label for the per-grantee permission menu on the OLP share dialog. Used by screen readers when entering the menu. Sentence case."
     },
-    "shareDialog.olp.permission.moreInfoAriaLabel": {
-        "text": "More information about {label}",
-        "crowdinContext": "Accessibility label for the info-circle next to a permission level row in the OLP permission menu. {label} is the permission level name (e.g. 'Can view'). Sentence case."
-    },
     "shareDialog.olp.permission.effective.tooltip.view": {
         "text": "Can view is inherited from a group or a parent workspace. Changing or removing the permission granted here does not take that access away.",
         "crowdinContext": "Tooltip on the warning badge on a grantee row whose view permission comes from inheritance rather than a grant made in this workspace. The API does not say whether the source is a group or a parent workspace, so the copy must name both."
@@ -3126,18 +3122,6 @@
     "shareDialog.olp.permission.effective.ariaLabel": {
         "text": "Permission is inherited",
         "crowdinContext": "Accessibility label for the warning badge on a grantee row whose permission comes from inheritance — either exceeding the level granted in this workspace, or being the only source of access. Must stay level-agnostic: the badge's tooltip names the level. Sentence case."
-    },
-    "shareDialog.olp.permission.tooltip.edit": {
-        "text": "Grantee can edit this object and share it with others.",
-        "crowdinContext": "Tooltip explaining the 'Can edit & share' permission level in the object-level permissions menu."
-    },
-    "shareDialog.olp.permission.tooltip.share": {
-        "text": "Grantee can view this object and share it with others.",
-        "crowdinContext": "Tooltip explaining the 'Can view & share' permission level in the object-level permissions menu."
-    },
-    "shareDialog.olp.permission.tooltip.view": {
-        "text": "Grantee can view this object.",
-        "crowdinContext": "Tooltip explaining the 'Can view' permission level in the object-level permissions menu."
     },
     "dialogs.closeLabel": {
         "text": "Close dialog",
@@ -3938,6 +3922,14 @@
     "userManagement.workspace.permission.createMetric.tooltip": {
         "text": "Adds CREATE_METRIC permission to create and manage new metrics. To manage any other metric, the user needs access to it.",
         "crowdinContext": "Create metric permission tooltip"
+    },
+    "userManagement.workspace.permission.createVisualization": {
+        "text": "Visualizations",
+        "crowdinContext": "Name of the workspace permission that allows user to create visualizations in workspace."
+    },
+    "userManagement.workspace.permission.createVisualization.tooltip": {
+        "text": "Adds CREATE_VISUALIZATION permission to save new visualizations. With View access, this works only in the editor embedded in a dashboard the user can edit.",
+        "crowdinContext": "Create visualization permission tooltip"
     },
     "userManagement.workspace.permission.useAiAssistant": {
         "text": "AI Assistant",

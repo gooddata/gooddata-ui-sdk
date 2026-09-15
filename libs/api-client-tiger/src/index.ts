@@ -2928,6 +2928,9 @@ export {
     type ManageMetricPermissionsRequestInner,
     type ActionsApiManageMetricPermissionsRequest,
     type ActionsApiMetricPermissionsRequest,
+    type ManageVisualizationPermissionsRequestInner,
+    type ActionsApiManageVisualizationPermissionsRequest,
+    type ActionsApiVisualizationPermissionsRequest,
     type ManagePermissionsApiGetDataSourcePermissionsRequest,
     type ManagePermissionsApiInterface,
     type ManagePermissionsApiManageDataSourcePermissionsRequest,
@@ -2962,6 +2965,13 @@ export {
     type MetricPermissionsForAssigneePermissionsEnum,
     type MetricPermissionsForAssigneeRule,
     type MetricPermissionsForAssigneeRulePermissionsEnum,
+    type VisualizationPermissions,
+    type VisualizationPermissionsAssignment,
+    type VisualizationPermissionsAssignmentPermissionsEnum,
+    type VisualizationPermissionsForAssignee,
+    type VisualizationPermissionsForAssigneePermissionsEnum,
+    type VisualizationPermissionsForAssigneeRule,
+    type VisualizationPermissionsForAssigneeRulePermissionsEnum,
     type MetricsApiCreateEntityMetricsRequest,
     type MetricsApiDeleteEntityMetricsRequest,
     type MetricsApiGetAllEntitiesMetricsRequest,
@@ -3082,10 +3092,12 @@ export {
     type PermissionsApiManageFactPermissionsRequest,
     type PermissionsApiManageLabelPermissionsRequest,
     type PermissionsApiManageMetricPermissionsRequest,
+    type PermissionsApiManageVisualizationPermissionsRequest,
     type PermissionsApiManageOrganizationPermissionsRequest,
     type PermissionsApiManageWorkspacePermissionsRequest,
     type PermissionsApiLabelPermissionsRequest,
     type PermissionsApiMetricPermissionsRequest,
+    type PermissionsApiVisualizationPermissionsRequest,
     type PermissionsApiSetOrganizationPermissionsRequest,
     type PermissionsApiSetUserGroupPermissionsRequest,
     type PermissionsApiSetUserPermissionsRequest,
@@ -6453,5 +6465,5 @@ export const defaultTigerClient: ITigerClient = tigerClientFactory(defaultAxios)
 /**
  * @deprecated This will be removed in the next major release, please use the named export "tigerFactory" instead
  */
-// oxlint-disable-next-line eslint-js/no-restricted-exports
+// oxlint-disable-next-line eslint/no-restricted-exports
 export default defaultTigerClient;

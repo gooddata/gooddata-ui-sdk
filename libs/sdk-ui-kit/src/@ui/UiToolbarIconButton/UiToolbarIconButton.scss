@@ -1,0 +1,30 @@
+// (C) 2026 GoodData Corporation
+
+@use "../UiToolbar/toolbarItem";
+
+.gd-ui-kit-toolbar-icon-button {
+    $root: &;
+
+    @include toolbarItem.toolbar-item-base;
+    @include toolbarItem.toolbar-item-ladder($root);
+
+    position: relative;
+    flex-shrink: 0;
+
+    &--size-medium {
+        width: toolbarItem.$toolbar-item-size;
+    }
+
+    &--size-small {
+        width: toolbarItem.$toolbar-icon-size-small;
+        height: toolbarItem.$toolbar-icon-size-small;
+        padding: 0;
+
+        // The visible box is 14px; the pointer target is widened to 24px.
+        &::before {
+            content: "";
+            position: absolute;
+            inset: calc((toolbarItem.$toolbar-icon-size-small - toolbarItem.$toolbar-hit-area) / 2);
+        }
+    }
+}

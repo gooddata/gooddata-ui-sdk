@@ -135,20 +135,13 @@ export interface IObjectShareControllerState {
      */
     granteeControlsLocked: boolean;
     /**
-     * Display pair for the synthesized administrator self row, or undefined when
-     * no such row applies. Set for a confirmed workspace manager with no row of their
-     * own in the list — their access comes from the role, and the row shows it however
-     * many other grantees are listed. Any row of theirs takes its place, whether granted
-     * here (by another manager, or listed by the backend) or inherited from a group or a
-     * parent workspace; once no such row remains, the synthesized one returns. Never set
-     * while the manager permission is unknown: a badge that guesses wrong brands a plain
-     * SHARE holder an administrator, so a failed read shows no row (on an unshared
-     * object, an empty list).
-     *
-     * Also set for the whole of a draft, where the caller will own what they create — the
-     * list is theirs either way, so the row holds as grantees are added.
+     * Whether to tell the caller that they, as a workspace manager, have full access to
+     * the object regardless of the grants listed. True only on a successfully FETCHED list
+     * for a caller whose MANAGE permission is known to be granted: an unread permission must
+     * not read as "is a manager". Never true while drafting — the caller will own what they
+     * create, which needs no explaining.
      */
-    adminSelfRow: { name: string; email?: string } | undefined;
+    showAdminAccessNote: boolean;
     generalAccess: GeneralAccessValue;
     /**
      * Permission level of the all-workspace-members rule when general access is

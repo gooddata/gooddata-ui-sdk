@@ -10,6 +10,7 @@ export function useElementSize<T extends HTMLElement>(deps?: DependencyList) {
     const [height, setHeight] = useState<number>(0);
     const [width, setWidth] = useState<number>(0);
 
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
     useLayoutEffect(() => {
         const resizeObserver = new ResizeObserver((entries) => {
             const [entry] = entries;
@@ -32,7 +33,7 @@ export function useElementSize<T extends HTMLElement>(deps?: DependencyList) {
                 setWidth(0);
             }
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, deps ?? []);
 
     return {

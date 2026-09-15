@@ -7,7 +7,7 @@ import { UiSkeleton } from "@gooddata/sdk-ui-kit";
 import { CatalogDetailContentRow } from "../CatalogDetailContentRow.js";
 
 import { CatalogDetailAccessRow } from "./CatalogDetailAccessRow.js";
-import { useCatalogItemShareState } from "./CatalogItemShareProvider.js";
+import { useCatalogItemShareActions, useCatalogItemShareState } from "./CatalogItemShareProvider.js";
 import { shareMessages } from "./messages.js";
 
 /**
@@ -22,13 +22,18 @@ import { shareMessages } from "./messages.js";
  */
 export function CatalogItemAccessRow() {
     const { active, summary, summaryError } = useCatalogItemShareState();
+    // The same gate the Share button uses, so the value is clickable exactly when the
+    // button is offered: the actions context stays inactive until the access list lands.
+    const share = useCatalogItemShareActions();
 
     if (!active) {
         return null;
     }
 
     if (summary) {
-        return <CatalogDetailAccessRow summary={summary} />;
+        return (
+            <CatalogDetailAccessRow summary={summary} onOpenShare={share.active ? share.open : undefined} />
+        );
     }
     return (
         <CatalogDetailContentRow

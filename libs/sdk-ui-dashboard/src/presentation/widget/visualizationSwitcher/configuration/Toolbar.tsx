@@ -130,7 +130,7 @@ export function Toolbar({
             onVisualizationsChanged(updatedVisualizations);
             userInteraction.visualizationSwitcherInteraction("visualizationSwitcherOrderChanged");
         },
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
         [onVisualizationsChanged, visualizations],
     );
 
@@ -155,7 +155,7 @@ export function Toolbar({
                 "visualizationSwitcherVisualizationDetailOpened",
             );
         },
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
         [onSelectedVisualizationChanged],
     );
 

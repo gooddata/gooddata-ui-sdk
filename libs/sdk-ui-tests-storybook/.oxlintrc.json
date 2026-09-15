@@ -23,7 +23,7 @@
         {
             "files": ["**/*.stories.tsx"],
             "rules": {
-                "eslint-js/no-restricted-exports": "off"
+                "eslint/no-restricted-exports": "off"
             }
         }
     ]

@@ -24,7 +24,7 @@ export const getImplicitGranularPermissions = (
         case "VIEW":
             return [];
         case "ANALYZE":
-            return ["CREATE_FILTER_VIEW"];
+            return ["CREATE_VISUALIZATION", "CREATE_FILTER_VIEW"];
         case "MANAGE":
             return [
                 "EXPORT",
@@ -32,6 +32,7 @@ export const getImplicitGranularPermissions = (
                 "EXPORT_TABULAR",
                 "CREATE_AUTOMATION",
                 "CREATE_METRIC",
+                "CREATE_VISUALIZATION",
                 "CREATE_FILTER_VIEW",
             ];
         default:
@@ -135,12 +136,13 @@ export const isPermissionDisabled = (
     selectedGranularPermissions: WorkspacePermissions,
 ) => {
     const isManageWithNoAi = selectedWorkspacePermission === "MANAGE" && permission !== "USE_AI_ASSISTANT";
-    const isAnalyzeWithCreateFilterView =
-        selectedWorkspacePermission === "ANALYZE" && permission === "CREATE_FILTER_VIEW";
+    const isAnalyzeWithImpliedPermission =
+        selectedWorkspacePermission === "ANALYZE" &&
+        (permission === "CREATE_FILTER_VIEW" || permission === "CREATE_VISUALIZATION");
     const isExportSubPermission =
         selectedGranularPermissions.includes("EXPORT") && exportSubPermissions.includes(permission);
 
-    return isManageWithNoAi || isAnalyzeWithCreateFilterView || isExportSubPermission;
+    return isManageWithNoAi || isAnalyzeWithImpliedPermission || isExportSubPermission;
 };
 
 /**
@@ -163,6 +165,7 @@ export const removeRedundantPermissions = (permissions: WorkspacePermissions): W
     if (permissions.includes("ANALYZE")) {
         sanitizedPermissions = sanitizedPermissions.filter((p) => p !== "VIEW");
         sanitizedPermissions = sanitizedPermissions.filter((p) => p !== "CREATE_FILTER_VIEW");
+        sanitizedPermissions = sanitizedPermissions.filter((p) => p !== "CREATE_VISUALIZATION");
     }
 
     if (permissions.includes("EXPORT")) {
@@ -203,6 +206,7 @@ const reorderPermissions = (permissions: WorkspacePermissions): WorkspacePermiss
         "CREATE_FILTER_VIEW",
         "CREATE_AUTOMATION",
         "CREATE_METRIC",
+        "CREATE_VISUALIZATION",
         "EXPORT",
         "EXPORT_PDF",
         "EXPORT_TABULAR",

@@ -1,0 +1,66 @@
+// (C) 2026 GoodData Corporation
+
+@use "../UiToolbar/toolbarItem";
+
+.gd-ui-kit-toolbar-color-swatch {
+    $root: &;
+    $bar-height: 5px;
+    $glyph-size: 12px;
+
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    width: toolbarItem.$toolbar-icon-size-medium;
+    height: toolbarItem.$toolbar-icon-size-medium;
+    overflow: hidden;
+
+    &__fill {
+        position: relative;
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        background-color: var(--gd-palette-complementary-0);
+    }
+
+    &__transparent {
+        position: absolute;
+        inset: 0;
+        background: repeating-conic-gradient(var(--gd-palette-complementary-3) 0 25%, transparent 0 50%) 0 0 /
+            6px 6px;
+    }
+
+    &__glyph {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: $glyph-size;
+        height: $glyph-size;
+        font-family: var(--gd-font-family);
+        font-size: $glyph-size;
+        font-weight: 700;
+        line-height: 1;
+        color: currentColor;
+    }
+
+    &__bar {
+        box-sizing: border-box;
+        width: 100%;
+        height: $bar-height;
+        border-radius: var(--gd-button-borderRadius);
+        background-color: var(--gd-palette-primary-base);
+    }
+
+    &--hasBorder {
+        &#{$root}--variant-fill #{$root}__fill {
+            box-shadow: inset 0 0 0 1px var(--gd-palette-complementary-5);
+        }
+
+        &#{$root}--variant-text #{$root}__bar {
+            box-shadow: inset 0 0 0 1px var(--gd-palette-complementary-4);
+        }
+    }
+}

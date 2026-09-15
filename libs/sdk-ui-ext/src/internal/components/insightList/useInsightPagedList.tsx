@@ -299,7 +299,7 @@ export function useInsightPagedList({
         void fetchItems({ page: nextPage, search, tabId: selectedTabId });
     }, [hasNextPage, isNextPageLoading, isLoading, currentPage, search, selectedTabId, fetchItems]);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
     const onSearch = useCallback(
         debounce((searchString: string) => {
             setCurrentPage(0);

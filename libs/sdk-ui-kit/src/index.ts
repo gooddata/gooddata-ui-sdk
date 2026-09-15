@@ -1052,6 +1052,39 @@ export { DefaultUiTabsTabValue } from "./@ui/UiTabs/defaultComponents/DefaultUiT
 export { getTypedUiTabsContextStore } from "./@ui/UiTabs/context.js";
 export { useUiTabsContextStoreValue } from "./@ui/UiTabs/useUiTabsContextStoreValue.js";
 export { UiTooltip } from "./@ui/UiTooltip/UiTooltip.js";
+export { UiToolbar, type IUiToolbarProps } from "./@ui/UiToolbar/UiToolbar.js";
+export type { UiToolbarNamingConfig } from "./@ui/UiToolbar/context.js";
+export { TOOLBAR_SKIP_ATTR } from "./@ui/UiToolbar/rovingFocusUtils.js";
+export { type IUiToolbarItemBaseProps } from "./@ui/UiToolbar/toolbarItemProps.js";
+export { UiToolbarButton, type IUiToolbarButtonProps } from "./@ui/UiToolbarButton/UiToolbarButton.js";
+export {
+    UiToolbarIconButton,
+    type IUiToolbarIconButtonProps,
+} from "./@ui/UiToolbarIconButton/UiToolbarIconButton.js";
+export {
+    UiToolbarIconSelect,
+    type IUiToolbarIconSelectProps,
+} from "./@ui/UiToolbarIconSelect/UiToolbarIconSelect.js";
+export { UiToolbarSelect, type IUiToolbarSelectProps } from "./@ui/UiToolbarSelect/UiToolbarSelect.js";
+export {
+    UiToolbarStepper,
+    type IUiToolbarStepperProps,
+    type IUiToolbarStepperAccessibilityConfig,
+} from "./@ui/UiToolbarStepper/UiToolbarStepper.js";
+export {
+    UiToolbarSegmentedControl,
+    type IUiToolbarSegmentedControlProps,
+} from "./@ui/UiToolbarSegmentedControl/UiToolbarSegmentedControl.js";
+export type { UiToolbarSegmentedControlChangeEvent } from "./@ui/UiToolbarSegmentedControl/context.js";
+export {
+    UiToolbarMoreButton,
+    type IUiToolbarMoreButtonProps,
+} from "./@ui/UiToolbarMoreButton/UiToolbarMoreButton.js";
+export { UiToolbarDivider } from "./@ui/UiToolbarDivider/UiToolbarDivider.js";
+export {
+    UiToolbarColorSwatch,
+    type IUiToolbarColorSwatchProps,
+} from "./@ui/UiToolbarColorSwatch/UiToolbarColorSwatch.js";
 export type { IUiTooltipProps, TooltipArrowPlacement } from "./@ui/UiTooltip/types.js";
 export { TOOLTIP_WIDTH_MEDIUM } from "./@ui/UiTooltip/constants.js";
 export {
@@ -1066,6 +1099,7 @@ export {
     makeKeyboardNavigation,
     makeTabsKeyboardNavigation,
     makeHorizontalKeyboardNavigation,
+    makeRadioGroupKeyboardNavigation,
     modifierNegator,
     type IHandleActionOptions,
     type IModifier,

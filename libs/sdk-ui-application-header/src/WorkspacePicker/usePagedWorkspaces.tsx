@@ -179,7 +179,7 @@ export function usePagedWorkspaces<TResolve extends boolean = true>({
         void fetchItems({ page: nextPage, search });
     }, [hasNextPage, isNextPageLoading, isLoading, currentPage, search, fetchItems]);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
     const onSearch = useCallback(
         debounce((searchString: string) => {
             setCurrentPage(0);

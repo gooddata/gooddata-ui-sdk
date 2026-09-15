@@ -69,7 +69,7 @@ export function useInsightWidgetDataView({
 
     const insightWithAddedFilters = useMemo(
         () => insightSetFilters(insight!, widgetFiltersPromise.result),
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
         [
             insight,
             /**
@@ -77,7 +77,7 @@ export function useInsightWidgetDataView({
              * and expensive re-renders down the line. The stringification is worth it as the filters are usually
              * pretty small thus saving more time than it is taking.
              */
-            // eslint-disable-next-line react-hooks/exhaustive-deps
+            // oxlint-disable-next-line react-hooks/exhaustive-deps
             stringify(widgetFiltersPromise.result),
         ],
     );

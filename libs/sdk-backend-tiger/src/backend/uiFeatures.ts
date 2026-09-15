@@ -12,6 +12,7 @@ export enum TigerFeaturesNames {
     EnableMetricFormatOverrides = "enableMetricFormatOverrides",
     EnableColumnLevelPermissions = "enableColumnLevelPermissions",
     EnableMetricPermissions = "enableMetricPermissions",
+    EnableCreateVisualizationWorkspacePermission = "enableCreateVisualizationWorkspacePermission",
     EnableSqlDatasets = "enableSqlDatasets",
     EnableHighchartsAccessibility = "enableHighchartsAccessibility",
     EnableAccessibleChartTooltip = "enableAccessibleChartTooltip",
@@ -143,6 +144,7 @@ export type ITigerFeatureFlags = {
     enableMetricFormatOverrides: (typeof FeatureFlagsValues)["enableMetricFormatOverrides"][number];
     enableColumnLevelPermissions: (typeof FeatureFlagsValues)["enableColumnLevelPermissions"][number];
     enableMetricPermissions: (typeof FeatureFlagsValues)["enableMetricPermissions"][number];
+    enableCreateVisualizationWorkspacePermission: (typeof FeatureFlagsValues)["enableCreateVisualizationWorkspacePermission"][number];
     enableSqlDatasets: (typeof FeatureFlagsValues)["enableSqlDatasets"][number];
     enableRadarChart: (typeof FeatureFlagsValues)["enableRadarChart"][number];
     enableMekkoChart: (typeof FeatureFlagsValues)["enableMekkoChart"][number];
@@ -274,6 +276,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableMetricFormatOverrides: false,
     enableColumnLevelPermissions: false,
     enableMetricPermissions: false,
+    enableCreateVisualizationWorkspacePermission: false,
     enableSqlDatasets: false,
     enableRadarChart: false,
     enableMekkoChart: false,
@@ -405,6 +408,7 @@ export const FeatureFlagsValues = {
     enableMetricFormatOverrides: [true, false] as const,
     enableColumnLevelPermissions: [true, false] as const,
     enableMetricPermissions: [true, false] as const,
+    enableCreateVisualizationWorkspacePermission: [true, false] as const,
     enableSqlDatasets: [true, false] as const,
     enableRadarChart: [true, false] as const,
     enableMekkoChart: [true, false] as const,

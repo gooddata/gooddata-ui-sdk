@@ -32,6 +32,7 @@ const METRIC_DOCS_URL = "https://www.gooddata.ai/docs/cloud/api-and-sdk/vs-code-
 const messages = defineMessages({
     createTitle: { id: "analyticsCatalog.metric.dialog.create.title" },
     editTitle: { id: "analyticsCatalog.metric.dialog.edit.title" },
+    viewTitle: { id: "analyticsCatalog.metric.dialog.view.title" },
     duplicate: { id: "analyticsCatalog.metric.dialog.edit.duplicate" },
     createDefaultTitle: { id: "analyticsCatalog.metric.create.defaultTitle" },
     createSuccess: { id: "analyticsCatalog.metric.create.success" },

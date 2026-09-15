@@ -137,7 +137,7 @@ export function useLayersTooltipData(params: IUseLayersTooltipDataParams): IGeoT
             execConfig,
             intl,
         );
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [tooltipEnabled, layerExecutions, layerDataViews, backend, workspace, chartTooltipContent]);
 
     const separators = config?.separators;

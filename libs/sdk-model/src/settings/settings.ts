@@ -533,6 +533,11 @@ export interface IFeatureFlags {
     enableMetricPermissions?: boolean;
 
     /**
+     * Shows the CREATE_VISUALIZATION workspace permission in user management.
+     */
+    enableCreateVisualizationWorkspacePermission?: boolean;
+
+    /**
      * Enables Highcharts accessibility features.
      */
     enableHighchartsAccessibility?: boolean;

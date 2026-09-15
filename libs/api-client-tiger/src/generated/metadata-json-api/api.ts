@@ -3267,7 +3267,7 @@ export interface DeclarativeSingleWorkspacePermission {
     'name': DeclarativeSingleWorkspacePermissionNameEnum;
 }
 
-export type DeclarativeSingleWorkspacePermissionNameEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'VIEW';
+export type DeclarativeSingleWorkspacePermissionNameEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'CREATE_VISUALIZATION' | 'VIEW';
 
 /**
  * Source object reference (attribute or fact) including aggregation operation.
@@ -3744,7 +3744,7 @@ export interface DeclarativeWorkspaceHierarchyPermission {
     'name': DeclarativeWorkspaceHierarchyPermissionNameEnum;
 }
 
-export type DeclarativeWorkspaceHierarchyPermissionNameEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'VIEW';
+export type DeclarativeWorkspaceHierarchyPermissionNameEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'CREATE_VISUALIZATION' | 'VIEW';
 
 /**
  * A declarative form of a model and analytics for a workspace.
@@ -16000,7 +16000,7 @@ export interface JsonApiWorkspaceOutMeta {
     'permissions'?: Array<JsonApiWorkspaceOutMetaPermissionsEnum>;
 }
 
-export type JsonApiWorkspaceOutMetaPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'VIEW';
+export type JsonApiWorkspaceOutMetaPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'CREATE_VISUALIZATION' | 'VIEW';
 
 export interface JsonApiWorkspaceOutMetaConfig {
     /**
@@ -16562,6 +16562,11 @@ export type ManageLabelPermissionsRequestInner = LabelPermissionsForAssignee | L
  * @type ManageMetricPermissionsRequestInner
  */
 export type ManageMetricPermissionsRequestInner = MetricPermissionsForAssignee | MetricPermissionsForAssigneeRule;
+
+/**
+ * @type ManageVisualizationPermissionsRequestInner
+ */
+export type ManageVisualizationPermissionsRequestInner = VisualizationPermissionsForAssignee | VisualizationPermissionsForAssigneeRule;
 
 /**
  * Filter via label with given match type and literal value.
@@ -18031,8 +18036,8 @@ export interface UserManagementWorkspacePermissionAssignment {
 }
 
 export type UserManagementWorkspacePermissionAssignmentAccessSourceEnum = 'DIRECT' | 'GROUP' | 'HIERARCHY';
-export type UserManagementWorkspacePermissionAssignmentHierarchyPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'VIEW';
-export type UserManagementWorkspacePermissionAssignmentPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'VIEW';
+export type UserManagementWorkspacePermissionAssignmentHierarchyPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'CREATE_VISUALIZATION' | 'VIEW';
+export type UserManagementWorkspacePermissionAssignmentPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'CREATE_VISUALIZATION' | 'VIEW';
 
 /**
  * List of users
@@ -18106,6 +18111,50 @@ export interface VisualExportRequest {
      */
     'timezoneId'?: string | null;
 }
+
+export interface VisualizationPermissions {
+    /**
+     * List of rules
+     */
+    'rules': Array<RulePermission>;
+    /**
+     * List of user groups
+     */
+    'userGroups': Array<UserGroupPermission>;
+    /**
+     * List of users
+     */
+    'users': Array<UserPermission>;
+}
+
+/**
+ * Desired levels of permissions on a visualization for an assignee.
+ */
+export interface VisualizationPermissionsAssignment {
+    'permissions': Array<VisualizationPermissionsAssignmentPermissionsEnum>;
+}
+
+export type VisualizationPermissionsAssignmentPermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
+
+/**
+ * Desired levels of visualization permissions for an assignee identified by an identifier.
+ */
+export interface VisualizationPermissionsForAssignee {
+    'permissions': Array<VisualizationPermissionsForAssigneePermissionsEnum>;
+    'assigneeIdentifier': AssigneeIdentifier;
+}
+
+export type VisualizationPermissionsForAssigneePermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
+
+/**
+ * Desired levels of visualization permissions for a collection of assignees identified by a rule.
+ */
+export interface VisualizationPermissionsForAssigneeRule {
+    'permissions': Array<VisualizationPermissionsForAssigneeRulePermissionsEnum>;
+    'assigneeRule': AssigneeRule;
+}
+
+export type VisualizationPermissionsForAssigneeRulePermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
 
 /**
  * Webhook destination for notifications. The property url is required on create and update.
@@ -18215,8 +18264,8 @@ export interface WorkspacePermissionAssignment {
     'permissions'?: Array<WorkspacePermissionAssignmentPermissionsEnum>;
 }
 
-export type WorkspacePermissionAssignmentHierarchyPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'VIEW';
-export type WorkspacePermissionAssignmentPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'VIEW';
+export type WorkspacePermissionAssignmentHierarchyPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'CREATE_VISUALIZATION' | 'VIEW';
+export type WorkspacePermissionAssignmentPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'CREATE_VISUALIZATION' | 'VIEW';
 
 /**
  * List of workspace users
@@ -20475,6 +20524,72 @@ export async function ActionsApiAxiosParamCreator_ManageOrganizationPermissions(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
+ * 
+ * @summary (BETA) Manage Permissions for a Visualization
+ * @param {string} workspaceId 
+ * @param {string} visualizationObjectId 
+ * @param {Array<ManageVisualizationPermissionsRequestInner>} manageVisualizationPermissionsRequestInner 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_ManageVisualizationPermissions(
+    workspaceId: string, visualizationObjectId: string, manageVisualizationPermissionsRequestInner: Array<ManageVisualizationPermissionsRequestInner>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('manageVisualizationPermissions', 'workspaceId', workspaceId)
+    // verify required parameter 'visualizationObjectId' is not null or undefined
+    assertParamExists('manageVisualizationPermissions', 'visualizationObjectId', visualizationObjectId)
+    // verify required parameter 'manageVisualizationPermissionsRequestInner' is not null or undefined
+    assertParamExists('manageVisualizationPermissions', 'manageVisualizationPermissionsRequestInner', manageVisualizationPermissionsRequestInner)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/visualizationObjects/{visualizationObjectId}/managePermissions`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"visualizationObjectId"}}`, encodeURIComponent(String(visualizationObjectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof manageVisualizationPermissionsRequestInner !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(manageVisualizationPermissionsRequestInner !== undefined ? manageVisualizationPermissionsRequestInner : {})
+        : manageVisualizationPermissionsRequestInner || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
  * Manage Permissions for a Workspace and its Workspace Hierarchy
  * @summary Manage Permissions for a Workspace
  * @param {string} workspaceId 
@@ -21973,6 +22088,55 @@ export async function ActionsApiAxiosParamCreator_UnsubscribeWorkspaceAutomation
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
+ * 
+ * @summary (BETA) Get Visualization Permissions
+ * @param {string} workspaceId 
+ * @param {string} visualizationObjectId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_VisualizationPermissions(
+    workspaceId: string, visualizationObjectId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('visualizationPermissions', 'workspaceId', workspaceId)
+    // verify required parameter 'visualizationObjectId' is not null or undefined
+    assertParamExists('visualizationPermissions', 'visualizationObjectId', visualizationObjectId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/visualizationObjects/{visualizationObjectId}/permissions`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"visualizationObjectId"}}`, encodeURIComponent(String(visualizationObjectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
  * Resolves values for all settings in a workspace by current user, workspace, organization, or default settings.
  * @summary Values for all settings.
  * @param {string} workspaceId 
@@ -22842,6 +23006,32 @@ export async function ActionsApi_ManageOrganizationPermissions(
 
 // ActionsApi Api FP
 /**
+ * 
+ * @summary (BETA) Manage Permissions for a Visualization
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiManageVisualizationPermissionsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_ManageVisualizationPermissions(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiManageVisualizationPermissionsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ManageVisualizationPermissions(
+        requestParameters.workspaceId, requestParameters.visualizationObjectId, requestParameters.manageVisualizationPermissionsRequestInner, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
  * Manage Permissions for a Workspace and its Workspace Hierarchy
  * @summary Manage Permissions for a Workspace
  * @param {AxiosInstance} axios Axios instance.
@@ -23566,6 +23756,32 @@ export async function ActionsApi_UnsubscribeWorkspaceAutomations(
 
 // ActionsApi Api FP
 /**
+ * 
+ * @summary (BETA) Get Visualization Permissions
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiVisualizationPermissionsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_VisualizationPermissions(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiVisualizationPermissionsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<VisualizationPermissions> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_VisualizationPermissions(
+        requestParameters.workspaceId, requestParameters.visualizationObjectId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
  * Resolves values for all settings in a workspace by current user, workspace, organization, or default settings.
  * @summary Values for all settings.
  * @param {AxiosInstance} axios Axios instance.
@@ -23910,6 +24126,16 @@ export interface ActionsApiInterface {
     manageOrganizationPermissions(requestParameters: ActionsApiManageOrganizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
+     * 
+     * @summary (BETA) Manage Permissions for a Visualization
+     * @param {ActionsApiManageVisualizationPermissionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    manageVisualizationPermissions(requestParameters: ActionsApiManageVisualizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
      * Manage Permissions for a Workspace and its Workspace Hierarchy
      * @summary Manage Permissions for a Workspace
      * @param {ActionsApiManageWorkspacePermissionsRequest} requestParameters Request parameters.
@@ -24184,6 +24410,16 @@ export interface ActionsApiInterface {
      * @memberof ActionsApiInterface
      */
     unsubscribeWorkspaceAutomations(requestParameters: ActionsApiUnsubscribeWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * 
+     * @summary (BETA) Get Visualization Permissions
+     * @param {ActionsApiVisualizationPermissionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    visualizationPermissions(requestParameters: ActionsApiVisualizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<VisualizationPermissions>;
 
     /**
      * Resolves values for all settings in a workspace by current user, workspace, organization, or default settings.
@@ -24817,6 +25053,34 @@ export interface ActionsApiManageOrganizationPermissionsRequest {
 }
 
 /**
+ * Request parameters for manageVisualizationPermissions operation in ActionsApi.
+ * @export
+ * @interface ActionsApiManageVisualizationPermissionsRequest
+ */
+export interface ActionsApiManageVisualizationPermissionsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionsApiManageVisualizationPermissions
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionsApiManageVisualizationPermissions
+     */
+    readonly visualizationObjectId: string
+
+    /**
+     * 
+     * @type {Array<ManageVisualizationPermissionsRequestInner>}
+     * @memberof ActionsApiManageVisualizationPermissions
+     */
+    readonly manageVisualizationPermissionsRequestInner: Array<ManageVisualizationPermissionsRequestInner>
+}
+
+/**
  * Request parameters for manageWorkspacePermissions operation in ActionsApi.
  * @export
  * @interface ActionsApiManageWorkspacePermissionsRequest
@@ -25230,6 +25494,27 @@ export interface ActionsApiUnsubscribeWorkspaceAutomationsRequest {
 }
 
 /**
+ * Request parameters for visualizationPermissions operation in ActionsApi.
+ * @export
+ * @interface ActionsApiVisualizationPermissionsRequest
+ */
+export interface ActionsApiVisualizationPermissionsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionsApiVisualizationPermissions
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionsApiVisualizationPermissions
+     */
+    readonly visualizationObjectId: string
+}
+
+/**
  * Request parameters for workspaceResolveAllSettings operation in ActionsApi.
  * @export
  * @interface ActionsApiWorkspaceResolveAllSettingsRequest
@@ -25631,6 +25916,18 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
+     * 
+     * @summary (BETA) Manage Permissions for a Visualization
+     * @param {ActionsApiManageVisualizationPermissionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public manageVisualizationPermissions(requestParameters: ActionsApiManageVisualizationPermissionsRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_ManageVisualizationPermissions(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
      * Manage Permissions for a Workspace and its Workspace Hierarchy
      * @summary Manage Permissions for a Workspace
      * @param {ActionsApiManageWorkspacePermissionsRequest} requestParameters Request parameters.
@@ -25960,6 +26257,18 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      */
     public unsubscribeWorkspaceAutomations(requestParameters: ActionsApiUnsubscribeWorkspaceAutomationsRequest, options?: AxiosRequestConfig) {
         return ActionsApi_UnsubscribeWorkspaceAutomations(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary (BETA) Get Visualization Permissions
+     * @param {ActionsApiVisualizationPermissionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public visualizationPermissions(requestParameters: ActionsApiVisualizationPermissionsRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_VisualizationPermissions(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -157323,6 +157632,72 @@ export async function PermissionsApiAxiosParamCreator_ManageOrganizationPermissi
 
 // PermissionsApi FP - PermissionsApiAxiosParamCreator
 /**
+ * 
+ * @summary (BETA) Manage Permissions for a Visualization
+ * @param {string} workspaceId 
+ * @param {string} visualizationObjectId 
+ * @param {Array<ManageVisualizationPermissionsRequestInner>} manageVisualizationPermissionsRequestInner 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PermissionsApiAxiosParamCreator_ManageVisualizationPermissions(
+    workspaceId: string, visualizationObjectId: string, manageVisualizationPermissionsRequestInner: Array<ManageVisualizationPermissionsRequestInner>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('manageVisualizationPermissions', 'workspaceId', workspaceId)
+    // verify required parameter 'visualizationObjectId' is not null or undefined
+    assertParamExists('manageVisualizationPermissions', 'visualizationObjectId', visualizationObjectId)
+    // verify required parameter 'manageVisualizationPermissionsRequestInner' is not null or undefined
+    assertParamExists('manageVisualizationPermissions', 'manageVisualizationPermissionsRequestInner', manageVisualizationPermissionsRequestInner)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/visualizationObjects/{visualizationObjectId}/managePermissions`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"visualizationObjectId"}}`, encodeURIComponent(String(visualizationObjectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof manageVisualizationPermissionsRequestInner !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(manageVisualizationPermissionsRequestInner !== undefined ? manageVisualizationPermissionsRequestInner : {})
+        : manageVisualizationPermissionsRequestInner || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// PermissionsApi FP - PermissionsApiAxiosParamCreator
+/**
  * Manage Permissions for a Workspace and its Workspace Hierarchy
  * @summary Manage Permissions for a Workspace
  * @param {string} workspaceId 
@@ -157668,6 +158043,55 @@ export async function PermissionsApiAxiosParamCreator_SetWorkspacePermissions(
     localVarRequestOptions.data = needsSerialization
         ? JSON.stringify(declarativeWorkspacePermissions !== undefined ? declarativeWorkspacePermissions : {})
         : declarativeWorkspacePermissions || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// PermissionsApi FP - PermissionsApiAxiosParamCreator
+/**
+ * 
+ * @summary (BETA) Get Visualization Permissions
+ * @param {string} workspaceId 
+ * @param {string} visualizationObjectId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PermissionsApiAxiosParamCreator_VisualizationPermissions(
+    workspaceId: string, visualizationObjectId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('visualizationPermissions', 'workspaceId', workspaceId)
+    // verify required parameter 'visualizationObjectId' is not null or undefined
+    assertParamExists('visualizationPermissions', 'visualizationObjectId', visualizationObjectId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/visualizationObjects/{visualizationObjectId}/permissions`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"visualizationObjectId"}}`, encodeURIComponent(String(visualizationObjectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
 
     return {
         url: toPathString(localVarUrlObj),
@@ -158146,6 +158570,32 @@ export async function PermissionsApi_ManageOrganizationPermissions(
 
 // PermissionsApi Api FP
 /**
+ * 
+ * @summary (BETA) Manage Permissions for a Visualization
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {PermissionsApiManageVisualizationPermissionsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PermissionsApi_ManageVisualizationPermissions(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: PermissionsApiManageVisualizationPermissionsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await PermissionsApiAxiosParamCreator_ManageVisualizationPermissions(
+        requestParameters.workspaceId, requestParameters.visualizationObjectId, requestParameters.manageVisualizationPermissionsRequestInner, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// PermissionsApi Api FP
+/**
  * Manage Permissions for a Workspace and its Workspace Hierarchy
  * @summary Manage Permissions for a Workspace
  * @param {AxiosInstance} axios Axios instance.
@@ -158293,6 +158743,32 @@ export async function PermissionsApi_SetWorkspacePermissions(
 ): AxiosPromise<void> {
     const localVarAxiosArgs = await PermissionsApiAxiosParamCreator_SetWorkspacePermissions(
         requestParameters.workspaceId, requestParameters.declarativeWorkspacePermissions, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// PermissionsApi Api FP
+/**
+ * 
+ * @summary (BETA) Get Visualization Permissions
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {PermissionsApiVisualizationPermissionsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PermissionsApi_VisualizationPermissions(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: PermissionsApiVisualizationPermissionsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<VisualizationPermissions> {
+    const localVarAxiosArgs = await PermissionsApiAxiosParamCreator_VisualizationPermissions(
+        requestParameters.workspaceId, requestParameters.visualizationObjectId, 
         options || {},
         configuration,
     );
@@ -158486,6 +158962,16 @@ export interface PermissionsApiInterface {
     manageOrganizationPermissions(requestParameters: PermissionsApiManageOrganizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
+     * 
+     * @summary (BETA) Manage Permissions for a Visualization
+     * @param {PermissionsApiManageVisualizationPermissionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PermissionsApiInterface
+     */
+    manageVisualizationPermissions(requestParameters: PermissionsApiManageVisualizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
      * Manage Permissions for a Workspace and its Workspace Hierarchy
      * @summary Manage Permissions for a Workspace
      * @param {PermissionsApiManageWorkspacePermissionsRequest} requestParameters Request parameters.
@@ -158544,6 +159030,16 @@ export interface PermissionsApiInterface {
      * @memberof PermissionsApiInterface
      */
     setWorkspacePermissions(requestParameters: PermissionsApiSetWorkspacePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * 
+     * @summary (BETA) Get Visualization Permissions
+     * @param {PermissionsApiVisualizationPermissionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PermissionsApiInterface
+     */
+    visualizationPermissions(requestParameters: PermissionsApiVisualizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<VisualizationPermissions>;
 
 }
 
@@ -158919,6 +159415,34 @@ export interface PermissionsApiManageOrganizationPermissionsRequest {
 }
 
 /**
+ * Request parameters for manageVisualizationPermissions operation in PermissionsApi.
+ * @export
+ * @interface PermissionsApiManageVisualizationPermissionsRequest
+ */
+export interface PermissionsApiManageVisualizationPermissionsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PermissionsApiManageVisualizationPermissions
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PermissionsApiManageVisualizationPermissions
+     */
+    readonly visualizationObjectId: string
+
+    /**
+     * 
+     * @type {Array<ManageVisualizationPermissionsRequestInner>}
+     * @memberof PermissionsApiManageVisualizationPermissions
+     */
+    readonly manageVisualizationPermissionsRequestInner: Array<ManageVisualizationPermissionsRequestInner>
+}
+
+/**
  * Request parameters for manageWorkspacePermissions operation in PermissionsApi.
  * @export
  * @interface PermissionsApiManageWorkspacePermissionsRequest
@@ -159035,6 +159559,27 @@ export interface PermissionsApiSetWorkspacePermissionsRequest {
      * @memberof PermissionsApiSetWorkspacePermissions
      */
     readonly declarativeWorkspacePermissions: DeclarativeWorkspacePermissions
+}
+
+/**
+ * Request parameters for visualizationPermissions operation in PermissionsApi.
+ * @export
+ * @interface PermissionsApiVisualizationPermissionsRequest
+ */
+export interface PermissionsApiVisualizationPermissionsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PermissionsApiVisualizationPermissions
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PermissionsApiVisualizationPermissions
+     */
+    readonly visualizationObjectId: string
 }
 
 /**
@@ -159260,6 +159805,18 @@ export class PermissionsApi extends BaseAPI implements PermissionsApiInterface {
     }
 
     /**
+     * 
+     * @summary (BETA) Manage Permissions for a Visualization
+     * @param {PermissionsApiManageVisualizationPermissionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PermissionsApi
+     */
+    public manageVisualizationPermissions(requestParameters: PermissionsApiManageVisualizationPermissionsRequest, options?: AxiosRequestConfig) {
+        return PermissionsApi_ManageVisualizationPermissions(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
      * Manage Permissions for a Workspace and its Workspace Hierarchy
      * @summary Manage Permissions for a Workspace
      * @param {PermissionsApiManageWorkspacePermissionsRequest} requestParameters Request parameters.
@@ -159329,6 +159886,18 @@ export class PermissionsApi extends BaseAPI implements PermissionsApiInterface {
      */
     public setWorkspacePermissions(requestParameters: PermissionsApiSetWorkspacePermissionsRequest, options?: AxiosRequestConfig) {
         return PermissionsApi_SetWorkspacePermissions(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary (BETA) Get Visualization Permissions
+     * @param {PermissionsApiVisualizationPermissionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PermissionsApi
+     */
+    public visualizationPermissions(requestParameters: PermissionsApiVisualizationPermissionsRequest, options?: AxiosRequestConfig) {
+        return PermissionsApi_VisualizationPermissions(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 }
 

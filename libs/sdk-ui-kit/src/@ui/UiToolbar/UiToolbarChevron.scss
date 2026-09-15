@@ -1,0 +1,11 @@
+// (C) 2026 GoodData Corporation
+
+.gd-ui-kit-toolbar-chevron {
+    display: inline-flex;
+    flex-shrink: 0;
+    transition: var(--gd-transition-all);
+
+    &--isOpen {
+        transform: rotate(180deg);
+    }
+}

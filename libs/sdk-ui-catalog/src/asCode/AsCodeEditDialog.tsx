@@ -13,6 +13,7 @@ import { useAsCodeBase } from "./useAsCodeBase.js";
 type Props = {
     descriptor: IAsCodeDescriptor;
     item: ICatalogItem;
+    mode: "edit" | "view";
     onClose: () => void;
     onSaved?: (item: ICatalogItem) => void;
     // Emits the current unsaved edits (reconciled) for the create dialog to copy from.
@@ -20,7 +21,7 @@ type Props = {
 };
 
 /** @internal */
-export function AsCodeEditDialog({ descriptor, item, onClose, onSaved, onDuplicate }: Props) {
+export function AsCodeEditDialog({ descriptor, item, mode, onClose, onSaved, onDuplicate }: Props) {
     const { addSuccess } = useToastMessage();
     const { base, isLoading, port } = useAsCodeBase(descriptor, item, onClose);
 
@@ -37,6 +38,17 @@ export function AsCodeEditDialog({ descriptor, item, onClose, onSaved, onDuplica
         [addSuccess, base, descriptor, onClose, onSaved, port],
     );
 
+    if (mode === "view") {
+        return (
+            <AsCodeDialog
+                descriptor={descriptor}
+                mode="view"
+                isLoading={isLoading}
+                initialDefinition={base}
+                onClose={onClose}
+            />
+        );
+    }
     return (
         <AsCodeDialog
             descriptor={descriptor}

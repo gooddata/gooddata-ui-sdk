@@ -9,12 +9,6 @@
         gap: var(--gd-spacing-5px);
     }
 
-    &__field-label {
-        font-size: 14px;
-        line-height: 21px;
-        color: var(--gd-palette-complementary-7);
-    }
-
     &__empty-state {
         min-height: 50px;
         display: flex;

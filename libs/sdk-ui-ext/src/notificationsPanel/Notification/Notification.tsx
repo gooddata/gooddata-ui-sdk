@@ -128,6 +128,7 @@ export function Notification({
     }, [
         onNotificationClick,
         notification,
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
         isExpired,
         markNotificationAsRead,
         closeNotificationsPanel,

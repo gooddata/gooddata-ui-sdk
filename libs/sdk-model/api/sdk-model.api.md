@@ -115,6 +115,7 @@ export const AssignedWorkspacePermissionValue: {
     readonly VIEW: "VIEW";
     readonly CREATE_AUTOMATION: "CREATE_AUTOMATION";
     readonly CREATE_METRIC: "CREATE_METRIC";
+    readonly CREATE_VISUALIZATION: "CREATE_VISUALIZATION";
     readonly USE_AI_ASSISTANT: "USE_AI_ASSISTANT";
 };
 
@@ -376,7 +377,13 @@ export function canCreateMetric(workspacePermissions: IWorkspacePermissions, are
 export function canEditMetric(metricPermissions: AccessGranularPermission[] | undefined, workspacePermissions: IWorkspacePermissions, areMetricPermissionsEnabled: boolean): boolean;
 
 // @alpha
+export function canEditVisualization(visualizationPermissions: AccessGranularPermission[] | undefined, workspacePermissions: IWorkspacePermissions, areVisualizationPermissionsEnabled: boolean): boolean;
+
+// @alpha
 export function canShareMetric(metricPermissions: AccessGranularPermission[] | undefined, workspacePermissions: IWorkspacePermissions, areMetricPermissionsEnabled: boolean): boolean;
+
+// @alpha
+export function canShareVisualization(visualizationPermissions: AccessGranularPermission[] | undefined, workspacePermissions: IWorkspacePermissions, areVisualizationPermissionsEnabled: boolean): boolean;
 
 // @beta
 export function catalogComputedAttributeAsCatalogAttribute(item: ICatalogComputedAttribute): ICatalogAttribute;
@@ -3029,6 +3036,7 @@ export interface IFeatureFlags {
     enableColumnLevelPermissions?: boolean;
     enableComputedAttributes?: boolean;
     enableConditionalFormatting?: boolean;
+    enableCreateVisualizationWorkspacePermission?: boolean;
     enableCustomGeoCollection?: boolean;
     // @alpha
     enableCustomTooltip?: boolean;
@@ -7496,7 +7504,7 @@ export type NotificationType = "alertNotification" | "scheduleNotification" | "t
 export type ObjectOrigin = "ALL" | "PARENTS" | "NATIVE";
 
 // @alpha
-export type ObjectPermissionsObjectKind = "attribute" | "fact" | "label" | "measure" | "computedAttribute";
+export type ObjectPermissionsObjectKind = "attribute" | "fact" | "label" | "measure" | "computedAttribute" | "insight";
 
 // @public
 export type ObjectType = "measure" | "fact" | "attribute" | "computedAttribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "workspaceTheme" | "workspaceColorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy" | "exportDefinition" | "automation" | "filterView" | "workspaceDataFilter" | "workspaceDataFilterSetting" | "userDataFilter" | "notificationChannel" | "memoryItem" | "parameter" | "reportPageLayout" | "reportTemplate" | "report";

@@ -91,7 +91,7 @@ function NonContextToastsInteropInner({
         isInitialized.current = true;
 
         return () => {
-            // eslint-disable-next-line react-hooks/exhaustive-deps
+            // oxlint-disable-next-line react-hooks/exhaustive-deps
             removeMessages(messagesRef.current);
         };
     }, [addMessages, messagesRef, removeMessages]);

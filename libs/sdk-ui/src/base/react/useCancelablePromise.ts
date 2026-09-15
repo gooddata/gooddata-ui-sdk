@@ -184,6 +184,7 @@ export function useCancelablePromise<TResult, TError = any>(
     });
     const [state, setState] = useState(getInitialState());
 
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         if (!promise) {
             setPendingStateIfNeeded(state.status, setState);
@@ -232,7 +233,7 @@ export function useCancelablePromise<TResult, TError = any>(
                 onCancel();
             }
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, deps);
 
     // We want to avoid the return of the old state when some dependency has changed,

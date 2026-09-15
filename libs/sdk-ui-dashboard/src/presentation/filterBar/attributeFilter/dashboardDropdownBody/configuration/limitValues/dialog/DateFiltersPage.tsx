@@ -53,7 +53,7 @@ export function DateAttributeListItem({
         return cx("gd-list-item date-filter__limit__popup__item", `s-${simplifyText(title ?? "unknown")}`, {
             "is-disabled": isDisabled,
         });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [item]);
 
     const dataSet = isDashboardDependentDateFilter(item) ? item.dataSet : undefined;

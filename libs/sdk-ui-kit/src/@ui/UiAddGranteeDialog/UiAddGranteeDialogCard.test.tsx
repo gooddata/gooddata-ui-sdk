@@ -19,7 +19,6 @@ const renderWithIntl = (ui: ReactNode) =>
     );
 
 const baseProps = {
-    objectTitle: "Customer",
     loadOptions: () => Promise.resolve({ groups: [], users: [] }),
     selectedGrantees: [] as const,
     onSelectedGranteesChange: () => {},
@@ -32,7 +31,10 @@ const baseProps = {
 describe("UiAddGranteeDialogCard", () => {
     it("renders the dialog title with the object name interpolated", () => {
         renderWithIntl(<UiAddGranteeDialogCard {...baseProps} />);
-        expect(screen.getByRole("heading", { name: 'Share "Customer"' })).toBeInTheDocument();
+        expect(screen.getByRole("heading", { name: "Add users or groups" })).toBeInTheDocument();
+        // The title also names the search input, which has no visible label of its own.
+        expect(screen.getByRole("combobox", { name: "Add users or groups" })).toBeInTheDocument();
+        expect(screen.queryByText("User or group")).not.toBeInTheDocument();
     });
 
     it("renders the embedded grantee picker (search combobox)", () => {
