@@ -27,7 +27,7 @@ import type {
     IMeasureKeyDrivers,
     IMeasureReferencing,
     ISaveMeasureOptions,
-    IUpdateMeasureMetaPayload,
+    IUpdateMetadataObjectMetaPayload,
     IWorkspaceMeasuresService,
 } from "@gooddata/sdk-backend-spi";
 import {
@@ -39,7 +39,7 @@ import {
     isIdentifierRef,
 } from "@gooddata/sdk-model";
 
-import { toTigerConditionalFormatting } from "../../../convertors/fromBackend/conditionalFormattingConversions.js";
+import { toTigerConditionalFormattingPatch } from "../../../convertors/fromBackend/conditionalFormattingConversions.js";
 import { visualizationObjectsItemToInsight } from "../../../convertors/fromBackend/InsightConverter.js";
 import { convertMetricFromBackend } from "../../../convertors/fromBackend/MetricConverter.js";
 import { jsonApiIdToObjRef } from "../../../convertors/fromBackend/ObjRefConverter.js";
@@ -179,7 +179,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
         return convertMetricFromBackend(result.data, result.data.included);
     }
 
-    async updateMeasureMeta(measure: IUpdateMeasureMetaPayload): Promise<IMeasureMetadataObject> {
+    async updateMeasureMeta(measure: IUpdateMetadataObjectMetaPayload): Promise<IMeasureMetadataObject> {
         const objectId = objRefToIdentifier(measure.ref, this.authCall);
         const result = await this.authCall((client) => {
             return EntitiesApi_PatchEntityMetrics(client.axios, client.basePath, {
@@ -199,13 +199,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
                             ...(measure.isHiddenFromKda === undefined
                                 ? {}
                                 : { isHiddenFromKda: measure.isHiddenFromKda }),
-                            ...(measure.conditionalFormatting === undefined
-                                ? {}
-                                : {
-                                      conditionalFormatting: measure.conditionalFormatting
-                                          ? toTigerConditionalFormatting(measure.conditionalFormatting)
-                                          : null,
-                                  }),
+                            ...toTigerConditionalFormattingPatch(measure.conditionalFormatting),
                         },
                     },
                 },

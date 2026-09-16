@@ -5,9 +5,14 @@ import { describe, expect, it, vi } from "vitest";
 
 import { type ISemanticConditionalFormatting } from "@gooddata/sdk-model";
 
+import { createLabel } from "../catalogItem/testFixtures.js";
 import { TestIntlProvider } from "../localization/TestIntlProvider.js";
 
-import { CatalogDetailConditionalFormatting } from "./CatalogDetailConditionalFormatting.js";
+import {
+    CatalogDetailConditionalFormatting,
+    labelTargetOption,
+    measureTargetOption,
+} from "./CatalogDetailConditionalFormatting.js";
 
 const RULE: ISemanticConditionalFormatting = {
     conditions: [
@@ -24,12 +29,16 @@ function renderRow(
     conditionalFormatting: ISemanticConditionalFormatting | undefined,
     onConditionalFormattingChange = vi.fn(),
     canEdit = true,
+    kind: "measure" | "attribute" = "measure",
 ) {
     render(
         <TestIntlProvider>
             <CatalogDetailConditionalFormatting
-                identifier="metric.id"
-                title="Revenue"
+                targetOption={
+                    kind === "measure"
+                        ? measureTargetOption({ identifier: "metric.id", title: "Revenue" })
+                        : labelTargetOption(createLabel("attribute.id", "Region"))
+                }
                 conditionalFormatting={conditionalFormatting}
                 canEdit={canEdit}
                 onConditionalFormattingChange={onConditionalFormattingChange}
@@ -84,5 +93,27 @@ describe("CatalogDetailConditionalFormatting — toggling", () => {
         fireEvent.click(screen.getByRole("checkbox"));
 
         expect(onConditionalFormattingChange).toHaveBeenCalledWith({ ...RULE, enabled: true });
+    });
+});
+
+describe("CatalogDetailConditionalFormatting — kind='attribute'", () => {
+    it("shows 'Add rule' and no toggle when there is no rule", () => {
+        renderRow(undefined, undefined, true, "attribute");
+        expect(screen.getByText("Add rule")).toBeInTheDocument();
+        expect(screen.queryByRole("checkbox")).not.toBeInTheDocument();
+    });
+
+    it("shows a checked toggle and 'Edit' when a rule exists and is enabled", () => {
+        renderRow(RULE, undefined, true, "attribute");
+        expect(screen.getByText("Edit")).toBeInTheDocument();
+        expect(screen.getByRole("checkbox")).toBeChecked();
+    });
+
+    it("flips enabled without touching the stored conditions when toggled off", () => {
+        const { onConditionalFormattingChange } = renderRow(RULE, undefined, true, "attribute");
+
+        fireEvent.click(screen.getByRole("checkbox"));
+
+        expect(onConditionalFormattingChange).toHaveBeenCalledWith({ ...RULE, enabled: false });
     });
 });

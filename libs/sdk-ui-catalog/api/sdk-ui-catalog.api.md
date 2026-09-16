@@ -7,6 +7,7 @@
 import type { AccessGranularPermission } from '@gooddata/sdk-model';
 import type { CertificationStatus } from '@gooddata/sdk-model';
 import type { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import type { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import type { IDataSetMetadataObject } from '@gooddata/sdk-model';
 import type { IdentifierRef } from '@gooddata/sdk-model';
 import type { IInsightDefinition } from '@gooddata/sdk-model';
@@ -152,6 +153,8 @@ export type ICatalogItem = ICatalogItemDashboard | ICatalogItemInsight | ICatalo
 export interface ICatalogItemAttribute extends ICatalogItemBase {
     // (undocumented)
     dataSet?: IDataSetMetadataObject;
+    // @alpha
+    labels?: IAttributeDisplayFormMetadataObject[];
     // (undocumented)
     type: "attribute";
 }

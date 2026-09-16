@@ -77,6 +77,8 @@ export function UiColorValueField({
             />
             <UiDropdown
                 closeOnEscape
+                // The list portals out of the picker, so the keyboard reaches it only by being put there.
+                autofocusOnOpen
                 width="auto"
                 accessibilityConfig={{ triggerRole: "combobox", popupRole: "listbox" }}
                 renderButton={({ ref, isOpen, toggleDropdown, ariaAttributes }) => (

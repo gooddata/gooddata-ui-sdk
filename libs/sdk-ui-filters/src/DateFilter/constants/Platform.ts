@@ -2,6 +2,8 @@
 
 // date format used on server
 export const platformDateFormat = "YYYY-MM-DD";
+// the same format in date-fns tokens
+export const platformDateFnsFormat = "yyyy-MM-dd";
 
 export const platformDateTimeFormat = "YYYY-MM-DD HH:mm";
 export const platformDateTimeFormatWithSeconds = "YYYY-MM-DD HH:mm:ss";

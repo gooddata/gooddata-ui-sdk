@@ -3,6 +3,7 @@
 import { type ISeparators } from "@gooddata/sdk-model";
 import {
     type IResolvedReferenceValues,
+    computedAttributeKey,
     labelKey,
     labelReference,
     measureReference,
@@ -18,7 +19,7 @@ import { type TooltipPayload, getTooltipProperties, parseTooltipPayload } from "
  *
  * Walks the standard tooltip payload slots in default-tooltip render order
  * (`locationName → size → color → measures[] → segment → tooltipText`) and
- * registers values keyed by `metric/<ldmId>` and `label/<id>`. The first slot
+ * registers values keyed by `metric/<ldmId>`, `label/<id>` and `computed_attribute/<id>`. The first slot
  * that contributes a key wins — this matches the order users see in the
  * default tooltip, so a `{metric/foo}` reference in markdown resolves to the
  * same value the user can already see above it.
@@ -43,13 +44,17 @@ export function resolveReferencesFromGeoFeature(
     const props = getTooltipProperties(properties);
     const measureLdmByLocalId = referenceMaps?.measures ?? {};
     const attributeIdByDisplayFormId = referenceMaps?.attributes ?? {};
+    const computedAttributeIds = new Set(referenceMaps?.computedAttributeIds ?? []);
 
     const registerAttribute = (payload: TooltipPayload | undefined) => {
         if (!payload?.attrId || payload.value === undefined) {
             return;
         }
         const status = labelReference(String(payload.value));
-        const displayFormKey = labelKey(payload.attrId);
+        // A computed attribute publishes under its own namespace, so it cannot be answered by -
+        // or answer - a label that happens to share its identifier.
+        const buildKey = computedAttributeIds.has(payload.attrId) ? computedAttributeKey : labelKey;
+        const displayFormKey = buildKey(payload.attrId);
         if (values[displayFormKey] === undefined) {
             values[displayFormKey] = status;
         }
@@ -58,7 +63,7 @@ export function resolveReferencesFromGeoFeature(
         // under first-wins — no self-equality check needed.
         const attributeId = attributeIdByDisplayFormId[payload.attrId];
         if (attributeId) {
-            const attributeKey = labelKey(attributeId);
+            const attributeKey = buildKey(attributeId);
             if (values[attributeKey] === undefined) {
                 values[attributeKey] = status;
             }

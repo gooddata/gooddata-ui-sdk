@@ -319,8 +319,20 @@ $content-font-size: 14px;
             padding-right: 30px;
         }
 
-        .s-cf-catalog-toggle-label {
+        .gd-analytics-catalog-detail__cf-toggle {
             margin-right: 4px;
+        }
+
+        .gd-analytics-catalog-detail__cf-labels {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .gd-analytics-catalog-detail__cf-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .gd-ui-kit-tags__tags-container {

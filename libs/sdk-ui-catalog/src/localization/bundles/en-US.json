@@ -909,11 +909,11 @@
     },
     "analyticsCatalog.computedAttribute.dialog.delete.usageWarning": {
         "text": "This attribute is used in <b>{count, plural, one {# object} other {# objects}}</b>",
-        "crowdinContext": "Warning banner in the computed attribute delete dialog when other objects still reference it. {count} is the number of referencing visualizations, metrics, and dashboards, wrapped in <b>. Followed by a Show more toggle that lists their titles."
+        "crowdinContext": "Warning banner in the computed attribute delete dialog when other objects still reference it. {count} is the number of referencing visualizations, metrics, dashboards and data filters, wrapped in <b>. Followed by a Show more toggle that lists their titles."
     },
     "analyticsCatalog.computedAttribute.dialog.delete.blocked": {
-        "text": "The computed attribute <b>{name}</b> cannot be deleted because it is used in some visualizations, metrics, or dashboards. To delete this attribute, remove it from all of them first.",
-        "crowdinContext": "Body of the computed attribute delete dialog when visualizations, metrics, or dashboards still reference it, so deletion is refused. {name} is the computed attribute title or fallback ID. <b>...</b> wraps the name in bold."
+        "text": "The computed attribute <b>{name}</b> cannot be deleted because it is used in some visualizations, metrics, dashboards, or data filters. To delete this attribute, remove it from all of them first.",
+        "crowdinContext": "Body of the computed attribute delete dialog when visualizations, metrics, dashboards, or data filters still reference it, so deletion is refused. {name} is the computed attribute title or fallback ID. <b>...</b> wraps the name in bold."
     },
     "analyticsCatalog.computedAttribute.dialog.delete.submit": {
         "text": "Delete",

@@ -27,18 +27,6 @@ vi.mock("@gooddata/api-client-tiger/endpoints/entitiesObjects", () => ({
     EntitiesApi_DeleteEntityReports: vi.fn(),
 }));
 
-const getSettings = vi.fn();
-const setReportsBrandKit = vi.fn();
-const deleteReportsBrandKit = vi.fn();
-
-vi.mock("./settings/index.js", () => ({
-    TigerWorkspaceSettings: class {
-        getSettings = getSettings;
-        setReportsBrandKit = setReportsBrandKit;
-        deleteReportsBrandKit = deleteReportsBrandKit;
-    },
-}));
-
 const { TigerWorkspaceReportsService } = await import("./reports.js");
 
 const authCall = (<T>(fn: (client: unknown) => Promise<T>) => fn({ axios: {}, basePath: "" })) as never;
@@ -127,42 +115,5 @@ describe("TigerWorkspaceReportsService page layouts", () => {
             expect.anything(),
             expect.objectContaining({ workspaceId: "ws1", objectId: "layout1" }),
         );
-    });
-});
-
-describe("TigerWorkspaceReportsService brand kit", () => {
-    it("sanitizes the kit resolved from the workspace settings", async () => {
-        getSettings.mockResolvedValue({
-            reportsBrandKit: {
-                version: "1",
-                assets: { logo: "https://cdn.example.com/logo.svg", images: "no" },
-            },
-        });
-
-        await expect(newService().getBrandKit()).resolves.toEqual({
-            version: "1",
-            assets: { logo: "https://cdn.example.com/logo.svg" },
-        });
-    });
-
-    it("returns undefined when no kit is set", async () => {
-        getSettings.mockResolvedValue({});
-
-        await expect(newService().getBrandKit()).resolves.toBeUndefined();
-    });
-
-    it("stores the sanitized kit and refuses a foreign one", async () => {
-        const service = newService();
-
-        await service.setBrandKit({
-            version: "1",
-            assets: { logo: "https://cdn.example.com/logo.svg", images: "no" },
-        } as never);
-        expect(setReportsBrandKit).toHaveBeenCalledWith({
-            version: "1",
-            assets: { logo: "https://cdn.example.com/logo.svg" },
-        });
-
-        await expect(service.setBrandKit({ version: "2" } as never)).rejects.toThrow(/not a valid brand kit/);
     });
 });

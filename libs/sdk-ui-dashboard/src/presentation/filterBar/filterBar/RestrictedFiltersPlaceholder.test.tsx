@@ -20,10 +20,10 @@ function renderPlaceholder(count: number, onRemove?: () => void) {
 describe("RestrictedFiltersPlaceholder", () => {
     it("reports how many filters were left out, never which", () => {
         renderPlaceholder(1);
-        expect(screen.getByText("1 filter wasn't applied")).toBeInTheDocument();
+        expect(screen.getByText("1 restricted filter")).toBeInTheDocument();
 
         renderPlaceholder(3);
-        expect(screen.getByText("3 filters weren't applied")).toBeInTheDocument();
+        expect(screen.getByText("3 restricted filters")).toBeInTheDocument();
     });
 
     it("reaches the remove action by keyboard alone", async () => {
@@ -67,7 +67,7 @@ describe("RestrictedFiltersPlaceholder", () => {
         expect(screen.getByRole("tooltip")).toBeInTheDocument();
 
         await user.keyboard("{Enter}");
-        expect(screen.getByRole("dialog", { name: "1 filter wasn't applied" })).toBeInTheDocument();
+        expect(screen.getByRole("dialog", { name: "1 restricted filter" })).toBeInTheDocument();
 
         await user.tab();
         expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
@@ -79,6 +79,8 @@ describe("RestrictedFiltersPlaceholder", () => {
 
         await userEvent.setup().tab();
 
-        expect(screen.getByRole("tooltip")).toHaveTextContent("You don't have access to 2 filters.");
+        expect(screen.getByRole("tooltip")).toHaveTextContent(
+            "You don't have access to 2 filters. Contact your administrator to request access.",
+        );
     });
 });

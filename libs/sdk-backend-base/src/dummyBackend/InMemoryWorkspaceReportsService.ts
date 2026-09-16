@@ -9,13 +9,11 @@ import {
     type IReportPageLayoutDefinition,
     type IReportTemplate,
     type IReportTemplateDefinition,
-    type IReportsBrandKit,
     type ObjRef,
     areObjRefsEqual,
     idRef,
     isIdentifierRef,
     objRefToString,
-    sanitizeReportsBrandKit,
 } from "@gooddata/sdk-model";
 
 // Key ignores the identifier ref's optional object type (typed and untyped identifier
@@ -44,7 +42,6 @@ export class InMemoryWorkspaceReportsService implements IWorkspaceReportsService
     private readonly pageLayouts = new Map<string, IReportPageLayout>();
     private readonly templates = new Map<string, IReportTemplate>();
     private readonly reports = new Map<string, IReport>();
-    private brandKit: IReportsBrandKit | undefined;
     private sequence = 0;
 
     private newRef(
@@ -180,24 +177,6 @@ export class InMemoryWorkspaceReportsService implements IWorkspaceReportsService
     public deleteReport(ref: ObjRef): Promise<void> {
         this.assertExistsAndUnlocked(this.reports, ref, "Report");
         this.reports.delete(refKey(ref));
-        return Promise.resolve();
-    }
-
-    public getBrandKit(): Promise<IReportsBrandKit | undefined> {
-        return Promise.resolve(this.brandKit === undefined ? undefined : deepClone(this.brandKit));
-    }
-
-    public setBrandKit(brandKit: IReportsBrandKit): Promise<void> {
-        const sanitized = sanitizeReportsBrandKit(brandKit);
-        if (sanitized === undefined) {
-            throw new UnexpectedError("The provided value is not a valid brand kit.");
-        }
-        this.brandKit = sanitized;
-        return Promise.resolve();
-    }
-
-    public deleteBrandKit(): Promise<void> {
-        this.brandKit = undefined;
         return Promise.resolve();
     }
 

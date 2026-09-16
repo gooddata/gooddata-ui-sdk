@@ -442,21 +442,26 @@ export function App() {
 The `GenAIAssistant` component can be customized using the `slots` prop.
 The following slots are available:
 
-| Slot name                 | Description                                                |
-| ------------------------- | ---------------------------------------------------------- |
-| `LandingScreen`           | Custom screen rendered before any messages are sent.       |
-| `Disclaimer`              | Custom content rendered below the chat input.              |
-| `AgentItem`               | Custom rendering for each agent in the agent chooser.      |
-| `UserMessage`             | Custom wrapper for user messages.                          |
-| `AssistantMessage`        | Custom wrapper for assistant messages.                     |
-| `MessageTextContent`      | Custom rendering for text message content.                 |
-| `MessageErrorContent`     | Custom rendering for error message content.                |
-| `MessageReasoningContent` | Custom rendering for assistant reasoning content.          |
-| `MessageMultipartContent` | Custom rendering for complex messages with multiple parts. |
-| `FollowUpButtons`         | Custom wrapper for the list of follow-up buttons.          |
-| `Feedback`                | Custom rendering for message feedback buttons.             |
-| `FollowUpQuestion`        | Custom rendering for an individual follow-up question.     |
-| `AgentChooser`            | Custom rendering for the whole agent chooser component.    |
+| Slot name                  | Description                                                      |
+| -------------------------- | ---------------------------------------------------------------- |
+| `LandingScreen`            | Custom screen rendered before any messages are sent.             |
+| `Disclaimer`               | Custom content rendered below the chat input.                    |
+| `AgentItem`                | Custom rendering for each agent in the agent chooser.            |
+| `ConversationDrawerHeader` | Custom rendering for the conversations drawer header.            |
+| `ConversationHeader`       | Custom content rendered above each conversation list group.      |
+| `ConversationFooter`       | Custom content rendered below each conversation list group.      |
+| `ConversationDateGrouping` | Custom rendering for date grouping rows in conversation history. |
+| `ConversationItem`         | Custom rendering for each conversation in the history list.      |
+| `UserMessage`              | Custom wrapper for user messages.                                |
+| `AssistantMessage`         | Custom wrapper for assistant messages.                           |
+| `MessageTextContent`       | Custom rendering for text message content.                       |
+| `MessageErrorContent`      | Custom rendering for error message content.                      |
+| `MessageReasoningContent`  | Custom rendering for assistant reasoning content.                |
+| `MessageMultipartContent`  | Custom rendering for complex messages with multiple parts.       |
+| `FollowUpButtons`          | Custom wrapper for the list of follow-up buttons.                |
+| `Feedback`                 | Custom rendering for message feedback buttons.                   |
+| `FollowUpQuestion`         | Custom rendering for an individual follow-up question.           |
+| `AgentChooser`             | Custom rendering for the whole agent chooser component.          |
 
 ## Initial Assistant Experience
 
@@ -725,6 +730,118 @@ const CustomAgentItem = ({ Default, defaultProps }: ISlotProps<IGenAIAssistantAg
     );
 };
 ```
+
+### Customizing conversation history
+
+You can customize the conversation history UI (in `GenAIAssistant` and `GenAIConversations`) using these slots:
+
+- `slots.ConversationDrawerHeader`: header of the conversation drawer.
+- `slots.ConversationHeader`: content rendered above each conversation group.
+- `slots.ConversationFooter`: content rendered below each conversation group.
+- `slots.ConversationDateGrouping`: date-group labels (for example "Today" or "Last week").
+- `slots.ConversationItem`: wrapper for each interactive conversation row.
+
+Available components:
+
+- `DefaultConversationDrawerHeader`
+- `DefaultConversationHeader`
+- `DefaultConversationFooter`
+- `DefaultConversationDateGrouping`
+- `DefaultConversationItem`
+
+#### Conversation history slots props
+
+**ConversationDrawerHeader props**
+
+| Prop name | Type     | Description                                     |
+| --------- | -------- | ----------------------------------------------- |
+| `title`   | `string` | Localized title shown at the top of the drawer. |
+
+**ConversationHeader and ConversationFooter props**
+
+| Prop name   | Type            | Description                                |
+| ----------- | --------------- | ------------------------------------------ |
+| `id`        | `string`        | Identifier of the conversation group list. |
+| `listItems` | `IUiMenuItem[]` | Items rendered in the given list group.    |
+
+**ConversationDateGrouping props**
+
+| Prop name            | Type                    | Description                                   |
+| -------------------- | ----------------------- | --------------------------------------------- |
+| `menuGroupItemProps` | `IUiMenuGroupItemProps` | Props for the underlying date-group menu row. |
+
+**ConversationItem props**
+
+| Prop name       | Type                                 | Description                                            |
+| --------------- | ------------------------------------ | ------------------------------------------------------ |
+| `conversation`  | `IChatConversationLocal`             | The conversation represented by the item.              |
+| `menuItemProps` | `IUiMenuInteractiveItemWrapperProps` | Props for the underlying interactive conversation row. |
+
+```tsx
+import {
+    GenAIAssistant,
+    type IGenAIAssistantConversationHeaderProps,
+    type IGenAIAssistantConversationFooterProps,
+    type IGenAIAssistantConversationDrawerHeaderProps,
+    type IGenAIAssistantConversationItemProps,
+    type IGenAIAssistantConversationDateGroupingProps,
+} from "@gooddata/sdk-ui-gen-ai";
+import { type ISlotProps } from "@gooddata/sdk-ui-kit";
+
+const CustomConversationDrawerHeader = ({
+    defaultProps,
+}: ISlotProps<IGenAIAssistantConversationDrawerHeaderProps>) => {
+    return <div style={{ padding: "8px 12px", fontWeight: 600 }}>History: {defaultProps.title}</div>;
+};
+
+const CustomConversationHeader = ({ defaultProps }: ISlotProps<IGenAIAssistantConversationHeaderProps>) => {
+    if (defaultProps.listItems.length === 0) {
+        return null;
+    }
+
+    return <div style={{ padding: "4px 12px", opacity: 0.75 }}>Items: {defaultProps.listItems.length}</div>;
+};
+
+const CustomConversationFooter = ({ defaultProps }: ISlotProps<IGenAIAssistantConversationFooterProps>) => {
+    if (defaultProps.listItems.length === 0) {
+        return null;
+    }
+
+    return <div style={{ margin: "4px 12px", borderTop: "1px solid #eee" }} />;
+};
+
+const CustomConversationDateGrouping = ({
+    Default,
+    defaultProps,
+}: ISlotProps<IGenAIAssistantConversationDateGroupingProps>) => {
+    return <Default {...defaultProps} />;
+};
+
+const CustomConversationItem = ({
+    Default,
+    defaultProps,
+}: ISlotProps<IGenAIAssistantConversationItemProps>) => {
+    return (
+        <div style={{ borderLeft: "2px solid transparent" }}>
+            <Default {...defaultProps} />
+        </div>
+    );
+};
+
+export const App = () => (
+    <GenAIAssistant
+        slots={{
+            ConversationDrawerHeader: CustomConversationDrawerHeader,
+            ConversationHeader: CustomConversationHeader,
+            ConversationFooter: CustomConversationFooter,
+            ConversationDateGrouping: CustomConversationDateGrouping,
+            ConversationItem: CustomConversationItem,
+        }}
+    />
+);
+```
+
+Use `Default` + `defaultProps` when you want to preserve built-in menu semantics and interaction behavior.
 
 ### Customizing user and assistant messages
 

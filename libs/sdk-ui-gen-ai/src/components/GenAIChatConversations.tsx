@@ -20,9 +20,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
-    DefaultUiMenuInteractiveItemWrapper,
     Dropdown,
     type IUiMenuFocusableItem,
+    type IUiMenuInteractiveItemWrapperProps,
     type IUiMenuItem,
     UiDrawer,
     UiIcon,
@@ -50,6 +50,7 @@ import { generateTemporaryTitle } from "../utils.js";
 import { collectReferences, replaceReferences } from "./completion/references.js";
 import { ConversationDeleteDialog } from "./ConversationDeleteDialog.js";
 import { ConversationRenameDialog } from "./ConversationRenameDialog.js";
+import { useCustomization } from "./CustomizationContext.js";
 import { useFullscreenCheck } from "./hooks/useFullscreenCheck.js";
 import { useHistoryCheck } from "./hooks/useHistoryCheck.js";
 import { ConversationDateGroup, groupConversationsByDate } from "./utils/conversationGrouper.js";
@@ -61,6 +62,9 @@ type GenAIChatConversationsProps = {
 };
 
 type ConversationDropZone = "pin" | "unpin" | "body";
+
+const PINNED_CONVERSATIONS_LIST_ID = "gd-gen-ai-conversations-pinned";
+const REST_CONVERSATIONS_LIST_ID = "gd-gen-ai-conversations-rest";
 
 export function GenAIChatConversations({ onClose, onSelect, wrapper }: GenAIChatConversationsProps) {
     const menuRef = useRef<HTMLElement>(undefined);
@@ -422,6 +426,7 @@ function DrawerComponent({ onClose, children }: IDrawerComponentProps) {
     const ref = useRef<HTMLElement>(undefined);
     const { isHistory } = useHistoryCheck();
     const intl = useIntl();
+    const { ConversationDrawerHeaderComponent } = useCustomization();
 
     return (
         <>
@@ -434,12 +439,9 @@ function DrawerComponent({ onClose, children }: IDrawerComponentProps) {
                 node={ref.current}
                 showBackdrop={false}
                 header={
-                    <div style={{ width: "100%" }}>
-                        <div className="gd-gen-ai-chat__window__conversations__header">
-                            {intl.formatMessage({ id: "gd.gen-ai.conversations.title" })}
-                        </div>
-                        <div className="gd-gen-ai-chat__window__conversations__divider" />
-                    </div>
+                    <ConversationDrawerHeaderComponent
+                        title={intl.formatMessage({ id: "gd.gen-ai.conversations.title" })}
+                    />
                 }
                 closeLabel={intl.formatMessage({ id: "gd.gen-ai.conversations.close-label" })}
                 onClickClose={onClose}
@@ -490,6 +492,7 @@ function DrawerContent({
 }: IDrawerContentProps) {
     const intl = useIntl();
     const conversationsListRef = useRef<HTMLDivElement>(null);
+    const { ConversationHeaderComponent, ConversationFooterComponent } = useCustomization();
 
     const pinnedItems = useMemo(() => {
         return menuItems.filter((item) => item.id === ConversationDateGroup.PINNED);
@@ -549,8 +552,12 @@ function DrawerContent({
                                 })}
                             </div>
                         </div>
+                        <ConversationHeaderComponent
+                            id={PINNED_CONVERSATIONS_LIST_ID}
+                            listItems={pinnedItems}
+                        />
                         <ConversationsList
-                            id="gd-gen-ai-conversations-pinned"
+                            id={PINNED_CONVERSATIONS_LIST_ID}
                             menuRef={menuRef}
                             openedId={openedId}
                             listItems={pinnedItems}
@@ -558,6 +565,10 @@ function DrawerContent({
                             onDragEnd={onDragEnd}
                             onMenuUnhandledKeyDown={onMenuUnhandledKeyDown}
                             handleSelect={handleSelect}
+                        />
+                        <ConversationFooterComponent
+                            id={PINNED_CONVERSATIONS_LIST_ID}
+                            listItems={pinnedItems}
                         />
                     </div>
                     <div
@@ -578,8 +589,9 @@ function DrawerContent({
                                 })}
                             </div>
                         </div>
+                        <ConversationHeaderComponent id={REST_CONVERSATIONS_LIST_ID} listItems={restItems} />
                         <ConversationsList
-                            id="gd-gen-ai-conversations-rest"
+                            id={REST_CONVERSATIONS_LIST_ID}
                             menuRef={menuRef}
                             openedId={openedId}
                             listItems={restItems}
@@ -588,6 +600,7 @@ function DrawerContent({
                             onMenuUnhandledKeyDown={onMenuUnhandledKeyDown}
                             handleSelect={handleSelect}
                         />
+                        <ConversationFooterComponent id={REST_CONVERSATIONS_LIST_ID} listItems={restItems} />
                     </div>
                     {draggedConversation ? (
                         <div
@@ -624,11 +637,13 @@ function ConversationsList({
     onMenuUnhandledKeyDown,
 }: IConversationListProps) {
     const intl = useIntl();
+    const { ConversationDateGroupingComponent } = useCustomization();
 
     return useMemo(() => {
         return (
             <UiMenu
                 onUnhandledKeyDown={onMenuUnhandledKeyDown}
+                GroupItem={(props) => <ConversationDateGroupingComponent menuGroupItemProps={props} />}
                 InteractiveItemWrapper={(props) => (
                     <DraggableConversationItem
                         {...props}
@@ -670,10 +685,11 @@ function ConversationsList({
         onMenuUnhandledKeyDown,
         openedId,
         menuRef,
+        ConversationDateGroupingComponent,
     ]);
 }
 
-type DraggableConversationItemProps = Parameters<typeof DefaultUiMenuInteractiveItemWrapper>[0] & {
+type DraggableConversationItemProps = IUiMenuInteractiveItemWrapperProps & {
     intl: ReturnType<typeof useIntl>;
     openedId: string | undefined;
     onDragStart: (conversationId: string, event: DragEvent<HTMLDivElement>) => void;
@@ -681,6 +697,7 @@ type DraggableConversationItemProps = Parameters<typeof DefaultUiMenuInteractive
 };
 
 function DraggableConversationItem(props: DraggableConversationItemProps) {
+    const { ConversationItemComponent } = useCustomization();
     const data = props.item.data as IChatConversationLocal;
     const itemTitle = props.item.stringTitle || generateTemporaryTitle(props.intl, data);
 
@@ -703,11 +720,14 @@ function DraggableConversationItem(props: DraggableConversationItemProps) {
                 props.onDragEnd();
             }}
         >
-            <DefaultUiMenuInteractiveItemWrapper
-                {...props}
-                item={{
-                    ...props.item,
-                    stringTitle: itemTitle,
+            <ConversationItemComponent
+                conversation={data}
+                menuItemProps={{
+                    item: {
+                        ...props.item,
+                        stringTitle: itemTitle,
+                    },
+                    Component: props.Component,
                 }}
             />
         </div>

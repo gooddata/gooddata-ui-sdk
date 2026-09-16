@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-model, sdk-backend-spi/base/tiger/mockingbird: removed the @alpha reports brand kit (IReportsBrandKit, sanitizeReportsBrandKit, ISettings.reportsBrandKit, getBrandKit/setBrandKit/deleteBrandKit, the logoInverse report variable). Added @alpha ITheme.reports and ITheme.assets sections with ITheme.version \"2\"; report text slot kinds are now h1-h6 and p1-p3. sdk-ui-theme-provider emits the reports theme properties as --gd-reports-* variables (indexed color lists, cqw lengths) and skips version, assets, font files and palette references. Reports resolve {logo} and theme asset ids as image variables, and the report export DOM contract moves to version 2, whose data-export-text-kind states those levels.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

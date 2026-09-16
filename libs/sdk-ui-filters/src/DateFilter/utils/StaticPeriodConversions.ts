@@ -119,3 +119,25 @@ export function resolvePeriodBoundaries(
         to: to.format(platformDateFormat),
     };
 }
+
+/**
+ * The single-sided counterpart to {@link resolvePeriodBoundaries} - expands one typed anchor to the
+ * start or end of its period. Needed because the period picker commits each field independently on
+ * blur, at which point the other side may be empty or unparsable.
+ */
+export function resolvePeriodBoundary(
+    granularity: DateFilterGranularity,
+    date: DateString,
+    side: "start" | "end",
+    weekStart: WeekStart = "Sunday",
+): DateString {
+    assertStaticPeriodGranularity(granularity);
+
+    const anchor = moment(date, platformDateFormat);
+    const resolved =
+        side === "start"
+            ? startOfPeriod(granularity, anchor, weekStart)
+            : endOfPeriod(granularity, anchor, weekStart);
+
+    return resolved.format(platformDateFormat);
+}

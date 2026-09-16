@@ -134,6 +134,14 @@ export interface ITooltipReferenceMaps {
      * so users may reference an attribute by either id, mirroring Highcharts.
      */
     attributes: Record<string, string>;
+
+    /**
+     * The ids among {@link ITooltipReferenceMaps.attributes} that name a computed attribute rather
+     * than a label. Their values are published under the `computed_attribute/` key namespace: an
+     * id is unique only within its object type, so a label and a computed attribute may both be
+     * called `tier` and must not answer each other's reference.
+     */
+    computedAttributeIds: string[];
 }
 
 /**

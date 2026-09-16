@@ -1,10 +1,10 @@
 // (C) 2026 GoodData Corporation
 
-import { type ReactNode, useRef, useState } from "react";
+import { type ReactNode, useId, useRef, useState } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { UiButton, UiFocusManager, UiTooltip, getFocusableElements } from "@gooddata/sdk-ui-kit";
+import { UiButton, UiFocusManager, UiIcon, UiTooltip, getFocusableElements } from "@gooddata/sdk-ui-kit";
 
 /**
  * Props of the component reporting the dashboard filters that could not be applied.
@@ -25,6 +25,7 @@ export interface IRestrictedFiltersPlaceholderProps {
 export function RestrictedFiltersPlaceholder({ count, onRemove }: IRestrictedFiltersPlaceholderProps) {
     const intl = useIntl();
     const wrapperRef = useRef<HTMLSpanElement>(null);
+    const tooltipId = useId();
     // hovering must not steal the focus, so only a deliberate open moves it into the tooltip
     const [isOpenedForAction, setIsOpenedForAction] = useState(false);
 
@@ -57,7 +58,7 @@ export function RestrictedFiltersPlaceholder({ count, onRemove }: IRestrictedFil
 
     const notice = (
         <>
-            <span className="gd-icon-lock" />
+            <UiIcon type="lock" size={16} color="complementary-6" layout="block" />
             {noticeText}
         </>
     );
@@ -67,7 +68,11 @@ export function RestrictedFiltersPlaceholder({ count, onRemove }: IRestrictedFil
         // elements inside one of them
         <span className="dash-filters-restricted" ref={wrapperRef}>
             <UiTooltip
-                anchorWrapperStyles={{ display: "flex", flex: 1 }}
+                id={tooltipId}
+                anchorWrapperStyles={{ display: "flex" }}
+                behaviour="popover"
+                arrowPlacement="top-start"
+                width={300}
                 accessibilityConfig={
                     isOpenedForAction ? { role: "dialog", ariaLabel: noticeText } : undefined
                 }
@@ -111,6 +116,8 @@ export function RestrictedFiltersPlaceholder({ count, onRemove }: IRestrictedFil
                             className="dash-filters-restricted-notice dash-filters-restricted-notice--actionable"
                             data-testid="restricted-filters"
                             aria-haspopup="dialog"
+                            aria-expanded={isOpenedForAction}
+                            aria-describedby={tooltipId}
                             onClick={openForAction}
                         >
                             {notice}
@@ -118,7 +125,10 @@ export function RestrictedFiltersPlaceholder({ count, onRemove }: IRestrictedFil
                     ) : (
                         <span
                             className="dash-filters-restricted-notice"
+                            role="note"
                             tabIndex={0}
+                            aria-label={noticeText}
+                            aria-describedby={tooltipId}
                             data-testid="restricted-filters"
                         >
                             {notice}

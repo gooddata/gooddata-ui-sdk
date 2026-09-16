@@ -25,6 +25,21 @@ describe("resolveReferencesFromGeoFeature", () => {
         expect(resolveReferencesFromGeoFeature(null, undefined, undefined)).toEqual({});
     });
 
+    it("registers a computed attribute under its own key namespace, not the label one", () => {
+        const props: GeoJSON.GeoJsonProperties = {
+            locationName: attribute("Tier", "Gold", "tier"),
+        };
+        const maps: ITooltipReferenceMaps = {
+            measures: {},
+            // a computed attribute is its own display form, so both ids are the same
+            attributes: { tier: "tier" },
+            computedAttributeIds: ["tier"],
+        };
+        expect(resolveReferencesFromGeoFeature(props, maps, undefined)).toEqual({
+            "computed_attribute/tier": value("Gold"),
+        });
+    });
+
     it("registers a measure under its LDM identifier when localId maps to one", () => {
         const props: GeoJSON.GeoJsonProperties = {
             color: measure("Sales", 100, "m_color"),
@@ -32,6 +47,7 @@ describe("resolveReferencesFromGeoFeature", () => {
         const maps: ITooltipReferenceMaps = {
             measures: { m_color: "ldm.sales" },
             attributes: {},
+            computedAttributeIds: [],
         };
         expect(resolveReferencesFromGeoFeature(props, maps, undefined)).toEqual({
             "metric/ldm.sales": value("100"),
@@ -42,7 +58,7 @@ describe("resolveReferencesFromGeoFeature", () => {
         const props: GeoJSON.GeoJsonProperties = {
             color: measure("Sales", 100, "m_color"),
         };
-        const maps: ITooltipReferenceMaps = { measures: {}, attributes: {} };
+        const maps: ITooltipReferenceMaps = { measures: {}, attributes: {}, computedAttributeIds: [] };
         expect(resolveReferencesFromGeoFeature(props, maps, undefined)).toEqual({});
     });
 
@@ -54,6 +70,7 @@ describe("resolveReferencesFromGeoFeature", () => {
         const maps: ITooltipReferenceMaps = {
             measures: { m: "ldm.sales", s: "ldm.size" },
             attributes: {},
+            computedAttributeIds: [],
         };
         expect(resolveReferencesFromGeoFeature(props, maps, undefined)).toEqual({
             "metric/ldm.sales": EMPTY,
@@ -70,6 +87,7 @@ describe("resolveReferencesFromGeoFeature", () => {
             // both map to the same ldm id
             measures: { m_size: "ldm.shared", m_color: "ldm.shared" },
             attributes: {},
+            computedAttributeIds: [],
         };
         const values = resolveReferencesFromGeoFeature(props, maps, undefined);
         expect(values["metric/ldm.shared"]).toEqual(value("1"));
@@ -82,6 +100,7 @@ describe("resolveReferencesFromGeoFeature", () => {
         const maps: ITooltipReferenceMaps = {
             measures: {},
             attributes: { "df.country": "attr.country" },
+            computedAttributeIds: [],
         };
         expect(resolveReferencesFromGeoFeature(props, maps, undefined)).toEqual({
             "label/df.country": value("Czechia"),
@@ -93,7 +112,7 @@ describe("resolveReferencesFromGeoFeature", () => {
         const props: GeoJSON.GeoJsonProperties = {
             segment: attribute("Segment", "EU", "df.segment"),
         };
-        const maps: ITooltipReferenceMaps = { measures: {}, attributes: {} };
+        const maps: ITooltipReferenceMaps = { measures: {}, attributes: {}, computedAttributeIds: [] };
         expect(resolveReferencesFromGeoFeature(props, maps, undefined)).toEqual({
             "label/df.segment": value("EU"),
         });
@@ -103,7 +122,7 @@ describe("resolveReferencesFromGeoFeature", () => {
         const props: GeoJSON.GeoJsonProperties = {
             locationName: attribute("Country", "", "df.country"),
         };
-        const maps: ITooltipReferenceMaps = { measures: {}, attributes: {} };
+        const maps: ITooltipReferenceMaps = { measures: {}, attributes: {}, computedAttributeIds: [] };
         expect(resolveReferencesFromGeoFeature(props, maps, undefined)).toEqual({
             "label/df.country": EMPTY,
         });
@@ -116,6 +135,7 @@ describe("resolveReferencesFromGeoFeature", () => {
         const maps: ITooltipReferenceMaps = {
             measures: {},
             attributes: { "df.region": "attr.region" },
+            computedAttributeIds: [],
         };
         expect(resolveReferencesFromGeoFeature(props, maps, undefined)).toEqual({
             "label/df.region": value("Bohemia"),
@@ -130,6 +150,7 @@ describe("resolveReferencesFromGeoFeature", () => {
         const maps: ITooltipReferenceMaps = {
             measures: { a: "ldm.x", b: "ldm.y" },
             attributes: {},
+            computedAttributeIds: [],
         };
         expect(resolveReferencesFromGeoFeature(props, maps, undefined)).toEqual({
             "metric/ldm.x": value("10"),

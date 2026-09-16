@@ -67,6 +67,16 @@ export const dateFilterValueToDateRange = (
     return { from, to };
 };
 
+export const dateFilterValueToPeriodRange = (value: IUiAbsoluteDateFilterForm): IPeriodRange => {
+    const from = convertPlatformDateStringToDate(value.from);
+    const to = convertPlatformDateStringToDate(value.to);
+
+    return {
+        from: convertDateToPlatformDateString(from, platformDateFormat) ?? undefined,
+        to: convertDateToPlatformDateString(to, platformDateFormat) ?? undefined,
+    };
+};
+
 /**
  * @internal
  */

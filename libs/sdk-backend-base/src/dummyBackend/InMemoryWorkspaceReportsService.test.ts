@@ -127,36 +127,6 @@ describe("InMemoryWorkspaceReportsService", () => {
         expect(fetched.content.pages).toEqual([]);
     });
 
-    it("round-trips and deletes the brand kit", async () => {
-        const service = new InMemoryWorkspaceReportsService();
-        await expect(service.getBrandKit()).resolves.toBeUndefined();
-
-        const kit = { version: "1" as const, assets: { logo: "https://cdn.example.com/logo.svg" } };
-        await service.setBrandKit(kit);
-        await expect(service.getBrandKit()).resolves.toEqual(kit);
-
-        await service.deleteBrandKit();
-        await expect(service.getBrandKit()).resolves.toBeUndefined();
-    });
-
-    it("stores an empty kit, refuses a foreign one and sanitizes the one it stores", async () => {
-        const service = new InMemoryWorkspaceReportsService();
-        await service.setBrandKit({
-            version: "1",
-            assets: { logo: "https://cdn.example.com/logo.svg", images: "no" },
-        } as never);
-        await expect(service.getBrandKit()).resolves.toEqual({
-            version: "1",
-            assets: { logo: "https://cdn.example.com/logo.svg" },
-        });
-
-        // A kit that carries nothing is what a workspace holds before anyone fills one in, so it
-        // stores rather than throwing; only a value that is no version 1 kit at all is refused.
-        await service.setBrandKit({ version: "1" });
-        await expect(service.getBrandKit()).resolves.toEqual({ version: "1" });
-        expect(() => service.setBrandKit({ version: "2" } as never)).toThrow(/not a valid brand kit/);
-    });
-
     it("throws on unknown refs and locked objects", async () => {
         const service = new InMemoryWorkspaceReportsService();
 

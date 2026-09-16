@@ -23,7 +23,8 @@ type UnmappedTypes =
     | "SORT_CASE_SENSITIVE"
     | "ENABLE_QUERY_TAGS"
     | "CERTIFY_PARENT_OBJECTS"
-    | "HLL_TYPE";
+    | "HLL_TYPE"
+    | "REPORTS_BRAND_KIT";
 
 // Only mandatory types
 type MandatoryTypes = Exclude<AllSettingsType, UnmappedTypes>;
@@ -70,7 +71,6 @@ const TYPE_TO_KEY_MAP = {
     ENABLE_PARTIAL_DATA_RESULTS: "enablePartialDataResults",
     ENABLE_NULL_JOINS: "enableNullJoins",
     ENABLE_TIMEZONE_CHANGE: "enableTimezoneChange",
-    REPORTS_BRAND_KIT: "reportsBrandKit",
 } as const satisfies Record<MandatoryTypes, keyof ISettings>;
 
 export function mapTypeToKey(

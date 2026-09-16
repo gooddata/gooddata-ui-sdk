@@ -1471,6 +1471,10 @@
         "text": "Use date format {format}.",
         "crowdinContext": "Date input field hint. The {format} placeholder shows the expected date format pattern (e.g., 'MM/DD/YYYY')."
     },
+    "filters.staticPeriod.dateFormatHintWithExample": {
+        "text": "Use date format {format} (e.g. {example}).",
+        "crowdinContext": "Date input field hint for the period range picker's Week/Month/Quarter/Year granularities. The {format} placeholder shows the expected date format pattern (e.g., 'yyyy-MM'), and {example} shows a worked example of a valid value in that format (e.g., '2026-03')."
+    },
     "filters.staticPeriod.timeFormatHint": {
         "text": "Use time format HH:MM; max value is 23:59.",
         "crowdinContext": "Displayed as a hint below input in which user enters a time."
@@ -1771,6 +1775,10 @@
         "text": "Error: Invalid start date — use {format} format.",
         "crowdinContext": "Placeholder '{format}' is used for showing date format. Example 'Error: Start date is not in MM/dd/yyyy format'."
     },
+    "filters.staticPeriod.errors.invalidStartDateWithExample": {
+        "text": "Error: Invalid start date — use {format} format (e.g. {example}).",
+        "crowdinContext": "Shown for the period range picker's Week/Month/Quarter/Year granularities. Placeholder '{format}' shows the expected date format (e.g. 'yyyy-MM'), and '{example}' shows a worked example of a valid value in that format (e.g. '2026-03')."
+    },
     "filters.staticPeriod.errors.startDateAfterEndDate": {
         "text": "Error: Invalid start date — set a date before the end date.",
         "crowdinContext": "This error is displayed once there is a datetime range and Start date is after End date."
@@ -1786,6 +1794,10 @@
     "filters.staticPeriod.errors.invalidEndDate": {
         "text": "Error: Invalid end date — use {format} format.",
         "crowdinContext": "Placeholder '{format}' is used for showing date format. Example 'Error: End date is not in MM/dd/yyyy format'."
+    },
+    "filters.staticPeriod.errors.invalidEndDateWithExample": {
+        "text": "Error: Invalid end date — use {format} format (e.g. {example}).",
+        "crowdinContext": "Shown for the period range picker's Week/Month/Quarter/Year granularities. Placeholder '{format}' shows the expected date format (e.g. 'yyyy-MM'), and '{example}' shows a worked example of a valid value in that format (e.g. '2026-03')."
     },
     "filters.staticPeriod.errors.endDateBeforeStartDate": {
         "text": "Error: Invalid end date — set a date after the start date.",

@@ -11,6 +11,7 @@ import { noBarrelFiles } from "./configurations/no-barrel-files.js";
 import { noOnlyTests } from "./configurations/no-only-tests.js";
 import { oxc } from "./configurations/oxc.js";
 import { playwright } from "./configurations/playwright.js";
+import { reactHooks } from "./configurations/react-hooks.js";
 import { react } from "./configurations/react.js";
 import { sonarjs } from "./configurations/sonarjs.js";
 import { storybook } from "./configurations/storybook.js";
@@ -38,14 +39,22 @@ export const variants: Record<string, IConfiguration[]> = {
     esm: [importEsm], // used for this lib
     "esm-vitest": [importEsm, vitest, noOnlyTests], // for @gooddata/util and MAQL language server
     "esm-vitest-rtl": [importEsm, vitest, testingLibraryDom, noOnlyTests], // for @gooddata/util and MAQL language server
-    react: [browserEnv, react], // for skel tsx
-    "react-vitest": [browserEnv, react, vitest, noOnlyTests], // for gdc-ui libs
-    "react-vitest-rtl": [browserEnv, react, vitest, testingLibraryReact, noOnlyTests], // for gdc-ui libs
-    "react-playwright": [browserEnv, react, playwright, chaiFriendly, noOnlyTests], // for gdc e2e libs
+    react: [browserEnv, react, reactHooks], // for skel tsx
+    "react-vitest": [browserEnv, react, reactHooks, vitest, noOnlyTests], // for gdc-ui libs
+    "react-vitest-rtl": [browserEnv, react, reactHooks, vitest, testingLibraryReact, noOnlyTests], // for gdc-ui libs
+    "react-playwright": [browserEnv, react, reactHooks, playwright, chaiFriendly, noOnlyTests], // for gdc e2e libs
     "esm-playwright": [browserEnv, importEsm, playwright, chaiFriendly, noOnlyTests], // for e2e utils
-    "esm-react": [browserEnv, react, importEsm], // for most react libs
-    "esm-react-playwright": [browserEnv, react, importEsm, playwright, chaiFriendly, noOnlyTests], // for gdc e2e libs with react
-    "esm-react-storybook": [browserEnv, react, importEsm, storybook], // for sdk-ui-tests-storybook
-    "esm-react-vitest": [browserEnv, react, importEsm, vitest, noOnlyTests], // for most sdk react libs with vitest
-    "esm-react-vitest-rtl": [browserEnv, react, importEsm, vitest, testingLibraryReact, noOnlyTests], // for most sdk react libs with vitest
+    "esm-react": [browserEnv, react, reactHooks, importEsm], // for most react libs
+    "esm-react-playwright": [browserEnv, react, reactHooks, importEsm, playwright, chaiFriendly, noOnlyTests], // for gdc e2e libs with react
+    "esm-react-storybook": [browserEnv, react, reactHooks, importEsm, storybook], // for sdk-ui-tests-storybook
+    "esm-react-vitest": [browserEnv, react, reactHooks, importEsm, vitest, noOnlyTests], // for most sdk react libs with vitest
+    "esm-react-vitest-rtl": [
+        browserEnv,
+        react,
+        reactHooks,
+        importEsm,
+        vitest,
+        testingLibraryReact,
+        noOnlyTests,
+    ], // for most sdk react libs with vitest
 };

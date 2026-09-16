@@ -22,7 +22,6 @@ import {
     type IAlertDefault,
     type IDefaultExportTemplate,
     type IFiscalYear,
-    type IReportsBrandKit,
     type ISeparators,
     type ISettings,
     type ObjRef,
@@ -256,14 +255,6 @@ export class TigerWorkspaceSettings
 
     public async deleteMetricFormatOverride(): Promise<void> {
         return this.deleteSettingByType("METRIC_FORMAT_OVERRIDE");
-    }
-
-    public async setReportsBrandKit(brandKit: IReportsBrandKit): Promise<void> {
-        return this.setSetting("REPORTS_BRAND_KIT", brandKit);
-    }
-
-    public async deleteReportsBrandKit(): Promise<void> {
-        return this.deleteSettingByType("REPORTS_BRAND_KIT");
     }
 
     public getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings> {

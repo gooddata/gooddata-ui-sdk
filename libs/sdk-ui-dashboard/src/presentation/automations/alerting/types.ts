@@ -12,7 +12,6 @@ import {
     type IAlertTriggerInterval,
     type IAlertTriggerMode,
     type IAttribute,
-    type IAttributeMetadataObject,
     type IAutomationMetadataObject,
     type IAutomationMetadataObjectDefinition,
     type ICatalogAttribute,
@@ -219,9 +218,9 @@ export interface IAlertingDialogAttributeProps {
      */
     catalogDateDatasets: ICatalogDateDataset[];
     /**
-     * Distinct values of an attribute in the widget's execution result.
+     * Distinct values of an insight attribute in the widget's execution result, by its display form.
      */
-    getAttributeValues: (attribute: IAttributeMetadataObject) => AttributeValue[];
+    getAttributeValues: (attribute: IAttribute) => AttributeValue[];
     /**
      * Disables the select while the execution result is loading.
      */

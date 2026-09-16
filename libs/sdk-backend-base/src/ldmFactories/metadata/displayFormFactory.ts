@@ -3,6 +3,7 @@
 import {
     type IAttributeDisplayFormGeoAreaConfig,
     type IAttributeDisplayFormMetadataObject,
+    type ISemanticConditionalFormatting,
     type ObjRef,
 } from "@gooddata/sdk-model";
 
@@ -41,6 +42,11 @@ export class AttributeDisplayFormMetadataObjectBuilder<
 
     public geoAreaConfig(config: IAttributeDisplayFormGeoAreaConfig | undefined): this {
         this.item.geoAreaConfig = config;
+        return this;
+    }
+
+    public conditionalFormatting(conditionalFormatting?: ISemanticConditionalFormatting): this {
+        this.item.conditionalFormatting = conditionalFormatting;
         return this;
     }
 }

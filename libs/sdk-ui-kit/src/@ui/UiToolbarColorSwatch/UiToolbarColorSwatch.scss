@@ -47,11 +47,24 @@
     }
 
     &__bar {
+        position: relative;
         box-sizing: border-box;
         width: 100%;
         height: $bar-height;
+        overflow: hidden;
         border-radius: var(--gd-button-borderRadius);
         background-color: var(--gd-palette-primary-base);
+
+        // The bar is one tile high, so the checker is scaled down to still read as one.
+        #{$root}__transparent {
+            background-size: 3px 3px;
+        }
+    }
+
+    // The checker shows through to whatever is behind it, which for the bar is the accent it
+    // carries when a colour is set. Unset, it stands on the same ground as a transparent fill.
+    &--isTransparent #{$root}__bar {
+        background-color: var(--gd-palette-complementary-0);
     }
 
     &--hasBorder {

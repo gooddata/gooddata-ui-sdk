@@ -61,6 +61,7 @@ import {
     type IDashboard,
     type IFilterContext,
     type IFilterContextDefinition,
+    type IInsight,
     type ISemanticSearchRelationship,
     type ISemanticSearchResultItem,
     type ITempFilterContext,
@@ -722,11 +723,19 @@ function applyDashboardPatch(
         identifier: patch.dashboard_id,
         type: "analyticalDashboard",
     });
+    const all = related.filter((part) => !!part.base);
     // The most recent card for this dashboard need not carry a base - a patch that failed to
     // apply resolves to one without. Rebase on the last card that actually has one.
-    const last = related.filter((part) => !!part.base).pop();
-    const base = last?.base;
-    const previousInsights = last?.insights ?? [];
+    const base = all[all.length - 1]?.base;
+    // Collate insights from all cards that are related to this dashboard in history
+    const previousInsights = Object.values(
+        all.reduce<Record<string, IInsight>>((b, p) => {
+            p.insights?.forEach((i) => {
+                b[i.insight.identifier] = i;
+            });
+            return b;
+        }, {}),
+    );
 
     if (!base) {
         return {

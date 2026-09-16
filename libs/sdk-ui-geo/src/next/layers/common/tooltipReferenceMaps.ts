@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { measureLocalId } from "@gooddata/sdk-model";
+import { isComputedAttributeRef, measureLocalId } from "@gooddata/sdk-model";
 import { type DataViewFacade } from "@gooddata/sdk-ui";
 import { resolveMeasureLdmIdentifier } from "@gooddata/sdk-ui-vis-commons";
 
@@ -16,6 +16,9 @@ import { type ITooltipReferenceMaps } from "../registry/adapterTypes.js";
  *   payloads as `attrId`) paired with `formOf.identifier` (the parent
  *   attribute id). Entries where both ids are equal are still emitted so
  *   callers can do a single lookup without a self-equality check.
+ * - `computedAttributeIds`: which of those ids name a computed attribute, read from the
+ *   descriptor ref the backend types honestly, so the resolver can publish them under their own
+ *   key namespace instead of the label one.
  *
  * @internal
  */
@@ -31,6 +34,7 @@ export function buildTooltipReferenceMaps(dataView: DataViewFacade): ITooltipRef
     }
 
     const attributes: Record<string, string> = {};
+    const computedAttributeIds: string[] = [];
     for (const descriptor of dataView.meta().attributeDescriptors()) {
         const header = descriptor.attributeHeader;
         // `identifier` is the display-form id (URI-typed display forms fall
@@ -39,8 +43,12 @@ export function buildTooltipReferenceMaps(dataView: DataViewFacade): ITooltipRef
         const attributeId = header.formOf?.identifier;
         if (displayFormId && attributeId) {
             attributes[displayFormId] = attributeId;
+            if (isComputedAttributeRef(header.ref)) {
+                // For a computed attribute both ids are its own, so one entry covers both.
+                computedAttributeIds.push(displayFormId);
+            }
         }
     }
 
-    return { measures, attributes };
+    return { measures, attributes, computedAttributeIds };
 }

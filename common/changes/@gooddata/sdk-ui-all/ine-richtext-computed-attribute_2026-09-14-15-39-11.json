@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "Support {computed_attribute/id} references in rich text and custom tooltips",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "ivan.nejezchleb@gooddata.com"
+}

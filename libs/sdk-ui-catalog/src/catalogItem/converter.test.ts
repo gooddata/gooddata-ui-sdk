@@ -2,18 +2,21 @@
 
 import { describe, expect, it } from "vitest";
 
-import type {
-    IComputedAttributeMetadataObject,
-    IMeasureMetadataObject,
-    IParameterMetadataObject,
-    MetricType,
+import {
+    type IAttributeMetadataObject,
+    type IComputedAttributeMetadataObject,
+    type IMeasureMetadataObject,
+    type IParameterMetadataObject,
+    type MetricType,
 } from "@gooddata/sdk-model";
 
 import {
+    convertAttributeToCatalogItem,
     convertComputedAttributeToCatalogItem,
     convertMeasureToCatalogItem,
     convertParameterToCatalogItem,
 } from "./converter.js";
+import { createLabel } from "./testFixtures.js";
 
 function createMeasure(overrides: Partial<IMeasureMetadataObject> = {}): IMeasureMetadataObject {
     const base: IMeasureMetadataObject = {
@@ -64,6 +67,38 @@ describe("convertMeasureToCatalogItem", () => {
 
     it("should leave the permissions undefined when they were not requested", () => {
         expect(convertMeasureToCatalogItem(createMeasure()).permissions).toBeUndefined();
+    });
+});
+
+function createAttribute(overrides: Partial<IAttributeMetadataObject> = {}): IAttributeMetadataObject {
+    const base: IAttributeMetadataObject = {
+        id: "attribute.id",
+        uri: "/gdc/md/attribute.id",
+        type: "attribute",
+        unlisted: false,
+        ref: { identifier: "attribute.id", type: "attribute" },
+        title: "Region",
+        description: "Sales region",
+        tags: [],
+        production: true,
+        deprecated: false,
+        isLocked: false,
+        displayForms: [],
+    };
+
+    return {
+        ...base,
+        ...overrides,
+    };
+}
+
+describe("convertAttributeToCatalogItem", () => {
+    it("leaves labels for the detail loader, since list queries do not include them", () => {
+        const label = createLabel("label.name", "Region Name");
+
+        expect(
+            convertAttributeToCatalogItem(createAttribute({ displayForms: [label] })).labels,
+        ).toBeUndefined();
     });
 });
 

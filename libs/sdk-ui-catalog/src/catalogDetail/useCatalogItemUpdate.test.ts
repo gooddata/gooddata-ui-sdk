@@ -9,6 +9,7 @@ import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { type ISemanticConditionalFormatting, idRef } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 
+import { createLabel } from "../catalogItem/testFixtures.js";
 import type { ICatalogItem, ICatalogItemMeasure, ICatalogItemRef } from "../catalogItem/types.js";
 import { PermissionsProvider } from "../permission/PermissionsContext.js";
 import type { PermissionsState } from "../permission/types.js";
@@ -505,6 +506,166 @@ describe("useCatalogItemUpdate – updateItemConditionalFormatting", () => {
             result.current.updateItemConditionalFormatting(rule);
         });
         expect(result.current.item).toMatchObject({ conditionalFormatting: rule });
+
+        await waitFor(() => {
+            expect(onError).toHaveBeenCalled();
+        });
+        expect(result.current.item).toEqual(itemBeforeEdit);
+    });
+});
+
+const labelEntity = createLabel("label.name", "Region Name");
+
+const attributeEntity = {
+    type: "attribute" as const,
+    ref: idRef("attribute.id", "attribute"),
+    id: "attribute.id",
+    title: "Region",
+    description: "",
+    tags: [],
+    isLocked: false,
+    displayForms: [labelEntity],
+};
+
+function createAttributeWrapper(
+    getAttribute = vi.fn().mockResolvedValue(attributeEntity),
+    updateAttributeDisplayFormMeta = vi.fn().mockResolvedValue(labelEntity),
+) {
+    const backend = {
+        workspace: () => ({
+            attributes: () => ({ getAttribute, updateAttributeDisplayFormMeta }),
+        }),
+    } as unknown as IAnalyticalBackend;
+
+    // the load hook reads feature flags off the permissions context
+    const permissionsState = {
+        status: "success",
+        result: { settings: { enableMetricPermissions: false } },
+    } as PermissionsState;
+
+    function wrapper({ children }: PropsWithChildren) {
+        return createElement(
+            BackendProvider,
+            { backend },
+            createElement(
+                WorkspaceProvider,
+                { workspace: "test-workspace" },
+                createElement(PermissionsProvider, { permissionsState }, children),
+            ),
+        );
+    }
+
+    return { wrapper, getAttribute, updateAttributeDisplayFormMeta };
+}
+
+describe("useCatalogItemUpdate – updateItemLabelConditionalFormatting", () => {
+    const rule: ISemanticConditionalFormatting = {
+        conditions: [
+            {
+                id: "c1",
+                operator: "EQUAL_TO",
+                value: { kind: "literal", value: "East" },
+                format: { scope: "cell", color: "#ff0000" },
+            },
+        ],
+    };
+
+    function renderAttributeHook(
+        wrapper: ({ children }: PropsWithChildren) => ReturnType<typeof createElement>,
+        onError?: () => void,
+    ) {
+        return renderHook(
+            () =>
+                useCatalogItemUpdate({
+                    currentUser: null,
+                    objectId: "attribute.id",
+                    objectType: "attribute",
+                    onError,
+                }),
+            { wrapper },
+        );
+    }
+
+    it("applies the change to the label optimistically, then persists it via a partial updateAttributeDisplayFormMeta patch", async () => {
+        const { wrapper, updateAttributeDisplayFormMeta } = createAttributeWrapper();
+        const { result } = renderAttributeHook(wrapper);
+
+        await waitFor(() => {
+            expect(result.current.status).toBe("success");
+        });
+
+        act(() => {
+            result.current.updateItemLabelConditionalFormatting(labelEntity.ref, rule);
+        });
+
+        expect(result.current.item).toMatchObject({
+            labels: [{ id: "label.name", conditionalFormatting: rule }],
+        });
+        // Only the label was patched; the attribute's own audit fields stay as loaded.
+        expect(result.current.item?.updatedAt).toBeNull();
+
+        await waitFor(() => {
+            expect(updateAttributeDisplayFormMeta).toHaveBeenCalledWith(
+                expect.objectContaining({ ref: labelEntity.ref, conditionalFormatting: rule }),
+            );
+        });
+    });
+
+    it("clears the label's rule via an explicit null, not undefined", async () => {
+        const { wrapper, updateAttributeDisplayFormMeta } = createAttributeWrapper();
+        const { result } = renderAttributeHook(wrapper);
+
+        await waitFor(() => {
+            expect(result.current.status).toBe("success");
+        });
+
+        act(() => {
+            result.current.updateItemLabelConditionalFormatting(labelEntity.ref, rule);
+        });
+        await waitFor(() => {
+            expect(updateAttributeDisplayFormMeta).toHaveBeenCalledTimes(1);
+        });
+
+        act(() => {
+            result.current.updateItemLabelConditionalFormatting(labelEntity.ref, undefined);
+        });
+        await waitFor(() => {
+            expect(updateAttributeDisplayFormMeta).toHaveBeenLastCalledWith(
+                expect.objectContaining({ conditionalFormatting: null }),
+            );
+        });
+    });
+
+    it("ignores a label the attribute does not have", async () => {
+        const { wrapper, updateAttributeDisplayFormMeta } = createAttributeWrapper();
+        const { result } = renderAttributeHook(wrapper);
+
+        await waitFor(() => {
+            expect(result.current.status).toBe("success");
+        });
+
+        act(() => {
+            result.current.updateItemLabelConditionalFormatting(idRef("label.other", "displayForm"), rule);
+        });
+
+        expect(updateAttributeDisplayFormMeta).not.toHaveBeenCalled();
+    });
+
+    it("reverts the label and reports the error when persisting fails", async () => {
+        const updateAttributeDisplayFormMeta = vi.fn().mockRejectedValue(new Error("boom"));
+        const { wrapper } = createAttributeWrapper(undefined, updateAttributeDisplayFormMeta);
+        const onError = vi.fn();
+        const { result } = renderAttributeHook(wrapper, onError);
+
+        await waitFor(() => {
+            expect(result.current.status).toBe("success");
+        });
+        const itemBeforeEdit = result.current.item;
+
+        act(() => {
+            result.current.updateItemLabelConditionalFormatting(labelEntity.ref, rule);
+        });
+        expect(result.current.item).toMatchObject({ labels: [{ conditionalFormatting: rule }] });
 
         await waitFor(() => {
             expect(onError).toHaveBeenCalled();

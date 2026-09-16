@@ -190,8 +190,8 @@ const hideAbsoluteFormGranularities: DashboardConfigMerger = (dashboardConfig) =
  * Establishes the absolute form's granularity baseline from the feature flag, before any dashboard-level
  * merging happens.
  *
- * TODO: Backend doesn't support absolute form granularities yet. Therefore, we are using the granularities
- * from the relative form as a temporary solution. This should be replaced in the future.
+ * TODO: MC-5360: Backend doesn't support absolute form granularities yet. Therefore, we are using the
+ * granularities from the relative form as a temporary solution. This should be replaced in the future.
  *
  * @param config - date filter config
  * @param isAbsoluteDateFilterGranularityEnabled - whether the absolute date filter granularity feature is enabled

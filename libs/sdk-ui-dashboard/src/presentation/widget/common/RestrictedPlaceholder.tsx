@@ -1,42 +1,28 @@
 // (C) 2026 GoodData Corporation
 
+import { type CSSProperties } from "react";
+
 import cx from "classnames";
-import { FormattedMessage } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { type ScreenSize } from "@gooddata/sdk-model";
-import { Typography } from "@gooddata/sdk-ui-kit";
+import { ErrorComponent } from "@gooddata/sdk-ui";
+import { Bubble, BubbleHoverTrigger, type IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 import { type CustomRestrictedPlaceholderComponent } from "../../dashboardContexts/types.js";
 import { type WidgetExportData } from "../../export/types.js";
 import { DashboardItem } from "../../presentationComponents/DashboardItems/DashboardItem.js";
 import { DashboardItemVisualization } from "../../presentationComponents/DashboardItems/DashboardItemVisualization.js";
-import { CompactContentError } from "../insight/ViewModeDashboardInsight/CustomError/CompactContentError.js";
-import { ErrorContainer } from "../insight/ViewModeDashboardInsight/CustomError/ErrorContainer.js";
-import { shouldRenderFullContent } from "../insight/ViewModeDashboardInsight/CustomError/sizingUtils.js";
 
-/** Smallest tile that still fits the headline on its own. */
-const MEDIUM_MIN_WIDTH = 160;
-const MEDIUM_MIN_HEIGHT = 100;
+const tooltipAlignPoints: IAlignPoint[] = [{ align: "bc tc" }];
 
-export type RestrictedPlaceholderVariant = "full" | "medium" | "compact";
-
-/**
- * Which of the three renderings a tile of the given size can carry. A chart error may collapse
- * straight from "everything" to "icon only" because the user can open the widget to find out more;
- * a restricted widget cannot be opened, so it keeps the headline for as long as text fits at all.
- */
-export function restrictedPlaceholderVariant(
-    width: number | undefined,
-    height: number | undefined,
-): RestrictedPlaceholderVariant {
-    if (shouldRenderFullContent(height, width)) {
-        return "full";
-    }
-    if ((width ?? 0) >= MEDIUM_MIN_WIDTH && (height ?? 0) >= MEDIUM_MIN_HEIGHT) {
-        return "medium";
-    }
-    return "compact";
-}
+const errorContentStyle: CSSProperties = {
+    // it centres its column, and centring splits the overflow between both ends: on a tile too small
+    // for the message that takes the lock off the top. From the start, the lock and the reason are
+    // what survives the clip.
+    justifyContent: "flex-start",
+    minWidth: 0,
+};
 
 /**
  * Props of the replaceable content of a restricted placeholder. The dashboard owns the tile and,
@@ -52,47 +38,41 @@ export interface IRestrictedPlaceholderContentProps {
 }
 
 /**
- * The built-in restricted placeholder content: a lock with the reason and the recovery step, scaled
- * to the room available.
+ * The built-in restricted placeholder content: a lock with the reason and the recovery step.
+ *
+ * It is the error tile the dashboard already shows for a visualization that is gone, with the lock
+ * in place of the warning, so the two read as the same kind of message. It renders the same at every
+ * size — the tile clips what does not fit and the hover tooltip carries the whole message — so one
+ * widget cannot read differently in two render modes. The measured size is therefore not used, and
+ * is passed to a consumer's replacement only.
  *
  * @alpha
  */
-export function RestrictedPlaceholderContent({ width, height }: IRestrictedPlaceholderContentProps) {
-    return <RestrictedPlaceholderMessage variant={restrictedPlaceholderVariant(width, height)} />;
-}
-
-export function RestrictedPlaceholderMessage({ variant }: { variant: RestrictedPlaceholderVariant }) {
-    if (variant === "compact") {
-        return (
-            <ErrorContainer>
-                {/* the placeholder replaces the widget title too, so without this the tile would
-                    announce nothing at all — CompactContentError shows its text on hover only */}
-                <span className="sr-only">
-                    <FormattedMessage id="widget.error.restricted_insight.message" />{" "}
-                    <FormattedMessage id="widget.error.restricted_insight.description" />
-                </span>
-                <CompactContentError
-                    className="gd-icon-lock"
-                    headline="widget.error.restricted_insight.message"
-                    text="widget.error.restricted_insight.description"
-                />
-            </ErrorContainer>
-        );
-    }
+export function RestrictedPlaceholderContent(_props: IRestrictedPlaceholderContentProps) {
+    const intl = useIntl();
 
     return (
-        <ErrorContainer>
-            <div className="info-label-icon gd-icon-lock">
-                <Typography tagName="h2">
-                    <FormattedMessage id="widget.error.restricted_insight.message" tagName="span" />
-                </Typography>
-                {variant === "full" ? (
-                    <Typography tagName="h2">
-                        <FormattedMessage id="widget.error.restricted_insight.description" tagName="span" />
-                    </Typography>
-                ) : null}
-            </div>
-        </ErrorContainer>
+        <BubbleHoverTrigger className="gd-restricted-placeholder-trigger">
+            <ErrorComponent
+                className="gd-restricted-placeholder"
+                dataTestId="restricted-placeholder"
+                icon="gd-icon-lock"
+                // it does not shrink on its own - flex: 1 0 auto - so a narrow tile would push its
+                // centred lock outside the visible area
+                width="100%"
+                style={errorContentStyle}
+                message={intl.formatMessage({ id: "widget.error.restricted_insight.message" })}
+                description={intl.formatMessage({ id: "widget.error.restricted_insight.description" })}
+                // deliberately not given the tile size: ErrorComponent would clamp its content to 44
+                // or 64px, which is right for a chart error sharing the tile with a widget headline
+                // and wrong here, where the placeholder replaces the headline and owns the tile
+            />
+            <Bubble alignPoints={tooltipAlignPoints}>
+                {intl.formatMessage({ id: "widget.error.restricted_insight.message" })}
+                <br />
+                {intl.formatMessage({ id: "widget.error.restricted_insight.description" })}
+            </Bubble>
+        </BubbleHoverTrigger>
     );
 }
 

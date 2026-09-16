@@ -156,9 +156,16 @@ function getMeasures(references: ReferenceMap) {
     });
 }
 
+/**
+ * A computed attribute is referenced like any other attribute: its ref goes on the display form
+ * slot, typed `computedAttribute`, and the backend aggregates over it the same way - both `max` and
+ * `count` below are supported over a computed attribute.
+ */
 function getLabels(references: ReferenceMap) {
     const attributes = Object.values(references)
-        .map(({ type, ref }) => (type === "displayForm" || type === "attribute" ? ref : null))
+        .map(({ type, ref }) =>
+            type === "displayForm" || type === "attribute" || type === "computedAttribute" ? ref : null,
+        )
         .filter(Boolean);
 
     const items = attributes.map((ref, i) => {

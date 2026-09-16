@@ -23,7 +23,7 @@ export interface IUiToolbarColorSwatchProps {
      */
     hasBorder?: boolean;
     /**
-     * No colour is set. Applies to the "fill" variant only.
+     * No colour is set: the fill, or the bar of the "text" variant, shows a checker instead.
      * @defaultValue false
      */
     isTransparent?: boolean;
@@ -49,21 +49,21 @@ export function UiToolbarColorSwatch({
     isTransparent = false,
     glyph = "A",
 }: IUiToolbarColorSwatchProps) {
-    const isTransparentFill = variant === "fill" && isTransparent;
+    const swatchStyle = { backgroundColor: isTransparent ? undefined : color };
+    const checker = isTransparent ? <span className={e("transparent")} /> : null;
 
     return (
-        <span className={b({ variant, hasBorder, isTransparent: isTransparentFill })} aria-hidden>
+        <span className={b({ variant, hasBorder, isTransparent })} aria-hidden>
             {variant === "fill" ? (
-                <span
-                    className={e("fill")}
-                    style={{ backgroundColor: isTransparentFill ? undefined : color }}
-                >
-                    {isTransparentFill ? <span className={e("transparent")} /> : null}
+                <span className={e("fill")} style={swatchStyle}>
+                    {checker}
                 </span>
             ) : (
                 <>
                     <span className={e("glyph")}>{glyph}</span>
-                    <span className={e("bar")} style={{ backgroundColor: color }} />
+                    <span className={e("bar")} style={swatchStyle}>
+                        {checker}
+                    </span>
                 </>
             )}
         </span>

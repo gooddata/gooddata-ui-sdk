@@ -23,6 +23,13 @@ describe("dashboardSideloadIncludes", () => {
         expect(dashboardSideloadIncludes(["measure"])).toEqual(["filterContexts", "metrics"]);
     });
 
+    it("side-loads computed attributes, which a rich text reference can also name", () => {
+        expect(dashboardSideloadIncludes(["computedAttribute"])).toEqual([
+            "filterContexts",
+            "computedAttributes",
+        ]);
+    });
+
     it("does not side-load labels for displayForm because they are resolved from filter contexts", () => {
         expect(dashboardSideloadIncludes(["displayForm"])).toEqual(["filterContexts"]);
     });

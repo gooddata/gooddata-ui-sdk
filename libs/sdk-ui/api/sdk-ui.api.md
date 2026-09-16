@@ -1120,6 +1120,7 @@ export interface IErrorProps {
     clientHeight?: any;
     // (undocumented)
     code?: string;
+    dataTestId?: string;
     // (undocumented)
     description?: string;
     height?: any;

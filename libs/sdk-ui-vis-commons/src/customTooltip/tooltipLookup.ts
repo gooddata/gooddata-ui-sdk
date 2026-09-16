@@ -7,7 +7,7 @@ import { DataViewFacade } from "@gooddata/sdk-ui";
 import { labelReference, measureReference } from "./referenceStatus.js";
 import { type ITooltipExecutionMeta } from "./tooltipExecution.js";
 import { buildKeySegment, joinKeySegments } from "./tooltipKey.js";
-import { type IResolvedReferenceValues, labelKey, metricKey } from "./types.js";
+import { type IResolvedReferenceValues, metricKey } from "./types.js";
 
 /**
  * Build a per-data-point lookup keyed by `${displayFormId}:${uri}` segments
@@ -66,8 +66,8 @@ export function buildLookupTable(
                 continue;
             }
 
-            const labelId = meta.labelIdMap[localId];
-            if (labelId) {
+            const attributeKey = meta.attributeKeyMap[localId];
+            if (attributeKey) {
                 const countLocalId = meta.labelCountMap[localId];
                 const countSeries = countLocalId ? seriesByLocalId.get(countLocalId) : undefined;
                 const countValue = countSeries
@@ -75,7 +75,7 @@ export function buildLookupTable(
                     : 1;
 
                 // count > 1 → "(Multiple items)"; else empty/value via the shared helper.
-                values[labelKey(labelId)] = countValue > 1 ? { kind: "multiple" } : labelReference(rawValue);
+                values[attributeKey] = countValue > 1 ? { kind: "multiple" } : labelReference(rawValue);
                 continue;
             }
 

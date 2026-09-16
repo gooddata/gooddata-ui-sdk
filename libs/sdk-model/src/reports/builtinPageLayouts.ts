@@ -63,7 +63,7 @@ const footerSlots = () => [
     {
         ...textSlot({
             localIdentifier: "footerPageNumber",
-            kind: "custom",
+            kind: "p1",
             content: "{currentPageNumber} / {totalPages}",
         }),
         style: { horizontalAlign: "end", verticalAlign: "end" },
@@ -98,11 +98,9 @@ const widescreenContentPage = (spec: IWidescreenPageSpec): IReportPageBody => {
         format: "widescreen",
         layout: column([slot("pageTitle", 2), body, footerRow()]),
         slots: [
-            textSlot({ localIdentifier: "pageTitle", kind: "title", hint: "Page title" }),
+            textSlot({ localIdentifier: "pageTitle", kind: "h1", hint: "Page title" }),
             ...vizRows.flat().map(vizSlot),
-            ...(summary
-                ? [textSlot({ localIdentifier: "summary", kind: "summary", hint: "Add a summary" })]
-                : []),
+            ...(summary ? [textSlot({ localIdentifier: "summary", kind: "p2", hint: "Add a summary" })] : []),
             ...footerSlots(),
         ],
     };
@@ -164,10 +162,10 @@ export const BuiltInReportPageLayoutCover: IReportPageLayout = builtInPage({
         format: "widescreen",
         layout: column([slot("coverTitle", 2), slot("coverSubtitle", 1), footerRow()]),
         slots: [
-            textSlot({ localIdentifier: "coverTitle", kind: "title", content: "{reportName}" }),
+            textSlot({ localIdentifier: "coverTitle", kind: "h1", content: "{reportName}" }),
             textSlot({
                 localIdentifier: "coverSubtitle",
-                kind: "subtitle",
+                kind: "h3",
                 content: "{periodStart} – {periodEnd}",
             }),
             ...footerSlots(),
@@ -189,7 +187,7 @@ export const BuiltInReportPageLayoutSection: IReportPageLayout = builtInPage({
         format: "widescreen",
         layout: column([slot("sectionTitle", 9), footerRow()]),
         slots: [
-            textSlot({ localIdentifier: "sectionTitle", kind: "sectionTitle", hint: "Section title" }),
+            textSlot({ localIdentifier: "sectionTitle", kind: "h2", hint: "Section title" }),
             ...footerSlots(),
         ],
     },
@@ -270,9 +268,9 @@ export const BuiltInReportPageLayoutViz6TextLeft: IReportPageLayout = builtInPag
             footerRow(),
         ]),
         slots: [
-            textSlot({ localIdentifier: "pageTitle", kind: "title", hint: "Page title" }),
-            textSlot({ localIdentifier: "text1", kind: "body", hint: "Add a text" }),
-            textSlot({ localIdentifier: "text2", kind: "body", hint: "Add a text" }),
+            textSlot({ localIdentifier: "pageTitle", kind: "h1", hint: "Page title" }),
+            textSlot({ localIdentifier: "text1", kind: "p1", hint: "Add a text" }),
+            textSlot({ localIdentifier: "text2", kind: "p1", hint: "Add a text" }),
             ...["widget1", "widget2", "widget3", "widget4", "widget5", "widget6"].map(vizSlot),
             ...footerSlots(),
         ],
@@ -313,12 +311,10 @@ const portraitContentPage = ({ vizRows, text, summary }: IPortraitPageSpec): IRe
         format: PORTRAIT_FORMAT,
         layout: column([slot("pageTitle", 1), column(bodyChildren, 10), footerRow()]),
         slots: [
-            textSlot({ localIdentifier: "pageTitle", kind: "title", hint: "Page title" }),
-            ...(text ? [textSlot({ localIdentifier: "text1", kind: "body", hint: "Add a text" })] : []),
+            textSlot({ localIdentifier: "pageTitle", kind: "h1", hint: "Page title" }),
+            ...(text ? [textSlot({ localIdentifier: "text1", kind: "p1", hint: "Add a text" })] : []),
             ...vizRows.flat().map(vizSlot),
-            ...(summary
-                ? [textSlot({ localIdentifier: "summary", kind: "summary", hint: "Add a summary" })]
-                : []),
+            ...(summary ? [textSlot({ localIdentifier: "summary", kind: "p2", hint: "Add a summary" })] : []),
             ...footerSlots(),
         ],
     };
@@ -338,10 +334,10 @@ export const BuiltInReportPageLayoutPortraitCover: IReportPageLayout = builtInPa
         format: PORTRAIT_FORMAT,
         layout: column([slot("coverTitle", 2), slot("coverSubtitle", 1), footerRow()]),
         slots: [
-            textSlot({ localIdentifier: "coverTitle", kind: "title", content: "{reportName}" }),
+            textSlot({ localIdentifier: "coverTitle", kind: "h1", content: "{reportName}" }),
             textSlot({
                 localIdentifier: "coverSubtitle",
-                kind: "subtitle",
+                kind: "h3",
                 content: "{periodStart} – {periodEnd}",
             }),
             ...footerSlots(),
@@ -363,7 +359,7 @@ export const BuiltInReportPageLayoutPortraitSection: IReportPageLayout = builtIn
         format: PORTRAIT_FORMAT,
         layout: column([slot("sectionTitle", 9), footerRow()]),
         slots: [
-            textSlot({ localIdentifier: "sectionTitle", kind: "sectionTitle", hint: "Section title" }),
+            textSlot({ localIdentifier: "sectionTitle", kind: "h2", hint: "Section title" }),
             ...footerSlots(),
         ],
     },
@@ -383,8 +379,8 @@ export const BuiltInReportPageLayoutPortraitSummary: IReportPageLayout = builtIn
         format: PORTRAIT_FORMAT,
         layout: column([slot("pageTitle", 1), slot("summary", 10), footerRow()]),
         slots: [
-            textSlot({ localIdentifier: "pageTitle", kind: "title", hint: "Page title" }),
-            textSlot({ localIdentifier: "summary", kind: "summary", hint: "Add a summary" }),
+            textSlot({ localIdentifier: "pageTitle", kind: "h1", hint: "Page title" }),
+            textSlot({ localIdentifier: "summary", kind: "p2", hint: "Add a summary" }),
             ...footerSlots(),
         ],
     },

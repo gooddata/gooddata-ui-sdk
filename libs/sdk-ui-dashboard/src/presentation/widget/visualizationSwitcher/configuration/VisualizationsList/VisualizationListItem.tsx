@@ -3,9 +3,18 @@
 import { useCallback, useState } from "react";
 
 import cx from "classnames";
+import { useIntl } from "react-intl";
 
 import { type IInsight, type IInsightWidget, insightVisualizationType } from "@gooddata/sdk-model";
-import { Button, type IAlignPoint, InsightListItemTypeIcon, ShortenedText } from "@gooddata/sdk-ui-kit";
+import {
+    Button,
+    type IAlignPoint,
+    InsightListItemTypeIcon,
+    ShortenedText,
+    UiIcon,
+} from "@gooddata/sdk-ui-kit";
+
+import { useIsWidgetRestricted } from "../../../../../model/react/useIsWidgetRestricted.js";
 
 import { VisualizationListMenu } from "./VisualizationListMenu.js";
 
@@ -48,6 +57,8 @@ export function VisualizationListItem({
 }: IVisualizationListItemProps) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [active, setActive] = useState<string>("");
+    const intl = useIntl();
+    const isRestricted = useIsWidgetRestricted(visualization);
 
     const onMenuButtonClick = useCallback(() => {
         setIsOpen(!isOpen);
@@ -76,7 +87,9 @@ export function VisualizationListItem({
                     onClick={() => onVisualizationSelect(visualization.identifier)}
                 >
                     <div className="visualization-title">
-                        {insight ? (
+                        {isRestricted ? (
+                            <UiIcon type="lock" size={14} color="complementary-7" />
+                        ) : insight ? (
                             <InsightListItemTypeIcon type={insightVisualizationType(insight)} />
                         ) : null}
                         <div className="gd-visualizations-list-item-content">
@@ -85,7 +98,9 @@ export function VisualizationListItem({
                                     className="gd-visualizations-list-item-content-name-text"
                                     tooltipAlignPoints={tooltipAlignPoints}
                                 >
-                                    {visualization.title}
+                                    {isRestricted
+                                        ? intl.formatMessage({ id: "visualizationSwitcher.restrictedEntry" })
+                                        : visualization.title}
                                 </ShortenedText>
                             </div>
                         </div>
@@ -109,7 +124,9 @@ export function VisualizationListItem({
                     visualization={visualization}
                     isLast={isLast}
                     isFirst={isFirst}
-                    shouldRenderActions={shouldRenderActions}
+                    // the editor cannot read the visualization, so it cannot judge where in the order
+                    // the entry belongs; removal is the only change it can make
+                    shouldRenderActions={shouldRenderActions && !isRestricted}
                     onMenuButtonClick={onMenuButtonClick}
                     onVisualizationDeleted={onVisualizationDeleted}
                     onVisualizationPositionChange={onVisualizationPositionChange}

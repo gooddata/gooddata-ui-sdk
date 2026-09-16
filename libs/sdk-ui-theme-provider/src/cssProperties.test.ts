@@ -8,6 +8,8 @@ import {
     type ParserFunction,
     clearCssProperties,
     generateShadowColor,
+    handleReportLength,
+    handleReportLineHeight,
     handleUnits,
     parseThemeToCssProperties,
     setCssProperties,
@@ -121,6 +123,96 @@ describe("cssProperties", () => {
             expect(tag).not.toEqual(null);
             expect(tag?.textContent).toContain(":root:root {");
             expect(tag?.textContent).toContain("color-scheme: dark;");
+        });
+
+        it("should index report color lists and skip the theme parts that are not CSS", () => {
+            setCssProperties(
+                {
+                    version: "2",
+                    palette: { primary: { base: "#14b2e2" } },
+                    reports: {
+                        visualizationPalette: { id: "brand", type: "colorPalette" },
+                        page: { backgroundColor: "#f8f2ec" },
+                        colors: { backgrounds: ["#fff", "#f8f2ec"], text: ["#101820"] },
+                        textStyle: {
+                            typography: {
+                                fontFamily: "Brand, sans-serif",
+                                fonts: [{ family: "Brand", url: "https://cdn.example.com/brand.woff2" }],
+                            },
+                            heading: { color: "#101820", h1: { fontSize: 4, lineHeight: "4.6cqw" } },
+                            paragraph: { p1: { fontSize: "16px" } },
+                        },
+                    },
+                    assets: { logos: [{ id: "logo", url: "https://cdn.example.com/logo.svg" }] },
+                },
+                false,
+            );
+
+            const css = document.getElementById("gdc-theme-properties")?.textContent ?? "";
+            expect(css).toContain("--gd-reports-page-backgroundColor: #f8f2ec;");
+            expect(css).toContain("--gd-reports-colors-backgrounds-0: #fff;");
+            expect(css).toContain("--gd-reports-colors-backgrounds-1: #f8f2ec;");
+            expect(css).toContain("--gd-reports-colors-text-0: #101820;");
+            expect(css).toContain("--gd-reports-textStyle-typography-fontFamily: Brand, sans-serif;");
+            expect(css).toContain("--gd-reports-textStyle-heading-color: #101820;");
+            expect(css).toContain("--gd-reports-textStyle-heading-h1-fontSize: 4cqw;");
+            expect(css).toContain("--gd-reports-textStyle-heading-h1-lineHeight: 4.6cqw;");
+            expect(css).not.toContain("--gd-version");
+            expect(css).not.toContain("--gd-assets");
+            expect(css).not.toContain("--gd-reports-textStyle-typography-fonts");
+            expect(css).not.toContain("--gd-reports-visualizationPalette");
+            expect(css).not.toContain("--gd-reports-textStyle-paragraph-p1-fontSize");
+            expect(css).not.toMatch(/: ;/);
+        });
+
+        it("should index an inline report visualization palette", () => {
+            setCssProperties({ reports: { visualizationPalette: ["#e4002b", "#00a3e0"] } }, false);
+
+            const css = document.getElementById("gdc-theme-properties")?.textContent ?? "";
+            expect(css).toContain("--gd-reports-visualizationPalette-0: #e4002b;");
+            expect(css).toContain("--gd-reports-visualizationPalette-1: #00a3e0;");
+        });
+    });
+
+    describe("handleReportLength", () => {
+        it("reads a bare number as cqw", () => {
+            expect(handleReportLength(3.5)).toBe("3.5cqw");
+            expect(handleReportLength("2")).toBe("2cqw");
+        });
+        it("lets a relative unit through", () => {
+            expect(handleReportLength("3.5cqw")).toBe("3.5cqw");
+            expect(handleReportLength(" 120% ")).toBe("120%");
+            expect(handleReportLength("1.2em")).toBe("1.2em");
+        });
+        it("drops a unit that would not follow the page width", () => {
+            // The page contains its inline axis only, so a block unit resolves against the viewport.
+            expect(handleReportLength("4cqh")).toBe("");
+            expect(handleReportLength("4cqb")).toBe("");
+            // Anchored to the root font size, so it holds its size while the page changes.
+            expect(handleReportLength("1.2rem")).toBe("");
+        });
+        it("drops absolute units and anything that is not a length", () => {
+            expect(handleReportLength("16px")).toBe("");
+            expect(handleReportLength("big")).toBe("");
+            expect(handleReportLength(-1)).toBe("");
+            expect(handleReportLength(Number.NaN)).toBe("");
+            expect(handleReportLength("4cqw; color: red")).toBe("");
+            expect(handleReportLength(undefined)).toBe("");
+        });
+    });
+
+    describe("handleReportLineHeight", () => {
+        it("reads a bare number as the CSS ratio it is, not as a share of the page", () => {
+            expect(handleReportLineHeight(1.5)).toBe("1.5");
+            expect(handleReportLineHeight("1.2")).toBe("1.2");
+        });
+        it("keeps a stated page-relative length", () => {
+            expect(handleReportLineHeight("4.3cqw")).toBe("4.3cqw");
+            expect(handleReportLineHeight("1.2em")).toBe("1.2em");
+        });
+        it("drops what is neither", () => {
+            expect(handleReportLineHeight("20px")).toBe("");
+            expect(handleReportLineHeight("normal")).toBe("");
         });
     });
 

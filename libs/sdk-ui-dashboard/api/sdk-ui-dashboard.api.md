@@ -2582,7 +2582,7 @@ export interface IAlertActionsContextValue {
 export interface IAlertDataContextValue {
     defaultRecipient: IAutomationRecipient;
     defaultUser: IAutomationRecipient;
-    getAttributeValues: (attribute: IAttributeMetadataObject) => AttributeValue[];
+    getAttributeValues: (attribute: IAttribute) => AttributeValue[];
     getMetricValue: (measure?: IMeasure, attribute?: IAttribute, value?: string | null) => number | undefined;
     isResultLoading: boolean;
     measureFormatMap: IMeasureFormatMap;
@@ -2639,7 +2639,7 @@ export interface IAlertingDialogAttributeProps {
     catalogDateDatasets: ICatalogDateDataset[];
     closeOnParentScroll?: boolean;
     disabled?: boolean;
-    getAttributeValues: (attribute: IAttributeMetadataObject) => AttributeValue[];
+    getAttributeValues: (attribute: IAttribute) => AttributeValue[];
     id: string;
     isResultLoading?: boolean;
     onAttributeChange: (attribute: AlertAttribute | undefined, value: AttributeValue | undefined) => void;
@@ -11345,7 +11345,7 @@ export type RestrictedFiltersPlaceholderComponentProvider = () => CustomRestrict
 export type RestrictedPlaceholderComponentProvider = (widget: IInsightWidget) => CustomRestrictedPlaceholderComponent;
 
 // @alpha
-export function RestrictedPlaceholderContent(input: IRestrictedPlaceholderContentProps): JSX.Element;
+export function RestrictedPlaceholderContent(_props: IRestrictedPlaceholderContentProps): JSX.Element;
 
 // @alpha
 export function revertLastLayoutChange(correlationId?: string): IUndoLayoutChanges;

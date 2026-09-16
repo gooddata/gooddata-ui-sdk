@@ -1,7 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
 import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
-import { castDraft } from "immer";
 
 import {
     type ICatalogAttribute,
@@ -46,7 +45,7 @@ const setCatalogItems: CatalogReducer<PayloadAction<SetCatalogItemsPayload>> = (
     } = action.payload;
 
     state.attributes = attributes;
-    state.measures = castDraft(measures);
+    state.measures = measures;
     state.facts = facts;
     state.dateDatasets = dateDatasets;
     state.attributeHierarchies = attributeHierarchies;
@@ -67,7 +66,7 @@ const setCatalogMeasuresAndFacts: CatalogReducer<PayloadAction<SetCatalogMeasure
     action,
 ) => {
     const { measures, facts } = action.payload;
-    state.measures = castDraft(measures);
+    state.measures = measures;
     state.facts = facts;
 };
 

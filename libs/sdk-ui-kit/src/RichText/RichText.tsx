@@ -34,6 +34,7 @@ const RICH_TEXT_PLACEHOLDER = `
 ![image](http://url/img.png)
 {metric/metric_id}
 {label/label_id}
+{computed_attribute/computed_attribute_id}
 `;
 
 function DefaultLoadingComponent() {

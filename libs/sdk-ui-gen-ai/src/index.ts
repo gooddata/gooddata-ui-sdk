@@ -157,6 +157,11 @@ export {
     type IGenAIAssistantLandingScreenProps,
     type IGenAIAssistantDisclaimerProps,
     type IGenAIAssistantAgentItemProps,
+    type IGenAIAssistantConversationItemProps,
+    type IGenAIAssistantConversationDrawerHeaderProps,
+    type IGenAIAssistantConversationHeaderProps,
+    type IGenAIAssistantConversationFooterProps,
+    type IGenAIAssistantConversationDateGroupingProps,
     type IGenAIAssistantUserMessageProps,
     type IGenAIAssistantAssistantMessageProps,
     type IGenAIAssistantMessageTextContentProps,
@@ -175,6 +180,11 @@ export { DefaultMessageMultipartContent } from "./components/customized/MessageM
 export { DefaultMessageReasoningContent } from "./components/customized/MessageReasoningContent.js";
 export { DefaultMessageTextContent } from "./components/customized/MessageTextContent.js";
 export { DefaultUserMessage } from "./components/customized/UserMessage.js";
+export { DefaultConversationItem } from "./components/customized/ConversationItem.js";
+export { DefaultConversationDrawerHeader } from "./components/customized/ConversationDrawerHeader.js";
+export { DefaultConversationHeader } from "./components/customized/ConversationHeader.js";
+export { DefaultConversationFooter } from "./components/customized/ConversationFooter.js";
+export { DefaultConversationDateGrouping } from "./components/customized/ConversationDateGrouping.js";
 export { DefaultFollowUpButtons } from "./components/customized/FollowUpButtons.js";
 export { DefaultFollowUpQuestion } from "./components/customized/FollowUpQuestion.js";
 export { DefaultFeedback } from "./components/customized/Feedback.js";

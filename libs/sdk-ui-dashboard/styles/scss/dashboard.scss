@@ -646,6 +646,18 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
     }
 }
 
+.gd-restricted-placeholder-trigger {
+    // pinned to the positioned content area the same way a visualization is, so the message cannot
+    // stretch the box it is measured against: a percentage of a parent that grows with its content
+    // would grow with it
+    position: absolute;
+    inset: 0;
+    display: flex;
+    // a tile can be shorter or narrower than the message; it is clipped rather than spilling out of
+    // the tile, and the hover bubble carries the whole text either way
+    overflow: hidden;
+}
+
 .visualization-content {
     position: relative;
     flex: 1 1 auto;

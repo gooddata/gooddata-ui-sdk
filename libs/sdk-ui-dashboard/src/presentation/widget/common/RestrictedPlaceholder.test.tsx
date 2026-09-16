@@ -6,12 +6,7 @@ import { render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 import { describe, expect, it } from "vitest";
 
-import {
-    RestrictedPlaceholder,
-    RestrictedPlaceholderContent,
-    RestrictedPlaceholderMessage,
-    restrictedPlaceholderVariant,
-} from "./RestrictedPlaceholder.js";
+import { RestrictedPlaceholder, RestrictedPlaceholderContent } from "./RestrictedPlaceholder.js";
 
 const messages = {
     "widget.error.restricted_insight.message": "No access to this visualization",
@@ -26,61 +21,32 @@ function renderWithIntl(component: ReactElement) {
     );
 }
 
-describe("restrictedPlaceholderVariant", () => {
-    it("spells out the whole message on a tile with room for it", () => {
-        expect(restrictedPlaceholderVariant(600, 400)).toBe("full");
-    });
-
-    it("keeps the headline on a tile too small for the description", () => {
-        expect(restrictedPlaceholderVariant(338, 320)).toBe("medium");
-    });
-
-    it("falls back to the icon alone on a tile too small for any text", () => {
-        expect(restrictedPlaceholderVariant(120, 90)).toBe("compact");
-    });
-
-    it("falls back to the icon alone before the tile has been measured", () => {
-        expect(restrictedPlaceholderVariant(undefined, undefined)).toBe("compact");
-    });
-});
-
-describe("RestrictedPlaceholderMessage", () => {
-    it("shows headline and description in the full variant", () => {
-        renderWithIntl(<RestrictedPlaceholderMessage variant="full" />);
+describe("RestrictedPlaceholderContent", () => {
+    it("reads as the error tile a missing visualization shows, with a lock", () => {
+        const { container } = renderWithIntl(<RestrictedPlaceholderContent width={600} height={400} />);
 
         expect(screen.getByText("No access to this visualization")).toBeInTheDocument();
         expect(screen.getByText("Ask your administrator for access")).toBeInTheDocument();
-    });
-
-    it("drops the description in the medium variant", () => {
-        renderWithIntl(<RestrictedPlaceholderMessage variant="medium" />);
-
-        expect(screen.getByText("No access to this visualization")).toBeInTheDocument();
-        expect(screen.queryByText("Ask your administrator for access")).not.toBeInTheDocument();
-    });
-
-    it("keeps the compact variant readable by assistive technology", () => {
-        const { container } = renderWithIntl(<RestrictedPlaceholderMessage variant="compact" />);
-
-        const srOnly = container.querySelector(".sr-only");
-        expect(srOnly).toBeInTheDocument();
-        expect(srOnly).toHaveTextContent("No access to this visualization");
-        expect(srOnly).toHaveTextContent("Ask your administrator for access");
-    });
-
-    it("does not show the compact variant text as visible tile content", () => {
-        const { container } = renderWithIntl(<RestrictedPlaceholderMessage variant="compact" />);
-
-        const visible = container.querySelector(".info-label-icon");
-        expect(visible).toBeInTheDocument();
-        expect(visible).toBeEmptyDOMElement();
-    });
-
-    it("marks the tile with a lock rather than a warning", () => {
-        const { container } = renderWithIntl(<RestrictedPlaceholderMessage variant="full" />);
-
-        expect(container.querySelector(".gd-icon-lock")).toBeInTheDocument();
+        expect(container.querySelector(".info-label-icon.gd-icon-lock")).toBeInTheDocument();
         expect(container.querySelector(".gd-icon-warning")).not.toBeInTheDocument();
+        expect(screen.getByTestId("restricted-placeholder")).toBeInTheDocument();
+    });
+
+    it.each([
+        ["a tile with room", 600, 400],
+        ["a short tile", 338, 100],
+        ["a narrow tile, where the text wraps", 160, 160],
+        ["a tile that has not been measured", undefined, undefined],
+    ])("renders the same on %s, and keeps the text reachable", (_, width, height) => {
+        const { container } = renderWithIntl(<RestrictedPlaceholderContent width={width} height={height} />);
+
+        // one rendering at every size: the tile clips what does not fit, and the hover bubble carries
+        // the whole message, so the same widget cannot read differently between two render modes
+        expect(screen.getAllByText("No access to this visualization").length).toBeGreaterThan(0);
+        expect(container.querySelector(".gd-bubble-trigger")).toBeInTheDocument();
+        expect(container.querySelector<HTMLElement>(".info-label")!.style.height).toBe("");
+        // it does not shrink on its own, so a narrow tile would carry its centred lock off-screen
+        expect(container.querySelector<HTMLElement>(".gd-restricted-placeholder")!.style.width).toBe("100%");
     });
 });
 

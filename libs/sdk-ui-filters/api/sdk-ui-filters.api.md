@@ -1437,12 +1437,15 @@ export interface IPeriodRange {
 
 // @alpha (undocumented)
 export interface IPeriodRangePickerProps {
+    customRangeHint?: ReactNode;
+    dateFormat?: string;
     // (undocumented)
     granularity: PeriodRangePickerGranularity;
     // (undocumented)
     isMobile: boolean;
     // (undocumented)
     onRangeChange: (newRange: IPeriodRange) => void;
+    onValidityChange?: (isValid: boolean) => void;
     // (undocumented)
     range: IPeriodRange;
     // (undocumented)

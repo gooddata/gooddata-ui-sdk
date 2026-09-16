@@ -221,6 +221,7 @@ $attribute-filter-drag-handle-left: 10px;
 
     .dash-filters-restricted {
         display: flex;
+        align-items: center;
         margin: 7px 11px 7px $default_space;
     }
 
@@ -228,17 +229,15 @@ $attribute-filter-drag-handle-left: 10px;
         box-sizing: border-box;
         display: inline-flex;
         align-items: center;
-        gap: 5px;
-        padding: 6px 10px;
+        gap: 7px;
+        min-height: 42px;
+        padding: 5px 10px;
         border: none;
-        border-radius: var(--gd-message-warning-borderRadius, 3px);
-        background: var(
-            --gd-message-warning-backgroundColor,
-            var(--gd-palette-warning-base-t85, rgba(241, 134, 0, 0.15))
-        );
-        color: var(--gd-message-warning-textColor, kit-variables.$gd-palette-warning-base);
+        background: none;
+        color: kit-variables.$gd-color-text;
         font-family: inherit;
         font-size: 12px;
+        font-weight: bold;
         line-height: 16px;
         white-space: nowrap;
         cursor: default;
@@ -246,16 +245,13 @@ $attribute-filter-drag-handle-left: 10px;
         &--actionable {
             cursor: pointer;
         }
-
-        .gd-icon-lock {
-            font-size: 14px;
-        }
     }
 }
 
 .dash-filters-restricted-tooltip {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: 5px;
 }
 

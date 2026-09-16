@@ -6,6 +6,11 @@ import {
     type IGenAIAssistantAgentChooserProps,
     type IGenAIAssistantAgentItemProps,
     type IGenAIAssistantAssistantMessageProps,
+    type IGenAIAssistantConversationDateGroupingProps,
+    type IGenAIAssistantConversationDrawerHeaderProps,
+    type IGenAIAssistantConversationFooterProps,
+    type IGenAIAssistantConversationHeaderProps,
+    type IGenAIAssistantConversationItemProps,
     type IGenAIAssistantFeedbackProps,
     type IGenAIAssistantFollowUpButtonsProps,
     type IGenAIAssistantFollowUpQuestionProps,
@@ -24,6 +29,11 @@ export interface IGenAIAssistantComponents {
     LandingScreenComponent: ComponentType;
     DisclaimerComponent: ComponentType;
     AgentItemComponent: ComponentType<IGenAIAssistantAgentItemProps>;
+    ConversationItemComponent: ComponentType<IGenAIAssistantConversationItemProps>;
+    ConversationDrawerHeaderComponent: ComponentType<IGenAIAssistantConversationDrawerHeaderProps>;
+    ConversationHeaderComponent: ComponentType<IGenAIAssistantConversationHeaderProps>;
+    ConversationFooterComponent: ComponentType<IGenAIAssistantConversationFooterProps>;
+    ConversationDateGroupingComponent: ComponentType<IGenAIAssistantConversationDateGroupingProps>;
     UserMessageComponent: ComponentType<IGenAIAssistantUserMessageProps>;
     AssistantMessageComponent: ComponentType<IGenAIAssistantAssistantMessageProps>;
     MessageTextContentComponent: ComponentType<IGenAIAssistantMessageTextContentProps>;

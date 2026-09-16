@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type IdentifierRef, type ObjRef, type ObjectType, areObjRefsEqual } from "@gooddata/sdk-model";
 
@@ -47,7 +47,10 @@ export function excludeReferences(references: ReferenceMap, excluded: ObjRef[]):
     );
 }
 
-export function createReference(parts: RegExpExecArray): { id: string; ref: IdentifierRef | null } {
+export function createReference(parts: RegExpExecArray): {
+    id: string;
+    ref: IdentifierRef | null;
+} {
     const id = parts[2];
     const type = normalizeType(parts[3]);
 
@@ -67,12 +70,26 @@ export function createReference(parts: RegExpExecArray): { id: string; ref: Iden
     };
 }
 
-function normalizeType(type: string): "displayForm" | "measure" | null {
-    if (type === "label" || type === "displayForm") {
-        return "displayForm";
+/**
+ * The object type a reference prefix names. A computed attribute keeps its own type rather than
+ * collapsing to `displayForm`: it has no labels on the backend, and the `computedAttribute` type on
+ * the ref is what tells the execution - and everything else handling an attribute-shaped ref - that
+ * this is one. See {@link @gooddata/sdk-model#isComputedAttributeRef}.
+ *
+ * Compared case-insensitively, the way the reference regex matches the prefix - otherwise a
+ * prefix the regex accepts could still resolve to nothing and be left as literal text.
+ */
+function normalizeType(type: string): "displayForm" | "measure" | "computedAttribute" | null {
+    switch (type.toLowerCase()) {
+        case "label":
+        case "displayform":
+            return "displayForm";
+        case "metric":
+        case "measure":
+            return "measure";
+        case "computed_attribute":
+            return "computedAttribute";
+        default:
+            return null;
     }
-    if (type === "metric" || type === "measure") {
-        return "measure";
-    }
-    return null;
 }

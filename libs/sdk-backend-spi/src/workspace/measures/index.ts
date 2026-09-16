@@ -6,15 +6,13 @@ import type {
     IMeasureMetadataObject,
     IMeasureMetadataObjectDefinition,
     IMetadataObject,
-    IMetadataObjectBase,
-    IMetadataObjectIdentity,
     IObjectCertificationWrite,
-    ISemanticConditionalFormatting,
     ObjRef,
     ObjectOrigin,
 } from "@gooddata/sdk-model";
 
 import type { IFilterBaseOptions } from "../../common/filtering.js";
+import type { IUpdateMetadataObjectMetaPayload } from "../../common/metadata.js";
 import type { IPagedResource } from "../../common/paging.js";
 import type { QueryMethod } from "../../common/query.js";
 import type { IConnectedAttributesOptions } from "../attributes/index.js";
@@ -87,17 +85,6 @@ export interface IMeasureKeyDrivers {
 }
 
 /**
- * Payload for {@link IWorkspaceMeasuresService.updateMeasureMeta}, a true partial patch: an omitted
- * field is left untouched; `conditionalFormatting: null` clears it.
- *
- * @public
- */
-export type IUpdateMeasureMetaPayload = Partial<IMetadataObjectBase> &
-    IMetadataObjectIdentity & {
-        conditionalFormatting?: ISemanticConditionalFormatting | null;
-    };
-
-/**
  * Service for create, update or delete measures and querying additional measures data.
  * If you want to query measures themselves, use catalog {@link IWorkspaceCatalogFactory}
  *
@@ -152,7 +139,7 @@ export interface IWorkspaceMeasuresService {
      * @param measure - metadata object to update
      * @returns promise of updated measure
      */
-    updateMeasureMeta(measure: IUpdateMeasureMetaPayload): Promise<IMeasureMetadataObject>;
+    updateMeasureMeta(measure: IUpdateMetadataObjectMetaPayload): Promise<IMeasureMetadataObject>;
 
     /**
      * Sets measure certification metadata.

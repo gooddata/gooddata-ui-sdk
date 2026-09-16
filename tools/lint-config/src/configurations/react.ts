@@ -2,7 +2,7 @@
 
 import { Rules } from "../types.js";
 
-const reactRulesCommon: Rules<"react"> = {
+export const reactRulesNativeSupported: Rules<"react"> = {
     "react/no-danger": "error",
 
     // turn exampleProps={true} into exampleProp
@@ -10,10 +10,6 @@ const reactRulesCommon: Rules<"react"> = {
 
     // no longer needed with new react transform
     "react/react-in-jsx-scope": "off",
-};
-
-export const reactRulesNativeSupported: Rules<"react"> = {
-    ...reactRulesCommon,
 };
 
 export const reactRulesNativeNotSupported: Rules<"react"> = {
@@ -35,9 +31,4 @@ export const reactRulesNativeNotSupported: Rules<"react"> = {
 export const reactRules: Rules<"react"> = {
     ...reactRulesNativeSupported,
     ...reactRulesNativeNotSupported,
-};
-
-export const reactHooksRules: Rules<"react-hooks"> = {
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "error",
 };

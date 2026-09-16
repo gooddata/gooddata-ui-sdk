@@ -19,7 +19,11 @@ import {
     convertMeasureToCatalogItem,
     convertParameterToCatalogItem,
 } from "../../catalogItem/converter.js";
-import { isCatalogItemLoaded, isCatalogItemMeasure } from "../../catalogItem/guards.js";
+import {
+    isCatalogItemAttribute,
+    isCatalogItemLoaded,
+    isCatalogItemMeasure,
+} from "../../catalogItem/guards.js";
 import { type ICatalogItem, type ICatalogItemRef } from "../../catalogItem/types.js";
 import { type ObjectType } from "../../objectType/types.js";
 import { useFeatureFlag } from "../../permission/PermissionsContext.js";
@@ -42,7 +46,9 @@ export function useCatalogItemLoad({ objectDefinition, objectId, objectType }: I
     const workspace = useWorkspaceStrict();
     const loadPermissions = useFeatureFlag("enableMetricPermissions");
     const filled =
-        isCatalogItemLoaded(objectDefinition) && !awaitsPermissions(objectDefinition, loadPermissions);
+        isCatalogItemLoaded(objectDefinition) &&
+        !awaitsPermissions(objectDefinition, loadPermissions) &&
+        !awaitsLabels(objectDefinition);
 
     const { status, error, result } = useCancelablePromise<ICatalogItem | undefined, Error>(
         {
@@ -97,6 +103,11 @@ function awaitsPermissions(item: ICatalogItem, loadPermissions: boolean): boolea
     return loadPermissions && isCatalogItemMeasure(item) && item.permissions === undefined;
 }
 
+// List queries don't include labels; only the detail fetch below does.
+function awaitsLabels(item: ICatalogItem): boolean {
+    return isCatalogItemAttribute(item) && item.labels === undefined;
+}
+
 async function loadObjectDefinition(
     workspace: IAnalyticalWorkspace,
     id: string,
@@ -116,7 +127,10 @@ async function loadObjectDefinition(
                         include: ["dataset"],
                     },
                 )
-                .then(convertAttributeToCatalogItem);
+                .then((attribute) => ({
+                    ...convertAttributeToCatalogItem(attribute),
+                    labels: attribute.displayForms,
+                }));
         case "dataSet":
             return workspace
                 .datasets()

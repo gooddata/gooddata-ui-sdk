@@ -27,14 +27,14 @@ export function IntelligenceStepCarousel({
     const isLast = currentIndex >= totalCount - 1;
 
     return (
-        <div className={e("carousel")}>
+        <div className={e("carousel")} data-testid="interaction-intelligence-carousel">
             <UiPaginationButton
                 direction="previous"
                 label={intl.formatMessage({ id: "gd.gen-ai.interactionIntelligence.pager.previous" })}
                 isDisabled={isFirst}
                 onClick={() => onSelectCategory(currentIndex - 1)}
             />
-            <span className={e("carousel__label")}>
+            <span className={e("carousel__label")} data-testid="interaction-intelligence-carousel-label">
                 <FormattedMessage
                     id="gd.gen-ai.interactionIntelligence.pager"
                     values={{

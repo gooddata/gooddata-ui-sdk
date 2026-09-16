@@ -44,7 +44,7 @@ export function loadComputedAttribute(
         .getComputedAttribute(idRef(item.identifier, "computedAttribute"));
 }
 
-/** Titles of the insights, metrics, dashboards, and computed attributes referencing a computed attribute. @internal */
+/** Titles of the insights, metrics, dashboards, computed attributes, and data filters referencing a computed attribute. @internal */
 export async function listComputedAttributeReferences(
     backend: IAnalyticalBackend,
     workspace: string,
@@ -59,6 +59,8 @@ export async function listComputedAttributeReferences(
         ...(referencing.measures ?? []).map((measure) => measure.title),
         ...(referencing.analyticalDashboards ?? []).map((dashboard) => dashboard.title),
         ...(referencing.computedAttributes ?? []).map((computedAttribute) => computedAttribute.title),
+        ...(referencing.userDataFilters ?? []).map((filter) => filter.title),
+        ...(referencing.workspaceDataFilters ?? []).map((filter) => filter.title),
     ];
 }
 

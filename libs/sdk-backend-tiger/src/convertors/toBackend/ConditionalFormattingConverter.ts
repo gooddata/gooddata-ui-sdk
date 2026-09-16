@@ -51,8 +51,8 @@ export function convertConditionalFormatting(
     ) {
         return null;
     }
-    // Array.isArray() narrows the readonly rules array to any[]; re-annotate to keep element types.
-    const rules: readonly IConditionalFormattingRule[] = conditionalFormatting.rules;
+    // Array.isArray() narrows the rules array to any[]; re-annotate to keep element types.
+    const rules: IConditionalFormattingRule[] = conditionalFormatting.rules;
     try {
         return convertConditionalFormattingToBackend({ enabled: conditionalFormatting.enabled, rules });
     } catch (error) {

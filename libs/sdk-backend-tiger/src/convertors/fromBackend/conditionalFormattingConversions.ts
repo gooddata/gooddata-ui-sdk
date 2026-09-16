@@ -57,7 +57,16 @@ export function toTigerConditionalFormatting(
  */
 export function fromTigerConditionalFormatting(
     conditionalFormatting: TigerConditionalFormatting,
-): ISemanticConditionalFormatting {
+): ISemanticConditionalFormatting;
+export function fromTigerConditionalFormatting(
+    conditionalFormatting: TigerConditionalFormatting | null | undefined,
+): ISemanticConditionalFormatting | undefined;
+export function fromTigerConditionalFormatting(
+    conditionalFormatting: TigerConditionalFormatting | null | undefined,
+): ISemanticConditionalFormatting | undefined {
+    if (!conditionalFormatting) {
+        return undefined;
+    }
     return {
         enabled: conditionalFormatting.enabled,
         conditions: conditionalFormatting.conditions.map((condition) => ({
@@ -65,5 +74,22 @@ export function fromTigerConditionalFormatting(
             id: condition.id ?? uuid(),
             value: fromTigerValue(condition.value),
         })),
+    };
+}
+
+/**
+ * The `conditionalFormatting` part of a partial PATCH: omitted leaves the stored value untouched,
+ * `null` clears it.
+ */
+export function toTigerConditionalFormattingPatch(
+    conditionalFormatting: ISemanticConditionalFormatting | null | undefined,
+): { conditionalFormatting?: TigerConditionalFormatting | null } {
+    if (conditionalFormatting === undefined) {
+        return {};
+    }
+    return {
+        conditionalFormatting: conditionalFormatting
+            ? toTigerConditionalFormatting(conditionalFormatting)
+            : null,
     };
 }

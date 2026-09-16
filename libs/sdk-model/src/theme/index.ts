@@ -1062,6 +1062,261 @@ export interface IThemeHeader {
 }
 
 /**
+ * Externally hosted image the theme offers to reports.
+ *
+ * @remarks
+ * The `id` is also the report variable the asset resolves: report content references it as `{id}`.
+ * It must match `^[a-zA-Z][a-zA-Z0-9_]*$`.
+ *
+ * @alpha
+ */
+export interface IThemeAsset {
+    id: string;
+
+    /**
+     * Absolute http(s) URL. The organization CSP must allow the host; for exports the host must
+     * also serve CORS headers.
+     */
+    url: string;
+
+    /**
+     * Label the asset is offered under in the editor.
+     */
+    title?: string;
+
+    /**
+     * Accessible name of the image; also shown when the image cannot be loaded.
+     */
+    altText?: string;
+}
+
+/**
+ * Image assets linked by URL, grouped by what they are used for.
+ *
+ * @alpha
+ */
+export interface IThemeAssets {
+    logos?: IThemeAsset[];
+
+    /**
+     * Images offered for image slots, and as element backgrounds.
+     */
+    images?: IThemeAsset[];
+
+    /**
+     * Images meant to be painted behind an element. They are offered first where a background is
+     * chosen; {@link IThemeAssets.images} are offered there too, so an image used both ways is
+     * stated once.
+     */
+    backgrounds?: IThemeAsset[];
+}
+
+/**
+ * One hosted font file registered as a font face for rendered reports.
+ *
+ * @alpha
+ */
+export interface IThemeReportsFontFace {
+    /**
+     * Font family name the face registers; referenced from {@link IThemeReportsTypography.fontFamily}.
+     */
+    family: string;
+
+    /**
+     * Absolute http(s) URL of a TTF/OTF/WOFF/WOFF2 file.
+     */
+    url: string;
+
+    /**
+     * CSS font-weight (1-1000). Defaults to 400.
+     */
+    weight?: number;
+
+    /**
+     * Defaults to "normal".
+     */
+    style?: "normal" | "italic";
+}
+
+/**
+ * Typography of rendered reports.
+ *
+ * @alpha
+ */
+export interface IThemeReportsTypography {
+    /**
+     * CSS font-family stack applied to rendered reports.
+     */
+    fontFamily?: string;
+
+    fonts?: IThemeReportsFontFace[];
+}
+
+/**
+ * Length used in rendered reports.
+ *
+ * @remarks
+ * A report page scales with its width, so lengths are stated in `cqw` (1cqw = 1% of the page
+ * width). A bare number means cqw: `3.5` and `"3.5cqw"` are the same length. `cqi`, `em` and `%`
+ * are accepted as well. Anything that does not follow the page width is ignored: `px` and `rem`
+ * hold their size, and `cqh` and `cqb` resolve against the viewport, because a page contains its
+ * inline axis only.
+ *
+ * A line height is the exception to the bare number: `1.5` is the CSS ratio it looks like, a
+ * multiple of the font size, not a share of the page width.
+ *
+ * @alpha
+ */
+export type ThemeReportsLength = string | number;
+
+/**
+ * Typography of one text level (h1-h6, p1-p3).
+ *
+ * @alpha
+ */
+export interface IThemeReportsTextLevel {
+    fontSize?: ThemeReportsLength;
+
+    lineHeight?: ThemeReportsLength;
+
+    /**
+     * Overrides the color of the level's group.
+     */
+    color?: ThemeColor;
+}
+
+/**
+ * Heading levels. Each level takes what it does not state from here, then from
+ * {@link IThemeReportsTextStyle}.
+ *
+ * @alpha
+ */
+export interface IThemeReportsHeading {
+    color?: ThemeColor;
+
+    lineHeight?: ThemeReportsLength;
+
+    h1?: IThemeReportsTextLevel;
+    h2?: IThemeReportsTextLevel;
+    h3?: IThemeReportsTextLevel;
+    h4?: IThemeReportsTextLevel;
+    h5?: IThemeReportsTextLevel;
+    h6?: IThemeReportsTextLevel;
+}
+
+/**
+ * Paragraph levels. Each level takes what it does not state from here, then from
+ * {@link IThemeReportsTextStyle}.
+ *
+ * @alpha
+ */
+export interface IThemeReportsParagraph {
+    color?: ThemeColor;
+
+    lineHeight?: ThemeReportsLength;
+
+    p1?: IThemeReportsTextLevel;
+    p2?: IThemeReportsTextLevel;
+    p3?: IThemeReportsTextLevel;
+}
+
+/**
+ * Text of rendered reports.
+ *
+ * @alpha
+ */
+export interface IThemeReportsTextStyle {
+    color?: ThemeColor;
+
+    lineHeight?: ThemeReportsLength;
+
+    typography?: IThemeReportsTypography;
+
+    heading?: IThemeReportsHeading;
+
+    paragraph?: IThemeReportsParagraph;
+}
+
+/**
+ * Colors offered to report authors as swatches. Each list is exposed as indexed CSS variables.
+ *
+ * @alpha
+ */
+export interface IThemeReportsColors {
+    /**
+     * Offered for element backgrounds.
+     */
+    backgrounds?: ThemeColor[];
+
+    /**
+     * Offered for text.
+     */
+    text?: ThemeColor[];
+}
+
+/**
+ * Report page properties.
+ *
+ * @alpha
+ */
+export interface IThemeReportsPage {
+    backgroundColor?: ThemeColor;
+}
+
+/**
+ * Reference to an existing color palette object, in the same shape the active color palette
+ * setting uses.
+ *
+ * @remarks
+ * A `workspaceColorPalette` is read from the workspace showing the report, which sees its own
+ * palettes and not a parent's. A palette shared across a workspace hierarchy belongs at the
+ * organization level.
+ *
+ * @alpha
+ */
+export interface IThemeColorPaletteRef {
+    id: string;
+
+    type: "colorPalette" | "workspaceColorPalette";
+}
+
+/**
+ * Report specific theme properties.
+ *
+ * @remarks
+ * Consumed by the reports application only; the properties are not part of the shared theming
+ * CSS variable specification.
+ *
+ * @alpha
+ */
+export interface IThemeReports {
+    /**
+     * Colors of visualizations in reports: stated inline, or a reference to a color palette
+     * object. When absent, reports use the workspace's active color palette.
+     */
+    visualizationPalette?: ThemeColor[] | IThemeColorPaletteRef;
+
+    page?: IThemeReportsPage;
+
+    colors?: IThemeReportsColors;
+
+    textStyle?: IThemeReportsTextStyle;
+}
+
+/**
+ * Type-guard testing whether the value is a {@link IThemeColorPaletteRef}.
+ *
+ * @alpha
+ */
+export function isThemeColorPaletteRef(value: unknown): value is IThemeColorPaletteRef {
+    if (typeof value !== "object" || value === null || Array.isArray(value)) {
+        return false;
+    }
+    const { id, type } = value as IThemeColorPaletteRef;
+    return typeof id === "string" && (type === "colorPalette" || type === "workspaceColorPalette");
+}
+
+/**
  * Theme used to customize selected parts of the UI
  *
  * @remarks
@@ -1072,6 +1327,14 @@ export interface IThemeHeader {
  * @beta
  */
 export interface ITheme {
+    /**
+     * Shape version of the theme content. Absent means version 1: a theme created before the
+     * `reports` and `assets` sections existed.
+     *
+     * @beta
+     */
+    version?: "2";
+
     /**
      * Images
      *
@@ -1148,6 +1411,20 @@ export interface ITheme {
      * @alpha
      */
     header?: IThemeHeader;
+
+    /**
+     * Report specific properties
+     *
+     * @alpha
+     */
+    reports?: IThemeReports;
+
+    /**
+     * Image assets offered to reports
+     *
+     * @alpha
+     */
+    assets?: IThemeAssets;
 }
 
 /**

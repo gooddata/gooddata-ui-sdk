@@ -46,7 +46,11 @@ const insightWidgetContent = (ids: string[]) => ({
         sections: [
             {
                 items: ids.map((id) => ({
-                    widget: { insight: { identifier: { id, type: "visualizationObject" } } },
+                    widget: {
+                        insight: {
+                            identifier: { id, type: "visualizationObject" },
+                        },
+                    },
                 })),
             },
         ],
@@ -56,18 +60,45 @@ const insightWidgetContent = (ids: string[]) => ({
 describe("resolveUnavailableReferences", () => {
     it("reports a restricted metric of the dashboard as forbidden", () => {
         const doc = dashboardDocument({
-            relationships: { metrics: { data: [{ id: "m1", type: "metric" }] } },
+            relationships: {
+                metrics: { data: [{ id: "m1", type: "metric" }] },
+            },
             restricted: [{ id: "m1", type: "metric" }],
         });
 
         expect(resolveUnavailableReferences(doc, ["measure"])).toEqual([
-            { ref: idRef("m1", "measure"), type: "measure", reason: "forbidden" },
+            {
+                ref: idRef("m1", "measure"),
+                type: "measure",
+                reason: "forbidden",
+            },
+        ]);
+    });
+
+    it("reports a restricted computed attribute of the dashboard as forbidden", () => {
+        const doc = dashboardDocument({
+            relationships: {
+                computedAttributes: {
+                    data: [{ id: "tier", type: "computedAttribute" }],
+                },
+            },
+            restricted: [{ id: "tier", type: "computedAttribute" }],
+        });
+
+        expect(resolveUnavailableReferences(doc, ["computedAttribute"])).toEqual([
+            {
+                ref: idRef("tier", "computedAttribute"),
+                type: "computedAttribute",
+                reason: "forbidden",
+            },
         ]);
     });
 
     it("reports nothing for a metric the user can read", () => {
         const doc = dashboardDocument({
-            relationships: { metrics: { data: [{ id: "m1", type: "metric" }] } },
+            relationships: {
+                metrics: { data: [{ id: "m1", type: "metric" }] },
+            },
         });
 
         expect(resolveUnavailableReferences(doc, ["measure"])).toEqual([]);
@@ -83,7 +114,11 @@ describe("resolveUnavailableReferences", () => {
 
     it("returns empty array when every content ref is present in relationships", () => {
         const doc = dashboardDocument({
-            relationships: { visualizationObjects: { data: [{ id: "vis1", type: "visualizationObject" }] } },
+            relationships: {
+                visualizationObjects: {
+                    data: [{ id: "vis1", type: "visualizationObject" }],
+                },
+            },
             content: insightWidgetContent(["vis1"]),
         });
 
@@ -105,14 +140,20 @@ describe("resolveUnavailableReferences", () => {
         });
 
         expect(resolveUnavailableReferences(doc, ["insight"])).toEqual([
-            { ref: { identifier: "vis2", type: "insight" }, type: "insight", reason: "forbidden" },
+            {
+                ref: { identifier: "vis2", type: "insight" },
+                type: "insight",
+                reason: "forbidden",
+            },
         ]);
     });
 
     it("does not infer forbidden from a relationship/include mismatch without meta.restricted", () => {
         const doc = dashboardDocument({
             relationships: {
-                visualizationObjects: { data: [{ id: "vis1", type: "visualizationObject" }] },
+                visualizationObjects: {
+                    data: [{ id: "vis1", type: "visualizationObject" }],
+                },
             },
             content: insightWidgetContent(["vis1"]),
         });
@@ -122,19 +163,31 @@ describe("resolveUnavailableReferences", () => {
 
     it("classifies a content ref absent from relationships as notFound", () => {
         const doc = dashboardDocument({
-            relationships: { visualizationObjects: { data: [{ id: "vis1", type: "visualizationObject" }] } },
+            relationships: {
+                visualizationObjects: {
+                    data: [{ id: "vis1", type: "visualizationObject" }],
+                },
+            },
             content: insightWidgetContent(["vis1", "visDeleted"]),
         });
 
         expect(resolveUnavailableReferences(doc, ["insight"])).toEqual([
-            { ref: { identifier: "visDeleted", type: "insight" }, type: "insight", reason: "notFound" },
+            {
+                ref: { identifier: "visDeleted", type: "insight" },
+                type: "insight",
+                reason: "notFound",
+            },
         ]);
     });
 
     it("classifies a missing filter context as notFound even when not in requested types", () => {
         const doc = dashboardDocument({
             relationships: { filterContexts: { data: [] } },
-            content: { filterContextRef: { identifier: { id: "fc1", type: "filterContext" } } },
+            content: {
+                filterContextRef: {
+                    identifier: { id: "fc1", type: "filterContext" },
+                },
+            },
         });
 
         expect(resolveUnavailableReferences(doc, [])).toEqual([
@@ -148,7 +201,11 @@ describe("resolveUnavailableReferences", () => {
 
     it("reports nothing for a type whose relationship key is absent and whose content has no refs of it", () => {
         const doc = dashboardDocument({
-            relationships: { visualizationObjects: { data: [{ id: "vis2", type: "visualizationObject" }] } },
+            relationships: {
+                visualizationObjects: {
+                    data: [{ id: "vis2", type: "visualizationObject" }],
+                },
+            },
             content: insightWidgetContent(["vis2"]),
             restricted: [{ id: "vis2", type: "visualizationObject" }],
         });
@@ -156,13 +213,19 @@ describe("resolveUnavailableReferences", () => {
         const result = resolveUnavailableReferences(doc, ["insight", "dataSet"]);
 
         expect(result).toEqual([
-            { ref: { identifier: "vis2", type: "insight" }, type: "insight", reason: "forbidden" },
+            {
+                ref: { identifier: "vis2", type: "insight" },
+                type: "insight",
+                reason: "forbidden",
+            },
         ]);
     });
 
     it("does not resolve labels from the dashboard document (they relate to filter contexts)", () => {
         const doc = dashboardDocument({
-            relationships: { labels: { data: [{ id: "label2", type: "label" }] } },
+            relationships: {
+                labels: { data: [{ id: "label2", type: "label" }] },
+            },
         });
 
         expect(resolveUnavailableReferences(doc, ["displayForm"])).toEqual([]);
@@ -171,7 +234,9 @@ describe("resolveUnavailableReferences", () => {
     it("classifies a missing drill-target dashboard as notFound without inferring forbidden", () => {
         const doc = dashboardDocument({
             relationships: {
-                analyticalDashboards: { data: [{ id: "dashForbidden", type: "analyticalDashboard" }] },
+                analyticalDashboards: {
+                    data: [{ id: "dashForbidden", type: "analyticalDashboard" }],
+                },
             },
             content: {
                 layout: {
@@ -226,17 +291,32 @@ describe("resolveUnavailableReferences", () => {
                         filters: [
                             {
                                 attributeFilter: {
-                                    displayForm: { identifier: { id: "label1", type: "label" } },
+                                    displayForm: {
+                                        identifier: {
+                                            id: "label1",
+                                            type: "label",
+                                        },
+                                    },
                                 },
                             },
                             {
                                 attributeFilter: {
-                                    displayForm: { identifier: { id: "label2", type: "label" } },
+                                    displayForm: {
+                                        identifier: {
+                                            id: "label2",
+                                            type: "label",
+                                        },
+                                    },
                                 },
                             },
                             {
                                 attributeFilter: {
-                                    displayForm: { identifier: { id: "labelDeleted", type: "label" } },
+                                    displayForm: {
+                                        identifier: {
+                                            id: "labelDeleted",
+                                            type: "label",
+                                        },
+                                    },
                                 },
                             },
                         ],
@@ -259,7 +339,11 @@ describe("resolveUnavailableReferences", () => {
                 { id: "labelFromAnotherContext", type: "label" },
             ]),
         ).toEqual([
-            { ref: { identifier: "label2", type: "displayForm" }, type: "displayForm", reason: "forbidden" },
+            {
+                ref: { identifier: "label2", type: "displayForm" },
+                type: "displayForm",
+                reason: "forbidden",
+            },
             {
                 ref: { identifier: "labelDeleted", type: "displayForm" },
                 type: "displayForm",
@@ -281,12 +365,20 @@ describe("resolveUnavailableReferences", () => {
 
     it("classifies content refs as notFound when Tiger omits the relationship key (all refs of the type deleted)", () => {
         const doc = dashboardDocument({
-            relationships: { filterContexts: { data: [{ id: "fc1", type: "filterContext" }] } },
+            relationships: {
+                filterContexts: {
+                    data: [{ id: "fc1", type: "filterContext" }],
+                },
+            },
             content: insightWidgetContent(["visDeleted"]),
         });
 
         expect(resolveUnavailableReferences(doc, ["insight"])).toEqual([
-            { ref: { identifier: "visDeleted", type: "insight" }, type: "insight", reason: "notFound" },
+            {
+                ref: { identifier: "visDeleted", type: "insight" },
+                type: "insight",
+                reason: "notFound",
+            },
         ]);
     });
 
@@ -302,8 +394,22 @@ describe("resolveUnavailableReferences", () => {
             },
             content: {
                 drills: [
-                    { target: { identifier: { id: "dash1", type: "analyticalDashboard" } } },
-                    { target: { identifier: { id: "other", type: "analyticalDashboard" } } },
+                    {
+                        target: {
+                            identifier: {
+                                id: "dash1",
+                                type: "analyticalDashboard",
+                            },
+                        },
+                    },
+                    {
+                        target: {
+                            identifier: {
+                                id: "other",
+                                type: "analyticalDashboard",
+                            },
+                        },
+                    },
                 ],
             },
         });
@@ -315,9 +421,15 @@ describe("resolveUnavailableReferences", () => {
 describe("resolveUnavailableDashboardReferences", () => {
     const missingStoredContext = dashboardDocument({
         relationships: {
-            visualizationObjects: { data: [{ id: "vis1", type: "visualizationObject" }] },
+            visualizationObjects: {
+                data: [{ id: "vis1", type: "visualizationObject" }],
+            },
         },
-        content: { filterContextRef: { identifier: { id: "fcStored", type: "filterContext" } } },
+        content: {
+            filterContextRef: {
+                identifier: { id: "fcStored", type: "filterContext" },
+            },
+        },
         restricted: [{ id: "vis1", type: "visualizationObject" }],
     });
     const withContext = (ref: unknown): IDashboard => ({ filterContext: { ref } }) as unknown as IDashboard;
@@ -336,7 +448,13 @@ describe("resolveUnavailableDashboardReferences", () => {
         const deletedStoredContext = dashboardDocument({
             relationships: {},
             content: {
-                tabs: [{ filterContextRef: { identifier: { id: "fcGone", type: "filterContext" } } }],
+                tabs: [
+                    {
+                        filterContextRef: {
+                            identifier: { id: "fcGone", type: "filterContext" },
+                        },
+                    },
+                ],
             },
         });
         const dashboard = {
@@ -359,7 +477,13 @@ describe("resolveUnavailableDashboardReferences", () => {
                 withContext(idRef("fcOverride", "filterContext")),
                 ["insight"],
             ),
-        ).toEqual([{ ref: { identifier: "vis1", type: "insight" }, type: "insight", reason: "forbidden" }]);
+        ).toEqual([
+            {
+                ref: { identifier: "vis1", type: "insight" },
+                type: "insight",
+                reason: "forbidden",
+            },
+        ]);
     });
 
     it("keeps the stored filter context a tab still uses when another tab is overridden", () => {
@@ -371,15 +495,30 @@ describe("resolveUnavailableDashboardReferences", () => {
             },
             content: {
                 tabs: [
-                    { filterContextRef: { identifier: { id: "fcKept", type: "filterContext" } } },
-                    { filterContextRef: { identifier: { id: "fcReplaced", type: "filterContext" } } },
+                    {
+                        filterContextRef: {
+                            identifier: { id: "fcKept", type: "filterContext" },
+                        },
+                    },
+                    {
+                        filterContextRef: {
+                            identifier: {
+                                id: "fcReplaced",
+                                type: "filterContext",
+                            },
+                        },
+                    },
                 ],
             },
         });
         const dashboard = {
             tabs: [
                 { filterContext: { ref: idRef("fcKept", "filterContext") } },
-                { filterContext: { ref: idRef("fcOverride", "filterContext") } },
+                {
+                    filterContext: {
+                        ref: idRef("fcOverride", "filterContext"),
+                    },
+                },
             ],
         } as unknown as IDashboard;
 
@@ -401,8 +540,19 @@ describe("resolveUnavailableDashboardReferences", () => {
             },
             content: {
                 tabs: [
-                    { filterContextRef: { identifier: { id: "fcKept", type: "filterContext" } } },
-                    { filterContextRef: { identifier: { id: "fcReplaced", type: "filterContext" } } },
+                    {
+                        filterContextRef: {
+                            identifier: { id: "fcKept", type: "filterContext" },
+                        },
+                    },
+                    {
+                        filterContextRef: {
+                            identifier: {
+                                id: "fcReplaced",
+                                type: "filterContext",
+                            },
+                        },
+                    },
                 ],
             },
         });
@@ -421,7 +571,9 @@ describe("resolveUnavailableDashboardReferences", () => {
         expect(
             resolveUnavailableDashboardReferences(
                 missingStoredContext,
-                { filterContext: buildExportOverrideFilterContext("export-1", []) } as unknown as IDashboard,
+                {
+                    filterContext: buildExportOverrideFilterContext("export-1", []),
+                } as unknown as IDashboard,
                 [],
             ),
         ).toEqual([]);
@@ -453,7 +605,11 @@ describe("inspectableFilterContextIds", () => {
     it("skips the synthetic export-override context, which has no entity behind it", () => {
         const dashboard = {
             filterContext: buildExportOverrideFilterContext("export-1", []),
-            tabs: [{ filterContext: buildExportOverrideFilterContext("export-1", []) }],
+            tabs: [
+                {
+                    filterContext: buildExportOverrideFilterContext("export-1", []),
+                },
+            ],
         } as unknown as IDashboard;
 
         expect(inspectableFilterContextIds(dashboard)).toEqual([]);
@@ -466,7 +622,9 @@ describe("fetchUnavailableFilterDisplayForms", () => {
     let authCall: TigerAuthenticatedCallGuard;
 
     const respondWith = (data: unknown[], restricted?: RestrictedObject[]) => {
-        request.mockResolvedValue({ data: { data, ...(restricted ? { meta: { restricted } } : {}) } });
+        request.mockResolvedValue({
+            data: { data, ...(restricted ? { meta: { restricted } } : {}) },
+        });
     };
 
     const requestedQuery = () => new URL(request.mock.calls[0][0].url).searchParams;
@@ -474,7 +632,9 @@ describe("fetchUnavailableFilterDisplayForms", () => {
     const dashboardWithContexts = (...ids: string[]) =>
         ({
             filterContext: { ref: idRef(ids[0], "filterContext") },
-            tabs: ids.slice(1).map((id) => ({ filterContext: { ref: idRef(id, "filterContext") } })),
+            tabs: ids.slice(1).map((id) => ({
+                filterContext: { ref: idRef(id, "filterContext") },
+            })),
         }) as unknown as IDashboard;
 
     const contextWithLabels = (id: string, labelIds: string[]) => ({
@@ -483,17 +643,31 @@ describe("fetchUnavailableFilterDisplayForms", () => {
         attributes: {
             content: {
                 filters: labelIds.map((labelId) => ({
-                    attributeFilter: { displayForm: { identifier: { id: labelId, type: "label" } } },
+                    attributeFilter: {
+                        displayForm: {
+                            identifier: { id: labelId, type: "label" },
+                        },
+                    },
                 })),
             },
         },
-        relationships: { labels: { data: labelIds.map((labelId) => ({ id: labelId, type: "label" })) } },
+        relationships: {
+            labels: {
+                data: labelIds.map((labelId) => ({
+                    id: labelId,
+                    type: "label",
+                })),
+            },
+        },
     });
 
     beforeEach(() => {
         request = vi.fn();
         authCall = ((call: (client: unknown) => unknown) =>
-            call({ axios: { request }, basePath: "https://example.com" })) as TigerAuthenticatedCallGuard;
+            call({
+                axios: { request },
+                basePath: "https://example.com",
+            })) as TigerAuthenticatedCallGuard;
     });
 
     it("does not ask the backend when display forms were not requested", async () => {
@@ -538,8 +712,16 @@ describe("fetchUnavailableFilterDisplayForms", () => {
                 "displayForm",
             ]),
         ).resolves.toEqual([
-            { ref: { identifier: "label2", type: "displayForm" }, type: "displayForm", reason: "forbidden" },
-            { ref: { identifier: "label3", type: "displayForm" }, type: "displayForm", reason: "forbidden" },
+            {
+                ref: { identifier: "label2", type: "displayForm" },
+                type: "displayForm",
+                reason: "forbidden",
+            },
+            {
+                ref: { identifier: "label3", type: "displayForm" },
+                type: "displayForm",
+                reason: "forbidden",
+            },
         ]);
     });
 

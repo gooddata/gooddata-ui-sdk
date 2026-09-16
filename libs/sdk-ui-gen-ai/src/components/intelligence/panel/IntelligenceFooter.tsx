@@ -34,7 +34,9 @@ export function IntelligenceFooter({ traceId }: IIntelligenceFooterProps) {
                 }
                 content={tooltipText}
             />
-            <span className={e("footer__trace-id")}>{traceId}</span>
+            <span className={e("footer__trace-id")} data-testid="interaction-intelligence-trace-id">
+                {traceId}
+            </span>
         </div>
     );
 }

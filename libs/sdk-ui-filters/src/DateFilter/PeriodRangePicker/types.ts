@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactNode } from "react";
+
 import { type DateFilterGranularity, type DateString, type WeekStart } from "@gooddata/sdk-model";
 
 /**
@@ -28,8 +30,18 @@ export interface IPeriodRangePickerProps {
     range: IPeriodRange;
     onRangeChange: (newRange: IPeriodRange) => void;
     isMobile: boolean;
-    /** Which day a week starts on; only relevant when `granularity` is `"GDC.time.week_us"`. Defaults to "Sunday". */
+    /** Which day a week starts on; only relevant when `granularity` is `"GDC.time.week_us"` or `"GDC.time.date"`. Defaults to "Sunday". */
     weekStart?: WeekStart;
     withoutApply?: boolean;
     submitForm: () => void;
+    /** Date format (date-fns tokens) for the "GDC.time.date" granularity; other granularities ignore it. */
+    dateFormat?: string;
+    /** Extra content rendered after the built-in format hint. */
+    customRangeHint?: ReactNode;
+    /**
+     * Reports whether the picker's fields currently form a submittable range, even while a field is
+     * empty or unparsable - unlike `onRangeChange`, which stays silent in that case. Pass a stable
+     * callback (e.g. a `useState` setter), not one that changes identity every render.
+     */
+    onValidityChange?: (isValid: boolean) => void;
 }

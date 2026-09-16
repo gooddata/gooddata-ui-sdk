@@ -27,6 +27,21 @@ describe("prepareTheme", () => {
 
         expect(prepareTheme(theme)).toMatchSnapshot();
     });
+
+    it("keeps the report sections and the content version", () => {
+        const theme: ITheme = {
+            version: "2",
+            palette: { primary: { base: "#14b2e2" } },
+            reports: { page: { backgroundColor: "#f8f2ec" } },
+            assets: { images: [{ id: "cover", url: "https://cdn.example.com/cover.jpg" }] },
+        };
+
+        for (const prepared of [prepareTheme(theme, true), prepareTheme(theme, false)]) {
+            expect(prepared.version).toBe("2");
+            expect(prepared.reports).toEqual(theme.reports);
+            expect(prepared.assets).toEqual(theme.assets);
+        }
+    });
 });
 
 describe("prepareComplementaryPalette", () => {

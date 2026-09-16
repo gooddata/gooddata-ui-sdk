@@ -55,9 +55,11 @@ describe("unavailableObjects store", () => {
                 unavailableObjectsActions.setUnavailableObjects([forbiddenDashboardByUri]),
             );
 
-            expect(selectUnavailableObjects({ unavailableObjects } as unknown as DashboardState)).toEqual([
-                forbiddenDashboardByUri,
-            ]);
+            expect(
+                selectUnavailableObjects({
+                    unavailableObjects,
+                } as unknown as DashboardState),
+            ).toEqual([forbiddenDashboardByUri]);
         });
     });
 
@@ -152,12 +154,19 @@ describe("unavailableObjects store", () => {
             reason: "notFound",
         };
 
-        it("collects the metric and label refs the user may not read", () => {
-            const state = stateWith(forbiddenMetric, forbiddenDisplayForm);
+        const forbiddenComputedAttribute: IUnavailableDashboardReference = {
+            ref: idRef("tier", "computedAttribute"),
+            type: "computedAttribute",
+            reason: "forbidden",
+        };
+
+        it("collects the metric, label and computed attribute refs the user may not read", () => {
+            const state = stateWith(forbiddenMetric, forbiddenDisplayForm, forbiddenComputedAttribute);
 
             expect(selectRestrictedRichTextReferences(state)).toEqual([
                 forbiddenMetric.ref,
                 forbiddenDisplayForm.ref,
+                forbiddenComputedAttribute.ref,
             ]);
         });
 

@@ -144,12 +144,12 @@
         "crowdinContext": "Action in the filter bar notice tooltip, shown in edit mode. Removes the filters the user is not allowed to access from the dashboard for good."
     },
     "filterBar.restrictedFilters.reason": {
-        "text": "{count, plural, one {You don't have access to # filter.} other {You don't have access to # filters.}}",
-        "crowdinContext": "Tooltip on the filter bar notice, giving the reason why that many dashboard filters were left out. Uses pluralization based on the number of filters."
+        "text": "{count, plural, one {You don't have access to # filter. Contact your administrator to request access.} other {You don't have access to # filters. Contact your administrator to request access.}}",
+        "crowdinContext": "Tooltip on the filter bar notice, giving the reason why that many dashboard filters were left out and how to get access. Uses pluralization based on the number of filters."
     },
     "filterBar.restrictedFilters": {
-        "text": "{count, plural, one {# filter wasn't applied} other {# filters weren't applied}}",
-        "crowdinContext": "Filter bar notice telling the viewer how many dashboard filters were left out because they are not allowed to access the objects those filters use. Uses pluralization based on the number of filters."
+        "text": "{count, plural, one {# restricted filter} other {# restricted filters}}",
+        "crowdinContext": "Filter bar entry standing in for the dashboard filters the viewer is not allowed to access, telling them how many there are. Never names the filters themselves. Uses pluralization based on the number of filters."
     },
     "filterBar.showAll": {
         "text": "Show all",

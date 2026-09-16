@@ -12,6 +12,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import type { IFilterBaseOptions } from "../../common/filtering.js";
+import type { IUpdateMetadataObjectMetaPayload } from "../../common/metadata.js";
 import type { IPagedResource } from "../../common/paging.js";
 import type { QueryMethod } from "../../common/query.js";
 
@@ -94,6 +95,15 @@ export interface IWorkspaceAttributesService {
     updateAttributeMeta(
         updatedAttribute: Partial<IMetadataObjectBase> & IMetadataObjectIdentity,
     ): Promise<IAttributeMetadataObject>;
+
+    /**
+     * Updates metadata of an attribute display form (label).
+     *
+     * @param updatedDisplayForm - update to apply
+     */
+    updateAttributeDisplayFormMeta(
+        updatedDisplayForm: IUpdateMetadataObjectMetaPayload,
+    ): Promise<IAttributeDisplayFormMetadataObject>;
 
     /**
      * Gets the list of metadata of attribute with the provided list of uris. (list of object refs)

@@ -127,7 +127,14 @@ describe("ViewModeDashboardVisualizationSwitcherRestricted", () => {
         expect(container.querySelector(".gd-icon-lock")).toBeInTheDocument();
     });
 
-    it("gives the content the positioned box its absolute container measures against", () => {
+    it("gives the content the positioned box an absolute container measures against", () => {
+        // asserted through a consumer's content: an absolutely sized replacement resolves its height
+        // against the nearest positioned ancestor, which has to be the switcher body and not the tile
+        function AbsolutelyPositionedContent() {
+            return <div className="gd-visualization-content">consumer content</div>;
+        }
+        mockContentProvider.mockImplementation(() => AbsolutelyPositionedContent);
+
         const { container } = renderRestricted();
 
         expect(

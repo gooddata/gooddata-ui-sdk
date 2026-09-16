@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef } from "react";
 
 import { useIntl } from "react-intl";
 
-import { idRef, insightId, uriRef } from "@gooddata/sdk-model";
+import { idRef, insightId } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { DropdownList, Input, NoData, UiSkeleton, isEscapeKey } from "@gooddata/sdk-ui-kit";
 
@@ -185,10 +185,7 @@ export function InsightPickerCore({
     );
 
     const handleItemClick = useCallback(
-        (entry: IInsightPickerItem) => {
-            const entryRef = entry.uri ? uriRef(entry.uri) : idRef(entry.identifier, "insight");
-            onSelect(entryRef, entry);
-        },
+        (entry: IInsightPickerItem) => onSelect(idRef(entry.identifier, "insight"), entry),
         [onSelect],
     );
 

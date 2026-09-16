@@ -19,7 +19,7 @@ export function IntelligenceHeader({ onClose }: IIntelligenceHeaderProps) {
 
     return (
         <div className={e("header")}>
-            <span className={e("header__title")}>
+            <span className={e("header__title")} data-testid="interaction-intelligence-title">
                 {intl.formatMessage({ id: "gd.gen-ai.interactionIntelligence.title" })}
             </span>
             <UiIconButton

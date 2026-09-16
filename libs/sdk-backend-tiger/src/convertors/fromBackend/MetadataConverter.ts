@@ -14,6 +14,8 @@ import {
     type JsonApiFactOutDocument,
     type JsonApiFactOutList,
     type JsonApiFactOutWithLinks,
+    type JsonApiLabelOut,
+    type JsonApiLabelOutDocument,
     type JsonApiLabelOutWithLinks,
     type JsonApiMetricOutList,
     type JsonApiMetricOutWithLinks,
@@ -38,6 +40,7 @@ import {
     idRef,
 } from "@gooddata/sdk-model";
 
+import { fromTigerConditionalFormatting } from "./conditionalFormattingConversions.js";
 import { convertLabelType } from "./LabelTypeConverter.js";
 import { convertMetricFromBackend } from "./MetricConverter.js";
 import { isInheritedObject } from "./ObjectInheritance.js";
@@ -112,11 +115,9 @@ export function convertAttributeLabels(
                 return undefined;
             }
 
-            const isPrimary = !!label.attributes?.primary;
+            const isDefault = defaultView ? defaultView.id === label.id : !!label.attributes?.primary;
 
-            const isDefault = defaultView ? defaultView.id === label.id : isPrimary;
-
-            return convertLabelWithLinks(label, attribute.id, isDefault, isPrimary);
+            return convertLabel(label, label.links?.self ?? "", attribute.id, isDefault);
         })
         .filter((df): df is IAttributeDisplayFormMetadataObject => df !== undefined);
 }
@@ -134,7 +135,10 @@ function convertAttributeWithLinks(
             .modify(commonMetadataObjectModifications(attribute))
             .displayForms(convertAttributeLabels(attribute, labelMap))
             .isLocked(isInheritedObject(attribute))
-            .dataSet(convertDatasetRelationship(attribute.relationships, dataSetMap)),
+            .dataSet(convertDatasetRelationship(attribute.relationships, dataSetMap))
+            .conditionalFormatting(
+                fromTigerConditionalFormatting(attribute.attributes?.conditionalFormatting),
+            ),
     );
 }
 
@@ -158,19 +162,23 @@ function convertAttributeDocument(
             .displayForms(convertAttributeLabels(attribute, labelMap))
             .isLocked(isInheritedObject(attribute))
             .isHidden(attribute.attributes?.isHidden)
-            .dataSet(convertDatasetRelationship(attribute.relationships, dataSetMap)),
+            .dataSet(convertDatasetRelationship(attribute.relationships, dataSetMap))
+            .conditionalFormatting(
+                fromTigerConditionalFormatting(attribute.attributes?.conditionalFormatting),
+            ),
     );
 }
 
 /**
- * Converts label when its side-loaded. attributeId and isDefault must be passed by context because sideloaded
- * label does not contain relationships
+ * Converts a label entity (sideloaded, listed, or a top-level document) into
+ * {@link IAttributeDisplayFormMetadataObject}. `isDefault` is known only from the owning attribute's
+ * `defaultView` relationship, so callers without it leave it out.
  */
-function convertLabelWithLinks(
-    label: JsonApiLabelOutWithLinks,
+export function convertLabel(
+    label: JsonApiLabelOut,
+    uri: string,
     attributeId: string,
-    isDefault: boolean,
-    isPrimary: boolean,
+    isDefault?: boolean,
 ): IAttributeDisplayFormMetadataObject {
     const geoCollectionId = label.attributes?.geoAreaConfig?.collection.id;
     return newAttributeDisplayFormMetadataObject(idRef(label.id, "displayForm"), (m) =>
@@ -178,19 +186,20 @@ function convertLabelWithLinks(
             .id(label.id)
             .title(label.attributes?.title || "")
             .description(label.attributes?.description || "")
-            .uri(label.links?.self ?? "")
+            .tags(label.attributes?.tags ?? [])
+            .uri(uri)
             .attribute(idRef(attributeId, "attribute"))
             .isDefault(isDefault)
-            .isPrimary(isPrimary)
+            .isPrimary(!!label.attributes?.primary)
             .displayFormType(convertLabelType(label.attributes?.valueType))
-            .geoAreaConfig(
-                geoCollectionId
-                    ? {
-                          collectionId: geoCollectionId,
-                      }
-                    : undefined,
-            ),
+            .geoAreaConfig(geoCollectionId ? { collectionId: geoCollectionId } : undefined)
+            .conditionalFormatting(fromTigerConditionalFormatting(label.attributes?.conditionalFormatting)),
     );
+}
+
+export function convertLabelDocument(labelDoc: JsonApiLabelOutDocument): IAttributeDisplayFormMetadataObject {
+    const label = labelDoc.data;
+    return convertLabel(label, labelDoc.links?.self ?? "", label.relationships?.attribute?.data?.id ?? "");
 }
 
 //

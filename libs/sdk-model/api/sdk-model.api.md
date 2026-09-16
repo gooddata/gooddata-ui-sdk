@@ -1359,6 +1359,8 @@ export interface IAttributeDisplayFormGeoAreaConfig {
 // @public
 export interface IAttributeDisplayFormMetadataObject extends IMetadataObject {
     attribute: ObjRef;
+    // @alpha
+    conditionalFormatting?: ISemanticConditionalFormatting;
     displayFormType?: AttributeDisplayFormType | string;
     // @alpha
     geoAreaConfig?: IAttributeDisplayFormGeoAreaConfig;
@@ -1445,6 +1447,8 @@ export interface IAttributeLocatorItemBody {
 
 // @public
 export interface IAttributeMetadataObject extends IMetadataObject {
+    // @alpha
+    conditionalFormatting?: ISemanticConditionalFormatting;
     dataSet?: IDataSetMetadataObject;
     displayForms: IAttributeDisplayFormMetadataObject[];
     drillDownStep?: ObjRef;
@@ -1924,8 +1928,8 @@ export interface IConditionalFormatting {
     // (undocumented)
     enabled: boolean;
     // (undocumented)
-    rules: readonly IConditionalFormattingRule[];
-    suppressedTargets?: readonly ConditionalFormattingTarget[];
+    rules: IConditionalFormattingRule[];
+    suppressedTargets?: ConditionalFormattingTarget[];
     version?: string;
 }
 
@@ -1951,7 +1955,7 @@ export interface IConditionalFormattingFormat {
 // @alpha
 export interface IConditionalFormattingRule {
     // (undocumented)
-    conditions: readonly IConditionalFormattingCondition[];
+    conditions: IConditionalFormattingCondition[];
     // (undocumented)
     id: string;
     // (undocumented)
@@ -3061,6 +3065,7 @@ export interface IFeatureFlags {
     enableDrillToUrlByDefault?: boolean;
     enableEmbedButtonInAD?: boolean;
     enableEmbedButtonInKD?: boolean;
+    enableEmbeddingWriteCommands?: boolean;
     enableEnhancedInsightPicker?: boolean;
     enableExecutionCancelling?: boolean;
     enableExportTemplateSelection?: boolean;
@@ -4640,8 +4645,6 @@ export interface IPermanentSettings {
     // @alpha
     openAiConfig?: IOpenAiConfig;
     platformEdition?: PlatformEdition;
-    // @alpha
-    reportsBrandKit?: IReportsBrandKit;
     responsiveUiDateFormat?: string;
     restrictBaseUi?: boolean;
     showHiddenCatalogItems?: boolean;
@@ -5054,55 +5057,6 @@ export interface IReportPageLayoutDefinition {
     title: string;
     // (undocumented)
     type: "reportPageLayout";
-}
-
-// @alpha
-export interface IReportsBrandKit {
-    // (undocumented)
-    assets?: IReportsBrandKitAssets;
-    // (undocumented)
-    colors?: IReportsBrandKitColors;
-    // (undocumented)
-    typography?: IReportsBrandKitTypography;
-    version: "1";
-}
-
-// @alpha
-export interface IReportsBrandKitAssets {
-    images?: IReportsBrandKitImage[];
-    logo?: string;
-    logoInverse?: string;
-}
-
-// @alpha
-export interface IReportsBrandKitColors {
-    brand?: string;
-    chart?: string[];
-    ink?: string;
-    inkMuted?: string;
-    paper?: string;
-    paperAlt?: string;
-}
-
-// @alpha
-export interface IReportsBrandKitFontFace {
-    family: string;
-    style?: "normal" | "italic";
-    url: string;
-    weight?: number;
-}
-
-// @alpha
-export interface IReportsBrandKitImage {
-    description?: string;
-    id: string;
-    url: string;
-}
-
-// @alpha
-export interface IReportsBrandKitTypography {
-    fontFamily?: string;
-    fonts?: IReportsBrandKitFontFace[];
 }
 
 // @alpha
@@ -5634,7 +5588,7 @@ export function isDrillToLegacyDashboard(obj: unknown): obj is IDrillToLegacyDas
 // @alpha
 export interface ISemanticConditionalFormatting {
     // (undocumented)
-    conditions: readonly IConditionalFormattingCondition[];
+    conditions: IConditionalFormattingCondition[];
     enabled?: boolean;
     version?: string;
 }
@@ -6087,6 +6041,9 @@ export function isReportContentV1(obj: unknown): obj is IReportContent;
 export function isReportDefinition(obj: unknown): obj is IReportDefinition;
 
 // @alpha
+export function isReportHeadingKind(kind: ReportTextSlotKind): kind is ReportHeadingKind;
+
+// @alpha
 export function isReportImageBackground(obj: unknown): obj is IReportImageBackground;
 
 // @alpha
@@ -6184,6 +6141,9 @@ export function isTestNotification(notification: unknown): notification is ITest
 
 // @alpha
 export function isTextAttributeFilter(obj: unknown): obj is TextAttributeFilter;
+
+// @alpha
+export function isThemeColorPaletteRef(value: unknown): value is IThemeColorPaletteRef;
 
 // @alpha (undocumented)
 export const isTimeGranularity: (g: string | undefined) => boolean;
@@ -6328,6 +6288,8 @@ export interface ITestNotificationDetails {
 // @beta
 export interface ITheme {
     analyticalDesigner?: IThemeAnalyticalDesigner;
+    // @alpha
+    assets?: IThemeAssets;
     button?: IThemeButton;
     chart?: IThemeChart;
     dashboards?: IThemeDashboard;
@@ -6338,10 +6300,13 @@ export interface ITheme {
     message?: IThemeMessage;
     modal?: IThemeModal;
     palette?: IThemePalette;
+    // @alpha
+    reports?: IThemeReports;
     table?: IThemeTable;
     toastMessage?: IThemeToastMessage;
     tooltip?: IThemeTooltip;
     typography?: IThemeTypography;
+    version?: "2";
 }
 
 // @beta
@@ -6352,6 +6317,23 @@ export interface IThemeAnalyticalDesigner {
 // @beta
 export interface IThemeAnalyticalDesignerTitle {
     color?: ThemeColor;
+}
+
+// @alpha
+export interface IThemeAsset {
+    altText?: string;
+    // (undocumented)
+    id: string;
+    title?: string;
+    url: string;
+}
+
+// @alpha
+export interface IThemeAssets {
+    backgrounds?: IThemeAsset[];
+    images?: IThemeAsset[];
+    // (undocumented)
+    logos?: IThemeAsset[];
 }
 
 // @beta
@@ -6410,6 +6392,14 @@ export interface IThemeColorFamily {
     contrast?: ThemeColor;
     dark?: ThemeColor;
     light?: ThemeColor;
+}
+
+// @alpha
+export interface IThemeColorPaletteRef {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    type: "colorPalette" | "workspaceColorPalette";
 }
 
 // @beta
@@ -6643,6 +6633,101 @@ export interface IThemePalette {
     primary?: IThemeColorFamily;
     success?: IThemeColorFamily;
     warning?: IThemeColorFamily;
+}
+
+// @alpha
+export interface IThemeReports {
+    // (undocumented)
+    colors?: IThemeReportsColors;
+    // (undocumented)
+    page?: IThemeReportsPage;
+    // (undocumented)
+    textStyle?: IThemeReportsTextStyle;
+    visualizationPalette?: ThemeColor[] | IThemeColorPaletteRef;
+}
+
+// @alpha
+export interface IThemeReportsColors {
+    backgrounds?: ThemeColor[];
+    text?: ThemeColor[];
+}
+
+// @alpha
+export interface IThemeReportsFontFace {
+    family: string;
+    style?: "normal" | "italic";
+    url: string;
+    weight?: number;
+}
+
+// @alpha
+export interface IThemeReportsHeading {
+    // (undocumented)
+    color?: ThemeColor;
+    // (undocumented)
+    h1?: IThemeReportsTextLevel;
+    // (undocumented)
+    h2?: IThemeReportsTextLevel;
+    // (undocumented)
+    h3?: IThemeReportsTextLevel;
+    // (undocumented)
+    h4?: IThemeReportsTextLevel;
+    // (undocumented)
+    h5?: IThemeReportsTextLevel;
+    // (undocumented)
+    h6?: IThemeReportsTextLevel;
+    // (undocumented)
+    lineHeight?: ThemeReportsLength;
+}
+
+// @alpha
+export interface IThemeReportsPage {
+    // (undocumented)
+    backgroundColor?: ThemeColor;
+}
+
+// @alpha
+export interface IThemeReportsParagraph {
+    // (undocumented)
+    color?: ThemeColor;
+    // (undocumented)
+    lineHeight?: ThemeReportsLength;
+    // (undocumented)
+    p1?: IThemeReportsTextLevel;
+    // (undocumented)
+    p2?: IThemeReportsTextLevel;
+    // (undocumented)
+    p3?: IThemeReportsTextLevel;
+}
+
+// @alpha
+export interface IThemeReportsTextLevel {
+    color?: ThemeColor;
+    // (undocumented)
+    fontSize?: ThemeReportsLength;
+    // (undocumented)
+    lineHeight?: ThemeReportsLength;
+}
+
+// @alpha
+export interface IThemeReportsTextStyle {
+    // (undocumented)
+    color?: ThemeColor;
+    // (undocumented)
+    heading?: IThemeReportsHeading;
+    // (undocumented)
+    lineHeight?: ThemeReportsLength;
+    // (undocumented)
+    paragraph?: IThemeReportsParagraph;
+    // (undocumented)
+    typography?: IThemeReportsTypography;
+}
+
+// @alpha
+export interface IThemeReportsTypography {
+    fontFamily?: string;
+    // (undocumented)
+    fonts?: IThemeReportsFontFace[];
 }
 
 // @beta
@@ -7541,9 +7626,6 @@ export type ParameterValue = IParameterDefinition["defaultValue"];
 export function parameterValueMatchesType(definition: IParameterDefinition, value: ParameterValue): boolean;
 
 // @alpha
-export function parseReportsBrandChartColor(color: string): IRgbColorValue | undefined;
-
-// @alpha
 export type PermissionSource = "direct" | "indirect";
 
 // @public
@@ -7679,7 +7761,7 @@ export type RemotePluggableApplicationsRegistry = IRemotePluggableApplicationsRe
 export type ReportBackground = IReportColorBackground | IReportImageBackground;
 
 // @alpha
-export type ReportBuiltInVariable = "reportName" | "reportDescription" | "periodStart" | "periodEnd" | "reportDateRange" | "reportAttributeFilters" | "exportedAt" | "exportedBy" | "lastModifiedAt" | "lastModifiedBy" | "workspaceName" | "workspaceId" | "totalPages" | "currentPageNumber" | "logo" | "logoInverse";
+export type ReportBuiltInVariable = "reportName" | "reportDescription" | "periodStart" | "periodEnd" | "reportDateRange" | "reportAttributeFilters" | "exportedAt" | "exportedBy" | "lastModifiedAt" | "lastModifiedBy" | "workspaceName" | "workspaceId" | "totalPages" | "currentPageNumber" | "logo";
 
 // @alpha
 export const ReportBuiltInVariables: ReportBuiltInVariable[];
@@ -7692,6 +7774,12 @@ export function reportContentPage(reportOrTemplate: IReport | IReportDefinition 
 
 // @alpha
 export type ReportDateString = string;
+
+// @alpha
+export type ReportHeadingKind = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+
+// @alpha
+export const ReportHeadingKinds: ReportHeadingKind[];
 
 // @alpha
 export type ReportImageFit = "contain" | "cover" | "fill";
@@ -7718,10 +7806,10 @@ export const ReportPageFormats: ReportPageFormat[];
 export type ReportPageLayoutNode = IReportLayoutSection | IReportLayoutSlotRef;
 
 // @alpha
-export function reportsBrandKitImageVariable(imageId: string): string;
+export type ReportParagraphKind = "p1" | "p2" | "p3";
 
 // @alpha
-export const ReportsBrandKitImageVariablePrefix = "image_";
+export const ReportParagraphKinds: ReportParagraphKind[];
 
 // @alpha
 export type ReportSlot = IReportVisualizationSlot | IReportTextSlot | IReportImageSlot;
@@ -7730,7 +7818,7 @@ export type ReportSlot = IReportVisualizationSlot | IReportTextSlot | IReportIma
 export function reportTextPlaceholder(name: string): string;
 
 // @alpha
-export type ReportTextSlotKind = "title" | "subtitle" | "sectionTitle" | "description" | "summary" | "body" | "custom";
+export type ReportTextSlotKind = ReportHeadingKind | ReportParagraphKind;
 
 // @alpha
 export type ReportTextSource = IReportStaticTextSource | IReportAiTextSource;
@@ -7769,9 +7857,6 @@ export function sanitizeBucketTotals(bucket: IBucket, sortItems: ISortItem[], to
 
 // @alpha
 export function sanitizeParameterValue(definition: IParameterDefinition, value: ParameterValue): ParameterValue;
-
-// @alpha
-export function sanitizeReportsBrandKit(value: unknown): IReportsBrandKit | undefined;
 
 // @alpha @deprecated
 export type ScheduledMailAttachment = IDashboardAttachment | IWidgetAttachment;
@@ -7852,6 +7937,9 @@ export type ThemeDashboardDensity = "comfortable" | "compact";
 
 // @beta
 export type ThemeFontUri = string;
+
+// @alpha
+export type ThemeReportsLength = string | number;
 
 // @internal
 export const throwUnexpected: (value: never) => never;

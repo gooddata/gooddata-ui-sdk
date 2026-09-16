@@ -2,6 +2,7 @@
 
 import { invariant } from "ts-invariant";
 
+import { type ISemanticConditionalFormatting } from "../../../conditionalFormatting/index.js";
 import { type ObjRef } from "../../../objRef/index.js";
 import { type IMetadataObject, isMetadataObject } from "../types.js";
 
@@ -103,6 +104,14 @@ export interface IAttributeDisplayFormMetadataObject extends IMetadataObject {
      * @alpha
      */
     geoAreaConfig?: IAttributeDisplayFormGeoAreaConfig;
+
+    /**
+     * Semantic-layer conditional formatting authored on this label; takes precedence over the owning
+     * attribute's (backend-defined).
+     *
+     * @alpha
+     */
+    conditionalFormatting?: ISemanticConditionalFormatting;
 }
 
 /**

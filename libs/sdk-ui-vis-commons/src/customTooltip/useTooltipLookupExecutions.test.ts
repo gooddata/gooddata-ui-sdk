@@ -29,10 +29,10 @@ vi.mock("./tooltipLookup.js", () => ({
     }),
 }));
 
-const META: ITooltipExecutionMeta = { labelCountMap: {}, measureIdMap: {}, labelIdMap: {} };
+const META: ITooltipExecutionMeta = { labelCountMap: {}, measureIdMap: {}, attributeKeyMap: {} };
 
 function metaWith(measureIdMap: Record<string, string>): ITooltipExecutionMeta {
-    return { labelCountMap: {}, measureIdMap, labelIdMap: {} };
+    return { labelCountMap: {}, measureIdMap, attributeKeyMap: {} };
 }
 
 function makeExecution(fingerprint: string, dataViewKey = fingerprint): IPreparedExecution {

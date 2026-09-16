@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { type ReactNode } from "react";
+import { type ReactNode, type RefObject } from "react";
 
 import { type DayPickerProps } from "react-day-picker";
 
@@ -21,6 +21,7 @@ import { type IPeriodRange, type PeriodRangePickerGranularity } from "../PeriodR
 
 import {
     dateFilterValueToDateRange,
+    dateFilterValueToPeriodRange,
     dateRangeToDateFilterValue,
     periodRangeToDateFilterValue,
 } from "./conversions.js";
@@ -51,6 +52,11 @@ export interface IAbsoluteDateFilterFormProps {
     submitForm: () => void;
     customRangeHint?: ReactNode;
     /**
+     * Reports whether the `PeriodRangePicker` branch's fields currently form a submittable range - see
+     * `IPeriodRangePickerProps.onValidityChange`. Not called for the classic `DateRangePicker` branch.
+     */
+    onPeriodRangeValidityChange?: (isValid: boolean) => void;
+    /**
      * Enables Day/Week/Month/Quarter/Year granularity switching.
      *
      * @remarks
@@ -67,6 +73,11 @@ export interface IAbsoluteDateFilterFormProps {
      * Accessibility configuration for the absolute date filter form.
      */
     accessibilityConfig?: IAbsoluteDateFilterFormAccessibilityConfig;
+    /**
+     * Ref for the granularity tabs' wrapping element - used for keyboard navigation focus management.
+     * Only relevant while {@link IAbsoluteDateFilterFormProps.isGranularityEnabled} renders the tabs.
+     */
+    granularityTabsRef?: RefObject<HTMLDivElement | null>;
 }
 
 const dayPickerProps: DayPickerProps = {
@@ -94,9 +105,11 @@ export function AbsoluteDateFilterForm({
     onSelectedFilterOptionChange,
     submitForm,
     customRangeHint,
+    onPeriodRangeValidityChange,
     isGranularityEnabled = false,
     availableGranularities,
     accessibilityConfig,
+    granularityTabsRef,
 }: IAbsoluteDateFilterFormProps) {
     const selectedGranularity = selectedFilterOption.granularity ?? availableGranularities[0];
     const showGranularityTabs = isGranularityEnabled && availableGranularities.length > 0;
@@ -143,12 +156,15 @@ export function AbsoluteDateFilterForm({
             <PeriodRangePicker
                 key={selectedGranularity}
                 granularity={selectedGranularity}
-                range={{ from: selectedFilterOption.from, to: selectedFilterOption.to }}
+                range={dateFilterValueToPeriodRange(selectedFilterOption)}
                 onRangeChange={handlePeriodRangeChange}
                 isMobile={isMobile}
                 weekStart={weekStart}
                 withoutApply={withoutApply}
                 submitForm={submitForm}
+                dateFormat={dateFormat}
+                customRangeHint={customRangeHint}
+                onValidityChange={onPeriodRangeValidityChange}
             />
         ) : (
             <DateRangePicker
@@ -170,14 +186,16 @@ export function AbsoluteDateFilterForm({
     return (
         <>
             {showGranularityTabs ? (
-                <GranularityTabs
-                    availableGranularities={availableGranularities}
-                    selectedGranularity={selectedGranularity}
-                    onSelectedGranularityChange={handleGranularityChange}
-                    accessibilityConfig={{ ariaControls: accessibilityConfig?.id }}
-                    className="gd-absolute-filter-form-granularity-tabs s-absolute-filter-form-granularity-tabs"
-                    selectedTabId={DATE_FILTER_ABSOLUTE_GRANULARITY_TAB_ID}
-                />
+                <div ref={granularityTabsRef}>
+                    <GranularityTabs
+                        availableGranularities={availableGranularities}
+                        selectedGranularity={selectedGranularity}
+                        onSelectedGranularityChange={handleGranularityChange}
+                        accessibilityConfig={{ ariaControls: accessibilityConfig?.id }}
+                        className="gd-absolute-filter-form-granularity-tabs s-absolute-filter-form-granularity-tabs"
+                        selectedTabId={DATE_FILTER_ABSOLUTE_GRANULARITY_TAB_ID}
+                    />
+                </div>
             ) : null}
             {showGranularityTabs ? (
                 <div

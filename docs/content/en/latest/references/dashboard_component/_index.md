@@ -21,3 +21,6 @@ The `View` and `Controller` parts are implemented using React components and hoo
 - integration with the eventing.
 
 It also supports a full drag-and-drop experience for creating and editing existing dashboards.
+
+For customizing the alert and scheduled-email dialogs specifically, see
+[Customize the Alert and Scheduled Email Dialogs](automation_dialogs_customization/).

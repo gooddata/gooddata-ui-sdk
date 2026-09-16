@@ -2,7 +2,11 @@
 
 import { uniqBy } from "lodash-es";
 
-import { MetadataUtilities } from "@gooddata/api-client-tiger";
+import {
+    type JsonApiUserDataFilterOutWithLinks,
+    type JsonApiWorkspaceDataFilterOutWithLinks,
+    MetadataUtilities,
+} from "@gooddata/api-client-tiger";
 import { ActionsApi_SetCertification } from "@gooddata/api-client-tiger/endpoints/actions";
 import {
     DashboardsApi_GetAllEntitiesAnalyticalDashboards,
@@ -10,7 +14,9 @@ import {
     EntitiesApi_DeleteEntityComputedAttributes,
     EntitiesApi_GetAllEntitiesComputedAttributes,
     EntitiesApi_GetAllEntitiesMetrics,
+    EntitiesApi_GetAllEntitiesUserDataFilters,
     EntitiesApi_GetAllEntitiesVisualizationObjects,
+    EntitiesApi_GetAllEntitiesWorkspaceDataFilters,
     EntitiesApi_GetEntityComputedAttributes,
     EntitiesApi_PatchEntityComputedAttributes,
     EntitiesApi_UpdateEntityComputedAttributes,
@@ -24,10 +30,13 @@ import type {
 import {
     type IComputedAttributeMetadataObject,
     type IComputedAttributeMetadataObjectDefinition,
+    type IMetadataObject,
     type IMetadataObjectBase,
     type IMetadataObjectIdentity,
     type IObjectCertificationWrite,
     type ObjRef,
+    type ObjectType,
+    idRef,
     insightId,
     isIdentifierRef,
 } from "@gooddata/sdk-model";
@@ -197,9 +206,10 @@ export class TigerWorkspaceComputedAttributes implements IWorkspaceComputedAttri
         const id = objRefToIdentifier(ref, this.authCall);
 
         // Visualizations grouping by the computed attribute, metrics that reference it,
-        // dashboards that filter by it or embed those visualizations, and other computed
-        // attributes whose MAQL references it. The backend allows the delete; the catalog
-        // refuses it and lists these titles instead.
+        // dashboards that filter by it or embed those visualizations, other computed
+        // attributes whose MAQL references it, and user or workspace data filters that
+        // reference it. The backend allows the delete; the catalog refuses it and lists
+        // these titles instead.
         const insights = this.authCall((client) =>
             MetadataUtilities.getAllPagesOf(client, EntitiesApi_GetAllEntitiesVisualizationObjects, {
                 workspaceId: this.workspace,
@@ -239,11 +249,40 @@ export class TigerWorkspaceComputedAttributes implements IWorkspaceComputedAttri
                 ),
         );
 
-        const [insightList, measureList, computedAttributeList] = await Promise.all([
-            insights,
-            measures,
-            computedAttributes,
-        ]);
+        // User data filters whose MAQL references the computed attribute.
+        const userDataFilters = this.authCall((client) =>
+            MetadataUtilities.getAllPagesOf(client, EntitiesApi_GetAllEntitiesUserDataFilters, {
+                workspaceId: this.workspace,
+                filter: `computedAttributes.id==${id}`,
+            })
+                .then(MetadataUtilities.mergeEntitiesResults)
+                .then((filters) =>
+                    filters.data.map((filter) => convertDataFilterFromBackend(filter, "userDataFilter")),
+                ),
+        );
+
+        // Workspace data filters have no documented computedAttributes relationship in the
+        // metadata API; the same RSQL still succeeds when the backend wires one. A 400 must
+        // not fail the whole lookup or the catalog would allow deletes of used attributes.
+        const workspaceDataFilters = this.authCall((client) =>
+            MetadataUtilities.getAllPagesOf(client, EntitiesApi_GetAllEntitiesWorkspaceDataFilters, {
+                workspaceId: this.workspace,
+                filter: `computedAttributes.id==${id}`,
+            })
+                .then(MetadataUtilities.mergeEntitiesResults)
+                .then((filters) =>
+                    filters.data.map((filter) => convertDataFilterFromBackend(filter, "workspaceDataFilter")),
+                ),
+        );
+
+        const [insightList, measureList, computedAttributeList, userDataFilterList, workspaceDataFilterList] =
+            await Promise.all([
+                insights,
+                measures,
+                computedAttributes,
+                userDataFilters,
+                workspaceDataFilters,
+            ]);
 
         const dashboardFilterParts = [`labels.id==${id}`];
         if (insightList.length > 0) {
@@ -270,10 +309,29 @@ export class TigerWorkspaceComputedAttributes implements IWorkspaceComputedAttri
             measures: measureList,
             analyticalDashboards,
             computedAttributes: computedAttributeList,
+            userDataFilters: userDataFilterList,
+            workspaceDataFilters: workspaceDataFilterList,
         };
     }
 
     public getComputedAttributesQuery(): ComputedAttributesQuery {
         return new ComputedAttributesQuery(this.authCall, { workspaceId: this.workspace });
     }
+}
+
+function convertDataFilterFromBackend(
+    item: JsonApiUserDataFilterOutWithLinks | JsonApiWorkspaceDataFilterOutWithLinks,
+    type: Extract<ObjectType, "userDataFilter" | "workspaceDataFilter">,
+): IMetadataObject {
+    return {
+        id: item.id,
+        ref: idRef(item.id, type),
+        type,
+        title: item.attributes?.title || item.id,
+        uri: item.links?.self ?? "",
+        description: item.attributes?.description || "",
+        production: true,
+        unlisted: false,
+        deprecated: false,
+    };
 }

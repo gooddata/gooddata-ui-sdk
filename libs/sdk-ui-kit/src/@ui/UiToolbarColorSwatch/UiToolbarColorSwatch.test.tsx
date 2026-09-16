@@ -19,16 +19,37 @@ describe("UiToolbarColorSwatch", () => {
         expect(root.querySelector(".gd-ui-kit-toolbar-color-swatch__transparent")).toBeNull();
     });
 
-    it("shows the transparent pattern for the fill variant only", () => {
+    it("shows the transparent pattern in the fill, and in the bar of the text variant", () => {
         const { container, rerender } = render(<UiToolbarColorSwatch isTransparent color="rgb(255, 0, 0)" />);
-        expect(container.querySelector(".gd-ui-kit-toolbar-color-swatch__transparent")).not.toBeNull();
+        expect(
+            container.querySelector(
+                ".gd-ui-kit-toolbar-color-swatch__fill .gd-ui-kit-toolbar-color-swatch__transparent",
+            ),
+        ).not.toBeNull();
         expect(container.querySelector(".gd-ui-kit-toolbar-color-swatch__fill")).not.toHaveStyle({
             backgroundColor: "rgb(255, 0, 0)",
         });
 
-        rerender(<UiToolbarColorSwatch variant="text" isTransparent />);
-        expect(container.querySelector(".gd-ui-kit-toolbar-color-swatch__transparent")).toBeNull();
-        expect(container.querySelector(".gd-ui-kit-toolbar-color-swatch")).not.toHaveClass(
+        rerender(<UiToolbarColorSwatch variant="text" isTransparent color="rgb(255, 0, 0)" />);
+        expect(
+            container.querySelector(
+                ".gd-ui-kit-toolbar-color-swatch__bar .gd-ui-kit-toolbar-color-swatch__transparent",
+            ),
+        ).not.toBeNull();
+        expect(container.querySelector(".gd-ui-kit-toolbar-color-swatch__bar")).not.toHaveStyle({
+            backgroundColor: "rgb(255, 0, 0)",
+        });
+        expect(container.querySelector(".gd-ui-kit-toolbar-color-swatch")).toHaveClass(
+            "gd-ui-kit-toolbar-color-swatch--isTransparent",
+        );
+    });
+
+    // The bar carries the accent when a colour is set, and the checker would otherwise show it
+    // through its transparent cells, reading as that colour rather than as no colour.
+    it("marks a transparent swatch so the checker does not stand on the accent", () => {
+        const { container } = render(<UiToolbarColorSwatch variant="text" isTransparent />);
+
+        expect(container.querySelector(".gd-ui-kit-toolbar-color-swatch")).toHaveClass(
             "gd-ui-kit-toolbar-color-swatch--isTransparent",
         );
     });

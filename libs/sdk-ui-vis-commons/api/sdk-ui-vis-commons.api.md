@@ -102,6 +102,9 @@ export const ColorUtils: {
 export function composeCustomTooltipSectionHtml(content: string, inChartValues: IResolvedReferenceValues, externalValues: IResolvedReferenceValues, localizedStrings: ITooltipLocalizedStrings): string;
 
 // @internal
+export const computedAttributeKey: (id: string) => string;
+
+// @internal
 export const CUSTOM_POINT_SHAPES: string[];
 
 // @alpha
@@ -621,8 +624,8 @@ export interface ITooltipExecutionBundle {
 
 // @internal
 export interface ITooltipExecutionMeta {
+    attributeKeyMap: Record<string, string>;
     labelCountMap: Record<string, string>;
-    labelIdMap: Record<string, string>;
     measureIdMap: Record<string, string>;
 }
 

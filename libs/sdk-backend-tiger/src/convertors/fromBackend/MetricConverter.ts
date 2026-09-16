@@ -40,11 +40,7 @@ export function convertMetricFromBackend(
             .expression(attributes.content.maql)
             .format(attributes.content.format ?? "")
             .metricType(attributes.content.metricType)
-            .conditionalFormatting(
-                attributes.conditionalFormatting
-                    ? fromTigerConditionalFormatting(attributes.conditionalFormatting)
-                    : undefined,
-            )
+            .conditionalFormatting(fromTigerConditionalFormatting(attributes.conditionalFormatting))
             .created(createdAt ?? undefined)
             .createdBy(convertUserIdentifier(createdBy, included))
             .updated(modifiedAt ?? undefined)

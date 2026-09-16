@@ -139,7 +139,7 @@ export interface IConditionalFormattingCondition {
 export interface IConditionalFormattingRule {
     id: string;
     target: ConditionalFormattingTarget;
-    conditions: readonly IConditionalFormattingCondition[];
+    conditions: IConditionalFormattingCondition[];
 }
 
 /**
@@ -156,7 +156,7 @@ export interface IConditionalFormatting {
      */
     version?: string;
     enabled: boolean;
-    rules: readonly IConditionalFormattingRule[];
+    rules: IConditionalFormattingRule[];
     /**
      * Targets whose formatting is explicitly suppressed — turned off rather than inherited from any
      * semantic-layer conditional formatting carried on the execution result (see
@@ -164,7 +164,7 @@ export interface IConditionalFormatting {
      * semantic layer has rules for it. A target not listed here (or when this is absent) is
      * Inherited: semantic rules apply as-is.
      */
-    suppressedTargets?: readonly ConditionalFormattingTarget[];
+    suppressedTargets?: ConditionalFormattingTarget[];
 }
 
 /**
@@ -182,7 +182,7 @@ export interface ISemanticConditionalFormatting {
      * Model version of the persisted shape. Absent is treated as `"1"`.
      */
     version?: string;
-    conditions: readonly IConditionalFormattingCondition[];
+    conditions: IConditionalFormattingCondition[];
     /**
      * Whether the rules are applied when rendering. Absent is treated as `true` — this lets the
      * object be turned off without deleting the authored conditions, distinct from having no rules

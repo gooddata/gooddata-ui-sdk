@@ -1,13 +1,13 @@
 // (C) 2026 GoodData Corporation
 
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { ActionsApi_ComputeLabelElementsPost } from "@gooddata/api-client-tiger/endpoints/labelElements";
 import { idRef, newNegativeAttributeFilter, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 
 import { type TigerAuthenticatedCallGuard } from "../../../../types/index.js";
 
-import { TigerWorkspaceElements } from "./index.js";
+import { type TigerWorkspaceElements as TigerWorkspaceElementsClass } from "./index.js";
 
 vi.mock("@gooddata/api-client-tiger/endpoints/labelElements", () => ({
     ActionsApi_ComputeLabelElementsPost: vi.fn().mockResolvedValue({
@@ -27,7 +27,15 @@ const lastElementsRequest = () => {
 };
 
 describe("TigerWorkspaceElementsQuery", () => {
-    const factory = new TigerWorkspaceElements(authCall, "workspace", (value) => value.toISOString());
+    // The service is imported dynamically from a fresh module registry so that it picks up the mock
+    // above even when another (non-isolated) test file already imported it without it.
+    let factory: TigerWorkspaceElementsClass;
+
+    beforeAll(async () => {
+        vi.resetModules();
+        const { TigerWorkspaceElements } = await import("./index.js");
+        factory = new TigerWorkspaceElements(authCall, "workspace", (value) => value.toISOString());
+    });
 
     beforeEach(() => {
         vi.mocked(ActionsApi_ComputeLabelElementsPost).mockClear();

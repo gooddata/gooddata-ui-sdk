@@ -117,6 +117,7 @@ export function CatalogDetailContent({
         updateItemMetricType,
         updateItemFormat,
         updateItemConditionalFormatting,
+        updateItemLabelConditionalFormatting,
         updateItemCertification,
         applyItemUpdate,
         applyItemDelete,
@@ -278,6 +279,9 @@ export function CatalogDetailContent({
                                     }}
                                     onConditionalFormattingChange={(conditionalFormatting) => {
                                         updateItemConditionalFormatting(conditionalFormatting);
+                                    }}
+                                    onLabelConditionalFormattingChange={(labelRef, conditionalFormatting) => {
+                                        updateItemLabelConditionalFormatting(labelRef, conditionalFormatting);
                                     }}
                                     separators={separators}
                                     currencyFormatOverride={

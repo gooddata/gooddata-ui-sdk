@@ -22,9 +22,21 @@ export function IntelligenceDetailRows({ rows }: IIntelligenceDetailRowsProps) {
     return (
         <dl className={e("detail-rows", { scrollable: true })}>
             {rows.map((row, index) => (
-                <div key={index} className={e("detail-rows__row")}>
-                    <dt className={e("detail-rows__label")}>{intl.formatMessage({ id: row.labelId })}</dt>
-                    <dd className={e("detail-rows__value")}>
+                <div
+                    key={index}
+                    className={e("detail-rows__row")}
+                    data-testid="interaction-intelligence-detail-row"
+                >
+                    <dt
+                        className={e("detail-rows__label")}
+                        data-testid="interaction-intelligence-detail-label"
+                    >
+                        {intl.formatMessage({ id: row.labelId })}
+                    </dt>
+                    <dd
+                        className={e("detail-rows__value")}
+                        data-testid="interaction-intelligence-detail-value"
+                    >
                         <DetailRowValue value={row.value} />
                     </dd>
                 </div>
