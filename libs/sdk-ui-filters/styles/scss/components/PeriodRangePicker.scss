@@ -22,12 +22,24 @@ $period-picker-shadow: 0 2px 5px 0 var(--gd-shadow-color-from-theme, rgba(31, 53
     // Range input
     // ---------------------------------------------------------------------------------------------
 
+    // The shared root is just a layout row now - each field renders its own bordered box below (the two
+    // <input>s already exist as separate DOM nodes; only the box chrome moved onto them), per the target
+    // design's two-separate-fields look.
     .rc-picker {
         position: relative;
         display: flex;
         align-items: center;
         box-sizing: border-box;
         width: 100%;
+        gap: 4px;
+    }
+
+    .rc-picker-input {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        flex: auto;
+        box-sizing: border-box;
         padding: 0 10px;
         border: 1px solid kit-variables.$gd-border-color;
         border-radius: $period-picker-radius;
@@ -38,15 +50,17 @@ $period-picker-shadow: 0 2px 5px 0 var(--gd-shadow-color-from-theme, rgba(31, 53
             border-color: kit-variables.$gd-color-state-blank;
         }
 
-        &.rc-picker-focused {
+        // rc-picker toggles `.rc-picker-focused` on the shared root, not per field box - drive each box's own
+        // focus ring off whichever of its own input actually has focus instead.
+        &:focus-within {
             border-color: kit-variables.$gd-palette-primary-base;
         }
-    }
 
-    .rc-picker-input {
-        position: relative;
-        display: inline-flex;
-        flex: auto;
+        // rc-picker marks the shared root invalid whenever EITHER side is invalid, so the root alone can't
+        // tell which field the error belongs to; the per-field state lives on that input's own aria-invalid.
+        &:has(input[aria-invalid="true"]) {
+            border-color: kit-variables.$gd-input-text-border-error;
+        }
 
         > input {
             width: 100%;
@@ -67,11 +81,11 @@ $period-picker-shadow: 0 2px 5px 0 var(--gd-shadow-color-from-theme, rgba(31, 53
         }
     }
 
+    // Matches the classic DateRangePicker.tsx, which shows no separator between its two fields. rc-picker
+    // always renders this element structurally (its content can be changed but not removed via props), so
+    // it's hidden here instead.
     .rc-picker-range-separator {
-        flex: none;
-        padding: 0 8px;
-        color: kit-variables.$gd-color-state-blank;
-        line-height: 1;
+        display: none;
     }
 
     .rc-picker-prefix,
@@ -83,45 +97,6 @@ $period-picker-shadow: 0 2px 5px 0 var(--gd-shadow-color-from-theme, rgba(31, 53
         color: kit-variables.$gd-palette-primary-base;
         font-size: 14px;
         pointer-events: none;
-    }
-
-    // Clear button overlays the suffix icon and is revealed on hover, so the input corner serves both
-    // as the calendar affordance and, once hovered with a value present, the clear affordance.
-    .rc-picker-clear {
-        position: absolute;
-        top: 50%;
-        inset-inline-end: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 18px;
-        height: 18px;
-        padding: 0;
-        border: 0;
-        border-radius: 50%;
-        transform: translateY(-50%);
-        background: kit-variables.$gd-color-white;
-        color: kit-variables.$gd-color-state-blank;
-        font-size: 14px;
-        line-height: 1;
-        cursor: pointer;
-        opacity: 0;
-        transition:
-            opacity 0.2s,
-            color 0.2s;
-
-        &:hover {
-            color: kit-variables.$gd-color-text;
-        }
-    }
-
-    .rc-picker:hover .rc-picker-clear,
-    .rc-picker-focused .rc-picker-clear {
-        opacity: 1;
-    }
-
-    .rc-picker-clear-btn::after {
-        content: "\00d7";
     }
 
     // rc-picker positions the bar under the active input via inline left/width styles.
@@ -417,6 +392,20 @@ $period-picker-shadow: 0 2px 5px 0 var(--gd-shadow-color-from-theme, rgba(31, 53
                 border-end-end-radius: $period-picker-radius;
             }
         }
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Accessibility hint
+    // ---------------------------------------------------------------------------------------------
+
+    // Mirrors .gd-date-range__hint (DateRangePicker.scss) - same format-hint text below the classic picker's
+    // inputs.
+    &__hint {
+        display: flex;
+        flex-direction: column;
+        color: kit-variables.$gd-medium-gray;
+        font-size: 12px;
+        padding-top: 10px;
     }
 
     // ---------------------------------------------------------------------------------------------

@@ -40,13 +40,14 @@ export interface ICustomTooltipConfig {
      *
      * Not supported: tables, code blocks, blockquotes, nested lists, raw HTML.
      *
-     * Also accepts metric/attribute references (\{metric/id\}, \{label/id\})
-     * that resolve dynamically per hovered data point. Resolved values are
+     * Also accepts metric/attribute references (\{metric/id\}, \{label/id\},
+     * \{computed_attribute/id\}) that resolve dynamically per hovered data point. Resolved values are
      * automatically backslash-escaped, so data containing markdown metacharacters
      * renders as literal text — no manual escaping is required.
      *
      * Use display-form identifiers (NOT parent attribute identifiers) inside
-     * `{label/id}`. An attribute id renders correctly for attributes that are
+     * `{label/id}`; a computed attribute has no labels and is named by its own
+     * identifier inside `{computed_attribute/id}`. An attribute id renders correctly for attributes that are
      * already in the chart, but it cannot be fetched as a label for external
      * attributes — and a single such ref causes the secondary tooltip fetch
      * to fail backend-side, dropping every other external ref alongside it.
@@ -78,7 +79,9 @@ export type ResolvedReference =
     | { readonly kind: "multiple" };
 
 /**
- * Lookup of resolved reference statuses keyed by `metric/id` or `label/id`.
+ * Lookup of resolved reference statuses, keyed by `<prefix>/<id>` - one namespace per object type,
+ * so ids reused across types cannot collide. The key is exactly the text between the braces of the
+ * reference it answers, lowercased prefix aside.
  *
  * @internal
  */
@@ -103,6 +106,18 @@ export const metricKey = (id: string): string => `metric/${id}`;
  * @internal
  */
 export const labelKey = (id: string): string => `label/${id}`;
+
+/**
+ * Builds the `computed_attribute/<id>` lookup key for a computed attribute reference.
+ *
+ * A computed attribute gets a namespace of its own rather than sharing the label one: ids are
+ * unique per object type, so a label and a computed attribute may both be called `tier` and would
+ * otherwise overwrite each other in the lookup - silently showing one's value for the other.
+ * See {@link metricKey}.
+ *
+ * @internal
+ */
+export const computedAttributeKey = (id: string): string => `computed_attribute/${id}`;
 
 /**
  * Localized placeholder strings for the non-value reference states. Built once

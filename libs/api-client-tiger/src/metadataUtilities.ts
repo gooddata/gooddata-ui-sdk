@@ -21,9 +21,11 @@ import {
     type JsonApiNotificationChannelIdentifierOutList,
     type JsonApiNotificationChannelOutList,
     type JsonApiThemeOutList,
+    type JsonApiUserDataFilterOutList,
     type JsonApiUserOutList,
     type JsonApiVisualizationObjectOutList,
     type JsonApiWorkspaceColorPaletteOutList,
+    type JsonApiWorkspaceDataFilterOutList,
     type JsonApiWorkspaceThemeOutList,
 } from "./generated/metadata-json-api/index.js";
 
@@ -131,6 +133,8 @@ export type MetadataGetEntitiesResult =
     | JsonApiExportDefinitionOutList
     | JsonApiAutomationOutList
     | JsonApiUserOutList
+    | JsonApiUserDataFilterOutList
+    | JsonApiWorkspaceDataFilterOutList
     | JsonApiNotificationChannelOutList
     | JsonApiNotificationChannelIdentifierOutList;
 

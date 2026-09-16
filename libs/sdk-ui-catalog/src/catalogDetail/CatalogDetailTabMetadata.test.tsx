@@ -5,9 +5,10 @@ import { describe, expect, it, vi } from "vitest";
 
 import { type IDataSetMetadataObject, idRef } from "@gooddata/sdk-model";
 
-import type { ICatalogItem } from "../catalogItem/types.js";
+import { createLabel } from "../catalogItem/testFixtures.js";
+import type { ICatalogItem, ICatalogItemAttribute } from "../catalogItem/types.js";
 import { TestIntlProvider } from "../localization/TestIntlProvider.js";
-import { TestPermissionsProvider } from "../permission/TestPermissionsProvider.js";
+import { TestPermissionsProvider, defaultPermissionsResult } from "../permission/TestPermissionsProvider.js";
 
 import { CatalogDetailTabMetadata } from "./CatalogDetailTabMetadata.js";
 
@@ -151,5 +152,72 @@ describe("CatalogDetailTabMetadata", () => {
         const terms = screen.getAllByRole("term").map((el) => el.textContent);
         expect(terms[0]).toBe("Type");
         expect(screen.getByText("Metric")).toBeInTheDocument();
+    });
+});
+
+describe("CatalogDetailTabMetadata — label conditional formatting", () => {
+    const attributeItem: ICatalogItemAttribute = {
+        ...baseItem,
+        type: "attribute",
+        labels: [createLabel("label.name", "Region Name")],
+    };
+
+    function renderAttribute(
+        opts: {
+            enableSemanticConditionalFormatting?: boolean;
+            onLabelConditionalFormattingChange?: () => void;
+        } = {},
+    ) {
+        const { enableSemanticConditionalFormatting = false, ...props } = opts;
+
+        return render(
+            <TestPermissionsProvider
+                result={{
+                    ...defaultPermissionsResult,
+                    settings: { ...defaultPermissionsResult.settings, enableSemanticConditionalFormatting },
+                }}
+            >
+                <TestIntlProvider>
+                    <CatalogDetailTabMetadata
+                        item={attributeItem}
+                        canEdit
+                        onTagClick={noop}
+                        onTagAdd={noop}
+                        onTagRemove={noop}
+                        onIsHiddenChange={noop}
+                        onIsHiddenFromKdaChange={noop}
+                        onMetricTypeChange={noop}
+                        onFormatChange={noop}
+                        {...props}
+                    />
+                </TestIntlProvider>
+            </TestPermissionsProvider>,
+        );
+    }
+
+    it("shows the conditional formatting row with the labels when the flag is on and a handler is provided", () => {
+        renderAttribute({
+            enableSemanticConditionalFormatting: true,
+            onLabelConditionalFormattingChange: noop,
+        });
+
+        expect(screen.getByText("Conditional formatting")).toBeInTheDocument();
+        expect(screen.getByText("Region Name")).toBeInTheDocument();
+        expect(screen.getByText("Add rule")).toBeInTheDocument();
+    });
+
+    it("hides the rows when the flag is off, even with a handler provided", () => {
+        renderAttribute({
+            enableSemanticConditionalFormatting: false,
+            onLabelConditionalFormattingChange: noop,
+        });
+
+        expect(screen.queryByText("Add rule")).not.toBeInTheDocument();
+    });
+
+    it("hides the rows when no handler is provided, even with the flag on", () => {
+        renderAttribute({ enableSemanticConditionalFormatting: true });
+
+        expect(screen.queryByText("Add rule")).not.toBeInTheDocument();
     });
 });

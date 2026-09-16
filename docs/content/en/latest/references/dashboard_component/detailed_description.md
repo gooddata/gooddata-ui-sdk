@@ -64,6 +64,10 @@ Here are the most important props:
 
 ### Customizations props
 
+To customize the alert and scheduled-email dialogs specifically — replace them, override one region, decorate the
+data they read, or compose them from blocks — see
+[Customize the Alert and Scheduled Email Dialogs](../automation_dialogs_customization/).
+
 | Name                     | Required? | Type                             | Description                                                                                                                                                                                               |
 | :----------------------- | :-------- | :------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | customizationFns         | false     | DashboardModelCustomizationFns   | The customization functions. The dashboard component will call out to these functions at different points during its lifetime. To learn more, see documentation for a particular function. |

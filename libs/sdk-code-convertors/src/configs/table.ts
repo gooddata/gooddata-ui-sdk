@@ -60,9 +60,9 @@ export type TableConfigProperties = {
                 format: { color?: string; backgroundColor?: string; scope: "cell" | "row" };
             }[];
         }[];
-        // Matches sdk-model's own `suppressedTargets?: readonly ConditionalFormattingTarget[]` exactly —
+        // Matches sdk-model's own `suppressedTargets?: ConditionalFormattingTarget[]` exactly —
         // this mirror type must not disagree with the canonical shape on optionality or mutability.
-        suppressedTargets?: readonly (
+        suppressedTargets?: (
             | { kind: "measure"; measureIdentifier: string }
             | { kind: "attribute"; attributeIdentifier: string }
         )[];

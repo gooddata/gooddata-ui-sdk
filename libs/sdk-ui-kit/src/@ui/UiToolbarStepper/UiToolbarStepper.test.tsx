@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type KeyboardEvent } from "react";
+import { type KeyboardEvent, useState } from "react";
 
 import { fireEvent, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
@@ -133,6 +133,135 @@ describe("UiToolbarStepper", () => {
             />,
         );
         expect(screen.getByRole("textbox", { name: "Zoom" })).toHaveValue("75%");
+    });
+
+    it("reports the typed text live and shows what the consumer passes back", async () => {
+        const onDraftChange = vi.fn();
+        function Harness() {
+            const [value, setValue] = useState("100%");
+            return (
+                <UiToolbarStepper
+                    variant="value"
+                    value={value}
+                    onStep={() => {}}
+                    onCommit={() => {}}
+                    onDraftChange={(draft) => {
+                        onDraftChange(draft);
+                        setValue(draft);
+                    }}
+                    accessibilityConfig={A11Y}
+                />
+            );
+        }
+        const { user } = render(<Harness />);
+        const input = screen.getByRole("textbox", { name: "Zoom" });
+
+        await user.click(input);
+        await user.clear(input);
+        await user.type(input, "0.");
+        expect(onDraftChange.mock.calls.map(([text]) => text)).toEqual(["", "0", "0."]);
+        expect(input).toHaveValue("0.");
+    });
+
+    it("announces stepped values but not the typed text a consumer passes back", async () => {
+        function Harness() {
+            const [value, setValue] = useState("100%");
+            return (
+                <UiToolbarStepper
+                    variant="value"
+                    value={value}
+                    onStep={(direction) => setValue(direction === 1 ? "125%" : "75%")}
+                    onCommit={() => {}}
+                    onDraftChange={setValue}
+                    accessibilityConfig={A11Y}
+                />
+            );
+        }
+        const { user } = render(<Harness />);
+        const input = screen.getByRole("textbox", { name: "Zoom" });
+        const status = () => document.querySelector(".sr-only[role='status']")!;
+        expect(status()).toHaveTextContent("Zoom 100%");
+
+        await user.click(input);
+        await user.clear(input);
+        await user.type(input, "3");
+        expect(input).toHaveValue("3");
+        expect(status()).toHaveTextContent("Zoom 100%");
+
+        await user.keyboard("{ArrowUp}");
+        expect(status()).toHaveTextContent("Zoom 125%");
+
+        // Stepping back onto the typed text is a step, not an echo of the typing.
+        await user.clear(input);
+        await user.type(input, "75%");
+        expect(status()).toHaveTextContent("Zoom 125%");
+        await user.keyboard("{ArrowUp}{ArrowDown}");
+        expect(status()).toHaveTextContent("Zoom 75%");
+    });
+
+    it("shows a changed value at once, even while the input has focus", async () => {
+        function Harness() {
+            const [value, setValue] = useState("100%");
+            return (
+                <>
+                    <UiToolbarStepper
+                        variant="value"
+                        value={value}
+                        onStep={() => {}}
+                        onCommit={() => {}}
+                        accessibilityConfig={A11Y}
+                    />
+                    <button type="button" onClick={() => setValue("22%")}>
+                        set
+                    </button>
+                </>
+            );
+        }
+        const { user } = render(<Harness />);
+        const input = screen.getByRole("textbox", { name: "Zoom" });
+
+        await user.click(input);
+        await user.type(input, "3");
+        // fireEvent does not move focus, so the input is still focused when the value changes.
+        fireEvent.click(screen.getByText("set"));
+
+        expect(input).toHaveValue("22%");
+        expect(input).toHaveFocus();
+    });
+
+    it("shows a value stepped from the keyboard while the input keeps focus", async () => {
+        function Harness() {
+            const [value, setValue] = useState("100%");
+            return (
+                <UiToolbarStepper
+                    variant="value"
+                    value={value}
+                    onStep={(direction) => setValue(direction > 0 ? "125%" : "75%")}
+                    onCommit={setValue}
+                    accessibilityConfig={A11Y}
+                />
+            );
+        }
+        const { user } = render(<Harness />);
+        const input = screen.getByRole("textbox", { name: "Zoom" });
+
+        await user.click(input);
+        await user.keyboard("{ArrowUp}");
+        expect(input).toHaveValue("125%");
+        expect(input).toHaveFocus();
+
+        await user.clear(input);
+        await user.type(input, "9");
+        await user.keyboard("{ArrowDown}");
+        expect(input).toHaveValue("75%");
+    });
+
+    it("marks an invalid draft", () => {
+        renderStepper({ isInvalid: true });
+
+        const input = screen.getByRole("textbox", { name: "Zoom" });
+        expect(input).toHaveAttribute("aria-invalid", "true");
+        expect(input).toHaveClass("gd-ui-kit-toolbar-stepper__value--isInvalid");
     });
 
     it("steps with ArrowUp and ArrowDown inside the input", async () => {

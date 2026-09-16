@@ -14,6 +14,7 @@ import {
     type IInsight,
     idRef,
     newArbitraryAttributeFilter,
+    newAttribute,
     newInsightDefinition,
     newMatchAttributeFilter,
     newMeasureValueFilter,
@@ -2289,7 +2290,7 @@ describe("alert transforms", () => {
             ];
 
             const selected = getSelectedCatalogAttributeValue(
-                { id: "attr" } as any,
+                newAttribute("df1", (a) => a.localId("a1")),
                 () => values,
                 "custom-input",
             );

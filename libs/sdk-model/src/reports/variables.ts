@@ -31,8 +31,7 @@ export type ReportBuiltInVariable =
     | "workspaceId"
     | "totalPages"
     | "currentPageNumber"
-    | "logo"
-    | "logoInverse";
+    | "logo";
 
 /**
  * All built-in report variable names.
@@ -55,7 +54,6 @@ export const ReportBuiltInVariables: ReportBuiltInVariable[] = [
     "totalPages",
     "currentPageNumber",
     "logo",
-    "logoInverse",
 ];
 
 /**

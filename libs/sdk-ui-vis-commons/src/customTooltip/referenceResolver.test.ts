@@ -9,7 +9,12 @@ import { resolveReferences } from "./referenceResolver.js";
 import { type ITooltipLocalizedStrings, type ResolvedReference } from "./types.js";
 
 function strings(overrides?: Partial<ITooltipLocalizedStrings>): ITooltipLocalizedStrings {
-    return { noData: "(No data)", multipleItems: "(Multiple items)", noFetch: "(No data)", ...overrides };
+    return {
+        noData: "(No data)",
+        multipleItems: "(Multiple items)",
+        noFetch: "(No data)",
+        ...overrides,
+    };
 }
 
 function value(text: string): ResolvedReference {
@@ -38,6 +43,33 @@ describe("resolveReferences", () => {
         expect(result).toBe("Value: —");
     });
 
+    it("resolves a computed attribute reference from its own key namespace", () => {
+        const result = resolveReferences(
+            "Tier: {computed_attribute/tier}",
+            { "computed_attribute/tier": value("Gold") },
+            strings(),
+        );
+        expect(result).toBe("Tier: Gold");
+    });
+
+    it("does not answer a computed attribute reference with a label of the same id", () => {
+        const result = resolveReferences(
+            "{label/tier} vs {computed_attribute/tier}",
+            { "label/tier": value("Silver"), "computed_attribute/tier": value("Gold") },
+            strings(),
+        );
+        expect(result).toBe("Silver vs Gold");
+    });
+
+    it("renders could-not-retrieve when only the label of that id resolved", () => {
+        const result = resolveReferences(
+            "Tier: {computed_attribute/tier}",
+            { "label/tier": value("Silver") },
+            strings({ noFetch: "(No fetch)" }),
+        );
+        expect(result).toBe("Tier: \\(No fetch\\)");
+    });
+
     it("should resolve multiple references", () => {
         const result = resolveReferences(
             "**{metric/profit}** in {label/region}",
@@ -53,7 +85,9 @@ describe("resolveReferences", () => {
         // as an image URL by markdownToHtml.
         const result = resolveReferences(
             "![product]({label/product_image_url})",
-            { "label/product_image_url": value("https://cdn.example.com/widget.png") },
+            {
+                "label/product_image_url": value("https://cdn.example.com/widget.png"),
+            },
             strings(),
         );
         expect(result).toBe("![product](https://cdn.example.com/widget.png)");
@@ -75,7 +109,10 @@ describe("resolveReferences", () => {
     it("preserves identifier case (LDM identifiers are case-sensitive)", () => {
         const result = resolveReferences(
             "{metric/Revenue}",
-            { "metric/Revenue": value("case sensitive hit"), "metric/revenue": value("wrong match") },
+            {
+                "metric/Revenue": value("case sensitive hit"),
+                "metric/revenue": value("wrong match"),
+            },
             strings(),
         );
         expect(result).toBe("case sensitive hit");
@@ -127,7 +164,10 @@ describe("resolveReferences", () => {
         it("blanks a no-data image alt reference too, matching RichText", () => {
             const result = resolveReferences(
                 "![{label/capital}]({label/flag})",
-                { "label/capital": { kind: "empty" }, "label/flag": { kind: "empty" } },
+                {
+                    "label/capital": { kind: "empty" },
+                    "label/flag": { kind: "empty" },
+                },
                 strings(),
             );
             expect(result).toBe("![]()");
@@ -136,7 +176,10 @@ describe("resolveReferences", () => {
         it("blanks a no-data link URL but keeps the link text placeholder", () => {
             const result = resolveReferences(
                 "[{label/name}]({label/url})",
-                { "label/name": { kind: "empty" }, "label/url": { kind: "empty" } },
+                {
+                    "label/name": { kind: "empty" },
+                    "label/url": { kind: "empty" },
+                },
                 strings(),
             );
             // href blanked → dead link; text stays a text node → no-data placeholder.
@@ -222,7 +265,9 @@ describe("resolveReferences", () => {
         it("escapes `!` so values cannot inject an image with attacker-controlled src", () => {
             const resolved = resolveReferences(
                 "{label/name}",
-                { "label/name": value("![pwn](https://attacker.example/track.png)") },
+                {
+                    "label/name": value("![pwn](https://attacker.example/track.png)"),
+                },
                 strings(),
             );
             const html = markdownToHtml(resolved);

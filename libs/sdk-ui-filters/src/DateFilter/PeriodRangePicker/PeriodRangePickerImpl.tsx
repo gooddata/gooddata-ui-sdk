@@ -1,6 +1,14 @@
 // (C) 2026 GoodData Corporation
 
-import { type ComponentProps, useCallback, useMemo, useRef } from "react";
+import {
+    type ComponentProps,
+    type FocusEvent,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 
 import * as rcDeDE from "@rc-component/picker/locale/de_DE";
 import * as rcEnGB from "@rc-component/picker/locale/en_GB";
@@ -25,28 +33,98 @@ import * as rcUkUA from "@rc-component/picker/locale/uk_UA";
 import * as rcViVN from "@rc-component/picker/locale/vi_VN";
 import * as rcZhCN from "@rc-component/picker/locale/zh_CN";
 import * as rcZhTW from "@rc-component/picker/locale/zh_TW";
+import { format, isValid, parse } from "date-fns";
 import { defaultImport } from "default-import";
-import moment, { type Moment } from "moment";
-import { useIntl } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 
 import { type ILocale, useDebounce } from "@gooddata/sdk-ui";
-import { sanitizeLocaleForMoment } from "@gooddata/util";
+import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
-import { platformDateFormat } from "../constants/Platform.js";
-import { resolvePeriodBoundaries } from "../utils/StaticPeriodConversions.js";
+import { platformDateFnsFormat } from "../constants/Platform.js";
+import { InputErrorMessage } from "../DateRangePicker/InputErrorMessage.js";
+import { resolvePeriodBoundaries, resolvePeriodBoundary } from "../utils/StaticPeriodConversions.js";
 
-import { MomentRangePicker } from "./momentRangePicker.js";
+import { AccessibleFieldInput } from "./AccessibleFieldInput.js";
+import { DateFnsRangePicker } from "./dateFnsRangePicker.js";
+import {
+    ERROR_MESSAGE_IDS,
+    type IPeriodRangeAccessibility,
+    PeriodRangeAccessibilityContext,
+    type PeriodRangeFieldErrorKind,
+    type PeriodRangeSide,
+    isBlockingFieldError,
+    resolveFieldErrorKind,
+} from "./periodRangePickerAccessibility.js";
 import {
     type IPeriodRange,
     type IPeriodRangePickerProps,
     type PeriodRangePickerGranularity,
 } from "./types.js";
-import { getWeekStartMomentLocale } from "./weekStartMomentLocale.js";
+import { getWeekStartDateFnsLocale, resolveWeekStartLocale } from "./weekStartDateFnsLocale.js";
 
-type PickerLocale = NonNullable<ComponentProps<typeof MomentRangePicker>["locale"]>;
+type PickerLocale = NonNullable<ComponentProps<typeof DateFnsRangePicker>["locale"]>;
+
+// rc-picker is date-library agnostic and keeps its own field/header/cell format defaults in moment
+// notation (see its `fillLocale`, mirrored in the comment on the guard test in
+// tests/PeriodRangePicker.test.tsx). Since some tokens (e.g. "D", "Y") are legal in both moment and
+// date-fns notation with different meanings, no static rewrite of an arbitrary format string can safely
+// tell which notation it's already in - so every field rc-picker would otherwise default is pinned here,
+// in date-fns notation, making all of them unambiguously ours. Spread into every locale via
+// getPickerLocale below.
+//
+// Deliberately also overrides the few values rc-picker's own locale files provide
+// (ja/ko/zh `yearFormat: 'YYYY年'`/`'YYYY년'`, fr `dayFormat: 'DD'`): one predictable format set
+// everywhere beats per-locale chrome, at the cost of the year-panel suffix and French zero-padding.
+export const DATE_FNS_PICKER_FORMATS = {
+    fieldDateFormat: "yyyy-MM-dd",
+    // Week-numbering year, unpadded, rather than calendar year: date-fns's own `parse` rejects combining
+    // calendar year with a week-of-year token in one format string (they can disagree right at a year
+    // boundary). `useAdditionalWeekYearTokens: true` (dateFnsRangePicker.tsx) is required for this token.
+    fieldWeekFormat: "Y-ww",
+    fieldMonthFormat: "yyyy-MM",
+    fieldQuarterFormat: "yyyy-QQQ",
+    fieldYearFormat: "yyyy",
+    // Never rendered (no time picker mode) but pinned anyway for a clean sweep - see the guard test.
+    fieldDateTimeFormat: "yyyy-MM-dd HH:mm",
+    fieldTimeFormat: "HH:mm",
+    yearFormat: "yyyy",
+    cellYearFormat: "yyyy",
+    cellQuarterFormat: "QQQ",
+    cellDateFormat: "d",
+    dayFormat: "d",
+    cellMeridiemFormat: "a",
+} as const;
+
+// The field's actual format token string for granularities where it isn't a user-configurable `dateFormat`
+// (that only applies to "GDC.time.date") - reused both for the hint panel and the "invalid" error message.
+const GRANULARITY_TO_FIELD_FORMAT: Record<Exclude<PeriodRangePickerGranularity, "GDC.time.date">, string> = {
+    "GDC.time.week_us": DATE_FNS_PICKER_FORMATS.fieldWeekFormat,
+    "GDC.time.month": DATE_FNS_PICKER_FORMATS.fieldMonthFormat,
+    "GDC.time.quarter": DATE_FNS_PICKER_FORMATS.fieldQuarterFormat,
+    "GDC.time.year": DATE_FNS_PICKER_FORMATS.fieldYearFormat,
+};
+
+// A fixed sample date for the format hint's worked example
+const HINT_EXAMPLE_DATE = new Date(2026, 2, 25);
+
+const messages = defineMessages({
+    dateFormatHint: { id: "filters.staticPeriod.dateFormatHint" },
+    dateFormatHintWithExample: { id: "filters.staticPeriod.dateFormatHintWithExample" },
+    invalidStartDateWithExample: { id: "filters.staticPeriod.errors.invalidStartDateWithExample" },
+    invalidEndDateWithExample: { id: "filters.staticPeriod.errors.invalidEndDateWithExample" },
+});
+
+// The with-example counterpart to ERROR_MESSAGE_IDS's "invalid" entry, kept as a small side map rather
+// than folded into that Record - which keeps ERROR_MESSAGE_IDS's compile-time completeness guarantee
+// (one id pair per PeriodRangeFieldErrorKind) intact instead of reshaping it around a with/without-example
+// axis that only applies to one error kind.
+const INVALID_MESSAGE_IDS_WITH_EXAMPLE: Record<PeriodRangeSide, string> = {
+    start: messages.invalidStartDateWithExample.id,
+    end: messages.invalidEndDateWithExample.id,
+};
 
 // rc-picker's locale files carry the same ESM-`export default`-without-`"type": "module"` packaging quirk as
-// its `generate/moment` module (see momentRangePicker.tsx), so the default export is unwrapped via
+// its `generate/dateFns` module (see dateFnsRangePicker.tsx), so the default export is unwrapped via
 // `defaultImport`, which tolerates both interop shapes these modules can be loaded through.
 const pickerLocale = (localeModule: unknown): PickerLocale =>
     defaultImport(localeModule as { default: PickerLocale });
@@ -89,7 +167,10 @@ const RC_PICKER_LOCALES: RcPickerLocales = {
 };
 
 function getPickerLocale(intlLocale: ILocale): PickerLocale {
-    return RC_PICKER_LOCALES[intlLocale] ?? RC_PICKER_LOCALES["en-US"];
+    return {
+        ...(RC_PICKER_LOCALES[intlLocale] ?? RC_PICKER_LOCALES["en-US"]),
+        ...DATE_FNS_PICKER_FORMATS,
+    };
 }
 
 const GRANULARITY_TO_PICKER_MODE: Record<
@@ -103,11 +184,27 @@ const GRANULARITY_TO_PICKER_MODE: Record<
     "GDC.time.year": "year",
 };
 
-function parseRangeValue(range: IPeriodRange): [Moment, Moment] | null {
-    if (!range.from || !range.to) {
+function parsePeriodBoundary(value: string | undefined): Date | null {
+    if (!value) {
         return null;
     }
-    return [moment(range.from, platformDateFormat), moment(range.to, platformDateFormat)];
+    const date = parse(value, platformDateFnsFormat, new Date());
+    // date-fns returns an Invalid Date rather than throwing; handing that to rc-picker renders a
+    // broken field instead of an empty one.
+    return isValid(date) ? date : null;
+}
+
+/**
+ * Parses each side of the range independently, so a range with only one side filled still hands
+ * rc-picker the side it does have.
+ *
+ * @remarks
+ * Collapsing a half-filled range to `null` would blank BOTH fields: rc-picker maps a `null` value to
+ * its `EMPTY_VALUE` and `useCalendarValue`'s effect then resets the rendered calendar value to `[]`.
+ * A `[Date, null]` tuple is kept verbatim and clears only the field whose entry is `null`.
+ */
+function parseRangeValue(range: IPeriodRange): [Date | null, Date | null] {
+    return [parsePeriodBoundary(range.from), parsePeriodBoundary(range.to)];
 }
 
 /**
@@ -121,16 +218,29 @@ function parseRangeValue(range: IPeriodRange): [Moment, Moment] | null {
  */
 export function resolveSelectedRange(
     granularity: PeriodRangePickerGranularity,
-    start: Moment,
-    end: Moment,
+    start: Date,
+    end: Date,
     weekStart: NonNullable<IPeriodRangePickerProps["weekStart"]>,
 ): IPeriodRange {
     return resolvePeriodBoundaries(
         granularity,
-        start.format(platformDateFormat),
-        end.format(platformDateFormat),
+        format(start, platformDateFnsFormat),
+        format(end, platformDateFnsFormat),
         weekStart,
     );
+}
+
+/**
+ * Single-sided counterpart to {@link resolveSelectedRange}, used by the blur handler which commits
+ * one field at a time.
+ */
+export function resolveSelectedBoundary(
+    granularity: PeriodRangePickerGranularity,
+    date: Date,
+    side: PeriodRangeSide,
+    weekStart: NonNullable<IPeriodRangePickerProps["weekStart"]>,
+): string {
+    return resolvePeriodBoundary(granularity, format(date, platformDateFnsFormat), side, weekStart);
 }
 
 /**
@@ -149,43 +259,328 @@ export function PeriodRangePickerImpl({
     weekStart = "Sunday",
     withoutApply = false,
     submitForm,
+    dateFormat,
+    customRangeHint,
+    onValidityChange,
 }: IPeriodRangePickerProps) {
     const intl = useIntl();
     const wrapperRef = useRef<HTMLDivElement | null>(null);
     const debouncedSubmitForm = useDebounce(submitForm, 0);
 
-    const pickerMode = GRANULARITY_TO_PICKER_MODE[granularity];
-    const value = useMemo(() => parseRangeValue(range), [range]);
+    const hintId = useIdPrefixed("gd-period-range-picker-hint");
+    const startErrorId = useIdPrefixed("gd-period-range-picker-start-error");
+    const endErrorId = useIdPrefixed("gd-period-range-picker-end-error");
 
-    // Week-start is a workspace setting independent of display language (see weekStartMomentLocale.ts) — only
-    // relevant for the Week grid; Month/Quarter/Year/Day ignore it, so leave their locale's own default alone.
+    const pickerMode = GRANULARITY_TO_PICKER_MODE[granularity];
+    const value = useMemo(() => parseRangeValue({ from: range.from, to: range.to }), [range.from, range.to]);
+
+    // Enter is handled in a DOM event handler several component layers down (AccessibleFieldInput),
+    // and blur fires before the state from the last keystroke has been re-rendered here. Both need
+    // the current values, so the two state pieces they read are mirrored into refs.
+    const liveValueRef = useRef<[Date | null, Date | null]>(value);
+    const fieldRawStateRef = useRef<Record<PeriodRangeSide, { hasParseError: boolean; isBlank: boolean }>>({
+        start: { hasParseError: false, isBlank: !range.from },
+        end: { hasParseError: false, isBlank: !range.to },
+    });
+    const enterCommitRef = useRef(false);
+
+    // `value` only carries what the parent has actually committed, which lags a field being typed into:
+    // rc-picker reports intermediate dates through onCalendarChange long before the round that would
+    // commit them. liveValue mirrors those intermediate dates so the date-order check and the Enter
+    // commit see what is on screen, and is reset whenever the parent hands down a new range.
+    const [liveValue, setLiveValue] = useState<[Date | null, Date | null]>(() => value);
+    useEffect(() => {
+        liveValueRef.current = value;
+        setLiveValue(value);
+    }, [value]);
+
+    // Tracks which side was most recently edited, so a date-order error (see isDateOrderError below) can be
+    // flagged on just that field - matching the classic DateRangePicker's single-field behavior - rather than
+    // both sides at once.
+    const [lastEditedSide, setLastEditedSide] = useState<PeriodRangeSide | undefined>(undefined);
+    const handleCalendarChange = useCallback(
+        (
+            dates: [Date | null, Date | null],
+            _dateStrings: [string, string],
+            info: { range?: PeriodRangeSide },
+        ) => {
+            liveValueRef.current = dates;
+            setLiveValue(dates);
+            if (info.range) {
+                setLastEditedSide(info.range);
+            }
+        },
+        [],
+    );
+
+    // Opening the calendar is fully controlled by us, not rc-picker: rc-picker also asks to open on every
+    // keystroke that edits the masked input, but we ignore those requests and only open in response to an
+    // actual click on the field or an explicit "open" key (see AccessibleFieldInput.tsx's handleKeyDown).
+    // Requests to close - Escape, an outside click, or a confirmed selection - are still honored normally.
+    const [open, setOpen] = useState(false);
+    const handleOpenChange = useCallback((nextOpen: boolean) => {
+        if (!nextOpen) {
+            setOpen(false);
+        }
+    }, []);
+    const openCalendar = useCallback(() => setOpen(true), []);
+
+    // An empty field is only flagged invalid once the user has actually left it. An untouched empty field
+    // on first render shouldn't read as an error.
+    const [touched, setTouched] = useState<Record<PeriodRangeSide, boolean>>({ start: false, end: false });
+
+    // Two raw, single-source facts only each field's own input can observe directly - whether rc-picker
+    // failed to parse its typed text, and whether its live displayed text is currently blank (which, unlike
+    // `liveValue`, also catches clearing a field that held a valid value, before it's blurred). Lazily
+    // initialized from the incoming range so the very first render/report already agrees.
+    const [fieldRawState, setFieldRawState] = useState<
+        Record<PeriodRangeSide, { hasParseError: boolean; isBlank: boolean }>
+    >(() => ({
+        start: { hasParseError: false, isBlank: !range.from },
+        end: { hasParseError: false, isBlank: !range.to },
+    }));
+
+    const handleFieldStateChange = useCallback(
+        (side: PeriodRangeSide, raw: { hasParseError: boolean; isBlank: boolean }) => {
+            fieldRawStateRef.current = { ...fieldRawStateRef.current, [side]: raw };
+            setFieldRawState((prev) => {
+                // A field going from non-blank to blank is the user actively clearing it - an interaction,
+                // so the empty-field error may show straight away rather than waiting for blur. A field
+                // that was never filled stays blur-gated, so a fresh render of an empty range shows no error.
+                if (raw.isBlank && !prev[side].isBlank) {
+                    setTouched((prevTouched) =>
+                        prevTouched[side] ? prevTouched : { ...prevTouched, [side]: true },
+                    );
+                }
+                return prev[side].hasParseError === raw.hasParseError && prev[side].isBlank === raw.isBlank
+                    ? prev
+                    : { ...prev, [side]: raw };
+            });
+        },
+        [],
+    );
+
+    // Shared by blur and Enter - both commit a single field's typed text the same way: an empty or
+    // unparsable field resolves to `undefined`, mirroring the classic picker's DateInput.tsx.
+    const resolveSideValue = useCallback(
+        (side: PeriodRangeSide): string | undefined => {
+            const raw = fieldRawStateRef.current[side];
+            const date = liveValueRef.current[side === "start" ? 0 : 1];
+            return raw.hasParseError || raw.isBlank || !date
+                ? undefined
+                : resolveSelectedBoundary(granularity, date, side, weekStart);
+        },
+        [granularity, weekStart],
+    );
+
+    // rc-picker's `onChange` fires once per completed round, not per field (see `submitField` in its
+    // useRangeValueChange), so tabbing out of the start field would otherwise commit nothing. Blur is
+    // the per-field commit point, mirroring the classic DateRangePicker's onDateInputBlur.
+    const handleFieldBlur = useCallback(
+        (_event: FocusEvent<HTMLElement>, info: { range?: PeriodRangeSide }) => {
+            if (enterCommitRef.current) {
+                // rc-picker's own `useFocusEvents` also deactivates/blurs the field as part of confirming it
+                // via Enter. Letting this one through too would recompute using this closure's now-stale
+                // `range`, clobbering whichever side handleEnterCommit did (or deliberately didn't) commit.
+                return;
+            }
+            const side = info.range;
+            if (!side) {
+                return;
+            }
+            setTouched((prev) => (prev[side] ? prev : { ...prev, [side]: true }));
+            if (fieldRawStateRef.current[side].hasParseError) {
+                // Leaving `range` untouched keeps rc-picker's own controlled `value` prop untouched too, so
+                // it never resyncs and overwrites the garbled text still sitting in the field - a Date-shaped
+                // `value` has no way to carry that text through anyway, only a real parsed date or blank.
+                return;
+            }
+            const rangeKey = side === "start" ? "from" : "to";
+            onRangeChange({ ...range, [rangeKey]: resolveSideValue(side) });
+        },
+        [range, onRangeChange, resolveSideValue],
+    );
+
+    const isDateOrderError = Boolean(
+        liveValue[0] && liveValue[1] && liveValue[0].getTime() > liveValue[1].getTime(),
+    );
+
+    // Plain render-time derivations, not state - the empty-field error message is gated on `touched` and
+    // sourced from `fieldRawState.isBlank` (see handleFieldStateChange above) so it agrees with the same
+    // isBlank signal isRangeValid/onValidityChange use, rather than `liveValue`, which only updates once a
+    // field has actually participated in a round. `liveValue` is still used below for the date-order check,
+    // which only applies to a field currently holding a parsed date. The date-order error is only ever
+    // flagged on the side most recently edited (mirroring the classic DateRangePicker's
+    // setStartAfterEndDateError), not on both sides at once.
+    const fieldErrorKind: Record<PeriodRangeSide, PeriodRangeFieldErrorKind> = {
+        start: resolveFieldErrorKind({
+            hasParseError: fieldRawState.start.hasParseError,
+            touched: touched.start,
+            isEmpty: fieldRawState.start.isBlank,
+            isDateOrderError: isDateOrderError && lastEditedSide === "start",
+        }),
+        end: resolveFieldErrorKind({
+            hasParseError: fieldRawState.end.hasParseError,
+            touched: touched.end,
+            isEmpty: fieldRawState.end.isBlank,
+            isDateOrderError: isDateOrderError && lastEditedSide === "end",
+        }),
+    };
+
+    const isRangeValid =
+        !fieldRawState.start.hasParseError &&
+        !fieldRawState.start.isBlank &&
+        !fieldRawState.end.hasParseError &&
+        !fieldRawState.end.isBlank;
+
+    // A field can only be broken for as long as the component rendering it exists - whatever the caller
+    // gates on this signal shouldn't stay blocked forever just because this picker went away.
+    useEffect(() => {
+        return () => onValidityChange?.(true);
+    }, [onValidityChange]);
+
+    // rc-picker's own onChange (handleChange, below) only fires for a confirmed, complete range - never while
+    // a field is empty or unparsable - so a caller gating submission on `range` alone stays stale for as long
+    // as a field is broken.
+    useEffect(() => {
+        onValidityChange?.(isRangeValid);
+    }, [isRangeValid, onValidityChange]);
+
+    // When no per-workspace dateFormat is set, fall back to the same format the picker itself uses by
+    // default, so the hint text always matches what the picker actually expects. Once time granularity is
+    // supported, this fallback will need to switch too.
+    const fieldFormat: string =
+        granularity === "GDC.time.date"
+            ? (dateFormat ?? DATE_FNS_PICKER_FORMATS.fieldDateFormat)
+            : GRANULARITY_TO_FIELD_FORMAT[granularity];
+
+    // Independent of the `locale` useMemo below - also needed to render the format hint's worked example,
+    // which is computed for every non-Day granularity while `locale` only resolves this for Day/Week.
+    const weekStartLocaleKey = useMemo(
+        () => getWeekStartDateFnsLocale(intl.locale, weekStart),
+        [intl.locale, weekStart],
+    );
+
+    // A worked example alongside the format token pattern (e.g. "yyyy-MM (e.g. 2026-03)"), so a caller who
+    // doesn't recognize date-fns tokens can still tell what to type.
+    const hintExample = useMemo(
+        () =>
+            granularity === "GDC.time.date"
+                ? undefined
+                : format(HINT_EXAMPLE_DATE, fieldFormat, {
+                      locale: resolveWeekStartLocale(weekStartLocaleKey),
+                      useAdditionalWeekYearTokens: true,
+                  }),
+        [granularity, fieldFormat, weekStartLocaleKey],
+    );
+
+    // Enter applies the whole range immediately in INDIVIDUAL mode, mirroring the classic picker's
+    // `onSubmitValue(true)`. It cannot hang off handleChange: rc-picker's onChange is a per-round event,
+    // so an Enter in the start field - before the end field has participated in the round - never
+    // reaches it. Reads the refs rather than state because it runs from a DOM handler.
+    //
+    // Both sides must be present, parsable and in order; otherwise Enter is a no-op - it neither applies
+    // nor commits, because the offending field already shows its own error and blur will commit it once
+    // the user leaves it.
+    const handleEnterCommit = useCallback(() => {
+        const from = resolveSideValue("start");
+        const to = resolveSideValue("end");
+        if (from === undefined || to === undefined) {
+            return;
+        }
+
+        const [start, end] = liveValueRef.current;
+        const orderKind: PeriodRangeFieldErrorKind =
+            start && end && start.getTime() > end.getTime() ? "order" : undefined;
+        if (isBlockingFieldError(orderKind)) {
+            return;
+        }
+
+        onRangeChange({ from, to });
+        debouncedSubmitForm();
+    }, [resolveSideValue, onRangeChange, debouncedSubmitForm]);
+
+    const accessibility = useMemo<IPeriodRangeAccessibility>(
+        () => ({
+            start: {
+                ariaLabel: intl.formatMessage({ id: "filters.date.accessibility.label.from" }),
+                errorKind: fieldErrorKind.start,
+                errorId: startErrorId,
+                hintId,
+            },
+            end: {
+                ariaLabel: intl.formatMessage({ id: "filters.date.accessibility.label.to" }),
+                errorKind: fieldErrorKind.end,
+                errorId: endErrorId,
+                hintId,
+            },
+            onFieldStateChange: handleFieldStateChange,
+            isCalendarOpen: open,
+            onRequestOpen: openCalendar,
+            enterCommitRef,
+            onEnterCommit: handleEnterCommit,
+            ignoreEnter: withoutApply,
+        }),
+        [
+            intl,
+            fieldErrorKind.start,
+            fieldErrorKind.end,
+            handleFieldStateChange,
+            hintId,
+            startErrorId,
+            endErrorId,
+            open,
+            openCalendar,
+            handleEnterCommit,
+            withoutApply,
+        ],
+    );
+
+    const getFieldErrorMessage = (side: PeriodRangeSide): string | undefined => {
+        const kind = fieldErrorKind[side];
+        if (!kind) {
+            return undefined;
+        }
+        if (kind === "invalid" && hintExample !== undefined) {
+            return intl.formatMessage(
+                { id: INVALID_MESSAGE_IDS_WITH_EXAMPLE[side] },
+                { format: fieldFormat, example: hintExample },
+            );
+        }
+        const id = ERROR_MESSAGE_IDS[kind][side];
+        return intl.formatMessage({ id }, kind === "invalid" ? { format: fieldFormat } : undefined);
+    };
+
+    // weekStart and dateFormat are workspace settings independent of display language, so Week/Day override the
+    // locale's own defaults for them (see weekStartDateFnsLocale.ts); Month/Quarter/Year need no override.
     const locale = useMemo((): PickerLocale => {
         const baseLocale = getPickerLocale(intl.locale as ILocale);
-        if (granularity !== "GDC.time.week_us") {
+        if (granularity !== "GDC.time.date" && granularity !== "GDC.time.week_us") {
             return baseLocale;
         }
-        const momentLocaleKey = getWeekStartMomentLocale(sanitizeLocaleForMoment(intl.locale), weekStart);
-        return { ...baseLocale, locale: momentLocaleKey };
-    }, [intl.locale, granularity, weekStart]);
+        return dateFormat && granularity === "GDC.time.date"
+            ? { ...baseLocale, locale: weekStartLocaleKey, fieldDateFormat: dateFormat }
+            : { ...baseLocale, locale: weekStartLocaleKey };
+    }, [intl.locale, granularity, weekStartLocaleKey, dateFormat]);
 
     const handleChange = useCallback(
-        (dates: [Moment | null, Moment | null] | null) => {
+        (dates: [Date | null, Date | null] | null) => {
+            if (enterCommitRef.current) {
+                // Enter is owned by handleEnterCommit, which does not depend on this per-round event.
+                // Letting it through as well would commit the range a second time in INDIVIDUAL, and
+                // would commit at all in ALL_AT_ONCE, where Enter must stay inert.
+                return;
+            }
             if (!dates?.[0] || !dates[1]) {
-                onRangeChange({ from: undefined, to: undefined });
+                // A partial range reaches onChange once `allowEmpty` lets it past rc-picker's
+                // validateEmptyDateRange. The blur handler owns per-field commits, including clearing a
+                // side to undefined, so there is nothing to do here - and wiping both sides, as this used
+                // to, would discard the value blur had just committed.
                 return;
             }
             onRangeChange(resolveSelectedRange(granularity, dates[0], dates[1], weekStart));
-
-            if (withoutApply) {
-                // rc-picker's RangePicker calls onChange twice per completed selection (both with the same,
-                // correct final value); debouncing collapses that into a single submitForm() call rather than
-                // firing it twice for one user gesture. Deferred to the next render loop — mirrors
-                // DateRangePicker.tsx's updateRangeState, whose comment notes the newest values aren't
-                // propagated to state yet within the same tick.
-                debouncedSubmitForm();
-            }
         },
-        [granularity, weekStart, withoutApply, debouncedSubmitForm, onRangeChange],
+        [granularity, weekStart, onRangeChange],
     );
 
     const getPopupContainer = useCallback(() => wrapperRef.current ?? document.body, []);
@@ -199,19 +594,41 @@ export function PeriodRangePickerImpl({
             }
             ref={wrapperRef}
         >
-            <MomentRangePicker
-                picker={pickerMode}
-                value={value}
-                onChange={handleChange}
-                inputReadOnly
-                getPopupContainer={getPopupContainer}
-                locale={locale}
-                // rc-picker's bare defaults render no clear button, a "~" separator, and no suffix icon —
-                // each is pinned explicitly here.
-                allowClear
-                separator="→"
-                suffixIcon={<span className="gd-icon-calendar" aria-hidden="true" />}
-            />
+            <PeriodRangeAccessibilityContext.Provider value={accessibility}>
+                <DateFnsRangePicker
+                    picker={pickerMode}
+                    value={value}
+                    onChange={handleChange}
+                    onCalendarChange={handleCalendarChange}
+                    onBlur={handleFieldBlur}
+                    open={open}
+                    onOpenChange={handleOpenChange}
+                    onClick={openCalendar}
+                    getPopupContainer={getPopupContainer}
+                    locale={locale}
+                    allowClear={false}
+                    order={false}
+                    allowEmpty={[true, true]}
+                    // Without this the picker overwrites a field's text with the
+                    // formatted committed value the moment the field goes inactive - so text that
+                    // failed to parse vanishes on blur and its "invalid format" error is replaced by
+                    // "empty".
+                    preserveInvalidOnBlur
+                    suffixIcon={<span className="gd-icon-calendar" aria-hidden="true" />}
+                    components={{ input: AccessibleFieldInput }}
+                />
+            </PeriodRangeAccessibilityContext.Provider>
+            <div id={hintId} className="gd-period-range-picker__hint">
+                {hintExample === undefined
+                    ? intl.formatMessage(messages.dateFormatHint, { format: fieldFormat })
+                    : intl.formatMessage(messages.dateFormatHintWithExample, {
+                          format: fieldFormat,
+                          example: hintExample,
+                      })}
+                {customRangeHint}
+            </div>
+            <InputErrorMessage descriptionId={startErrorId} errorText={getFieldErrorMessage("start")} />
+            <InputErrorMessage descriptionId={endErrorId} errorText={getFieldErrorMessage("end")} />
         </div>
     );
 }

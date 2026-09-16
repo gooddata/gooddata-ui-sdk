@@ -34,8 +34,10 @@ import type { ISemanticSearchRelationship } from '@gooddata/sdk-model';
 import type { ISemanticSearchResultItem } from '@gooddata/sdk-model';
 import { ISlotProps } from '@gooddata/sdk-ui-kit';
 import { IUiButtonProps } from '@gooddata/sdk-ui-kit';
+import { IUiMenuGroupItemProps } from '@gooddata/sdk-ui-kit';
 import { IUiMenuInteractiveItemProps } from '@gooddata/sdk-ui-kit';
 import { IUiMenuInteractiveItemWrapperProps } from '@gooddata/sdk-ui-kit';
+import { IUiMenuItem } from '@gooddata/sdk-ui-kit';
 import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { JSX } from 'react/jsx-runtime';
 import { ReactNode } from 'react';
@@ -259,6 +261,21 @@ export function DefaultAgentItem(props: IGenAIAssistantAgentItemProps): JSX.Elem
 export function DefaultAssistantMessage(props: IGenAIAssistantAssistantMessageProps): JSX.Element;
 
 // @alpha
+export function DefaultConversationDateGrouping(props: IGenAIAssistantConversationDateGroupingProps): JSX.Element;
+
+// @alpha
+export function DefaultConversationDrawerHeader(props: IGenAIAssistantConversationDrawerHeaderProps): JSX.Element;
+
+// @alpha
+export function DefaultConversationFooter(_: IGenAIAssistantConversationFooterProps): null;
+
+// @alpha
+export function DefaultConversationHeader(_: IGenAIAssistantConversationHeaderProps): null;
+
+// @alpha
+export function DefaultConversationItem(props: IGenAIAssistantConversationItemProps): JSX.Element;
+
+// @alpha
 export function DefaultDisclaimer(_props: IGenAIAssistantDisclaimerProps): JSX.Element;
 
 // @alpha
@@ -480,6 +497,34 @@ export type IGenAIAssistantAssistantMessageProps = {
     isLast?: boolean;
 };
 
+// @alpha
+export type IGenAIAssistantConversationDateGroupingProps = {
+    menuGroupItemProps: IUiMenuGroupItemProps;
+};
+
+// @alpha
+export type IGenAIAssistantConversationDrawerHeaderProps = {
+    title: string;
+};
+
+// @alpha
+export type IGenAIAssistantConversationFooterProps = {
+    id: string;
+    listItems: IUiMenuItem[];
+};
+
+// @alpha
+export type IGenAIAssistantConversationHeaderProps = {
+    id: string;
+    listItems: IUiMenuItem[];
+};
+
+// @alpha
+export type IGenAIAssistantConversationItemProps = {
+    conversation: IChatConversationLocal;
+    menuItemProps: IUiMenuInteractiveItemWrapperProps;
+};
+
 // @public
 export type IGenAIAssistantDisclaimerProps = Record<string, never>;
 
@@ -546,6 +591,16 @@ export interface IGenAIAssistantSlots {
     AgentItem?: ComponentType<ISlotProps<IGenAIAssistantAgentItemProps>>;
     // @alpha
     AssistantMessage?: ComponentType<ISlotProps<IGenAIAssistantAssistantMessageProps>>;
+    // @alpha
+    ConversationDateGrouping?: ComponentType<ISlotProps<IGenAIAssistantConversationDateGroupingProps>>;
+    // @alpha
+    ConversationDrawerHeader?: ComponentType<ISlotProps<IGenAIAssistantConversationDrawerHeaderProps>>;
+    // @alpha
+    ConversationFooter?: ComponentType<ISlotProps<IGenAIAssistantConversationFooterProps>>;
+    // @alpha
+    ConversationHeader?: ComponentType<ISlotProps<IGenAIAssistantConversationHeaderProps>>;
+    // @alpha
+    ConversationItem?: ComponentType<ISlotProps<IGenAIAssistantConversationItemProps>>;
     Disclaimer?: ComponentType<ISlotProps<IGenAIAssistantDisclaimerProps>>;
     // @alpha
     Feedback?: ComponentType<ISlotProps<IGenAIAssistantFeedbackProps>>;

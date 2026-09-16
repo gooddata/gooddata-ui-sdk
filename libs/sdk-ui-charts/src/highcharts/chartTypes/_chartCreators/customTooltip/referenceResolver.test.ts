@@ -27,11 +27,18 @@ function attributeIntersection(args: {
     attributeId: string;
     name: string;
     formattedName?: string;
+    computedAttribute?: boolean;
 }) {
     return {
         header: {
             attributeHeader: {
                 identifier: args.displayFormId,
+                // the descriptor ref carries the object type; a computed attribute's own ref is
+                // what sits on the display form slot
+                ref: {
+                    identifier: args.displayFormId,
+                    type: args.computedAttribute ? "computedAttribute" : "displayForm",
+                },
                 formOf: { identifier: args.attributeId },
             },
             attributeHeaderItem: {
@@ -90,6 +97,26 @@ describe("resolveReferencesFromPoint", () => {
             "label/region.display": value("East"),
             "label/region": value("East"),
         });
+    });
+
+    it("registers a computed attribute under its own namespace, not the label one", () => {
+        // Ids are unique only within an object type: a label may also be called `tier`, and it
+        // must not be answered by - or answer - this value.
+        const result = resolveReferencesFromPoint(
+            point({
+                drillIntersection: [
+                    attributeIntersection({
+                        displayFormId: "tier",
+                        attributeId: "tier",
+                        name: "Gold",
+                        computedAttribute: true,
+                    }),
+                ],
+            }),
+            undefined,
+            undefined,
+        );
+        expect(result).toEqual({ "computed_attribute/tier": value("Gold") });
     });
 
     it("prefers formattedName over name for attribute display values", () => {

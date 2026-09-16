@@ -30,7 +30,11 @@ import {
 import {
     AreaChart,
     BarChart,
+    BubbleChart,
+    BulletChart,
     ColumnChart,
+    ComboChart,
+    DependencyWheelChart,
     DonutChart,
     FunnelChart,
     Headline,
@@ -40,7 +44,10 @@ import {
     PieChart,
     PyramidChart,
     RadarChart,
+    Repeater,
+    SankeyChart,
     ScatterPlot,
+    Treemap,
     WaterfallChart,
 } from "@gooddata/sdk-ui-charts";
 import {
@@ -93,6 +100,11 @@ const SLICED_CHARTS: Record<string, typeof PieChart> = {
     "local:donut": DonutChart,
     "local:pyramid": PyramidChart,
     "local:funnel": FunnelChart,
+};
+
+const FLOW_DIAGRAMS: Record<string, typeof SankeyChart> = {
+    "local:sankey": SankeyChart,
+    "local:dependencywheel": DependencyWheelChart,
 };
 
 export type ConversationVisualisationProps = {
@@ -349,6 +361,77 @@ export function ConversationVisualisation({
                         separators,
                     },
                 );
+            case "local:bubble":
+                return renderBubbleChart(
+                    intl.locale,
+                    bucketsData,
+                    filters,
+                    sorts,
+                    colorPalette,
+                    handleSdkError,
+                    handleSuccess,
+                    handlerDrill,
+                    {
+                        drillableItems,
+                        enableAccessibleChartTooltip,
+                        execConfig,
+                        separators,
+                    },
+                );
+            case "local:bullet":
+                return renderBulletChart(
+                    intl.locale,
+                    bucketsData,
+                    filters,
+                    sorts,
+                    colorPalette,
+                    handleSdkError,
+                    handleSuccess,
+                    handlerDrill,
+                    {
+                        drillableItems,
+                        enableAccessibleChartTooltip,
+                        execConfig,
+                        separators,
+                    },
+                );
+            case "local:combo2":
+                return renderComboChart(
+                    intl.locale,
+                    visualization,
+                    bucketsData,
+                    filters,
+                    sorts,
+                    colorPalette,
+                    handleSdkError,
+                    handleSuccess,
+                    handlerDrill,
+                    {
+                        drillableItems,
+                        enableAccessibleChartTooltip,
+                        execConfig,
+                        separators,
+                    },
+                );
+            case "local:sankey":
+            case "local:dependencywheel":
+                return renderFlowDiagram(
+                    FLOW_DIAGRAMS[visualization.insight.visualizationUrl],
+                    intl.locale,
+                    bucketsData,
+                    filters,
+                    sorts,
+                    colorPalette,
+                    handleSdkError,
+                    handleSuccess,
+                    handlerDrill,
+                    {
+                        drillableItems,
+                        enableAccessibleChartTooltip,
+                        execConfig,
+                        separators,
+                    },
+                );
             case "local:scatter":
                 return renderScatterPlot(
                     intl.locale,
@@ -382,6 +465,38 @@ export function ConversationVisualisation({
                         enableNewPivotTable,
                         enableAccessibleChartTooltip,
                         agGridToken: resolvedAgGridToken,
+                        execConfig,
+                        separators,
+                    },
+                );
+            case "local:repeater":
+                return renderRepeater(
+                    intl.locale,
+                    visualization,
+                    bucketsData,
+                    filters,
+                    colorPalette,
+                    handleSdkError,
+                    handleSuccess,
+                    handlerDrill,
+                    {
+                        drillableItems,
+                        execConfig,
+                        separators,
+                    },
+                );
+            case "local:treemap":
+                return renderTreemap(
+                    intl.locale,
+                    bucketsData,
+                    filters,
+                    colorPalette,
+                    handleSdkError,
+                    handleSuccess,
+                    handlerDrill,
+                    {
+                        drillableItems,
+                        enableAccessibleChartTooltip,
                         execConfig,
                         separators,
                     },
@@ -551,7 +666,7 @@ const renderBarChart = (
         <BarChart
             locale={locale}
             height={VIS_HEIGHT}
-            measures={metrics}
+            measures={stack[0] ? [metrics[0]] : metrics}
             viewBy={view[0]}
             stackBy={stack[0]}
             sortBy={sortBy}
@@ -725,6 +840,186 @@ const renderSlicedChart = (
     );
 };
 
+const renderBubbleChart = (
+    locale: string,
+    buckets: ReturnType<typeof useBucketData>,
+    filters: IFilter[],
+    sortBy: ISortItem[],
+    colorPalette: IColorPalette | undefined,
+    onError: OnError,
+    onSuccess: OnExportReady,
+    onDrill: OnFiredDrillEvent,
+    props: {
+        drillableItems?: ExplicitDrill[];
+        enableAccessibleChartTooltip?: boolean;
+        execConfig?: IExecutionConfig;
+        separators?: ISeparators;
+    },
+) => {
+    const { metrics, secondary_metrics, tertiary_metrics, view } = buckets;
+
+    return (
+        <BubbleChart
+            locale={locale}
+            height={VIS_HEIGHT}
+            xAxisMeasure={metrics[0]}
+            yAxisMeasure={secondary_metrics[0]}
+            size={tertiary_metrics[0]}
+            viewBy={view[0]}
+            filters={filters}
+            sortBy={sortBy}
+            config={{
+                ...visualizationTooltipOptions,
+                ...legendTooltipOptions,
+                colorPalette,
+                separators: props.separators,
+                enableAccessibleTooltip: props.enableAccessibleChartTooltip,
+            }}
+            drillableItems={props.drillableItems}
+            onDrill={onDrill}
+            onError={onError}
+            onExportReady={onSuccess}
+            execConfig={props.execConfig}
+        />
+    );
+};
+
+const renderBulletChart = (
+    locale: string,
+    buckets: ReturnType<typeof useBucketData>,
+    filters: IFilter[],
+    sortBy: ISortItem[],
+    colorPalette: IColorPalette | undefined,
+    onError: OnError,
+    onSuccess: OnExportReady,
+    onDrill: OnFiredDrillEvent,
+    props: {
+        drillableItems?: ExplicitDrill[];
+        enableAccessibleChartTooltip?: boolean;
+        execConfig?: IExecutionConfig;
+        separators?: ISeparators;
+    },
+) => {
+    const { metrics, secondary_metrics, tertiary_metrics, view } = buckets;
+
+    return (
+        <BulletChart
+            locale={locale}
+            height={VIS_HEIGHT}
+            primaryMeasure={metrics[0]}
+            targetMeasure={secondary_metrics[0]}
+            comparativeMeasure={tertiary_metrics[0]}
+            viewBy={view}
+            filters={filters}
+            sortBy={sortBy}
+            config={{
+                ...visualizationTooltipOptions,
+                ...legendTooltipOptions,
+                colorPalette,
+                separators: props.separators,
+                enableAccessibleTooltip: props.enableAccessibleChartTooltip,
+            }}
+            drillableItems={props.drillableItems}
+            onDrill={onDrill}
+            onError={onError}
+            onExportReady={onSuccess}
+            execConfig={props.execConfig}
+        />
+    );
+};
+
+const renderComboChart = (
+    locale: string,
+    visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>,
+    buckets: ReturnType<typeof useBucketData>,
+    filters: IFilter[],
+    sortBy: ISortItem[],
+    colorPalette: IColorPalette | undefined,
+    onError: OnError,
+    onSuccess: OnExportReady,
+    onDrill: OnFiredDrillEvent,
+    props: {
+        drillableItems?: ExplicitDrill[];
+        enableAccessibleChartTooltip?: boolean;
+        execConfig?: IExecutionConfig;
+        separators?: ISeparators;
+    },
+) => {
+    const { metrics, secondary_metrics, view } = buckets;
+    const controls = visualization.insight.properties["controls"];
+
+    return (
+        <ComboChart
+            locale={locale}
+            height={VIS_HEIGHT}
+            primaryMeasures={metrics}
+            secondaryMeasures={secondary_metrics}
+            viewBy={view[0]}
+            filters={filters}
+            sortBy={sortBy}
+            config={{
+                ...visualizationTooltipOptions,
+                ...legendTooltipOptions,
+                colorPalette,
+                separators: props.separators,
+                enableAccessibleTooltip: props.enableAccessibleChartTooltip,
+                dualAxis: controls?.["dualAxis"],
+                primaryChartType: controls?.["primaryChartType"],
+                secondaryChartType: controls?.["secondaryChartType"],
+            }}
+            drillableItems={props.drillableItems}
+            onDrill={onDrill}
+            onError={onError}
+            onExportReady={onSuccess}
+            execConfig={props.execConfig}
+        />
+    );
+};
+
+const renderFlowDiagram = (
+    Chart: typeof SankeyChart,
+    locale: string,
+    buckets: ReturnType<typeof useBucketData>,
+    filters: IFilter[],
+    sortBy: ISortItem[],
+    colorPalette: IColorPalette | undefined,
+    onError: OnError,
+    onSuccess: OnExportReady,
+    onDrill: OnFiredDrillEvent,
+    props: {
+        drillableItems?: ExplicitDrill[];
+        enableAccessibleChartTooltip?: boolean;
+        execConfig?: IExecutionConfig;
+        separators?: ISeparators;
+    },
+) => {
+    const { metrics, attribute_from, attribute_to } = buckets;
+
+    return (
+        <Chart
+            locale={locale}
+            height={VIS_HEIGHT}
+            measure={metrics[0]}
+            attributeFrom={attribute_from[0]}
+            attributeTo={attribute_to[0]}
+            filters={filters}
+            sortBy={sortBy}
+            config={{
+                ...visualizationTooltipOptions,
+                ...legendTooltipOptions,
+                colorPalette,
+                separators: props.separators,
+                enableAccessibleTooltip: props.enableAccessibleChartTooltip,
+            }}
+            drillableItems={props.drillableItems}
+            onDrill={onDrill}
+            onError={onError}
+            onExportReady={onSuccess}
+            execConfig={props.execConfig}
+        />
+    );
+};
+
 const renderScatterPlot = (
     locale: string,
     visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>,
@@ -803,6 +1098,50 @@ const renderRadarChart = (
             segmentBy={segment[0]}
             filters={filters}
             sortBy={sortBy}
+            config={{
+                ...visualizationTooltipOptions,
+                ...legendTooltipOptions,
+                colorPalette,
+                separators: props.separators,
+                enableAccessibleTooltip: props.enableAccessibleChartTooltip,
+            }}
+            drillableItems={props.drillableItems}
+            onDrill={onDrill}
+            onError={onError}
+            onExportReady={onSuccess}
+            execConfig={props.execConfig}
+        />
+    );
+};
+
+// Treemap takes no sortBy: it always derives its own sorting from the buckets
+// (getDefaultTreemapSort), so the sorts the insight carries are deliberately not forwarded.
+const renderTreemap = (
+    locale: string,
+    buckets: ReturnType<typeof useBucketData>,
+    filters: IFilter[],
+    colorPalette: IColorPalette | undefined,
+    onError: OnError,
+    onSuccess: OnExportReady,
+    onDrill: OnFiredDrillEvent,
+    props: {
+        drillableItems?: ExplicitDrill[];
+        enableAccessibleChartTooltip?: boolean;
+        execConfig?: IExecutionConfig;
+        separators?: ISeparators;
+    },
+) => {
+    const { metrics, view, segment } = buckets;
+    const viewBy = metrics.length === 1 ? view[0] : undefined;
+
+    return (
+        <Treemap
+            locale={locale}
+            height={VIS_HEIGHT}
+            measures={metrics}
+            viewBy={viewBy}
+            segmentBy={segment[0]}
+            filters={filters}
             config={{
                 ...visualizationTooltipOptions,
                 ...legendTooltipOptions,
@@ -907,6 +1246,45 @@ const renderWaterfallChart = (
     );
 };
 
+const renderRepeater = (
+    locale: string,
+    visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>,
+    buckets: ReturnType<typeof useBucketData>,
+    filters: IFilter[],
+    colorPalette: IColorPalette | undefined,
+    onError: OnError,
+    onSuccess: OnExportReady,
+    onDrill: OnFiredDrillEvent,
+    props: {
+        drillableItems?: ExplicitDrill[];
+        execConfig?: IExecutionConfig;
+        separators?: ISeparators;
+    },
+) => {
+    const { attribute, columns, view } = buckets;
+
+    return (
+        <Repeater
+            locale={locale}
+            height={VIS_HEIGHT}
+            attribute={attribute[0]}
+            columns={columns}
+            viewBy={view[0]}
+            filters={filters}
+            config={{
+                colorPalette,
+                separators: props.separators,
+                inlineVisualizations: visualization.insight.properties["inlineVisualizations"],
+            }}
+            drillableItems={props.drillableItems}
+            onDrill={onDrill}
+            onError={onError}
+            onExportReady={onSuccess}
+            execConfig={props.execConfig}
+        />
+    );
+};
+
 const renderTable = (
     locale: string,
     buckets: ReturnType<typeof useBucketData>,
@@ -934,7 +1312,7 @@ const renderTable = (
             measures={metrics}
             filters={filters}
             sortBy={sortBy}
-            columns={[...columns, ...stack, ...segment].filter(Boolean)}
+            columns={[...columns.filter(isAttribute), ...stack, ...segment].filter(Boolean)}
             rows={[...attribute, ...trend, ...view].filter(Boolean)}
             config={
                 props.enableNewPivotTable
@@ -996,23 +1374,32 @@ function useBucketData(buckets: IBucket[]) {
         const metrics = buckets.find((b) => b.localIdentifier === "measures")?.items.filter(isMeasure) ?? [];
         const secondary_metrics =
             buckets.find((b) => b.localIdentifier === "secondary_measures")?.items.filter(isMeasure) ?? [];
+        const tertiary_metrics =
+            buckets.find((b) => b.localIdentifier === "tertiary_measures")?.items.filter(isMeasure) ?? [];
         const view = buckets.find((b) => b.localIdentifier === "view")?.items.filter(isAttribute) ?? [];
         const stack = buckets.find((b) => b.localIdentifier === "stack")?.items.filter(isAttribute) ?? [];
         const trend = buckets.find((b) => b.localIdentifier === "trend")?.items.filter(isAttribute) ?? [];
-        const columns = buckets.find((b) => b.localIdentifier === "columns")?.items.filter(isAttribute) ?? [];
+        const columns = buckets.find((b) => b.localIdentifier === "columns")?.items ?? [];
         const attribute =
             buckets.find((b) => b.localIdentifier === "attribute")?.items.filter(isAttribute) ?? [];
         const segment = buckets.find((b) => b.localIdentifier === "segment")?.items.filter(isAttribute) ?? [];
+        const attribute_from =
+            buckets.find((b) => b.localIdentifier === "attribute_from")?.items.filter(isAttribute) ?? [];
+        const attribute_to =
+            buckets.find((b) => b.localIdentifier === "attribute_to")?.items.filter(isAttribute) ?? [];
 
         return {
             metrics,
             secondary_metrics,
+            tertiary_metrics,
             view,
             stack,
             trend,
             segment,
             attribute,
             columns,
+            attribute_from,
+            attribute_to,
         };
     }, [buckets]);
 }

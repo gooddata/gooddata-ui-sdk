@@ -5,6 +5,7 @@ import {
     type IAttributesQuery,
     type IConnectedAttributesOptions,
     type IElementsQueryFactory,
+    type IUpdateMetadataObjectMetaPayload,
     type IWorkspaceAttributesService,
 } from "@gooddata/sdk-backend-spi";
 import {
@@ -45,6 +46,12 @@ export abstract class DecoratedWorkspaceAttributesService implements IWorkspaceA
         updatedAttribute: Partial<IMetadataObjectBase> & IMetadataObjectIdentity,
     ): Promise<IAttributeMetadataObject> {
         return this.decorated.updateAttributeMeta(updatedAttribute);
+    }
+
+    public updateAttributeDisplayFormMeta(
+        updatedDisplayForm: IUpdateMetadataObjectMetaPayload,
+    ): Promise<IAttributeDisplayFormMetadataObject> {
+        return this.decorated.updateAttributeDisplayFormMeta(updatedDisplayForm);
     }
 
     public getAttributeByDisplayForm(ref: ObjRef): Promise<IAttributeMetadataObject> {

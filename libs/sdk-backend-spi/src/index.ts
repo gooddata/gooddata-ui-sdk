@@ -278,6 +278,7 @@ export {
 } from "./errors/index.js";
 
 export type { IPagedResource } from "./common/paging.js";
+export type { IUpdateMetadataObjectMetaPayload } from "./common/metadata.js";
 export type { IFilterBaseOptions } from "./common/filtering.js";
 export type { QueryMethod } from "./common/query.js";
 
@@ -315,7 +316,6 @@ export type {
     IMeasureKeyDrivers,
     IMeasuresQueryResult,
     IMeasuresQuery,
-    IUpdateMeasureMetaPayload,
 } from "./workspace/measures/index.js";
 
 export type { IWorkspaceFactsService, IFactsQuery, IFactsQueryResult } from "./workspace/facts/index.js";

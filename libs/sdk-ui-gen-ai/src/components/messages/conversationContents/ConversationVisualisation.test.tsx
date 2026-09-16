@@ -12,6 +12,7 @@ import {
     type ISeparators,
     idRef,
     newAttribute,
+    newAttributeSort,
     newBucket,
     newMeasure,
 } from "@gooddata/sdk-model";
@@ -28,8 +29,23 @@ type RecordedProps = {
         legend?: unknown;
         stackMeasures?: unknown;
         stackMeasuresToPercent?: unknown;
+        dualAxis?: unknown;
+        primaryChartType?: unknown;
+        secondaryChartType?: unknown;
+        inlineVisualizations?: unknown;
     };
+    attribute?: unknown;
     measures?: unknown[];
+    primaryMeasures?: unknown[];
+    secondaryMeasures?: unknown[];
+    xAxisMeasure?: unknown;
+    yAxisMeasure?: unknown;
+    size?: unknown;
+    primaryMeasure?: unknown;
+    targetMeasure?: unknown;
+    comparativeMeasure?: unknown;
+    attributeFrom?: unknown;
+    attributeTo?: unknown;
     viewBy?: unknown;
     stackBy?: unknown;
     trendBy?: unknown;
@@ -53,14 +69,21 @@ function recorder(component: string) {
 vi.mock("@gooddata/sdk-ui-charts", () => ({
     AreaChart: recorder("AreaChart"),
     BarChart: recorder("BarChart"),
+    BubbleChart: recorder("BubbleChart"),
+    BulletChart: recorder("BulletChart"),
     ColumnChart: recorder("ColumnChart"),
+    ComboChart: recorder("ComboChart"),
     LineChart: recorder("LineChart"),
     PieChart: recorder("PieChart"),
     DonutChart: recorder("DonutChart"),
     PyramidChart: recorder("PyramidChart"),
     FunnelChart: recorder("FunnelChart"),
     RadarChart: recorder("RadarChart"),
+    Repeater: recorder("Repeater"),
+    SankeyChart: recorder("SankeyChart"),
+    DependencyWheelChart: recorder("DependencyWheelChart"),
     ScatterPlot: recorder("ScatterPlot"),
+    Treemap: recorder("Treemap"),
     Headline: recorder("Headline"),
     Heatmap: recorder("Heatmap"),
     WaterfallChart: recorder("WaterfallChart"),
@@ -142,13 +165,20 @@ describe("ConversationVisualisation", () => {
     it.each([
         ["local:area", "AreaChart"],
         ["local:bar", "BarChart"],
+        ["local:bubble", "BubbleChart"],
+        ["local:bullet", "BulletChart"],
         ["local:column", "ColumnChart"],
+        ["local:combo2", "ComboChart"],
         ["local:line", "LineChart"],
         ["local:pie", "PieChart"],
         ["local:donut", "DonutChart"],
         ["local:pyramid", "PyramidChart"],
         ["local:funnel", "FunnelChart"],
         ["local:radar", "RadarChart"],
+        ["local:repeater", "Repeater"],
+        ["local:treemap", "Treemap"],
+        ["local:sankey", "SankeyChart"],
+        ["local:dependencywheel", "DependencyWheelChart"],
         ["local:scatter", "ScatterPlot"],
         ["local:headline", "Headline"],
         ["local:waterfall", "WaterfallChart"],
@@ -207,6 +237,50 @@ describe("ConversationVisualisation", () => {
         });
     });
 
+    it("renders a stacked bar with only the first measure", () => {
+        const viewAttribute = newAttribute("category");
+        const stackAttribute = newAttribute("region");
+
+        renderVisualisation(
+            "local:bar",
+            {},
+            {
+                buckets: [
+                    newBucket("measures", newMeasure("m1"), newMeasure("m2")),
+                    newBucket("view", viewAttribute),
+                    newBucket("stack", stackAttribute),
+                ],
+            },
+        );
+
+        expect(lastProps.get("BarChart")).toMatchObject({
+            measures: [newMeasure("m1")],
+            viewBy: viewAttribute,
+            stackBy: stackAttribute,
+        });
+    });
+
+    it("renders an unstacked bar with all measures", () => {
+        const viewAttribute = newAttribute("category");
+
+        renderVisualisation(
+            "local:bar",
+            {},
+            {
+                buckets: [
+                    newBucket("measures", newMeasure("m1"), newMeasure("m2")),
+                    newBucket("view", viewAttribute),
+                ],
+            },
+        );
+
+        expect(lastProps.get("BarChart")).toMatchObject({
+            measures: [newMeasure("m1"), newMeasure("m2")],
+            viewBy: viewAttribute,
+            stackBy: undefined,
+        });
+    });
+
     it("maps the radar trend bucket to trendBy and the segment bucket to segmentBy", () => {
         const trendAttribute = newAttribute("category");
         const segmentAttribute = newAttribute("campaign");
@@ -241,6 +315,224 @@ describe("ConversationVisualisation", () => {
             measures: [newMeasure("m1"), newMeasure("m2")],
             trendBy: undefined,
             segmentBy: undefined,
+        });
+    });
+
+    it("maps the treemap buckets and leaves its sorting to the chart", () => {
+        const viewAttribute = newAttribute("category");
+        const segmentAttribute = newAttribute("campaign");
+
+        renderVisualisation(
+            "local:treemap",
+            {},
+            {
+                buckets: [
+                    newBucket("measures", newMeasure("m1")),
+                    newBucket("view", viewAttribute),
+                    newBucket("segment", segmentAttribute),
+                ],
+                sorts: [newAttributeSort(viewAttribute, "desc")],
+            },
+        );
+
+        expect(lastProps.get("Treemap")).toMatchObject({
+            measures: [newMeasure("m1")],
+            viewBy: viewAttribute,
+            segmentBy: segmentAttribute,
+        });
+        expect(lastProps.get("Treemap")).not.toHaveProperty("sortBy");
+    });
+
+    it("omits the treemap viewBy when the insight carries several measures", () => {
+        renderVisualisation(
+            "local:treemap",
+            {},
+            {
+                buckets: [
+                    newBucket("measures", newMeasure("m1"), newMeasure("m2")),
+                    newBucket("view", newAttribute("category")),
+                ],
+            },
+        );
+
+        expect(lastProps.get("Treemap")).toMatchObject({
+            measures: [newMeasure("m1"), newMeasure("m2")],
+            viewBy: undefined,
+        });
+    });
+
+    it("renders a treemap of several measures with no attribute bucket", () => {
+        renderVisualisation(
+            "local:treemap",
+            {},
+            { buckets: [newBucket("measures", newMeasure("m1"), newMeasure("m2"))] },
+        );
+
+        expect(lastProps.get("Treemap")).toMatchObject({
+            measures: [newMeasure("m1"), newMeasure("m2")],
+            viewBy: undefined,
+            segmentBy: undefined,
+        });
+    });
+
+    it("spreads the bubble measure buckets across its axes and bubble size", () => {
+        const viewAttribute = newAttribute("channel");
+
+        renderVisualisation(
+            "local:bubble",
+            {},
+            {
+                buckets: [
+                    newBucket("measures", newMeasure("m1")),
+                    newBucket("secondary_measures", newMeasure("m2")),
+                    newBucket("tertiary_measures", newMeasure("m3")),
+                    newBucket("view", viewAttribute),
+                ],
+            },
+        );
+
+        expect(lastProps.get("BubbleChart")).toMatchObject({
+            xAxisMeasure: newMeasure("m1"),
+            yAxisMeasure: newMeasure("m2"),
+            size: newMeasure("m3"),
+            viewBy: viewAttribute,
+        });
+    });
+
+    it("renders a bubble whose insight only sizes the bubbles", () => {
+        renderVisualisation(
+            "local:bubble",
+            {},
+            { buckets: [newBucket("tertiary_measures", newMeasure("m3"))] },
+        );
+
+        expect(lastProps.get("BubbleChart")).toMatchObject({
+            xAxisMeasure: undefined,
+            yAxisMeasure: undefined,
+            size: newMeasure("m3"),
+        });
+    });
+
+    it("maps the bullet measure buckets to its primary, target and comparative measures", () => {
+        const firstView = newAttribute("product");
+        const secondView = newAttribute("region");
+
+        renderVisualisation(
+            "local:bullet",
+            {},
+            {
+                buckets: [
+                    newBucket("measures", newMeasure("m1")),
+                    newBucket("secondary_measures", newMeasure("m2")),
+                    newBucket("tertiary_measures", newMeasure("m3")),
+                    newBucket("view", firstView, secondView),
+                ],
+            },
+        );
+
+        expect(lastProps.get("BulletChart")).toMatchObject({
+            primaryMeasure: newMeasure("m1"),
+            targetMeasure: newMeasure("m2"),
+            comparativeMeasure: newMeasure("m3"),
+            viewBy: [firstView, secondView],
+        });
+    });
+
+    it("splits the combo measures between its two axes", () => {
+        const viewAttribute = newAttribute("category");
+
+        renderVisualisation(
+            "local:combo2",
+            {},
+            {
+                buckets: [
+                    newBucket("measures", newMeasure("m1")),
+                    newBucket("secondary_measures", newMeasure("m2")),
+                    newBucket("view", viewAttribute),
+                ],
+            },
+        );
+
+        expect(lastProps.get("ComboChart")).toMatchObject({
+            primaryMeasures: [newMeasure("m1")],
+            secondaryMeasures: [newMeasure("m2")],
+            viewBy: viewAttribute,
+        });
+    });
+
+    it("leaves the combo axis types to the chart when the insight does not configure them", () => {
+        renderVisualisation("local:combo2");
+
+        expect(lastProps.get("ComboChart")?.config).toMatchObject({
+            dualAxis: undefined,
+            primaryChartType: undefined,
+            secondaryChartType: undefined,
+        });
+    });
+
+    it("carries over the combo axis types the insight configures", () => {
+        renderVisualisation(
+            "local:combo2",
+            {},
+            {
+                properties: {
+                    controls: {
+                        dualAxis: false,
+                        primaryChartType: "area",
+                        secondaryChartType: "column",
+                    },
+                },
+            },
+        );
+
+        expect(lastProps.get("ComboChart")?.config).toMatchObject({
+            dualAxis: false,
+            primaryChartType: "area",
+            secondaryChartType: "column",
+        });
+    });
+
+    it.each([
+        ["local:sankey", "SankeyChart"],
+        ["local:dependencywheel", "DependencyWheelChart"],
+    ])("maps the %s endpoint buckets to attributeFrom and attributeTo", (url, component) => {
+        const fromAttribute = newAttribute("campaign");
+        const toAttribute = newAttribute("state");
+
+        renderVisualisation(
+            url,
+            {},
+            {
+                buckets: [
+                    newBucket("measures", newMeasure("m1")),
+                    newBucket("attribute_from", fromAttribute),
+                    newBucket("attribute_to", toAttribute),
+                ],
+            },
+        );
+
+        expect(lastProps.get(component)).toMatchObject({
+            measure: newMeasure("m1"),
+            attributeFrom: fromAttribute,
+            attributeTo: toAttribute,
+        });
+    });
+
+    it("renders a sankey whose insight carries only the target endpoint", () => {
+        const toAttribute = newAttribute("state");
+
+        renderVisualisation(
+            "local:sankey",
+            {},
+            {
+                buckets: [newBucket("measures", newMeasure("m1")), newBucket("attribute_to", toAttribute)],
+            },
+        );
+
+        expect(lastProps.get("SankeyChart")).toMatchObject({
+            measure: newMeasure("m1"),
+            attributeFrom: undefined,
+            attributeTo: toAttribute,
         });
     });
 
@@ -296,6 +588,65 @@ describe("ConversationVisualisation", () => {
         expect(lastProps.get("WaterfallChart")).toMatchObject({
             measures: [newMeasure("m1"), newMeasure("m2")],
             viewBy: undefined,
+        });
+    });
+
+    it("keeps both the attributes and the measures of the repeater columns bucket", () => {
+        const rowAttribute = newAttribute("campaign_name");
+        const columnAttribute = newAttribute("campaign_name_cloned");
+        const viewAttribute = newAttribute("type");
+
+        renderVisualisation(
+            "local:repeater",
+            {},
+            {
+                buckets: [
+                    newBucket("attribute", rowAttribute),
+                    newBucket("columns", columnAttribute, newMeasure("m1")),
+                    newBucket("view", viewAttribute),
+                ],
+            },
+        );
+
+        expect(lastProps.get("Repeater")).toMatchObject({
+            attribute: rowAttribute,
+            columns: [columnAttribute, newMeasure("m1")],
+            viewBy: viewAttribute,
+        });
+    });
+
+    it("passes the inline visualizations of the repeater to the chart", () => {
+        const inlineVisualizations = { m1: { type: "line" } };
+
+        renderVisualisation(
+            "local:repeater",
+            {},
+            {
+                buckets: [newBucket("attribute", newAttribute("campaign_name"))],
+                properties: { inlineVisualizations },
+            },
+        );
+
+        expect(lastProps.get("Repeater")?.config?.inlineVisualizations).toEqual(inlineVisualizations);
+    });
+
+    it("leaves the measures of the columns bucket out of the table columns", () => {
+        const columnAttribute = newAttribute("region");
+
+        renderVisualisation(
+            "local:table",
+            {},
+            {
+                buckets: [
+                    newBucket("measures", newMeasure("m1")),
+                    newBucket("columns", columnAttribute, newMeasure("m2")),
+                ],
+            },
+        );
+
+        expect(lastProps.get("PivotTableNext")).toMatchObject({
+            measures: [newMeasure("m1")],
+            columns: [columnAttribute],
         });
     });
 });

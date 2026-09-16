@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-filters: Enable keyboard typing in the absolute date filter's Day/Week/Month/Quarter/Year period picker, and fix the Week field snapping to the wrong week mid-edit",
+            "type": "minor",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "dusan.kovacik@gooddata.com"
+}

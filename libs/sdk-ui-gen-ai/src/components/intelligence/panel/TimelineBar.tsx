@@ -50,7 +50,14 @@ export function TimelineBar({ segments, highlightedStepIndexes, renderTooltip }:
                 };
 
                 if (!renderTooltip) {
-                    return <div key={segment.stepId} className={className} style={style} />;
+                    return (
+                        <div
+                            key={segment.stepId}
+                            className={className}
+                            data-testid="interaction-intelligence-timeline-segment"
+                            style={style}
+                        />
+                    );
                 }
 
                 return (
@@ -63,6 +70,7 @@ export function TimelineBar({ segments, highlightedStepIndexes, renderTooltip }:
                         anchor={
                             <div
                                 className={className}
+                                data-testid="interaction-intelligence-timeline-segment"
                                 onMouseEnter={() => setHoveredStepIndex(segment.stepIndex)}
                                 onMouseLeave={() => setHoveredStepIndex(undefined)}
                             />

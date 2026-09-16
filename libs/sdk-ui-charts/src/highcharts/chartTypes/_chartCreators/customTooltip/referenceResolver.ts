@@ -8,10 +8,11 @@
  * file builds the lookup from a hovered Highcharts point's drill intersection.
  */
 
-import { type ISeparators, isMeasureDescriptor } from "@gooddata/sdk-model";
+import { type ISeparators, isComputedAttributeRef, isMeasureDescriptor } from "@gooddata/sdk-model";
 import { type IDrillEventIntersectionElement, isDrillIntersectionAttributeItem } from "@gooddata/sdk-ui";
 import {
     type IResolvedReferenceValues,
+    computedAttributeKey,
     labelKey,
     labelReference,
     measureReference,
@@ -47,7 +48,13 @@ export function resolveReferencesFromPoint(
         const { header } = element;
 
         if (isDrillIntersectionAttributeItem(header)) {
-            // Attribute element — resolve {label/id}
+            // Attribute element — resolve {label/id}, or {computed_attribute/id} when the
+            // descriptor ref says so. A computed attribute has no labels: its fabricated display
+            // form carries its own ref, which the backend types honestly for exactly this reason.
+            // Publishing it under its own key keeps it apart from a label of the same identifier.
+            const buildKey = isComputedAttributeRef(header.attributeHeader.ref)
+                ? computedAttributeKey
+                : labelKey;
             const displayFormId = header.attributeHeader.identifier;
             const attributeId = header.attributeHeader.formOf.identifier;
             const displayValue =
@@ -55,9 +62,9 @@ export function resolveReferencesFromPoint(
             const status = labelReference(displayValue);
 
             // Register under both display form and attribute identifiers
-            values[labelKey(displayFormId)] = status;
+            values[buildKey(displayFormId)] = status;
             if (attributeId !== displayFormId) {
-                values[labelKey(attributeId)] = status;
+                values[buildKey(attributeId)] = status;
             }
         } else if (isMeasureDescriptor(header)) {
             const localId = header.measureHeaderItem.localIdentifier;

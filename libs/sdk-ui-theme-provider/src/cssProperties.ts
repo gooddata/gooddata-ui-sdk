@@ -93,8 +93,66 @@ export function handleUnits(value: string): string {
  */
 export type ParserFunction = {
     key: string;
-    fn: (value: any, isScoped?: boolean, scopeTo?: HTMLElement, scopeId?: string) => string;
+    /**
+     * Returns the CSS value, an empty string to emit nothing, or an object to keep descending into.
+     */
+    fn: (value: any, isScoped?: boolean, scopeTo?: HTMLElement, scopeId?: string) => string | object;
 };
+
+// A report page scales with its width, so its lengths are read against that width: a bare number is
+// cqw. The units are the ones that follow it — `cqh` and `cqb` are left out although they parse,
+// because a page contains its inline axis only and a block unit silently resolves against the
+// viewport instead; `px` and `rem` are left out because they hold their size while the page changes.
+const REPORT_LENGTH = /^\d+(\.\d+)?(cqw|cqi|em|%)$/;
+
+function reportLength(value: unknown, bare: (n: number) => string): string {
+    if (typeof value === "number") {
+        return Number.isFinite(value) && value >= 0 ? bare(value) : "";
+    }
+    if (typeof value !== "string") {
+        return "";
+    }
+    const trimmed = value.trim();
+    if (trimmed !== "" && parseFloat(trimmed).toString() === trimmed && parseFloat(trimmed) >= 0) {
+        return bare(parseFloat(trimmed));
+    }
+    return REPORT_LENGTH.test(trimmed) ? trimmed : "";
+}
+
+/**
+ * @internal
+ */
+export function handleReportLength(value: unknown): string {
+    return reportLength(value, (n) => `${n}cqw`);
+}
+
+/**
+ * @internal
+ */
+export function handleReportLineHeight(value: unknown): string {
+    // CSS reads a bare line height as a multiple of the font size, which is what anyone writing
+    // `1.5` means; reading it as a share of the page width the way a size is read would set a
+    // heading's lines closer together than its letters are tall.
+    return reportLength(value, (n) => `${n}`);
+}
+
+const REPORT_TEXT_LEVELS = [
+    ...["h1", "h2", "h3", "h4", "h5", "h6"].map((level) => `heading-${level}`),
+    ...["p1", "p2", "p3"].map((level) => `paragraph-${level}`),
+];
+
+const reportLengthParserFunctions: ParserFunction[] = [
+    ...REPORT_TEXT_LEVELS.map((level) => ({
+        key: `--gd-reports-textStyle-${level}-fontSize`,
+        fn: handleReportLength,
+    })),
+    ...[
+        "--gd-reports-textStyle-lineHeight",
+        "--gd-reports-textStyle-heading-lineHeight",
+        "--gd-reports-textStyle-paragraph-lineHeight",
+        ...REPORT_TEXT_LEVELS.map((level) => `--gd-reports-textStyle-${level}-lineHeight`),
+    ].map((key) => ({ key, fn: handleReportLineHeight })),
+];
 
 const customParserFunctions: ParserFunction[] = [
     {
@@ -171,6 +229,14 @@ const customParserFunctions: ParserFunction[] = [
         fn: (value: boolean) => (value ? DEFAULT_WIDGET_SHADOW : "none"),
     },
     { key: "--gd-palette-complementary", fn: () => "" },
+    // Not CSS: the content version, the image assets and the font files are read by the reports
+    // application from the theme object itself.
+    { key: "--gd-version", fn: () => "" },
+    { key: "--gd-assets", fn: () => "" },
+    { key: "--gd-reports-textStyle-typography-fonts", fn: () => "" },
+    // Inline colors become indexed variables; a palette reference is resolved by the application.
+    { key: "--gd-reports-visualizationPalette", fn: (value: unknown) => (Array.isArray(value) ? value : "") },
+    ...reportLengthParserFunctions,
 ];
 
 /**
@@ -195,7 +261,7 @@ export function parseThemeToCssProperties(
             if (newValue !== null && typeof newValue === "object") {
                 cssProperties.push(
                     ...parseThemeToCssProperties(
-                        newValue,
+                        newValue as ITheme,
                         parserFunctions,
                         newKey,
                         isScoped,
@@ -203,12 +269,8 @@ export function parseThemeToCssProperties(
                         scopeId,
                     ),
                 );
-            } else {
-                const parse = parserFunctions.find((exception) => exception.key === newKey);
-                const newValue = parse ? parse.fn(value, isScoped, scopeTo, scopeId) : value;
-                if (newValue !== undefined) {
-                    cssProperties.push({ key: newKey, value: newValue });
-                }
+            } else if (newValue !== "") {
+                cssProperties.push({ key: newKey, value: newValue });
             }
         }
     }

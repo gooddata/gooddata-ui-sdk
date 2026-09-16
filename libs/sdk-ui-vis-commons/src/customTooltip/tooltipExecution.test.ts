@@ -5,7 +5,7 @@
 import { describe, expect, it } from "vitest";
 
 import { type IExecutionFactory, type IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { idRef, newDefForItems, newMeasure } from "@gooddata/sdk-model";
+import { idRef, newAttribute, newDefForItems, newMeasure } from "@gooddata/sdk-model";
 
 import { buildTooltipExecution } from "./tooltipExecution.js";
 
@@ -46,6 +46,83 @@ describe("buildTooltipExecution (WS3 premise: in-chart refs fire no secondary fe
         expect(execution).toBeNull();
     });
 
+    it("returns null when the referenced computed attribute is already in the chart", () => {
+        // A computed attribute's own ref sits on the display form slot, so it is found among the
+        // chart's label ids just like a display form would be.
+        const execution = buildTooltipExecution(
+            fakeExecutionFactory(),
+            newDefForItems("ws", [
+                newAttribute(idRef("tier", "computedAttribute"), (a) => a.localId("a_tier")),
+            ]),
+            "Tier {computed_attribute/tier}",
+        );
+        expect(execution).toBeNull();
+    });
+
+    it("fetches an external computed attribute as a max+count pair, like a label", () => {
+        const execution = buildTooltipExecution(
+            fakeExecutionFactory(),
+            chartDef,
+            "Tier {computed_attribute/tier}",
+        );
+        expect(execution).not.toBeNull();
+        // published under its own namespace, not the label one
+        expect(execution?.batch.meta.attributeKeyMap).toEqual({ tt_lv_0: "computed_attribute/tier" });
+        expect(execution?.batch.meta.labelCountMap).toEqual({
+            tt_lv_0: "tt_lc_0",
+        });
+    });
+
+    it("fetches a repeated computed attribute reference once", () => {
+        const execution = buildTooltipExecution(
+            fakeExecutionFactory(),
+            chartDef,
+            "{computed_attribute/tier} and {Computed_Attribute/tier}",
+        );
+        expect(execution?.batch.meta.attributeKeyMap).toEqual({ tt_lv_0: "computed_attribute/tier" });
+    });
+
+    it("keeps a label and a computed attribute of the same id apart when both are fetched", () => {
+        // Ids are unique only within an object type, so `tier` can name both. Under one shared
+        // namespace the second value would overwrite the first and one reference would silently
+        // render the other's value.
+        const execution = buildTooltipExecution(
+            fakeExecutionFactory(),
+            chartDef,
+            "{label/tier} vs {computed_attribute/tier}",
+        );
+        expect(execution?.batch.meta.attributeKeyMap).toEqual({
+            tt_lv_0: "label/tier",
+            tt_lv_1: "computed_attribute/tier",
+        });
+    });
+
+    it("does not treat a computed attribute as in-chart because a label of that id is in the chart", () => {
+        // Both sit on the display form slot, so without a per-type split the reference would be
+        // classified as already resolvable and answered by the label's value.
+        const withLabel = newDefForItems("ws", [
+            newAttribute(idRef("tier", "displayForm"), (a) => a.localId("a_tier")),
+        ]);
+        const execution = buildTooltipExecution(
+            fakeExecutionFactory(),
+            withLabel,
+            "Tier {computed_attribute/tier}",
+        );
+        expect(execution?.batch.meta.attributeKeyMap).toEqual({ tt_lv_0: "computed_attribute/tier" });
+    });
+
+    it("does not treat a label as in-chart because a computed attribute of that id is in the chart", () => {
+        const withComputedAttribute = newDefForItems("ws", [
+            newAttribute(idRef("tier", "computedAttribute"), (a) => a.localId("a_tier")),
+        ]);
+        const execution = buildTooltipExecution(
+            fakeExecutionFactory(),
+            withComputedAttribute,
+            "Tier {label/tier}",
+        );
+        expect(execution?.batch.meta.attributeKeyMap).toEqual({ tt_lv_0: "label/tier" });
+    });
+
     it("builds an execution only for references not already in the chart (control)", () => {
         const execution = buildTooltipExecution(
             fakeExecutionFactory(),
@@ -53,7 +130,9 @@ describe("buildTooltipExecution (WS3 premise: in-chart refs fire no secondary fe
             "External {metric/orders_total}",
         );
         expect(execution).not.toBeNull();
-        expect(execution?.batch.meta.measureIdMap).toEqual({ tt_m_0: "orders_total" });
+        expect(execution?.batch.meta.measureIdMap).toEqual({
+            tt_m_0: "orders_total",
+        });
         // One external reference → one per-reference fallback bundle (built lazily).
         expect(execution?.perRef()).toHaveLength(1);
     });

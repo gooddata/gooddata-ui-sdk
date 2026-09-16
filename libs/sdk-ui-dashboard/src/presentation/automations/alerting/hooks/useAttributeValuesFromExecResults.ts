@@ -6,7 +6,6 @@ import type { IExecutionResult } from "@gooddata/sdk-backend-spi";
 import {
     type IAttribute,
     type IAttributeDescriptor,
-    type IAttributeMetadataObject,
     type IMeasure,
     areObjRefsEqual,
     isResultAttributeHeader,
@@ -80,7 +79,7 @@ export function useAttributeValuesFromExecResults(execResult: IExecutionResultEn
     }, [execResult]);
 
     const getAttributeValues = useCallback(
-        (attr: IAttributeMetadataObject): AttributeValue[] => {
+        (attr: IAttribute): AttributeValue[] => {
             const header = findAttributeHeader(dataView, attr);
             const indexes = findDimIndexes(dataView, header);
             return findAttributeValues(dataView, indexes);
@@ -99,7 +98,7 @@ export function useAttributeValuesFromExecResults(execResult: IExecutionResultEn
                 return calculatePredictedValue(data);
             }
 
-            const header = findAttributeHeader2(dataView, attr);
+            const header = findAttributeHeader(dataView, attr);
             const indexes = findDimIndexes(dataView, header);
 
             const values = calculateValues(dataView, indexes, value);
@@ -147,27 +146,8 @@ function calculateValues(dataView: DataViewFacade | null, indexes: [number, numb
         });
 }
 
-function findAttributeHeader(dataView: DataViewFacade | null, attr: IAttributeMetadataObject) {
-    if (!dataView) {
-        return null;
-    }
-
-    return (
-        dataView
-            .meta()
-            .attributeDescriptors()
-            .find((descriptor) => {
-                return (
-                    areObjRefsEqual(descriptor.attributeHeader.ref, attr.ref) ||
-                    attr.displayForms.some((displayForm) => {
-                        return areObjRefsEqual(descriptor.attributeHeader.ref, displayForm.ref);
-                    })
-                );
-            }) ?? null
-    );
-}
-
-function findAttributeHeader2(dataView: DataViewFacade | null, attr: IAttribute | undefined) {
+// By display form, not catalog attribute: two display forms of one attribute are two descriptors.
+function findAttributeHeader(dataView: DataViewFacade | null, attr: IAttribute | undefined) {
     if (!dataView || !attr) {
         return null;
     }

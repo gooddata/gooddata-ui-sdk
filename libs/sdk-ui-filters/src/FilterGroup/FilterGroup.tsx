@@ -57,6 +57,7 @@ import {
 } from "../MeasureValueFilter/MeasureValueFilter.js";
 import { type IMeasureValueFilterDropdownButtonProps } from "../MeasureValueFilter/MeasureValueFilterButton.js";
 import { FilterButtonCustomIcon } from "../shared/components/internal/FilterButtonCustomIcon.js";
+import { isEditableElement } from "../shared/utils/domUtilities.js";
 
 import { useFilterGroupStatus } from "./useFilterGroupStatus.js";
 
@@ -115,13 +116,6 @@ const IGNORE_CLICKS_ON_BY_CLASS = [
     `.${MEASURE_VALUE_FILTER_OPERATOR_DROPDOWN_BODY_CLASS}`,
     `.${MEASURE_VALUE_FILTER_DETAILS_BUBBLE_CLASS}`,
 ];
-
-function isEditableElement(target: EventTarget | null): boolean {
-    return (
-        target instanceof HTMLElement &&
-        (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable)
-    );
-}
 
 /**
  * FilterGroup is a component that renders a dropdown button with multiple attribute filters

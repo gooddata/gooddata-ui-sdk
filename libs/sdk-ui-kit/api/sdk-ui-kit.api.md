@@ -8270,13 +8270,16 @@ export interface IUiToolbarStepperProps {
     inputRef?: Ref<HTMLInputElement>;
     // (undocumented)
     isDisabled?: boolean;
+    isInvalid?: boolean;
     isOpen?: boolean;
     // (undocumented)
     onClick?: (event: MouseEvent_2<HTMLInputElement>) => void;
     onCommit?: (value: string) => void;
+    onDraftChange?: (draft: string) => void;
     onInputKeyDown?: (event: KeyboardEvent_2<HTMLInputElement>) => void;
     // (undocumented)
     onStep: (direction: 1 | -1) => void;
+    placeholder?: string;
     value: string;
     variant: "value" | "pagination";
 }
@@ -9058,10 +9061,10 @@ export type RecurrenceType = (typeof RECURRENCE_TYPES)[RecurrenceTypeKey];
 // @internal
 export type RecurrenceTypeKey = keyof typeof RECURRENCE_TYPES;
 
-// @internal (undocumented)
+// @internal
 export const REFERENCE_REGEX_MATCH: RegExp;
 
-// @internal (undocumented)
+// @internal
 export const REFERENCE_REGEX_SPLIT: RegExp;
 
 // @internal (undocumented)

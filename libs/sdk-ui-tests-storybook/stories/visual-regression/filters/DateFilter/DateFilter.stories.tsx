@@ -327,5 +327,17 @@ GranularitySwitching.parameters = {
                 postOperation: 1000,
             },
         },
+        "to-field-opens-after-from-field-click": {
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
+            clickSelectors: [
+                { selector: ".s-date-filter-button" },
+                { selector: ".s-absolute-form-button" },
+                { selector: ".s-period-range-picker input" },
+                { selector: '.s-period-range-picker input[date-range="end"]' },
+            ],
+            delay: {
+                postOperation: 200,
+            },
+        },
     },
 } satisfies IStoryParameters;

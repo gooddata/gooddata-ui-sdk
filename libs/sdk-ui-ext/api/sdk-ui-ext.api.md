@@ -1353,7 +1353,11 @@ export type ScheduleAutomationsColumnName = "nextRun" | "attachments";
 export const semanticRuleFor: (option: ITargetOption, semantic: ISemanticConditionalFormatting) => IConditionalFormattingRule;
 
 // @internal
-export function sortShareableLabels(labels: readonly IObjectShareLabel[]): IObjectShareLabel[];
+export function sortShareableLabels<T extends {
+    id: string;
+    title: string;
+    isPrimary?: boolean;
+}>(labels: readonly T[]): T[];
 
 // @internal
 export function summaryOtherGranteeCount(summary: IObjectAccessSummary): number;

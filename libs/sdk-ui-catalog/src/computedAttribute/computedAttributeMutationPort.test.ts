@@ -170,13 +170,15 @@ describe("computedAttributeMutationPort adapter", () => {
 });
 
 describe("computed attribute references", () => {
-    it("titles the referencing insights, metrics, dashboards, and computed attributes", async () => {
+    it("titles the referencing insights, metrics, dashboards, computed attributes, and data filters", async () => {
         const { backend, getComputedAttributeReferencingObjects } = createFakeBackend();
         getComputedAttributeReferencingObjects.mockResolvedValueOnce({
             insights: [{ insight: { title: "Rep performance" } }, { insight: { title: "Won by band" } }],
             measures: [{ title: "Metric ABC" }],
             analyticalDashboards: [{ title: "Sales overview" }],
             computedAttributes: [{ title: "Band tier" }],
+            userDataFilters: [{ title: "Region filter" }],
+            workspaceDataFilters: [{ title: "Workspace region" }],
         });
 
         expect(await listComputedAttributeReferences(backend, "ws-1", computedAttributeItem)).toEqual([
@@ -185,6 +187,8 @@ describe("computed attribute references", () => {
             "Metric ABC",
             "Sales overview",
             "Band tier",
+            "Region filter",
+            "Workspace region",
         ]);
     });
 

@@ -29,11 +29,9 @@ import {
     type IReportPageLayoutDefinition,
     type IReportTemplate,
     type IReportTemplateDefinition,
-    type IReportsBrandKit,
     type ObjRef,
     areObjRefsEqual,
     objRefToString,
-    sanitizeReportsBrandKit,
 } from "@gooddata/sdk-model";
 
 import {
@@ -48,8 +46,6 @@ import {
 } from "../../convertors/toBackend/ReportsConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 import { objRefToIdentifier } from "../../utils/api.js";
-
-import { TigerWorkspaceSettings } from "./settings/index.js";
 
 const auditInclude = ["createdBy" as const, "modifiedBy" as const];
 
@@ -301,27 +297,6 @@ export class TigerWorkspaceReportsService implements IWorkspaceReportsService {
             }),
         );
     };
-
-    public getBrandKit = async (): Promise<IReportsBrandKit | undefined> => {
-        const settings = await this.settings().getSettings();
-        return sanitizeReportsBrandKit(settings.reportsBrandKit);
-    };
-
-    public setBrandKit = async (brandKit: IReportsBrandKit): Promise<void> => {
-        const sanitized = sanitizeReportsBrandKit(brandKit);
-        if (sanitized === undefined) {
-            throw new UnexpectedError("The provided value is not a valid brand kit.");
-        }
-        await this.settings().setReportsBrandKit(sanitized);
-    };
-
-    public deleteBrandKit = async (): Promise<void> => {
-        await this.settings().deleteReportsBrandKit();
-    };
-
-    private settings(): TigerWorkspaceSettings {
-        return new TigerWorkspaceSettings(this.authCall, this.workspace);
-    }
 
     private newObjectId(ref: ObjRef | undefined, what: string): string {
         if (!ref) {

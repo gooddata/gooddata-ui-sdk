@@ -6,6 +6,11 @@ import { customizationContext } from "./CustomizationContext.js";
 import { DefaultAgentChooser } from "./customized/AgentChooser.js";
 import { DefaultAgentItem } from "./customized/AgentItem.js";
 import { DefaultAssistantMessage } from "./customized/AssistantMessage.js";
+import { DefaultConversationDateGrouping } from "./customized/ConversationDateGrouping.js";
+import { DefaultConversationDrawerHeader } from "./customized/ConversationDrawerHeader.js";
+import { DefaultConversationFooter } from "./customized/ConversationFooter.js";
+import { DefaultConversationHeader } from "./customized/ConversationHeader.js";
+import { DefaultConversationItem } from "./customized/ConversationItem.js";
 import { DefaultDisclaimer } from "./customized/Disclaimer.js";
 import { DefaultFeedback } from "./customized/Feedback.js";
 import { DefaultFollowUpButtons } from "./customized/FollowUpButtons.js";
@@ -19,6 +24,11 @@ import {
     type IGenAIAssistantAgentChooserProps,
     type IGenAIAssistantAgentItemProps,
     type IGenAIAssistantAssistantMessageProps,
+    type IGenAIAssistantConversationDateGroupingProps,
+    type IGenAIAssistantConversationDrawerHeaderProps,
+    type IGenAIAssistantConversationFooterProps,
+    type IGenAIAssistantConversationHeaderProps,
+    type IGenAIAssistantConversationItemProps,
     type IGenAIAssistantFeedbackProps,
     type IGenAIAssistantFollowUpButtonsProps,
     type IGenAIAssistantFollowUpQuestionProps,
@@ -70,6 +80,60 @@ function AgentItemSlotRenderer(props: IGenAIAssistantAgentItemProps) {
         return <AgentItemSlot Default={DefaultAgentItem} defaultProps={defaultProps} />;
     }
     return <DefaultAgentItem {...props} />;
+}
+
+function ConversationItemSlotRenderer(props: IGenAIAssistantConversationItemProps) {
+    const { slots } = useContext(customizationContext);
+    const ConversationItemSlot = slots?.ConversationItem;
+
+    if (ConversationItemSlot) {
+        return <ConversationItemSlot Default={DefaultConversationItem} defaultProps={props} />;
+    }
+    return <DefaultConversationItem {...props} />;
+}
+
+function ConversationHeaderSlotRenderer(props: IGenAIAssistantConversationHeaderProps) {
+    const { slots } = useContext(customizationContext);
+    const ConversationHeaderSlot = slots?.ConversationHeader;
+
+    if (ConversationHeaderSlot) {
+        return <ConversationHeaderSlot Default={DefaultConversationHeader} defaultProps={props} />;
+    }
+    return <DefaultConversationHeader {...props} />;
+}
+
+function ConversationDrawerHeaderSlotRenderer(props: IGenAIAssistantConversationDrawerHeaderProps) {
+    const { slots } = useContext(customizationContext);
+    const ConversationDrawerHeaderSlot = slots?.ConversationDrawerHeader;
+
+    if (ConversationDrawerHeaderSlot) {
+        return (
+            <ConversationDrawerHeaderSlot Default={DefaultConversationDrawerHeader} defaultProps={props} />
+        );
+    }
+    return <DefaultConversationDrawerHeader {...props} />;
+}
+
+function ConversationFooterSlotRenderer(props: IGenAIAssistantConversationFooterProps) {
+    const { slots } = useContext(customizationContext);
+    const ConversationFooterSlot = slots?.ConversationFooter;
+
+    if (ConversationFooterSlot) {
+        return <ConversationFooterSlot Default={DefaultConversationFooter} defaultProps={props} />;
+    }
+    return <DefaultConversationFooter {...props} />;
+}
+
+function ConversationDateGroupingSlotRenderer(props: IGenAIAssistantConversationDateGroupingProps) {
+    const { slots } = useContext(customizationContext);
+    const ConversationDateGroupingSlot = slots?.ConversationDateGrouping;
+
+    if (ConversationDateGroupingSlot) {
+        return (
+            <ConversationDateGroupingSlot Default={DefaultConversationDateGrouping} defaultProps={props} />
+        );
+    }
+    return <DefaultConversationDateGrouping {...props} />;
 }
 
 function UserMessageSlotRenderer(props: IGenAIAssistantUserMessageProps) {
@@ -178,6 +242,11 @@ export function CustomizationProvider({ children, slots }: PropsWithChildren<Cus
             LandingScreenComponent: LandingScreenSlotRenderer,
             DisclaimerComponent: DisclaimerSlotRenderer,
             AgentItemComponent: AgentItemSlotRenderer,
+            ConversationItemComponent: ConversationItemSlotRenderer,
+            ConversationDrawerHeaderComponent: ConversationDrawerHeaderSlotRenderer,
+            ConversationHeaderComponent: ConversationHeaderSlotRenderer,
+            ConversationFooterComponent: ConversationFooterSlotRenderer,
+            ConversationDateGroupingComponent: ConversationDateGroupingSlotRenderer,
             UserMessageComponent: UserMessageSlotRenderer,
             AssistantMessageComponent: AssistantMessageSlotRenderer,
             MessageTextContentComponent: MessageTextContentSlotRenderer,

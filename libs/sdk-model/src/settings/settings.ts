@@ -3,7 +3,6 @@
 import { isEmpty } from "lodash-es";
 
 import type { IDateFilterConfig } from "../dateFilterConfig/index.js";
-import type { IReportsBrandKit } from "../reports/brandKit.js";
 
 /**
  * Describes metric format override configuration.
@@ -351,12 +350,6 @@ export interface IPermanentSettings {
      * @beta
      */
     defaultExportTemplate?: IDefaultExportTemplate;
-
-    /**
-     * Brand kit offered to report authors: brand colors, typography and shared assets.
-     * @alpha
-     */
-    reportsBrandKit?: IReportsBrandKit;
 
     /**
      * Indicates current platform edition.
@@ -1195,4 +1188,17 @@ export interface IFeatureFlags {
      * Enable the Business Briefing reports application.
      */
     enableBusinessBriefingReportsApp?: boolean;
+
+    /**
+     * Enable the write and export postMessage commands for embedded dashboards and Analytical Designer.
+     *
+     * @remarks
+     * Covers saveDashboard, saveAsDashboard, exportToPdf and openDeleteDashboardDialog in embedded
+     * dashboards, and saveInsight, saveAsInsight and exportInsight in embedded Analytical Designer.
+     * These commands are accepted from any parent origin, so the embedding organization must restrict
+     * who may frame the application through the CSP frame-ancestors directive before this is enabled.
+     *
+     * Disabled by default.
+     */
+    enableEmbeddingWriteCommands?: boolean;
 }

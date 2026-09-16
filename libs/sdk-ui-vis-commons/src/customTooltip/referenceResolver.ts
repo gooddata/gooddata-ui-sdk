@@ -7,6 +7,7 @@ import {
     type IResolvedReferenceValues,
     type ITooltipLocalizedStrings,
     type ResolvedReference,
+    computedAttributeKey,
     labelKey,
     metricKey,
 } from "./types.js";
@@ -41,13 +42,21 @@ function renderReference(ref: ResolvedReference | undefined, strings: ITooltipLo
     }
 }
 
-// Prefix is matched case-insensitively (`metric` | `label`); LDM identifiers are case-sensitive.
+// One key namespace per object type, so an id reused across types resolves to the right value.
+// The prefix is matched case-insensitively; LDM identifiers are case-sensitive.
+const KEY_BUILDERS: Record<string, (id: string) => string> = {
+    metric: metricKey,
+    label: labelKey,
+    computed_attribute: computedAttributeKey,
+};
+
 function lookupRef(
     values: IResolvedReferenceValues,
     prefix: string,
     identifier: string,
 ): ResolvedReference | undefined {
-    return values[prefix.toLowerCase() === "metric" ? metricKey(identifier) : labelKey(identifier)];
+    const buildKey = KEY_BUILDERS[prefix.toLowerCase()];
+    return buildKey ? values[buildKey(identifier)] : undefined;
 }
 
 // In image/link URL targets a no-data reference must collapse to empty rather than
@@ -81,7 +90,7 @@ function blankNonValueTargets(content: string, values: IResolvedReferenceValues)
 }
 
 /**
- * Substitutes `{metric/id}` and `{label/id}` references in markdown content
+ * Substitutes `{metric/id}`, `{label/id}` and `{computed_attribute/id}` references in markdown content
  * with resolved values from the lookup table.
  *
  * Substituted values come from data and may contain markdown metacharacters

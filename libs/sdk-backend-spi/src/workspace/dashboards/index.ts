@@ -264,6 +264,7 @@ export type SupportedDashboardReferenceTypes =
     | "dataSet"
     | "displayForm"
     | "measure"
+    | "computedAttribute"
     | "analyticalDashboard";
 
 /**

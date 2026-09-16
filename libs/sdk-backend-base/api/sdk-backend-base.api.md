@@ -143,7 +143,6 @@ import { IReport } from '@gooddata/sdk-model';
 import { IReportDefinition } from '@gooddata/sdk-model';
 import { IReportPageLayout } from '@gooddata/sdk-model';
 import { IReportPageLayoutDefinition } from '@gooddata/sdk-model';
-import { IReportsBrandKit } from '@gooddata/sdk-model';
 import { IReportTemplate } from '@gooddata/sdk-model';
 import { IReportTemplateDefinition } from '@gooddata/sdk-model';
 import { IRequestCorrelationMetadata } from '@gooddata/sdk-backend-spi';
@@ -248,6 +247,8 @@ export class AttributeDisplayFormMetadataObjectBuilder<T extends IAttributeDispl
     // (undocumented)
     attribute(ref: ObjRef): this;
     // (undocumented)
+    conditionalFormatting(conditionalFormatting?: ISemanticConditionalFormatting): this;
+    // (undocumented)
     displayFormType(type: string | undefined): this;
     // (undocumented)
     geoAreaConfig(config: IAttributeDisplayFormGeoAreaConfig | undefined): this;
@@ -259,6 +260,8 @@ export class AttributeDisplayFormMetadataObjectBuilder<T extends IAttributeDispl
 
 // @beta
 export class AttributeMetadataObjectBuilder<T extends IAttributeMetadataObject = IAttributeMetadataObject> extends MetadataObjectBuilder<T> {
+    // (undocumented)
+    conditionalFormatting(conditionalFormatting?: ISemanticConditionalFormatting): this;
     // (undocumented)
     dataSet(value: IDataSetMetadataObject | undefined): this;
     // (undocumented)
@@ -852,15 +855,11 @@ export abstract class DecoratedWorkspaceReportsService implements IWorkspaceRepo
     // (undocumented)
     protected readonly decorated: IWorkspaceReportsService;
     // (undocumented)
-    deleteBrandKit(): Promise<void>;
-    // (undocumented)
     deleteReport(ref: ObjRef): Promise<void>;
     // (undocumented)
     deleteReportPageLayout(ref: ObjRef): Promise<void>;
     // (undocumented)
     deleteReportTemplate(ref: ObjRef): Promise<void>;
-    // (undocumented)
-    getBrandKit(): Promise<IReportsBrandKit | undefined>;
     // (undocumented)
     getReport(ref: ObjRef): Promise<IReport>;
     // (undocumented)
@@ -873,8 +872,6 @@ export abstract class DecoratedWorkspaceReportsService implements IWorkspaceRepo
     getReportTemplate(ref: ObjRef): Promise<IReportTemplate>;
     // (undocumented)
     getReportTemplates(): Promise<IReportTemplate[]>;
-    // (undocumented)
-    setBrandKit(brandKit: IReportsBrandKit): Promise<void>;
     // (undocumented)
     updateReport(report: IReport): Promise<IReport>;
     // (undocumented)
@@ -1231,15 +1228,11 @@ export class InMemoryWorkspaceReportsService implements IWorkspaceReportsService
     // (undocumented)
     createReportTemplate(template: IReportTemplateDefinition): Promise<IReportTemplate>;
     // (undocumented)
-    deleteBrandKit(): Promise<void>;
-    // (undocumented)
     deleteReport(ref: ObjRef): Promise<void>;
     // (undocumented)
     deleteReportPageLayout(ref: ObjRef): Promise<void>;
     // (undocumented)
     deleteReportTemplate(ref: ObjRef): Promise<void>;
-    // (undocumented)
-    getBrandKit(): Promise<IReportsBrandKit | undefined>;
     // (undocumented)
     getReport(ref: ObjRef): Promise<IReport>;
     // (undocumented)
@@ -1252,8 +1245,6 @@ export class InMemoryWorkspaceReportsService implements IWorkspaceReportsService
     getReportTemplate(ref: ObjRef): Promise<IReportTemplate>;
     // (undocumented)
     getReportTemplates(): Promise<IReportTemplate[]>;
-    // (undocumented)
-    setBrandKit(brandKit: IReportsBrandKit): Promise<void>;
     // (undocumented)
     updateReport(report: IReport): Promise<IReport>;
     // (undocumented)

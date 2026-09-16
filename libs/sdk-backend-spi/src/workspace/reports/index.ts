@@ -7,7 +7,6 @@ import {
     type IReportPageLayoutDefinition,
     type IReportTemplate,
     type IReportTemplateDefinition,
-    type IReportsBrandKit,
     type ObjRef,
 } from "@gooddata/sdk-model";
 
@@ -108,28 +107,4 @@ export interface IWorkspaceReportsService {
      * Delete an existing report.
      */
     deleteReport(ref: ObjRef): Promise<void>;
-
-    //
-    // Brand kit
-    //
-
-    /**
-     * Get the workspace brand kit, or undefined when none is set.
-     *
-     * @remarks
-     * Backed by the `reportsBrandKit` workspace setting. The stored content is free-form JSON;
-     * implementations sanitize it ({@link @gooddata/sdk-model#sanitizeReportsBrandKit}) so the
-     * result is always a valid kit.
-     */
-    getBrandKit(): Promise<IReportsBrandKit | undefined>;
-
-    /**
-     * Set the workspace brand kit.
-     */
-    setBrandKit(brandKit: IReportsBrandKit): Promise<void>;
-
-    /**
-     * Delete the workspace brand kit.
-     */
-    deleteBrandKit(): Promise<void>;
 }

@@ -8,7 +8,7 @@ import {
     type IMeasureReferencing,
     type IMeasuresQuery,
     type ISaveMeasureOptions,
-    type IUpdateMeasureMetaPayload,
+    type IUpdateMetadataObjectMetaPayload,
     type IWorkspaceMeasuresService,
 } from "@gooddata/sdk-backend-spi";
 import {
@@ -49,7 +49,7 @@ export abstract class DecoratedWorkspaceMeasuresService implements IWorkspaceMea
         return this.decorated.updateMeasure(measure);
     }
 
-    updateMeasureMeta(measure: IUpdateMeasureMetaPayload): Promise<IMeasureMetadataObject> {
+    updateMeasureMeta(measure: IUpdateMetadataObjectMetaPayload): Promise<IMeasureMetadataObject> {
         return this.decorated.updateMeasureMeta(measure);
     }
 

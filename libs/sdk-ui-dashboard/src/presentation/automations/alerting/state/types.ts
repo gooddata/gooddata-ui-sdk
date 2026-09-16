@@ -13,7 +13,6 @@ import {
     type IAlertTriggerInterval,
     type IAlertTriggerMode,
     type IAttribute,
-    type IAttributeMetadataObject,
     type IAutomationMetadataObjectDefinition,
     type IAutomationRecipient,
     type IMeasure,
@@ -171,9 +170,9 @@ export interface IAlertDataContextValue {
      */
     isResultLoading: boolean;
     /**
-     * Distinct values of an attribute in the widget's execution result.
+     * Distinct values of an insight attribute in the widget's execution result, by its display form.
      */
-    getAttributeValues: (attribute: IAttributeMetadataObject) => AttributeValue[];
+    getAttributeValues: (attribute: IAttribute) => AttributeValue[];
     /**
      * The measure's current value, optionally sliced by an attribute value; undefined while loading.
      */

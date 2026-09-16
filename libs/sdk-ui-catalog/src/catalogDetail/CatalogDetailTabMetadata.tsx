@@ -4,7 +4,7 @@ import cx from "classnames";
 import type { ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import type { ISemanticConditionalFormatting, ISeparators, MetricType } from "@gooddata/sdk-model";
+import type { ISemanticConditionalFormatting, ISeparators, MetricType, ObjRef } from "@gooddata/sdk-model";
 import { type IUiTagDef, UiDate, UiIcon, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import {
@@ -19,7 +19,11 @@ import { type ICatalogItem } from "../catalogItem/types.js";
 import { getObjectTypeLabel } from "../objectType/labels.js";
 import { useFeatureFlag } from "../permission/PermissionsContext.js";
 
-import { CatalogDetailConditionalFormatting } from "./CatalogDetailConditionalFormatting.js";
+import { CatalogDetailAttributeLabelsConditionalFormatting } from "./CatalogDetailAttributeLabelsConditionalFormatting.js";
+import {
+    CatalogDetailConditionalFormatting,
+    measureTargetOption,
+} from "./CatalogDetailConditionalFormatting.js";
 import { CatalogDetailContentRow } from "./CatalogDetailContentRow.js";
 import { CatalogDetailGranularities } from "./CatalogDetailGranularities.js";
 import { CatalogDetailMetricSettings } from "./CatalogDetailMetricSettings.js";
@@ -36,6 +40,10 @@ type Props = {
     onMetricTypeChange?: (metricType: MetricType | undefined) => void;
     onFormatChange?: (format: string | null) => void;
     onConditionalFormattingChange?: (
+        conditionalFormatting: ISemanticConditionalFormatting | undefined,
+    ) => void;
+    onLabelConditionalFormattingChange?: (
+        labelRef: ObjRef,
         conditionalFormatting: ISemanticConditionalFormatting | undefined,
     ) => void;
     separators?: ISeparators;
@@ -64,6 +72,7 @@ export function CatalogDetailTabMetadata({
     onMetricTypeChange,
     onFormatChange,
     onConditionalFormattingChange,
+    onLabelConditionalFormattingChange,
     separators,
     currencyFormatOverride,
     enableMetricFormatOverrides,
@@ -73,10 +82,10 @@ export function CatalogDetailTabMetadata({
     const enableSemanticConditionalFormatting = useFeatureFlag("enableSemanticConditionalFormatting");
     const intl = useIntl();
     const isMeasure = isCatalogItemMeasure(item);
+    const isAttribute = isCatalogItemAttribute(item);
     const isDataSet = isCatalogItemDataSet(item);
     const granularities = isDataSet ? (item.dataSet.attributes ?? []) : [];
-    const datasetTitle =
-        isCatalogItemAttribute(item) || isCatalogItemFact(item) ? item.dataSet?.title : undefined;
+    const datasetTitle = isAttribute || isCatalogItemFact(item) ? item.dataSet?.title : undefined;
 
     return (
         <dl className="gd-analytics-catalog-detail__tab-content">
@@ -204,12 +213,18 @@ export function CatalogDetailTabMetadata({
             ) : null}
             {isMeasure && enableSemanticConditionalFormatting && onConditionalFormattingChange ? (
                 <CatalogDetailConditionalFormatting
-                    identifier={item.identifier}
-                    title={item.title}
-                    format={item.format}
+                    targetOption={measureTargetOption(item)}
                     conditionalFormatting={item.conditionalFormatting}
                     canEdit={canEdit}
                     onConditionalFormattingChange={onConditionalFormattingChange}
+                    separators={separators}
+                />
+            ) : null}
+            {isAttribute && enableSemanticConditionalFormatting && onLabelConditionalFormattingChange ? (
+                <CatalogDetailAttributeLabelsConditionalFormatting
+                    labels={item.labels ?? []}
+                    canEdit={canEdit}
+                    onLabelConditionalFormattingChange={onLabelConditionalFormattingChange}
                     separators={separators}
                 />
             ) : null}

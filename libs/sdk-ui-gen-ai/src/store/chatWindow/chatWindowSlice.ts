@@ -1,7 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
 import { type PayloadAction, type Reducer, createSlice } from "@reduxjs/toolkit";
-import { castDraft } from "immer";
 
 import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import {
@@ -225,7 +224,7 @@ const chatWindowSlice = createSlice({
             state.excludeTags = excludeTags;
         },
         setCatalogItemsActions: (state, { payload }: PayloadAction<CatalogItem[] | undefined>) => {
-            state.catalogItems = castDraft(payload);
+            state.catalogItems = payload;
         },
         setInputValueAction: (state, { payload: { value } }: PayloadAction<{ value: string }>) => {
             state.inputValue = value;

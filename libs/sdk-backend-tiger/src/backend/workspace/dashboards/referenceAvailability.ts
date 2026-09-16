@@ -33,11 +33,11 @@ import { objectTypeToTigerIdType } from "../../../types/refTypeMapping.js";
  * are resolved from each filter context's own document (verified on dev-latest). Display forms
  * referenced elsewhere in dashboard content (e.g. drill-to-URL) are not inspected.
  *
- * Metrics and labels referenced from a rich text widget live inside markdown text rather than as
- * structured refs, so the backend does not link them yet (measured on dev-latest: a dashboard GET
+ * Metrics, labels and computed attributes referenced from a rich text widget live inside markdown
+ * text rather than as structured refs, so the backend does not link them yet (measured on dev-latest: a dashboard GET
  * with `include=metrics` returns no `metrics` relationship for such a reference, for an
  * administrator as well). They are inspected here because the backend team agreed to report them
- * through this same signal; until it does, no metric is reported and the widget behaves as today.
+ * through this same signal; until it does, nothing is reported and the widget behaves as today.
  *
  * Nothing outside this module may interpret the raw availability metadata or relationships;
  * replacing the mechanism must only change this module.
@@ -57,6 +57,7 @@ const RELATIONSHIP_KEYS = {
     filterContext: "filterContexts",
     displayForm: "labels",
     measure: "metrics",
+    computedAttribute: "computedAttributes",
     analyticalDashboard: "analyticalDashboards",
 } as const satisfies Record<InspectedType, DashboardInclude>;
 
@@ -133,12 +134,20 @@ function diffInspectedTypes(
 
         for (const linkage of restricted) {
             if (linkage.type === tigerType && linkage.id !== selfId && related.has(linkage.id)) {
-                unavailable.push({ ref: idRef(linkage.id, type), type, reason: "forbidden" });
+                unavailable.push({
+                    ref: idRef(linkage.id, type),
+                    type,
+                    reason: "forbidden",
+                });
             }
         }
         for (const id of contentRefIds.get(tigerType) ?? []) {
             if (id !== selfId && !related.has(id)) {
-                unavailable.push({ ref: idRef(id, type), type, reason: "notFound" });
+                unavailable.push({
+                    ref: idRef(id, type),
+                    type,
+                    reason: "notFound",
+                });
             }
         }
     }

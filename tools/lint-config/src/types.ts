@@ -26,3 +26,5 @@ export interface IOverride<RulePrefix extends string = ""> {
     files: OverrideFiles;
     rules: Rules<RulePrefix>;
 }
+
+export type Settings = Record<string, object>;

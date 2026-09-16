@@ -134,6 +134,7 @@ export {
     type ITooltipLocalizedStrings,
     metricKey,
     labelKey,
+    computedAttributeKey,
 } from "./customTooltip/types.js";
 export { markdownToHtml } from "./customTooltip/markdownToHtml.js";
 export { resolveReferences } from "./customTooltip/referenceResolver.js";

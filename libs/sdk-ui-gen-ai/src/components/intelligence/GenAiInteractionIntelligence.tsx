@@ -81,7 +81,7 @@ export function GenAiInteractionIntelligence({
     }
 
     return (
-        <div className={b()} ref={panelRef}>
+        <div className={b()} data-testid="interaction-intelligence-panel" ref={panelRef}>
             {resolvedView.mode === "detail" ? (
                 <IntelligenceCategoryDetail
                     data={data}

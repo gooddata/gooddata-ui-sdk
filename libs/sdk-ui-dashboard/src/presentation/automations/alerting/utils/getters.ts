@@ -12,7 +12,6 @@ import {
     type IAlertRelativeArithmeticOperator,
     type IAlertRelativeOperator,
     type IAttribute,
-    type IAttributeMetadataObject,
     type IAutomationAlert,
     type IAutomationMetadataObject,
     type IAutomationMetadataObjectDefinition,
@@ -307,9 +306,14 @@ export function getSelectedCatalogAttribute(
         return undefined;
     }
 
+    // The display form's own title, else two labels of one attribute render as the same row.
+    const displayForm = item.attribute.displayForms.find((df) =>
+        areObjRefsEqual(df.ref, attribute.attribute.attribute.displayForm),
+    );
+
     return {
         ...item.attribute,
-        title: getAttributeTitle(attribute.attribute) ?? item.attribute?.title,
+        title: getAttributeTitle(attribute.attribute) ?? displayForm?.title ?? item.attribute.title,
     };
 }
 
@@ -317,8 +321,8 @@ export function getSelectedCatalogAttribute(
  * @internal
  */
 export function getSelectedCatalogAttributeValue(
-    attribute: IAttributeMetadataObject | undefined,
-    getAttributeValue: (attr: IAttributeMetadataObject) => {
+    attribute: IAttribute | undefined,
+    getAttributeValue: (attr: IAttribute) => {
         title: string;
         value: string;
         name: string;

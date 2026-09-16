@@ -9,6 +9,7 @@ import {
     MeasureGroupIdentifier,
     filterMeasureRef,
     idRef,
+    isComputedAttributeRef,
     isIdentifierRef,
     isLocalIdRef,
     isSimpleMeasure,
@@ -20,32 +21,39 @@ import {
 } from "@gooddata/sdk-model";
 import { REFERENCE_REGEX_MATCH } from "@gooddata/sdk-ui-kit";
 
-import { type ICustomTooltipConfig } from "./types.js";
+import { type ICustomTooltipConfig, computedAttributeKey, labelKey } from "./types.js";
 
 interface IParsedReference {
-    type: "metric" | "label";
+    type: "metric" | "label" | "computed_attribute";
     id: string;
 }
+
+// Keyed by the prefix lowercased, as the regex matches it case-insensitively.
+const CANONICAL_TYPE: Record<string, IParsedReference["type"]> = {
+    metric: "metric",
+    label: "label",
+    computed_attribute: "computed_attribute",
+};
 
 function parseReferences(content: string): IParsedReference[] {
     const refs: IParsedReference[] = [];
     const seen = new Set<string>();
 
     // REFERENCE_REGEX_MATCH lives in sdk-ui-kit; match[3] is the kind
-    // ("label" | "metric"), match[4] is the id.
+    // ("label" | "metric" | "computed_attribute"), match[4] is the id.
     for (const match of content.matchAll(REFERENCE_REGEX_MATCH)) {
-        const rawType = match[3].toLowerCase();
+        const type = CANONICAL_TYPE[match[3].toLowerCase()];
         // Synonyms like `measure` / `displayForm` aren't canonical here; let
         // them fall through so the rest of the pipeline doesn't silently treat
         // a `measure` ref as a metric.
-        if (rawType !== "metric" && rawType !== "label") {
+        if (!type) {
             continue;
         }
         const id = match[4];
-        const key = `${rawType}/${id}`;
+        const key = `${type}/${id}`;
         if (!seen.has(key)) {
             seen.add(key);
-            refs.push({ type: rawType, id });
+            refs.push({ type, id });
         }
     }
 
@@ -65,18 +73,29 @@ function getChartMetricIds(definition: IExecutionDefinition): Set<string> {
     return ids;
 }
 
-function getChartLabelIds(definition: IExecutionDefinition): Set<string> {
-    // Only display-form identifier refs match. Refs in user content using a
-    // URI ref or a parent attribute id miss the set, fall into the secondary
-    // execution, and fail backend-side (one bad ref drops the whole call).
-    const ids = new Set<string>();
+/**
+ * The chart's attribute-shaped ids, kept apart by object type. A computed attribute's own ref is
+ * what sits on the display form slot, so without the split a label and a computed attribute of the
+ * same id would be indistinguishable here - and a reference to one would be answered by the other.
+ *
+ * Only identifier refs match. Refs in user content using a URI ref or a parent attribute id miss
+ * the set, fall into the secondary execution, and fail backend-side (one bad ref drops the whole
+ * call).
+ */
+function getChartAttributeIds(definition: IExecutionDefinition): {
+    labelIds: Set<string>;
+    computedAttributeIds: Set<string>;
+} {
+    const labelIds = new Set<string>();
+    const computedAttributeIds = new Set<string>();
     for (const attr of definition.attributes) {
         const ref = attr.attribute.displayForm;
-        if (isIdentifierRef(ref)) {
-            ids.add(ref.identifier);
+        if (!isIdentifierRef(ref)) {
+            continue;
         }
+        (isComputedAttributeRef(ref) ? computedAttributeIds : labelIds).add(ref.identifier);
     }
-    return ids;
+    return { labelIds, computedAttributeIds };
 }
 
 /**
@@ -106,8 +125,8 @@ function getFilterDependencyMeasures(
 
 /**
  * Build tooltip-only measures for the given references (already filtered to
- * those not in the chart). Labels get a max+count pair (mirrors the RichText
- * widget pattern) so the lookup can render "(Multiple items)" when a label
+ * those not in the chart). Labels and computed attributes get a max+count pair
+ * (mirrors the RichText widget pattern) so the lookup can render "(Multiple items)" when a label
  * resolves to >1 value per row.
  *
  * LocalId prefixes `tt_m_`, `tt_lv_`, `tt_lc_` are reserved — collision with
@@ -116,12 +135,12 @@ function getFilterDependencyMeasures(
 function buildTooltipItems(refs: readonly IParsedReference[]): {
     measures: IMeasure[];
     labelCountMap: Record<string, string>;
-    labelIdMap: Record<string, string>;
+    attributeKeyMap: Record<string, string>;
     measureIdMap: Record<string, string>;
 } {
     const measures: IMeasure[] = [];
     const labelCountMap: Record<string, string> = {};
-    const labelIdMap: Record<string, string> = {};
+    const attributeKeyMap: Record<string, string> = {};
     const measureIdMap: Record<string, string> = {};
     let idx = 0;
 
@@ -135,18 +154,21 @@ function buildTooltipItems(refs: readonly IParsedReference[]): {
             const countLocalId = `tt_lc_${idx}`;
             idx++;
 
-            measures.push(
-                newMeasure(idRef(ref.id, "displayForm"), (m) => m.localId(valueLocalId).aggregation("max")),
-            );
-            measures.push(
-                newMeasure(idRef(ref.id, "displayForm"), (m) => m.localId(countLocalId).aggregation("count")),
-            );
+            // A computed attribute has no labels on the backend and is referenced by its own type;
+            // both aggregations below are supported over it.
+            const isComputedAttribute = ref.type === "computed_attribute";
+            const attributeRef = idRef(ref.id, isComputedAttribute ? "computedAttribute" : "displayForm");
+
+            measures.push(newMeasure(attributeRef, (m) => m.localId(valueLocalId).aggregation("max")));
+            measures.push(newMeasure(attributeRef, (m) => m.localId(countLocalId).aggregation("count")));
             labelCountMap[valueLocalId] = countLocalId;
-            labelIdMap[valueLocalId] = ref.id;
+            attributeKeyMap[valueLocalId] = isComputedAttribute
+                ? computedAttributeKey(ref.id)
+                : labelKey(ref.id);
         }
     }
 
-    return { measures, labelCountMap, labelIdMap, measureIdMap };
+    return { measures, labelCountMap, attributeKeyMap, measureIdMap };
 }
 
 /**
@@ -189,8 +211,12 @@ export interface ITooltipExecutionMeta {
     labelCountMap: Record<string, string>;
     /** tooltip metric localId → LDM measure identifier. */
     measureIdMap: Record<string, string>;
-    /** label value localId → LDM label identifier. */
-    labelIdMap: Record<string, string>;
+    /**
+     * Attribute value localId → the lookup key its value is published under. A key rather than a
+     * bare id, because a label and a computed attribute may share an identifier and each belongs
+     * in its own namespace - see {@link @gooddata/sdk-ui-vis-commons#computedAttributeKey}.
+     */
+    attributeKeyMap: Record<string, string>;
 }
 
 /**
@@ -243,7 +269,7 @@ function buildBundle(
     externalRefs: readonly IParsedReference[],
     options?: IBuildTooltipExecutionOptions,
 ): ITooltipExecutionBundle | null {
-    const { measures, labelCountMap, labelIdMap, measureIdMap } = buildTooltipItems(externalRefs);
+    const { measures, labelCountMap, attributeKeyMap, measureIdMap } = buildTooltipItems(externalRefs);
 
     if (measures.length === 0) {
         return null;
@@ -266,7 +292,7 @@ function buildBundle(
 
     return {
         execution,
-        meta: { labelCountMap, measureIdMap, labelIdMap },
+        meta: { labelCountMap, measureIdMap, attributeKeyMap },
     };
 }
 
@@ -290,14 +316,17 @@ export function buildTooltipExecution(
     }
 
     const chartMetricIds = getChartMetricIds(chartDefinition);
-    const chartLabelIds = getChartLabelIds(chartDefinition);
+    const { labelIds, computedAttributeIds } = getChartAttributeIds(chartDefinition);
 
-    // References not already resolvable from the chart's own drill data.
-    const externalRefs = refs.filter(
-        (ref) =>
-            (ref.type === "metric" && !chartMetricIds.has(ref.id)) ||
-            (ref.type === "label" && !chartLabelIds.has(ref.id)),
-    );
+    // References not already resolvable from the chart's own drill data. Each type is matched
+    // against the ids of its own type only: an id may name a label and a computed attribute at
+    // once, and answering one from the other would show a value belonging to a different object.
+    const inChartIds: Record<IParsedReference["type"], Set<string>> = {
+        metric: chartMetricIds,
+        label: labelIds,
+        computed_attribute: computedAttributeIds,
+    };
+    const externalRefs = refs.filter((ref) => !inChartIds[ref.type].has(ref.id));
 
     const batch = buildBundle(executionFactory, chartDefinition, externalRefs, options);
     if (!batch) {

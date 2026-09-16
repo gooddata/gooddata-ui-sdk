@@ -7,6 +7,7 @@ import {
     type IAttributeWithReferences,
     type IAttributesQuery,
     type IElementsQueryFactory,
+    type IUpdateMetadataObjectMetaPayload,
     type IWorkspaceAttributesService,
     NotSupported,
     UnexpectedResponseError,
@@ -134,6 +135,12 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
     public updateAttributeMeta(
         _: Partial<IMetadataObjectBase> & IMetadataObjectIdentity,
     ): Promise<IAttributeMetadataObject> {
+        throw new NotSupported("not supported");
+    }
+
+    public updateAttributeDisplayFormMeta(
+        _: IUpdateMetadataObjectMetaPayload,
+    ): Promise<IAttributeDisplayFormMetadataObject> {
         throw new NotSupported("not supported");
     }
 

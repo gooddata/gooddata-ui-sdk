@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { useState } from "react";
+import { type ReactNode, useState } from "react";
 
 import { type WeekStart } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
@@ -27,9 +27,13 @@ const initialRangeByGranularity: Record<PeriodRangePickerGranularity, IPeriodRan
 function PeriodRangePickerExample({
     granularity,
     weekStart,
+    customRangeHint,
+    dateFormat,
 }: {
     granularity: PeriodRangePickerGranularity;
     weekStart?: WeekStart;
+    customRangeHint?: ReactNode;
+    dateFormat?: string;
 }) {
     const [range, setRange] = useState<IPeriodRange>(initialRangeByGranularity[granularity]);
     return (
@@ -45,6 +49,8 @@ function PeriodRangePickerExample({
                     isMobile={false}
                     submitForm={() => {}}
                     weekStart={weekStart}
+                    customRangeHint={customRangeHint}
+                    dateFormat={dateFormat}
                 />
             </div>
         </IntlWrapper>
@@ -60,6 +66,34 @@ const openedScreenshot: IStoryParameters["screenshots"] = {
     },
 };
 
+// Same as openedScreenshot, plus an "opened-to" capture: clicking the "to" field must reliably (re)open the
+// shared calendar too, not just the "from" field the plain `opened` capture above already exercises. Applied
+// only to Day/DayThemed below to keep the visual-regression suite's runtime/baseline-review cost down.
+const openedScreenshotWithEndField: IStoryParameters["screenshots"] = {
+    ...openedScreenshot,
+    "opened-to": {
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        clickSelector: '.s-period-range-picker input[date-range="end"]',
+        delay: { postOperation: 200 },
+    },
+};
+
+// rc-picker's field isn't a masked input here (no `format={{ type: "mask" }}` is passed), so a stray
+// character just lands in the text and fails the strict parse - flagging the field invalid right away,
+// with no blur needed. keyPressSelector only focuses the field, and the calendar opens on click alone,
+// so the dropdown stays closed and the error row below the fields stays unobstructed.
+const errorScreenshot: IStoryParameters["screenshots"] = {
+    error: {
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        keyPressSelector: {
+            selector: '.s-period-range-picker input[date-range="start"]',
+            keyPress: "x",
+        },
+        postInteractionWait: { selector: ".s-absolute-range-error" },
+        delay: { postOperation: 300 },
+    },
+};
+
 export default {
     title: "10 Filters/DateFilter/PeriodRangePicker",
 };
@@ -67,7 +101,23 @@ export default {
 export function Day() {
     return <PeriodRangePickerExample granularity="GDC.time.date" />;
 }
-Day.parameters = { kind: "day", screenshots: openedScreenshot } satisfies IStoryParameters;
+Day.parameters = {
+    kind: "day",
+    screenshots: { ...openedScreenshotWithEndField, ...errorScreenshot },
+} satisfies IStoryParameters;
+
+export function DayWithCustomHint() {
+    return (
+        <PeriodRangePickerExample
+            granularity="GDC.time.date"
+            customRangeHint={<span className="s-custom-range-hint">Custom hint content</span>}
+        />
+    );
+}
+DayWithCustomHint.parameters = {
+    kind: "day with custom hint",
+    screenshots: openedScreenshot,
+} satisfies IStoryParameters;
 
 export function Week() {
     return <PeriodRangePickerExample granularity="GDC.time.week_us" />;
@@ -98,7 +148,10 @@ export function Year() {
 Year.parameters = { kind: "year", screenshots: openedScreenshot } satisfies IStoryParameters;
 
 export const DayThemed = () => wrapWithTheme(<PeriodRangePickerExample granularity="GDC.time.date" />);
-DayThemed.parameters = { kind: "day themed", screenshots: openedScreenshot } satisfies IStoryParameters;
+DayThemed.parameters = {
+    kind: "day themed",
+    screenshots: { ...openedScreenshotWithEndField, ...errorScreenshot },
+} satisfies IStoryParameters;
 
 export const WeekThemed = () => wrapWithTheme(<PeriodRangePickerExample granularity="GDC.time.week_us" />);
 WeekThemed.parameters = { kind: "week themed", screenshots: openedScreenshot } satisfies IStoryParameters;
@@ -121,3 +174,11 @@ QuarterThemed.parameters = {
 
 export const YearThemed = () => wrapWithTheme(<PeriodRangePickerExample granularity="GDC.time.year" />);
 YearThemed.parameters = { kind: "year themed", screenshots: openedScreenshot } satisfies IStoryParameters;
+
+export function DayWithCustomFormat() {
+    return <PeriodRangePickerExample granularity="GDC.time.date" dateFormat="dd/MM/yyyy" />;
+}
+DayWithCustomFormat.parameters = {
+    kind: "day with custom format",
+    screenshots: openedScreenshot,
+} satisfies IStoryParameters;

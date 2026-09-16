@@ -123,9 +123,11 @@ export function sortGrantees(grantees: readonly IObjectShareGrantee[]): IObjectS
  *
  * @internal
  */
-export function sortShareableLabels(labels: readonly IObjectShareLabel[]): IObjectShareLabel[] {
+export function sortShareableLabels<T extends { id: string; title: string; isPrimary?: boolean }>(
+    labels: readonly T[],
+): T[] {
     return labels.slice().sort((a, b) => {
-        if (a.isPrimary !== b.isPrimary) {
+        if (!!a.isPrimary !== !!b.isPrimary) {
             return a.isPrimary ? -1 : 1;
         }
         const byTitle = a.title.localeCompare(b.title, undefined, { sensitivity: "base" });

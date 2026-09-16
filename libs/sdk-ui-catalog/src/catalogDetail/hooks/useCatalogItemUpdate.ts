@@ -5,12 +5,24 @@ import { useCallback, useEffect, useState } from "react";
 import { isEqual } from "lodash-es";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { type IUser, type MetricType } from "@gooddata/sdk-model";
+import {
+    type ISemanticConditionalFormatting,
+    type IUser,
+    type MetricType,
+    type ObjRef,
+    areObjRefsEqual,
+} from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { getDisplayName } from "../../catalogItem/converter.js";
-import { isCatalogItemHidable, isCatalogItemLoaded, isCatalogItemMeasure } from "../../catalogItem/guards.js";
 import {
+    isCatalogItemAttribute,
+    isCatalogItemHidable,
+    isCatalogItemLoaded,
+    isCatalogItemMeasure,
+} from "../../catalogItem/guards.js";
+import {
+    persistLabelConditionalFormatting,
     persistMeasureConditionalFormatting,
     updateCatalogItem,
     updateCatalogItemCertification,
@@ -35,7 +47,7 @@ export interface IUseCatalogItemUpdate {
     onError?: (error: Error) => void;
 }
 
-type PersistHandler<TItem extends ICatalogItem> = (item: TItem) => Promise<void> | void;
+type PersistHandler<TItem extends ICatalogItem> = (item: TItem) => Promise<unknown> | void;
 
 export function useCatalogItemUpdate({
     currentUser,
@@ -104,267 +116,137 @@ export function useCatalogItemUpdate({
         [onDelete],
     );
 
-    const updateItemTitle = useCallback(
-        (title: string) => {
+    // One optimistic update flow for every field: apply locally, persist, revert on failure.
+    const runUpdate = useCallback(
+        <TItem extends ICatalogItem>(
+            target: TItem | null | undefined,
+            updater: () => Partial<TItem>,
+            persist?: PersistHandler<TItem>,
+            options?: { touch?: boolean },
+        ) => {
             updateItem(
                 backend,
                 workspace,
                 currentUser,
-                item,
+                target,
                 status !== "success",
-                () => ({
-                    title,
-                }),
+                updater,
                 (newItem) => {
                     setItem(newItem);
                     onUpdate?.(newItem);
                 },
                 (err) => {
-                    revertItemUpdate(err, item);
+                    revertItemUpdate(err, target);
                 },
+                persist,
+                options,
             );
         },
-        [backend, currentUser, item, onUpdate, revertItemUpdate, status, workspace],
+        [backend, currentUser, onUpdate, revertItemUpdate, status, workspace],
+    );
+
+    const updateItemTitle = useCallback(
+        (title: string) => runUpdate(item, () => ({ title })),
+        [item, runUpdate],
     );
     const updateItemDescription = useCallback(
-        (description: string) => {
-            updateItem(
-                backend,
-                workspace,
-                currentUser,
-                item,
-                status !== "success",
-                () => ({
-                    description,
-                }),
-                (newItem) => {
-                    setItem(newItem);
-                    onUpdate?.(newItem);
-                },
-                (err) => {
-                    revertItemUpdate(err, item);
-                },
-            );
-        },
-        [backend, currentUser, item, onUpdate, revertItemUpdate, status, workspace],
+        (description: string) => runUpdate(item, () => ({ description })),
+        [item, runUpdate],
     );
     const updateItemTags = useCallback(
-        (tags: string[]) => {
-            updateItem(
-                backend,
-                workspace,
-                currentUser,
-                item,
-                status !== "success",
-                () => ({
-                    tags,
-                }),
-                (newItem) => {
-                    setItem(newItem);
-                    onUpdate?.(newItem);
-                },
-                (err) => {
-                    revertItemUpdate(err, item);
-                },
-            );
-        },
-        [backend, currentUser, item, onUpdate, revertItemUpdate, status, workspace],
+        (tags: string[]) => runUpdate(item, () => ({ tags })),
+        [item, runUpdate],
     );
     const updateItemIsHidden = useCallback(
         (isHidden: boolean) => {
-            if (!isCatalogItemHidable(item)) {
-                return;
+            if (isCatalogItemHidable(item)) {
+                runUpdate(item, () => ({ isHidden }));
             }
-
-            updateItem(
-                backend,
-                workspace,
-                currentUser,
-                item,
-                status !== "success",
-                () => ({
-                    isHidden,
-                }),
-                (newItem) => {
-                    setItem(newItem);
-                    onUpdate?.(newItem);
-                },
-                (err) => {
-                    revertItemUpdate(err, item);
-                },
-            );
         },
-        [backend, currentUser, item, onUpdate, revertItemUpdate, status, workspace],
+        [item, runUpdate],
     );
     const updateItemIsHiddenFromKda = useCallback(
         (isHiddenFromKda: boolean) => {
-            if (!isCatalogItemMeasure(item)) {
-                return;
+            if (isCatalogItemMeasure(item)) {
+                runUpdate(item, () => ({ isHiddenFromKda }));
             }
-
-            updateItem(
-                backend,
-                workspace,
-                currentUser,
-                item,
-                status !== "success",
-                () => ({
-                    isHiddenFromKda,
-                }),
-                (newItem) => {
-                    setItem(newItem);
-                    onUpdate?.(newItem);
-                },
-                (err) => {
-                    revertItemUpdate(err, item);
-                },
-            );
         },
-        [backend, currentUser, item, onUpdate, revertItemUpdate, status, workspace],
-    );
-    const persistMeasureChanges = useCallback(
-        (nextItem: ICatalogItemMeasure) => persistMeasureMetadata(backend, workspace, nextItem),
-        [backend, workspace],
+        [item, runUpdate],
     );
     const updateItemMetricType = useCallback(
         (metricType: MetricType | undefined) => {
-            if (!isCatalogItemMeasure(item)) {
-                return;
+            if (isCatalogItemMeasure(item)) {
+                runUpdate(
+                    item,
+                    () => ({ metricType }),
+                    (next) => persistMeasureMetadata(backend, workspace, next),
+                );
             }
-
-            updateItem(
-                backend,
-                workspace,
-                currentUser,
-                item,
-                status !== "success",
-                () => ({
-                    metricType,
-                }),
-                (newItem) => {
-                    setItem(newItem);
-                    onUpdate?.(newItem);
-                },
-                (err) => {
-                    revertItemUpdate(err, item);
-                },
-                persistMeasureChanges,
-            );
         },
-        [backend, currentUser, item, onUpdate, persistMeasureChanges, revertItemUpdate, status, workspace],
+        [backend, item, runUpdate, workspace],
     );
     const updateItemFormat = useCallback(
         (format: string | null) => {
-            if (!isCatalogItemMeasure(item)) {
-                return;
+            if (isCatalogItemMeasure(item)) {
+                runUpdate(
+                    item,
+                    () => ({ format }),
+                    (next) => persistMeasureMetadata(backend, workspace, next),
+                );
             }
-
-            updateItem(
-                backend,
-                workspace,
-                currentUser,
-                item,
-                status !== "success",
-                () => ({
-                    format,
-                }),
-                (newItem) => {
-                    setItem(newItem);
-                    onUpdate?.(newItem);
-                },
-                (err) => {
-                    revertItemUpdate(err, item);
-                },
-                persistMeasureChanges,
-            );
         },
-        [backend, currentUser, item, onUpdate, persistMeasureChanges, revertItemUpdate, status, workspace],
-    );
-    const persistMeasureConditionalFormattingChanges = useCallback(
-        (nextItem: ICatalogItemMeasure) => persistMeasureConditionalFormatting(backend, workspace, nextItem),
-        [backend, workspace],
+        [backend, item, runUpdate, workspace],
     );
     const updateItemConditionalFormatting = useCallback(
         (conditionalFormatting: ICatalogItemMeasure["conditionalFormatting"]) => {
-            if (!isCatalogItemMeasure(item)) {
+            if (isCatalogItemMeasure(item)) {
+                runUpdate(
+                    item,
+                    () => ({ conditionalFormatting }),
+                    (next) => persistMeasureConditionalFormatting(backend, workspace, next),
+                );
+            }
+        },
+        [backend, item, runUpdate, workspace],
+    );
+    const updateItemLabelConditionalFormatting = useCallback(
+        (labelRef: ObjRef, conditionalFormatting: ISemanticConditionalFormatting | undefined) => {
+            if (!isCatalogItemAttribute(item)) {
                 return;
             }
-
-            updateItem(
-                backend,
-                workspace,
-                currentUser,
+            const label = item.labels?.find((candidate) => areObjRefsEqual(candidate.ref, labelRef));
+            if (!label) {
+                return;
+            }
+            const updatedLabel = { ...label, conditionalFormatting };
+            runUpdate(
                 item,
-                status !== "success",
                 () => ({
-                    conditionalFormatting,
+                    labels: item.labels?.map((candidate) => (candidate === label ? updatedLabel : candidate)),
                 }),
-                (newItem) => {
-                    setItem(newItem);
-                    onUpdate?.(newItem);
-                },
-                (err) => {
-                    revertItemUpdate(err, item);
-                },
-                persistMeasureConditionalFormattingChanges,
+                () => persistLabelConditionalFormatting(backend, workspace, updatedLabel),
+                { touch: false },
             );
         },
-        [
-            backend,
-            currentUser,
-            item,
-            onUpdate,
-            persistMeasureConditionalFormattingChanges,
-            revertItemUpdate,
-            status,
-            workspace,
-        ],
-    );
-    const persistCertificationChanges = useCallback(
-        (newItem: ICatalogItem) => updateCatalogItemCertification(backend, workspace, newItem),
-        [backend, workspace],
+        [backend, item, runUpdate, workspace],
     );
     const updateItemCertification = useCallback(
-        (certification: ICatalogItem["certification"]) => {
-            updateItem(
-                backend,
-                workspace,
-                currentUser,
+        (certification: ICatalogItem["certification"]) =>
+            runUpdate(
                 item,
-                status !== "success",
                 () => ({
                     certification: certification
                         ? {
                               ...certification,
                               ...(certification.status === "CERTIFIED"
-                                  ? {
-                                        certifiedAt: new Date(),
-                                        certifiedBy: getDisplayName(currentUser),
-                                    }
+                                  ? { certifiedAt: new Date(), certifiedBy: getDisplayName(currentUser) }
                                   : {}),
                           }
                         : undefined,
                 }),
-                (newItem) => {
-                    setItem(newItem);
-                    onUpdate?.(newItem);
-                },
-                (err) => {
-                    revertItemUpdate(err, item);
-                },
-                persistCertificationChanges,
-            );
-        },
-        [
-            backend,
-            currentUser,
-            item,
-            onUpdate,
-            persistCertificationChanges,
-            revertItemUpdate,
-            status,
-            workspace,
-        ],
+                (next) => updateCatalogItemCertification(backend, workspace, next),
+            ),
+        [backend, currentUser, item, runUpdate, workspace],
     );
 
     return {
@@ -379,6 +261,7 @@ export function useCatalogItemUpdate({
         updateItemMetricType,
         updateItemFormat,
         updateItemConditionalFormatting,
+        updateItemLabelConditionalFormatting,
         updateItemCertification,
         applyItemUpdate,
         applyItemDelete,
@@ -395,6 +278,7 @@ function updateItem<TItem extends ICatalogItem>(
     onUpdate: (newItem: TItem) => void,
     onError: (error: Error) => void,
     persist?: PersistHandler<TItem>,
+    options: { touch?: boolean } = {},
 ) {
     if (disabled || !item) {
         return;
@@ -405,7 +289,9 @@ function updateItem<TItem extends ICatalogItem>(
         return;
     }
 
-    const newItem = makeUpdatedItem(user, item, itemChanges);
+    // A label patch does not touch the attribute itself, so it must not stamp updatedAt/updatedBy.
+    const newItem =
+        options.touch === false ? { ...item, ...itemChanges } : makeUpdatedItem(user, item, itemChanges);
 
     onUpdate(newItem);
     const persistFn = persist ?? ((nextItem: TItem) => updateCatalogItem(backend, workspace, nextItem));

@@ -33,6 +33,7 @@ export function IntelligenceCategoryRow({
         <button
             type="button"
             className={e("category-row")}
+            data-testid="interaction-intelligence-category-row"
             onClick={onSelect}
             onMouseEnter={() => onHoverChange(true)}
             onMouseLeave={() => onHoverChange(false)}
@@ -40,7 +41,7 @@ export function IntelligenceCategoryRow({
             onBlur={() => onHoverChange(false)}
         >
             <IconCircle category={category.category} />
-            <span className={e("category-row__label")}>
+            <span className={e("category-row__label")} data-testid="interaction-intelligence-category-label">
                 {resolveMessage(intl, category.labelId, category.category)}
             </span>
             {/* Always rendered — it is what pushes the chevron to the end of the row. */}

@@ -60,9 +60,10 @@ export const selectRestrictedInsightsMap: DashboardSelector<ObjRefMap<IUnavailab
     );
 
 /**
- * Object types a rich text widget can reference: `{metric/id}` and `{label/id}`.
+ * Object types a rich text widget can reference: `{metric/id}`, `{label/id}` and
+ * `{computed_attribute/id}`.
  */
-const RICH_TEXT_REFERENCE_TYPES: ObjectType[] = ["measure", "displayForm"];
+const RICH_TEXT_REFERENCE_TYPES: ObjectType[] = ["measure", "displayForm", "computedAttribute"];
 
 /**
  * Selects the refs a rich text widget references but the current user is not allowed to read. A

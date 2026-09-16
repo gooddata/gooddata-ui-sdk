@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
@@ -275,6 +275,18 @@ describe("UiColorPicker", () => {
 
             expect(screen.getByRole("textbox")).toHaveValue("hsl(0, 100%, 50%)");
             expect(screen.getByRole("combobox", { name: "notation" })).toHaveTextContent("HSL");
+        });
+
+        // The list portals out of the picker, so the keyboard reaches it only by being put there.
+        it("moves focus into the notation list when the keyboard opens it", async () => {
+            renderGathering();
+            const trigger = screen.getByRole("combobox", { name: "notation" });
+
+            trigger.focus();
+            await userEvent.keyboard("{ArrowDown}");
+
+            const list = await screen.findByRole("listbox", { name: "notation" });
+            await waitFor(() => expect(list.contains(document.activeElement)).toBe(true));
         });
 
         it("applies nothing while a function notation is still open", () => {

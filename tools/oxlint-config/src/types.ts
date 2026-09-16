@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import type { GlobalValue, IPackage, Rules } from "@gooddata/lint-config";
+import type { GlobalValue, IPackage, Rules, Settings } from "@gooddata/lint-config";
 
 export type Category =
     | "correctness"
@@ -45,7 +45,7 @@ interface IConfigurationShared<RulePrefix extends string> {
     /**
      * Settings to be added when this configuration is active
      */
-    settings?: Record<string, object>;
+    settings?: Settings;
     /**
      * Ignore patterns to be added when this configuration is active
      */
@@ -57,6 +57,7 @@ interface IOverride<RulePrefix extends string> extends IConfigurationShared<Rule
     excludedFiles?: string[];
     env?: Record<string, boolean>;
     globals?: Record<string, GlobalValue>;
+    settings?: Settings;
 }
 
 export interface IConfiguration<RulePrefix extends string = "">

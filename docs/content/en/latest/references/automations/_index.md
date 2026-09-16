@@ -9,6 +9,10 @@ weight: 80
 
 The `Automations` component lets you review and manage schedule and alert automations directly inside your GoodData applications. It handles data loading, permission checks, and bulk actions while staying configurable through props and context providers.
 
+**NOTE:** This page covers the standalone list component. To customize the alert and scheduled-email dialogs that
+the Dashboard component opens, see
+[Customize the Alert and Scheduled Email Dialogs](../dashboard_component/automation_dialogs_customization/).
+
 ## Features
 
 - Inspect automations at workspace or organization scope from a single React component

@@ -1,8 +1,8 @@
 // (C) 2026 GoodData Corporation
 
-import { type AxiosPromise } from "axios";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
+import { type JsonApiMetricOutDocument } from "@gooddata/api-client-tiger";
 import {
     EntitiesApi_GetEntityMetrics,
     EntitiesApi_PatchEntityMetrics,
@@ -10,6 +10,7 @@ import {
 import { idRef } from "@gooddata/sdk-model";
 
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { axiosResponse } from "../../../utils/axiosResponse.test.helpers.js";
 
 import { type TigerWorkspaceMeasures as TigerWorkspaceMeasuresClass } from "./index.js";
 
@@ -42,20 +43,18 @@ const authCall = vi.fn(async (callback) =>
 ) as TigerAuthenticatedCallGuard;
 
 function patchResponse() {
-    return {
+    return axiosResponse<JsonApiMetricOutDocument>({
         data: {
-            data: {
-                id: "m1",
-                type: "metric",
-                attributes: {
-                    title: "Revenue",
-                    description: "",
-                    tags: [],
-                    content: { maql: "SELECT 1", format: "#,##0.00" },
-                },
+            id: "m1",
+            type: "metric",
+            attributes: {
+                title: "Revenue",
+                description: "",
+                tags: [],
+                content: { maql: "SELECT 1", format: "#,##0.00" },
             },
         },
-    } as unknown as Awaited<AxiosPromise>;
+    });
 }
 
 describe("TigerWorkspaceMeasures.updateMeasureMeta — conditionalFormatting", () => {

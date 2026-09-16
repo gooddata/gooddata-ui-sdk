@@ -11,6 +11,7 @@ const SIDELOADED_REFERENCE_TYPES = [
     "dashboardPlugin",
     "analyticalDashboard",
     "measure",
+    "computedAttribute",
 ] as const satisfies readonly SupportedDashboardReferenceTypes[];
 
 const SIDELOAD_INCLUDE_BY_TYPE = {
@@ -19,6 +20,7 @@ const SIDELOAD_INCLUDE_BY_TYPE = {
     dashboardPlugin: "dashboardPlugins",
     analyticalDashboard: "analyticalDashboards",
     measure: "metrics",
+    computedAttribute: "computedAttributes",
 } as const satisfies Partial<Record<SupportedDashboardReferenceTypes, DashboardInclude>>;
 
 /**

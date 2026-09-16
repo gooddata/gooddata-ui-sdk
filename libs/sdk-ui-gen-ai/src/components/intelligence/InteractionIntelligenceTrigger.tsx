@@ -36,6 +36,7 @@ export function InteractionIntelligenceTrigger({
         <button
             type="button"
             className={e("trigger")}
+            data-testid="interaction-intelligence-trigger"
             onClick={onToggle}
             aria-label={label}
             aria-expanded={isOpen}

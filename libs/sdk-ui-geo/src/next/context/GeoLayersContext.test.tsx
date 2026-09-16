@@ -64,6 +64,7 @@ describe("GeoLayersContext", () => {
         const tooltipReferenceMaps: ITooltipReferenceMaps = {
             measures: { m_local: "f_population" },
             attributes: { "df.city": "attr.city" },
+            computedAttributeIds: [],
         };
         const layerOutputs = new Map([["L1", makePrepared({ tooltipReferenceMaps })]]);
 

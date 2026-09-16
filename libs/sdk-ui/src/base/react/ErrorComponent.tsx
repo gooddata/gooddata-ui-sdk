@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type CSSProperties } from "react";
 
@@ -39,6 +39,10 @@ export interface IErrorProps {
     message: string;
     description?: string;
     className?: string;
+    /**
+     * Test identifier put on the component's root element.
+     */
+    dataTestId?: string;
     style?: object;
     width?: any;
     /**
@@ -62,6 +66,7 @@ export interface IErrorProps {
 export function ErrorComponent({
     icon = "gd-icon-warning",
     className = "Error s-error",
+    dataTestId,
     width = undefined,
     height = "100%",
     style,
@@ -88,7 +93,7 @@ export function ErrorComponent({
     };
 
     return (
-        <div className={className} style={wrapperStyle}>
+        <div className={className} style={wrapperStyle} data-testid={dataTestId}>
             <div
                 className="info-label"
                 style={{

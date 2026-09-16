@@ -299,7 +299,7 @@ export function ConditionalFormattingSection({
     const canAddRule = !isLoading && targetOptions.length > 0 && targetDataReady;
 
     const commit = (
-        rulesNext: readonly IConditionalFormattingRule[],
+        rulesNext: IConditionalFormattingRule[],
         enabledNext: boolean,
         suppressedTargetsNext = config?.suppressedTargets,
     ) => {
@@ -341,7 +341,7 @@ export function ConditionalFormattingSection({
     const setTargetMode = (
         target: IConditionalFormattingRule["target"],
         mode: "inherited" | "off",
-        rulesNext: readonly IConditionalFormattingRule[] = rules,
+        rulesNext: IConditionalFormattingRule[] = rules,
     ) => {
         const value = targetToValue(target);
         const suppressedTargets = config?.suppressedTargets ?? [];

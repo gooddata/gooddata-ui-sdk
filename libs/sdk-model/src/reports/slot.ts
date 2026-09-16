@@ -101,19 +101,27 @@ export interface IReportVisualizationSlot extends IReportSlotBase {
 }
 
 /**
- * Semantic kind of a text slot. Drives default typography/styling and AI context only —
- * never geometry (geometry always comes from the layout tree).
+ * Heading levels a text slot can carry.
  *
  * @alpha
  */
-export type ReportTextSlotKind =
-    | "title"
-    | "subtitle"
-    | "sectionTitle"
-    | "description"
-    | "summary"
-    | "body"
-    | "custom";
+export type ReportHeadingKind = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+
+/**
+ * Paragraph levels a text slot can carry.
+ *
+ * @alpha
+ */
+export type ReportParagraphKind = "p1" | "p2" | "p3";
+
+/**
+ * Text level of a text slot. Drives default typography/styling and AI context only —
+ * never geometry (geometry always comes from the layout tree). Each level is styled by the matching
+ * theme text level (`reports.textStyle.heading.h1` ...).
+ *
+ * @alpha
+ */
+export type ReportTextSlotKind = ReportHeadingKind | ReportParagraphKind;
 
 /**
  * Author-written text.
@@ -255,19 +263,37 @@ export type ReportSlot = IReportVisualizationSlot | IReportTextSlot | IReportIma
 export const BuiltInReportSlotTypes: string[] = ["visualization", "text", "image"];
 
 /**
- * All semantic kinds a text slot can carry.
+ * All heading levels, highest first.
+ *
+ * @alpha
+ */
+export const ReportHeadingKinds: ReportHeadingKind[] = ["h1", "h2", "h3", "h4", "h5", "h6"];
+
+/**
+ * All paragraph levels, largest first.
+ *
+ * @alpha
+ */
+export const ReportParagraphKinds: ReportParagraphKind[] = ["p1", "p2", "p3"];
+
+/**
+ * All levels a text slot can carry.
  *
  * @alpha
  */
 export const BuiltInReportTextSlotKinds: ReportTextSlotKind[] = [
-    "title",
-    "subtitle",
-    "sectionTitle",
-    "description",
-    "summary",
-    "body",
-    "custom",
+    ...ReportHeadingKinds,
+    ...ReportParagraphKinds,
 ];
+
+/**
+ * Whether the level is a heading.
+ *
+ * @alpha
+ */
+export function isReportHeadingKind(kind: ReportTextSlotKind): kind is ReportHeadingKind {
+    return (ReportHeadingKinds as string[]).includes(kind);
+}
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IReportVisualizationSlot}.

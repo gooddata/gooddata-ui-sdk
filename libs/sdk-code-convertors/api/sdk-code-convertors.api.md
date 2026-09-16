@@ -3779,7 +3779,7 @@ export type TableConfigProperties = {
                 };
             }[];
         }[];
-        suppressedTargets?: readonly ({
+        suppressedTargets?: ({
             kind: "measure";
             measureIdentifier: string;
         } | {
@@ -3905,7 +3905,7 @@ export function tableSave(fields: Visualisation["query"]["fields"] | undefined, 
                 };
             }[];
         }[];
-        suppressedTargets?: readonly ({
+        suppressedTargets?: ({
             kind: "measure";
             measureIdentifier: string;
         } | {

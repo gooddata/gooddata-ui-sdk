@@ -5,7 +5,6 @@ import { type MutableRefObject, type ReactElement, useCallback, useMemo, useStat
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { areObjRefsEqual } from "@gooddata/sdk-model";
 import {
     Dropdown,
     DropdownButton,
@@ -178,8 +177,13 @@ export function DefaultAlertingDialogAttribute({
     }, [selectedAttributeProp, catalogAttributes, catalogDateDatasets]);
 
     const selectedAttributeValue = useMemo(
-        () => getSelectedCatalogAttributeValue(selectedAttribute, getAttributeValues, selectedValue),
-        [selectedAttribute, getAttributeValues, selectedValue],
+        () =>
+            getSelectedCatalogAttributeValue(
+                selectedAttributeProp?.attribute,
+                getAttributeValues,
+                selectedValue,
+            ),
+        [selectedAttributeProp, getAttributeValues, selectedValue],
     );
 
     const accessibilityAriaLabel = intl.formatMessage({ id: "insightAlert.config.selectAttribute" });
@@ -195,17 +199,17 @@ export function DefaultAlertingDialogAttribute({
                 continue;
             }
 
-            const values = getAttributeValues(item);
-            const hasDisplayForm = selectedAttribute?.displayForms.some((df) =>
-                areObjRefsEqual(df.ref, attribute.attribute.attribute.displayForm),
-            );
-
-            const isSelected = Boolean(hasDisplayForm);
+            // Not `item.id`: two display forms share it, and UiMenu resolves ids tree-wide.
+            const itemKey = attribute.attribute.attribute.localIdentifier;
+            const values = getAttributeValues(attribute.attribute);
+            const isSelected =
+                selectedAttributeProp?.attribute.attribute.localIdentifier ===
+                attribute.attribute.attribute.localIdentifier;
 
             if (values.length > 5) {
                 attributeItems.push({
                     type: "content" as const,
-                    id: `attribute-${item.id}`,
+                    id: `attribute-${itemKey}`,
                     stringTitle: item.title || intl.formatMessage({ id: "empty_value" }),
                     data: undefined,
                     Component: ({ onClose }) => (
@@ -224,20 +228,20 @@ export function DefaultAlertingDialogAttribute({
 
             const subItems: IUiMenuItem<IAttributeMenuData>[] = [
                 createInteractiveItem(
-                    `all-${item.id}`,
+                    `all-${itemKey}`,
                     `${accessibilityAriaLabel} (${values.length})`,
                     attribute,
                     undefined,
-                    Boolean(hasDisplayForm && !selectedAttributeValue),
+                    isSelected && !selectedAttributeValue,
                 ),
-                createSeparator(`separator-${item.id}`),
+                createSeparator(`separator-${itemKey}`),
                 ...values.map((value) =>
                     createInteractiveItem(
-                        `value-${value.value}`,
+                        `value-${itemKey}-${value.value}`,
                         (value.title ?? value.name) || intl.formatMessage({ id: "empty_value" }),
                         attribute,
                         value,
-                        Boolean(hasDisplayForm && selectedAttributeValue?.value === value.value),
+                        isSelected && selectedAttributeValue?.value === value.value,
                     ),
                 ),
             ];
@@ -250,18 +254,11 @@ export function DefaultAlertingDialogAttribute({
             // Create attribute item with submenu
             attributeItems.push(
                 createInteractiveItem(
-                    `attribute-${item.id}`,
+                    `attribute-${itemKey}`,
                     item.title || intl.formatMessage({ id: "empty_value" }),
                     attribute,
                     undefined,
-                    Boolean(
-                        (selectedAttribute &&
-                            areObjRefsEqual(
-                                selectedAttribute.ref,
-                                attribute.attribute.attribute.displayForm,
-                            )) ||
-                        hasSelectedChild,
-                    ),
+                    isSelected || hasSelectedChild,
                     subItems,
                 ),
             );
@@ -291,6 +288,7 @@ export function DefaultAlertingDialogAttribute({
         intl,
         onAttributeChange,
         selectedAttribute,
+        selectedAttributeProp,
         selectedAttributeValue,
     ]);
 

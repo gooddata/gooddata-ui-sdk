@@ -920,6 +920,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableBusinessBriefingReportsApp,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableEmbeddingWriteCommands,
+            "enableEmbeddingWriteCommands",
+            "BOOLEAN",
+            FeatureFlagsValues.enableEmbeddingWriteCommands,
+        ),
     };
 }
 

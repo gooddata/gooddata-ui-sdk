@@ -4,6 +4,7 @@ import {
     type IAttributeDisplayFormMetadataObject,
     type IAttributeMetadataObject,
     type IDataSetMetadataObject,
+    type ISemanticConditionalFormatting,
     type ObjRef,
 } from "@gooddata/sdk-model";
 
@@ -51,6 +52,11 @@ export class AttributeMetadataObjectBuilder<
 
     public sourceColumn(value: string | undefined): this {
         this.item.sourceColumn = value;
+        return this;
+    }
+
+    public conditionalFormatting(conditionalFormatting?: ISemanticConditionalFormatting): this {
+        this.item.conditionalFormatting = conditionalFormatting;
         return this;
     }
 }

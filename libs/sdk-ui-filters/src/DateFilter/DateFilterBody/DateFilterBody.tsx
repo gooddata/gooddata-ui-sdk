@@ -27,6 +27,7 @@ import {
 } from "@gooddata/sdk-model";
 import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
+import { isEditableElement } from "../../shared/utils/domUtilities.js";
 import { CheckboxSection } from "../CheckboxSection/CheckboxSection.js";
 import {
     type DateFilterOption,
@@ -130,6 +131,11 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
     const rootRef = useRef<HTMLDivElement>(null);
     const didResetMobileScroll = useRef(false);
     const didSyncInitialMobileRoute = useRef(false);
+
+    // Gates Apply independently of `errors`: a garbled/emptied PeriodRangePicker field never reaches
+    // `onSelectedFilterOptionChange`, so `errors` alone would stay stale and leave Apply enabled - see
+    // `IPeriodRangePickerProps.onValidityChange`.
+    const [isPeriodRangeValid, setIsPeriodRangeValid] = useState(true);
 
     const intl = useIntl();
 
@@ -348,7 +354,7 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
     );
 
     const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-        if (e.key === "ArrowLeft" && route) {
+        if (e.key === "ArrowLeft" && route && !isEditableElement(e.target)) {
             e.preventDefault();
             e.stopPropagation();
             handleBackNavigation();
@@ -421,6 +427,7 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
                         withoutApply={withoutApply}
                         enableEmptyDateValues={props.enableEmptyDateValues}
                         customRangeHint={props.customRangeHint}
+                        onPeriodRangeValidityChange={setIsPeriodRangeValid}
                         activeForm={route}
                         onBackNavigation={handleBackNavigation}
                         onClose={closeDropdown}
@@ -559,7 +566,7 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
                                 isMobile ? "gd-button-medium" : "gd-button-small",
                                 "s-date-filter-apply",
                             )}
-                            disabled={!isEmpty(errors)}
+                            disabled={!isEmpty(errors) || !isPeriodRangeValid}
                             onClick={() => {
                                 onApplyClick();
                                 closeDropdown();

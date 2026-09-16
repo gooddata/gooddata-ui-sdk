@@ -15,12 +15,14 @@ import {
     EntitiesApi_GetAllEntitiesLabels,
     EntitiesApi_GetEntityAttributes,
     EntitiesApi_PatchEntityAttributes,
+    EntitiesApi_PatchEntityLabels,
 } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import { ActionsApi_ComputeValidObjects } from "@gooddata/api-client-tiger/endpoints/validObjects";
 import {
     type IAttributeWithReferences,
     type IConnectedAttributesOptions,
     type IElementsQueryFactory,
+    type IUpdateMetadataObjectMetaPayload,
     type IWorkspaceAttributesService,
     NotSupported,
     UnexpectedResponseError,
@@ -30,6 +32,7 @@ import {
     type IAttributeMetadataObject,
     type IDataSetMetadataObject,
     type IMetadataObject,
+    type IMetadataObjectBase,
     type IMetadataObjectIdentity,
     type IdentifierRef,
     type ObjRef,
@@ -39,12 +42,15 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
+import { toTigerConditionalFormattingPatch } from "../../../convertors/fromBackend/conditionalFormattingConversions.js";
 import { type DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types.js";
 import {
     convertAttributeLabels,
     convertAttributeWithSideloadedLabels,
     convertAttributesWithSideloadedLabels,
     convertDatasetWithLinks,
+    convertLabel,
+    convertLabelDocument,
     createDataSetMap,
     createLabelMap,
 } from "../../../convertors/fromBackend/MetadataConverter.js";
@@ -83,13 +89,13 @@ export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
     };
 
     public updateAttributeMeta = async (
-        updatedAttribute: Partial<IAttributeMetadataObject> & IMetadataObjectIdentity,
+        updatedAttribute: Partial<IMetadataObjectBase> & IMetadataObjectIdentity,
     ): Promise<IAttributeMetadataObject> => {
         const ref = updatedAttribute.ref;
         invariant(isIdentifierRef(ref), "tiger backend only supports referencing by identifier");
+        const objectId = ref.identifier;
 
         return this.authCall(async (client) => {
-            const objectId = ref.identifier;
             const response = await EntitiesApi_PatchEntityAttributes(client.axios, client.basePath, {
                 objectId,
                 workspaceId: this.workspace,
@@ -118,6 +124,41 @@ export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
         });
     };
 
+    public updateAttributeDisplayFormMeta = async (
+        updatedDisplayForm: IUpdateMetadataObjectMetaPayload,
+    ): Promise<IAttributeDisplayFormMetadataObject> => {
+        const ref = updatedDisplayForm.ref;
+        invariant(isIdentifierRef(ref), "tiger backend only supports referencing by identifier");
+        const objectId = ref.identifier;
+
+        return this.authCall(async (client) => {
+            const response = await EntitiesApi_PatchEntityLabels(client.axios, client.basePath, {
+                objectId,
+                workspaceId: this.workspace,
+                jsonApiLabelPatchDocument: {
+                    data: {
+                        id: objectId,
+                        type: "label",
+                        attributes: {
+                            ...(updatedDisplayForm.title === undefined
+                                ? {}
+                                : { title: updatedDisplayForm.title }),
+                            ...(updatedDisplayForm.description === undefined
+                                ? {}
+                                : { description: updatedDisplayForm.description }),
+                            ...(updatedDisplayForm.tags === undefined
+                                ? {}
+                                : { tags: updatedDisplayForm.tags }),
+                            ...toTigerConditionalFormattingPatch(updatedDisplayForm.conditionalFormatting),
+                        },
+                    },
+                },
+            });
+
+            return convertLabelDocument(response.data);
+        });
+    };
+
     public getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]> {
         if (refs.length === 0) {
             return Promise.resolve([]);
@@ -137,23 +178,9 @@ export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
             });
             const result = allDisplayForms?.data?.data;
 
-            return result?.map((item) => ({
-                attribute: {
-                    identifier: item.relationships?.attribute?.data?.id || "",
-                    type: item.relationships?.attribute?.data?.type || "attribute",
-                },
-                ref: { identifier: item.id, type: "displayForm" },
-                title: item?.attributes?.title || "",
-                description: item?.attributes?.description || "",
-                tags: item?.attributes?.tags,
-                primary: item?.attributes?.primary,
-                deprecated: false,
-                uri: item.id, // this is suspicious, we should use the uri from the self link
-                type: "displayForm", // item.type is "label", set here as displayForm
-                production: true,
-                unlisted: false,
-                id: item.id,
-            }));
+            return result?.map((item) =>
+                convertLabel(item, item.links?.self ?? "", item.relationships?.attribute?.data?.id ?? ""),
+            );
         });
     }
 

@@ -102,6 +102,7 @@ import {
     type IReferencesService,
     type ISecuritySettingsService,
     type ISemanticSearchQuery,
+    type IUpdateMetadataObjectMetaPayload,
     type IUserService,
     type IUserWorkspaceSettings,
     type IWidgetAlertCount,
@@ -1616,6 +1617,12 @@ class DummyWorkspaceAttributesService implements IWorkspaceAttributesService {
     updateAttributeMeta(
         _: Partial<IMetadataObjectBase> & IMetadataObjectIdentity,
     ): Promise<IAttributeMetadataObject> {
+        throw new NotSupported("not supported");
+    }
+
+    updateAttributeDisplayFormMeta(
+        _: IUpdateMetadataObjectMetaPayload,
+    ): Promise<IAttributeDisplayFormMetadataObject> {
         throw new NotSupported("not supported");
     }
 

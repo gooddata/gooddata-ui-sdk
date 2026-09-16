@@ -6,8 +6,10 @@ import { type IChatSuggestion } from "@gooddata/sdk-backend-spi";
 import { type GenAIChatEffort } from "@gooddata/sdk-model";
 import {
     type ISlotProps,
+    type IUiMenuGroupItemProps,
     type IUiMenuInteractiveItemProps,
     type IUiMenuInteractiveItemWrapperProps,
+    type IUiMenuItem,
 } from "@gooddata/sdk-ui-kit";
 
 import {
@@ -66,6 +68,73 @@ export type IGenAIAssistantAgentItemProps = {
      * The content to render inside the item.
      */
     Content?: ComponentType<IUiMenuInteractiveItemProps>;
+};
+
+/**
+ * Properties for the ConversationItem slot.
+ * @alpha
+ */
+export type IGenAIAssistantConversationItemProps = {
+    /**
+     * The conversation represented by the item.
+     */
+    conversation: IChatConversationLocal;
+    /**
+     * Props to pass to the underlying UiMenuInteractiveItemWrapper.
+     */
+    menuItemProps: IUiMenuInteractiveItemWrapperProps;
+};
+
+/**
+ * Properties for the ConversationDrawerHeader slot.
+ * @alpha
+ */
+export type IGenAIAssistantConversationDrawerHeaderProps = {
+    /**
+     * Title displayed in the conversations drawer header.
+     */
+    title: string;
+};
+
+/**
+ * Properties for the ConversationHeader slot.
+ * @alpha
+ */
+export type IGenAIAssistantConversationHeaderProps = {
+    /**
+     * Identifier of the conversations list.
+     */
+    id: string;
+    /**
+     * Conversations list items.
+     */
+    listItems: IUiMenuItem[];
+};
+
+/**
+ * Properties for the ConversationFooter slot.
+ * @alpha
+ */
+export type IGenAIAssistantConversationFooterProps = {
+    /**
+     * Identifier of the conversations list.
+     */
+    id: string;
+    /**
+     * Conversations list items.
+     */
+    listItems: IUiMenuItem[];
+};
+
+/**
+ * Properties for the ConversationDateGrouping slot.
+ * @alpha
+ */
+export type IGenAIAssistantConversationDateGroupingProps = {
+    /**
+     * Props to pass to the underlying UiMenuGroupItem component.
+     */
+    menuGroupItemProps: IUiMenuGroupItemProps;
 };
 
 /**
@@ -306,6 +375,36 @@ export interface IGenAIAssistantSlots {
      * Custom React component rendered for each agent in the agent chooser dropdown.
      */
     AgentItem?: ComponentType<ISlotProps<IGenAIAssistantAgentItemProps>>;
+
+    /**
+     * @alpha
+     * Custom React component rendered for each conversation item in the history list.
+     */
+    ConversationItem?: ComponentType<ISlotProps<IGenAIAssistantConversationItemProps>>;
+
+    /**
+     * @alpha
+     * Custom React component rendered as the drawer header for conversation history.
+     */
+    ConversationDrawerHeader?: ComponentType<ISlotProps<IGenAIAssistantConversationDrawerHeaderProps>>;
+
+    /**
+     * @alpha
+     * Custom React component rendered above each conversation history list section.
+     */
+    ConversationHeader?: ComponentType<ISlotProps<IGenAIAssistantConversationHeaderProps>>;
+
+    /**
+     * @alpha
+     * Custom React component rendered below each conversation history list section.
+     */
+    ConversationFooter?: ComponentType<ISlotProps<IGenAIAssistantConversationFooterProps>>;
+
+    /**
+     * @alpha
+     * Custom React component rendered for date grouped conversation sections.
+     */
+    ConversationDateGrouping?: ComponentType<ISlotProps<IGenAIAssistantConversationDateGroupingProps>>;
 
     /**
      * @alpha

@@ -1,5 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
+import { type ISemanticConditionalFormatting } from "../../../conditionalFormatting/index.js";
 import { type ObjRef } from "../../../objRef/index.js";
 import { type IAttributeDisplayFormMetadataObject } from "../attributeDisplayForm/index.js";
 import { type IDataSetMetadataObject } from "../dataSet/index.js";
@@ -50,6 +51,13 @@ export interface IAttributeMetadataObject extends IMetadataObject {
      * Source column name in the underlying data source table.
      */
     sourceColumn?: string;
+
+    /**
+     * Semantic-layer conditional formatting authored on this attribute.
+     *
+     * @alpha
+     */
+    conditionalFormatting?: ISemanticConditionalFormatting;
 }
 
 /**

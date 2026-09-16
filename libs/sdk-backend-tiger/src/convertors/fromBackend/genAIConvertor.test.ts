@@ -403,6 +403,34 @@ describe("genAIConvertor", () => {
                 content: { type: "multipart", parts },
             }) as unknown as AiConversationItemResponse;
 
+        const historyItem = (
+            widgets: string[],
+            insights: Array<{ identifier: string; title: string }>,
+        ): IChatConversationItem =>
+            ({
+                content: {
+                    type: "multipart",
+                    parts: [
+                        {
+                            type: "dashboard",
+                            dashboard: {
+                                ref: {
+                                    identifier: DASHBOARD_ID,
+                                    type: "analyticalDashboard",
+                                },
+                            },
+                            base: baseDocument(widgets),
+                            insights: insights.map(({ identifier, title }) => ({
+                                insight: {
+                                    identifier,
+                                    title,
+                                },
+                            })),
+                        },
+                    ],
+                },
+            }) as unknown as IChatConversationItem;
+
         const dashboardParts = (item: IChatConversationItem) =>
             (item.content as IChatConversationMultipartContent).parts.filter(
                 (part): part is IChatConversationDashboardContent => part.type === "dashboard",
@@ -486,6 +514,36 @@ describe("genAIConvertor", () => {
             // The operations are defined against the relayed document, so the second proposal
             // rebases on the same base rather than on the result of the first one.
             expect(widgetVisualizations(parts[0]!)).toEqual(["chart1", "chart3"]);
+        });
+
+        it("collates insights from all related cards in history and keeps the latest duplicate", () => {
+            const history: IChatConversationItem[] = [
+                historyItem(
+                    ["chart1"],
+                    [
+                        { identifier: "chart1", title: "Chart 1 (old)" },
+                        { identifier: "chart2", title: "Chart 2" },
+                    ],
+                ),
+                historyItem(["chart1"], [{ identifier: "chart1", title: "Chart 1 (new)" }]),
+            ];
+
+            const converted = convertChatConversationItemFromBackend(
+                makeItem([patchPart("chart3")], 2),
+                [],
+                history,
+                dateNormalizer,
+            )!;
+
+            const [part] = dashboardParts(converted);
+
+            expect(widgetVisualizations(part!)).toEqual(["chart1", "chart3"]);
+            expect(
+                part!.insights?.map((insight) => [insight.insight.identifier, insight.insight.title]),
+            ).toEqual([
+                ["chart1", "Chart 1 (new)"],
+                ["chart2", "Chart 2"],
+            ]);
         });
 
         it("rebases on a base resent in the current message rather than the one in history", () => {

@@ -57,12 +57,21 @@ describe("loadUnavailableReferences", () => {
     });
 
     it("adds display form and drill target availability to the base result", async () => {
-        const load = vi.fn().mockResolvedValue({ insights: [], plugins: [], unavailable: [forbiddenLabel] });
+        const load = vi.fn().mockResolvedValue({
+            insights: [],
+            plugins: [],
+            unavailable: [forbiddenLabel],
+        });
 
         await expect(
             loadUnavailableReferences(createContext(load), dashboard, [forbiddenInsight], true, false),
         ).resolves.toEqual([forbiddenInsight, forbiddenLabel]);
-        expect(load).toHaveBeenCalledWith(dashboard, ["displayForm", "analyticalDashboard", "measure"]);
+        expect(load).toHaveBeenCalledWith(dashboard, [
+            "displayForm",
+            "analyticalDashboard",
+            "measure",
+            "computedAttribute",
+        ]);
     });
 
     it("keeps the caller-provided availability of a persisted dashboard without asking the backend", async () => {
@@ -85,7 +94,9 @@ describe("loadUnavailableReferences", () => {
 
     it("does not request again when the switch was known up front and the load already covered everything", async () => {
         const load = vi.fn();
-        const ctx = createContext(load, { enableDashboardPartialRendering: true });
+        const ctx = createContext(load, {
+            enableDashboardPartialRendering: true,
+        });
 
         await expect(
             loadUnavailableReferences(ctx, dashboard, [forbiddenInsight], true, false),
@@ -98,11 +109,26 @@ describe("dashboardLoadReferenceTypes", () => {
     it("requests only insights and datasets unless the host settings turn partial rendering on", () => {
         expect(dashboardLoadReferenceTypes(createContext(vi.fn()))).toEqual(["insight", "dataSet"]);
         expect(
-            dashboardLoadReferenceTypes(createContext(vi.fn(), { enableDashboardPartialRendering: false })),
+            dashboardLoadReferenceTypes(
+                createContext(vi.fn(), {
+                    enableDashboardPartialRendering: false,
+                }),
+            ),
         ).toEqual(["insight", "dataSet"]);
         expect(
-            dashboardLoadReferenceTypes(createContext(vi.fn(), { enableDashboardPartialRendering: true })),
-        ).toEqual(["insight", "dataSet", "displayForm", "analyticalDashboard", "measure"]);
+            dashboardLoadReferenceTypes(
+                createContext(vi.fn(), {
+                    enableDashboardPartialRendering: true,
+                }),
+            ),
+        ).toEqual([
+            "insight",
+            "dataSet",
+            "displayForm",
+            "analyticalDashboard",
+            "measure",
+            "computedAttribute",
+        ]);
     });
 });
 
@@ -115,6 +141,7 @@ describe("getDashboardLoadReferenceTypes", () => {
             "displayForm",
             "analyticalDashboard",
             "measure",
+            "computedAttribute",
         ]);
     });
 });

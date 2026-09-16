@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-model, sdk-backend-tiger: Add the enableEmbeddingWriteCommands feature flag that gates the write and export postMessage commands for embedded dashboards and Analytical Designer. Disabled by default.",
+            "type": "patch",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

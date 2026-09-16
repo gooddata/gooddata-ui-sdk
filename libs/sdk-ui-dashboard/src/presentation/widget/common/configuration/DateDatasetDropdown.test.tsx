@@ -49,32 +49,32 @@ describe("DateDatasetDropdown — list width (F1-2702, KD edit mode)", () => {
     });
 
     function mockElementRects(triggerWidth: number, buttonLeft = 100) {
-        return vi
-            .spyOn(Element.prototype, "getBoundingClientRect")
-            .mockImplementation(function (this: Element) {
-                const base = { bottom: 0, height: 23, top: 0, x: 0, y: 0, toJSON: () => null };
-                if (this.classList.contains("s-date-dataset-width-probe")) {
-                    const width = (this.textContent ?? "").length * 8;
-                    return { ...base, width, left: 0, right: width };
-                }
-                if (this.querySelector?.(".s-date-dataset-button")) {
-                    return {
-                        ...base,
-                        width: triggerWidth,
-                        left: buttonLeft,
-                        right: buttonLeft + triggerWidth,
-                    };
-                }
-                return { ...base, width: 0, left: 0, right: 0 };
-            });
+        return vi.spyOn(Element.prototype, "getBoundingClientRect").mockImplementation(function (
+            this: Element,
+        ) {
+            const base = { bottom: 0, height: 23, top: 0, x: 0, y: 0, toJSON: () => null };
+            if (this.classList.contains("s-date-dataset-width-probe")) {
+                const width = (this.textContent ?? "").length * 8;
+                return { ...base, width, left: 0, right: width };
+            }
+            if (this.querySelector?.(".s-date-dataset-button")) {
+                return {
+                    ...base,
+                    width: triggerWidth,
+                    left: buttonLeft,
+                    right: buttonLeft + triggerWidth,
+                };
+            }
+            return { ...base, width: 0, left: 0, right: 0 };
+        });
     }
 
     function mockScrollbarWidth(width: number) {
-        return vi
-            .spyOn(HTMLElement.prototype, "offsetWidth", "get")
-            .mockImplementation(function (this: HTMLElement) {
-                return this.classList.contains("s-date-dataset-scrollbar-probe") ? width : 0;
-            });
+        return vi.spyOn(HTMLElement.prototype, "offsetWidth", "get").mockImplementation(function (
+            this: HTMLElement,
+        ) {
+            return this.classList.contains("s-date-dataset-scrollbar-probe") ? width : 0;
+        });
     }
 
     function withInnerWidth(width: number, run: () => void) {
@@ -277,14 +277,14 @@ describe("DateDatasetDropdown — list width (F1-2702, KD edit mode)", () => {
     it("does not measure the scrollbar width at all when the list never overflows", () => {
         mockElementRects(80);
         let scrollbarProbeCreations = 0;
-        vi.spyOn(HTMLElement.prototype, "offsetWidth", "get").mockImplementation(
-            function (this: HTMLElement) {
-                if (this.classList.contains("s-date-dataset-scrollbar-probe")) {
-                    scrollbarProbeCreations += 1;
-                }
-                return 0;
-            },
-        );
+        vi.spyOn(HTMLElement.prototype, "offsetWidth", "get").mockImplementation(function (
+            this: HTMLElement,
+        ) {
+            if (this.classList.contains("s-date-dataset-scrollbar-probe")) {
+                scrollbarProbeCreations += 1;
+            }
+            return 0;
+        });
 
         renderComponent({ relatedDateDatasets: [makeDateDataset("a", "A")] });
 
@@ -294,14 +294,14 @@ describe("DateDatasetDropdown — list width (F1-2702, KD edit mode)", () => {
     it("only measures the scrollbar width once, even as an already-overflowing item list keeps changing", () => {
         mockElementRects(80);
         let scrollbarProbeCreations = 0;
-        vi.spyOn(HTMLElement.prototype, "offsetWidth", "get").mockImplementation(
-            function (this: HTMLElement) {
-                if (this.classList.contains("s-date-dataset-scrollbar-probe")) {
-                    scrollbarProbeCreations += 1;
-                }
-                return 0;
-            },
-        );
+        vi.spyOn(HTMLElement.prototype, "offsetWidth", "get").mockImplementation(function (
+            this: HTMLElement,
+        ) {
+            if (this.classList.contains("s-date-dataset-scrollbar-probe")) {
+                scrollbarProbeCreations += 1;
+            }
+            return 0;
+        });
 
         const overflowingItems = (count: number) =>
             Array.from({ length: count }, (_, index) => makeDateDataset(`item-${index}`, `Q${index}`));

@@ -25,6 +25,7 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../model/react/DashboardStoreProvider.js";
+import { useIsAnyWidgetRestricted } from "../../../../model/react/useIsWidgetRestricted.js";
 import { selectSettings } from "../../../../model/store/config/configSelectors.js";
 import { selectInsightsMap } from "../../../../model/store/insights/insightsSelectors.js";
 import { type ExtendedDashboardWidget, isCustomWidgetBase } from "../../../../model/types/layoutTypes.js";
@@ -60,6 +61,7 @@ export function HeightResizerHotspot({ section, items, getLayoutDimensions }: He
     const isAnyWidgetHovered = HoveredWidgetContext.useContextStore((ctx) =>
         widgets.some((widget) => ctx.isHovered(widget.ref, ctx.hoveredWidgets)),
     );
+    const isAnyWidgetRestricted = useIsAnyWidgetRestricted(widgets);
 
     const gridWidth = determineWidthForScreen(screen, layoutItemSize);
 
@@ -138,6 +140,12 @@ export function HeightResizerHotspot({ section, items, getLayoutDimensions }: He
         (areWidgetsResizing || isResizerVisible) && !isColumnResizing && !isOtherRowResizing;
 
     const status = isDragging ? "muted" : isAnyWidgetHovered ? "default" : "active";
+
+    // the resizer covers the whole row, and a restricted widget in it has a size the editor cannot
+    // judge, so the row keeps its height until that widget is removed
+    if (isAnyWidgetRestricted) {
+        return null;
+    }
 
     return (
         <div

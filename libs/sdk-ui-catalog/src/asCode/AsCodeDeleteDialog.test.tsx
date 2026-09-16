@@ -190,7 +190,7 @@ describe("AsCodeDeleteDialog with a blocking referencing lookup (computed attrib
 
         expect(
             await screen.findByText(
-                /cannot be deleted because it is used in some visualizations, metrics, or dashboards/,
+                /cannot be deleted because it is used in some visualizations, metrics, dashboards, or data filters/,
             ),
         ).toBeInTheDocument();
         expect(screen.getByText("1 object")).toBeInTheDocument();

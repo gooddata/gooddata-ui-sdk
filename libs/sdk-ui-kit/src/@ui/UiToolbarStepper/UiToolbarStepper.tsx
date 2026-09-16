@@ -59,6 +59,23 @@ export interface IUiToolbarStepperProps {
      */
     onCommit?: (value: string) => void;
     /**
+     * Reports every change of the typed text. A consumer that applies the text live must pass it
+     * back as `value` while it is being typed, because `value` is what the field shows. Such a
+     * consumer has committed each keystroke already, so Escape and blur restore the `value` it
+     * passes and any return to the text from before the edit is its own to make. A consumer that
+     * waits for `onCommit` leaves `value` alone and gets that return from the field.
+     */
+    onDraftChange?: (draft: string) => void;
+    /**
+     * Marks the typed text as not acceptable.
+     * @defaultValue false
+     */
+    isInvalid?: boolean;
+    /**
+     * Shown in the editable value while it is empty.
+     */
+    placeholder?: string;
+    /**
      * Held while the preset list is on screen.
      * @defaultValue false
      */
@@ -113,6 +130,9 @@ export const UiToolbarStepper = forwardRef<HTMLDivElement, IUiToolbarStepperProp
         decreaseIcon,
         increaseIcon,
         onCommit,
+        onDraftChange,
+        isInvalid = false,
+        placeholder,
         isOpen = false,
         ariaAttributes,
         inputRef,
@@ -126,9 +146,17 @@ export const UiToolbarStepper = forwardRef<HTMLDivElement, IUiToolbarStepperProp
 
     const [draft, setDraft] = useState(value);
     const [committed, setCommitted] = useState(value);
+    // The text last typed, while it may still come back as `value`.
+    const [typed, setTyped] = useState<string>();
+    // What the status region says. A value that merely echoes the typed text is left out: the
+    // input reads the keystrokes itself, and a second reading of each one would talk over it.
+    const [announced, setAnnounced] = useState(value);
     if (committed !== value) {
         setCommitted(value);
         setDraft(value);
+        if (value !== typed) {
+            setAnnounced(value);
+        }
     }
 
     const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -157,20 +185,24 @@ export const UiToolbarStepper = forwardRef<HTMLDivElement, IUiToolbarStepperProp
             event.preventDefault();
             event.stopPropagation();
             if (canStepUp) {
+                setTyped(undefined);
                 onStep(1);
             }
         } else if (event.code === "ArrowDown" && !hasSystemModifier(event)) {
             event.preventDefault();
             event.stopPropagation();
             if (canStepDown) {
+                setTyped(undefined);
                 onStep(-1);
             }
         } else if (event.code === "Enter") {
             event.preventDefault();
             event.stopPropagation();
+            setTyped(undefined);
             onCommit?.(draft);
         } else if (event.code === "Escape") {
             // Not stopped: an enclosing dropdown closes its preset list on the same key.
+            setTyped(undefined);
             setDraft(value);
         }
     };
@@ -190,15 +222,24 @@ export const UiToolbarStepper = forwardRef<HTMLDivElement, IUiToolbarStepperProp
             {isEditable ? (
                 <input
                     ref={inputRef}
-                    className={e("value", { isEditable, isActive: isOpen })}
+                    className={e("value", { isEditable, isActive: isOpen, isInvalid })}
                     type="text"
                     inputMode="decimal"
                     value={draft}
+                    placeholder={placeholder}
                     aria-label={accessibilityConfig.ariaLabel}
                     aria-disabled={isDisabled || undefined}
+                    aria-invalid={isInvalid || undefined}
                     readOnly={isDisabled}
-                    onChange={(event: ChangeEvent<HTMLInputElement>) => setDraft(event.target.value)}
-                    onBlur={() => setDraft(value)}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                        setDraft(event.target.value);
+                        setTyped(event.target.value);
+                        onDraftChange?.(event.target.value);
+                    }}
+                    onBlur={() => {
+                        setTyped(undefined);
+                        setDraft(value);
+                    }}
                     onClick={isDisabled ? undefined : onClick}
                     onKeyDown={handleKeyDown}
                     {...ariaAttributes}
@@ -213,8 +254,8 @@ export const UiToolbarStepper = forwardRef<HTMLDivElement, IUiToolbarStepperProp
                 </span>
             )}
             {isEditable ? (
-                <span className="sr-only" role="status" aria-label={accessibilityConfig.ariaLabel}>
-                    {value}
+                <span className="sr-only" role="status">
+                    {`${accessibilityConfig.ariaLabel} ${announced}`}
                 </span>
             ) : null}
             <UiToolbarIconButton

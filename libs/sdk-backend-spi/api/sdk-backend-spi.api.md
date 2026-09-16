@@ -146,7 +146,6 @@ import { IReport } from '@gooddata/sdk-model';
 import { IReportDefinition } from '@gooddata/sdk-model';
 import { IReportPageLayout } from '@gooddata/sdk-model';
 import { IReportPageLayoutDefinition } from '@gooddata/sdk-model';
-import { IReportsBrandKit } from '@gooddata/sdk-model';
 import { IReportTemplate } from '@gooddata/sdk-model';
 import { IReportTemplateDefinition } from '@gooddata/sdk-model';
 import { IResultHeader } from '@gooddata/sdk-model';
@@ -1128,6 +1127,8 @@ export interface IComputedAttributeReferencing {
     computedAttributes?: IMetadataObject[];
     insights?: IInsight[];
     measures?: IMetadataObject[];
+    userDataFilters?: IMetadataObject[];
+    workspaceDataFilters?: IMetadataObject[];
 }
 
 // @public
@@ -2791,7 +2792,7 @@ export interface IUnavailableDashboardReference {
 }
 
 // @public
-export type IUpdateMeasureMetaPayload = Partial<IMetadataObjectBase> & IMetadataObjectIdentity & {
+export type IUpdateMetadataObjectMetaPayload = Partial<IMetadataObjectBase> & IMetadataObjectIdentity & {
     conditionalFormatting?: ISemanticConditionalFormatting | null;
 };
 
@@ -2873,6 +2874,7 @@ export interface IWorkspaceAttributesService {
     getCommonAttributes(attributeRefs: ObjRef[]): Promise<ObjRef[]>;
     getCommonAttributesBatch(attributesRefsBatch: ObjRef[][]): Promise<ObjRef[][]>;
     getConnectedAttributesByDisplayForm(ref: ObjRef, options?: IConnectedAttributesOptions): Promise<ObjRef[]>;
+    updateAttributeDisplayFormMeta(updatedDisplayForm: IUpdateMetadataObjectMetaPayload): Promise<IAttributeDisplayFormMetadataObject>;
     updateAttributeMeta(updatedAttribute: Partial<IMetadataObjectBase> & IMetadataObjectIdentity): Promise<IAttributeMetadataObject>;
 }
 
@@ -3156,7 +3158,7 @@ export interface IWorkspaceMeasuresService {
     getMeasuresQuery(): IMeasuresQuery;
     setCertification(ref: ObjRef, certification?: IObjectCertificationWrite): Promise<void>;
     updateMeasure(measure: IMeasureMetadataObject): Promise<IMeasureMetadataObject>;
-    updateMeasureMeta(measure: IUpdateMeasureMetaPayload): Promise<IMeasureMetadataObject>;
+    updateMeasureMeta(measure: IUpdateMetadataObjectMetaPayload): Promise<IMeasureMetadataObject>;
 }
 
 // @alpha
@@ -3185,18 +3187,15 @@ export interface IWorkspaceReportsService {
     createReport(report: IReportDefinition): Promise<IReport>;
     createReportPageLayout(page: IReportPageLayoutDefinition): Promise<IReportPageLayout>;
     createReportTemplate(template: IReportTemplateDefinition): Promise<IReportTemplate>;
-    deleteBrandKit(): Promise<void>;
     deleteReport(ref: ObjRef): Promise<void>;
     deleteReportPageLayout(ref: ObjRef): Promise<void>;
     deleteReportTemplate(ref: ObjRef): Promise<void>;
-    getBrandKit(): Promise<IReportsBrandKit | undefined>;
     getReport(ref: ObjRef): Promise<IReport>;
     getReportPageLayout(ref: ObjRef): Promise<IReportPageLayout>;
     getReportPageLayouts(): Promise<IReportPageLayout[]>;
     getReports(): Promise<IReport[]>;
     getReportTemplate(ref: ObjRef): Promise<IReportTemplate>;
     getReportTemplates(): Promise<IReportTemplate[]>;
-    setBrandKit(brandKit: IReportsBrandKit): Promise<void>;
     updateReport(report: IReport): Promise<IReport>;
     updateReportPageLayout(page: IReportPageLayout): Promise<IReportPageLayout>;
     updateReportTemplate(template: IReportTemplate): Promise<IReportTemplate>;
@@ -3414,7 +3413,7 @@ export class ProtectedDataError extends AnalyticalBackendError {
 export type QueryMethod = "GET" | "POST";
 
 // @alpha
-export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin" | "dataSet" | "displayForm" | "measure" | "analyticalDashboard";
+export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin" | "dataSet" | "displayForm" | "measure" | "computedAttribute" | "analyticalDashboard";
 
 // @public
 export type SupportedInsightReferenceTypes = Exclude<InsightReferenceTypes, "displayForm" | "variable">;

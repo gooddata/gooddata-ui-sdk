@@ -207,6 +207,44 @@ describe("testing rehype plugin to extract references", () => {
         expect(readable.properties.className).toContain("gd-rich-text-metric-value");
     });
 
+    it("resolves a computed attribute reference, matching on its own object type", () => {
+        const tier = {
+            ...em("tier", "Tier", 0, false),
+            ref: { type: "computedAttribute", identifier: "tier" },
+            data: {
+                formatable: false,
+                coordinates: [],
+                rawValue: "Gold",
+            } as unknown as DataPoint,
+        } as EvaluatedMetric;
+        const walk = rehypeReferences(intl, [tier])();
+        const tree = {
+            type: "root",
+            children: [
+                {
+                    type: "element",
+                    tagName: "p",
+                    properties: {},
+                    children: [
+                        { type: "text", value: "{computed_attribute/tier}" },
+                        { type: "text", value: " and " },
+                        // same identifier, different object type: no value was fetched for it
+                        { type: "text", value: "{label/tier}" },
+                    ],
+                },
+            ],
+        };
+        const updated = walk(tree as Root) as Root;
+
+        const spans = ((updated.children[0] as unknown as HtmlNode).children as any[]).filter(
+            (child) => child.tagName === "span",
+        );
+        const [computedAttribute, label] = spans;
+        expect(computedAttribute.properties.className).toContain("gd-rich-text-metric-value");
+        expect(computedAttribute.children[0].value).toEqual("Gold");
+        expect(label.properties.className).toContain("gd-rich-text-metric-error");
+    });
+
     it("replace references ids for not formatted values in text", () => {
         const walk = rehypeReferences(intl, metrics1)();
         const updated = walk(htmlTreeSimpleText2 as Root);

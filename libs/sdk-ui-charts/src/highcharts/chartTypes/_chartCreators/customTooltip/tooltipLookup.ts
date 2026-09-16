@@ -52,6 +52,6 @@ export function buildChartReferenceLookup(
     for (const [localId, mapping] of Object.entries(identifierMapping.measures)) {
         measureIdMap[localId] = mapping.ldmId;
     }
-    const meta: ITooltipExecutionMeta = { measureIdMap, labelCountMap: {}, labelIdMap: {} };
+    const meta: ITooltipExecutionMeta = { measureIdMap, labelCountMap: {}, attributeKeyMap: {} };
     return buildLookupTable(dataView, meta, separators);
 }

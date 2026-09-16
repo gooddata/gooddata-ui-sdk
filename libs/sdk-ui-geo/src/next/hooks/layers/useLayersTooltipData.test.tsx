@@ -48,7 +48,7 @@ const survivingBuildFeatureKey: BuildFeatureKey = () => "feature-key";
 const survivingTooltipExecution: ITooltipExecution = {
     batch: {
         execution: survivingPrepared,
-        meta: { labelCountMap: {}, measureIdMap: {}, labelIdMap: {} },
+        meta: { labelCountMap: {}, measureIdMap: {}, attributeKeyMap: {} },
     },
     perRef: () => [],
 };

@@ -51,7 +51,7 @@ const body: IReportPageBody = {
     },
     slots: [
         { type: "visualization", localIdentifier: "widget", placeholder: { hint: "Add a visualization" } },
-        { type: "text", localIdentifier: "summary", kind: "summary", placeholder: { hint: "Summary" } },
+        { type: "text", localIdentifier: "summary", kind: "p2", placeholder: { hint: "Summary" } },
     ],
 };
 
@@ -324,7 +324,7 @@ describe("box styling", () => {
 
     const body = (overrides: Partial<IReportPageBody>): IReportPageBody => ({
         layout: { type: "slotRef", slotId: "text1" },
-        slots: [{ type: "text", localIdentifier: "text1", kind: "body" }],
+        slots: [{ type: "text", localIdentifier: "text1", kind: "p1" }],
         ...overrides,
     });
 
@@ -332,7 +332,7 @@ describe("box styling", () => {
         const issues = validateReportPageBody(
             body({
                 style: { background: { type: "image", slotId: "bg" } },
-                slots: [{ type: "text", localIdentifier: "text1", kind: "body" }, imageSlot("bg")],
+                slots: [{ type: "text", localIdentifier: "text1", kind: "p1" }, imageSlot("bg")],
             }),
         );
 
@@ -367,8 +367,8 @@ describe("box styling", () => {
             body({
                 style: { background: { type: "image", slotId: "orphan" } },
                 slots: [
-                    { type: "text", localIdentifier: "text1", kind: "body" },
-                    { type: "text", localIdentifier: "orphan", kind: "body" },
+                    { type: "text", localIdentifier: "text1", kind: "p1" },
+                    { type: "text", localIdentifier: "orphan", kind: "p1" },
                 ],
             }),
         );
@@ -416,7 +416,7 @@ describe("box styling", () => {
                     {
                         type: "text",
                         localIdentifier: "text1",
-                        kind: "body",
+                        kind: "p1",
                         style: { background: { type: "image", slotId: "bg" }, borderRadius: 1 },
                     },
                     imageSlot("bg"),
@@ -431,11 +431,11 @@ describe("box styling", () => {
         const issues = validateReportPageBody(
             body({
                 slots: [
-                    { type: "text", localIdentifier: "text1", kind: "body" },
+                    { type: "text", localIdentifier: "text1", kind: "p1" },
                     {
                         type: "text",
                         localIdentifier: "orphan",
-                        kind: "body",
+                        kind: "p1",
                         style: { background: { type: "image", slotId: "bg" } },
                     },
                     imageSlot("bg"),
@@ -467,13 +467,13 @@ describe("box styling", () => {
                     {
                         type: "text",
                         localIdentifier: "text1",
-                        kind: "body",
+                        kind: "p1",
                         style: { background: { type: "image", slotId: "bg" } },
                     },
                     {
                         type: "text",
                         localIdentifier: "orphan",
-                        kind: "body",
+                        kind: "p1",
                         style: { background: { type: "image", slotId: "bg" } },
                     },
                     imageSlot("bg"),
@@ -493,8 +493,8 @@ describe("box styling", () => {
         const issues = validateReportPageBody(
             body({
                 slots: [
-                    { type: "text", localIdentifier: "text1", kind: "body" },
-                    { type: "text", localIdentifier: "orphan", kind: "body", style: { borderRadius: -5 } },
+                    { type: "text", localIdentifier: "text1", kind: "p1" },
+                    { type: "text", localIdentifier: "orphan", kind: "p1", style: { borderRadius: -5 } },
                 ],
             }),
         );
@@ -518,7 +518,7 @@ describe("box styling", () => {
                     {
                         type: "text",
                         localIdentifier: "text1",
-                        kind: "body",
+                        kind: "p1",
                         style: { background: { type: "image", slotId: "text1" } },
                     },
                 ],
@@ -540,7 +540,7 @@ describe("box styling", () => {
                     {
                         type: "text",
                         localIdentifier: "text1",
-                        kind: "body",
+                        kind: "p1",
                         style: { borderRadius: -1 },
                     },
                 ],
@@ -606,7 +606,7 @@ describe("box styling", () => {
                 children: [{ type: "slotRef", slotId: "text1" }],
             },
             slots: [
-                { type: "text", localIdentifier: "text1", kind: "body" },
+                { type: "text", localIdentifier: "text1", kind: "p1" },
                 imageSlot("cover"),
                 imageSlot("band"),
             ],
@@ -666,7 +666,7 @@ describe("ReportPageFormat", () => {
         const issues = validateReportPageBody({
             format: "a5Portrait" as never,
             layout: { type: "slotRef", slotId: "title" },
-            slots: [{ type: "text", localIdentifier: "title", kind: "title" }],
+            slots: [{ type: "text", localIdentifier: "title", kind: "h1" }],
         });
 
         expect(issues).toEqual([{ severity: "error", message: 'Unknown page format "a5Portrait".' }]);

@@ -15,8 +15,14 @@ const ALL_TYPES: SupportedDashboardReferenceTypes[] = [
     "displayForm",
     "analyticalDashboard",
     "measure",
+    "computedAttribute",
 ];
-const ENRICHED_TYPES: SupportedDashboardReferenceTypes[] = ["displayForm", "analyticalDashboard", "measure"];
+const ENRICHED_TYPES: SupportedDashboardReferenceTypes[] = [
+    "displayForm",
+    "analyticalDashboard",
+    "measure",
+    "computedAttribute",
+];
 
 /**
  * Whether the partial-rendering switch is known before the first request: hosts that supply

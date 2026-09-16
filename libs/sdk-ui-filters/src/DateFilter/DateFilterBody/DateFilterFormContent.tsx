@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type KeyboardEvent, type ReactNode, useCallback, useRef } from "react";
+import { type KeyboardEvent, type ReactNode, type RefObject, useCallback, useRef } from "react";
 
 import { isEmpty } from "lodash-es";
 import { useIntl } from "react-intl";
@@ -17,7 +17,7 @@ import { useId } from "@gooddata/sdk-ui-kit";
 
 import { AbsoluteDateFilterForm } from "../AbsoluteDateFilterForm/AbsoluteDateFilterForm.js";
 import {
-    createDateFilterRelativeFormKeyboardHandler,
+    createGranularityTabsKeyboardHandler,
     submitRelativeDateFilterForm,
 } from "../accessibility/keyboardNavigation.js";
 import { DateFilterFormWrapper } from "../DateFilterFormWrapper/DateFilterFormWrapper.js";
@@ -51,6 +51,7 @@ export interface IDateFilterFormContentProps {
     withoutApply?: boolean;
     enableEmptyDateValues?: boolean;
     customRangeHint?: ReactNode;
+    onPeriodRangeValidityChange?: (isValid: boolean) => void;
 
     activeForm: DateFilterRoute;
     onBackNavigation: () => void;
@@ -58,6 +59,22 @@ export interface IDateFilterFormContentProps {
 
     submitForm: () => void;
     errors?: IExtendedDateFilterErrors;
+}
+
+/**
+ * Builds the keydown handler bound to a granularity tabs container, shared by the absolute and relative
+ * form's wrapper `<div>`s below - the only two consumers, hence a local hook rather than a shared export.
+ */
+function useGranularityTabsKeydownHandler(
+    tabGranularityRef: RefObject<HTMLDivElement | null>,
+    closeDropdown: () => void,
+) {
+    return useCallback(
+        (event: KeyboardEvent) => {
+            createGranularityTabsKeyboardHandler({ tabGranularityRef, closeDropdown })(event);
+        },
+        [tabGranularityRef, closeDropdown],
+    );
 }
 
 /**
@@ -81,6 +98,7 @@ export function DateFilterFormContent({
     withoutApply,
     enableEmptyDateValues,
     customRangeHint,
+    onPeriodRangeValidityChange,
     activeForm,
     onBackNavigation,
     onClose,
@@ -102,8 +120,8 @@ export function DateFilterFormContent({
             : filterOptions.relativeForm;
 
     const intl = useIntl();
-    const relativeDateFilterRef = useRef<HTMLDivElement>(null);
     const tabGranularityRef = useRef<HTMLDivElement>(null);
+    const absoluteTabGranularityRef = useRef<HTMLDivElement>(null);
     const relativeDateFilterId = useId();
     const absoluteDateFilterId = useId();
 
@@ -115,16 +133,10 @@ export function DateFilterFormContent({
     const effectiveEmptyValueHandling = selectedFilterOption.emptyValueHandling ?? "exclude";
     const emptyValueHandlingToggleChecked = effectiveEmptyValueHandling === "include";
 
-    const handleRelativeDateFilterKeydown = useCallback(
-        (event: KeyboardEvent, closeDropdown: () => void) => {
-            const keyboardHandler = createDateFilterRelativeFormKeyboardHandler({
-                relativeDateFilterRef,
-                tabGranularityRef,
-                closeDropdown,
-            });
-            keyboardHandler(event);
-        },
-        [relativeDateFilterRef, tabGranularityRef],
+    const handleRelativeDateFilterKeydown = useGranularityTabsKeydownHandler(tabGranularityRef, onClose);
+    const handleAbsoluteDateFilterKeydown = useGranularityTabsKeydownHandler(
+        absoluteTabGranularityRef,
+        onClose,
     );
 
     return (
@@ -140,37 +152,43 @@ export function DateFilterFormContent({
                     backLabel={intl.formatMessage({ id: "menu.back" })}
                     isMobile={isMobile}
                 >
-                    <DateFilterFormWrapper isMobile={isMobile}>
-                        <AbsoluteDateFilterForm
-                            dateFormat={dateFormat}
-                            onSelectedFilterOptionChange={onSelectedFilterOptionChange}
-                            selectedFilterOption={absoluteSelectedFilterOption as IUiAbsoluteDateFilterForm}
-                            isMobile={isMobile}
-                            isTimeEnabled={isTimeForAbsoluteRangeEnabled}
-                            isSecondsEnabled={isSecondsForAbsoluteRangeEnabled}
-                            isGranularityEnabled={isAbsoluteDateFilterGranularityEnabled}
-                            availableGranularities={absoluteAvailableGranularities}
-                            accessibilityConfig={{ id: absoluteDateFilterId }}
-                            weekStart={weekStart}
-                            submitForm={submitForm}
-                            withoutApply={withoutApply}
-                            customRangeHint={customRangeHint}
-                        />
-                        {shouldRenderEmptyValuesHandling ? (
-                            <EmptyValuesHandlingToggle
-                                mode="include"
-                                className="gd-date-filter-empty-values-handling-toggle"
-                                checked={emptyValueHandlingToggleChecked}
-                                onChange={(checked: boolean) => {
-                                    const emptyValueHandling = checked ? "include" : undefined;
-                                    onSelectedFilterOptionChange({
-                                        ...absoluteSelectedFilterOption!,
-                                        emptyValueHandling,
-                                    });
-                                }}
+                    <div onKeyDown={handleAbsoluteDateFilterKeydown}>
+                        <DateFilterFormWrapper isMobile={isMobile}>
+                            <AbsoluteDateFilterForm
+                                dateFormat={dateFormat}
+                                onSelectedFilterOptionChange={onSelectedFilterOptionChange}
+                                selectedFilterOption={
+                                    absoluteSelectedFilterOption as IUiAbsoluteDateFilterForm
+                                }
+                                isMobile={isMobile}
+                                isTimeEnabled={isTimeForAbsoluteRangeEnabled}
+                                isSecondsEnabled={isSecondsForAbsoluteRangeEnabled}
+                                isGranularityEnabled={isAbsoluteDateFilterGranularityEnabled}
+                                availableGranularities={absoluteAvailableGranularities}
+                                accessibilityConfig={{ id: absoluteDateFilterId }}
+                                weekStart={weekStart}
+                                submitForm={submitForm}
+                                withoutApply={withoutApply}
+                                customRangeHint={customRangeHint}
+                                onPeriodRangeValidityChange={onPeriodRangeValidityChange}
+                                granularityTabsRef={absoluteTabGranularityRef}
                             />
-                        ) : null}
-                    </DateFilterFormWrapper>
+                            {shouldRenderEmptyValuesHandling ? (
+                                <EmptyValuesHandlingToggle
+                                    mode="include"
+                                    className="gd-date-filter-empty-values-handling-toggle"
+                                    checked={emptyValueHandlingToggleChecked}
+                                    onChange={(checked: boolean) => {
+                                        const emptyValueHandling = checked ? "include" : undefined;
+                                        onSelectedFilterOptionChange({
+                                            ...absoluteSelectedFilterOption!,
+                                            emptyValueHandling,
+                                        });
+                                    }}
+                                />
+                            ) : null}
+                        </DateFilterFormWrapper>
+                    </div>
                 </DateFilterFormNavigationWrapper>
             ) : null}
 
@@ -185,10 +203,7 @@ export function DateFilterFormContent({
                     backLabel={intl.formatMessage({ id: "menu.back" })}
                     isMobile={isMobile}
                 >
-                    <div
-                        ref={relativeDateFilterRef}
-                        onKeyDown={(e) => handleRelativeDateFilterKeydown(e, onClose)}
-                    >
+                    <div onKeyDown={handleRelativeDateFilterKeydown}>
                         <DateFilterFormWrapper isMobile={isMobile}>
                             <RelativeDateFilterForm
                                 onSelectedFilterOptionChange={onSelectedFilterOptionChange}

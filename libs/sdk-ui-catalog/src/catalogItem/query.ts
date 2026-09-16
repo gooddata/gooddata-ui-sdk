@@ -2,6 +2,7 @@
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
+    type IAttributeDisplayFormMetadataObject,
     type IMeasureMetadataObject,
     type IMeasureMetadataObjectDefinition,
     type IParameterMetadataObjectDefinition,
@@ -394,8 +395,23 @@ export function persistMeasureConditionalFormatting(
         .updateMeasureMeta({
             ...buildIdentity(item),
             conditionalFormatting: item.conditionalFormatting ?? null,
-        })
-        .then(() => undefined);
+        });
+}
+
+export function persistLabelConditionalFormatting(
+    backend: IAnalyticalBackend,
+    workspace: string,
+    label: IAttributeDisplayFormMetadataObject,
+) {
+    return backend
+        .workspace(workspace)
+        .attributes()
+        .updateAttributeDisplayFormMeta({
+            ref: label.ref,
+            id: label.id,
+            uri: label.uri,
+            conditionalFormatting: label.conditionalFormatting ?? null,
+        });
 }
 
 function updateInsightCatalogItemMeta(

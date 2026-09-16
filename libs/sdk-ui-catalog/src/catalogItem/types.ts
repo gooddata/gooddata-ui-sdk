@@ -7,6 +7,7 @@ import type {
 import type {
     AccessGranularPermission,
     CertificationStatus,
+    IAttributeDisplayFormMetadataObject,
     IDataSetMetadataObject,
     IParameterDefinition,
     ISemanticConditionalFormatting,
@@ -157,6 +158,11 @@ export interface ICatalogItemComputedAttribute extends ICatalogItemBase {
 export interface ICatalogItemAttribute extends ICatalogItemBase {
     type: "attribute";
     dataSet?: IDataSetMetadataObject;
+    /**
+     * The attribute's labels (display forms), each carrying its own semantic-layer conditional formatting.
+     * @alpha
+     */
+    labels?: IAttributeDisplayFormMetadataObject[];
 }
 
 /**
