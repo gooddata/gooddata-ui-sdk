@@ -16,7 +16,7 @@ import {
 } from "./objectShareController.helpers.js";
 import type { IObjectShareLabel } from "./types.js";
 
-/** Per-label probe outcome: the fetched access list, or a failure with whether it was transient (not a 404). */
+/** Per-label probe outcome: the fetched access list, or a failure with whether it was transient (not a definitive 403/404). */
 type LabelProbeResult =
     | { label: IObjectShareLabel; list: IObjectAccessList }
     | { label: IObjectShareLabel; transient: boolean };
@@ -238,9 +238,9 @@ export function useLabelScope(
         setDirectLabelIdsByGrantee({});
     }
 
-    // Probe each label's access list to learn which are permissionable (some 404) and
+    // Probe each label's access list to learn which are permissionable (some 403/404) and
     // which each grantee holds. `hasList` gates it: a list with no named grantees keeps
-    // `granteeIdsKey` empty, but the permissionable set (404 filtering) must still resolve.
+    // `granteeIdsKey` empty, but the permissionable set (403/404 filtering) must still resolve.
     const { result: labelLists } = useCancelablePromise(
         {
             promise:
@@ -253,7 +253,7 @@ export function useLabelScope(
                                       .objectPermissions()
                                       .getAccessList({ kind: "label", ref: label.ref })
                                       .then((list) => ({ label, list }) as const)
-                                      // Only a definitive 404 means the label can't take a
+                                      // Only a definitive 403/404 means the label can't take a
                                       // grant; a transient failure must NOT drop a real label.
                                       .catch(
                                           (error: unknown) =>
@@ -306,7 +306,7 @@ export function useLabelScope(
         }
         const permissionable = new Set<string>();
         for (const result of labelLists) {
-            // Keep transiently-failed labels permissionable; skip definitive 404s.
+            // Keep transiently-failed labels permissionable; skip definitive 403/404s.
             if ("transient" in result) {
                 if (result.transient) {
                     permissionable.add(result.label.id);

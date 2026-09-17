@@ -119,20 +119,31 @@ export function useInsightPickerHybridSearch({
     );
 
     const isSearching = searchState.query !== "";
-    const { searchItems, searchRelatedItems } = useMemo(
+    // The loaded entries are the server's own matches, so only the semantic hits are taken from
+    // here. Re-matching the entries on the client would drop the ones the server matched on a
+    // field this matcher does not read, leaving rows missing from a list whose count still counts
+    // them.
+    const { searchRelatedItems } = useMemo(
         () => hybridSearch({ items: searchEntries }),
         [hybridSearch, searchEntries],
     );
-    const displayItems = useMemo(
-        () => (isSearching ? [...searchItems, ...searchRelatedItems] : searchEntries),
-        [isSearching, searchEntries, searchItems, searchRelatedItems],
+
+    const loadedIdentifiers = useMemo(
+        () => new Set(searchEntries.map((entry) => entry.identifier)),
+        [searchEntries],
+    );
+    // Semantic hits carry identifier refs while loaded insights carry URI refs, so the generic
+    // ObjRef comparison upstream never sees them as the same object. Compare identifiers instead.
+    const relatedItems = useMemo(
+        () => searchRelatedItems.filter((item) => !loadedIdentifiers.has(item.identifier)),
+        [searchRelatedItems, loadedIdentifiers],
     );
 
     return {
         searchState,
         semanticSearchState,
         searchEntries,
-        displayItems,
+        relatedItems,
         isSearching,
         handleSearchChange,
     };

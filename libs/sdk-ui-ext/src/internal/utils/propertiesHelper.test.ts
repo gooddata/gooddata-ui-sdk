@@ -2,7 +2,12 @@
 
 import { describe, expect, it } from "vitest";
 
-import { type IConditionalFormatting, newAttributeSort, newInsightDefinition } from "@gooddata/sdk-model";
+import {
+    type IConditionalFormatting,
+    newAttributeSort,
+    newInsightDefinition,
+    newTotal,
+} from "@gooddata/sdk-model";
 import { type ColumnWidthItem } from "@gooddata/sdk-ui-pivot";
 
 import { OPTIONAL_STACKING_PROPERTIES } from "../constants/supportedProperties.js";
@@ -24,9 +29,11 @@ import {
     getConditionalFormattingFromProperties,
     getEffectiveConditionalFormatting,
     getHighchartsAxisNameConfiguration,
+    getPivotTableProperties,
     getReferencePointWithSupportedProperties,
     getSupportedProperties,
     getSupportedPropertiesControls,
+    getTotalsOverrideFromProperties,
     isDualAxisOrSomeSecondaryAxisMeasure,
     isSemanticConditionalFormattingEnabled,
     removeImmutableOptionalStackingProperties,
@@ -458,6 +465,44 @@ describe("propertiesHelper", () => {
 
         it("returns false when settings are undefined", () => {
             expect(isSemanticConditionalFormattingEnabled(undefined)).toBe(false);
+        });
+    });
+
+    describe("getTotalsOverrideFromProperties", () => {
+        it("should return the persisted totals override keyed by bucket", () => {
+            const totals = { attribute: [newTotal("sum", "m1", "a1")] };
+            const visualizationProperties: IVisualizationProperties = {
+                controls: { totals },
+            };
+
+            expect(getTotalsOverrideFromProperties(visualizationProperties)).toEqual(totals);
+        });
+
+        it("should return undefined when no totals override is persisted", () => {
+            const visualizationProperties: IVisualizationProperties = {
+                controls: {},
+            };
+
+            expect(getTotalsOverrideFromProperties(visualizationProperties)).toBeUndefined();
+        });
+    });
+
+    describe("getPivotTableProperties", () => {
+        it("should carry the totals override along so it is not dropped by an unrelated controls change", () => {
+            const totals = { attribute: [newTotal("sum", "m1", "a1")] };
+            const visualizationProperties: IVisualizationProperties = {
+                controls: { totals },
+            };
+
+            expect(getPivotTableProperties({}, visualizationProperties)).toMatchObject({ totals });
+        });
+
+        it("should omit totals when none are persisted", () => {
+            const visualizationProperties: IVisualizationProperties = {
+                controls: {},
+            };
+
+            expect(getPivotTableProperties({}, visualizationProperties)).not.toHaveProperty("totals");
         });
     });
 });

@@ -465,6 +465,9 @@ function recordedWorkspace(
                 getColorPalettes(): Promise<IColorPaletteMetadataObject[]> {
                     return Promise.resolve([]);
                 },
+                getColorPaletteByRef(): Promise<IColorPalette | undefined> {
+                    return Promise.resolve(undefined);
+                },
                 createColorPalette: resolveColorPalette,
                 updateColorPalette: resolveColorPalette,
                 deleteColorPalette(): Promise<void> {

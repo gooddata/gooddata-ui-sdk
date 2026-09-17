@@ -123,9 +123,30 @@ export interface IWorkspaceStylingService {
     /**
      * Request all color palettes defined on the workspace level.
      *
+     * @remarks
+     * The workspace's own palettes, which are the ones it can manage. A palette inherited from a
+     * parent workspace is not among them; use {@link IWorkspaceStylingService.getColorPaletteByRef}
+     * to read one that is merely referenced.
+     *
      * @returns promise of array of color palette metadata objects
      */
     getColorPalettes(): Promise<IColorPaletteMetadataObject[]>;
+
+    /**
+     * Read one color palette by reference, wherever the workspace can see it.
+     *
+     * @remarks
+     * The scope is carried by the reference itself, as it is for
+     * {@link IWorkspaceStylingService.setActiveColorPalette}: an `idRef` typed
+     * `"workspaceColorPalette"` names a workspace-scoped palette, one typed `"colorPalette"` an
+     * organization-scoped one. Both are read through this method. A workspace-scoped palette is
+     * reached whether the workspace owns it or inherits it from a parent, which is what separates
+     * this from {@link IWorkspaceStylingService.getColorPalettes}.
+     *
+     * @param colorPaletteRef - color palette reference
+     * @returns promise of the color palette, or undefined where the workspace cannot see one
+     */
+    getColorPaletteByRef(colorPaletteRef: ObjRef): Promise<IColorPalette | undefined>;
 
     /**
      * Create a new color palette on the workspace level.

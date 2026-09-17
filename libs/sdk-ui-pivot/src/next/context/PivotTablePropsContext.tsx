@@ -45,7 +45,8 @@ type MenuDefaults =
     | "aggregations"
     | "aggregationsSubMenu"
     | "aggregationsSubMenuForRows"
-    | "aggregationTypes";
+    | "aggregationTypes"
+    | "totalLabelsEditable";
 
 type MenuWithDefaults = WithRequired<IMenu, MenuDefaults>;
 
@@ -112,6 +113,7 @@ export function applyPivotTableDefaultProps(props: ICorePivotTableNextProps): Pi
                 aggregationsSubMenu: props.config?.menu?.aggregationsSubMenu ?? false,
                 aggregationsSubMenuForRows: props.config?.menu?.aggregationsSubMenuForRows ?? false,
                 aggregationTypes: props.config?.menu?.aggregationTypes ?? DEFAULT_TOTAL_FUNCTIONS,
+                totalLabelsEditable: props.config?.menu?.totalLabelsEditable ?? false,
             },
         },
         execConfig: props.execConfig ?? EMPTY_OBJECT,

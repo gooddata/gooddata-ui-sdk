@@ -1162,6 +1162,7 @@ export interface IUsePagedDropdownConfig {
     // (undocumented)
     excludeTags?: string[];
     includeAuthorInfo?: boolean;
+    searchTerm?: string;
     sortBy?: InsightListSortBy;
     sortDirection?: InsightListSortDirection;
     // (undocumented)

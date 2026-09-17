@@ -1170,7 +1170,7 @@ export interface IThemeReportsTypography {
 export type ThemeReportsLength = string | number;
 
 /**
- * Typography of one text level (h1-h6, p1-p3).
+ * Typography of one text level.
  *
  * @alpha
  */
@@ -1215,9 +1215,9 @@ export interface IThemeReportsParagraph {
 
     lineHeight?: ThemeReportsLength;
 
-    p1?: IThemeReportsTextLevel;
-    p2?: IThemeReportsTextLevel;
-    p3?: IThemeReportsTextLevel;
+    largeText?: IThemeReportsTextLevel;
+    normalText?: IThemeReportsTextLevel;
+    smallText?: IThemeReportsTextLevel;
 }
 
 /**
@@ -1268,9 +1268,9 @@ export interface IThemeReportsPage {
  * setting uses.
  *
  * @remarks
- * A `workspaceColorPalette` is read from the workspace showing the report, which sees its own
- * palettes and not a parent's. A palette shared across a workspace hierarchy belongs at the
- * organization level.
+ * The `type` states the scope: `colorPalette` names one of the organization's palettes,
+ * `workspaceColorPalette` one a workspace holds - its own, or one it inherits from a parent.
+ * Either can be referenced.
  *
  * @alpha
  */

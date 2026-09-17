@@ -14,6 +14,12 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     med: { id: "visualizations.totals.dropdown.title.med" },
     "disabled.mvf": { id: "visualizations.totals.dropdown.tooltip.nat.disabled.mvf" },
     "disabled.ranking": { id: "visualizations.totals.dropdown.tooltip.nat.disabled.ranking" },
+    // Total label rename action menu / popover
+    totalLabelActions: { id: "visualizations.totals.labelActions.aria" },
+    renameTotalLabel: { id: "visualizations.totals.renameLabel.action" },
+    resetTotalLabel: { id: "visualizations.totals.resetLabel.action" },
+    cancel: { id: "cancel" },
+    save: { id: "save" },
     // Aggregations menu
     aggregationsSection: { id: "visualizations.menu.aggregations" },
     rowsSection: { id: "visualizations.menu.aggregations.rows" },

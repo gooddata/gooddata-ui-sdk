@@ -178,7 +178,6 @@ describe("computed attribute references", () => {
             analyticalDashboards: [{ title: "Sales overview" }],
             computedAttributes: [{ title: "Band tier" }],
             userDataFilters: [{ title: "Region filter" }],
-            workspaceDataFilters: [{ title: "Workspace region" }],
         });
 
         expect(await listComputedAttributeReferences(backend, "ws-1", computedAttributeItem)).toEqual([
@@ -188,7 +187,6 @@ describe("computed attribute references", () => {
             "Sales overview",
             "Band tier",
             "Region filter",
-            "Workspace region",
         ]);
     });
 

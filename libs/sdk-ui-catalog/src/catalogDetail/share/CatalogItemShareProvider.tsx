@@ -168,7 +168,8 @@ export function CatalogItemShareProvider({
 
     // Sharing is offered only while the access list is reachable. The permissions
     // endpoint is manage-gated, so a user who can only view/analyze the object gets
-    // a 404; we then hide both the Share button and the inline access row — there is
+    // a 403 (or a 404 when the object is not visible to them at all); we then hide
+    // both the Share button and the inline access row — there is
     // nothing they can act on. A transient load error does not set the flag, so a
     // flaky fetch doesn't strip the UI — it is reported as `summaryError` instead,
     // so the access row can show an error rather than load forever.
@@ -203,7 +204,7 @@ export function CatalogItemShareProvider({
     );
 
     // The Share button waits for the access list; the inline row does not. Sharing is
-    // hidden for a caller the manage-gated endpoint 404s, but that verdict only
+    // hidden for a caller the manage-gated endpoint denies, but that verdict only
     // arrives with the response — offering the button optimistically made it appear
     // and then vanish for a view-only user. The row instead shows its skeleton while
     // the fetch is in flight, which is why only the actions gate on resolution.

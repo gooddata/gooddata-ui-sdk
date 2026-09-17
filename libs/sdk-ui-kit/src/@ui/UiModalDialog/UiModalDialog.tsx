@@ -59,7 +59,13 @@ export interface IUiModalDialogProps {
     children: ReactNode;
     /** Whether the modal is shown. */
     isOpen: boolean;
-    /** Fires when the user dismisses via Esc, backdrop click, or `onClose` from inside. */
+    /**
+     * Whether a press on the backdrop dismisses the modal. Defaults to `false`
+     * so a stray click cannot discard what the user typed; dialogs that hold no
+     * user input can opt in.
+     */
+    closeOnOutsideClick?: boolean;
+    /** Fires when the user dismisses via Esc, backdrop press, or `onClose` from inside. */
     onClose: () => void;
     /** Card width in px. Defaults to 540. */
     width?: number;
@@ -76,8 +82,8 @@ export interface IUiModalDialogProps {
 
 /**
  * Modal dialog — portal, dimmed backdrop, card chrome (radius, shadow, fill,
- * padding), focus management, dismiss-on-outside / Esc, and the dialog
- * landmark (`role="dialog"`, `aria-modal="true"`). Compose `UiDialogHeader`,
+ * padding), focus management, Esc dismiss, and the dialog landmark
+ * (`role="dialog"`, `aria-modal="true"`). Compose `UiDialogHeader`,
  * an optional `UiDialogBody`, and `UiDialogFooter` as children.
  *
  * @internal
@@ -87,6 +93,7 @@ export function UiModalDialog({
     isOpen,
     onClose,
     width,
+    closeOnOutsideClick,
     accessibilityConfig,
     dataTestId,
 }: IUiModalDialogProps) {
@@ -97,6 +104,7 @@ export function UiModalDialog({
         <OpenModalDialog
             onClose={onClose}
             width={width}
+            closeOnOutsideClick={closeOnOutsideClick}
             accessibilityConfig={accessibilityConfig}
             dataTestId={dataTestId}
         >
@@ -114,12 +122,14 @@ function OpenModalDialog({
     children,
     onClose,
     width = 540,
+    closeOnOutsideClick = false,
     accessibilityConfig,
     dataTestId,
 }: {
     children: ReactNode;
     onClose: () => void;
     width?: number;
+    closeOnOutsideClick?: boolean;
     accessibilityConfig?: IUiModalDialogProps["accessibilityConfig"];
     dataTestId?: string;
 }) {
@@ -168,6 +178,7 @@ function OpenModalDialog({
     );
 
     const dismiss = useDismiss(context, {
+        enabled: closeOnOutsideClick,
         outsidePressEvent: "mousedown",
         // Nested kit floating popups (dropdowns, menus, autocomplete listbox)
         // portal their bodies outside our `refs.floating`, so a click on a

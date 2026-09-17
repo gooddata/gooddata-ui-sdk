@@ -5,7 +5,8 @@
 // chunk URLs that no longer exist on the server. Vite emits a `vite:preloadError`
 // event when a dynamic import fails. We catch it, hard-reload the page once to fetch
 // the new index.html, and use sessionStorage to avoid reload loops if the redeployed
-// build is itself broken.
+// build is itself broken. The reload is raised synchronously from the event, so a page
+// holding unsaved work still gets its `beforeunload` say — see `installPreloadErrorHandler`.
 //
 // The version watcher proactively detects redeploys by polling the COMMITHASH file.
 // When the deployed commit differs from the one the tab was loaded with, it fires
@@ -19,6 +20,17 @@ interface IVitePreloadErrorEvent extends Event {
 
 const RELOAD_FLAG_KEY = "gd-chunk-reload-guard";
 const RELOAD_LOOP_WINDOW_MS = 30_000;
+
+/**
+ * How long one recovery attempt speaks for any further stale chunks in the same document.
+ *
+ * A redeploy usually takes several imports away at once, and each failure raises its own event.
+ * Without a bound, a user who answers the unload prompt with "stay" is asked again immediately,
+ * once per failed import. The window is short on purpose: it must cover a burst of simultaneous
+ * failures without reaching the next thing the user does, so that someone who saves and carries
+ * on still gets their recovery.
+ */
+const RELOAD_COALESCE_WINDOW_MS = 1_000;
 
 /**
  * Optional callback invoked synchronously immediately before a stale-chunk hard reload.
@@ -41,6 +53,8 @@ export type StaleChunkReloadListener = (info: IStaleChunkReloadInfo) => void;
 let preloadErrorHandlerInstalled = false;
 let versionWatcherInstalled = false;
 let staleChunkReloadListener: StaleChunkReloadListener | undefined;
+let lastReloadAttemptAt: number | undefined;
+let isReloadAttemptUnresolved = false;
 
 function readReloadFlag(): { hash: string; at: number } | undefined {
     try {
@@ -121,13 +135,38 @@ export function reloadForStaleChunks(reason: string): void {
     const currentHash = getCurrentHash();
     const previous = readReloadFlag();
 
-    if (previous?.hash === currentHash && Date.now() - previous.at < RELOAD_LOOP_WINDOW_MS) {
+    // A redeploy strips many chunks at once, so the failures arrive in a burst. One attempt
+    // speaks for all of them; without this the user is asked to leave once per failed import.
+    //
+    // An attempt stays unresolved while the browser's unload prompt is up, because that prompt
+    // blocks this thread: elapsed time alone would count the seconds the user spends reading it
+    // and expire the window exactly when the queued events are about to drain.
+    if (isReloadAttemptUnresolved) {
+        return;
+    }
+    if (lastReloadAttemptAt !== undefined && Date.now() - lastReloadAttemptAt < RELOAD_COALESCE_WINDOW_MS) {
+        return;
+    }
+
+    // Still running after an attempt means the navigation was cancelled — by a `beforeunload`
+    // handler the user answered with "stay". The flag is then this document's own, and must not
+    // stand in for a reload that never happened. The loop guard is unaffected: it protects the
+    // case where a reload DID replace the document, whose fresh module state starts undefined.
+    const staleFlagIsOurOwn = lastReloadAttemptAt !== undefined;
+
+    if (
+        !staleFlagIsOurOwn &&
+        previous?.hash === currentHash &&
+        Date.now() - previous.at < RELOAD_LOOP_WINDOW_MS
+    ) {
         console.error(
             `[host-runtime/chunk-reload-guard] Skipping reload for "${reason}" — already reloaded for the same build (${currentHash}) within ${RELOAD_LOOP_WINDOW_MS}ms.`,
         );
         return;
     }
 
+    isReloadAttemptUnresolved = true;
+    lastReloadAttemptAt = Date.now();
     writeReloadFlag(currentHash);
     console.warn(`[host-runtime/chunk-reload-guard] Reloading page due to: ${reason}`);
 
@@ -141,6 +180,14 @@ export function reloadForStaleChunks(reason: string): void {
     const target = new URL(window.location.href);
     target.searchParams.set(STALE_CHUNK_RELOAD_PARAM, String(Date.now()));
     window.location.replace(target.toString());
+
+    // Reached only if the navigation did not happen — a `beforeunload` the user answered with
+    // "stay". This runs after that prompt closes, since the prompt blocks the thread, so the
+    // coalescing window starts from the moment the user is back rather than from the attempt.
+    window.setTimeout(() => {
+        isReloadAttemptUnresolved = false;
+        lastReloadAttemptAt = Date.now();
+    }, 0);
 }
 
 /**
@@ -168,6 +215,12 @@ export function installPreloadErrorHandler(): void {
         // error from asPluggableApp instead of a preload failure. If the loop guard
         // suppresses the reload, the original rejection still gives the caller a
         // truthful failure to handle.
+        //
+        // Reload synchronously, from inside the dispatch. Deferring it — to a timer or even a
+        // microtask — hands control back to the failing import first, and a rejected `React.lazy`
+        // with no error boundary above it unmounts the tree that installed the page's
+        // `beforeunload` guard. The reload would then discard unsaved work unasked, which is the
+        // whole thing this guard exists to prevent.
         reloadForStaleChunks(`vite:preloadError (${preloadEvent.payload?.message ?? "unknown"})`);
     });
 }

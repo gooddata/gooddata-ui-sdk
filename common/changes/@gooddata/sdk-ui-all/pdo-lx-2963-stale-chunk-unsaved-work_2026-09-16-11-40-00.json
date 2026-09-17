@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-pluggable-host: Stop the stale-chunk recovery reload from discarding unsaved work after a redeploy. The reload is raised synchronously from the preload-error event, so a page holding unsaved changes still gets its `beforeunload` say, and repeated attempts are coalesced so a burst of missing chunks asks once rather than once per chunk.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

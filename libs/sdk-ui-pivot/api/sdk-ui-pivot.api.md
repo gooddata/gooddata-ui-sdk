@@ -299,6 +299,7 @@ export interface IMenuNext {
     aggregationsSubMenu?: boolean;
     aggregationsSubMenuForRows?: boolean;
     aggregationTypes?: TotalType[];
+    totalLabelsEditable?: boolean;
 }
 
 // @public (undocumented)

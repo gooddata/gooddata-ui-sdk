@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-ext: Fix the insight picker search finding only the visualizations already paged into the list, so what a search returned depended on how far the user had scrolled. The typed query now goes to the backend as a case-insensitive title filter, every page of matches is fetched, and an empty result says \"No visualizations found\" instead of \"No visualizations\".",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

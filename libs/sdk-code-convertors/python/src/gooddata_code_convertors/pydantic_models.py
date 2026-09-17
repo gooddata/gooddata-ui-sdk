@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 2c88ffe3c5efc3c42f0621bb4d52489fb6a032792f10f81fda902e362f4a850c
+# schema-hash: 4d368ca704d390ba0890e3e00d6a5ce9ff26400e32f701eb3b903fb96595761f
 
 from __future__ import annotations
 
@@ -87,6 +87,10 @@ __all__ = [
     "DashboardFiltersNoGroups",
     "DashboardMetricValueFilter",
     "DashboardRelativeDateFilter",
+    "DashboardStateMultiselect",
+    "DashboardStateMultiselect1",
+    "DashboardStateMultiselect2",
+    "DashboardStateSelect",
     "DashboardTextFilter",
     "DashboardTextFilter1",
     "DashboardTextFilter2",
@@ -537,86 +541,6 @@ class Parents(BaseModel):
     )
 
 
-class DashboardAttributeFilter1(BaseModel):
-    model_config = ConfigDict(
-        regex_engine="python-re",
-    )
-    title: str | None = Field(None, description='Optional title of the filter')
-    type: Type3
-    using: AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier = Field(
-        ..., description='Attribute or label to use in this filter.'
-    )
-    multiselect: bool | None = Field(
-        None, description='Whether the filter should allow multiple selection'
-    )
-    mode: Mode2 | None = Field(
-        None,
-        description='Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter.',
-    )
-    display_as: constr(pattern=r'^label/(?!\.)[.A-Za-z0-9_-]{1,255}$') | None = Field(
-        None,
-        description='Configures the label used for representing attribute filter elements in UI.',
-        title='Display As Label Identifier',
-    )
-    selection_type: SelectionType | None = Field(
-        None,
-        description="Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available.",
-    )
-    parents: list[str | Parents] | None = Field(
-        None, description='An ids of the parent local attribute or label filter'
-    )
-    metric_filters: list[str] | None = Field(
-        None,
-        description='An id of the attributes, labels, facts or metrics to validate the filter by',
-    )
-    state: Any | None = None
-
-
-class DashboardAttributeFilter2(BaseModel):
-    model_config = ConfigDict(
-        regex_engine="python-re",
-    )
-    title: str | None = Field(None, description='Optional title of the filter')
-    type: Type3
-    using: AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier = Field(
-        ..., description='Attribute or label to use in this filter.'
-    )
-    multiselect: bool | None = Field(
-        None, description='Whether the filter should allow multiple selection'
-    )
-    mode: Mode2 | None = Field(
-        None,
-        description='Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter.',
-    )
-    display_as: constr(pattern=r'^label/(?!\.)[.A-Za-z0-9_-]{1,255}$') | None = Field(
-        None,
-        description='If specified, the attribute filter will display the elements in selected label form.',
-        title='Display As Label Identifier',
-    )
-    selection_type: SelectionType | None = Field(
-        None,
-        description="Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available.",
-    )
-    parents: list[str | Parents] | None = Field(
-        None, description='An ids of the parent local attribute or label filter'
-    )
-    metric_filters: list[str] | None = Field(
-        None,
-        description='An id of the attributes, labels, facts or metrics to validate the filter by',
-    )
-    state: Any | None = None
-
-
-class DashboardAttributeFilter(
-    RootModel[DashboardAttributeFilter1 | DashboardAttributeFilter2]
-):
-    root: DashboardAttributeFilter1 | DashboardAttributeFilter2 = Field(
-        ...,
-        description='A dashboard attribute filter',
-        title='Dashboard attribute filter',
-    )
-
-
 class Type5(Enum):
     text_filter = 'text_filter'
 
@@ -736,6 +660,26 @@ class DateFilterGranularity(Enum):
     FISCAL_YEAR = 'FISCAL_YEAR'
     FISCAL_QUARTER = 'FISCAL_QUARTER'
     FISCAL_MONTH = 'FISCAL_MONTH'
+
+
+class DashboardStateSelect(BaseModel):
+    include: list[str] = Field(..., max_length=1)
+
+
+class DashboardStateMultiselect1(BaseModel):
+    include: list[str]
+
+
+class DashboardStateMultiselect2(BaseModel):
+    exclude: list[str]
+
+
+class DashboardStateMultiselect(
+    RootModel[DashboardStateMultiselect1 | DashboardStateMultiselect2]
+):
+    root: DashboardStateMultiselect1 | DashboardStateMultiselect2 = Field(
+        ..., description='State of the multiselect'
+    )
 
 
 class Condition2(Enum):
@@ -2776,6 +2720,86 @@ class DashboardRelativeDateFilter(BaseModel):
     )
 
 
+class DashboardAttributeFilter1(BaseModel):
+    model_config = ConfigDict(
+        regex_engine="python-re",
+    )
+    title: str | None = Field(None, description='Optional title of the filter')
+    type: Type3
+    using: AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier = Field(
+        ..., description='Attribute or label to use in this filter.'
+    )
+    multiselect: bool | None = Field(
+        None, description='Whether the filter should allow multiple selection'
+    )
+    mode: Mode2 | None = Field(
+        None,
+        description='Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter.',
+    )
+    display_as: constr(pattern=r'^label/(?!\.)[.A-Za-z0-9_-]{1,255}$') | None = Field(
+        None,
+        description='Configures the label used for representing attribute filter elements in UI.',
+        title='Display As Label Identifier',
+    )
+    selection_type: SelectionType | None = Field(
+        None,
+        description="Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available.",
+    )
+    parents: list[str | Parents] | None = Field(
+        None, description='An ids of the parent local attribute or label filter'
+    )
+    metric_filters: list[str] | None = Field(
+        None,
+        description='An id of the attributes, labels, facts or metrics to validate the filter by',
+    )
+    state: DashboardStateSelect | None = None
+
+
+class DashboardAttributeFilter2(BaseModel):
+    model_config = ConfigDict(
+        regex_engine="python-re",
+    )
+    title: str | None = Field(None, description='Optional title of the filter')
+    type: Type3
+    using: AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier = Field(
+        ..., description='Attribute or label to use in this filter.'
+    )
+    multiselect: bool | None = Field(
+        None, description='Whether the filter should allow multiple selection'
+    )
+    mode: Mode2 | None = Field(
+        None,
+        description='Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter.',
+    )
+    display_as: constr(pattern=r'^label/(?!\.)[.A-Za-z0-9_-]{1,255}$') | None = Field(
+        None,
+        description='If specified, the attribute filter will display the elements in selected label form.',
+        title='Display As Label Identifier',
+    )
+    selection_type: SelectionType | None = Field(
+        None,
+        description="Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available.",
+    )
+    parents: list[str | Parents] | None = Field(
+        None, description='An ids of the parent local attribute or label filter'
+    )
+    metric_filters: list[str] | None = Field(
+        None,
+        description='An id of the attributes, labels, facts or metrics to validate the filter by',
+    )
+    state: DashboardStateMultiselect | None = None
+
+
+class DashboardAttributeFilter(
+    RootModel[DashboardAttributeFilter1 | DashboardAttributeFilter2]
+):
+    root: DashboardAttributeFilter1 | DashboardAttributeFilter2 = Field(
+        ...,
+        description='A dashboard attribute filter',
+        title='Dashboard attribute filter',
+    )
+
+
 class DashboardMetricValueFilter(BaseModel):
     type: Type7
     title: str | None = Field(
@@ -2982,7 +3006,7 @@ class Plugins(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='An unique identifier of the plugin.')
-    parameters: Any | None = Field(
+    parameters: dict[str, Any] | list[Any] | str | float | bool | None = Field(
         None,
         description='Parameter that will be passed to the plugin. Everything other than string will be serialized to JSON automatically.',
     )

@@ -6,12 +6,14 @@ import { type ColGroupDef } from "ag-grid-enterprise";
 
 import { isGrandTotalColumnDefinition, isSubtotalColumnDefinition } from "@gooddata/sdk-ui";
 
+import { resolveTotalLabelTargetFromColumnDefinition } from "../../features/aggregations/totalLabelTarget.js";
 import { e } from "../../features/styling/bem.js";
 import { useHeaderCellAriaLabel } from "../../hooks/header/useHeaderCellAriaLabel.js";
 import { useHeaderGroupDrilling } from "../../hooks/header/useHeaderGroupDrilling.js";
 import { useHeaderMenu } from "../../hooks/header/useHeaderMenu.js";
 import { useHeaderMenuKeyboard } from "../../hooks/header/useHeaderMenuKeyboard.js";
 import { useHeaderSpaceKey } from "../../hooks/header/useHeaderSpaceKey.js";
+import { useTotalLabelHeader } from "../../hooks/header/useTotalLabelHeader.js";
 import { useIsTransposed } from "../../hooks/shared/useIsTransposed.js";
 import {
     getPivotHeaderClickableAreaTestIdProps,
@@ -38,6 +40,7 @@ export function PivotGroupHeader(params: IHeaderGroupCellProps) {
     const colGroupDef = params.columnGroup.getColGroupDef() as AgGridColumnGroupDef | null;
 
     const columnDefinition = colGroupDef?.context?.columnDefinition;
+    const resolvedTotalLabelTarget = resolveTotalLabelTargetFromColumnDefinition(columnDefinition);
     const isValueColDef = isValueColumnDef(columnDefinition);
     const columnScope = getColumnScope(columnDefinition);
     const pivotAttributeDescriptors = getPivotAttributeDescriptors(columnScope);
@@ -60,6 +63,18 @@ export function PivotGroupHeader(params: IHeaderGroupCellProps) {
 
     const isTotalHeader = isTotal || isTotalGroup;
     const isSubtotalHeader = isSubtotal || isSubtotalGroup;
+    // shouldSkipHeaderName blanks nested repeats of a total group ("Sum" > "Sum"); they must not
+    // become rename targets. When transposed, MeasureHeader's own leaf cell owns the total's label
+    // instead (see its comment) - this group must not also show/target it, or both cells end up
+    // showing "Sum" at once.
+    const hasVisibleHeaderName = colGroupDef?.headerName !== undefined;
+    const ownsTotalLabel = hasVisibleHeaderName && (!isTransposed || !(isTotalHeader || isSubtotalHeader));
+    const totalLabelTarget = ownsTotalLabel ? resolvedTotalLabelTarget : undefined;
+    const { label: customTotalLabel, onClick: handleTotalLabelClick } = useTotalLabelHeader(
+        params.eGridHeader,
+        totalLabelTarget,
+    );
+    const visibleHeaderText = ownsTotalLabel ? (customTotalLabel ?? params.displayName) : "";
 
     const allowAggregations =
         params.pivotGroupDepth !== 0 && // Not description level of the pivoting group
@@ -93,6 +108,7 @@ export function PivotGroupHeader(params: IHeaderGroupCellProps) {
         {
             measureIdentifiers: params.measureIdentifiers,
             pivotAttributeDescriptors,
+            ariaLabelDisplayNameOverride: customTotalLabel,
         },
         params,
     );
@@ -111,7 +127,7 @@ export function PivotGroupHeader(params: IHeaderGroupCellProps) {
         [isDrillable, handleHeaderDrill],
     );
 
-    useHeaderSpaceKey(params, handleHeaderClick);
+    useHeaderSpaceKey(params, handleTotalLabelClick ?? handleHeaderClick);
     useHeaderMenuKeyboard(
         params,
         () => {
@@ -120,7 +136,7 @@ export function PivotGroupHeader(params: IHeaderGroupCellProps) {
         },
         hasMenuItems,
     );
-    useHeaderCellAriaLabel(params.eGridHeader, headerCellAriaLabel);
+    useHeaderCellAriaLabel(params.eGridHeader, headerCellAriaLabel, params.displayName);
 
     return (
         <div
@@ -128,6 +144,7 @@ export function PivotGroupHeader(params: IHeaderGroupCellProps) {
                 "is-menu-open": isMenuOpen,
                 drillable: isDrillable,
             })}
+            onClick={handleTotalLabelClick}
             {...getPivotHeaderTestIdProps({
                 drillable: isDrillable,
                 isTotal: isTotalHeader,
@@ -135,8 +152,8 @@ export function PivotGroupHeader(params: IHeaderGroupCellProps) {
             })}
         >
             <div className="gd-header-content" aria-hidden="true">
-                <span className="gd-header-text" {...getPivotHeaderTextTestIdProps()}>
-                    {params.displayName}
+                <span className="gd-header-text" {...(ownsTotalLabel ? getPivotHeaderTextTestIdProps() : {})}>
+                    {visibleHeaderText}
                 </span>
             </div>
             {isDrillable ? (

@@ -73,11 +73,76 @@ export interface IReportBoxStyle {
 }
 
 /**
- * Styling of a text slot: the paint of its box, plus the ink and placement of the text it owns.
+ * Size a heading is rendered at. Each size is styled by the matching theme text level
+ * (`reports.textStyle.heading.h1` ...).
  *
- * @remarks
- * Overrides the ink and placement of the slot's {@link ReportTextSlotKind} defaults; the kind
- * keeps owning semantic typography (size and weight).
+ * @alpha
+ */
+export type ReportHeadingType = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+
+/**
+ * Size a paragraph is rendered at. Each size is styled by the matching theme text level
+ * (`reports.textStyle.paragraph.largeText` ...).
+ *
+ * @alpha
+ */
+export type ReportParagraphType = "largeText" | "normalText" | "smallText";
+
+/**
+ * Size any report text is rendered at.
+ *
+ * @alpha
+ */
+export type ReportTextType = ReportHeadingType | ReportParagraphType;
+
+/**
+ * All heading sizes, largest first.
+ *
+ * @alpha
+ */
+export const ReportHeadingTypes: ReportHeadingType[] = ["h1", "h2", "h3", "h4", "h5", "h6"];
+
+/**
+ * All paragraph sizes, largest first.
+ *
+ * @alpha
+ */
+export const ReportParagraphTypes: ReportParagraphType[] = ["largeText", "normalText", "smallText"];
+
+/**
+ * Size a heading slot that states none is rendered at.
+ *
+ * @alpha
+ */
+export const DefaultReportHeadingType: ReportHeadingType = "h1";
+
+/**
+ * Size a paragraph slot that states none is rendered at.
+ *
+ * @alpha
+ */
+export const DefaultReportParagraphType: ReportParagraphType = "normalText";
+
+/**
+ * Type-guard testing whether the value is a {@link ReportHeadingType}.
+ *
+ * @alpha
+ */
+export function isReportHeadingType(value: unknown): value is ReportHeadingType {
+    return ReportHeadingTypes.includes(value as ReportHeadingType);
+}
+
+/**
+ * Type-guard testing whether the value is a {@link ReportParagraphType}.
+ *
+ * @alpha
+ */
+export function isReportParagraphType(value: unknown): value is ReportParagraphType {
+    return ReportParagraphTypes.includes(value as ReportParagraphType);
+}
+
+/**
+ * Styling of a text slot: the paint of its box, plus the ink and placement of the text it owns.
  *
  * @alpha
  */
@@ -90,6 +155,31 @@ export interface IReportTextStyle extends IReportBoxStyle {
     horizontalAlign?: ReportContentAlignment;
 
     verticalAlign?: ReportContentAlignment;
+}
+
+/**
+ * Styling of a heading slot.
+ *
+ * @alpha
+ */
+export interface IReportHeadingStyle extends IReportTextStyle {
+    /**
+     * Defaults to {@link DefaultReportHeadingType}. The size owns the semantic typography that goes
+     * with it; the rest of the style overrides ink and placement on top of it.
+     */
+    type?: ReportHeadingType;
+}
+
+/**
+ * Styling of a paragraph slot.
+ *
+ * @alpha
+ */
+export interface IReportParagraphStyle extends IReportTextStyle {
+    /**
+     * Defaults to {@link DefaultReportParagraphType}.
+     */
+    type?: ReportParagraphType;
 }
 
 /**

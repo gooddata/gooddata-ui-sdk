@@ -1410,7 +1410,7 @@ function useInherit(input: string | "inherit" | undefined | false) {
     return input && input !== "inherit" ? input : "";
 }
 
-function serialiseParameters(params: object | string) {
+function serialiseParameters(params: object | string | number | boolean) {
     try {
         return JSON.stringify(params);
     } catch {

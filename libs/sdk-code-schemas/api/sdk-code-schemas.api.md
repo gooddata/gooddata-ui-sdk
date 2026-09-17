@@ -758,7 +758,7 @@ interface Dashboard {
         id: Id15;
         parameters?: {
             [k: string]: unknown;
-        };
+        } | unknown[] | string | number | boolean | null;
     } | Id16)[];
     sections?: Section[];
     tabs?: Tab[];
@@ -800,9 +800,7 @@ type DashboardAttributeFilter1 = {
     mode?: "readonly" | "hidden" | "active";
     display_as?: DisplayAsLabelIdentifier;
     selection_type?: "list" | "text" | "listOrText";
-    state?: {
-        [k: string]: unknown;
-    };
+    state?: DashboardStateSelect;
     parents?: (LocalAttributeFilter | LocalDateFilter)[];
     metric_filters?: string[];
     [k: string]: unknown;
@@ -814,9 +812,7 @@ type DashboardAttributeFilter1 = {
     mode?: "readonly" | "hidden" | "active";
     display_as?: DisplayAsLabelIdentifier1;
     selection_type?: "list" | "text" | "listOrText";
-    state?: {
-        [k: string]: unknown;
-    };
+    state?: DashboardStateMultiselect;
     parents?: (LocalAttributeFilter1 | LocalDateFilter1)[];
     metric_filters?: string[];
     [k: string]: unknown;
@@ -862,6 +858,27 @@ interface DashboardRelativeDateFilter {
     [k: string]: unknown;
     // (undocumented)
     type: "date_filter" | "attribute_filter" | "text_filter" | "metric_value_filter" | "filter_group";
+}
+
+// Warning: (ae-missing-release-tag) "DashboardStateMultiselect" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type DashboardStateMultiselect = {
+    include: string[];
+    [k: string]: unknown;
+} | {
+    exclude: string[];
+    [k: string]: unknown;
+};
+
+// Warning: (ae-missing-release-tag) "DashboardStateSelect" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface DashboardStateSelect {
+    // (undocumented)
+    [k: string]: unknown;
+    // (undocumented)
+    include: [] | [string];
 }
 
 // Warning: (ae-missing-release-tag) "DashboardTextFilter" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -2733,6 +2750,7 @@ export const metadata_v1: {
                                     };
                                     parameters: {
                                         description: string;
+                                        type: string[];
                                     };
                                 };
                                 required: string[];
@@ -5503,7 +5521,7 @@ export const metadata_v1: {
                             description: string;
                         };
                         state: {
-                            ref: string;
+                            $ref: string;
                         };
                         parents: {
                             type: string;
@@ -5602,7 +5620,7 @@ export const metadata_v1: {
                             description: string;
                         };
                         state: {
-                            ref: string;
+                            $ref: string;
                         };
                         parents: {
                             type: string;
@@ -6084,6 +6102,60 @@ export const metadata_v1: {
         dateFilterGranularity: {
             type: string;
             enum: string[];
+        };
+        dashboardStateSelect: {
+            description: string;
+            type: string;
+            properties: {
+                include: {
+                    type: string;
+                    items: {
+                        type: string;
+                        $semantic: {
+                            type: string;
+                            from: string;
+                        };
+                    };
+                    maxItems: number;
+                };
+            };
+            required: string[];
+        };
+        dashboardStateMultiselect: {
+            description: string;
+            oneOf: ({
+                type: string;
+                properties: {
+                    include: {
+                        type: string;
+                        items: {
+                            type: string;
+                            $semantic: {
+                                type: string;
+                                from: string;
+                            };
+                        };
+                    };
+                    exclude?: undefined;
+                };
+                required: string[];
+            } | {
+                type: string;
+                properties: {
+                    include?: undefined;
+                    exclude: {
+                        type: string;
+                        items: {
+                            type: string;
+                            $semantic: {
+                                type: string;
+                                from: string;
+                            };
+                        };
+                    };
+                };
+                required: string[];
+            })[];
         };
         mvfCondition: {
             title: string;
@@ -7296,6 +7368,7 @@ export const metadata_v1: {
                                 };
                                 parameters: {
                                     description: string;
+                                    type: string[];
                                 };
                             };
                             required: string[];
@@ -11349,6 +11422,7 @@ declare namespace v1 {
         LabelIdentifier3,
         ComputedAttributeIdentifier3,
         DisplayAsLabelIdentifier1,
+        DashboardStateMultiselect,
         LocalAttributeFilter1,
         DashboardTextFilter,
         AttributeIdentifier4,
@@ -11596,6 +11670,7 @@ declare namespace v1 {
         DashboardFilters,
         DashboardAbsoluteDateFilter,
         DashboardRelativeDateFilter,
+        DashboardStateSelect,
         LocalDateFilter,
         LocalDateFilter1,
         DashboardTextFilter1,

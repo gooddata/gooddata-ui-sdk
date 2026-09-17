@@ -2,6 +2,8 @@
 
 import { isEmpty } from "lodash-es";
 
+import { type ObjectType } from "@gooddata/sdk-model";
+
 /**
  * @public
  */
@@ -119,6 +121,22 @@ export interface IObjUriQualifier {
  */
 export interface IObjIdentifierQualifier {
     identifier: string;
+
+    /**
+     * Type of the referenced object.
+     *
+     * @remarks
+     * An identifier alone does not say what kind of object it names. This matters for attribute filters:
+     * a filter's `displayForm` may point either at a label (`displayForm`) or at a computed attribute
+     * (`computedAttribute`). A computed attribute has no labels of its own; it is referenced directly and
+     * such reference is distinguished from a label reference solely by this type. Without it, the
+     * receiving application has to assume a label and a computed attribute filter silently turns into
+     * a filter on a non-existent label.
+     *
+     * When omitted, the reference is treated as a label (`displayForm`). Events always carry the type
+     * so that consumers can tell the two apart; commands may pass it back as received.
+     */
+    type?: ObjectType;
 }
 
 /**

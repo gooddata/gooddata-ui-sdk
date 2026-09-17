@@ -25,6 +25,11 @@ import {
 
 import { useCurrentDataView } from "../context/CurrentDataViewContext.js";
 import { usePivotTableProps } from "../context/PivotTablePropsContext.js";
+import { useTotalLabelContext } from "../context/TotalLabelContext.js";
+import {
+    isFirstTotalHeaderAttributeCell,
+    resolveTotalLabelTargetFromTotalLabelCellData,
+} from "../features/aggregations/totalLabelTarget.js";
 import { createCustomDrillEvent } from "../features/drilling/events.js";
 import { createDrillIntersection } from "../features/drilling/intersection.js";
 import { isCellDrillable } from "../features/drilling/isDrillable.js";
@@ -72,6 +77,7 @@ const tableKeyboardNavigation = makeKeyboardNavigation({
  */
 export function useInteractionProps(): (agGridReactProps: AgGridProps) => AgGridProps {
     const { drillableItems, onDrill } = usePivotTableProps();
+    const { enabled: totalLabelsEditable, openTotalLabelMenu } = useTotalLabelContext();
     const { currentDataView } = useCurrentDataView();
     const isDraggingRef = useRef<boolean>(false);
     const clickedCellRef = useRef<{ rowIndex: number; colId: string | undefined } | null>(null);
@@ -169,18 +175,56 @@ export function useInteractionProps(): (agGridReactProps: AgGridProps) => AgGrid
         }
     }, []);
 
+    const openTotalLabelMenuFromCellEvent = useCallback(
+        (
+            event:
+                | CellClickedEvent<AgGridRowData, string | null>
+                | CellKeyDownEvent<AgGridRowData, string | null>,
+        ) => {
+            const colId = event.colDef?.colId ?? event.colDef?.field;
+            const cellData = colId ? event.data?.cellDataByColId?.[colId] : undefined;
+            const totalTarget = resolveTotalLabelTargetFromTotalLabelCellData(cellData);
+            const isBlankDuplicateAttributeCell =
+                cellData?.columnDefinition.type === "attribute" &&
+                !!colId &&
+                !isFirstTotalHeaderAttributeCell(event.data, colId);
+
+            if (!totalLabelsEditable || !totalTarget || !event.event || isBlankDuplicateAttributeCell) {
+                return false;
+            }
+
+            const eventTarget = event.event.target;
+            if (!(eventTarget instanceof HTMLElement)) {
+                return false;
+            }
+
+            event.event.preventDefault();
+            openTotalLabelMenu({
+                ...totalTarget,
+                anchor: eventTarget.closest<HTMLElement>("[role='gridcell']") ?? eventTarget,
+            });
+
+            return true;
+        },
+        [openTotalLabelMenu, totalLabelsEditable],
+    );
+
     const onCellClicked = useCallback(
         (event: CellClickedEvent<AgGridRowData, string | null>) => {
             // Only drill if user didn't drag (simple click)
             if (!isDraggingRef.current) {
-                drillFromCellEvent(event);
+                const menuOpened = openTotalLabelMenuFromCellEvent(event);
+
+                if (!menuOpened) {
+                    drillFromCellEvent(event);
+                }
             }
 
             // Reset state
             clickedCellRef.current = null;
             isDraggingRef.current = false;
         },
-        [drillFromCellEvent],
+        [drillFromCellEvent, openTotalLabelMenuFromCellEvent],
     );
 
     const onCellSelectionChanged = useCallback(() => {
@@ -333,13 +377,8 @@ export function useInteractionProps(): (agGridReactProps: AgGridProps) => AgGrid
                 )(keyboardEvent);
             }
 
-            // Handle drilling only if there are drillable items
-            if (!onDrill || !drillableItems) {
-                return;
-            }
-
-            // Drill via keyboard: ENTER or SPACE pressed on a drillable cell
-            // Only drill if no modifier keys are pressed (to avoid conflicts with selection shortcuts)
+            // Open total-label actions or drill via keyboard. Only handle Enter/Space without modifiers
+            // to avoid conflicts with selection shortcuts.
             const hasModifiers =
                 keyboardEvent.ctrlKey ||
                 keyboardEvent.metaKey ||
@@ -347,10 +386,22 @@ export function useInteractionProps(): (agGridReactProps: AgGridProps) => AgGrid
                 keyboardEvent.altKey;
 
             if ((isEnterKey(keyboardEvent) || isSpaceKey(keyboardEvent)) && !hasModifiers) {
-                drillFromCellEvent(event);
+                const menuOpened = openTotalLabelMenuFromCellEvent(event);
+                if (!menuOpened && onDrill && drillableItems) {
+                    drillFromCellEvent(event);
+                }
             }
         },
-        [drillFromCellEvent, onDrill, drillableItems, navigateToHome, navigateToEnd, selectColumn, selectRow],
+        [
+            drillFromCellEvent,
+            drillableItems,
+            navigateToEnd,
+            navigateToHome,
+            onDrill,
+            openTotalLabelMenuFromCellEvent,
+            selectColumn,
+            selectRow,
+        ],
     );
 
     return useCallback(

@@ -935,10 +935,11 @@ export const pluggableApp: IPluggableApp = {
         onEvent,
         onTelemetryEvent,
     }: IPluggableApplicationMountOptions): IPluggableApplicationMountHandle {
-        // To customize the host header (e.g. add app-specific help menu items),
-        // destructure \`onHeaderChange\` from the mount options and call:
+        // The host header already shows the product-wide help links. To add app-specific ones,
+        // destructure \`onHeaderChange\` from the mount options and push the WHOLE menu — the push
+        // replaces the host default, it does not extend it:
         //   onHeaderChange?.({ helpMenuItems: [...] });
-        // See modules/gdc-catalog/module/src/pluggableApp.tsx for a working example.
+        // See modules/gdc-ldm-modeler/module/src/pluggableApp.tsx for a working example.
         const root = createRoot(container);
 
         renderApp(root, ctx, basePath, onEvent, onTelemetryEvent);

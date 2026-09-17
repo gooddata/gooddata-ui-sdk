@@ -13,20 +13,26 @@ import {
 import { selectSettings } from "../../../../../model/store/config/configSelectors.js";
 import { selectIsInEditMode } from "../../../../../model/store/renderMode/renderModeSelectors.js";
 
-function isSupportedWidgetProperties(
+/**
+ * Exported for direct unit testing - the surrounding hook needs a full dashboard store to render.
+ * @internal
+ */
+export function isSupportedWidgetProperties(
     properties: IPushData["properties"],
     isInEditMode: boolean,
     enableNewPivotTable: boolean,
 ): boolean {
-    // currently we only support the columnWidths and textWrapping for pivot tables
+    // currently we only support the columnWidths, textWrapping and totals (rename/reset of an
+    // existing total's alias - see PluggablePivotTableNext.persistTotalsOverride) for pivot tables
     // this should be ideally driven by the PlugVis API, not hardcoded here
     const controls = properties?.controls as any;
 
     const hasColumnWidths = !!controls?.columnWidths;
     const hasTextWrapping = !!controls?.textWrapping;
+    const hasTotals = !!controls?.totals;
 
     if (enableNewPivotTable) {
-        return hasColumnWidths || hasTextWrapping;
+        return hasColumnWidths || hasTextWrapping || hasTotals;
     }
 
     if (isInEditMode) {

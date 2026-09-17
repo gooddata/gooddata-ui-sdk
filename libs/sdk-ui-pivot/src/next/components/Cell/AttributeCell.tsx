@@ -1,5 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
+import { useCallback, useEffect, useRef } from "react";
+
 import { type ICellRendererParams } from "ag-grid-enterprise";
 import { type IntlShape } from "react-intl";
 
@@ -12,7 +14,12 @@ import {
     isTableTotalHeaderValue,
 } from "@gooddata/sdk-ui";
 
-import { getAttributeColIds, shouldGroupAttribute } from "../../features/columns/shared.js";
+import { useTotalLabelContext } from "../../context/TotalLabelContext.js";
+import {
+    isFirstTotalHeaderAttributeCell,
+    resolveTotalLabelTargetFromTotalLabelCellData,
+} from "../../features/aggregations/totalLabelTarget.js";
+import { shouldGroupAttribute } from "../../features/columns/shared.js";
 import { e } from "../../features/styling/bem.js";
 import {
     getPivotCellAttributeImageTestIdProps,
@@ -55,36 +62,46 @@ export function AttributeCell(
     const columnDefinition = params.columnDefinition;
     const dataTestIdProps = getPivotCellTestIdPropsFromCellTypes(params.cellTypes);
 
+    const cellData = params.data?.cellDataByColId?.[colId];
+    const isTotalHeaderCell =
+        !!cellData && (isTableTotalHeaderValue(cellData) || isTableGrandTotalHeaderValue(cellData));
+    const isFirstTotalCell = isTotalHeaderCell && isFirstTotalHeaderAttributeCell(params.data, colId);
+
+    const { enabled: totalLabelsEditable } = useTotalLabelContext();
+    const isRenameableTotalCell =
+        totalLabelsEditable && isFirstTotalCell && !!resolveTotalLabelTargetFromTotalLabelCellData(cellData);
+
+    const cellRef = useRef<HTMLElement | null>(null);
+    const setCellRef = useCallback((node: HTMLElement | null) => {
+        cellRef.current = node;
+    }, []);
+    useEffect(() => {
+        const gridCell = cellRef.current?.closest<HTMLElement>("[role='gridcell']");
+        if (!gridCell || !isRenameableTotalCell) {
+            return;
+        }
+
+        const previousAriaHasPopup = gridCell.getAttribute("aria-haspopup");
+        gridCell.setAttribute("aria-haspopup", "menu");
+        return () => {
+            if (previousAriaHasPopup === null) {
+                gridCell.removeAttribute("aria-haspopup");
+            } else {
+                gridCell.setAttribute("aria-haspopup", previousAriaHasPopup);
+            }
+        };
+    }, [isRenameableTotalCell]);
+
     // 1) Empty value handling - must be checked first
     if (!value) {
         return <span {...dataTestIdProps}>{emptyHeaderTitleFromIntl(params.intl)}</span>;
     }
 
-    // 2) Total/grand-total header visibility: render title only in the first attribute column
-    // If this is a total/grand-total header cell, render the title only in the first
-    // attribute column that carries the total header in this row. Hide it in others.
-    const cellData = params.data?.cellDataByColId?.[colId];
-    const isTotalHeaderCell =
-        !!cellData && (isTableTotalHeaderValue(cellData) || isTableGrandTotalHeaderValue(cellData));
-
-    if (isTotalHeaderCell) {
-        const attributeColIds = getAttributeColIds(params.data);
-
-        // Find the first attribute column (by columnIndex) that has a total/grand-total header in this row
-        const firstTotalAttrColId = attributeColIds
-            .filter((id) => {
-                const c = params.data?.cellDataByColId?.[id];
-                return !!c && (isTableTotalHeaderValue(c) || isTableGrandTotalHeaderValue(c));
-            })
-            .sort((a, b) => {
-                const ai = params.data!.cellDataByColId![a].columnDefinition.columnIndex;
-                const bi = params.data!.cellDataByColId![b].columnDefinition.columnIndex;
-                return ai - bi;
-            })[0];
-
-        if (firstTotalAttrColId && firstTotalAttrColId !== params.colId) {
-            return <span {...dataTestIdProps} />;
-        }
+    // If this is a total/grand-total header cell, render the title only in the first attribute
+    // column that carries the total header in this row (see isFirstTotalHeaderAttributeCell) -
+    // hide it in the others.
+    if (isTotalHeaderCell && !isFirstTotalCell) {
+        return <span {...dataTestIdProps} />;
     }
 
     // 3) Image rendering: check if attribute should be rendered as an image
@@ -99,7 +116,11 @@ export function AttributeCell(
         const primaryLabelValue = getPrimaryLabelValue(cellData as ITableAttributeHeaderValue);
 
         return (
-            <div className={e("cell-image-wrapper")} {...getPivotCellAttributeImageTestIdProps()}>
+            <div
+                ref={setCellRef}
+                className={e("cell-image-wrapper")}
+                {...getPivotCellAttributeImageTestIdProps()}
+            >
                 <ImageCell src={value} alt={primaryLabelValue} />
             </div>
         );
@@ -110,7 +131,11 @@ export function AttributeCell(
     const previousRow = rowIndex ? params.api.getDisplayedRowAtIndex(rowIndex - 1) : null;
 
     if (!previousRow?.data) {
-        return <span {...dataTestIdProps}>{value}</span>;
+        return (
+            <span ref={setCellRef} {...dataTestIdProps}>
+                {value}
+            </span>
+        );
     }
 
     const shouldGroup = shouldGroupAttribute(params, previousRow, columnDefinition);
@@ -119,5 +144,9 @@ export function AttributeCell(
         return <span {...dataTestIdProps} />;
     }
 
-    return <span {...dataTestIdProps}>{value}</span>;
+    return (
+        <span ref={setCellRef} {...dataTestIdProps}>
+            {value}
+        </span>
+    );
 }

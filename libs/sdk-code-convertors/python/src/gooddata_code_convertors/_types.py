@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 2c88ffe3c5efc3c42f0621bb4d52489fb6a032792f10f81fda902e362f4a850c
+# schema-hash: 4d368ca704d390ba0890e3e00d6a5ce9ff26400e32f701eb3b903fb96595761f
 
 from __future__ import annotations
 
@@ -44,6 +44,10 @@ __all__ = [
     "DashboardFiltersNoGroups",
     "DashboardMetricValueFilter",
     "DashboardRelativeDateFilter",
+    "DashboardStateMultiselect",
+    "DashboardStateMultiselect1",
+    "DashboardStateMultiselect2",
+    "DashboardStateSelect",
     "DashboardTextFilter",
     "DashboardTextFilter1",
     "DashboardTextFilter2",
@@ -246,45 +250,6 @@ class Parents(TypedDict):
     date: NotRequired[str]
 
 
-class DashboardAttributeFilter1(TypedDict):
-    title: NotRequired[str]
-    type: Literal['attribute_filter']
-    using: AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier
-    multiselect: NotRequired[bool]
-    mode: NotRequired[
-        Literal['readonly', 'hidden', 'active']
-    ]
-    display_as: NotRequired[str]
-    selection_type: NotRequired[
-        Literal['list', 'text', 'listOrText']
-    ]
-    parents: NotRequired[list[str | Parents]]
-    metric_filters: NotRequired[list[str]]
-    state: NotRequired[Any]
-
-
-class DashboardAttributeFilter2(TypedDict):
-    title: NotRequired[str]
-    type: Literal['attribute_filter']
-    using: AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier
-    multiselect: NotRequired[bool]
-    mode: NotRequired[
-        Literal['readonly', 'hidden', 'active']
-    ]
-    display_as: NotRequired[str]
-    selection_type: NotRequired[
-        Literal['list', 'text', 'listOrText']
-    ]
-    parents: NotRequired[list[str | Parents]]
-    metric_filters: NotRequired[list[str]]
-    state: NotRequired[Any]
-
-
-DashboardAttributeFilter: TypeAlias = (
-    DashboardAttributeFilter1 | DashboardAttributeFilter2
-)
-
-
 class DashboardTextFilter1(TypedDict):
     title: NotRequired[str]
     using: AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier
@@ -325,6 +290,23 @@ DashboardTextFilter: TypeAlias = DashboardTextFilter1 | DashboardTextFilter2
 
 
 DateFilterGranularity: TypeAlias = Literal['SECOND', 'MINUTE', 'HOUR', 'DAY', 'WEEK', 'WEEK_US', 'MONTH', 'QUARTER', 'YEAR', 'FISCAL_YEAR', 'FISCAL_QUARTER', 'FISCAL_MONTH']
+
+
+class DashboardStateSelect(TypedDict):
+    include: list[str]
+
+
+class DashboardStateMultiselect1(TypedDict):
+    include: list[str]
+
+
+class DashboardStateMultiselect2(TypedDict):
+    exclude: list[str]
+
+
+DashboardStateMultiselect: TypeAlias = (
+    DashboardStateMultiselect1 | DashboardStateMultiselect2
+)
 
 
 class MvfCondition1(TypedDict):
@@ -771,6 +753,45 @@ DashboardRelativeDateFilter = TypedDict(
 )
 
 
+class DashboardAttributeFilter1(TypedDict):
+    title: NotRequired[str]
+    type: Literal['attribute_filter']
+    using: AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier
+    multiselect: NotRequired[bool]
+    mode: NotRequired[
+        Literal['readonly', 'hidden', 'active']
+    ]
+    display_as: NotRequired[str]
+    selection_type: NotRequired[
+        Literal['list', 'text', 'listOrText']
+    ]
+    parents: NotRequired[list[str | Parents]]
+    metric_filters: NotRequired[list[str]]
+    state: NotRequired[DashboardStateSelect]
+
+
+class DashboardAttributeFilter2(TypedDict):
+    title: NotRequired[str]
+    type: Literal['attribute_filter']
+    using: AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier
+    multiselect: NotRequired[bool]
+    mode: NotRequired[
+        Literal['readonly', 'hidden', 'active']
+    ]
+    display_as: NotRequired[str]
+    selection_type: NotRequired[
+        Literal['list', 'text', 'listOrText']
+    ]
+    parents: NotRequired[list[str | Parents]]
+    metric_filters: NotRequired[list[str]]
+    state: NotRequired[DashboardStateMultiselect]
+
+
+DashboardAttributeFilter: TypeAlias = (
+    DashboardAttributeFilter1 | DashboardAttributeFilter2
+)
+
+
 class DashboardMetricValueFilter(TypedDict):
     type: Literal['metric_value_filter']
     title: NotRequired[str]
@@ -853,7 +874,7 @@ class ColorDefinition(TypedDict):
 
 class Plugins(TypedDict):
     id: Identifier
-    parameters: NotRequired[Any]
+    parameters: NotRequired[dict[str, Any] | list[Any] | str | float | bool | None]
 
 
 class Permissions(TypedDict):

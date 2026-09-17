@@ -2,13 +2,15 @@
 
 import { useCallback } from "react";
 
-import { isEqual, uniqWith } from "lodash-es";
+import { uniqWith } from "lodash-es";
 
 import { type ITotal, bucketsFind, sanitizeBucketTotals } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
 import { orderTotals } from "../../features/aggregations/ordering.js";
+import { areTotalsSameDefinition, withInheritedAlias } from "../../features/aggregations/totals.js";
+import { useIsTransposed } from "../shared/useIsTransposed.js";
 
 /**
  * Manages totals updates and communicates changes externally.
@@ -18,6 +20,7 @@ import { orderTotals } from "../../features/aggregations/ordering.js";
  */
 export function useUpdateTotals() {
     const { pushData, execution } = usePivotTableProps();
+    const isTransposed = useIsTransposed();
 
     const onUpdateTotals = useCallback(
         (currentTotals: ITotal[], totalDefinitions: ITotal[], isActive: boolean, isColumn: boolean) => {
@@ -27,8 +30,17 @@ export function useUpdateTotals() {
 
             // Update total definitions based on current state
             const updatedTotals = isActive
-                ? currentTotals.filter((total) => !totalDefinitions.some((def) => isEqual(def, total)))
-                : uniqWith([...currentTotals, ...totalDefinitions], isEqual);
+                ? currentTotals.filter(
+                      (total) =>
+                          !totalDefinitions.some((definition) => areTotalsSameDefinition(definition, total)),
+                  )
+                : uniqWith(
+                      [
+                          ...currentTotals,
+                          ...withInheritedAlias(currentTotals, totalDefinitions, !isColumn && isTransposed),
+                      ],
+                      areTotalsSameDefinition,
+                  );
 
             // Apply consistent ordering to ensure external consumers receive properly ordered totals
             const orderedTotals = orderTotals(updatedTotals);
@@ -58,7 +70,7 @@ export function useUpdateTotals() {
                 });
             }
         },
-        [pushData, execution],
+        [pushData, execution, isTransposed],
     );
 
     return {

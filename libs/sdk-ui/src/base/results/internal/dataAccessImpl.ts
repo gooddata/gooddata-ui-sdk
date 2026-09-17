@@ -91,10 +91,26 @@ class SingleDimIterator implements Iterator<DataPoint> {
     };
 }
 
-const types: ObjectType[] = ["attribute", "displayForm"];
+/**
+ * The item types whose min/max yields a textual value rather than a number, so a number format
+ * must not be applied to it.
+ *
+ * `computedAttribute` is listed separately even though the match below is a substring one: the
+ * type is spelled with a capital A, so it does NOT contain `attribute`. Without its own entry a
+ * computed attribute's value reaches the formatter and comes out as `NaN`.
+ */
+const types: ObjectType[] = ["attribute", "displayForm", "computedAttribute"];
 const aggregations: MeasureAggregation[] = ["min", "max"];
 
-function canFormatValue(desc: DataSeriesDescriptor, rawValue: DataValue): boolean {
+/**
+ * Whether a number format may be applied to the value.
+ *
+ * The match is a substring one because for a uriRef item there is no type to read and the uri
+ * stands in for it — an attribute's uri contains the type name.
+ *
+ * @internal
+ */
+export function canFormatValue(desc: DataSeriesDescriptor, rawValue: DataValue): boolean {
     const def = desc.measureDefinition.measure.definition;
 
     if (isMeasureDefinition(def) && def.measureDefinition.aggregation) {

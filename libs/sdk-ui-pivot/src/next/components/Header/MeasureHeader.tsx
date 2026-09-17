@@ -5,11 +5,13 @@ import { useState } from "react";
 import { isGrandTotalColumnDefinition, isSubtotalColumnDefinition } from "@gooddata/sdk-ui";
 
 import { useColumnDefs } from "../../context/ColumnDefsContext.js";
+import { resolveTotalLabelTargetFromColumnDefinition } from "../../features/aggregations/totalLabelTarget.js";
 import { e } from "../../features/styling/bem.js";
 import { useHeaderCellAriaLabel } from "../../hooks/header/useHeaderCellAriaLabel.js";
 import { useHeaderMenu } from "../../hooks/header/useHeaderMenu.js";
 import { useHeaderMenuKeyboard } from "../../hooks/header/useHeaderMenuKeyboard.js";
 import { useHeaderSpaceKey } from "../../hooks/header/useHeaderSpaceKey.js";
+import { useTotalLabelHeader } from "../../hooks/header/useTotalLabelHeader.js";
 import { useIsTransposed } from "../../hooks/shared/useIsTransposed.js";
 import {
     getPivotHeaderClickableAreaTestIdProps,
@@ -39,6 +41,17 @@ export function MeasureHeader(params: AgGridHeaderParams) {
 
     const colDef = params.column.getColDef() as AgGridColumnDef;
     const columnDefinition = colDef?.context?.columnDefinition;
+    // In a non-transposed table, a total/subtotal column's leaf headers still carry the total's
+    // column definition (that's how they pick up total/subtotal styling), but they display the
+    // measure name, not the total's own label - PivotGroupHeader owns that label there. Only in a
+    // transposed table does this header cell represent the total's own label.
+    const totalLabelTarget = isTransposed
+        ? resolveTotalLabelTargetFromColumnDefinition(columnDefinition)
+        : undefined;
+    const { label: customTotalLabel, onClick: handleTotalLabelClick } = useTotalLabelHeader(
+        params.eGridHeader,
+        totalLabelTarget,
+    );
     const isValueColDef = isValueColumnDef(columnDefinition);
     const columnScope = getColumnScope(columnDefinition);
     const pivotAttributeDescriptors = getPivotAttributeDescriptors(columnScope);
@@ -79,11 +92,15 @@ export function MeasureHeader(params: AgGridHeaderParams) {
             includeHeaderWrapping,
             includeCellWrapping,
         },
-        { measureIdentifiers: measureIdentifier ? [measureIdentifier] : [], pivotAttributeDescriptors },
+        {
+            measureIdentifiers: measureIdentifier ? [measureIdentifier] : [],
+            pivotAttributeDescriptors,
+            ariaLabelDisplayNameOverride: customTotalLabel,
+        },
         params,
     );
 
-    useHeaderSpaceKey(params, handleHeaderClick);
+    useHeaderSpaceKey(params, handleTotalLabelClick ?? handleHeaderClick);
     useHeaderMenuKeyboard(
         params,
         () => {
@@ -92,7 +109,7 @@ export function MeasureHeader(params: AgGridHeaderParams) {
         },
         hasMenuItems,
     );
-    useHeaderCellAriaLabel(params.eGridHeader, headerCellAriaLabel);
+    useHeaderCellAriaLabel(params.eGridHeader, headerCellAriaLabel, params.displayName);
 
     return (
         <HeaderKeyboardHint
@@ -105,11 +122,12 @@ export function MeasureHeader(params: AgGridHeaderParams) {
                 className={e("header-cell", {
                     "is-menu-open": isMenuOpen,
                 })}
+                onClick={handleTotalLabelClick}
                 {...getPivotHeaderTestIdProps({ isTotal, isSubtotal })}
             >
                 <div className="gd-header-content" aria-hidden="true">
                     <span className="gd-header-text" {...getPivotHeaderTextTestIdProps()}>
-                        {params.displayName}
+                        {customTotalLabel ?? params.displayName}
                     </span>
                     {!!colDef.sortable && sortDirection ? (
                         <SortIndicator sortDirection={sortDirection} sortIndex={sortIndex} />

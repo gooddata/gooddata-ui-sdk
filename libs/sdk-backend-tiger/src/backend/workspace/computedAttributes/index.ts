@@ -16,7 +16,6 @@ import {
     EntitiesApi_GetAllEntitiesMetrics,
     EntitiesApi_GetAllEntitiesUserDataFilters,
     EntitiesApi_GetAllEntitiesVisualizationObjects,
-    EntitiesApi_GetAllEntitiesWorkspaceDataFilters,
     EntitiesApi_GetEntityComputedAttributes,
     EntitiesApi_PatchEntityComputedAttributes,
     EntitiesApi_UpdateEntityComputedAttributes,
@@ -261,28 +260,12 @@ export class TigerWorkspaceComputedAttributes implements IWorkspaceComputedAttri
                 ),
         );
 
-        // Workspace data filters have no documented computedAttributes relationship in the
-        // metadata API; the same RSQL still succeeds when the backend wires one. A 400 must
-        // not fail the whole lookup or the catalog would allow deletes of used attributes.
-        const workspaceDataFilters = this.authCall((client) =>
-            MetadataUtilities.getAllPagesOf(client, EntitiesApi_GetAllEntitiesWorkspaceDataFilters, {
-                workspaceId: this.workspace,
-                filter: `computedAttributes.id==${id}`,
-            })
-                .then(MetadataUtilities.mergeEntitiesResults)
-                .then((filters) =>
-                    filters.data.map((filter) => convertDataFilterFromBackend(filter, "workspaceDataFilter")),
-                ),
-        );
-
-        const [insightList, measureList, computedAttributeList, userDataFilterList, workspaceDataFilterList] =
-            await Promise.all([
-                insights,
-                measures,
-                computedAttributes,
-                userDataFilters,
-                workspaceDataFilters,
-            ]);
+        const [insightList, measureList, computedAttributeList, userDataFilterList] = await Promise.all([
+            insights,
+            measures,
+            computedAttributes,
+            userDataFilters,
+        ]);
 
         const dashboardFilterParts = [`labels.id==${id}`];
         if (insightList.length > 0) {
@@ -310,7 +293,6 @@ export class TigerWorkspaceComputedAttributes implements IWorkspaceComputedAttri
             analyticalDashboards,
             computedAttributes: computedAttributeList,
             userDataFilters: userDataFilterList,
-            workspaceDataFilters: workspaceDataFilterList,
         };
     }
 

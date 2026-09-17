@@ -610,7 +610,8 @@
                                             "$semantic": { "type": "reference", "source": "plugin.id" }
                                         },
                                         "parameters": {
-                                            "description": "Parameter that will be passed to the plugin. Everything other than string will be serialized to JSON automatically."
+                                            "description": "Parameter that will be passed to the plugin. Everything other than string will be serialized to JSON automatically.",
+                                            "type": ["object", "array", "string", "number", "boolean", "null"]
                                         }
                                     },
                                     "required": ["id"],
@@ -3561,7 +3562,7 @@
             "oneOf": [
                 {
                     "if": {
-                        "properties": { "multiselect": { "type": "boolean", "enum": [true] } },
+                        "properties": { "multiselect": { "type": "boolean", "enum": [false] } },
                         "required": ["multiselect"]
                     },
                     "then": {
@@ -3595,7 +3596,7 @@
                                 "enum": ["list", "text", "listOrText"],
                                 "description": "Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available."
                             },
-                            "state": { "ref": "#/$defs/dashboardStateMultiselect" },
+                            "state": { "$ref": "#/$defs/dashboardStateSelect" },
                             "parents": {
                                 "type": "array",
                                 "description": "An ids of the parent local attribute or label filter",
@@ -3690,7 +3691,7 @@
                                 "enum": ["list", "text", "listOrText"],
                                 "description": "Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available."
                             },
-                            "state": { "ref": "#/$defs/dashboardStateSelect" },
+                            "state": { "$ref": "#/$defs/dashboardStateMultiselect" },
                             "parents": {
                                 "type": "array",
                                 "description": "An ids of the parent local attribute or label filter",
@@ -4134,6 +4135,52 @@
                 "FISCAL_YEAR",
                 "FISCAL_QUARTER",
                 "FISCAL_MONTH"
+            ]
+        },
+        "dashboardStateSelect": {
+            "description": "State of the single select",
+            "type": "object",
+            "properties": {
+                "include": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "$semantic": { "type": "values", "from": "current.filter.using" }
+                    },
+                    "maxItems": 1
+                }
+            },
+            "required": ["include"]
+        },
+        "dashboardStateMultiselect": {
+            "description": "State of the multiselect",
+            "oneOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "include": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "$semantic": { "type": "values", "from": "current.filter.using" }
+                            }
+                        }
+                    },
+                    "required": ["include"]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "exclude": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "$semantic": { "type": "values", "from": "current.filter.using" }
+                            }
+                        }
+                    },
+                    "required": ["exclude"]
+                }
             ]
         },
         "mvfCondition": {
@@ -5279,7 +5326,8 @@
                                         "$semantic": { "type": "reference", "source": "plugin.id" }
                                     },
                                     "parameters": {
-                                        "description": "Parameter that will be passed to the plugin. Everything other than string will be serialized to JSON automatically."
+                                        "description": "Parameter that will be passed to the plugin. Everything other than string will be serialized to JSON automatically.",
+                                        "type": ["object", "array", "string", "number", "boolean", "null"]
                                     }
                                 },
                                 "required": ["id"],

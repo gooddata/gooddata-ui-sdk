@@ -16,8 +16,8 @@ export interface IUiConfirmDialogProps extends IUiConfirmDialogCardProps {
  * Modal confirm dialog used for actions that need explicit user confirmation
  * (granting workspace access, restricting access, removing a grantee,
  * transferring ownership). Wraps `UiConfirmDialogCard` in `UiModalDialog`
- * for the full modal contract — portal, dimmed backdrop, focus trap,
- * Esc and backdrop dismiss.
+ * for the full modal contract — portal, dimmed backdrop, focus trap
+ * and Esc dismiss.
  *
  * @internal
  */

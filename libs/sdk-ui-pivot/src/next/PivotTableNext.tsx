@@ -31,6 +31,7 @@ import { PivotTablePropsProvider, usePivotTableProps } from "./context/PivotTabl
 import { PivotTableSizingProvider, usePivotTableSizingActions } from "./context/PivotTableSizingContext.js";
 import { RuntimeErrorProvider, useRuntimeError } from "./context/RuntimeErrorContext.js";
 import { TableReadyProvider } from "./context/TableReadyContext.js";
+import { TotalLabelProvider } from "./context/TotalLabelContext.js";
 import { b } from "./features/styling/bem.js";
 import { useInitExecution } from "./hooks/init/useInitExecution.js";
 import { useInitExecutionResult } from "./hooks/init/useInitExecutionResult.js";
@@ -128,9 +129,11 @@ function PivotTableNextWithInitialization() {
             <TableReadyProvider>
                 <DrillableItemsRefProvider>
                     <ColumnDefsProvider>
-                        <HeaderMenuProvider>
-                            <RenderPivotTableNextAgGrid />
-                        </HeaderMenuProvider>
+                        <TotalLabelProvider>
+                            <HeaderMenuProvider>
+                                <RenderPivotTableNextAgGrid />
+                            </HeaderMenuProvider>
+                        </TotalLabelProvider>
                     </ColumnDefsProvider>
                 </DrillableItemsRefProvider>
             </TableReadyProvider>

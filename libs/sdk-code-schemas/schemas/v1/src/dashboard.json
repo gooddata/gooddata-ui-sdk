@@ -130,7 +130,8 @@
                                         }
                                     },
                                     "parameters": {
-                                        "description": "Parameter that will be passed to the plugin. Everything other than string will be serialized to JSON automatically."
+                                        "description": "Parameter that will be passed to the plugin. Everything other than string will be serialized to JSON automatically.",
+                                        "type": ["object", "array", "string", "number", "boolean", "null"]
                                     }
                                 },
                                 "required": ["id"],

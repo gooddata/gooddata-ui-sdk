@@ -22,8 +22,8 @@ function SampleCard() {
         >
             <h2 style={{ marginTop: 0 }}>Sample modal</h2>
             <p>
-                The modal primitive renders the dimmed backdrop, traps focus, dismisses on Esc and backdrop
-                click, and portals out of the caller's subtree.
+                The modal primitive renders the dimmed backdrop, traps focus, dismisses on Esc, and portals
+                out of the caller's subtree.
             </p>
         </div>
     );
