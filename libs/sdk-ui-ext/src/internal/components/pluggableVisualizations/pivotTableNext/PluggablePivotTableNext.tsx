@@ -13,8 +13,10 @@ import {
     type IInsightDefinition,
     type ISettings,
     type ISortItem,
+    type ITotal,
     bucketAttributes,
     bucketMeasures,
+    bucketTotals,
     insightBucket,
     insightBuckets,
     insightFilters,
@@ -44,7 +46,7 @@ import {
 } from "@gooddata/sdk-ui-pivot/next";
 
 import { METRIC } from "../../../constants/bucket.js";
-import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
+import { ANALYTICAL_ENVIRONMENT, DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
 import { PIVOT_TABLE_NEXT_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import {
     type IBucketFilter,
@@ -80,6 +82,7 @@ import {
     getReferencePointWithSupportedProperties,
     getSupportedPropertiesControls,
     getTextWrappingFromProperties,
+    getTotalsOverrideFromProperties,
     isSemanticConditionalFormattingEnabled,
 } from "../../../utils/propertiesHelper.js";
 import {
@@ -102,7 +105,7 @@ import {
 
 import { getColumnAttributes, getRowAttributes, shouldAdjustColumnHeadersPositionToTop } from "./helpers.js";
 import { adaptReferencePointSortItemsToPivotTable, getSanitizedSortItems } from "./sortHelpers.js";
-import { removeInvalidTotals } from "./totalsHelpers.js";
+import { applyTotalsOverride, getChangedTotals, removeInvalidTotals } from "./totalsHelpers.js";
 import {
     adaptMdObjectWidthItemsToPivotTable,
     adaptReferencePointWidthItemsToPivotTable,
@@ -122,6 +125,12 @@ export function createPivotTableNextConfig(
         enableAccessibility: settings.enableAccessibilityMode ?? false,
     };
 
+    // Total labels are only ever editable in AD, or on a dashboard while it's in edit mode - "none"
+    // (embedded examples, which have nowhere to persist an edited label) is excluded naturally.
+    const totalLabelsEditable =
+        environment === ANALYTICAL_ENVIRONMENT ||
+        (environment === DASHBOARDS_ENVIRONMENT && !!config.isInEditMode);
+
     if (environment !== DASHBOARDS_ENVIRONMENT) {
         tableConfig = {
             ...tableConfig,
@@ -129,6 +138,15 @@ export function createPivotTableNextConfig(
                 aggregations: true,
                 aggregationsSubMenu: true,
                 aggregationsSubMenuForRows: true,
+                totalLabelsEditable,
+            },
+        };
+    } else if (config.isInEditMode) {
+        tableConfig = {
+            ...tableConfig,
+            menu: {
+                ...tableConfig.menu,
+                totalLabelsEditable,
             },
         };
     }
@@ -435,12 +453,21 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
 
         const { customVisualizationConfig = {}, theme, custom = {}, config = {} } = options;
         const { drillableItems } = custom;
-        const execution = this.getExecution(options, insight, executionFactory);
+
+        // A renamed total's alias is a widget-level override on dashboards (see handlePushData) -
+        // it must land on the buckets used to build the execution, since the alias is part of the
+        // total's own definition, not just how it's displayed.
+        const insightWithTotalsOverride =
+            this.environment === DASHBOARDS_ENVIRONMENT
+                ? applyTotalsOverride(insight, getTotalsOverrideFromProperties(insightProperties(insight)))
+                : insight;
+
+        const execution = this.getExecution(options, insightWithTotalsOverride, executionFactory);
 
         // Extract bucket data to send down the pivot table
-        const measuresBucket = insightBucket(insight, BucketNames.MEASURES);
-        const rowsBucket = insightBucket(insight, BucketNames.ATTRIBUTE);
-        const columnsBucket = insightBucket(insight, BucketNames.COLUMNS);
+        const measuresBucket = insightBucket(insightWithTotalsOverride, BucketNames.MEASURES);
+        const rowsBucket = insightBucket(insightWithTotalsOverride, BucketNames.ATTRIBUTE);
+        const columnsBucket = insightBucket(insightWithTotalsOverride, BucketNames.COLUMNS);
 
         const measures = measuresBucket ? bucketMeasures(measuresBucket) : [];
         const rows = rowsBucket ? bucketAttributes(rowsBucket) : [];
@@ -603,6 +630,32 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
         });
     }
 
+    // On a dashboard there is no shared-insight bucket to persist a renamed/reset total's alias
+    // into (unlike AD, which writes it straight onto the reference point's buckets via its own
+    // properties saga) - store it as a widget-level controls override instead, keyed by bucket,
+    // merged with whatever the OTHER bucket already had, since CHANGE_PROPERTIES replaces all
+    // widget properties wholesale.
+    private persistTotalsOverride(totals: ITotal[], bucketType: string) {
+        const properties = this.visualizationProperties ?? {};
+        const previousTotalsOverride = getTotalsOverrideFromProperties(properties);
+
+        const currentBucket = insightBucket(this.currentInsight, bucketType);
+        const changedTotals = getChangedTotals(totals, currentBucket ? bucketTotals(currentBucket) : []);
+
+        this.pushData({
+            properties: {
+                ...properties,
+                controls: {
+                    ...properties.controls,
+                    totals: {
+                        ...previousTotalsOverride,
+                        [bucketType]: changedTotals,
+                    },
+                },
+            },
+        });
+    }
+
     private handlePushData(data: any) {
         if (data?.properties?.sortItems) {
             // Handle sort items with optional totals
@@ -616,19 +669,30 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
             };
 
             this.pushData({ properties });
+        } else if (data?.properties?.totals && this.environment === DASHBOARDS_ENVIRONMENT) {
+            this.persistTotalsOverride(data.properties.totals, data.properties.bucketType);
         } else if (data?.properties?.controls) {
-            // Enrich with current column widths if not present so they do not get lost in other properties changing
+            // Enrich with current column widths and totals override if not present so they do not
+            // get lost in other properties changing (CHANGE_PROPERTIES replaces all widget
+            // properties wholesale - e.g. toggling header text wrapping must not silently revert a
+            // previously persisted total rename).
             const columnWidths =
                 getColumnWidthsFromProperties(data.properties) ??
                 getColumnWidthsFromProperties(this.visualizationProperties);
             const shouldAddColumnWidths = !data.properties.controls.columnWidths;
 
+            const totals =
+                getTotalsOverrideFromProperties(data.properties) ??
+                getTotalsOverrideFromProperties(this.visualizationProperties);
+            const shouldAddTotals = !data.properties.controls.totals && !!totals;
+
             const properties = {
                 ...data.properties,
-                ...(shouldAddColumnWidths && {
+                ...((shouldAddColumnWidths || shouldAddTotals) && {
                     controls: {
                         ...data.properties.controls,
-                        columnWidths,
+                        ...(shouldAddColumnWidths && { columnWidths }),
+                        ...(shouldAddTotals && { totals }),
                     },
                 }),
             };

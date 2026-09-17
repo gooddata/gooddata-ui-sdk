@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ITotal, type TotalType } from "@gooddata/sdk-model";
 
@@ -53,6 +53,16 @@ export interface IMenu {
      * Default: false
      */
     aggregationsSubMenuForRows?: boolean;
+
+    /**
+     * If true, grand total, subtotal, and total-column labels can be renamed from their contextual
+     * action menu. The custom label is stored in the {@link @gooddata/sdk-model#ITotal} alias.
+     *
+     * @remarks
+     * Intended for editing surfaces that handle visualization property updates through `pushData`.
+     * Default: false
+     */
+    totalLabelsEditable?: boolean;
 }
 
 /**

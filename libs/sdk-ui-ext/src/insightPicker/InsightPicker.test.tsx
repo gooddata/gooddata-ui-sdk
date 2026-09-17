@@ -17,6 +17,13 @@ const AUTHOR = "author-login";
 const OTHER_AUTHOR = "other-login";
 const UNUSED_TAG = "tag-nobody-used";
 const TOTAL_INSIGHTS = 60;
+const PAGE_SIZE = 50;
+/** Sits past the first page, so the picker cannot have it from its own first query. */
+const LATE_INSIGHT_INDEX = 55;
+const LATE_INSIGHT_TITLE = "Eventing overview";
+/** Matched by the backend through a field the picker's own matcher does not read. */
+const TAGGED_INSIGHT_INDEX = 57;
+const TAGGED_INSIGHT_TAG = "quarterly";
 
 function insight(index: number): IInsight {
     return {
@@ -24,7 +31,8 @@ function insight(index: number): IInsight {
             identifier: `insight-${index}`,
             uri: `/insight/${index}`,
             ref: uriRef(`/insight/${index}`),
-            title: `Insight ${index}`,
+            title: index === LATE_INSIGHT_INDEX ? LATE_INSIGHT_TITLE : `Insight ${index}`,
+            tags: index === TAGGED_INSIGHT_INDEX ? [TAGGED_INSIGHT_TAG] : [],
             visualizationUrl: "local:table",
             buckets: [],
             filters: [],
@@ -48,6 +56,7 @@ interface IInsightsQueryStub {
 function createBackend({ insightsAuthor }: { insightsAuthor: string }) {
     const createdByFilters: (string[] | undefined)[] = [];
     const queries: { createdBy: string[] | undefined; tags: string[] | undefined }[] = [];
+    const searchFilters: (string | undefined)[] = [];
 
     const getInsightsQuery = (): IInsightsQueryStub => {
         let page = 0;
@@ -68,8 +77,10 @@ function createBackend({ insightsAuthor }: { insightsAuthor: string }) {
             query: () => {
                 const createdBy = filter?.createdBy;
                 const tags = filter?.tags;
+                const search = filter?.search;
                 createdByFilters.push(createdBy);
                 queries.push({ createdBy, tags });
+                searchFilters.push(search);
 
                 if (createdBy?.length && !createdBy.includes(insightsAuthor)) {
                     return Promise.resolve({ items: [], totalCount: 0 });
@@ -77,9 +88,17 @@ function createBackend({ insightsAuthor }: { insightsAuthor: string }) {
                 if (tags?.includes(UNUSED_TAG)) {
                     return Promise.resolve({ items: [], totalCount: 0 });
                 }
+                // Mirrors the backend's multi-field `=containsic=` search filter.
+                const matching = search
+                    ? allInsights.filter((item) =>
+                          [item.insight.title, item.insight.identifier, ...item.insight.tags!].some((value) =>
+                              value.toLowerCase().includes(search.toLowerCase()),
+                          ),
+                      )
+                    : allInsights;
                 return Promise.resolve({
-                    items: allInsights.slice(page * 50, (page + 1) * 50),
-                    totalCount: TOTAL_INSIGHTS,
+                    items: matching.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE),
+                    totalCount: matching.length,
                 });
             },
         };
@@ -100,7 +119,7 @@ function createBackend({ insightsAuthor }: { insightsAuthor: string }) {
         }),
     } as unknown as IAnalyticalBackend;
 
-    return { backend, createdByFilters, queries };
+    return { backend, createdByFilters, queries, searchFilters };
 }
 
 /** Mirrors the consumers: the picker body is mounted only while open, its state is not. */
@@ -165,7 +184,69 @@ function PlainControlledPicker({
     );
 }
 
+function searchInput() {
+    return screen.getByPlaceholderText(/Search all visualizations/);
+}
+
 describe("InsightPicker", () => {
+    it("matches a visualization the title does not, so a description or id still finds it", async () => {
+        const { backend } = createBackend({ insightsAuthor: AUTHOR });
+
+        render(<TestPicker backend={backend} />);
+        expect(await screen.findByText("Insight 0")).toBeTruthy();
+
+        await userEvent.type(searchInput(), `insight-${LATE_INSIGHT_INDEX}`);
+
+        expect(await screen.findByText(LATE_INSIGHT_TITLE)).toBeTruthy();
+    });
+
+    it("shows a visualization the backend matched on a field the picker cannot read", async () => {
+        const { backend } = createBackend({ insightsAuthor: AUTHOR });
+
+        render(<TestPicker backend={backend} />);
+        expect(await screen.findByText("Insight 0")).toBeTruthy();
+
+        await userEvent.type(searchInput(), TAGGED_INSIGHT_TAG);
+
+        expect(await screen.findByText(`Insight ${TAGGED_INSIGHT_INDEX}`)).toBeTruthy();
+    });
+
+    it("searches every visualization through the backend, not only the loaded pages", async () => {
+        const { backend, searchFilters } = createBackend({ insightsAuthor: AUTHOR });
+
+        render(<TestPicker backend={backend} />);
+        expect(await screen.findByText("Insight 0")).toBeTruthy();
+
+        await userEvent.type(searchInput(), "eventing");
+
+        await waitFor(() => expect(searchFilters).toContain("eventing"));
+        expect(await screen.findByText(LATE_INSIGHT_TITLE)).toBeTruthy();
+        expect(screen.queryByText("Insight 0")).toBeNull();
+    });
+
+    it("tells a search that matched nothing apart from an empty workspace", async () => {
+        const { backend } = createBackend({ insightsAuthor: AUTHOR });
+
+        render(<TestPicker backend={backend} />);
+        expect(await screen.findByText("Insight 0")).toBeTruthy();
+
+        await userEvent.type(searchInput(), "nothing matches this");
+
+        expect(await screen.findByText("No visualizations found")).toBeTruthy();
+    });
+
+    it("keeps the author default when a search is what matched nothing", async () => {
+        const { backend } = createBackend({ insightsAuthor: AUTHOR });
+
+        render(<TestPicker backend={backend} />);
+        expect(await screen.findByText("Insight 0")).toBeTruthy();
+
+        await userEvent.type(searchInput(), "nothing matches this");
+        expect(await screen.findByText("No visualizations found")).toBeTruthy();
+
+        expect(screen.getByTestId("author-filter").textContent).toBe(AUTHOR);
+    });
+
     it("drops the author default when the author has no visualizations", async () => {
         const { backend, createdByFilters } = createBackend({ insightsAuthor: OTHER_AUTHOR });
 

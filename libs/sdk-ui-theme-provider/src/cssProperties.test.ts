@@ -140,7 +140,7 @@ describe("cssProperties", () => {
                                 fonts: [{ family: "Brand", url: "https://cdn.example.com/brand.woff2" }],
                             },
                             heading: { color: "#101820", h1: { fontSize: 4, lineHeight: "4.6cqw" } },
-                            paragraph: { p1: { fontSize: "16px" } },
+                            paragraph: { normalText: { fontSize: "16px" }, smallText: { fontSize: 1.2 } },
                         },
                     },
                     assets: { logos: [{ id: "logo", url: "https://cdn.example.com/logo.svg" }] },
@@ -161,7 +161,9 @@ describe("cssProperties", () => {
             expect(css).not.toContain("--gd-assets");
             expect(css).not.toContain("--gd-reports-textStyle-typography-fonts");
             expect(css).not.toContain("--gd-reports-visualizationPalette");
-            expect(css).not.toContain("--gd-reports-textStyle-paragraph-p1-fontSize");
+            expect(css).toContain("--gd-reports-textStyle-paragraph-smallText-fontSize: 1.2cqw;");
+            // An absolute unit does not scale with the page, so it is dropped rather than rendered.
+            expect(css).not.toContain("--gd-reports-textStyle-paragraph-normalText-fontSize");
             expect(css).not.toMatch(/: ;/);
         });
 

@@ -659,6 +659,9 @@ export type GeneralAccessValue = "RESTRICTED" | "WORKSPACE";
 // @internal (undocumented)
 export function generateHeaderAccountMenuItems(workspacePermissions: IWorkspacePermissions, workspaceId?: string, featureFlags?: ISettings): IHeaderMenuItem[];
 
+// @internal
+export function generateHeaderCommonHelpMenuItems(): IHeaderMenuItem[];
+
 // @internal (undocumented)
 export function generateHeaderHelpMenuItems(documentationUrl?: string, supportForumUrl?: string, userEmail?: string, workspaceId?: string, sessionId?: string, supportEmail?: string, isBranded?: boolean, featureFlags?: ISettings): IHeaderMenuItem[];
 
@@ -7497,6 +7500,7 @@ export interface IUiMenuSubview {
 export interface IUiModalDialogProps {
     accessibilityConfig?: Pick<IAccessibilityConfigBase, "ariaLabel" | "ariaLabelledBy">;
     children: ReactNode;
+    closeOnOutsideClick?: boolean;
     dataTestId?: string;
     isOpen: boolean;
     onClose: () => void;

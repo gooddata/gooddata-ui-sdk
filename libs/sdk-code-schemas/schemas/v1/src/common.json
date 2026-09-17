@@ -608,7 +608,7 @@
                         "properties": {
                             "multiselect": {
                                 "type": "boolean",
-                                "enum": [true]
+                                "enum": [false]
                             }
                         },
                         "required": ["multiselect"]
@@ -657,7 +657,7 @@
                                 "description": "Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available."
                             },
                             "state": {
-                                "ref": "#/$defs/dashboardStateMultiselect"
+                                "$ref": "#/$defs/dashboardStateSelect"
                             },
                             "parents": {
                                 "type": "array",
@@ -766,7 +766,7 @@
                                 "description": "Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available."
                             },
                             "state": {
-                                "ref": "#/$defs/dashboardStateSelect"
+                                "$ref": "#/$defs/dashboardStateMultiselect"
                             },
                             "parents": {
                                 "type": "array",
@@ -1258,7 +1258,6 @@
                             "from": "current.filter.using"
                         }
                     },
-                    "minItems": 1,
                     "maxItems": 1
                 }
             },

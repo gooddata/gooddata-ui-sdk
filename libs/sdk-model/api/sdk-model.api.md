@@ -349,9 +349,6 @@ export const BuiltInReportPageLayoutViz6TextLeft: IReportPageLayout;
 export const BuiltInReportSlotTypes: string[];
 
 // @alpha
-export const BuiltInReportTextSlotKinds: ReportTextSlotKind[];
-
-// @alpha
 export const BuiltInWidgetTypes: string[];
 
 // @alpha
@@ -671,7 +668,13 @@ export function defaultDimensionsGenerator(definition: IExecutionDefinition): ID
 export const DefaultLocale: ILocale;
 
 // @alpha
+export const DefaultReportHeadingType: ReportHeadingType;
+
+// @alpha
 export const DefaultReportPageFormat: ReportPageFormat;
+
+// @alpha
+export const DefaultReportParagraphType: ReportParagraphType;
 
 // @public
 export function defFingerprint(def: IExecutionDefinition): string;
@@ -4966,6 +4969,20 @@ export interface IReportDefinition extends IReportBase {
 }
 
 // @alpha
+export interface IReportHeadingSlot extends IReportSlotBase {
+    source?: ReportTextSource;
+    // (undocumented)
+    style?: IReportHeadingStyle;
+    // (undocumented)
+    type: "heading";
+}
+
+// @alpha
+export interface IReportHeadingStyle extends IReportTextStyle {
+    type?: ReportHeadingType;
+}
+
+// @alpha
 export interface IReportImageBackground {
     slotId: string;
     // (undocumented)
@@ -5060,6 +5077,20 @@ export interface IReportPageLayoutDefinition {
 }
 
 // @alpha
+export interface IReportParagraphSlot extends IReportSlotBase {
+    source?: ReportTextSource;
+    // (undocumented)
+    style?: IReportParagraphStyle;
+    // (undocumented)
+    type: "paragraph";
+}
+
+// @alpha
+export interface IReportParagraphStyle extends IReportTextStyle {
+    type?: ReportParagraphType;
+}
+
+// @alpha
 export interface IReportSlotBase {
     localIdentifier: string;
     placeholder?: IReportSlotPlaceholder;
@@ -5103,14 +5134,7 @@ export interface IReportTemplateDefinition {
 }
 
 // @alpha
-export interface IReportTextSlot extends IReportSlotBase {
-    // (undocumented)
-    kind: ReportTextSlotKind;
-    source?: ReportTextSource;
-    style?: IReportTextStyle;
-    // (undocumented)
-    type: "text";
-}
+export type IReportTextSlot = IReportHeadingSlot | IReportParagraphSlot;
 
 // @alpha
 export interface IReportTextStyle extends IReportBoxStyle {
@@ -6041,7 +6065,10 @@ export function isReportContentV1(obj: unknown): obj is IReportContent;
 export function isReportDefinition(obj: unknown): obj is IReportDefinition;
 
 // @alpha
-export function isReportHeadingKind(kind: ReportTextSlotKind): kind is ReportHeadingKind;
+export function isReportHeadingSlot(obj: unknown): obj is IReportHeadingSlot;
+
+// @alpha
+export function isReportHeadingType(value: unknown): value is ReportHeadingType;
 
 // @alpha
 export function isReportImageBackground(obj: unknown): obj is IReportImageBackground;
@@ -6066,6 +6093,12 @@ export function isReportPageLayoutContentV1(obj: unknown): obj is IReportPageLay
 
 // @alpha
 export function isReportPageLayoutDefinition(obj: unknown): obj is IReportPageLayoutDefinition;
+
+// @alpha
+export function isReportParagraphSlot(obj: unknown): obj is IReportParagraphSlot;
+
+// @alpha
+export function isReportParagraphType(value: unknown): value is ReportParagraphType;
 
 // @alpha
 export function isReportSlot(obj: unknown): obj is ReportSlot;
@@ -6691,13 +6724,13 @@ export interface IThemeReportsParagraph {
     // (undocumented)
     color?: ThemeColor;
     // (undocumented)
+    largeText?: IThemeReportsTextLevel;
+    // (undocumented)
     lineHeight?: ThemeReportsLength;
     // (undocumented)
-    p1?: IThemeReportsTextLevel;
+    normalText?: IThemeReportsTextLevel;
     // (undocumented)
-    p2?: IThemeReportsTextLevel;
-    // (undocumented)
-    p3?: IThemeReportsTextLevel;
+    smallText?: IThemeReportsTextLevel;
 }
 
 // @alpha
@@ -7776,10 +7809,10 @@ export function reportContentPage(reportOrTemplate: IReport | IReportDefinition 
 export type ReportDateString = string;
 
 // @alpha
-export type ReportHeadingKind = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+export type ReportHeadingType = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 
 // @alpha
-export const ReportHeadingKinds: ReportHeadingKind[];
+export const ReportHeadingTypes: ReportHeadingType[];
 
 // @alpha
 export type ReportImageFit = "contain" | "cover" | "fill";
@@ -7806,10 +7839,10 @@ export const ReportPageFormats: ReportPageFormat[];
 export type ReportPageLayoutNode = IReportLayoutSection | IReportLayoutSlotRef;
 
 // @alpha
-export type ReportParagraphKind = "p1" | "p2" | "p3";
+export type ReportParagraphType = "largeText" | "normalText" | "smallText";
 
 // @alpha
-export const ReportParagraphKinds: ReportParagraphKind[];
+export const ReportParagraphTypes: ReportParagraphType[];
 
 // @alpha
 export type ReportSlot = IReportVisualizationSlot | IReportTextSlot | IReportImageSlot;
@@ -7818,10 +7851,19 @@ export type ReportSlot = IReportVisualizationSlot | IReportTextSlot | IReportIma
 export function reportTextPlaceholder(name: string): string;
 
 // @alpha
-export type ReportTextSlotKind = ReportHeadingKind | ReportParagraphKind;
+export function reportTextSlotType(slot: IReportTextSlot): ReportTextType;
+
+// @alpha
+export function reportTextSlotTypes(slot: IReportTextSlot): ReportTextType[];
 
 // @alpha
 export type ReportTextSource = IReportStaticTextSource | IReportAiTextSource;
+
+// @alpha
+export type ReportTextType = ReportHeadingType | ReportParagraphType;
+
+// @alpha
+export const ReportTextTypes: ReportTextType[];
 
 // @alpha
 export type RequiredEntitlements = Condition<Partial<{

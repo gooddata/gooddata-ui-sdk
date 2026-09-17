@@ -15,7 +15,37 @@ import { emptyDef, measureLocalId } from "@gooddata/sdk-model";
 
 import { type DataAccessConfig, DefaultDataAccessConfig } from "../dataAccessConfig.js";
 
+import { canFormatValue } from "./dataAccessImpl.js";
 import { newDataAccessMethods } from "./dataAccessMethods.js";
+
+describe("canFormatValue", () => {
+    const seriesDesc = (aggregation: string | undefined, item: object) =>
+        ({
+            measureDefinition: {
+                measure: { definition: { measureDefinition: { aggregation, item } } },
+            },
+        }) as any;
+
+    it.each([
+        ["displayForm", false],
+        ["attribute", false],
+        // spelled with a capital A, so it does not contain "attribute" — it needs its own entry,
+        // or a computed attribute's textual value reaches the number formatter as NaN
+        ["computedAttribute", false],
+    ])("does not format max over an item of type %s", (type, expected) => {
+        expect(canFormatValue(seriesDesc("max", { identifier: "x", type }), "Gold")).toBe(expected);
+    });
+
+    it("formats a measure aggregated over a fact", () => {
+        expect(canFormatValue(seriesDesc("sum", { identifier: "x", type: "fact" }), 42)).toBe(true);
+    });
+
+    it("does not format a non-numeric value of a measure with no aggregation", () => {
+        expect(canFormatValue(seriesDesc(undefined, { identifier: "x", type: "measure" }), "Gold")).toBe(
+            false,
+        );
+    });
+});
 
 describe("DataAccessMethods", () => {
     it("should handle empty data view", () => {

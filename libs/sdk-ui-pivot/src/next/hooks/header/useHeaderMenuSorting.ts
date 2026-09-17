@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type MouseEvent, useCallback } from "react";
 
@@ -49,7 +49,10 @@ function buildSortedWithRankLabel(
  *
  * @internal
  */
-export function useHeaderMenuSorting(params: AgGridHeaderParams | AgGridHeaderGroupParams | null) {
+export function useHeaderMenuSorting(
+    params: AgGridHeaderParams | AgGridHeaderGroupParams | null,
+    displayNameOverride?: string,
+) {
     const intl = useIntl();
 
     // Only regular header params support sorting (not group headers)
@@ -74,8 +77,11 @@ export function useHeaderMenuSorting(params: AgGridHeaderParams | AgGridHeaderGr
         [params, isRegularHeader],
     );
 
-    // Get column name for ARIA labels
-    const columnName = isRegularHeader ? params.displayName : "";
+    // Get column name for ARIA labels. Group headers (not regular/sortable headers) fall back to
+    // "" - not params.displayName - so useHeaderCellAriaLabel leaves AG Grid's own group/expand-
+    // aware computed accessible name alone, except when there IS a renamed total to announce via
+    // displayNameOverride.
+    const columnName = displayNameOverride ?? (isRegularHeader ? params.displayName : "");
 
     // Build ARIA label for sorting menu items
     // Format: "[Column Name], sort [ascending/descending], [sorted ascending/descending, rank N]"

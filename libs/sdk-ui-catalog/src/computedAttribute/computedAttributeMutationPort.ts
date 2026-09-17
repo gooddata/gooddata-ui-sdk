@@ -60,7 +60,6 @@ export async function listComputedAttributeReferences(
         ...(referencing.analyticalDashboards ?? []).map((dashboard) => dashboard.title),
         ...(referencing.computedAttributes ?? []).map((computedAttribute) => computedAttribute.title),
         ...(referencing.userDataFilters ?? []).map((filter) => filter.title),
-        ...(referencing.workspaceDataFilters ?? []).map((filter) => filter.title),
     ];
 }
 

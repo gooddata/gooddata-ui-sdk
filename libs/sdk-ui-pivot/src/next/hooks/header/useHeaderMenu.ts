@@ -22,6 +22,7 @@ import { useHeaderMenuTextWrapping } from "./useHeaderMenuTextWrapping.js";
  * @param includeCellWrapping - Whether cell wrapping menu items should be included
  * @param measureIdentifiers - Array of measure identifiers for the cell
  * @param pivotAttributeDescriptors - Array of pivot attribute descriptors
+ * @param ariaLabelDisplayNameOverride - Overrides the name used to build the header's ARIA label
  * @param gridApi - Optional ag-grid API for checking current state
  * @returns Filtered menu items and handlers based on permissions
  */
@@ -37,6 +38,7 @@ export function useHeaderMenu(
     additionalContext: {
         measureIdentifiers: string[];
         pivotAttributeDescriptors: IAttributeDescriptor[];
+        ariaLabelDisplayNameOverride?: string;
     },
     agGridHeaderParams: AgGridHeaderParams | AgGridHeaderGroupParams | null,
 ) {
@@ -48,7 +50,7 @@ export function useHeaderMenu(
         includeHeaderWrapping,
         includeCellWrapping,
     } = options;
-    const { measureIdentifiers, pivotAttributeDescriptors } = additionalContext;
+    const { measureIdentifiers, pivotAttributeDescriptors, ariaLabelDisplayNameOverride } = additionalContext;
 
     // Aggregations
     const { aggregationsItems, handleAggregationsItemClick } = useHeaderMenuAggregations(
@@ -78,7 +80,7 @@ export function useHeaderMenu(
         handleSortingItemClick,
         handleProgressSort,
         headerCellAriaLabel,
-    } = useHeaderMenuSorting(agGridHeaderParams);
+    } = useHeaderMenuSorting(agGridHeaderParams, ariaLabelDisplayNameOverride);
 
     const sanitizedSortingProps = allowSorting
         ? {

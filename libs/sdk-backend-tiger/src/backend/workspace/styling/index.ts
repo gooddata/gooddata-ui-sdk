@@ -23,6 +23,7 @@ import {
 } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import { type IWorkspaceStylingService } from "@gooddata/sdk-backend-spi";
 import {
+    type IColorPalette,
     type IColorPaletteDefinition,
     type IColorPaletteItem,
     type IColorPaletteMetadataObject,
@@ -31,6 +32,7 @@ import {
     type IThemeMetadataObject,
     type ObjRef,
     idRef,
+    isIdentifierRef,
 } from "@gooddata/sdk-model";
 
 import {
@@ -292,6 +294,40 @@ export class TigerWorkspaceStyling implements IWorkspaceStylingService {
                         )
                         .map(convertColorPaletteWithLinks);
                 }),
+        );
+    }
+
+    /**
+     * Read one color palette by reference, wherever the workspace can see it.
+     *
+     * @remarks
+     * Fetched by id rather than found in the listing above: that one asks for `origin: "NATIVE"`,
+     * so it never holds a palette the workspace inherits from its parent. The scope comes from the
+     * reference type, the same discriminator the active color palette setting carries.
+     */
+    public async getColorPaletteByRef(colorPaletteRef: ObjRef): Promise<IColorPalette | undefined> {
+        const id = objRefToIdentifier(colorPaletteRef, this.authCall);
+        const filter = `id=="${id}"`;
+        const isWorkspaceScoped =
+            isIdentifierRef(colorPaletteRef) && colorPaletteRef.type === "workspaceColorPalette";
+
+        const fetchList: (client: ITigerClientBase) => AxiosPromise<any> = isWorkspaceScoped
+            ? (client) =>
+                  EntitiesApi_GetAllEntitiesWorkspaceColorPalettes(client.axios, client.basePath, {
+                      workspaceId: this.workspace,
+                      filter,
+                  })
+            : (client) => EntitiesApi_GetAllEntitiesColorPalettes(client.axios, client.basePath, { filter });
+
+        // Malformed content is no palette at all, so the caller falls back to whatever it would use
+        // without a reference rather than drawing colors that are not colors.
+        return this.resolveActiveStyleContent<IColorPalette | undefined>(
+            fetchList,
+            (content) => {
+                const colorPalette = unwrapColorPaletteContent(content);
+                return isValidColorPalette(colorPalette) ? colorPalette : undefined;
+            },
+            undefined,
         );
     }
 

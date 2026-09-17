@@ -327,9 +327,7 @@ export type DashboardAttributeFilter1 =
            * Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available.
            */
           selection_type?: "list" | "text" | "listOrText";
-          state?: {
-              [k: string]: unknown;
-          };
+          state?: DashboardStateSelect;
           /**
            * An ids of the parent local attribute or label filter
            */
@@ -363,9 +361,7 @@ export type DashboardAttributeFilter1 =
            * Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available.
            */
           selection_type?: "list" | "text" | "listOrText";
-          state?: {
-              [k: string]: unknown;
-          };
+          state?: DashboardStateMultiselect;
           /**
            * An ids of the parent local attribute or label filter
            */
@@ -412,6 +408,18 @@ export type ComputedAttributeIdentifier3 = string;
  * If specified, the attribute filter will display the elements in selected label form.
  */
 export type DisplayAsLabelIdentifier1 = string;
+/**
+ * State of the multiselect
+ */
+export type DashboardStateMultiselect =
+    | {
+          include: string[];
+          [k: string]: unknown;
+      }
+    | {
+          exclude: string[];
+          [k: string]: unknown;
+      };
 /**
  * Local attribute or date filter to use as parent
  */
@@ -2029,9 +2037,15 @@ export interface Dashboard {
               /**
                * Parameter that will be passed to the plugin. Everything other than string will be serialized to JSON automatically.
                */
-              parameters?: {
-                  [k: string]: unknown;
-              };
+              parameters?:
+                  | {
+                        [k: string]: unknown;
+                    }
+                  | unknown[]
+                  | string
+                  | number
+                  | boolean
+                  | null;
           }
         | Id16
     )[];
@@ -2323,6 +2337,16 @@ export interface DashboardAbsoluteDateFilter {
  */
 export interface DashboardRelativeDateFilter {
     type: "date_filter" | "attribute_filter" | "text_filter" | "metric_value_filter" | "filter_group";
+    [k: string]: unknown;
+}
+/**
+ * State of the single select
+ */
+export interface DashboardStateSelect {
+    /**
+
+   */
+    include: [] | [string];
     [k: string]: unknown;
 }
 export interface LocalDateFilter {

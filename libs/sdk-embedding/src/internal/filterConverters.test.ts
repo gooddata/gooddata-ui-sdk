@@ -5,6 +5,8 @@ import { describe, expect, it } from "vitest";
 import {
     type FilterItem,
     type IAbsoluteDateFilter,
+    type IArbitraryAttributeFilterItem,
+    type IMatchAttributeFilterItem,
     type IMeasureValueFilter,
     type INegativeAttributeFilter,
     type IPositiveAttributeFilter,
@@ -19,6 +21,7 @@ import {
     isAllValueAttributeFilterItem,
     isValidFiltersFormat,
     isValidRemoveFiltersFormat,
+    toDisplayFormRefType,
     transformFilterContext,
 } from "./filterConverters.js";
 
@@ -501,6 +504,81 @@ describe("filter convertors", () => {
             ],
         };
         expect(transformFilterContext(filters)).toEqual(expected);
+    });
+
+    describe("display form reference type", () => {
+        it("should treat a missing or non computed attribute type as a label", () => {
+            expect(toDisplayFormRefType(undefined)).toBe("displayForm");
+            expect(toDisplayFormRefType("displayForm")).toBe("displayForm");
+            expect(toDisplayFormRefType("attribute")).toBe("displayForm");
+        });
+
+        it("should keep a computed attribute type", () => {
+            expect(toDisplayFormRefType("computedAttribute")).toBe("computedAttribute");
+        });
+
+        it("should transform identifier based attribute filters with the display form type", () => {
+            const labelFilter: IPositiveAttributeFilter = {
+                positiveAttributeFilter: {
+                    displayForm: { identifier: "label.id" },
+                    in: ["a"],
+                },
+            };
+            const computedAttributeFilter: INegativeAttributeFilter = {
+                negativeAttributeFilter: {
+                    displayForm: { identifier: "ca.id", type: "computedAttribute" },
+                    notIn: ["a"],
+                },
+            };
+
+            expect(transformFilterContext([labelFilter, computedAttributeFilter]).attributeFilters).toEqual([
+                {
+                    attributeElements: ["a"],
+                    dfIdentifier: "label.id",
+                    dfType: "displayForm",
+                    dfUri: undefined,
+                    negativeSelection: false,
+                },
+                {
+                    attributeElements: ["a"],
+                    dfIdentifier: "ca.id",
+                    dfType: "computedAttribute",
+                    dfUri: undefined,
+                    negativeSelection: true,
+                },
+            ]);
+        });
+
+        it("should not assign a display form type to uri based attribute filters", () => {
+            expect(
+                transformFilterContext([positiveAttributeFilter]).attributeFilters[0].dfType,
+            ).toBeUndefined();
+        });
+
+        it("should transform text attribute filters with the display form type", () => {
+            const arbitraryFilter: IArbitraryAttributeFilterItem = {
+                arbitraryAttributeFilter: {
+                    displayForm: { identifier: "ca.id", type: "computedAttribute" },
+                    values: ["a"],
+                },
+            };
+            const matchFilter: IMatchAttributeFilterItem = {
+                matchAttributeFilter: {
+                    displayForm: { identifier: "label.id" },
+                    operator: "contains",
+                    literal: "a",
+                },
+            };
+
+            const transformed = transformFilterContext([arbitraryFilter, matchFilter]);
+
+            expect(transformed.arbitraryAttributeFilters).toEqual([
+                { dfIdentifier: "ca.id", dfType: "computedAttribute", values: ["a"] },
+            ]);
+            expect(transformed.matchAttributeFilters).toEqual([
+                { dfIdentifier: "label.id", dfType: "displayForm", operator: "contains", literal: "a" },
+            ]);
+        });
     });
 
     it("should check all time date filter item", () => {

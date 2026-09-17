@@ -343,6 +343,18 @@
         "text": "{page} of {pagesCount}",
         "crowdinContext": "Pagination indicator showing current page number and total pages (e.g., '2 of 5'). The {page} and {pagesCount} placeholders will be replaced with actual numbers."
     },
+    "visualizations.totals.renameLabel.action": {
+        "text": "Rename label…",
+        "crowdinContext": "Action in the contextual menu of a pivot table total that opens a popover for renaming the total's label."
+    },
+    "visualizations.totals.labelActions.aria": {
+        "text": "Total label actions",
+        "crowdinContext": "Accessible name for the contextual action menu used to rename or reset a pivot table total label."
+    },
+    "visualizations.totals.resetLabel.action": {
+        "text": "Reset to default",
+        "crowdinContext": "Action that resets a renamed pivot table total label back to its default function-name label (e.g. 'Sum')."
+    },
     "visualizations.totals.dropdown.title.sum": {
         "text": "Sum",
         "crowdinContext": "Total of type 'Sum'. Showed in menu before adding to table."
@@ -4742,6 +4754,22 @@
     "gs.header.metrics": {
         "text": "Metrics",
         "crowdinContext": "Navigation link to metrics section"
+    },
+    "gs.header.helpMenu.gettingStarted": {
+        "text": "Getting started",
+        "crowdinContext": "Link to getting started guide in help menu"
+    },
+    "gs.header.helpMenu.connectData": {
+        "text": "Connecting data",
+        "crowdinContext": "Link to data connection guide in help menu"
+    },
+    "gs.header.helpMenu.manage.ws": {
+        "text": "Managing workspaces and workspace hierarchy",
+        "crowdinContext": "Link to workspace management documentation in help menu"
+    },
+    "gs.header.helpMenu.manage.user": {
+        "text": "Managing users and user groups",
+        "crowdinContext": "Link to user management documentation in help menu"
     },
     "gs.header.slack": {
         "text": "Slack",

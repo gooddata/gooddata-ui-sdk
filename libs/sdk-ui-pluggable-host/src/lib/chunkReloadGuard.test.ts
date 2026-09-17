@@ -11,6 +11,23 @@ import {
 
 const RELOAD_FLAG_KEY = "gd-chunk-reload-guard";
 const RELOAD_LOOP_WINDOW_MS = 30_000;
+const RELOAD_COALESCE_WINDOW_MS = 1_000;
+
+/**
+ * Start of each test's own minute on a fake clock.
+ *
+ * The guard coalesces recovery attempts by wall-clock time and, with isolation off, the module
+ * instance is shared by the whole file. Giving each test a clock well past the previous one is
+ * what stops one test's attempt from coalescing away the next test's.
+ */
+let testClock = Date.UTC(2026, 0, 1);
+
+function startTestClock(): number {
+    testClock += 60_000;
+    vi.useFakeTimers();
+    vi.setSystemTime(testClock);
+    return testClock;
+}
 
 /**
  * Installs the `location.replace` spy and hands back the undo.
@@ -42,12 +59,30 @@ function stubLocationReplace(replaceSpy: ReturnType<typeof vi.fn>): () => void {
     };
 }
 
+function staleChunkEvent(): Event {
+    const event = new Event("vite:preloadError", { cancelable: true });
+    (event as unknown as { payload: Error }).payload = new Error("chunk 404");
+    return event;
+}
+
+/**
+ * A fresh copy of the guard, standing in for the module state a newly loaded document gets.
+ * The loop guard spans documents — sessionStorage outlives the reload, the module does not —
+ * so a suite reusing one instance to model "the page reloaded" tests something the browser
+ * never does.
+ */
+async function freshDocument(): Promise<typeof import("./chunkReloadGuard.js")> {
+    vi.resetModules();
+    return import("./chunkReloadGuard.js");
+}
+
 describe("reloadForStaleChunks", () => {
     let replaceSpy: ReturnType<typeof vi.fn>;
     let restoreLocation: () => void;
 
     beforeEach(() => {
         sessionStorage.removeItem(RELOAD_FLAG_KEY);
+        startTestClock();
         replaceSpy = vi.fn();
         restoreLocation = stubLocationReplace(replaceSpy);
         vi.spyOn(console, "warn").mockImplementation(() => {});
@@ -55,6 +90,9 @@ describe("reloadForStaleChunks", () => {
     });
 
     afterEach(() => {
+        // Let the attempt-resolved timer run: it clears module state the next test would inherit,
+        // which with isolation off is shared by the whole file.
+        vi.runOnlyPendingTimers();
         setStaleChunkReloadListener(undefined);
         sessionStorage.removeItem(RELOAD_FLAG_KEY);
         restoreLocation();
@@ -86,30 +124,34 @@ describe("reloadForStaleChunks", () => {
         expect(Number.isFinite(Number(cb))).toBe(true);
     });
 
-    it("skips the second reload within the loop-guard window for the same build", () => {
+    it("skips the reload when the reloaded document came back on the same build", async () => {
         reloadForStaleChunks("first");
-        reloadForStaleChunks("second");
+        const reloaded = await freshDocument();
+
+        reloaded.reloadForStaleChunks("second");
 
         expect(replaceSpy).toHaveBeenCalledTimes(1);
     });
 
-    it("reloads again once the loop-guard window has elapsed", () => {
-        vi.useFakeTimers();
-        vi.setSystemTime(new Date("2026-01-01T00:00:00Z"));
+    it("reloads again once the loop-guard window has elapsed", async () => {
+        const now = vi.getMockedSystemTime()!.getTime();
 
         reloadForStaleChunks("first");
         expect(replaceSpy).toHaveBeenCalledTimes(1);
+        const reloaded = await freshDocument();
 
-        vi.setSystemTime(new Date("2026-01-01T00:00:00Z").getTime() + RELOAD_LOOP_WINDOW_MS + 1);
-        reloadForStaleChunks("second");
+        vi.setSystemTime(now + RELOAD_LOOP_WINDOW_MS + 1);
+        reloaded.reloadForStaleChunks("second");
 
         expect(replaceSpy).toHaveBeenCalledTimes(2);
     });
 
-    it("reloads again immediately when COMMITHASH differs from the stored flag (new build deployed)", () => {
+    it("reloads again immediately when COMMITHASH differs from the stored flag (new build deployed)", async () => {
         reloadForStaleChunks("first");
+        const reloaded = await freshDocument();
         window.COMMITHASH = "buildB";
-        reloadForStaleChunks("second");
+
+        reloaded.reloadForStaleChunks("second");
 
         expect(replaceSpy).toHaveBeenCalledTimes(2);
     });
@@ -128,12 +170,14 @@ describe("reloadForStaleChunks", () => {
         expect(listenerCallOrder).toBeLessThan(reloadCallOrder);
     });
 
-    it("does not invoke the listener when the loop guard skips the reload", () => {
+    it("does not invoke the listener when the loop guard skips the reload", async () => {
         const listener = vi.fn();
         setStaleChunkReloadListener(listener);
 
         reloadForStaleChunks("first");
-        reloadForStaleChunks("second");
+        const reloaded = await freshDocument();
+        reloaded.setStaleChunkReloadListener(listener);
+        reloaded.reloadForStaleChunks("second");
 
         expect(listener).toHaveBeenCalledTimes(1);
     });
@@ -148,6 +192,21 @@ describe("reloadForStaleChunks", () => {
 
         expect(listener).toHaveBeenCalledTimes(1);
         expect(replaceSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it("tries again in the same document, where the flag can only be from a cancelled navigation", () => {
+        // A `beforeunload` handler the user answered with "stay" cancels the navigation and
+        // leaves the flag behind. Honouring it would deny the recovery to a user who has since
+        // saved, for the rest of the loop-guard window.
+        const now = vi.getMockedSystemTime()!.getTime();
+
+        reloadForStaleChunks("first");
+        // The prompt closes with "stay" and the thread resumes, resolving that attempt.
+        vi.advanceTimersByTime(0);
+        vi.setSystemTime(now + RELOAD_COALESCE_WINDOW_MS + 1);
+        reloadForStaleChunks("second");
+
+        expect(replaceSpy).toHaveBeenCalledTimes(2);
     });
 
     it("ignores a corrupted loop-guard flag and reloads", () => {
@@ -173,6 +232,7 @@ describe("installPreloadErrorHandler", () => {
 
     beforeEach(() => {
         sessionStorage.removeItem(RELOAD_FLAG_KEY);
+        startTestClock();
         replaceSpy = vi.fn();
         restoreLocation = stubLocationReplace(replaceSpy);
         vi.spyOn(console, "warn").mockImplementation(() => {});
@@ -185,8 +245,12 @@ describe("installPreloadErrorHandler", () => {
     });
 
     afterEach(() => {
+        // Let the attempt-resolved timer run: it clears module state the next test would inherit,
+        // which with isolation off is shared by the whole file.
+        vi.runOnlyPendingTimers();
         sessionStorage.removeItem(RELOAD_FLAG_KEY);
         restoreLocation();
+        vi.useRealTimers();
         vi.restoreAllMocks();
     });
 
@@ -196,12 +260,71 @@ describe("installPreloadErrorHandler", () => {
         // it, the helper returns undefined, Module Federation's expose factory then runs
         // `Object.assign({}, undefined)` and yields an empty module, and asPluggableApp
         // throws "does not export a valid pluggable app" — masking the real failure.
-        const event = new Event("vite:preloadError", { cancelable: true });
-        (event as unknown as { payload: Error }).payload = new Error("chunk 404");
+        const event = staleChunkEvent();
 
         window.dispatchEvent(event);
 
         expect(event.defaultPrevented).toBe(false);
         expect(replaceSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it("reloads synchronously, before the rejection can unmount the page's unload guard", () => {
+        // A rejected `React.lazy` with no error boundary above it unmounts the tree that
+        // installed `beforeunload`. Deferring the reload — even by a microtask — would let that
+        // happen first and discard unsaved work unasked.
+        window.dispatchEvent(staleChunkEvent());
+
+        expect(replaceSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it("asks once for a burst of failures, not once per missing chunk", () => {
+        // A redeploy strips many chunks at once. Every failure raises its own event, and a user
+        // who answers the unload prompt with "stay" would otherwise be asked again immediately.
+        window.dispatchEvent(staleChunkEvent());
+        window.dispatchEvent(staleChunkEvent());
+        window.dispatchEvent(staleChunkEvent());
+
+        expect(replaceSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it("stays coalesced across a slow answer to the unload prompt", () => {
+        // The prompt blocks this thread, so the seconds the user spends reading it would otherwise
+        // count against the window and expire it exactly as the queued events drain.
+        const now = vi.getMockedSystemTime()!.getTime();
+        window.dispatchEvent(staleChunkEvent());
+
+        vi.setSystemTime(now + 5 * RELOAD_COALESCE_WINDOW_MS);
+        window.dispatchEvent(staleChunkEvent());
+
+        expect(replaceSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it("restarts the window when the user gets back, not when the attempt was made", () => {
+        const now = vi.getMockedSystemTime()!.getTime();
+        window.dispatchEvent(staleChunkEvent());
+
+        // The prompt closes with "stay"; the thread resumes and the pending attempt resolves.
+        vi.setSystemTime(now + 5 * RELOAD_COALESCE_WINDOW_MS);
+        vi.advanceTimersByTime(0);
+
+        window.dispatchEvent(staleChunkEvent());
+        expect(replaceSpy).toHaveBeenCalledTimes(1);
+
+        vi.setSystemTime(now + 5 * RELOAD_COALESCE_WINDOW_MS + RELOAD_COALESCE_WINDOW_MS + 1);
+        window.dispatchEvent(staleChunkEvent());
+
+        expect(replaceSpy).toHaveBeenCalledTimes(2);
+    });
+
+    it("asks again once the burst is over, so a user who saved still gets their recovery", () => {
+        const now = vi.getMockedSystemTime()!.getTime();
+        window.dispatchEvent(staleChunkEvent());
+        expect(replaceSpy).toHaveBeenCalledTimes(1);
+        vi.advanceTimersByTime(0);
+
+        vi.setSystemTime(now + RELOAD_COALESCE_WINDOW_MS + 1);
+        window.dispatchEvent(staleChunkEvent());
+
+        expect(replaceSpy).toHaveBeenCalledTimes(2);
     });
 });

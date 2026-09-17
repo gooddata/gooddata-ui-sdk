@@ -9,6 +9,7 @@ import { DashboardDateFilterConfigMode } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { ILowerBoundedFilter } from '@gooddata/sdk-model';
 import { IUpperBoundedFilter } from '@gooddata/sdk-model';
+import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 
 // @public (undocumented)
@@ -920,6 +921,7 @@ export interface IObjectMeta {
 export interface IObjIdentifierQualifier {
     // (undocumented)
     identifier: string;
+    type?: ObjectType;
 }
 
 // @public (undocumented)

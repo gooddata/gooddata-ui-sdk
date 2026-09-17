@@ -188,6 +188,19 @@
             }
         }
 
+        // A total's own label (e.g. "Sum", or a custom rename) is text, not a numeric value, so it must
+        // override the metric column's right-aligned styling above. Combined with --metric for higher
+        // specificity so this wins regardless of declaration order.
+        &--metric.gd-pivot-table-next__header-cell--total-label {
+            .gd-header-content {
+                justify-content: flex-start;
+
+                .gd-header-text {
+                    text-align: left;
+                }
+            }
+        }
+
         &--subtotal {
             font-weight: 800;
             background-color: var(--subtotal-bg);
@@ -677,5 +690,19 @@
         .ag-paging-row-summary-panel {
             display: none;
         }
+    }
+}
+
+// Total label rename action menu and popover
+.gd-pivot-table-rename-total-popover {
+    padding: var(--gd-spacing-10px);
+    min-width: 220px;
+
+    .gd-pivot-table-rename-total-popover-buttons {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: var(--gd-spacing-10px);
+        margin-top: var(--gd-spacing-10px);
     }
 }

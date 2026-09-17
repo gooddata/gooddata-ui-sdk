@@ -286,6 +286,7 @@ export {
 } from "./Header/HeaderDataMenu.js";
 export { generateHeaderAccountMenuItems, type IUiSettings } from "./Header/generateHeaderAccountMenuItems.js";
 export { generateHeaderHelpMenuItems } from "./Header/generateHeaderHelpMenuItems.js";
+export { generateHeaderCommonHelpMenuItems } from "./Header/generateHeaderCommonHelpMenuItems.js";
 export { generateHeaderStaticHelpMenuItems } from "./Header/generateHeaderStaticHelpMenuItems.js";
 export { HeaderBadge, type IHeaderBadgeProps } from "./Header/HeaderBadge.js";
 export { HeaderBadgeWithModal, type IHeaderBadgeWithModalProps } from "./Header/HeaderBadgeWithModal.js";

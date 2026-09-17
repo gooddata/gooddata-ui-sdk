@@ -62,6 +62,13 @@ export interface IUsePagedDropdownConfig {
      * Only used by the enhanced insight picker — other consumers should leave this off.
      */
     includeAuthorInfo?: boolean;
+    /**
+     * Search term owned by the caller. It replaces the hook's own search state, so that every page
+     * the hook fetches is already narrowed by the server instead of by the caller afterwards. It is
+     * matched across title, identifier, description and tags, unlike the tab-based term, which the
+     * backend matches against the title alone.
+     */
+    searchTerm?: string;
 }
 
 /**
@@ -128,6 +135,7 @@ export function useInsightPagedList({
     sortDirection = DEFAULT_SORT_DIRECTION,
     createdByFilter,
     includeAuthorInfo = false,
+    searchTerm,
 }: IUsePagedDropdownConfig): IUsePagedDropdownResult {
     const [items, setItems] = useState<IInsight[]>([]);
     const [totalItemsCount, setTotalItemsCount] = useState<number | undefined>(undefined);
@@ -137,6 +145,9 @@ export function useInsightPagedList({
     const [currentPage, setCurrentPage] = useState(0);
     const [search, setSearch] = useState("");
     const [selectedTabId, setSelectedTabId] = useState(tabsIds.my);
+
+    const effectiveSearch = searchTerm ?? search;
+    const ownsSearchTerm = searchTerm !== undefined;
 
     const abortControllerRef = useRef<AbortController | null>(null);
     const initialLoadCompletedRef = useRef(false);
@@ -181,7 +192,7 @@ export function useInsightPagedList({
                     .withPage(page)
                     .withSorting(sorting);
 
-                const searchedTitle = searchValue || undefined;
+                const searchedText = searchValue || undefined;
                 // When includeAuthorInfo is true (picker mode), only use the explicit createdByFilter.
                 // Otherwise fall back to the legacy tab-based author filtering.
                 const searchedAuthor =
@@ -199,7 +210,11 @@ export function useInsightPagedList({
                 const filter: IFilterBaseOptions = {
                     ...((tags?.length ?? 0) > 0 ? { tags } : {}),
                     ...((excludeTags?.length ?? 0) > 0 ? { excludeTags } : {}),
-                    ...(searchedTitle ? { title: searchedTitle } : {}),
+                    ...(searchedText
+                        ? ownsSearchTerm
+                            ? { search: searchedText }
+                            : { title: searchedText }
+                        : {}),
                     ...(effectiveCreatedBy ? { createdBy: effectiveCreatedBy } : {}),
                 };
 
@@ -287,6 +302,7 @@ export function useInsightPagedList({
             sorting,
             createdByFilter,
             includeAuthorInfo,
+            ownsSearchTerm,
         ],
     );
 
@@ -296,8 +312,8 @@ export function useInsightPagedList({
         }
         const nextPage = currentPage + 1;
         setCurrentPage(nextPage);
-        void fetchItems({ page: nextPage, search, tabId: selectedTabId });
-    }, [hasNextPage, isNextPageLoading, isLoading, currentPage, search, selectedTabId, fetchItems]);
+        void fetchItems({ page: nextPage, search: effectiveSearch, tabId: selectedTabId });
+    }, [hasNextPage, isNextPageLoading, isLoading, currentPage, effectiveSearch, selectedTabId, fetchItems]);
 
     // oxlint-disable-next-line react-hooks/exhaustive-deps
     const onSearch = useCallback(
@@ -314,9 +330,9 @@ export function useInsightPagedList({
             const { id: tabId } = tab;
             setCurrentPage(0);
             setSelectedTabId(tabId);
-            void fetchItems({ page: 0, search, tabId, resetItems: true });
+            void fetchItems({ page: 0, search: effectiveSearch, tabId, resetItems: true });
         },
-        [fetchItems, search],
+        [fetchItems, effectiveSearch],
     );
 
     const reset = useCallback(() => {
@@ -338,13 +354,13 @@ export function useInsightPagedList({
 
     const loadInitialItems = useCallback(() => {
         setCurrentPage(0);
-        void fetchItems({ page: 0, search: "", tabId: undefined, resetItems: true });
-    }, [fetchItems]);
+        void fetchItems({ page: 0, search: effectiveSearch, tabId: undefined, resetItems: true });
+    }, [fetchItems, effectiveSearch]);
 
     const resetItems = useCallback(() => {
         setCurrentPage(0);
-        void fetchItems({ page: 0, search: search, tabId: selectedTabId, resetItems: true });
-    }, [fetchItems, search, selectedTabId]);
+        void fetchItems({ page: 0, search: effectiveSearch, tabId: selectedTabId, resetItems: true });
+    }, [fetchItems, effectiveSearch, selectedTabId]);
 
     return {
         items,
@@ -353,7 +369,7 @@ export function useInsightPagedList({
         isNextPageLoading,
         initialLoadCompleted,
         currentPage,
-        search,
+        search: effectiveSearch,
         selectedTabId,
         hasNextPage,
         skeletonItemsCount,

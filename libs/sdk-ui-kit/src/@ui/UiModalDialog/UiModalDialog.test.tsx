@@ -62,10 +62,21 @@ describe("UiModalDialog", () => {
         expect(onClose).not.toHaveBeenCalled();
     });
 
-    it("calls onClose when the backdrop is clicked", () => {
+    it("keeps the dialog open when the backdrop is pressed", () => {
         const onClose = vi.fn();
         render(
             <UiModalDialog isOpen onClose={onClose} dataTestId="modal">
+                <div>content</div>
+            </UiModalDialog>,
+        );
+        fireEvent.mouseDown(screen.getByTestId("modal"));
+        expect(onClose).not.toHaveBeenCalled();
+    });
+
+    it("calls onClose when the backdrop is pressed and closeOnOutsideClick is set", () => {
+        const onClose = vi.fn();
+        render(
+            <UiModalDialog isOpen onClose={onClose} closeOnOutsideClick dataTestId="modal">
                 <div>content</div>
             </UiModalDialog>,
         );

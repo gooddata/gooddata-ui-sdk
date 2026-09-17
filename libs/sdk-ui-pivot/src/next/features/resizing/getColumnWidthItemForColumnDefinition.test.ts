@@ -5,14 +5,9 @@
 import { describe, expect, it } from "vitest";
 
 import {
-    type IAttributeDescriptor,
-    type IMeasureDescriptor,
-    type IResultAttributeHeader,
-    type IResultMeasureHeader,
-    idRef,
-} from "@gooddata/sdk-model";
-import { type ITableColumnDefinition, type ITableValueColumnDefinition } from "@gooddata/sdk-ui";
-
+    createAttributeColumnDefinition,
+    createValueColumnDefinition,
+} from "../../testing/columnDefinitions.test.helpers.js";
 import { newAttributeColumnLocator } from "../../types/locators.js";
 import { newWidthForAllColumnsForMeasure, setNewWidthForSelectedColumns } from "../../types/resizing.js";
 
@@ -126,94 +121,3 @@ describe("getColumnWidthItemForColumnDefinition", () => {
         expect(result).toBeUndefined();
     });
 });
-
-function createValueColumnDefinition(options: {
-    measureIdentifier: string;
-    attributeIdentifier: string;
-    attributeElementUri: string;
-}): ITableColumnDefinition {
-    const { measureIdentifier, attributeIdentifier, attributeElementUri } = options;
-
-    const columnScope: ITableValueColumnDefinition["columnScope"] = [
-        {
-            type: "attributeScope",
-            descriptor: createAttributeDescriptor(attributeIdentifier),
-            header: createAttributeHeader(attributeElementUri),
-        },
-        {
-            type: "measureScope",
-            descriptor: createMeasureDescriptor(measureIdentifier),
-            header: createMeasureHeader(),
-        },
-    ];
-
-    const valueColumnDefinition: ITableValueColumnDefinition = {
-        type: "value",
-        columnIndex: 0,
-        columnHeaderIndex: 0,
-        isEmpty: false,
-        isTransposed: false,
-        columnScope,
-        measureHeader: createMeasureHeader(),
-        measureDescriptor: createMeasureDescriptor(measureIdentifier),
-    };
-
-    return valueColumnDefinition;
-}
-
-function createAttributeColumnDefinition(attributeIdentifier: string): ITableColumnDefinition {
-    return {
-        type: "attribute",
-        columnIndex: 0,
-        rowHeaderIndex: 0,
-        attributeDescriptor: createAttributeDescriptor(attributeIdentifier),
-    };
-}
-
-function createAttributeDescriptor(attributeIdentifier: string): IAttributeDescriptor {
-    return {
-        attributeHeader: {
-            uri: `/gdc/md/demo/obj/${attributeIdentifier}`,
-            identifier: `${attributeIdentifier}.id`,
-            localIdentifier: attributeIdentifier,
-            ref: idRef(`${attributeIdentifier}.id`),
-            name: "Region",
-            formOf: {
-                ref: idRef("attr.region"),
-                uri: "/gdc/md/demo/obj/attr.region",
-                identifier: "attr.region",
-                name: "Region",
-            },
-            primaryLabel: idRef(`${attributeIdentifier}.id`),
-        },
-    };
-}
-
-function createAttributeHeader(attributeElementUri: string): IResultAttributeHeader {
-    return {
-        attributeHeaderItem: {
-            name: "Region",
-            uri: attributeElementUri,
-        },
-    };
-}
-
-function createMeasureDescriptor(measureIdentifier: string): IMeasureDescriptor {
-    return {
-        measureHeaderItem: {
-            localIdentifier: measureIdentifier,
-            name: "Amount",
-            format: "#,##0.00",
-            ref: idRef(measureIdentifier),
-        },
-    };
-}
-
-function createMeasureHeader(): IResultMeasureHeader {
-    return {
-        measureHeaderItem: {
-            name: "Amount",
-            order: 0,
-        },
-    };
-}

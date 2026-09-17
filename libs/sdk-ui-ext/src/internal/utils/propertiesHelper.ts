@@ -7,6 +7,7 @@ import {
     type IConditionalFormatting,
     type IInsightDefinition,
     type ISettings,
+    type ITotal,
     bucketsIsEmpty,
     insightBuckets,
     insightProperties,
@@ -307,6 +308,20 @@ export function getGrandTotalsPositionFromProperties(
     return visualizationProperties?.controls?.["grandTotalsPosition"];
 }
 
+/**
+ * Widget-level override of totals' aliases, keyed by the bucket's localIdentifier ("attribute" or
+ * "columns"). Dashboards have no shared-insight bucket to persist a rename into (unlike AD, which
+ * writes it straight onto the reference point's buckets), so this lives in the widget's own
+ * properties instead - see PluggablePivotTableNext for where it's written and applied.
+ */
+export type PivotTableTotalsOverride = Record<string, ITotal[]>;
+
+export function getTotalsOverrideFromProperties(
+    visualizationProperties: IVisualizationProperties,
+): PivotTableTotalsOverride | undefined {
+    return visualizationProperties?.controls?.["totals"];
+}
+
 export function getPaginationFromProperties(
     visualizationProperties: IVisualizationProperties,
 ): IPagination | undefined {
@@ -477,11 +492,15 @@ export function getPivotTableProperties(settings: ISettings, properties: IVisual
     const grandTotalsPosition = enableNewPivotTable
         ? getGrandTotalsPositionFromProperties(properties)
         : undefined;
+    // Carried along so other controls changes (e.g. column resize) do not silently wipe out a
+    // previously persisted total rename - see PivotTableTotalsOverride.
+    const totalsOverride = enableNewPivotTable ? getTotalsOverrideFromProperties(properties) : undefined;
 
     return {
         measureGroupDimension: getMeasureGroupDimensionFromProperties(properties),
         columnHeadersPosition: getColumnHeadersPositionFromProperties(properties),
         ...(textWrapping ? { textWrapping } : {}),
         ...(grandTotalsPosition ? { grandTotalsPosition } : {}),
+        ...(totalsOverride ? { totals: totalsOverride } : {}),
     };
 }

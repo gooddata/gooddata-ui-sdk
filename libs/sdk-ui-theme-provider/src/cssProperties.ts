@@ -138,7 +138,7 @@ export function handleReportLineHeight(value: unknown): string {
 
 const REPORT_TEXT_LEVELS = [
     ...["h1", "h2", "h3", "h4", "h5", "h6"].map((level) => `heading-${level}`),
-    ...["p1", "p2", "p3"].map((level) => `paragraph-${level}`),
+    ...["largeText", "normalText", "smallText"].map((level) => `paragraph-${level}`),
 ];
 
 const reportLengthParserFunctions: ParserFunction[] = [

@@ -218,6 +218,64 @@ describe("TigerWorkspaceStyling active color palette resolution", () => {
     });
 });
 
+describe("TigerWorkspaceStyling color palette by reference", () => {
+    beforeEach(() => {
+        vi.clearAllMocks();
+    });
+
+    // Both scopes are read here: the reference type says which collection holds the palette. The
+    // listing asks for NATIVE palettes only, so a palette the workspace inherits from a parent is
+    // reachable by reference and by nothing else.
+    it("fetches a workspace-scoped palette by id, without the listing's origin filter", async () => {
+        vi.mocked(EntitiesApi_GetAllEntitiesWorkspaceColorPalettes).mockResolvedValue(
+            listResponse([{ attributes: { content: paletteContent } }]),
+        );
+
+        const styling = new TigerWorkspaceStyling(authCall, WORKSPACE);
+        const palette = await styling.getColorPaletteByRef(idRef("cp-1", "workspaceColorPalette"));
+
+        expect(palette).toEqual(paletteContent.colorPalette);
+        expect(vi.mocked(EntitiesApi_GetAllEntitiesWorkspaceColorPalettes).mock.calls[0][2]).toEqual({
+            workspaceId: WORKSPACE,
+            filter: `id=="cp-1"`,
+        });
+        expect(EntitiesApi_GetAllEntitiesColorPalettes).not.toHaveBeenCalled();
+    });
+
+    it("fetches an organization-scoped palette from the organization collection", async () => {
+        vi.mocked(EntitiesApi_GetAllEntitiesColorPalettes).mockResolvedValue(
+            listResponse([{ attributes: { content: paletteContent } }]),
+        );
+
+        const styling = new TigerWorkspaceStyling(authCall, WORKSPACE);
+        const palette = await styling.getColorPaletteByRef(idRef("cp-1", "colorPalette"));
+
+        expect(palette).toEqual(paletteContent.colorPalette);
+        expect(vi.mocked(EntitiesApi_GetAllEntitiesColorPalettes).mock.calls[0][2]).toEqual({
+            filter: `id=="cp-1"`,
+        });
+        expect(EntitiesApi_GetAllEntitiesWorkspaceColorPalettes).not.toHaveBeenCalled();
+    });
+
+    it("gives no palette where the workspace cannot see one, rather than a default", async () => {
+        vi.mocked(EntitiesApi_GetAllEntitiesWorkspaceColorPalettes).mockResolvedValue(listResponse([]));
+
+        const styling = new TigerWorkspaceStyling(authCall, WORKSPACE);
+
+        expect(await styling.getColorPaletteByRef(idRef("missing", "workspaceColorPalette"))).toBeUndefined();
+    });
+
+    it("gives no palette when the content it finds is not one", async () => {
+        vi.mocked(EntitiesApi_GetAllEntitiesColorPalettes).mockResolvedValue(
+            listResponse([{ attributes: { content: { colorPalette: "not-an-array" } } }]),
+        );
+
+        const styling = new TigerWorkspaceStyling(authCall, WORKSPACE);
+
+        expect(await styling.getColorPaletteByRef(idRef("cp-bad", "colorPalette"))).toBeUndefined();
+    });
+});
+
 describe("TigerWorkspaceStyling workspace object management", () => {
     beforeEach(() => {
         vi.clearAllMocks();

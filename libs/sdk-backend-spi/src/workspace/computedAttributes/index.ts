@@ -50,10 +50,6 @@ export interface IComputedAttributeReferencing {
      * User data filters whose MAQL definition references the computed attribute.
      */
     userDataFilters?: IMetadataObject[];
-    /**
-     * Workspace data filters whose definition references the computed attribute.
-     */
-    workspaceDataFilters?: IMetadataObject[];
 }
 
 /**

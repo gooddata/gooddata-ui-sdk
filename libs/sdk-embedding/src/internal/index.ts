@@ -8,6 +8,8 @@ import { validators } from "./validators.js";
 export { messagingUtils, validators };
 export {
     filterConverters,
+    type DisplayFormRefType,
+    toDisplayFormRefType,
     type IExternalFiltersObject,
     type ITransformedArbitraryAttributeFilter,
     type ITransformedAttributeFilterItem,

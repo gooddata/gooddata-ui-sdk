@@ -2,7 +2,13 @@
 
 import { isEmpty } from "lodash-es";
 
-import { type ILowerBoundedFilter, type IUpperBoundedFilter, type ObjRef, idRef } from "@gooddata/sdk-model";
+import {
+    type ILowerBoundedFilter,
+    type IUpperBoundedFilter,
+    type ObjRef,
+    type ObjectType,
+    idRef,
+} from "@gooddata/sdk-model";
 
 import {
     type DateFilterItem,
@@ -39,14 +45,37 @@ import {
 
 const EXTERNAL_DATE_FILTER_FORMAT = "YYYY-MM-DD";
 
+/**
+ * What an attribute filter's `displayForm` identifier points at: a label or a computed attribute.
+ * A computed attribute is referenced directly, so this is the only thing that tells the two apart.
+ */
+export type DisplayFormRefType = "displayForm" | "computedAttribute";
+
+/**
+ * Resolves the display form reference type from the (optional) type carried by an identifier qualifier.
+ * Only `computedAttribute` is significant; anything else, including a missing type, is a label.
+ */
+export function toDisplayFormRefType(type: ObjectType | undefined): DisplayFormRefType {
+    return type === "computedAttribute" ? "computedAttribute" : "displayForm";
+}
+
 export interface ITransformedArbitraryAttributeFilter {
     dfIdentifier: string;
+    /**
+     * Whether `dfIdentifier` names a label or a computed attribute. Undefined only for legacy uri-based
+     * references; consumers treat it as a label.
+     */
+    dfType?: DisplayFormRefType;
     values: string[];
     negativeSelection?: boolean;
 }
 
 export interface ITransformedMatchAttributeFilter {
     dfIdentifier: string;
+    /**
+     * Whether `dfIdentifier` names a label or a computed attribute.
+     */
+    dfType?: DisplayFormRefType;
     operator: "contains" | "startsWith" | "endsWith";
     literal: string;
     caseSensitive?: boolean;
@@ -91,6 +120,11 @@ export interface ITransformedAttributeFilterItem {
     negativeSelection: boolean;
     attributeElements: string[];
     dfIdentifier?: string;
+    /**
+     * Whether `dfIdentifier` names a label or a computed attribute. Undefined when the filter is
+     * referenced by uri; consumers treat it as a label.
+     */
+    dfType?: DisplayFormRefType;
     dfUri?: string;
     displayAsLabel?: ObjRef;
 }
@@ -383,6 +417,7 @@ export function isValidFiltersFormat(
 function getObjectUriIdentifier(obj: ObjQualifier | undefined): {
     uri?: string;
     identifier?: string;
+    type?: ObjectType;
 } {
     if (!obj) {
         return {};
@@ -391,7 +426,19 @@ function getObjectUriIdentifier(obj: ObjQualifier | undefined): {
     return {
         uri: isObjectUriQualifier(obj) ? obj.uri : undefined,
         identifier: isObjIdentifierQualifier(obj) ? obj.identifier : undefined,
+        type: isObjIdentifierQualifier(obj) ? obj.type : undefined,
     };
+}
+
+/**
+ * The `dfType` of a transformed attribute filter: present only for identifier-based references,
+ * where it is the sole distinction between a label and a computed attribute.
+ */
+function getDfType(
+    identifier: string | undefined,
+    type: ObjectType | undefined,
+): DisplayFormRefType | undefined {
+    return identifier === undefined ? undefined : toDisplayFormRefType(type);
 }
 
 function transformDateFilterItem(dateFilterItem: DateFilterItem): ITransformedDateFilterItem {
@@ -434,12 +481,13 @@ function transformPositiveNegativeAttributeFilterItem(
             positiveAttributeFilter: { in: attributeElements, displayForm },
             displayAsLabel,
         } = attributeFilterItem;
-        const { uri: dfUri, identifier: dfIdentifier } = getObjectUriIdentifier(displayForm);
+        const { uri: dfUri, identifier: dfIdentifier, type } = getObjectUriIdentifier(displayForm);
         const { identifier: displayAsLabelIdentifier } = getObjectUriIdentifier(displayAsLabel);
         return {
             negativeSelection: false,
             attributeElements,
             dfIdentifier,
+            dfType: getDfType(dfIdentifier, type),
             dfUri,
             ...(displayAsLabelIdentifier
                 ? {
@@ -453,12 +501,13 @@ function transformPositiveNegativeAttributeFilterItem(
         negativeAttributeFilter: { notIn: attributeElements, displayForm },
         displayAsLabel,
     } = attributeFilterItem;
-    const { uri: dfUri, identifier: dfIdentifier } = getObjectUriIdentifier(displayForm);
+    const { uri: dfUri, identifier: dfIdentifier, type } = getObjectUriIdentifier(displayForm);
     const { identifier: displayAsLabelIdentifier } = getObjectUriIdentifier(displayAsLabel);
     return {
         negativeSelection: true,
         attributeElements,
         dfIdentifier,
+        dfType: getDfType(dfIdentifier, type),
         dfUri,
         ...(displayAsLabelIdentifier
             ? {
@@ -476,6 +525,7 @@ function transformArbitraryAttributeFilterItem(
     } = filterItem;
     return {
         dfIdentifier: displayForm.identifier,
+        dfType: toDisplayFormRefType(displayForm.type),
         values,
         ...(negativeSelection === undefined ? {} : { negativeSelection }),
     };
@@ -489,6 +539,7 @@ function transformMatchAttributeFilterItem(
     } = filterItem;
     return {
         dfIdentifier: displayForm.identifier,
+        dfType: toDisplayFormRefType(displayForm.type),
         operator,
         literal,
         ...(caseSensitive === undefined ? {} : { caseSensitive }),

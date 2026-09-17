@@ -20,6 +20,7 @@ import {
 import { totalTypeMessages } from "../../../locales.js";
 import { type AgGridCellRendererParams } from "../../types/agGrid.js";
 import { type AgGridRowData } from "../../types/internal.js";
+import { resolveCustomTotalLabel } from "../aggregations/totalLabelTarget.js";
 
 export const isTableTotalCellData = (cellData: ITableDataValue | undefined) => {
     if (!cellData) {
@@ -81,9 +82,18 @@ export function extractIntlFormattedValue(
         return null;
     }
 
-    return isTableGrandTotalHeaderValue(cell) || isTableTotalHeaderValue(cell)
-        ? (translateTotalValue(cell.formattedValue as TotalType, intl) ?? cell.formattedValue)
-        : cell.formattedValue;
+    if (!isTableGrandTotalHeaderValue(cell) && !isTableTotalHeaderValue(cell)) {
+        return cell.formattedValue;
+    }
+
+    // Resolve the alias directly instead of re-deriving "was formattedValue already replaced
+    // upstream" from its own (possibly already-mutated) value - a custom alias must be shown
+    // verbatim even when it happens to collide with a raw total-type key like "sum", so it has to
+    // win the ?? chain before translation is attempted.
+    const dataView = params?.data?.dataView;
+    const customLabel = dataView ? resolveCustomTotalLabel(cell, dataView) : undefined;
+
+    return customLabel ?? translateTotalValue(cell.formattedValue as TotalType, intl) ?? cell.formattedValue;
 }
 
 /**

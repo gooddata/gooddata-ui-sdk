@@ -1128,7 +1128,6 @@ export interface IComputedAttributeReferencing {
     insights?: IInsight[];
     measures?: IMetadataObject[];
     userDataFilters?: IMetadataObject[];
-    workspaceDataFilters?: IMetadataObject[];
 }
 
 // @public
@@ -3311,6 +3310,7 @@ export interface IWorkspaceStylingService {
     getActiveColorPalette(): Promise<ObjRef | undefined>;
     getActiveTheme(): Promise<ObjRef | undefined>;
     getColorPalette(): Promise<IColorPalette>;
+    getColorPaletteByRef(colorPaletteRef: ObjRef): Promise<IColorPalette | undefined>;
     getColorPalettes(): Promise<IColorPaletteMetadataObject[]>;
     getTheme(): Promise<ITheme>;
     getThemes(): Promise<IThemeMetadataObject[]>;

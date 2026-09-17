@@ -6,7 +6,18 @@ import { type FilterContextItem, type IDashboardFilterReference } from "../dashb
 import { type VisualizationProperties } from "../insight/index.js";
 import { type ObjRef } from "../objRef/index.js";
 
-import { type IReportImageStyle, type IReportTextStyle } from "./styling.js";
+import {
+    DefaultReportHeadingType,
+    DefaultReportParagraphType,
+    type IReportHeadingStyle,
+    type IReportImageStyle,
+    type IReportParagraphStyle,
+    ReportHeadingTypes,
+    ReportParagraphTypes,
+    type ReportTextType,
+    isReportHeadingType,
+    isReportParagraphType,
+} from "./styling.js";
 
 /**
  * Metadata of a slot that is intentionally left unfilled in a report page or template.
@@ -101,29 +112,6 @@ export interface IReportVisualizationSlot extends IReportSlotBase {
 }
 
 /**
- * Heading levels a text slot can carry.
- *
- * @alpha
- */
-export type ReportHeadingKind = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-
-/**
- * Paragraph levels a text slot can carry.
- *
- * @alpha
- */
-export type ReportParagraphKind = "p1" | "p2" | "p3";
-
-/**
- * Text level of a text slot. Drives default typography/styling and AI context only —
- * never geometry (geometry always comes from the layout tree). Each level is styled by the matching
- * theme text level (`reports.textStyle.heading.h1` ...).
- *
- * @alpha
- */
-export type ReportTextSlotKind = ReportHeadingKind | ReportParagraphKind;
-
-/**
  * Author-written text.
  *
  * @alpha
@@ -171,25 +159,47 @@ export interface IReportAiTextSource {
 export type ReportTextSource = IReportStaticTextSource | IReportAiTextSource;
 
 /**
- * Slot rendering text.
+ * Slot rendering a heading.
+ *
+ * @remarks
+ * A heading is a line of display text, so it carries no markup of its own: what is typed in it is
+ * what it renders.
  *
  * @alpha
  */
-export interface IReportTextSlot extends IReportSlotBase {
-    type: "text";
+export interface IReportHeadingSlot extends IReportSlotBase {
+    type: "heading";
 
-    kind: ReportTextSlotKind;
-
-    /**
-     * Ink and placement overrides on top of the kind's defaults.
-     */
-    style?: IReportTextStyle;
+    style?: IReportHeadingStyle;
 
     /**
      * Undefined = declared-but-empty slot.
      */
     source?: ReportTextSource;
 }
+
+/**
+ * Slot rendering prose, written as markdown.
+ *
+ * @alpha
+ */
+export interface IReportParagraphSlot extends IReportSlotBase {
+    type: "paragraph";
+
+    style?: IReportParagraphStyle;
+
+    /**
+     * Undefined = declared-but-empty slot.
+     */
+    source?: ReportTextSource;
+}
+
+/**
+ * Slot rendering text of either kind.
+ *
+ * @alpha
+ */
+export type IReportTextSlot = IReportHeadingSlot | IReportParagraphSlot;
 
 /**
  * What an image slot displays.
@@ -260,39 +270,39 @@ export type ReportSlot = IReportVisualizationSlot | IReportTextSlot | IReportIma
  *
  * @alpha
  */
-export const BuiltInReportSlotTypes: string[] = ["visualization", "text", "image"];
+export const BuiltInReportSlotTypes: string[] = ["visualization", "heading", "paragraph", "image"];
 
 /**
- * All heading levels, highest first.
+ * All sizes a text slot can be rendered at, headings first.
  *
  * @alpha
  */
-export const ReportHeadingKinds: ReportHeadingKind[] = ["h1", "h2", "h3", "h4", "h5", "h6"];
+export const ReportTextTypes: ReportTextType[] = [...ReportHeadingTypes, ...ReportParagraphTypes];
 
 /**
- * All paragraph levels, largest first.
+ * Sizes the slot can be rendered at, which is what its own type decides.
  *
  * @alpha
  */
-export const ReportParagraphKinds: ReportParagraphKind[] = ["p1", "p2", "p3"];
+export function reportTextSlotTypes(slot: IReportTextSlot): ReportTextType[] {
+    return slot.type === "heading" ? ReportHeadingTypes : ReportParagraphTypes;
+}
 
 /**
- * All levels a text slot can carry.
+ * Size the slot is rendered at.
+ *
+ * @remarks
+ * A slot states its size, and content is an open format: a size the slot cannot carry, and a size
+ * from a newer version, both fall back to the default of the slot's own type.
  *
  * @alpha
  */
-export const BuiltInReportTextSlotKinds: ReportTextSlotKind[] = [
-    ...ReportHeadingKinds,
-    ...ReportParagraphKinds,
-];
-
-/**
- * Whether the level is a heading.
- *
- * @alpha
- */
-export function isReportHeadingKind(kind: ReportTextSlotKind): kind is ReportHeadingKind {
-    return (ReportHeadingKinds as string[]).includes(kind);
+export function reportTextSlotType(slot: IReportTextSlot): ReportTextType {
+    const stated = slot.style?.type;
+    if (slot.type === "heading") {
+        return isReportHeadingType(stated) ? stated : DefaultReportHeadingType;
+    }
+    return isReportParagraphType(stated) ? stated : DefaultReportParagraphType;
 }
 
 /**
@@ -305,12 +315,30 @@ export function isReportVisualizationSlot(obj: unknown): obj is IReportVisualiza
 }
 
 /**
+ * Type-guard testing whether the provided object is an instance of {@link IReportHeadingSlot}.
+ *
+ * @alpha
+ */
+export function isReportHeadingSlot(obj: unknown): obj is IReportHeadingSlot {
+    return !isEmpty(obj) && (obj as IReportHeadingSlot).type === "heading";
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IReportParagraphSlot}.
+ *
+ * @alpha
+ */
+export function isReportParagraphSlot(obj: unknown): obj is IReportParagraphSlot {
+    return !isEmpty(obj) && (obj as IReportParagraphSlot).type === "paragraph";
+}
+
+/**
  * Type-guard testing whether the provided object is an instance of {@link IReportTextSlot}.
  *
  * @alpha
  */
 export function isReportTextSlot(obj: unknown): obj is IReportTextSlot {
-    return !isEmpty(obj) && (obj as IReportTextSlot).type === "text";
+    return isReportHeadingSlot(obj) || isReportParagraphSlot(obj);
 }
 
 /**

@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -22,6 +22,27 @@ import { useInsightPickerHybridSearch } from "./useInsightPickerHybridSearch.js"
 
 // These tab identifiers are internal keys for useInsightPagedList state — not i18n IDs.
 const tabsIds: ITabsIds = { my: "my", all: "all" };
+
+const SEARCH_DEBOUNCE_MS = 300;
+
+const EMPTY_RELATED_ITEMS: readonly IInsightPickerItem[] = [];
+
+// Clearing the field applies at once — waiting out a debounce to show the full list again reads
+// as the picker being stuck.
+function useDebouncedSearchQuery(searchQuery: string, delayMs: number): string {
+    const [debouncedQuery, setDebouncedQuery] = useState(searchQuery);
+
+    useEffect(() => {
+        if (searchQuery === "") {
+            setDebouncedQuery("");
+            return undefined;
+        }
+        const timeout = setTimeout(() => setDebouncedQuery(searchQuery), delayMs);
+        return () => clearTimeout(timeout);
+    }, [searchQuery, delayMs]);
+
+    return debouncedQuery;
+}
 
 export function InsightPickerCore({
     backend: backendProp,
@@ -57,6 +78,10 @@ export function InsightPickerCore({
     const workspace = useWorkspaceStrict(workspaceProp);
 
     const hasMenu = !!(menuActions?.length || renderMenu);
+
+    // The list is paged, so only the server can answer a search over every visualization. The
+    // debounce keeps one query per pause in typing rather than one per keystroke.
+    const debouncedSearchQuery = useDebouncedSearchQuery(searchQuery, SEARCH_DEBOUNCE_MS);
 
     // --- Filter options from API ---
     const {
@@ -97,6 +122,7 @@ export function InsightPickerCore({
         sortDirection,
         createdByFilter: authorFilter.length > 0 ? authorFilter : undefined,
         includeAuthorInfo: true,
+        searchTerm: debouncedSearchQuery,
     });
 
     // Fetch on mount
@@ -108,8 +134,9 @@ export function InsightPickerCore({
     const sortingKey = `${sortBy ?? ""},${sortDirection}`;
     const authorFilterKey = authorFilter.join(",");
     const tagFilterKey = tagFilter.join(",");
+    const searchKey = debouncedSearchQuery;
     // Holds the filters the loaded items belong to. The reload effect below advances it.
-    const prevKeys = useRef({ sortingKey, authorFilterKey, tagFilterKey });
+    const prevKeys = useRef({ sortingKey, authorFilterKey, tagFilterKey, searchKey });
 
     // The picker opens filtered to the current user. A user who authored nothing would face an
     // empty picker, so drop that default and let the reload below fetch every author. The filter
@@ -126,13 +153,14 @@ export function InsightPickerCore({
     // This effect must stay ahead of the reload effect, which is what makes the last check work.
     const isUntouchedAuthorDefault =
         !isAuthorFilterModified && !!author && authorFilter.length === 1 && authorFilter[0] === author;
-    const mayDropAuthorDefault = isUntouchedAuthorDefault && tagFilter.length === 0;
+    const mayDropAuthorDefault = isUntouchedAuthorDefault && tagFilter.length === 0 && searchKey === "";
     useEffect(() => {
         const prev = prevKeys.current;
         const isCountStale =
             sortingKey !== prev.sortingKey ||
             authorFilterKey !== prev.authorFilterKey ||
-            tagFilterKey !== prev.tagFilterKey;
+            tagFilterKey !== prev.tagFilterKey ||
+            searchKey !== prev.searchKey;
 
         if (!isCountStale && initialLoadCompleted && totalInsightsCount === 0 && mayDropAuthorDefault) {
             onAuthorFilterChange([]);
@@ -145,20 +173,22 @@ export function InsightPickerCore({
         sortingKey,
         authorFilterKey,
         tagFilterKey,
+        searchKey,
     ]);
 
-    // Reload when sorting or filters change (after initial load)
+    // Reload when sorting, filters or the search term change (after initial load)
     useEffect(() => {
         const prev = prevKeys.current;
         if (
             sortingKey !== prev.sortingKey ||
             authorFilterKey !== prev.authorFilterKey ||
-            tagFilterKey !== prev.tagFilterKey
+            tagFilterKey !== prev.tagFilterKey ||
+            searchKey !== prev.searchKey
         ) {
-            prevKeys.current = { sortingKey, authorFilterKey, tagFilterKey };
+            prevKeys.current = { sortingKey, authorFilterKey, tagFilterKey, searchKey };
             resetItems();
         }
-    }, [sortingKey, authorFilterKey, tagFilterKey, resetItems]);
+    }, [sortingKey, authorFilterKey, tagFilterKey, searchKey, resetItems]);
 
     // --- Insight lookup ---
     const insightsByIdentifier = useMemo(
@@ -167,7 +197,7 @@ export function InsightPickerCore({
     );
 
     // --- Hybrid search ---
-    const { searchState, semanticSearchState, displayItems, isSearching, handleSearchChange } =
+    const { searchState, semanticSearchState, searchEntries, relatedItems, isSearching, handleSearchChange } =
         useInsightPickerHybridSearch({
             insights,
             searchQuery,
@@ -177,7 +207,19 @@ export function InsightPickerCore({
             excludeTags,
         });
 
-    const totalItems = isSearching ? displayItems.length : (totalInsightsCount ?? insights.length);
+    // Semantic hits are appended below the literal matches, so they may only be shown once every
+    // page of those matches is in. Otherwise the next page would push them further down the list.
+    // A reload reports no next page until the first page of the new query lands, so the loading
+    // flags and the debounce have to be checked too — `hasNextPage` alone is false in that window.
+    const isLiteralSearchComplete =
+        searchState.query === debouncedSearchQuery && !isLoading && !isNextPageLoading && !hasNextPage;
+    const appendedRelatedItems = isSearching && isLiteralSearchComplete ? relatedItems : EMPTY_RELATED_ITEMS;
+    const displayItems = useMemo(
+        () => [...searchEntries, ...appendedRelatedItems],
+        [searchEntries, appendedRelatedItems],
+    );
+
+    const totalItems = (totalInsightsCount ?? insights.length) + appendedRelatedItems.length;
 
     const shouldLoadNextPage = useCallback(
         (lastItemIndex: number, itemsCount: number) => lastItemIndex >= itemsCount - 5,
@@ -233,13 +275,14 @@ export function InsightPickerCore({
                 width={width}
                 isMobile={false}
                 isLoading={
-                    isSearching
-                        ? semanticSearchState.state === "loading" && displayItems.length === 0
-                        : isLoading
-                          ? insights.length === 0
+                    isLoading
+                        ? insights.length === 0
+                        : isSearching && semanticSearchState.state === "loading"
+                          ? displayItems.length === 0
                           : undefined
                 }
                 showSearch={false}
+                searchString={searchState.query}
                 onKeyDownConfirm={(entry) => {
                     if (onItemActivate) {
                         const sourceInsight = insightsByIdentifier.get(entry.identifier);
@@ -252,11 +295,11 @@ export function InsightPickerCore({
                 items={displayItems}
                 itemsCount={totalItems}
                 maxHeight={maxHeight}
-                loadNextPage={isSearching ? undefined : loadNextPage}
-                hasNextPage={isSearching ? false : hasNextPage}
-                skeletonItemsCount={isSearching ? 0 : skeletonItemsCount}
-                isNextPageLoading={isSearching ? false : isNextPageLoading}
-                shouldLoadNextPage={isSearching ? undefined : shouldLoadNextPage}
+                loadNextPage={loadNextPage}
+                hasNextPage={hasNextPage}
+                skeletonItemsCount={skeletonItemsCount}
+                isNextPageLoading={isNextPageLoading}
+                shouldLoadNextPage={shouldLoadNextPage}
                 SkeletonItem={() => (
                     <UiSkeleton
                         itemWidth={["100%"]}

@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "added @alpha IWorkspaceStylingService.getColorPaletteByRef, which reads one color palette by reference and reaches a palette the workspace inherits rather than owns",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

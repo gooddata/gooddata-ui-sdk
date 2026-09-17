@@ -36,6 +36,7 @@ const USER_GRANT: AccessGranteeDetail = {
 } as AccessGranteeDetail;
 
 const notFound = () => new UnexpectedResponseError("Not Found", 404, {});
+const forbidden = () => new UnexpectedResponseError("Forbidden", 403, {});
 
 // The profile ref is a URI while grants carry the user id, exactly as tiger returns them:
 // a self-grant must be matched on the login, never on this ref.
@@ -418,6 +419,25 @@ describe("CatalogItemShareProvider", () => {
         // A view/analyze-only user gets a 404 on the manage-gated permissions
         // endpoint. The share UI (Share button + inline access row) must then hide.
         const backend = makeBackend(vi.fn(async () => Promise.reject(notFound())));
+        let stateActive = true;
+        let actionsActive = true;
+        function Probe() {
+            stateActive = useCatalogItemShareState().active;
+            actionsActive = useCatalogItemShareActions().active;
+            return null;
+        }
+
+        renderProvider(backend, <Probe />);
+
+        await settle(() => expect(stateActive).toBe(false));
+        expect(actionsActive).toBe(false);
+    });
+
+    it("reports inactive for a shareable item when access is forbidden (403)", async () => {
+        // A user who can see the object but can't manage it (e.g. an ANALYZE user
+        // holding an object-level VIEW grant) gets a 403 from the manage-gated
+        // permissions endpoint. That is as definitive as a 404: hide the share UI.
+        const backend = makeBackend(vi.fn(async () => Promise.reject(forbidden())));
         let stateActive = true;
         let actionsActive = true;
         function Probe() {

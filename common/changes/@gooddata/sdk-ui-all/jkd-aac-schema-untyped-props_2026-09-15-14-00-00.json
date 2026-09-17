@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-code-schemas: Give dashboard attribute-filter `state` and plugin `parameters` real types, and fix the multiselect discriminator that had been inverted since the schema was introduced.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

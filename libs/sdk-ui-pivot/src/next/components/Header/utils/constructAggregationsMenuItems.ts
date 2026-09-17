@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { compact, isEqual } from "lodash-es";
+import { compact } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import {
@@ -13,6 +13,7 @@ import {
 
 import { messages } from "../../../../locales.js";
 import { DEFAULT_TOTAL_FUNCTIONS } from "../../../constants/internal.js";
+import { areTotalsSameDefinition } from "../../../features/aggregations/totals.js";
 import {
     type IAggregationsMenuItem,
     type IAggregationsSubMenuItem,
@@ -239,6 +240,6 @@ function isTotalActive(currentTotals: ITotal[], totalDefinitions: ITotal[]): boo
     }
 
     return totalDefinitions.every((totalDef) =>
-        currentTotals.some((currentTotal) => isEqual(currentTotal, totalDef)),
+        currentTotals.some((currentTotal) => areTotalsSameDefinition(currentTotal, totalDef)),
     );
 }

@@ -21,6 +21,7 @@ import {
     type IHeaderWorkspace,
     ToastsCenterContextProvider,
     generateHeaderAccountMenuItems,
+    generateHeaderCommonHelpMenuItems,
     generateHeaderStaticHelpMenuItems,
 } from "@gooddata/sdk-ui-kit";
 import { defaultHeaderTheme } from "@gooddata/sdk-ui-theme-provider";
@@ -148,14 +149,17 @@ export function HostChrome({
         [resolvedApplications, ctx, pathname],
     );
 
-    // The default help menu links exclusively to GoodData resources (documentation, university,
-    // community, Slack). When white-labeling is enabled (the "Hide links to GoodData documentation"
-    // setting) those must not leak into the branded header, so the host renders no default help
-    // menu. Apps may still supply their own help items via headerOptions.
+    // The default help menu links exclusively to GoodData resources (product documentation,
+    // university, community, Slack). When white-labeling is enabled (the "Hide links to GoodData
+    // documentation" setting) those must not leak into the branded header, so the host renders no
+    // default help menu. An app that needs app-specific links replaces the whole menu through
+    // headerOptions; an app that pushes nothing gets these product-wide links. (LX-2960)
     const helpMenuItems = useMemo(
         () =>
             headerOptions?.helpMenuItems ??
-            (ctx.whiteLabeling?.enabled ? [] : generateHeaderStaticHelpMenuItems()),
+            (ctx.whiteLabeling?.enabled
+                ? []
+                : [...generateHeaderCommonHelpMenuItems(), ...generateHeaderStaticHelpMenuItems()]),
         [headerOptions, ctx.whiteLabeling?.enabled],
     );
 
