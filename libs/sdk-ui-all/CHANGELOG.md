@@ -1,6 +1,84 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 10 Sep 2026 06:58:30 GMT and should not be manually modified.
+This log was last generated on Thu, 17 Sep 2026 06:44:22 GMT and should not be manually modified.
+
+## 11.57.0
+
+Thu, 17 Sep 2026 06:44:22 GMT
+
+### Minor changes
+
+- sdk-ui-filters: Enable keyboard typing in the absolute date filter's Day/Week/Month/Quarter/Year period picker, and fix the Week field snapping to the wrong week mid-edit
+
+### Patches
+
+- The automation dialog customization API is promoted to @beta; the useDashboardAlerts/useDashboardScheduledEmails delete callbacks are renamed (on*ManagementDelete* -> on*Delete*) to match what they observe.
+- sdk-model, sdk-backend-tiger: Add the enableEmbeddingWriteCommands feature flag that gates the write and export postMessage commands for embedded dashboards and Analytical Designer. Disabled by default.
+- sdk-ui-kit: Regenerate defaultTheme.scss from its spec, restoring the :root defaults for --gd-avatar-background-color, --gd-viz-tooltip-max-height and the geo multi-layer legend variables, which were referenced without a fallback
+- sdk-ui-kit: UiTooltip caps its width at 300px by default (override via the --gd-tooltip-maxWidth CSS variable, or by setting an explicit width)
+
+### Updates
+
+- sdk-ui-all: Update context selection logic for new conversation.
+- sdk-ui-gen-ai: Refine bar chart stacking logic in conversation visualization.
+- sdk-ui-gen-ai: Update layout to responsive to AD and modeler.
+- sdk-ui-gen-ai: Enhance Markdown handling and improve CustomHyperlink processing.
+- sdk-ui-dashboard: Support saving draft insights during dashboard save flow.
+- sdk-ui-gen-ai: Introduce customizable conversation history slots in assistant.
+- sdk-ui-pivot, sdk-ui-ext: Allow renaming and resetting pivot table total labels in PivotTableNext
+- sdk-ui-dashboard: Add help link.
+- sdk-embedding: the identifier qualifier of post message attribute filters carries an optional object type, so that a filter on a computed attribute stays distinguishable from a filter on a label
+- Allow filtering computed attributes by certification in the analytics catalog
+- sdk-ui-catalog, sdk-ui-ext, sdk-ui-kit: Reworked object sharing in the Analytics Catalog to follow the reviewed design — the share and add-grantee dialogs, the permission menu, and the catalog detail's type row, clickable access value and read-only definition view.
+- Reference computed attributes in drill to URL placeholders
+- Keep arrow keys inside a rich text editor instead of navigating the surrounding menu
+- sdk-ui-catalog: Hide the Share button and access row when the permissions endpoint denies the caller with 403, not only 404.
+- Support {computed_attribute/id} references in rich text and custom tooltips
+- sdk-code-schemas: Give dashboard attribute-filter `state` and plugin `parameters` real types, and fix the multiselect discriminator that had been inverted since the schema was introduced.
+- sdk-backend-tiger: Copilot adding a chart to an open dashboard now renders the patched draft as a single card, and follow-up proposals in the same conversation keep working after a reload.
+- sdk-ui-ext: Add the useCopyObjectPermissions hook, which reproduces one object's own access on another.
+- sdk-ui-dashboard: Restyle the restricted filters placeholder as a filter bar entry - a lock icon and the count of restricted filters - instead of a warning chip. The tooltip now also tells the viewer to contact their administrator for access.
+- sdk-ui-all: A rich text widget now shows a restricted marker in place of a value the user has no access to, and keeps showing the values it can resolve.
+- sdk-ui-all: A restricted entry of a visualization switcher is now labelled as restricted while editing, offers removal alone, and neither it nor the row it sits in can be resized.
+- sdk-ui-all: A restricted reference is now marked wherever a dashboard renders text with references — section and widget descriptions too, not only a rich text widget.
+- sdk-ui-all: Anyone who can edit a dashboard can now remove a restricted visualization widget from it, which until now had no menu at all; neither the menu nor the delete confirmation names such a widget.
+- sdk-ui-dashboard: Fix the alert dialog's "For" dropdown when the insight uses two display forms of one attribute: no duplicated item, and each display form offers and marks selected its own values
+- sdk-ui, sdk-ui-dashboard: A dashboard blocked by an expired contract now shows the correct lock message and icon.
+- sdk-ui-kit: Menu z-index is supplied by the active OverlayController
+- sdk-ui:Convert aborted executions to CANCELLED instead of UNKNOWN_ERROR; sdk-backend-tiger no longer logs request cancellations as backend errors.
+- sdk-ui-pluggable-host:Add HostErrorBoundary so an uncaught error renders an error screen instead of unmounting the whole host page.
+- sdk-ui-pluggable-host:Keep the mounted app rendered while the same workspace's platform context refreshes instead of swapping it for a loader.
+- sdk-ui-kit: UiToolbarStepper reports the typed text live (onDraftChange), can mark it invalid (isInvalid) and shows a placeholder while empty
+- sdk-ui-kit: Add the UiToolbar component family (UiToolbar, UiToolbarButton, UiToolbarIconButton, UiToolbarIconSelect, UiToolbarSelect, UiToolbarStepper, UiToolbarSegmentedControl, UiToolbarMoreButton, UiToolbarDivider, UiToolbarColorSwatch)
+- sdk-ui-ext: Fix the insight picker showing "No visualizations" after the first scroll for a user who authored none of them. The paged list widened only its first query past the author filter, so the next page came back empty and replaced the total count of the widened list. The picker now drops the author filter itself, which every page is fetched from.
+- sdk-ui-pluggable-host: Add the product-wide contextual links to the default help menu, so an application that pushes no help items of its own gets them.
+- sdk-ui-kit: UiModalDialog no longer closes on a backdrop press unless closeOnOutsideClick is set.
+- sdk-ui-pluggable-host: Stop the stale-chunk recovery reload from discarding unsaved work after a redeploy. The reload is raised synchronously from the preload-error event, so a page holding unsaved changes still gets its `beforeunload` say, and repeated attempts are coalesced so a burst of missing chunks asks once rather than once per chunk.
+- sdk-ui-ext: Fix the insight picker search finding only the visualizations already paged into the list, so what a search returned depended on how far the user had scrolled. The typed query now goes to the backend as a case-insensitive title filter, every page of matches is fetched, and an empty result says "No visualizations found" instead of "No visualizations".
+- sdk-model, sdk-backend-spi/base/tiger/mockingbird: removed the @alpha reports brand kit (IReportsBrandKit, sanitizeReportsBrandKit, ISettings.reportsBrandKit, getBrandKit/setBrandKit/deleteBrandKit, the logoInverse report variable). Added @alpha ITheme.reports and ITheme.assets sections with ITheme.version "2"; report text slot kinds are now h1-h6 and p1-p3. sdk-ui-theme-provider emits the reports theme properties as --gd-reports-* variables (indexed color lists, cqw lengths) and skips version, assets, font files and palette references. Reports resolve {logo} and theme asset ids as image variables, and the report export DOM contract moves to version 2, whose data-export-text-kind states those levels.
+- added @alpha IWorkspaceStylingService.getColorPaletteByRef, which reads one color palette by reference and reaches a palette the workspace inherits rather than owns
+- sdk-model: Report text slots split into @alpha "heading" and "paragraph" slot types. The text level moves from IReportTextSlot.kind to the slot style as "type", and the theme paragraph levels are renamed to largeText, normalText and smallText.
+- sdk-ui-kit: UiDropdown no longer repeats a listbox, menu, tree or grid popupRole on the floating panel around the body that already carries it
+- sdk-ui-pluggable-host: The host hides its navigation, chat and brand title for an export mode named in the search string as well as in the fragment, and recognises the reports module's export_slideshow mode next to the dashboards' export.
+- sdk-ui-gen-ai: Render waterfall charts in the AI assistant chat.
+- sdk-ui-gen-ai: Render donut, pyramid and funnel charts in the AI assistant chat.
+- sdk-ui-gen-ai: Render bubble and bullet charts in the AI assistant chat.
+- sdk-ui-gen-ai: Render radar charts in the AI assistant chat.
+- sdk-ui-gen-ai: Render Sankey and Dependency Wheel charts in the AI assistant chat.
+- sdk-ui-gen-ai: Render treemap charts in the AI assistant chat.
+- sdk-ui-gen-ai: Start a new conversation instead of resuming the last one when the AI Assistant is opened after 8 hours of inactivity.
+- sdk-ui-gen-ai: Render heatmap charts in the AI assistant chat.
+- sdk-ui-gen-ai: Render stacked area charts in the AI assistant chat.
+- sdk-ui-gen-ai: Render combo chart in the AI assistant chat.
+- sdk-ui-gen-ai: Render repeater chart in the AI assistant chat.
+- sdk-ui-catalog: Attribute detail gains a Conditional Formatting row per label (behind enableSemanticConditionalFormatting).
+- sdk-ui-dashboard: Preserve restricted dashboard filters for partial rendering, show them as generic chips, and exclude them from executions.
+- sdk-ui-dashboard: Add the getDashboardLoadReferenceTypes helper so hosts that preload the dashboard request the reference types partial rendering needs.
+- sdk-ui-dashboard: Let consumers replace the filter bar notice about filters that were not applied, via filterBar().withRestrictedPlaceholderProvider and the RestrictedFiltersPlaceholderComponentProvider prop.
+- sdk-ui-dashboard: Let an editor remove the dashboard filters they are not allowed to read, through the removeRestrictedFilters command and the action the filter bar notice offers in edit mode.
+- api-client-tiger: Per-type Attribute, Label and Fact permission schemas replace the LdmObjectPermissions types.
+- sdk-ui-ext: Add the CREATE_VISUALIZATION granular workspace permission to user management dialogs, gated by the enableCreateVisualizationWorkspacePermission feature flag.
+- sdk-backend-tiger: Support reading and managing object-level permissions of visualizations.
 
 ## 11.56.0
 
