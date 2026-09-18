@@ -3,6 +3,7 @@
 import { intersection, isEmpty, uniqBy } from "lodash-es";
 import { invariant } from "ts-invariant";
 
+import { type AccessGranularPermission } from "../accessControl/index.js";
 import { type IAuditable, type IObjectCertification } from "../base/metadata.js";
 import { type IColor } from "../colors/index.js";
 import {
@@ -66,6 +67,12 @@ export type IInsight = IInsightDefinition &
              * Insight is draft only, its not saved yet
              */
             isDraft?: boolean;
+            /**
+             * The current user's object-level permissions on the insight.
+             * Only populated when the backend was asked for them, undefined otherwise.
+             * @alpha
+             */
+            permissions?: AccessGranularPermission[];
 
             /**
              * Certification metadata.

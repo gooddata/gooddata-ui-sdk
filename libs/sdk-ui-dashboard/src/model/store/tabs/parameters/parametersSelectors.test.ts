@@ -22,6 +22,7 @@ import {
 } from "../../catalog/catalogState.js";
 import { insightsAdapter } from "../../insights/insightsEntityAdapter.js";
 import { type DashboardState } from "../../types.js";
+import { DEFAULT_TAB_ID } from "../tabsState.js";
 
 import {
     computeParameterResetTargets,
@@ -33,6 +34,7 @@ import {
     selectActiveTabExportParameters,
     selectDashboardParameterEntries,
     selectDashboardParameters,
+    selectDashboardParametersByTab,
     selectEffectiveDashboardParametersForWidget,
     selectEffectiveParameterValuesForWidget,
     selectExportEffectiveParameters,
@@ -41,11 +43,13 @@ import {
     selectHasAnyResettableParameterOnActiveTab,
     selectIsParametersChanged,
     selectIsWorkingParametersChanged,
+    selectOriginalParameterValuesByTab,
     selectParameterDisplayValueByRef,
     selectParameterReconciliationByRef,
     selectParameterReconciliations,
     selectParameterResetValueByRef,
     selectParameterRuntimeOverrideByRef,
+    selectParameterValuesByTab,
     selectReferencedInsightParameterValuesForWidget,
     selectSmartPersistedTabsParameters,
     selectWidgetParameterContext,
@@ -164,9 +168,12 @@ interface IFullStateOptions {
     renderMode?: RenderMode;
     measureParametersStatus?: CatalogMeasureParametersStatus;
     measureParameters?: Record<string, IdentifierRef[]>;
+    secondTabEntries?: IDashboardParameterEntry[];
+    persistedDashboardHasTabs?: boolean;
 }
 
 const TAB_ID = "tab-1";
+const SECOND_TAB_ID = "tab-2";
 const W1_REF = { identifier: "w-1", type: "insight" } as const;
 const W1_INSIGHT_REF = idRef("insight-1", "insight");
 
@@ -181,19 +188,23 @@ function makeFullState({
     renderMode = "view",
     measureParametersStatus = "loaded",
     measureParameters: byMetric = {},
+    secondTabEntries,
+    persistedDashboardHasTabs = true,
 }: IFullStateOptions): DashboardState {
     const persistedDashboard: Partial<IDashboard> | undefined =
         persistedDashboardParameters === undefined
             ? undefined
             : ({
                   parameters: persistedDashboardParameters,
-                  tabs: [
-                      {
-                          localIdentifier: TAB_ID,
-                          title: "Tab 1",
-                          parameters: persistedDashboardParameters,
-                      },
-                  ],
+                  tabs: persistedDashboardHasTabs
+                      ? [
+                            {
+                                localIdentifier: TAB_ID,
+                                title: "Tab 1",
+                                parameters: persistedDashboardParameters,
+                            },
+                        ]
+                      : undefined,
               } as Partial<IDashboard>);
     return {
         tabs: {
@@ -225,6 +236,15 @@ function makeFullState({
                         },
                     },
                 },
+                ...(secondTabEntries
+                    ? [
+                          {
+                              localIdentifier: SECOND_TAB_ID,
+                              title: "Tab 2",
+                              parameters: { parameters: secondTabEntries },
+                          },
+                      ]
+                    : []),
             ],
             activeTabLocalIdentifier: TAB_ID,
         },
@@ -424,6 +444,114 @@ describe("parameter selectors (per tab)", () => {
                 entries: [{ parameter: topNParameter, runtimeOverride: undefined }],
             });
             expect(selectActiveTabDrillParameters(state)).toEqual([]);
+        });
+    });
+
+    describe("selectParameterValuesByTab", () => {
+        it("skips an entry with no runtime value", () => {
+            const state = makeFullState({
+                entries: [{ parameter: topNParameter, runtimeOverride: undefined }],
+            });
+            expect(selectParameterValuesByTab(state)).toEqual({ [TAB_ID]: [] });
+        });
+
+        it("reports the applied value, not the staged one", () => {
+            const state = makeFullState({
+                entries: [{ parameter: topNParameter, runtimeOverride: 25, workingOverride: 99 }],
+            });
+            expect(selectParameterValuesByTab(state)).toEqual({ [TAB_ID]: [{ ref: topNRef, value: 25 }] });
+        });
+
+        it("keys every tab's own values by tab local identifier", () => {
+            const state = makeFullState({
+                entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
+                secondTabEntries: [{ parameter: scenarioParameter, runtimeOverride: "Budget" }],
+            });
+            expect(selectParameterValuesByTab(state)).toEqual({
+                [TAB_ID]: [{ ref: topNRef, value: 25 }],
+                [SECOND_TAB_ID]: [{ ref: scenarioRef, value: "Budget" }],
+            });
+        });
+
+        it("skips a STRING entry when string parameters are disabled", () => {
+            const state = makeFullState({
+                entries: [{ parameter: scenarioParameter, runtimeOverride: "Budget" }],
+                enableStringParameters: false,
+            });
+            expect(selectParameterValuesByTab(state)).toEqual({ [TAB_ID]: [] });
+        });
+    });
+
+    describe("selectDashboardParametersByTab", () => {
+        it("keys every tab's persisted-shape parameters by tab local identifier", () => {
+            const state = makeFullState({
+                entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
+                secondTabEntries: [{ parameter: scenarioParameter, runtimeOverride: "Budget" }],
+            });
+            expect(selectDashboardParametersByTab(state)).toEqual({
+                [TAB_ID]: [topNParameter],
+                [SECOND_TAB_ID]: [scenarioParameter],
+            });
+        });
+
+        it("reports an empty array for a tab without parameters", () => {
+            const state = makeFullState({ entries: [] });
+            expect(selectDashboardParametersByTab(state)).toEqual({ [TAB_ID]: [] });
+        });
+    });
+
+    describe("selectOriginalParameterValuesByTab", () => {
+        it("reports the pinned persisted value", () => {
+            const state = makeFullState({
+                entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
+                workspaceParameters: [topNWorkspace],
+                persistedDashboardParameters: [{ ...topNParameter, value: 7 }],
+            });
+            expect(selectOriginalParameterValuesByTab(state)).toEqual({
+                [TAB_ID]: [{ ref: topNRef, value: 7 }],
+            });
+        });
+
+        it("falls back to the workspace default for an unpinned parameter", () => {
+            const state = makeFullState({
+                entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
+                workspaceParameters: [topNWorkspace],
+                persistedDashboardParameters: [topNParameter],
+            });
+            expect(selectOriginalParameterValuesByTab(state)).toEqual({
+                [TAB_ID]: [{ ref: topNRef, value: 10 }],
+            });
+        });
+
+        it("skips an unpinned parameter while the workspace catalog is not loaded", () => {
+            const state = makeFullState({
+                entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
+                workspaceParameters: [topNWorkspace],
+                catalogStatus: "loading",
+                persistedDashboardParameters: [topNParameter],
+            });
+            expect(selectOriginalParameterValuesByTab(state)).toEqual({ [TAB_ID]: [] });
+        });
+
+        it("skips a STRING parameter when string parameters are disabled", () => {
+            const state = makeFullState({
+                entries: [{ parameter: scenarioParameter, runtimeOverride: "Budget" }],
+                persistedDashboardParameters: [{ ...scenarioParameter, value: "Budget" }],
+                enableStringParameters: false,
+            });
+            expect(selectOriginalParameterValuesByTab(state)).toEqual({ [TAB_ID]: [] });
+        });
+
+        it("reports the persisted root parameters under the default tab for a legacy dashboard", () => {
+            const state = makeFullState({
+                entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
+                workspaceParameters: [topNWorkspace],
+                persistedDashboardParameters: [{ ...topNParameter, value: 7 }],
+                persistedDashboardHasTabs: false,
+            });
+            expect(selectOriginalParameterValuesByTab(state)).toEqual({
+                [DEFAULT_TAB_ID]: [{ ref: topNRef, value: 7 }],
+            });
         });
     });
 

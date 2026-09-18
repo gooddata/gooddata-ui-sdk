@@ -69,6 +69,7 @@ export function useCatalogQueryOptions(
     const { search, origin, createdBy, tags, qualityIds, isHidden, certification } = filterInputs;
     // the detail panel reuses the listed item, so its permissions have to come with the list
     const loadPermissions = useFeatureFlag("enableMetricPermissions");
+    const loadVisualizationPermissions = useFeatureFlag("enableVisualizationPermissions");
 
     return useMemo<ICatalogItemQueryOptions>(() => {
         let includeIds: string[] | undefined = id;
@@ -97,6 +98,7 @@ export function useCatalogQueryOptions(
             certification,
             pageSize,
             loadPermissions,
+            loadVisualizationPermissions,
         };
     }, [
         backend,
@@ -111,6 +113,7 @@ export function useCatalogQueryOptions(
         isHidden,
         certification,
         loadPermissions,
+        loadVisualizationPermissions,
     ]);
 }
 

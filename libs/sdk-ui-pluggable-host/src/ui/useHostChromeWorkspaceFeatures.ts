@@ -40,7 +40,6 @@ export function useHostChromeWorkspaceFeatures(
 
         const settings = ctx.settings;
         const enableSemanticSearch = !!settings.enableSemanticSearch;
-        const enableGenAIChat = !!settings.enableGenAIChat;
         const canUseAiAssistant = !!ctx.workspacePermissions?.canUseAiAssistant;
         const canManageProject = !!ctx.workspacePermissions?.canManageProject;
         const canCreateVisualization = !!ctx.workspacePermissions?.canCreateVisualization;
@@ -48,7 +47,7 @@ export function useHostChromeWorkspaceFeatures(
         const canFullControl = !!ctx.organizationPermissions?.canManageOrganization;
 
         const showSearch = isWorkspaceApp && !!workspaceId && enableSemanticSearch;
-        const showChat = isWorkspaceApp && !!workspaceId && enableGenAIChat && canUseAiAssistant;
+        const showChat = isWorkspaceApp && !!workspaceId && canUseAiAssistant;
 
         return {
             isWorkspaceApp,

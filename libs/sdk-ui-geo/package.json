@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-geo",
-    "version": "11.58.0-alpha.0",
+    "version": "11.58.0-alpha.1",
     "description": "GoodData.UI SDK - Geo Charts",
     "license": "MIT",
     "author": "GoodData Corporation",
@@ -15,7 +15,8 @@
         "esm/**/*.d.ts",
         "esm/**/*.map",
         "esm/**/*.svg",
-        "styles"
+        "styles",
+        "worker/*.js"
     ],
     "type": "module",
     "sideEffects": [
@@ -39,7 +40,7 @@
         "build": "bash scripts/build.sh",
         "build-check": "tsc",
         "build-ts": "tsc -p tsconfig.build.json",
-        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm styles/css coverage temp *.log tsconfig.tsbuildinfo",
+        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm worker styles/css coverage temp *.log tsconfig.tsbuildinfo",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
         "format-check": "oxfmt --check .",
         "format-write": "oxfmt .",
@@ -67,7 +68,7 @@
         "default-import": "1.1.5",
         "lodash-es": "^4.17.23",
         "mapbox-gl": "^2.6.1",
-        "maplibre-gl": "^4.7.1",
+        "maplibre-gl": "^6.10.0",
         "react-intl": "10.1.25",
         "react-measure": "^2.5.2",
         "ts-invariant": "0.10.3",
@@ -86,7 +87,6 @@
         "@types/geojson": "^7946.0.16",
         "@types/lodash-es": "4.17.12",
         "@types/mapbox-gl": "2.7.21",
-        "@types/maplibre-gl": "1.14.0",
         "@types/node": "24.12.0",
         "@types/react": "19.1.11",
         "@types/react-dom": "19.1.7",
@@ -110,6 +110,7 @@
         "raf": "3.4.1",
         "react": "19.1.1",
         "react-dom": "19.1.1",
+        "rolldown": "1.0.3",
         "sass": "1.104.1",
         "stylelint": "16.26.1",
         "typescript": "7.0.2",

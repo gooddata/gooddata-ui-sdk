@@ -130,23 +130,24 @@ const ScenarioConfig = [
     },
     {
         /*
-         * Pluggable geo stories render multiple variants in a single report (AD-like, KD full, KD half).
-         * Give MapLibre/SwiftShader extra settle time after readySelector to reduce flaky captures.
-         */
-        idRegex: /(04).*Geo(Area|Pushpin)?Chart.*/g,
-        config: {
-            delay: {
-                postReady: 500,
-            },
-        },
-    },
-    {
-        /*
-         * Use Chromium with SwiftShader for all GeoChart variants
+         * All geo stories: Chromium with SwiftShader (WebGL2 without a GPU) and settle time after the
+         * ready selector. The default chromium profile passes --disable-gpu together with
+         * --disable-software-rasterizer, which leaves no WebGL context at all, so MapLibre creates no
+         * canvas and the chart falls back to its error state.
+         *
+         * The settle time is needed because the ready resolver fires as soon as that canvas exists,
+         * while the map still has to start its worker and slice the GeoJSON into tiles. 500 ms was
+         * enough for every geo capture in CI and locally.
+         *
+         * Note: this fixed delay could be replaced by the MapLibre "idle" event, left to a later
+         * follow-up.
          */
         idRegex: /.*Geo(Area|Pushpin)?Chart.*/g,
         config: {
             browsers: [BrowserAlias.ChromiumSwiftShader],
+            delay: {
+                postReady: 500,
+            },
         },
     },
 ];

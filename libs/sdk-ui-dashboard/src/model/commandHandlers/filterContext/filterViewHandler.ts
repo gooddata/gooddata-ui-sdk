@@ -21,6 +21,7 @@ import {
     type ISetFilterViewAsDefault,
     changeFilterContextSelectionByParams,
 } from "../../commands/filters.js";
+import { changeParameterValues } from "../../commands/parameters.js";
 import {
     filterViewApplicationFailed,
     filterViewApplicationSucceeded,
@@ -51,6 +52,7 @@ import { type DashboardContext } from "../../types/commonTypes.js";
 import { type PromiseFnReturnType } from "../../types/sagas.js";
 import { resolveParameterValuesForFilterView } from "../dashboard/common/parameterHydration.js";
 import { loadFilterViews } from "../dashboard/initializeDashboardHandler/loadFilterViews.js";
+import { changeParameterValuesHandler } from "../parameters/changeParameterValuesHandler.js";
 
 import { resetCrossFiltering } from "./common.js";
 
@@ -199,13 +201,16 @@ export function* applyFilterViewHandler(ctx: DashboardContext, cmd: IApplyFilter
         );
         const workspaceParameters: ReturnType<typeof selectCatalogParameters> =
             yield select(selectCatalogParameters);
-        yield put(
-            tabsActions.setParameterRuntimeValues({
-                values: resolveParameterValuesForFilterView(
+        yield call(
+            changeParameterValuesHandler,
+            ctx,
+            changeParameterValues({
+                parameters: resolveParameterValuesForFilterView(
                     parameterEntries,
                     filterView.parameters ?? [],
                     workspaceParameters,
                 ),
+                correlationId: cmd.correlationId,
             }),
         );
         yield put(filterViewApplicationSucceeded(ctx, filterView, cmd.correlationId));

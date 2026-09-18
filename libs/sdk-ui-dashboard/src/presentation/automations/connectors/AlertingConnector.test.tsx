@@ -227,22 +227,14 @@ describe("AlertingConnector", () => {
         });
     });
 
-    it("wires the lifecycle callbacks to the create/edit dialog without the deprecated data props", () => {
+    it("wires the lifecycle callbacks to the create/edit dialog", () => {
         fixtures.alertsState.isAlertDialogOpen = true;
         fixtures.alertsState.isAlertManagementDialogOpen = false;
 
         render(<AlertingConnector />);
 
         expect(fixtures.dialogProps).toBeDefined();
-        for (const prop of [
-            "alertToEdit",
-            "users",
-            "usersError",
-            "notificationChannels",
-            "widget",
-            "insight",
-            "isLoading",
-        ]) {
+        for (const prop of ["users", "usersError"]) {
             expect(fixtures.dialogProps?.[prop]).toBeUndefined();
         }
         expect(fixtures.dialogProps?.["onCreateSuccess"]).toBe(fixtures.onAlertingCreateSuccess);
@@ -253,15 +245,11 @@ describe("AlertingConnector", () => {
         expect(fixtures.dialogProps?.["onDeleteError"]).toBe(fixtures.onAlertingDeleteError);
     });
 
-    it("renders the management dialog without the deprecated data props", () => {
+    it("renders the management dialog even when the alerts hook reports an error", () => {
         fixtures.automationsError = new Error("automations failed to load");
 
         render(<AlertingConnector />);
 
         expect(fixtures.managementDialogProps).toBeDefined();
-        expect(fixtures.managementDialogProps?.["automations"]).toBeUndefined();
-        expect(fixtures.managementDialogProps?.["notificationChannels"]).toBeUndefined();
-        expect(fixtures.managementDialogProps?.["alertDataError"]).toBeUndefined();
-        expect(fixtures.managementDialogProps?.["isLoadingAlertingData"]).toBeUndefined();
     });
 });

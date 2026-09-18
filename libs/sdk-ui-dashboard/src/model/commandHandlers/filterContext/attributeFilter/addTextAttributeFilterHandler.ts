@@ -31,6 +31,10 @@ import { validateDrillToCustomUrlParams } from "../../common/validateDrillToCust
 import { dispatchFilterContextChanged } from "../common.js";
 
 import { resolveAndRegisterDisplayFormMetadata } from "./resolveDisplayFormMetadata.js";
+import {
+    computedAttributesDisabledMessage,
+    findDisabledComputedAttributeRef,
+} from "./validation/computedAttributesEnabledValidation.js";
 import { canFilterBeAdded } from "./validation/uniqueFiltersValidation.js";
 
 export function* addTextAttributeFilterHandler(
@@ -41,6 +45,18 @@ export function* addTextAttributeFilterHandler(
 
     const displayForm = dashboardAttributeFilterItemDisplayForm(filter);
     const localIdentifier = dashboardAttributeFilterItemLocalIdentifier(filter);
+
+    const disabledComputedAttributeRef: SagaReturnType<typeof findDisabledComputedAttributeRef> = yield call(
+        findDisabledComputedAttributeRef,
+        [displayForm],
+    );
+    if (disabledComputedAttributeRef) {
+        throw invalidArgumentsProvided(
+            ctx,
+            cmd,
+            computedAttributesDisabledMessage(disabledComputedAttributeRef),
+        );
+    }
 
     const isUnderFilterCountLimit: ReturnType<typeof selectCanAddMoreFilters> =
         yield select(selectCanAddMoreFilters);

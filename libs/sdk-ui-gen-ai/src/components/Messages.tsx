@@ -8,7 +8,6 @@ import { useSelector } from "react-redux";
 
 import { type CatalogItem } from "@gooddata/sdk-model";
 
-import { isAssistantMessage, isUserMessage } from "../model.js";
 import {
     agentSwitchingActiveSelector,
     catalogItemsSelector,
@@ -17,19 +16,16 @@ import {
     asyncProcessSelector,
     conversationMessagesSelector,
     conversationSelector,
-    messagesSelector,
 } from "../store/messages/messagesSelectors.js";
 
 import { ChatSkeleton } from "./ChatSkeleton.js";
 import { parseReferences } from "./completion/references.js";
 import { useCustomization } from "./CustomizationContext.js";
 import { useFullscreenCheck } from "./hooks/useFullscreenCheck.js";
-import { AssistantMessageComponent } from "./messages/AssistantMessage.js";
 import { ItemsGroup } from "./messages/ItemsGroup.js";
 import { useMessageScroller } from "./messages/MessageScroller.js";
 import { SystemItemComponent } from "./messages/SystemItem.js";
 import { ToolItemComponent } from "./messages/ToolItem.js";
-import { UserMessageComponent } from "./messages/UserMessage.js";
 import { groupMessages } from "./utils/groupUtility.js";
 
 type MessagesComponentProps = {
@@ -37,20 +33,19 @@ type MessagesComponentProps = {
 };
 
 export function Messages({ initializing }: MessagesComponentProps) {
-    const messages = useSelector(messagesSelector);
     const loading = useSelector(asyncProcessSelector);
     const conversation = useSelector(conversationSelector);
     const conversationMessages = useSelector(conversationMessagesSelector);
     const catalogItems = useSelector(catalogItemsSelector);
     const agentSwitchingActive = useSelector(agentSwitchingActiveSelector);
 
-    const { scrollerRef } = useMessageScroller(conversation ? conversationMessages : messages);
+    const { scrollerRef } = useMessageScroller(conversationMessages);
     const { LandingScreenComponent } = useCustomization();
     const { isBigScreen, isSmallScreen, isFullscreen } = useFullscreenCheck();
     const intl = useIntl();
 
     const isLoading = loading === "loading" || loading === "clearing" || initializing;
-    const isEmpty = (conversation ? !conversationMessages.length : !messages.length) && !isLoading;
+    const isEmpty = !conversationMessages.length && !isLoading;
 
     return (
         <div
@@ -72,46 +67,14 @@ export function Messages({ initializing }: MessagesComponentProps) {
                 {isEmpty ? <LandingScreenComponent /> : null}
                 {isLoading ? <ChatSkeleton /> : null}
                 {isLoading ? null : (
-                    <>
-                        {conversation ? (
-                            <ConversationMessages
-                                catalogItems={catalogItems}
-                                conversation={conversation}
-                                messages={conversationMessages}
-                            />
-                        ) : (
-                            <ThreadMessages messages={messages} />
-                        )}
-                    </>
+                    <ConversationMessages
+                        catalogItems={catalogItems}
+                        conversation={conversation}
+                        messages={conversationMessages}
+                    />
                 )}
             </div>
         </div>
-    );
-}
-
-interface IThreadMessagesProps {
-    messages: ReturnType<typeof messagesSelector>;
-}
-
-function ThreadMessages({ messages }: IThreadMessagesProps) {
-    return (
-        <>
-            {messages.map((message, index) => {
-                const isLast = index === messages.length - 1;
-
-                if (isUserMessage(message)) {
-                    return <UserMessageComponent key={message.localId} message={message} isLast={isLast} />;
-                }
-
-                if (isAssistantMessage(message)) {
-                    return (
-                        <AssistantMessageComponent key={message.localId} message={message} isLast={isLast} />
-                    );
-                }
-
-                return assertNever(message);
-            })}
-        </>
     );
 }
 

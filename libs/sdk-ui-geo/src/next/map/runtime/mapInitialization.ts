@@ -12,6 +12,7 @@ import type {
 import { type IGeoChartViewportNavigation } from "../../types/config/viewport.js";
 import { type IMapOptions } from "../../types/map/provider.js";
 import { type IMapLibreLocale } from "../../utils/mapLocale.js";
+import { registerGeoAssetProtocol } from "../style/geoAssetProtocol.js";
 import { fetchMapStyle } from "../style/styleEndpoint.js";
 
 import { normalizeBoundsForShortestPath } from "./bounds.js";
@@ -21,6 +22,7 @@ import {
     type IMapInteractionOptions,
     resolveMapInteractionOptions,
 } from "./mapConfig.js";
+import { ensureMapLibreWorkerUrl } from "./mapWorker.js";
 
 /**
  * Result of map initialization
@@ -45,9 +47,9 @@ interface IMapInitializationOptions extends IMapOptions {
  *
  * @remarks
  * This function handles the creation of a MapLibre GL map instance with all necessary
- * configuration. It dynamically imports maplibre-gl to avoid bundling issues, sets up
- * the map with safe default options, and ensures glyphs are properly configured for
- * text rendering.
+ * configuration. It dynamically imports maplibre-gl to avoid bundling issues, points MapLibre
+ * at the worker script this package ships, sets up the map with safe default options, and
+ * ensures glyphs are properly configured for text rendering.
  *
  * @param options - Map initialization options including container, center, zoom, bounds, etc.
  * @param locale - Optional MapLibre locale configuration for cooperative gestures
@@ -79,6 +81,7 @@ export async function initializeMapLibreMap(
     backend?: IAnalyticalBackend,
 ): Promise<IMapInitResult> {
     const maplibregl = await import("maplibre-gl");
+    ensureMapLibreWorkerUrl(maplibregl);
     const styleSpecification =
         style ?? (backend ? await fetchMapStyle(backend, basemap, language) : undefined);
 
@@ -93,14 +96,19 @@ export async function initializeMapLibreMap(
         touchZoomRotate,
     });
 
+    // Tiles, glyphs and sprites served by the backend are loaded through its authenticated call
+    // path. Assets on third-party hosts are still fetched by MapLibre directly.
+    const geoAssets = backend ? registerGeoAssetProtocol(maplibregl, backend) : undefined;
+
     const mapOptions: MapOptions = {
         ...DEFAULT_MAPLIBRE_OPTIONS,
         ...interactionOptions,
         style: styleSpecification,
         container,
+        transformRequest: geoAssets?.transformRequest,
         ...getNavigationOptions(navigation, interactionOptions),
         cooperativeGestures,
-        preserveDrawingBuffer,
+        canvasContextAttributes: { preserveDrawingBuffer },
         ...(cooperativeGestures && locale ? { locale } : {}),
     };
 
@@ -130,7 +138,21 @@ export async function initializeMapLibreMap(
         mapOptions.zoom = zoom;
     }
 
-    const map = new maplibregl.Map(mapOptions);
+    let map: MapLibreMap;
+
+    try {
+        map = new maplibregl.Map(mapOptions);
+    } catch (error) {
+        geoAssets?.release();
+        throw error;
+    }
+
+    // Released only once the map is removed: MapLibre still settles in-flight asset requests
+    // while it tears down, and those need the protocol to stay registered.
+    if (geoAssets) {
+        map.once("remove", geoAssets.release);
+    }
+
     if (
         navigation !== undefined &&
         interactionOptions.interactive &&
@@ -159,6 +181,7 @@ export async function initializeMapLibreMap(
             cleanup();
             console.error("[initializeMapLibreMap] Map error", event);
             reject(new Error(`MapLibre initialization error: ${getMaplibreErrorMessage(event)}`));
+            map.remove();
         };
         const tryResolveFromCurrentState = () => {
             if (!isSettled && map.loaded() && map.isStyleLoaded()) {

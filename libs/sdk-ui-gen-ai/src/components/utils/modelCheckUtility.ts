@@ -51,11 +51,8 @@ export function isSupportedOpenAiModel(modelId: string | undefined): {
     };
 }
 
-export function hasUnsupportedActiveProvider(
-    provider: ILlmActiveProvider | undefined,
-    enableAiAgenticConversations: boolean | undefined,
-): boolean {
-    if (provider && enableAiAgenticConversations) {
+export function hasUnsupportedActiveProvider(provider: ILlmActiveProvider | undefined): boolean {
+    if (provider) {
         const { defaultModelId } = provider;
         const { isOpenAi, isSupported } = isSupportedOpenAiModel(defaultModelId);
         if (!isOpenAi) {

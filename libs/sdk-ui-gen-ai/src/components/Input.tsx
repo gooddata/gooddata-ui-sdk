@@ -9,13 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { SyntaxHighlightingInput } from "@gooddata/sdk-ui-kit";
 
-import {
-    type IChatConversationLocalItem,
-    type UserMessage,
-    makeTextContents,
-    makeUserItem,
-    makeUserMessage,
-} from "../model.js";
+import { makeUserItem } from "../model.js";
 import {
     agentSwitchingEnabledSelector,
     inputValueSelector,
@@ -24,9 +18,7 @@ import { setInputValueAction } from "../store/chatWindow/chatWindowSlice.js";
 import {
     asyncProcessSelector,
     conversationMessagesSelector,
-    conversationSelector,
     conversationsLoadedSelector,
-    messagesSelector,
     refocusSelector,
 } from "../store/messages/messagesSelectors.js";
 import { newMessageAction } from "../store/messages/messagesSlice.js";
@@ -71,10 +63,8 @@ function InputComponent({ autofocus = false, canManage, canAnalyze, targetRef }:
     const dispatch = useDispatch();
     const { isBigScreen, isSmallScreen, isFullscreen } = useFullscreenCheck();
 
-    const conversation = useSelector((state: RootState) => conversationSelector(state));
     const conversationsLoaded = useSelector((state: RootState) => conversationsLoadedSelector(state));
     const items = useSelector((state: RootState) => conversationMessagesSelector(state));
-    const messages = useSelector((state: RootState) => messagesSelector(state));
     const loading = useSelector((state: RootState) => asyncProcessSelector(state));
     const agentSwitchingEnabled = useSelector((state: RootState) => agentSwitchingEnabledSelector(state));
     const refocusKey = useSelector((state: RootState) => refocusSelector(state));
@@ -84,7 +74,7 @@ function InputComponent({ autofocus = false, canManage, canAnalyze, targetRef }:
 
     const isLoading = loading === "loading" || loading === "clearing";
     const isAssistantLoading = isLoading || loading === "restoring";
-    const isEmpty = conversation ? !items?.length && !isLoading : !messages?.length && !isLoading;
+    const isEmpty = !items?.length && !isLoading;
 
     const value = useSelector((state: RootState) => inputValueSelector(state));
     const [areAgentsBusy, setAreAgentsBusy] = useState(true);
@@ -106,18 +96,11 @@ function InputComponent({ autofocus = false, canManage, canAnalyze, targetRef }:
     const ref = useInputAutofocus(editorApi, autofocus && allowed, { isBusy, refocusKey });
 
     const handleSubmit = () => {
-        let item: IChatConversationLocalItem | UserMessage;
-        if (conversation) {
-            item = makeUserItem({
-                type: "text",
-                text: escapeMarkdown(value),
-                objects: collectReferences(value, used.current),
-            });
-        } else {
-            item = makeUserMessage([
-                makeTextContents(escapeMarkdown(value), collectReferences(value, used.current)),
-            ]);
-        }
+        const item = makeUserItem({
+            type: "text",
+            text: escapeMarkdown(value),
+            objects: collectReferences(value, used.current),
+        });
         dispatch(newMessageAction(item));
         dispatch(setInputValueAction({ value: "" }));
     };

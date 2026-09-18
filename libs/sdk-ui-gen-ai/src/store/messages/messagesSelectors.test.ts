@@ -13,7 +13,6 @@ import {
     conversationMessagesByIdSelector,
     conversationMessagesSelector,
     hasMessagesSelector,
-    lastMessageSelector,
     selectedEffortSelector,
 } from "./messagesSelectors.js";
 import { messagesSliceReducer } from "./messagesSlice.js";
@@ -29,61 +28,7 @@ const makeState = (messages: RootState["messages"]): RootState => ({
 });
 
 describe("messagesSelectors", () => {
-    describe("lastMessageSelector", () => {
-        it("should return the last message", () => {
-            const state = makeState({
-                ...baseState.messages,
-                messageOrder: ["1", "2"],
-                messages: {
-                    "1": {
-                        id: "1",
-                        localId: "1",
-                        created: 1,
-                        role: "user",
-                        cancelled: false,
-                        complete: true,
-                        content: [{ type: "text", text: "Hello", objects: [] }],
-                    },
-                    "2": {
-                        id: "2",
-                        localId: "2",
-                        created: 2,
-                        role: "assistant",
-                        cancelled: true,
-                        complete: true,
-                        content: [{ type: "text", text: "Hi there!", objects: [] }],
-                        feedback: "NONE",
-                    },
-                },
-            });
-
-            const lastMessage = lastMessageSelector(state);
-
-            expect(lastMessage).toBe(state.messages.messages["2"]);
-        });
-    });
-
     describe("hasMessagesSelector", () => {
-        it("should return true when message list is not empty", () => {
-            const state = makeState({
-                ...baseState.messages,
-                messageOrder: ["msg-1"],
-                messages: {
-                    "msg-1": {
-                        id: "msg-1",
-                        localId: "msg-1",
-                        created: 1,
-                        role: "user",
-                        cancelled: false,
-                        complete: true,
-                        content: [{ type: "text", text: "Hi", objects: [] }],
-                    },
-                },
-            });
-
-            expect(hasMessagesSelector(state)).toBe(true);
-        });
-
         it("should return true when current conversation has items in conversationsData", () => {
             const state = makeState({
                 ...baseState.messages,

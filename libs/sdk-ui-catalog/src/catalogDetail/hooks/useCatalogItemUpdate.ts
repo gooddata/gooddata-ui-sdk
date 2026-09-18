@@ -20,6 +20,7 @@ import {
     isCatalogItemHidable,
     isCatalogItemLoaded,
     isCatalogItemMeasure,
+    isCatalogItemWithPermissions,
 } from "../../catalogItem/guards.js";
 import {
     persistLabelConditionalFormatting,
@@ -100,7 +101,7 @@ export function useCatalogItemUpdate({
     /** Sync local state with an item mutation persisted outside this hook; does not re-persist. */
     const applyItemUpdate = useCallback(
         (updated: ICatalogItem) => {
-            const next = keepMeasurePermissions(item, updated);
+            const next = keepPermissions(item, updated);
             setItem(next);
             onUpdate?.(next);
         },
@@ -299,11 +300,8 @@ function updateItem<TItem extends ICatalogItem>(
 }
 
 // The update endpoint cannot return permissions, and a save does not change them.
-function keepMeasurePermissions(
-    previous: ICatalogItem | null | undefined,
-    updated: ICatalogItem,
-): ICatalogItem {
-    if (!previous || !isCatalogItemMeasure(previous) || !isCatalogItemMeasure(updated)) {
+function keepPermissions(previous: ICatalogItem | null | undefined, updated: ICatalogItem): ICatalogItem {
+    if (!previous || !isCatalogItemWithPermissions(previous) || !isCatalogItemWithPermissions(updated)) {
         return updated;
     }
     if (previous.identifier !== updated.identifier) {

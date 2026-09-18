@@ -1,6 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
 import type {
+    AddProtocolAction as MapLibreAddProtocolAction,
     CircleLayerSpecification as MapLibreCircleLayerSpecification,
     ExpressionSpecification as MapLibreExpressionSpecification,
     FillLayerSpecification as MapLibreFillLayerSpecification,
@@ -10,6 +11,7 @@ import type {
     LngLatBoundsLike as MapLibreLngLatBoundsLike,
     LngLatLike as MapLibreLngLatLike,
     Map as MapLibreMap,
+    MapEventType as MapLibreMapEventType,
     MapMouseEvent as MapLibreMapMouseEvent,
     MapOptions as MapLibreMapOptions,
     Popup as MapLibrePopup,
@@ -42,9 +44,25 @@ export type MapOptions = MapLibreMapOptions;
 export type PopupOptions = MapLibrePopupOptions;
 export type MapMouseEvent = MapLibreMapMouseEvent;
 
-type OnceArgs = Parameters<MapLibreMap["once"]>;
-type OnArgs = Parameters<MapLibreMap["on"]>;
-type OffArgs = Parameters<MapLibreMap["off"]>;
+/**
+ * Signature of a handler registered through `maplibregl.addProtocol`.
+ */
+export type AddProtocolAction = MapLibreAddProtocolAction;
+
+/**
+ * Name of a map-level MapLibre event.
+ *
+ * @internal
+ */
+export type MapEventName = keyof MapLibreMapEventType;
+
+/**
+ * Listener of one map-level MapLibre event, typed by the event name.
+ *
+ * @internal
+ */
+export type MapEventListener<T extends MapEventName> = (event: MapLibreMapEventType[T]) => void;
+
 type AddSourceArgs = Parameters<MapLibreMap["addSource"]>;
 type AddLayerArgs = Parameters<MapLibreMap["addLayer"]>;
 type GetLayerArgs = Parameters<MapLibreMap["getLayer"]>;
@@ -77,9 +95,9 @@ export const MAP_FACADE_SOURCE = Symbol("mapFacadeSource");
 
 export interface IMapFacade {
     isStyleLoaded(): boolean;
-    once(...args: OnceArgs): IMapFacade;
-    on(...args: OnArgs): IMapFacade;
-    off(...args: OffArgs): IMapFacade;
+    once<T extends MapEventName>(type: T, listener: MapEventListener<T>): IMapFacade;
+    on<T extends MapEventName>(type: T, listener: MapEventListener<T>): IMapFacade;
+    off<T extends MapEventName>(type: T, listener: MapEventListener<T>): IMapFacade;
     addSource(...args: AddSourceArgs): IMapFacade;
     addLayer(...args: AddLayerArgs): IMapFacade;
     getLayer(...args: GetLayerArgs): ReturnType<MapLibreMap["getLayer"]>;
@@ -142,16 +160,16 @@ export interface IPopupFacade {
 export function createMapFacade(map: MapLibreMap): IMapFacade {
     const facade: IMapFacade = {
         isStyleLoaded: () => Boolean(map.isStyleLoaded()),
-        once: (...args: OnceArgs) => {
-            void map.once(...args);
+        once: <T extends MapEventName>(type: T, listener: MapEventListener<T>) => {
+            void map.once(type, listener);
             return facade;
         },
-        on: (...args: OnArgs) => {
-            map.on(...args);
+        on: <T extends MapEventName>(type: T, listener: MapEventListener<T>) => {
+            map.on(type, listener);
             return facade;
         },
-        off: (...args: OffArgs) => {
-            map.off(...args);
+        off: <T extends MapEventName>(type: T, listener: MapEventListener<T>) => {
+            map.off(type, listener);
             return facade;
         },
         addSource: (...args: AddSourceArgs) => {

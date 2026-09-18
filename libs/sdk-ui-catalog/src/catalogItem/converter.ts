@@ -118,6 +118,7 @@ export function convertInsightToCatalogItem({ insight }: IInsight): ICatalogItem
         isLocked: insight.isLocked ?? false,
         isEditable: true,
         isHidden: insight.isHidden,
+        permissions: insight.permissions,
     };
 }
 

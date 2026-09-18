@@ -337,379 +337,6 @@ $dataset_color: #952f8e;
     }
 }
 
-//MESSAGES
-
-.gd-gen-ai-chat__messages__message {
-    display: flex;
-}
-
-.gd-gen-ai-chat__messages__message__contents_wrap {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    flex-grow: 1;
-}
-
-.gd-gen-ai-chat__messages__feedback {
-    display: flex;
-    flex-direction: row;
-    height: 20px;
-
-    svg {
-        opacity: 0;
-        transition: opacity 0.2s;
-    }
-
-    &:focus-within {
-        svg {
-            opacity: 1;
-        }
-    }
-}
-
-.gd-gen-ai-chat__messages__message:last-child .gd-gen-ai-chat__messages__feedback,
-.gd-gen-ai-chat__messages__message:hover .gd-gen-ai-chat__messages__feedback,
-.gd-gen-ai-chat__messages__feedback--assigned {
-    svg {
-        opacity: 1;
-    }
-}
-
-.gd-gen-ai-chat__messages__message--user {
-    .gd-gen-ai-chat__messages__content--text {
-        $tail-height: 7px;
-        $tail-width: 10px;
-
-        max-width: 80%;
-        background-color: kit-variables.$gd-palette-primary-base;
-        border-radius: 3px 3px 0 3px;
-        padding: 4.5px 12px;
-        position: relative;
-        align-self: flex-end;
-        margin-bottom: 15px;
-        animation: gd-gen-ai-message-in 0.3s ease-out;
-
-        &::after {
-            content: "";
-            position: absolute;
-            bottom: -$tail-height;
-            right: 0;
-            border: 0 solid transparent;
-            border-top: $tail-height solid kit-variables.$gd-palette-primary-base;
-            border-left-width: $tail-width;
-            width: 0;
-            height: 0;
-        }
-
-        @include content-markdown(kit-variables.$gd-color-white, "user");
-    }
-
-    &.gd-gen-ai-chat__messages__message--cancelled .gd-gen-ai-chat__messages__content--text {
-        color: kit-variables.$gd-color-white;
-        background-color: kit-variables.$gd-palette-primary-base-t80;
-    }
-
-    &.gd-gen-ai-chat__messages__message--cancelled .gd-gen-ai-chat__messages__content--text::after {
-        border-top-color: kit-variables.$gd-palette-primary-base-t80;
-    }
-}
-
-.gd-gen-ai-chat__messages__message--assistant {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    align-items: flex-start;
-    margin-bottom: 19px;
-
-    &:last-child {
-        margin-bottom: 40px;
-    }
-
-    .gd-gen-ai-chat__messages__content {
-        .gd-typography--h1,
-        .gd-typography--h2,
-        .gd-typography--h3,
-        .gd-typography--h4 {
-            margin-top: 15px;
-            margin-bottom: 10px;
-        }
-
-        .gd-typography--p {
-            margin-top: 5px;
-            margin-bottom: 5px;
-        }
-    }
-}
-
-.gd-gen-ai-chat__messages__contents {
-    flex: 1;
-    padding: 4.5px 0;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-
-    // UI kit links have white-space nowrap, which is not desired in the chat
-    & .gd-hyperlink,
-    & .gd-hyperlink-text {
-        white-space: normal;
-    }
-
-    // List contents should be styled same as a pargraph
-    & li {
-        @include typo-mixins.gd-paragraph;
-    }
-
-    @include object-types("user");
-}
-
-.gd-gen-ai-chat__messages__content--text {
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    p,
-    ul,
-    ol {
-        margin: 0 0 8px;
-    }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        margin-top: 12px;
-    }
-
-    h1:first-child,
-    h2:first-child,
-    h3:first-child,
-    h4:first-child,
-    h5:first-child,
-    h6:first-child {
-        margin-top: 0;
-    }
-
-    ul,
-    ol {
-        padding-left: 20px;
-    }
-
-    li {
-        margin-bottom: 4px;
-
-        &:last-child {
-            margin-bottom: 0;
-        }
-    }
-
-    p:last-child,
-    ul:last-child,
-    ol:last-child {
-        margin-bottom: 0;
-    }
-
-    table {
-        @include typo-mixins.gd-paragraph;
-        width: 100%;
-        border-collapse: collapse;
-        margin: 8px 0;
-    }
-
-    th,
-    td {
-        border: 1px solid kit-variables.$gd-border-color;
-        padding: 4px 8px;
-        text-align: left;
-    }
-
-    th {
-        background: kit-variables.$is-focused-background;
-        font-weight: 600;
-    }
-}
-
-.gd-gen-ai-chat__messages__content--error {
-    flex: unset;
-    padding: 4px 10px;
-    border-radius: 3px;
-    background: kit-variables.$gd-palette-error-dimmed;
-    color: kit-variables.$gd-palette-error-base;
-}
-
-.gd-gen-ai-chat__messages__content--changeAnalysis {
-    &__button {
-        margin-top: 15px;
-    }
-
-    &__metric {
-        display: inline-flex;
-        align-items: baseline;
-        flex-direction: row;
-        gap: 5px;
-        color: kit-variables.$gd-color-object-type-metric;
-
-        svg {
-            position: relative;
-            bottom: -4px;
-        }
-    }
-}
-
-.gd-gen-ai-chat__messages__content--semantic-search {
-    display: grid;
-
-    .gd-gen-ai-chat__messages__semantic-search-header {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 7px;
-        margin: 10px 0 5px 0;
-        font-size: 14px;
-        font-weight: 400;
-        color: var(--gd-palette-complementary-7);
-    }
-
-    .gd-ui-kit-treeview {
-        border: 1px solid kit-variables.$gd-border-color;
-        border-radius: 8px;
-        overflow-x: hidden;
-        overflow-y: auto;
-        overscroll-behavior: contain;
-        margin: 0;
-    }
-}
-
-.gd-gen-ai-chat__messages__message--cancelled .gd-gen-ai-chat__messages__content {
-    &,
-    & p,
-    & a,
-    & a:hover,
-    & a:active,
-    & a:visited {
-        color: kit-variables.$gd-color-disabled;
-    }
-}
-
-.gd-gen-ai-chat__loading {
-    animation: gd-gen-ai-message-loading 3s infinite linear;
-}
-
-.gd-gen-ai-chat__visualization {
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 8px;
-    position: relative;
-    border: 1px solid kit-variables.$is-focused-background;
-    background: kit-variables.$gd-chart-background;
-    color: variables.$gd-dashboards-content-widget-title-color;
-
-    &--headline {
-        height: auto;
-        min-height: 50px;
-
-        // Headline value is smaller in chart, looks much better with contrast with other text
-        .headline-value {
-            font-size: 0.8em;
-        }
-
-        .gd-icon-filter::before {
-            background: none;
-        }
-    }
-
-    &--table {
-        background: kit-variables.$gd-table-background;
-    }
-
-    &__wrapper {
-        height: 250px;
-
-        &--headline {
-            height: auto;
-            min-height: 50px;
-        }
-    }
-
-    &__drill_overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.01);
-    }
-
-    &__title {
-        text-align: center;
-        margin-top: 15px;
-    }
-
-    &__suggestions {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: row;
-        gap: 10px;
-
-        .gd-ui-kit-button + .gd-ui-kit-button {
-            margin-left: 0;
-        }
-    }
-
-    &__save-dialog {
-        width: 565px;
-
-        .gd-dialog-content p {
-            margin-bottom: 1em;
-        }
-    }
-
-    &__buttons {
-        position: absolute;
-        top: 0.5em;
-        right: 0.5em;
-        display: flex;
-        flex-direction: row;
-        gap: 5px;
-    }
-
-    &__save button:not(:focus):not(:focus-visible) {
-        opacity: 0;
-    }
-
-    &__table button:not(:focus):not(:focus-visible) {
-        opacity: 0;
-    }
-
-    // Show menu button on hover or when menu is open (active class)
-    &:hover,
-    &.active {
-        .gd-gen-ai-chat__visualization__save button {
-            opacity: 1;
-        }
-
-        .gd-gen-ai-chat__visualization__table button {
-            opacity: 1;
-        }
-    }
-
-    &__menu_overlay {
-        padding: 8px 0;
-        box-shadow: 0 1px 20px var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.2));
-        background: kit-variables.$gd-color-white;
-        border-radius: 3px;
-    }
-
-    &__what-if-group {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-    }
-}
-
 .gd-gen-ai-chat__messages__empty {
     display: flex;
     flex-direction: column;
@@ -815,7 +442,7 @@ $dataset_color: #952f8e;
     display: inline;
 }
 
-.gd-gen-ai-chat__visualization__drill-header {
+.gd-gen-ai-chat__conversation__visualization__drill-header {
     padding: 4px 10px;
     display: flex;
     text-transform: uppercase;
@@ -1507,9 +1134,13 @@ $dataset_color: #952f8e;
     }
 
     &--error {
+        flex: unset;
+        padding: 4px 10px;
+        border-radius: 3px;
+        background: kit-variables.$gd-palette-error-dimmed;
+        color: kit-variables.$gd-palette-error-base;
         display: flex;
         flex-direction: column;
-        padding: 0;
 
         .gd-gen-ai-chat__error-info {
             display: flex;
@@ -1785,5 +1416,13 @@ $dataset_color: #952f8e;
         box-shadow: 0 1px 20px var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.2));
         background: kit-variables.$gd-color-white;
         border-radius: 3px;
+    }
+
+    &__save-dialog {
+        width: 565px;
+
+        .gd-dialog-content p {
+            margin-bottom: 1em;
+        }
     }
 }

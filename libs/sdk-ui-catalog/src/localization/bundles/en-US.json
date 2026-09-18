@@ -799,6 +799,10 @@
         "text": "Delete",
         "crowdinContext": "Label for the Delete button in the parameter delete confirmation dialog."
     },
+    "analyticsCatalog.parameter.dialog.delete.usageWarning": {
+        "text": "This parameter is used by {count, plural, one {# object} other {# objects}}. Deleting it may break them.",
+        "crowdinContext": "Warning shown in the parameter delete dialog when the parameter is referenced by other objects."
+    },
     "analyticsCatalog.parameter.delete.success": {
         "text": "Parameter deleted.",
         "crowdinContext": "Toast shown after a parameter is deleted successfully from the Analytics Catalog."

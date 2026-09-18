@@ -34,7 +34,7 @@ function createFakeBackend() {
     const updateMeasure = vi.fn().mockResolvedValue(savedMeasure);
     const deleteMeasure = vi.fn().mockResolvedValue(undefined);
     const getMeasure = vi.fn().mockResolvedValue(savedMeasure);
-    const getMeasureReferencingObjects = vi.fn().mockResolvedValue({ insights: [], measures: [] });
+    const getReferences = vi.fn().mockResolvedValue({ nodes: [], edges: [] });
     const backend = {
         workspace: () => ({
             measures: () => ({
@@ -42,11 +42,13 @@ function createFakeBackend() {
                 updateMeasure,
                 deleteMeasure,
                 getMeasure,
-                getMeasureReferencingObjects,
+            }),
+            references: () => ({
+                getReferences,
             }),
         }),
     } as unknown as IAnalyticalBackend;
-    return { backend, createMeasure, updateMeasure, deleteMeasure, getMeasure, getMeasureReferencingObjects };
+    return { backend, createMeasure, updateMeasure, deleteMeasure, getMeasure, getReferences };
 }
 
 describe("metricMutationPort adapter", () => {
@@ -181,23 +183,35 @@ describe("metricMutationPort adapter", () => {
 });
 
 describe("metric references", () => {
-    it("listMetricReferences titles the referencing insights and measures", async () => {
-        const { backend, getMeasureReferencingObjects } = createFakeBackend();
-        getMeasureReferencingObjects.mockResolvedValueOnce({
-            insights: [{ insight: { title: "Revenue trend" } }, { insight: { title: "Top accounts" } }],
-            measures: [{ title: "Revenue per account" }],
+    it("listMetricReferences titles every dependent node and skips the root", async () => {
+        const { backend, getReferences } = createFakeBackend();
+        getReferences.mockResolvedValueOnce({
+            nodes: [
+                { identifier: "revenue.total", type: "measure", title: "Total Revenue", isRoot: true },
+                { identifier: "viz.trend", type: "insight", title: "Revenue trend" },
+                { identifier: "revenue.per.account", type: "measure", title: "Revenue per account" },
+                { identifier: "ca.rep", type: "computedAttribute", title: "Rep performance" },
+            ],
+            edges: [],
         });
 
         expect(await listMetricReferences(backend, "ws-1", measureItem)).toEqual([
             "Revenue trend",
-            "Top accounts",
             "Revenue per account",
+            "Rep performance",
         ]);
+        expect(getReferences).toHaveBeenCalledWith(
+            { identifier: "revenue.total", type: "measure" },
+            { direction: "up" },
+        );
     });
 
-    it("listMetricReferences reports nothing when the response carries neither array", async () => {
-        const { backend, getMeasureReferencingObjects } = createFakeBackend();
-        getMeasureReferencingObjects.mockResolvedValueOnce({});
+    it("listMetricReferences reports nothing when only the root is present", async () => {
+        const { backend, getReferences } = createFakeBackend();
+        getReferences.mockResolvedValueOnce({
+            nodes: [{ identifier: "revenue.total", type: "measure", title: "Total Revenue", isRoot: true }],
+            edges: [],
+        });
 
         expect(await listMetricReferences(backend, "ws-1", measureItem)).toEqual([]);
     });

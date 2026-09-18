@@ -69,7 +69,7 @@ import { SaveVisualizationDialog } from "./SaveVisualizationDialog.js";
 import { createKdaDefinitionFromDrill, getDashboardAttributeFilter } from "./useKdaDefinition.js";
 import { useSaveCheck } from "./useSaveCheck.js";
 
-const MORE_MENU_BUTTON_ID = "gd-gen-ai-chat__visualization__save__more-menu-button";
+const MORE_MENU_BUTTON_ID = "gd-gen-ai-chat__conversation__visualization__save__more-menu-button";
 const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];
 
 interface IMenuButtonItem {
@@ -515,7 +515,7 @@ function VisualizationErrorReport({ error }: IVisualizationErrorReportProps) {
         return null;
     }
 
-    const className = cx("gd-gen-ai-chat__messages__content--error");
+    const className = cx("gd-gen-ai-chat__conversation__item__content--error");
 
     return (
         <>

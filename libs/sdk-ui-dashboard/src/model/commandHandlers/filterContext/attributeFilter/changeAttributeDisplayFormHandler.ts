@@ -19,6 +19,10 @@ import { type DashboardContext } from "../../../types/commonTypes.js";
 import { dispatchFilterContextChanged } from "../common.js";
 
 import { resolveAndRegisterDisplayFormMetadata } from "./resolveDisplayFormMetadata.js";
+import {
+    computedAttributesDisabledMessage,
+    findDisabledComputedAttributeRef,
+} from "./validation/computedAttributesEnabledValidation.js";
 import { validateFilterDisplayForm } from "./validation/filterDisplayFormValidation.js";
 
 export function* changeAttributeDisplayFormHandler(
@@ -26,6 +30,18 @@ export function* changeAttributeDisplayFormHandler(
     cmd: ISetAttributeFilterDisplayForm,
 ): SagaIterator<void> {
     const { filterLocalId, displayForm, isWorkingSelectionChange, isResultOfMigration } = cmd.payload;
+
+    const disabledComputedAttributeRef: SagaReturnType<typeof findDisabledComputedAttributeRef> = yield call(
+        findDisabledComputedAttributeRef,
+        [displayForm],
+    );
+    if (disabledComputedAttributeRef) {
+        throw invalidArgumentsProvided(
+            ctx,
+            cmd,
+            computedAttributesDisabledMessage(disabledComputedAttributeRef),
+        );
+    }
 
     const displayFormData = yield call(resolveAndRegisterDisplayFormMetadata, displayForm);
 

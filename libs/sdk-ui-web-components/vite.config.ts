@@ -1,11 +1,13 @@
 // (C) 2022-2026 GoodData Corporation
 
+import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { type OutputChunk } from "rollup";
-import { defineConfig, loadEnv } from "vite";
+import { type Plugin, defineConfig, loadEnv } from "vite";
 import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 
 const require = createRequire(import.meta.url);
@@ -14,6 +16,42 @@ const sdkModelDependency = npmPackage.dependencies?.["@gooddata/sdk-model"] ?? "
 const sdkModelVersion = sdkModelDependency.replace(/[\^~]/, "");
 
 const projectDir = dirname(fileURLToPath(import.meta.url));
+
+const MAPLIBRE_WORKER_MODULE = /[\\/]sdk-ui-geo[\\/]esm[\\/]next[\\/]map[\\/]runtime[\\/]mapWorker\.js$/;
+const MAPLIBRE_WORKER_URL_EXPRESSION =
+    'new URL("../../../../worker/maplibre-gl-worker.js", import.meta.url).href';
+
+/**
+ * sdk-ui-geo points MapLibre at the worker it ships with `new URL(..., import.meta.url)`. Vite in
+ * library mode inlines every such asset as a data URL, which would put the ~0.5 MB worker into
+ * the bundle and make MapLibre start it from a `data:` import. This plugin emits the worker as a
+ * hashed file next to the chunks and, before Vite sees the `new URL` call, replaces it with a
+ * reference to that file. The build fails if sdk-ui-geo changes the expression.
+ */
+function emitMapLibreWorkerPlugin(): Plugin {
+    let referenceId: string;
+    return {
+        name: "emit-maplibre-worker",
+        apply: "build",
+        enforce: "pre",
+        buildStart() {
+            const source = readFileSync(
+                resolve(projectDir, "node_modules/@gooddata/sdk-ui-geo/worker/maplibre-gl-worker.js"),
+            );
+            const hash = createHash("sha256").update(source).digest("hex").slice(0, 8);
+            referenceId = this.emitFile({ type: "asset", fileName: `maplibre-gl-worker.${hash}.js`, source });
+        },
+        transform(code, id) {
+            if (!MAPLIBRE_WORKER_MODULE.test(id)) {
+                return undefined;
+            }
+            if (!code.includes(MAPLIBRE_WORKER_URL_EXPRESSION)) {
+                this.error(`${id} no longer contains ${MAPLIBRE_WORKER_URL_EXPRESSION}; update this plugin`);
+            }
+            return code.replace(MAPLIBRE_WORKER_URL_EXPRESSION, `import.meta.ROLLUP_FILE_URL_${referenceId}`);
+        },
+    };
+}
 export default defineConfig(({ command, mode }) => {
     // Load env file based on `mode` in the current working directory.
     const env = loadEnv(mode, projectDir, "");
@@ -62,6 +100,7 @@ export default defineConfig(({ command, mode }) => {
     // this is config for the build
     return {
         plugins: [
+            emitMapLibreWorkerPlugin(),
             cssInjectedByJsPlugin({
                 jsAssetsFilterFunction: (chunk: OutputChunk) => /^index\.js$/.test(chunk.fileName),
             }),

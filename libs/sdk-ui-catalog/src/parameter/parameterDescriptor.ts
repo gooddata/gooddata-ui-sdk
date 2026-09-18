@@ -18,7 +18,7 @@ import { ObjectTypes } from "../objectType/constants.js";
 import { PARAMETER_FEATURE_FLAG, useEnabledParameterTypes } from "./gate.js";
 import { createParameterCompletions } from "./parameterCompletions.js";
 import { createCopiedParameter } from "./parameterCopy.js";
-import { createParameterMutationAdapter } from "./parameterMutationPort.js";
+import { createParameterMutationAdapter, listParameterReferences } from "./parameterMutationPort.js";
 import { serializeParameterToYaml } from "./parameterSerialization.js";
 import { validateParameterYaml } from "./parameterValidation.js";
 
@@ -42,6 +42,10 @@ const messages = defineMessages({
     deleteSuccess: { id: "analyticsCatalog.parameter.delete.success" },
     deleteError: { id: "analyticsCatalog.parameter.delete.error" },
 }) satisfies IAsCodeMessages;
+
+const capabilityMessages = defineMessages({
+    deleteUsageWarning: { id: "analyticsCatalog.parameter.dialog.delete.usageWarning" },
+});
 
 const errorMessages = defineMessages({
     empty: { id: "analyticsCatalog.parameter.validation.empty" },
@@ -127,6 +131,11 @@ export const parameterDescriptor = defineAsCodeDescriptor<
             tags: item.tags,
             definition: item.definition,
         }),
+    },
+    // Warns when other objects still depend on it (metrics, computed attributes, insights, dashboards).
+    referenceCounted: {
+        load: listParameterReferences,
+        usageWarning: capabilityMessages.deleteUsageWarning,
     },
     // A copied parameter derives a human-readable id that can collide on create; identity lets the dialog retry without it.
     identity: {

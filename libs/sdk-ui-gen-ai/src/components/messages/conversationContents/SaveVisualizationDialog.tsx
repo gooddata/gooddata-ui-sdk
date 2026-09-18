@@ -49,7 +49,7 @@ export function SaveVisualizationDialog({
             showProgressIndicator={part.saving?.started}
             isSubmitDisabled={part.saving?.started}
             isCancelDisabled={part.saving?.started}
-            className="gd-gen-ai-chat__visualization__save-dialog"
+            className="gd-gen-ai-chat__conversation__visualization__save-dialog"
         >
             <Typography tagName="p">
                 {type === "save"

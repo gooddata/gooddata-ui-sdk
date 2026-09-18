@@ -25,6 +25,7 @@ import {
     removeAttributeFilters,
     resetFilterContextWorkingSelection,
 } from "../../../../model/commands/filters.js";
+import { changeParameterValues } from "../../../../model/commands/parameters.js";
 import { filterContextSelectionReset } from "../../../../model/events/filters.js";
 import { parametersSelectionReset } from "../../../../model/events/parameters.js";
 import {
@@ -50,7 +51,6 @@ import {
     selectIsWorkingFilterContextChanged,
     selectOriginalFilterContextFilters,
 } from "../../../../model/store/tabs/filterContext/filterContextSelectors.js";
-import { tabsActions } from "../../../../model/store/tabs/index.js";
 import { selectActiveTabParameterResetTargets } from "../../../../model/store/tabs/parameters/parametersSelectors.js";
 import { selectActiveTabLocalIdentifier } from "../../../../model/store/tabs/tabsSelectors.js";
 
@@ -308,7 +308,7 @@ export const useResetFiltersButton = (): {
         }
 
         if (canResetParameters) {
-            dispatch(tabsActions.setParameterRuntimeValues({ values: parameterResetTargets }));
+            dispatch(changeParameterValues({ parameters: parameterResetTargets }));
             dispatchEvent(parametersSelectionReset());
             parametersStateReset();
         }

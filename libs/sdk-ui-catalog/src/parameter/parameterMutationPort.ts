@@ -1,7 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import type { IParameterMetadataObjectDefinition } from "@gooddata/sdk-model";
+import { type IParameterMetadataObjectDefinition, idRef } from "@gooddata/sdk-model";
 
 import type { IAsCodeMutationPort } from "../asCode/descriptor.js";
 import { convertParameterToCatalogItem } from "../catalogItem/converter.js";
@@ -14,13 +14,26 @@ import type { ICatalogItemParameter } from "../catalogItem/types.js";
 
 /**
  * A parameter's YAML round-trips 1:1 to its definition, so the editor works directly off the catalog
- * item (see the descriptor's `editSeed`) — there is no `load` and no `getReferencingObjectsCount`.
+ * item (see the descriptor's `editSeed`) — there is no `load`.
  * @internal
  */
 export type IParameterMutationPort = IAsCodeMutationPort<
     IParameterMetadataObjectDefinition,
     ICatalogItemParameter
 >;
+
+/** Titles of objects that depend on a parameter (metrics, computed attributes, insights, dashboards). @internal */
+export async function listParameterReferences(
+    backend: IAnalyticalBackend,
+    workspace: string,
+    item: ICatalogItemParameter,
+): Promise<string[]> {
+    const { nodes } = await backend
+        .workspace(workspace)
+        .references()
+        .getReferences(idRef(item.identifier, "parameter"), { direction: "up" });
+    return nodes.filter((node) => !node.isRoot).map((node) => node.title);
+}
 
 /**
  * @internal

@@ -3017,7 +3017,6 @@ export interface IFeatureFlags {
     enableAccessibilityMode?: boolean;
     enableAccessibleChartTooltip?: boolean;
     enableAgentInstructions?: boolean;
-    enableAiAgenticConversations?: boolean;
     enableAiAgenticMultiConversations?: boolean;
     enableAiAgenticSuggestions?: boolean;
     enableAiContextSetup?: boolean;
@@ -3079,14 +3078,12 @@ export interface IFeatureFlags {
     enableGenAiAgenticDataShareOptOut?: boolean;
     enableGenAiAgentSwitching?: boolean;
     enableGenAICatalogQualityChecker?: boolean;
-    enableGenAIChat?: boolean;
     enableGenAiDashboardBuilderSkill?: boolean;
     enableGenAiInteractionIntelligence?: boolean;
     enableGenAiInteractionIntelligence_timeline?: boolean;
     enableGenAIMemory?: boolean;
     enableGenAiObservability?: boolean;
     enableGenAiReasoningEffort?: boolean;
-    enableGenAIReasoningVisibility?: boolean;
     enableGenAiRightPanel?: boolean;
     enableGeoArea?: boolean;
     enableGeoBasemapConfig?: boolean;
@@ -3155,6 +3152,7 @@ export interface IFeatureFlags {
     enableUserDataFiltersUi?: boolean;
     enableVisualizationFilteringByTags?: boolean;
     enableVisualizationFineTuning?: boolean;
+    enableVisualizationPermissions?: boolean;
     enableWidgetExportPdf?: boolean;
     enableWorkspaceSettingsAppHeaderMenuItem?: boolean;
     // @alpha
@@ -3574,6 +3572,7 @@ export type IInsight = IInsightDefinition & IInsightIdentity & {
     insight: IAuditable & {
         isLocked?: boolean;
         isDraft?: boolean;
+        permissions?: AccessGranularPermission[];
         certification?: IObjectCertification;
     };
 };

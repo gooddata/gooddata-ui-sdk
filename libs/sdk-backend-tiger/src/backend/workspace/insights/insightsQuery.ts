@@ -28,6 +28,7 @@ export class InsightsQuery implements IInsightsQuery {
     private filter: IFilterBaseOptions | undefined = undefined;
     private sort: string[] | undefined = undefined;
     private include: EntitiesApiGetAllEntitiesVisualizationObjectsRequest["include"] = undefined;
+    private metaInclude: EntitiesApiGetAllEntitiesVisualizationObjectsRequest["metaInclude"] = undefined;
     private origin: ObjectOrigin | undefined = undefined;
     private method: QueryMethod = "GET";
     private totalCount: number | undefined = undefined;
@@ -69,6 +70,12 @@ export class InsightsQuery implements IInsightsQuery {
         return this;
     }
 
+    withMetaInclude(metaInclude: string[]): IInsightsQuery {
+        // NOTE: Unsupported metaInclude values handling is delegated to the backend
+        this.metaInclude = metaInclude as EntitiesApiGetAllEntitiesVisualizationObjectsRequest["metaInclude"];
+        return this;
+    }
+
     withOrigin(origin: ObjectOrigin): IInsightsQuery {
         this.origin = origin;
         return this;
@@ -88,8 +95,12 @@ export class InsightsQuery implements IInsightsQuery {
                 /**
                  * For backend performance reasons, we do not want to ask for paging info each time.
                  */
+                const requestedMeta = [
+                    ...(this.totalCount === undefined ? (["page"] as const) : []),
+                    ...(this.metaInclude ?? []),
+                ];
                 const metaInclude: EntitiesApiGetAllEntitiesVisualizationObjectsRequest["metaInclude"] =
-                    this.totalCount === undefined ? (["page"] as const) : undefined;
+                    requestedMeta.length ? requestedMeta : undefined;
 
                 const items = await this.authCall((client) => {
                     if (this.method === "POST") {

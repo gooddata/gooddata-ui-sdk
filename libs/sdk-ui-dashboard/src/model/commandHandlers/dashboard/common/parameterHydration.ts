@@ -9,11 +9,12 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
+import { type IParameterValueChange } from "../../../commands/parameters.js";
 import {
     buildWorkspaceParametersByRef,
     computeHydratedRuntimeOverride,
+    hydrateParameterEntry,
 } from "../../../store/tabs/parameters/parametersHelpers.js";
-import { type ISetParameterRuntimeValuePayload } from "../../../store/tabs/parameters/parametersReducers.js";
 import {
     type IDashboardParameterEntry,
     pickTabParametersSource,
@@ -37,13 +38,7 @@ export function hydrateParameterEntries(
         return [];
     }
     const workspaceByRef = buildWorkspaceParametersByRef(workspaceParameters);
-    return dashboardParameters.map((parameter) => ({
-        parameter,
-        runtimeOverride: computeHydratedRuntimeOverride(
-            parameter,
-            workspaceByRef.get(objRefToString(parameter.ref)),
-        ),
-    }));
+    return dashboardParameters.map((parameter) => hydrateParameterEntry(parameter, workspaceByRef));
 }
 
 /**
@@ -87,7 +82,7 @@ export function resolveParameterValuesForFilterView(
     entries: ReadonlyArray<IDashboardParameterEntry>,
     filterViewParameters: ReadonlyArray<IDashboardParameter>,
     workspaceParameters: IParameterMetadataObject[],
-): ISetParameterRuntimeValuePayload[] {
+): IParameterValueChange[] {
     const workspaceByRef = buildWorkspaceParametersByRef(workspaceParameters);
     return entries.map((entry) => {
         const { ref } = entry.parameter;

@@ -43,7 +43,7 @@ describe("drillToDashboardHandler parameter inheritance", () => {
             Tester = tester;
         }, SimpleDashboardIdentifier);
         Tester.dispatch(tabsActions.addParameter({ parameter: topNParameter, workspaceDefault: 5 }));
-        Tester.dispatch(tabsActions.setParameterRuntimeValue({ ref: topNRef, value: 3 }));
+        Tester.dispatch(tabsActions.setParameterRuntimeValues({ values: [{ ref: topNRef, value: 3 }] }));
     });
 
     it("carries the source tab's active parameter overrides in the resolved payload (drill to self)", async () => {
@@ -56,7 +56,7 @@ describe("drillToDashboardHandler parameter inheritance", () => {
     });
 
     it("carries a parameter left at its workspace default (F1-2604)", async () => {
-        Tester.dispatch(tabsActions.setParameterRuntimeValue({ ref: topNRef, value: 5 }));
+        Tester.dispatch(tabsActions.setParameterRuntimeValues({ values: [{ ref: topNRef, value: 5 }] }));
 
         const event = await Tester.dispatchAndWaitFor(
             drillToDashboard(selfDrillDefinition, drillEvent),
@@ -72,7 +72,7 @@ describe("drillToDashboardHandler parameter inheritance", () => {
         await Tester.dispatchAndWaitFor(createDashboardTab("Tab 2"), "GDC.DASH/EVT.TAB.SWITCHED");
         const targetTabId = Tester.select(selectActiveTabLocalIdentifier)!;
         Tester.dispatch(tabsActions.addParameter({ parameter: topNParameter, workspaceDefault: 5 }));
-        Tester.dispatch(tabsActions.setParameterRuntimeValue({ ref: topNRef, value: 7 }));
+        Tester.dispatch(tabsActions.setParameterRuntimeValues({ values: [{ ref: topNRef, value: 7 }] }));
 
         await Tester.dispatchAndWaitFor(switchDashboardTab(sourceTabId), "GDC.DASH/EVT.TAB.SWITCHED");
 

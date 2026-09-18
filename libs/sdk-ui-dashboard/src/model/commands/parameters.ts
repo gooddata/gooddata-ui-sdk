@@ -1,8 +1,18 @@
 // (C) 2026 GoodData Corporation
 
-import { type IInsightParameterValue } from "@gooddata/sdk-model";
+import { type IdentifierRef, type ParameterValue } from "@gooddata/sdk-model";
 
 import { type IDashboardCommand } from "./base.js";
+
+/**
+ * A runtime value to write for one parameter. `undefined` clears the runtime override.
+ *
+ * @alpha
+ */
+export interface IParameterValueChange {
+    ref: IdentifierRef;
+    value: ParameterValue | undefined;
+}
 
 /**
  * Params for {@link changeParameterValues} command.
@@ -10,7 +20,7 @@ import { type IDashboardCommand } from "./base.js";
  * @internal
  */
 export type ChangeParameterValuesParams = {
-    parameters: IInsightParameterValue[];
+    parameters: IParameterValueChange[];
     /**
      * Target tab. When omitted, the runtime overrides are applied to the active tab.
      */
@@ -24,7 +34,7 @@ export type ChangeParameterValuesParams = {
  * @internal
  */
 export interface IChangeParameterValuesPayload {
-    readonly parameters: IInsightParameterValue[];
+    readonly parameters: IParameterValueChange[];
     readonly tabLocalIdentifier?: string;
 }
 

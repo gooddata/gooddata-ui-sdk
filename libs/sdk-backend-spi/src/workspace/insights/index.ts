@@ -279,6 +279,14 @@ export interface IGetInsightOptions {
      * If user is inactive or logged in user has not rights to access this information than users that created/modified is undefined.
      */
     loadUserData?: boolean;
+
+    /**
+     * Ask the backend to return the insight's object-level permissions.
+     *
+     * @remarks
+     * Defaults to false.
+     */
+    loadPermissions?: boolean;
 }
 
 /**
@@ -329,6 +337,14 @@ export interface IInsightsQuery {
      * @returns insights query
      */
     withInclude(include: string[]): IInsightsQuery;
+
+    /**
+     * Sets meta include for the query.
+     *
+     * @param metaInclude - meta include to apply
+     * @returns insights query
+     */
+    withMetaInclude(metaInclude: string[]): IInsightsQuery;
 
     /**
      * Sets origin for the query.

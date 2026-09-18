@@ -27,6 +27,8 @@ import {
     type IExecutionResult,
     type IForecastConfig,
     type IForecastResult,
+    type IGeoAsset,
+    type IGeoAssetOptions,
     type IGeoService,
     type IGeoStyleListItem,
     type IGeoStyleParams,
@@ -3147,6 +3149,12 @@ class WithGeoCaching implements IGeoService {
         }
 
         return result;
+    }
+
+    public getAsset(url: string, options?: IGeoAssetOptions): Promise<IGeoAsset> {
+        // Deliberately not cached. Assets are binary, numerous and already cached by the map
+        // renderer and by the browser HTTP cache; holding them here would grow without bound.
+        return this.decorated.getAsset(url, options);
     }
 
     public collections() {

@@ -2,7 +2,6 @@
 
 import {
     DummyChatConversations,
-    DummyGenAIChatThread,
     DummySemanticSearchQueryBuilder,
     InMemoryPaging,
 } from "@gooddata/sdk-backend-base";
@@ -14,7 +13,6 @@ import {
     type IAuthenticationProvider,
     type IBackendCapabilities,
     type IChatConversations,
-    type IChatThread,
     type IDataFiltersService,
     type IDataSourcesService,
     type IDateFilterConfigsQuery,
@@ -519,9 +517,6 @@ function recordedWorkspace(
         },
         genAI(): IGenAIService {
             return {
-                getChatThread(): IChatThread {
-                    return new DummyGenAIChatThread();
-                },
                 getChatConversations(_options?: { isPreview?: boolean }): IChatConversations {
                     return new DummyChatConversations();
                 },

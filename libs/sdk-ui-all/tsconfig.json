@@ -2,6 +2,7 @@
     "extends": "../tsconfig.base.json",
     "compilerOptions": {
         "tsBuildInfoFile": "./tsconfig.check.tsbuildinfo",
-        "noEmit": true
+        "noEmit": true,
+        "skipLibCheck": true
     }
 }

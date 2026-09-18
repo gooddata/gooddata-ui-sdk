@@ -10,12 +10,7 @@ import {
     isChatConversationVisualisationContent,
 } from "@gooddata/sdk-backend-spi";
 
-import {
-    type IChatConversationLocalItem,
-    type Message,
-    isAssistantMessage,
-    isChatConversationLocalItem,
-} from "../../model.js";
+import { type IChatConversationLocalItem } from "../../model.js";
 import { onDefinitionReceivedAction } from "../chatWindow/chatWindowSlice.js";
 
 /**
@@ -23,7 +18,7 @@ import { onDefinitionReceivedAction } from "../chatWindow/chatWindowSlice.js";
  * @internal
  */
 export function* notifyDefinitionReceived(
-    items: IChatConversationLocalItem | Message | (IChatConversationLocalItem | Message)[],
+    items: IChatConversationLocalItem | IChatConversationLocalItem[],
     conversationId: string,
 ) {
     const itemsArray = Array.isArray(items) ? items : [items];
@@ -68,15 +63,11 @@ export function* notifyDefinitionReceived(
     }
 
     for (const item of itemsArray) {
-        if (isChatConversationLocalItem(item)) {
-            const interactionId = item.responseId;
-            yield* processContent(
-                item,
-                item.content as IChatConversationMultipartPart | IChatConversationContent,
-                interactionId,
-            );
-        } else if (isAssistantMessage(item)) {
-            //NOTE: This is not supported for old messages api
-        }
+        const interactionId = item.responseId;
+        yield* processContent(
+            item,
+            item.content as IChatConversationMultipartPart | IChatConversationContent,
+            interactionId,
+        );
     }
 }

@@ -8,6 +8,7 @@ import { canEditCatalogItem, canShareCatalogItem } from "./permission.js";
 import type { ICatalogItem } from "./types.js";
 
 const metricFlag: ISettings = { enableMetricPermissions: true };
+const visualizationFlag: ISettings = { enableVisualizationPermissions: true };
 const columnFlag: ISettings = { enableColumnLevelPermissions: true };
 const bothFlags: ISettings = { enableMetricPermissions: true, enableColumnLevelPermissions: true };
 const computedAttributeFlag: ISettings = { enableComputedAttributes: true };
@@ -105,6 +106,37 @@ describe("canEditCatalogItem", () => {
         const perms = buildPermissions();
         const item = buildItem({ type: "insight" });
         expect(canEditCatalogItem(perms, item)).toBe(false);
+    });
+
+    describe("with visualization permissions enabled", () => {
+        it("allows edit of an insight the user has EDIT on", () => {
+            const item = buildItem({ type: "insight", permissions: ["EDIT"] });
+            expect(canEditCatalogItem(buildPermissions(), item, visualizationFlag)).toBe(true);
+        });
+
+        it("stops the workspace role from deciding once the flag is on", () => {
+            const item = buildItem({ type: "insight" });
+            expect(
+                canEditCatalogItem(
+                    buildPermissions({ canCreateVisualization: true }),
+                    item,
+                    visualizationFlag,
+                ),
+            ).toBe(false);
+            expect(canEditCatalogItem(buildPermissions(), item, visualizationFlag)).toBe(false);
+        });
+
+        it("lets a workspace manager edit an insight regardless of its own permissions", () => {
+            const item = buildItem({ type: "insight" });
+            expect(
+                canEditCatalogItem(buildPermissions({ canManageProject: true }), item, visualizationFlag),
+            ).toBe(true);
+        });
+
+        it("ignores the insight own EDIT with the flag off", () => {
+            const item = buildItem({ type: "insight", permissions: ["EDIT"] });
+            expect(canEditCatalogItem(buildPermissions(), item)).toBe(false);
+        });
     });
 
     describe("with metric permissions enabled", () => {
@@ -219,10 +251,46 @@ describe("canShareCatalogItem", () => {
         expect(canShareCatalogItem(perms, attribute, bothFlags)).toBe(true);
     });
 
+    it("lets an admin share a visualization behind the visualization flag", () => {
+        const perms = buildPermissions({ canManageProject: true });
+        expect(canShareCatalogItem(perms, buildItem({ type: "insight" }), visualizationFlag)).toBe(true);
+    });
+
+    it("lets a non-admin share a visualization only through SHARE", () => {
+        const perms = buildPermissions();
+        expect(
+            canShareCatalogItem(
+                perms,
+                buildItem({ type: "insight", permissions: ["SHARE"] }),
+                visualizationFlag,
+            ),
+        ).toBe(true);
+        expect(
+            canShareCatalogItem(
+                perms,
+                buildItem({ type: "insight", permissions: ["EDIT"] }),
+                visualizationFlag,
+            ),
+        ).toBe(false);
+        expect(canShareCatalogItem(perms, buildItem({ type: "insight" }), visualizationFlag)).toBe(false);
+    });
+
+    it("shares no visualization with the visualization flag off, whatever the other flags", () => {
+        const perms = buildPermissions({ canManageProject: true });
+        expect(canShareCatalogItem(perms, buildItem({ type: "insight" }), bothFlags)).toBe(false);
+        expect(canShareCatalogItem(perms, buildItem({ type: "insight", permissions: ["SHARE"] }))).toBe(
+            false,
+        );
+    });
+
     it("shares no kind that has no access list, whatever the flags", () => {
         const perms = buildPermissions({ canManageProject: true });
 
-        expect(canShareCatalogItem(perms, buildItem({ type: "insight" }), bothFlags)).toBe(false);
-        expect(canShareCatalogItem(perms, buildItem({ type: "analyticalDashboard" }), bothFlags)).toBe(false);
+        expect(
+            canShareCatalogItem(perms, buildItem({ type: "analyticalDashboard" }), {
+                ...bothFlags,
+                ...visualizationFlag,
+            }),
+        ).toBe(false);
     });
 });

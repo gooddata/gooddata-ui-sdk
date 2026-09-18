@@ -9,12 +9,6 @@ import {
     type IChatConversationLocalContent,
     type IChatConversationLocalItem,
     type IChatConversationMultipartLocalPart,
-    type Message,
-    type RoutingContents,
-    isChatConversationLocalItem,
-    isRoutingContents,
-    isTextContents,
-    isUserMessage,
 } from "../../model.js";
 import {
     copyToClipboardAction,
@@ -25,13 +19,8 @@ import {
     setUserContextAction,
 } from "../chatWindow/chatWindowSlice.js";
 import { type EventDispatcher } from "../events.js";
-import { clearCachedMessages, saveMessages, setIsOpened } from "../localStorage.js";
-import {
-    conversationMessagesSelector,
-    conversationSelector,
-    messagesSelector,
-    threadIdSelector,
-} from "../messages/messagesSelectors.js";
+import { setIsOpened } from "../localStorage.js";
+import { conversationMessagesSelector, threadIdSelector } from "../messages/messagesSelectors.js";
 import {
     clearThreadAction,
     deleteConversationAction,
@@ -39,7 +28,6 @@ import {
     deleteConversationSuccessAction,
     evaluateMessageCompleteAction,
     loadConversationSuccessAction,
-    loadThreadSuccessAction,
     newMessageAction,
     pinConversationFailureAction,
     pinConversationSuccessAction,
@@ -59,7 +47,6 @@ export function* onEvent() {
     yield takeEvery(setOpenAction.type, onSetOpen);
     yield takeEvery(setFullscreenAction.type, onFullscreenChanged);
     yield takeEvery(setSelectedAgentAction.type, onSelectedAgentChanged);
-    yield takeEvery(loadThreadSuccessAction.type, onThreadLoaded);
     yield takeEvery(loadConversationSuccessAction.type, onThreadLoaded);
     yield takeEvery(clearThreadAction.type, onClearThread);
     yield takeEvery(newMessageAction.type, onNewMessage);
@@ -220,12 +207,6 @@ function* onConversationLoaded({
     });
 }
 
-function* persistMessages() {
-    const workspace: string = yield getContext("workspace");
-    const messages: Message[] = yield select(messagesSelector);
-    saveMessages(workspace, messages);
-}
-
 function* onSetOpen({ payload: { isOpen } }: ReturnType<typeof setOpenAction>) {
     setIsOpened(isOpen);
 
@@ -268,11 +249,7 @@ function* onSelectedAgentChanged({
     });
 }
 
-function* onThreadLoaded({
-    payload: { threadId },
-}: ReturnType<typeof loadThreadSuccessAction | typeof loadConversationSuccessAction>) {
-    yield* persistMessages();
-
+function* onThreadLoaded({ payload: { threadId } }: ReturnType<typeof loadConversationSuccessAction>) {
     // Only emit the chatOpened event when we have a real server-side threadId.
     // The cache-restore dispatch uses an empty threadId and should not trigger telemetry.
     if (!threadId) {
@@ -287,9 +264,6 @@ function* onThreadLoaded({
 }
 
 function* onClearThread(_action: ReturnType<typeof clearThreadAction>) {
-    const workspace: string = yield getContext("workspace");
-    clearCachedMessages(workspace);
-
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
     const threadId: string | undefined = yield select(threadIdSelector);
 
@@ -300,53 +274,29 @@ function* onClearThread(_action: ReturnType<typeof clearThreadAction>) {
 }
 
 function* onNewMessage({ payload: message }: ReturnType<typeof newMessageAction>) {
-    if (isChatConversationLocalItem(message)) {
-        if (message.role !== "user") {
-            return;
-        }
-
-        const messageContent = message.content as IChatConversationLocalContent;
-        if (messageContent.type !== "text") {
-            return;
-        }
-
-        const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
-        const threadId: string | undefined = yield select(threadIdSelector);
-
-        eventDispatcher.dispatch({
-            type: "chatUserMessage",
-            threadId,
-            question: messageContent.text,
-            objects: messageContent.objects ?? [],
-        });
-    } else {
-        if (!isUserMessage(message)) {
-            return;
-        }
-
-        const messageContent = message.content.find((c) => isTextContents(c));
-
-        if (!messageContent?.text) {
-            return;
-        }
-
-        const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
-        const threadId: string | undefined = yield select(threadIdSelector);
-
-        eventDispatcher.dispatch({
-            type: "chatUserMessage",
-            threadId,
-            question: messageContent.text,
-            objects: messageContent.objects,
-        });
+    if (message.role !== "user") {
+        return;
     }
+
+    const messageContent = message.content as IChatConversationLocalContent;
+    if (messageContent.type !== "text") {
+        return;
+    }
+
+    const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
+    const threadId: string | undefined = yield select(threadIdSelector);
+
+    eventDispatcher.dispatch({
+        type: "chatUserMessage",
+        threadId,
+        question: messageContent.text,
+        objects: messageContent.objects ?? [],
+    });
 }
 
 function* onEvaluateMessageComplete({
     payload: { assistantMessageId },
 }: ReturnType<typeof evaluateMessageCompleteAction>) {
-    yield* persistMessages();
-
     const message: MessageInfo | null = yield call(loadMessage, assistantMessageId);
 
     if (!message?.useCase) {
@@ -473,31 +423,16 @@ type MessageInfo = {
 };
 
 function* loadMessage(assistantMessageId: string): Generator<unknown, MessageInfo | null> {
-    const conversation: ReturnType<typeof conversationSelector> = yield select(conversationSelector);
-    if (conversation) {
-        const allMessages: IChatConversationLocalItem[] = yield select(conversationMessagesSelector);
-        const message = allMessages.find((m) => m.localId === assistantMessageId);
+    const allMessages: IChatConversationLocalItem[] = yield select(conversationMessagesSelector);
+    const message = allMessages.find((m) => m.localId === assistantMessageId);
 
-        return message
-            ? {
-                  id: message.id,
-                  localId: message.localId,
-                  useCase: convertMessageTypeTo(message?.content),
-              }
-            : null;
-    } else {
-        const allMessages: Message[] = yield select(messagesSelector);
-        const message = allMessages.find((m) => m.localId === assistantMessageId);
-        const useCase = message?.content.find((c): c is RoutingContents => isRoutingContents(c))?.useCase;
-
-        return message
-            ? {
-                  id: message.id ?? "",
-                  localId: message.localId,
-                  useCase,
-              }
-            : null;
-    }
+    return message
+        ? {
+              id: message.id,
+              localId: message.localId,
+              useCase: convertMessageTypeTo(message?.content),
+          }
+        : null;
 }
 
 function convertMessageTypeTo(

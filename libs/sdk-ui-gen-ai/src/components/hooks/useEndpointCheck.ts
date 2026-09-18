@@ -13,10 +13,7 @@ export function useEndpointCheck(settings: IUserWorkspaceSettings | undefined, c
 
     const promise = async () => {
         if (!canFullControl) {
-            const unsupportedProvider = hasUnsupportedActiveProvider(
-                settings?.activeLlmProvider,
-                settings?.enableAiAgenticConversations,
-            );
+            const unsupportedProvider = hasUnsupportedActiveProvider(settings?.activeLlmProvider);
             return createInfo(0, unsupportedProvider, unsupportedProvider);
         }
         try {
@@ -42,10 +39,7 @@ export function useEndpointCheck(settings: IUserWorkspaceSettings | undefined, c
 }
 
 async function getProviderInfo(backend: IAnalyticalBackend, settings: IUserWorkspaceSettings | undefined) {
-    const unsupportedProvider = hasUnsupportedActiveProvider(
-        settings?.activeLlmProvider,
-        settings?.enableAiAgenticConversations,
-    );
+    const unsupportedProvider = hasUnsupportedActiveProvider(settings?.activeLlmProvider);
     if (unsupportedProvider) {
         return createInfo(0, true, unsupportedProvider);
     }

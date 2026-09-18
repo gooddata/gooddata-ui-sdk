@@ -9,6 +9,7 @@ import {
     areObjRefsEqual,
 } from "@gooddata/sdk-model";
 
+import { type IParameterValueChange } from "../../../commands/parameters.js";
 import { type ITabState, type ITabsState, getActiveTab, getTabOrActive } from "../tabsState.js";
 
 import { type IDashboardParameterEntry, parametersInitialState } from "./parametersState.js";
@@ -47,23 +48,8 @@ const addParameter: ParametersReducer<PayloadAction<IAddParameterPayload>> = (st
 /**
  * @alpha
  */
-export interface ISetParameterRuntimeValuePayload {
-    ref: ObjRef;
-    value: ParameterValue | undefined;
-}
-
-const setParameterRuntimeValue: ParametersReducer<PayloadAction<ISetParameterRuntimeValuePayload>> = (
-    state,
-    action,
-) => {
-    setRuntimeOverride(state, action.payload);
-};
-
-/**
- * @alpha
- */
 export interface ISetParameterRuntimeValuesPayload {
-    values: ISetParameterRuntimeValuePayload[];
+    values: IParameterValueChange[];
     /**
      * Target tab. When omitted, the active tab is used.
      */
@@ -128,7 +114,7 @@ const removeParameter: ParametersReducer<PayloadAction<IRemoveParameterPayload>>
 
 function setRuntimeOverride(
     state: ITabsState,
-    { ref, value }: ISetParameterRuntimeValuePayload,
+    { ref, value }: IParameterValueChange,
     tabLocalIdentifier?: string,
 ): void {
     const entry = findParameterEntry(state, ref, tabLocalIdentifier);
@@ -178,7 +164,6 @@ export function clearParameterWorkingValues(tab: ITabState): void {
 
 export const parametersReducers = {
     addParameter,
-    setParameterRuntimeValue,
     setParameterRuntimeValues,
     setParameterWorkingValue,
     removeParameter,

@@ -21,7 +21,6 @@ import {
     type IAutomationsQuery,
     type IAutomationsQueryResult,
     type IChatConversations,
-    type IChatThread,
     type IClusteringConfig,
     type IClusteringResult,
     type ICollectionItemsConfig,
@@ -235,7 +234,7 @@ import {
 import { AbstractExecutionFactory } from "../toolkit/execution.js";
 
 import { DummyAnalyticsCatalogService } from "./DummyAnalyticsCatalogService.js";
-import { DummyChatConversations, DummyGenAIChatThread } from "./DummyGenAIChatThread.js";
+import { DummyChatConversations } from "./DummyGenAIChatThread.js";
 import { DummySemanticQualityService } from "./DummySemanticQualityService.js";
 import { DummySemanticSearchQueryBuilder } from "./DummySemanticSearch.js";
 import { InMemoryWorkspaceReportsService } from "./InMemoryWorkspaceReportsService.js";
@@ -339,6 +338,9 @@ export function dummyBackend(config: DummyBackendConfig = defaultDummyBackendCon
                     throw new NotSupported("not supported");
                 },
                 getStyleById: () => {
+                    throw new NotSupported("not supported");
+                },
+                getAsset: () => {
                     throw new NotSupported("not supported");
                 },
                 collections: () => ({
@@ -557,9 +559,6 @@ function dummyWorkspace(
         },
         genAI(): IGenAIService {
             return {
-                getChatThread(): IChatThread {
-                    return new DummyGenAIChatThread();
-                },
                 getChatConversations(_options?: { isPreview?: boolean }): IChatConversations {
                     return new DummyChatConversations();
                 },
@@ -2194,6 +2193,10 @@ class DummyInsightsQuery implements IInsightsQuery {
     }
 
     withInclude(): IInsightsQuery {
+        return this;
+    }
+
+    withMetaInclude(): IInsightsQuery {
         return this;
     }
 

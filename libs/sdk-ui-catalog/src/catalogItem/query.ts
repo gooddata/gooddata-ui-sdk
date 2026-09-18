@@ -79,8 +79,9 @@ export function getInsightsQuery({
     isHidden,
     certification,
     pageSize = PAGE_SIZE,
+    loadVisualizationPermissions = false,
 }: ICatalogItemQueryOptions) {
-    return backend
+    const query = backend
         .workspace(workspace)
         .insights()
         .getInsightsQuery()
@@ -101,6 +102,8 @@ export function getInsightsQuery({
             certification,
         })
         .withMethod("POST");
+
+    return loadVisualizationPermissions ? query.withMetaInclude(["permissions"]) : query;
 }
 
 export function getMetricsQuery({
@@ -561,14 +564,6 @@ export function deleteMeasureCatalogItem(backend: IAnalyticalBackend, workspace:
 
 export function getMeasureCatalogItem(backend: IAnalyticalBackend, workspace: string, ref: ObjRef) {
     return backend.workspace(workspace).measures().getMeasure(ref);
-}
-
-export function getMeasureReferencingObjectsCatalogItem(
-    backend: IAnalyticalBackend,
-    workspace: string,
-    ref: ObjRef,
-) {
-    return backend.workspace(workspace).measures().getMeasureReferencingObjects(ref);
 }
 
 export function updateCatalogItemCertification(

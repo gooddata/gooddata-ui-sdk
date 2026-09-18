@@ -18434,6 +18434,7 @@
                             "items": {
                                 "type": "string",
                                 "enum": [
+                                    "permissions",
                                     "origin",
                                     "page",
                                     "all",
@@ -18441,7 +18442,7 @@
                                 ]
                             }
                         },
-                        "example": "metaInclude=origin,page,all"
+                        "example": "metaInclude=permissions,origin,page,all"
                     }
                 ],
                 "responses": {
@@ -18528,13 +18529,14 @@
                             "items": {
                                 "type": "string",
                                 "enum": [
+                                    "permissions",
                                     "origin",
                                     "all",
                                     "ALL"
                                 ]
                             }
                         },
-                        "example": "metaInclude=origin,all"
+                        "example": "metaInclude=permissions,origin,all"
                     }
                 ],
                 "requestBody": {
@@ -18743,13 +18745,14 @@
                             "items": {
                                 "type": "string",
                                 "enum": [
+                                    "permissions",
                                     "origin",
                                     "all",
                                     "ALL"
                                 ]
                             }
                         },
-                        "example": "metaInclude=origin,all"
+                        "example": "metaInclude=permissions,origin,all"
                     }
                 ],
                 "responses": {
@@ -57981,6 +57984,18 @@
                                             "PARENT"
                                         ]
                                     }
+                                }
+                            },
+                            "permissions": {
+                                "type": "array",
+                                "description": "List of valid permissions for a logged-in user.",
+                                "items": {
+                                    "type": "string",
+                                    "enum": [
+                                        "EDIT",
+                                        "SHARE",
+                                        "VIEW"
+                                    ]
                                 }
                             }
                         }

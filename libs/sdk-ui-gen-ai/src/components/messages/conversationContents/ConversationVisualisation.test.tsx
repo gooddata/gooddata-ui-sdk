@@ -8,8 +8,11 @@ import { Provider } from "react-redux";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
+    type IAttribute,
     type IInsight,
     type ISeparators,
+    attributeDisplayFormRef,
+    attributeLocalId,
     idRef,
     newAttribute,
     newAttributeSort,
@@ -53,6 +56,11 @@ type RecordedProps = {
     measure?: unknown;
     rows?: unknown;
     columns?: unknown;
+    location?: unknown;
+    color?: unknown;
+    latitude?: unknown;
+    longitude?: unknown;
+    area?: unknown;
 };
 
 const rendered: { component: string; separators: ISeparators | undefined }[] = [];
@@ -98,6 +106,11 @@ vi.mock("@gooddata/sdk-ui-pivot/next", () => ({
     useAgGridToken: (token?: string) => token,
 }));
 
+vi.mock("@gooddata/sdk-ui-geo", () => ({
+    GeoPushpinChart: recorder("GeoPushpinChart"),
+    GeoAreaChart: recorder("GeoAreaChart"),
+}));
+
 vi.mock("@gooddata/sdk-ui-dashboard", () => ({
     getKdaKeyDriverCombinations: () => [],
 }));
@@ -137,7 +150,10 @@ function visualizationOf(visualizationUrl: string): IInsight {
 
 function renderVisualisation(
     visualizationUrl: string,
-    props: { isTable?: boolean; enableNewPivotTable?: boolean } = {},
+    props: {
+        isTable?: boolean;
+        enableNewPivotTable?: boolean;
+    } = {},
     insight: Partial<IInsight["insight"]> = {},
 ) {
     const base = visualizationOf(visualizationUrl);
@@ -628,6 +644,88 @@ describe("ConversationVisualisation", () => {
         );
 
         expect(lastProps.get("Repeater")?.config?.inlineVisualizations).toEqual(inlineVisualizations);
+    });
+
+    const pushpinInsight = {
+        buckets: [
+            newBucket(
+                "location",
+                newAttribute("customer_city_latitude", (a) => a.localId("loc")),
+            ),
+            newBucket("size", newMeasure("m1")),
+            newBucket("color", newMeasure("m2")),
+            newBucket("segment", newAttribute("order_id")),
+        ],
+        properties: {
+            controls: { latitude: "customer_city_latitude", longitude: "customer_city_longitude" },
+        },
+    };
+
+    it("rebuilds the pushpin latitude and longitude from the location bucket and the controls", () => {
+        renderVisualisation("local:pushpin", {}, pushpinInsight);
+
+        const latitude = lastProps.get("GeoPushpinChart")?.latitude as IAttribute;
+        const longitude = lastProps.get("GeoPushpinChart")?.longitude as IAttribute;
+
+        expect(attributeDisplayFormRef(latitude)).toEqual(idRef("customer_city_latitude", "displayForm"));
+        expect(attributeLocalId(latitude)).toBe("loc");
+        expect(attributeDisplayFormRef(longitude)).toEqual(idRef("customer_city_longitude", "displayForm"));
+        expect(attributeLocalId(longitude)).toBe("longitude_df");
+    });
+
+    it("maps the remaining pushpin buckets to size, color and segment", () => {
+        renderVisualisation("local:pushpin", {}, pushpinInsight);
+
+        expect(lastProps.get("GeoPushpinChart")).toMatchObject({
+            size: newMeasure("m1"),
+            color: newMeasure("m2"),
+            segmentBy: newAttribute("order_id"),
+        });
+    });
+
+    it("renders a pushpin whose size bucket the insight leaves empty", () => {
+        renderVisualisation(
+            "local:pushpin",
+            {},
+            {
+                ...pushpinInsight,
+                buckets: pushpinInsight.buckets.filter((b) => b.localIdentifier !== "size"),
+            },
+        );
+
+        expect(lastProps.get("GeoPushpinChart")).toMatchObject({
+            size: undefined,
+            color: newMeasure("m2"),
+        });
+    });
+
+    it("renders no pushpin when the dataset carries only one of the two geo labels", () => {
+        renderVisualisation(
+            "local:pushpin",
+            {},
+            { ...pushpinInsight, properties: { controls: { latitude: "", longitude: "" } } },
+        );
+
+        expect(rendered).toEqual([]);
+    });
+
+    it("renders a choropleth from the area bucket", () => {
+        renderVisualisation(
+            "local:choropleth",
+            {},
+            {
+                buckets: [
+                    newBucket(
+                        "area",
+                        newAttribute("customer_country", (a) => a.localId("country")),
+                    ),
+                    newBucket("color", newMeasure("m1")),
+                ],
+            },
+        );
+
+        expect(rendered).toEqual([{ component: "GeoAreaChart", separators }]);
+        expect(attributeLocalId(lastProps.get("GeoAreaChart")?.area as IAttribute)).toBe("country");
     });
 
     it("leaves the measures of the columns bucket out of the table columns", () => {

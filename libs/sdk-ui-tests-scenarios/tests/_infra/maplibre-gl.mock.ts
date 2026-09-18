@@ -192,4 +192,18 @@ class MockPopup {
     }
 }
 
-export { MockMap as Map, MockPopup as Popup };
+let workerUrl = "";
+
+function getWorkerUrl(): string {
+    return workerUrl;
+}
+
+function setWorkerUrl(url: string): void {
+    workerUrl = url;
+}
+
+function addProtocol(_protocol: string, _loadFn: unknown): void {}
+
+function removeProtocol(_protocol: string): void {}
+
+export { MockMap as Map, MockPopup as Popup, addProtocol, getWorkerUrl, removeProtocol, setWorkerUrl };

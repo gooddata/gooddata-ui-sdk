@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-catalog: Load the current user's permissions on a visualization behind the enableVisualizationPermissions feature flag, so Share and Edit on its detail follow them.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

@@ -11,8 +11,6 @@ import { ComponentType } from 'react';
 import { DashboardSelectorEvaluator } from '@gooddata/sdk-ui-dashboard';
 import { EnhancedStore } from '@reduxjs/toolkit';
 import { GenAIChatEffort } from '@gooddata/sdk-model';
-import type { GenAIChatInteractionUserFeedback } from '@gooddata/sdk-model';
-import type { GenAIChatRoutingUseCase } from '@gooddata/sdk-model';
 import { GenAIObjectType } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IChatConversation } from '@gooddata/sdk-backend-spi';
@@ -25,13 +23,9 @@ import { IChatSuggestion } from '@gooddata/sdk-backend-spi';
 import { IChatSuggestions } from '@gooddata/sdk-backend-spi';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IDashboard } from '@gooddata/sdk-model';
-import type { IGenAIChangeAnalysisParams } from '@gooddata/sdk-model';
 import { IGenAIUserContext } from '@gooddata/sdk-model';
-import type { IGenAIVisualization } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IListedDashboard } from '@gooddata/sdk-model';
-import type { ISemanticSearchRelationship } from '@gooddata/sdk-model';
-import type { ISemanticSearchResultItem } from '@gooddata/sdk-model';
 import { ISlotProps } from '@gooddata/sdk-ui-kit';
 import { IUiButtonProps } from '@gooddata/sdk-ui-kit';
 import { IUiMenuGroupItemProps } from '@gooddata/sdk-ui-kit';
@@ -44,32 +38,9 @@ import { ReactNode } from 'react';
 import { SdkErrorType } from '@gooddata/sdk-ui';
 import { Store } from '@reduxjs/toolkit';
 
-// @public (undocumented)
-export type AssistantMessage = BaseMessage & {
-    role: "assistant";
-    feedback: GenAIChatInteractionUserFeedback;
-    feedbackError?: string;
-};
-
 // @public
 export type BaseEvent = {
     threadId?: string;
-};
-
-// @public (undocumented)
-export type BaseMessage = {
-    id?: string;
-    localId: string;
-    created: number;
-    cancelled: boolean;
-    complete: boolean;
-    content: Contents[];
-};
-
-// @public (undocumented)
-export type ChangeAnalysisContents = {
-    type: "changeAnalysis";
-    params: IGenAIChangeAnalysisParams;
 };
 
 // @public
@@ -248,9 +219,6 @@ export type ChatVisualizationErrorEvent = BaseEvent & {
 // @public (undocumented)
 export const clearThreadAction: ActionCreatorWithoutPayload<"messages/clearThreadAction">;
 
-// @public (undocumented)
-export type Contents = TextContents | RoutingContents | ReasoningContents | SearchContents | SemanticSearchContents | VisualizationContents | ChangeAnalysisContents | ErrorContents;
-
 // @alpha
 export function DefaultAgentChooser(props: IGenAIAssistantAgentChooserProps): JSX.Element;
 
@@ -319,12 +287,6 @@ export function DefaultMessageTextContent(props: IGenAIAssistantMessageTextConte
 
 // @alpha
 export function DefaultUserMessage(props: IGenAIAssistantUserMessageProps): JSX.Element;
-
-// @public (undocumented)
-export type ErrorContents = {
-    type: "error";
-    text: string;
-};
 
 // @public
 export type GenAIAgent = {
@@ -768,59 +730,11 @@ export type LinkHandlerEvent = {
 // @internal
 export const makeAssistantItem: (content?: IChatConversationLocalContent, id?: string, complete?: boolean) => IChatConversationLocalItem;
 
-// @public (undocumented)
-export const makeTextContents: (text: string, objects: TextContentObject[]) => TextContents;
-
 // @internal
 export const makeUserItem: (content?: IChatConversationLocalContent, id?: string) => IChatConversationLocalItem;
 
 // @public (undocumented)
-export const makeUserMessage: (content: Contents[]) => UserMessage;
-
-// @public
-export type Message = UserMessage | AssistantMessage;
-
-// @public (undocumented)
-export const newMessageAction: ActionCreatorWithPayload<Message | IChatConversationLocalItem, "messages/newMessageAction">;
-
-// @public (undocumented)
-export type ReasoningContents = {
-    type: "reasoning";
-    steps: ReasoningStep[];
-};
-
-// @public (undocumented)
-export type ReasoningStep = {
-    title: string;
-    thoughts?: ReasoningThought[];
-};
-
-// @public (undocumented)
-export type ReasoningThought = {
-    text: string;
-};
-
-// @public (undocumented)
-export type RoutingContents = {
-    type: "routing";
-    text: string;
-    useCase: GenAIChatRoutingUseCase;
-};
-
-// @public (undocumented)
-export type SearchContents = {
-    type: "search";
-    text: string;
-    searchResults: ISemanticSearchResultItem[];
-};
-
-// @public (undocumented)
-export type SemanticSearchContents = {
-    type: "semanticSearch";
-    text: string;
-    searchResults: ISemanticSearchResultItem[];
-    relationships: ISemanticSearchRelationship[];
-};
+export const newMessageAction: ActionCreatorWithPayload<IChatConversationLocalItem, "messages/newMessageAction">;
 
 // @public (undocumented)
 export const setAmbientUserContextAction: ActionCreatorWithPayload<    {
@@ -861,13 +775,6 @@ export type TextContentObject = {
     title: string;
 };
 
-// @public (undocumented)
-export type TextContents = {
-    type: "text";
-    text: string;
-    objects: TextContentObject[];
-};
-
 // @internal (undocumented)
 export function useGenAiChatAvailability(backend: IAnalyticalBackend, workspaceId?: string, enabled?: boolean, canManage?: boolean): boolean;
 
@@ -882,17 +789,5 @@ export function useGenAiCurrentConversation(): IChatConversationLocal | undefine
 
 // @public
 export function useGenAiDispatcher(): EnhancedStore["dispatch"];
-
-// @public (undocumented)
-export type UserMessage = BaseMessage & {
-    role: "user";
-};
-
-// @public (undocumented)
-export type VisualizationContents = {
-    type: "visualization";
-    text: string;
-    createdVisualizations: IGenAIVisualization[];
-};
 
 ```

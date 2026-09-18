@@ -6,11 +6,11 @@ import { renderHook, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { idRef } from "@gooddata/sdk-model";
+import { type IInsight, idRef, newInsightDefinition } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 
 import { createLabel } from "../../catalogItem/testFixtures.js";
-import type { ICatalogItemAttribute } from "../../catalogItem/types.js";
+import type { ICatalogItemAttribute, ICatalogItemInsight } from "../../catalogItem/types.js";
 import { PermissionsProvider } from "../../permission/PermissionsContext.js";
 import type { PermissionsState } from "../../permission/types.js";
 
@@ -88,5 +88,85 @@ describe("useCatalogItemLoad – attribute labels", () => {
             expect(result.current.status).toBe("success");
         });
         expect(getAttribute).not.toHaveBeenCalled();
+    });
+});
+
+const insightEntity: IInsight = {
+    insight: {
+        ...newInsightDefinition("local:bar").insight,
+        identifier: "insight.id",
+        uri: "/insight.id",
+        ref: idRef("insight.id", "insight"),
+        permissions: ["SHARE", "VIEW"],
+    },
+};
+
+const insightListItem: ICatalogItemInsight = {
+    identifier: "insight.id",
+    type: "insight",
+    title: "Revenue by region",
+    description: "",
+    tags: [],
+    visualizationType: "bar",
+    createdBy: "",
+    createdAt: null,
+    updatedBy: "",
+    updatedAt: null,
+    isLocked: false,
+    isEditable: true,
+};
+
+function createInsightWrapper(enableVisualizationPermissions: boolean) {
+    const getInsight = vi.fn().mockResolvedValue(insightEntity);
+    const backend = {
+        workspace: () => ({ insights: () => ({ getInsight }) }),
+    } as unknown as IAnalyticalBackend;
+    const permissionsState = {
+        status: "success",
+        result: { settings: { enableVisualizationPermissions } },
+    } as PermissionsState;
+    function wrapper({ children }: PropsWithChildren) {
+        return createElement(
+            BackendProvider,
+            { backend },
+            createElement(
+                WorkspaceProvider,
+                { workspace: "test-workspace" },
+                createElement(PermissionsProvider, { permissionsState }, children),
+            ),
+        );
+    }
+    return { wrapper, getInsight };
+}
+
+describe("useCatalogItemLoad – visualization permissions", () => {
+    it("refetches an insight handed over without permissions once the flag is on", async () => {
+        const { wrapper, getInsight } = createInsightWrapper(true);
+
+        const { result } = renderHook(() => useCatalogItemLoad({ objectDefinition: insightListItem }), {
+            wrapper,
+        });
+
+        await waitFor(() => {
+            expect(result.current.status).toBe("success");
+        });
+        expect(getInsight).toHaveBeenCalledWith(idRef("insight.id", "insight"), {
+            loadUserData: true,
+            loadPermissions: true,
+        });
+        expect(result.current.item).toMatchObject({ permissions: ["SHARE", "VIEW"] });
+    });
+
+    it("does not refetch an insight while the flag is off", async () => {
+        const { wrapper, getInsight } = createInsightWrapper(false);
+
+        const { result } = renderHook(() => useCatalogItemLoad({ objectDefinition: insightListItem }), {
+            wrapper,
+        });
+
+        await waitFor(() => {
+            expect(result.current.status).toBe("success");
+        });
+        expect(getInsight).not.toHaveBeenCalled();
     });
 });

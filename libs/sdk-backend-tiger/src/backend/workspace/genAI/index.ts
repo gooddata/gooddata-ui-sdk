@@ -8,7 +8,6 @@ import {
 import type {
     IAnalyticsCatalogService,
     IChatConversations,
-    IChatThread,
     IDashboardSummary,
     IDashboardSummaryRequest,
     IGenAIService,
@@ -23,7 +22,6 @@ import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 import { AnalyticsCatalogService } from "./AnalyticsCatalogService.js";
 import { ChatConversationsService } from "./ChatConversations.js";
-import { ChatThreadService } from "./ChatThread.js";
 import { KnowledgeDocumentsService } from "./KnowledgeDocumentsService.js";
 import { MemoryItemsService } from "./MemoryItemsService.js";
 import { SemanticQualityService } from "./SemanticQualityService.js";
@@ -35,10 +33,6 @@ export class GenAIService implements IGenAIService {
         private readonly workspaceId: string,
         private readonly dateNormalizer: DateNormalizer,
     ) {}
-
-    getChatThread(): IChatThread {
-        return new ChatThreadService(this.authCall, this.workspaceId, this.dateNormalizer);
-    }
 
     getChatConversations(options?: { isPreview?: boolean }): IChatConversations {
         return new ChatConversationsService(this.authCall, this.workspaceId, this.dateNormalizer, options);

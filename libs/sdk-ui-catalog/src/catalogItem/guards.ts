@@ -13,6 +13,7 @@ import type {
     ICatalogItemParameter,
     ICatalogItemRef,
     ICatalogItemTextGenerable,
+    ICatalogItemWithPermissions,
     VisualizationType,
 } from "./types.js";
 
@@ -85,6 +86,16 @@ export function isCatalogItemHidable(item: ICatalogItem | undefined | null): ite
         isCatalogItemAttribute(item) ||
         isCatalogItemFact(item)
     );
+}
+
+/**
+ * Type guard for catalog items that carry the current user's own object-level permissions.
+ * @internal
+ */
+export function isCatalogItemWithPermissions(
+    item: ICatalogItem | undefined | null,
+): item is ICatalogItemWithPermissions {
+    return isCatalogItemInsight(item) || isCatalogItemMeasure(item);
 }
 
 /**

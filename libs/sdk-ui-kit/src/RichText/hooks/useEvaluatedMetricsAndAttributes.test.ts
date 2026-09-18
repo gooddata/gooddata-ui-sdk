@@ -17,28 +17,37 @@ describe("getLabels", () => {
             "label/city": { ref: idRef("city", "displayForm"), type: "displayForm" },
         };
 
-        const { metrics, probes } = getLabels(references);
+        const { metrics, countMap } = getLabels(references);
 
         expect(metrics.map(measureLocalId)).toEqual(["m_max_0", "m_count_0"]);
         expect(metrics.map(aggregationOf)).toEqual(["max", "count"]);
-        expect(probes).toEqual({ m_max_0: { localId: "m_count_0", kind: "count" } });
+        expect(countMap).toEqual({ m_max_0: "m_count_0" });
     });
 
-    it("probes a computed attribute with min instead of count", () => {
-        // Counting one needs a slicing context the rich text execution does not have: it is
-        // functionally determined by the attributes it is computed on and its own dataset is
-        // synthetic, so the backend finds no single witness and rejects the WHOLE execution with
-        // "Ambiguous context for count" — taking every other reference in the widget with it.
-        // `count` is a DISTINCT count, so comparing min to max answers the same question.
+    it("aggregates a computed attribute exactly like a label", () => {
         const references: ReferenceMap = {
             "computed_attribute/tier": { ref: idRef("tier", "computedAttribute"), type: "computedAttribute" },
         };
 
-        const { metrics, probes } = getLabels(references);
+        const { metrics, countMap } = getLabels(references);
 
-        expect(metrics.map(measureLocalId)).toEqual(["m_max_0", "m_min_0"]);
-        expect(metrics.map(aggregationOf)).toEqual(["max", "min"]);
-        expect(probes).toEqual({ m_max_0: { localId: "m_min_0", kind: "min" } });
+        expect(metrics.map(measureLocalId)).toEqual(["m_max_0", "m_count_0"]);
+        expect(metrics.map(aggregationOf)).toEqual(["max", "count"]);
+        expect(countMap).toEqual({ m_max_0: "m_count_0" });
+    });
+
+    it("keeps its own object type on the aggregated item", () => {
+        // The ref, not the aggregation, is what tells the backend which object this is — a
+        // computed attribute has no labels, so it must not be asked for as a display form.
+        const references: ReferenceMap = {
+            "computed_attribute/tier": { ref: idRef("tier", "computedAttribute"), type: "computedAttribute" },
+        };
+
+        const { metrics } = getLabels(references);
+
+        expect(
+            metrics.map((m) => (m.measure.definition as IMeasureDefinition).measureDefinition.item),
+        ).toEqual([idRef("tier", "computedAttribute"), idRef("tier", "computedAttribute")]);
     });
 
     it("keeps the pairing right when both kinds are referenced", () => {
@@ -47,12 +56,9 @@ describe("getLabels", () => {
             "label/city": { ref: idRef("city", "displayForm"), type: "displayForm" },
         };
 
-        const { metrics, probes } = getLabels(references);
+        const { metrics, countMap } = getLabels(references);
 
-        expect(metrics.map(measureLocalId)).toEqual(["m_max_0", "m_min_0", "m_max_1", "m_count_1"]);
-        expect(probes).toEqual({
-            m_max_0: { localId: "m_min_0", kind: "min" },
-            m_max_1: { localId: "m_count_1", kind: "count" },
-        });
+        expect(metrics.map(measureLocalId)).toEqual(["m_max_0", "m_count_0", "m_max_1", "m_count_1"]);
+        expect(countMap).toEqual({ m_max_0: "m_count_0", m_max_1: "m_count_1" });
     });
 });

@@ -7,7 +7,6 @@ import {
     type IAnalyticalBackend,
     type IChatConversationItem,
     type IChatConversationItemsQueryResult,
-    type IUserWorkspaceSettings,
 } from "@gooddata/sdk-backend-spi";
 
 import {
@@ -15,7 +14,6 @@ import {
     type IChatConversationLocalItem,
     makeConversationItem,
 } from "../../model.js";
-import { settingsSelector } from "../chatWindow/chatWindowSelectors.js";
 import {
     asyncProcessSelector,
     conversationMessagesSelector,
@@ -55,12 +53,6 @@ import { notifyDefinitionReceived } from "./onDefinitionReceivedTrigger.js";
 export function* onChatOpenSync({ payload: { isOpen } }: PayloadAction<{ isOpen: boolean }>) {
     // Only act when the chat is being opened.
     if (!isOpen) {
-        return;
-    }
-
-    const settings: IUserWorkspaceSettings | undefined = yield select(settingsSelector);
-    // Only the agentic conversations flow keeps a list of conversations on the backend.
-    if (!settings?.enableAiAgenticConversations) {
         return;
     }
 

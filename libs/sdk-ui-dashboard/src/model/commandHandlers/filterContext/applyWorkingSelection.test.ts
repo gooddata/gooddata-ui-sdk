@@ -15,6 +15,9 @@ import {
     resetFilterContextWorkingSelection,
 } from "../../commands/filters.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
+import { isDashboardParametersChanged } from "../../events/parameters.js";
+import { selectConfig } from "../../store/config/configSelectors.js";
+import { configActions } from "../../store/config/index.js";
 import { selectIsCrossFiltering } from "../../store/drill/drillSelectors.js";
 import { drillActions } from "../../store/drill/index.js";
 import { filterViewsActions } from "../../store/filterViews/index.js";
@@ -28,6 +31,7 @@ import { tabsActions } from "../../store/tabs/index.js";
 import {
     selectIsWorkingParametersChanged,
     selectParameterRuntimeOverrideByRef,
+    selectParameterValuesByTab,
 } from "../../store/tabs/parameters/parametersSelectors.js";
 import {
     selectActiveOrDefaultTabLocalIdentifier,
@@ -57,7 +61,10 @@ describe("apply/reset of the working selection", () => {
             SimpleDashboardIdentifier,
             {
                 initCommand: initializeDashboard({
-                    settings: { dashboardFiltersApplyMode: { mode: "ALL_AT_ONCE" } },
+                    settings: {
+                        dashboardFiltersApplyMode: { mode: "ALL_AT_ONCE" },
+                        enableParameters: true,
+                    },
                 }),
             },
         );
@@ -155,5 +162,98 @@ describe("apply/reset of the working selection", () => {
 
         expect(selectIsWorkingParametersChanged(Tester.state())).toBe(false);
         expect(selectParameterRuntimeOverrideByRef(topNRef)(Tester.state())).toBe(5);
+    });
+
+    it("emits a parameters changed event when a filter view carrying a different value is applied", async () => {
+        await stageFilterAndParameter();
+
+        const dashboardRef = selectDashboardRef(Tester.state())!;
+        const activeTabId = selectActiveTabLocalIdentifier(Tester.state());
+        const filterView: IDashboardFilterView = {
+            ref: idRef("filter-view-1", "filterView"),
+            name: "View",
+            dashboard: dashboardRef,
+            user: idRef("user-1"),
+            tabLocalIdentifier: activeTabId,
+            filterContext: selectFilterContextDefinition(Tester.state()),
+            parameters: [{ ...topNParameter, value: 7 }],
+        };
+        Tester.dispatch(filterViewsActions.addFilterView({ dashboard: dashboardRef, filterView }));
+
+        await Tester.dispatchAndWaitFor(
+            applyFilterView(filterView.ref),
+            "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.APPLY.SUCCESS",
+        );
+
+        expect(selectParameterRuntimeOverrideByRef(topNRef)(Tester.state())).toBe(7);
+        const events = Tester.emittedEvents().filter(isDashboardParametersChanged);
+        expect(events).toHaveLength(1);
+        expect(events[0].payload).toEqual({
+            parameters: [{ ref: topNRef, value: 7 }],
+            tabLocalIdentifier: activeTabId,
+        });
+    });
+
+    it("emits a parameters changed event with the applied values when a staged parameter is applied", async () => {
+        await stageFilterAndParameter();
+        const activeTabId = selectActiveTabLocalIdentifier(Tester.state());
+
+        await Tester.dispatchAndWaitFor(
+            applyFilterContextWorkingSelection(),
+            "GDC.DASH/EVT.FILTER_CONTEXT.WORKING_SELECTION.APPLIED",
+        );
+
+        const events = Tester.emittedEvents().filter(isDashboardParametersChanged);
+        expect(events).toHaveLength(1);
+        expect(events[0].payload).toEqual({
+            parameters: [{ ref: topNRef, value: 42 }],
+            tabLocalIdentifier: activeTabId,
+        });
+    });
+
+    it("does not emit a parameters changed event when only a gated string value is applied", async function gatedStringApply() {
+        const ref = idRef("scenario", "parameter");
+        Tester.dispatch(
+            tabsActions.addParameter({
+                parameter: { ref, parameterType: "STRING", mode: "active" },
+                workspaceDefault: "Actual",
+            }),
+        );
+        Tester.dispatch(tabsActions.setParameterWorkingValue({ ref, value: "Forecast" }));
+        const config = selectConfig(Tester.state());
+        Tester.dispatch(
+            configActions.setConfig({
+                ...config,
+                settings: { ...config.settings, enableStringParameters: false },
+            }),
+        );
+        const valuesBefore = selectParameterValuesByTab(Tester.state());
+
+        await Tester.dispatchAndWaitFor(
+            applyFilterContextWorkingSelection(),
+            "GDC.DASH/EVT.FILTER_CONTEXT.WORKING_SELECTION.APPLIED",
+        );
+
+        expect(selectParameterRuntimeOverrideByRef(ref)(Tester.state())).toBe("Forecast");
+        expect(selectParameterValuesByTab(Tester.state())).toEqual(valuesBefore);
+        expect(Tester.emittedEvents().filter(isDashboardParametersChanged)).toHaveLength(0);
+    });
+
+    it("does not emit a parameters changed event when only a filter is staged", async () => {
+        await Tester.dispatchAndWaitFor(
+            changeWorkingAttributeFilterSelection(
+                firstAttributeFilterLocalId(),
+                { uris: [STAGED_ELEMENT_URI] },
+                "IN",
+            ),
+            "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+        );
+
+        await Tester.dispatchAndWaitFor(
+            applyFilterContextWorkingSelection(),
+            "GDC.DASH/EVT.FILTER_CONTEXT.WORKING_SELECTION.APPLIED",
+        );
+
+        expect(Tester.emittedEvents().filter(isDashboardParametersChanged)).toHaveLength(0);
     });
 });
