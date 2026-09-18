@@ -5,7 +5,7 @@ import { type RefObject, useCallback, useEffect, useMemo, useRef, useState } fro
 import { type IAnalyticalBackend, type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import type { GenAIObjectType, IColorPalette, IGenAIUserContext } from "@gooddata/sdk-model";
 
-import { makeTextContents, makeUserItem, makeUserMessage } from "../model.js";
+import { makeUserItem } from "../model.js";
 import { setAmbientUserContextAction, setUserContextAction } from "../store/chatWindow/chatWindowSlice.js";
 import {
     type ChatAssistantMessageEvent,
@@ -157,8 +157,7 @@ export interface IGenAIChatDialogConnectedProps {
 
 /**
  * A "connected" wrapper over {@link GenAIChatDialog} that centralizes the wiring every consumer otherwise
- * duplicates: object-type derivation, the dispatcher-based seeding flow (clear thread / set user context /
- * agentic-vs-classic message keyed on `enableAiAgenticConversations`), default link handling, and normalizing
+ * duplicates: object-type derivation, the dispatcher-based seeding flow (clear thread / set user context), default link handling, and normalizing
  * raw chat events into the {@link GenAIChatConnectedEvent} union.
  *
  * Consumers supply their own data sources (backend/workspace/permissions), open-state, telemetry sink and
@@ -326,11 +325,7 @@ export function GenAIChatDialogConnected({
         chatDispatcher(setUserContextAction({ userContext, replaceUserContext }));
         // Ask question
         if (askedQuestion) {
-            if (settings.enableAiAgenticConversations) {
-                chatDispatcher(newMessageAction(makeUserItem({ type: "text", text: askedQuestion })));
-            } else {
-                chatDispatcher(newMessageAction(makeUserMessage([makeTextContents(askedQuestion, [])])));
-            }
+            chatDispatcher(newMessageAction(makeUserItem({ type: "text", text: askedQuestion })));
         }
     }, [
         isOpen,

@@ -28,8 +28,10 @@ import {
     selectIsWorkingFilterContextChanged,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
+import { selectParameterValuesByTab } from "../../store/tabs/parameters/parametersSelectors.js";
 import { selectActiveOrDefaultTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+import { dispatchParametersChanged } from "../parameters/changeParameterValuesHandler.js";
 
 export function* dispatchFilterContextChanged(
     ctx: DashboardContext,
@@ -116,6 +118,11 @@ export function* applyWorkingSelectionHandler(ctx: DashboardContext, cmd: IDashb
     // cross-filtering alive, so only a staged filter change may drop it.
     const isWorkingFilterContextChanged: ReturnType<typeof selectIsWorkingFilterContextChanged> =
         yield select(selectIsWorkingFilterContextChanged);
+    const tabId: ReturnType<typeof selectActiveOrDefaultTabLocalIdentifier> = yield select(
+        selectActiveOrDefaultTabLocalIdentifier,
+    );
+    const valuesBefore: ReturnType<typeof selectParameterValuesByTab> =
+        yield select(selectParameterValuesByTab);
     yield put(tabsActions.applyWorkingSelection({ enableImmediateAttributeFilterDisplayAsLabelMigration }));
     const isCrossFiltering: ReturnType<typeof selectIsCrossFiltering> = yield select(selectIsCrossFiltering);
 
@@ -124,6 +131,8 @@ export function* applyWorkingSelectionHandler(ctx: DashboardContext, cmd: IDashb
     }
     yield dispatchDashboardEvent(filterContextWorkingSelectionApplied(ctx, cmd.correlationId));
     yield call(dispatchFilterContextChanged, ctx, cmd);
+
+    yield call(dispatchParametersChanged, ctx, cmd, tabId, valuesBefore[tabId]);
 }
 
 export function* resetWorkingSelectionHandler() {

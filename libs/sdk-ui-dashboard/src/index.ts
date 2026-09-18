@@ -701,6 +701,7 @@ export {
 export {
     type IChangeParameterValues,
     type IChangeParameterValuesPayload,
+    type IParameterValueChange,
     type ChangeParameterValuesParams,
     changeParameterValues,
 } from "./model/commands/parameters.js";
@@ -802,6 +803,10 @@ export {
     type IDashboardParametersSelectionReset,
     parametersSelectionReset,
     isDashboardParametersSelectionReset,
+    type IDashboardParametersChanged,
+    type IDashboardParametersChangedPayload,
+    parametersChanged,
+    isDashboardParametersChanged,
 } from "./model/events/parameters.js";
 export {
     type IDashboardCommandStarted,
@@ -1675,7 +1680,6 @@ export type {
 export type {
     IAddParameterPayload,
     IRemoveParameterPayload,
-    ISetParameterRuntimeValuePayload,
     ISetParameterRuntimeValuesPayload,
     ISetParameterWorkingValuePayload,
 } from "./model/store/tabs/parameters/parametersReducers.js";
@@ -1686,14 +1690,17 @@ export type {
 export {
     selectDashboardParameterEntries,
     selectDashboardParameters,
+    selectDashboardParametersByTab,
     selectEffectiveParameterValuesForWidget,
     selectExportEffectiveParameters,
     selectFilterViewParameters,
     selectHasAnyResettableParameterOnActiveTab,
     selectIsParametersChanged,
     selectIsWorkingParametersChanged,
+    selectOriginalParameterValuesByTab,
     selectParameterDisplayValueByRef,
     selectParameterRuntimeOverrideByRef,
+    selectParameterValuesByTab,
 } from "./model/store/tabs/parameters/parametersSelectors.js";
 export { drillActions } from "./model/store/drill/index.js";
 export {

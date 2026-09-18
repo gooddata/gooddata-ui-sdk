@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { Suspense, lazy, useMemo } from "react";
+import { Suspense, lazy } from "react";
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -38,16 +38,6 @@ export function ConversationSearchContent({
     const workspace = useWorkspaceStrict();
     const showSearchUI = results.length > 0;
 
-    const content = useMemo(
-        () => ({
-            type: "semanticSearch" as const,
-            text: "",
-            searchResults: results,
-            relationships: relationships,
-        }),
-        [results, relationships],
-    );
-
     // No results, no search UI
     if (!showSearchUI) {
         return null;
@@ -68,7 +58,8 @@ export function ConversationSearchContent({
             <Suspense fallback={<SemanticSearchTreeViewFallback />}>
                 <SemanticSearchTreeView
                     workspace={workspace}
-                    content={content}
+                    searchResults={results}
+                    relationships={relationships}
                     maxHeight={SEMANTIC_SEARCH_TREE_VIEW_HEIGHT}
                 />
             </Suspense>

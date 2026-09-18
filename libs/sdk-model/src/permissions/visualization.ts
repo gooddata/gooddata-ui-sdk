@@ -8,9 +8,9 @@ import { type IWorkspacePermissions } from "./index.js";
  * Effective EDIT capability for a single visualization.
  *
  * @remarks
- * Same shape as {@link canEditMetric}: a workspace admin can always edit, and behind
- * enableVisualizationPermissions the visualization's own EDIT grants it to everyone else. Before the
- * flag, editing was decided by the workspace role alone, which callers keep checking separately.
+ * Behind enableVisualizationPermissions a workspace admin can always edit and the visualization's own
+ * EDIT grants it to everyone else, the same shape as {@link canEditMetric}. Before the flag, the
+ * workspace role alone decides: `canCreateVisualization`, which ANALYZE holds.
  *
  * @param visualizationPermissions - the visualization's own permissions, absent when they were not requested
  * @param workspacePermissions - the user's workspace permissions
@@ -23,10 +23,10 @@ export function canEditVisualization(
     workspacePermissions: IWorkspacePermissions,
     areVisualizationPermissionsEnabled: boolean,
 ): boolean {
-    return (
-        workspacePermissions.canManageProject ||
-        (areVisualizationPermissionsEnabled && (visualizationPermissions?.includes("EDIT") ?? false))
-    );
+    if (!areVisualizationPermissionsEnabled) {
+        return workspacePermissions.canCreateVisualization;
+    }
+    return workspacePermissions.canManageProject || (visualizationPermissions?.includes("EDIT") ?? false);
 }
 
 /**

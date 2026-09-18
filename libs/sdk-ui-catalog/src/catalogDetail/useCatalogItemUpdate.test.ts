@@ -10,7 +10,12 @@ import { type ISemanticConditionalFormatting, idRef } from "@gooddata/sdk-model"
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 
 import { createLabel } from "../catalogItem/testFixtures.js";
-import type { ICatalogItem, ICatalogItemMeasure, ICatalogItemRef } from "../catalogItem/types.js";
+import type {
+    ICatalogItem,
+    ICatalogItemInsight,
+    ICatalogItemMeasure,
+    ICatalogItemRef,
+} from "../catalogItem/types.js";
 import { PermissionsProvider } from "../permission/PermissionsContext.js";
 import type { PermissionsState } from "../permission/types.js";
 
@@ -36,6 +41,22 @@ const itemB: ICatalogItem = {
     title: "Param B",
     description: "Description B",
     definition: { type: "NUMBER", defaultValue: 99 },
+};
+
+const insightWithPermissions: ICatalogItemInsight = {
+    type: "insight",
+    identifier: "insight.id",
+    title: "Revenue by region",
+    description: "",
+    tags: [],
+    createdBy: "",
+    updatedBy: "",
+    createdAt: null,
+    updatedAt: null,
+    isLocked: false,
+    isEditable: true,
+    visualizationType: "bar",
+    permissions: ["EDIT", "SHARE"],
 };
 
 const measureWithPermissions: ICatalogItemMeasure = {
@@ -223,6 +244,37 @@ describe("useCatalogItemUpdate – applyItemUpdate / applyItemDelete", () => {
         });
 
         const expected = { ...saved, permissions: measureWithPermissions.permissions };
+        expect(result.current.item).toEqual(expected);
+        expect(onUpdate).toHaveBeenCalledWith(expected);
+    });
+
+    it("applyItemUpdate keeps the visualization's permissions the update response cannot return", async () => {
+        const { wrapper } = createWrapper();
+        const onUpdate = vi.fn();
+
+        const { result } = renderHook(
+            () =>
+                useCatalogItemUpdate({
+                    currentUser: null,
+                    objectDefinition: insightWithPermissions,
+                    onUpdate,
+                }),
+            { wrapper },
+        );
+
+        await waitFor(() => {
+            expect(result.current.status).toBe("success");
+            expect(result.current.item).toEqual(insightWithPermissions);
+        });
+
+        const saved: ICatalogItemInsight = { ...insightWithPermissions, title: "Revenue by country" };
+        delete saved.permissions;
+
+        act(() => {
+            result.current.applyItemUpdate(saved);
+        });
+
+        const expected = { ...saved, permissions: insightWithPermissions.permissions };
         expect(result.current.item).toEqual(expected);
         expect(onUpdate).toHaveBeenCalledWith(expected);
     });

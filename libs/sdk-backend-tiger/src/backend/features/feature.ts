@@ -54,6 +54,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableVisualizationPermissions,
+            "enableVisualizationPermissions",
+            "BOOLEAN",
+            FeatureFlagsValues.enableVisualizationPermissions,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableRadarChart,
             "enableRadarChart",
             "BOOLEAN",
@@ -261,13 +268,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableCatalogSmartSearchResults",
             "BOOLEAN",
             FeatureFlagsValues.enableCatalogSmartSearchResults,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableGenAIChat,
-            "enableGenAIChat",
-            "BOOLEAN",
-            FeatureFlagsValues.enableGenAIChat,
         ),
         ...loadFeature(
             features,
@@ -618,20 +618,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableAiAssistantEmbedding",
             "BOOLEAN",
             FeatureFlagsValues.enableAiAssistantEmbedding,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableGenAIReasoningVisibility,
-            "enableGenAIReasoningVisibility",
-            "BOOLEAN",
-            FeatureFlagsValues.enableGenAIReasoningVisibility,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableAiAgenticConversations,
-            "enableAiAgenticConversations",
-            "BOOLEAN",
-            FeatureFlagsValues.enableAiAgenticConversations,
         ),
         ...loadFeature(
             features,

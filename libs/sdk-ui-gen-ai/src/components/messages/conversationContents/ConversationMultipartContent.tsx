@@ -79,7 +79,7 @@ export function ConversationMultipartContent({
                             visualization={part.visualization}
                         />
                     ) : (
-                        <div key={index} className="gd-gen-ai-chat__messages__content--error">
+                        <div key={index} className="gd-gen-ai-chat__conversation__item__content--error">
                             {intl.formatMessage({ id: "gd.gen-ai.visualization.unavailable" })}
                         </div>
                     );

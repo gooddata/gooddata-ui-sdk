@@ -3,9 +3,10 @@
 import {
     type ISettings,
     type IWorkspacePermissions,
-    type ObjectType,
     canEditMetric,
+    canEditVisualization,
     canShareMetric,
+    canShareVisualization,
 } from "@gooddata/sdk-model";
 
 import { COMPUTED_ATTRIBUTE_FEATURE_FLAG } from "../computedAttribute/gate.js";
@@ -13,7 +14,9 @@ import { COMPUTED_ATTRIBUTE_FEATURE_FLAG } from "../computedAttribute/gate.js";
 import {
     isCatalogItemAttribute,
     isCatalogItemComputedAttribute,
+    isCatalogItemDashboard,
     isCatalogItemFact,
+    isCatalogItemInsight,
     isCatalogItemMeasure,
 } from "./guards.js";
 import type { ICatalogItem } from "./types.js";
@@ -53,19 +56,22 @@ export function canEditCatalogItem(
         );
     }
 
-    // If the user has WS.Analyze permission to create visualizations, they can update the item if it is a visualization
-    // or a dashboard to which they have access.
-    if (workspacePermissions.canCreateVisualization) {
-        const editableTypes: ObjectType[] = ["analyticalDashboard", "insight"];
-        return editableTypes.includes(item.type);
+    // A visualization is edited through its own EDIT permission.
+    if (isCatalogItemInsight(item)) {
+        return canEditVisualization(
+            item.permissions,
+            workspacePermissions,
+            Boolean(settings?.enableVisualizationPermissions),
+        );
     }
 
-    return false;
+    // With WS.Analyze the user can update a dashboard to which they have access.
+    return isCatalogItemDashboard(item) && workspacePermissions.canCreateVisualization;
 }
 
 /**
- * Whether the user may share the item. Metrics are gated by the metric-permissions flag and then by
- * their own SHARE, deliberately not derived from EDIT. Attributes and facts have no object-level
+ * Whether the user may share the item. Metrics and visualizations are gated by their own permissions
+ * flag and then by their own SHARE, deliberately not derived from EDIT. Attributes and facts have no object-level
  * permissions, so their column-level-permissions flag decides and the backend refuses the access
  * list to anyone who may not manage them. The two flags are independent. A computed
  * attribute follows the attribute rule and additionally needs the computed-attributes
@@ -85,6 +91,14 @@ export function canShareCatalogItem(
             item.permissions,
             workspacePermissions,
             Boolean(settings?.enableMetricPermissions),
+        );
+    }
+
+    if (isCatalogItemInsight(item)) {
+        return canShareVisualization(
+            item.permissions,
+            workspacePermissions,
+            Boolean(settings?.enableVisualizationPermissions),
         );
     }
 

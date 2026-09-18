@@ -22,7 +22,7 @@ import {
 import {
     isCatalogItemAttribute,
     isCatalogItemLoaded,
-    isCatalogItemMeasure,
+    isCatalogItemWithPermissions,
 } from "../../catalogItem/guards.js";
 import { type ICatalogItem, type ICatalogItemRef } from "../../catalogItem/types.js";
 import { type ObjectType } from "../../objectType/types.js";
@@ -44,7 +44,9 @@ export function useCatalogItemLoad({ objectDefinition, objectId, objectType }: I
 
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
-    const loadPermissions = useFeatureFlag("enableMetricPermissions");
+    const metricPermissions = useFeatureFlag("enableMetricPermissions");
+    const visualizationPermissions = useFeatureFlag("enableVisualizationPermissions");
+    const loadPermissions = loadsOwnPermissions(type, metricPermissions, visualizationPermissions);
     const filled =
         isCatalogItemLoaded(objectDefinition) &&
         !awaitsPermissions(objectDefinition, loadPermissions) &&
@@ -97,10 +99,25 @@ export function useCatalogItemLoad({ objectDefinition, objectId, objectType }: I
     };
 }
 
-// A metric handed over by a producer that cannot return permissions (a semantic-search hit) has to
+function loadsOwnPermissions(
+    type: ObjectType | undefined,
+    metricPermissions: boolean,
+    visualizationPermissions: boolean,
+): boolean {
+    switch (type) {
+        case "measure":
+            return metricPermissions;
+        case "insight":
+            return visualizationPermissions;
+        default:
+            return false;
+    }
+}
+
+// An item handed over by a producer that cannot return permissions (a semantic-search hit) has to
 // be fetched for them, or its own EDIT and SHARE would read as absent.
 function awaitsPermissions(item: ICatalogItem, loadPermissions: boolean): boolean {
-    return loadPermissions && isCatalogItemMeasure(item) && item.permissions === undefined;
+    return loadPermissions && isCatalogItemWithPermissions(item) && item.permissions === undefined;
 }
 
 // List queries don't include labels; only the detail fetch below does.
@@ -163,6 +180,7 @@ async function loadObjectDefinition(
                     },
                     {
                         loadUserData: true,
+                        ...(loadPermissions ? { loadPermissions: true } : {}),
                     },
                 )
                 .then(convertInsightToCatalogItem);

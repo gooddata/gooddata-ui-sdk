@@ -50,13 +50,13 @@ Whatever you render there is mounted inside the same context providers as the de
 [state accessors](#compose-your-own-dialog-from-the-shell-and-blocks) below instead of relying on props. The props
 each component receives still carry the dialogs' lifecycle callbacks:
 
-- the create/edit dialog props (`IAlertingDialogProps`, `IScheduledEmailDialogProps`) extend
-  `IAutomationDialogCallbacks` — the `onCreate*`/`onUpdate*`/`onDelete*` success and error pairs, plus `onCancel`;
-- the management dialog props (`IAlertingManagementDialogProps`, `IScheduledEmailManagementDialogProps`) extend
+- the create/edit dialog props (`IAlertingDialogProps`, `IScheduledEmailDialogProps`) carry
+  `IAutomationDialogCallbacks` — the `onCreate*`/`onUpdate*`/`onDelete*` success and error pairs, plus `onCancel`
+  (the scheduled-email props additionally carry `onBack`);
+- the management dialog props (`IAlertingManagementDialogProps`, `IScheduledEmailManagementDialogProps`) carry
   `IAutomationManagementDialogCallbacks` — `onAdd`, `onEdit`, and `onClose`.
 
-Their data-carrying members (`alertToEdit`, `insight`, and the rest) are deprecated and no longer populated — read
-the same data from the dialog's own context instead (see
+The dialogs read their data from their own context instead (see
 [Decorate the data a dialog reads](#decorate-the-data-a-dialog-reads)).
 
 ```tsx
@@ -301,10 +301,7 @@ const DashboardLabelDecorator: CustomAlertingManagementDialogContextDecoratorCom
     children?: ReactNode;
 }) => {
     const ctx = useAlertingManagementDialogContext();
-    const decorated = useMemo(
-        () => ({ ...ctx, dashboardTitle: myDisplayTitle(ctx.dashboardTitle) }),
-        [ctx],
-    );
+    const decorated = useMemo(() => ({ ...ctx, dashboardTitle: myDisplayTitle(ctx.dashboardTitle) }), [ctx]);
     return (
         <AlertingManagementDialogContextProvider value={decorated}>
             {children}

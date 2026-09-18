@@ -9,8 +9,6 @@ import {
     type IChatConversationInteractionStep,
     type IChatConversationItem,
     type IChatConversationThreadQuery,
-    type IChatThreadQuery,
-    type IGenAIChatEvaluation,
     type IUserWorkspaceSettings,
     isChatConversationError,
     isChatConversationInteractionStep,
@@ -23,15 +21,9 @@ import {
 } from "@gooddata/sdk-model";
 
 import {
-    type AssistantMessage,
     type IChatConversationLocal,
     type IChatConversationLocalItem,
-    type Message,
-    isChatConversationLocalItem,
-    isTextContents,
-    isUserMessage,
     makeAssistantItem,
-    makeAssistantMessage,
 } from "../../model.js";
 import { generateTitleFromQuestion } from "../../utils.js";
 import {
@@ -46,7 +38,6 @@ import {
     conversationEffortSelector,
     conversationMessagesByIdSelector,
     conversationSelector,
-    messagesSelector,
     pendingAgentSwitchSelector,
     selectedAgentIdSelector,
 } from "../messages/messagesSelectors.js";
@@ -65,10 +56,9 @@ import {
     setCurrentConversationAction,
 } from "../messages/messagesSlice.js";
 
-import { processContents } from "./converters/interactionsToMessages.js";
 import { convertToLocalContent } from "./converters/toLocalContent.js";
 import { notifyDefinitionReceived } from "./onDefinitionReceivedTrigger.js";
-import { convertMessageToChatConversation, extractError } from "./utils.js";
+import { extractError } from "./utils.js";
 
 /**
  * Load thread history and put it to the store.
@@ -76,227 +66,13 @@ import { convertMessageToChatConversation, extractError } from "./utils.js";
  */
 export function* onUserMessage({ payload }: ReturnType<typeof newMessageAction>) {
     const conversation: IChatConversationLocal | undefined = yield select(conversationSelector);
-    let message = payload;
+    const message = payload;
 
-    if (conversation && !isChatConversationLocalItem(message)) {
-        message = convertMessageToChatConversation(message);
+    if (!conversation) {
+        throw new Error("Thread mode is turned on, but conversation message was provided.");
     }
 
-    if (isChatConversationLocalItem(message)) {
-        if (!conversation) {
-            throw new Error("Thread mode is turned on, but conversation message was provided.");
-        }
-        yield conversationUserMessage(message);
-    } else {
-        if (conversation) {
-            throw new Error("Conversation mode is turned on, but thread message was provided.");
-        }
-        yield threadUserMessage(message);
-    }
-}
-
-//THREAD API
-
-function* threadUserMessage(message: Message) {
-    let initialAssistantMessage: AssistantMessage | undefined = undefined;
-    let lastAssistantMessage: AssistantMessage | undefined = undefined;
-
-    try {
-        // Make sure the message is a user message and it got text contents
-        if (!isUserMessage(message)) {
-            return;
-        }
-
-        const textContents = message.content.find(isTextContents)?.text;
-
-        if (!textContents) {
-            return;
-        }
-
-        // Create a new empty assistant message
-        initialAssistantMessage = makeAssistantMessage([]);
-
-        // Set evaluation state in store
-        yield put(evaluateMessageAction({ message: initialAssistantMessage }));
-
-        // Retrieve backend from context
-        const backend: IAnalyticalBackend = yield getContext("backend");
-        const workspace: string = yield getContext("workspace");
-
-        // Make the request to start the evaluation
-        const chatThreadQuery = backend.workspace(workspace).genAI().getChatThread().query(textContents);
-
-        // evaluateUserMessage may create additional assistant messages if the stream contains
-        // multiple interaction IDs. It returns the last message that needs to be completed.
-        const result: EvaluateUserMessageResult = yield call(
-            evaluateUserMessage,
-            initialAssistantMessage,
-            chatThreadQuery,
-        );
-        lastAssistantMessage = result.lastAssistantMessage;
-    } catch (e) {
-        const wasCanceled: boolean = yield cancelled();
-
-        // On error, mark the last known message (or initial if no result yet)
-        const messageToError = lastAssistantMessage ?? initialAssistantMessage;
-        if (messageToError && !wasCanceled) {
-            yield put(
-                evaluateMessageErrorAction({
-                    assistantMessageId: messageToError.localId,
-                    error: extractError(e),
-                }),
-            );
-        }
-    } finally {
-        const wasCanceled: boolean = yield cancelled();
-
-        // Mark the last assistant message as complete
-        const messageToComplete = lastAssistantMessage ?? initialAssistantMessage;
-        if (messageToComplete) {
-            // Check if the message still exists before marking it complete
-            // (it may have been removed if the chat was cleared)
-            const currentMessages: Message[] = yield select(messagesSelector);
-            const messageExists = currentMessages.some((m) => m.localId === messageToComplete.localId);
-
-            if (messageExists) {
-                yield put(
-                    evaluateMessageCompleteAction({
-                        assistantMessageId: messageToComplete.localId,
-                        cancelled: wasCanceled,
-                    }),
-                );
-            }
-        }
-    }
-}
-
-/**
- * Result of evaluating a user message, containing all assistant messages created during the stream.
- */
-type EvaluateUserMessageResult = {
-    /**
-     * The last assistant message that was being processed when the stream ended.
-     * This is the message that needs to be marked as complete by the caller.
-     */
-    lastAssistantMessage: AssistantMessage;
-};
-
-function* evaluateUserMessage(message: AssistantMessage, preparedChatThread: IChatThreadQuery) {
-    let reader: ReadableStreamReader<IGenAIChatEvaluation> | undefined = undefined;
-    const settings: IUserWorkspaceSettings | undefined = yield select(settingsSelector);
-    const objectTypes: GenAIObjectType[] | undefined = yield select(objectTypesSelector);
-    const allowedRelationshipTypes: IAllowedRelationshipType[] | undefined = yield select(
-        allowedRelationshipTypesSelector,
-    );
-    const context: ReturnType<typeof userContextSelector> = yield select(userContextSelector);
-
-    const showReasoning = Boolean(settings?.enableGenAIReasoningVisibility);
-
-    // Track interaction ID to assistant message mapping
-    let currentAssistantMessage = message;
-    let currentInteractionId: string | undefined = undefined;
-
-    let queryBuilder = preparedChatThread
-        .withSearchLimit(Number(settings?.["aiChatSearchLimit"]) || 10)
-        .withObjectTypes(objectTypes);
-
-    if (allowedRelationshipTypes?.length) {
-        queryBuilder = queryBuilder.withAllowedRelationshipTypes(allowedRelationshipTypes);
-    }
-
-    if (context) {
-        queryBuilder = queryBuilder.withUserContext(context);
-    }
-
-    try {
-        const results: ReadableStream<IGenAIChatEvaluation> = yield call([queryBuilder, queryBuilder.stream]);
-
-        reader = results.getReader();
-        while (true) {
-            const { value, done }: { value?: IGenAIChatEvaluation; done: boolean } = yield call([
-                reader,
-                reader.read,
-            ]);
-
-            if (done) {
-                break;
-            }
-
-            if (value) {
-                const chunkInteractionId = value.chatHistoryInteractionId;
-
-                // If we see a NEW interaction ID, create a new assistant message
-                if (
-                    chunkInteractionId &&
-                    currentInteractionId &&
-                    chunkInteractionId !== currentInteractionId
-                ) {
-                    // Check if the current message still exists before marking it complete
-                    // (it may have been removed if the chat was cleared)
-                    const currentMessages: Message[] = yield select(messagesSelector);
-                    const messageExists = currentMessages.some(
-                        (m) => m.localId === currentAssistantMessage.localId,
-                    );
-
-                    if (messageExists) {
-                        // Mark current message as complete
-                        yield put(
-                            evaluateMessageCompleteAction({
-                                assistantMessageId: currentAssistantMessage.localId,
-                            }),
-                        );
-                    }
-
-                    // Create new assistant message for the new interaction
-                    currentAssistantMessage = makeAssistantMessage([]);
-                    yield put(evaluateMessageAction({ message: currentAssistantMessage }));
-                }
-
-                // Track the current interaction ID
-                if (chunkInteractionId) {
-                    currentInteractionId = chunkInteractionId;
-                }
-
-                // Dispatch streaming content to current message
-                const contents = processContents(value, true, { showReasoning });
-                yield put(
-                    evaluateMessageStreamingAction({
-                        assistantMessageId: currentAssistantMessage.localId,
-                        interactionId: chunkInteractionId,
-                        contents,
-                    }),
-                );
-                yield call(
-                    notifyDefinitionReceived,
-                    {
-                        ...currentAssistantMessage,
-                        content: contents,
-                        id: chunkInteractionId,
-                    },
-                    "",
-                );
-            }
-        }
-
-        return { lastAssistantMessage: currentAssistantMessage };
-    } finally {
-        if (reader) {
-            const wasCancelled: boolean = yield cancelled();
-
-            if (wasCancelled) {
-                yield call([reader, reader.cancel]);
-            }
-
-            yield call([reader, reader.releaseLock]);
-        }
-
-        //Cancel saga
-        const messages: Message[] = yield select(messagesSelector);
-        const found = messages.find((m) => m.localId === currentAssistantMessage.localId);
-        if (!found) {
-            yield cancel();
-        }
-    }
+    yield conversationUserMessage(message);
 }
 
 //CONVERSATIONS API
@@ -471,7 +247,7 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
         if (messageToComplete) {
             // Check if the message still exists before marking it complete
             // (it may have been removed if the chat was cleared)
-            const currentMessages: Message[] = yield select(
+            const currentMessages: IChatConversationLocalItem[] = yield select(
                 conversationMessagesByIdSelector,
                 conversation?.localId,
             );

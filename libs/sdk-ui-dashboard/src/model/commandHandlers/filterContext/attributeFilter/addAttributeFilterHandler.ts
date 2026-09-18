@@ -37,6 +37,10 @@ import { resolveDisplayFormMetadata } from "../../../utils/displayFormResolver.j
 import { validateDrillToCustomUrlParams } from "../../common/validateDrillToCustomUrlParams.js";
 import { dispatchFilterContextChanged } from "../common.js";
 
+import {
+    computedAttributesDisabledMessage,
+    findDisabledComputedAttributeRef,
+} from "./validation/computedAttributesEnabledValidation.js";
 import { canFilterBeAdded } from "./validation/uniqueFiltersValidation.js";
 
 export function* addAttributeFilterHandler(
@@ -56,6 +60,18 @@ export function* addAttributeFilterHandler(
         primaryDisplayForm,
         title,
     } = cmd.payload;
+
+    const disabledComputedAttributeRef: SagaReturnType<typeof findDisabledComputedAttributeRef> = yield call(
+        findDisabledComputedAttributeRef,
+        [displayForm, primaryDisplayForm],
+    );
+    if (disabledComputedAttributeRef) {
+        throw invalidArgumentsProvided(
+            ctx,
+            cmd,
+            computedAttributesDisabledMessage(disabledComputedAttributeRef),
+        );
+    }
 
     const isUnderFilterCountLimit: ReturnType<typeof selectCanAddMoreFilters> =
         yield select(selectCanAddMoreFilters);

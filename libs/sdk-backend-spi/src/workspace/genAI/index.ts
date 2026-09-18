@@ -5,7 +5,6 @@ import type {
     FilterContextItem,
     GenAIChatEffort,
     GenAIChatInteractionUserFeedback,
-    GenAIChatInteractionUserVisualisation,
     GenAIObjectType,
     IAllowedRelationshipType,
     IAttribute,
@@ -14,12 +13,6 @@ import type {
     IAutomationSchedule,
     IDashboard,
     IFilter,
-    IGenAIChangeAnalysisParams,
-    IGenAIChatInteraction,
-    IGenAIChatReasoning,
-    IGenAIChatRouting,
-    IGenAICreatedVisualizations,
-    IGenAIFoundObjects,
     IGenAIUserContext,
     IGenAiClarifyingQuestion,
     IInsight,
@@ -56,11 +49,6 @@ export interface IGenAIService {
      * Get a semantic search query builder.
      */
     getSemanticSearchQuery(): ISemanticSearchQuery;
-
-    /**
-     * Get a chatbot thread builder.
-     */
-    getChatThread(): IChatThread;
 
     /**
      * Get a chatbot conversations builder.
@@ -225,93 +213,6 @@ export interface ISemanticSearchQuery {
 export type { ISemanticSearchResult };
 
 /**
- * Chatbot thread.
- * @beta
- */
-export interface IChatThread {
-    /**
-     * Load chat history for the chat thread.
-     */
-    loadHistory(fromInteractionId?: string, options?: { signal?: AbortSignal }): Promise<IChatThreadHistory>;
-    /**
-     * Reset the chat thread history.
-     */
-    reset(): Promise<void>;
-    /**
-     * Save user feedback for the interaction.
-     */
-    saveUserFeedback(
-        interactionId: string,
-        feedback: GenAIChatInteractionUserFeedback,
-        userTextFeedback?: string,
-    ): Promise<void>;
-    /**
-     * Save user feedback for the interaction.
-     */
-    saveUserVisualisation(
-        interactionId: string,
-        visualization: GenAIChatInteractionUserVisualisation,
-    ): Promise<void>;
-
-    /**
-     * Save render visualisation status for the interaction.
-     */
-    saveRenderVisualisationStatus(
-        interactionId: string,
-        status: "SUCCESSFUL" | "UNEXPECTED_ERROR" | "TOO_MANY_DATA_POINTS" | "NO_DATA" | "NO_RESULTS",
-    ): Promise<void>;
-    /**
-     * Add a user message to the chat thread.
-     */
-    query(userMessage: string): IChatThreadQuery;
-}
-
-/**
- * Chatbot thread history.
- * @beta
- */
-export interface IChatThreadHistory {
-    interactions: IGenAIChatInteraction[];
-    threadId: string;
-}
-
-/**
- * Chatbot thread query builder.
- * @beta
- */
-export interface IChatThreadQuery {
-    /**
-     * Define the limit for the number of search results returned by the chat thread.
-     */
-    withSearchLimit(searchLimit: number): IChatThreadQuery;
-    /**
-     * Define the limit for the number of created visualization returned by the chat thread.
-     */
-    withCreateLimit(createLimit: number): IChatThreadQuery;
-    /**
-     * Define the user context for the chat thread.
-     * For example, what dashboard the user is currently looking at.
-     */
-    withUserContext(userContext: IGenAIUserContext): IChatThreadQuery;
-    /**
-     * Define the object types for the chat thread.
-     */
-    withObjectTypes(objectTypes?: GenAIObjectType[]): IChatThreadQuery;
-    /**
-     * Define allowed relationships for search queries in search
-     */
-    withAllowedRelationshipTypes(relationshipTypes?: IAllowedRelationshipType[]): IChatThreadQuery;
-    /**
-     * Execute the chat thread.
-     */
-    query(options?: { signal?: AbortSignal }): Promise<IGenAIChatEvaluation>;
-    /**
-     * Execute the chat thread and stream the results.
-     */
-    stream(): ReadableStream<IGenAIChatEvaluation>;
-}
-
-/**
  * Memory service.
  * @internal
  */
@@ -345,24 +246,6 @@ export interface IMemoryItemsService {
      * Get memory created by users.
      */
     getCreatedByUsers(): Promise<IMemoryCreatedByUsers>;
-}
-
-/**
- * GenAI chat evaluation result.
- * @beta
- */
-export interface IGenAIChatEvaluation {
-    routing?: IGenAIChatRouting;
-    reasoning?: IGenAIChatReasoning;
-    textResponse?: string;
-    /** @deprecated Use `semanticSearch` property instead. */
-    foundObjects?: IGenAIFoundObjects;
-    semanticSearch?: ISemanticSearchResult;
-    createdVisualizations?: IGenAICreatedVisualizations;
-    changeAnalysisParams?: IGenAIChangeAnalysisParams;
-    errorResponse?: string;
-    chatHistoryThreadId?: string;
-    chatHistoryInteractionId?: string;
 }
 
 /**

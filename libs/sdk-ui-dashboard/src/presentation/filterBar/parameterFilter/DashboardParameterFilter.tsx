@@ -18,6 +18,7 @@ import {
     useIdPrefixed,
 } from "@gooddata/sdk-ui-kit";
 
+import { changeParameterValues } from "../../../model/commands/parameters.js";
 import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectCatalogParameterByRef } from "../../../model/store/catalog/catalogSelectors.js";
 import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../../model/store/config/configSelectors.js";
@@ -96,7 +97,7 @@ export function DashboardParameterFilter({ parameter }: IDashboardParameterFilte
         : {
               mode: "commit",
               onCommit: (value) =>
-                  dispatch(tabsActions.setParameterRuntimeValue({ ref: parameter.ref, value })),
+                  dispatch(changeParameterValues({ parameters: [{ ref: parameter.ref, value }] })),
           };
 
     return (

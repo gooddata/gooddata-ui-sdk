@@ -44,12 +44,14 @@ import {
     buildPersistedByTabAndRef,
     buildWorkspaceParametersByRef,
     classifyParameterReconciliation,
+    collectAppliedParameterValues,
     collectExportOverrides,
     collectParameterReconciliations,
     collectReferencedParameterRefs,
     computeParameterResetTargets,
     computeParameterResetValue,
     displayOverride,
+    hydrateParameterEntry,
     isGatedStringEntry,
     resolveEffectiveParameterValuesForRefs,
     smartPersistResolvedEntry,
@@ -66,8 +68,9 @@ const EMPTY_PARAMETERS: IDashboardParameter[] = [];
 const EMPTY_EXPORT_PARAMETERS: IDashboardExportParameter[] = [];
 const EMPTY_PARAMETER_VALUES: IInsightParameterValue[] = [];
 const EMPTY_TABS: IDashboardTab[] = [];
-const EMPTY_RESET_TARGETS: { ref: ObjRef; value: ParameterValue | undefined }[] = [];
+const EMPTY_RESET_TARGETS: IInsightParameterValue[] = [];
 const EMPTY_RECONCILIATIONS: IParameterReconciliationEntry[] = [];
+const EMPTY_WORKSPACE_PARAMETERS_BY_REF: Map<string, IParameterMetadataObject> = new Map();
 
 const selectParametersState = createSelector(
     selectActiveTab,
@@ -85,6 +88,11 @@ const selectPersistedDashboardTabsRaw: DashboardSelector<IDashboardTab[]> = (sta
 const selectWorkspaceParametersByRef: DashboardSelector<Map<string, IParameterMetadataObject>> =
     createSelector(selectCatalogParameters, buildWorkspaceParametersByRef);
 
+const selectLoadedWorkspaceParametersByRef: DashboardSelector<Map<string, IParameterMetadataObject>> =
+    createSelector(selectWorkspaceParametersByRef, selectCatalogParametersIsLoaded, (byRef, isLoaded) =>
+        isLoaded ? byRef : EMPTY_WORKSPACE_PARAMETERS_BY_REF,
+    );
+
 /**
  * Returns the persisted-shape parameter entries currently held by the active tab.
  *
@@ -94,6 +102,21 @@ export const selectDashboardParameters: DashboardSelector<IDashboardParameter[]>
     selectParametersState,
     (state) => state.parameters.map((entry) => entry.parameter),
 );
+
+/**
+ * Persisted-shape parameters of every tab, keyed by tab `localIdentifier`. Each tab gets a key,
+ * with `[]` when it holds no parameter.
+ *
+ * @internal
+ */
+export const selectDashboardParametersByTab: DashboardSelector<Record<string, IDashboardParameter[]>> =
+    createSelector(selectTabs, (tabs) => {
+        const result: Record<string, IDashboardParameter[]> = {};
+        for (const tab of tabs ?? []) {
+            result[tab.localIdentifier] = (tab.parameters?.parameters ?? []).map((entry) => entry.parameter);
+        }
+        return result;
+    });
 
 /**
  * Returns currently active parameter references on the active tab.
@@ -158,16 +181,28 @@ export const selectActiveTabDrillParameters: DashboardSelector<IInsightParameter
     selectDashboardParameterEntries,
     selectEnableStringParameters,
     (entries, isStringEnabled) => {
-        const result: IInsightParameterValue[] = [];
-        for (const entry of entries) {
-            if (entry.runtimeOverride === undefined || isGatedStringEntry(entry, isStringEnabled)) {
-                continue;
-            }
-            result.push({ ref: entry.parameter.ref, value: entry.runtimeOverride });
-        }
+        const result = collectAppliedParameterValues(entries, isStringEnabled);
         return result.length === 0 ? EMPTY_PARAMETER_VALUES : result;
     },
 );
+
+/**
+ * Applied parameter values of every tab, keyed by tab `localIdentifier`. Each tab gets a key,
+ * with `[]` when it has no applied value.
+ *
+ * @internal
+ */
+export const selectParameterValuesByTab: DashboardSelector<Record<string, IInsightParameterValue[]>> =
+    createSelector(selectTabs, selectEnableStringParameters, (tabs, isStringEnabled) => {
+        const result: Record<string, IInsightParameterValue[]> = {};
+        for (const tab of tabs ?? []) {
+            result[tab.localIdentifier] = collectAppliedParameterValues(
+                tab.parameters?.parameters ?? [],
+                isStringEnabled,
+            );
+        }
+        return result;
+    });
 
 /**
  * Returns a selector that yields the entry held by the active tab for a given parameter ref,
@@ -259,11 +294,10 @@ export const selectParameterResetValueByRef: (ref: ObjRef) => DashboardSelector<
 export const selectSmartPersistedTabsParameters: DashboardSelector<Record<string, IDashboardParameter[]>> =
     createSelector(
         selectTabs,
-        selectWorkspaceParametersByRef,
-        selectCatalogParametersIsLoaded,
+        selectLoadedWorkspaceParametersByRef,
         selectPersistedDashboardTabsRaw,
         selectPersistedParametersFromMeta,
-        (tabs, workspaceParameterByRef, isCatalogLoaded, persistedTabs, rootPersistedParameters) => {
+        (tabs, workspaceParameterByRef, persistedTabs, rootPersistedParameters) => {
             const result: Record<string, IDashboardParameter[]> = {};
             if (!tabs) {
                 return result;
@@ -274,9 +308,7 @@ export const selectSmartPersistedTabsParameters: DashboardSelector<Record<string
                 const persistedForTab = persistedByTabAndRef.get(tab.localIdentifier) ?? new Map();
                 result[tab.localIdentifier] = entries.map((entry) => {
                     const refKey = objRefToString(entry.parameter.ref);
-                    const workspaceParameter = isCatalogLoaded
-                        ? workspaceParameterByRef.get(refKey)
-                        : undefined;
+                    const workspaceParameter = workspaceParameterByRef.get(refKey);
                     if (!workspaceParameter) {
                         return persistedForTab.get(refKey) ?? entry.parameter;
                     }
@@ -315,6 +347,29 @@ const selectPersistedTabsParametersFromMeta: DashboardSelector<Record<string, ID
     );
 
 /**
+ * Applied parameter values as last persisted, keyed by tab `localIdentifier`: the pinned persisted
+ * value, else the workspace default. A parameter that resolves to no value is skipped.
+ *
+ * @internal
+ */
+export const selectOriginalParameterValuesByTab: DashboardSelector<Record<string, IInsightParameterValue[]>> =
+    createSelector(
+        selectPersistedTabsParametersFromMeta,
+        selectLoadedWorkspaceParametersByRef,
+        selectEnableStringParameters,
+        (persistedByTab, workspaceParameterByRef, isStringEnabled) => {
+            const result: Record<string, IInsightParameterValue[]> = {};
+            for (const [tabId, persistedParameters] of Object.entries(persistedByTab)) {
+                const entries = persistedParameters.map((parameter) =>
+                    hydrateParameterEntry(parameter, workspaceParameterByRef),
+                );
+                result[tabId] = collectAppliedParameterValues(entries, isStringEnabled);
+            }
+            return result;
+        },
+    );
+
+/**
  * Returns true if the dashboard parameters that would be persisted differ from the persisted
  * version on any tab.
  *
@@ -342,21 +397,20 @@ export const selectIsParametersChanged: DashboardSelector<boolean> = createSelec
  *
  * @internal
  */
-export const selectActiveTabParameterResetTargets: DashboardSelector<
-    { ref: ObjRef; value: ParameterValue | undefined }[]
-> = createSelector(
-    selectDashboardParameterEntries,
-    selectCatalogParameters,
-    selectIsInEditMode,
-    selectEnableParameters,
-    (entries, workspaceParameters, isInEditMode, isEnabled) => {
-        if (!isEnabled) {
-            return EMPTY_RESET_TARGETS;
-        }
-        const targets = computeParameterResetTargets(entries, workspaceParameters, isInEditMode);
-        return targets.length === 0 ? EMPTY_RESET_TARGETS : targets;
-    },
-);
+export const selectActiveTabParameterResetTargets: DashboardSelector<IInsightParameterValue[]> =
+    createSelector(
+        selectDashboardParameterEntries,
+        selectCatalogParameters,
+        selectIsInEditMode,
+        selectEnableParameters,
+        (entries, workspaceParameters, isInEditMode, isEnabled) => {
+            if (!isEnabled) {
+                return EMPTY_RESET_TARGETS;
+            }
+            const targets = computeParameterResetTargets(entries, workspaceParameters, isInEditMode);
+            return targets.length === 0 ? EMPTY_RESET_TARGETS : targets;
+        },
+    );
 
 /**
  * True when the active tab has at least one parameter whose display value (staged, else applied)

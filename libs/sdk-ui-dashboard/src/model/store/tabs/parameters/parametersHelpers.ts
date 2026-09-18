@@ -161,6 +161,25 @@ export function computeHydratedRuntimeOverride(
 }
 
 /**
+ * The store entry for a persisted parameter, with `runtimeOverride` seeded per
+ * {@link computeHydratedRuntimeOverride}.
+ *
+ * @internal
+ */
+export function hydrateParameterEntry(
+    parameter: IDashboardParameter,
+    workspaceParameterByRef: Map<string, IParameterMetadataObject>,
+): IDashboardParameterEntry {
+    return {
+        parameter,
+        runtimeOverride: computeHydratedRuntimeOverride(
+            parameter,
+            workspaceParameterByRef.get(objRefToString(parameter.ref)),
+        ),
+    };
+}
+
+/**
  * The workspace definition a dashboard parameter binds to: the definition when its type matches
  * the parameter's own type tag, `undefined` otherwise (removed or incompatible workspace
  * parameter). The single home of the type-match invariant shared by hydration, reset,
@@ -274,6 +293,26 @@ export function collectParameterReconciliations(
             name: resolveParameterTitle(entry.parameter, workspaceParameter),
             kind,
         });
+    }
+    return result;
+}
+
+/**
+ * The applied values of the entries. Entries without a `runtimeOverride` and gated-off STRING entries
+ * are skipped.
+ *
+ * @internal
+ */
+export function collectAppliedParameterValues(
+    entries: IDashboardParameterEntry[],
+    isStringEnabled: boolean,
+): IInsightParameterValue[] {
+    const result: IInsightParameterValue[] = [];
+    for (const entry of entries) {
+        if (entry.runtimeOverride === undefined || isGatedStringEntry(entry, isStringEnabled)) {
+            continue;
+        }
+        result.push({ ref: entry.parameter.ref, value: entry.runtimeOverride });
     }
     return result;
 }
@@ -509,10 +548,9 @@ export function computeParameterResetTargets(
     entries: IDashboardParameterEntry[],
     workspaceParameters: IParameterMetadataObject[],
     isInEditMode: boolean,
-): { ref: IDashboardParameterEntry["parameter"]["ref"]; value: ParameterValue | undefined }[] {
+): IInsightParameterValue[] {
     const workspaceParameterByRef = buildWorkspaceParametersByRef(workspaceParameters);
-    const result: { ref: IDashboardParameterEntry["parameter"]["ref"]; value: ParameterValue | undefined }[] =
-        [];
+    const result: IInsightParameterValue[] = [];
     for (const entry of entries) {
         if (entry.parameter.mode !== DashboardParameterModeValues.ACTIVE) {
             continue;

@@ -5,21 +5,14 @@ import { type ComponentType, type KeyboardEvent, type ReactNode, type Ref } from
 import {
     type DashboardAttachmentType,
     type FilterContextItem,
-    type IAutomationMetadataObject,
     type IAutomationMetadataObjectDefinition,
     type IExportDefinitionVisualizationObjectSettings,
     type IExportTemplate,
-    type IFilter,
-    type IInsight,
-    type INotificationChannelIdentifier,
-    type INotificationChannelMetadataObject,
-    type IWidget,
     type IdentifierRef,
     type ParameterValue,
     type WeekStart,
     type WidgetAttachmentType,
 } from "@gooddata/sdk-model";
-import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 import { type ISlotProps } from "@gooddata/sdk-ui-kit";
 
 import { type IAutomationFiltersTab } from "../../../model/store/filtering/types.js";
@@ -43,97 +36,12 @@ import {
 /**
  * Props of the scheduled-email create/edit dialog, accepted by `ScheduledEmailDialogComponent`.
  *
- * Extends {@link IAutomationDialogCallbacks} with data props that are all deprecated — the dialog
- * reads its data from `useScheduledEmailDialogContext()` instead.
+ * Extends {@link IAutomationDialogCallbacks} — the dialog carries no data props; it reads its
+ * data from `useScheduledEmailDialogContext()` instead.
  *
  * @beta
  */
 export interface IScheduledEmailDialogProps extends IAutomationDialogCallbacks {
-    /**
-     * In case, we are not creating new schedule, but editing existing one, this is the active schedule to be edited.
-     *
-     * @deprecated has no effect since 11.51 — the dialog reads `scheduledExportToEdit` from
-     *     `useScheduledEmailDialogContext()`. To adjust what it reads, use the
-     *     `ScheduledEmailDialogContextDecoratorComponent` dashboard prop. Prop will be removed.
-     */
-    scheduledExportToEdit?: IAutomationMetadataObject;
-
-    /**
-     * Notification channels in organization
-     *
-     * @deprecated has no effect since 11.51 — the dialog reads `notificationChannels` from
-     *     `useScheduledEmailDialogContext()`. To adjust what it reads, use the
-     *     `ScheduledEmailDialogContextDecoratorComponent` dashboard prop. Prop will be removed.
-     */
-    notificationChannels?: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
-
-    /**
-     * Widget to be used for scheduled email.
-     *
-     * Note: this is available only when scheduling export for widget, not dashboard.
-     * Typed as IWidget (not ExtendedDashboardWidget) because the dialog only
-     * supports insight widgets; custom widgets and nested layouts are not valid
-     * export targets and were silently discarded at the connector boundary anyway.
-     *
-     * @deprecated has no effect since 11.51 — the dialog reads `widget` from
-     *     `useScheduledEmailDialogContext()`. To adjust what it reads, use the
-     *     `ScheduledEmailDialogContextDecoratorComponent` dashboard prop. Prop will be removed.
-     */
-    widget?: IWidget;
-
-    /**
-     * Insight to be used for scheduled email.
-     *
-     * Note: this is available only when scheduling export for widget, not dashboard.
-     *
-     * @deprecated has no effect since 11.51 — the dialog reads `insight` from
-     *     `useScheduledEmailDialogContext()`. To adjust what it reads, use the
-     *     `ScheduledEmailDialogContextDecoratorComponent` dashboard prop. Prop will be removed.
-     */
-    insight?: IInsight;
-
-    /**
-     * Dashboard filters to be used for scheduled email.
-     *
-     * Note:
-     * - Provided filters exclude cross-filtering filters, as these are typically not desired in exported reports.
-     *
-     * - If the current dashboard filters (excluding cross-filtering) match the saved dashboard filters, this will be undefined.
-     *   In such cases, the scheduled export will use the most recent saved dashboard filters, guaranteeing that
-     *   the export reflects the latest intended filter configuration and we don't want to save them.
-     *
-     * - If we are editing an existing scheduled export, this will contain its filters, as changing saved filters is currently not allowed.
-     *
-     * @deprecated has no effect since 11.51 — the dialog reads `dashboardFilters` from
-     *     `useScheduledEmailDialogContext()`. To adjust what it reads, use the
-     *     `ScheduledEmailDialogContextDecoratorComponent` dashboard prop. Prop will be removed.
-     */
-    dashboardFilters?: FilterContextItem[];
-
-    /**
-     * Widget filters to be used for scheduled email.
-     *
-     * Note:
-     * - Provided filters are a combination of insight and dashboard filters, following these rules:
-     *     - Cross-filtering filters are excluded as they are typically not desired in the scheduled export.
-     *     - The widget's ignored filters configuration is honored (ignored filters are not overridden by dashboard filters and remain as is).
-     *     - If the resulting filters include all-time date filter, it is excluded as it has no effect on the scheduled export execution.
-     *
-     * - If we are editing an existing scheduled export, this will contain its filters, as changing saved filters is currently not allowed.
-     *
-     * @deprecated not read by the default dialog; the effective widget filters are derived from the
-     *     edited filters. Prop will be removed.
-     */
-    widgetFilters?: IFilter[];
-
-    /**
-     * Is scheduled email dialog loading initial data, before it can be rendered?
-     *
-     * @deprecated has no effect since 11.51 — the dialog reads `isLoading` from
-     *     `useScheduledEmailDialogContext()`. Prop will be removed.
-     */
-    isLoading?: boolean;
-
     /**
      * Callback to be called, when user goes back to the scheduled email management dialog.
      */
@@ -776,42 +684,12 @@ export interface IScheduledEmailDialogShellProps extends Pick<
 /**
  * Props of the scheduled-email management dialog, accepted by `ScheduledEmailManagementDialogComponent`.
  *
- * Extends {@link IAutomationManagementDialogCallbacks} with data props that are all deprecated —
- * the dialog reads its data from `useScheduledEmailManagementDialogContext()` instead.
+ * Alias of {@link IAutomationManagementDialogCallbacks} — the dialog carries no data props; it
+ * reads its data from `useScheduledEmailManagementDialogContext()` instead.
  *
  * @beta
  */
-export interface IScheduledEmailManagementDialogProps extends IAutomationManagementDialogCallbacks {
-    /**
-     * Is loading schedule data?
-     *
-     * @deprecated read `isLoading` from `useScheduledEmailManagementDialogContext()` instead. Prop will
-     *     be removed.
-     */
-    isLoadingScheduleData?: boolean;
-
-    /**
-     * Error occurred while loading schedule data?
-     *
-     * @deprecated not read by the default dialog. Prop will be removed.
-     */
-    scheduleDataError?: GoodDataSdkError;
-
-    /**
-     * Notification channels in organization
-     *
-     * @deprecated not read by the default dialog. Prop will be removed.
-     */
-    notificationChannels?: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
-
-    /**
-     * Automations in workspace
-     *
-     * @deprecated read `automations` from `useScheduledEmailManagementDialogContext()` instead. Prop
-     *     will be removed.
-     */
-    automations?: IAutomationMetadataObject[];
-}
+export type IScheduledEmailManagementDialogProps = IAutomationManagementDialogCallbacks;
 
 ///
 /// Custom component types

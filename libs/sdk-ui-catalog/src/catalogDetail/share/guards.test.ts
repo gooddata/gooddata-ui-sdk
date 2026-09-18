@@ -44,6 +44,13 @@ const computedAttribute: ShareableCatalogItem = {
     identifier: "ca.revenue_bucket",
     title: "Revenue bucket",
 };
+const insight: ShareableCatalogItem = {
+    ...itemBase,
+    type: "insight",
+    identifier: "insight.revenue",
+    title: "Revenue by region",
+    visualizationType: "column",
+};
 const dashboard: ICatalogItem = {
     ...itemBase,
     type: "analyticalDashboard",
@@ -57,6 +64,7 @@ describe("isShareableCatalogItem", () => {
         { item: fact, expected: true },
         { item: measure, expected: true },
         { item: computedAttribute, expected: true },
+        { item: insight, expected: true },
         { item: dashboard, expected: false },
     ])("returns $expected for $item.type", ({ item, expected }) => {
         expect(isShareableCatalogItem(item)).toBe(expected);
@@ -64,6 +72,13 @@ describe("isShareableCatalogItem", () => {
 });
 
 describe("toShareTarget", () => {
+    it("maps a visualization to an insight-kind target", () => {
+        expect(toShareTarget(insight)).toEqual({
+            kind: "insight",
+            ref: idRef("insight.revenue", "insight"),
+        });
+    });
+
     it("maps a measure to a measure-kind target", () => {
         expect(toShareTarget(measure)).toEqual({
             kind: "measure",

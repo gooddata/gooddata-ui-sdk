@@ -6223,6 +6223,7 @@ export {
     type JsonApiComputedAttributePatchAttributesContentMetricTypeEnum,
     type JsonApiComputedAttributePostOptionalIdAttributesContentMetricTypeEnum,
     type JsonApiMetricOutMetaPermissionsEnum,
+    type JsonApiVisualizationObjectOutMetaPermissionsEnum,
     type JsonApiVisualizationObjectOutRelationshipsComputedAttributes,
     type ActionsApiComputedAttributePermissionsRequest,
     type ActionsApiManageComputedAttributePermissionsRequest,

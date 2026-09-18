@@ -7,9 +7,9 @@
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2026-9-15
+Date generated: 2026-9-17
 
-Revision ID: 53e5b31eb80f5e6946a5e63ab38484173dd3b694
+Revision ID: 6e9e7d215b299b59d80f8f5d8951b4add339a98a
 
 ================================================================================
 ================================================================================
@@ -135,11 +135,17 @@ No first party licenses found in gooddata-ui-sdk
 - @mapbox/jsonlint-lines-primitives (2.0.3) [MIT]
 - @mapbox/mapbox-gl-supported (2.0.1) [BSD-3-Clause]
 - @mapbox/point-geometry (0.1.0) [ISC]
+- @mapbox/point-geometry (1.1.0) [ISC]
 - @mapbox/tiny-sdf (2.2.0) [BSD-2-Clause]
 - @mapbox/unitbezier (0.0.1) [BSD-2-Clause]
+- @mapbox/unitbezier (1.0.0) [BSD-2-Clause]
 - @mapbox/vector-tile (1.3.1) [BSD-3-Clause]
+- @mapbox/vector-tile (3.0.0) [BSD-3-Clause]
 - @mapbox/whoots-js (3.1.0) [ISC]
-- @maplibre/maplibre-gl-style-spec (20.4.0) [ISC, MIT, BSD-3-Clause]
+- @maplibre/geojson-vt (6.1.1) [MIT, ISC]
+- @maplibre/maplibre-gl-style-spec (26.4.4) [ISC, MIT, BSD-3-Clause]
+- @maplibre/mlt (1.3.0) [MIT, Apache-2.0]
+- @maplibre/vt-pbf (4.3.2) [MIT, BSD-3-Clause]
 - @marijn/find-cluster-break (1.0.3) [MIT]
 - @module-federation/error-codes (2.6.0) [MIT]
 - @module-federation/runtime (2.6.0) [MIT]
@@ -184,20 +190,15 @@ No first party licenses found in gooddata-ui-sdk
 - @types/estree-jsx (1.0.5) [MIT]
 - @types/fs-extra (9.0.13) [MIT]
 - @types/geojson (7946.0.16) [MIT]
-- @types/geojson-vt (3.2.5) [MIT]
 - @types/hast (3.0.5) [MIT]
 - @types/json-stable-stringify (1.2.0) [MIT]
-- @types/mapbox__point-geometry (0.1.4) [MIT]
-- @types/mapbox__vector-tile (1.3.4) [MIT]
 - @types/mdast (4.0.4) [MIT]
 - @types/ms (2.1.0) [MIT]
 - @types/node (22.20.1) [MIT]
 - @types/node (24.12.0) [MIT]
 - @types/parse-json (4.0.2) [MIT]
-- @types/pbf (3.0.5) [MIT]
 - @types/react (19.1.11) [MIT]
 - @types/react-transition-group (4.4.12) [MIT]
-- @types/supercluster (7.1.3) [MIT]
 - @types/unist (2.0.11) [MIT]
 - @types/unist (3.0.3) [MIT]
 - @types/use-sync-external-store (0.0.6) [MIT]
@@ -226,6 +227,7 @@ No first party licenses found in gooddata-ui-sdk
 - balanced-match (2.0.0) [MIT]
 - balanced-match (4.0.4) [MIT]
 - base64-js (1.5.1) [MIT]
+- bidi-js (1.1.0) [MIT]
 - bl (4.1.0) [MIT]
 - brace-expansion (5.0.8) [MIT]
 - braces (3.0.3) [MIT]
@@ -336,7 +338,6 @@ No first party licenses found in gooddata-ui-sdk
 - fs-extra (10.1.0) [MIT]
 - function-bind (1.1.2) [MIT]
 - geojson-vt (3.2.1) [ISC]
-- geojson-vt (4.0.3) [ISC]
 - get-intrinsic (1.3.0) [MIT]
 - get-node-dimensions (1.2.1) [MIT]
 - get-own-enumerable-property-symbols (3.0.2) [ISC]
@@ -348,7 +349,6 @@ No first party licenses found in gooddata-ui-sdk
 - glob-parent (5.1.2) [ISC]
 - global-modules (2.0.0) [MIT]
 - global-prefix (3.0.0) [MIT]
-- global-prefix (4.0.0) [MIT]
 - globby (11.1.0) [MIT]
 - globjoin (0.1.4) [MIT]
 - gopd (1.2.0) [MIT]
@@ -384,7 +384,6 @@ No first party licenses found in gooddata-ui-sdk
 - indent-string (4.0.0) [MIT]
 - inherits (2.0.4) [ISC]
 - ini (1.3.8) [ISC]
-- ini (4.1.3) [ISC]
 - inline-style-parser (0.2.7) [MIT]
 - inquirer (9.3.8) [MIT]
 - intl-messageformat (11.2.14) [BSD-3-Clause]
@@ -409,7 +408,6 @@ No first party licenses found in gooddata-ui-sdk
 - is-wsl (2.2.0) [MIT]
 - isarray (2.0.5) [MIT]
 - isexe (2.0.0) [ISC]
-- isexe (3.1.5) [ISC]
 - jackspeak (4.2.3) [blueoak-1.0.0]
 - js-tokens (4.0.0) [MIT]
 - js-yaml (4.3.0) [MIT]
@@ -440,7 +438,7 @@ No first party licenses found in gooddata-ui-sdk
 - luxon (3.7.2) [MIT]
 - lz-string (1.5.0) [MIT, WTFPL]
 - mapbox-gl (2.15.0) [BSD-3-Clause, MIT]
-- maplibre-gl (4.7.1) [BSD-3-Clause, MIT, 0BSD, ISC]
+- maplibre-gl (6.10.0) [BSD-3-Clause, ISC, MIT]
 - markdown-table (3.0.4) [MIT]
 - matchmediaquery (0.4.2) [MIT]
 - math-intrinsics (1.1.0) [MIT]
@@ -529,6 +527,7 @@ No first party licenses found in gooddata-ui-sdk
 - path-scurry (2.0.2) [blueoak-1.0.0]
 - path-type (4.0.0) [MIT]
 - pbf (3.3.0) [MIT, BSD-3-Clause]
+- pbf (5.1.2) [MIT, BSD-3-Clause]
 - picocolors (1.1.1) [ISC]
 - picomatch (2.3.2) [MIT]
 - picomatch (4.0.5) [MIT]
@@ -687,7 +686,6 @@ No first party licenses found in gooddata-ui-sdk
 - wcwidth (1.0.1) [MIT]
 - which (1.3.1) [ISC]
 - which (2.0.2) [ISC]
-- which (4.0.0) [ISC]
 - wrap-ansi (6.2.0) [MIT]
 - write-file-atomic (5.0.1) [ISC]
 - yallist (5.0.0) [ISC]
@@ -10294,7 +10292,7 @@ Authors: accounts+npm-mapbox-machine-user@mapbox.com, accounts+npmjs-01@mapbox.c
 Package Manager: NPM
 Project URL: https://www.npmjs.com/package/@mapbox/geojson-rewind
 Package Download URL: https://registry.npmjs.org/@mapbox/geojson-rewind/-/geojson-rewind-0.5.2.tgz
-Dependency Path: mapbox-gl > @mapbox/geojson-rewind > maplibre-gl > @mapbox/geojson-rewind
+Dependency Path: mapbox-gl > @mapbox/geojson-rewind
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -10333,7 +10331,7 @@ Authors: accounts+npm-mapbox-machine-user@mapbox.com, accounts+npmjs-01@mapbox.c
 Package Manager: NPM
 Project URL: https://www.npmjs.com/package/@mapbox/jsonlint-lines-primitives
 Package Download URL: https://registry.npmjs.org/@mapbox/jsonlint-lines-primitives/-/jsonlint-lines-primitives-2.0.3.tgz
-Dependency Path: mapbox-gl > @mapbox/jsonlint-lines-primitives > maplibre-gl > @mapbox/jsonlint-lines-primitives > maplibre-gl > @maplibre/maplibre-gl-style-spec > @mapbox/jsonlint-lines-primitives
+Dependency Path: mapbox-gl > @mapbox/jsonlint-lines-primitives > maplibre-gl > @maplibre/maplibre-gl-style-spec > @mapbox/jsonlint-lines-primitives
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -10459,7 +10457,42 @@ Authors: flippmoke@gmail.com
 Package Manager: NPM
 Project URL: https://www.npmjs.com/package/@mapbox/point-geometry
 Package Download URL: https://registry.npmjs.org/@mapbox/point-geometry/-/point-geometry-0.1.0.tgz
-Dependency Path: mapbox-gl > @mapbox/point-geometry > mapbox-gl > @mapbox/vector-tile > @mapbox/point-geometry > mapbox-gl > vt-pbf > @mapbox/point-geometry > mapbox-gl > vt-pbf > @mapbox/vector-tile > @mapbox/point-geometry > maplibre-gl > @mapbox/point-geometry > maplibre-gl > @mapbox/vector-tile > @mapbox/point-geometry > maplibre-gl > vt-pbf > @mapbox/point-geometry > maplibre-gl > vt-pbf > @mapbox/vector-tile > @mapbox/point-geometry
+Dependency Path: mapbox-gl > @mapbox/point-geometry > mapbox-gl > @mapbox/vector-tile > @mapbox/point-geometry > mapbox-gl > vt-pbf > @mapbox/point-geometry > mapbox-gl > vt-pbf > @mapbox/vector-tile > @mapbox/point-geometry
+File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
+
+--------------------------------------------------------------------------------
+Package Title: @mapbox/point-geometry (1.1.0)
+
+Package Locator: npm+@mapbox/point-geometry$1.1.0
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+a point geometry with transforms
+
+* Declared Licenses *
+ISC
+
+ISC License
+Copyright (c) 2004-2010 by Internet Systems Consortium, Inc. ("ISC")
+Copyright (c) 1995-2003 by Internet Software Consortium
+Permission to use, copy, modify, and /or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
+THE SOFTWARE IS PROVIDED "AS IS" AND ISC DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL ISC BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+* License Header *
+ISC License
+Copyright (c) 2004-2010 by Internet Systems Consortium, Inc. ("ISC")
+Copyright (c) 1995-2003 by Internet Software Consortium
+Permission to use, copy, modify, and /or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
+THE SOFTWARE IS PROVIDED "AS IS" AND ISC DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL ISC BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+* Package Info *
+
+Authors: flippmoke@gmail.com
+Package Manager: NPM
+Project URL: https://www.npmjs.com/package/@mapbox/point-geometry
+Package Download URL: https://registry.npmjs.org/@mapbox/point-geometry/-/point-geometry-1.1.0.tgz
+Dependency Path: maplibre-gl > @mapbox/point-geometry > maplibre-gl > @mapbox/vector-tile > @mapbox/point-geometry > maplibre-gl > @maplibre/mlt > @mapbox/point-geometry > maplibre-gl > @maplibre/vt-pbf > @mapbox/point-geometry
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -10597,7 +10630,100 @@ Authors: accounts+npm-mapbox-machine-user@mapbox.com, accounts+npmjs-01@mapbox.c
 Package Manager: NPM
 Project URL: https://github.com/mapbox/unitbezier
 Package Download URL: https://registry.npmjs.org/@mapbox/unitbezier/-/unitbezier-0.0.1.tgz
-Dependency Path: mapbox-gl > @mapbox/unitbezier > maplibre-gl > @mapbox/unitbezier > maplibre-gl > @maplibre/maplibre-gl-style-spec > @mapbox/unitbezier
+Dependency Path: mapbox-gl > @mapbox/unitbezier
+File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
+
+--------------------------------------------------------------------------------
+Package Title: @mapbox/unitbezier (1.0.0)
+
+Package Locator: npm+@mapbox/unitbezier$1.0.0
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+unit bezier curve interpolation
+
+* Declared Licenses *
+BSD-2-Clause
+--------------------------------------------------------------------------------
+File matches:
+- LICENSE
+  - Copyright (c) 2008 Apple Inc. All Rights Reserved.
+- package.json
+--------------------------------------------------------------------------------
+
+BSD-2-Clause
+
+Copyright (C) 2008 Apple Inc. All Rights Reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY APPLE INC. ``AS IS'' AND ANY
+EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL APPLE INC. OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
+OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+Ported from Webkit
+http://svn.webkit.org/repository/webkit/trunk/Source/WebCore/platform/graphics/UnitBezier.h
+
+
+* License Header *
+BSD-2-Clause
+
+Copyright (C) 2008 Apple Inc. All Rights Reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY APPLE INC. ``AS IS'' AND ANY
+EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL APPLE INC. OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
+OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+Ported from Webkit
+http://svn.webkit.org/repository/webkit/trunk/Source/WebCore/platform/graphics/UnitBezier.h
+
+
+* Copyrights *
+BSD-2-Clause
+- Copyright (c) 2008 Apple Inc. All Rights Reserved.
+
+* Package Info *
+
+Authors: accounts+npm-mapbox-machine-user@mapbox.com, accounts+npmjs-01@mapbox.com, accounts+npmjs-02@mapbox.com, accounts+npmjs-03@mapbox.com, accounts+npmjs-04@mapbox.com, accounts+npmjs-05@mapbox.com, accounts+npmjs-06@mapbox.com, accounts+npmjs-07@mapbox.com, accounts+npmjs-08@mapbox.com, accounts+npmjs-09@mapbox.com, accounts+npmjs-advanced-actions@mapbox.com, accounts+npmjs-npm-ci@mapbox.com, accounts+npmjs@mapbox.com, accounts@mapbox.com, yannick.meeus+npm+prod+01@mapbox.com, yannick.meeus+npm+prod+02@mapbox.com, yannick.meeus+npm+prod+03@mapbox.com, yannick.meeus+npm+prod+04@mapbox.com, yannick.meeus+npm+prod+05@mapbox.com, yannick.meeus+npm+prod+06@mapbox.com, yannick.meeus+npm+prod+07@mapbox.com, yannick.meeus+npm+prod+08@mapbox.com, yannick.meeus+npm+prod+09@mapbox.com, yannick.meeus+npm+prod+advanced+actions@mapbox.com, yannick.meeus+npm+production+ci@mapbox.com, yannick.meeus+npm+staging+advanced+actions@mapbox.com, yannick.meeus+npm+staging+ci@mapbox.com, yannick.meeus@mapbox.com
+Package Manager: NPM
+Project URL: https://github.com/mapbox/unitbezier
+Package Download URL: https://registry.npmjs.org/@mapbox/unitbezier/-/unitbezier-1.0.0.tgz
+Dependency Path: maplibre-gl > @mapbox/unitbezier > maplibre-gl > @maplibre/maplibre-gl-style-spec > @mapbox/unitbezier
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -10684,7 +10810,94 @@ Authors: 0o3ko0@gmail.com, aarthy@mapbox.com, abhishek@mapbox.com, accounts@mapb
 Package Manager: NPM
 Project URL: https://www.npmjs.com/package/@mapbox/vector-tile
 Package Download URL: https://registry.npmjs.org/@mapbox/vector-tile/-/vector-tile-1.3.1.tgz
-Dependency Path: mapbox-gl > @mapbox/vector-tile > mapbox-gl > vt-pbf > @mapbox/vector-tile > maplibre-gl > @mapbox/vector-tile > maplibre-gl > vt-pbf > @mapbox/vector-tile
+Dependency Path: mapbox-gl > @mapbox/vector-tile > mapbox-gl > vt-pbf > @mapbox/vector-tile
+File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
+
+--------------------------------------------------------------------------------
+Package Title: @mapbox/vector-tile (3.0.0)
+
+Package Locator: npm+@mapbox/vector-tile$3.0.0
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+Parses vector tiles
+
+* Declared Licenses *
+BSD-3-Clause
+
+Copyright (c) 2014, Mapbox
+
+
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice,
+      this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright notice,
+      this list of conditions and the following disclaimer in the documentation
+      and/or other materials provided with the distribution.
+    * Neither the name of Mapbox nor the names of its contributors
+      may be used to endorse or promote products derived from this software
+      without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+* License Header *
+Copyright (c) 2014, Mapbox
+
+
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice,
+      this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright notice,
+      this list of conditions and the following disclaimer in the documentation
+      and/or other materials provided with the distribution.
+    * Neither the name of Mapbox nor the names of its contributors
+      may be used to endorse or promote products derived from this software
+      without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+* Copyrights *
+BSD-3-Clause
+- Copyright (c) 2014, Mapbox
+
+* Package Info *
+
+Authors: 0o3ko0@gmail.com, aarthy@mapbox.com, abhishek@mapbox.com, accounts@mapbox.com, adam.debreczeni@mapbox.com, adarsh.pavani@mapbox.com, agafonkin@gmail.com, aileen.s.rowan@gmail.com, aj@mapbox.com, alex.parlato@mapbox.com, alex@mapbox.com, alexy@codeforamerica.org, ali@mapbox.com, alice@mapbox.com, alinapaz@gmail.com, amisha@mapbox.com, amyleewalton@gmail.com, andrea.delrio@mapbox.com, andrew.evans@mapbox.com, andrew@mapbox.com, andrey@mapbox.com, angel.kittiyachavalit@gmail.com, angela.navarro@mapbox.com, anjana.vakil@mapbox.com, ann.millspaugh@gmail.com, anna.petrone@mapbox.com, ansis.brammanis@gmail.com, anthony.agby@mapbox.com, antonio@mapbox.com, arun.planemad@gmail.com, aruna@mapbox.com, asheemm@gmail.com, b.jazzy.w@gmail.com, benjamin@mapbox.com, bersabel.tadesse@mapbox.com, bharata+npm@mapbox.com, bhargav.kowshik@gmail.com, blannon@gmail.com, bobby@mapbox.com, brendan@mapbox.com, bruno@mapbox.com, bryan@mapbox.com, cameron@mapbox.com, camilla@mapbox.com, camilo.sanin@mapbox.com, carol@mapbox.com, caseymm@gmail.com, charlie@mapbox.com, chethan@mapbox.com, chris.loer@mapbox.com, christopher.cailleaux@gmail.com, christopher.knouss@mapbox.com, colleen.mcginnis@mapbox.com, damon@mapbox.com, dan@mapbox.com, dana.sulit@mapbox.com, dane@mapbox.com, daniel+npm@trvx.org, daniel.paz-soldan@mapbox.com, daniel.puttick@mapbox.com, danmactough@gmail.com, danpat@danpat.net, dave.prukop@mapbox.com, dave@mapbox.com, david.dave.clark@gmail.com, david.nesbitt@mapbox.com, decorah@mapbox.com, denis.koronchik@gmail.com, devin.boyer@mapbox.com, diane.e.schulze@gmail.com, dthompson@gmail.com, duane.gearhart@mapbox.com, dubois@mapbox.com, edgar.marca@mapbox.com, eli.fitch.prof+npm@gmail.com, eliane@mapbox.com, emily.chow@mapbox.com, emily@mapbox.com, emmanuel.sambale@gmail.com, eric.alessandrini@mapbox.com, eric.wolfe@mapbox.com, fabian.guerra@gmail.com, fischer@mapbox.com, flippmoke@gmail.com, friedbunny@users.noreply.github.com, ghoshkaj@gmail.com, gokul.ganesan@mapbox.com, greg.knisely@mapbox.com, hello@chau-nguyen.de, hello@franka.tech, hi@jacquestardie.org, hjudge@mapbox.com, ian.villeda@gmail.com, ian@mapbox.com, info@ivovandongen.nl, ingalls@protonmail.com, irwin@mapbox.com, jake@jakepruitt.com, jayana.charles@mapbox.com, jeff@miccolis.net, jesse@rebounds.net, jim.martin@mapbox.com, jinny.cho@mapbox.com, joe.clark@mapbox.com, john.firebaugh@gmail.com, john.sylak-glassman@mapbox.com, johnny@johnnyray.me, jordan.kiley@mapbox.com, jordan.webb@mapbox.com, jothirnadh@mapbox.com, julianne@mapbox.com, justyna.janczyszyn@mapbox.com, kai@mapbox.com, kalimar.maia@gmail.com, kara.e.mahoney@gmail.com, karen.ellenberger@mapbox.com, karen@mapbox.com, katherine.meng@mapbox.com, kelly.young@mapbox.com, kevinkreiser@gmail.com, kilatsat@gmail.com, krishna@mapbox.com, kristen.diluca@mapbox.com, langston.smith@mapbox.com, laura.mooney@mapbox.com, lauren@mapbox.com, lauri.rustanius@mapbox.com, laurier@mapbox.com, lily@mapbox.com, liz.shigetoshi@mapbox.com, lizzie.gooding@mapbox.com, lo_benichou@protonmail.com, lucas@lucaswoj.com, luis@mapbox.com, lukasz.paczos@mapbox.com, lyzi@mapbox.com, macro.shen@mapbox.com, mai.nguyen@mapbox.com, mail@kkaefer.com, mallorywood413@gmail.com, manohar@mapbox.com, mark.misener@mapbox.com, matt.gosline@mapbox.com, matt@mapbox.com, matt@mattficke.com, max@mapbox.com, mcwhittemore@gmail.com, me@lukasmartinelli.ch, michael.krasnyk@gmail.com, mikel@groundtruth.in, mollylloyd@gmail.com, morgan.herlocker@gmail.com, morgane.santos@mapbox.com, msteigerwalt@gmail.com, mully@mapbox.com, mxn@1ec5.org, nadia.barbosa@mapbox.com, nat@mapbox.com, nick.cordella@mapbox.com, nick.italiano@mapbox.com, nicki@mapbox.com, nikinfour@gmail.com, nmargolis89@gmail.com, norchard24@gmail.com, norman.barker@mapbox.com, oindrila.gupta92@gmail.com, okorie.puryear@mapbox.com, olivia.brundage@mapbox.com, oormila@mapbox.com, pablo.guardiola@mapbox.com, paige.moody@mapbox.com, patrick.taylor@mapbox.com, patrick@mapbox.com, paul@mapbox.com, paul@pave4.com, perry@mapbox.com, peterqliu@gmail.com, poornima@mapbox.com, pratik@mapbox.com, r.ragupathy85@gmail.com, rafa@mapbox.com, randall.lee@mapbox.com, rasagy@mapbox.com, rebecca.rice@mapbox.com, ryan.baumann@mapbox.com, ryan.clark.j@gmail.com, saba.elhilo2@gmail.com, sabelo.mhlambi@mapbox.com, safonov.ilya@gmail.com, sam.fader@mapbox.com, sam@mapbox.com, saman@mapbox.com, scott.farley@mapbox.com, scott.schultz@mapbox.com, sean@mapbox.com, sewilhelm@gmail.com, siyu.song@gmail.com, spam@freenerd.de, srividyabharadwaj26@gmail.com, tapasweni@mapbox.com, tara.adiseshan@gmail.com, tim.channell@gmail.com, tlee@mapbox.com, tmpsantos@gmail.com, tony.chen@mapbox.com, toomey.chris@gmail.com, tridip@mapbox.com, tristen.brown@gmail.com, ulsh@mapbox.com, upendra@mapbox.com, vestibule@anandthakker.net, vincent.sarago@mapbox.com, virginia@mapbox.com, vladimir.kananovich@mapbox.com, will@mapbox.com, xianny@gmail.com, young@mapbox.com, zurihunter92@gmail.com
+Package Manager: NPM
+Project URL: https://www.npmjs.com/package/@mapbox/vector-tile
+Package Download URL: https://registry.npmjs.org/@mapbox/vector-tile/-/vector-tile-3.0.0.tgz
+Dependency Path: maplibre-gl > @mapbox/vector-tile
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -10741,13 +10954,184 @@ Authors: accounts+npmjs-01@mapbox.com, accounts+npmjs-02@mapbox.com, accounts+np
 Package Manager: NPM
 Project URL: https://www.npmjs.com/package/@mapbox/whoots-js
 Package Download URL: https://registry.npmjs.org/@mapbox/whoots-js/-/whoots-js-3.1.0.tgz
-Dependency Path: mapbox-gl > @mapbox/whoots-js > maplibre-gl > @mapbox/whoots-js
+Dependency Path: mapbox-gl > @mapbox/whoots-js
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
-Package Title: @maplibre/maplibre-gl-style-spec (20.4.0)
+Package Title: @maplibre/geojson-vt (6.1.1)
 
-Package Locator: npm+@maplibre/maplibre-gl-style-spec$20.4.0
+Package Locator: npm+@maplibre/geojson-vt$6.1.1
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+Slice GeoJSON data into vector tiles efficiently
+
+* Declared Licenses *
+MIT, ISC
+
+* MIT *
+--------------------------------------------------------------------------------
+File matches:
+- LICENSE
+  - Copyright (c) 2024 Mapbox
+  - Copyright (c) 2025 MapLibre contributors
+--------------------------------------------------------------------------------
+
+MIT License
+Copyright (c) <year> <copyright holders>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+* License Header *
+Copyright (c) 2025 MapLibre contributors
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+* ISC *
+--------------------------------------------------------------------------------
+File matches:
+- LICENSE
+  - Copyright (c) 2024 Mapbox
+  - Copyright (c) 2025 MapLibre contributors
+- package.json
+--------------------------------------------------------------------------------
+
+The MIT License (MIT)
+
+Copyright (c) 2025 MapLibre contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+--------------------------------------------------------------------------------
+
+ISC License
+
+Copyright (c) 2024, Mapbox
+
+Permission to use, copy, modify, and/or distribute this software for any purpose
+with or without fee is hereby granted, provided that the above copyright notice
+and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
+FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
+OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
+TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
+THIS SOFTWARE.
+
+
+* License Header *
+The MIT License (MIT)
+
+Copyright (c) 2025 MapLibre contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+--------------------------------------------------------------------------------
+
+ISC License
+
+Copyright (c) 2024, Mapbox
+
+Permission to use, copy, modify, and/or distribute this software for any purpose
+with or without fee is hereby granted, provided that the above copyright notice
+and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
+FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
+OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
+TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
+THIS SOFTWARE.
+
+
+* Copyrights *
+MIT
+- Copyright (c) 2025 MapLibre contributors
+- Copyright (c) 2024 Mapbox
+ISC
+- Copyright (c) 2025 MapLibre contributors
+- Copyright (c) 2024 Mapbox
+
+* Package Info *
+
+Authors: birk.skyum@pm.me, board@maplibre.org, elsinga@fs.tum.de, harel.mazor@gmail.com, mwilsnd@gmail.com, ryan@scully.biz, yuriastrakhan@gmail.com
+Package Manager: NPM
+Project URL: https://github.com/maplibre/geojson-vt#readme
+Package Download URL: https://registry.npmjs.org/@maplibre/geojson-vt/-/geojson-vt-6.1.1.tgz
+Dependency Path: maplibre-gl > @maplibre/geojson-vt
+File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
+
+--------------------------------------------------------------------------------
+Package Title: @maplibre/maplibre-gl-style-spec (26.4.4)
+
+Package Locator: npm+@maplibre/maplibre-gl-style-spec$26.4.4
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -11092,8 +11476,769 @@ BSD-3-Clause
 Authors: birk.skyum@pm.me, board@maplibre.org, harel.mazor@gmail.com, mwilsnd@gmail.com, ryan@scully.biz
 Package Manager: NPM
 Project URL: https://maplibre.org/maplibre-style-spec/
-Package Download URL: https://registry.npmjs.org/@maplibre/maplibre-gl-style-spec/-/maplibre-gl-style-spec-20.4.0.tgz
+Package Download URL: https://registry.npmjs.org/@maplibre/maplibre-gl-style-spec/-/maplibre-gl-style-spec-26.4.4.tgz
 Dependency Path: maplibre-gl > @maplibre/maplibre-gl-style-spec
+File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
+
+--------------------------------------------------------------------------------
+Package Title: @maplibre/mlt (1.3.0)
+
+Package Locator: npm+@maplibre/mlt$1.3.0
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+This package contains a JavaScript encoder and decoder for the experimental MapLibre Tile (MLT) vector tile format.
+
+* Declared Licenses *
+MIT, Apache-2.0
+
+* MIT *
+--------------------------------------------------------------------------------
+File matches:
+- LICENSE.txt
+  - Copyright (c) 2024 MapLibre contributors
+- package.json
+--------------------------------------------------------------------------------
+
+MIT License
+Copyright (c) <year> <copyright holders>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+* License Header *
+Copyright (c) 2024 MapLibre contributors
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+* Apache-2.0 *
+--------------------------------------------------------------------------------
+File matches:
+- LICENSE.txt
+  - Copyright (c) 2024 MapLibre contributors
+- package.json
+--------------------------------------------------------------------------------
+
+===== MIT License =====
+MIT License
+
+Copyright (c) 2024 MapLibre contributors
+
+Permission is hereby granted, free of charge, to any
+person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the
+Software without restriction, including without
+limitation the rights to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software
+is furnished to do so, subject to the following
+conditions:
+
+The above copyright notice and this permission notice
+shall be included in all copies or substantial portions
+of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF
+ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT
+SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
+IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+
+===== Apache License 2.0 =====
+                              Apache License
+                        Version 2.0, January 2004
+                     http://www.apache.org/licenses/
+
+TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+1. Definitions.
+
+   "License" shall mean the terms and conditions for use, reproduction,
+   and distribution as defined by Sections 1 through 9 of this document.
+
+   "Licensor" shall mean the copyright owner or entity authorized by
+   the copyright owner that is granting the License.
+
+   "Legal Entity" shall mean the union of the acting entity and all
+   other entities that control, are controlled by, or are under common
+   control with that entity. For the purposes of this definition,
+   "control" means (i) the power, direct or indirect, to cause the
+   direction or management of such entity, whether by contract or
+   otherwise, or (ii) ownership of fifty percent (50%) or more of the
+   outstanding shares, or (iii) beneficial ownership of such entity.
+
+   "You" (or "Your") shall mean an individual or Legal Entity
+   exercising permissions granted by this License.
+
+   "Source" form shall mean the preferred form for making modifications,
+   including but not limited to software source code, documentation
+   source, and configuration files.
+
+   "Object" form shall mean any form resulting from mechanical
+   transformation or translation of a Source form, including but
+   not limited to compiled object code, generated documentation,
+   and conversions to other media types.
+
+   "Work" shall mean the work of authorship, whether in Source or
+   Object form, made available under the License, as indicated by a
+   copyright notice that is included in or attached to the work
+   (an example is provided in the Appendix below).
+
+   "Derivative Works" shall mean any work, whether in Source or Object
+   form, that is based on (or derived from) the Work and for which the
+   editorial revisions, annotations, elaborations, or other modifications
+   represent, as a whole, an original work of authorship. For the purposes
+   of this License, Derivative Works shall not include works that remain
+   separable from, or merely link (or bind by name) to the interfaces of,
+   the Work and Derivative Works thereof.
+
+   "Contribution" shall mean any work of authorship, including
+   the original version of the Work and any modifications or additions
+   to that Work or Derivative Works thereof, that is intentionally
+   submitted to Licensor for inclusion in the Work by the copyright owner
+   or by an individual or Legal Entity authorized to submit on behalf of
+   the copyright owner. For the purposes of this definition, "submitted"
+   means any form of electronic, verbal, or written communication sent
+   to the Licensor or its representatives, including but not limited to
+   communication on electronic mailing lists, source code control systems,
+   and issue tracking systems that are managed by, or on behalf of, the
+   Licensor for the purpose of discussing and improving the Work, but
+   excluding communication that is conspicuously marked or otherwise
+   designated in writing by the copyright owner as "Not a Contribution."
+
+   "Contributor" shall mean Licensor and any individual or Legal Entity
+   on behalf of whom a Contribution has been received by Licensor and
+   subsequently incorporated within the Work.
+
+2. Grant of Copyright License. Subject to the terms and conditions of
+   this License, each Contributor hereby grants to You a perpetual,
+   worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+   copyright license to reproduce, prepare Derivative Works of,
+   publicly display, publicly perform, sublicense, and distribute the
+   Work and such Derivative Works in Source or Object form.
+
+3. Grant of Patent License. Subject to the terms and conditions of
+   this License, each Contributor hereby grants to You a perpetual,
+   worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+   (except as stated in this section) patent license to make, have made,
+   use, offer to sell, sell, import, and otherwise transfer the Work,
+   where such license applies only to those patent claims licensable
+   by such Contributor that are necessarily infringed by their
+   Contribution(s) alone or by combination of their Contribution(s)
+   with the Work to which such Contribution(s) was submitted. If You
+   institute patent litigation against any entity (including a
+   cross-claim or counterclaim in a lawsuit) alleging that the Work
+   or a Contribution incorporated within the Work constitutes direct
+   or contributory patent infringement, then any patent licenses
+   granted to You under this License for that Work shall terminate
+   as of the date such litigation is filed.
+
+4. Redistribution. You may reproduce and distribute copies of the
+   Work or Derivative Works thereof in any medium, with or without
+   modifications, and in Source or Object form, provided that You
+   meet the following conditions:
+
+   (a) You must give any other recipients of the Work or
+       Derivative Works a copy of this License; and
+
+   (b) You must cause any modified files to carry prominent notices
+       stating that You changed the files; and
+
+   (c) You must retain, in the Source form of any Derivative Works
+       that You distribute, all copyright, patent, trademark, and
+       attribution notices from the Source form of the Work,
+       excluding those notices that do not pertain to any part of
+       the Derivative Works; and
+
+   (d) If the Work includes a "NOTICE" text file as part of its
+       distribution, then any Derivative Works that You distribute must
+       include a readable copy of the attribution notices contained
+       within such NOTICE file, excluding those notices that do not
+       pertain to any part of the Derivative Works, in at least one
+       of the following places: within a NOTICE text file distributed
+       as part of the Derivative Works; within the Source form or
+       documentation, if provided along with the Derivative Works; or,
+       within a display generated by the Derivative Works, if and
+       wherever such third-party notices normally appear. The contents
+       of the NOTICE file are for informational purposes only and
+       do not modify the License. You may add Your own attribution
+       notices within Derivative Works that You distribute, alongside
+       or as an addendum to the NOTICE text from the Work, provided
+       that such additional attribution notices cannot be construed
+       as modifying the License.
+
+   You may add Your own copyright statement to Your modifications and
+   may provide additional or different license terms and conditions
+   for use, reproduction, or distribution of Your modifications, or
+   for any such Derivative Works as a whole, provided Your use,
+   reproduction, and distribution of the Work otherwise complies with
+   the conditions stated in this License.
+
+5. Submission of Contributions. Unless You explicitly state otherwise,
+   any Contribution intentionally submitted for inclusion in the Work
+   by You to the Licensor shall be under the terms and conditions of
+   this License, without any additional terms or conditions.
+   Notwithstanding the above, nothing herein shall supersede or modify
+   the terms of any separate license agreement you may have executed
+   with Licensor regarding such Contributions.
+
+6. Trademarks. This License does not grant permission to use the trade
+   names, trademarks, service marks, or product names of the Licensor,
+   except as required for reasonable and customary use in describing the
+   origin of the Work and reproducing the content of the NOTICE file.
+
+7. Disclaimer of Warranty. Unless required by applicable law or
+   agreed to in writing, Licensor provides the Work (and each
+   Contributor provides its Contributions) on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+   implied, including, without limitation, any warranties or conditions
+   of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+   PARTICULAR PURPOSE. You are solely responsible for determining the
+   appropriateness of using or redistributing the Work and assume any
+   risks associated with Your exercise of permissions under this License.
+
+8. Limitation of Liability. In no event and under no legal theory,
+   whether in tort (including negligence), contract, or otherwise,
+   unless required by applicable law (such as deliberate and grossly
+   negligent acts) or agreed to in writing, shall any Contributor be
+   liable to You for damages, including any direct, indirect, special,
+   incidental, or consequential damages of any character arising as a
+   result of this License or out of the use or inability to use the
+   Work (including but not limited to damages for loss of goodwill,
+   work stoppage, computer failure or malfunction, or any and all
+   other commercial damages or losses), even if such Contributor
+   has been advised of the possibility of such damages.
+
+9. Accepting Warranty or Additional Liability. While redistributing
+   the Work or Derivative Works thereof, You may choose to offer,
+   and charge a fee for, acceptance of support, warranty, indemnity,
+   or other liability obligations and/or rights consistent with this
+   License. However, in accepting such obligations, You may act only
+   on Your own behalf and on Your sole responsibility, not on behalf
+   of any other Contributor, and only if You agree to indemnify,
+   defend, and hold each Contributor harmless for any liability
+   incurred by, or claims asserted against, such Contributor by reason
+   of your accepting any such warranty or additional liability.
+
+END OF TERMS AND CONDITIONS
+
+APPENDIX: How to apply the Apache License to your work.
+
+   To apply the Apache License to your work, attach the following
+   boilerplate notice, with the fields enclosed by brackets "[]"
+   replaced with your own identifying information. (Don't include
+   the brackets!)  The text should be enclosed in the appropriate
+   comment syntax for the file format. We also recommend that a
+   file or class name and description of purpose be included on the
+   same "printed page" as the copyright notice for easier
+   identification within third-party archives.
+
+Copyright 2024 MapLibre contributors
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+
+* License Header *
+===== MIT License =====
+MIT License
+
+Copyright (c) 2024 MapLibre contributors
+
+Permission is hereby granted, free of charge, to any
+person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the
+Software without restriction, including without
+limitation the rights to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software
+is furnished to do so, subject to the following
+conditions:
+
+The above copyright notice and this permission notice
+shall be included in all copies or substantial portions
+of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF
+ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT
+SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
+IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+
+===== Apache License 2.0 =====
+                              Apache License
+                        Version 2.0, January 2004
+                     http://www.apache.org/licenses/
+
+TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+1. Definitions.
+
+   "License" shall mean the terms and conditions for use, reproduction,
+   and distribution as defined by Sections 1 through 9 of this document.
+
+   "Licensor" shall mean the copyright owner or entity authorized by
+   the copyright owner that is granting the License.
+
+   "Legal Entity" shall mean the union of the acting entity and all
+   other entities that control, are controlled by, or are under common
+   control with that entity. For the purposes of this definition,
+   "control" means (i) the power, direct or indirect, to cause the
+   direction or management of such entity, whether by contract or
+   otherwise, or (ii) ownership of fifty percent (50%) or more of the
+   outstanding shares, or (iii) beneficial ownership of such entity.
+
+   "You" (or "Your") shall mean an individual or Legal Entity
+   exercising permissions granted by this License.
+
+   "Source" form shall mean the preferred form for making modifications,
+   including but not limited to software source code, documentation
+   source, and configuration files.
+
+   "Object" form shall mean any form resulting from mechanical
+   transformation or translation of a Source form, including but
+   not limited to compiled object code, generated documentation,
+   and conversions to other media types.
+
+   "Work" shall mean the work of authorship, whether in Source or
+   Object form, made available under the License, as indicated by a
+   copyright notice that is included in or attached to the work
+   (an example is provided in the Appendix below).
+
+   "Derivative Works" shall mean any work, whether in Source or Object
+   form, that is based on (or derived from) the Work and for which the
+   editorial revisions, annotations, elaborations, or other modifications
+   represent, as a whole, an original work of authorship. For the purposes
+   of this License, Derivative Works shall not include works that remain
+   separable from, or merely link (or bind by name) to the interfaces of,
+   the Work and Derivative Works thereof.
+
+   "Contribution" shall mean any work of authorship, including
+   the original version of the Work and any modifications or additions
+   to that Work or Derivative Works thereof, that is intentionally
+   submitted to Licensor for inclusion in the Work by the copyright owner
+   or by an individual or Legal Entity authorized to submit on behalf of
+   the copyright owner. For the purposes of this definition, "submitted"
+   means any form of electronic, verbal, or written communication sent
+   to the Licensor or its representatives, including but not limited to
+   communication on electronic mailing lists, source code control systems,
+   and issue tracking systems that are managed by, or on behalf of, the
+   Licensor for the purpose of discussing and improving the Work, but
+   excluding communication that is conspicuously marked or otherwise
+   designated in writing by the copyright owner as "Not a Contribution."
+
+   "Contributor" shall mean Licensor and any individual or Legal Entity
+   on behalf of whom a Contribution has been received by Licensor and
+   subsequently incorporated within the Work.
+
+2. Grant of Copyright License. Subject to the terms and conditions of
+   this License, each Contributor hereby grants to You a perpetual,
+   worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+   copyright license to reproduce, prepare Derivative Works of,
+   publicly display, publicly perform, sublicense, and distribute the
+   Work and such Derivative Works in Source or Object form.
+
+3. Grant of Patent License. Subject to the terms and conditions of
+   this License, each Contributor hereby grants to You a perpetual,
+   worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+   (except as stated in this section) patent license to make, have made,
+   use, offer to sell, sell, import, and otherwise transfer the Work,
+   where such license applies only to those patent claims licensable
+   by such Contributor that are necessarily infringed by their
+   Contribution(s) alone or by combination of their Contribution(s)
+   with the Work to which such Contribution(s) was submitted. If You
+   institute patent litigation against any entity (including a
+   cross-claim or counterclaim in a lawsuit) alleging that the Work
+   or a Contribution incorporated within the Work constitutes direct
+   or contributory patent infringement, then any patent licenses
+   granted to You under this License for that Work shall terminate
+   as of the date such litigation is filed.
+
+4. Redistribution. You may reproduce and distribute copies of the
+   Work or Derivative Works thereof in any medium, with or without
+   modifications, and in Source or Object form, provided that You
+   meet the following conditions:
+
+   (a) You must give any other recipients of the Work or
+       Derivative Works a copy of this License; and
+
+   (b) You must cause any modified files to carry prominent notices
+       stating that You changed the files; and
+
+   (c) You must retain, in the Source form of any Derivative Works
+       that You distribute, all copyright, patent, trademark, and
+       attribution notices from the Source form of the Work,
+       excluding those notices that do not pertain to any part of
+       the Derivative Works; and
+
+   (d) If the Work includes a "NOTICE" text file as part of its
+       distribution, then any Derivative Works that You distribute must
+       include a readable copy of the attribution notices contained
+       within such NOTICE file, excluding those notices that do not
+       pertain to any part of the Derivative Works, in at least one
+       of the following places: within a NOTICE text file distributed
+       as part of the Derivative Works; within the Source form or
+       documentation, if provided along with the Derivative Works; or,
+       within a display generated by the Derivative Works, if and
+       wherever such third-party notices normally appear. The contents
+       of the NOTICE file are for informational purposes only and
+       do not modify the License. You may add Your own attribution
+       notices within Derivative Works that You distribute, alongside
+       or as an addendum to the NOTICE text from the Work, provided
+       that such additional attribution notices cannot be construed
+       as modifying the License.
+
+   You may add Your own copyright statement to Your modifications and
+   may provide additional or different license terms and conditions
+   for use, reproduction, or distribution of Your modifications, or
+   for any such Derivative Works as a whole, provided Your use,
+   reproduction, and distribution of the Work otherwise complies with
+   the conditions stated in this License.
+
+5. Submission of Contributions. Unless You explicitly state otherwise,
+   any Contribution intentionally submitted for inclusion in the Work
+   by You to the Licensor shall be under the terms and conditions of
+   this License, without any additional terms or conditions.
+   Notwithstanding the above, nothing herein shall supersede or modify
+   the terms of any separate license agreement you may have executed
+   with Licensor regarding such Contributions.
+
+6. Trademarks. This License does not grant permission to use the trade
+   names, trademarks, service marks, or product names of the Licensor,
+   except as required for reasonable and customary use in describing the
+   origin of the Work and reproducing the content of the NOTICE file.
+
+7. Disclaimer of Warranty. Unless required by applicable law or
+   agreed to in writing, Licensor provides the Work (and each
+   Contributor provides its Contributions) on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+   implied, including, without limitation, any warranties or conditions
+   of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+   PARTICULAR PURPOSE. You are solely responsible for determining the
+   appropriateness of using or redistributing the Work and assume any
+   risks associated with Your exercise of permissions under this License.
+
+8. Limitation of Liability. In no event and under no legal theory,
+   whether in tort (including negligence), contract, or otherwise,
+   unless required by applicable law (such as deliberate and grossly
+   negligent acts) or agreed to in writing, shall any Contributor be
+   liable to You for damages, including any direct, indirect, special,
+   incidental, or consequential damages of any character arising as a
+   result of this License or out of the use or inability to use the
+   Work (including but not limited to damages for loss of goodwill,
+   work stoppage, computer failure or malfunction, or any and all
+   other commercial damages or losses), even if such Contributor
+   has been advised of the possibility of such damages.
+
+9. Accepting Warranty or Additional Liability. While redistributing
+   the Work or Derivative Works thereof, You may choose to offer,
+   and charge a fee for, acceptance of support, warranty, indemnity,
+   or other liability obligations and/or rights consistent with this
+   License. However, in accepting such obligations, You may act only
+   on Your own behalf and on Your sole responsibility, not on behalf
+   of any other Contributor, and only if You agree to indemnify,
+   defend, and hold each Contributor harmless for any liability
+   incurred by, or claims asserted against, such Contributor by reason
+   of your accepting any such warranty or additional liability.
+
+END OF TERMS AND CONDITIONS
+
+APPENDIX: How to apply the Apache License to your work.
+
+   To apply the Apache License to your work, attach the following
+   boilerplate notice, with the fields enclosed by brackets "[]"
+   replaced with your own identifying information. (Don't include
+   the brackets!)  The text should be enclosed in the appropriate
+   comment syntax for the file format. We also recommend that a
+   file or class name and description of purpose be included on the
+   same "printed page" as the copyright notice for easier
+   identification within third-party archives.
+
+Copyright 2024 MapLibre contributors
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+
+* Copyrights *
+MIT
+- Copyright (c) 2024 MapLibre contributors
+Apache-2.0
+- Copyright (c) 2024 MapLibre contributors
+
+* Package Info *
+
+Authors: birk.skyum@pm.me, board@maplibre.org, harel.mazor@gmail.com, mwilsnd@gmail.com, ryan@scully.biz
+Package Manager: NPM
+Project URL: https://github.com/maplibre/maplibre-tile-spec/#readme
+Package Download URL: https://registry.npmjs.org/@maplibre/mlt/-/mlt-1.3.0.tgz
+Dependency Path: maplibre-gl > @maplibre/mlt
+File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
+
+--------------------------------------------------------------------------------
+Package Title: @maplibre/vt-pbf (4.3.2)
+
+Package Locator: npm+@maplibre/vt-pbf$4.3.2
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+Serialize mapbox vector tiles to binary protobufs in javascript.
+
+* Declared Licenses *
+MIT, BSD-3-Clause
+
+* MIT *
+--------------------------------------------------------------------------------
+File matches:
+- LICENSE
+  - Copyright (c) 2014 Mapbox
+  - Copyright (c) 2015 Anand Thakker
+  - Copyright (c) 2025 MapLibre contributors
+- package.json
+--------------------------------------------------------------------------------
+
+MIT License
+Copyright (c) <year> <copyright holders>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+* License Header *
+Copyright (c) 2025 MapLibre contributors
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+* BSD-3-Clause *
+--------------------------------------------------------------------------------
+File matches:
+- LICENSE
+  - Copyright (c) 2014 Mapbox
+  - Copyright (c) 2015 Anand Thakker
+  - Copyright (c) 2025 MapLibre contributors
+--------------------------------------------------------------------------------
+
+The MIT License (MIT)
+
+Copyright (c) 2025 MapLibre contributors
+
+Copyright (c) 2015 Anand Thakker
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+--------------------------------------------------------------------------------
+
+Contains geojson_wrapper.js from https://github.com/mapbox/mapbox-gl-js
+
+Copyright (c) 2014, Mapbox
+
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice,
+      this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright notice,
+      this list of conditions and the following disclaimer in the documentation
+      and/or other materials provided with the distribution.
+    * Neither the name of Mapbox GL JS nor the names of its contributors
+      may be used to endorse or promote products derived from this software
+      without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+
+* License Header *
+The MIT License (MIT)
+
+Copyright (c) 2025 MapLibre contributors
+
+Copyright (c) 2015 Anand Thakker
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+--------------------------------------------------------------------------------
+
+Contains geojson_wrapper.js from https://github.com/mapbox/mapbox-gl-js
+
+Copyright (c) 2014, Mapbox
+
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice,
+      this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright notice,
+      this list of conditions and the following disclaimer in the documentation
+      and/or other materials provided with the distribution.
+    * Neither the name of Mapbox GL JS nor the names of its contributors
+      may be used to endorse or promote products derived from this software
+      without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+
+* Copyrights *
+MIT
+- Copyright (c) 2025 MapLibre contributors
+- Copyright (c) 2015 Anand Thakker
+- Copyright (c) 2014 Mapbox
+BSD-3-Clause
+- Copyright (c) 2025 MapLibre contributors
+- Copyright (c) 2015 Anand Thakker
+- Copyright (c) 2014 Mapbox
+
+* Package Info *
+
+Authors: birk.skyum@pm.me, board@maplibre.org, harel.mazor@gmail.com, mwilsnd@gmail.com, ryan@scully.biz
+Package Manager: NPM
+Project URL: https://github.com/maplibre/vt-pbf#readme
+Package Download URL: https://registry.npmjs.org/@maplibre/vt-pbf/-/vt-pbf-4.3.2.tgz
+Dependency Path: maplibre-gl > @maplibre/vt-pbf
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -15960,86 +17105,7 @@ Authors: ts-npm-types@microsoft.com
 Package Manager: NPM
 Project URL: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/geojson
 Package Download URL: https://registry.npmjs.org/@types/geojson/-/geojson-7946.0.16.tgz
-Dependency Path: @types/geojson > maplibre-gl > @types/geojson > maplibre-gl > @types/geojson-vt > @types/geojson > maplibre-gl > @types/mapbox__vector-tile > @types/geojson > maplibre-gl > @types/supercluster > @types/geojson
-File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
-
---------------------------------------------------------------------------------
-Package Title: @types/geojson-vt (3.2.5)
-
-Package Locator: npm+@types/geojson-vt$3.2.5
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-TypeScript definitions for geojson-vt
-
-* Declared Licenses *
-MIT
---------------------------------------------------------------------------------
-File matches:
-- LICENSE
-  - Copyright (c)  Microsoft Corporation.
-- package.json
---------------------------------------------------------------------------------
-
-    MIT License
-
-    Copyright (c) Microsoft Corporation.
-
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:
-
-    The above copyright notice and this permission notice shall be included in all
-    copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    SOFTWARE
-
-
-* License Header *
-    MIT License
-
-    Copyright (c) Microsoft Corporation.
-
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:
-
-    The above copyright notice and this permission notice shall be included in all
-    copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    SOFTWARE
-
-
-* Copyrights *
-MIT
-- Copyright (c)  Microsoft Corporation.
-
-* Package Info *
-
-Authors: ts-npm-types@microsoft.com
-Package Manager: NPM
-Project URL: https://www.npmjs.com/package/@types/geojson-vt
-Package Download URL: https://registry.npmjs.org/@types/geojson-vt/-/geojson-vt-3.2.5.tgz
-Dependency Path: maplibre-gl > @types/geojson-vt
+Dependency Path: @types/geojson > maplibre-gl > @mapbox/vector-tile > @types/geojson > maplibre-gl > @maplibre/vt-pbf > @types/geojson > maplibre-gl > @types/geojson
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -16198,164 +17264,6 @@ Package Manager: NPM
 Project URL: https://www.npmjs.com/package/@types/json-stable-stringify
 Package Download URL: https://registry.npmjs.org/@types/json-stable-stringify/-/json-stable-stringify-1.2.0.tgz
 Dependency Path: @formatjs/cli-lib > @formatjs/ts-transformer > @types/json-stable-stringify > @formatjs/cli-lib > @types/json-stable-stringify
-File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
-
---------------------------------------------------------------------------------
-Package Title: @types/mapbox__point-geometry (0.1.4)
-
-Package Locator: npm+@types/mapbox__point-geometry$0.1.4
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-Stub TypeScript definitions entry for @mapbox/point-geometry, which provides its own types definitions
-
-* Declared Licenses *
-MIT
---------------------------------------------------------------------------------
-File matches:
-- LICENSE
-  - Copyright (c)  Microsoft Corporation.
-- package.json
---------------------------------------------------------------------------------
-
-    MIT License
-
-    Copyright (c) Microsoft Corporation.
-
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:
-
-    The above copyright notice and this permission notice shall be included in all
-    copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    SOFTWARE
-
-
-* License Header *
-    MIT License
-
-    Copyright (c) Microsoft Corporation.
-
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:
-
-    The above copyright notice and this permission notice shall be included in all
-    copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    SOFTWARE
-
-
-* Copyrights *
-MIT
-- Copyright (c)  Microsoft Corporation.
-
-* Package Info *
-
-Authors: ts-npm-types@microsoft.com
-Package Manager: NPM
-Project URL: https://www.npmjs.com/package/@types/mapbox__point-geometry
-Package Download URL: https://registry.npmjs.org/@types/mapbox__point-geometry/-/mapbox__point-geometry-0.1.4.tgz
-Dependency Path: maplibre-gl > @types/mapbox__point-geometry > maplibre-gl > @types/mapbox__vector-tile > @types/mapbox__point-geometry
-File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
-
---------------------------------------------------------------------------------
-Package Title: @types/mapbox__vector-tile (1.3.4)
-
-Package Locator: npm+@types/mapbox__vector-tile$1.3.4
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-Stub TypeScript definitions entry for @mapbox/vector-tile, which provides its own types definitions
-
-* Declared Licenses *
-MIT
---------------------------------------------------------------------------------
-File matches:
-- LICENSE
-  - Copyright (c)  Microsoft Corporation.
-- package.json
---------------------------------------------------------------------------------
-
-    MIT License
-
-    Copyright (c) Microsoft Corporation.
-
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:
-
-    The above copyright notice and this permission notice shall be included in all
-    copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    SOFTWARE
-
-
-* License Header *
-    MIT License
-
-    Copyright (c) Microsoft Corporation.
-
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:
-
-    The above copyright notice and this permission notice shall be included in all
-    copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    SOFTWARE
-
-
-* Copyrights *
-MIT
-- Copyright (c)  Microsoft Corporation.
-
-* Package Info *
-
-Authors: ts-npm-types@microsoft.com
-Package Manager: NPM
-Project URL: https://www.npmjs.com/package/@types/mapbox__vector-tile
-Package Download URL: https://registry.npmjs.org/@types/mapbox__vector-tile/-/mapbox__vector-tile-1.3.4.tgz
-Dependency Path: maplibre-gl > @types/mapbox__vector-tile
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -16734,85 +17642,6 @@ Dependency Path: react-select > @emotion/react > @emotion/babel-plugin > babel-p
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
-Package Title: @types/pbf (3.0.5)
-
-Package Locator: npm+@types/pbf$3.0.5
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-TypeScript definitions for pbf
-
-* Declared Licenses *
-MIT
---------------------------------------------------------------------------------
-File matches:
-- LICENSE
-  - Copyright (c)  Microsoft Corporation.
-- package.json
---------------------------------------------------------------------------------
-
-    MIT License
-
-    Copyright (c) Microsoft Corporation.
-
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:
-
-    The above copyright notice and this permission notice shall be included in all
-    copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    SOFTWARE
-
-
-* License Header *
-    MIT License
-
-    Copyright (c) Microsoft Corporation.
-
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:
-
-    The above copyright notice and this permission notice shall be included in all
-    copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    SOFTWARE
-
-
-* Copyrights *
-MIT
-- Copyright (c)  Microsoft Corporation.
-
-* Package Info *
-
-Authors: ts-npm-types@microsoft.com
-Package Manager: NPM
-Project URL: https://www.npmjs.com/package/@types/pbf
-Package Download URL: https://registry.npmjs.org/@types/pbf/-/pbf-3.0.5.tgz
-Dependency Path: maplibre-gl > @types/mapbox__vector-tile > @types/pbf > maplibre-gl > @types/pbf
-File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
-
---------------------------------------------------------------------------------
 Package Title: @types/react (19.1.11)
 
 Package Locator: npm+@types/react$19.1.11
@@ -16968,85 +17797,6 @@ Package Manager: NPM
 Project URL: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react-transition-group
 Package Download URL: https://registry.npmjs.org/@types/react-transition-group/-/react-transition-group-4.4.12.tgz
 Dependency Path: react-select > @types/react-transition-group > react-select-async-paginate > react-select > @types/react-transition-group
-File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
-
---------------------------------------------------------------------------------
-Package Title: @types/supercluster (7.1.3)
-
-Package Locator: npm+@types/supercluster$7.1.3
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-TypeScript definitions for supercluster
-
-* Declared Licenses *
-MIT
---------------------------------------------------------------------------------
-File matches:
-- LICENSE
-  - Copyright (c)  Microsoft Corporation.
-- package.json
---------------------------------------------------------------------------------
-
-    MIT License
-
-    Copyright (c) Microsoft Corporation.
-
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:
-
-    The above copyright notice and this permission notice shall be included in all
-    copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    SOFTWARE
-
-
-* License Header *
-    MIT License
-
-    Copyright (c) Microsoft Corporation.
-
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:
-
-    The above copyright notice and this permission notice shall be included in all
-    copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    SOFTWARE
-
-
-* Copyrights *
-MIT
-- Copyright (c)  Microsoft Corporation.
-
-* Package Info *
-
-Authors: ts-npm-types@microsoft.com
-Package Manager: NPM
-Project URL: https://www.npmjs.com/package/@types/supercluster
-Package Download URL: https://registry.npmjs.org/@types/supercluster/-/supercluster-7.1.3.tgz
-Dependency Path: maplibre-gl > @types/supercluster
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -19686,6 +20436,87 @@ Package Manager: NPM
 Project URL: https://github.com/beatgammit/base64-js
 Package Download URL: https://registry.npmjs.org/base64-js/-/base64-js-1.5.1.tgz
 Dependency Path: inquirer > ora > bl > buffer > base64-js > ora > bl > buffer > base64-js
+File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
+
+--------------------------------------------------------------------------------
+Package Title: bidi-js (1.1.0)
+
+Package Locator: npm+bidi-js$1.1.0
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+A JavaScript implementation of the Unicode Bidirectional Algorithm
+
+* Declared Licenses *
+MIT
+--------------------------------------------------------------------------------
+File matches:
+- LICENSE.txt
+  - Copyright (c) 2021 Jason Johnston
+- package.json
+--------------------------------------------------------------------------------
+
+Copyright (c) 2021 Jason Johnston
+
+MIT License
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+* License Header *
+Copyright (c) 2021 Jason Johnston
+
+MIT License
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+* Copyrights *
+MIT
+- Copyright (c) 2021 Jason Johnston
+
+* Package Info *
+
+Authors: jason@lojjic.com
+Package Manager: NPM
+Project URL: https://github.com/lojjic/bidi-js#readme
+Package Download URL: https://registry.npmjs.org/bidi-js/-/bidi-js-1.1.0.tgz
+Dependency Path: maplibre-gl > bidi-js
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -28380,63 +29211,6 @@ Dependency Path: mapbox-gl > geojson-vt
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
-Package Title: geojson-vt (4.0.3)
-
-Package Locator: npm+geojson-vt$4.0.3
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-Slice GeoJSON data into vector tiles efficiently
-
-* Declared Licenses *
-ISC
-
-ISC License
-
-Copyright (c) 2015, Mapbox
-
-Permission to use, copy, modify, and/or distribute this software for any purpose
-with or without fee is hereby granted, provided that the above copyright notice
-and this permission notice appear in all copies.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
-FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
-OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
-TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
-THIS SOFTWARE.
-
-
-* License Header *
-ISC License
-
-Copyright (c) 2015, Mapbox
-
-Permission to use, copy, modify, and/or distribute this software for any purpose
-with or without fee is hereby granted, provided that the above copyright notice
-and this permission notice appear in all copies.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
-FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
-OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
-TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
-THIS SOFTWARE.
-
-
-* Package Info *
-
-Authors: accounts+npm-mapbox-machine-user@mapbox.com, accounts+npmjs-01@mapbox.com, accounts+npmjs-02@mapbox.com, accounts+npmjs-03@mapbox.com, accounts+npmjs-04@mapbox.com, accounts+npmjs-05@mapbox.com, accounts+npmjs-06@mapbox.com, accounts+npmjs-07@mapbox.com, accounts+npmjs-08@mapbox.com, accounts+npmjs-09@mapbox.com, accounts+npmjs-advanced-actions@mapbox.com, accounts+npmjs-npm-ci@mapbox.com, accounts+npmjs@mapbox.com, accounts@mapbox.com, agafonkin@gmail.com, mcwhittemore@gmail.com
-Package Manager: NPM
-Project URL: https://www.npmjs.com/package/geojson-vt
-Package Download URL: https://registry.npmjs.org/geojson-vt/-/geojson-vt-4.0.3.tgz
-Dependency Path: maplibre-gl > geojson-vt
-File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
-
---------------------------------------------------------------------------------
 Package Title: get-intrinsic (1.3.0)
 
 Package Locator: npm+get-intrinsic$1.3.0
@@ -28794,7 +29568,7 @@ Authors: ehmicky@gmail.com, sindresorhus@gmail.com
 Package Manager: NPM
 Project URL: https://www.npmjs.com/package/get-stream
 Package Download URL: https://registry.npmjs.org/get-stream/-/get-stream-6.0.1.tgz
-Dependency Path: mapbox-gl > @mapbox/geojson-rewind > get-stream > maplibre-gl > @mapbox/geojson-rewind > get-stream
+Dependency Path: mapbox-gl > @mapbox/geojson-rewind > get-stream
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -29207,85 +29981,6 @@ Package Manager: NPM
 Project URL: https://github.com/jonschlinkert/global-prefix
 Package Download URL: https://registry.npmjs.org/global-prefix/-/global-prefix-3.0.0.tgz
 Dependency Path: stylelint > global-modules > global-prefix > stylelint-config-standard > stylelint > global-modules > global-prefix > stylelint-config-standard > stylelint-config-recommended > stylelint > global-modules > global-prefix > stylelint-order > stylelint > global-modules > global-prefix > stylelint-plugin-defensive-css > stylelint > global-modules > global-prefix > stylelint-scss > stylelint > global-modules > global-prefix
-File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
-
---------------------------------------------------------------------------------
-Package Title: global-prefix (4.0.0)
-
-Package Locator: npm+global-prefix$4.0.0
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-Get the npm global path prefix.
-
-* Declared Licenses *
-MIT
---------------------------------------------------------------------------------
-File matches:
-- LICENSE
-  - Copyright (c) 2015 present, Jon Schlinkert.
-- package.json
---------------------------------------------------------------------------------
-
-The MIT License (MIT)
-
-Copyright (c) 2015-present, Jon Schlinkert.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-
-
-* License Header *
-The MIT License (MIT)
-
-Copyright (c) 2015-present, Jon Schlinkert.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-
-
-* Copyrights *
-MIT
-- Copyright (c) 2015 present, Jon Schlinkert.
-
-* Package Info *
-
-Authors: blaine.bublitz@gmail.com, brian.woodward@gmail.com, github@sellside.com
-Package Manager: NPM
-Project URL: https://github.com/jonschlinkert/global-prefix
-Package Download URL: https://registry.npmjs.org/global-prefix/-/global-prefix-4.0.0.tgz
-Dependency Path: maplibre-gl > global-prefix
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -31938,7 +32633,7 @@ Authors: feross@feross.org
 Package Manager: NPM
 Project URL: https://github.com/feross/ieee754#readme
 Package Download URL: https://registry.npmjs.org/ieee754/-/ieee754-1.2.1.tgz
-Dependency Path: inquirer > ora > bl > buffer > ieee754 > mapbox-gl > pbf > ieee754 > mapbox-gl > vt-pbf > pbf > ieee754 > maplibre-gl > pbf > ieee754 > maplibre-gl > vt-pbf > pbf > ieee754 > ora > bl > buffer > ieee754
+Dependency Path: inquirer > ora > bl > buffer > ieee754 > mapbox-gl > pbf > ieee754 > mapbox-gl > vt-pbf > pbf > ieee754 > ora > bl > buffer > ieee754
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -32511,73 +33206,6 @@ Package Manager: NPM
 Project URL: https://github.com/npm/ini#readme
 Package Download URL: https://registry.npmjs.org/ini/-/ini-1.3.8.tgz
 Dependency Path: stylelint > global-modules > global-prefix > ini > stylelint-config-standard > stylelint > global-modules > global-prefix > ini > stylelint-config-standard > stylelint-config-recommended > stylelint > global-modules > global-prefix > ini > stylelint-order > stylelint > global-modules > global-prefix > ini > stylelint-plugin-defensive-css > stylelint > global-modules > global-prefix > ini > stylelint-scss > stylelint > global-modules > global-prefix > ini
-File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
-
---------------------------------------------------------------------------------
-Package Title: ini (4.1.3)
-
-Package Locator: npm+ini$4.1.3
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-An ini encoder/decoder for node
-
-* Declared Licenses *
-ISC
---------------------------------------------------------------------------------
-File matches:
-- LICENSE
-  - Copyright (c)  Isaac Z. Schlueter and Contributors
-- package.json
---------------------------------------------------------------------------------
-
-The ISC License
-
-Copyright (c) Isaac Z. Schlueter and Contributors
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted, provided that the above
-copyright notice and this permission notice appear in all copies.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
-IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-
-* License Header *
-The ISC License
-
-Copyright (c) Isaac Z. Schlueter and Contributors
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted, provided that the above
-copyright notice and this permission notice appear in all copies.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
-IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-
-* Copyrights *
-ISC
-- Copyright (c)  Isaac Z. Schlueter and Contributors
-
-* Package Info *
-
-Authors: npm-cli+bot@github.com, owlstronaut@github.com, reggi@github.com, saquibkhan@github.com
-Package Manager: NPM
-Project URL: https://github.com/npm/ini#readme
-Package Download URL: https://registry.npmjs.org/ini/-/ini-4.1.3.tgz
-Dependency Path: maplibre-gl > global-prefix > ini
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -34314,63 +34942,6 @@ Dependency Path: cross-spawn > which > isexe > html-validate > glob > foreground
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
-Package Title: isexe (3.1.5)
-
-Package Locator: npm+isexe$3.1.5
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-Minimal module to check if a file is executable.
-
-* Declared Licenses *
-ISC
-
-The ISC License
-
-Copyright (c) Isaac Z. Schlueter and Contributors
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted, provided that the above
-copyright notice and this permission notice appear in all copies.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
-IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-
-* License Header *
-The ISC License
-
-Copyright (c) Isaac Z. Schlueter and Contributors
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted, provided that the above
-copyright notice and this permission notice appear in all copies.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
-IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-
-* Package Info *
-
-Authors: i@izs.me
-Package Manager: NPM
-Project URL: https://github.com/isaacs/isexe#readme
-Package Download URL: https://registry.npmjs.org/isexe/-/isexe-3.1.5.tgz
-Dependency Path: maplibre-gl > global-prefix > which > isexe
-File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
-
---------------------------------------------------------------------------------
 Package Title: jackspeak (4.2.3)
 
 Package Locator: npm+jackspeak$4.2.3
@@ -35298,7 +35869,7 @@ Authors: agafonkin@gmail.com
 Package Manager: NPM
 Project URL: https://www.npmjs.com/package/kdbush
 Package Download URL: https://registry.npmjs.org/kdbush/-/kdbush-4.1.0.tgz
-Dependency Path: mapbox-gl > kdbush > mapbox-gl > supercluster > kdbush > maplibre-gl > kdbush > maplibre-gl > supercluster > kdbush
+Dependency Path: mapbox-gl > kdbush > mapbox-gl > supercluster > kdbush > maplibre-gl > @maplibre/geojson-vt > kdbush > maplibre-gl > kdbush
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -35460,7 +36031,7 @@ Authors: brian.woodward@gmail.com, github@sellside.com
 Package Manager: NPM
 Project URL: https://www.npmjs.com/package/kind-of
 Package Download URL: https://registry.npmjs.org/kind-of/-/kind-of-6.0.3.tgz
-Dependency Path: maplibre-gl > global-prefix > kind-of > stylelint > global-modules > global-prefix > kind-of > stylelint-config-standard > stylelint > global-modules > global-prefix > kind-of > stylelint-config-standard > stylelint-config-recommended > stylelint > global-modules > global-prefix > kind-of > stylelint-order > stylelint > global-modules > global-prefix > kind-of > stylelint-plugin-defensive-css > stylelint > global-modules > global-prefix > kind-of > stylelint-scss > stylelint > global-modules > global-prefix > kind-of
+Dependency Path: stylelint > global-modules > global-prefix > kind-of > stylelint-config-standard > stylelint > global-modules > global-prefix > kind-of > stylelint-config-standard > stylelint-config-recommended > stylelint > global-modules > global-prefix > kind-of > stylelint-order > stylelint > global-modules > global-prefix > kind-of > stylelint-plugin-defensive-css > stylelint > global-modules > global-prefix > kind-of > stylelint-scss > stylelint > global-modules > global-prefix > kind-of
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -36990,9 +37561,9 @@ Dependency Path: mapbox-gl
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
-Package Title: maplibre-gl (4.7.1)
+Package Title: maplibre-gl (6.10.0)
 
-Package Locator: npm+maplibre-gl$4.7.1
+Package Locator: npm+maplibre-gl$6.10.0
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -37003,11 +37574,6 @@ BSD licensed community fork of mapbox-gl, a WebGL interactive maps library
 BSD-3-Clause
 --------------------------------------------------------------------------------
 File matches:
-- dist/LICENSE.txt
-  - Copyright (c) 2010-2016 Mike Bostock
-  - Copyright (c) 2011 by Evan Wallace
-  - Copyright (c) 2020 Mapbox
-  - Copyright (c) 2023 MapLibre contributors
 - LICENSE.txt
   - Copyright (c) 2010-2016 Mike Bostock
   - Copyright (c) 2011 by Evan Wallace
@@ -37255,16 +37821,29 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 * Other Licenses *
-MIT, 0BSD, ISC
+ISC, MIT
+
+* ISC *
+--------------------------------------------------------------------------------
+File matches:
+- src/util/transferable_grid_index.ts
+  - Copyright (c) 2016 Mapbox
+--------------------------------------------------------------------------------
+
+ISC License
+Copyright (c) 2004-2010 by Internet Systems Consortium, Inc. ("ISC")
+Copyright (c) 1995-2003 by Internet Software Consortium
+Permission to use, copy, modify, and /or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
+THE SOFTWARE IS PROVIDED "AS IS" AND ISC DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL ISC BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+* License Header *
+Copyright (c) 2016 Mapbox
+Permission to use, copy, modify, and distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
+THE SOFTWARE IS PROVIDED "AS IS" AND ISC DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL ISC BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 * MIT *
 --------------------------------------------------------------------------------
 File matches:
-- dist/LICENSE.txt
-  - Copyright (c) 2010-2016 Mike Bostock
-  - Copyright (c) 2011 by Evan Wallace
-  - Copyright (c) 2020 Mapbox
-  - Copyright (c) 2023 MapLibre contributors
 - LICENSE.txt
   - Copyright (c) 2010-2016 Mike Bostock
   - Copyright (c) 2011 by Evan Wallace
@@ -37313,85 +37892,26 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-* 0BSD *
---------------------------------------------------------------------------------
-File matches:
-- dist/maplibre-gl-csp-dev.js
-  - Copyright (c)  Microsoft Corporation.
-  - Copyright (c) 2016 Mapbox
-- dist/maplibre-gl-csp-worker-dev.js
-  - Copyright (c)  Microsoft Corporation.
-  - Copyright (c)  sign
-- dist/maplibre-gl-dev.js
-  - Copyright (c)  Microsoft Corporation.
-  - Copyright (c)  sign
-- dist/maplibre-gl-unminified.js
-  - Copyright (c)  Microsoft Corporation.
-  - Copyright (c)  s
-  - Copyright (c) 2016 Mapbox
---------------------------------------------------------------------------------
-
-Copyright (C) 2006 by Rob Landley <rob@landley.net>
-Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted.
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-* License Header *
-Copyright (C) 2006 by Rob Landley <rob@landley.net>
-Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted.
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-* ISC *
---------------------------------------------------------------------------------
-File matches:
-- dist/maplibre-gl-csp-dev.js
-  - Copyright (c)  Microsoft Corporation.
-  - Copyright (c) 2016 Mapbox
-- dist/maplibre-gl-unminified.js
-  - Copyright (c)  Microsoft Corporation.
-  - Copyright (c)  s
-  - Copyright (c) 2016 Mapbox
-- src/util/transferable_grid_index.ts
-  - Copyright (c) 2016 Mapbox
---------------------------------------------------------------------------------
-
-ISC License
-Copyright (c) 2004-2010 by Internet Systems Consortium, Inc. ("ISC")
-Copyright (c) 1995-2003 by Internet Software Consortium
-Permission to use, copy, modify, and /or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
-THE SOFTWARE IS PROVIDED "AS IS" AND ISC DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL ISC BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-* License Header *
-Copyright (c)  Microsoft Corporation.
-Permission to use, copy, modify, and distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
-THE SOFTWARE IS PROVIDED "AS IS" AND ISC DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL ISC BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
 * Copyrights *
 BSD-3-Clause
 - Copyright (c) 2023 MapLibre contributors
 - Copyright (c) 2020 Mapbox
 - Copyright (c) 2011 by Evan Wallace
 - Copyright (c) 2010-2016 Mike Bostock
+ISC
+- Copyright (c) 2016 Mapbox
 MIT
 - Copyright (c) 2023 MapLibre contributors
 - Copyright (c) 2020 Mapbox
 - Copyright (c) 2011 by Evan Wallace
 - Copyright (c) 2010-2016 Mike Bostock
-0BSD
-- Copyright (c)  Microsoft Corporation.
-- Copyright (c)  sign
-- Copyright (c) 2016 Mapbox
-- Copyright (c)  s
-ISC
-- Copyright (c)  Microsoft Corporation.
-- Copyright (c) 2016 Mapbox
-- Copyright (c)  s
 
 * Package Info *
 
 Authors: birk.skyum@pm.me, board@maplibre.org, harel.mazor@gmail.com, yuriastrakhan@gmail.com
 Package Manager: NPM
 Project URL: https://maplibre.org/
-Package Download URL: https://registry.npmjs.org/maplibre-gl/-/maplibre-gl-4.7.1.tgz
+Package Download URL: https://registry.npmjs.org/maplibre-gl/-/maplibre-gl-6.10.0.tgz
 Dependency Path: maplibre-gl
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
@@ -42340,7 +42860,7 @@ Authors: github@tixz.dk, ljharb@gmail.com, npm_j@ruru.gen.nz
 Package Manager: NPM
 Project URL: https://github.com/minimistjs/minimist
 Package Download URL: https://registry.npmjs.org/minimist/-/minimist-1.2.8.tgz
-Dependency Path: html-validate > minimist > mapbox-gl > @mapbox/geojson-rewind > minimist > maplibre-gl > @mapbox/geojson-rewind > minimist > maplibre-gl > @maplibre/maplibre-gl-style-spec > minimist
+Dependency Path: html-validate > minimist > mapbox-gl > @mapbox/geojson-rewind > minimist > maplibre-gl > @maplibre/maplibre-gl-style-spec > minimist
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -44814,7 +45334,101 @@ Authors: 0o3ko0@gmail.com, aarthy@mapbox.com, abhishek@mapbox.com, accounts+npm-
 Package Manager: NPM
 Project URL: https://www.npmjs.com/package/pbf
 Package Download URL: https://registry.npmjs.org/pbf/-/pbf-3.3.0.tgz
-Dependency Path: mapbox-gl > pbf > mapbox-gl > vt-pbf > pbf > maplibre-gl > pbf > maplibre-gl > vt-pbf > pbf
+Dependency Path: mapbox-gl > pbf > mapbox-gl > vt-pbf > pbf
+File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
+
+--------------------------------------------------------------------------------
+Package Title: pbf (5.1.2)
+
+Package Locator: npm+pbf$5.1.2
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+a low-level, lightweight protocol buffers implementation in JavaScript
+
+* Declared Licenses *
+MIT, BSD-3-Clause
+
+* MIT *
+
+// 64-bit int handling is based on github.com/dpw/node-buffer-more-ints (MIT-licensed)
+
+
+
+* License Header *
+// 64-bit int handling is based on github.com/dpw/node-buffer-more-ints (MIT-licensed)
+
+
+
+* BSD-3-Clause *
+
+Copyright (c) 2017, Mapbox
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+* Redistributions of source code must retain the above copyright notice, this
+  list of conditions and the following disclaimer.
+
+* Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
+
+* Neither the name of pbf nor the names of its
+  contributors may be used to endorse or promote products derived from
+  this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+* License Header *
+Copyright (c) 2017, Mapbox
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+* Redistributions of source code must retain the above copyright notice, this
+  list of conditions and the following disclaimer.
+
+* Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
+
+* Neither the name of pbf nor the names of its
+  contributors may be used to endorse or promote products derived from
+  this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+* Package Info *
+
+Authors: 0o3ko0@gmail.com, aarthy@mapbox.com, abhishek@mapbox.com, accounts+npm-mapbox-machine-user@mapbox.com, accounts+npmjs-01@mapbox.com, accounts+npmjs-02@mapbox.com, accounts+npmjs-03@mapbox.com, accounts+npmjs-04@mapbox.com, accounts+npmjs-05@mapbox.com, accounts+npmjs-06@mapbox.com, accounts+npmjs-07@mapbox.com, accounts+npmjs-08@mapbox.com, accounts+npmjs-09@mapbox.com, accounts+npmjs-advanced-actions@mapbox.com, accounts+npmjs-npm-ci@mapbox.com, accounts+npmjs@mapbox.com, accounts@mapbox.com, agafonkin@gmail.com, aileen.s.rowan@gmail.com, aj@mapbox.com, alex.parlato@mapbox.com, alex@mapbox.com, alice@mapbox.com, alinapaz@gmail.com, amisha@mapbox.com, amyleewalton@gmail.com, andrew@mapbox.com, ansis.brammanis@gmail.com, arun.planemad@gmail.com, aruna@mapbox.com, benjamin@mapbox.com, bharata+npm@mapbox.com, bhargav.kowshik@gmail.com, blannon@gmail.com, bobby@mapbox.com, brendan@mapbox.com, bryan@mapbox.com, camilla@mapbox.com, carol@mapbox.com, chethan@mapbox.com, chris.loer@mapbox.com, colleen.mcginnis@mapbox.com, damon@mapbox.com, dan@mapbox.com, dana.sulit@mapbox.com, dane@mapbox.com, daniel+npm@trvx.org, danpat@danpat.net, david.dave.clark@gmail.com, decorah@mapbox.com, dubois@mapbox.com, eliane@mapbox.com, emily@mapbox.com, emmanuel.sambale@gmail.com, fischer@mapbox.com, ghoshkaj@gmail.com, gokul.ganesan@mapbox.com, hello@chau-nguyen.de, hi@jacquestardie.org, ian.villeda@gmail.com, ian@mapbox.com, ingalls@protonmail.com, jake@jakepruitt.com, jeff@miccolis.net, john.firebaugh@gmail.com, jothirnadh@mapbox.com, kai@mapbox.com, kai@mapbox.com, kara.e.mahoney@gmail.com, karen@mapbox.com, krishna@mapbox.com, l@pwd.io, lauren@mapbox.com, laurier@mapbox.com, lily@mapbox.com, lindsay@mapbox.com, lyzi@mapbox.com, mail@kkaefer.com, manohar@mapbox.com, matt@mattficke.com, max@mapbox.com, mcwhittemore@gmail.com, me@lukasmartinelli.ch, michael.krasnyk@gmail.com, mollylloyd@gmail.com, morgan.herlocker@gmail.com, mrcsother@gmail.com, mully@mapbox.com, nadia.barbosa@mapbox.com, nat@mapbox.com, nick.cordella@mapbox.com, nicki@mapbox.com, nikinfour@gmail.com, oindrila.gupta92@gmail.com, olivia.brundage@mapbox.com, patrick@mapbox.com, paul@mapbox.com, perry@mapbox.com, pratik@mapbox.com, r.ragupathy85@gmail.com, ranka.aj@gmail.com, rasagy@mapbox.com, ryan.baumann@mapbox.com, ryan.clark.j@gmail.com, sajjadkm@gmail.com, sam@mapbox.com, saman@mapbox.com, sean@mapbox.com, siyu.song@gmail.com, spam@freenerd.de, srividyabharadwaj26@gmail.com, tim.channell@gmail.com, tlee@mapbox.com, tony.chen@mapbox.com, tristen.brown@gmail.com, ulsh@mapbox.com, upendra@mapbox.com, vestibule@anandthakker.net, vincent.sarago@mapbox.com, virginia@mapbox.com, will@mapbox.com, young@mapbox.com
+Package Manager: NPM
+Project URL: https://www.npmjs.com/package/pbf
+Package Download URL: https://registry.npmjs.org/pbf/-/pbf-5.1.2.tgz
+Dependency Path: maplibre-gl > @mapbox/vector-tile > pbf > maplibre-gl > @maplibre/vt-pbf > pbf > maplibre-gl > pbf
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -49234,7 +49848,7 @@ Authors: mathiasbuus@gmail.com
 Package Manager: NPM
 Project URL: https://www.npmjs.com/package/protocol-buffers-schema
 Package Download URL: https://registry.npmjs.org/protocol-buffers-schema/-/protocol-buffers-schema-3.6.1.tgz
-Dependency Path: mapbox-gl > pbf > resolve-protobuf-schema > protocol-buffers-schema > mapbox-gl > vt-pbf > pbf > resolve-protobuf-schema > protocol-buffers-schema > maplibre-gl > pbf > resolve-protobuf-schema > protocol-buffers-schema > maplibre-gl > vt-pbf > pbf > resolve-protobuf-schema > protocol-buffers-schema
+Dependency Path: mapbox-gl > pbf > resolve-protobuf-schema > protocol-buffers-schema > mapbox-gl > vt-pbf > pbf > resolve-protobuf-schema > protocol-buffers-schema > maplibre-gl > @mapbox/vector-tile > pbf > resolve-protobuf-schema > protocol-buffers-schema > maplibre-gl > @maplibre/vt-pbf > pbf > resolve-protobuf-schema > protocol-buffers-schema > maplibre-gl > pbf > resolve-protobuf-schema > protocol-buffers-schema
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -49515,7 +50129,7 @@ Authors: agafonkin@gmail.com
 Package Manager: NPM
 Project URL: https://www.npmjs.com/package/quickselect
 Package Download URL: https://registry.npmjs.org/quickselect/-/quickselect-2.0.0.tgz
-Dependency Path: mapbox-gl > quickselect > maplibre-gl > @maplibre/maplibre-gl-style-spec > quickselect
+Dependency Path: mapbox-gl > quickselect
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -49572,7 +50186,7 @@ Authors: agafonkin@gmail.com
 Package Manager: NPM
 Project URL: https://www.npmjs.com/package/quickselect
 Package Download URL: https://registry.npmjs.org/quickselect/-/quickselect-3.0.0.tgz
-Dependency Path: maplibre-gl > quickselect
+Dependency Path: maplibre-gl > @maplibre/maplibre-gl-style-spec > quickselect > maplibre-gl > quickselect
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -55013,7 +55627,7 @@ Authors: floatdrop@gmail.com
 Package Manager: NPM
 Project URL: https://github.com/floatdrop/require-from-string#readme
 Package Download URL: https://registry.npmjs.org/require-from-string/-/require-from-string-2.0.2.tgz
-Dependency Path: html-validate > @sidvind/better-ajv-errors > ajv > require-from-string > html-validate > ajv > require-from-string > stylelint > table > ajv > require-from-string > stylelint-config-standard > stylelint > table > ajv > require-from-string > stylelint-config-standard > stylelint-config-recommended > stylelint > table > ajv > require-from-string > stylelint-order > stylelint > table > ajv > require-from-string > stylelint-plugin-defensive-css > stylelint > table > ajv > require-from-string > stylelint-scss > stylelint > table > ajv > require-from-string
+Dependency Path: html-validate > @sidvind/better-ajv-errors > ajv > require-from-string > html-validate > ajv > require-from-string > maplibre-gl > bidi-js > require-from-string > stylelint > table > ajv > require-from-string > stylelint-config-standard > stylelint > table > ajv > require-from-string > stylelint-config-standard > stylelint-config-recommended > stylelint > table > ajv > require-from-string > stylelint-order > stylelint > table > ajv > require-from-string > stylelint-plugin-defensive-css > stylelint > table > ajv > require-from-string > stylelint-scss > stylelint > table > ajv > require-from-string
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -55489,7 +56103,7 @@ Authors: mathiasbuus@gmail.com
 Package Manager: NPM
 Project URL: https://www.npmjs.com/package/resolve-protobuf-schema
 Package Download URL: https://registry.npmjs.org/resolve-protobuf-schema/-/resolve-protobuf-schema-2.1.0.tgz
-Dependency Path: mapbox-gl > pbf > resolve-protobuf-schema > mapbox-gl > vt-pbf > pbf > resolve-protobuf-schema > maplibre-gl > pbf > resolve-protobuf-schema > maplibre-gl > vt-pbf > pbf > resolve-protobuf-schema
+Dependency Path: mapbox-gl > pbf > resolve-protobuf-schema > mapbox-gl > vt-pbf > pbf > resolve-protobuf-schema > maplibre-gl > @mapbox/vector-tile > pbf > resolve-protobuf-schema > maplibre-gl > @maplibre/vt-pbf > pbf > resolve-protobuf-schema > maplibre-gl > pbf > resolve-protobuf-schema
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -55882,7 +56496,7 @@ Authors: mbostock@gmail.com
 Package Manager: NPM
 Project URL: https://www.npmjs.com/package/rw
 Package Download URL: https://registry.npmjs.org/rw/-/rw-1.3.3.tgz
-Dependency Path: mapbox-gl > rw > maplibre-gl > @maplibre/maplibre-gl-style-spec > rw
+Dependency Path: mapbox-gl > rw
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -58733,7 +59347,7 @@ Authors: accounts+npm-mapbox-machine-user@mapbox.com, accounts+npmjs-01@mapbox.c
 Package Manager: NPM
 Project URL: https://www.npmjs.com/package/supercluster
 Package Download URL: https://registry.npmjs.org/supercluster/-/supercluster-8.0.1.tgz
-Dependency Path: mapbox-gl > supercluster > maplibre-gl > supercluster
+Dependency Path: mapbox-gl > supercluster
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -63542,7 +64156,7 @@ Authors: accounts@mapbox.com, agafonkin@gmail.com, aj@mapbox.com, alex@mapbox.co
 Package Manager: NPM
 Project URL: https://www.npmjs.com/package/vt-pbf
 Package Download URL: https://registry.npmjs.org/vt-pbf/-/vt-pbf-3.1.3.tgz
-Dependency Path: mapbox-gl > vt-pbf > maplibre-gl > vt-pbf
+Dependency Path: mapbox-gl > vt-pbf
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -63806,59 +64420,6 @@ Package Manager: NPM
 Project URL: https://github.com/isaacs/node-which#readme
 Package Download URL: https://registry.npmjs.org/which/-/which-2.0.2.tgz
 Dependency Path: cross-spawn > which > html-validate > glob > foreground-child > cross-spawn > which
-File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
-
---------------------------------------------------------------------------------
-Package Title: which (4.0.0)
-
-Package Locator: npm+which$4.0.0
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-Like which(1) unix command. Find the first instance of an executable in the PATH.
-
-* Declared Licenses *
-ISC
-
-Copyright (c) 2016, Contributors
-
-Permission to use, copy, modify, and/or distribute this software for any purpose
-with or without fee is hereby granted, provided that the above copyright notice
-and this permission notice appear in all copies.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
-FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
-OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
-TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
-THIS SOFTWARE.
-
-
-* License Header *
-Copyright (c) 2016, Contributors
-
-Permission to use, copy, modify, and/or distribute this software for any purpose
-with or without fee is hereby granted, provided that the above copyright notice
-and this permission notice appear in all copies.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
-FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
-OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
-TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
-THIS SOFTWARE.
-
-
-* Package Info *
-
-Authors: i@izs.me
-Package Manager: NPM
-Project URL: https://github.com/isaacs/node-which#readme
-Package Download URL: https://registry.npmjs.org/which/-/which-4.0.0.tgz
-Dependency Path: maplibre-gl > global-prefix > which
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -64353,4 +64914,4 @@ File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2026-9-15
+Report Generated by FOSSA on 2026-9-17

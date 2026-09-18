@@ -5,14 +5,18 @@ import { describe, expect, it } from "vitest";
 import {
     type IAttributeMetadataObject,
     type IComputedAttributeMetadataObject,
+    type IInsight,
     type IMeasureMetadataObject,
     type IParameterMetadataObject,
     type MetricType,
+    idRef,
+    newInsightDefinition,
 } from "@gooddata/sdk-model";
 
 import {
     convertAttributeToCatalogItem,
     convertComputedAttributeToCatalogItem,
+    convertInsightToCatalogItem,
     convertMeasureToCatalogItem,
     convertParameterToCatalogItem,
 } from "./converter.js";
@@ -177,5 +181,29 @@ describe("convertComputedAttributeToCatalogItem", () => {
         expect(catalogItem.certification).toEqual(
             expect.objectContaining({ status: "CERTIFIED", message: "Trusted attribute" }),
         );
+    });
+});
+
+function createInsight(overrides: Partial<IInsight["insight"]> = {}): IInsight {
+    return {
+        insight: {
+            ...newInsightDefinition("local:bar").insight,
+            identifier: "insight.id",
+            uri: "/insight.id",
+            ref: idRef("insight.id", "insight"),
+            ...overrides,
+        },
+    };
+}
+
+describe("convertInsightToCatalogItem", () => {
+    it("should carry the insight object-level permissions", () => {
+        expect(
+            convertInsightToCatalogItem(createInsight({ permissions: ["VIEW", "SHARE"] })).permissions,
+        ).toEqual(["VIEW", "SHARE"]);
+    });
+
+    it("should leave the permissions undefined when they were not requested", () => {
+        expect(convertInsightToCatalogItem(createInsight()).permissions).toBeUndefined();
     });
 });

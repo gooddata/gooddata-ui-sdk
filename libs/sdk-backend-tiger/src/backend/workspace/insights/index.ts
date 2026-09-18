@@ -7,8 +7,6 @@ import {
     type JsonApiComputedAttributeOutIncludes,
     type JsonApiVisualizationObjectOutDocument,
     MetadataUtilities,
-    type VisualizationObjectModelV1,
-    type VisualizationObjectModelV2,
     isAttributeItem,
     isDataSetItem,
     isFactItem,
@@ -73,10 +71,10 @@ import { convertGraphEntityNodeToAnalyticalDashboard } from "../../../convertors
 import {
     convertVisualizationObjectsToInsights,
     insightFromInsightDefinition,
+    visualizationObjectDocumentToInsight,
 } from "../../../convertors/fromBackend/InsightConverter.js";
 import { isInheritedObject } from "../../../convertors/fromBackend/ObjectInheritance.js";
 import { convertUserIdentifier } from "../../../convertors/fromBackend/UsersConverter.js";
-import { convertVisualizationObject } from "../../../convertors/fromBackend/visualizationObjects/VisualizationObjectConverter.js";
 import { convertConditionalFormatting } from "../../../convertors/toBackend/ConditionalFormattingConverter.js";
 import { convertInsight } from "../../../convertors/toBackend/InsightConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
@@ -235,6 +233,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
     private getInsightWithReferences = async (
         ref: ObjRef,
         references: EntitiesApiGetEntityVisualizationObjectsRequest["include"] = [],
+        loadPermissions?: boolean,
     ): Promise<{
         insight: IInsight;
         included: JsonApiComputedAttributeOutIncludes[] | undefined;
@@ -246,15 +245,16 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                 objectId: id,
                 workspaceId: this.workspace,
                 ...includeObj,
+                ...(loadPermissions ? { metaInclude: ["permissions" as const] } : {}),
             }),
         );
-        return createInsightFromBackend(response.data, ref);
+        return createInsightFromBackend(response.data);
     };
 
     public getInsight = async (ref: ObjRef, options: IGetInsightOptions = {}): Promise<IInsight> => {
         const references = options?.loadUserData ? ["createdBy" as const, "modifiedBy" as const] : [];
 
-        const { insight } = await this.getInsightWithReferences(ref, references);
+        const { insight } = await this.getInsightWithReferences(ref, references, options.loadPermissions);
         return insight;
     };
 
@@ -352,7 +352,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
             });
         });
 
-        const { insight } = createInsightFromBackend(response.data, insightMeta.ref);
+        const { insight } = createInsightFromBackend(response.data);
         return insight;
     };
 
@@ -428,38 +428,9 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
     };
 }
 
-function createInsightFromBackend(data: JsonApiVisualizationObjectOutDocument, ref: ObjRef) {
-    const { data: visualizationObject, links, included } = data;
-    const { relationships = {} } = visualizationObject;
-    const { createdBy, modifiedBy } = relationships;
-
-    const insight = insightFromInsightDefinition(
-        convertVisualizationObject(
-            visualizationObject.attributes.content as
-                | VisualizationObjectModelV1.IVisualizationObject
-                | VisualizationObjectModelV2.IVisualizationObject,
-            visualizationObject.attributes.title!,
-            visualizationObject.attributes.description!,
-            visualizationObject.attributes.tags,
-        ),
-        visualizationObject.id,
-        links!.self,
-        visualizationObject.attributes.tags,
-        isInheritedObject(visualizationObject),
-        visualizationObject.attributes?.isHidden,
-        visualizationObject.attributes?.createdAt ?? undefined,
-        visualizationObject.attributes?.modifiedAt ?? undefined,
-        convertUserIdentifier(createdBy, included),
-        convertUserIdentifier(modifiedBy, included),
-        convertCertificationFromBackend(visualizationObject.attributes),
-    );
-
-    if (!insight) {
-        throw new UnexpectedError(`Insight for ${objRefToString(ref)} not found!`);
-    }
-
+function createInsightFromBackend(data: JsonApiVisualizationObjectOutDocument) {
     return {
-        insight,
-        included,
+        insight: visualizationObjectDocumentToInsight(data),
+        included: data.included,
     };
 }

@@ -7,6 +7,7 @@ import {
     isCatalogItemAttribute,
     isCatalogItemComputedAttribute,
     isCatalogItemFact,
+    isCatalogItemInsight,
     isCatalogItemMeasure,
 } from "../../catalogItem/guards.js";
 import type { ICatalogItem } from "../../catalogItem/types.js";
@@ -14,16 +15,17 @@ import type { ICatalogItem } from "../../catalogItem/types.js";
 import type { ShareableCatalogItem } from "./types.js";
 
 /**
- * Catalog items the share dialog can target: attributes, facts, measures and computed
- * attributes. Labels are not first-class catalog items; they appear inside the labels
- * picker when sharing an attribute.
+ * Catalog items the share dialog can target: attributes, facts, measures, computed
+ * attributes and visualizations. Labels are not first-class catalog items; they appear
+ * inside the labels picker when sharing an attribute.
  */
 export function isShareableCatalogItem(item: ICatalogItem): item is ShareableCatalogItem {
     return (
         isCatalogItemAttribute(item) ||
         isCatalogItemFact(item) ||
         isCatalogItemMeasure(item) ||
-        isCatalogItemComputedAttribute(item)
+        isCatalogItemComputedAttribute(item) ||
+        isCatalogItemInsight(item)
     );
 }
 

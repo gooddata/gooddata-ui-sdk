@@ -57,13 +57,11 @@ export const queueMiddleware: Middleware = (storeAPI) => {
 };
 
 function loadAsyncProcess(state: RootState) {
-    // Load async process from right place
-    let asyncProcess = state.messages.messageAsyncProcess;
     if (state.messages.currentConversation) {
-        asyncProcess = checkConversationData(
+        return checkConversationData(
             state.messages.conversationsData,
             state.messages.currentConversation.localId,
         )?.asyncProcess;
     }
-    return asyncProcess;
+    return "loading";
 }

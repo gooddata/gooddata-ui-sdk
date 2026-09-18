@@ -207,6 +207,39 @@ describe("testing rehype plugin to extract references", () => {
         expect(readable.properties.className).toContain("gd-rich-text-metric-value");
     });
 
+    it("renders every reference as unretrievable when the execution failed", () => {
+        // A rejected execution surfaces as no evaluated values at all — one AFM serves every
+        // reference, so none of them resolve. Each must say so rather than render a stray value.
+        const walk = rehypeReferences(intl, [])();
+        const tree = {
+            type: "root",
+            children: [
+                {
+                    type: "element",
+                    tagName: "p",
+                    properties: {},
+                    children: [
+                        { type: "text", value: "{computed_attribute/tier}" },
+                        { type: "text", value: " and " },
+                        { type: "text", value: "{label/city}" },
+                        { type: "text", value: " and " },
+                        { type: "text", value: "{metric/revenue}" },
+                    ],
+                },
+            ],
+        };
+        const updated = walk(tree as Root) as Root;
+
+        const spans = ((updated.children[0] as unknown as HtmlNode).children as any[]).filter(
+            (child) => child.tagName === "span",
+        );
+        expect(spans).toHaveLength(3);
+        spans.forEach((span) => {
+            expect(span.properties.className).toContain("gd-rich-text-metric-error");
+            expect(span.children[0].value).toEqual("(Data could not be retrieved)");
+        });
+    });
+
     it("resolves a computed attribute reference, matching on its own object type", () => {
         const tier = {
             ...em("tier", "Tier", 0, false),

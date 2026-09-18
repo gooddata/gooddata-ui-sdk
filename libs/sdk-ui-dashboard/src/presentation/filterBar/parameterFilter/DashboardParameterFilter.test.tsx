@@ -14,6 +14,7 @@ import {
     idRef,
 } from "@gooddata/sdk-model";
 
+import { changeParameterValues } from "../../../model/commands/parameters.js";
 import { selectCatalogParameterByRef } from "../../../model/store/catalog/catalogSelectors.js";
 import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../../model/store/config/configSelectors.js";
 import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
@@ -218,7 +219,7 @@ describe("DashboardParameterFilter", () => {
         fireEvent.change(getDropdownInput(), { target: { value: "Forecast" } });
         fireEvent.click(screen.getByTestId("parameter-control-dropdown-apply"));
         expect(mockDispatch).toHaveBeenCalledWith(
-            tabsActions.setParameterRuntimeValue({ ref: scenarioRef, value: "Forecast" }),
+            changeParameterValues({ parameters: [{ ref: scenarioRef, value: "Forecast" }] }),
         );
     });
 
@@ -307,7 +308,7 @@ describe("DashboardParameterFilter", () => {
         fireEvent.click(await screen.findByText("Forecast"));
 
         expect(mockDispatch).toHaveBeenCalledWith(
-            tabsActions.setParameterRuntimeValue({ ref: enumRef, value: "forecast" }),
+            changeParameterValues({ parameters: [{ ref: enumRef, value: "forecast" }] }),
         );
     });
 

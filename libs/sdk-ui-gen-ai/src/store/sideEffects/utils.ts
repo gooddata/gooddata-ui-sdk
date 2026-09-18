@@ -2,8 +2,6 @@
 
 import { isUnexpectedResponseError } from "@gooddata/sdk-backend-spi";
 
-import { type IChatConversationLocalItem, type Message, makeUserItem } from "../../model.js";
-
 export function extractError(e: unknown) {
     if (e instanceof Error) {
         // Prefer error detail from response body over axios's generic message
@@ -21,21 +19,4 @@ function extractErrorDetail(e: Error): string | undefined {
         return body.detail;
     }
     return undefined;
-}
-
-export function convertMessageToChatConversation(message: Message): IChatConversationLocalItem {
-    //NOTE: Try to convert message to local item to ensure backward compatibility with
-    // previous action
-    return makeUserItem(
-        {
-            type: "text",
-            text: message.content.reduce((acc, content) => {
-                if (content.type === "text") {
-                    return acc + " " + content.text;
-                }
-                return acc;
-            }, ""),
-        },
-        message.id,
-    );
 }

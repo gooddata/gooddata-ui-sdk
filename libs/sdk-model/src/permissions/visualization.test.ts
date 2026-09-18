@@ -7,8 +7,9 @@ import { type AccessGranularPermission } from "../accessControl/index.js";
 import { type IWorkspacePermissions } from "./index.js";
 import { canEditVisualization, canShareVisualization } from "./visualization.js";
 
-const admin = { canManageProject: true } as IWorkspacePermissions;
-const nonAdmin = { canManageProject: false } as IWorkspacePermissions;
+const admin = { canManageProject: true, canCreateVisualization: true } as IWorkspacePermissions;
+const analyst = { canManageProject: false, canCreateVisualization: true } as IWorkspacePermissions;
+const nonAdmin = { canManageProject: false, canCreateVisualization: false } as IWorkspacePermissions;
 
 const ALL: (AccessGranularPermission[] | undefined)[] = [
     undefined,
@@ -21,9 +22,10 @@ const ALL: (AccessGranularPermission[] | undefined)[] = [
 
 describe("canEditVisualization", () => {
     it.each(ALL.map((p) => [p]))(
-        "with the flag off ignores the visualization's permissions (%j)",
+        "with the flag off lets the workspace role decide, not the visualization's permissions (%j)",
         (visualizationPermissions) => {
             expect(canEditVisualization(visualizationPermissions, admin, false)).toBe(true);
+            expect(canEditVisualization(visualizationPermissions, analyst, false)).toBe(true);
             expect(canEditVisualization(visualizationPermissions, nonAdmin, false)).toBe(false);
         },
     );
@@ -43,6 +45,11 @@ describe("canEditVisualization", () => {
         expect(canEditVisualization(["VIEW"], nonAdmin, true)).toBe(false);
         expect(canEditVisualization([], nonAdmin, true)).toBe(false);
         expect(canEditVisualization(undefined, nonAdmin, true)).toBe(false);
+    });
+
+    it("with the flag on the workspace role no longer decides", () => {
+        expect(canEditVisualization(["VIEW"], analyst, true)).toBe(false);
+        expect(canEditVisualization(undefined, analyst, true)).toBe(false);
     });
 });
 

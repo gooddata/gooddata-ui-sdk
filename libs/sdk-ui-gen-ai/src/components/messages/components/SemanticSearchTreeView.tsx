@@ -5,7 +5,12 @@ import { type KeyboardEvent, type MouseEvent, useCallback, useId } from "react";
 import { useIntl } from "react-intl";
 import { useSelector } from "react-redux";
 
-import { isSemanticSearchRelationship, isSemanticSearchResultItem } from "@gooddata/sdk-model";
+import {
+    type ISemanticSearchRelationship,
+    type ISemanticSearchResultItem,
+    isSemanticSearchRelationship,
+    isSemanticSearchResultItem,
+} from "@gooddata/sdk-model";
 import { useBackendStrict } from "@gooddata/sdk-ui";
 import {
     LeveledSearchTreeView,
@@ -15,13 +20,13 @@ import {
     buildSemanticSearchTreeViewItems,
 } from "@gooddata/sdk-ui-semantic-search/internal";
 
-import { type SemanticSearchContents } from "../../../model.js";
 import { settingsSelector } from "../../../store/chatWindow/chatWindowSelectors.js";
 import { useConfig } from "../../ConfigContext.js";
 
 type SemanticSearchTreeViewProps = {
     workspace: string;
-    content: SemanticSearchContents;
+    searchResults: ISemanticSearchResultItem[];
+    relationships: ISemanticSearchRelationship[];
     maxHeight: number;
 };
 
@@ -35,7 +40,12 @@ export function SemanticSearchTreeView(props: SemanticSearchTreeViewProps) {
     );
 }
 
-export function SemanticSearchTreeViewImpl({ workspace, content, maxHeight }: SemanticSearchTreeViewProps) {
+export function SemanticSearchTreeViewImpl({
+    workspace,
+    searchResults,
+    relationships,
+    maxHeight,
+}: SemanticSearchTreeViewProps) {
     const intl = useIntl();
     const backend = useBackendStrict();
     const { canFullControl, canManage, canAnalyze, linkHandler } = useConfig();
@@ -48,8 +58,8 @@ export function SemanticSearchTreeViewImpl({ workspace, content, maxHeight }: Se
     const items = buildSemanticSearchTreeViewItems({
         intl,
         workspace,
-        searchResults: content.searchResults,
-        relationships: content.relationships,
+        searchResults,
+        relationships,
         threshold: 0, // Keep all items for now
         canEdit,
         uiPathOptions: {

@@ -7,13 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { type IUiButtonProps, UiButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
-import {
-    makeAssistantItem,
-    makeAssistantMessage,
-    makeTextContents,
-    makeUserItem,
-    makeUserMessage,
-} from "../../model.js";
+import { makeAssistantItem, makeUserItem } from "../../model.js";
 import { agentSwitchingActiveSelector } from "../../store/chatWindow/chatWindowSelectors.js";
 import { agentsAvailableSelector } from "../../store/messages/messagesSelectors.js";
 import { setMessagesAction as setMessagesActionCreator } from "../../store/messages/messagesSlice.js";
@@ -60,10 +54,6 @@ export function DefaultLandingQuestion({ icon, question, answer, title = questio
                 }
 
                 setMessagesAction({
-                    messages: [
-                        makeUserMessage([makeTextContents(escapeMarkdown(question), [])]),
-                        makeAssistantMessage([makeTextContents(escapeMarkdown(answer), [])], true),
-                    ],
                     items: [
                         makeUserItem({ type: "text", text: escapeMarkdown(question) }),
                         makeAssistantItem({ type: "text", text: escapeMarkdown(answer) }, "", true),

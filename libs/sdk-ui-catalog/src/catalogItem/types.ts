@@ -82,6 +82,8 @@ export interface ICatalogItemDashboard extends ICatalogItemBase {
 export interface ICatalogItemInsight extends ICatalogItemBase {
     type: "insight";
     visualizationType: VisualizationType;
+    /** Object-level permissions, only when the query asked for them. Undefined otherwise. */
+    permissions?: AccessGranularPermission[];
 }
 
 /**
@@ -201,6 +203,12 @@ export type ICatalogItemTextGenerable = Extract<
     { type: AnalyticsCatalogGenerateDescriptionObjectType }
 >;
 
+/**
+ * Catalog items that carry the current user's own object-level permissions.
+ * @internal
+ */
+export type ICatalogItemWithPermissions = Extract<ICatalogItem, { type: "insight" | "measure" }>;
+
 export type ICatalogItemFeedOptions = Omit<ICatalogItemQueryOptions, "origin" | "tags">;
 
 export interface ICatalogItemQueryOptions {
@@ -219,6 +227,8 @@ export interface ICatalogItemQueryOptions {
     pageSize?: number;
     /** Ask for each metric's object-level permissions, kept on ICatalogItemMeasure.permissions. */
     loadPermissions?: boolean;
+    /** Ask for each visualization's object-level permissions, kept on ICatalogItemInsight.permissions. */
+    loadVisualizationPermissions?: boolean;
 }
 
 export interface ICatalogItemSemanticSearchOptions {

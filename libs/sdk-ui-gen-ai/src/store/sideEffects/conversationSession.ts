@@ -41,7 +41,7 @@ export function* onConversationActivity() {
 /** Read staleness and refresh the timer on open. Only one open path calls this per opening. @internal */
 export function* consumeStaleConversationSession(): Generator<any, boolean, any> {
     const settings: IUserWorkspaceSettings | undefined = yield select(settingsSelector);
-    if (!settings?.enableAiAgenticConversations || !settings?.enableAiAgenticMultiConversations) {
+    if (!settings?.enableAiAgenticMultiConversations) {
         return false;
     }
 

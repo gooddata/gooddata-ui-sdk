@@ -5,6 +5,10 @@ import config from "@gooddata/eslint-config/oxlint-esm-react-vitest";
 export default [
     ...config,
     {
+        // bundled MapLibre worker produced by scripts/build.sh
+        ignores: ["worker/**"],
+    },
+    {
         rules: {
             "no-restricted-imports": [
                 "error",

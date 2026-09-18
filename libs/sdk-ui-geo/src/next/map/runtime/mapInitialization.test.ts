@@ -22,6 +22,10 @@ type IMapConstructorOptions = {
     boxZoom?: boolean;
     touchZoomRotate?: boolean;
     keyboard?: boolean;
+    preserveDrawingBuffer?: boolean;
+    canvasContextAttributes?: {
+        preserveDrawingBuffer?: boolean;
+    };
 };
 
 type IMapEventPayload = {
@@ -34,6 +38,8 @@ type IMapEventHandler = (payload?: IMapEventPayload) => void;
 
 let lastMapOptions: IMapConstructorOptions | undefined;
 const disableRotationMock = vi.fn();
+const setWorkerUrlMock = vi.fn();
+let configuredWorkerUrl = "";
 
 class MockMap {
     public readonly touchZoomRotate = {
@@ -74,6 +80,11 @@ class MockPopup {
 vi.mock("maplibre-gl", () => ({
     Map: MockMap,
     Popup: MockPopup,
+    getWorkerUrl: () => configuredWorkerUrl,
+    setWorkerUrl: (url: string) => {
+        configuredWorkerUrl = url;
+        setWorkerUrlMock(url);
+    },
 }));
 
 const MAP_STYLE: StyleSpecification = {
@@ -90,6 +101,40 @@ describe("initializeMapLibreMap", () => {
     beforeEach(() => {
         lastMapOptions = undefined;
         disableRotationMock.mockClear();
+        setWorkerUrlMock.mockClear();
+        configuredWorkerUrl = "";
+    });
+
+    it("points MapLibre at the bundled worker when no worker URL is configured", async () => {
+        await initializeMapLibreMap({
+            container: createContainer(),
+            style: MAP_STYLE,
+        });
+
+        expect(setWorkerUrlMock).toHaveBeenCalledTimes(1);
+        expect(setWorkerUrlMock.mock.calls[0]?.[0]).toMatch(/\/worker\/maplibre-gl-worker\.js$/);
+    });
+
+    it("keeps a worker URL that was configured before the map is created", async () => {
+        configuredWorkerUrl = "https://example.com/custom-worker.js";
+
+        await initializeMapLibreMap({
+            container: createContainer(),
+            style: MAP_STYLE,
+        });
+
+        expect(setWorkerUrlMock).not.toHaveBeenCalled();
+    });
+
+    it("passes preserveDrawingBuffer through canvasContextAttributes", async () => {
+        await initializeMapLibreMap({
+            container: createContainer(),
+            style: MAP_STYLE,
+            preserveDrawingBuffer: true,
+        });
+
+        expect(lastMapOptions?.canvasContextAttributes).toEqual({ preserveDrawingBuffer: true });
+        expect(lastMapOptions?.preserveDrawingBuffer).toBeUndefined();
     });
 
     it("uses renderWorldCopies disabled by default", async () => {

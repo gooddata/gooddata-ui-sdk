@@ -105,6 +105,7 @@ export const metricDescriptor = defineAsCodeDescriptor<IMeasureMetadataObjectDef
         emptyDefinition: (defaultTitle) =>
             metricYamlToDefinition({ type: "metric", title: defaultTitle, maql: "SELECT 1" }),
         seed: { load: loadMetric, loadError: capabilityMessages.loadError },
+        // Warns when other objects still depend on it (insights, metrics, computed attributes, dashboards).
         referenceCounted: {
             load: listMetricReferences,
             usageWarning: capabilityMessages.deleteUsageWarning,

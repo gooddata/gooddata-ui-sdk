@@ -1,8 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { isChatConversationItem } from "@gooddata/sdk-backend-spi";
-
-import { type AssistantMessage, type IChatConversationLocalItem } from "../../model.js";
+import { type IChatConversationLocalItem } from "../../model.js";
 import { type setUserFeedback } from "../../store/messages/messagesSlice.js";
 
 import { type IFeedbackData } from "./FeedbackPopup.js";
@@ -19,7 +17,7 @@ export type SetUserFeedbackHandler = (payload: Parameters<typeof setUserFeedback
  * @internal
  */
 export interface IUseUserFeedbackProps {
-    message: AssistantMessage | IChatConversationLocalItem;
+    message: IChatConversationLocalItem;
     setUserFeedback: SetUserFeedbackHandler;
 }
 
@@ -40,54 +38,28 @@ export interface IUseUserFeedbackReturn {
  */
 export function useUserFeedback({ message, setUserFeedback }: IUseUserFeedbackProps): IUseUserFeedbackReturn {
     const handlePositiveFeedbackClick = () => {
-        if (isChatConversationItem(message)) {
-            if (message.feedback?.feedback === "POSITIVE") {
-                // If already positive, toggle back to none
-                setUserFeedback({
-                    assistantMessageId: message.localId,
-                    feedback: "NONE",
-                });
-            } else {
-                // Set positive feedback
-                setUserFeedback({
-                    assistantMessageId: message.localId,
-                    feedback: "POSITIVE",
-                });
-            }
+        if (message.feedback?.feedback === "POSITIVE") {
+            // If already positive, toggle back to none
+            setUserFeedback({
+                assistantMessageId: message.localId,
+                feedback: "NONE",
+            });
         } else {
-            if (message.feedback === "POSITIVE") {
-                // If already positive, toggle back to none
-                setUserFeedback({
-                    assistantMessageId: message.localId,
-                    feedback: "NONE",
-                });
-            } else {
-                // Set positive feedback
-                setUserFeedback({
-                    assistantMessageId: message.localId,
-                    feedback: "POSITIVE",
-                });
-            }
+            // Set positive feedback
+            setUserFeedback({
+                assistantMessageId: message.localId,
+                feedback: "POSITIVE",
+            });
         }
     };
 
     const handleNegativeFeedbackClick = () => {
-        if (isChatConversationItem(message)) {
-            if (message.feedback?.feedback === "NEGATIVE") {
-                // If already negative, toggle back to none
-                setUserFeedback({
-                    assistantMessageId: message.localId,
-                    feedback: "NONE",
-                });
-            }
-        } else {
-            if (message.feedback === "NEGATIVE") {
-                // If already negative, toggle back to none
-                setUserFeedback({
-                    assistantMessageId: message.localId,
-                    feedback: "NONE",
-                });
-            }
+        if (message.feedback?.feedback === "NEGATIVE") {
+            // If already negative, toggle back to none
+            setUserFeedback({
+                assistantMessageId: message.localId,
+                feedback: "NONE",
+            });
         }
         // Note: If not negative, the popup will be shown automatically by UiPopover when anchor is clicked
     };

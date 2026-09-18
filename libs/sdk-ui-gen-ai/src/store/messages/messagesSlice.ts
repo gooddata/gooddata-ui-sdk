@@ -9,30 +9,20 @@ import { type SdkErrorType } from "@gooddata/sdk-ui";
 import { selectDefaultAgentId } from "../../components/utils/agentSelection.js";
 import { DEFAULT_EFFORT, deriveConversationEffort } from "../../components/utils/effortSelection.js";
 import {
-    type AssistantMessage,
-    type Contents,
     type GenAIAgent,
     type IChatConversationErrorContent,
     type IChatConversationLocal,
     type IChatConversationLocalContent,
     type IChatConversationLocalItem,
     type IChatConversationMultipartLocalPart,
-    type Message,
-    type UserMessage,
-    isAssistantMessage,
-    isChatConversationLocalItem,
-    isUserMessage,
-    isVisualizationContents,
     makeAgentChangeItem,
     makeErrorContent,
-    makeErrorContents,
 } from "../../model.js";
 import {
     type IChatConversationResponseTrace,
     type IChatConversationTracedAction,
     type StoredConversation,
 } from "../../types.js";
-import { convertMessageToChatConversation } from "../sideEffects/utils.js";
 import {
     createEmptyConversation,
     getConversationData,
@@ -49,23 +39,6 @@ type MessagesSliceState = {
      * If the thread is loaded.
      */
     loaded: boolean;
-    /**
-     * A normalized map of messages indexed by their localId.
-     */
-    messages: Record<string, Message>;
-    /**
-     * An order of messages in the chat.
-     */
-    messageOrder: string[];
-    /**
-     * If the interface is busy, this specifies the details of the async operation.
-     * Where:
-     * - loading: the thread history is being loaded from the backend (no messages to show yet)
-     * - restoring: cached messages have been restored while the backend fetch is still in-flight
-     * - clearing: the thread is being cleared
-     * - evaluating: the new user message is being evaluated by assistant
-     */
-    messageAsyncProcess?: "loading" | "restoring" | "clearing" | "evaluating";
 
     /**
      * A list of conversations.
@@ -135,10 +108,6 @@ const initialState: MessagesSliceState = {
     // Start with loading state to avoid re-render from empty state on startup
     loaded: false,
     verbose: getInitialVerboseState(),
-    //old messages
-    messageAsyncProcess: "loading",
-    messageOrder: [],
-    messages: {},
     //conversations
     conversations: undefined,
     currentConversation: undefined,
@@ -148,18 +117,6 @@ const initialState: MessagesSliceState = {
     agents: undefined,
     conversationsData: {},
     refocus: 0,
-};
-
-const setNormalizedMessages = (state: MessagesSliceState, messages: Message[]) => {
-    state.messages = messages.reduce(
-        (acc, message) => {
-            acc[message.localId] = message;
-            return acc;
-        },
-        {} as MessagesSliceState["messages"],
-    );
-    state.messageOrder = messages.map((message) => message.localId);
-    state.loaded = true;
 };
 
 const setNormalizedConversations = (state: MessagesSliceState, conversations: IChatConversationLocal[]) => {
@@ -255,48 +212,32 @@ const getAssistantMessageStrict = (
     state: MessagesSliceState,
     assistantMessageId: string,
     conversationId?: string,
-): AssistantMessage | IChatConversationLocalItem => {
-    if (state.currentConversation) {
-        const data = getConversationData(state.conversationsData, conversationId);
-        if (!data) {
-            throw new Error(`Unexpected error during message evaluation.`);
-        }
-        const message = data.items[assistantMessageId];
-        if (message.role !== "assistant") {
-            throw new Error(`Unexpected error during message evaluation.`);
-        }
-        return message;
-    } else {
-        const message = state.messages[assistantMessageId];
-        if (!isAssistantMessage(message)) {
-            throw new Error(`Unexpected error during message evaluation.`);
-        }
-        return message;
+): IChatConversationLocalItem => {
+    const data = getConversationData(state.conversationsData, conversationId);
+    if (!data) {
+        throw new Error(`Unexpected error during message evaluation.`);
     }
+    const message = data.items[assistantMessageId];
+    if (message.role !== "assistant") {
+        throw new Error(`Unexpected error during message evaluation.`);
+    }
+    return message;
 };
 
 const getUserMessageStrict = (
     state: MessagesSliceState,
     assistantMessageId: string,
     conversationId?: string,
-): UserMessage | IChatConversationLocalItem => {
-    if (state.currentConversation) {
-        const data = getConversationData(state.conversationsData, conversationId);
-        if (!data) {
-            throw new Error(`Unexpected error during message evaluation.`);
-        }
-        const message = data.items[assistantMessageId];
-        if (message.role !== "user") {
-            throw new Error(`Unexpected error during message evaluation.`);
-        }
-        return message;
-    } else {
-        const message = state.messages[assistantMessageId];
-        if (!isUserMessage(message)) {
-            throw new Error(`Unexpected error during message evaluation.`);
-        }
-        return message;
+): IChatConversationLocalItem => {
+    const data = getConversationData(state.conversationsData, conversationId);
+    if (!data) {
+        throw new Error(`Unexpected error during message evaluation.`);
     }
+    const message = data.items[assistantMessageId];
+    if (message.role !== "user") {
+        throw new Error(`Unexpected error during message evaluation.`);
+    }
+    return message;
 };
 
 const getMessageExists = (
@@ -304,14 +245,11 @@ const getMessageExists = (
     assistantMessageId: string,
     conversationId?: string,
 ): boolean => {
-    if (state.currentConversation) {
-        if (!conversationId) {
-            return false;
-        }
-        const data = getConversationData(state.conversationsData, conversationId);
-        return !!data?.items[assistantMessageId];
+    if (!conversationId) {
+        return false;
     }
-    return !!state.messages[assistantMessageId];
+    const data = getConversationData(state.conversationsData, conversationId);
+    return !!data?.items[assistantMessageId];
 };
 
 /**
@@ -322,26 +260,17 @@ const getUserMessageBeforeSafe = (
     state: MessagesSliceState,
     assistantMessageId: string,
     conversationId?: string,
-): UserMessage | IChatConversationLocalItem | undefined => {
-    if (state.currentConversation) {
-        const data = getConversationData(state.conversationsData, conversationId);
-        if (!data) {
-            return undefined;
-        }
-        const messageIndex = data.order.indexOf(assistantMessageId);
-        if (messageIndex <= 0) {
-            return undefined;
-        }
-        const message = data.items[data.order[messageIndex - 1]];
-        return message.role === "user" ? message : undefined;
+): IChatConversationLocalItem | undefined => {
+    const data = getConversationData(state.conversationsData, conversationId);
+    if (!data) {
+        return undefined;
     }
-
-    const messageIndex = state.messageOrder.indexOf(assistantMessageId);
+    const messageIndex = data.order.indexOf(assistantMessageId);
     if (messageIndex <= 0) {
         return undefined;
     }
-    const message = state.messages[state.messageOrder[messageIndex - 1]];
-    return isUserMessage(message) ? message : undefined;
+    const message = data.items[data.order[messageIndex - 1]];
+    return message.role === "user" ? message : undefined;
 };
 
 const messagesSlice = createSlice({
@@ -349,59 +278,15 @@ const messagesSlice = createSlice({
     initialState,
     reducers: {
         loadThreadAction: (state) => {
-            if (state.currentConversation) {
-                const data = getConversationData(state.conversationsData, state.currentConversation.localId);
-                if (data) {
-                    data.asyncProcess = "loading";
-                }
-            } else {
-                state.messageAsyncProcess = "loading";
+            const data = getConversationData(state.conversationsData, state.currentConversation?.localId);
+            if (data) {
+                data.asyncProcess = "loading";
             }
         },
         loadThreadErrorAction: (state, { payload: { error } }: PayloadAction<{ error: Error }>) => {
             state.globalError = errorToObject(error);
-            if (state.currentConversation) {
-                const data = getConversationData(state.conversationsData, state.currentConversation.localId);
-                delete data?.asyncProcess;
-            } else {
-                delete state.messageAsyncProcess;
-            }
-        },
-        loadThreadSuccessAction: (
-            state,
-            { payload: { messages, threadId } }: PayloadAction<{ messages: Message[]; threadId: string }>,
-        ) => {
-            setNormalizedMessages(state, messages);
-            state.threadId = threadId;
-            if (state.currentConversation) {
-                const data = getConversationData(state.conversationsData, state.currentConversation.localId);
-                delete data?.asyncProcess;
-            } else {
-                delete state.messageAsyncProcess;
-                state.conversationsLoaded = true;
-            }
-        },
-        /**
-         * Restore previously cached messages immediately while the backend is still loading.
-         * Unlike loadThreadSuccessAction, this does not mark the thread as fully loaded,
-         * so the backend fetch continues and will replace these messages when complete.
-         * Sets asyncProcess to "restoring" so that:
-         * - The skeleton spinner is hidden and cached messages are rendered (Messages checks for "loading"/"clearing" only).
-         * - The input remains disabled (Input checks !!asyncProcess, and "restoring" is truthy).
-         */
-        restoreCachedMessagesAction: (
-            state,
-            { payload: { messages } }: PayloadAction<{ messages: Message[] }>,
-        ) => {
-            state.messages = messages.reduce(
-                (acc, message) => {
-                    acc[message.localId] = message;
-                    return acc;
-                },
-                {} as MessagesSliceState["messages"],
-            );
-            state.messageOrder = messages.map((message) => message.localId);
-            state.messageAsyncProcess = "restoring";
+            const data = getConversationData(state.conversationsData, state.currentConversation?.localId);
+            delete data?.asyncProcess;
         },
         loadConversationsSuccessAction: (
             state,
@@ -427,46 +312,28 @@ const messagesSlice = createSlice({
             state.selectedAgentId = currentConversation.agentId ?? state.selectedAgentId;
             seedConversationEffort(state, currentConversation.localId);
             state.threadId = threadId;
-            if (state.currentConversation) {
-                const data = getConversationData(state.conversationsData, state.currentConversation.localId);
-                delete data?.asyncProcess;
-            } else {
-                delete state.messageAsyncProcess;
-            }
+            const data = getConversationData(state.conversationsData, state.currentConversation?.localId);
+            delete data?.asyncProcess;
         },
         clearThreadAction: (state) => {
             // Don't clobber an in-flight reply's "evaluating" marker: in multi-conversation mode this
             // "clear" navigates to a fresh draft and leaves the outgoing conversation intact, so it must
             // stay busy until its reply resolves (LX-2644).
-            if (state.currentConversation) {
-                const data = getConversationData(state.conversationsData, state.currentConversation.localId);
-                if (data && data.asyncProcess !== "evaluating") {
-                    data.asyncProcess = "clearing";
-                }
-            } else if (state.messageAsyncProcess !== "evaluating") {
-                state.messageAsyncProcess = "clearing";
+            const data = getConversationData(state.conversationsData, state.currentConversation?.localId);
+            if (data && data.asyncProcess !== "evaluating") {
+                data.asyncProcess = "clearing";
             }
         },
         clearThreadErrorAction: (state, { payload: { error } }: PayloadAction<{ error: Error }>) => {
             state.globalError = errorToObject(error);
-            if (state.currentConversation) {
-                const data = getConversationData(state.conversationsData, state.currentConversation.localId);
-                delete data?.asyncProcess;
-            } else {
-                delete state.messageAsyncProcess;
-            }
+            const data = getConversationData(state.conversationsData, state.currentConversation?.localId);
+            delete data?.asyncProcess;
         },
         clearThreadSuccessAction: (state) => {
-            state.messages = {};
-            state.messageOrder = [];
             state.loaded = false;
             delete state.globalError;
-            if (state.currentConversation) {
-                const data = getConversationData(state.conversationsData, state.currentConversation.localId);
-                delete data?.asyncProcess;
-            } else {
-                delete state.messageAsyncProcess;
-            }
+            const data = getConversationData(state.conversationsData, state.currentConversation?.localId);
+            delete data?.asyncProcess;
         },
         clearConversationSuccessAction: (
             state,
@@ -482,92 +349,56 @@ const messagesSlice = createSlice({
             const data = getConversationData(state.conversationsData, state.currentConversation.localId);
             delete data?.asyncProcess;
         },
-        /**
-         * Add message to the stack
-         */
-        newMessageAction: (state, action: PayloadAction<Message | IChatConversationLocalItem>) => {
-            let message = action.payload;
+        newMessageAction: (state, action: PayloadAction<IChatConversationLocalItem>) => {
+            const message = action.payload;
 
-            if (state.currentConversation && !isChatConversationLocalItem(message)) {
-                message = convertMessageToChatConversation(message);
+            // keep list of conversations, but clear current conversation data in the view
+            if (!state.currentConversation) {
+                state.currentConversation = createEmptyConversation();
             }
-
-            if (isChatConversationLocalItem(message)) {
-                // keep list of conversations, but clear current conversation data in the view
-                if (!state.currentConversation) {
-                    state.currentConversation = createEmptyConversation();
+            const currentConversation = state.currentConversation;
+            currentConversation.updatedAt = new Date().toISOString();
+            state.conversations = state.conversations?.map((conversation) => {
+                if (conversation.localId === currentConversation.localId) {
+                    return {
+                        ...conversation,
+                        updatedAt: currentConversation.updatedAt,
+                    };
                 }
-                const currentConversation = state.currentConversation;
-                currentConversation.updatedAt = new Date().toISOString();
-                state.conversations = state.conversations?.map((conversation) => {
-                    if (conversation.localId === currentConversation.localId) {
-                        return {
-                            ...conversation,
-                            updatedAt: currentConversation.updatedAt,
-                        };
-                    }
-                    return conversation;
+                return conversation;
+            });
+
+            const data = getConversationData(state.conversationsData, currentConversation.localId);
+            if (data) {
+                // We need to mark all messages as filled
+                Object.values(data.items).forEach((item) => {
+                    item.filled = true;
                 });
-
-                const data = getConversationData(state.conversationsData, currentConversation.localId);
-                if (data) {
-                    // We need to mark all messages as filled
-                    Object.values(data.items).forEach((item) => {
-                        item.filled = true;
-                    });
-                    data.items[message.localId] = message;
-                    data.order.push(message.localId);
-                }
-            } else {
-                if (state.currentConversation) {
-                    throw new Error("Working with thread message but conversation mode is active.");
-                }
-                state.messages[message.localId] = message;
-                state.messageOrder.push(action.payload.localId);
+                data.items[message.localId] = message;
+                data.order.push(message.localId);
             }
             state.loaded = true;
         },
-        /**
-         * Start the message evaluation, adding new assistant message as an incomplete placeholder
-         */
         evaluateMessageAction: (
             state,
             {
                 payload: { message, conversationId },
             }: PayloadAction<{
-                message: AssistantMessage | IChatConversationLocalItem;
+                message: IChatConversationLocalItem;
                 conversationId?: string;
             }>,
         ) => {
-            if (isChatConversationLocalItem(message)) {
-                if (!conversationId) {
-                    throw new Error("Working with conversation message but thread mode is active.");
-                }
-                const data = getConversationData(state.conversationsData, conversationId);
-                if (data) {
-                    data.items[message.localId] = message;
-                    data.order.push(message.localId);
-                }
-                setConversationInProgress(state, true, conversationId);
-            } else {
-                if (state.currentConversation) {
-                    throw new Error("Working with thread message but conversation mode is active.");
-                }
-                state.messages[message.localId] = message;
-                state.messageOrder.push(message.localId);
+            if (!conversationId) {
+                throw new Error("Working with conversation message but thread mode is active.");
             }
-            if (state.currentConversation) {
-                const data = getConversationData(state.conversationsData, conversationId);
-                if (data) {
-                    data.asyncProcess = "evaluating";
-                }
-            } else {
-                state.messageAsyncProcess = "evaluating";
+            const data = getConversationData(state.conversationsData, conversationId);
+            if (data) {
+                data.items[message.localId] = message;
+                data.order.push(message.localId);
+                data.asyncProcess = "evaluating";
             }
+            setConversationInProgress(state, true, conversationId);
         },
-        /**
-         * The evaluation failed, need to update the assistant message.
-         */
         evaluateMessageErrorAction: (
             state,
             {
@@ -583,7 +414,6 @@ const messagesSlice = createSlice({
             if (data) {
                 delete data.asyncProcess;
             }
-            delete state.messageAsyncProcess;
 
             if (!getMessageExists(state, payload.assistantMessageId, payload.conversationId)) {
                 return;
@@ -595,24 +425,15 @@ const messagesSlice = createSlice({
                 payload.conversationId,
             );
 
-            if (isChatConversationLocalItem(assistantMessage)) {
-                assistantMessage.complete = true;
-                assistantMessage.streaming = false;
-                assistantMessage.content = makeErrorContent(payload.error);
-            } else {
-                assistantMessage.complete = true;
-                assistantMessage.content.push(makeErrorContents(payload.error));
-            }
+            assistantMessage.complete = true;
+            assistantMessage.streaming = false;
+            assistantMessage.content = makeErrorContent(payload.error);
         },
-        /**
-         * Received new chunk from server over SSE.
-         */
         evaluateMessageStreamingAction: (
             state,
             {
                 payload,
             }: PayloadAction<{
-                contents?: Contents[];
                 item?: IChatConversationItem;
                 content?: IChatConversationLocalContent | IChatConversationErrorContent;
                 assistantMessageId: string;
@@ -634,20 +455,14 @@ const messagesSlice = createSlice({
                 payload.conversationId,
             );
             assistantMessage.id = payload.interactionId ?? assistantMessage.id;
-
-            if (isChatConversationLocalItem(assistantMessage)) {
-                assistantMessage.content = payload.content ?? {
-                    type: "text",
-                    text: "",
-                };
-                assistantMessage.streaming = true;
-                assistantMessage.cancelled = false;
-                assistantMessage.responseId = payload.item?.responseId ?? "";
-                assistantMessage.replyTo = payload.item?.replyTo;
-            } else {
-                assistantMessage.content.push(...(payload.contents ?? []));
-                assistantMessage.cancelled = false;
-            }
+            assistantMessage.content = payload.content ?? {
+                type: "text",
+                text: "",
+            };
+            assistantMessage.streaming = true;
+            assistantMessage.cancelled = false;
+            assistantMessage.responseId = payload.item?.responseId ?? "";
+            assistantMessage.replyTo = payload.item?.replyTo;
 
             // Also update the interaction id in the relevant user message (if one exists)
             // Note: dynamically created assistant messages (for multi-interaction streams)
@@ -691,7 +506,7 @@ const messagesSlice = createSlice({
             }: PayloadAction<{
                 userMessageId: string;
                 conversation: IChatConversationLocal;
-                message: IChatConversationItem | UserMessage;
+                message: IChatConversationItem;
                 isStartMessage: boolean;
                 interactionId?: string;
                 conversationId?: string;
@@ -708,15 +523,10 @@ const messagesSlice = createSlice({
             const userMessage = getUserMessageStrict(state, payload.userMessageId, payload.conversationId);
             userMessage.id = payload.interactionId ?? userMessage.id;
 
-            if (isChatConversationLocalItem(userMessage)) {
-                const message = payload.message as IChatConversationItem;
-                userMessage.responseId = message.responseId;
-                userMessage.replyTo = message.replyTo;
-                userMessage.createdAt = message.createdAt;
-            } else {
-                const message = payload.message as UserMessage;
-                userMessage.created = message.created;
-            }
+            const message = payload.message as IChatConversationItem;
+            userMessage.responseId = message.responseId;
+            userMessage.replyTo = message.replyTo;
+            userMessage.createdAt = message.createdAt;
         },
         evaluateMessageCompleteAction: (
             state,
@@ -734,7 +544,6 @@ const messagesSlice = createSlice({
             if (data) {
                 delete data.asyncProcess;
             }
-            delete state.messageAsyncProcess;
 
             if (!getMessageExists(state, payload.assistantMessageId, payload.conversationId)) {
                 return;
@@ -747,21 +556,15 @@ const messagesSlice = createSlice({
             );
             assistantMessage.complete = true;
             assistantMessage.cancelled = payload.cancelled ?? assistantMessage.cancelled;
-            if (isChatConversationLocalItem(assistantMessage)) {
-                assistantMessage.streaming = false;
-            }
+            assistantMessage.streaming = false;
         },
         setMessagesAction: (
             state,
-            {
-                payload: { messages, items },
-            }: PayloadAction<{ messages?: Message[]; items?: IChatConversationLocalItem[] }>,
+            { payload: { items } }: PayloadAction<{ items?: IChatConversationLocalItem[] }>,
         ) => {
             const conversation = state.currentConversation;
             if (conversation) {
                 setNormalizedConversation(state, conversation, items ?? []);
-            } else {
-                setNormalizedMessages(state, messages ?? []);
             }
         },
         setVerboseAction: (state, { payload: { verbose } }: PayloadAction<{ verbose: boolean }>) => {
@@ -1010,9 +813,6 @@ const messagesSlice = createSlice({
             // orphan the "loading" flag on the conversation that was actually loading -
             // its skeleton then spins forever when it is reopened (LX-2577). Clear the
             // load flag wherever it sits; there is only ever one load in flight.
-            if (state.messageAsyncProcess === "loading" || state.messageAsyncProcess === "restoring") {
-                delete state.messageAsyncProcess;
-            }
             for (const data of Object.values(state.conversationsData)) {
                 if (data.asyncProcess === "loading" || data.asyncProcess === "restoring") {
                     delete data.asyncProcess;
@@ -1020,12 +820,8 @@ const messagesSlice = createSlice({
             }
             // Preserve the original behaviour for the current conversation's non-load
             // async states (e.g. "evaluating"/"clearing").
-            if (state.currentConversation) {
-                const data = getConversationData(state.conversationsData, state.currentConversation.localId);
-                delete data?.asyncProcess;
-            } else {
-                delete state.messageAsyncProcess;
-            }
+            const data = getConversationData(state.conversationsData, state.currentConversation?.localId);
+            delete data?.asyncProcess;
         },
         /**
          * Clear the "loading"/"restoring" flag for a specific conversation.
@@ -1044,8 +840,6 @@ const messagesSlice = createSlice({
                 if (data?.asyncProcess === "loading" || data?.asyncProcess === "restoring") {
                     delete data.asyncProcess;
                 }
-            } else if (state.messageAsyncProcess === "loading" || state.messageAsyncProcess === "restoring") {
-                delete state.messageAsyncProcess;
             }
         },
         filledFormAction: (
@@ -1063,9 +857,7 @@ const messagesSlice = createSlice({
                 conversationId,
             );
 
-            if (isChatConversationLocalItem(assistantMessage)) {
-                assistantMessage.filled = true;
-            }
+            assistantMessage.filled = true;
         },
         refocusInput: (state) => {
             state.refocus++;
@@ -1087,19 +879,15 @@ const messagesSlice = createSlice({
                 conversationId,
             );
 
-            if (isChatConversationLocalItem(assistantMessage)) {
-                const original = assistantMessage.feedback ?? {
-                    type: "feedback",
-                    createdAt: new Date().getTime(),
-                    updatedAt: new Date().getTime(),
-                };
-                assistantMessage.feedback = {
-                    ...original,
-                    feedback: payload.feedback,
-                };
-            } else {
-                assistantMessage.feedback = payload.feedback;
-            }
+            const original = assistantMessage.feedback ?? {
+                type: "feedback",
+                createdAt: new Date().getTime(),
+                updatedAt: new Date().getTime(),
+            };
+            assistantMessage.feedback = {
+                ...original,
+                feedback: payload.feedback,
+            };
         },
         setUserFeedbackError: (
             state,
@@ -1118,43 +906,17 @@ const messagesSlice = createSlice({
                 payload.conversationId,
             );
 
-            if (isChatConversationLocalItem(assistantMessage)) {
-                const original = assistantMessage.feedback ?? {
-                    type: "feedback",
-                    createdAt: new Date().getTime(),
-                    updatedAt: new Date().getTime(),
-                };
+            const original = assistantMessage.feedback ?? {
+                type: "feedback",
+                createdAt: new Date().getTime(),
+                updatedAt: new Date().getTime(),
+            };
 
-                assistantMessage.feedback = {
-                    ...original,
-                    feedback: "NONE",
-                    error: payload.error,
-                };
-            } else {
-                assistantMessage.feedback = "NONE";
-                assistantMessage.feedbackError = payload.error;
-            }
-        },
-        clearUserFeedbackError: (
-            state,
-            {
-                payload,
-            }: PayloadAction<{
-                assistantMessageId: string;
-                conversationId?: string;
-            }>,
-        ) => {
-            // Clear feedback error after showing toast
-            const assistantMessage = getAssistantMessageStrict(
-                state,
-                payload.assistantMessageId,
-                payload.conversationId,
-            );
-            if (isChatConversationLocalItem(assistantMessage)) {
-                delete assistantMessage.feedback?.error;
-            } else {
-                delete assistantMessage.feedbackError;
-            }
+            assistantMessage.feedback = {
+                ...original,
+                feedback: "NONE",
+                error: payload.error,
+            };
         },
         saveVisualizationAction: (
             state,
@@ -1174,35 +936,21 @@ const messagesSlice = createSlice({
                 conversationId,
             );
 
-            if (isChatConversationLocalItem(assistantMessage)) {
-                if (assistantMessage.content.type !== "multipart") {
-                    throw new Error("Unexpected message type");
-                }
+            if (assistantMessage.content.type !== "multipart") {
+                throw new Error("Unexpected message type");
+            }
 
-                const visualization: IChatConversationMultipartLocalPart | undefined =
-                    assistantMessage.content.parts
-                        .filter((filter) => filter.type === "visualization")
-                        .find(
-                            (content) =>
-                                content.visualization?.insight.identifier === payload.visualizationId,
-                        );
+            const visualization: IChatConversationMultipartLocalPart | undefined =
+                assistantMessage.content.parts
+                    .filter((filter) => filter.type === "visualization")
+                    .find((content) => content.visualization?.insight.identifier === payload.visualizationId);
 
-                if (visualization?.visualization) {
-                    visualization.visualization.insight.title = payload.visualizationTitle;
-                    visualization.saving = {
-                        started: true,
-                        completed: false,
-                    };
-                }
-            } else {
-                const visualization = assistantMessage.content
-                    .filter(isVisualizationContents)
-                    .flatMap((content) => content.createdVisualizations)
-                    .find((content) => content.id === payload.visualizationId);
-
-                if (visualization) {
-                    visualization.saving = true;
-                }
+            if (visualization?.visualization) {
+                visualization.visualization.insight.title = payload.visualizationTitle;
+                visualization.saving = {
+                    started: true,
+                    completed: false,
+                };
             }
         },
         savedVisualizationAction: (
@@ -1221,22 +969,17 @@ const messagesSlice = createSlice({
                 conversationId,
             );
 
-            if (isChatConversationLocalItem(assistantMessage)) {
-                if (assistantMessage.content.type !== "multipart") {
-                    throw new Error("Unexpected message type");
-                }
+            if (assistantMessage.content.type !== "multipart") {
+                throw new Error("Unexpected message type");
+            }
 
-                const visualization: IChatConversationMultipartLocalPart | undefined =
-                    assistantMessage.content.parts
-                        .filter((filter) => filter.type === "visualization")
-                        .find(
-                            (content) =>
-                                content.visualization?.insight.identifier === payload.visualizationId,
-                        );
+            const visualization: IChatConversationMultipartLocalPart | undefined =
+                assistantMessage.content.parts
+                    .filter((filter) => filter.type === "visualization")
+                    .find((content) => content.visualization?.insight.identifier === payload.visualizationId);
 
-                if (visualization) {
-                    delete visualization.saving;
-                }
+            if (visualization) {
+                delete visualization.saving;
             }
         },
         saveVisualizationErrorAction: (
@@ -1259,35 +1002,21 @@ const messagesSlice = createSlice({
                 payload.conversationId,
             );
 
-            if (isChatConversationLocalItem(assistantMessage)) {
-                if (assistantMessage.content.type !== "multipart") {
-                    throw new Error("Unexpected message type");
-                }
+            if (assistantMessage.content.type !== "multipart") {
+                throw new Error("Unexpected message type");
+            }
 
-                const visualization: IChatConversationMultipartLocalPart | undefined =
-                    assistantMessage.content.parts
-                        .filter((filter) => filter.type === "visualization")
-                        .find(
-                            (content) =>
-                                content.visualization?.insight.identifier === payload.visualizationId,
-                        );
+            const visualization: IChatConversationMultipartLocalPart | undefined =
+                assistantMessage.content.parts
+                    .filter((filter) => filter.type === "visualization")
+                    .find((content) => content.visualization?.insight.identifier === payload.visualizationId);
 
-                if (visualization) {
-                    visualization.saving = {
-                        started: false,
-                        completed: false,
-                    };
-                    visualization.error = payload.error;
-                }
-            } else {
-                const visualization = assistantMessage.content
-                    .filter(isVisualizationContents)
-                    .flatMap((content) => content.createdVisualizations)
-                    .find((content) => content.id === payload.visualizationId);
-
-                if (visualization) {
-                    visualization.saving = false;
-                }
+            if (visualization) {
+                visualization.saving = {
+                    started: false,
+                    completed: false,
+                };
+                visualization.error = payload.error;
             }
         },
         saveVisualizationSuccessAction: (
@@ -1308,36 +1037,21 @@ const messagesSlice = createSlice({
                 payload.conversationId,
             );
 
-            if (isChatConversationLocalItem(assistantMessage)) {
-                if (assistantMessage.content.type !== "multipart") {
-                    throw new Error("Unexpected message type");
-                }
+            if (assistantMessage.content.type !== "multipart") {
+                throw new Error("Unexpected message type");
+            }
 
-                const visualization: IChatConversationMultipartLocalPart | undefined =
-                    assistantMessage.content.parts
-                        .filter((filter) => filter.type === "visualization")
-                        .find(
-                            (content) =>
-                                content.visualization?.insight.identifier === payload.visualizationId,
-                        );
+            const visualization: IChatConversationMultipartLocalPart | undefined =
+                assistantMessage.content.parts
+                    .filter((filter) => filter.type === "visualization")
+                    .find((content) => content.visualization?.insight.identifier === payload.visualizationId);
 
-                if (visualization?.visualization) {
-                    visualization.saving = {
-                        started: true,
-                        completed: true,
-                    };
-                    visualization.visualization.insight.identifier = payload.savedVisualizationId;
-                }
-            } else {
-                const visualization = assistantMessage.content
-                    .filter(isVisualizationContents)
-                    .flatMap((content) => content.createdVisualizations)
-                    .find((content) => content.id === payload.visualizationId);
-
-                if (visualization) {
-                    visualization.saving = false;
-                    visualization.savedVisualizationId = payload.savedVisualizationId;
-                }
+            if (visualization?.visualization) {
+                visualization.saving = {
+                    started: true,
+                    completed: true,
+                };
+                visualization.visualization.insight.identifier = payload.savedVisualizationId;
             }
         },
         saveVisualisationRenderStatusAction: (
@@ -1365,31 +1079,17 @@ const messagesSlice = createSlice({
                 conversationId,
             );
 
-            if (isChatConversationLocalItem(assistantMessage)) {
-                if (assistantMessage.content.type !== "multipart") {
-                    throw new Error("Unexpected message type");
-                }
+            if (assistantMessage.content.type !== "multipart") {
+                throw new Error("Unexpected message type");
+            }
 
-                const visualization: IChatConversationMultipartLocalPart | undefined =
-                    assistantMessage.content.parts
-                        .filter((filter) => filter.type === "visualization")
-                        .find(
-                            (content) =>
-                                content.visualization?.insight.identifier === payload.visualizationId,
-                        );
+            const visualization: IChatConversationMultipartLocalPart | undefined =
+                assistantMessage.content.parts
+                    .filter((filter) => filter.type === "visualization")
+                    .find((content) => content.visualization?.insight.identifier === payload.visualizationId);
 
-                if (visualization) {
-                    delete visualization.reporting;
-                }
-            } else {
-                const visualization = assistantMessage.content
-                    .filter(isVisualizationContents)
-                    .flatMap((content) => content.createdVisualizations)
-                    .find((content) => content.id === payload.visualizationId);
-
-                if (visualization) {
-                    delete visualization.statusReportPending;
-                }
+            if (visualization) {
+                delete visualization.reporting;
             }
         },
         visualizationErrorAction: (
@@ -1532,10 +1232,8 @@ export const messagesSliceReducer: Reducer<MessagesSliceState> = messagesSlice.r
 export const {
     loadThreadAction,
     loadThreadErrorAction,
-    loadThreadSuccessAction,
     loadConversationsSuccessAction,
     loadConversationSuccessAction,
-    restoreCachedMessagesAction,
     clearThreadErrorAction,
     clearThreadSuccessAction,
     clearConversationSuccessAction,
@@ -1552,7 +1250,6 @@ export const {
     clearConversationLoadingAction,
     setUserFeedback,
     setUserFeedbackError,
-    clearUserFeedbackError,
     saveVisualizationAction,
     savedVisualizationAction,
     saveVisualizationErrorAction,

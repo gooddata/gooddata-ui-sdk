@@ -51,7 +51,7 @@ export function DrillSelectDropdownMenu({ drillState, onClose, onSelect }: Drill
                 {
                     type: "static" as const,
                     data: (
-                        <span className="gd-gen-ai-chat__visualization__drill-header">
+                        <span className="gd-gen-ai-chat__conversation__visualization__drill-header">
                             <FormattedMessage id="gd.gen-ai.drill_modal_picker.header.explain" />
                         </span>
                     ),

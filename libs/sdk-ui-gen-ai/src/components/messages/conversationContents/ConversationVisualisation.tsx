@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 
 import { type IChatConversationVisualisationContent } from "@gooddata/sdk-backend-spi";
 import {
+    type IAttribute,
     type IBucket,
     type IColorPalette,
     type IDrillOrigin,
@@ -16,8 +17,12 @@ import {
     type ISeparators,
     type ISortItem,
     type ITheme,
+    attributeAlias,
+    attributeLocalId,
+    idRef,
     isAttribute,
     isMeasure,
+    newAttribute,
 } from "@gooddata/sdk-model";
 import {
     type ExplicitDrill,
@@ -54,6 +59,7 @@ import {
     type IDashboardKeyDriverCombinationItem,
     getKdaKeyDriverCombinations,
 } from "@gooddata/sdk-ui-dashboard";
+import { GeoAreaChart, GeoPushpinChart } from "@gooddata/sdk-ui-geo";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { PivotTableNext, useAgGridToken } from "@gooddata/sdk-ui-pivot/next";
 import { ScopedThemeProvider, useTheme } from "@gooddata/sdk-ui-theme-provider";
@@ -465,6 +471,39 @@ export function ConversationVisualisation({
                         enableNewPivotTable,
                         enableAccessibleChartTooltip,
                         agGridToken: resolvedAgGridToken,
+                        execConfig,
+                        separators,
+                    },
+                );
+            case "local:pushpin":
+                return renderPushpinChart(
+                    intl.locale,
+                    visualization,
+                    bucketsData,
+                    filters,
+                    sorts,
+                    colorPalette,
+                    handleSdkError,
+                    handleSuccess,
+                    handlerDrill,
+                    {
+                        drillableItems,
+                        execConfig,
+                        separators,
+                    },
+                );
+            case "local:choropleth":
+                return renderChoroplethChart(
+                    intl.locale,
+                    bucketsData,
+                    filters,
+                    sorts,
+                    colorPalette,
+                    handleSdkError,
+                    handleSuccess,
+                    handlerDrill,
+                    {
+                        drillableItems,
                         execConfig,
                         separators,
                     },
@@ -1285,6 +1324,125 @@ const renderRepeater = (
     );
 };
 
+const locationToLatitudeLongitude = (
+    location: IAttribute | undefined,
+    controls: Record<string, any> | undefined,
+): { latitude: IAttribute; longitude: IAttribute } | undefined => {
+    const latitudeId = controls?.["latitude"];
+    const longitudeId = controls?.["longitude"];
+
+    if (!location || !latitudeId || !longitudeId) {
+        return undefined;
+    }
+
+    const alias = attributeAlias(location);
+
+    return {
+        latitude: newAttribute(idRef(latitudeId, "displayForm"), (a) =>
+            a.localId(attributeLocalId(location)).alias(alias),
+        ),
+        longitude: newAttribute(idRef(longitudeId, "displayForm"), (a) =>
+            a.localId("longitude_df").alias(alias),
+        ),
+    };
+};
+
+const renderPushpinChart = (
+    locale: string,
+    visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>,
+    buckets: ReturnType<typeof useBucketData>,
+    filters: IFilter[],
+    sortBy: ISortItem[],
+    colorPalette: IColorPalette | undefined,
+    onError: OnError,
+    onSuccess: OnExportReady,
+    onDrill: OnFiredDrillEvent,
+    props: {
+        drillableItems?: ExplicitDrill[];
+        execConfig?: IExecutionConfig;
+        separators?: ISeparators;
+    },
+) => {
+    const { location, size, color, segment } = buckets;
+    const geo = locationToLatitudeLongitude(location[0], visualization.insight.properties["controls"]);
+
+    if (!geo) {
+        return null;
+    }
+
+    return (
+        <div style={{ height: VIS_HEIGHT }}>
+            <GeoPushpinChart
+                locale={locale}
+                latitude={geo.latitude}
+                longitude={geo.longitude}
+                size={size[0]}
+                color={color[0]}
+                segmentBy={segment[0]}
+                filters={filters}
+                sortBy={sortBy}
+                config={{
+                    ...legendTooltipOptions,
+                    colorPalette,
+                    separators: props.separators,
+                    cooperativeGestures: true,
+                }}
+                drillableItems={props.drillableItems}
+                onDrill={onDrill}
+                onError={onError}
+                onExportReady={onSuccess}
+                execConfig={props.execConfig}
+            />
+        </div>
+    );
+};
+
+const renderChoroplethChart = (
+    locale: string,
+    buckets: ReturnType<typeof useBucketData>,
+    filters: IFilter[],
+    sortBy: ISortItem[],
+    colorPalette: IColorPalette | undefined,
+    onError: OnError,
+    onSuccess: OnExportReady,
+    onDrill: OnFiredDrillEvent,
+    props: {
+        drillableItems?: ExplicitDrill[];
+        execConfig?: IExecutionConfig;
+        separators?: ISeparators;
+    },
+) => {
+    const { area, color, segment } = buckets;
+
+    if (!area[0]) {
+        return null;
+    }
+
+    return (
+        <div style={{ height: VIS_HEIGHT }}>
+            <GeoAreaChart
+                locale={locale}
+                area={area[0]}
+                color={color[0]}
+                segmentBy={segment[0]}
+                filters={filters}
+                sortBy={sortBy}
+                config={{
+                    ...legendTooltipOptions,
+                    colorPalette,
+                    separators: props.separators,
+                    cooperativeGestures: true,
+                }}
+                drillableItems={props.drillableItems}
+                onDrill={onDrill}
+                onError={onError}
+                onExportReady={onSuccess}
+                execConfig={props.execConfig}
+            />
+        </div>
+    );
+};
+
 const renderTable = (
     locale: string,
     buckets: ReturnType<typeof useBucketData>,
@@ -1304,16 +1462,18 @@ const renderTable = (
     },
 ) => {
     const TableComponent = props.enableNewPivotTable ? PivotTableNext : PivotTable;
-    const { metrics, attribute, trend, view, stack, segment, columns } = buckets;
+    const { metrics, attribute, trend, view, stack, segment, columns, location, area, size, color } = buckets;
+    const geoMeasures = [...size, ...color].filter(isMeasure);
+    const geoAttributes = [...size, ...color].filter(isAttribute);
 
     return (
         <TableComponent
             locale={locale}
-            measures={metrics}
+            measures={[...metrics, ...geoMeasures]}
             filters={filters}
             sortBy={sortBy}
             columns={[...columns.filter(isAttribute), ...stack, ...segment].filter(Boolean)}
-            rows={[...attribute, ...trend, ...view].filter(Boolean)}
+            rows={[...attribute, ...trend, ...view, ...location, ...area, ...geoAttributes].filter(Boolean)}
             config={
                 props.enableNewPivotTable
                     ? { agGridToken: props.agGridToken, separators: props.separators }
@@ -1387,6 +1547,11 @@ function useBucketData(buckets: IBucket[]) {
             buckets.find((b) => b.localIdentifier === "attribute_from")?.items.filter(isAttribute) ?? [];
         const attribute_to =
             buckets.find((b) => b.localIdentifier === "attribute_to")?.items.filter(isAttribute) ?? [];
+        const location =
+            buckets.find((b) => b.localIdentifier === "location")?.items.filter(isAttribute) ?? [];
+        const area = buckets.find((b) => b.localIdentifier === "area")?.items.filter(isAttribute) ?? [];
+        const size = buckets.find((b) => b.localIdentifier === "size")?.items ?? [];
+        const color = buckets.find((b) => b.localIdentifier === "color")?.items ?? [];
 
         return {
             metrics,
@@ -1400,6 +1565,10 @@ function useBucketData(buckets: IBucket[]) {
             columns,
             attribute_from,
             attribute_to,
+            location,
+            area,
+            size,
+            color,
         };
     }, [buckets]);
 }

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IntlShape } from "react-intl";
 
@@ -7,11 +7,11 @@ import { type IntlShape } from "react-intl";
  *
  * @internal
  */
-export interface IMapLibreLocale {
+export type IMapLibreLocale = {
     "ScrollZoomBlocker.CtrlMessage": string;
     "ScrollZoomBlocker.CmdMessage": string;
     "TouchPanBlocker.Message": string;
-}
+};
 
 /**
  * Generate MapLibre locale configuration with translated messages

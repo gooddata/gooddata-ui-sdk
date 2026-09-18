@@ -144,14 +144,14 @@ describe("parameters reducers (per tab)", () => {
         });
     });
 
-    describe("setParameterRuntimeValue", () => {
+    describe("setParameterRuntimeValues", () => {
         it("updates only runtimeOverride on the active tab, leaves persisted entry untouched", () => {
             const initial = makeState([{ parameter: topNParameter, runtimeOverride: 10 }]);
 
             const next = produce(initial, (draft) =>
-                parametersReducers.setParameterRuntimeValue(
+                parametersReducers.setParameterRuntimeValues(
                     draft,
-                    tabsActions.setParameterRuntimeValue({ ref: topNRef, value: 99 }),
+                    tabsActions.setParameterRuntimeValues({ values: [{ ref: topNRef, value: 99 }] }),
                 ),
             );
 
@@ -163,9 +163,11 @@ describe("parameters reducers (per tab)", () => {
             const initial = makeState([{ parameter: scenarioParameter, runtimeOverride: "Actual" }]);
 
             const next = produce(initial, (draft) =>
-                parametersReducers.setParameterRuntimeValue(
+                parametersReducers.setParameterRuntimeValues(
                     draft,
-                    tabsActions.setParameterRuntimeValue({ ref: scenarioRef, value: "Budget" }),
+                    tabsActions.setParameterRuntimeValues({
+                        values: [{ ref: scenarioRef, value: "Budget" }],
+                    }),
                 ),
             );
 
@@ -176,9 +178,9 @@ describe("parameters reducers (per tab)", () => {
             const initial = makeState([{ parameter: topNParameter, runtimeOverride: 10 }]);
 
             const next = produce(initial, (draft) =>
-                parametersReducers.setParameterRuntimeValue(
+                parametersReducers.setParameterRuntimeValues(
                     draft,
-                    tabsActions.setParameterRuntimeValue({ ref: sampleRef, value: 99 }),
+                    tabsActions.setParameterRuntimeValues({ values: [{ ref: sampleRef, value: 99 }] }),
                 ),
             );
 
@@ -205,9 +207,9 @@ describe("parameters reducers (per tab)", () => {
             };
 
             const next = produce(initial, (draft) =>
-                parametersReducers.setParameterRuntimeValue(
+                parametersReducers.setParameterRuntimeValues(
                     draft,
-                    tabsActions.setParameterRuntimeValue({ ref: topNRef, value: 99 }),
+                    tabsActions.setParameterRuntimeValues({ values: [{ ref: topNRef, value: 99 }] }),
                 ),
             );
 
@@ -443,15 +445,15 @@ describe("parameters reducers (per tab)", () => {
     });
 
     describe("runtime writes supersede staging", () => {
-        it("setParameterRuntimeValue drops the staged value for the written ref", () => {
+        it("setParameterRuntimeValues drops the staged value for the written ref", () => {
             const initial = makeState([
                 { parameter: topNParameter, runtimeOverride: 10, workingOverride: 99 },
             ]);
 
             const next = produce(initial, (draft) =>
-                parametersReducers.setParameterRuntimeValue(
+                parametersReducers.setParameterRuntimeValues(
                     draft,
-                    tabsActions.setParameterRuntimeValue({ ref: topNRef, value: 50 }),
+                    tabsActions.setParameterRuntimeValues({ values: [{ ref: topNRef, value: 50 }] }),
                 ),
             );
 
@@ -459,15 +461,15 @@ describe("parameters reducers (per tab)", () => {
             expect(activeParameters(next as ITabsState)[0]).not.toHaveProperty("workingOverride");
         });
 
-        it("setParameterRuntimeValue drops staging even when the runtime value does not change", () => {
+        it("setParameterRuntimeValues drops staging even when the runtime value does not change", () => {
             const initial = makeState([
                 { parameter: topNParameter, runtimeOverride: 10, workingOverride: 99 },
             ]);
 
             const next = produce(initial, (draft) =>
-                parametersReducers.setParameterRuntimeValue(
+                parametersReducers.setParameterRuntimeValues(
                     draft,
-                    tabsActions.setParameterRuntimeValue({ ref: topNRef, value: 10 }),
+                    tabsActions.setParameterRuntimeValues({ values: [{ ref: topNRef, value: 10 }] }),
                 ),
             );
 

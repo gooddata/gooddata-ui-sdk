@@ -531,6 +531,11 @@ export interface IFeatureFlags {
     enableCreateVisualizationWorkspacePermission?: boolean;
 
     /**
+     * Enables object-level permissions for visualizations. Shared with the backend, which enforces them.
+     */
+    enableVisualizationPermissions?: boolean;
+
+    /**
      * Enables Highcharts accessibility features.
      */
     enableHighchartsAccessibility?: boolean;
@@ -616,11 +621,6 @@ export interface IFeatureFlags {
      * Enable Catalog smart search results in the UI.
      */
     enableCatalogSmartSearchResults?: boolean;
-
-    /**
-     * Enable Gen AI Chatbot in UI.
-     */
-    enableGenAIChat?: boolean;
 
     /**
      * Enable GenAI catalog quality checker in Analytics Catalog.
@@ -900,11 +900,6 @@ export interface IFeatureFlags {
     enableAIDataSetting?: boolean;
 
     /**
-     * Enable GenAI reasoning visibility.
-     */
-    enableGenAIReasoningVisibility?: boolean;
-
-    /**
      * AI Chat search limit
      */
     aiChatSearchLimit?: number;
@@ -1065,11 +1060,6 @@ export interface IFeatureFlags {
      * Enable User Data Filters UI.
      */
     enableUserDataFiltersUi?: boolean;
-
-    /**
-     * Enable ai agentic conversations.
-     */
-    enableAiAgenticConversations?: boolean;
 
     /**
      * Enable ai context setup.

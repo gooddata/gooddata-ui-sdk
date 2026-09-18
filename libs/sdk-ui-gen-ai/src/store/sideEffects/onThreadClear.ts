@@ -14,7 +14,6 @@ import {
     cancelAsyncAction,
     clearConversationSuccessAction,
     clearThreadErrorAction,
-    clearThreadSuccessAction,
     startNewConversationAction,
 } from "../messages/messagesSlice.js";
 
@@ -25,38 +24,13 @@ import {
 export function* onThreadClear() {
     try {
         const settings: IUserWorkspaceSettings | undefined = yield select(settingsSelector);
-        if (settings?.enableAiAgenticConversations) {
-            if (settings.enableAiAgenticMultiConversations) {
-                yield createConversation();
-            } else {
-                yield resetConversation();
-            }
+        if (settings?.enableAiAgenticMultiConversations) {
+            yield createConversation();
         } else {
-            yield resetThread();
+            yield resetConversation();
         }
     } catch (e) {
         yield put(clearThreadErrorAction({ error: e as Error }));
-    }
-}
-
-//THREAD API
-
-function* resetThread() {
-    // Retrieve backend from context
-    const backend: IAnalyticalBackend = yield getContext("backend");
-    const workspace: string = yield getContext("workspace");
-
-    const chatThread = backend.workspace(workspace).genAI().getChatThread();
-
-    const [_results, cancelAction]: [results: void, ReturnType<typeof cancelAsyncAction>] = yield race([
-        call(chatThread.reset.bind(chatThread)),
-        take(cancelAsyncAction.type),
-    ]);
-
-    if (cancelAction) {
-        // Just skip, as the action was cancelled
-    } else {
-        yield put(clearThreadSuccessAction());
     }
 }
 

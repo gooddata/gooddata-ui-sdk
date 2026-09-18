@@ -12,18 +12,12 @@ import {
     type IAlertTriggerInterval,
     type IAlertTriggerMode,
     type IAttribute,
-    type IAutomationMetadataObject,
     type IAutomationMetadataObjectDefinition,
     type ICatalogAttribute,
     type ICatalogDateDataset,
     type IDataSetMetadataObject,
-    type IInsight,
     type IMeasure,
-    type INotificationChannelIdentifier,
-    type INotificationChannelMetadataObject,
-    type IWidget,
 } from "@gooddata/sdk-model";
-import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 import type { AI_OPERATOR, AI_OPERATORS } from "@gooddata/sdk-ui-ext";
 import { type ISlotProps, type OverlayPositionType } from "@gooddata/sdk-ui-kit";
 
@@ -48,64 +42,12 @@ import { type AttributeValue } from "./hooks/useAttributeValuesFromExecResults.j
 /**
  * Props of the alerting create/edit dialog, accepted by `AlertingDialogComponent`.
  *
- * Extends {@link IAutomationDialogCallbacks} with data props that are all deprecated — the dialog
- * reads its data from `useAlertingDialogContext()` instead.
+ * Alias of {@link IAutomationDialogCallbacks} — the dialog carries no data props; it reads its
+ * data from `useAlertingDialogContext()` instead.
  *
  * @beta
  */
-export interface IAlertingDialogProps extends IAutomationDialogCallbacks {
-    /**
-     * In case, we are not creating new alert, but editing existing one, this is the active alert to be edited.
-     *
-     * @deprecated has no effect since 11.51 — the dialog reads `alertToEdit` from
-     *     `useAlertingDialogContext()`. To adjust what it reads, use the
-     *     `AlertingDialogContextDecoratorComponent` dashboard prop. Prop will be removed.
-     */
-    alertToEdit?: IAutomationMetadataObject;
-
-    /**
-     * Notification channels in organization
-     *
-     * @deprecated has no effect since 11.51 — the dialog reads `notificationChannels` from
-     *     `useAlertingDialogContext()`. To adjust what it reads, use the
-     *     `AlertingDialogContextDecoratorComponent` dashboard prop. Prop will be removed.
-     */
-    notificationChannels?: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
-
-    /**
-     * Widget to be used for alert.
-     *
-     * Note: this is available only when alerting for widget, not dashboard.
-     * Typed as IWidget (not ExtendedDashboardWidget) because the dialog only
-     * supports insight widgets; custom widgets and nested layouts are not valid
-     * alert targets and were silently discarded at the connector boundary anyway.
-     *
-     * @deprecated has no effect since 11.51 — the dialog reads `widget` from
-     *     `useAlertingDialogContext()`. To adjust what it reads, use the
-     *     `AlertingDialogContextDecoratorComponent` dashboard prop. Prop will be removed.
-     */
-    widget?: IWidget;
-
-    /**
-     * Insight to be used for alert.
-     *
-     * Note: this is available only when alerting for widget, not dashboard.
-     *
-     * @deprecated has no effect since 11.51 — the dialog reads `insight` from
-     *     `useAlertingDialogContext()`. To adjust what it reads, use the
-     *     `AlertingDialogContextDecoratorComponent` dashboard prop (e.g. so an alert follows a
-     *     widget's date-granularity selection). Prop will be removed.
-     */
-    insight?: IInsight;
-
-    /**
-     * Is alert dialog loading initial data, before it can be rendered?
-     *
-     * @deprecated has no effect since 11.51 — the dialog reads `isLoading` from
-     *     `useAlertingDialogContext()`. Prop will be removed.
-     */
-    isLoading?: boolean;
-}
+export type IAlertingDialogProps = IAutomationDialogCallbacks;
 
 /**
  * Props of the default alerting dialog's header region (the title input row).
@@ -631,42 +573,12 @@ export interface IAlertingDialogFormFieldGroupProps {
 /**
  * Props of the alerting management dialog, accepted by `AlertingManagementDialogComponent`.
  *
- * Extends {@link IAutomationManagementDialogCallbacks} with data props that are all deprecated —
- * the dialog reads its data from `useAlertingManagementDialogContext()` instead.
+ * Alias of {@link IAutomationManagementDialogCallbacks} — the dialog carries no data props; it
+ * reads its data from `useAlertingManagementDialogContext()` instead.
  *
  * @beta
  */
-export interface IAlertingManagementDialogProps extends IAutomationManagementDialogCallbacks {
-    /**
-     * Is loading alert data?
-     *
-     * @deprecated not read by the default dialog. Prop will be removed.
-     */
-    isLoadingAlertingData?: boolean;
-
-    /**
-     * Error occurred while loading alert data?
-     *
-     * @deprecated not read by the default dialog. Prop will be removed.
-     */
-    alertDataError?: GoodDataSdkError;
-
-    /**
-     * Notification channels in organization
-     *
-     * @deprecated not read by the default dialog. A replacement can read the dashboard's
-     *     notification channels directly. Prop will be removed.
-     */
-    notificationChannels?: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
-
-    /**
-     * Automations in workspace
-     *
-     * @deprecated not read by the default dialog. A replacement can read the dashboard's
-     *     automations directly. Prop will be removed.
-     */
-    automations?: IAutomationMetadataObject[];
-}
+export type IAlertingManagementDialogProps = IAutomationManagementDialogCallbacks;
 
 ///
 /// Custom component types

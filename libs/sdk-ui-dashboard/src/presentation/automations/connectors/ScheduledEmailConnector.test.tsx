@@ -254,24 +254,14 @@ describe("ScheduledEmailConnector", () => {
         });
     });
 
-    it("wires the lifecycle callbacks to the create/edit dialog without the deprecated data props", () => {
+    it("wires the lifecycle callbacks to the create/edit dialog", () => {
         fixtures.seState.isScheduleEmailingDialogOpen = true;
         fixtures.seState.isScheduleEmailingManagementDialogOpen = false;
 
         render(<ScheduledEmailConnector />);
 
         expect(fixtures.dialogProps).toBeDefined();
-        for (const prop of [
-            "scheduledExportToEdit",
-            "users",
-            "usersError",
-            "notificationChannels",
-            "widget",
-            "insight",
-            "dashboardFilters",
-            "widgetFilters",
-            "isLoading",
-        ]) {
+        for (const prop of ["users", "usersError"]) {
             expect(fixtures.dialogProps?.[prop]).toBeUndefined();
         }
         expect(fixtures.dialogProps?.["onCreateSuccess"]).toBe(fixtures.onScheduleEmailingCreateSuccess);
@@ -282,19 +272,11 @@ describe("ScheduledEmailConnector", () => {
         expect(fixtures.dialogProps?.["onDeleteError"]).toBe(fixtures.onScheduleEmailingDeleteError);
     });
 
-    it("does not supply the deprecated data props to the management dialog", () => {
+    it("renders the management dialog even when the automations hook reports an error", () => {
         fixtures.automationsError = new Error("automations failed to load");
 
         render(<ScheduledEmailConnector />);
 
         expect(fixtures.managementDialogProps).toBeDefined();
-        for (const prop of [
-            "automations",
-            "isLoadingScheduleData",
-            "notificationChannels",
-            "scheduleDataError",
-        ]) {
-            expect(fixtures.managementDialogProps?.[prop]).toBeUndefined();
-        }
     });
 });

@@ -14,7 +14,6 @@ import { DimensionGenerator } from '@gooddata/sdk-model';
 import type { FilterContextItem } from '@gooddata/sdk-model';
 import type { GenAIChatEffort } from '@gooddata/sdk-model';
 import type { GenAIChatInteractionUserFeedback } from '@gooddata/sdk-model';
-import type { GenAIChatInteractionUserVisualisation } from '@gooddata/sdk-model';
 import type { GenAIObjectType } from '@gooddata/sdk-model';
 import { GeoCollectionKind } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
@@ -93,13 +92,7 @@ import { IFilter } from '@gooddata/sdk-model';
 import type { IFilterContext } from '@gooddata/sdk-model';
 import type { IFilterContextDefinition } from '@gooddata/sdk-model';
 import { IFiscalYear } from '@gooddata/sdk-model';
-import type { IGenAIChangeAnalysisParams } from '@gooddata/sdk-model';
-import type { IGenAIChatInteraction } from '@gooddata/sdk-model';
-import type { IGenAIChatReasoning } from '@gooddata/sdk-model';
-import type { IGenAIChatRouting } from '@gooddata/sdk-model';
 import type { IGenAiClarifyingQuestion } from '@gooddata/sdk-model';
-import type { IGenAICreatedVisualizations } from '@gooddata/sdk-model';
-import type { IGenAIFoundObjects } from '@gooddata/sdk-model';
 import type { IGenAIUserContext } from '@gooddata/sdk-model';
 import { IGeoCollection } from '@gooddata/sdk-model';
 import { IGeoCollectionDefinition } from '@gooddata/sdk-model';
@@ -316,6 +309,15 @@ export type GenAIAppliedMemoryStrategy = "always" | "auto";
 
 // @internal
 export type GenAIInteractionStepCategory = "applyMemory" | "skillRouting" | "knowledgeSearch" | "catalogSearch" | "metricQuery" | "composeAnswer";
+
+// @alpha
+export const GEO_ASSET_PATH = "/api/v1/location/";
+
+// @alpha
+export type GeoAssetResponseType = "arraybuffer" | "json";
+
+// @alpha
+export function getGeoAssetPath(url: string): string | undefined;
 
 // @alpha
 export interface IAgentsQuery {
@@ -1030,39 +1032,6 @@ export type IChatSuggestions = {
     actions?: IChatSuggestion[];
 };
 
-// @beta
-export interface IChatThread {
-    loadHistory(fromInteractionId?: string, options?: {
-        signal?: AbortSignal;
-    }): Promise<IChatThreadHistory>;
-    query(userMessage: string): IChatThreadQuery;
-    reset(): Promise<void>;
-    saveRenderVisualisationStatus(interactionId: string, status: "SUCCESSFUL" | "UNEXPECTED_ERROR" | "TOO_MANY_DATA_POINTS" | "NO_DATA" | "NO_RESULTS"): Promise<void>;
-    saveUserFeedback(interactionId: string, feedback: GenAIChatInteractionUserFeedback, userTextFeedback?: string): Promise<void>;
-    saveUserVisualisation(interactionId: string, visualization: GenAIChatInteractionUserVisualisation): Promise<void>;
-}
-
-// @beta
-export interface IChatThreadHistory {
-    // (undocumented)
-    interactions: IGenAIChatInteraction[];
-    // (undocumented)
-    threadId: string;
-}
-
-// @beta
-export interface IChatThreadQuery {
-    query(options?: {
-        signal?: AbortSignal;
-    }): Promise<IGenAIChatEvaluation>;
-    stream(): ReadableStream<IGenAIChatEvaluation>;
-    withAllowedRelationshipTypes(relationshipTypes?: IAllowedRelationshipType[]): IChatThreadQuery;
-    withCreateLimit(createLimit: number): IChatThreadQuery;
-    withObjectTypes(objectTypes?: GenAIObjectType[]): IChatThreadQuery;
-    withSearchLimit(searchLimit: number): IChatThreadQuery;
-    withUserContext(userContext: IGenAIUserContext): IChatThreadQuery;
-}
-
 // @internal
 export interface IChatWhatIfAdjustment {
     ref: ObjRef;
@@ -1730,30 +1699,6 @@ export interface IForecastView {
 }
 
 // @beta
-export interface IGenAIChatEvaluation {
-    // (undocumented)
-    changeAnalysisParams?: IGenAIChangeAnalysisParams;
-    // (undocumented)
-    chatHistoryInteractionId?: string;
-    // (undocumented)
-    chatHistoryThreadId?: string;
-    // (undocumented)
-    createdVisualizations?: IGenAICreatedVisualizations;
-    // (undocumented)
-    errorResponse?: string;
-    // @deprecated (undocumented)
-    foundObjects?: IGenAIFoundObjects;
-    // (undocumented)
-    reasoning?: IGenAIChatReasoning;
-    // (undocumented)
-    routing?: IGenAIChatRouting;
-    // (undocumented)
-    semanticSearch?: ISemanticSearchResult;
-    // (undocumented)
-    textResponse?: string;
-}
-
-// @beta
 export interface IGenAIService {
     // @internal
     getAnalyticsCatalog(): IAnalyticsCatalogService;
@@ -1761,7 +1706,6 @@ export interface IGenAIService {
     getChatConversations(options?: {
         isPreview?: boolean;
     }): IChatConversations;
-    getChatThread(): IChatThread;
     // @internal
     getKnowledgeDocuments(): IKnowledgeDocumentsService;
     getLlmConfigured(): Promise<boolean>;
@@ -1776,8 +1720,22 @@ export interface IGenAIService {
 }
 
 // @alpha
+export interface IGeoAsset {
+    cacheControl?: string;
+    data: ArrayBuffer | Record<string, unknown>;
+    expires?: string;
+}
+
+// @alpha
+export interface IGeoAssetOptions {
+    responseType?: GeoAssetResponseType;
+    signal?: AbortSignal;
+}
+
+// @alpha
 export interface IGeoService {
     collections(): IOrganizationGeoCollectionsService;
+    getAsset(url: string, options?: IGeoAssetOptions): Promise<IGeoAsset>;
     getDefaultStyle(params?: IGeoStyleParams): Promise<IGeoStyleSpecification>;
     getDefaultStyleSpriteIcons(): Promise<string[]>;
     getStyleById(styleId: string, params?: IGeoStyleParams): Promise<IGeoStyleSpecification>;
@@ -1842,6 +1800,7 @@ export interface IGetExportDefinitionOptions {
 
 // @public
 export interface IGetInsightOptions {
+    loadPermissions?: boolean;
     loadUserData?: boolean;
 }
 
@@ -1878,6 +1837,7 @@ export interface IInsightsQuery {
     query(): Promise<IInsightsQueryResult>;
     withFilter(filter: IFilterBaseOptions): IInsightsQuery;
     withInclude(include: string[]): IInsightsQuery;
+    withMetaInclude(metaInclude: string[]): IInsightsQuery;
     // @beta
     withMethod(method: QueryMethod): IInsightsQuery;
     withOrigin(origin: ObjectOrigin | (string & {})): IInsightsQuery;
@@ -2743,6 +2703,9 @@ export interface ISemanticSearchQuery {
 }
 
 export { ISemanticSearchResult }
+
+// @alpha
+export function isGeoAssetUrl(url: string): boolean;
 
 // @public
 export function isLimitReached(obj: unknown): obj is LimitReached;

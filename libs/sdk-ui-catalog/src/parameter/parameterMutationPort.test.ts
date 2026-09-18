@@ -5,7 +5,9 @@ import { describe, expect, it, vi } from "vitest";
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import type { IParameterMetadataObject, IParameterMetadataObjectDefinition } from "@gooddata/sdk-model";
 
-import { createParameterMutationAdapter } from "./parameterMutationPort.js";
+import type { ICatalogItemParameter } from "../catalogItem/types.js";
+
+import { createParameterMutationAdapter, listParameterReferences } from "./parameterMutationPort.js";
 import { createTestParameterMutationPort } from "./parameterMutationPort.test.utils.js";
 
 const savedParameter: IParameterMetadataObject = {
@@ -29,11 +31,13 @@ function createFakeBackend(
         createParameter?: ReturnType<typeof vi.fn>;
         updateParameter?: ReturnType<typeof vi.fn>;
         deleteParameter?: ReturnType<typeof vi.fn>;
+        getReferences?: ReturnType<typeof vi.fn>;
     } = {},
 ) {
     const createParameter = overrides.createParameter ?? vi.fn().mockResolvedValue(savedParameter);
     const updateParameter = overrides.updateParameter ?? vi.fn().mockResolvedValue(savedParameter);
     const deleteParameter = overrides.deleteParameter ?? vi.fn().mockResolvedValue(undefined);
+    const getReferences = overrides.getReferences ?? vi.fn().mockResolvedValue({ nodes: [], edges: [] });
     const backend = {
         workspace: () => ({
             parameters: () => ({
@@ -41,9 +45,12 @@ function createFakeBackend(
                 updateParameter,
                 deleteParameter,
             }),
+            references: () => ({
+                getReferences,
+            }),
         }),
     } as unknown as IAnalyticalBackend;
-    return { backend, createParameter, updateParameter, deleteParameter };
+    return { backend, createParameter, updateParameter, deleteParameter, getReferences };
 }
 
 describe("parameterMutationPort adapter", () => {
@@ -186,5 +193,40 @@ describe("parameterMutationPort adapter", () => {
                 }),
             ).rejects.toThrow(/identity/);
         });
+    });
+});
+
+describe("parameter references", () => {
+    const parameterItem = { identifier: "param.id", type: "parameter" } as ICatalogItemParameter;
+
+    it("listParameterReferences titles every dependent node and skips the root", async () => {
+        const { backend, getReferences } = createFakeBackend();
+        getReferences.mockResolvedValueOnce({
+            nodes: [
+                { identifier: "param.id", type: "parameter", title: "My Param", isRoot: true },
+                { identifier: "ca.rep", type: "computedAttribute", title: "Rep performance" },
+                { identifier: "revenue.param", type: "measure", title: "Revenue with param" },
+            ],
+            edges: [],
+        });
+
+        expect(await listParameterReferences(backend, "ws-1", parameterItem)).toEqual([
+            "Rep performance",
+            "Revenue with param",
+        ]);
+        expect(getReferences).toHaveBeenCalledWith(
+            { identifier: "param.id", type: "parameter" },
+            { direction: "up" },
+        );
+    });
+
+    it("listParameterReferences reports nothing when only the root is present", async () => {
+        const { backend, getReferences } = createFakeBackend();
+        getReferences.mockResolvedValueOnce({
+            nodes: [{ identifier: "param.id", type: "parameter", title: "My Param", isRoot: true }],
+            edges: [],
+        });
+
+        expect(await listParameterReferences(backend, "ws-1", parameterItem)).toEqual([]);
     });
 });

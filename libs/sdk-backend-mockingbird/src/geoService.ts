@@ -1,6 +1,10 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type IGeoService, type IGeoStyleSpecification } from "@gooddata/sdk-backend-spi";
+import {
+    type IGeoAssetOptions,
+    type IGeoService,
+    type IGeoStyleSpecification,
+} from "@gooddata/sdk-backend-spi";
 
 const DEFAULT_GEO_STYLE: IGeoStyleSpecification = {
     version: 8,
@@ -17,6 +21,10 @@ export function createMockGeoService(style?: IGeoStyleSpecification): IGeoServic
         getDefaultStyleSpriteIcons: async () => Promise.resolve([]),
         getStyles: async () => Promise.resolve([]),
         getStyleById: async () => Promise.resolve(resolvedStyle),
+        getAsset: async (_url: string, options?: IGeoAssetOptions) =>
+            Promise.resolve({
+                data: options?.responseType === "json" ? {} : new ArrayBuffer(0),
+            }),
         collections: () => ({
             getAll: () => Promise.resolve([]),
             getGeoCollection: () => Promise.resolve(undefined),

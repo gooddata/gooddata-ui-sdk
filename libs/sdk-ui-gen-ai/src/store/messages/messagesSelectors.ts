@@ -5,18 +5,13 @@ import { createSelector } from "@reduxjs/toolkit";
 import { type GenAIChatEffort } from "@gooddata/sdk-model";
 
 import { DEFAULT_EFFORT } from "../../components/utils/effortSelection.js";
-import { type IChatConversationLocal, type IChatConversationLocalItem, type Message } from "../../model.js";
+import { type IChatConversationLocal, type IChatConversationLocalItem } from "../../model.js";
 import { type IChatConversationResponseTrace } from "../../types.js";
 import { type RootState } from "../types.js";
 
 import { messagesSliceName } from "./messagesSlice.js";
 
 const messagesSliceSelector = (state: RootState) => state[messagesSliceName];
-
-export const messagesSelector: (state: RootState) => Message[] = createSelector(
-    messagesSliceSelector,
-    (state) => state.messageOrder.map((id) => state.messages[id]),
-);
 
 export const loadedSelector: (state: RootState) => boolean = createSelector(
     messagesSliceSelector,
@@ -28,17 +23,9 @@ export const isVerboseSelector: (state: RootState) => boolean = createSelector(
     (state) => state.verbose,
 );
 
-export const lastMessageSelector: (state: RootState) => Message | undefined = createSelector(
-    messagesSliceSelector,
-    (state) => state.messages[state.messageOrder[state.messageOrder.length - 1]],
-);
-
 export const hasMessagesSelector: (state: RootState) => boolean = createSelector(
     messagesSliceSelector,
     (state) => {
-        if (state.messageOrder.length > 0) {
-            return true;
-        }
         const data = state.conversationsData[state.currentConversation?.localId ?? ""];
         return (data?.order ?? []).length > 0;
     },
@@ -53,7 +40,7 @@ export const asyncProcessSelector: (
             const data = state.conversationsData[state.currentConversation.localId];
             return data?.asyncProcess;
         }
-        return state.messageAsyncProcess;
+        return "loading";
     },
 );
 

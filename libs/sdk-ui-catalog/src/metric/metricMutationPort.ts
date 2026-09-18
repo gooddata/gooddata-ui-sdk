@@ -6,7 +6,6 @@ import {
     type IMeasureMetadataObjectDefinition,
     type ISettings,
     idRef,
-    insightTitle,
     isMeasureMetadataObject,
 } from "@gooddata/sdk-model";
 
@@ -17,7 +16,6 @@ import {
     createMeasureCatalogItem,
     deleteMeasureCatalogItem,
     getMeasureCatalogItem,
-    getMeasureReferencingObjectsCatalogItem,
     updateMeasureCatalogItem,
 } from "../catalogItem/query.js";
 import type { ICatalogItemMeasure } from "../catalogItem/types.js";
@@ -45,21 +43,17 @@ export function loadMetric(
     return getMeasureCatalogItem(backend, workspace, idRef(item.identifier, "measure"));
 }
 
-/** Titles of the insights and measures referencing a measure. @internal */
+/** Titles of objects that depend on a measure (insights, metrics, computed attributes, dashboards). @internal */
 export async function listMetricReferences(
     backend: IAnalyticalBackend,
     workspace: string,
     item: ICatalogItemMeasure,
 ): Promise<string[]> {
-    const referencing = await getMeasureReferencingObjectsCatalogItem(
-        backend,
-        workspace,
-        idRef(item.identifier, "measure"),
-    );
-    return [
-        ...(referencing.insights ?? []).map((insight) => insightTitle(insight)),
-        ...(referencing.measures ?? []).map((measure) => measure.title),
-    ];
+    const { nodes } = await backend
+        .workspace(workspace)
+        .references()
+        .getReferences(idRef(item.identifier, "measure"), { direction: "up" });
+    return nodes.filter((node) => !node.isRoot).map((node) => node.title);
 }
 
 /**

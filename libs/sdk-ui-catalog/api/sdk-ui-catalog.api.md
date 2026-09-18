@@ -220,6 +220,7 @@ export interface ICatalogItemFact extends ICatalogItemBase {
 
 // @public
 export interface ICatalogItemInsight extends ICatalogItemBase {
+    permissions?: AccessGranularPermission[];
     // (undocumented)
     type: "insight";
     // (undocumented)

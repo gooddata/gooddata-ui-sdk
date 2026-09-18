@@ -87,6 +87,10 @@ import {
 import { canApplyFilterTypeToTarget } from "../dashboard/common/attributeFilterSelectionTypeCompatibility.js";
 
 import { resolveAndRegisterDisplayFormMetadata } from "./attributeFilter/resolveDisplayFormMetadata.js";
+import {
+    computedAttributesDisabledMessage,
+    findDisabledComputedAttributeRef,
+} from "./attributeFilter/validation/computedAttributesEnabledValidation.js";
 import { canApplyDateFilter, dispatchFilterContextChanged } from "./common.js";
 
 // Tab-aware select helpers — encapsulate the "if tab select ForTab else select" pattern.
@@ -220,6 +224,26 @@ export function* changeFilterContextSelectionHandler(
             );
         }),
     );
+
+    const disabledComputedAttributeRef: SagaReturnType<typeof findDisabledComputedAttributeRef> = yield call(
+        findDisabledComputedAttributeRef,
+        [
+            ...normalizedFilters
+                .filter(isDashboardAttributeFilterItem)
+                .map((filter) => dashboardAttributeFilterItemDisplayForm(filter)),
+            ...attributeFilterConfigs.map((config) => config.displayAsLabel),
+        ],
+    );
+    if (disabledComputedAttributeRef) {
+        yield dispatchDashboardEvent(
+            invalidArgumentsProvided(
+                ctx,
+                cmd,
+                computedAttributesDisabledMessage(disabledComputedAttributeRef),
+            ),
+        );
+        return;
+    }
 
     // Separate text filter types (arbitrary, match) — they use whole-filter replacement
     const textAttributeFiltersRaw = normalizedFilters.filter(

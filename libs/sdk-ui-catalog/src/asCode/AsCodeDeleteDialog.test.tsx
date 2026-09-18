@@ -54,6 +54,13 @@ function computedAttributeDescriptorWithReferences(load: () => Promise<string[]>
     };
 }
 
+function parameterDescriptorWithReferences(load: () => Promise<string[]>): IAsCodeDescriptor {
+    return {
+        ...parameterDescriptor,
+        referenceCounted: { ...parameterDescriptor.referenceCounted!, load },
+    };
+}
+
 const stubBackend = {} as unknown as IAnalyticalBackend;
 
 function Wrapper({ children }: PropsWithChildren) {
@@ -233,19 +240,47 @@ describe("AsCodeDeleteDialog with a blocking referencing lookup (computed attrib
     });
 });
 
-describe("AsCodeDeleteDialog without a referencing-count lookup (parameter)", () => {
-    it("enables the delete action immediately and shows no usage warning", () => {
-        render(
+describe("AsCodeDeleteDialog with a referencing-count lookup (parameter)", () => {
+    function renderParameter(descriptor: IAsCodeDescriptor) {
+        return render(
             <AsCodeDeleteDialog
-                descriptor={parameterDescriptor}
+                descriptor={descriptor}
                 item={parameterItem}
                 onClose={vi.fn()}
                 onDeleted={vi.fn()}
             />,
             { wrapper: Wrapper },
         );
+    }
 
+    it("keeps the delete action disabled until the usage lookup resolves", async () => {
+        let resolveLookup: (titles: string[]) => void = () => {};
+        renderParameter(
+            parameterDescriptorWithReferences(
+                () =>
+                    new Promise<string[]>((resolve) => {
+                        resolveLookup = resolve;
+                    }),
+            ),
+        );
+
+        expect(getDeleteButton()).toHaveAttribute("aria-disabled", "true");
+        resolveLookup([]);
+        await waitFor(() => expect(getDeleteButton()).toHaveAttribute("aria-disabled", "false"));
+    });
+
+    it("surfaces the dependent-object warning once the usage lookup resolves", async () => {
+        renderParameter(parameterDescriptorWithReferences(vi.fn().mockResolvedValue(["Rep performance"])));
+
+        expect(await screen.findByText(/used by 1 object/)).toBeInTheDocument();
         expect(getDeleteButton()).toHaveAttribute("aria-disabled", "false");
-        expect(screen.queryByText(/used by/)).toBeNull();
+    });
+
+    it("does not disclose the referencing objects for a type that does not opt in", async () => {
+        renderParameter(parameterDescriptorWithReferences(vi.fn().mockResolvedValue(["Rep performance"])));
+
+        await screen.findByText(/used by 1 object/);
+        expect(screen.queryByText("Show more")).toBeNull();
+        expect(screen.queryByText("Rep performance")).toBeNull();
     });
 });

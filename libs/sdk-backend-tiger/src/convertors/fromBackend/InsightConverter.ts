@@ -4,12 +4,19 @@ import {
     type JsonApiAnalyticalDashboardOutIncludes,
     type JsonApiComputedAttributeOutIncludes,
     type JsonApiVisualizationObjectOut,
+    type JsonApiVisualizationObjectOutDocument,
     type JsonApiVisualizationObjectOutList,
     type JsonApiVisualizationObjectOutWithLinks,
     type VisualizationObjectModelV1,
     type VisualizationObjectModelV2,
 } from "@gooddata/api-client-tiger";
-import { type IInsight, type IInsightDefinition, type IUser, idRef } from "@gooddata/sdk-model";
+import {
+    type AccessGranularPermission,
+    type IInsight,
+    type IInsightDefinition,
+    type IUser,
+    idRef,
+} from "@gooddata/sdk-model";
 
 import { convertCertificationFromBackend } from "./CertificationConverter.js";
 import { isInheritedObject } from "./ObjectInheritance.js";
@@ -28,6 +35,7 @@ export const insightFromInsightDefinition = (
     createdBy: IUser | undefined,
     updatedBy: IUser | undefined,
     certification?: IInsight["insight"]["certification"],
+    permissions?: AccessGranularPermission[],
 ): IInsight => {
     return {
         insight: {
@@ -43,6 +51,7 @@ export const insightFromInsightDefinition = (
             updated,
             updatedBy,
             ...(certification ? { certification } : {}),
+            ...(permissions ? { permissions } : {}),
         },
     };
 };
@@ -76,7 +85,21 @@ export const visualizationObjectsItemToInsight = (
         convertUserIdentifier(createdBy, included),
         convertUserIdentifier(modifiedBy, included),
         convertCertificationFromBackend(attributes, convertUserIdentifier(certifiedBy, included)),
+        visualizationObject.meta?.permissions,
     );
+};
+
+/**
+ * Converts a single visualization object document. The document carries the object's links,
+ * the item itself does not, so the uri comes from the document.
+ */
+export const visualizationObjectDocumentToInsight = ({
+    data,
+    links,
+    included,
+}: JsonApiVisualizationObjectOutDocument): IInsight => {
+    const converted = visualizationObjectsItemToInsight(data, included);
+    return { insight: { ...converted.insight, uri: links?.self ?? converted.insight.uri } };
 };
 
 export const convertVisualizationObjectsToInsights = (

@@ -16,8 +16,6 @@ import { ExplainConfig } from '@gooddata/sdk-backend-spi';
 import { ExplainType } from '@gooddata/sdk-backend-spi';
 import { FilterContextItem } from '@gooddata/sdk-model';
 import { FiltersByTab } from '@gooddata/sdk-backend-spi';
-import { GenAIChatInteractionUserFeedback } from '@gooddata/sdk-model';
-import { GenAIChatInteractionUserVisualisation } from '@gooddata/sdk-model';
 import { GenAIObjectType } from '@gooddata/sdk-model';
 import { IActiveCalendars } from '@gooddata/sdk-model';
 import { IAiRateLimit } from '@gooddata/sdk-model';
@@ -48,9 +46,6 @@ import { IChatConversation } from '@gooddata/sdk-backend-spi';
 import { IChatConversationItemsQuery } from '@gooddata/sdk-backend-spi';
 import { IChatConversations } from '@gooddata/sdk-backend-spi';
 import { IChatConversationThread } from '@gooddata/sdk-backend-spi';
-import { IChatThread } from '@gooddata/sdk-backend-spi';
-import { IChatThreadHistory } from '@gooddata/sdk-backend-spi';
-import { IChatThreadQuery } from '@gooddata/sdk-backend-spi';
 import { IClusteringConfig } from '@gooddata/sdk-backend-spi';
 import { IClusteringResult } from '@gooddata/sdk-backend-spi';
 import { ICollectionItemsConfig } from '@gooddata/sdk-backend-spi';
@@ -1026,24 +1021,6 @@ export class DummyChatConversations implements IChatConversations {
 
 // @internal
 export function dummyDataView(definition: IExecutionDefinition, result?: IExecutionResult, config?: DummyBackendConfig): IDataView;
-
-// @internal
-export class DummyGenAIChatThread implements IChatThread {
-    // (undocumented)
-    loadHistory(_fromInteractionId: string, input: {
-        signal?: AbortSignal;
-    }): Promise<IChatThreadHistory>;
-    // (undocumented)
-    query(_userMessage: string): IChatThreadQuery;
-    // (undocumented)
-    reset(): Promise<void>;
-    // (undocumented)
-    saveRenderVisualisationStatus(_interactionId: string, _status: "SUCCESSFUL" | "UNEXPECTED_ERROR" | "TOO_MANY_DATA_POINTS" | "NO_DATA" | "NO_RESULTS"): Promise<void>;
-    // (undocumented)
-    saveUserFeedback(_interactionId: string, _feedback: GenAIChatInteractionUserFeedback, _userTextFeedback?: string): Promise<void>;
-    // (undocumented)
-    saveUserVisualisation(_interactionId: string, _visualization: GenAIChatInteractionUserVisualisation): Promise<void>;
-}
 
 // @internal
 export class DummySemanticSearchQueryBuilder implements ISemanticSearchQuery {
