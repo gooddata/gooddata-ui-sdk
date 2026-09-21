@@ -212,7 +212,7 @@ function canShowCatalogItem(featureFlags: ISettings, workspacePermissions: IWork
     return (
         !!featureFlags["enableAnalyticalCatalog"] &&
         // WS.Analyze and above can access the catalog
-        workspacePermissions.canCreateVisualization
+        workspacePermissions.canAnalyzeWorkspace
     );
 }
 
@@ -246,7 +246,7 @@ function analyzeItemUrl(baseUrl: string, workspaceId: string, featureFlags: ISet
     return withBaseUrl(baseUrl, `/analyze/#/${workspaceId}/reportId/edit`);
 }
 function canShowAnalyzeItem(workspacePermissions: IWorkspacePermissions): boolean {
-    return Boolean(workspacePermissions.canCreateVisualization === true);
+    return Boolean(workspacePermissions.canAnalyzeWorkspace === true);
 }
 
 function dataItemUrl(

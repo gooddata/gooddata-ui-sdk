@@ -46,7 +46,7 @@ export function useHostChromeSearch({
                 backend={getBackend()}
                 workspaceId={features.workspaceId}
                 canManage={features.canManageProject}
-                canAnalyze={features.canCreateVisualization}
+                canAnalyze={features.canAnalyzeWorkspace}
                 canFullControl={features.canFullControl}
                 metadataTimeZone={features.settings.metadataTimeZone}
                 isTrial={isTrial}

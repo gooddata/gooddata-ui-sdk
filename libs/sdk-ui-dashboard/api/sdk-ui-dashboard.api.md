@@ -10438,6 +10438,14 @@ export interface IWidgetHeader {
     title?: string;
 }
 
+// @internal
+export interface IWidgetTabContext {
+    // (undocumented)
+    tab: ITabState;
+    // (undocumented)
+    widget: ExtendedDashboardWidget;
+}
+
 // @internal (undocumented)
 export interface IWidthResizerDragItem {
     // (undocumented)
@@ -11567,6 +11575,9 @@ export const selectAllCatalogMeasuresMap: DashboardSelector<ObjRefMap<ICatalogMe
 // @alpha
 export const selectAllCustomWidgets: DashboardSelector<ExtendedDashboardWidget[]>;
 
+// @internal
+export const selectAllFiltersForWidgetByRefAcrossTabs: (ref: ObjRef) => DashboardSelector<[IDashboardFilter[], IDashboardFilter[]]>;
+
 // @alpha
 export const selectAllInsightWidgets: DashboardSelector<ExtendedDashboardWidget[]>;
 
@@ -11581,6 +11592,9 @@ export const selectAllowMultipleInteractionsPerAttributeAndMeasure: DashboardSel
 
 // @internal
 export const selectAllowUnfinishedFeatures: DashboardSelector<boolean>;
+
+// @internal
+export const selectAllTabsWidgetContexts: DashboardSelector<IWidgetTabContext[]>;
 
 // @alpha
 export const selectAnalyticalWidgetByRef: (ref: ObjRef | undefined) => DashboardSelector<IWidget | undefined>;

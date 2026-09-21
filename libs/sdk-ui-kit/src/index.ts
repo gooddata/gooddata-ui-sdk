@@ -813,6 +813,7 @@ export { RichText, type IRichTextProps } from "./RichText/RichText.js";
 export { ALL_RICH_TEXT_FEATURES, type RichTextFeature } from "./RichText/plugins/remark-markdown-features.js";
 export { RichTextWithTooltip, type IRichTextWithTooltipProps } from "./RichText/RichTextWithTooltip.js";
 export { REFERENCE_REGEX_MATCH, REFERENCE_REGEX_SPLIT } from "./RichText/plugins/types.js";
+export { collectReferences, replaceReferences, type ReferenceMap } from "./RichText/helpers/references.js";
 export { RecurrenceForm, type IRecurrenceFormProps } from "./RecurrenceForm/RecurrenceForm.js";
 export { Recurrence, type IRecurrenceProps } from "./RecurrenceForm/Recurrence.js";
 export { transformCronExpressionToRecurrenceType } from "./RecurrenceForm/utils/utils.js";

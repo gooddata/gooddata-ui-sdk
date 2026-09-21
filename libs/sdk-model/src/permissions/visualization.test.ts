@@ -7,9 +7,9 @@ import { type AccessGranularPermission } from "../accessControl/index.js";
 import { type IWorkspacePermissions } from "./index.js";
 import { canEditVisualization, canShareVisualization } from "./visualization.js";
 
-const admin = { canManageProject: true, canCreateVisualization: true } as IWorkspacePermissions;
-const analyst = { canManageProject: false, canCreateVisualization: true } as IWorkspacePermissions;
-const nonAdmin = { canManageProject: false, canCreateVisualization: false } as IWorkspacePermissions;
+const admin = { canManageProject: true, canAnalyzeWorkspace: true } as IWorkspacePermissions;
+const analyst = { canManageProject: false, canAnalyzeWorkspace: true } as IWorkspacePermissions;
+const nonAdmin = { canManageProject: false, canAnalyzeWorkspace: false } as IWorkspacePermissions;
 
 const ALL: (AccessGranularPermission[] | undefined)[] = [
     undefined,

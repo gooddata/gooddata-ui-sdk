@@ -4,6 +4,7 @@ import {
     type IMeasure,
     type IMeasureDescriptor,
     type ObjRef,
+    type ObjectType,
     attributeDisplayFormRef,
     attributeLocalId,
     isArithmeticMeasure,
@@ -29,6 +30,7 @@ import {
     type IMappingHeader,
     getMappingHeaderIdentifier,
     getMappingHeaderLocalIdentifier,
+    getMappingHeaderRef,
     getMappingHeaderUri,
     hasMappingHeaderLocalIdentifier,
 } from "./MappingHeader.js";
@@ -117,7 +119,24 @@ function matchHeaderUri(uri: string, header: IMappingHeader): boolean {
     return headerUri ? headerUri === uri : false;
 }
 
-function matchHeaderIdentifier(identifier: string, header: IMappingHeader): boolean {
+/**
+ * A ref matches when it names the same identifier and the same type. Asking for a type is the only way to
+ * tell a computed attribute from a label of the same identifier, so a ref that carries no type cannot
+ * satisfy such a request.
+ */
+function matchRef(identifier: string, type: ObjectType, ref: ObjRef | undefined): boolean {
+    return isIdentifierRef(ref) && ref.identifier === identifier && ref.type === type;
+}
+
+function matchHeaderIdentifier(
+    identifier: string,
+    type: ObjectType | undefined,
+    header: IMappingHeader,
+): boolean {
+    if (type !== undefined) {
+        return matchRef(identifier, type, getMappingHeaderRef(header));
+    }
+
     const headerIdentifier = getMappingHeaderIdentifier(header);
     return headerIdentifier ? headerIdentifier === identifier : false;
 }
@@ -127,7 +146,15 @@ function matchUri(uri: string, measure: IMeasure): boolean {
     return simpleMeasureUri ? simpleMeasureUri === uri : false;
 }
 
-function matchMeasureIdentifier(identifier: string, measure: IMeasure): boolean {
+function matchMeasureIdentifier(
+    identifier: string,
+    type: ObjectType | undefined,
+    measure: IMeasure,
+): boolean {
+    if (type !== undefined) {
+        return matchRef(identifier, type, measureItem(measure));
+    }
+
     const simpleMeasureIdentifier = measureIdentifier(measure);
     return simpleMeasureIdentifier ? simpleMeasureIdentifier === identifier : false;
 }
@@ -157,6 +184,7 @@ function matchDerivedMeasureByMasterUri(
 
 function matchDerivedMeasureByMasterIdentifier(
     identifier: string,
+    type: ObjectType | undefined,
     measure: IMeasure,
     context: IHeaderPredicateContext,
 ): boolean {
@@ -169,13 +197,13 @@ function matchDerivedMeasureByMasterIdentifier(
 
     const masterMeasureHeader = dv.meta().measureDescriptor(masterMeasureLocalIdentifier)!;
 
-    if (matchHeaderIdentifier(identifier, masterMeasureHeader)) {
+    if (matchHeaderIdentifier(identifier, type, masterMeasureHeader)) {
         return true;
     }
 
     const masterMeasure = dv.def().measure(masterMeasureLocalIdentifier)!;
 
-    return matchMeasureIdentifier(identifier, masterMeasure);
+    return matchMeasureIdentifier(identifier, type, masterMeasure);
 }
 
 /**
@@ -217,9 +245,14 @@ export function uriMatch(uri: string): IHeaderPredicate {
  * Creates a new predicate that returns true for any header that belongs to either attribute or measure with the
  * provided identifier.
  *
+ * @remarks
+ * Passing a type narrows the match to a header whose ref names both that identifier and that type. This is the
+ * only way to tell a computed attribute from a label of the same identifier: a computed attribute has no labels
+ * and is referenced directly, so the identifier alone matches either.
+ *
  * @public
  */
-export function identifierMatch(identifier: string): IHeaderPredicate {
+export function identifierMatch(identifier: string, type?: ObjectType): IHeaderPredicate {
     if (!identifier) {
         return alwaysFalsePredicate;
     }
@@ -230,7 +263,7 @@ export function identifierMatch(identifier: string): IHeaderPredicate {
             return false;
         }
 
-        if (matchHeaderIdentifier(identifier, header)) {
+        if (matchHeaderIdentifier(identifier, type, header)) {
             return true;
         }
 
@@ -244,11 +277,11 @@ export function identifierMatch(identifier: string): IHeaderPredicate {
             return false;
         }
 
-        if (matchMeasureIdentifier(identifier, measure)) {
+        if (matchMeasureIdentifier(identifier, type, measure)) {
             return true;
         }
 
-        return matchDerivedMeasureByMasterIdentifier(identifier, measure, context);
+        return matchDerivedMeasureByMasterIdentifier(identifier, type, measure, context);
     };
 }
 
@@ -359,12 +392,12 @@ export function composedFromUri(uri: string): IHeaderPredicate {
  *
  * @public
  */
-export function composedFromIdentifier(identifier: string): IHeaderPredicate {
+export function composedFromIdentifier(identifier: string, type?: ObjectType): IHeaderPredicate {
     if (!identifier) {
         return alwaysFalsePredicate;
     }
 
-    return composedFromQualifier(identifierMatch(identifier));
+    return composedFromQualifier(identifierMatch(identifier, type));
 }
 
 /**

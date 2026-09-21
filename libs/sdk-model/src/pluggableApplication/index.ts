@@ -82,7 +82,7 @@ export function toPluggableApplicationWorkspacePermissions(
 ): IPluggableApplicationWorkspacePermissions {
     return {
         canViewWorkspace: permissions.canAccessWorkbench,
-        canAnalyze: permissions.canCreateVisualization,
+        canAnalyze: permissions.canAnalyzeWorkspace,
         canManageWorkspace: permissions.canManageProject,
         canExport: permissions.canExportReport,
         canExportTabular: permissions.canExportTabular,

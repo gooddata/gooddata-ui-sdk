@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type PropsWithChildren, useMemo } from "react";
 
@@ -16,7 +16,7 @@ type Props = PropsWithChildren<{
 
 const defaultPermissionsStatus = "success";
 export const defaultPermissionsResult = {
-    permissions: { canCreateVisualization: true } as IWorkspacePermissions,
+    permissions: { canAnalyzeWorkspace: true, canCreateVisualization: true } as IWorkspacePermissions,
     user: { login: "test" } as IUser,
     settings: {} as IUserWorkspaceSettings,
 };

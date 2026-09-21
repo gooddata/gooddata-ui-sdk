@@ -142,7 +142,7 @@ function SemanticSearchCore(props: Omit<SemanticSearchProps, "locale">) {
     const effectiveWorkspace = useWorkspaceStrict(workspace);
     const { loading, permissions } = usePermissions();
 
-    const canEdit = permissions.canManageProject ?? permissions.canCreateVisualization ?? false;
+    const canEdit = permissions.canManageProject || permissions.canAnalyzeWorkspace;
     const allowedRelationshipTypes = !loading && !canEdit ? ALLOWED_RELATIONSHIP_TYPES_FOR_VIEWER : undefined;
 
     // Input value handling

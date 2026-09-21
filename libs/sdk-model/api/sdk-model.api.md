@@ -3024,6 +3024,7 @@ export interface IFeatureFlags {
     enableAiLlmAnthropicProvider?: boolean;
     enableAiOnData?: boolean;
     enableAlertOncePerInterval?: boolean;
+    // @deprecated
     enableAmplitudeTracker?: boolean;
     enableAnalyticalCatalog?: boolean;
     enableAnalyticalCatalogMetricEditor?: boolean;
@@ -3440,6 +3441,7 @@ export interface IGenAIWhatIfScenario {
 // @internal
 export interface IGenAIWidgetDescriptor {
     content?: string;
+    filters?: GenAIUserContextFilter[];
     insightRef?: ObjRef;
     resultId?: string;
     title: string;
@@ -8112,6 +8114,11 @@ export type WorkspacePermission =
 * Whether the current user has permissions to access GoodData portal directly (user can log in).
 */
 | "canAccessWorkbench"
+/**
+* Whether the current user holds the ANALYZE workspace role or higher: may open Analytical Designer
+* and the Analytics Catalog. Surfaces gate on this; creating objects gates on the canCreate* permissions.
+*/
+| "canAnalyzeWorkspace"
 /**
 * Whether the current user has permissions to create a report object via API.
 */

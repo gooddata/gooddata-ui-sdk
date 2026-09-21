@@ -3,10 +3,10 @@
 import { defaultDateFilterOptions } from "./constants/config.js";
 import { granularityIntlCodes } from "./constants/i18n.js";
 import { mapOptionToAfm } from "./utils/AFMConversions.js";
+import { formatAbsoluteDateRange } from "./utils/FormattingUtils.js";
 import { filterVisibleDateFilterOptions } from "./utils/OptionUtils.js";
 import { applyExcludeCurrentPeriod, canExcludeCurrentPeriod } from "./utils/PeriodExclusion.js";
 import {
-    formatAbsoluteDateRange,
     formatRelativeDateRange,
     getDateFilterRepresentation,
     getDateFilterTitleUsingTranslator,

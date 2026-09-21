@@ -4,6 +4,7 @@ import {
     type IAttributeDescriptor,
     type IMeasureDescriptor,
     type IResultAttributeHeader,
+    idRef,
     uriRef,
 } from "@gooddata/sdk-model";
 
@@ -179,6 +180,42 @@ export const attributeDescriptor: IAttributeDescriptor = {
             identifier: "attributeElementIdentifier",
             name: "attributeElementName",
             ref: uriRef("/attributeElementUri"),
+        },
+    },
+} as IAttributeDescriptor;
+
+/**
+ * A label and a computed attribute sharing an identifier. A computed attribute has no labels and is
+ * referenced directly, so only the ref type tells the two apart.
+ */
+export const labelDescriptor: IAttributeDescriptor = {
+    attributeHeader: {
+        uri: "",
+        identifier: "sharedIdentifier",
+        localIdentifier: "labelLocalIdentifier",
+        name: "labelName",
+        ref: idRef("sharedIdentifier", "displayForm"),
+        formOf: {
+            uri: "",
+            identifier: "attributeIdentifier",
+            name: "attributeName",
+            ref: idRef("attributeIdentifier", "attribute"),
+        },
+    },
+} as IAttributeDescriptor;
+
+export const computedAttributeDescriptor: IAttributeDescriptor = {
+    attributeHeader: {
+        uri: "",
+        identifier: "sharedIdentifier",
+        localIdentifier: "computedAttributeLocalIdentifier",
+        name: "computedAttributeName",
+        ref: idRef("sharedIdentifier", "computedAttribute"),
+        formOf: {
+            uri: "",
+            identifier: "sharedIdentifier",
+            name: "computedAttributeName",
+            ref: idRef("sharedIdentifier", "computedAttribute"),
         },
     },
 } as IAttributeDescriptor;

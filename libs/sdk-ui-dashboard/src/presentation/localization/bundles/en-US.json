@@ -2587,6 +2587,18 @@
         "text": "The rich text and all of its content will be irreversibly deleted.",
         "crowdinContext": "Warning message when deleting a rich text component"
     },
+    "richText.restrictedReferences.dialog.header": {
+        "text": "Remove restricted content?",
+        "crowdinContext": "Title of the confirmation dialog shown when an editor starts editing a rich text that references objects they cannot read"
+    },
+    "richText.restrictedReferences.dialog.message": {
+        "text": "Parts of this text are restricted. Editing it will permanently remove the restricted objects for all users.",
+        "crowdinContext": "Body of that confirmation dialog: why parts of the text are missing, and what editing it does to them. Worded for any text a dashboard renders - a rich text widget, a section description, an insight description"
+    },
+    "richText.restrictedReferences.dialog.submit": {
+        "text": "Remove and edit",
+        "crowdinContext": "Confirming button of that dialog; it rewrites the text and opens it for editing"
+    },
     "richText.emptyContent": {
         "text": "No rich text content",
         "crowdinContext": "Message shown when rich text component has no content"

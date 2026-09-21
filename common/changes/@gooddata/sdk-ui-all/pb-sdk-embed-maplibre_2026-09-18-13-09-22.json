@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "maplibre-gl 6 makes webpack warn \"Critical dependency: the request of a dependency is an expression\". Add the `maplibre-gl.mjs` parser rule to your webpack config, see the webpack rules in react-app-template.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

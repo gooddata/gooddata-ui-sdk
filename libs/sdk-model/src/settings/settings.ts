@@ -684,6 +684,9 @@ export interface IFeatureFlags {
 
     /**
      * Enables tracking events to Amplitude.
+     *
+     * @deprecated The Amplitude integration was removed and nothing reads this setting. It will be
+     * removed in the next major version.
      */
     enableAmplitudeTracker?: boolean;
 

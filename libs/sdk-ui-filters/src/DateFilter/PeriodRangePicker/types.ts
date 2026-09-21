@@ -34,7 +34,10 @@ export interface IPeriodRangePickerProps {
     weekStart?: WeekStart;
     withoutApply?: boolean;
     submitForm: () => void;
-    /** Date format (date-fns tokens) for the "GDC.time.date" granularity; other granularities ignore it. */
+    /**
+     * Date format (date-fns tokens). Formats the input fields for the "GDC.time.date" granularity, and the
+     * day-level range preview for all the others.
+     */
     dateFormat?: string;
     /** Extra content rendered after the built-in format hint. */
     customRangeHint?: ReactNode;

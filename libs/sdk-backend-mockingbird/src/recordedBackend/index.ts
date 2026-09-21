@@ -1006,6 +1006,7 @@ function recordedPermissionsFactory(): IWorkspacePermissionsService {
                 canAccessWorkbench: true,
                 canCreateAnalyticalDashboard: true,
                 canCreateReport: true,
+                canAnalyzeWorkspace: true,
                 canCreateVisualization: true,
                 canExecuteRaw: true,
                 canExportReport: true,

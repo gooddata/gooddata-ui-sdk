@@ -63,9 +63,16 @@ $period-picker-shadow: 0 2px 5px 0 var(--gd-shadow-color-from-theme, rgba(31, 53
         }
 
         > input {
+            // No global border-box reset reaches this scope, so the padding below would otherwise be added
+            // to the full width rather than fitted inside it.
+            box-sizing: border-box;
             width: 100%;
+            // rc-picker sets a `size` attribute on this input, so its intrinsic width would keep the box from
+            // ever shrinking and the ellipsis below would never engage.
+            min-width: 0;
             height: 28px;
-            padding: 0;
+            // Clears the leading icon, which sits over this box rather than beside it: 14px glyph + 6px gap.
+            padding: 0 0 0 20px;
             border: 0;
             outline: none;
             background: transparent;
@@ -79,6 +86,24 @@ $period-picker-shadow: 0 2px 5px 0 var(--gd-shadow-color-from-theme, rgba(31, 53
                 color: kit-variables.$gd-color-state-blank;
             }
         }
+
+        // One leading icon per field, replacing the picker's single trailing icon.
+        //
+        // Positioned over the input rather than laid out beside it, which is what makes `pointer-events: none`
+        // mean "the click reaches this field": as a flex sibling the icon's area belongs to the wrapper, and a
+        // mousedown outside both inputs is read as "no field clicked" and falls back to focusing the start one.
+        .gd-icon-calendar {
+            position: absolute;
+            top: 0;
+            // The wrapper's own horizontal padding, i.e. flush with the input's left edge.
+            left: 10px;
+            display: flex;
+            align-items: center;
+            height: 100%;
+            color: kit-variables.$gd-palette-primary-base;
+            font-size: 14px;
+            pointer-events: none;
+        }
     }
 
     // Matches the classic DateRangePicker.tsx, which shows no separator between its two fields. rc-picker
@@ -86,17 +111,6 @@ $period-picker-shadow: 0 2px 5px 0 var(--gd-shadow-color-from-theme, rgba(31, 53
     // it's hidden here instead.
     .rc-picker-range-separator {
         display: none;
-    }
-
-    .rc-picker-prefix,
-    .rc-picker-suffix {
-        display: flex;
-        flex: none;
-        align-items: center;
-        margin-left: 6px;
-        color: kit-variables.$gd-palette-primary-base;
-        font-size: 14px;
-        pointer-events: none;
     }
 
     // rc-picker positions the bar under the active input via inline left/width styles.
@@ -406,6 +420,17 @@ $period-picker-shadow: 0 2px 5px 0 var(--gd-shadow-color-from-theme, rgba(31, 53
         color: kit-variables.$gd-medium-gray;
         font-size: 12px;
         padding-top: 10px;
+    }
+
+    // The day-level range the picked periods resolve to. The top rule is this element's own; the matching
+    // rule below it is the footer's existing border-top (.gd-extended-date-filter-actions), so the preview
+    // ends up framed by exactly two lines without touching DateFilterBody.
+    &__preview {
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid kit-variables.$gd-border-color;
+        color: kit-variables.$gd-medium-gray;
+        font-size: 12px;
     }
 
     // ---------------------------------------------------------------------------------------------

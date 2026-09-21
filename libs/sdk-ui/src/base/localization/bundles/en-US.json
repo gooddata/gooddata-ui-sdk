@@ -1485,7 +1485,15 @@
     },
     "filters.staticPeriod.dateFormatHintWithExample": {
         "text": "Use date format {format} (e.g. {example}).",
-        "crowdinContext": "Date input field hint for the period range picker's Week/Month/Quarter/Year granularities. The {format} placeholder shows the expected date format pattern (e.g., 'yyyy-MM'), and {example} shows a worked example of a valid value in that format (e.g., '2026-03')."
+        "crowdinContext": "Date input field hint for the period range picker's Week/Month/Quarter/Year granularities. The {format} placeholder shows the expected date format pattern (e.g., 'M/yyyy'), and {example} shows a worked example of a valid value in that format (e.g., '3/2026')."
+    },
+    "filters.staticPeriod.rangePreview": {
+        "text": "Preview: {range}",
+        "crowdinContext": "Shown below the period range picker. The {range} placeholder is the selected period range resolved to exact days, e.g. '3/1/2026 – 5/31/2026'."
+    },
+    "filters.staticPeriod.weekLabel": {
+        "text": "Week {week}/{year}",
+        "crowdinContext": "Label for a single week on the date filter button, e.g. 'Week 15/2026'. The {week} placeholder is the week number within {year}, not zero-padded (e.g. 'Week 7/2026'); a range of weeks renders this twice, as 'Week 15/2026 – Week 17/2026'."
     },
     "filters.staticPeriod.timeFormatHint": {
         "text": "Use time format HH:MM; max value is 23:59.",
@@ -1789,7 +1797,7 @@
     },
     "filters.staticPeriod.errors.invalidStartDateWithExample": {
         "text": "Error: Invalid start date — use {format} format (e.g. {example}).",
-        "crowdinContext": "Shown for the period range picker's Week/Month/Quarter/Year granularities. Placeholder '{format}' shows the expected date format (e.g. 'yyyy-MM'), and '{example}' shows a worked example of a valid value in that format (e.g. '2026-03')."
+        "crowdinContext": "Shown for the period range picker's Week/Month/Quarter/Year granularities. Placeholder '{format}' shows the expected date format (e.g. 'M/yyyy'), and '{example}' shows a worked example of a valid value in that format (e.g. '3/2026')."
     },
     "filters.staticPeriod.errors.startDateAfterEndDate": {
         "text": "Error: Invalid start date — set a date before the end date.",
@@ -1809,7 +1817,7 @@
     },
     "filters.staticPeriod.errors.invalidEndDateWithExample": {
         "text": "Error: Invalid end date — use {format} format (e.g. {example}).",
-        "crowdinContext": "Shown for the period range picker's Week/Month/Quarter/Year granularities. Placeholder '{format}' shows the expected date format (e.g. 'yyyy-MM'), and '{example}' shows a worked example of a valid value in that format (e.g. '2026-03')."
+        "crowdinContext": "Shown for the period range picker's Week/Month/Quarter/Year granularities. Placeholder '{format}' shows the expected date format (e.g. 'M/yyyy'), and '{example}' shows a worked example of a valid value in that format (e.g. '3/2026')."
     },
     "filters.staticPeriod.errors.endDateBeforeStartDate": {
         "text": "Error: Invalid end date — set a date after the start date.",
@@ -4418,6 +4426,10 @@
     "richText.restricted": {
         "text": "restricted",
         "crowdinContext": "Stands inline in a sentence in place of a value the user has no access to; keep it lower case, it is not a sentence of its own"
+    },
+    "richText.restricted.reason": {
+        "text": "You don't have access to this reference. Contact your administrator to request access.",
+        "crowdinContext": "Tooltip on the marker standing in a text where a value cannot be shown, giving the reason and how to get access"
     },
     "recurrence.starts": {
         "text": "Starts on",

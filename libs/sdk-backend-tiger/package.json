@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-tiger",
-    "version": "11.58.0-alpha.1",
+    "version": "11.58.0-alpha.2",
     "description": "GoodData Backend SPI implementation for GoodData Cloud and GoodData.CN",
     "license": "MIT",
     "author": "GoodData",
@@ -97,6 +97,6 @@
         "oxlint-plugin-eslint": "1.82.0",
         "oxlint-tsgolint": "7.0.2001",
         "typescript": "7.0.2",
-        "vitest": "4.1.8"
+        "vitest": "4.1.11"
     }
 }

@@ -37,12 +37,14 @@ import { format, isValid, parse } from "date-fns";
 import { defaultImport } from "default-import";
 import { defineMessages, useIntl } from "react-intl";
 
-import { type ILocale, useDebounce } from "@gooddata/sdk-ui";
+import { type ILocale, useDebounce, useDebouncedState } from "@gooddata/sdk-ui";
 import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
-import { platformDateFnsFormat } from "../constants/Platform.js";
+import { DEFAULT_DATE_FORMAT, platformDateFnsFormat } from "../constants/Platform.js";
 import { InputErrorMessage } from "../DateRangePicker/InputErrorMessage.js";
+import { formatAbsoluteDateRange } from "../utils/FormattingUtils.js";
 import { resolvePeriodBoundaries, resolvePeriodBoundary } from "../utils/StaticPeriodConversions.js";
+import { getWeekStartDateFnsLocale, resolveWeekStartLocale } from "../utils/weekStartDateFnsLocale.js";
 
 import { AccessibleFieldInput } from "./AccessibleFieldInput.js";
 import { DateFnsRangePicker } from "./dateFnsRangePicker.js";
@@ -55,12 +57,12 @@ import {
     isBlockingFieldError,
     resolveFieldErrorKind,
 } from "./periodRangePickerAccessibility.js";
+import { PreviewAnnouncer } from "./PreviewAnnouncer.js";
 import {
     type IPeriodRange,
     type IPeriodRangePickerProps,
     type PeriodRangePickerGranularity,
 } from "./types.js";
-import { getWeekStartDateFnsLocale, resolveWeekStartLocale } from "./weekStartDateFnsLocale.js";
 
 type PickerLocale = NonNullable<ComponentProps<typeof DateFnsRangePicker>["locale"]>;
 
@@ -77,12 +79,13 @@ type PickerLocale = NonNullable<ComponentProps<typeof DateFnsRangePicker>["local
 // everywhere beats per-locale chrome, at the cost of the year-panel suffix and French zero-padding.
 export const DATE_FNS_PICKER_FORMATS = {
     fieldDateFormat: "yyyy-MM-dd",
-    // Week-numbering year, unpadded, rather than calendar year: date-fns's own `parse` rejects combining
-    // calendar year with a week-of-year token in one format string (they can disagree right at a year
-    // boundary). `useAdditionalWeekYearTokens: true` (dateFnsRangePicker.tsx) is required for this token.
-    fieldWeekFormat: "Y-ww",
-    fieldMonthFormat: "yyyy-MM",
-    fieldQuarterFormat: "yyyy-QQQ",
+    // Week-numbering year, not the calendar "yyyy": date-fns throws when a week-of-year token is
+    // combined with the calendar year, and needs its additional week-year tokens enabled for this one.
+    // The year, not the period, is what stays zero-padded: a half-typed year would otherwise parse and get
+    // re-spelled under the caret.
+    fieldWeekFormat: "w/YYYY",
+    fieldMonthFormat: "M/yyyy",
+    fieldQuarterFormat: "QQQ/yyyy",
     fieldYearFormat: "yyyy",
     // Never rendered (no time picker mode) but pinned anyway for a clean sweep - see the guard test.
     fieldDateTimeFormat: "yyyy-MM-dd HH:mm",
@@ -95,10 +98,38 @@ export const DATE_FNS_PICKER_FORMATS = {
     cellMeridiemFormat: "a",
 } as const;
 
-// The field's actual format token string for granularities where it isn't a user-configurable `dateFormat`
-// (that only applies to "GDC.time.date") - reused both for the hint panel and the "invalid" error message.
-const GRANULARITY_TO_FIELD_FORMAT: Record<Exclude<PeriodRangePickerGranularity, "GDC.time.date">, string> = {
-    "GDC.time.week_us": DATE_FNS_PICKER_FORMATS.fieldWeekFormat,
+// What each period field accepts when typed, handed to rc-picker as its `format` prop, which takes a
+// list and outranks the locale's own per-granularity format. Only entry [0] is ever displayed - it is
+// how a committed value is spelled and what the field snaps back to; the rest are parse-only
+// alternates, tried in order.
+//
+// The displayed spelling is unpadded, the same way the backend spells these periods, so a field and a chart
+// axis never name the same period differently. The alternates keep the padded spelling from being rejected
+// outright; Quarter's runs the other way, accepting the bare quarter number. Quarter gets no "QQ/yyyy"
+// alternate, so that a month typed into a quarter field errors instead of committing a different range.
+//
+// No alternate may pair a week-of-year token with a calendar year: date-fns throws on that combination
+// and the parse loop has no try/catch, so one such entry would break parsing for that granularity's field.
+const GRANULARITY_TO_FIELD_FORMATS: Record<
+    Exclude<PeriodRangePickerGranularity, "GDC.time.date">,
+    string[]
+> = {
+    "GDC.time.week_us": [DATE_FNS_PICKER_FORMATS.fieldWeekFormat, "ww/YYYY"],
+    "GDC.time.month": [DATE_FNS_PICKER_FORMATS.fieldMonthFormat, "MM/yyyy"],
+    "GDC.time.quarter": [DATE_FNS_PICKER_FORMATS.fieldQuarterFormat, "Q/yyyy"],
+    "GDC.time.year": [DATE_FNS_PICKER_FORMATS.fieldYearFormat],
+};
+
+// The format shown to the user, in the hint panel and in the "invalid" error message, for granularities
+// that have no user-configurable date format.
+//
+// Week deliberately does not reuse what its field actually parses: the field needs the week-numbering
+// year, but spelling it that way here would read as a typo next to the other granularities, so all
+// hints show the same year format. Do not collapse the two into one source - Week will stop parsing.
+// The difference is invisible except in the week straddling a year boundary, where the two spellings
+// pick different years and the hint names a value the field rejects - a rejection, never a wrong range.
+const GRANULARITY_TO_HINT_FORMAT: Record<Exclude<PeriodRangePickerGranularity, "GDC.time.date">, string> = {
+    "GDC.time.week_us": "w/yyyy",
     "GDC.time.month": DATE_FNS_PICKER_FORMATS.fieldMonthFormat,
     "GDC.time.quarter": DATE_FNS_PICKER_FORMATS.fieldQuarterFormat,
     "GDC.time.year": DATE_FNS_PICKER_FORMATS.fieldYearFormat,
@@ -106,6 +137,9 @@ const GRANULARITY_TO_FIELD_FORMAT: Record<Exclude<PeriodRangePickerGranularity, 
 
 // A fixed sample date for the format hint's worked example
 const HINT_EXAMPLE_DATE = new Date(2026, 2, 25);
+
+// How long typing has to stop before the resolved range is announced.
+export const PREVIEW_ANNOUNCEMENT_DELAY = 1000;
 
 const messages = defineMessages({
     dateFormatHint: { id: "filters.staticPeriod.dateFormatHint" },
@@ -449,10 +483,14 @@ export function PeriodRangePickerImpl({
     // When no per-workspace dateFormat is set, fall back to the same format the picker itself uses by
     // default, so the hint text always matches what the picker actually expects. Once time granularity is
     // supported, this fallback will need to switch too.
-    const fieldFormat: string =
+    const hintFormat: string =
         granularity === "GDC.time.date"
             ? (dateFormat ?? DATE_FNS_PICKER_FORMATS.fieldDateFormat)
-            : GRANULARITY_TO_FIELD_FORMAT[granularity];
+            : GRANULARITY_TO_HINT_FORMAT[granularity];
+
+    // Day is left to the locale, which already carries the account's own date format.
+    const fieldFormats =
+        granularity === "GDC.time.date" ? undefined : GRANULARITY_TO_FIELD_FORMATS[granularity];
 
     // Independent of the `locale` useMemo below - also needed to render the format hint's worked example,
     // which is computed for every non-Day granularity while `locale` only resolves this for Day/Week.
@@ -461,18 +499,61 @@ export function PeriodRangePickerImpl({
         [intl.locale, weekStart],
     );
 
-    // A worked example alongside the format token pattern (e.g. "yyyy-MM (e.g. 2026-03)"), so a caller who
+    // A worked example alongside the format token pattern (e.g. "M/yyyy (e.g. 3/2026)"), so a caller who
     // doesn't recognize date-fns tokens can still tell what to type.
     const hintExample = useMemo(
         () =>
             granularity === "GDC.time.date"
                 ? undefined
-                : format(HINT_EXAMPLE_DATE, fieldFormat, {
+                : format(HINT_EXAMPLE_DATE, hintFormat, {
                       locale: resolveWeekStartLocale(weekStartLocaleKey),
                       useAdditionalWeekYearTokens: true,
                   }),
-        [granularity, fieldFormat, weekStartLocaleKey],
+        [granularity, hintFormat, weekStartLocaleKey],
     );
+
+    // Day fields already spell out exact days, so a preview there would just repeat the inputs. Every other
+    // granularity shows a period token that hides which days the filter will actually cover.
+    const showRangePreview = granularity !== "GDC.time.date";
+
+    // Derived from `liveValue`, not from the committed `range` prop: after the first calendar cell click the
+    // committed range is still the previous one while the field already shows the new period, so a preview
+    // sourced from it would contradict the fields on screen. It carries period anchors, hence the same
+    // per-side boundary expansion the blur commit does.
+    //
+    // Undefined when there is no range to show; the en dash the row falls back to keeps it - and so the
+    // dialog height - stable, and is the character a formatted range joins its ends with.
+    //
+    // `liveValue` only holds the last successfully parsed dates, so a blank or unparsable field leaves stale
+    // ones behind. Without the validity guard the preview would contradict the error shown right above it;
+    // reversed ends are excluded for the same reason, since that range can never be applied.
+    const previewRange = useMemo(() => {
+        const [start, end] = liveValue;
+        if (!isRangeValid || isDateOrderError || !start || !end) {
+            return undefined;
+        }
+        return formatAbsoluteDateRange(
+            resolveSelectedBoundary(granularity, start, "start", weekStart),
+            resolveSelectedBoundary(granularity, end, "end", weekStart),
+            // Formatted like the filter button's own title, so it falls back to the same format that does.
+            dateFormat ?? DEFAULT_DATE_FORMAT,
+        );
+    }, [isRangeValid, isDateOrderError, liveValue, granularity, weekStart, dateFormat]);
+
+    // Announced from its own region rather than from the preview, which changes on every keystroke and would
+    // be read over the characters still being typed. Debouncing holds the announcement until typing stops.
+    const [, setPreviewAnnouncement, previewAnnouncement] = useDebouncedState<string | null>(
+        null,
+        PREVIEW_ANNOUNCEMENT_DELAY,
+    );
+
+    useEffect(() => {
+        setPreviewAnnouncement(
+            showRangePreview && previewRange !== undefined
+                ? intl.formatMessage({ id: "filters.staticPeriod.rangePreview" }, { range: previewRange })
+                : null,
+        );
+    }, [showRangePreview, previewRange, intl, setPreviewAnnouncement]);
 
     // Enter applies the whole range immediately in INDIVIDUAL mode, mirroring the classic picker's
     // `onSubmitValue(true)`. It cannot hang off handleChange: rc-picker's onChange is a per-round event,
@@ -544,11 +625,11 @@ export function PeriodRangePickerImpl({
         if (kind === "invalid" && hintExample !== undefined) {
             return intl.formatMessage(
                 { id: INVALID_MESSAGE_IDS_WITH_EXAMPLE[side] },
-                { format: fieldFormat, example: hintExample },
+                { format: hintFormat, example: hintExample },
             );
         }
         const id = ERROR_MESSAGE_IDS[kind][side];
-        return intl.formatMessage({ id }, kind === "invalid" ? { format: fieldFormat } : undefined);
+        return intl.formatMessage({ id }, kind === "invalid" ? { format: hintFormat } : undefined);
     };
 
     // weekStart and dateFormat are workspace settings independent of display language, so Week/Day override the
@@ -606,6 +687,7 @@ export function PeriodRangePickerImpl({
                     onClick={openCalendar}
                     getPopupContainer={getPopupContainer}
                     locale={locale}
+                    format={fieldFormats}
                     allowClear={false}
                     order={false}
                     allowEmpty={[true, true]}
@@ -614,21 +696,29 @@ export function PeriodRangePickerImpl({
                     // failed to parse vanishes on blur and its "invalid format" error is replaced by
                     // "empty".
                     preserveInvalidOnBlur
-                    suffixIcon={<span className="gd-icon-calendar" aria-hidden="true" />}
                     components={{ input: AccessibleFieldInput }}
                 />
             </PeriodRangeAccessibilityContext.Provider>
             <div id={hintId} className="gd-period-range-picker__hint">
                 {hintExample === undefined
-                    ? intl.formatMessage(messages.dateFormatHint, { format: fieldFormat })
+                    ? intl.formatMessage(messages.dateFormatHint, { format: hintFormat })
                     : intl.formatMessage(messages.dateFormatHintWithExample, {
-                          format: fieldFormat,
+                          format: hintFormat,
                           example: hintExample,
                       })}
                 {customRangeHint}
             </div>
             <InputErrorMessage descriptionId={startErrorId} errorText={getFieldErrorMessage("start")} />
             <InputErrorMessage descriptionId={endErrorId} errorText={getFieldErrorMessage("end")} />
+            {showRangePreview ? (
+                <div className="gd-period-range-picker__preview s-period-range-picker-preview">
+                    {intl.formatMessage(
+                        { id: "filters.staticPeriod.rangePreview" },
+                        { range: previewRange ?? "\u2013" },
+                    )}
+                </div>
+            ) : null}
+            <PreviewAnnouncer message={previewAnnouncement} />
         </div>
     );
 }

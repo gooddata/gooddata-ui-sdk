@@ -423,7 +423,7 @@ export interface IPluggableAppLogRecord {
  *
  * @remarks
  * Pluggable applications describe an event with these neutral groups and must NOT assume any particular
- * analytics backend (Matomo, Amplitude, …) — the host shell decides how to record them. `identifiers` are
+ * analytics backend (Matomo, …) — the host shell decides how to record them. `identifiers` are
  * sensitive entity ids (workspace, dashboard, report, …) the shell may hash and aggregate; `stats` are
  * contextual metrics (counts, types, …). Any other key is a free-form event property. Passed as the `data`
  * argument of {@link IPluggableAppTelemetryCallbacks.trackEvent}.
@@ -490,7 +490,7 @@ export interface IPluggableAppTelemetryCallbacks {
      *
      * @remarks
      * Unlike {@link IPluggableAppTelemetryCallbacks.trackEvent} (which routes to the analytics
-     * trackers — Matomo / Amplitude), this targets the host's OpenTelemetry logging pipeline (OTLP
+     * trackers — Matomo), this targets the host's OpenTelemetry logging pipeline (OTLP
      * `/v1/logs`). It exists because the OTel Logs API cannot be reliably shared across module-federation
      * bundles the way the global tracer is, so module logs are forwarded as plain data and re-emitted by
      * the host. Optional: a host that has no OTel logger configured simply omits it (the call is a no-op).

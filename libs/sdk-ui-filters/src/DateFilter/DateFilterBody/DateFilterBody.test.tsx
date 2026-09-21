@@ -5,7 +5,7 @@ import { useState } from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { type IAllTimeDateFilterOption } from "@gooddata/sdk-model";
+import { type IAllTimeDateFilterOption, type WeekStart } from "@gooddata/sdk-model";
 import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import { DEFAULT_DATE_FORMAT } from "../constants/Platform.js";
@@ -25,7 +25,7 @@ describe("ExtendedDateFilterBody", () => {
         visible: true,
     };
 
-    const createDateFilterButton = (props?: IDateFilterButtonLocalizedProps) => {
+    const createDateFilterButton = (props?: Partial<IDateFilterButtonLocalizedProps>) => {
         const defaultProps: IDateFilterButtonLocalizedProps = {
             isMobile: false,
             dateFilterOption: allTime,
@@ -370,11 +370,11 @@ describe("ExtendedDateFilterBody", () => {
                     document.querySelectorAll<HTMLInputElement>(".rc-picker input"),
                 );
                 fireEvent.focus(newStartInput);
-                fireEvent.change(newStartInput, { target: { value: "2026-03" } });
+                fireEvent.change(newStartInput, { target: { value: "3/2026" } });
                 fireEvent.keyDown(newStartInput, { key: "Tab", code: "Tab" });
                 fireEvent.blur(newStartInput);
                 fireEvent.focus(newEndInput);
-                fireEvent.change(newEndInput, { target: { value: "2026-06" } });
+                fireEvent.change(newEndInput, { target: { value: "6/2026" } });
                 fireEvent.keyDown(newEndInput, { key: "Enter", code: "Enter" });
 
                 await waitFor(() => {
@@ -519,6 +519,45 @@ describe("ExtendedDateFilterBody", () => {
             fireEvent.keyDown(quarterTab!, { key: "Home", code: "Home" });
             expect(document.activeElement).toHaveClass("s-granularity-day");
             expect(document.querySelector(".s-relative-filter-form-granularity-tabs")).toBeInTheDocument();
+        });
+    });
+
+    // A layer dropping the week start would turn the label back into a day range with the suite still green.
+    describe("date filter button title for a week-granularity absolute filter", () => {
+        const weekFilter: IUiAbsoluteDateFilterForm = {
+            type: "absoluteForm",
+            localIdentifier: "ABSOLUTE_FORM",
+            granularity: "GDC.time.week_us",
+            from: "2026-04-05",
+            to: "2026-04-11",
+            name: "",
+            visible: true,
+        };
+
+        function DateFilterButtonUnderTest(props: Partial<IDateFilterButtonLocalizedProps>) {
+            return createDateFilterButton({ dateFilterOption: weekFilter, ...props });
+        }
+
+        const renderButton = (weekStart?: WeekStart) => {
+            const Wrapped = withIntlForTest(DateFilterButtonUnderTest);
+            return render(<Wrapped weekStart={weekStart} />);
+        };
+
+        // These dates are one whole week under a Sunday start and two under a Monday one.
+        it("should label the week according to a Sunday week start", () => {
+            renderButton("Sunday");
+            expect(screen.getByText("Week 15/2026")).toBeInTheDocument();
+        });
+
+        it("should label the same dates differently under a Monday week start", () => {
+            renderButton("Monday");
+            expect(screen.getByText("Week 14/2026 \u2013 Week 15/2026")).toBeInTheDocument();
+        });
+
+        it("should fall back to the day range when no week start reaches the button", () => {
+            renderButton();
+            expect(screen.getByText("04/05/2026 \u2013 04/11/2026")).toBeInTheDocument();
+            expect(screen.queryByText(/^Week /)).not.toBeInTheDocument();
         });
     });
 

@@ -967,6 +967,7 @@ export type GenAIAnswerOutput =
     | "keyDriverAnalysis"
     | "whatIf"
     | "searchResults"
+    | "clarifyingQuestions"
     | "alertProposal";
 
 /**

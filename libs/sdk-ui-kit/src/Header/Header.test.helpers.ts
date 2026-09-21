@@ -33,6 +33,7 @@ export const getWorkspacePermissionsMock = (
         canCreateReport: true,
         canInitData,
         canCreateScheduledMail: true,
+        canAnalyzeWorkspace: true,
         canCreateVisualization: true,
         canExecuteRaw: true,
         canExportReport: true,

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { PropsWithChildren, ReactNode } from "react";
 
@@ -31,7 +31,7 @@ export function PermissionsGate({ loadingNode, errorNode, unauthorizedNode, chil
     }
 
     // WS.Analyze and above can access the catalog
-    const canAnalyzeWorkspace = permissions?.permissions?.canCreateVisualization;
+    const canAnalyzeWorkspace = permissions?.permissions?.canAnalyzeWorkspace;
     if (!canAnalyzeWorkspace) {
         return <>{unauthorizedNode}</>;
     }

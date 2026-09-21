@@ -77,6 +77,7 @@ import { MouseEvent as MouseEvent_2 } from 'react';
 import { MouseEventHandler } from 'react';
 import { MutableRefObject } from 'react';
 import { NamedExoticComponent } from 'react';
+import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { OffsetOptions } from '@floating-ui/react';
 import { OnError } from '@gooddata/sdk-ui';
@@ -271,6 +272,9 @@ export type CodeLanguageType = "js" | "ts";
 
 // @internal (undocumented)
 export function CodeOptions(input: ICodeOptionsProps): JSX.Element;
+
+// @internal
+export function collectReferences(content: string): ReferenceMap;
 
 // @internal
 export type Color = string;
@@ -9072,7 +9076,16 @@ export const REFERENCE_REGEX_MATCH: RegExp;
 export const REFERENCE_REGEX_SPLIT: RegExp;
 
 // @internal (undocumented)
+export type ReferenceMap = Record<string, {
+    ref: ObjRef;
+    type: ObjectType;
+}>;
+
+// @internal (undocumented)
 export const relatedHeader: IDateDatasetHeader;
+
+// @internal
+export function replaceReferences(content: string, replaced: ObjRef[], replacement: string): string;
 
 // @internal (undocumented)
 export function resolveAnchor(anchor: IFloatingAnchor): HTMLElement | VirtualElement | null;

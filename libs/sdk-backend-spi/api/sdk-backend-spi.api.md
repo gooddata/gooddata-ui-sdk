@@ -302,7 +302,7 @@ export type FiltersByTab = {
 export type FilterWithResolvableElements = IAttributeFilter | IRelativeDateFilter;
 
 // @internal
-export type GenAIAnswerOutput = "text" | "visualization" | "dashboard" | "keyDriverAnalysis" | "whatIf" | "searchResults" | "alertProposal";
+export type GenAIAnswerOutput = "text" | "visualization" | "dashboard" | "keyDriverAnalysis" | "whatIf" | "searchResults" | "clarifyingQuestions" | "alertProposal";
 
 // @internal
 export type GenAIAppliedMemoryStrategy = "always" | "auto";

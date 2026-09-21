@@ -1,8 +1,20 @@
 // (C) 2019-2026 GoodData Corporation
 
+import { format } from "date-fns";
 import moment from "moment";
 
 import { sanitizeLocaleForMoment } from "@gooddata/util";
+
+import {
+    DAY_END_TIME,
+    DAY_START_TIME,
+    TIME_FORMAT,
+    TIME_FORMAT_WITH_SECONDS,
+    TIME_FORMAT_WITH_SECONDS_WITH_SEPARATOR,
+    TIME_FORMAT_WITH_SEPARATOR,
+} from "../constants/Platform.js";
+
+import { convertPlatformDateStringToDate } from "./DateConversions.js";
 
 export const getLocalizedDateFormat = (locale: string): any => {
     const localizedMoment = moment().locale(sanitizeLocaleForMoment(locale));
@@ -56,3 +68,77 @@ export const localizedIcuDateFormatPatterns: Record<string, string> = {
  */
 export const getLocalizedIcuDateFormatPattern = (locale: string) =>
     localizedIcuDateFormatPatterns[locale] ?? localizedIcuDateFormatPatterns[DEFAULT_LOCALE];
+
+const getTimeRange = (
+    dateFrom: Date,
+    dateTo: Date,
+    splitter = "\u2013",
+    timeFormat: string = TIME_FORMAT,
+): string => {
+    const fromTime = format(dateFrom, timeFormat);
+    const toTime = format(dateTo, timeFormat);
+
+    return fromTime === toTime ? fromTime : `${fromTime} ${splitter} ${toTime}`;
+};
+
+const isTimeForWholeDay = (dateFrom: Date, dateTo: Date) =>
+    dateFrom.getHours() === 0 &&
+    dateFrom.getMinutes() === 0 &&
+    dateFrom.getSeconds() === 0 &&
+    dateTo.getHours() === 23 &&
+    dateTo.getMinutes() === 59 &&
+    (dateTo.getSeconds() === 0 || dateTo.getSeconds() === 59);
+
+const adjustDatetime = (date: string | Date, isTimeEnabled: boolean, defaultTime = DAY_START_TIME) => {
+    if (!(typeof date === "string")) {
+        return date;
+    }
+
+    if (isTimeEnabled && date.split(" ").length === 1) {
+        return `${date} ${defaultTime}`;
+    }
+
+    return date;
+};
+
+/**
+ * @beta
+ */
+export const formatAbsoluteDateRange = (
+    from: Date | string,
+    to: Date | string,
+    dateFormat: string,
+    splitter = "\u2013",
+): string => {
+    const isTimeEnabled = dateFormat.includes(TIME_FORMAT);
+    const isSecondsEnabled = dateFormat.includes(TIME_FORMAT_WITH_SECONDS);
+    const timeFormat = isSecondsEnabled ? TIME_FORMAT_WITH_SECONDS : TIME_FORMAT;
+    const timeFormatWithSeparator = isSecondsEnabled
+        ? TIME_FORMAT_WITH_SECONDS_WITH_SEPARATOR
+        : TIME_FORMAT_WITH_SEPARATOR;
+    const dateFormatWithoutTime = dateFormat.replace(timeFormatWithSeparator, "");
+
+    // append start and end times if necessary
+    const adjustedFrom = adjustDatetime(from, isTimeEnabled, DAY_START_TIME);
+    const adjustedTo = adjustDatetime(to, isTimeEnabled, DAY_END_TIME);
+
+    const fromDate = convertPlatformDateStringToDate(adjustedFrom) ?? undefined;
+    const toDate = convertPlatformDateStringToDate(adjustedTo) ?? undefined;
+    const coversWholeDay = fromDate && toDate ? isTimeForWholeDay(fromDate, toDate) : false;
+
+    if (fromDate && toDate && moment(fromDate).isSame(toDate, "day")) {
+        if (isTimeEnabled && !coversWholeDay) {
+            return `${format(fromDate, dateFormatWithoutTime)}, ${getTimeRange(fromDate, toDate, splitter, timeFormat)}`;
+        } else {
+            return format(fromDate, dateFormatWithoutTime);
+        }
+    }
+
+    // do not show time in case of whole day coverage
+    const displayDateFormat = coversWholeDay ? dateFormatWithoutTime : dateFormat;
+
+    const fromTitle = fromDate ? format(fromDate, displayDateFormat) : "";
+    const toTitle = toDate ? format(toDate, displayDateFormat) : "";
+
+    return `${fromTitle} ${splitter} ${toTitle}`;
+};

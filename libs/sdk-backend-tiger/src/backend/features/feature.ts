@@ -369,13 +369,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableAmplitudeTracker,
-            "enableAmplitudeTracker",
-            "BOOLEAN",
-            FeatureFlagsValues.enableAmplitudeTracker,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableExportTemplateSelection,
             "enableExportTemplateSelection",
             "BOOLEAN",

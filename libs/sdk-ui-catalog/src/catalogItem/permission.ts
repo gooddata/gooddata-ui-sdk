@@ -65,8 +65,8 @@ export function canEditCatalogItem(
         );
     }
 
-    // With WS.Analyze the user can update a dashboard to which they have access.
-    return isCatalogItemDashboard(item) && workspacePermissions.canCreateVisualization;
+    // The ANALYZE role updates dashboards it has access to; creating visualizations plays no part here.
+    return isCatalogItemDashboard(item) && workspacePermissions.canAnalyzeWorkspace;
 }
 
 /**

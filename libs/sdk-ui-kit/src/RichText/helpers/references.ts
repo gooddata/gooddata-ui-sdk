@@ -4,6 +4,9 @@ import { type IdentifierRef, type ObjRef, type ObjectType, areObjRefsEqual } fro
 
 import { REFERENCE_REGEX_MATCH } from "../plugins/types.js";
 
+/**
+ * @internal
+ */
 export type ReferenceMap = Record<
     string,
     {
@@ -12,6 +15,11 @@ export type ReferenceMap = Record<
     }
 >;
 
+/**
+ * The references the text points at, by the identifier each was written with.
+ *
+ * @internal
+ */
 export function collectReferences(content: string) {
     const map: ReferenceMap = {};
 
@@ -45,6 +53,25 @@ export function excludeReferences(references: ReferenceMap, excluded: ObjRef[]):
             ([, reference]) => !excluded.some((ref) => areObjRefsEqual(ref, reference.ref)),
         ),
     );
+}
+
+/**
+ * The text with every reference pointing at one of the given objects replaced by `replacement`.
+ * The markup around a reference is left alone, so emphasis that held the reference now holds the
+ * replacement. The result is stored as the widget's text, and thus the replacement is not localised.
+ *
+ * @internal
+ */
+export function replaceReferences(content: string, replaced: ObjRef[], replacement: string): string {
+    if (replaced.length === 0) {
+        return content;
+    }
+    const regex = new RegExp(REFERENCE_REGEX_MATCH.source, REFERENCE_REGEX_MATCH.flags);
+
+    return content.replace(regex, (...parts) => {
+        const { ref } = createReference(parts as unknown as RegExpExecArray);
+        return ref && replaced.some((one) => areObjRefsEqual(one, ref)) ? replacement : parts[0];
+    });
 }
 
 export function createReference(parts: RegExpExecArray): {

@@ -4,7 +4,7 @@ import { type Locale } from "date-fns";
 
 import { type WeekStart } from "@gooddata/sdk-model";
 
-import { convertLocale } from "../utils/dateFnsLocale.js";
+import { convertLocale } from "./dateFnsLocale.js";
 
 const LOCALE_KEY_NAMESPACE = "gdc-period-range-picker-week-start";
 
@@ -21,8 +21,7 @@ const overriddenLocales = new Map<string, Locale>();
  *
  * Registers (once per locale+weekStart pair) a clone of `baseLocaleKey`'s date-fns `Locale` with
  * `options.weekStartsOn` and `options.firstWeekContainsDate` overridden, under a synthetic key, and returns
- * that key for use as the picker's `locale.locale` field; `resolveWeekStartLocale` (in `dateFnsRangePicker.tsx`)
- * looks it back up.
+ * that key for use as the picker's `locale.locale` field.
  *
  * @param baseLocaleKey - the display locale (this app's `ILocale` code, e.g. "en-US") to inherit everything
  * else (month names, formats, ...) from
@@ -34,7 +33,7 @@ export function getWeekStartDateFnsLocale(baseLocaleKey: string, weekStart: Week
     const weekStartsOn = weekStart === "Monday" ? 1 : 0;
     // Paired with weekStartsOn using the same convention date-fns's own locales follow: ISO-8601 numbering
     // (the week containing Jan 4th is week 1) for a Monday-start week, the US convention (the week containing
-    // Jan 1st is week 1) for a Sunday-start week - keeps the locale internally consistent so "Y-ww" week
+    // Jan 1st is week 1) for a Sunday-start week - keeps the locale internally consistent so "w/Y" week
     // numbers round-trip correctly across year boundaries instead of inheriting an unrelated base-locale value.
     const firstWeekContainsDate = weekStartsOn === 1 ? 4 : 1;
     const localeKey = `${LOCALE_KEY_NAMESPACE}-${baseLocaleKey.toLowerCase()}-${weekStartsOn}`;

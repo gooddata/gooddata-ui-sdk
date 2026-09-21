@@ -503,6 +503,7 @@ exports[`initialize dashboard handler > for any dashboard > should resolve confi
 exports[`initialize dashboard handler > for any dashboard > should resolve permissions if none provided 1`] = `
 {
   "canAccessWorkbench": true,
+  "canAnalyzeWorkspace": true,
   "canCreateAnalyticalDashboard": true,
   "canCreateAutomation": true,
   "canCreateFilterView": true,

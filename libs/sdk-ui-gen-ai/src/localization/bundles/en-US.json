@@ -1079,6 +1079,10 @@
         "text": "Alert proposal",
         "crowdinContext": "Interaction Intelligence 'Output' row value when the turn produced an alert proposal"
     },
+    "gd.gen-ai.interactionIntelligence.detail.output.clarifyingQuestions": {
+        "text": "Clarifying questions",
+        "crowdinContext": "Interaction Intelligence 'Output' row value when the turn produced an clarifying question"
+    },
     "drill.kda.from": {
         "text": "from",
         "crowdinContext": "Key driver analysis drill from label, must be lowercase"

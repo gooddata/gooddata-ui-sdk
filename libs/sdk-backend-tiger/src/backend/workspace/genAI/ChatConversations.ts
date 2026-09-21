@@ -6,6 +6,8 @@ import {
     type AiConversationItemResponse,
     type AiInteractionStepResponse,
     type AiSendMessageRequest,
+    type AiUserContextWidgetDescriptor,
+    type AiUserContextWidgetDescriptorWidgetTypeEnum,
 } from "@gooddata/api-client-tiger";
 import {
     GenAiApi_DeleteConversation,
@@ -41,7 +43,9 @@ import {
     type GenAIObjectType,
     type IAllowedRelationshipType,
     type IDashboardDefinition,
+    type IGenAIDashboardContext,
     type IGenAIUserContext,
+    type IGenAIWidgetDescriptor,
     isIdentifierRef,
     isTempFilterContext,
     objRefToString,
@@ -448,9 +452,7 @@ export class ChatConversationThreadQuery implements IChatConversationThreadQuery
                                     },
                                     reasoningEffort: requestParameters.effort,
                                 },
-                                userContext: convertUserContext(
-                                    requestParameters.userContext,
-                                ) as AiSendMessageRequest["userContext"],
+                                userContext: convertUserContext(requestParameters.userContext),
                             },
                         },
                         {
@@ -581,94 +583,22 @@ class ServerSentEventsDataConverter extends TransformStream<
 /**
  * Convert SDK model user context (with ObjRef) to the API user context (with plain string IDs).
  */
-function convertUserContext(userContext: IGenAIUserContext | undefined) {
+function convertUserContext(userContext: IGenAIUserContext | undefined): AiSendMessageRequest["userContext"] {
     if (!userContext) {
         return undefined;
     }
 
     return {
-        ...(userContext.activeObject
-            ? {
-                  activeObject: {
-                      id: objRefToString(userContext.activeObject.ref),
-                      type: userContext.activeObject.type,
-                      workspaceId: userContext.activeObject.workspaceId,
-                  },
-              }
-            : {}),
+        ...convertActiveObject(userContext),
         ...(userContext.view?.dashboard
             ? {
                   view: {
-                      dashboard: {
-                          id: objRefToString(userContext.view.dashboard.ref),
-                          ...(userContext.view.dashboard.title
-                              ? { title: userContext.view.dashboard.title }
-                              : {}),
-                          ...(userContext.view.dashboard.activeTabId
-                              ? { activeTabId: userContext.view.dashboard.activeTabId }
-                              : {}),
-                          ...(userContext.view.dashboard.filters?.length
-                              ? {
-                                    // Filter `title` is display-only (drives the context indicator);
-                                    // the backend filter models reject unknown fields.
-                                    filters: userContext.view.dashboard.filters.map(
-                                        ({ title: _title, ...filter }) => filter,
-                                    ),
-                                }
-                              : {}),
-                          widgets: userContext.view.dashboard.widgets.map((w) => ({
-                              title: w.title,
-                              widgetId: objRefToString(w.widgetRef),
-                              widgetType: w.widgetType,
-                              ...(w.insightRef
-                                  ? w.widgetType === "visualizationSwitcher"
-                                      ? {
-                                            activeVisualizationId: objRefToString(w.insightRef),
-                                            ...(w.visualizations
-                                                ? {
-                                                      visualizationIds: w.visualizations
-                                                          .map(({ insightRef }) =>
-                                                              insightRef ? objRefToString(insightRef) : "",
-                                                          )
-                                                          .filter(Boolean),
-                                                  }
-                                                : {}),
-                                        }
-                                      : { visualizationId: objRefToString(w.insightRef) }
-                                  : {}),
-                              ...(w.resultId ? { resultId: w.resultId } : {}),
-                              ...(w.content === undefined ? {} : { content: w.content }),
-                          })),
-                          ...(userContext.view.dashboard.definition
-                              ? {
-                                    definition: convertDashboard(
-                                        userContext.view.dashboard.definition as IDashboardDefinition,
-                                    ),
-                                }
-                              : {}),
-                      },
+                      dashboard: convertDashboardView(userContext.view.dashboard),
                   },
               }
             : {}),
-        ...(userContext.referencedObjects
-            ? {
-                  referencedObjects: userContext.referencedObjects.map((group) => ({
-                      ...(group.context
-                          ? {
-                                context: {
-                                    type: group.context.type,
-                                    id: objRefToString(group.context.ref),
-                                },
-                            }
-                          : {}),
-                      objects: group.objects.map((o) => ({
-                          type: o.type,
-                          id: objRefToString(o.ref),
-                      })),
-                  })),
-              }
-            : {}),
-    };
+        ...convertReferencedObjects(userContext),
+    } as AiSendMessageRequest["userContext"];
 }
 
 function convertDashboard(dashboard: IDashboardDefinition) {
@@ -706,4 +636,89 @@ function convertDashboard(dashboard: IDashboardDefinition) {
     );
 
     return json;
+}
+
+function convertActiveObject(userContext: IGenAIUserContext) {
+    return userContext.activeObject
+        ? {
+              activeObject: {
+                  id: objRefToString(userContext.activeObject.ref),
+                  type: userContext.activeObject.type,
+                  workspaceId: userContext.activeObject.workspaceId,
+              },
+          }
+        : {};
+}
+
+function convertReferencedObjects(userContext: IGenAIUserContext) {
+    return userContext.referencedObjects
+        ? {
+              referencedObjects: userContext.referencedObjects.map((group) => ({
+                  ...(group.context
+                      ? {
+                            context: {
+                                type: group.context.type,
+                                id: objRefToString(group.context.ref),
+                            },
+                        }
+                      : {}),
+                  objects: group.objects.map((o) => ({
+                      type: o.type,
+                      id: objRefToString(o.ref),
+                  })),
+              })),
+          }
+        : {};
+}
+
+function convertDashboardView(dashboard: IGenAIDashboardContext) {
+    return {
+        id: objRefToString(dashboard.ref),
+        ...(dashboard.title ? { title: dashboard.title } : {}),
+        ...(dashboard.activeTabId ? { activeTabId: dashboard.activeTabId } : {}),
+        ...(dashboard.filters?.length
+            ? {
+                  // Filter `title` is display-only (drives the context indicator);
+                  // the backend filter models reject unknown fields.
+                  filters: dashboard.filters.map(({ title: _title, ...filter }) => filter),
+              }
+            : {}),
+        widgets: dashboard.widgets.map(convertWidget),
+        ...(dashboard.definition
+            ? {
+                  definition: convertDashboard(dashboard.definition as IDashboardDefinition),
+              }
+            : {}),
+    };
+}
+
+function convertWidget(w: IGenAIWidgetDescriptor): AiUserContextWidgetDescriptor {
+    return {
+        title: w.title,
+        widgetId: objRefToString(w.widgetRef),
+        widgetType: w.widgetType as AiUserContextWidgetDescriptorWidgetTypeEnum,
+        ...(w.insightRef
+            ? {
+                  visualizationId: objRefToString(w.insightRef),
+                  activeVisualizationId: objRefToString(w.insightRef),
+              }
+            : {}),
+        ...(w.visualizations
+            ? {
+                  visualizationIds: w.visualizations
+                      ?.map(({ insightRef }) => (insightRef ? objRefToString(insightRef) : ""))
+                      .filter(Boolean),
+                  visualizations: w.visualizations?.map(convertWidget),
+              }
+            : {}),
+        ...(w.resultId ? { resultId: w.resultId } : {}),
+        ...(w.content === undefined ? {} : { content: w.content }),
+        ...(w.filters?.length
+            ? {
+                  // Filter `title` is display-only (drives the context indicator);
+                  // the backend filter models reject unknown fields.
+                  filters: w.filters.map(({ title: _title, ...filter }) => filter),
+              }
+            : {}),
+    } as AiUserContextWidgetDescriptor;
 }

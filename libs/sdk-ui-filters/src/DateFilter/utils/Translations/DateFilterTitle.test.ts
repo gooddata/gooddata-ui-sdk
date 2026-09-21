@@ -4,7 +4,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { type DateFilterGranularity } from "@gooddata/sdk-model";
+import { type DateFilterGranularity, type ILocale, type WeekStart } from "@gooddata/sdk-model";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
 
 import {
@@ -359,6 +359,66 @@ describe("getDateFilterTitleUsingTranslator", () => {
                 DEFAULT_DATE_FORMAT,
             );
             expect(actual).toEqual("Q2 2026");
+        });
+    });
+
+    describe("static period (absolute form) with a week granularity", () => {
+        // Needs real messages resolved, not serialized ids.
+        const weekLabel = (from: string, to: string, weekStart?: WeekStart, locale: ILocale = "en-US") =>
+            getDateFilterRepresentation(
+                {
+                    localIdentifier: "ABSOLUTE_FORM",
+                    type: "absoluteForm" as const,
+                    from,
+                    to,
+                    granularity: "GDC.time.week_us" as const,
+                    name: "",
+                    visible: true,
+                },
+                locale,
+                DEFAULT_MESSAGES[DEFAULT_LANGUAGE],
+                "short",
+                DEFAULT_DATE_FORMAT,
+                weekStart,
+            );
+
+        it("should render a week range as two week labels", () => {
+            expect(weekLabel("2026-04-05", "2026-04-25", "Sunday")).toEqual("Week 15/2026 – Week 17/2026");
+        });
+
+        it("should collapse a range that starts and ends in the same week to a single label", () => {
+            expect(weekLabel("2026-04-05", "2026-04-11", "Sunday")).toEqual("Week 15/2026");
+        });
+
+        it("should not pad a single-digit week number, like the picker's own week field", () => {
+            expect(weekLabel("2026-02-08", "2026-02-14", "Sunday")).toEqual("Week 7/2026");
+        });
+
+        it("should number weeks according to weekStart, not the display locale", () => {
+            expect(weekLabel("2026-04-05", "2026-04-05", "Sunday")).toEqual("Week 15/2026");
+            expect(weekLabel("2026-04-05", "2026-04-05", "Monday")).toEqual("Week 14/2026");
+            // fr-FR starts weeks on Monday, so the workspace setting has to win over the locale.
+            expect(weekLabel("2026-04-05", "2026-04-05", "Sunday", "fr-FR")).toEqual("Week 15/2026");
+        });
+
+        it("should fall back to a plain day range when no week start is given", () => {
+            expect(weekLabel("2026-04-05", "2026-04-11")).toEqual("04/05/2026 – 04/11/2026");
+        });
+
+        it("should pair the week with its week-numbering year across a year boundary", () => {
+            expect(weekLabel("2027-01-01", "2027-01-01", "Monday")).toEqual("Week 53/2026");
+            expect(weekLabel("2026-12-27", "2026-12-27", "Sunday")).toEqual("Week 1/2027");
+        });
+
+        it("should keep rendering a plain day range when no granularity is selected", () => {
+            const actual = getDateFilterRepresentation(
+                { ...absoluteFormFilter },
+                "en-US",
+                DEFAULT_MESSAGES[DEFAULT_LANGUAGE],
+                "short",
+                DEFAULT_DATE_FORMAT,
+            );
+            expect(actual).toEqual("01/01/2019 – 02/01/2019");
         });
     });
 });

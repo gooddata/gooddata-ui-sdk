@@ -48,8 +48,8 @@ describe("convertPostMessageToDrillablePredicates", () => {
         expect(uriMatchSpy).toBeCalledWith("/measure");
 
         expect(identifierMatchSpy).toHaveBeenCalledTimes(2);
-        expect(identifierMatchSpy).toBeCalledWith("bar");
-        expect(identifierMatchSpy).toBeCalledWith("baz");
+        expect(identifierMatchSpy).toBeCalledWith("bar", undefined);
+        expect(identifierMatchSpy).toBeCalledWith("baz", undefined);
     });
 
     it("should return deduplicated predicates", () => {
@@ -63,7 +63,62 @@ describe("convertPostMessageToDrillablePredicates", () => {
         expect(uriMatchSpy).toHaveBeenCalledTimes(1);
         expect(uriMatchSpy).toBeCalledWith("/common");
         expect(identifierMatchSpy).toHaveBeenCalledTimes(1);
-        expect(identifierMatchSpy).toBeCalledWith("common");
+        expect(identifierMatchSpy).toBeCalledWith("common", undefined);
+    });
+
+    it("should pass the type on to the predicate when an identifier comes as a qualifier", () => {
+        const data: IDrillableItemsCommandBody = {
+            identifiers: [{ identifier: "region", type: "computedAttribute" }, "bar"],
+            composedFrom: {
+                identifiers: [{ identifier: "amount", type: "fact" }],
+            },
+        };
+
+        const result = convertPostMessageToDrillablePredicates(data);
+        assertPredicates(result, 3);
+
+        expect(identifierMatchSpy).toHaveBeenCalledTimes(2);
+        expect(identifierMatchSpy).toBeCalledWith("region", "computedAttribute");
+        expect(identifierMatchSpy).toBeCalledWith("bar", undefined);
+
+        expect(composedFromIdentifierSpy).toHaveBeenCalledTimes(1);
+        expect(composedFromIdentifierSpy).toBeCalledWith("amount", "fact");
+    });
+
+    it("should keep a computed attribute and a label of the same identifier apart", () => {
+        const data: IDrillableItemsCommandBody = {
+            identifiers: [
+                { identifier: "region", type: "computedAttribute" },
+                { identifier: "region", type: "displayForm" },
+                "region",
+            ],
+        };
+
+        const result = convertPostMessageToDrillablePredicates(data);
+        assertPredicates(result, 3);
+
+        expect(identifierMatchSpy).toHaveBeenCalledTimes(3);
+        expect(identifierMatchSpy).toBeCalledWith("region", "computedAttribute");
+        expect(identifierMatchSpy).toBeCalledWith("region", "displayForm");
+        expect(identifierMatchSpy).toBeCalledWith("region", undefined);
+    });
+
+    it("should deduplicate qualifiers naming the same identifier and type", () => {
+        const data: IDrillableItemsCommandBody = {
+            identifiers: [
+                { identifier: "region", type: "computedAttribute" },
+                { identifier: "region", type: "computedAttribute" },
+                "bar",
+                { identifier: "bar" },
+            ],
+        };
+
+        const result = convertPostMessageToDrillablePredicates(data);
+        assertPredicates(result, 2);
+
+        expect(identifierMatchSpy).toHaveBeenCalledTimes(2);
+        expect(identifierMatchSpy).toBeCalledWith("region", "computedAttribute");
+        expect(identifierMatchSpy).toBeCalledWith("bar", undefined);
     });
 
     it("should return no predicates when no identifiers and uris provided", () => {
@@ -95,7 +150,7 @@ describe("convertPostMessageToDrillablePredicates", () => {
         assertPredicates(result, 1);
 
         expect(identifierMatchSpy).toHaveBeenCalledTimes(1);
-        expect(identifierMatchSpy).toBeCalledWith("bar");
+        expect(identifierMatchSpy).toBeCalledWith("bar", undefined);
     });
 
     it("should return composedFromUri predicates when composed uri provided", () => {
@@ -143,8 +198,8 @@ describe("convertPostMessageToDrillablePredicates", () => {
         assertPredicates(result, 2);
 
         expect(composedFromIdentifierSpy).toHaveBeenCalledTimes(2);
-        expect(composedFromIdentifierSpy).toBeCalledWith("bar");
-        expect(composedFromIdentifierSpy).toBeCalledWith("baz");
+        expect(composedFromIdentifierSpy).toBeCalledWith("bar", undefined);
+        expect(composedFromIdentifierSpy).toBeCalledWith("baz", undefined);
     });
 
     it("should return predicates when composed uri and identifiers provided", () => {
@@ -164,7 +219,7 @@ describe("convertPostMessageToDrillablePredicates", () => {
         expect(composedFromUriSpy).toHaveBeenCalledTimes(1);
         expect(composedFromUriSpy).toBeCalledWith("/foo");
         expect(composedFromIdentifierSpy).toHaveBeenCalledTimes(1);
-        expect(composedFromIdentifierSpy).toBeCalledWith("bar");
+        expect(composedFromIdentifierSpy).toBeCalledWith("bar", undefined);
     });
 
     it("should return deduplicated predicates when composed uris and identifiers provided", () => {
@@ -185,8 +240,8 @@ describe("convertPostMessageToDrillablePredicates", () => {
         expect(composedFromUriSpy).toBeCalledWith("/foo");
         expect(composedFromUriSpy).toBeCalledWith("/common");
         expect(composedFromIdentifierSpy).toHaveBeenCalledTimes(2);
-        expect(composedFromIdentifierSpy).toBeCalledWith("bar");
-        expect(composedFromIdentifierSpy).toBeCalledWith("common");
+        expect(composedFromIdentifierSpy).toBeCalledWith("bar", undefined);
+        expect(composedFromIdentifierSpy).toBeCalledWith("common", undefined);
     });
 
     it("should return deduplicated predicates when all input uris and identifiers provided", () => {
@@ -206,17 +261,17 @@ describe("convertPostMessageToDrillablePredicates", () => {
         expect(uriMatchSpy).toBeCalledWith("/common");
 
         expect(identifierMatchSpy).toHaveBeenCalledTimes(3);
-        expect(identifierMatchSpy).toBeCalledWith("bar");
-        expect(identifierMatchSpy).toBeCalledWith("baz");
-        expect(identifierMatchSpy).toBeCalledWith("common");
+        expect(identifierMatchSpy).toBeCalledWith("bar", undefined);
+        expect(identifierMatchSpy).toBeCalledWith("baz", undefined);
+        expect(identifierMatchSpy).toBeCalledWith("common", undefined);
 
         expect(composedFromUriSpy).toHaveBeenCalledTimes(2);
         expect(composedFromUriSpy).toBeCalledWith("/foo");
         expect(composedFromUriSpy).toBeCalledWith("/common");
 
         expect(composedFromIdentifierSpy).toHaveBeenCalledTimes(3);
-        expect(composedFromIdentifierSpy).toBeCalledWith("bar");
-        expect(composedFromIdentifierSpy).toBeCalledWith("baz");
-        expect(composedFromIdentifierSpy).toBeCalledWith("common");
+        expect(composedFromIdentifierSpy).toBeCalledWith("bar", undefined);
+        expect(composedFromIdentifierSpy).toBeCalledWith("baz", undefined);
+        expect(composedFromIdentifierSpy).toBeCalledWith("common", undefined);
     });
 });

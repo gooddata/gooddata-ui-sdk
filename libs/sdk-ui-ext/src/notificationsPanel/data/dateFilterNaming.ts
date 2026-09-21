@@ -30,6 +30,14 @@ export function translateDateFilter(intl: IntlShape, filter: IDateFilter, dateFo
     // - Special case for "All time" with excluded empty values.
     // - For included empty values, decorate the base representation.
     // - For "only" empty values, use the dedicated title.
+    //
+    // Week granularity is the one deliberate divergence: `getDateFilterTitleUsingTranslator` renders an
+    // absolute week filter as "Week 15/2026 - Week 17/2026", which needs both the filter's granularity and
+    // the workspace week start. The AFM shape carries no granularity at all today, and the week start is a
+    // workspace setting this function cannot reach either, so an absolute week filter is spelled out here
+    // as the plain day range it resolves to. MC-5254 gives the absolute AFM filter an optional granularity;
+    // even then the missing week start keeps this branch on the day range, which is exactly what
+    // `getDateFilterTitleUsingTranslator` itself falls back to when no week start reaches it.
     if (
         metadata.type === "relative" &&
         metadata.granularity === "ALL_TIME_GRANULARITY" &&
