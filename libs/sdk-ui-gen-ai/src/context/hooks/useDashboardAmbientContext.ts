@@ -4,14 +4,20 @@ import { type RefObject, useEffect, useRef } from "react";
 
 import { useDispatch } from "react-redux";
 
-import { type IWidget, type ObjRef, idRef } from "@gooddata/sdk-model";
+import {
+    type FilterContextItem,
+    type IWidget,
+    type ObjRef,
+    idRef,
+    serializeObjRef,
+} from "@gooddata/sdk-model";
 import {
     type DashboardSelector,
     type DashboardSelectorEvaluator,
-    type ExtendedDashboardWidget,
     newDisplayFormMap,
-    newMapForObjectWithIdentity,
     selectActiveTab,
+    selectAllFiltersForWidgetByRefAcrossTabs,
+    selectAllTabsWidgetContexts,
     selectAttributeFilterDisplayFormsMap,
     selectDashboardId,
     selectDashboardTitle,
@@ -19,7 +25,6 @@ import {
     selectFilterContextFilters,
     selectIsNewDashboard,
     selectVisualizationSwitcherActiveVisualizations,
-    selectWidgetsMap,
 } from "@gooddata/sdk-ui-dashboard";
 
 import { setAmbientUserContextAction } from "../../store/chatWindow/chatWindowSlice.js";
@@ -63,11 +68,24 @@ function buildFromDashboard(dashboardSelector: DashboardSelectorEvaluator) {
         newDisplayFormMap([]),
     );
 
-    const widgetsMap = selectWithDefault(
-        dashboardSelector,
-        selectWidgetsMap,
-        newMapForObjectWithIdentity<ExtendedDashboardWidget>([]),
-    );
+    const widgetContexts = selectWithDefault(dashboardSelector, selectAllTabsWidgetContexts, []);
+    const widgetsMap = new Map<ObjRef, IWidget>();
+    const widgetFiltersMap = new Map<string, ReturnType<typeof buildFiltersContext>>();
+
+    for (const context of widgetContexts) {
+        widgetsMap.set(context.widget.ref, context.widget as IWidget);
+        const [commonDateFilters, otherFilters] = dashboardSelector(
+            selectAllFiltersForWidgetByRefAcrossTabs(context.widget.ref),
+        );
+        widgetFiltersMap.set(
+            serializeObjRef(context.widget.ref),
+            buildFiltersContext(
+                [...commonDateFilters, ...otherFilters] as unknown as FilterContextItem[],
+                displayForms,
+            ),
+        );
+    }
+
     const activeTab = selectWithOptional(dashboardSelector, selectActiveTab);
     const workingDefinition = selectWithOptional(dashboardSelector, selectDashboardWorkingDefinition);
     const visualizationSwitcherActiveVisualizations = selectWithDefault(
@@ -84,9 +102,11 @@ function buildFromDashboard(dashboardSelector: DashboardSelectorEvaluator) {
 
     const filters = buildFiltersContext(filterContextItems ?? [], displayForms);
     const { widgets } = buildWidgetsContext(
-        widgetsMap as unknown as Map<ObjRef, IWidget>,
+        widgetsMap,
         results,
         visualizationSwitcherActiveVisualizations,
+        undefined,
+        widgetFiltersMap,
     );
 
     return mergeContexts(

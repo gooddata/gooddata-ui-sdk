@@ -16,6 +16,7 @@ import type {
     MapOptions as MapLibreMapOptions,
     Popup as MapLibrePopup,
     PopupOptions as MapLibrePopupOptions,
+    ProjectionSpecification as MapLibreProjectionSpecification,
     StyleSpecification as MapLibreStyleSpecification,
     SymbolLayerSpecification as MapLibreSymbolLayerSpecification,
 } from "maplibre-gl";
@@ -31,6 +32,7 @@ export type Popup = MapLibrePopup;
  * @public
  */
 export type StyleSpecification = MapLibreStyleSpecification;
+export type ProjectionSpecification = MapLibreProjectionSpecification;
 export type GeoJSONSourceSpecification = MapLibreGeoJSONSourceSpecification;
 export type FilterSpecification = MapLibreFilterSpecification;
 export type ExpressionSpecification = MapLibreExpressionSpecification;

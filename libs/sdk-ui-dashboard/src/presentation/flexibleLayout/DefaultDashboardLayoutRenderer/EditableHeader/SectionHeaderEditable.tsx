@@ -20,6 +20,10 @@ import { selectSeparators } from "../../../../model/store/config/configSelectors
 import { uiActions } from "../../../../model/store/ui/index.js";
 import { selectRestrictedRichTextReferences } from "../../../../model/store/unavailableObjects/unavailableObjectsSelectors.js";
 import { useDashboardComponentsContext } from "../../../dashboardContexts/DashboardComponentsContext.js";
+import {
+    RestrictedReferencesDialog,
+    useHasRestrictedReferences,
+} from "../../../widget/richText/RestrictedReferencesDialog.js";
 
 import { EditableLabelWithBubble } from "./EditableLabelWithBubble.js";
 import { MAX_TITLE_LENGTH, TITLE_LENGTH_WARNING_LIMIT, getTitle } from "./sectionHeaderHelper.js";
@@ -75,25 +79,53 @@ export function SectionHeaderEditable({
         [changeTitle, onEditingEnd],
     );
 
-    const [isRichTextEditing, setIsRichTextEditing] = useState(false);
+    // what the editor asked for; whether it is the question or the editor follows from the text
+    const [isEditingRequested, setIsEditingRequested] = useState(false);
     const [richTextValue, setRichTextValue] = useState<string>("");
 
-    const onDescriptionClick = useCallback(() => {
-        if (!isRichTextEditing) {
-            onEditingStart();
-            setIsRichTextEditing(true);
-        }
-    }, [isRichTextEditing, onEditingStart]);
-
-    const onDescriptionBlur = useCallback(() => {
-        changeDescription(richTextValue);
-        onEditingEnd();
-        setIsRichTextEditing(false);
-    }, [changeDescription, onEditingEnd, richTextValue]);
+    const startEditing = useCallback(() => {
+        onEditingStart();
+        setIsEditingRequested(true);
+    }, [onEditingStart]);
 
     const onRichTextChange = useCallback((value: string) => {
         setRichTextValue(value);
     }, []);
+
+    const hasRestrictedReferences = useHasRestrictedReferences(richTextValue);
+    const isRichTextEditing = isEditingRequested && !hasRestrictedReferences;
+    const isAskingToSanitize = isEditingRequested && hasRestrictedReferences;
+
+    // the rewrite is committed at once: it was confirmed, and it is not a keystroke. The editor was
+    // already asked for, so the description opens as soon as the text no longer holds a reference
+    const onSanitized = useCallback(
+        (sanitized: string) => {
+            setRichTextValue(sanitized);
+            changeDescription(sanitized);
+        },
+        [changeDescription],
+    );
+
+    const stopEditing = useCallback(() => {
+        setIsEditingRequested(false);
+        onEditingEnd();
+    }, [onEditingEnd]);
+
+    const onDescriptionBlur = useCallback(() => {
+        // the confirmation takes the focus out of the description, and that is not the editor
+        // leaving it: nothing is decided yet
+        if (isAskingToSanitize) {
+            return;
+        }
+        changeDescription(richTextValue);
+        stopEditing();
+    }, [changeDescription, richTextValue, stopEditing, isAskingToSanitize]);
+
+    const onDescriptionClick = useCallback(() => {
+        if (!isEditingRequested) {
+            startEditing();
+        }
+    }, [isEditingRequested, startEditing]);
 
     useEffect(() => {
         setRichTextValue(rawDescription);
@@ -156,6 +188,13 @@ export function SectionHeaderEditable({
                     />
                 </div>
             </div>
+            {isAskingToSanitize ? (
+                <RestrictedReferencesDialog
+                    value={richTextValue}
+                    onSanitized={onSanitized}
+                    onCancel={stopEditing}
+                />
+            ) : null}
         </div>
     );
 }

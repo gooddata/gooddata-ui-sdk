@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import {
     type IAttributeDescriptor,
@@ -9,6 +9,7 @@ import {
     type IResultMeasureHeader,
     type ITotalDescriptor,
     type ITotalDescriptorItem,
+    type ObjRef,
     isAttributeDescriptor,
     isColorDescriptor,
     isMeasureDescriptor,
@@ -131,6 +132,22 @@ export function getMappingHeaderIdentifier(header: IMappingHeader): string | und
         return header.measureHeaderItem.identifier;
     }
     throw new Error(`Mapping header of type "${Object.keys(header)}" has no identifier`);
+}
+
+/**
+ * The ref of the object the header describes. Unlike the identifier, the ref carries the object type, the
+ * only thing telling a computed attribute from a label of the same identifier.
+ *
+ * @internal
+ */
+export function getMappingHeaderRef(header: IMappingHeader): ObjRef | undefined {
+    if (isAttributeDescriptor(header)) {
+        return header.attributeHeader.ref;
+    } else if (isMeasureDescriptor(header)) {
+        return header.measureHeaderItem.ref;
+    }
+
+    return undefined;
 }
 
 /**

@@ -6,6 +6,7 @@ import { invariant } from "ts-invariant";
 
 import {
     type DrillDefinition,
+    type FilterContextItem,
     type IDashboardLayout,
     type IDrillDownReference,
     type IDrillToLegacyDashboard,
@@ -46,8 +47,12 @@ import { type IUndoableCommand, createUndoableCommandsMapping } from "../../_inf
 import {
     selectCrossFilteringFiltersLocalIdentifiers,
     selectCrossFilteringFiltersLocalIdentifiersByWidgetRef,
+    selectCrossFilteringItemsByTab,
 } from "../../drill/drillSelectors.js";
-import { selectExecutableDashboardFilters } from "../../filtering/dashboardFilterSelectors.js";
+import {
+    selectExecutableDashboardFilters,
+    selectExecutableDashboardFiltersByTab,
+} from "../../filtering/dashboardFilterSelectors.js";
 import { getWidgetCoordinates, isItemWithBaseWidget } from "../../tabs/layout/layoutUtils.js";
 import { type DashboardSelector } from "../../types.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../tabsSelectors.js";
@@ -421,6 +426,50 @@ export const selectWidgetDrills: (
         createSelector(selectAnalyticalWidgetByRef(ref), (widget) => widget?.drills ?? []),
     );
 
+function calculateWidgetFilters(
+    widget: ExtendedDashboardWidget,
+    dashboardFilters: FilterContextItem[],
+    crossFilteringFiltersLocalIdentifiers: string[] | undefined,
+    shouldIgnoreCrossFiltering: boolean,
+    allCrossFilteringLocalIdentifiers: string[],
+): [IDashboardFilter[], IDashboardFilter[]] {
+    if (isExtendedDashboardLayoutWidget(widget)) {
+        return [[], []];
+    }
+
+    // Widget is the source of cross-filtering, so filtering out the cross-filtering filters
+    const filtersWithoutCrossFilteringFilters = dashboardFilters.filter((f) => {
+        if (isDashboardAttributeFilterItem(f)) {
+            const localId = dashboardAttributeFilterItemLocalIdentifier(f);
+            return !crossFilteringFiltersLocalIdentifiers?.includes(localId!);
+        }
+
+        return true;
+    });
+
+    // Widget ignores cross-filtering, so we should remove all cross-filtering filters
+    const filtersWithoutAllCrossFiltering = shouldIgnoreCrossFiltering
+        ? filtersWithoutCrossFilteringFilters.filter((f) => {
+              if (isDashboardAttributeFilterItem(f)) {
+                  const localId = dashboardAttributeFilterItemLocalIdentifier(f);
+                  return !allCrossFilteringLocalIdentifiers.includes(localId!);
+              }
+
+              return true;
+          })
+        : [...filtersWithoutCrossFilteringFilters];
+
+    const [commonDateFilters, otherFilters] = partition(
+        filtersWithoutAllCrossFiltering,
+        isDashboardCommonDateFilter,
+    );
+
+    const dateFilters = filterContextItemsToDashboardFiltersByWidget(commonDateFilters, widget);
+    const otherFiltersConverted = filterContextItemsToDashboardFiltersByWidget(otherFilters, widget);
+
+    return [dateFilters, otherFiltersConverted];
+}
+
 /**
  * Selects all filters from filter context converted to filters specific for a widget specified by a ref.
  *
@@ -447,41 +496,61 @@ export const selectAllFiltersForWidgetByRef: (
         ) => {
             invariant(widget, `widget with ref ${objRefToString(ref)} does not exist in the state`);
 
-            if (isExtendedDashboardLayoutWidget(widget)) {
+            return calculateWidgetFilters(
+                widget,
+                dashboardFilters,
+                crossFilteringFiltersLocalIdentifiers,
+                shouldIgnoreCrossFiltering,
+                allCrossFilteringLocalIdentifiers,
+            );
+        },
+    );
+});
+
+/**
+ * Selects all filters from filter context converted to filters specific for a widget specified by a ref,
+ * even if the widget is not on the active tab.
+ *
+ * @remarks
+ * This does NOT resolve things like ignored filters for a widget, etc.
+ *
+ * @internal
+ */
+export const selectAllFiltersForWidgetByRefAcrossTabs: (
+    ref: ObjRef,
+) => DashboardSelector<[IDashboardFilter[], IDashboardFilter[]]> = createMemoizedSelector((ref: ObjRef) => {
+    return createSelector(
+        selectAllTabsWidgetContexts,
+        selectExecutableDashboardFiltersByTab,
+        selectCrossFilteringItemsByTab,
+        (contexts, filtersByTab, crossFilteringByTab) => {
+            const context = contexts.find((c) => areObjRefsEqual(c.widget.ref, ref));
+            if (!context) {
                 return [[], []];
             }
 
-            // Widget is the source of cross-filtering, so filtering out the cross-filtering filters
-            const filtersWithoutCrossFilteringFilters = dashboardFilters.filter((f) => {
-                if (isDashboardAttributeFilterItem(f)) {
-                    const localId = dashboardAttributeFilterItemLocalIdentifier(f);
-                    return !crossFilteringFiltersLocalIdentifiers?.includes(localId!);
-                }
+            const { tab, widget } = context;
+            const tabId = tab.localIdentifier ?? DEFAULT_TAB_ID;
+            const dashboardFilters = filtersByTab[tabId] ?? [];
+            const crossFilteringItems = crossFilteringByTab[tabId] ?? [];
 
-                return true;
-            });
-
-            // Widget ignores cross-filtering, so we should remove all cross-filtering filters
-            const filtersWithoutAllCrossFiltering = shouldIgnoreCrossFiltering
-                ? filtersWithoutCrossFilteringFilters.filter((f) => {
-                      if (isDashboardAttributeFilterItem(f)) {
-                          const localId = dashboardAttributeFilterItemLocalIdentifier(f);
-                          return !allCrossFilteringLocalIdentifiers.includes(localId!);
-                      }
-
-                      return true;
-                  })
-                : [...filtersWithoutCrossFilteringFilters];
-
-            const [commonDateFilters, otherFilters] = partition(
-                filtersWithoutAllCrossFiltering,
-                isDashboardCommonDateFilter,
+            const crossFilteringFiltersLocalIdentifiers = crossFilteringItems.find((item) =>
+                areObjRefsEqual(ref, item.widgetRef),
+            )?.filterLocalIdentifiers;
+            const shouldIgnoreCrossFiltering = isInsightWidget(widget)
+                ? (widget.ignoreCrossFiltering ?? false)
+                : false;
+            const allCrossFilteringLocalIdentifiers = crossFilteringItems.flatMap(
+                (item) => item.filterLocalIdentifiers,
             );
 
-            return [
-                filterContextItemsToDashboardFiltersByWidget(commonDateFilters, widget),
-                filterContextItemsToDashboardFiltersByWidget(otherFilters, widget),
-            ];
+            return calculateWidgetFilters(
+                widget,
+                dashboardFilters,
+                crossFilteringFiltersLocalIdentifiers,
+                shouldIgnoreCrossFiltering,
+                allCrossFilteringLocalIdentifiers,
+            );
         },
     );
 });

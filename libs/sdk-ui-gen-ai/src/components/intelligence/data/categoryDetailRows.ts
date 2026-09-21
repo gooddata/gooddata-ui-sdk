@@ -29,6 +29,7 @@ const ANSWER_OUTPUT_LABEL_MESSAGES = defineMessages({
     whatIf: { id: "gd.gen-ai.interactionIntelligence.detail.output.whatIf" },
     searchResults: { id: "gd.gen-ai.interactionIntelligence.detail.output.searchResults" },
     alertProposal: { id: "gd.gen-ai.interactionIntelligence.detail.output.alertProposal" },
+    clarifyingQuestions: { id: "gd.gen-ai.interactionIntelligence.detail.output.clarifyingQuestions" },
 }) satisfies Record<GenAIAnswerOutput, { id: string }>;
 
 /**

@@ -403,10 +403,10 @@ export function getAvailableSelectionTypeFromFilter(filter: IAttributeFilter | u
 export function getAvailableTextSelectionTypes(selectionTypes: AttributeFilterAvailableSelectionType[] | undefined): AttributeFilterTextSelectionType[];
 
 // @beta (undocumented)
-export const getDateFilterRepresentation: (filter: DateFilterOption, locale: ILocale, messages: ITranslations, labelMode: DateFilterLabelMode, dateFormat?: string) => string;
+export const getDateFilterRepresentation: (filter: DateFilterOption, locale: ILocale, messages: ITranslations, labelMode: DateFilterLabelMode, dateFormat?: string, weekStart?: WeekStart) => string;
 
 // @beta
-export const getDateFilterTitleUsingTranslator: (filter: DateFilterOption, translator: IDateAndMessageTranslator, labelMode: DateFilterLabelMode, dateFormat?: string) => string;
+export const getDateFilterTitleUsingTranslator: (filter: DateFilterOption, translator: IDateAndMessageTranslator, labelMode: DateFilterLabelMode, dateFormat?: string, weekStart?: WeekStart) => string;
 
 // @alpha
 export function getDefaultCalendarTab(activeCalendars?: IActiveCalendars, currentPreset?: DateFilterOption): CalendarTabType;

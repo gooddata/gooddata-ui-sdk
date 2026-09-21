@@ -8,7 +8,7 @@ import { type DataPoint, createIntlMock } from "@gooddata/sdk-ui";
 import { type EvaluatedMetric } from "../hooks/useEvaluatedMetricsAndAttributes.js";
 
 import { rehypeReferences } from "./rehype-references.js";
-import { type HtmlNode } from "./types.js";
+import { type HtmlNode, RESTRICTED_MARKER_TAG } from "./types.js";
 
 describe("testing rehype plugin to extract references", () => {
     const intl = createIntlMock();
@@ -197,13 +197,13 @@ describe("testing rehype plugin to extract references", () => {
         };
         const updated = walk(tree as Root) as Root;
 
-        const spans = ((updated.children[0] as unknown as HtmlNode).children as any[]).filter(
-            (child) => child.tagName === "span",
-        );
-        const [restricted, readable] = spans;
-        expect(restricted.properties.className).toContain("gd-rich-text-metric-restricted");
+        const children = (updated.children[0] as unknown as HtmlNode).children as any[];
+        // the marker is an element of its own, so the renderer names it rather than recognising it
+        const restricted = children.find((child) => child.tagName === RESTRICTED_MARKER_TAG);
         expect(restricted.children[0].value).toEqual("restricted");
-        // the other reference in the same text keeps its value
+        expect(restricted.properties.className).toContain("gd-rich-text-metric-restricted");
+        // the other reference in the same text keeps its value, and stays an ordinary span
+        const readable = children.find((child) => child.tagName === "span");
         expect(readable.properties.className).toContain("gd-rich-text-metric-value");
     });
 

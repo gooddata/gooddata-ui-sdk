@@ -688,7 +688,7 @@ describe("resolveApplications", () => {
                 const result = resolveApplications({
                     localApps: local,
                     remoteRegistry: undefined,
-                    ctx: ctxWith({ workspacePermissions: { canCreateVisualization: true } }),
+                    ctx: ctxWith({ workspacePermissions: { canAnalyzeWorkspace: true } }),
                     scope: "workspace",
                 });
 
@@ -741,7 +741,7 @@ describe("resolveApplications", () => {
                 const result = resolveApplications({
                     localApps: local,
                     remoteRegistry: undefined,
-                    ctx: ctxWith({ workspacePermissions: { canCreateVisualization: false } }),
+                    ctx: ctxWith({ workspacePermissions: { canAnalyzeWorkspace: false } }),
                     scope: "workspace",
                 });
 
@@ -761,7 +761,7 @@ describe("resolveApplications", () => {
                 const result = resolveApplications({
                     localApps: local,
                     remoteRegistry: undefined,
-                    ctx: ctxWith({ workspacePermissions: { canCreateVisualization: true } }),
+                    ctx: ctxWith({ workspacePermissions: { canAnalyzeWorkspace: true } }),
                     scope: "workspace",
                 });
 
@@ -1062,7 +1062,7 @@ describe("resolveApplications", () => {
                     remoteRegistry: undefined,
                     ctx: ctxWith({
                         userSettings: { enableFeature: true },
-                        workspacePermissions: { canCreateVisualization: true },
+                        workspacePermissions: { canAnalyzeWorkspace: true },
                     }),
                     scope: "workspace",
                 });
@@ -1086,7 +1086,7 @@ describe("resolveApplications", () => {
                     remoteRegistry: undefined,
                     ctx: ctxWith({
                         userSettings: { enableFeature: true },
-                        workspacePermissions: { canCreateVisualization: false },
+                        workspacePermissions: { canAnalyzeWorkspace: false },
                     }),
                     scope: "workspace",
                 });

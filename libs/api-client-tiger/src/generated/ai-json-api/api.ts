@@ -344,7 +344,7 @@ export interface AiAlertDatasetRef {
  * The alert itself (mirrors canonical AutomationAlert).
  */
 export interface AiAlertDefinition {
-    'condition': AiCondition;
+    'condition': AiCondition1;
     /**
      * Execution (AFM) definition of the alert.
      */
@@ -370,11 +370,11 @@ export interface AiAlertExecution {
     /**
      * Alert execution filters.
      */
-    'filters'?: Array<object | null>;
+    'filters'?: Array<object>;
     /**
      * Metrics computed by the alert (1-2).
      */
-    'measures'?: Array<object | null>;
+    'measures'?: Array<object>;
 }
 
 /**
@@ -533,6 +533,53 @@ export const AiAppApplicationDtosAfmFilterDefinitionMatchType = {
 } as const;
 
 export type AiAppApplicationDtosAfmFilterDefinitionMatchType = typeof AiAppApplicationDtosAfmFilterDefinitionMatchType[keyof typeof AiAppApplicationDtosAfmFilterDefinitionMatchType];
+
+
+
+export const AiAppApplicationDtosConversationUserContextDateFilterGranularity = {
+    SECOND: 'SECOND',
+    SECOND_OF_MINUTE: 'SECOND_OF_MINUTE',
+    SECOND_OF_DAY: 'SECOND_OF_DAY',
+    MINUTE: 'MINUTE',
+    MINUTE_OF_DAY: 'MINUTE_OF_DAY',
+    HOUR: 'HOUR',
+    DAY: 'DAY',
+    WEEK_US: 'WEEK_US',
+    MONTH: 'MONTH',
+    QUARTER: 'QUARTER',
+    YEAR: 'YEAR',
+    MINUTE_OF_HOUR: 'MINUTE_OF_HOUR',
+    HOUR_OF_DAY: 'HOUR_OF_DAY',
+    DAY_OF_WEEK: 'DAY_OF_WEEK',
+    DAY_OF_MONTH: 'DAY_OF_MONTH',
+    DAY_OF_QUARTER: 'DAY_OF_QUARTER',
+    DAY_OF_YEAR: 'DAY_OF_YEAR',
+    WEEK_OF_YEAR: 'WEEK_OF_YEAR',
+    MONTH_OF_YEAR: 'MONTH_OF_YEAR',
+    QUARTER_OF_YEAR: 'QUARTER_OF_YEAR',
+    FISCAL_DAY_OF_FISCAL_WEEK: 'FISCAL_DAY_OF_FISCAL_WEEK',
+    FISCAL_DAY_OF_FISCAL_MONTH: 'FISCAL_DAY_OF_FISCAL_MONTH',
+    FISCAL_DAY_OF_FISCAL_QUARTER: 'FISCAL_DAY_OF_FISCAL_QUARTER',
+    FISCAL_DAY_OF_FISCAL_SEMESTER: 'FISCAL_DAY_OF_FISCAL_SEMESTER',
+    FISCAL_DAY_OF_FISCAL_YEAR: 'FISCAL_DAY_OF_FISCAL_YEAR',
+    FISCAL_WEEK: 'FISCAL_WEEK',
+    FISCAL_WEEK_OF_FISCAL_MONTH: 'FISCAL_WEEK_OF_FISCAL_MONTH',
+    FISCAL_WEEK_OF_FISCAL_QUARTER: 'FISCAL_WEEK_OF_FISCAL_QUARTER',
+    FISCAL_WEEK_OF_FISCAL_SEMESTER: 'FISCAL_WEEK_OF_FISCAL_SEMESTER',
+    FISCAL_WEEK_OF_FISCAL_YEAR: 'FISCAL_WEEK_OF_FISCAL_YEAR',
+    FISCAL_MONTH: 'FISCAL_MONTH',
+    FISCAL_MONTH_OF_FISCAL_QUARTER: 'FISCAL_MONTH_OF_FISCAL_QUARTER',
+    FISCAL_MONTH_OF_FISCAL_SEMESTER: 'FISCAL_MONTH_OF_FISCAL_SEMESTER',
+    FISCAL_MONTH_OF_FISCAL_YEAR: 'FISCAL_MONTH_OF_FISCAL_YEAR',
+    FISCAL_QUARTER: 'FISCAL_QUARTER',
+    FISCAL_QUARTER_OF_FISCAL_SEMESTER: 'FISCAL_QUARTER_OF_FISCAL_SEMESTER',
+    FISCAL_QUARTER_OF_FISCAL_YEAR: 'FISCAL_QUARTER_OF_FISCAL_YEAR',
+    FISCAL_SEMESTER: 'FISCAL_SEMESTER',
+    FISCAL_SEMESTER_OF_FISCAL_YEAR: 'FISCAL_SEMESTER_OF_FISCAL_YEAR',
+    FISCAL_YEAR: 'FISCAL_YEAR'
+} as const;
+
+export type AiAppApplicationDtosConversationUserContextDateFilterGranularity = typeof AiAppApplicationDtosConversationUserContextDateFilterGranularity[keyof typeof AiAppApplicationDtosConversationUserContextDateFilterGranularity];
 
 
 /**
@@ -746,7 +793,7 @@ export interface AiCertificationInfo {
 
 export interface AiChartFill {
     'pattern_name_mapping'?: { [key: string]: AiPatternNameMapping; } | null;
-    'type'?: AiType53 | null;
+    'type'?: AiType54 | null;
 }
 
 
@@ -791,11 +838,30 @@ export interface AiColorDefinition {
 }
 
 export interface AiColumnOverride {
-    'locators'?: Array<object | null> | null;
+    'locators'?: Array<object> | null;
     'match_type'?: AiGooddataCodeConvertorsPydanticModelsMatchType | null;
     'wrap_header_text'?: boolean | null;
     'wrap_text'?: boolean | null;
 }
+
+
+
+export const AiColumns = {
+    NUMBER_1: 1,
+    NUMBER_2: 2,
+    NUMBER_3: 3,
+    NUMBER_4: 4,
+    NUMBER_5: 5,
+    NUMBER_6: 6,
+    NUMBER_7: 7,
+    NUMBER_8: 8,
+    NUMBER_9: 9,
+    NUMBER_10: 10,
+    NUMBER_11: 11,
+    NUMBER_12: 12
+} as const;
+
+export type AiColumns = typeof AiColumns[keyof typeof AiColumns];
 
 
 export interface AiComparison {
@@ -884,7 +950,7 @@ export interface AiComposeAnswerDetail {
 }
 
 export type AiComposeAnswerDetailCategoryEnum = 'composeAnswer';
-export type AiComposeAnswerDetailOutputEnum = 'text' | 'visualization' | 'dashboard' | 'keyDriverAnalysis' | 'whatIf' | 'searchResults' | 'alertProposal';
+export type AiComposeAnswerDetailOutputEnum = 'text' | 'visualization' | 'dashboard' | 'keyDriverAnalysis' | 'whatIf' | 'searchResults' | 'alertProposal' | 'clarifyingQuestions';
 
 export interface AiCompoundMeasureValueFilter {
     'compoundMeasureValueFilter': AiCompoundMeasureValueFilterBody;
@@ -909,11 +975,20 @@ export interface AiCompoundMeasureValueFilterBodyDimensionalityInner {
     'localIdentifier': string;
 }
 
+
+export const AiCondition = {
+    IS: 'is',
+    IS_NOT: 'isNot'
+} as const;
+
+export type AiCondition = typeof AiCondition[keyof typeof AiCondition];
+
+
 /**
- * @type AiCondition
+ * @type AiCondition1
  * Alert trigger condition.
  */
-export type AiCondition = AiAnomalyCondition | AiComparisonCondition | AiRangeCondition | AiRelativeCondition;
+export type AiCondition1 = AiAnomalyCondition | AiComparisonCondition | AiRangeCondition | AiRelativeCondition;
 
 
 export const AiCondition2 = {
@@ -1145,20 +1220,6 @@ export interface AiConfig {
 
 
 /**
- * AAC ref: dashboard.json container widget holding nested sections.
- */
-export interface AiContainerWidget {
-    'columns'?: number;
-    'container': string;
-    'enable_section_headers'?: boolean;
-    'layout_direction'?: AiContainerWidgetLayoutDirectionEnum;
-    'rows'?: number;
-    'sections': Array<AiDashboardSection>;
-}
-
-export type AiContainerWidgetLayoutDirectionEnum = 'row' | 'column';
-
-/**
  * @type AiContent
  * Conversation item content payload.
  */
@@ -1360,73 +1421,99 @@ export interface AiCustomTooltip {
 }
 
 
-/**
- * AAC ref: dashboard.json. Both dashboard model versions are supported.  A document carries its layout either in ``tabs`` or at the root in ``sections``, and both shapes are read here. A version 2 dashboard converts to AAC with root ``sections`` and no ``tabs``, which the AAC schema treats as a single implicit tab.  ``version`` says nothing reliable about which shape a relayed document uses, so nothing branches on it: a document can arrive with ``version: \"3\"`` and no ``tabs``, because the convertor computes the version from the declarative input and separately flattens a single untitled tab into root sections. Read the presence of ``tabs`` instead.  ``version`` is optional because AAC treats an absent version as 2.
- */
-export interface AiDashboard {
-    [key: string]: any;
-
-    'cross_filtering'?: boolean;
-    'description'?: string;
-    'enable_section_headers'?: boolean;
-    'filter_views'?: boolean;
-    'filters'?: { [key: string]: AiFiltersValue; };
-    'id': string;
-    'permissions'?: object;
-    'sections'?: Array<AiDashboardSection>;
-    'tabs'?: Array<AiDashboardTab>;
-    'tags'?: Array<string>;
-    'title': string;
-    'type': string;
-    'user_filters_reset'?: boolean;
-    'user_filters_save'?: boolean;
-    'version'?: AiDashboardVersionEnum;
-}
-
-export type AiDashboardVersionEnum = '2' | '3';
-
 export interface AiDashboardAbsoluteDateFilter {
     'date'?: string;
-    'empty_values'?: string;
-    'from'?: string;
-    'granularity'?: AiDashboardAbsoluteDateFilterGranularityEnum;
-    'mode'?: string;
-    'title'?: string;
-    'to'?: string;
-    'type': AiDashboardAbsoluteDateFilterTypeEnum;
+    'empty_values'?: AiEmptyValues | null;
+    'from'?: string | null;
+    'granularity'?: AiDateFilterGranularityOutput | null;
+    'mode'?: AiMode | null;
+    'title'?: string | null;
+    'to'?: string | null;
+    'type': AiType1;
 }
 
-export type AiDashboardAbsoluteDateFilterGranularityEnum = 'SECOND' | 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK_US' | 'MONTH' | 'QUARTER' | 'YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
-export type AiDashboardAbsoluteDateFilterTypeEnum = 'date_filter';
 
 /**
- * AAC ref: dashboard.json attribute filter.
+ * A dashboard attribute filter
  */
 export interface AiDashboardAttributeFilter {
     'display_as'?: string;
     'metric_filters'?: Array<string>;
-    'mode'?: string;
+    'mode'?: AiMode2;
     'multiselect'?: boolean;
-    'parents'?: Array<any>;
-    'selection_type'?: string;
-    'state'?: any;
+    'parents'?: Array<AiDashboardAttributeFilter2ParentsInner>;
+    'selection_type'?: AiSelectionType;
+    'state'?: AiDashboardStateMultiselect;
     'title'?: string;
-    'type': AiDashboardAttributeFilterTypeEnum;
+    'type': AiType3;
+    'using': AiUsing2;
+}
+
+
+export interface AiDashboardAttributeFilter1 {
+    'display_as'?: string | null;
+    'metric_filters'?: Array<string> | null;
+    'mode'?: AiMode2 | null;
+    'multiselect'?: boolean | null;
+    'parents'?: Array<AiDashboardAttributeFilter1ParentsInner> | null;
+    'selection_type'?: AiSelectionType | null;
+    'state'?: AiDashboardStateSelect | null;
+    'title'?: string | null;
+    'type': AiType3;
+    'using': AiUsing1;
+}
+
+
+export interface AiDashboardAttributeFilter1ParentsInner {
+    /**
+     * Whether the parent filter is common date or special date
+     */
+    'common': boolean;
+    'date'?: string;
+    /**
+     * Local date filter to use as parent
+     */
     'using': string;
 }
 
-export type AiDashboardAttributeFilterTypeEnum = 'attribute_filter';
-
-/**
- * AAC ref: dashboard.json filter group.
- */
-export interface AiDashboardFilterGroup {
-    'filters': { [key: string]: AiFiltersValue1; };
-    'title': string;
-    'type': AiDashboardFilterGroupTypeEnum;
+export interface AiDashboardAttributeFilter2 {
+    'display_as'?: string | null;
+    'metric_filters'?: Array<string> | null;
+    'mode'?: AiMode2 | null;
+    'multiselect'?: boolean | null;
+    'parents'?: Array<AiDashboardAttributeFilter2ParentsInner> | null;
+    'selection_type'?: AiSelectionType | null;
+    'state'?: AiDashboardStateMultiselect | null;
+    'title'?: string | null;
+    'type': AiType3;
+    'using': AiUsing2;
 }
 
-export type AiDashboardFilterGroupTypeEnum = 'filter_group';
+
+export interface AiDashboardAttributeFilter2ParentsInner {
+    /**
+     * Whether the parent filter is common date or special date
+     */
+    'common': boolean;
+    'date'?: string;
+    /**
+     * Local date filter to use as parent
+     */
+    'using': string;
+}
+
+export interface AiDashboardFilterGroup {
+    /**
+     * Dashboard filters that cannot contain filter groups - only attribute, date, text, and metric value filters
+     */
+    'filters': object;
+    /**
+     * Display title for the filter group
+     */
+    'title': string;
+    'type': AiType8;
+}
+
 
 /**
  * PATCH /conversations/{conversationId}/dashboards/{dashboardId} body.
@@ -1435,23 +1522,79 @@ export interface AiDashboardIdUpdateRequest {
     'id': string;
 }
 
-/**
- * AAC ref: dashboard.json metric value filter.
- */
-export interface AiDashboardMetricValueFilter {
-    [key: string]: any;
-
-    'conditions'?: Array<object | null>;
-    'dimensionality'?: Array<string>;
-    'mode'?: string;
-    'null_values_as_zero'?: boolean;
+export interface AiDashboardInput {
+    'cross_filtering'?: boolean | null;
+    'description'?: string;
+    'enable_section_headers'?: boolean | null;
+    'filter_views'?: boolean | null;
+    'filters'?: object;
+    'id': string;
+    'permissions'?: AiPermissions | null;
+    'persistent_filters_across_tabs'?: boolean | null;
+    'plugins'?: Array<AiDashboardInputPluginsInner> | null;
+    'sections'?: Array<AiSectionInput> | null;
+    'tabs'?: Array<AiTabInput> | null;
+    'tags'?: Array<string>;
+    'timezone_config'?: AiTimezoneConfig | null;
     'title'?: string;
-    'type': string;
+    'type': AiType55;
+    'user_filters_reset'?: boolean | null;
+    'user_filters_save'?: boolean | null;
+    'version'?: AiVersion | null;
+}
+
+
+export interface AiDashboardInputPluginsInner {
+    'id': string;
+    'parameters'?: AiParameters | null;
+}
+
+export interface AiDashboardMetricValueFilter {
+    'conditions'?: Array<AiMvfCondition> | null;
+    'dimensionality'?: Array<AiDashboardMetricValueFilterDimensionalityInner> | null;
+    'mode'?: AiMode6 | null;
+    'null_values_as_zero'?: boolean | null;
+    'title'?: string | null;
+    'type': AiType7;
+    /**
+     * A metric identifier in the form of metric/{id}.
+     */
     'using': string;
 }
 
+
+export interface AiDashboardMetricValueFilterDimensionalityInner {
+}
+
+export interface AiDashboardOutput {
+    'cross_filtering'?: boolean | null;
+    'description'?: string;
+    'enable_section_headers'?: boolean | null;
+    'filter_views'?: boolean | null;
+    'filters'?: object;
+    'id': string;
+    'permissions'?: AiPermissions | null;
+    'persistent_filters_across_tabs'?: boolean | null;
+    'plugins'?: Array<AiDashboardOutputPluginsInner> | null;
+    'sections'?: Array<AiSectionOutput> | null;
+    'tabs'?: Array<AiTabOutput> | null;
+    'tags'?: Array<string>;
+    'timezone_config'?: AiTimezoneConfig | null;
+    'title'?: string;
+    'type': AiType55;
+    'user_filters_reset'?: boolean | null;
+    'user_filters_save'?: boolean | null;
+    'version'?: AiVersion | null;
+}
+
+
+export interface AiDashboardOutputPluginsInner {
+    'id': string;
+    'parameters'?: AiParameters | null;
+}
+
 export interface AiDashboardPart {
-    'dashboard'?: AiDashboard | null;
+    'dashboard'?: AiDashboardOutput | null;
     'references'?: AiDashboardReferences | null;
     'saved_dashboard_id'?: string | null;
     /**
@@ -1463,7 +1606,7 @@ export interface AiDashboardPart {
 export type AiDashboardPartTypeEnum = 'dashboard';
 
 /**
- * A proposed change to a dashboard the user has open, as RFC 6902 operations.  Apply the operations to the AAC document that was relayed in the request context, once, when the user accepts the proposal. Replaying conversation history must not apply them again.
+ * A proposed change to a dashboard the user has open, as RFC 6902 operations.  Apply them once, when the user accepts the proposal, to the document in the `dashboard` part that precedes this one in the same message. That document, not the dashboard as it stands now, is what the operations were compiled against; keeping the two in step is the client\'s to do, by relaying the document it currently holds with every message. Replaying conversation history must not apply the operations again.
  */
 export interface AiDashboardPatch {
     [key: string]: any;
@@ -1473,9 +1616,9 @@ export interface AiDashboardPatch {
      */
     'dashboard_id': string;
     /**
-     * RFC 6902 JSON Patch operations against the relayed AAC dashboard document. A `test` operation guards each insert: if one fails, the dashboard moved and the change must be discarded rather than forced.
+     * RFC 6902 operations against the document in the preceding `dashboard` part. A `test` operation guards each one that addresses an existing widget, so applying them to a document that has moved fails the whole patch rather than changing the wrong widget. Applied to the `dashboard` part they arrive with, those guards hold by construction.
      */
-    'operations': Array<object | null>;
+    'operations': Array<object>;
     'references'?: AiDashboardPatchReferences;
 }
 
@@ -1528,101 +1671,130 @@ export interface AiDashboardReferences {
     /**
      * Full AAC body of every dataset the chart uses.
      */
-    'datasets'?: Array<object | null>;
+    'datasets'?: Array<object>;
     /**
      * Full AAC body of every date dataset the chart uses.
      */
-    'datedatasets'?: Array<object | null>;
+    'datedatasets'?: Array<object>;
     /**
      * Full AAC body of every widget-referenced visualization the workspace does NOT hold yet, which saving must create — under the id each body carries, which the widgets point at. Everything in `visualizations` already exists and must not be recreated.
      */
-    'new_visualizations'?: Array<object | null>;
+    'new_visualizations'?: Array<object>;
     /**
      * Full AAC body of every widget-referenced visualization that has one available.
      */
-    'visualizations': Array<object | null>;
+    'visualizations': Array<object>;
 }
 
 export interface AiDashboardRelativeDateFilter {
     'date'?: string;
-    'empty_values'?: string;
-    'from'?: number;
-    'granularity'?: AiDashboardRelativeDateFilterGranularityEnum;
-    'mode'?: string;
-    'title'?: string;
-    'to'?: number;
-    'type': AiDashboardRelativeDateFilterTypeEnum;
+    'empty_values'?: AiEmptyValues | null;
+    /**
+     * A period start as number, from today
+     */
+    'from': number;
+    'granularity'?: AiDateFilterGranularityOutput | null;
+    'mode'?: AiMode | null;
+    'title'?: string | null;
+    /**
+     * A period end as number, from today
+     */
+    'to': number;
+    'type': AiType1;
 }
 
-export type AiDashboardRelativeDateFilterGranularityEnum = 'SECOND' | 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK_US' | 'MONTH' | 'QUARTER' | 'YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
-export type AiDashboardRelativeDateFilterTypeEnum = 'date_filter';
 
 /**
- * AAC ref: dashboard.json section.
+ * State of the multiselect
  */
-export interface AiDashboardSection {
-    'description'?: string;
-    'title'?: string;
-    'widgets': Array<AiDashboardSectionWidgetsInner>;
+export interface AiDashboardStateMultiselect {
+    'include': Array<string>;
+    'exclude': Array<string>;
 }
 
-export interface AiDashboardSectionWidgetsInner {
-    'columns'?: number;
-    'description'?: string;
-    'id'?: string;
-    'rows'?: number;
-    'title'?: string;
-    'visualization': string;
-    'content': string;
-    'visualizations': Array<AiDashboardWidget>;
-    'container': string;
-    'enable_section_headers'?: boolean;
-    'layout_direction'?: AiDashboardSectionWidgetsInnerLayoutDirectionEnum;
-    'sections': Array<AiDashboardSection>;
+export interface AiDashboardStateMultiselect1 {
+    'include': Array<string>;
 }
 
-export type AiDashboardSectionWidgetsInnerLayoutDirectionEnum = 'row' | 'column';
+export interface AiDashboardStateMultiselect2 {
+    'exclude': Array<string>;
+}
 
-/**
- * AAC ref: dashboard.json tab.  A tab owns its own layout and filters. In AAC this is where the layout lives for either dashboard model version.
- */
-export interface AiDashboardTab {
-    'filters'?: { [key: string]: AiFiltersValue2; };
-    'id': string;
-    'sections': Array<AiDashboardSection>;
-    'title': string;
+export interface AiDashboardStateSelect {
+    'include': Array<string>;
 }
 
 /**
- * AAC ref: dashboard.json text filter.  AAC splits this into two branches, one carrying ``values`` and one carrying ``value``. Both are optional here, so a relayed filter of either branch reads back.
+ * A dashboard text filter
  */
 export interface AiDashboardTextFilter {
     'case_sensitive'?: boolean;
-    'condition'?: string;
+    'condition': AiCondition1;
     'display_as'?: string;
     'metric_filters'?: Array<string>;
-    'mode'?: string;
-    'parents'?: Array<any>;
-    'selection_type'?: string;
+    'mode'?: AiMode2;
+    'parents'?: Array<AiDashboardTextFilter2ParentsInner>;
+    'selection_type'?: AiSelectionType;
     'title'?: string;
-    'type': AiDashboardTextFilterTypeEnum;
-    'using': string;
-    'value'?: string;
-    'values'?: Array<string | null>;
+    'type': AiType5;
+    'using': AiUsing4;
+    'values': Array<string>;
+    'value': string;
 }
 
-export type AiDashboardTextFilterTypeEnum = 'text_filter';
 
-/**
- * AAC ref: dashboard.json visualization widget (size hints in 12-column grid units).  ``id`` is accepted because a relayed dashboard document may carry it, but nothing here depends on it: a widget is identified by its position in document order, since the client cannot guarantee widget ids.
- */
-export interface AiDashboardWidget {
-    'columns'?: number;
-    'description'?: string;
-    'id'?: string;
-    'rows'?: number;
-    'title'?: string;
-    'visualization': string;
+export interface AiDashboardTextFilter1 {
+    'case_sensitive'?: boolean | null;
+    'condition': AiCondition;
+    'display_as'?: string | null;
+    'metric_filters'?: Array<string> | null;
+    'mode'?: AiMode2 | null;
+    'parents'?: Array<AiDashboardTextFilter1ParentsInner> | null;
+    'selection_type'?: AiSelectionType | null;
+    'title'?: string | null;
+    'type': AiType5;
+    'using': AiUsing3;
+    'values': Array<string | null>;
+}
+
+
+export interface AiDashboardTextFilter1ParentsInner {
+    /**
+     * Whether the parent filter is common date or special date
+     */
+    'common': boolean;
+    'date'?: string;
+    /**
+     * Local date filter to use as parent
+     */
+    'using': string;
+}
+
+export interface AiDashboardTextFilter2 {
+    'case_sensitive'?: boolean | null;
+    'condition': AiCondition1;
+    'display_as'?: string | null;
+    'metric_filters'?: Array<string> | null;
+    'mode'?: AiMode2 | null;
+    'parents'?: Array<AiDashboardTextFilter2ParentsInner> | null;
+    'selection_type'?: AiSelectionType | null;
+    'title'?: string | null;
+    'type': AiType5;
+    'using': AiUsing4;
+    'value': string;
+}
+
+
+export interface AiDashboardTextFilter2ParentsInner {
+    /**
+     * Whether the parent filter is common date or special date
+     */
+    'common': boolean;
+    'date'?: string;
+    /**
+     * Local date filter to use as parent
+     */
+    'using': string;
 }
 
 export interface AiDataLabels {
@@ -1644,50 +1816,22 @@ export interface AiDataTotals {
 }
 
 
-export const AiDateFilterGranularity = {
+export const AiDateFilterGranularityOutput = {
     SECOND: 'SECOND',
-    SECOND_OF_MINUTE: 'SECOND_OF_MINUTE',
-    SECOND_OF_DAY: 'SECOND_OF_DAY',
     MINUTE: 'MINUTE',
-    MINUTE_OF_DAY: 'MINUTE_OF_DAY',
     HOUR: 'HOUR',
     DAY: 'DAY',
+    WEEK: 'WEEK',
     WEEK_US: 'WEEK_US',
     MONTH: 'MONTH',
     QUARTER: 'QUARTER',
     YEAR: 'YEAR',
-    MINUTE_OF_HOUR: 'MINUTE_OF_HOUR',
-    HOUR_OF_DAY: 'HOUR_OF_DAY',
-    DAY_OF_WEEK: 'DAY_OF_WEEK',
-    DAY_OF_MONTH: 'DAY_OF_MONTH',
-    DAY_OF_QUARTER: 'DAY_OF_QUARTER',
-    DAY_OF_YEAR: 'DAY_OF_YEAR',
-    WEEK_OF_YEAR: 'WEEK_OF_YEAR',
-    MONTH_OF_YEAR: 'MONTH_OF_YEAR',
-    QUARTER_OF_YEAR: 'QUARTER_OF_YEAR',
-    FISCAL_DAY_OF_FISCAL_WEEK: 'FISCAL_DAY_OF_FISCAL_WEEK',
-    FISCAL_DAY_OF_FISCAL_MONTH: 'FISCAL_DAY_OF_FISCAL_MONTH',
-    FISCAL_DAY_OF_FISCAL_QUARTER: 'FISCAL_DAY_OF_FISCAL_QUARTER',
-    FISCAL_DAY_OF_FISCAL_SEMESTER: 'FISCAL_DAY_OF_FISCAL_SEMESTER',
-    FISCAL_DAY_OF_FISCAL_YEAR: 'FISCAL_DAY_OF_FISCAL_YEAR',
-    FISCAL_WEEK: 'FISCAL_WEEK',
-    FISCAL_WEEK_OF_FISCAL_MONTH: 'FISCAL_WEEK_OF_FISCAL_MONTH',
-    FISCAL_WEEK_OF_FISCAL_QUARTER: 'FISCAL_WEEK_OF_FISCAL_QUARTER',
-    FISCAL_WEEK_OF_FISCAL_SEMESTER: 'FISCAL_WEEK_OF_FISCAL_SEMESTER',
-    FISCAL_WEEK_OF_FISCAL_YEAR: 'FISCAL_WEEK_OF_FISCAL_YEAR',
-    FISCAL_MONTH: 'FISCAL_MONTH',
-    FISCAL_MONTH_OF_FISCAL_QUARTER: 'FISCAL_MONTH_OF_FISCAL_QUARTER',
-    FISCAL_MONTH_OF_FISCAL_SEMESTER: 'FISCAL_MONTH_OF_FISCAL_SEMESTER',
-    FISCAL_MONTH_OF_FISCAL_YEAR: 'FISCAL_MONTH_OF_FISCAL_YEAR',
+    FISCAL_YEAR: 'FISCAL_YEAR',
     FISCAL_QUARTER: 'FISCAL_QUARTER',
-    FISCAL_QUARTER_OF_FISCAL_SEMESTER: 'FISCAL_QUARTER_OF_FISCAL_SEMESTER',
-    FISCAL_QUARTER_OF_FISCAL_YEAR: 'FISCAL_QUARTER_OF_FISCAL_YEAR',
-    FISCAL_SEMESTER: 'FISCAL_SEMESTER',
-    FISCAL_SEMESTER_OF_FISCAL_YEAR: 'FISCAL_SEMESTER_OF_FISCAL_YEAR',
-    FISCAL_YEAR: 'FISCAL_YEAR'
+    FISCAL_MONTH: 'FISCAL_MONTH'
 } as const;
 
-export type AiDateFilterGranularity = typeof AiDateFilterGranularity[keyof typeof AiDateFilterGranularity];
+export type AiDateFilterGranularityOutput = typeof AiDateFilterGranularityOutput[keyof typeof AiDateFilterGranularityOutput];
 
 
 
@@ -1744,6 +1888,20 @@ export interface AiDeleteDocumentResponse {
     'message': string;
     'success': boolean;
 }
+
+export interface AiDescription1 {
+}
+
+export type AiDescription2 = false
+
+
+
+export const AiDescription3 = {
+    INHERIT: 'inherit'
+} as const;
+
+export type AiDescription3 = typeof AiDescription3[keyof typeof AiDescription3];
+
 
 
 export const AiDirection = {
@@ -1827,89 +1985,6 @@ export interface AiFeedback {
 
 export type AiFeedbackTypeEnum = 'POSITIVE' | 'NEGATIVE';
 
-export interface AiFiltersValue {
-    'date'?: string;
-    'empty_values'?: string;
-    'from'?: string;
-    'granularity'?: AiFiltersValueGranularityEnum;
-    'mode'?: string;
-    'title': string;
-    'to'?: string;
-    'type': string;
-    'display_as'?: string;
-    'metric_filters'?: Array<string>;
-    'multiselect'?: boolean;
-    'parents'?: Array<any>;
-    'selection_type'?: string;
-    'state'?: any;
-    'using': string;
-    'case_sensitive'?: boolean;
-    'condition'?: string;
-    'value'?: string;
-    'values'?: Array<string>;
-    'conditions'?: Array<object>;
-    'dimensionality'?: Array<string>;
-    'null_values_as_zero'?: boolean;
-    'filters': { [key: string]: AiFiltersValue1; };
-}
-
-export type AiFiltersValueGranularityEnum = 'SECOND' | 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK_US' | 'MONTH' | 'QUARTER' | 'YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
-
-export interface AiFiltersValue1 {
-    'date'?: string;
-    'empty_values'?: string;
-    'from'?: string;
-    'granularity'?: AiFiltersValue1GranularityEnum;
-    'mode'?: string;
-    'title'?: string;
-    'to'?: string;
-    'type': string;
-    'display_as'?: string;
-    'metric_filters'?: Array<string>;
-    'multiselect'?: boolean;
-    'parents'?: Array<any>;
-    'selection_type'?: string;
-    'state'?: any;
-    'using': string;
-    'case_sensitive'?: boolean;
-    'condition'?: string;
-    'value'?: string;
-    'values'?: Array<string>;
-    'conditions'?: Array<object>;
-    'dimensionality'?: Array<string>;
-    'null_values_as_zero'?: boolean;
-}
-
-export type AiFiltersValue1GranularityEnum = 'SECOND' | 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK_US' | 'MONTH' | 'QUARTER' | 'YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
-
-export interface AiFiltersValue2 {
-    'date'?: string;
-    'empty_values'?: string;
-    'from'?: string;
-    'granularity'?: AiFiltersValue2GranularityEnum;
-    'mode'?: string;
-    'title': string;
-    'to'?: string;
-    'type': string;
-    'display_as'?: string;
-    'metric_filters'?: Array<string>;
-    'multiselect'?: boolean;
-    'parents'?: Array<any>;
-    'selection_type'?: string;
-    'state'?: any;
-    'using': string;
-    'case_sensitive'?: boolean;
-    'condition'?: string;
-    'value'?: string;
-    'values'?: Array<string>;
-    'conditions'?: Array<object>;
-    'dimensionality'?: Array<string>;
-    'null_values_as_zero'?: boolean;
-    'filters': { [key: string]: AiFiltersValue1; };
-}
-
-export type AiFiltersValue2GranularityEnum = 'SECOND' | 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK_US' | 'MONTH' | 'QUARTER' | 'YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
-
 export interface AiFormat {
     'fill'?: string | null;
     'scope': AiScope;
@@ -1974,6 +2049,25 @@ export interface AiFunctionResultContent {
 }
 
 export type AiFunctionResultContentTypeEnum = 'toolResult';
+
+
+export const AiGooddataCodeConvertorsPydanticModelsDateFilterGranularity = {
+    SECOND: 'SECOND',
+    MINUTE: 'MINUTE',
+    HOUR: 'HOUR',
+    DAY: 'DAY',
+    WEEK: 'WEEK',
+    WEEK_US: 'WEEK_US',
+    MONTH: 'MONTH',
+    QUARTER: 'QUARTER',
+    YEAR: 'YEAR',
+    FISCAL_YEAR: 'FISCAL_YEAR',
+    FISCAL_QUARTER: 'FISCAL_QUARTER',
+    FISCAL_MONTH: 'FISCAL_MONTH'
+} as const;
+
+export type AiGooddataCodeConvertorsPydanticModelsDateFilterGranularity = typeof AiGooddataCodeConvertorsPydanticModelsDateFilterGranularity[keyof typeof AiGooddataCodeConvertorsPydanticModelsDateFilterGranularity];
+
 
 
 export const AiGooddataCodeConvertorsPydanticModelsMatchType = {
@@ -2052,6 +2146,65 @@ export interface AiHTTPValidationError {
     'detail'?: Array<AiValidationError>;
 }
 
+/**
+ * An ID of the attribute that holds the url to be opened on interaction
+ */
+export interface AiHref {
+}
+
+/**
+ * An ignored drill down item
+ */
+export interface AiIgnoredDrillDown {
+    /**
+     * An id of the attribute hierarchy to be ignored
+     */
+    'hierarchy': string;
+    /**
+     * An id of the drill down to be ignored
+     */
+    'on': string;
+    /**
+     * An id of the date attribute hierarchy template to be ignored
+     */
+    'template': AiTemplate;
+}
+
+
+export interface AiIgnoredDrillDown1 {
+    /**
+     * An id of the attribute hierarchy to be ignored
+     */
+    'hierarchy': string;
+    /**
+     * An id of the drill down to be ignored
+     */
+    'on': string;
+}
+
+export interface AiIgnoredDrillDown2 {
+    /**
+     * An id of the drill down to be ignored
+     */
+    'on': string;
+    /**
+     * An id of the date attribute hierarchy template to be ignored
+     */
+    'template': AiTemplate;
+}
+
+
+export interface AiIgnoredDrillDownsIntersection {
+    /**
+     * An attributes list to be ignored
+     */
+    'attributes': Array<string>;
+    /**
+     * An attribute hierarchy that is related to attributes that will be ignored
+     */
+    'hierarchy': AiIgnoredDrillDown;
+}
+
 export interface AiInlineFilterDefinition {
     'inline': AiInlineFilterDefinitionBody;
 }
@@ -2060,6 +2213,110 @@ export interface AiInlineFilterDefinitionBody {
     'applyOnResult'?: boolean | null;
     'filter': string;
     'localIdentifier'?: string | null;
+}
+
+/**
+ * An interaction for current widget.
+ */
+export interface AiInteraction {
+    /**
+     * An id of the metric or attribute that will trigger the interaction
+     */
+    'click_on': string;
+    /**
+     * Attribute local IDs to ignore in the drill intersection
+     */
+    'ignored_intersection_attributes'?: Array<string>;
+    'open_url': AiOpenUrl;
+    'filters'?: AiInteractionFilters;
+    /**
+     * An id of the dashboard to be opened on interaction
+     */
+    'open_dashboard': string;
+    'open_dashboard_tab'?: string;
+    /**
+     * An id of the visualization to be opened on interaction
+     */
+    'open_visualization': string;
+}
+
+export interface AiInteractionFilters {
+    'exclude'?: AiInteractionFiltersExclude | null;
+    'include'?: AiInteractionFiltersInclude | null;
+}
+
+export interface AiInteractionFiltersExclude {
+    /**
+     * Dashboard filter local IDs to exclude when drilling to this visualization
+     */
+    'dashboard_filters'?: Array<string>;
+    /**
+     * Attribute local IDs to ignore in the drill intersection
+     */
+    'drilled_datapoint'?: Array<string>;
+}
+
+export interface AiInteractionFiltersInclude {
+    /**
+     * Source measure-level filter IDs to include when drilling to this visualization
+     */
+    'metric_filters'?: Array<string>;
+    /**
+     * Source insight filter IDs to include when drilling to this visualization
+     */
+    'visualization_filters'?: Array<string>;
+}
+
+export interface AiInteractionOpenDashboard {
+    /**
+     * An id of the metric or attribute that will trigger the interaction
+     */
+    'click_on': string;
+    'filters'?: AiInteractionFilters | null;
+    /**
+     * An id of the dashboard to be opened on interaction
+     */
+    'open_dashboard': string;
+    'open_dashboard_tab'?: string | null;
+}
+
+export interface AiInteractionOpenParamUrl {
+    /**
+     * An id of the metric or attribute that will trigger the interaction
+     */
+    'click_on': string;
+    /**
+     * Attribute local IDs to ignore in the drill intersection
+     */
+    'ignored_intersection_attributes'?: Array<string>;
+    'open_url': AiOpenUrl;
+}
+
+export interface AiInteractionOpenPlainUrl {
+    /**
+     * An id of the metric or attribute that will trigger the interaction
+     */
+    'click_on': string;
+    /**
+     * Attribute local IDs to ignore in the drill intersection
+     */
+    'ignored_intersection_attributes'?: Array<string>;
+    /**
+     * An url to be opened on interaction
+     */
+    'open_url': string;
+}
+
+export interface AiInteractionOpenVisualization {
+    /**
+     * An id of the metric or attribute that will trigger the interaction
+     */
+    'click_on': string;
+    'filters'?: AiInteractionFilters | null;
+    /**
+     * An id of the visualization to be opened on interaction
+     */
+    'open_visualization': string;
 }
 
 /**
@@ -2135,7 +2392,7 @@ export interface AiKeyDriverAnalysis {
     /**
      * Filters applied to analysis.
      */
-    'filters': Array<object | null>;
+    'filters': Array<object>;
     /**
      * Measure definition for key driver analysis.
      */
@@ -2215,7 +2472,13 @@ export interface AiLabel2 {
     'localIdentifier': string;
 }
 
+/**
+ * An id of the attribute that holds the label for the url to be opened on interaction
+ */
 export interface AiLabel3 {
+}
+
+export interface AiLabel4 {
     'identifier': AiAfmObjectIdentifierBody;
     'localIdentifier': string;
 }
@@ -2226,7 +2489,7 @@ export interface AiLayerItem {
     'metrics'?: Array<AiBucketItem>;
     'segment_by'?: Array<AiBucketItem>;
     'title'?: string;
-    'type': AiType50;
+    'type': AiType51;
     'view_by'?: Array<string>;
 }
 
@@ -2251,9 +2514,18 @@ export interface AiLayerItemBase {
     'metrics'?: Array<AiBucketItem> | null;
     'segment_by'?: Array<AiBucketItem> | null;
     'title'?: string;
-    'type'?: AiType50 | null;
+    'type'?: AiType51 | null;
     'view_by'?: Array<string> | null;
 }
+
+
+
+export const AiLayoutDirection = {
+    ROW: 'row',
+    COLUMN: 'column'
+} as const;
+
+export type AiLayoutDirection = typeof AiLayoutDirection[keyof typeof AiLayoutDirection];
 
 
 export interface AiLineStyleMapping1 {
@@ -2489,6 +2761,39 @@ export const AiMinSize = {
 export type AiMinSize = typeof AiMinSize[keyof typeof AiMinSize];
 
 
+
+export const AiMode = {
+    READONLY: 'readonly',
+    HIDDEN: 'hidden',
+    ACTIVE: 'active'
+} as const;
+
+export type AiMode = typeof AiMode[keyof typeof AiMode];
+
+
+
+export const AiMode2 = {
+    READONLY: 'readonly',
+    HIDDEN: 'hidden',
+    ACTIVE: 'active',
+    READONLY2: 'readonly',
+    HIDDEN2: 'hidden',
+    ACTIVE2: 'active'
+} as const;
+
+export type AiMode2 = typeof AiMode2[keyof typeof AiMode2];
+
+
+
+export const AiMode6 = {
+    READONLY: 'readonly',
+    HIDDEN: 'hidden',
+    ACTIVE: 'active'
+} as const;
+
+export type AiMode6 = typeof AiMode6[keyof typeof AiMode6];
+
+
 export interface AiMultipartContent {
     /**
      * Ordered multipart content fragments.
@@ -2607,6 +2912,11 @@ export type AiObservabilityMetricType = typeof AiObservabilityMetricType[keyof t
 
 export interface AiObservabilityOverviewResponse {
     'metrics': Array<AiMetricUsageResponse>;
+}
+
+export interface AiOpenUrl {
+    'href'?: AiHref | null;
+    'label'?: AiLabel3 | null;
 }
 
 
@@ -2808,6 +3118,24 @@ export type AiOperator7 = typeof AiOperator7[keyof typeof AiOperator7];
 
 
 /**
+ * Parameter that will be passed to the plugin. Everything other than string will be serialized to JSON automatically.
+ */
+export interface AiParameters {
+}
+
+export interface AiParents {
+    /**
+     * Whether the parent filter is common date or special date
+     */
+    'common': boolean;
+    'date'?: string | null;
+    /**
+     * Local date filter to use as parent
+     */
+    'using': string;
+}
+
+/**
  * Request body for PATCH /documents/{documentId}.
  */
 export interface AiPatchDocumentRequest {
@@ -2847,6 +3175,18 @@ export const AiPatternNameMapping = {
 export type AiPatternNameMapping = typeof AiPatternNameMapping[keyof typeof AiPatternNameMapping];
 
 
+export interface AiPermission {
+    'all'?: boolean | null;
+    'user_groups'?: Array<string> | null;
+    'users'?: Array<string> | null;
+}
+
+export interface AiPermissions {
+    'EDIT'?: AiPermission | null;
+    'SHARE'?: AiPermission | null;
+    'VIEW'?: AiPermission | null;
+}
+
 
 export const AiPlacement = {
     ABOVE: 'above',
@@ -2856,6 +3196,11 @@ export const AiPlacement = {
 
 export type AiPlacement = typeof AiPlacement[keyof typeof AiPlacement];
 
+
+export interface AiPlugins {
+    'id': string;
+    'parameters'?: AiParameters | null;
+}
 
 
 export const AiPointShapeMapping = {
@@ -2876,7 +3221,7 @@ export interface AiPositiveAttributeFilter {
 export interface AiPositiveAttributeFilterBody {
     'applyOnResult'?: boolean | null;
     'in': AiAttributeFilterElements;
-    'label': AiLabel3;
+    'label': AiLabel4;
     'localIdentifier'?: string | null;
     'usesArbitraryValues'?: boolean | null;
 }
@@ -2891,7 +3236,7 @@ export interface AiQueryAttributeFilter {
     'display_as'?: string | null;
     'state'?: AiState | null;
     'type': AiType11;
-    'using': AiUsing1;
+    'using': AiUsing5;
 }
 
 
@@ -2902,7 +3247,7 @@ export interface AiQueryAttributeSort {
      * Sort direction.
      */
     'direction': AiDirection;
-    'type': AiType47;
+    'type': AiType48;
 }
 
 
@@ -2960,8 +3305,8 @@ export interface AiQueryField {
     'operator': AiOperator13;
     'show_all_values'?: boolean;
     'title'?: string;
-    'type': AiType46;
-    'using': AiUsing7 | null;
+    'type': AiType47;
+    'using': AiUsing11 | null;
     'compute_ratio'?: boolean;
     'filter_by'?: object;
     'period'?: number;
@@ -2975,8 +3320,8 @@ export interface AiQueryField1 {
     'operator'?: AiOperator | null;
     'show_all_values'?: boolean | null;
     'title'?: string;
-    'type'?: AiType33 | null;
-    'using': AiUsing2;
+    'type'?: AiType34 | null;
+    'using': AiUsing6;
 }
 
 
@@ -2985,8 +3330,8 @@ export interface AiQueryField10 {
     'date_filter'?: string | null;
     'maql'?: string | null;
     'operator'?: AiOperator7 | null;
-    'type'?: AiType42 | null;
-    'using'?: AiUsing3 | null;
+    'type'?: AiType43 | null;
+    'using'?: AiUsing7 | null;
 }
 
 
@@ -3002,8 +3347,8 @@ export interface AiQueryField11 {
     /**
      * Type of relative period metric related to another metric in list.
      */
-    'type': AiType43;
-    'using': AiUsing4;
+    'type': AiType44;
+    'using': AiUsing8;
 }
 
 
@@ -3012,8 +3357,8 @@ export interface AiQueryField12 {
     'date_filter'?: string | null;
     'maql'?: string | null;
     'operator'?: AiOperator11 | null;
-    'type'?: AiType44 | null;
-    'using'?: AiUsing5 | null;
+    'type'?: AiType45 | null;
+    'using'?: AiUsing9 | null;
 }
 
 
@@ -3030,8 +3375,8 @@ export interface AiQueryField13 {
     /**
      * Type of relative period metric related to another metric in list.
      */
-    'type': AiType45;
-    'using': AiUsing6;
+    'type': AiType46;
+    'using': AiUsing10;
 }
 
 
@@ -3040,8 +3385,8 @@ export interface AiQueryField14 {
     'date_filter'?: string | null;
     'maql'?: string | null;
     'operator'?: AiOperator13 | null;
-    'type'?: AiType46 | null;
-    'using'?: AiUsing7 | null;
+    'type'?: AiType47 | null;
+    'using'?: AiUsing11 | null;
 }
 
 
@@ -3050,8 +3395,8 @@ export interface AiQueryField2 {
     'date_filter'?: string | null;
     'maql'?: string | null;
     'operator'?: AiOperator1 | null;
-    'type'?: AiType34 | null;
-    'using'?: AiUsing8 | null;
+    'type'?: AiType35 | null;
+    'using'?: AiUsing12 | null;
 }
 
 
@@ -3063,7 +3408,7 @@ export interface AiQueryField3 {
     'maql'?: string | null;
     'operator'?: AiOperator2 | null;
     'title'?: string;
-    'type'?: AiType35 | null;
+    'type'?: AiType36 | null;
     'using': AiMetricIdentifier;
 }
 
@@ -3073,8 +3418,8 @@ export interface AiQueryField4 {
     'date_filter'?: string | null;
     'maql'?: string | null;
     'operator'?: AiOperator3 | null;
-    'type'?: AiType36 | null;
-    'using'?: AiUsing9 | null;
+    'type'?: AiType37 | null;
+    'using'?: AiUsing13 | null;
 }
 
 
@@ -3089,8 +3434,8 @@ export interface AiQueryField5 {
     'maql'?: string | null;
     'operator'?: AiOperator4 | null;
     'title'?: string;
-    'type'?: AiType37 | null;
-    'using': AiUsing10;
+    'type'?: AiType38 | null;
+    'using': AiUsing14;
 }
 
 
@@ -3099,8 +3444,8 @@ export interface AiQueryField6 {
     'date_filter'?: string | null;
     'maql'?: string | null;
     'operator'?: AiOperator5 | null;
-    'type'?: AiType38 | null;
-    'using'?: AiUsing11 | null;
+    'type'?: AiType39 | null;
+    'using'?: AiUsing15 | null;
 }
 
 
@@ -3113,8 +3458,8 @@ export interface AiQueryField7 {
     'maql': string;
     'operator'?: AiOperator6 | null;
     'title'?: string;
-    'type'?: AiType39 | null;
-    'using'?: AiUsing12 | null;
+    'type'?: AiType40 | null;
+    'using'?: AiUsing16 | null;
 }
 
 
@@ -3123,8 +3468,8 @@ export interface AiQueryField8 {
     'date_filter'?: string | null;
     'maql'?: string | null;
     'operator'?: AiOperator7 | null;
-    'type'?: AiType40 | null;
-    'using'?: AiUsing13 | null;
+    'type'?: AiType41 | null;
+    'using'?: AiUsing17 | null;
 }
 
 
@@ -3137,7 +3482,7 @@ export interface AiQueryField9 {
      */
     'operator': AiOperator7;
     'title'?: string;
-    'type'?: AiType41 | null;
+    'type'?: AiType42 | null;
     'using': Array<string>;
 }
 
@@ -3157,7 +3502,7 @@ export interface AiQueryFilter {
      */
     'to': number;
     'type': AiType18;
-    'using': AiUsing19;
+    'using': AiUsing23;
     'with'?: object;
     'display_as'?: string;
     'state'?: AiState;
@@ -3190,7 +3535,7 @@ export interface AiQueryMetricSort {
      */
     'direction': AiDirection;
     'metrics': Array<AiQueryMetricSortMetricsInner>;
-    'type': AiType48;
+    'type': AiType49;
 }
 
 
@@ -3206,7 +3551,7 @@ export interface AiQueryMetricValueFilter {
     'dimensionality'?: Array<AiQueryMetricValueFilter4DimensionalityInner>;
     'null_values_as_zero'?: boolean;
     'type': AiType14;
-    'using': AiUsing17;
+    'using': AiUsing21;
     /**
      * Condition to use for this filter.
      */
@@ -3231,7 +3576,7 @@ export interface AiQueryMetricValueFilter1 {
     'dimensionality'?: Array<AiQueryMetricValueFilter1DimensionalityInner> | null;
     'null_values_as_zero'?: boolean | null;
     'type': AiType14;
-    'using': AiUsing14;
+    'using': AiUsing18;
 }
 
 
@@ -3246,7 +3591,7 @@ export interface AiQueryMetricValueFilter2 {
     'dimensionality'?: Array<AiQueryMetricValueFilter2DimensionalityInner> | null;
     'null_values_as_zero'?: boolean | null;
     'type': AiType14;
-    'using': AiUsing15;
+    'using': AiUsing19;
     /**
      * Value to use in condition for this filter.
      */
@@ -3273,7 +3618,7 @@ export interface AiQueryMetricValueFilter3 {
      */
     'to': number;
     'type': AiType14;
-    'using': AiUsing16;
+    'using': AiUsing20;
 }
 
 
@@ -3284,7 +3629,7 @@ export interface AiQueryMetricValueFilter4 {
     'conditions'?: Array<AiMvfCondition> | null;
     'dimensionality'?: Array<AiQueryMetricValueFilter4DimensionalityInner> | null;
     'type': AiType14;
-    'using': AiUsing17;
+    'using': AiUsing21;
 }
 
 
@@ -3300,7 +3645,7 @@ export interface AiQueryRankingFilter {
      */
     'top': number;
     'type': AiType18;
-    'using': AiUsing19;
+    'using': AiUsing23;
 }
 
 
@@ -3313,7 +3658,7 @@ export interface AiQueryRankingFilter1 {
     'strict_limit_of_rows'?: boolean | null;
     'top'?: number | null;
     'type': AiType18;
-    'using': AiUsing18;
+    'using': AiUsing22;
 }
 
 
@@ -3326,7 +3671,7 @@ export interface AiQueryRankingFilter2 {
      */
     'top': number;
     'type': AiType18;
-    'using': AiUsing19;
+    'using': AiUsing23;
 }
 
 
@@ -3337,7 +3682,7 @@ export interface AiQuerySort {
      * Sort direction.
      */
     'direction': AiDirection;
-    'type': AiType48;
+    'type': AiType49;
     'metrics': Array<AiQueryMetricSortMetricsInner>;
 }
 
@@ -3347,7 +3692,7 @@ export interface AiQueryTextFilter {
     'condition': AiCondition6;
     'display_as'?: string;
     'type': AiType12;
-    'using': AiUsing21;
+    'using': AiUsing25;
     'values': Array<string>;
     'value': string;
 }
@@ -3358,7 +3703,7 @@ export interface AiQueryTextFilter1 {
     'condition': AiCondition5;
     'display_as'?: string | null;
     'type': AiType12;
-    'using': AiUsing20;
+    'using': AiUsing24;
     'values': Array<string | null>;
 }
 
@@ -3368,7 +3713,7 @@ export interface AiQueryTextFilter2 {
     'condition': AiCondition6;
     'display_as'?: string | null;
     'type': AiType12;
-    'using': AiUsing21;
+    'using': AiUsing25;
     'value': string;
 }
 
@@ -3594,16 +3939,6 @@ export type AiResponseFeedbackTypeEnum = 'POSITIVE' | 'NEGATIVE';
 
 export interface AiResponseFeedbackRequest {
     'feedback': AiResponseFeedback | null;
-}
-
-/**
- * AAC ref: dashboard.json rich text widget.
- */
-export interface AiRichTextWidget {
-    'columns'?: number;
-    'content': string;
-    'id'?: string;
-    'rows'?: number;
 }
 
 /**
@@ -3921,6 +4256,55 @@ export interface AiSearchedGroup {
     'titles'?: Array<string>;
 }
 
+export interface AiSection1Input {
+    'description'?: string | null;
+    'title'?: string | null;
+    /**
+     * A list of widgets in this section
+     */
+    'widgets': Array<AiWidgetInput>;
+}
+
+export interface AiSection1Output {
+    'description'?: string | null;
+    'title'?: string | null;
+    /**
+     * A list of widgets in this section
+     */
+    'widgets': Array<AiWidgetOutput>;
+}
+
+export interface AiSectionInput {
+    'description'?: string | null;
+    'title'?: string | null;
+    /**
+     * A list of widgets in this section.
+     */
+    'widgets': Array<AiWidgetInput>;
+}
+
+export interface AiSectionOutput {
+    'description'?: string | null;
+    'title'?: string | null;
+    /**
+     * A list of widgets in this section.
+     */
+    'widgets': Array<AiWidgetOutput>;
+}
+
+
+export const AiSelectionType = {
+    LIST: 'list',
+    TEXT: 'text',
+    LIST_OR_TEXT: 'listOrText',
+    LIST2: 'list',
+    TEXT2: 'text',
+    LIST_OR_TEXT2: 'listOrText'
+} as const;
+
+export type AiSelectionType = typeof AiSelectionType[keyof typeof AiSelectionType];
+
+
 export interface AiSendMessageContent {
     'text': string;
     'type': AiSendMessageContentTypeEnum;
@@ -4158,6 +4542,26 @@ export interface AiSwitchAgentRequest {
     'agentId': string;
 }
 
+export interface AiTabInput {
+    'filters'?: object;
+    'id': string;
+    /**
+     * A list of sections in this tab.
+     */
+    'sections': Array<AiSectionInput>;
+    'title': string;
+}
+
+export interface AiTabOutput {
+    'filters'?: object;
+    'id': string;
+    /**
+     * A list of sections in this tab.
+     */
+    'sections': Array<AiSectionOutput>;
+    'title': string;
+}
+
 export interface AiTarget {
     /**
      * Local identifier of the targeted measure.
@@ -4178,6 +4582,14 @@ export interface AiTarget1 {
      */
     'attribute': string;
 }
+
+
+export const AiTemplate = {
+    DEFAULT: 'default'
+} as const;
+
+export type AiTemplate = typeof AiTemplate[keyof typeof AiTemplate];
+
 
 export interface AiTextMessageContent {
     /**
@@ -4211,17 +4623,43 @@ export interface AiTextWrapping {
     'wrap_text'?: boolean | null;
 }
 
+export interface AiTimezoneConfig {
+    'allow_user_override_in_view_mode'?: boolean | null;
+    'show_timezone_info'?: boolean | null;
+    'timezone_id'?: AiTimezoneId | null;
+}
+
+/**
+ * An IANA timezone ID (for example, Europe/Prague or UTC) or $browserDetected to use the viewer browser timezone.
+ */
+export interface AiTimezoneId {
+}
+
+export interface AiTitle1 {
+}
+
+export type AiTitle2 = false
+
+
 export interface AiTo {
 }
 
 export interface AiTotalItem {
     'title'?: string;
-    'type': AiType49;
+    'type': AiType50;
     /**
      * Local metric identifier to use for this total.
      */
     'using': string;
 }
+
+
+
+export const AiType1 = {
+    DATE_FILTER: 'date_filter'
+} as const;
+
+export type AiType1 = typeof AiType1[keyof typeof AiType1];
 
 
 
@@ -4259,20 +4697,18 @@ export type AiType18 = typeof AiType18[keyof typeof AiType18];
 
 
 
-export const AiType33 = {
-    PREVIOUS_YEAR: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD'
+export const AiType3 = {
+    ATTRIBUTE_FILTER: 'attribute_filter',
+    ATTRIBUTE_FILTER2: 'attribute_filter'
 } as const;
 
-export type AiType33 = typeof AiType33[keyof typeof AiType33];
+export type AiType3 = typeof AiType3[keyof typeof AiType3];
 
 
 
 export const AiType34 = {
     PREVIOUS_YEAR: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
-    PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD'
+    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD'
 } as const;
 
 export type AiType34 = typeof AiType34[keyof typeof AiType34];
@@ -4281,7 +4717,9 @@ export type AiType34 = typeof AiType34[keyof typeof AiType34];
 
 export const AiType35 = {
     PREVIOUS_YEAR: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD'
+    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
+    PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
+    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD'
 } as const;
 
 export type AiType35 = typeof AiType35[keyof typeof AiType35];
@@ -4290,9 +4728,7 @@ export type AiType35 = typeof AiType35[keyof typeof AiType35];
 
 export const AiType36 = {
     PREVIOUS_YEAR: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
-    PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD'
+    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD'
 } as const;
 
 export type AiType36 = typeof AiType36[keyof typeof AiType36];
@@ -4301,7 +4737,9 @@ export type AiType36 = typeof AiType36[keyof typeof AiType36];
 
 export const AiType37 = {
     PREVIOUS_YEAR: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD'
+    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
+    PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
+    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD'
 } as const;
 
 export type AiType37 = typeof AiType37[keyof typeof AiType37];
@@ -4310,9 +4748,7 @@ export type AiType37 = typeof AiType37[keyof typeof AiType37];
 
 export const AiType38 = {
     PREVIOUS_YEAR: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
-    PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD'
+    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD'
 } as const;
 
 export type AiType38 = typeof AiType38[keyof typeof AiType38];
@@ -4321,7 +4757,9 @@ export type AiType38 = typeof AiType38[keyof typeof AiType38];
 
 export const AiType39 = {
     PREVIOUS_YEAR: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD'
+    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
+    PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
+    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD'
 } as const;
 
 export type AiType39 = typeof AiType39[keyof typeof AiType39];
@@ -4330,9 +4768,7 @@ export type AiType39 = typeof AiType39[keyof typeof AiType39];
 
 export const AiType40 = {
     PREVIOUS_YEAR: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
-    PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD'
+    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD'
 } as const;
 
 export type AiType40 = typeof AiType40[keyof typeof AiType40];
@@ -4341,7 +4777,9 @@ export type AiType40 = typeof AiType40[keyof typeof AiType40];
 
 export const AiType41 = {
     PREVIOUS_YEAR: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD'
+    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
+    PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
+    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD'
 } as const;
 
 export type AiType41 = typeof AiType41[keyof typeof AiType41];
@@ -4350,9 +4788,7 @@ export type AiType41 = typeof AiType41[keyof typeof AiType41];
 
 export const AiType42 = {
     PREVIOUS_YEAR: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
-    PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD'
+    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD'
 } as const;
 
 export type AiType42 = typeof AiType42[keyof typeof AiType42];
@@ -4362,7 +4798,8 @@ export type AiType42 = typeof AiType42[keyof typeof AiType42];
 export const AiType43 = {
     PREVIOUS_YEAR: 'PREVIOUS_YEAR',
     PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
-    PREVIOUS_YEAR2: 'PREVIOUS_YEAR'
+    PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
+    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD'
 } as const;
 
 export type AiType43 = typeof AiType43[keyof typeof AiType43];
@@ -4372,8 +4809,7 @@ export type AiType43 = typeof AiType43[keyof typeof AiType43];
 export const AiType44 = {
     PREVIOUS_YEAR: 'PREVIOUS_YEAR',
     PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
-    PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD'
+    PREVIOUS_YEAR2: 'PREVIOUS_YEAR'
 } as const;
 
 export type AiType44 = typeof AiType44[keyof typeof AiType44];
@@ -4383,6 +4819,7 @@ export type AiType44 = typeof AiType44[keyof typeof AiType44];
 export const AiType45 = {
     PREVIOUS_YEAR: 'PREVIOUS_YEAR',
     PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
+    PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
     PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD'
 } as const;
 
@@ -4393,7 +4830,6 @@ export type AiType45 = typeof AiType45[keyof typeof AiType45];
 export const AiType46 = {
     PREVIOUS_YEAR: 'PREVIOUS_YEAR',
     PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
-    PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
     PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD'
 } as const;
 
@@ -4402,7 +4838,10 @@ export type AiType46 = typeof AiType46[keyof typeof AiType46];
 
 
 export const AiType47 = {
-    ATTRIBUTE_SORT: 'attribute_sort'
+    PREVIOUS_YEAR: 'PREVIOUS_YEAR',
+    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
+    PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
+    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD'
 } as const;
 
 export type AiType47 = typeof AiType47[keyof typeof AiType47];
@@ -4410,7 +4849,7 @@ export type AiType47 = typeof AiType47[keyof typeof AiType47];
 
 
 export const AiType48 = {
-    METRIC_SORT: 'metric_sort'
+    ATTRIBUTE_SORT: 'attribute_sort'
 } as const;
 
 export type AiType48 = typeof AiType48[keyof typeof AiType48];
@@ -4418,6 +4857,22 @@ export type AiType48 = typeof AiType48[keyof typeof AiType48];
 
 
 export const AiType49 = {
+    METRIC_SORT: 'metric_sort'
+} as const;
+
+export type AiType49 = typeof AiType49[keyof typeof AiType49];
+
+
+
+export const AiType5 = {
+    TEXT_FILTER: 'text_filter'
+} as const;
+
+export type AiType5 = typeof AiType5[keyof typeof AiType5];
+
+
+
+export const AiType50 = {
     SUM: 'SUM',
     AVG: 'AVG',
     MAX: 'MAX',
@@ -4426,39 +4881,39 @@ export const AiType49 = {
     NAT: 'NAT'
 } as const;
 
-export type AiType49 = typeof AiType49[keyof typeof AiType49];
-
-
-
-export const AiType50 = {
-    PUSHPIN: 'pushpin',
-    AREA: 'area'
-} as const;
-
 export type AiType50 = typeof AiType50[keyof typeof AiType50];
 
 
 
-export const AiType53 = {
+export const AiType51 = {
+    PUSHPIN: 'pushpin',
+    AREA: 'area'
+} as const;
+
+export type AiType51 = typeof AiType51[keyof typeof AiType51];
+
+
+
+export const AiType54 = {
     SOLID: 'solid',
     PATTERN: 'pattern',
     OUTLINE: 'outline'
 } as const;
 
-export type AiType53 = typeof AiType53[keyof typeof AiType53];
+export type AiType54 = typeof AiType54[keyof typeof AiType54];
 
 
 
-export const AiType62 = {
-    TABLE: 'table'
+export const AiType55 = {
+    DASHBOARD: 'dashboard'
 } as const;
 
-export type AiType62 = typeof AiType62[keyof typeof AiType62];
+export type AiType55 = typeof AiType55[keyof typeof AiType55];
 
 
 
 export const AiType63 = {
-    BAR_CHART: 'bar_chart'
+    TABLE: 'table'
 } as const;
 
 export type AiType63 = typeof AiType63[keyof typeof AiType63];
@@ -4466,7 +4921,7 @@ export type AiType63 = typeof AiType63[keyof typeof AiType63];
 
 
 export const AiType64 = {
-    COLUMN_CHART: 'column_chart'
+    BAR_CHART: 'bar_chart'
 } as const;
 
 export type AiType64 = typeof AiType64[keyof typeof AiType64];
@@ -4474,7 +4929,7 @@ export type AiType64 = typeof AiType64[keyof typeof AiType64];
 
 
 export const AiType65 = {
-    LINE_CHART: 'line_chart'
+    COLUMN_CHART: 'column_chart'
 } as const;
 
 export type AiType65 = typeof AiType65[keyof typeof AiType65];
@@ -4482,7 +4937,7 @@ export type AiType65 = typeof AiType65[keyof typeof AiType65];
 
 
 export const AiType66 = {
-    AREA_CHART: 'area_chart'
+    LINE_CHART: 'line_chart'
 } as const;
 
 export type AiType66 = typeof AiType66[keyof typeof AiType66];
@@ -4490,7 +4945,7 @@ export type AiType66 = typeof AiType66[keyof typeof AiType66];
 
 
 export const AiType67 = {
-    SCATTER_CHART: 'scatter_chart'
+    AREA_CHART: 'area_chart'
 } as const;
 
 export type AiType67 = typeof AiType67[keyof typeof AiType67];
@@ -4498,7 +4953,7 @@ export type AiType67 = typeof AiType67[keyof typeof AiType67];
 
 
 export const AiType68 = {
-    BUBBLE_CHART: 'bubble_chart'
+    SCATTER_CHART: 'scatter_chart'
 } as const;
 
 export type AiType68 = typeof AiType68[keyof typeof AiType68];
@@ -4506,15 +4961,23 @@ export type AiType68 = typeof AiType68[keyof typeof AiType68];
 
 
 export const AiType69 = {
-    PIE_CHART: 'pie_chart'
+    BUBBLE_CHART: 'bubble_chart'
 } as const;
 
 export type AiType69 = typeof AiType69[keyof typeof AiType69];
 
 
 
+export const AiType7 = {
+    METRIC_VALUE_FILTER: 'metric_value_filter'
+} as const;
+
+export type AiType7 = typeof AiType7[keyof typeof AiType7];
+
+
+
 export const AiType70 = {
-    DONUT_CHART: 'donut_chart'
+    PIE_CHART: 'pie_chart'
 } as const;
 
 export type AiType70 = typeof AiType70[keyof typeof AiType70];
@@ -4522,7 +4985,7 @@ export type AiType70 = typeof AiType70[keyof typeof AiType70];
 
 
 export const AiType71 = {
-    TREEMAP_CHART: 'treemap_chart'
+    DONUT_CHART: 'donut_chart'
 } as const;
 
 export type AiType71 = typeof AiType71[keyof typeof AiType71];
@@ -4530,7 +4993,7 @@ export type AiType71 = typeof AiType71[keyof typeof AiType71];
 
 
 export const AiType72 = {
-    PYRAMID_CHART: 'pyramid_chart'
+    TREEMAP_CHART: 'treemap_chart'
 } as const;
 
 export type AiType72 = typeof AiType72[keyof typeof AiType72];
@@ -4538,7 +5001,7 @@ export type AiType72 = typeof AiType72[keyof typeof AiType72];
 
 
 export const AiType73 = {
-    FUNNEL_CHART: 'funnel_chart'
+    PYRAMID_CHART: 'pyramid_chart'
 } as const;
 
 export type AiType73 = typeof AiType73[keyof typeof AiType73];
@@ -4546,7 +5009,7 @@ export type AiType73 = typeof AiType73[keyof typeof AiType73];
 
 
 export const AiType74 = {
-    HEATMAP_CHART: 'heatmap_chart'
+    FUNNEL_CHART: 'funnel_chart'
 } as const;
 
 export type AiType74 = typeof AiType74[keyof typeof AiType74];
@@ -4554,7 +5017,7 @@ export type AiType74 = typeof AiType74[keyof typeof AiType74];
 
 
 export const AiType75 = {
-    BULLET_CHART: 'bullet_chart'
+    HEATMAP_CHART: 'heatmap_chart'
 } as const;
 
 export type AiType75 = typeof AiType75[keyof typeof AiType75];
@@ -4562,7 +5025,7 @@ export type AiType75 = typeof AiType75[keyof typeof AiType75];
 
 
 export const AiType76 = {
-    WATERFALL_CHART: 'waterfall_chart'
+    BULLET_CHART: 'bullet_chart'
 } as const;
 
 export type AiType76 = typeof AiType76[keyof typeof AiType76];
@@ -4570,7 +5033,7 @@ export type AiType76 = typeof AiType76[keyof typeof AiType76];
 
 
 export const AiType77 = {
-    DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart'
+    WATERFALL_CHART: 'waterfall_chart'
 } as const;
 
 export type AiType77 = typeof AiType77[keyof typeof AiType77];
@@ -4578,7 +5041,7 @@ export type AiType77 = typeof AiType77[keyof typeof AiType77];
 
 
 export const AiType78 = {
-    SANKEY_CHART: 'sankey_chart'
+    DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart'
 } as const;
 
 export type AiType78 = typeof AiType78[keyof typeof AiType78];
@@ -4586,15 +5049,23 @@ export type AiType78 = typeof AiType78[keyof typeof AiType78];
 
 
 export const AiType79 = {
-    HEADLINE_CHART: 'headline_chart'
+    SANKEY_CHART: 'sankey_chart'
 } as const;
 
 export type AiType79 = typeof AiType79[keyof typeof AiType79];
 
 
 
+export const AiType8 = {
+    FILTER_GROUP: 'filter_group'
+} as const;
+
+export type AiType8 = typeof AiType8[keyof typeof AiType8];
+
+
+
 export const AiType80 = {
-    COMBO_CHART: 'combo_chart'
+    HEADLINE_CHART: 'headline_chart'
 } as const;
 
 export type AiType80 = typeof AiType80[keyof typeof AiType80];
@@ -4602,7 +5073,7 @@ export type AiType80 = typeof AiType80[keyof typeof AiType80];
 
 
 export const AiType81 = {
-    GEO_CHART: 'geo_chart'
+    COMBO_CHART: 'combo_chart'
 } as const;
 
 export type AiType81 = typeof AiType81[keyof typeof AiType81];
@@ -4610,7 +5081,7 @@ export type AiType81 = typeof AiType81[keyof typeof AiType81];
 
 
 export const AiType82 = {
-    GEO_AREA_CHART: 'geo_area_chart'
+    GEO_CHART: 'geo_chart'
 } as const;
 
 export type AiType82 = typeof AiType82[keyof typeof AiType82];
@@ -4618,7 +5089,7 @@ export type AiType82 = typeof AiType82[keyof typeof AiType82];
 
 
 export const AiType83 = {
-    REPEATER_CHART: 'repeater_chart'
+    GEO_AREA_CHART: 'geo_area_chart'
 } as const;
 
 export type AiType83 = typeof AiType83[keyof typeof AiType83];
@@ -4626,10 +5097,18 @@ export type AiType83 = typeof AiType83[keyof typeof AiType83];
 
 
 export const AiType84 = {
-    RADAR_CHART: 'radar_chart'
+    REPEATER_CHART: 'repeater_chart'
 } as const;
 
 export type AiType84 = typeof AiType84[keyof typeof AiType84];
+
+
+
+export const AiType85 = {
+    RADAR_CHART: 'radar_chart'
+} as const;
+
+export type AiType85 = typeof AiType85[keyof typeof AiType85];
 
 
 
@@ -4659,7 +5138,7 @@ export interface AiUserContext {
 
 export interface AiUserContextDashboard {
     'activeTabId'?: string | null;
-    'definition'?: object | null;
+    'definition'?: AiDashboardInput | null;
     'filters'?: Array<AiVisualizationFilter> | null;
     'id': string;
     'title'?: string | null;
@@ -4701,6 +5180,7 @@ export interface AiUserContextRichTextWidgetDescriptor {
 export type AiUserContextRichTextWidgetDescriptorWidgetTypeEnum = 'richText';
 
 export interface AiUserContextSwitcherVisualization {
+    'filters'?: Array<AiVisualizationFilter> | null;
     'resultId'?: string | null;
     'title'?: string | null;
     'visualizationId': string;
@@ -4766,7 +5246,7 @@ export interface AiUsing1 {
 }
 
 /**
- * Attribute identifier to use for this field.
+ * Identifier to use for this field.
  */
 export interface AiUsing10 {
 }
@@ -4781,73 +5261,94 @@ export interface AiUsing13 {
 }
 
 /**
- * Metric or local metric to use in this filter.
+ * Attribute identifier to use for this field.
  */
 export interface AiUsing14 {
 }
 
-/**
- * Metric or local metric to use in this filter.
- */
 export interface AiUsing15 {
 }
 
-/**
- * Metric or local metric to use in this filter.
- */
 export interface AiUsing16 {
 }
 
-/**
- * Metric or local metric to use in this filter.
- */
 export interface AiUsing17 {
 }
 
 /**
- * Metric identifier to use for this filter.
+ * Metric or local metric to use in this filter.
  */
 export interface AiUsing18 {
 }
 
 /**
- * Metric identifier to use for this filter.
+ * Metric or local metric to use in this filter.
  */
 export interface AiUsing19 {
 }
 
 /**
- * Attribute or label identifier to use for this field.
+ * Attribute or label to use in this filter.
  */
 export interface AiUsing2 {
 }
 
 /**
- * Attribute or label to use in this filter.
+ * Metric or local metric to use in this filter.
  */
 export interface AiUsing20 {
 }
 
 /**
- * Attribute or label to use in this filter.
+ * Metric or local metric to use in this filter.
  */
 export interface AiUsing21 {
 }
 
+/**
+ * Metric identifier to use for this filter.
+ */
+export interface AiUsing22 {
+}
+
+/**
+ * Metric identifier to use for this filter.
+ */
+export interface AiUsing23 {
+}
+
+/**
+ * Attribute or label to use in this filter.
+ */
+export interface AiUsing24 {
+}
+
+/**
+ * Attribute or label to use in this filter.
+ */
+export interface AiUsing25 {
+}
+
+/**
+ * Attribute or label to use in this filter.
+ */
 export interface AiUsing3 {
 }
 
 /**
- * Identifier to use for this field.
+ * Attribute or label to use in this filter.
  */
 export interface AiUsing4 {
 }
 
+/**
+ * Attribute or label to use in this filter.
+ */
 export interface AiUsing5 {
 }
 
 /**
- * Identifier to use for this field.
+ * Attribute or label identifier to use for this field.
  */
 export interface AiUsing6 {
 }
@@ -4855,6 +5356,9 @@ export interface AiUsing6 {
 export interface AiUsing7 {
 }
 
+/**
+ * Identifier to use for this field.
+ */
 export interface AiUsing8 {
 }
 
@@ -4910,6 +5414,15 @@ export interface AiValueOperand {
 }
 
 
+export const AiVersion = {
+    _2: '2',
+    _3: '3'
+} as const;
+
+export type AiVersion = typeof AiVersion[keyof typeof AiVersion];
+
+
+
 export const AiViewport = {
     AUTO: 'auto',
     CONTINENT_AF: 'continent_af',
@@ -4947,7 +5460,7 @@ export interface AiVisualisation {
     /**
      * Type of visualisation.
      */
-    'type': AiType84;
+    'type': AiType85;
     'view_by'?: Array<AiBucketItem>;
     'stack_by'?: Array<AiBucketItem>;
     'trend_by'?: Array<AiBucketItem>;
@@ -4978,7 +5491,7 @@ export interface AiVisualisation1 {
     /**
      * Type of visualisation.
      */
-    'type': AiType62;
+    'type': AiType63;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5000,7 +5513,7 @@ export interface AiVisualisation10 {
     /**
      * Type of visualisation.
      */
-    'type': AiType71;
+    'type': AiType72;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5022,7 +5535,7 @@ export interface AiVisualisation11 {
     /**
      * Type of visualisation.
      */
-    'type': AiType72;
+    'type': AiType73;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5044,7 +5557,7 @@ export interface AiVisualisation12 {
     /**
      * Type of visualisation.
      */
-    'type': AiType73;
+    'type': AiType74;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5068,7 +5581,7 @@ export interface AiVisualisation13 {
     /**
      * Type of visualisation.
      */
-    'type': AiType74;
+    'type': AiType75;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5090,7 +5603,7 @@ export interface AiVisualisation14 {
     /**
      * Type of visualisation.
      */
-    'type': AiType75;
+    'type': AiType76;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5112,7 +5625,7 @@ export interface AiVisualisation15 {
     /**
      * Type of visualisation.
      */
-    'type': AiType76;
+    'type': AiType77;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5136,7 +5649,7 @@ export interface AiVisualisation16 {
     /**
      * Type of visualisation.
      */
-    'type': AiType77;
+    'type': AiType78;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5160,7 +5673,7 @@ export interface AiVisualisation17 {
     /**
      * Type of visualisation.
      */
-    'type': AiType78;
+    'type': AiType79;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5182,7 +5695,7 @@ export interface AiVisualisation18 {
     /**
      * Type of visualisation.
      */
-    'type': AiType79;
+    'type': AiType80;
     'view_by'?: Array<any> | null;
 }
 
@@ -5204,7 +5717,7 @@ export interface AiVisualisation19 {
     /**
      * Type of visualisation.
      */
-    'type': AiType80;
+    'type': AiType81;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5227,7 +5740,7 @@ export interface AiVisualisation2 {
     /**
      * Type of visualisation.
      */
-    'type': AiType63;
+    'type': AiType64;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5250,7 +5763,7 @@ export interface AiVisualisation20 {
     /**
      * Type of visualisation.
      */
-    'type': AiType81;
+    'type': AiType82;
     'view_by'?: Array<string> | null;
 }
 
@@ -5273,7 +5786,7 @@ export interface AiVisualisation21 {
     /**
      * Type of visualisation.
      */
-    'type': AiType82;
+    'type': AiType83;
     'view_by'?: Array<string> | null;
 }
 
@@ -5297,7 +5810,7 @@ export interface AiVisualisation22 {
     /**
      * Type of visualisation.
      */
-    'type': AiType83;
+    'type': AiType84;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5319,7 +5832,7 @@ export interface AiVisualisation23 {
     /**
      * Type of visualisation.
      */
-    'type': AiType84;
+    'type': AiType85;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5342,7 +5855,7 @@ export interface AiVisualisation3 {
     /**
      * Type of visualisation.
      */
-    'type': AiType64;
+    'type': AiType65;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5365,7 +5878,7 @@ export interface AiVisualisation4 {
     /**
      * Type of visualisation.
      */
-    'type': AiType65;
+    'type': AiType66;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5388,7 +5901,7 @@ export interface AiVisualisation5 {
     /**
      * Type of visualisation.
      */
-    'type': AiType66;
+    'type': AiType67;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5411,7 +5924,7 @@ export interface AiVisualisation6 {
     /**
      * Type of visualisation.
      */
-    'type': AiType67;
+    'type': AiType68;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5434,7 +5947,7 @@ export interface AiVisualisation7 {
     /**
      * Type of visualisation.
      */
-    'type': AiType68;
+    'type': AiType69;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5456,7 +5969,7 @@ export interface AiVisualisation8 {
     /**
      * Type of visualisation.
      */
-    'type': AiType69;
+    'type': AiType70;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5478,7 +5991,7 @@ export interface AiVisualisation9 {
     /**
      * Type of visualisation.
      */
-    'type': AiType70;
+    'type': AiType71;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5513,6 +6026,29 @@ export interface AiVisualizationBottomRankingFilter {
 }
 
 export type AiVisualizationBottomRankingFilterTypeEnum = 'ranking_filter';
+
+/**
+ * One execution\'s result for a visualization, for a client that cannot execute it itself.
+ */
+export interface AiVisualizationData {
+    /**
+     * Column descriptors, one per result column.
+     */
+    'columns': Array<any>;
+    'formattedRows'?: Array<any> | null;
+    /**
+     * Size of the full result, before any truncation.
+     */
+    'rowCount': number;
+    /**
+     * Result rows, raw values.
+     */
+    'rows': Array<any>;
+    /**
+     * Whether `rows` holds less than the full result.
+     */
+    'truncated': boolean;
+}
 
 export interface AiVisualizationExcludedResponse {
     'reason': string;
@@ -5559,6 +6095,7 @@ export interface AiVisualizationMetricValueRangeFilter {
 export type AiVisualizationMetricValueRangeFilterTypeEnum = 'metric_value_filter';
 
 export interface AiVisualizationPart {
+    'data'?: AiVisualizationData | null;
     'references'?: AiVisualizationReferences | null;
     /**
      * Type of multipart part.
@@ -5588,23 +6125,13 @@ export interface AiVisualizationReferences {
 
 export interface AiVisualizationRelativeDateFilter {
     'from': number;
-    'granularity': AiDateFilterGranularity;
+    'granularity': AiAppApplicationDtosConversationUserContextDateFilterGranularity;
     'to': number;
     'type': AiVisualizationRelativeDateFilterTypeEnum;
     'using'?: string | null;
 }
 
 export type AiVisualizationRelativeDateFilterTypeEnum = 'date_filter';
-
-/**
- * AAC ref: dashboard.json visualization switcher widget.
- */
-export interface AiVisualizationSwitcherWidget {
-    'columns'?: number;
-    'id'?: string;
-    'rows'?: number;
-    'visualizations': Array<AiDashboardWidget>;
-}
 
 export interface AiVisualizationTopRankingFilter {
     'attribute'?: string | null;
@@ -5614,6 +6141,26 @@ export interface AiVisualizationTopRankingFilter {
 }
 
 export type AiVisualizationTopRankingFilterTypeEnum = 'ranking_filter';
+
+export interface AiVisualizationWidget {
+    'columns'?: AiColumns | null;
+    'date'?: string;
+    'description'?: AiDescription1 | null;
+    'id'?: string;
+    'ignored_cross_filtering'?: boolean | null;
+    'ignored_drill_downs'?: Array<AiIgnoredDrillDown> | null;
+    'ignored_drill_downs_intersections'?: Array<AiIgnoredDrillDownsIntersection> | null;
+    'ignored_filters'?: Array<string> | null;
+    'interactions'?: Array<AiInteraction> | null;
+    'rows'?: number | null;
+    'title'?: AiTitle1 | null;
+    /**
+     * An id of the visualization to be rendered with the widget
+     */
+    'visualization': string;
+    'zoom_data'?: boolean | null;
+}
+
 
 export interface AiWhatIfAnalysisPart {
     /**
@@ -5665,6 +6212,124 @@ export interface AiWhatIfScenarioVariant {
      */
     'label': string;
 }
+
+export interface AiWidget1 {
+    'columns'?: AiColumns | null;
+    /**
+     * A markdown content of the widget
+     */
+    'content': string;
+    'id'?: string;
+    'rows'?: number | null;
+}
+
+
+export interface AiWidget2 {
+    'columns'?: AiColumns | null;
+    'id'?: string;
+    'rows'?: number | null;
+    /**
+     * A list of visualizations to be rendered with the widget
+     */
+    'visualizations': Array<AiVisualizationWidget>;
+}
+
+
+export interface AiWidget3Input {
+    'columns'?: AiColumns | null;
+    'container': string;
+    'enable_section_headers'?: boolean | null;
+    'layout_direction'?: AiLayoutDirection | null;
+    'rows'?: number | null;
+    /**
+     * A list of sections contained in this container
+     */
+    'sections': Array<AiSection1Input>;
+}
+
+
+export interface AiWidget3Output {
+    'columns'?: AiColumns | null;
+    'container': string;
+    'enable_section_headers'?: boolean | null;
+    'layout_direction'?: AiLayoutDirection | null;
+    'rows'?: number | null;
+    /**
+     * A list of sections contained in this container
+     */
+    'sections': Array<AiSection1Output>;
+}
+
+
+export interface AiWidgetInput {
+    'columns'?: AiColumns;
+    'date'?: string;
+    'description'?: AiDescription1 | null;
+    'id'?: string;
+    'ignored_cross_filtering'?: boolean;
+    'ignored_drill_downs'?: Array<AiIgnoredDrillDown>;
+    'ignored_drill_downs_intersections'?: Array<AiIgnoredDrillDownsIntersection>;
+    'ignored_filters'?: Array<string>;
+    'interactions'?: Array<AiInteraction>;
+    'rows'?: number;
+    'title'?: AiTitle1 | null;
+    /**
+     * An id of the visualization to be rendered with the widget
+     */
+    'visualization': string;
+    'zoom_data'?: boolean;
+    /**
+     * A markdown content of the widget
+     */
+    'content': string;
+    /**
+     * A list of visualizations to be rendered with the widget
+     */
+    'visualizations': Array<AiVisualizationWidget>;
+    'container': string;
+    'enable_section_headers'?: boolean;
+    'layout_direction'?: AiLayoutDirection;
+    /**
+     * A list of sections contained in this container
+     */
+    'sections': Array<AiSection1Input>;
+}
+
+
+export interface AiWidgetOutput {
+    'columns'?: AiColumns;
+    'date'?: string;
+    'description'?: AiDescription1 | null;
+    'id'?: string;
+    'ignored_cross_filtering'?: boolean;
+    'ignored_drill_downs'?: Array<AiIgnoredDrillDown>;
+    'ignored_drill_downs_intersections'?: Array<AiIgnoredDrillDownsIntersection>;
+    'ignored_filters'?: Array<string>;
+    'interactions'?: Array<AiInteraction>;
+    'rows'?: number;
+    'title'?: AiTitle1 | null;
+    /**
+     * An id of the visualization to be rendered with the widget
+     */
+    'visualization': string;
+    'zoom_data'?: boolean;
+    /**
+     * A markdown content of the widget
+     */
+    'content': string;
+    /**
+     * A list of visualizations to be rendered with the widget
+     */
+    'visualizations': Array<AiVisualizationWidget>;
+    'container': string;
+    'enable_section_headers'?: boolean;
+    'layout_direction'?: AiLayoutDirection;
+    /**
+     * A list of sections contained in this container
+     */
+    'sections': Array<AiSection1Output>;
+}
+
 
 
 export const AiWidth = {

@@ -2,7 +2,6 @@
 
 import { format } from "date-fns";
 import { capitalize } from "lodash-es";
-import moment from "moment";
 
 import {
     type DateFilterGranularity,
@@ -11,6 +10,7 @@ import {
     type ILowerBoundedFilter,
     type IRelativeDateFilterPreset,
     type IUpperBoundedFilter,
+    type WeekStart,
     isAbsoluteDateFilterForm,
     isAbsoluteDateFilterPreset,
     isAllTimeDateFilterOption,
@@ -27,15 +27,7 @@ import {
     granularityIntlCodes,
     granularityIntlCodesFull,
 } from "../../constants/i18n.js";
-import {
-    DAY_END_TIME,
-    DAY_START_TIME,
-    DEFAULT_DATE_FORMAT,
-    TIME_FORMAT,
-    TIME_FORMAT_WITH_SECONDS,
-    TIME_FORMAT_WITH_SECONDS_WITH_SEPARATOR,
-    TIME_FORMAT_WITH_SEPARATOR,
-} from "../../constants/Platform.js";
+import { DEFAULT_DATE_FORMAT } from "../../constants/Platform.js";
 import {
     type DateFilterOption,
     type IUiAbsoluteDateFilterForm,
@@ -43,86 +35,10 @@ import {
 } from "../../interfaces/index.js";
 import { convertPlatformDateStringToDate } from "../DateConversions.js";
 import { convertLocale } from "../dateFnsLocale.js";
+import { DEFAULT_LOCALE, formatAbsoluteDateRange } from "../FormattingUtils.js";
+import { getWeekStartDateFnsLocale, resolveWeekStartLocale } from "../weekStartDateFnsLocale.js";
 
-import {
-    type IDateAndMessageTranslator,
-    type IDateTranslator,
-    type IMessageTranslator,
-} from "./Translators.js";
-
-export const getTimeRange = (
-    dateFrom: Date,
-    dateTo: Date,
-    splitter = "\u2013",
-    timeFormat: string = TIME_FORMAT,
-): string => {
-    const fromTime = format(dateFrom, timeFormat);
-    const toTime = format(dateTo, timeFormat);
-
-    return fromTime === toTime ? fromTime : `${fromTime} ${splitter} ${toTime}`;
-};
-
-const isTimeForWholeDay = (dateFrom: Date, dateTo: Date) =>
-    dateFrom.getHours() === 0 &&
-    dateFrom.getMinutes() === 0 &&
-    dateFrom.getSeconds() === 0 &&
-    dateTo.getHours() === 23 &&
-    dateTo.getMinutes() === 59 &&
-    (dateTo.getSeconds() === 0 || dateTo.getSeconds() === 59);
-
-const adjustDatetime = (date: string | Date, isTimeEnabled: boolean, defaultTime = DAY_START_TIME) => {
-    if (!(typeof date === "string")) {
-        return date;
-    }
-
-    if (isTimeEnabled && date.split(" ").length === 1) {
-        return `${date} ${defaultTime}`;
-    }
-
-    return date;
-};
-
-/**
- * @beta
- */
-export const formatAbsoluteDateRange = (
-    from: Date | string,
-    to: Date | string,
-    dateFormat: string,
-    splitter = "\u2013",
-): string => {
-    const isTimeEnabled = dateFormat.includes(TIME_FORMAT);
-    const isSecondsEnabled = dateFormat.includes(TIME_FORMAT_WITH_SECONDS);
-    const timeFormat = isSecondsEnabled ? TIME_FORMAT_WITH_SECONDS : TIME_FORMAT;
-    const timeFormatWithSeparator = isSecondsEnabled
-        ? TIME_FORMAT_WITH_SECONDS_WITH_SEPARATOR
-        : TIME_FORMAT_WITH_SEPARATOR;
-    const dateFormatWithoutTime = dateFormat.replace(timeFormatWithSeparator, "");
-
-    // append start and end times if necessary
-    const adjustedFrom = adjustDatetime(from, isTimeEnabled, DAY_START_TIME);
-    const adjustedTo = adjustDatetime(to, isTimeEnabled, DAY_END_TIME);
-
-    const fromDate = convertPlatformDateStringToDate(adjustedFrom) ?? undefined;
-    const toDate = convertPlatformDateStringToDate(adjustedTo) ?? undefined;
-    const coversWholeDay = fromDate && toDate ? isTimeForWholeDay(fromDate, toDate) : false;
-
-    if (fromDate && toDate && moment(fromDate).isSame(toDate, "day")) {
-        if (isTimeEnabled && !coversWholeDay) {
-            return `${format(fromDate, dateFormatWithoutTime)}, ${getTimeRange(fromDate, toDate, splitter, timeFormat)}`;
-        } else {
-            return format(fromDate, dateFormatWithoutTime);
-        }
-    }
-
-    // do not show time in case of whole day coverage
-    const displayDateFormat = coversWholeDay ? dateFormatWithoutTime : dateFormat;
-
-    const fromTitle = fromDate ? format(fromDate, displayDateFormat) : "";
-    const toTitle = toDate ? format(toDate, displayDateFormat) : "";
-
-    return `${fromTitle} ${splitter} ${toTitle}`;
-};
+import { type IDateAndMessageTranslator, type IMessageTranslator } from "./Translators.js";
 
 // Intl.DateTimeFormat options for Month/Year period labels; Quarter is handled separately below.
 const MONTH_AND_YEAR_INTL_OPTIONS: Partial<Record<DateFilterGranularity, Intl.DateTimeFormatOptions>> = {
@@ -134,28 +50,54 @@ const MONTH_AND_YEAR_INTL_OPTIONS: Partial<Record<DateFilterGranularity, Intl.Da
 const formatQuarterLabel = (date: Date, locale?: string): string =>
     format(date, "QQQ y", { locale: convertLocale(locale) });
 
+// A week's number depends on which day the workspace starts weeks on, so both parts come from a date-fns
+// locale carrying that week start. The message places them, so the word and its position stay translatable.
+const formatWeekLabel = (date: Date, weekStart: WeekStart, translator: IDateAndMessageTranslator): string => {
+    const weekLocale = resolveWeekStartLocale(
+        getWeekStartDateFnsLocale(translator.locale ?? DEFAULT_LOCALE, weekStart),
+    );
+
+    return translator.formatMessage(
+        { id: "filters.staticPeriod.weekLabel" },
+        {
+            // Strings rather than numbers, so the year does not come back group-separated. "Y" is the
+            // week-numbering year, which date-fns guards behind a flag as a likely typo for "y".
+            week: format(date, "w", { locale: weekLocale }),
+            year: format(date, "Y", { locale: weekLocale, useAdditionalWeekYearTokens: true }),
+        },
+    );
+};
+
+// Week is absent: its label cannot be derived from the date alone, it also needs the week start.
 const STATIC_PERIOD_LABEL_GRANULARITIES = new Set<DateFilterGranularity>([
     "GDC.time.month",
     "GDC.time.quarter",
     "GDC.time.year",
 ]);
 
-// Formats a static from/to range.
+const formatMonthQuarterOrYearLabel = (
+    date: Date,
+    granularity: DateFilterGranularity,
+    translator: IDateAndMessageTranslator,
+): string => {
+    const intlOptions = MONTH_AND_YEAR_INTL_OPTIONS[granularity];
+    return intlOptions
+        ? translator.formatDate(date, intlOptions)
+        : formatQuarterLabel(date, translator.locale);
+};
+
+// Formats a static from/to range as period labels, collapsing a single-period range to one label. The
+// boundary label is passed in, so a week label can carry the week start the other granularities ignore.
 const formatStaticPeriodDateRange = (
     from: string,
     to: string,
-    granularity: DateFilterGranularity,
-    translator: IDateTranslator,
+    formatPeriodBoundaryLabel: (date: Date) => string,
 ): string => {
     const fromDate = convertPlatformDateStringToDate(from) ?? undefined;
     const toDate = convertPlatformDateStringToDate(to) ?? undefined;
     if (!fromDate || !toDate) {
         return "";
     }
-
-    const intlOptions = MONTH_AND_YEAR_INTL_OPTIONS[granularity];
-    const formatPeriodBoundaryLabel = (date: Date) =>
-        intlOptions ? translator.formatDate(date, intlOptions) : formatQuarterLabel(date, translator.locale);
 
     const fromLabel = formatPeriodBoundaryLabel(fromDate);
     const toLabel = formatPeriodBoundaryLabel(toDate);
@@ -288,12 +230,23 @@ const getAbsoluteFormFilterRepresentation = (
     filter: IUiAbsoluteDateFilterForm,
     translator: IDateAndMessageTranslator,
     dateFormat: string,
+    weekStart: WeekStart | undefined,
 ): string => {
     if (!filter.from || !filter.to) {
         return "";
     }
-    if (filter.granularity && STATIC_PERIOD_LABEL_GRANULARITIES.has(filter.granularity)) {
-        return formatStaticPeriodDateRange(filter.from, filter.to, filter.granularity, translator);
+    const granularity = filter.granularity;
+    // Which week a day falls in depends on the workspace's week start, so with none given, fall through to
+    // the day range rather than name a week that the rest of the workspace numbers differently.
+    if (granularity === "GDC.time.week_us" && weekStart) {
+        return formatStaticPeriodDateRange(filter.from, filter.to, (date) =>
+            formatWeekLabel(date, weekStart, translator),
+        );
+    }
+    if (granularity && STATIC_PERIOD_LABEL_GRANULARITIES.has(granularity)) {
+        return formatStaticPeriodDateRange(filter.from, filter.to, (date) =>
+            formatMonthQuarterOrYearLabel(date, granularity, translator),
+        );
     }
     return formatAbsoluteDateRange(filter.from, filter.to, dateFormat);
 };
@@ -338,9 +291,16 @@ const getDateFilterRepresentationByFilterType = (
     translator: IDateAndMessageTranslator,
     dateFormat: string,
     labelMode: DateFilterLabelMode,
+    weekStart: WeekStart | undefined,
 ) => {
     if (isAbsoluteDateFilterForm(filter) || isRelativeDateFilterForm(filter)) {
-        return getDateFilterRepresentationUsingTranslator(filter, translator, dateFormat, labelMode);
+        return getDateFilterRepresentationUsingTranslator(
+            filter,
+            translator,
+            dateFormat,
+            labelMode,
+            weekStart,
+        );
     } else if (isEmptyValuesDateFilterOption(filter)) {
         return filter.name || getEmptyValuesFilterRepresentation(translator);
     } else if (
@@ -350,7 +310,7 @@ const getDateFilterRepresentationByFilterType = (
     ) {
         return (
             filter.name ||
-            getDateFilterRepresentationUsingTranslator(filter, translator, dateFormat, labelMode)
+            getDateFilterRepresentationUsingTranslator(filter, translator, dateFormat, labelMode, weekStart)
         );
     } else {
         throw new Error("Unknown DateFilterOption type");
@@ -387,12 +347,19 @@ export const getDateFilterTitleUsingTranslator = (
     translator: IDateAndMessageTranslator,
     labelMode: DateFilterLabelMode,
     dateFormat: string = DEFAULT_DATE_FORMAT,
+    weekStart?: WeekStart,
 ): string => {
     if (isAllTimeDateFilterOption(filter) && filter.emptyValueHandling === "exclude") {
         return translator.formatMessage({ id: "filters.allTime.exceptEmptyValues.title" });
     }
 
-    const baseTitle = getDateFilterRepresentationByFilterType(filter, translator, dateFormat, labelMode);
+    const baseTitle = getDateFilterRepresentationByFilterType(
+        filter,
+        translator,
+        dateFormat,
+        labelMode,
+        weekStart,
+    );
 
     // Special case for that can potentially be persisted but is equal to regular "All time"
     if (isAllTimeDateFilterOption(filter) && filter.emptyValueHandling === "include") {
@@ -415,9 +382,10 @@ const getDateFilterRepresentationUsingTranslator = (
     translator: IDateAndMessageTranslator,
     dateFormat: string,
     labelMode: DateFilterLabelMode,
+    weekStart: WeekStart | undefined,
 ): string => {
     if (isAbsoluteDateFilterForm(filter)) {
-        return getAbsoluteFormFilterRepresentation(filter, translator, dateFormat);
+        return getAbsoluteFormFilterRepresentation(filter, translator, dateFormat, weekStart);
     } else if (isAbsoluteDateFilterPreset(filter)) {
         return getAbsolutePresetFilterRepresentation(filter, dateFormat);
     } else if (isAllTimeDateFilterOption(filter)) {
@@ -442,8 +410,9 @@ export const getDateFilterRepresentation = (
     messages: ITranslations,
     labelMode: DateFilterLabelMode,
     dateFormat: string = DEFAULT_DATE_FORMAT,
+    weekStart?: WeekStart,
 ): string => {
     const translator = getIntl(locale, messages);
 
-    return getDateFilterRepresentationUsingTranslator(filter, translator, dateFormat, labelMode);
+    return getDateFilterRepresentationUsingTranslator(filter, translator, dateFormat, labelMode, weekStart);
 };

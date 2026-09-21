@@ -1,9 +1,11 @@
 // (C) 2026 GoodData Corporation
 
 import { render, screen } from "@testing-library/react";
+import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { idRef } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 
 import { type IRichTextProps, RichText } from "./RichText.js";
@@ -72,5 +74,50 @@ describe("RichText", () => {
         const withHtml = renderRichText({ value: "<div>block</div>", allowedMarkdown: ["html"] });
         expect(await screen.findByText("<div>block</div>")).toBeInTheDocument();
         expect(withHtml.container.querySelector("p")).toBeNull();
+    });
+});
+
+describe("RichText restricted marker", () => {
+    const restrictedProps: IRichTextProps = {
+        value: "Margin held at {metric/margin} while revenue grew {metric/revenue}.",
+        referencesEnabled: true,
+        restrictedReferences: [idRef("margin", "measure")],
+    };
+    const reason = "You don't have access to this reference. Contact your administrator to request access.";
+
+    it("gives the reason, and stays text rather than a control", async () => {
+        renderRichText(restrictedProps);
+
+        expect(await screen.findByText("restricted")).toBeInTheDocument();
+        expect(screen.queryByRole("button")).not.toBeInTheDocument();
+
+        await userEvent.setup().tab();
+
+        expect(await screen.findByRole("tooltip")).toHaveTextContent(reason);
+    });
+
+    it("names its reason to assistive technology, not only on screen", async () => {
+        const { container } = renderRichText(restrictedProps);
+
+        const marker = await screen.findByText("restricted");
+        const describedBy = marker.getAttribute("aria-describedby");
+        expect(describedBy).toBeTruthy();
+
+        // the description the marker points at is filled once it is reached, which for a keyboard
+        // user is the same moment the tooltip opens
+        await userEvent.setup().tab();
+
+        expect(container.querySelector(`#${describedBy}`)).toHaveTextContent(reason);
+    });
+
+    it("marks a reference of either kind the same way", async () => {
+        const { container } = renderRichText({
+            value: "Sales in {label/city} of {metric/margin}",
+            referencesEnabled: true,
+            restrictedReferences: [idRef("city", "displayForm"), idRef("margin", "measure")],
+        });
+
+        expect(await screen.findAllByText("restricted")).toHaveLength(2);
+        expect(container.querySelectorAll(".gd-rich-text-metric-restricted")).toHaveLength(2);
     });
 });

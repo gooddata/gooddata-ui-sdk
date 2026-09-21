@@ -99,6 +99,7 @@ describe("Catalog", () => {
                         enableGenAICatalogQualityChecker: true,
                     } as IUserWorkspaceSettings,
                     permissions: {
+                        canAnalyzeWorkspace: true,
                         canCreateVisualization: true,
                         canUseAiAssistant: false,
                     } as IWorkspacePermissions,
@@ -121,6 +122,7 @@ describe("Catalog", () => {
                         enableGenAICatalogQualityChecker: true,
                     } as IUserWorkspaceSettings,
                     permissions: {
+                        canAnalyzeWorkspace: true,
                         canCreateVisualization: true,
                         canUseAiAssistant: true,
                     } as IWorkspacePermissions,
@@ -141,6 +143,7 @@ describe("Catalog", () => {
                 result={{
                     settings: { enableParameters: true } as IUserWorkspaceSettings,
                     permissions: {
+                        canAnalyzeWorkspace: true,
                         canCreateVisualization: true,
                         canManageProject: false,
                     } as IWorkspacePermissions,
@@ -163,6 +166,7 @@ describe("Catalog", () => {
                 result={{
                     settings: { enableParameters: true } as IUserWorkspaceSettings,
                     permissions: {
+                        canAnalyzeWorkspace: true,
                         canCreateVisualization: true,
                         canManageProject: true,
                     } as IWorkspacePermissions,

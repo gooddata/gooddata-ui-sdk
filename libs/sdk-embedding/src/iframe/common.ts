@@ -1,5 +1,7 @@
 // (C) 2020-2026 GoodData Corporation
 
+import { type IObjIdentifierQualifier } from "./legacyTypes.js";
+
 /**
  * List of products using post events
  *
@@ -235,9 +237,16 @@ export interface ISimpleDrillableItemsCommandBody {
      */
     uris?: string[];
     /**
-     * The array of identifiers of attributes or measures
+     * The array of identifiers of attributes or measures.
+     *
+     * @remarks
+     * An entry is either a bare identifier, which makes drillable any object of that identifier whatever
+     * its type, or a qualifier naming the object type as well, which makes drillable only an object
+     * matching both. The typed form is the only way to tell a computed attribute from a label of the same
+     * identifier: a computed attribute has no labels and is referenced directly, so an identifier alone
+     * activates drilling on both.
      */
-    identifiers?: string[];
+    identifiers?: (string | IObjIdentifierQualifier)[];
 }
 
 /**

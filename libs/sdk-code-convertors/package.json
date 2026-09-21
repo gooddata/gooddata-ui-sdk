@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-code-convertors",
-    "version": "11.58.0-alpha.1",
+    "version": "11.58.0-alpha.2",
     "description": "GoodData AAC declarative converters",
     "license": "MIT",
     "author": "GoodData",
@@ -72,6 +72,6 @@
         "oxlint-plugin-eslint": "1.82.0",
         "oxlint-tsgolint": "7.0.2001",
         "typescript": "7.0.2",
-        "vitest": "4.1.8"
+        "vitest": "4.1.11"
     }
 }

@@ -54,7 +54,6 @@ export enum TigerFeaturesNames {
     EnableVisualizationFilteringByTags = "enableVisualizationFilteringByTags",
     EnableVisualizationFineTuning = "enableVisualizationFineTuning",
     EnableDashboardDescriptionDynamicHeight = "enableDashboardDescriptionDynamicHeight",
-    EnableAmplitudeTracker = "enableAmplitudeTracker",
     EnableExportTemplateSelection = "enableExportTemplateSelection",
     EnableExportTemplatesSettingUi = "enableExportTemplatesSettingUi",
     EnableRawExports = "enableRawExports",
@@ -189,7 +188,6 @@ export type ITigerFeatureFlags = {
     enableDashboardTabularExport: (typeof FeatureFlagsValues)["enableDashboardTabularExport"][number];
     enableOrchestratedTabularExports: (typeof FeatureFlagsValues)["enableOrchestratedTabularExports"][number];
     enableDashboardDescriptionDynamicHeight: (typeof FeatureFlagsValues)["enableDashboardDescriptionDynamicHeight"][number];
-    enableAmplitudeTracker: (typeof FeatureFlagsValues)["enableAmplitudeTracker"][number];
     enableExportTemplateSelection: (typeof FeatureFlagsValues)["enableExportTemplateSelection"][number];
     enableExportTemplatesSettingUi: (typeof FeatureFlagsValues)["enableExportTemplatesSettingUi"][number];
     enableRawExports: (typeof FeatureFlagsValues)["enableRawExports"][number];
@@ -320,7 +318,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDashboardTabularExport: false,
     enableOrchestratedTabularExports: false,
     enableDashboardDescriptionDynamicHeight: false,
-    enableAmplitudeTracker: false,
     enableExportTemplateSelection: true,
     enableExportTemplatesSettingUi: false,
     enableRawExports: false,
@@ -451,7 +448,6 @@ export const FeatureFlagsValues = {
     enableDashboardTabularExport: [true, false] as const,
     enableOrchestratedTabularExports: [true, false] as const,
     enableDashboardDescriptionDynamicHeight: [true, false] as const,
-    enableAmplitudeTracker: [true, false] as const,
     enableExportTemplateSelection: [true, false] as const,
     enableExportTemplatesSettingUi: [true, false] as const,
     enableRawExports: [true, false] as const,

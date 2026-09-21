@@ -27,6 +27,11 @@ export type WorkspacePermission =
      */
     | "canAccessWorkbench"
     /**
+     * Whether the current user holds the ANALYZE workspace role or higher: may open Analytical Designer
+     * and the Analytics Catalog. Surfaces gate on this; creating objects gates on the canCreate* permissions.
+     */
+    | "canAnalyzeWorkspace"
+    /**
      * Whether the current user has permissions to create a report object via API.
      */
     | "canCreateReport"

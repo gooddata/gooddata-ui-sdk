@@ -18,16 +18,19 @@ interface IAccessibleFieldInputProps extends InputHTMLAttributes<HTMLInputElemen
 }
 
 /**
- * A drop-in replacement for the plain `<input>` rc-picker renders for each half of the date range,
- * used only to layer on the accessibility attributes our a11y model needs - a label, an invalid
- * state, and a description pointing at either a format hint or an error message. Typing, masking,
- * and focus behavior all still belong to rc-picker; this component just decorates the props it's handed.
+ * Replaces the plain `<input>` rc-picker renders for each half of the date range, adding the accessibility
+ * attributes our a11y model needs - a label, an invalid state, and a description pointing at a format hint
+ * or an error - plus that field's own leading calendar icon. Typing, masking and focus stay with rc-picker.
  *
  * @remarks
- * rc-picker exposes two facts only this component can observe directly: whether the typed text failed to
- * parse (as this input's own invalid state) and whether the field is currently blank (its own live displayed
- * text, which updates on every keystroke including a clear). Both are reported upward, raw and unresolved, via
- * an effect - the surrounding picker owns everything else needed to turn them into an error kind or message.
+ * The icon is rendered here because rc-picker's own icon props render once for the whole range control,
+ * not once per field. Returning a fragment is safe: rc-picker reaches the input through `ref`.
+ * The icon is inert - `aria-hidden` plus `pointer-events: none` - so it adds no tab stop, and it is
+ * positioned over the input rather than beside it, so a click on it activates this field.
+ *
+ * Two facts are only observable here: whether the typed text failed to parse, and whether the field is
+ * currently blank. Both are reported upward raw, via an effect; the surrounding picker turns them into an
+ * error kind or message.
  */
 export const AccessibleFieldInput = forwardRef<HTMLInputElement, IAccessibleFieldInputProps>((props, ref) => {
     const { "date-range": side, "aria-invalid": rcPickerInvalid, onKeyDown, ...restProps } = props;
@@ -108,22 +111,25 @@ export const AccessibleFieldInput = forwardRef<HTMLInputElement, IAccessibleFiel
     );
 
     return (
-        <input
-            ref={ref}
-            {...restProps}
-            date-range={side}
-            onKeyDown={handleKeyDown}
-            aria-label={field?.ariaLabel}
-            // `hasParseError` looks redundant with `field.errorKind` (resolveFieldErrorKind already
-            // returns "invalid" whenever hasParseError), but isn't: hasParseError reflects this render, while
-            // field.errorKind comes from the parent's state, which only catches up after this component's
-            // effect fires post-commit. Dropping it would leave aria-invalid="false" for one render right
-            // after the first unparsable keystroke.
-            aria-invalid={field ? hasParseError || field.errorKind !== undefined : rcPickerInvalid}
-            aria-describedby={
-                field ? (field.errorKind === undefined ? field.hintId : field.errorId) : undefined
-            }
-        />
+        <>
+            <span className="gd-icon-calendar" aria-hidden="true" />
+            <input
+                ref={ref}
+                {...restProps}
+                date-range={side}
+                onKeyDown={handleKeyDown}
+                aria-label={field?.ariaLabel}
+                // `hasParseError` looks redundant with `field.errorKind` (resolveFieldErrorKind already
+                // returns "invalid" whenever hasParseError), but isn't: hasParseError reflects this render, while
+                // field.errorKind comes from the parent's state, which only catches up after this component's
+                // effect fires post-commit. Dropping it would leave aria-invalid="false" for one render right
+                // after the first unparsable keystroke.
+                aria-invalid={field ? hasParseError || field.errorKind !== undefined : rcPickerInvalid}
+                aria-describedby={
+                    field ? (field.errorKind === undefined ? field.hintId : field.errorId) : undefined
+                }
+            />
+        </>
     );
 });
 AccessibleFieldInput.displayName = "AccessibleFieldInput";

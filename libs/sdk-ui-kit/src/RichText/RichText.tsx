@@ -13,7 +13,7 @@ import {
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
-import Markdown from "react-markdown";
+import Markdown, { type Components } from "react-markdown";
 
 import { type IExecutionConfig, type IFilter, type ISeparators, type ObjRef } from "@gooddata/sdk-model";
 import { IntlWrapper, LoadingComponent, type OnError, type OnLoadingChanged } from "@gooddata/sdk-ui";
@@ -22,6 +22,8 @@ import { useEvaluatedReferences } from "./hooks/useEvaluatedReferences.js";
 import { rehypeReferences } from "./plugins/rehype-references.js";
 import { type RichTextFeature, remarkMarkdownFeatures } from "./plugins/remark-markdown-features.js";
 import { remarkReferences } from "./plugins/remark-references.js";
+import { RESTRICTED_MARKER_TAG } from "./plugins/types.js";
+import { RestrictedReferenceMarker } from "./RestrictedReferenceMarker.js";
 
 // lineHeight from CSS, used to calculate max textarea height based on provided row count
 const RICH_TEXT_TEXTAREA_ROW_HEIGHT = 19;
@@ -307,6 +309,14 @@ function RichTextView({
         }
     }, [error, onError]);
 
+    // the marker is an element of our own, which the map's type cannot name - it is keyed by the
+    // intrinsic elements - so the map is assembled and then declared
+    const components = {
+        img: ImageComponent,
+        a: AnchorComponent,
+        [RESTRICTED_MARKER_TAG]: RestrictedReferenceMarker,
+    } as Components;
+
     if (isEmptyValue && emptyElement) {
         return emptyElement;
     }
@@ -317,7 +327,7 @@ function RichTextView({
 
     return (
         <Markdown
-            components={{ img: ImageComponent, a: AnchorComponent }}
+            components={components}
             remarkPlugins={[
                 ...(allowedMarkdown === undefined ? [] : [remarkMarkdownFeatures(allowedMarkdown)]),
                 ...(referencesEnabled ? [remarkReferences()] : []),

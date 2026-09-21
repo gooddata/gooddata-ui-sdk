@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "Deprecate enableAmplitudeTracker and stop resolving it; the Amplitude integration was removed",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "petr.benes@gooddata.com"
+}

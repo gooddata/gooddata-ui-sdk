@@ -79,6 +79,7 @@ import { LOCALES } from '@gooddata/sdk-model';
 import { MemoExoticComponent } from 'react';
 import { MessageDescriptor } from 'react-intl';
 import { MutableRefObject } from 'react';
+import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { PropsWithoutRef } from 'react';
 import { ReactElement } from 'react';
@@ -225,7 +226,7 @@ export type CollectionItemsRequestOptions = {
 };
 
 // @public
-export function composedFromIdentifier(identifier: string): IHeaderPredicate;
+export function composedFromIdentifier(identifier: string, type?: ObjectType): IHeaderPredicate;
 
 // @public
 export function composedFromUri(uri: string): IHeaderPredicate;
@@ -931,7 +932,7 @@ export interface IDataVisualizationProps extends IVisualizationProps, IVisualiza
 }
 
 // @public
-export function identifierMatch(identifier: string): IHeaderPredicate;
+export function identifierMatch(identifier: string, type?: ObjectType): IHeaderPredicate;
 
 // @public (undocumented)
 export type IDrillableItem = IDrillableItemUri | IDrillableItemIdentifier | (IDrillableItemUri & IDrillableItemIdentifier);

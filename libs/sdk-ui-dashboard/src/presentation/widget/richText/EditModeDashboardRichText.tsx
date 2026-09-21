@@ -1,6 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -23,10 +23,12 @@ import { useDashboardDispatch, useDashboardSelector } from "../../../model/react
 import { useDashboardExecConfig } from "../../../model/react/useWidgetExecConfig.js";
 import { useWidgetSelection } from "../../../model/react/useWidgetSelection.js";
 import { selectIsWhiteLabeled, selectSeparators } from "../../../model/store/config/configSelectors.js";
+import { uiActions } from "../../../model/store/ui/index.js";
 import { selectRestrictedRichTextReferences } from "../../../model/store/unavailableObjects/unavailableObjectsSelectors.js";
 import { DASHBOARD_OVERLAYS_FILTER_Z_INDEX } from "../../../presentation/constants/zIndex.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 
+import { RestrictedReferencesDialog, useHasRestrictedReferences } from "./RestrictedReferencesDialog.js";
 import { type IDashboardRichTextProps } from "./types.js";
 import { useEditableRichTextMenu } from "./useEditableRichTextMenu.js";
 
@@ -50,10 +52,28 @@ export function EditModeDashboardRichText({ widget, clientWidth, clientHeight }:
     const separators = useDashboardSelector(selectSeparators);
 
     const dispatch = useDashboardDispatch();
+    const releaseWidget = useCallback(() => dispatch(uiActions.clearWidgetSelection()), [dispatch]);
 
     const [richText, setRichText] = useState<string>(widget?.content);
 
-    const [isRichTextEditing, setIsRichTextEditing] = useState(false);
+    // the rewrite is committed at once: it was confirmed, and it is not a keystroke
+    const onSanitized = useCallback(
+        (sanitized: string) => {
+            setRichText(sanitized);
+            dispatch(changeRichTextWidgetContent(widget.ref, sanitized));
+        },
+        [dispatch, widget.ref],
+    );
+
+    // Selecting the widget is what opens its editor, and a text holding a reference the editor may
+    // not read is asked about first. Both states are that selection and that text, so neither is
+    // kept as a flag: confirming rewrites the text, which is what turns the question into the
+    // editor; cancelling lets the widget go - deliberately, rather than through deselectWidgets,
+    // which holds on to a widget whose text the pointer happens to have selected.
+    const hasRestrictedReferences = useHasRestrictedReferences(richText);
+    const isRichTextEditing = isSelected && !hasRestrictedReferences;
+    const isAskingToSanitize = isSelected && hasRestrictedReferences;
+
     const [isConfirmDeleteDialogVisible, setIsConfirmDeleteDialogVisible] = useState(false);
     const theme = useTheme();
 
@@ -73,10 +93,6 @@ export function EditModeDashboardRichText({ widget, clientWidth, clientHeight }:
         () => RichTextMenuComponentProvider(widget),
         [RichTextMenuComponentProvider, widget],
     );
-
-    useEffect(() => {
-        setIsRichTextEditing(isSelected);
-    }, [isSelected]);
 
     useEffect(() => {
         // Deselect widget and commit updated markdown text "on blur"
@@ -130,6 +146,13 @@ export function EditModeDashboardRichText({ widget, clientWidth, clientHeight }:
                         ) : null}
                     </div>
                 </div>
+            ) : null}
+            {isAskingToSanitize ? (
+                <RestrictedReferencesDialog
+                    value={richText}
+                    onSanitized={onSanitized}
+                    onCancel={releaseWidget}
+                />
             ) : null}
             {isConfirmDeleteDialogVisible ? (
                 <OverlayControllerProvider overlayController={overlayController}>

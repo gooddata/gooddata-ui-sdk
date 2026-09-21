@@ -19,6 +19,7 @@ const columnAndComputedAttributeFlags: ISettings = {
 
 function buildPermissions(overrides: Partial<IWorkspacePermissions> = {}): IWorkspacePermissions {
     return {
+        canAnalyzeWorkspace: false,
         canCreateVisualization: false,
         canManageProject: false,
         ...overrides,
@@ -75,25 +76,25 @@ describe("canEditCatalogItem", () => {
     });
 
     it("returns false when item is not editable", () => {
-        const perms = buildPermissions({ canCreateVisualization: true });
+        const perms = buildPermissions({ canAnalyzeWorkspace: true });
         const item = buildItem({ isEditable: false });
         expect(canEditCatalogItem(perms, item)).toBe(false);
     });
 
-    it("allows edit for canCreateVisualization on insight", () => {
-        const perms = buildPermissions({ canCreateVisualization: true });
+    it("allows edit for the ANALYZE role on insight", () => {
+        const perms = buildPermissions({ canAnalyzeWorkspace: true });
         const item = buildItem({ type: "insight" });
         expect(canEditCatalogItem(perms, item)).toBe(true);
     });
 
-    it("allows edit for canCreateVisualization on analyticalDashboard", () => {
-        const perms = buildPermissions({ canCreateVisualization: true });
+    it("allows edit for the ANALYZE role on analyticalDashboard", () => {
+        const perms = buildPermissions({ canAnalyzeWorkspace: true });
         const item = buildItem({ type: "analyticalDashboard" });
         expect(canEditCatalogItem(perms, item)).toBe(true);
     });
 
-    it("disallows edit for canCreateVisualization on disallowed types", () => {
-        const perms = buildPermissions({ canCreateVisualization: true });
+    it("disallows edit for the ANALYZE role on disallowed types", () => {
+        const perms = buildPermissions({ canAnalyzeWorkspace: true });
         const disallowedTypes: ICatalogItem["type"][] = ["measure", "fact", "attribute"];
 
         for (const type of disallowedTypes) {
@@ -102,7 +103,7 @@ describe("canEditCatalogItem", () => {
         }
     });
 
-    it("returns false when user lacks both manage project and create visualization", () => {
+    it("returns false when user lacks both manage project and the ANALYZE role", () => {
         const perms = buildPermissions();
         const item = buildItem({ type: "insight" });
         expect(canEditCatalogItem(perms, item)).toBe(false);
@@ -117,11 +118,7 @@ describe("canEditCatalogItem", () => {
         it("stops the workspace role from deciding once the flag is on", () => {
             const item = buildItem({ type: "insight" });
             expect(
-                canEditCatalogItem(
-                    buildPermissions({ canCreateVisualization: true }),
-                    item,
-                    visualizationFlag,
-                ),
+                canEditCatalogItem(buildPermissions({ canAnalyzeWorkspace: true }), item, visualizationFlag),
             ).toBe(false);
             expect(canEditCatalogItem(buildPermissions(), item, visualizationFlag)).toBe(false);
         });

@@ -1,10 +1,20 @@
 // (C) 2026 GoodData Corporation
 
 import { type IUnavailableDashboardReference } from "@gooddata/sdk-backend-spi";
-import { isInsightWidget, isVisualizationSwitcherWidget } from "@gooddata/sdk-model";
+import {
+    type ObjRef,
+    areObjRefsEqual,
+    isInsightWidget,
+    isRichTextWidget,
+    isVisualizationSwitcherWidget,
+} from "@gooddata/sdk-model";
+import { collectReferences } from "@gooddata/sdk-ui-kit";
 
 import { type ObjRefMap } from "../../_staging/metadata/objRefMap.js";
-import { selectRestrictedInsightsMap } from "../store/unavailableObjects/unavailableObjectsSelectors.js";
+import {
+    selectRestrictedInsightsMap,
+    selectRestrictedRichTextReferences,
+} from "../store/unavailableObjects/unavailableObjectsSelectors.js";
 import { type ExtendedDashboardWidget, isExtendedDashboardLayoutWidget } from "../types/layoutTypes.js";
 
 import { useDashboardSelector } from "./DashboardStoreProvider.js";
@@ -12,11 +22,13 @@ import { useDashboardSelector } from "./DashboardStoreProvider.js";
 /**
  * A switcher counts as restricted as soon as one of its entries is: its size comes from a
  * visualization type the editor may not read, exactly as for a single restricted visualization. A
- * container counts once anything inside it does, because its own resize reaches every descendant.
+ * rich text widget counts once its text references an object that is withheld, and a container once
+ * anything inside it does, because its own resize reaches every descendant.
  */
 function isWidgetRestricted(
     widget: ExtendedDashboardWidget,
     restrictedInsights: ObjRefMap<IUnavailableDashboardReference>,
+    restrictedReferences: ObjRef[],
 ): boolean {
     if (isInsightWidget(widget)) {
         return restrictedInsights.has(widget.insight);
@@ -24,11 +36,19 @@ function isWidgetRestricted(
     if (isVisualizationSwitcherWidget(widget)) {
         return widget.visualizations.some((visualization) => restrictedInsights.has(visualization.insight));
     }
+    if (isRichTextWidget(widget)) {
+        return Object.values(collectReferences(widget.content)).some((reference) =>
+            restrictedReferences.some((restricted) => areObjRefsEqual(restricted, reference.ref)),
+        );
+    }
     if (isExtendedDashboardLayoutWidget(widget)) {
         // resizing a container writes its new width to every widget inside it, so a container holding
         // a restricted widget cannot be resized either
         return widget.sections.some((section) =>
-            section.items.some((item) => item.widget && isWidgetRestricted(item.widget, restrictedInsights)),
+            section.items.some(
+                (item) =>
+                    item.widget && isWidgetRestricted(item.widget, restrictedInsights, restrictedReferences),
+            ),
         );
     }
     return false;
@@ -42,8 +62,9 @@ function isWidgetRestricted(
  */
 export function useIsWidgetRestricted(widget: ExtendedDashboardWidget): boolean {
     const restrictedInsights = useDashboardSelector(selectRestrictedInsightsMap);
+    const restrictedReferences = useDashboardSelector(selectRestrictedRichTextReferences);
 
-    return isWidgetRestricted(widget, restrictedInsights);
+    return isWidgetRestricted(widget, restrictedInsights, restrictedReferences);
 }
 
 /**
@@ -54,6 +75,7 @@ export function useIsWidgetRestricted(widget: ExtendedDashboardWidget): boolean 
  */
 export function useIsAnyWidgetRestricted(widgets: ExtendedDashboardWidget[]): boolean {
     const restrictedInsights = useDashboardSelector(selectRestrictedInsightsMap);
+    const restrictedReferences = useDashboardSelector(selectRestrictedRichTextReferences);
 
-    return widgets.some((widget) => isWidgetRestricted(widget, restrictedInsights));
+    return widgets.some((widget) => isWidgetRestricted(widget, restrictedInsights, restrictedReferences));
 }

@@ -11,7 +11,13 @@ import { type ISeparators, type IdentifierRef, type ObjRef, areObjRefsEqual } fr
 import { createReference } from "../helpers/references.js";
 import { type EvaluatedMetric } from "../hooks/useEvaluatedMetricsAndAttributes.js";
 
-import { type HtmlNode, REFERENCE_REGEX_MATCH, REFERENCE_REGEX_SPLIT, type TextNode } from "./types.js";
+import {
+    type HtmlNode,
+    REFERENCE_REGEX_MATCH,
+    REFERENCE_REGEX_SPLIT,
+    RESTRICTED_MARKER_TAG,
+    type TextNode,
+} from "./types.js";
 
 export function rehypeReferences(
     intl: IntlShape,
@@ -55,7 +61,7 @@ export function rehypeReferences(
 function createRestrictedMarker(intl: IntlShape, text: TextNode | null) {
     return {
         type: "element",
-        tagName: "span",
+        tagName: RESTRICTED_MARKER_TAG,
         properties: {
             className: "gd-rich-text-metric-restricted gd-icon-lock",
         },

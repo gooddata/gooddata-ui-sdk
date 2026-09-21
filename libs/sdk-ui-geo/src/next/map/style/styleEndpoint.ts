@@ -2,7 +2,7 @@
 
 import { type IAnalyticalBackend, isUnexpectedResponseError } from "@gooddata/sdk-backend-spi";
 
-import type { StyleSpecification } from "../../layers/common/mapFacade.js";
+import type { ProjectionSpecification, StyleSpecification } from "../../layers/common/mapFacade.js";
 
 const ABSOLUTE_URL_PATTERN = /^https?:\/\//i;
 
@@ -24,6 +24,8 @@ const KNOWN_SOURCE_TYPES: ReadonlySet<string> = new Set([
  * Tile-based source types that optionally define data via "tiles" or "url".
  */
 const TILE_SOURCE_TYPES: ReadonlySet<string> = new Set(["vector", "raster", "raster-dem"]);
+
+const MERCATOR_PROJECTION: ProjectionSpecification = { type: "mercator" };
 
 /**
  * Fetches the MapLibre style specification from the backend.
@@ -51,7 +53,14 @@ export async function fetchMapStyle(
             ? await backend.geo().getDefaultStyle({ language })
             : await fetchMapStyleByIdWithFallback(backend, basemap, language);
     assertValidStyle(style);
-    return style;
+    return withMercatorProjection(style);
+}
+
+/**
+ * Forces a flat map: the AWS basemap styles declare a globe projection, which MapLibre 6 honours.
+ */
+function withMercatorProjection(style: StyleSpecification): StyleSpecification {
+    return { ...style, projection: MERCATOR_PROJECTION };
 }
 
 async function fetchMapStyleByIdWithFallback(

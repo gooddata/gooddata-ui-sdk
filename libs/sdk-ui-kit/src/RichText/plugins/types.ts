@@ -30,3 +30,12 @@ export const REFERENCE_REGEX_SPLIT = /(\{(?:label|metric|computed_attribute)\/[a
  * @internal
  */
 export const REFERENCE_REGEX_MATCH = /(\{((label|metric|computed_attribute)\/([a-z0-9._-]*))\})/gi;
+
+/**
+ * The element the reference plugin leaves in place of a value the user may not read. It has a tag
+ * of its own, so the renderer maps it to a component by name rather than telling it apart from
+ * other markup by what it looks like.
+ *
+ * @internal
+ */
+export const RESTRICTED_MARKER_TAG = "gd-restricted-reference";

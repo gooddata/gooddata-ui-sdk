@@ -10,6 +10,7 @@ import {
     type ICatalogMeasure,
     type ISeparators,
     type ObjRef,
+    type WeekStart,
     areObjRefsEqual,
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardAttributeFilterItemTitle,
@@ -60,6 +61,7 @@ type FilterNamingDependencies = {
     intl: ReturnType<typeof useIntl>;
     locale: ILocale;
     dateFormat: string | undefined;
+    weekStart: WeekStart;
     getAttributeFilterDisplayFormFromMap: ReturnType<typeof useAttributeFilterDisplayFormFromMap>;
     getCatalogAttributeByRef: IAutomationsContextValue["getCatalogAttributeByRef"];
     measures: ICatalogMeasure[];
@@ -88,6 +90,7 @@ function useFilterNamingDependencies(filtersForTitles: FilterContextItem[]): Fil
         settings,
         catalogMeasures: measures,
         separators,
+        weekStart,
         getCatalogAttributeByRef,
     } = useAutomationsContext();
     const dateFormat = settings?.formatLocale
@@ -106,6 +109,7 @@ function useFilterNamingDependencies(filtersForTitles: FilterContextItem[]): Fil
             intl,
             locale,
             dateFormat,
+            weekStart,
             getAttributeFilterDisplayFormFromMap,
             getCatalogAttributeByRef,
             measures,
@@ -117,6 +121,7 @@ function useFilterNamingDependencies(filtersForTitles: FilterContextItem[]): Fil
             intl,
             locale,
             dateFormat,
+            weekStart,
             getAttributeFilterDisplayFormFromMap,
             getCatalogAttributeByRef,
             measures,
@@ -138,6 +143,7 @@ function transformFiltersToNamings(
     const {
         intl,
         dateFormat,
+        weekStart,
         getAttributeFilterDisplayFormFromMap,
         getCatalogAttributeByRef,
         measures,
@@ -199,6 +205,7 @@ function transformFiltersToNamings(
                 intl,
                 "full",
                 dateFormat,
+                weekStart,
             );
 
             const a = filter;

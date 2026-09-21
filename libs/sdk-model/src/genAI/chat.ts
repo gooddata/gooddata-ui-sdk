@@ -286,6 +286,10 @@ export interface IGenAIWidgetDescriptor {
      */
     visualizationUrl?: string;
     /**
+     * Vis dashboard applied filter bar as currently applied in the UI (live state).
+     */
+    filters?: GenAIUserContextFilter[];
+    /**
      * Signed result ID for this widget's cached execution result.
      */
     resultId?: string;

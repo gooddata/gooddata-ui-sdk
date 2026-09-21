@@ -60,6 +60,7 @@ const richTextWidget: IRichTextWidget = {
 };
 
 const otherInsightRef = idRef("insight-2", "insight");
+const restrictedMetric = idRef("m-restricted", "measure");
 
 function switcherWith(...insights: (typeof insightRef)[]): IVisualizationSwitcherWidget {
     return {
@@ -150,6 +151,24 @@ describe("useIsWidgetRestricted", () => {
         } as unknown as ExtendedDashboardWidget;
 
         expect(renderWith(container, { ref: insightRef, type: "insight", reason: "forbidden" })).toBe(false);
+    });
+
+    it("reports a rich text widget that references something the user may not read", () => {
+        expect(
+            renderWith(
+                { ...richTextWidget, content: "Margin {metric/m-restricted} of revenue" },
+                { ref: restrictedMetric, type: "measure", reason: "forbidden" },
+            ),
+        ).toBe(true);
+    });
+
+    it("does not report a rich text widget whose references are all available", () => {
+        expect(
+            renderWith(
+                { ...richTextWidget, content: "Revenue {metric/m-readable}" },
+                { ref: restrictedMetric, type: "measure", reason: "forbidden" },
+            ),
+        ).toBe(false);
     });
 
     it("does not report a widget that renders no insight", () => {

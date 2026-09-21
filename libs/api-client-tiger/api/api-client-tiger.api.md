@@ -3137,7 +3137,7 @@ export interface AiAlertDatasetRef {
 // @public
 export interface AiAlertDefinition {
     // (undocumented)
-    'condition': AiCondition;
+    'condition': AiCondition1;
     'execution': AiAlertExecution;
     // (undocumented)
     'interval'?: AiIntervalGranularity | null;
@@ -3149,8 +3149,8 @@ export interface AiAlertExecution {
     // (undocumented)
     [key: string]: any;
     'attributes'?: Array<object>;
-    'filters'?: Array<object | null>;
-    'measures'?: Array<object | null>;
+    'filters'?: Array<object>;
+    'measures'?: Array<object>;
 }
 
 // @public
@@ -3297,6 +3297,53 @@ export const AiAppApplicationDtosAfmFilterDefinitionMatchType: {
 
 // @public (undocumented)
 export type AiAppApplicationDtosAfmFilterDefinitionMatchType = typeof AiAppApplicationDtosAfmFilterDefinitionMatchType[keyof typeof AiAppApplicationDtosAfmFilterDefinitionMatchType];
+
+// @public (undocumented)
+export const AiAppApplicationDtosConversationUserContextDateFilterGranularity: {
+    readonly SECOND: 'SECOND';
+    readonly SECOND_OF_MINUTE: 'SECOND_OF_MINUTE';
+    readonly SECOND_OF_DAY: 'SECOND_OF_DAY';
+    readonly MINUTE: 'MINUTE';
+    readonly MINUTE_OF_DAY: 'MINUTE_OF_DAY';
+    readonly HOUR: 'HOUR';
+    readonly DAY: 'DAY';
+    readonly WEEK_US: 'WEEK_US';
+    readonly MONTH: 'MONTH';
+    readonly QUARTER: 'QUARTER';
+    readonly YEAR: 'YEAR';
+    readonly MINUTE_OF_HOUR: 'MINUTE_OF_HOUR';
+    readonly HOUR_OF_DAY: 'HOUR_OF_DAY';
+    readonly DAY_OF_WEEK: 'DAY_OF_WEEK';
+    readonly DAY_OF_MONTH: 'DAY_OF_MONTH';
+    readonly DAY_OF_QUARTER: 'DAY_OF_QUARTER';
+    readonly DAY_OF_YEAR: 'DAY_OF_YEAR';
+    readonly WEEK_OF_YEAR: 'WEEK_OF_YEAR';
+    readonly MONTH_OF_YEAR: 'MONTH_OF_YEAR';
+    readonly QUARTER_OF_YEAR: 'QUARTER_OF_YEAR';
+    readonly FISCAL_DAY_OF_FISCAL_WEEK: 'FISCAL_DAY_OF_FISCAL_WEEK';
+    readonly FISCAL_DAY_OF_FISCAL_MONTH: 'FISCAL_DAY_OF_FISCAL_MONTH';
+    readonly FISCAL_DAY_OF_FISCAL_QUARTER: 'FISCAL_DAY_OF_FISCAL_QUARTER';
+    readonly FISCAL_DAY_OF_FISCAL_SEMESTER: 'FISCAL_DAY_OF_FISCAL_SEMESTER';
+    readonly FISCAL_DAY_OF_FISCAL_YEAR: 'FISCAL_DAY_OF_FISCAL_YEAR';
+    readonly FISCAL_WEEK: 'FISCAL_WEEK';
+    readonly FISCAL_WEEK_OF_FISCAL_MONTH: 'FISCAL_WEEK_OF_FISCAL_MONTH';
+    readonly FISCAL_WEEK_OF_FISCAL_QUARTER: 'FISCAL_WEEK_OF_FISCAL_QUARTER';
+    readonly FISCAL_WEEK_OF_FISCAL_SEMESTER: 'FISCAL_WEEK_OF_FISCAL_SEMESTER';
+    readonly FISCAL_WEEK_OF_FISCAL_YEAR: 'FISCAL_WEEK_OF_FISCAL_YEAR';
+    readonly FISCAL_MONTH: 'FISCAL_MONTH';
+    readonly FISCAL_MONTH_OF_FISCAL_QUARTER: 'FISCAL_MONTH_OF_FISCAL_QUARTER';
+    readonly FISCAL_MONTH_OF_FISCAL_SEMESTER: 'FISCAL_MONTH_OF_FISCAL_SEMESTER';
+    readonly FISCAL_MONTH_OF_FISCAL_YEAR: 'FISCAL_MONTH_OF_FISCAL_YEAR';
+    readonly FISCAL_QUARTER: 'FISCAL_QUARTER';
+    readonly FISCAL_QUARTER_OF_FISCAL_SEMESTER: 'FISCAL_QUARTER_OF_FISCAL_SEMESTER';
+    readonly FISCAL_QUARTER_OF_FISCAL_YEAR: 'FISCAL_QUARTER_OF_FISCAL_YEAR';
+    readonly FISCAL_SEMESTER: 'FISCAL_SEMESTER';
+    readonly FISCAL_SEMESTER_OF_FISCAL_YEAR: 'FISCAL_SEMESTER_OF_FISCAL_YEAR';
+    readonly FISCAL_YEAR: 'FISCAL_YEAR';
+};
+
+// @public (undocumented)
+export type AiAppApplicationDtosConversationUserContextDateFilterGranularity = typeof AiAppApplicationDtosConversationUserContextDateFilterGranularity[keyof typeof AiAppApplicationDtosConversationUserContextDateFilterGranularity];
 
 // @public
 export interface AiAppliedMemoryItem {
@@ -3477,7 +3524,7 @@ export interface AiChartFill {
         [key: string]: AiPatternNameMapping;
     } | null;
     // (undocumented)
-    'type'?: AiType53 | null;
+    'type'?: AiType54 | null;
 }
 
 // @public (undocumented)
@@ -3514,7 +3561,7 @@ export interface AiColorDefinition {
 // @public (undocumented)
 export interface AiColumnOverride {
     // (undocumented)
-    'locators'?: Array<object | null> | null;
+    'locators'?: Array<object> | null;
     // (undocumented)
     'match_type'?: AiGooddataCodeConvertorsPydanticModelsMatchType | null;
     // (undocumented)
@@ -3522,6 +3569,25 @@ export interface AiColumnOverride {
     // (undocumented)
     'wrap_text'?: boolean | null;
 }
+
+// @public (undocumented)
+export const AiColumns: {
+    readonly NUMBER_1: 1;
+    readonly NUMBER_2: 2;
+    readonly NUMBER_3: 3;
+    readonly NUMBER_4: 4;
+    readonly NUMBER_5: 5;
+    readonly NUMBER_6: 6;
+    readonly NUMBER_7: 7;
+    readonly NUMBER_8: 8;
+    readonly NUMBER_9: 9;
+    readonly NUMBER_10: 10;
+    readonly NUMBER_11: 11;
+    readonly NUMBER_12: 12;
+};
+
+// @public (undocumented)
+export type AiColumns = typeof AiColumns[keyof typeof AiColumns];
 
 // @public (undocumented)
 export interface AiComparison {
@@ -3613,7 +3679,7 @@ export interface AiComposeAnswerDetail {
 export type AiComposeAnswerDetailCategoryEnum = 'composeAnswer';
 
 // @public (undocumented)
-export type AiComposeAnswerDetailOutputEnum = 'text' | 'visualization' | 'dashboard' | 'keyDriverAnalysis' | 'whatIf' | 'searchResults' | 'alertProposal';
+export type AiComposeAnswerDetailOutputEnum = 'text' | 'visualization' | 'dashboard' | 'keyDriverAnalysis' | 'whatIf' | 'searchResults' | 'alertProposal' | 'clarifyingQuestions';
 
 // @public (undocumented)
 export interface AiCompoundMeasureValueFilter {
@@ -3653,8 +3719,17 @@ export interface AiCompoundMeasureValueFilterBodyDimensionalityInner {
     'localIdentifier': string;
 }
 
+// @public (undocumented)
+export const AiCondition: {
+    readonly IS: 'is';
+    readonly IS_NOT: 'isNot';
+};
+
+// @public (undocumented)
+export type AiCondition = typeof AiCondition[keyof typeof AiCondition];
+
 // @public
-export type AiCondition = AiAnomalyCondition | AiComparisonCondition | AiRangeCondition | AiRelativeCondition;
+export type AiCondition1 = AiAnomalyCondition | AiComparisonCondition | AiRangeCondition | AiRelativeCondition;
 
 // @public (undocumented)
 export const AiCondition2: {
@@ -4048,25 +4123,6 @@ export interface AiConfigurationParameters {
 }
 
 // @public
-export interface AiContainerWidget {
-    // (undocumented)
-    'columns'?: number;
-    // (undocumented)
-    'container': string;
-    // (undocumented)
-    'enable_section_headers'?: boolean;
-    // (undocumented)
-    'layout_direction'?: AiContainerWidgetLayoutDirectionEnum;
-    // (undocumented)
-    'rows'?: number;
-    // (undocumented)
-    'sections': Array<AiDashboardSection>;
-}
-
-// @public (undocumented)
-export type AiContainerWidgetLayoutDirectionEnum = 'row' | 'column';
-
-// @public
 export type AiContent = ({
     type: 'multipart';
 } & AiMultipartContent) | ({
@@ -4236,69 +4292,25 @@ export interface AiCustomTooltip {
     'placement'?: AiPlacement | null;
 }
 
-// @public
-export interface AiDashboard {
-    // (undocumented)
-    [key: string]: any;
-    // (undocumented)
-    'cross_filtering'?: boolean;
-    // (undocumented)
-    'description'?: string;
-    // (undocumented)
-    'enable_section_headers'?: boolean;
-    // (undocumented)
-    'filter_views'?: boolean;
-    // (undocumented)
-    'filters'?: {
-        [key: string]: AiFiltersValue;
-    };
-    // (undocumented)
-    'id': string;
-    // (undocumented)
-    'permissions'?: object;
-    // (undocumented)
-    'sections'?: Array<AiDashboardSection>;
-    // (undocumented)
-    'tabs'?: Array<AiDashboardTab>;
-    // (undocumented)
-    'tags'?: Array<string>;
-    // (undocumented)
-    'title': string;
-    // (undocumented)
-    'type': string;
-    // (undocumented)
-    'user_filters_reset'?: boolean;
-    // (undocumented)
-    'user_filters_save'?: boolean;
-    // (undocumented)
-    'version'?: AiDashboardVersionEnum;
-}
-
 // @public (undocumented)
 export interface AiDashboardAbsoluteDateFilter {
     // (undocumented)
     'date'?: string;
     // (undocumented)
-    'empty_values'?: string;
+    'empty_values'?: AiEmptyValues | null;
     // (undocumented)
-    'from'?: string;
+    'from'?: string | null;
     // (undocumented)
-    'granularity'?: AiDashboardAbsoluteDateFilterGranularityEnum;
+    'granularity'?: AiDateFilterGranularityOutput | null;
     // (undocumented)
-    'mode'?: string;
+    'mode'?: AiMode | null;
     // (undocumented)
-    'title'?: string;
+    'title'?: string | null;
     // (undocumented)
-    'to'?: string;
+    'to'?: string | null;
     // (undocumented)
-    'type': AiDashboardAbsoluteDateFilterTypeEnum;
+    'type': AiType1;
 }
-
-// @public (undocumented)
-export type AiDashboardAbsoluteDateFilterGranularityEnum = 'SECOND' | 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK_US' | 'MONTH' | 'QUARTER' | 'YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
-
-// @public (undocumented)
-export type AiDashboardAbsoluteDateFilterTypeEnum = 'date_filter';
 
 // @public
 export interface AiDashboardAttributeFilter {
@@ -4307,40 +4319,94 @@ export interface AiDashboardAttributeFilter {
     // (undocumented)
     'metric_filters'?: Array<string>;
     // (undocumented)
-    'mode'?: string;
+    'mode'?: AiMode2;
     // (undocumented)
     'multiselect'?: boolean;
     // (undocumented)
-    'parents'?: Array<any>;
+    'parents'?: Array<AiDashboardAttributeFilter2ParentsInner>;
     // (undocumented)
-    'selection_type'?: string;
+    'selection_type'?: AiSelectionType;
     // (undocumented)
-    'state'?: any;
+    'state'?: AiDashboardStateMultiselect;
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type': AiDashboardAttributeFilterTypeEnum;
+    'type': AiType3;
     // (undocumented)
+    'using': AiUsing2;
+}
+
+// @public (undocumented)
+export interface AiDashboardAttributeFilter1 {
+    // (undocumented)
+    'display_as'?: string | null;
+    // (undocumented)
+    'metric_filters'?: Array<string> | null;
+    // (undocumented)
+    'mode'?: AiMode2 | null;
+    // (undocumented)
+    'multiselect'?: boolean | null;
+    // (undocumented)
+    'parents'?: Array<AiDashboardAttributeFilter1ParentsInner> | null;
+    // (undocumented)
+    'selection_type'?: AiSelectionType | null;
+    // (undocumented)
+    'state'?: AiDashboardStateSelect | null;
+    // (undocumented)
+    'title'?: string | null;
+    // (undocumented)
+    'type': AiType3;
+    // (undocumented)
+    'using': AiUsing1;
+}
+
+// @public (undocumented)
+export interface AiDashboardAttributeFilter1ParentsInner {
+    'common': boolean;
+    // (undocumented)
+    'date'?: string;
     'using': string;
 }
 
 // @public (undocumented)
-export type AiDashboardAttributeFilterTypeEnum = 'attribute_filter';
-
-// @public
-export interface AiDashboardFilterGroup {
+export interface AiDashboardAttributeFilter2 {
     // (undocumented)
-    'filters': {
-        [key: string]: AiFiltersValue1;
-    };
+    'display_as'?: string | null;
     // (undocumented)
-    'title': string;
+    'metric_filters'?: Array<string> | null;
     // (undocumented)
-    'type': AiDashboardFilterGroupTypeEnum;
+    'mode'?: AiMode2 | null;
+    // (undocumented)
+    'multiselect'?: boolean | null;
+    // (undocumented)
+    'parents'?: Array<AiDashboardAttributeFilter2ParentsInner> | null;
+    // (undocumented)
+    'selection_type'?: AiSelectionType | null;
+    // (undocumented)
+    'state'?: AiDashboardStateMultiselect | null;
+    // (undocumented)
+    'title'?: string | null;
+    // (undocumented)
+    'type': AiType3;
+    // (undocumented)
+    'using': AiUsing2;
 }
 
 // @public (undocumented)
-export type AiDashboardFilterGroupTypeEnum = 'filter_group';
+export interface AiDashboardAttributeFilter2ParentsInner {
+    'common': boolean;
+    // (undocumented)
+    'date'?: string;
+    'using': string;
+}
+
+// @public (undocumented)
+export interface AiDashboardFilterGroup {
+    'filters': object;
+    'title': string;
+    // (undocumented)
+    'type': AiType8;
+}
 
 // @public
 export interface AiDashboardIdUpdateRequest {
@@ -4348,30 +4414,127 @@ export interface AiDashboardIdUpdateRequest {
     'id': string;
 }
 
-// @public
-export interface AiDashboardMetricValueFilter {
+// @public (undocumented)
+export interface AiDashboardInput {
     // (undocumented)
-    [key: string]: any;
+    'cross_filtering'?: boolean | null;
     // (undocumented)
-    'conditions'?: Array<object | null>;
+    'description'?: string;
     // (undocumented)
-    'dimensionality'?: Array<string>;
+    'enable_section_headers'?: boolean | null;
     // (undocumented)
-    'mode'?: string;
+    'filter_views'?: boolean | null;
     // (undocumented)
-    'null_values_as_zero'?: boolean;
+    'filters'?: object;
+    // (undocumented)
+    'id': string;
+    // (undocumented)
+    'permissions'?: AiPermissions | null;
+    // (undocumented)
+    'persistent_filters_across_tabs'?: boolean | null;
+    // (undocumented)
+    'plugins'?: Array<AiDashboardInputPluginsInner> | null;
+    // (undocumented)
+    'sections'?: Array<AiSectionInput> | null;
+    // (undocumented)
+    'tabs'?: Array<AiTabInput> | null;
+    // (undocumented)
+    'tags'?: Array<string>;
+    // (undocumented)
+    'timezone_config'?: AiTimezoneConfig | null;
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type': string;
+    'type': AiType55;
     // (undocumented)
+    'user_filters_reset'?: boolean | null;
+    // (undocumented)
+    'user_filters_save'?: boolean | null;
+    // (undocumented)
+    'version'?: AiVersion | null;
+}
+
+// @public (undocumented)
+export interface AiDashboardInputPluginsInner {
+    // (undocumented)
+    'id': string;
+    // (undocumented)
+    'parameters'?: AiParameters | null;
+}
+
+// @public (undocumented)
+export interface AiDashboardMetricValueFilter {
+    // (undocumented)
+    'conditions'?: Array<AiMvfCondition> | null;
+    // (undocumented)
+    'dimensionality'?: Array<AiDashboardMetricValueFilterDimensionalityInner> | null;
+    // (undocumented)
+    'mode'?: AiMode6 | null;
+    // (undocumented)
+    'null_values_as_zero'?: boolean | null;
+    // (undocumented)
+    'title'?: string | null;
+    // (undocumented)
+    'type': AiType7;
     'using': string;
+}
+
+// @public (undocumented)
+export interface AiDashboardMetricValueFilterDimensionalityInner {
+}
+
+// @public (undocumented)
+export interface AiDashboardOutput {
+    // (undocumented)
+    'cross_filtering'?: boolean | null;
+    // (undocumented)
+    'description'?: string;
+    // (undocumented)
+    'enable_section_headers'?: boolean | null;
+    // (undocumented)
+    'filter_views'?: boolean | null;
+    // (undocumented)
+    'filters'?: object;
+    // (undocumented)
+    'id': string;
+    // (undocumented)
+    'permissions'?: AiPermissions | null;
+    // (undocumented)
+    'persistent_filters_across_tabs'?: boolean | null;
+    // (undocumented)
+    'plugins'?: Array<AiDashboardOutputPluginsInner> | null;
+    // (undocumented)
+    'sections'?: Array<AiSectionOutput> | null;
+    // (undocumented)
+    'tabs'?: Array<AiTabOutput> | null;
+    // (undocumented)
+    'tags'?: Array<string>;
+    // (undocumented)
+    'timezone_config'?: AiTimezoneConfig | null;
+    // (undocumented)
+    'title'?: string;
+    // (undocumented)
+    'type': AiType55;
+    // (undocumented)
+    'user_filters_reset'?: boolean | null;
+    // (undocumented)
+    'user_filters_save'?: boolean | null;
+    // (undocumented)
+    'version'?: AiVersion | null;
+}
+
+// @public (undocumented)
+export interface AiDashboardOutputPluginsInner {
+    // (undocumented)
+    'id': string;
+    // (undocumented)
+    'parameters'?: AiParameters | null;
 }
 
 // @public (undocumented)
 export interface AiDashboardPart {
     // (undocumented)
-    'dashboard'?: AiDashboard | null;
+    'dashboard'?: AiDashboardOutput | null;
     // (undocumented)
     'references'?: AiDashboardReferences | null;
     // (undocumented)
@@ -4387,7 +4550,7 @@ export interface AiDashboardPatch {
     // (undocumented)
     [key: string]: any;
     'dashboard_id': string;
-    'operations': Array<object | null>;
+    'operations': Array<object>;
     // (undocumented)
     'references'?: AiDashboardPatchReferences;
 }
@@ -4421,10 +4584,10 @@ export interface AiDashboardRef {
 export interface AiDashboardReferences {
     // (undocumented)
     [key: string]: any;
-    'datasets'?: Array<object | null>;
-    'datedatasets'?: Array<object | null>;
-    'new_visualizations'?: Array<object | null>;
-    'visualizations': Array<object | null>;
+    'datasets'?: Array<object>;
+    'datedatasets'?: Array<object>;
+    'new_visualizations'?: Array<object>;
+    'visualizations': Array<object>;
 }
 
 // @public (undocumented)
@@ -4432,80 +4595,43 @@ export interface AiDashboardRelativeDateFilter {
     // (undocumented)
     'date'?: string;
     // (undocumented)
-    'empty_values'?: string;
+    'empty_values'?: AiEmptyValues | null;
+    'from': number;
     // (undocumented)
-    'from'?: number;
+    'granularity'?: AiDateFilterGranularityOutput | null;
     // (undocumented)
-    'granularity'?: AiDashboardRelativeDateFilterGranularityEnum;
+    'mode'?: AiMode | null;
     // (undocumented)
-    'mode'?: string;
+    'title'?: string | null;
+    'to': number;
     // (undocumented)
-    'title'?: string;
-    // (undocumented)
-    'to'?: number;
-    // (undocumented)
-    'type': AiDashboardRelativeDateFilterTypeEnum;
+    'type': AiType1;
 }
-
-// @public (undocumented)
-export type AiDashboardRelativeDateFilterGranularityEnum = 'SECOND' | 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK_US' | 'MONTH' | 'QUARTER' | 'YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
-
-// @public (undocumented)
-export type AiDashboardRelativeDateFilterTypeEnum = 'date_filter';
 
 // @public
-export interface AiDashboardSection {
+export interface AiDashboardStateMultiselect {
     // (undocumented)
-    'description'?: string;
+    'exclude': Array<string>;
     // (undocumented)
-    'title'?: string;
-    // (undocumented)
-    'widgets': Array<AiDashboardSectionWidgetsInner>;
+    'include': Array<string>;
 }
 
 // @public (undocumented)
-export interface AiDashboardSectionWidgetsInner {
+export interface AiDashboardStateMultiselect1 {
     // (undocumented)
-    'columns'?: number;
-    // (undocumented)
-    'container': string;
-    // (undocumented)
-    'content': string;
-    // (undocumented)
-    'description'?: string;
-    // (undocumented)
-    'enable_section_headers'?: boolean;
-    // (undocumented)
-    'id'?: string;
-    // (undocumented)
-    'layout_direction'?: AiDashboardSectionWidgetsInnerLayoutDirectionEnum;
-    // (undocumented)
-    'rows'?: number;
-    // (undocumented)
-    'sections': Array<AiDashboardSection>;
-    // (undocumented)
-    'title'?: string;
-    // (undocumented)
-    'visualization': string;
-    // (undocumented)
-    'visualizations': Array<AiDashboardWidget>;
+    'include': Array<string>;
 }
 
 // @public (undocumented)
-export type AiDashboardSectionWidgetsInnerLayoutDirectionEnum = 'row' | 'column';
+export interface AiDashboardStateMultiselect2 {
+    // (undocumented)
+    'exclude': Array<string>;
+}
 
-// @public
-export interface AiDashboardTab {
+// @public (undocumented)
+export interface AiDashboardStateSelect {
     // (undocumented)
-    'filters'?: {
-        [key: string]: AiFiltersValue2;
-    };
-    // (undocumented)
-    'id': string;
-    // (undocumented)
-    'sections': Array<AiDashboardSection>;
-    // (undocumented)
-    'title': string;
+    'include': Array<string>;
 }
 
 // @public
@@ -4513,49 +4639,95 @@ export interface AiDashboardTextFilter {
     // (undocumented)
     'case_sensitive'?: boolean;
     // (undocumented)
-    'condition'?: string;
+    'condition': AiCondition1;
     // (undocumented)
     'display_as'?: string;
     // (undocumented)
     'metric_filters'?: Array<string>;
     // (undocumented)
-    'mode'?: string;
+    'mode'?: AiMode2;
     // (undocumented)
-    'parents'?: Array<any>;
+    'parents'?: Array<AiDashboardTextFilter2ParentsInner>;
     // (undocumented)
-    'selection_type'?: string;
+    'selection_type'?: AiSelectionType;
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type': AiDashboardTextFilterTypeEnum;
+    'type': AiType5;
     // (undocumented)
-    'using': string;
+    'using': AiUsing4;
     // (undocumented)
-    'value'?: string;
+    'value': string;
     // (undocumented)
-    'values'?: Array<string | null>;
+    'values': Array<string>;
 }
 
 // @public (undocumented)
-export type AiDashboardTextFilterTypeEnum = 'text_filter';
+export interface AiDashboardTextFilter1 {
+    // (undocumented)
+    'case_sensitive'?: boolean | null;
+    // (undocumented)
+    'condition': AiCondition;
+    // (undocumented)
+    'display_as'?: string | null;
+    // (undocumented)
+    'metric_filters'?: Array<string> | null;
+    // (undocumented)
+    'mode'?: AiMode2 | null;
+    // (undocumented)
+    'parents'?: Array<AiDashboardTextFilter1ParentsInner> | null;
+    // (undocumented)
+    'selection_type'?: AiSelectionType | null;
+    // (undocumented)
+    'title'?: string | null;
+    // (undocumented)
+    'type': AiType5;
+    // (undocumented)
+    'using': AiUsing3;
+    // (undocumented)
+    'values': Array<string | null>;
+}
 
 // @public (undocumented)
-export type AiDashboardVersionEnum = '2' | '3';
+export interface AiDashboardTextFilter1ParentsInner {
+    'common': boolean;
+    // (undocumented)
+    'date'?: string;
+    'using': string;
+}
 
-// @public
-export interface AiDashboardWidget {
+// @public (undocumented)
+export interface AiDashboardTextFilter2 {
     // (undocumented)
-    'columns'?: number;
+    'case_sensitive'?: boolean | null;
     // (undocumented)
-    'description'?: string;
+    'condition': AiCondition1;
     // (undocumented)
-    'id'?: string;
+    'display_as'?: string | null;
     // (undocumented)
-    'rows'?: number;
+    'metric_filters'?: Array<string> | null;
     // (undocumented)
-    'title'?: string;
+    'mode'?: AiMode2 | null;
     // (undocumented)
-    'visualization': string;
+    'parents'?: Array<AiDashboardTextFilter2ParentsInner> | null;
+    // (undocumented)
+    'selection_type'?: AiSelectionType | null;
+    // (undocumented)
+    'title'?: string | null;
+    // (undocumented)
+    'type': AiType5;
+    // (undocumented)
+    'using': AiUsing4;
+    // (undocumented)
+    'value': string;
+}
+
+// @public (undocumented)
+export interface AiDashboardTextFilter2ParentsInner {
+    'common': boolean;
+    // (undocumented)
+    'date'?: string;
+    'using': string;
 }
 
 // @public (undocumented)
@@ -4580,51 +4752,23 @@ export interface AiDataTotals {
 }
 
 // @public (undocumented)
-export const AiDateFilterGranularity: {
+export const AiDateFilterGranularityOutput: {
     readonly SECOND: 'SECOND';
-    readonly SECOND_OF_MINUTE: 'SECOND_OF_MINUTE';
-    readonly SECOND_OF_DAY: 'SECOND_OF_DAY';
     readonly MINUTE: 'MINUTE';
-    readonly MINUTE_OF_DAY: 'MINUTE_OF_DAY';
     readonly HOUR: 'HOUR';
     readonly DAY: 'DAY';
+    readonly WEEK: 'WEEK';
     readonly WEEK_US: 'WEEK_US';
     readonly MONTH: 'MONTH';
     readonly QUARTER: 'QUARTER';
     readonly YEAR: 'YEAR';
-    readonly MINUTE_OF_HOUR: 'MINUTE_OF_HOUR';
-    readonly HOUR_OF_DAY: 'HOUR_OF_DAY';
-    readonly DAY_OF_WEEK: 'DAY_OF_WEEK';
-    readonly DAY_OF_MONTH: 'DAY_OF_MONTH';
-    readonly DAY_OF_QUARTER: 'DAY_OF_QUARTER';
-    readonly DAY_OF_YEAR: 'DAY_OF_YEAR';
-    readonly WEEK_OF_YEAR: 'WEEK_OF_YEAR';
-    readonly MONTH_OF_YEAR: 'MONTH_OF_YEAR';
-    readonly QUARTER_OF_YEAR: 'QUARTER_OF_YEAR';
-    readonly FISCAL_DAY_OF_FISCAL_WEEK: 'FISCAL_DAY_OF_FISCAL_WEEK';
-    readonly FISCAL_DAY_OF_FISCAL_MONTH: 'FISCAL_DAY_OF_FISCAL_MONTH';
-    readonly FISCAL_DAY_OF_FISCAL_QUARTER: 'FISCAL_DAY_OF_FISCAL_QUARTER';
-    readonly FISCAL_DAY_OF_FISCAL_SEMESTER: 'FISCAL_DAY_OF_FISCAL_SEMESTER';
-    readonly FISCAL_DAY_OF_FISCAL_YEAR: 'FISCAL_DAY_OF_FISCAL_YEAR';
-    readonly FISCAL_WEEK: 'FISCAL_WEEK';
-    readonly FISCAL_WEEK_OF_FISCAL_MONTH: 'FISCAL_WEEK_OF_FISCAL_MONTH';
-    readonly FISCAL_WEEK_OF_FISCAL_QUARTER: 'FISCAL_WEEK_OF_FISCAL_QUARTER';
-    readonly FISCAL_WEEK_OF_FISCAL_SEMESTER: 'FISCAL_WEEK_OF_FISCAL_SEMESTER';
-    readonly FISCAL_WEEK_OF_FISCAL_YEAR: 'FISCAL_WEEK_OF_FISCAL_YEAR';
-    readonly FISCAL_MONTH: 'FISCAL_MONTH';
-    readonly FISCAL_MONTH_OF_FISCAL_QUARTER: 'FISCAL_MONTH_OF_FISCAL_QUARTER';
-    readonly FISCAL_MONTH_OF_FISCAL_SEMESTER: 'FISCAL_MONTH_OF_FISCAL_SEMESTER';
-    readonly FISCAL_MONTH_OF_FISCAL_YEAR: 'FISCAL_MONTH_OF_FISCAL_YEAR';
-    readonly FISCAL_QUARTER: 'FISCAL_QUARTER';
-    readonly FISCAL_QUARTER_OF_FISCAL_SEMESTER: 'FISCAL_QUARTER_OF_FISCAL_SEMESTER';
-    readonly FISCAL_QUARTER_OF_FISCAL_YEAR: 'FISCAL_QUARTER_OF_FISCAL_YEAR';
-    readonly FISCAL_SEMESTER: 'FISCAL_SEMESTER';
-    readonly FISCAL_SEMESTER_OF_FISCAL_YEAR: 'FISCAL_SEMESTER_OF_FISCAL_YEAR';
     readonly FISCAL_YEAR: 'FISCAL_YEAR';
+    readonly FISCAL_QUARTER: 'FISCAL_QUARTER';
+    readonly FISCAL_MONTH: 'FISCAL_MONTH';
 };
 
 // @public (undocumented)
-export type AiDateFilterGranularity = typeof AiDateFilterGranularity[keyof typeof AiDateFilterGranularity];
+export type AiDateFilterGranularityOutput = typeof AiDateFilterGranularityOutput[keyof typeof AiDateFilterGranularityOutput];
 
 // @public (undocumented)
 export const AiDateGranularity: {
@@ -4680,6 +4824,21 @@ export interface AiDeleteDocumentResponse {
     // (undocumented)
     'success': boolean;
 }
+
+// @public (undocumented)
+export interface AiDescription1 {
+}
+
+// @public (undocumented)
+export type AiDescription2 = false;
+
+// @public (undocumented)
+export const AiDescription3: {
+    readonly INHERIT: 'inherit';
+};
+
+// @public (undocumented)
+export type AiDescription3 = typeof AiDescription3[keyof typeof AiDescription3];
 
 // @public (undocumented)
 export const AiDirection: {
@@ -4773,167 +4932,6 @@ export interface AiFeedback {
 export type AiFeedbackTypeEnum = 'POSITIVE' | 'NEGATIVE';
 
 // @public (undocumented)
-export interface AiFiltersValue {
-    // (undocumented)
-    'case_sensitive'?: boolean;
-    // (undocumented)
-    'condition'?: string;
-    // (undocumented)
-    'conditions'?: Array<object>;
-    // (undocumented)
-    'date'?: string;
-    // (undocumented)
-    'dimensionality'?: Array<string>;
-    // (undocumented)
-    'display_as'?: string;
-    // (undocumented)
-    'empty_values'?: string;
-    // (undocumented)
-    'filters': {
-        [key: string]: AiFiltersValue1;
-    };
-    // (undocumented)
-    'from'?: string;
-    // (undocumented)
-    'granularity'?: AiFiltersValueGranularityEnum;
-    // (undocumented)
-    'metric_filters'?: Array<string>;
-    // (undocumented)
-    'mode'?: string;
-    // (undocumented)
-    'multiselect'?: boolean;
-    // (undocumented)
-    'null_values_as_zero'?: boolean;
-    // (undocumented)
-    'parents'?: Array<any>;
-    // (undocumented)
-    'selection_type'?: string;
-    // (undocumented)
-    'state'?: any;
-    // (undocumented)
-    'title': string;
-    // (undocumented)
-    'to'?: string;
-    // (undocumented)
-    'type': string;
-    // (undocumented)
-    'using': string;
-    // (undocumented)
-    'value'?: string;
-    // (undocumented)
-    'values'?: Array<string>;
-}
-
-// @public (undocumented)
-export interface AiFiltersValue1 {
-    // (undocumented)
-    'case_sensitive'?: boolean;
-    // (undocumented)
-    'condition'?: string;
-    // (undocumented)
-    'conditions'?: Array<object>;
-    // (undocumented)
-    'date'?: string;
-    // (undocumented)
-    'dimensionality'?: Array<string>;
-    // (undocumented)
-    'display_as'?: string;
-    // (undocumented)
-    'empty_values'?: string;
-    // (undocumented)
-    'from'?: string;
-    // (undocumented)
-    'granularity'?: AiFiltersValue1GranularityEnum;
-    // (undocumented)
-    'metric_filters'?: Array<string>;
-    // (undocumented)
-    'mode'?: string;
-    // (undocumented)
-    'multiselect'?: boolean;
-    // (undocumented)
-    'null_values_as_zero'?: boolean;
-    // (undocumented)
-    'parents'?: Array<any>;
-    // (undocumented)
-    'selection_type'?: string;
-    // (undocumented)
-    'state'?: any;
-    // (undocumented)
-    'title'?: string;
-    // (undocumented)
-    'to'?: string;
-    // (undocumented)
-    'type': string;
-    // (undocumented)
-    'using': string;
-    // (undocumented)
-    'value'?: string;
-    // (undocumented)
-    'values'?: Array<string>;
-}
-
-// @public (undocumented)
-export type AiFiltersValue1GranularityEnum = 'SECOND' | 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK_US' | 'MONTH' | 'QUARTER' | 'YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
-
-// @public (undocumented)
-export interface AiFiltersValue2 {
-    // (undocumented)
-    'case_sensitive'?: boolean;
-    // (undocumented)
-    'condition'?: string;
-    // (undocumented)
-    'conditions'?: Array<object>;
-    // (undocumented)
-    'date'?: string;
-    // (undocumented)
-    'dimensionality'?: Array<string>;
-    // (undocumented)
-    'display_as'?: string;
-    // (undocumented)
-    'empty_values'?: string;
-    // (undocumented)
-    'filters': {
-        [key: string]: AiFiltersValue1;
-    };
-    // (undocumented)
-    'from'?: string;
-    // (undocumented)
-    'granularity'?: AiFiltersValue2GranularityEnum;
-    // (undocumented)
-    'metric_filters'?: Array<string>;
-    // (undocumented)
-    'mode'?: string;
-    // (undocumented)
-    'multiselect'?: boolean;
-    // (undocumented)
-    'null_values_as_zero'?: boolean;
-    // (undocumented)
-    'parents'?: Array<any>;
-    // (undocumented)
-    'selection_type'?: string;
-    // (undocumented)
-    'state'?: any;
-    // (undocumented)
-    'title': string;
-    // (undocumented)
-    'to'?: string;
-    // (undocumented)
-    'type': string;
-    // (undocumented)
-    'using': string;
-    // (undocumented)
-    'value'?: string;
-    // (undocumented)
-    'values'?: Array<string>;
-}
-
-// @public (undocumented)
-export type AiFiltersValue2GranularityEnum = 'SECOND' | 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK_US' | 'MONTH' | 'QUARTER' | 'YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
-
-// @public (undocumented)
-export type AiFiltersValueGranularityEnum = 'SECOND' | 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK_US' | 'MONTH' | 'QUARTER' | 'YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
-
-// @public (undocumented)
 export interface AiFormat {
     // (undocumented)
     'fill'?: string | null;
@@ -4980,6 +4978,25 @@ export interface AiFunctionResultContent {
 
 // @public (undocumented)
 export type AiFunctionResultContentTypeEnum = 'toolResult';
+
+// @public (undocumented)
+export const AiGooddataCodeConvertorsPydanticModelsDateFilterGranularity: {
+    readonly SECOND: 'SECOND';
+    readonly MINUTE: 'MINUTE';
+    readonly HOUR: 'HOUR';
+    readonly DAY: 'DAY';
+    readonly WEEK: 'WEEK';
+    readonly WEEK_US: 'WEEK_US';
+    readonly MONTH: 'MONTH';
+    readonly QUARTER: 'QUARTER';
+    readonly YEAR: 'YEAR';
+    readonly FISCAL_YEAR: 'FISCAL_YEAR';
+    readonly FISCAL_QUARTER: 'FISCAL_QUARTER';
+    readonly FISCAL_MONTH: 'FISCAL_MONTH';
+};
+
+// @public (undocumented)
+export type AiGooddataCodeConvertorsPydanticModelsDateFilterGranularity = typeof AiGooddataCodeConvertorsPydanticModelsDateFilterGranularity[keyof typeof AiGooddataCodeConvertorsPydanticModelsDateFilterGranularity];
 
 // @public (undocumented)
 export const AiGooddataCodeConvertorsPydanticModelsMatchType: {
@@ -5054,10 +5071,39 @@ export const AiGridLineShape: {
 // @public (undocumented)
 export type AiGridLineShape = typeof AiGridLineShape[keyof typeof AiGridLineShape];
 
+// @public
+export interface AiHref {
+}
+
 // @public (undocumented)
 export interface AiHTTPValidationError {
     // (undocumented)
     'detail'?: Array<AiValidationError>;
+}
+
+// @public
+export interface AiIgnoredDrillDown {
+    'hierarchy': string;
+    'on': string;
+    'template': AiTemplate;
+}
+
+// @public (undocumented)
+export interface AiIgnoredDrillDown1 {
+    'hierarchy': string;
+    'on': string;
+}
+
+// @public (undocumented)
+export interface AiIgnoredDrillDown2 {
+    'on': string;
+    'template': AiTemplate;
+}
+
+// @public (undocumented)
+export interface AiIgnoredDrillDownsIntersection {
+    'attributes': Array<string>;
+    'hierarchy': AiIgnoredDrillDown;
 }
 
 // @public (undocumented)
@@ -5074,6 +5120,73 @@ export interface AiInlineFilterDefinitionBody {
     'filter': string;
     // (undocumented)
     'localIdentifier'?: string | null;
+}
+
+// @public
+export interface AiInteraction {
+    'click_on': string;
+    // (undocumented)
+    'filters'?: AiInteractionFilters;
+    'ignored_intersection_attributes'?: Array<string>;
+    'open_dashboard': string;
+    // (undocumented)
+    'open_dashboard_tab'?: string;
+    // (undocumented)
+    'open_url': AiOpenUrl;
+    'open_visualization': string;
+}
+
+// @public (undocumented)
+export interface AiInteractionFilters {
+    // (undocumented)
+    'exclude'?: AiInteractionFiltersExclude | null;
+    // (undocumented)
+    'include'?: AiInteractionFiltersInclude | null;
+}
+
+// @public (undocumented)
+export interface AiInteractionFiltersExclude {
+    'dashboard_filters'?: Array<string>;
+    'drilled_datapoint'?: Array<string>;
+}
+
+// @public (undocumented)
+export interface AiInteractionFiltersInclude {
+    'metric_filters'?: Array<string>;
+    'visualization_filters'?: Array<string>;
+}
+
+// @public (undocumented)
+export interface AiInteractionOpenDashboard {
+    'click_on': string;
+    // (undocumented)
+    'filters'?: AiInteractionFilters | null;
+    'open_dashboard': string;
+    // (undocumented)
+    'open_dashboard_tab'?: string | null;
+}
+
+// @public (undocumented)
+export interface AiInteractionOpenParamUrl {
+    'click_on': string;
+    'ignored_intersection_attributes'?: Array<string>;
+    // (undocumented)
+    'open_url': AiOpenUrl;
+}
+
+// @public (undocumented)
+export interface AiInteractionOpenPlainUrl {
+    'click_on': string;
+    'ignored_intersection_attributes'?: Array<string>;
+    'open_url': string;
+}
+
+// @public (undocumented)
+export interface AiInteractionOpenVisualization {
+    'click_on': string;
+    // (undocumented)
+    'filters'?: AiInteractionFilters | null;
+    'open_visualization': string;
 }
 
 // @public
@@ -5110,7 +5223,7 @@ export interface AiKeyDriverAnalysis {
     [key: string]: any;
     'analyzedPeriod': string;
     'dateAttributeId': string;
-    'filters': Array<object | null>;
+    'filters': Array<object>;
     'measure': AiKeyDriverAnalysisMeasure;
     'referencePeriod': string;
 }
@@ -5183,8 +5296,12 @@ export interface AiLabel2 {
     'localIdentifier': string;
 }
 
-// @public (undocumented)
+// @public
 export interface AiLabel3 {
+}
+
+// @public (undocumented)
+export interface AiLabel4 {
     // (undocumented)
     'identifier': AiAfmObjectIdentifierBody;
     // (undocumented)
@@ -5204,7 +5321,7 @@ export interface AiLayerItem {
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type': AiType50;
+    'type': AiType51;
     // (undocumented)
     'view_by'?: Array<string>;
 }
@@ -5244,10 +5361,19 @@ export interface AiLayerItemBase {
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type'?: AiType50 | null;
+    'type'?: AiType51 | null;
     // (undocumented)
     'view_by'?: Array<string> | null;
 }
+
+// @public (undocumented)
+export const AiLayoutDirection: {
+    readonly ROW: 'row';
+    readonly COLUMN: 'column';
+};
+
+// @public (undocumented)
+export type AiLayoutDirection = typeof AiLayoutDirection[keyof typeof AiLayoutDirection];
 
 // @public (undocumented)
 export interface AiLineStyleMapping1 {
@@ -5505,6 +5631,39 @@ export const AiMinSize: {
 export type AiMinSize = typeof AiMinSize[keyof typeof AiMinSize];
 
 // @public (undocumented)
+export const AiMode: {
+    readonly READONLY: 'readonly';
+    readonly HIDDEN: 'hidden';
+    readonly ACTIVE: 'active';
+};
+
+// @public (undocumented)
+export type AiMode = typeof AiMode[keyof typeof AiMode];
+
+// @public (undocumented)
+export const AiMode2: {
+    readonly READONLY: 'readonly';
+    readonly HIDDEN: 'hidden';
+    readonly ACTIVE: 'active';
+    readonly READONLY2: 'readonly';
+    readonly HIDDEN2: 'hidden';
+    readonly ACTIVE2: 'active';
+};
+
+// @public (undocumented)
+export type AiMode2 = typeof AiMode2[keyof typeof AiMode2];
+
+// @public (undocumented)
+export const AiMode6: {
+    readonly READONLY: 'readonly';
+    readonly HIDDEN: 'hidden';
+    readonly ACTIVE: 'active';
+};
+
+// @public (undocumented)
+export type AiMode6 = typeof AiMode6[keyof typeof AiMode6];
+
+// @public (undocumented)
 export interface AiMultipartContent {
     'parts': Array<AiMultipartContentPartsInner>;
     // (undocumented)
@@ -5632,6 +5791,14 @@ interface AiObservabilityOverviewResponse {
 }
 export { AiObservabilityOverviewResponse }
 export { AiObservabilityOverviewResponse as GenAiApiObservabilityOverviewResponse }
+
+// @public (undocumented)
+export interface AiOpenUrl {
+    // (undocumented)
+    'href'?: AiHref | null;
+    // (undocumented)
+    'label'?: AiLabel3 | null;
+}
 
 // @public (undocumented)
 export const AiOperator: {
@@ -5832,6 +5999,18 @@ export const AiOperator7: {
 export type AiOperator7 = typeof AiOperator7[keyof typeof AiOperator7];
 
 // @public
+export interface AiParameters {
+}
+
+// @public (undocumented)
+export interface AiParents {
+    'common': boolean;
+    // (undocumented)
+    'date'?: string | null;
+    'using': string;
+}
+
+// @public
 interface AiPatchDocumentRequest {
     // (undocumented)
     'isDisabled'?: boolean | null;
@@ -5875,6 +6054,26 @@ export const AiPatternNameMapping: {
 export type AiPatternNameMapping = typeof AiPatternNameMapping[keyof typeof AiPatternNameMapping];
 
 // @public (undocumented)
+export interface AiPermission {
+    // (undocumented)
+    'all'?: boolean | null;
+    // (undocumented)
+    'user_groups'?: Array<string> | null;
+    // (undocumented)
+    'users'?: Array<string> | null;
+}
+
+// @public (undocumented)
+export interface AiPermissions {
+    // (undocumented)
+    'EDIT'?: AiPermission | null;
+    // (undocumented)
+    'SHARE'?: AiPermission | null;
+    // (undocumented)
+    'VIEW'?: AiPermission | null;
+}
+
+// @public (undocumented)
 export const AiPlacement: {
     readonly ABOVE: 'above';
     readonly BELOW: 'below';
@@ -5883,6 +6082,14 @@ export const AiPlacement: {
 
 // @public (undocumented)
 export type AiPlacement = typeof AiPlacement[keyof typeof AiPlacement];
+
+// @public (undocumented)
+export interface AiPlugins {
+    // (undocumented)
+    'id': string;
+    // (undocumented)
+    'parameters'?: AiParameters | null;
+}
 
 // @public (undocumented)
 export const AiPointShapeMapping: {
@@ -5909,7 +6116,7 @@ export interface AiPositiveAttributeFilterBody {
     // (undocumented)
     'in': AiAttributeFilterElements;
     // (undocumented)
-    'label': AiLabel3;
+    'label': AiLabel4;
     // (undocumented)
     'localIdentifier'?: string | null;
     // (undocumented)
@@ -5935,7 +6142,7 @@ export interface AiQueryAttributeFilter {
     // (undocumented)
     'type': AiType11;
     // (undocumented)
-    'using': AiUsing1;
+    'using': AiUsing5;
 }
 
 // @public (undocumented)
@@ -5946,7 +6153,7 @@ export interface AiQueryAttributeSort {
     'by': AiBy1;
     'direction': AiDirection;
     // (undocumented)
-    'type': AiType47;
+    'type': AiType48;
 }
 
 // @public (undocumented)
@@ -6017,9 +6224,9 @@ export interface AiQueryField {
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type': AiType46;
+    'type': AiType47;
     // (undocumented)
-    'using': AiUsing7 | null;
+    'using': AiUsing11 | null;
 }
 
 // @public (undocumented)
@@ -6037,9 +6244,9 @@ export interface AiQueryField1 {
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type'?: AiType33 | null;
+    'type'?: AiType34 | null;
     // (undocumented)
-    'using': AiUsing2;
+    'using': AiUsing6;
 }
 
 // @public (undocumented)
@@ -6053,9 +6260,9 @@ export interface AiQueryField10 {
     // (undocumented)
     'operator'?: AiOperator7 | null;
     // (undocumented)
-    'type'?: AiType42 | null;
+    'type'?: AiType43 | null;
     // (undocumented)
-    'using'?: AiUsing3 | null;
+    'using'?: AiUsing7 | null;
 }
 
 // @public (undocumented)
@@ -6069,9 +6276,9 @@ export interface AiQueryField11 {
     'operator'?: AiOperator10 | null;
     // (undocumented)
     'title'?: string;
-    'type': AiType43;
+    'type': AiType44;
     // (undocumented)
-    'using': AiUsing4;
+    'using': AiUsing8;
 }
 
 // @public (undocumented)
@@ -6085,9 +6292,9 @@ export interface AiQueryField12 {
     // (undocumented)
     'operator'?: AiOperator11 | null;
     // (undocumented)
-    'type'?: AiType44 | null;
+    'type'?: AiType45 | null;
     // (undocumented)
-    'using'?: AiUsing5 | null;
+    'using'?: AiUsing9 | null;
 }
 
 // @public (undocumented)
@@ -6103,9 +6310,9 @@ export interface AiQueryField13 {
     'period'?: number | null;
     // (undocumented)
     'title'?: string;
-    'type': AiType45;
+    'type': AiType46;
     // (undocumented)
-    'using': AiUsing6;
+    'using': AiUsing10;
 }
 
 // @public (undocumented)
@@ -6119,9 +6326,9 @@ export interface AiQueryField14 {
     // (undocumented)
     'operator'?: AiOperator13 | null;
     // (undocumented)
-    'type'?: AiType46 | null;
+    'type'?: AiType47 | null;
     // (undocumented)
-    'using'?: AiUsing7 | null;
+    'using'?: AiUsing11 | null;
 }
 
 // @public (undocumented)
@@ -6135,9 +6342,9 @@ export interface AiQueryField2 {
     // (undocumented)
     'operator'?: AiOperator1 | null;
     // (undocumented)
-    'type'?: AiType34 | null;
+    'type'?: AiType35 | null;
     // (undocumented)
-    'using'?: AiUsing8 | null;
+    'using'?: AiUsing12 | null;
 }
 
 // @public (undocumented)
@@ -6157,7 +6364,7 @@ export interface AiQueryField3 {
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type'?: AiType35 | null;
+    'type'?: AiType36 | null;
     // (undocumented)
     'using': AiMetricIdentifier;
 }
@@ -6173,9 +6380,9 @@ export interface AiQueryField4 {
     // (undocumented)
     'operator'?: AiOperator3 | null;
     // (undocumented)
-    'type'?: AiType36 | null;
+    'type'?: AiType37 | null;
     // (undocumented)
-    'using'?: AiUsing9 | null;
+    'using'?: AiUsing13 | null;
 }
 
 // @public (undocumented)
@@ -6194,9 +6401,9 @@ export interface AiQueryField5 {
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type'?: AiType37 | null;
+    'type'?: AiType38 | null;
     // (undocumented)
-    'using': AiUsing10;
+    'using': AiUsing14;
 }
 
 // @public (undocumented)
@@ -6210,9 +6417,9 @@ export interface AiQueryField6 {
     // (undocumented)
     'operator'?: AiOperator5 | null;
     // (undocumented)
-    'type'?: AiType38 | null;
+    'type'?: AiType39 | null;
     // (undocumented)
-    'using'?: AiUsing11 | null;
+    'using'?: AiUsing15 | null;
 }
 
 // @public (undocumented)
@@ -6227,9 +6434,9 @@ export interface AiQueryField7 {
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type'?: AiType39 | null;
+    'type'?: AiType40 | null;
     // (undocumented)
-    'using'?: AiUsing12 | null;
+    'using'?: AiUsing16 | null;
 }
 
 // @public (undocumented)
@@ -6243,9 +6450,9 @@ export interface AiQueryField8 {
     // (undocumented)
     'operator'?: AiOperator7 | null;
     // (undocumented)
-    'type'?: AiType40 | null;
+    'type'?: AiType41 | null;
     // (undocumented)
-    'using'?: AiUsing13 | null;
+    'using'?: AiUsing17 | null;
 }
 
 // @public (undocumented)
@@ -6260,7 +6467,7 @@ export interface AiQueryField9 {
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type'?: AiType41 | null;
+    'type'?: AiType42 | null;
     // (undocumented)
     'using': Array<string>;
 }
@@ -6295,7 +6502,7 @@ export interface AiQueryFilter {
     // (undocumented)
     'type': AiType18;
     // (undocumented)
-    'using': AiUsing19;
+    'using': AiUsing23;
     'value': number;
     // (undocumented)
     'values': Array<string>;
@@ -6309,7 +6516,7 @@ export interface AiQueryMetricSort {
     // (undocumented)
     'metrics': Array<AiQueryMetricSortMetricsInner>;
     // (undocumented)
-    'type': AiType48;
+    'type': AiType49;
 }
 
 // @public (undocumented)
@@ -6336,7 +6543,7 @@ export interface AiQueryMetricValueFilter {
     // (undocumented)
     'type': AiType14;
     // (undocumented)
-    'using': AiUsing17;
+    'using': AiUsing21;
     'value': number;
 }
 
@@ -6351,7 +6558,7 @@ export interface AiQueryMetricValueFilter1 {
     // (undocumented)
     'type': AiType14;
     // (undocumented)
-    'using': AiUsing14;
+    'using': AiUsing18;
 }
 
 // @public (undocumented)
@@ -6368,7 +6575,7 @@ export interface AiQueryMetricValueFilter2 {
     // (undocumented)
     'type': AiType14;
     // (undocumented)
-    'using': AiUsing15;
+    'using': AiUsing19;
     'value': number;
 }
 
@@ -6388,7 +6595,7 @@ export interface AiQueryMetricValueFilter3 {
     // (undocumented)
     'type': AiType14;
     // (undocumented)
-    'using': AiUsing16;
+    'using': AiUsing20;
 }
 
 // @public (undocumented)
@@ -6404,7 +6611,7 @@ export interface AiQueryMetricValueFilter4 {
     // (undocumented)
     'type': AiType14;
     // (undocumented)
-    'using': AiUsing17;
+    'using': AiUsing21;
 }
 
 // @public (undocumented)
@@ -6423,7 +6630,7 @@ export interface AiQueryRankingFilter {
     // (undocumented)
     'type': AiType18;
     // (undocumented)
-    'using': AiUsing19;
+    'using': AiUsing23;
 }
 
 // @public (undocumented)
@@ -6438,7 +6645,7 @@ export interface AiQueryRankingFilter1 {
     // (undocumented)
     'type': AiType18;
     // (undocumented)
-    'using': AiUsing18;
+    'using': AiUsing22;
 }
 
 // @public (undocumented)
@@ -6453,7 +6660,7 @@ export interface AiQueryRankingFilter2 {
     // (undocumented)
     'type': AiType18;
     // (undocumented)
-    'using': AiUsing19;
+    'using': AiUsing23;
 }
 
 // @public (undocumented)
@@ -6466,7 +6673,7 @@ export interface AiQuerySort {
     // (undocumented)
     'metrics': Array<AiQueryMetricSortMetricsInner>;
     // (undocumented)
-    'type': AiType48;
+    'type': AiType49;
 }
 
 // @public (undocumented)
@@ -6480,7 +6687,7 @@ export interface AiQueryTextFilter {
     // (undocumented)
     'type': AiType12;
     // (undocumented)
-    'using': AiUsing21;
+    'using': AiUsing25;
     // (undocumented)
     'value': string;
     // (undocumented)
@@ -6498,7 +6705,7 @@ export interface AiQueryTextFilter1 {
     // (undocumented)
     'type': AiType12;
     // (undocumented)
-    'using': AiUsing20;
+    'using': AiUsing24;
     // (undocumented)
     'values': Array<string | null>;
 }
@@ -6514,7 +6721,7 @@ export interface AiQueryTextFilter2 {
     // (undocumented)
     'type': AiType12;
     // (undocumented)
-    'using': AiUsing21;
+    'using': AiUsing25;
     // (undocumented)
     'value': string;
 }
@@ -6756,18 +6963,6 @@ export interface AiResponseFeedbackRequest {
 export type AiResponseFeedbackTypeEnum = 'POSITIVE' | 'NEGATIVE';
 
 // @public
-export interface AiRichTextWidget {
-    // (undocumented)
-    'columns'?: number;
-    // (undocumented)
-    'content': string;
-    // (undocumented)
-    'id'?: string;
-    // (undocumented)
-    'rows'?: number;
-}
-
-// @public
 export type AiRight = AiMetricOperand | AiValueOperand;
 
 // @public (undocumented)
@@ -6990,6 +7185,55 @@ export interface AiSearchStatistics {
     // (undocumented)
     'totalResults': number;
 }
+
+// @public (undocumented)
+export interface AiSection1Input {
+    // (undocumented)
+    'description'?: string | null;
+    // (undocumented)
+    'title'?: string | null;
+    'widgets': Array<AiWidgetInput>;
+}
+
+// @public (undocumented)
+export interface AiSection1Output {
+    // (undocumented)
+    'description'?: string | null;
+    // (undocumented)
+    'title'?: string | null;
+    'widgets': Array<AiWidgetOutput>;
+}
+
+// @public (undocumented)
+export interface AiSectionInput {
+    // (undocumented)
+    'description'?: string | null;
+    // (undocumented)
+    'title'?: string | null;
+    'widgets': Array<AiWidgetInput>;
+}
+
+// @public (undocumented)
+export interface AiSectionOutput {
+    // (undocumented)
+    'description'?: string | null;
+    // (undocumented)
+    'title'?: string | null;
+    'widgets': Array<AiWidgetOutput>;
+}
+
+// @public (undocumented)
+export const AiSelectionType: {
+    readonly LIST: 'list';
+    readonly TEXT: 'text';
+    readonly LIST_OR_TEXT: 'listOrText';
+    readonly LIST2: 'list';
+    readonly TEXT2: 'text';
+    readonly LIST_OR_TEXT2: 'listOrText';
+};
+
+// @public (undocumented)
+export type AiSelectionType = typeof AiSelectionType[keyof typeof AiSelectionType];
 
 // @public (undocumented)
 export interface AiSendMessageContent {
@@ -7220,6 +7464,28 @@ export interface AiSwitchAgentRequest {
 }
 
 // @public (undocumented)
+export interface AiTabInput {
+    // (undocumented)
+    'filters'?: object;
+    // (undocumented)
+    'id': string;
+    'sections': Array<AiSectionInput>;
+    // (undocumented)
+    'title': string;
+}
+
+// @public (undocumented)
+export interface AiTabOutput {
+    // (undocumented)
+    'filters'?: object;
+    // (undocumented)
+    'id': string;
+    'sections': Array<AiSectionOutput>;
+    // (undocumented)
+    'title': string;
+}
+
+// @public (undocumented)
 export interface AiTarget {
     'measure': string;
 }
@@ -7229,6 +7495,14 @@ export interface AiTarget1 {
     'attribute': string;
     'measure': string;
 }
+
+// @public (undocumented)
+export const AiTemplate: {
+    readonly DEFAULT: 'default';
+};
+
+// @public (undocumented)
+export type AiTemplate = typeof AiTemplate[keyof typeof AiTemplate];
 
 // @public (undocumented)
 export interface AiTextMessageContent {
@@ -7259,6 +7533,27 @@ export interface AiTextWrapping {
 }
 
 // @public (undocumented)
+export interface AiTimezoneConfig {
+    // (undocumented)
+    'allow_user_override_in_view_mode'?: boolean | null;
+    // (undocumented)
+    'show_timezone_info'?: boolean | null;
+    // (undocumented)
+    'timezone_id'?: AiTimezoneId | null;
+}
+
+// @public
+export interface AiTimezoneId {
+}
+
+// @public (undocumented)
+export interface AiTitle1 {
+}
+
+// @public (undocumented)
+export type AiTitle2 = false;
+
+// @public (undocumented)
 export interface AiTo {
 }
 
@@ -7267,9 +7562,17 @@ export interface AiTotalItem {
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type': AiType49;
+    'type': AiType50;
     'using': string;
 }
+
+// @public (undocumented)
+export const AiType1: {
+    readonly DATE_FILTER: 'date_filter';
+};
+
+// @public (undocumented)
+export type AiType1 = typeof AiType1[keyof typeof AiType1];
 
 // @public (undocumented)
 export const AiType11: {
@@ -7306,20 +7609,18 @@ export const AiType18: {
 export type AiType18 = typeof AiType18[keyof typeof AiType18];
 
 // @public (undocumented)
-export const AiType33: {
-    readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
-    readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
+export const AiType3: {
+    readonly ATTRIBUTE_FILTER: 'attribute_filter';
+    readonly ATTRIBUTE_FILTER2: 'attribute_filter';
 };
 
 // @public (undocumented)
-export type AiType33 = typeof AiType33[keyof typeof AiType33];
+export type AiType3 = typeof AiType3[keyof typeof AiType3];
 
 // @public (undocumented)
 export const AiType34: {
     readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
     readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
-    readonly PREVIOUS_YEAR2: 'PREVIOUS_YEAR';
-    readonly PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD';
 };
 
 // @public (undocumented)
@@ -7329,6 +7630,8 @@ export type AiType34 = typeof AiType34[keyof typeof AiType34];
 export const AiType35: {
     readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
     readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
+    readonly PREVIOUS_YEAR2: 'PREVIOUS_YEAR';
+    readonly PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD';
 };
 
 // @public (undocumented)
@@ -7338,8 +7641,6 @@ export type AiType35 = typeof AiType35[keyof typeof AiType35];
 export const AiType36: {
     readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
     readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
-    readonly PREVIOUS_YEAR2: 'PREVIOUS_YEAR';
-    readonly PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD';
 };
 
 // @public (undocumented)
@@ -7349,6 +7650,8 @@ export type AiType36 = typeof AiType36[keyof typeof AiType36];
 export const AiType37: {
     readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
     readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
+    readonly PREVIOUS_YEAR2: 'PREVIOUS_YEAR';
+    readonly PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD';
 };
 
 // @public (undocumented)
@@ -7358,8 +7661,6 @@ export type AiType37 = typeof AiType37[keyof typeof AiType37];
 export const AiType38: {
     readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
     readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
-    readonly PREVIOUS_YEAR2: 'PREVIOUS_YEAR';
-    readonly PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD';
 };
 
 // @public (undocumented)
@@ -7369,6 +7670,8 @@ export type AiType38 = typeof AiType38[keyof typeof AiType38];
 export const AiType39: {
     readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
     readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
+    readonly PREVIOUS_YEAR2: 'PREVIOUS_YEAR';
+    readonly PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD';
 };
 
 // @public (undocumented)
@@ -7378,8 +7681,6 @@ export type AiType39 = typeof AiType39[keyof typeof AiType39];
 export const AiType40: {
     readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
     readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
-    readonly PREVIOUS_YEAR2: 'PREVIOUS_YEAR';
-    readonly PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD';
 };
 
 // @public (undocumented)
@@ -7389,6 +7690,8 @@ export type AiType40 = typeof AiType40[keyof typeof AiType40];
 export const AiType41: {
     readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
     readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
+    readonly PREVIOUS_YEAR2: 'PREVIOUS_YEAR';
+    readonly PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD';
 };
 
 // @public (undocumented)
@@ -7398,8 +7701,6 @@ export type AiType41 = typeof AiType41[keyof typeof AiType41];
 export const AiType42: {
     readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
     readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
-    readonly PREVIOUS_YEAR2: 'PREVIOUS_YEAR';
-    readonly PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD';
 };
 
 // @public (undocumented)
@@ -7410,6 +7711,7 @@ export const AiType43: {
     readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
     readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
     readonly PREVIOUS_YEAR2: 'PREVIOUS_YEAR';
+    readonly PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD';
 };
 
 // @public (undocumented)
@@ -7420,7 +7722,6 @@ export const AiType44: {
     readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
     readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
     readonly PREVIOUS_YEAR2: 'PREVIOUS_YEAR';
-    readonly PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD';
 };
 
 // @public (undocumented)
@@ -7430,6 +7731,7 @@ export type AiType44 = typeof AiType44[keyof typeof AiType44];
 export const AiType45: {
     readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
     readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
+    readonly PREVIOUS_YEAR2: 'PREVIOUS_YEAR';
     readonly PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD';
 };
 
@@ -7440,7 +7742,6 @@ export type AiType45 = typeof AiType45[keyof typeof AiType45];
 export const AiType46: {
     readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
     readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
-    readonly PREVIOUS_YEAR2: 'PREVIOUS_YEAR';
     readonly PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD';
 };
 
@@ -7449,7 +7750,10 @@ export type AiType46 = typeof AiType46[keyof typeof AiType46];
 
 // @public (undocumented)
 export const AiType47: {
-    readonly ATTRIBUTE_SORT: 'attribute_sort';
+    readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
+    readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
+    readonly PREVIOUS_YEAR2: 'PREVIOUS_YEAR';
+    readonly PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD';
 };
 
 // @public (undocumented)
@@ -7457,7 +7761,7 @@ export type AiType47 = typeof AiType47[keyof typeof AiType47];
 
 // @public (undocumented)
 export const AiType48: {
-    readonly METRIC_SORT: 'metric_sort';
+    readonly ATTRIBUTE_SORT: 'attribute_sort';
 };
 
 // @public (undocumented)
@@ -7465,6 +7769,22 @@ export type AiType48 = typeof AiType48[keyof typeof AiType48];
 
 // @public (undocumented)
 export const AiType49: {
+    readonly METRIC_SORT: 'metric_sort';
+};
+
+// @public (undocumented)
+export type AiType49 = typeof AiType49[keyof typeof AiType49];
+
+// @public (undocumented)
+export const AiType5: {
+    readonly TEXT_FILTER: 'text_filter';
+};
+
+// @public (undocumented)
+export type AiType5 = typeof AiType5[keyof typeof AiType5];
+
+// @public (undocumented)
+export const AiType50: {
     readonly SUM: 'SUM';
     readonly AVG: 'AVG';
     readonly MAX: 'MAX';
@@ -7474,38 +7794,38 @@ export const AiType49: {
 };
 
 // @public (undocumented)
-export type AiType49 = typeof AiType49[keyof typeof AiType49];
+export type AiType50 = typeof AiType50[keyof typeof AiType50];
 
 // @public (undocumented)
-export const AiType50: {
+export const AiType51: {
     readonly PUSHPIN: 'pushpin';
     readonly AREA: 'area';
 };
 
 // @public (undocumented)
-export type AiType50 = typeof AiType50[keyof typeof AiType50];
+export type AiType51 = typeof AiType51[keyof typeof AiType51];
 
 // @public (undocumented)
-export const AiType53: {
+export const AiType54: {
     readonly SOLID: 'solid';
     readonly PATTERN: 'pattern';
     readonly OUTLINE: 'outline';
 };
 
 // @public (undocumented)
-export type AiType53 = typeof AiType53[keyof typeof AiType53];
+export type AiType54 = typeof AiType54[keyof typeof AiType54];
 
 // @public (undocumented)
-export const AiType62: {
-    readonly TABLE: 'table';
+export const AiType55: {
+    readonly DASHBOARD: 'dashboard';
 };
 
 // @public (undocumented)
-export type AiType62 = typeof AiType62[keyof typeof AiType62];
+export type AiType55 = typeof AiType55[keyof typeof AiType55];
 
 // @public (undocumented)
 export const AiType63: {
-    readonly BAR_CHART: 'bar_chart';
+    readonly TABLE: 'table';
 };
 
 // @public (undocumented)
@@ -7513,7 +7833,7 @@ export type AiType63 = typeof AiType63[keyof typeof AiType63];
 
 // @public (undocumented)
 export const AiType64: {
-    readonly COLUMN_CHART: 'column_chart';
+    readonly BAR_CHART: 'bar_chart';
 };
 
 // @public (undocumented)
@@ -7521,7 +7841,7 @@ export type AiType64 = typeof AiType64[keyof typeof AiType64];
 
 // @public (undocumented)
 export const AiType65: {
-    readonly LINE_CHART: 'line_chart';
+    readonly COLUMN_CHART: 'column_chart';
 };
 
 // @public (undocumented)
@@ -7529,7 +7849,7 @@ export type AiType65 = typeof AiType65[keyof typeof AiType65];
 
 // @public (undocumented)
 export const AiType66: {
-    readonly AREA_CHART: 'area_chart';
+    readonly LINE_CHART: 'line_chart';
 };
 
 // @public (undocumented)
@@ -7537,7 +7857,7 @@ export type AiType66 = typeof AiType66[keyof typeof AiType66];
 
 // @public (undocumented)
 export const AiType67: {
-    readonly SCATTER_CHART: 'scatter_chart';
+    readonly AREA_CHART: 'area_chart';
 };
 
 // @public (undocumented)
@@ -7545,7 +7865,7 @@ export type AiType67 = typeof AiType67[keyof typeof AiType67];
 
 // @public (undocumented)
 export const AiType68: {
-    readonly BUBBLE_CHART: 'bubble_chart';
+    readonly SCATTER_CHART: 'scatter_chart';
 };
 
 // @public (undocumented)
@@ -7553,15 +7873,23 @@ export type AiType68 = typeof AiType68[keyof typeof AiType68];
 
 // @public (undocumented)
 export const AiType69: {
-    readonly PIE_CHART: 'pie_chart';
+    readonly BUBBLE_CHART: 'bubble_chart';
 };
 
 // @public (undocumented)
 export type AiType69 = typeof AiType69[keyof typeof AiType69];
 
 // @public (undocumented)
+export const AiType7: {
+    readonly METRIC_VALUE_FILTER: 'metric_value_filter';
+};
+
+// @public (undocumented)
+export type AiType7 = typeof AiType7[keyof typeof AiType7];
+
+// @public (undocumented)
 export const AiType70: {
-    readonly DONUT_CHART: 'donut_chart';
+    readonly PIE_CHART: 'pie_chart';
 };
 
 // @public (undocumented)
@@ -7569,7 +7897,7 @@ export type AiType70 = typeof AiType70[keyof typeof AiType70];
 
 // @public (undocumented)
 export const AiType71: {
-    readonly TREEMAP_CHART: 'treemap_chart';
+    readonly DONUT_CHART: 'donut_chart';
 };
 
 // @public (undocumented)
@@ -7577,7 +7905,7 @@ export type AiType71 = typeof AiType71[keyof typeof AiType71];
 
 // @public (undocumented)
 export const AiType72: {
-    readonly PYRAMID_CHART: 'pyramid_chart';
+    readonly TREEMAP_CHART: 'treemap_chart';
 };
 
 // @public (undocumented)
@@ -7585,7 +7913,7 @@ export type AiType72 = typeof AiType72[keyof typeof AiType72];
 
 // @public (undocumented)
 export const AiType73: {
-    readonly FUNNEL_CHART: 'funnel_chart';
+    readonly PYRAMID_CHART: 'pyramid_chart';
 };
 
 // @public (undocumented)
@@ -7593,7 +7921,7 @@ export type AiType73 = typeof AiType73[keyof typeof AiType73];
 
 // @public (undocumented)
 export const AiType74: {
-    readonly HEATMAP_CHART: 'heatmap_chart';
+    readonly FUNNEL_CHART: 'funnel_chart';
 };
 
 // @public (undocumented)
@@ -7601,7 +7929,7 @@ export type AiType74 = typeof AiType74[keyof typeof AiType74];
 
 // @public (undocumented)
 export const AiType75: {
-    readonly BULLET_CHART: 'bullet_chart';
+    readonly HEATMAP_CHART: 'heatmap_chart';
 };
 
 // @public (undocumented)
@@ -7609,7 +7937,7 @@ export type AiType75 = typeof AiType75[keyof typeof AiType75];
 
 // @public (undocumented)
 export const AiType76: {
-    readonly WATERFALL_CHART: 'waterfall_chart';
+    readonly BULLET_CHART: 'bullet_chart';
 };
 
 // @public (undocumented)
@@ -7617,7 +7945,7 @@ export type AiType76 = typeof AiType76[keyof typeof AiType76];
 
 // @public (undocumented)
 export const AiType77: {
-    readonly DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart';
+    readonly WATERFALL_CHART: 'waterfall_chart';
 };
 
 // @public (undocumented)
@@ -7625,7 +7953,7 @@ export type AiType77 = typeof AiType77[keyof typeof AiType77];
 
 // @public (undocumented)
 export const AiType78: {
-    readonly SANKEY_CHART: 'sankey_chart';
+    readonly DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart';
 };
 
 // @public (undocumented)
@@ -7633,15 +7961,23 @@ export type AiType78 = typeof AiType78[keyof typeof AiType78];
 
 // @public (undocumented)
 export const AiType79: {
-    readonly HEADLINE_CHART: 'headline_chart';
+    readonly SANKEY_CHART: 'sankey_chart';
 };
 
 // @public (undocumented)
 export type AiType79 = typeof AiType79[keyof typeof AiType79];
 
 // @public (undocumented)
+export const AiType8: {
+    readonly FILTER_GROUP: 'filter_group';
+};
+
+// @public (undocumented)
+export type AiType8 = typeof AiType8[keyof typeof AiType8];
+
+// @public (undocumented)
 export const AiType80: {
-    readonly COMBO_CHART: 'combo_chart';
+    readonly HEADLINE_CHART: 'headline_chart';
 };
 
 // @public (undocumented)
@@ -7649,7 +7985,7 @@ export type AiType80 = typeof AiType80[keyof typeof AiType80];
 
 // @public (undocumented)
 export const AiType81: {
-    readonly GEO_CHART: 'geo_chart';
+    readonly COMBO_CHART: 'combo_chart';
 };
 
 // @public (undocumented)
@@ -7657,7 +7993,7 @@ export type AiType81 = typeof AiType81[keyof typeof AiType81];
 
 // @public (undocumented)
 export const AiType82: {
-    readonly GEO_AREA_CHART: 'geo_area_chart';
+    readonly GEO_CHART: 'geo_chart';
 };
 
 // @public (undocumented)
@@ -7665,7 +8001,7 @@ export type AiType82 = typeof AiType82[keyof typeof AiType82];
 
 // @public (undocumented)
 export const AiType83: {
-    readonly REPEATER_CHART: 'repeater_chart';
+    readonly GEO_AREA_CHART: 'geo_area_chart';
 };
 
 // @public (undocumented)
@@ -7673,11 +8009,19 @@ export type AiType83 = typeof AiType83[keyof typeof AiType83];
 
 // @public (undocumented)
 export const AiType84: {
-    readonly RADAR_CHART: 'radar_chart';
+    readonly REPEATER_CHART: 'repeater_chart';
 };
 
 // @public (undocumented)
 export type AiType84 = typeof AiType84[keyof typeof AiType84];
+
+// @public (undocumented)
+export const AiType85: {
+    readonly RADAR_CHART: 'radar_chart';
+};
+
+// @public (undocumented)
+export type AiType85 = typeof AiType85[keyof typeof AiType85];
 
 // @public (undocumented)
 export const AiType9: {
@@ -7723,7 +8067,7 @@ export interface AiUserContextDashboard {
     // (undocumented)
     'activeTabId'?: string | null;
     // (undocumented)
-    'definition'?: object | null;
+    'definition'?: AiDashboardInput | null;
     // (undocumented)
     'filters'?: Array<AiVisualizationFilter> | null;
     // (undocumented)
@@ -7793,6 +8137,8 @@ export type AiUserContextRichTextWidgetDescriptorWidgetTypeEnum = 'richText';
 
 // @public (undocumented)
 export interface AiUserContextSwitcherVisualization {
+    // (undocumented)
+    'filters'?: Array<AiVisualizationFilter> | null;
     // (undocumented)
     'resultId'?: string | null;
     // (undocumented)
@@ -7893,15 +8239,15 @@ export interface AiUsing13 {
 export interface AiUsing14 {
 }
 
-// @public
+// @public (undocumented)
 export interface AiUsing15 {
 }
 
-// @public
+// @public (undocumented)
 export interface AiUsing16 {
 }
 
-// @public
+// @public (undocumented)
 export interface AiUsing17 {
 }
 
@@ -7925,7 +8271,23 @@ export interface AiUsing20 {
 export interface AiUsing21 {
 }
 
-// @public (undocumented)
+// @public
+export interface AiUsing22 {
+}
+
+// @public
+export interface AiUsing23 {
+}
+
+// @public
+export interface AiUsing24 {
+}
+
+// @public
+export interface AiUsing25 {
+}
+
+// @public
 export interface AiUsing3 {
 }
 
@@ -7933,7 +8295,7 @@ export interface AiUsing3 {
 export interface AiUsing4 {
 }
 
-// @public (undocumented)
+// @public
 export interface AiUsing5 {
 }
 
@@ -7945,7 +8307,7 @@ export interface AiUsing6 {
 export interface AiUsing7 {
 }
 
-// @public (undocumented)
+// @public
 export interface AiUsing8 {
 }
 
@@ -8004,6 +8366,15 @@ export interface AiValueOperand {
 }
 
 // @public (undocumented)
+export const AiVersion: {
+    readonly _2: '2';
+    readonly _3: '3';
+};
+
+// @public (undocumented)
+export type AiVersion = typeof AiVersion[keyof typeof AiVersion];
+
+// @public (undocumented)
 export const AiViewport: {
     readonly AUTO: 'auto';
     readonly CONTINENT_AF: 'continent_af';
@@ -8058,7 +8429,7 @@ export interface AiVisualisation {
     'to'?: AiBucketItem;
     // (undocumented)
     'trend_by'?: Array<AiBucketItem>;
-    'type': AiType84;
+    'type': AiType85;
     // (undocumented)
     'view_by'?: Array<AiBucketItem>;
 }
@@ -8088,7 +8459,7 @@ export interface AiVisualisation1 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType62;
+    'type': AiType63;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8114,7 +8485,7 @@ export interface AiVisualisation10 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType71;
+    'type': AiType72;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8140,7 +8511,7 @@ export interface AiVisualisation11 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType72;
+    'type': AiType73;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8166,7 +8537,7 @@ export interface AiVisualisation12 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType73;
+    'type': AiType74;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8196,7 +8567,7 @@ export interface AiVisualisation13 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType74;
+    'type': AiType75;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8222,7 +8593,7 @@ export interface AiVisualisation14 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType75;
+    'type': AiType76;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8248,7 +8619,7 @@ export interface AiVisualisation15 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType76;
+    'type': AiType77;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8278,7 +8649,7 @@ export interface AiVisualisation16 {
     'title'?: string;
     // (undocumented)
     'to'?: AiBucketItem | null;
-    'type': AiType77;
+    'type': AiType78;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8308,7 +8679,7 @@ export interface AiVisualisation17 {
     'title'?: string;
     // (undocumented)
     'to'?: AiBucketItem | null;
-    'type': AiType78;
+    'type': AiType79;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8334,7 +8705,7 @@ export interface AiVisualisation18 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType79;
+    'type': AiType80;
     // (undocumented)
     'view_by'?: Array<any> | null;
 }
@@ -8360,7 +8731,7 @@ export interface AiVisualisation19 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType80;
+    'type': AiType81;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8388,7 +8759,7 @@ export interface AiVisualisation2 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType63;
+    'type': AiType64;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8416,7 +8787,7 @@ export interface AiVisualisation20 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType81;
+    'type': AiType82;
     // (undocumented)
     'view_by'?: Array<string> | null;
 }
@@ -8444,7 +8815,7 @@ export interface AiVisualisation21 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType82;
+    'type': AiType83;
     // (undocumented)
     'view_by'?: Array<string> | null;
 }
@@ -8474,7 +8845,7 @@ export interface AiVisualisation22 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType83;
+    'type': AiType84;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8500,7 +8871,7 @@ export interface AiVisualisation23 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType84;
+    'type': AiType85;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8528,7 +8899,7 @@ export interface AiVisualisation3 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType64;
+    'type': AiType65;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8556,7 +8927,7 @@ export interface AiVisualisation4 {
     'title'?: string;
     // (undocumented)
     'trend_by'?: Array<AiBucketItem> | null;
-    'type': AiType65;
+    'type': AiType66;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8584,7 +8955,7 @@ export interface AiVisualisation5 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType66;
+    'type': AiType67;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8612,7 +8983,7 @@ export interface AiVisualisation6 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType67;
+    'type': AiType68;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8640,7 +9011,7 @@ export interface AiVisualisation7 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType68;
+    'type': AiType69;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8666,7 +9037,7 @@ export interface AiVisualisation8 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType69;
+    'type': AiType70;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8692,7 +9063,7 @@ export interface AiVisualisation9 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType70;
+    'type': AiType71;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8747,6 +9118,16 @@ export interface AiVisualizationBottomRankingFilter {
 
 // @public (undocumented)
 export type AiVisualizationBottomRankingFilterTypeEnum = 'ranking_filter';
+
+// @public
+export interface AiVisualizationData {
+    'columns': Array<any>;
+    // (undocumented)
+    'formattedRows'?: Array<any> | null;
+    'rowCount': number;
+    'rows': Array<any>;
+    'truncated': boolean;
+}
 
 // @public (undocumented)
 export interface AiVisualizationExcludedResponse {
@@ -8814,6 +9195,8 @@ export type AiVisualizationMetricValueRangeFilterTypeEnum = 'metric_value_filter
 // @public (undocumented)
 export interface AiVisualizationPart {
     // (undocumented)
+    'data'?: AiVisualizationData | null;
+    // (undocumented)
     'references'?: AiVisualizationReferences | null;
     'type'?: AiVisualizationPartTypeEnum;
     // (undocumented)
@@ -8838,7 +9221,7 @@ export interface AiVisualizationRelativeDateFilter {
     // (undocumented)
     'from': number;
     // (undocumented)
-    'granularity': AiDateFilterGranularity;
+    'granularity': AiAppApplicationDtosConversationUserContextDateFilterGranularity;
     // (undocumented)
     'to': number;
     // (undocumented)
@@ -8849,18 +9232,6 @@ export interface AiVisualizationRelativeDateFilter {
 
 // @public (undocumented)
 export type AiVisualizationRelativeDateFilterTypeEnum = 'date_filter';
-
-// @public
-export interface AiVisualizationSwitcherWidget {
-    // (undocumented)
-    'columns'?: number;
-    // (undocumented)
-    'id'?: string;
-    // (undocumented)
-    'rows'?: number;
-    // (undocumented)
-    'visualizations': Array<AiDashboardWidget>;
-}
 
 // @public (undocumented)
 export interface AiVisualizationTopRankingFilter {
@@ -8876,6 +9247,35 @@ export interface AiVisualizationTopRankingFilter {
 
 // @public (undocumented)
 export type AiVisualizationTopRankingFilterTypeEnum = 'ranking_filter';
+
+// @public (undocumented)
+export interface AiVisualizationWidget {
+    // (undocumented)
+    'columns'?: AiColumns | null;
+    // (undocumented)
+    'date'?: string;
+    // (undocumented)
+    'description'?: AiDescription1 | null;
+    // (undocumented)
+    'id'?: string;
+    // (undocumented)
+    'ignored_cross_filtering'?: boolean | null;
+    // (undocumented)
+    'ignored_drill_downs'?: Array<AiIgnoredDrillDown> | null;
+    // (undocumented)
+    'ignored_drill_downs_intersections'?: Array<AiIgnoredDrillDownsIntersection> | null;
+    // (undocumented)
+    'ignored_filters'?: Array<string> | null;
+    // (undocumented)
+    'interactions'?: Array<AiInteraction> | null;
+    // (undocumented)
+    'rows'?: number | null;
+    // (undocumented)
+    'title'?: AiTitle1 | null;
+    'visualization': string;
+    // (undocumented)
+    'zoom_data'?: boolean | null;
+}
 
 // @public (undocumented)
 export interface AiWhatIfAnalysisPart {
@@ -8905,6 +9305,134 @@ export interface AiWhatIfScenario {
 export interface AiWhatIfScenarioVariant {
     'adjustments': Array<AiWhatIfMeasureAdjustment>;
     'label': string;
+}
+
+// @public (undocumented)
+export interface AiWidget1 {
+    // (undocumented)
+    'columns'?: AiColumns | null;
+    'content': string;
+    // (undocumented)
+    'id'?: string;
+    // (undocumented)
+    'rows'?: number | null;
+}
+
+// @public (undocumented)
+export interface AiWidget2 {
+    // (undocumented)
+    'columns'?: AiColumns | null;
+    // (undocumented)
+    'id'?: string;
+    // (undocumented)
+    'rows'?: number | null;
+    'visualizations': Array<AiVisualizationWidget>;
+}
+
+// @public (undocumented)
+export interface AiWidget3Input {
+    // (undocumented)
+    'columns'?: AiColumns | null;
+    // (undocumented)
+    'container': string;
+    // (undocumented)
+    'enable_section_headers'?: boolean | null;
+    // (undocumented)
+    'layout_direction'?: AiLayoutDirection | null;
+    // (undocumented)
+    'rows'?: number | null;
+    'sections': Array<AiSection1Input>;
+}
+
+// @public (undocumented)
+export interface AiWidget3Output {
+    // (undocumented)
+    'columns'?: AiColumns | null;
+    // (undocumented)
+    'container': string;
+    // (undocumented)
+    'enable_section_headers'?: boolean | null;
+    // (undocumented)
+    'layout_direction'?: AiLayoutDirection | null;
+    // (undocumented)
+    'rows'?: number | null;
+    'sections': Array<AiSection1Output>;
+}
+
+// @public (undocumented)
+export interface AiWidgetInput {
+    // (undocumented)
+    'columns'?: AiColumns;
+    // (undocumented)
+    'container': string;
+    'content': string;
+    // (undocumented)
+    'date'?: string;
+    // (undocumented)
+    'description'?: AiDescription1 | null;
+    // (undocumented)
+    'enable_section_headers'?: boolean;
+    // (undocumented)
+    'id'?: string;
+    // (undocumented)
+    'ignored_cross_filtering'?: boolean;
+    // (undocumented)
+    'ignored_drill_downs'?: Array<AiIgnoredDrillDown>;
+    // (undocumented)
+    'ignored_drill_downs_intersections'?: Array<AiIgnoredDrillDownsIntersection>;
+    // (undocumented)
+    'ignored_filters'?: Array<string>;
+    // (undocumented)
+    'interactions'?: Array<AiInteraction>;
+    // (undocumented)
+    'layout_direction'?: AiLayoutDirection;
+    // (undocumented)
+    'rows'?: number;
+    'sections': Array<AiSection1Input>;
+    // (undocumented)
+    'title'?: AiTitle1 | null;
+    'visualization': string;
+    'visualizations': Array<AiVisualizationWidget>;
+    // (undocumented)
+    'zoom_data'?: boolean;
+}
+
+// @public (undocumented)
+export interface AiWidgetOutput {
+    // (undocumented)
+    'columns'?: AiColumns;
+    // (undocumented)
+    'container': string;
+    'content': string;
+    // (undocumented)
+    'date'?: string;
+    // (undocumented)
+    'description'?: AiDescription1 | null;
+    // (undocumented)
+    'enable_section_headers'?: boolean;
+    // (undocumented)
+    'id'?: string;
+    // (undocumented)
+    'ignored_cross_filtering'?: boolean;
+    // (undocumented)
+    'ignored_drill_downs'?: Array<AiIgnoredDrillDown>;
+    // (undocumented)
+    'ignored_drill_downs_intersections'?: Array<AiIgnoredDrillDownsIntersection>;
+    // (undocumented)
+    'ignored_filters'?: Array<string>;
+    // (undocumented)
+    'interactions'?: Array<AiInteraction>;
+    // (undocumented)
+    'layout_direction'?: AiLayoutDirection;
+    // (undocumented)
+    'rows'?: number;
+    'sections': Array<AiSection1Output>;
+    // (undocumented)
+    'title'?: AiTitle1 | null;
+    'visualization': string;
+    'visualizations': Array<AiVisualizationWidget>;
+    // (undocumented)
+    'zoom_data'?: boolean;
 }
 
 // @public (undocumented)

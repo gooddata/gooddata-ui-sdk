@@ -20,7 +20,9 @@ import {
 import {
     attributeDescriptor,
     attributeHeaderItem,
+    computedAttributeDescriptor,
     context,
+    labelDescriptor,
     measureDescriptors,
 } from "./HeaderPredicateFactory.test.helpers.js";
 
@@ -319,6 +321,42 @@ describe("identifierMatch", () => {
             const predicate: IHeaderPredicate = identifierMatch(null);
 
             expect(predicate(attributeHeaderItem, context)).toBe(false);
+        });
+    });
+
+    describe("with a type", () => {
+        it("should match only the computed attribute when the computed attribute type is asked for", () => {
+            const predicate: IHeaderPredicate = identifierMatch("sharedIdentifier", "computedAttribute");
+
+            expect(predicate(computedAttributeDescriptor, context)).toBe(true);
+            expect(predicate(labelDescriptor, context)).toBe(false);
+        });
+
+        it("should match only the label when the display form type is asked for", () => {
+            const predicate: IHeaderPredicate = identifierMatch("sharedIdentifier", "displayForm");
+
+            expect(predicate(labelDescriptor, context)).toBe(true);
+            expect(predicate(computedAttributeDescriptor, context)).toBe(false);
+        });
+
+        it("should match both when no type is asked for", () => {
+            const predicate: IHeaderPredicate = identifierMatch("sharedIdentifier");
+
+            expect(predicate(labelDescriptor, context)).toBe(true);
+            expect(predicate(computedAttributeDescriptor, context)).toBe(true);
+        });
+
+        it("should NOT match when the identifier matches but the type does not", () => {
+            const predicate: IHeaderPredicate = identifierMatch("sharedIdentifier", "measure");
+
+            expect(predicate(labelDescriptor, context)).toBe(false);
+            expect(predicate(computedAttributeDescriptor, context)).toBe(false);
+        });
+
+        it("should NOT match a header whose ref carries no type", () => {
+            const predicate: IHeaderPredicate = identifierMatch("attributeIdentifier", "displayForm");
+
+            expect(predicate(attributeDescriptor, context)).toBe(false);
         });
     });
 });

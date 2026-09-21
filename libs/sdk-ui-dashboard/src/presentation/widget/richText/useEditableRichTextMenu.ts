@@ -8,6 +8,7 @@ import { type IRichTextWidget } from "@gooddata/sdk-model";
 
 import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { useDashboardEventDispatch } from "../../../model/react/useDashboardEventDispatch.js";
+import { useIsWidgetRestricted } from "../../../model/react/useIsWidgetRestricted.js";
 import { selectEnableRichTextWidgetFilterConfiguration } from "../../../model/store/config/configSelectors.js";
 import { useDashboardCustomizationsContext } from "../../dashboardContexts/DashboardCustomizationsContext.js";
 import { getDefaultRichTextEditMode } from "../richTextMenu/DefaultDashboardRichTextMenu/getDefaultRichTextEditMenuItems.js";
@@ -29,6 +30,9 @@ export const useEditableRichTextMenu = (
     const enableRichTextWidgetFilterConfiguration = useDashboardSelector(
         selectEnableRichTextWidgetFilterConfiguration,
     );
+    // there is nothing to configure about a reference the editor is not allowed to read, so the
+    // menu of such a widget holds removal alone
+    const isRestricted = useIsWidgetRestricted(widget);
 
     const { richTextMenuItemsProvider } = useDashboardCustomizationsContext();
     const defaultMenuItems = useMemo<IRichTextMenuItem[]>(() => {
@@ -36,9 +40,9 @@ export const useEditableRichTextMenu = (
             intl,
             dispatch,
             eventDispatch,
-            enableRichTextWidgetFilterConfiguration,
+            enableRichTextWidgetFilterConfiguration: enableRichTextWidgetFilterConfiguration && !isRestricted,
         });
-    }, [dispatch, eventDispatch, intl, widget, enableRichTextWidgetFilterConfiguration]);
+    }, [dispatch, eventDispatch, intl, widget, enableRichTextWidgetFilterConfiguration, isRestricted]);
 
     const menuItems = useMemo<IRichTextMenuItem[]>(() => {
         return richTextMenuItemsProvider

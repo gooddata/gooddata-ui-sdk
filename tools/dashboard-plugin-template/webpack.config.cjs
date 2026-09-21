@@ -217,6 +217,12 @@ module.exports = (_env, argv) => {
                     test: /\.(eot|woff|woff2|ttf|svg|jpg|jpeg|gif)/,
                     type: "asset/resource",
                 },
+                // webpack rewrites maplibre's `new URL(<variable>, import.meta.url)` worker shim into an
+                // empty context module: a "Critical dependency" warning, and a throw at runtime.
+                {
+                    test: /[\\/]maplibre-gl[\\/]dist[\\/]maplibre-gl\.mjs$/,
+                    parser: { url: false },
+                },
                 !isProduction && {
                     test: /\.js$/,
                     enforce: "pre",

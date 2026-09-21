@@ -170,7 +170,7 @@ function GenAIContent(props: GenAIChatProps) {
             catalogItems={catalogItems}
             canFullControl={props.disableFullControl ? false : (permissions.canManageProject ?? false)}
             canManage={props.disableManage ? false : (permissions.canManageProject ?? false)}
-            canAnalyze={props.disableAnalyze ? false : (permissions.canCreateVisualization ?? false)}
+            canAnalyze={props.disableAnalyze ? false : (permissions.canAnalyzeWorkspace ?? false)}
         >
             <CustomizationProvider slots={slots}>
                 <GenAIChatWrapper initializing={loading} className={className} />

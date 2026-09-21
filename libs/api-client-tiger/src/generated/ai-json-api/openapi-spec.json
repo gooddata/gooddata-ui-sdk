@@ -3947,7 +3947,7 @@
                     "type": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Type53"
+                                "$ref": "#/components/schemas/Type54"
                             },
                             {
                                 "type": "null"
@@ -4127,6 +4127,24 @@
                 },
                 "type": "object",
                 "title": "ColumnOverride"
+            },
+            "Columns": {
+                "type": "integer",
+                "enum": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "title": "Columns"
             },
             "Comparison": {
                 "properties": {
@@ -4340,7 +4358,8 @@
                                     "keyDriverAnalysis",
                                     "whatIf",
                                     "searchResults",
-                                    "alertProposal"
+                                    "alertProposal",
+                                    "clarifyingQuestions"
                                 ]
                             },
                             {
@@ -4470,6 +4489,32 @@
                     "conditions"
                 ],
                 "title": "CompoundMeasureValueFilterBody"
+            },
+            "ComputedAttributeIdentifier": {
+                "type": "string",
+                "pattern": "^computed_attribute/(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                "title": "Computed Attribute Identifier",
+                "description": "A computed attribute identifier in the form of computed_attribute/{id}."
+            },
+            "Condition": {
+                "type": "string",
+                "enum": [
+                    "is",
+                    "isNot"
+                ],
+                "title": "Condition"
+            },
+            "Condition1": {
+                "type": "string",
+                "enum": [
+                    "contains",
+                    "doesNotContain",
+                    "startsWith",
+                    "doesNotStartWith",
+                    "endsWith",
+                    "doesNotEndWith"
+                ],
+                "title": "Condition1"
             },
             "Condition2": {
                 "type": "string",
@@ -5974,49 +6019,6 @@
                 "type": "object",
                 "title": "Config"
             },
-            "ContainerWidget": {
-                "properties": {
-                    "columns": {
-                        "type": "integer",
-                        "title": "Columns"
-                    },
-                    "container": {
-                        "type": "string",
-                        "title": "Container"
-                    },
-                    "enable_section_headers": {
-                        "type": "boolean",
-                        "title": "Enable Section Headers"
-                    },
-                    "layout_direction": {
-                        "type": "string",
-                        "enum": [
-                            "row",
-                            "column"
-                        ],
-                        "title": "Layout Direction"
-                    },
-                    "rows": {
-                        "type": "number",
-                        "title": "Rows"
-                    },
-                    "sections": {
-                        "items": {
-                            "$ref": "#/components/schemas/DashboardSection"
-                        },
-                        "type": "array",
-                        "title": "Sections"
-                    }
-                },
-                "additionalProperties": false,
-                "type": "object",
-                "required": [
-                    "container",
-                    "sections"
-                ],
-                "title": "ContainerWidget",
-                "description": "AAC ref: dashboard.json container widget holding nested sections."
-            },
             "ConversationFeedbackRequest": {
                 "properties": {
                     "feedback": {
@@ -6628,166 +6630,527 @@
                 "type": "object",
                 "title": "CustomTooltip"
             },
-            "Dashboard": {
+            "Dashboard-Input": {
                 "properties": {
                     "cross_filtering": {
-                        "type": "boolean",
-                        "title": "Cross Filtering"
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Cross Filtering",
+                        "description": "Whether cross filtering is enabled for this dashboard. Defaults to true."
                     },
                     "description": {
-                        "type": "string",
-                        "title": "Description"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Description"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "An optional description of the dashboard."
                     },
                     "enable_section_headers": {
-                        "type": "boolean",
-                        "title": "Enable Section Headers"
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Enable Section Headers",
+                        "description": "Applies to the root layout. Whether all sections headers are enabled. Defaults to true."
                     },
                     "filter_views": {
-                        "type": "boolean",
-                        "title": "Filter Views"
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Filter Views",
+                        "description": "Whether user can save and apply filter views for this dashboard. Defaults to true."
                     },
                     "filters": {
-                        "additionalProperties": {
-                            "anyOf": [
-                                {
-                                    "$ref": "#/components/schemas/DashboardRelativeDateFilter"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/DashboardAbsoluteDateFilter"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/DashboardAttributeFilter"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/DashboardTextFilter"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/DashboardMetricValueFilter"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/DashboardFilterGroup"
-                                }
-                            ]
-                        },
-                        "type": "object",
-                        "title": "Filters"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/DashboardFilters"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "id": {
-                        "type": "string",
-                        "title": "Id"
+                        "$ref": "#/components/schemas/Identifier",
+                        "description": "A unique identifier of the dashboard."
                     },
                     "permissions": {
-                        "additionalProperties": true,
-                        "type": "object",
-                        "title": "Permissions"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Permissions"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Permissions for the dashboard"
+                    },
+                    "persistent_filters_across_tabs": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Persistent Filters Across Tabs",
+                        "description": "Whether persistent filters across tabs are enabled for this dashboard. Defaults to true."
+                    },
+                    "plugins": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "anyOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Plugins"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/Identifier"
+                                        }
+                                    ]
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Plugins",
+                        "description": "A list of plugins in this dashboard."
                     },
                     "sections": {
-                        "items": {
-                            "$ref": "#/components/schemas/DashboardSection"
-                        },
-                        "type": "array",
-                        "title": "Sections"
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/Section-Input"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Sections",
+                        "description": "A list of sections in this dashboard."
                     },
                     "tabs": {
-                        "items": {
-                            "$ref": "#/components/schemas/DashboardTab"
-                        },
-                        "type": "array",
-                        "title": "Tabs"
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/Tab-Input"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tabs",
+                        "description": "A list of tabs in this dashboard. Each tab has its own layout, filters, and filter configurations. Mutually exclusive with sections and filters at dashboard level."
                     },
                     "tags": {
-                        "items": {
-                            "type": "string"
-                        },
-                        "type": "array",
-                        "title": "Tags"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Tags"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "A list of strings - metadata tags of this dashboard."
+                    },
+                    "timezone_config": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/TimezoneConfig"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Dashboard-level timezone configuration. If omitted, the workspace or organization timezone setting is used."
                     },
                     "title": {
-                        "type": "string",
-                        "title": "Title"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Title"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "An optional human readable title for the dashboard. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "type": "string",
-                        "const": "dashboard",
-                        "title": "Type"
+                        "$ref": "#/components/schemas/Type55"
                     },
                     "user_filters_reset": {
-                        "type": "boolean",
-                        "title": "User Filters Reset"
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "User Filters Reset",
+                        "description": "Whether user can reset custom updated filters. Defaults to true."
                     },
                     "user_filters_save": {
-                        "type": "boolean",
-                        "title": "User Filters Save"
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "User Filters Save",
+                        "description": "Whether user filter setting will be stored in local storage. Defaults to true."
                     },
                     "version": {
-                        "type": "string",
-                        "enum": [
-                            "2",
-                            "3"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Version"
+                            },
+                            {
+                                "type": "null"
+                            }
                         ],
-                        "title": "Version"
+                        "description": "Dashboard model version. \"2\" (default if omitted) — legacy shape: root-level sections/filters are also mirrored into a default tab, producing a declarative model with duplicated content for backward compatibility with older SDK readers. \"3\" — clean shape: tabs are the sole source of layout and filters; root sections/filters in YAML are still allowed as an authoring shortcut but are wrapped into a single synthetic tab without duplication. Use \"3\" for new dashboards; \"2\" exists to keep existing files round-trippable."
                     }
                 },
-                "additionalProperties": false,
                 "type": "object",
                 "required": [
-                    "type",
                     "id",
-                    "title"
+                    "type"
                 ],
-                "title": "Dashboard",
-                "description": "AAC ref: dashboard.json. Both dashboard model versions are supported.\n\nA document carries its layout either in ``tabs`` or at the root in ``sections``, and both\nshapes are read here. A version 2 dashboard converts to AAC with root ``sections`` and no\n``tabs``, which the AAC schema treats as a single implicit tab.\n\n``version`` says nothing reliable about which shape a relayed document uses, so nothing\nbranches on it: a document can arrive with ``version: \"3\"`` and no ``tabs``, because the\nconvertor computes the version from the declarative input and separately flattens a single\nuntitled tab into root sections. Read the presence of ``tabs`` instead.\n\n``version`` is optional because AAC treats an absent version as 2."
+                "title": "Dashboard"
+            },
+            "Dashboard-Output": {
+                "properties": {
+                    "cross_filtering": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Cross Filtering",
+                        "description": "Whether cross filtering is enabled for this dashboard. Defaults to true."
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Description"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "An optional description of the dashboard."
+                    },
+                    "enable_section_headers": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Enable Section Headers",
+                        "description": "Applies to the root layout. Whether all sections headers are enabled. Defaults to true."
+                    },
+                    "filter_views": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Filter Views",
+                        "description": "Whether user can save and apply filter views for this dashboard. Defaults to true."
+                    },
+                    "filters": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/DashboardFilters"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "id": {
+                        "$ref": "#/components/schemas/Identifier",
+                        "description": "A unique identifier of the dashboard."
+                    },
+                    "permissions": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Permissions"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Permissions for the dashboard"
+                    },
+                    "persistent_filters_across_tabs": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Persistent Filters Across Tabs",
+                        "description": "Whether persistent filters across tabs are enabled for this dashboard. Defaults to true."
+                    },
+                    "plugins": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "anyOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Plugins"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/Identifier"
+                                        }
+                                    ]
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Plugins",
+                        "description": "A list of plugins in this dashboard."
+                    },
+                    "sections": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/Section-Output"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Sections",
+                        "description": "A list of sections in this dashboard."
+                    },
+                    "tabs": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/Tab-Output"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tabs",
+                        "description": "A list of tabs in this dashboard. Each tab has its own layout, filters, and filter configurations. Mutually exclusive with sections and filters at dashboard level."
+                    },
+                    "tags": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Tags"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "A list of strings - metadata tags of this dashboard."
+                    },
+                    "timezone_config": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/TimezoneConfig"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Dashboard-level timezone configuration. If omitted, the workspace or organization timezone setting is used."
+                    },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Title"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "An optional human readable title for the dashboard. Will be derived from id if not provided explicitly."
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/Type55"
+                    },
+                    "user_filters_reset": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "User Filters Reset",
+                        "description": "Whether user can reset custom updated filters. Defaults to true."
+                    },
+                    "user_filters_save": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "User Filters Save",
+                        "description": "Whether user filter setting will be stored in local storage. Defaults to true."
+                    },
+                    "version": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Version"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Dashboard model version. \"2\" (default if omitted) — legacy shape: root-level sections/filters are also mirrored into a default tab, producing a declarative model with duplicated content for backward compatibility with older SDK readers. \"3\" — clean shape: tabs are the sole source of layout and filters; root sections/filters in YAML are still allowed as an authoring shortcut but are wrapped into a single synthetic tab without duplication. Use \"3\" for new dashboards; \"2\" exists to keep existing files round-trippable."
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "type"
+                ],
+                "title": "Dashboard"
             },
             "DashboardAbsoluteDateFilter": {
                 "properties": {
                     "date": {
-                        "type": "string",
-                        "title": "Date"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Identifier"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "An id of the date dataset to be used for date filter"
                     },
                     "empty_values": {
-                        "type": "string",
-                        "title": "Empty Values"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/EmptyValues"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Controls how empty values are handled in the filter."
                     },
                     "from": {
-                        "type": "string",
-                        "title": "From"
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "pattern": "^([0-9]{4})-([0-9]{2})-([0-9]{2})(?: ([0-9]{2}):([0-9]{2})(?::([0-9]{2}))?)?$"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "From",
+                        "description": "A period start as YYYY-MM-DD, or YYYY-MM-DD HH:mm for hour/minute, or YYYY-MM-DD HH:mm:ss for hour/minute/second granularities"
                     },
                     "granularity": {
-                        "type": "string",
-                        "enum": [
-                            "SECOND",
-                            "MINUTE",
-                            "HOUR",
-                            "DAY",
-                            "WEEK_US",
-                            "MONTH",
-                            "QUARTER",
-                            "YEAR",
-                            "FISCAL_MONTH",
-                            "FISCAL_QUARTER",
-                            "FISCAL_YEAR"
-                        ],
-                        "title": "Granularity"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/DateFilterGranularity-Output"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "mode": {
-                        "type": "string",
-                        "title": "Mode"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Mode"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter."
                     },
                     "title": {
-                        "type": "string",
-                        "title": "Title"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title",
+                        "description": "Optional title of the filter"
                     },
                     "to": {
-                        "type": "string",
-                        "title": "To"
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "pattern": "^([0-9]{4})-([0-9]{2})-([0-9]{2})(?: ([0-9]{2}):([0-9]{2})(?::([0-9]{2}))?)?$"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "To",
+                        "description": "A period end as YYYY-MM-DD, or YYYY-MM-DD HH:mm for hour/minute, or YYYY-MM-DD HH:mm:ss for hour/minute/second granularities"
                     },
                     "type": {
-                        "type": "string",
-                        "const": "date_filter",
-                        "title": "Type"
+                        "$ref": "#/components/schemas/Type1"
                     }
                 },
-                "additionalProperties": false,
                 "type": "object",
                 "required": [
                     "type"
@@ -6795,105 +7158,361 @@
                 "title": "DashboardAbsoluteDateFilter"
             },
             "DashboardAttributeFilter": {
+                "anyOf": [
+                    {
+                        "$ref": "#/components/schemas/DashboardAttributeFilter1"
+                    },
+                    {
+                        "$ref": "#/components/schemas/DashboardAttributeFilter2"
+                    }
+                ],
+                "title": "Dashboard attribute filter",
+                "description": "A dashboard attribute filter"
+            },
+            "DashboardAttributeFilter1": {
                 "properties": {
                     "display_as": {
-                        "type": "string",
-                        "title": "Display As"
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "pattern": "^label/(?!\\.)[.A-Za-z0-9_-]{1,255}$"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Display As Label Identifier",
+                        "description": "Configures the label used for representing attribute filter elements in UI."
                     },
                     "metric_filters": {
-                        "items": {
-                            "type": "string"
-                        },
-                        "type": "array",
-                        "title": "Metric Filters"
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Metric Filters",
+                        "description": "An id of the attributes, labels, facts or metrics to validate the filter by"
                     },
                     "mode": {
-                        "type": "string",
-                        "title": "Mode"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Mode2"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter."
                     },
                     "multiselect": {
-                        "type": "boolean",
-                        "title": "Multiselect"
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Multiselect",
+                        "description": "Whether the filter should allow multiple selection"
                     },
                     "parents": {
-                        "items": {},
-                        "type": "array",
-                        "title": "Parents"
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "anyOf": [
+                                        {
+                                            "type": "string"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/Parents"
+                                        }
+                                    ]
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Parents",
+                        "description": "An ids of the parent local attribute or label filter"
                     },
                     "selection_type": {
-                        "type": "string",
-                        "title": "Selection Type"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/SelectionType"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available."
                     },
                     "state": {
-                        "title": "State"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/DashboardStateSelect"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "title": {
-                        "type": "string",
-                        "title": "Title"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title",
+                        "description": "Optional title of the filter"
                     },
                     "type": {
-                        "type": "string",
-                        "const": "attribute_filter",
-                        "title": "Type"
+                        "$ref": "#/components/schemas/Type3"
                     },
                     "using": {
-                        "type": "string",
-                        "title": "Using"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/AttributeIdentifier"
+                            },
+                            {
+                                "$ref": "#/components/schemas/LabelIdentifier"
+                            },
+                            {
+                                "$ref": "#/components/schemas/ComputedAttributeIdentifier"
+                            }
+                        ],
+                        "title": "Using",
+                        "description": "Attribute or label to use in this filter."
                     }
                 },
-                "additionalProperties": false,
                 "type": "object",
                 "required": [
                     "type",
                     "using"
                 ],
-                "title": "DashboardAttributeFilter",
-                "description": "AAC ref: dashboard.json attribute filter."
+                "title": "DashboardAttributeFilter1"
+            },
+            "DashboardAttributeFilter2": {
+                "properties": {
+                    "display_as": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "pattern": "^label/(?!\\.)[.A-Za-z0-9_-]{1,255}$"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Display As Label Identifier",
+                        "description": "If specified, the attribute filter will display the elements in selected label form."
+                    },
+                    "metric_filters": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Metric Filters",
+                        "description": "An id of the attributes, labels, facts or metrics to validate the filter by"
+                    },
+                    "mode": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Mode2"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter."
+                    },
+                    "multiselect": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Multiselect",
+                        "description": "Whether the filter should allow multiple selection"
+                    },
+                    "parents": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "anyOf": [
+                                        {
+                                            "type": "string"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/Parents"
+                                        }
+                                    ]
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Parents",
+                        "description": "An ids of the parent local attribute or label filter"
+                    },
+                    "selection_type": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/SelectionType"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available."
+                    },
+                    "state": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/DashboardStateMultiselect"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title",
+                        "description": "Optional title of the filter"
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/Type3"
+                    },
+                    "using": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/AttributeIdentifier"
+                            },
+                            {
+                                "$ref": "#/components/schemas/LabelIdentifier"
+                            },
+                            {
+                                "$ref": "#/components/schemas/ComputedAttributeIdentifier"
+                            }
+                        ],
+                        "title": "Using",
+                        "description": "Attribute or label to use in this filter."
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "type",
+                    "using"
+                ],
+                "title": "DashboardAttributeFilter2"
             },
             "DashboardFilterGroup": {
                 "properties": {
                     "filters": {
-                        "additionalProperties": {
-                            "anyOf": [
-                                {
-                                    "$ref": "#/components/schemas/DashboardRelativeDateFilter"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/DashboardAbsoluteDateFilter"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/DashboardAttributeFilter"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/DashboardTextFilter"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/DashboardMetricValueFilter"
-                                }
-                            ]
-                        },
-                        "type": "object",
-                        "title": "Filters"
+                        "$ref": "#/components/schemas/DashboardFiltersNoGroups",
+                        "description": "Filters contained in this group (only attribute and date filters, no nested groups)"
                     },
                     "title": {
                         "type": "string",
-                        "title": "Title"
+                        "title": "Title",
+                        "description": "Display title for the filter group"
                     },
                     "type": {
-                        "type": "string",
-                        "const": "filter_group",
-                        "title": "Type"
+                        "$ref": "#/components/schemas/Type8"
                     }
                 },
-                "additionalProperties": false,
                 "type": "object",
                 "required": [
                     "type",
                     "title",
                     "filters"
                 ],
-                "title": "DashboardFilterGroup",
-                "description": "AAC ref: dashboard.json filter group."
+                "title": "DashboardFilterGroup"
+            },
+            "DashboardFilters": {
+                "patternProperties": {
+                    "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/DashboardAbsoluteDateFilter"
+                            },
+                            {
+                                "$ref": "#/components/schemas/DashboardRelativeDateFilter"
+                            },
+                            {
+                                "$ref": "#/components/schemas/DashboardAttributeFilter"
+                            },
+                            {
+                                "$ref": "#/components/schemas/DashboardTextFilter"
+                            },
+                            {
+                                "$ref": "#/components/schemas/DashboardMetricValueFilter"
+                            },
+                            {
+                                "$ref": "#/components/schemas/DashboardFilterGroup"
+                            }
+                        ]
+                    }
+                },
+                "type": "object",
+                "title": "Dashboard Filters"
+            },
+            "DashboardFiltersNoGroups": {
+                "patternProperties": {
+                    "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/DashboardAbsoluteDateFilter"
+                            },
+                            {
+                                "$ref": "#/components/schemas/DashboardRelativeDateFilter"
+                            },
+                            {
+                                "$ref": "#/components/schemas/DashboardAttributeFilter"
+                            },
+                            {
+                                "$ref": "#/components/schemas/DashboardTextFilter"
+                            },
+                            {
+                                "$ref": "#/components/schemas/DashboardMetricValueFilter"
+                            }
+                        ]
+                    }
+                },
+                "type": "object",
+                "title": "Dashboard Filters (no groups)",
+                "description": "Dashboard filters that cannot contain filter groups - only attribute, date, text, and metric value filters"
             },
             "DashboardIdUpdateRequest": {
                 "properties": {
@@ -6913,63 +7532,104 @@
             "DashboardMetricValueFilter": {
                 "properties": {
                     "conditions": {
-                        "items": {
-                            "additionalProperties": true,
-                            "type": "object"
-                        },
-                        "type": "array",
-                        "title": "Conditions"
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/MvfCondition"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Conditions",
+                        "description": "OR-ed list of conditions. Empty or omitted means \"All\" (no filtering)."
                     },
                     "dimensionality": {
-                        "items": {
-                            "type": "string"
-                        },
-                        "type": "array",
-                        "title": "Dimensionality"
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "anyOf": [
+                                        {
+                                            "$ref": "#/components/schemas/LabelIdentifier"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/ComputedAttributeIdentifier"
+                                        }
+                                    ]
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Dimensionality",
+                        "description": "Optional array of label or computed attribute references to apply dimensionality to the filter."
                     },
                     "mode": {
-                        "type": "string",
-                        "title": "Mode"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Mode6"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter."
                     },
                     "null_values_as_zero": {
-                        "type": "boolean",
-                        "title": "Null Values As Zero"
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Null Values As Zero",
+                        "description": "Null values will be treated as zero during comparisons."
                     },
                     "title": {
-                        "type": "string",
-                        "title": "Title"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title",
+                        "description": "Optional custom title of the filter to display in the filter bar."
                     },
                     "type": {
-                        "type": "string",
-                        "const": "metric_value_filter",
-                        "title": "Type"
+                        "$ref": "#/components/schemas/Type7"
                     },
                     "using": {
-                        "type": "string",
-                        "title": "Using"
+                        "$ref": "#/components/schemas/MetricIdentifier",
+                        "description": "Reference to the metric being filtered."
                     }
                 },
-                "additionalProperties": false,
                 "type": "object",
                 "required": [
                     "type",
                     "using"
                 ],
-                "title": "DashboardMetricValueFilter",
-                "description": "AAC ref: dashboard.json metric value filter."
+                "title": "DashboardMetricValueFilter"
             },
             "DashboardPart": {
                 "properties": {
                     "dashboard": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Dashboard"
+                                "$ref": "#/components/schemas/Dashboard-Output"
                             },
                             {
                                 "type": "null"
                             }
                         ],
-                        "description": "Optional full dashboard draft payload (AAC JSON) when available."
+                        "description": "Optional full dashboard payload (AAC JSON) when available."
                     },
                     "references": {
                         "anyOf": [
@@ -6992,7 +7652,7 @@
                             }
                         ],
                         "title": "Saved Dashboard Id",
-                        "description": "Id of the persisted analyticalDashboard once the user has saved this draft; null while it is still an unsaved draft. Lets the client distinguish a saved dashboard from a draft (e.g. after reload) and update it in place on further edits."
+                        "description": "Id of the analyticalDashboard this part is about: the dashboard a proposed change applies to, or the persisted one once the user has saved a draft; null for a draft that has never been saved. Lets the client distinguish a saved dashboard from a draft (e.g. after reload), update it in place on further edits, and pair a base with the `dashboardPatch` part that addresses it."
                     },
                     "type": {
                         "type": "string",
@@ -7020,7 +7680,7 @@
                         },
                         "type": "array",
                         "title": "Operations",
-                        "description": "RFC 6902 JSON Patch operations against the relayed AAC dashboard document. A `test` operation guards each insert: if one fails, the dashboard moved and the change must be discarded rather than forced."
+                        "description": "RFC 6902 operations against the document in the preceding `dashboard` part. A `test` operation guards each one that addresses an existing widget, so applying them to a document that has moved fails the whole patch rather than changing the wrong widget. Applied to the `dashboard` part they arrive with, those guards hold by construction."
                     },
                     "references": {
                         "anyOf": [
@@ -7041,7 +7701,7 @@
                     "operations"
                 ],
                 "title": "DashboardPatch",
-                "description": "A proposed change to a dashboard the user has open, as RFC 6902 operations.\n\nApply the operations to the AAC document that was relayed in the request context, once, when\nthe user accepts the proposal. Replaying conversation history must not apply them again."
+                "description": "A proposed change to a dashboard the user has open, as RFC 6902 operations.\n\nApply them once, when the user accepts the proposal, to the document in the `dashboard` part\nthat precedes this one in the same message. That document, not the dashboard as it stands now,\nis what the operations were compiled against; keeping the two in step is the client's to do,\nby relaying the document it currently holds with every message. Replaying conversation history\nmust not apply the operations again."
             },
             "DashboardPatchPart": {
                 "properties": {
@@ -7145,202 +7805,272 @@
             "DashboardRelativeDateFilter": {
                 "properties": {
                     "date": {
-                        "type": "string",
-                        "title": "Date"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Identifier"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "An id of the date dataset to be used for date filter"
                     },
                     "empty_values": {
-                        "type": "string",
-                        "title": "Empty Values"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/EmptyValues"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Controls how empty values are handled in the filter."
                     },
                     "from": {
-                        "type": "integer",
-                        "title": "From"
+                        "type": "number",
+                        "title": "From",
+                        "description": "A period start as number, from today"
                     },
                     "granularity": {
-                        "type": "string",
-                        "enum": [
-                            "SECOND",
-                            "MINUTE",
-                            "HOUR",
-                            "DAY",
-                            "WEEK_US",
-                            "MONTH",
-                            "QUARTER",
-                            "YEAR",
-                            "FISCAL_MONTH",
-                            "FISCAL_QUARTER",
-                            "FISCAL_YEAR"
-                        ],
-                        "title": "Granularity"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/DateFilterGranularity-Output"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "mode": {
-                        "type": "string",
-                        "title": "Mode"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Mode"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter."
                     },
                     "title": {
-                        "type": "string",
-                        "title": "Title"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title",
+                        "description": "Optional title of the filter"
                     },
                     "to": {
-                        "type": "integer",
-                        "title": "To"
+                        "type": "number",
+                        "title": "To",
+                        "description": "A period end as number, from today"
                     },
                     "type": {
-                        "type": "string",
-                        "const": "date_filter",
-                        "title": "Type"
+                        "$ref": "#/components/schemas/Type1"
                     }
                 },
-                "additionalProperties": false,
                 "type": "object",
                 "required": [
-                    "type"
+                    "type",
+                    "from",
+                    "to"
                 ],
                 "title": "DashboardRelativeDateFilter"
             },
-            "DashboardSection": {
-                "properties": {
-                    "description": {
-                        "type": "string",
-                        "title": "Description"
+            "DashboardStateMultiselect": {
+                "anyOf": [
+                    {
+                        "$ref": "#/components/schemas/DashboardStateMultiselect1"
                     },
-                    "title": {
-                        "type": "string",
-                        "title": "Title"
-                    },
-                    "widgets": {
-                        "items": {
-                            "anyOf": [
-                                {
-                                    "$ref": "#/components/schemas/DashboardWidget"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/RichTextWidget"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/VisualizationSwitcherWidget"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/ContainerWidget"
-                                }
-                            ]
-                        },
-                        "type": "array",
-                        "title": "Widgets"
+                    {
+                        "$ref": "#/components/schemas/DashboardStateMultiselect2"
                     }
-                },
-                "additionalProperties": false,
-                "type": "object",
-                "required": [
-                    "widgets"
                 ],
-                "title": "DashboardSection",
-                "description": "AAC ref: dashboard.json section."
+                "title": "DashboardStateMultiselect",
+                "description": "State of the multiselect"
             },
-            "DashboardTab": {
+            "DashboardStateMultiselect1": {
                 "properties": {
-                    "filters": {
-                        "additionalProperties": {
-                            "anyOf": [
-                                {
-                                    "$ref": "#/components/schemas/DashboardRelativeDateFilter"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/DashboardAbsoluteDateFilter"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/DashboardAttributeFilter"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/DashboardTextFilter"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/DashboardMetricValueFilter"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/DashboardFilterGroup"
-                                }
-                            ]
-                        },
-                        "type": "object",
-                        "title": "Filters"
-                    },
-                    "id": {
-                        "type": "string",
-                        "title": "Id"
-                    },
-                    "sections": {
-                        "items": {
-                            "$ref": "#/components/schemas/DashboardSection"
-                        },
-                        "type": "array",
-                        "title": "Sections"
-                    },
-                    "title": {
-                        "type": "string",
-                        "title": "Title"
-                    }
-                },
-                "additionalProperties": false,
-                "type": "object",
-                "required": [
-                    "id",
-                    "title",
-                    "sections"
-                ],
-                "title": "DashboardTab",
-                "description": "AAC ref: dashboard.json tab.\n\nA tab owns its own layout and filters. In AAC this is where the layout lives for either\ndashboard model version."
-            },
-            "DashboardTextFilter": {
-                "properties": {
-                    "case_sensitive": {
-                        "type": "boolean",
-                        "title": "Case Sensitive"
-                    },
-                    "condition": {
-                        "type": "string",
-                        "title": "Condition"
-                    },
-                    "display_as": {
-                        "type": "string",
-                        "title": "Display As"
-                    },
-                    "metric_filters": {
+                    "include": {
                         "items": {
                             "type": "string"
                         },
                         "type": "array",
-                        "title": "Metric Filters"
+                        "title": "Include"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "include"
+                ],
+                "title": "DashboardStateMultiselect1"
+            },
+            "DashboardStateMultiselect2": {
+                "properties": {
+                    "exclude": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Exclude"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "exclude"
+                ],
+                "title": "DashboardStateMultiselect2"
+            },
+            "DashboardStateSelect": {
+                "properties": {
+                    "include": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "maxItems": 1,
+                        "title": "Include"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "include"
+                ],
+                "title": "DashboardStateSelect"
+            },
+            "DashboardTextFilter": {
+                "anyOf": [
+                    {
+                        "$ref": "#/components/schemas/DashboardTextFilter1"
+                    },
+                    {
+                        "$ref": "#/components/schemas/DashboardTextFilter2"
+                    }
+                ],
+                "title": "Dashboard text filter",
+                "description": "A dashboard text filter"
+            },
+            "DashboardTextFilter1": {
+                "properties": {
+                    "case_sensitive": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Case Sensitive"
+                    },
+                    "condition": {
+                        "$ref": "#/components/schemas/Condition"
+                    },
+                    "display_as": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "pattern": "^label/(?!\\.)[.A-Za-z0-9_-]{1,255}$"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Display As Label Identifier",
+                        "description": "Configures the label used for representing attribute filter elements in UI."
+                    },
+                    "metric_filters": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Metric Filters",
+                        "description": "An id of the attributes, labels, facts or metrics to validate the filter by"
                     },
                     "mode": {
-                        "type": "string",
-                        "title": "Mode"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Mode2"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter."
                     },
                     "parents": {
-                        "items": {},
-                        "type": "array",
-                        "title": "Parents"
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "anyOf": [
+                                        {
+                                            "type": "string"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/Parents"
+                                        }
+                                    ]
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Parents",
+                        "description": "An ids of the parent local attribute, text, or date filter"
                     },
                     "selection_type": {
-                        "type": "string",
-                        "title": "Selection Type"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/SelectionType"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available."
                     },
                     "title": {
-                        "type": "string",
-                        "title": "Title"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title",
+                        "description": "Optional title of the filter"
                     },
                     "type": {
-                        "type": "string",
-                        "const": "text_filter",
-                        "title": "Type"
+                        "$ref": "#/components/schemas/Type5"
                     },
                     "using": {
-                        "type": "string",
-                        "title": "Using"
-                    },
-                    "value": {
-                        "type": "string",
-                        "title": "Value"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/AttributeIdentifier"
+                            },
+                            {
+                                "$ref": "#/components/schemas/LabelIdentifier"
+                            },
+                            {
+                                "$ref": "#/components/schemas/ComputedAttributeIdentifier"
+                            }
+                        ],
+                        "title": "Using",
+                        "description": "Attribute or label to use in this filter."
                     },
                     "values": {
                         "items": {
@@ -7357,49 +8087,146 @@
                         "title": "Values"
                     }
                 },
-                "additionalProperties": false,
                 "type": "object",
                 "required": [
+                    "using",
                     "type",
-                    "using"
+                    "condition",
+                    "values"
                 ],
-                "title": "DashboardTextFilter",
-                "description": "AAC ref: dashboard.json text filter.\n\nAAC splits this into two branches, one carrying ``values`` and one carrying ``value``.\nBoth are optional here, so a relayed filter of either branch reads back."
+                "title": "DashboardTextFilter1"
             },
-            "DashboardWidget": {
+            "DashboardTextFilter2": {
                 "properties": {
-                    "columns": {
-                        "type": "integer",
-                        "title": "Columns"
+                    "case_sensitive": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Case Sensitive"
                     },
-                    "description": {
-                        "type": "string",
-                        "title": "Description"
+                    "condition": {
+                        "$ref": "#/components/schemas/Condition1"
                     },
-                    "id": {
-                        "type": "string",
-                        "title": "Id"
+                    "display_as": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "pattern": "^label/(?!\\.)[.A-Za-z0-9_-]{1,255}$"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Display As Label Identifier",
+                        "description": "Configures the label used for representing attribute filter elements in UI."
                     },
-                    "rows": {
-                        "type": "number",
-                        "title": "Rows"
+                    "metric_filters": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Metric Filters",
+                        "description": "An id of the attributes, labels, facts or metrics to validate the filter by"
+                    },
+                    "mode": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Mode2"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter."
+                    },
+                    "parents": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "anyOf": [
+                                        {
+                                            "type": "string"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/Parents"
+                                        }
+                                    ]
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Parents",
+                        "description": "An ids of the parent local attribute, text, or date filter"
+                    },
+                    "selection_type": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/SelectionType"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available."
                     },
                     "title": {
-                        "type": "string",
-                        "title": "Title"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title",
+                        "description": "Optional title of the filter"
                     },
-                    "visualization": {
+                    "type": {
+                        "$ref": "#/components/schemas/Type5"
+                    },
+                    "using": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/AttributeIdentifier"
+                            },
+                            {
+                                "$ref": "#/components/schemas/LabelIdentifier"
+                            },
+                            {
+                                "$ref": "#/components/schemas/ComputedAttributeIdentifier"
+                            }
+                        ],
+                        "title": "Using",
+                        "description": "Attribute or label to use in this filter."
+                    },
+                    "value": {
                         "type": "string",
-                        "title": "Visualization"
+                        "title": "Value"
                     }
                 },
-                "additionalProperties": false,
                 "type": "object",
                 "required": [
-                    "visualization"
+                    "using",
+                    "type",
+                    "condition",
+                    "value"
                 ],
-                "title": "DashboardWidget",
-                "description": "AAC ref: dashboard.json visualization widget (size hints in 12-column grid units).\n\n``id`` is accepted because a relayed dashboard document may carry it, but nothing here\ndepends on it: a widget is identified by its position in document order, since the\nclient cannot guarantee widget ids."
+                "title": "DashboardTextFilter2"
             },
             "DataLabelsStyle": {
                 "type": "string",
@@ -7409,50 +8236,23 @@
                 ],
                 "title": "DataLabelsStyle"
             },
-            "DateFilterGranularity": {
+            "DateFilterGranularity-Output": {
                 "type": "string",
                 "enum": [
                     "SECOND",
-                    "SECOND_OF_MINUTE",
-                    "SECOND_OF_DAY",
                     "MINUTE",
-                    "MINUTE_OF_DAY",
                     "HOUR",
                     "DAY",
+                    "WEEK",
                     "WEEK_US",
                     "MONTH",
                     "QUARTER",
                     "YEAR",
-                    "MINUTE_OF_HOUR",
-                    "HOUR_OF_DAY",
-                    "DAY_OF_WEEK",
-                    "DAY_OF_MONTH",
-                    "DAY_OF_QUARTER",
-                    "DAY_OF_YEAR",
-                    "WEEK_OF_YEAR",
-                    "MONTH_OF_YEAR",
-                    "QUARTER_OF_YEAR",
-                    "FISCAL_DAY_OF_FISCAL_WEEK",
-                    "FISCAL_DAY_OF_FISCAL_MONTH",
-                    "FISCAL_DAY_OF_FISCAL_QUARTER",
-                    "FISCAL_DAY_OF_FISCAL_SEMESTER",
-                    "FISCAL_DAY_OF_FISCAL_YEAR",
-                    "FISCAL_WEEK",
-                    "FISCAL_WEEK_OF_FISCAL_MONTH",
-                    "FISCAL_WEEK_OF_FISCAL_QUARTER",
-                    "FISCAL_WEEK_OF_FISCAL_SEMESTER",
-                    "FISCAL_WEEK_OF_FISCAL_YEAR",
-                    "FISCAL_MONTH",
-                    "FISCAL_MONTH_OF_FISCAL_QUARTER",
-                    "FISCAL_MONTH_OF_FISCAL_SEMESTER",
-                    "FISCAL_MONTH_OF_FISCAL_YEAR",
+                    "FISCAL_YEAR",
                     "FISCAL_QUARTER",
-                    "FISCAL_QUARTER_OF_FISCAL_SEMESTER",
-                    "FISCAL_QUARTER_OF_FISCAL_YEAR",
-                    "FISCAL_SEMESTER",
-                    "FISCAL_SEMESTER_OF_FISCAL_YEAR",
-                    "FISCAL_YEAR"
-                ]
+                    "FISCAL_MONTH"
+                ],
+                "title": "DateFilterGranularity"
             },
             "DateGranularity": {
                 "type": "string",
@@ -7523,6 +8323,20 @@
                 "type": "string",
                 "maxLength": 10000,
                 "title": "Description"
+            },
+            "Description2": {
+                "type": "boolean",
+                "enum": [
+                    false
+                ],
+                "title": "Description2"
+            },
+            "Description3": {
+                "type": "string",
+                "enum": [
+                    "inherit"
+                ],
+                "title": "Description3"
             },
             "Direction": {
                 "type": "string",
@@ -7928,6 +8742,79 @@
                 "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
                 "title": "Id"
             },
+            "IgnoredDrillDown": {
+                "anyOf": [
+                    {
+                        "$ref": "#/components/schemas/IgnoredDrillDown1"
+                    },
+                    {
+                        "$ref": "#/components/schemas/IgnoredDrillDown2"
+                    }
+                ],
+                "title": "Ignored Drill Down",
+                "description": "An ignored drill down item"
+            },
+            "IgnoredDrillDown1": {
+                "properties": {
+                    "hierarchy": {
+                        "type": "string",
+                        "title": "Hierarchy",
+                        "description": "An id of the attribute hierarchy to be ignored"
+                    },
+                    "on": {
+                        "type": "string",
+                        "title": "On",
+                        "description": "An id of the drill down to be ignored"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "hierarchy",
+                    "on"
+                ],
+                "title": "IgnoredDrillDown1"
+            },
+            "IgnoredDrillDown2": {
+                "properties": {
+                    "on": {
+                        "type": "string",
+                        "title": "On",
+                        "description": "An id of the drill down to be ignored"
+                    },
+                    "template": {
+                        "$ref": "#/components/schemas/Template",
+                        "description": "An id of the date attribute hierarchy template to be ignored"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "template",
+                    "on"
+                ],
+                "title": "IgnoredDrillDown2"
+            },
+            "IgnoredDrillDownsIntersection": {
+                "properties": {
+                    "attributes": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Attributes",
+                        "description": "An attributes list to be ignored"
+                    },
+                    "hierarchy": {
+                        "$ref": "#/components/schemas/IgnoredDrillDown",
+                        "description": "An attribute hierarchy that is related to attributes that will be ignored"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "attributes",
+                    "hierarchy"
+                ],
+                "title": "IgnoredDrillDownsIntersection"
+            },
             "InlineFilterDefinition": {
                 "properties": {
                     "inline": {
@@ -7976,6 +8863,261 @@
                     "filter"
                 ],
                 "title": "InlineFilterDefinitionBody"
+            },
+            "Interaction": {
+                "anyOf": [
+                    {
+                        "$ref": "#/components/schemas/InteractionOpenPlainUrl"
+                    },
+                    {
+                        "$ref": "#/components/schemas/InteractionOpenParamUrl"
+                    },
+                    {
+                        "$ref": "#/components/schemas/InteractionOpenDashboard"
+                    },
+                    {
+                        "$ref": "#/components/schemas/InteractionOpenVisualization"
+                    }
+                ],
+                "title": "Interaction",
+                "description": "An interaction for current widget."
+            },
+            "InteractionClickOn": {
+                "type": "string",
+                "title": "InteractionClickOn",
+                "description": "An id of the metric or attribute that will trigger the interaction"
+            },
+            "InteractionFilters": {
+                "properties": {
+                    "exclude": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/InteractionFiltersExclude"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "include": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/InteractionFiltersInclude"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    }
+                },
+                "type": "object",
+                "title": "InteractionFilters"
+            },
+            "InteractionFiltersExclude": {
+                "properties": {
+                    "dashboard_filters": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/InteractionIgnoredDashboardFilters"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "drilled_datapoint": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/InteractionIgnoredIntersectionAttributes"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    }
+                },
+                "type": "object",
+                "title": "InteractionFiltersExclude"
+            },
+            "InteractionFiltersInclude": {
+                "properties": {
+                    "metric_filters": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/InteractionIncludedSourceMeasureFilters"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "visualization_filters": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/InteractionIncludedSourceInsightFilters"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    }
+                },
+                "type": "object",
+                "title": "InteractionFiltersInclude"
+            },
+            "InteractionIgnoredDashboardFilters": {
+                "items": {
+                    "type": "string"
+                },
+                "type": "array",
+                "title": "InteractionIgnoredDashboardFilters",
+                "description": "Dashboard filter local IDs to exclude when drilling to this visualization"
+            },
+            "InteractionIgnoredIntersectionAttributes": {
+                "items": {
+                    "type": "string"
+                },
+                "type": "array",
+                "title": "InteractionIgnoredIntersectionAttributes",
+                "description": "Attribute local IDs to ignore in the drill intersection"
+            },
+            "InteractionIncludedSourceInsightFilters": {
+                "items": {
+                    "type": "string"
+                },
+                "type": "array",
+                "title": "InteractionIncludedSourceInsightFilters",
+                "description": "Source insight filter IDs to include when drilling to this visualization"
+            },
+            "InteractionIncludedSourceMeasureFilters": {
+                "items": {
+                    "type": "string"
+                },
+                "type": "array",
+                "title": "InteractionIncludedSourceMeasureFilters",
+                "description": "Source measure-level filter IDs to include when drilling to this visualization"
+            },
+            "InteractionOpenDashboard": {
+                "properties": {
+                    "click_on": {
+                        "$ref": "#/components/schemas/InteractionClickOn"
+                    },
+                    "filters": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/InteractionFilters"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "open_dashboard": {
+                        "type": "string",
+                        "title": "Open Dashboard",
+                        "description": "An id of the dashboard to be opened on interaction"
+                    },
+                    "open_dashboard_tab": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Open Dashboard Tab",
+                        "description": "An optional id of the tab to be opened in the target dashboard"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "click_on",
+                    "open_dashboard"
+                ],
+                "title": "InteractionOpenDashboard"
+            },
+            "InteractionOpenParamUrl": {
+                "properties": {
+                    "click_on": {
+                        "$ref": "#/components/schemas/InteractionClickOn"
+                    },
+                    "ignored_intersection_attributes": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/InteractionIgnoredIntersectionAttributes"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "open_url": {
+                        "$ref": "#/components/schemas/OpenUrl"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "click_on",
+                    "open_url"
+                ],
+                "title": "InteractionOpenParamUrl"
+            },
+            "InteractionOpenPlainUrl": {
+                "properties": {
+                    "click_on": {
+                        "$ref": "#/components/schemas/InteractionClickOn"
+                    },
+                    "ignored_intersection_attributes": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/InteractionIgnoredIntersectionAttributes"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "open_url": {
+                        "type": "string",
+                        "title": "Open Url",
+                        "description": "An url to be opened on interaction"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "click_on",
+                    "open_url"
+                ],
+                "title": "InteractionOpenPlainUrl"
+            },
+            "InteractionOpenVisualization": {
+                "properties": {
+                    "click_on": {
+                        "$ref": "#/components/schemas/InteractionClickOn"
+                    },
+                    "filters": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/InteractionFilters"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "open_visualization": {
+                        "type": "string",
+                        "title": "Open Visualization",
+                        "description": "An id of the visualization to be opened on interaction"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "click_on",
+                    "open_visualization"
+                ],
+                "title": "InteractionOpenVisualization"
             },
             "InteractionStepListResponse": {
                 "properties": {
@@ -8393,7 +9535,7 @@
                     "type": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Type50"
+                                "$ref": "#/components/schemas/Type51"
                             },
                             {
                                 "type": "null"
@@ -8423,6 +9565,14 @@
                     "id"
                 ],
                 "title": "LayerItemBase"
+            },
+            "LayoutDirection": {
+                "type": "string",
+                "enum": [
+                    "row",
+                    "column"
+                ],
+                "title": "LayoutDirection"
             },
             "LineStyleMapping": {
                 "additionalProperties": {
@@ -8927,6 +10077,9 @@
                             },
                             {
                                 "$ref": "#/components/schemas/LabelIdentifier"
+                            },
+                            {
+                                "$ref": "#/components/schemas/ComputedAttributeIdentifier"
                             }
                         ],
                         "title": "By",
@@ -8974,6 +10127,36 @@
                     "default"
                 ],
                 "title": "MinSize"
+            },
+            "Mode": {
+                "type": "string",
+                "enum": [
+                    "readonly",
+                    "hidden",
+                    "active"
+                ],
+                "title": "Mode"
+            },
+            "Mode2": {
+                "type": "string",
+                "enum": [
+                    "readonly",
+                    "hidden",
+                    "active",
+                    "readonly",
+                    "hidden",
+                    "active"
+                ],
+                "title": "Mode2"
+            },
+            "Mode6": {
+                "type": "string",
+                "enum": [
+                    "readonly",
+                    "hidden",
+                    "active"
+                ],
+                "title": "Mode6"
             },
             "MultipartContent": {
                 "properties": {
@@ -9081,7 +10264,6 @@
                         "description": "Condition to use for this filter. If omitted, the condition represents ALL (no filtering)."
                     }
                 },
-                "additionalProperties": false,
                 "type": "object",
                 "title": "MvfCondition1"
             },
@@ -9096,7 +10278,6 @@
                         "description": "Value to use in condition for this filter."
                     }
                 },
-                "additionalProperties": false,
                 "type": "object",
                 "required": [
                     "condition",
@@ -9120,7 +10301,6 @@
                         "description": "To value to use in condition for this filter."
                     }
                 },
-                "additionalProperties": false,
                 "type": "object",
                 "required": [
                     "condition",
@@ -9271,6 +10451,48 @@
                     "metrics"
                 ],
                 "title": "ObservabilityOverviewResponse"
+            },
+            "OpenUrl": {
+                "properties": {
+                    "href": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/AttributeIdentifier"
+                            },
+                            {
+                                "$ref": "#/components/schemas/LabelIdentifier"
+                            },
+                            {
+                                "$ref": "#/components/schemas/ComputedAttributeIdentifier"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Href",
+                        "description": "An ID of the attribute that holds the url to be opened on interaction"
+                    },
+                    "label": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/AttributeIdentifier"
+                            },
+                            {
+                                "$ref": "#/components/schemas/LabelIdentifier"
+                            },
+                            {
+                                "$ref": "#/components/schemas/ComputedAttributeIdentifier"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Label",
+                        "description": "An id of the attribute that holds the label for the url to be opened on interaction"
+                    }
+                },
+                "type": "object",
+                "title": "OpenUrl"
             },
             "Operator": {
                 "type": "string",
@@ -9457,6 +10679,38 @@
                 ],
                 "title": "Operator7"
             },
+            "Parents": {
+                "properties": {
+                    "common": {
+                        "type": "boolean",
+                        "title": "Common",
+                        "description": "Whether the parent filter is common date or special date"
+                    },
+                    "date": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Date",
+                        "description": "Date dataset the common date filter is applied through. Only valid when common is true; ignored and stripped on both import and export when common is false."
+                    },
+                    "using": {
+                        "type": "string",
+                        "title": "Using",
+                        "description": "Local date filter to use as parent"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "using",
+                    "common"
+                ],
+                "title": "Parents"
+            },
             "PatchDocumentRequest": {
                 "properties": {
                     "isDisabled": {
@@ -9530,6 +10784,87 @@
                 ],
                 "title": "PatternNameMapping"
             },
+            "Permission": {
+                "properties": {
+                    "all": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "All"
+                    },
+                    "user_groups": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "User Groups"
+                    },
+                    "users": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Users"
+                    }
+                },
+                "type": "object",
+                "title": "Permission"
+            },
+            "Permissions": {
+                "properties": {
+                    "EDIT": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Permission"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "SHARE": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Permission"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "VIEW": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Permission"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    }
+                },
+                "type": "object",
+                "title": "Permissions"
+            },
             "Placement": {
                 "type": "string",
                 "enum": [
@@ -9538,6 +10873,45 @@
                     "replace"
                 ],
                 "title": "Placement"
+            },
+            "Plugins": {
+                "properties": {
+                    "id": {
+                        "$ref": "#/components/schemas/Identifier",
+                        "description": "An unique identifier of the plugin."
+                    },
+                    "parameters": {
+                        "anyOf": [
+                            {
+                                "additionalProperties": true,
+                                "type": "object"
+                            },
+                            {
+                                "items": {},
+                                "type": "array"
+                            },
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Parameters",
+                        "description": "Parameter that will be passed to the plugin. Everything other than string will be serialized to JSON automatically."
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id"
+                ],
+                "title": "Plugins"
             },
             "PointShapeMapping": {
                 "type": "string",
@@ -9693,6 +11067,9 @@
                             },
                             {
                                 "$ref": "#/components/schemas/LabelIdentifier"
+                            },
+                            {
+                                "$ref": "#/components/schemas/ComputedAttributeIdentifier"
                             }
                         ],
                         "title": "Using",
@@ -9730,6 +11107,9 @@
                             },
                             {
                                 "$ref": "#/components/schemas/LabelIdentifier"
+                            },
+                            {
+                                "$ref": "#/components/schemas/ComputedAttributeIdentifier"
                             }
                         ],
                         "title": "By",
@@ -9740,7 +11120,7 @@
                         "description": "Sort direction."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type47"
+                        "$ref": "#/components/schemas/Type48"
                     }
                 },
                 "additionalProperties": false,
@@ -9921,6 +11301,9 @@
                         "$ref": "#/components/schemas/LabelIdentifier"
                     },
                     {
+                        "$ref": "#/components/schemas/ComputedAttributeIdentifier"
+                    },
+                    {
                         "$ref": "#/components/schemas/MetricIdentifier"
                     },
                     {
@@ -10045,7 +11428,7 @@
                     "type": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Type33"
+                                "$ref": "#/components/schemas/Type34"
                             },
                             {
                                 "type": "null"
@@ -10071,6 +11454,10 @@
                             {
                                 "type": "string",
                                 "pattern": "^label/(?!\\.)[.A-Za-z0-9_-]{1,255}$"
+                            },
+                            {
+                                "type": "string",
+                                "pattern": "^computed_attribute/(?!\\.)[.A-Za-z0-9_-]{1,255}$"
                             },
                             {
                                 "type": "string",
@@ -10139,7 +11526,7 @@
                     "type": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Type42"
+                                "$ref": "#/components/schemas/Type43"
                             },
                             {
                                 "type": "null"
@@ -10221,7 +11608,7 @@
                         "description": "A field title."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type43",
+                        "$ref": "#/components/schemas/Type44",
                         "description": "Type of relative period metric related to another metric in list."
                     },
                     "using": {
@@ -10300,7 +11687,7 @@
                     "type": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Type44"
+                                "$ref": "#/components/schemas/Type45"
                             },
                             {
                                 "type": "null"
@@ -10395,7 +11782,7 @@
                         "description": "A field title."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type45",
+                        "$ref": "#/components/schemas/Type46",
                         "description": "Type of relative period metric related to another metric in list."
                     },
                     "using": {
@@ -10474,7 +11861,7 @@
                     "type": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Type46"
+                                "$ref": "#/components/schemas/Type47"
                             },
                             {
                                 "type": "null"
@@ -10554,7 +11941,7 @@
                     "type": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Type34"
+                                "$ref": "#/components/schemas/Type35"
                             },
                             {
                                 "type": "null"
@@ -10668,7 +12055,7 @@
                     "type": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Type35"
+                                "$ref": "#/components/schemas/Type36"
                             },
                             {
                                 "type": "null"
@@ -10747,7 +12134,7 @@
                     "type": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Type36"
+                                "$ref": "#/components/schemas/Type37"
                             },
                             {
                                 "type": "null"
@@ -10854,7 +12241,7 @@
                     "type": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Type37"
+                                "$ref": "#/components/schemas/Type38"
                             },
                             {
                                 "type": "null"
@@ -10949,7 +12336,7 @@
                     "type": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Type38"
+                                "$ref": "#/components/schemas/Type39"
                             },
                             {
                                 "type": "null"
@@ -11033,7 +12420,7 @@
                     "type": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Type39"
+                                "$ref": "#/components/schemas/Type40"
                             },
                             {
                                 "type": "null"
@@ -11117,7 +12504,7 @@
                     "type": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Type40"
+                                "$ref": "#/components/schemas/Type41"
                             },
                             {
                                 "type": "null"
@@ -11201,7 +12588,7 @@
                     "type": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Type41"
+                                "$ref": "#/components/schemas/Type42"
                             },
                             {
                                 "type": "null"
@@ -11287,7 +12674,7 @@
                         "title": "Metrics"
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type48"
+                        "$ref": "#/components/schemas/Type49"
                     }
                 },
                 "additionalProperties": false,
@@ -11333,6 +12720,9 @@
                                     "anyOf": [
                                         {
                                             "$ref": "#/components/schemas/LabelIdentifier"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/ComputedAttributeIdentifier"
                                         },
                                         {
                                             "type": "string"
@@ -11398,6 +12788,9 @@
                                     "anyOf": [
                                         {
                                             "$ref": "#/components/schemas/LabelIdentifier"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/ComputedAttributeIdentifier"
                                         },
                                         {
                                             "type": "string"
@@ -11469,6 +12862,9 @@
                                     "anyOf": [
                                         {
                                             "$ref": "#/components/schemas/LabelIdentifier"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/ComputedAttributeIdentifier"
                                         },
                                         {
                                             "type": "string"
@@ -11559,6 +12955,9 @@
                                             "$ref": "#/components/schemas/LabelIdentifier"
                                         },
                                         {
+                                            "$ref": "#/components/schemas/ComputedAttributeIdentifier"
+                                        },
+                                        {
                                             "type": "string"
                                         }
                                     ]
@@ -11613,6 +13012,9 @@
                         "anyOf": [
                             {
                                 "$ref": "#/components/schemas/LabelIdentifier"
+                            },
+                            {
+                                "$ref": "#/components/schemas/ComputedAttributeIdentifier"
                             },
                             {
                                 "type": "string"
@@ -11684,6 +13086,9 @@
                         "anyOf": [
                             {
                                 "$ref": "#/components/schemas/LabelIdentifier"
+                            },
+                            {
+                                "$ref": "#/components/schemas/ComputedAttributeIdentifier"
                             },
                             {
                                 "type": "string"
@@ -11817,6 +13222,9 @@
                             },
                             {
                                 "$ref": "#/components/schemas/LabelIdentifier"
+                            },
+                            {
+                                "$ref": "#/components/schemas/ComputedAttributeIdentifier"
                             }
                         ],
                         "title": "Using",
@@ -11885,6 +13293,9 @@
                             },
                             {
                                 "$ref": "#/components/schemas/LabelIdentifier"
+                            },
+                            {
+                                "$ref": "#/components/schemas/ComputedAttributeIdentifier"
                             }
                         ],
                         "title": "Using",
@@ -12448,33 +13859,6 @@
                     "feedback"
                 ],
                 "title": "ResponseFeedbackRequest"
-            },
-            "RichTextWidget": {
-                "properties": {
-                    "columns": {
-                        "type": "integer",
-                        "title": "Columns"
-                    },
-                    "content": {
-                        "type": "string",
-                        "title": "Content"
-                    },
-                    "id": {
-                        "type": "string",
-                        "title": "Id"
-                    },
-                    "rows": {
-                        "type": "number",
-                        "title": "Rows"
-                    }
-                },
-                "additionalProperties": false,
-                "type": "object",
-                "required": [
-                    "content"
-                ],
-                "title": "RichTextWidget",
-                "description": "AAC ref: dashboard.json rich text widget."
             },
             "RowHeight": {
                 "type": "string",
@@ -13407,6 +14791,182 @@
                 "title": "SearchedGroup",
                 "description": "The results of a search that share one object type."
             },
+            "Section-Input": {
+                "properties": {
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description",
+                        "description": "Optional description of the section"
+                    },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title",
+                        "description": "Optional title of the section"
+                    },
+                    "widgets": {
+                        "items": {
+                            "$ref": "#/components/schemas/Widget-Input"
+                        },
+                        "type": "array",
+                        "title": "Widgets",
+                        "description": "A list of widgets in this section."
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "widgets"
+                ],
+                "title": "Section"
+            },
+            "Section-Output": {
+                "properties": {
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description",
+                        "description": "Optional description of the section"
+                    },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title",
+                        "description": "Optional title of the section"
+                    },
+                    "widgets": {
+                        "items": {
+                            "$ref": "#/components/schemas/Widget-Output"
+                        },
+                        "type": "array",
+                        "title": "Widgets",
+                        "description": "A list of widgets in this section."
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "widgets"
+                ],
+                "title": "Section"
+            },
+            "Section1-Input": {
+                "properties": {
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description",
+                        "description": "Optional description of the section"
+                    },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title",
+                        "description": "Optional title of the section"
+                    },
+                    "widgets": {
+                        "items": {
+                            "$ref": "#/components/schemas/Widget-Input"
+                        },
+                        "type": "array",
+                        "title": "Widgets",
+                        "description": "A list of widgets in this section"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "widgets"
+                ],
+                "title": "Section1"
+            },
+            "Section1-Output": {
+                "properties": {
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description",
+                        "description": "Optional description of the section"
+                    },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title",
+                        "description": "Optional title of the section"
+                    },
+                    "widgets": {
+                        "items": {
+                            "$ref": "#/components/schemas/Widget-Output"
+                        },
+                        "type": "array",
+                        "title": "Widgets",
+                        "description": "A list of widgets in this section"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "widgets"
+                ],
+                "title": "Section1"
+            },
+            "SelectionType": {
+                "type": "string",
+                "enum": [
+                    "list",
+                    "text",
+                    "listOrText",
+                    "list",
+                    "text",
+                    "listOrText"
+                ],
+                "title": "SelectionType"
+            },
             "SendMessageContent": {
                 "properties": {
                     "text": {
@@ -14185,6 +15745,82 @@
                 "title": "SwitchAgentRequest",
                 "description": "POST /conversations/{conversationId}/switchAgent body."
             },
+            "Tab-Input": {
+                "properties": {
+                    "filters": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/DashboardFilters"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Filters specific to this tab."
+                    },
+                    "id": {
+                        "$ref": "#/components/schemas/Identifier",
+                        "description": "A unique identifier of the tab."
+                    },
+                    "sections": {
+                        "items": {
+                            "$ref": "#/components/schemas/Section-Input"
+                        },
+                        "type": "array",
+                        "title": "Sections",
+                        "description": "A list of sections in this tab."
+                    },
+                    "title": {
+                        "$ref": "#/components/schemas/Title",
+                        "description": "Display title for the tab."
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "title",
+                    "sections"
+                ],
+                "title": "Tab"
+            },
+            "Tab-Output": {
+                "properties": {
+                    "filters": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/DashboardFilters"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Filters specific to this tab."
+                    },
+                    "id": {
+                        "$ref": "#/components/schemas/Identifier",
+                        "description": "A unique identifier of the tab."
+                    },
+                    "sections": {
+                        "items": {
+                            "$ref": "#/components/schemas/Section-Output"
+                        },
+                        "type": "array",
+                        "title": "Sections",
+                        "description": "A list of sections in this tab."
+                    },
+                    "title": {
+                        "$ref": "#/components/schemas/Title",
+                        "description": "Display title for the tab."
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "title",
+                    "sections"
+                ],
+                "title": "Tab"
+            },
             "Tags": {
                 "items": {
                     "type": "string"
@@ -14221,6 +15857,13 @@
                     "attribute"
                 ],
                 "title": "Target1"
+            },
+            "Template": {
+                "type": "string",
+                "enum": [
+                    "default"
+                ],
+                "title": "Template"
             },
             "TextMessageContent": {
                 "properties": {
@@ -14311,10 +15954,72 @@
                 "type": "object",
                 "title": "TextWrapping"
             },
+            "TimezoneConfig": {
+                "properties": {
+                    "allow_user_override_in_view_mode": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Allow User Override In View Mode",
+                        "description": "Whether viewers can override the dashboard timezone for their current session."
+                    },
+                    "show_timezone_info": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Show Timezone Info",
+                        "description": "Whether the dashboard timezone indicator is visible."
+                    },
+                    "timezone_id": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/TimezoneId"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Dashboard default timezone. Use an IANA timezone ID or $browserDetected. If omitted, the workspace or organization timezone setting is used."
+                    }
+                },
+                "type": "object",
+                "title": "TimezoneConfig"
+            },
+            "TimezoneId": {
+                "anyOf": [
+                    {
+                        "type": "string",
+                        "const": "$browserDetected"
+                    },
+                    {
+                        "type": "string",
+                        "pattern": "^[A-Za-z][A-Za-z0-9_+.-]*(?:/[A-Za-z0-9_+.-]+)*$"
+                    }
+                ],
+                "title": "TimezoneId",
+                "description": "An IANA timezone ID (for example, Europe/Prague or UTC) or $browserDetected to use the viewer browser timezone."
+            },
             "Title": {
                 "type": "string",
                 "maxLength": 255,
                 "title": "Title"
+            },
+            "Title2": {
+                "type": "boolean",
+                "enum": [
+                    false
+                ],
+                "title": "Title2"
             },
             "TotalItem": {
                 "properties": {
@@ -14330,7 +16035,7 @@
                         "description": "A total title."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type49"
+                        "$ref": "#/components/schemas/Type50"
                     },
                     "using": {
                         "type": "string",
@@ -14345,6 +16050,13 @@
                     "using"
                 ],
                 "title": "TotalItem"
+            },
+            "Type1": {
+                "type": "string",
+                "enum": [
+                    "date_filter"
+                ],
+                "title": "Type1"
             },
             "Type11": {
                 "type": "string",
@@ -14376,19 +16088,17 @@
                 ],
                 "title": "Type18"
             },
-            "Type33": {
+            "Type3": {
                 "type": "string",
                 "enum": [
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD"
+                    "attribute_filter",
+                    "attribute_filter"
                 ],
-                "title": "Type33"
+                "title": "Type3"
             },
             "Type34": {
                 "type": "string",
                 "enum": [
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD",
                     "PREVIOUS_YEAR",
                     "PREVIOUS_PERIOD"
                 ],
@@ -14398,6 +16108,8 @@
                 "type": "string",
                 "enum": [
                     "PREVIOUS_YEAR",
+                    "PREVIOUS_PERIOD",
+                    "PREVIOUS_YEAR",
                     "PREVIOUS_PERIOD"
                 ],
                 "title": "Type35"
@@ -14405,8 +16117,6 @@
             "Type36": {
                 "type": "string",
                 "enum": [
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD",
                     "PREVIOUS_YEAR",
                     "PREVIOUS_PERIOD"
                 ],
@@ -14416,6 +16126,8 @@
                 "type": "string",
                 "enum": [
                     "PREVIOUS_YEAR",
+                    "PREVIOUS_PERIOD",
+                    "PREVIOUS_YEAR",
                     "PREVIOUS_PERIOD"
                 ],
                 "title": "Type37"
@@ -14423,8 +16135,6 @@
             "Type38": {
                 "type": "string",
                 "enum": [
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD",
                     "PREVIOUS_YEAR",
                     "PREVIOUS_PERIOD"
                 ],
@@ -14434,6 +16144,8 @@
                 "type": "string",
                 "enum": [
                     "PREVIOUS_YEAR",
+                    "PREVIOUS_PERIOD",
+                    "PREVIOUS_YEAR",
                     "PREVIOUS_PERIOD"
                 ],
                 "title": "Type39"
@@ -14441,8 +16153,6 @@
             "Type40": {
                 "type": "string",
                 "enum": [
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD",
                     "PREVIOUS_YEAR",
                     "PREVIOUS_PERIOD"
                 ],
@@ -14452,6 +16162,8 @@
                 "type": "string",
                 "enum": [
                     "PREVIOUS_YEAR",
+                    "PREVIOUS_PERIOD",
+                    "PREVIOUS_YEAR",
                     "PREVIOUS_PERIOD"
                 ],
                 "title": "Type41"
@@ -14459,8 +16171,6 @@
             "Type42": {
                 "type": "string",
                 "enum": [
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD",
                     "PREVIOUS_YEAR",
                     "PREVIOUS_PERIOD"
                 ],
@@ -14471,7 +16181,8 @@
                 "enum": [
                     "PREVIOUS_YEAR",
                     "PREVIOUS_PERIOD",
-                    "PREVIOUS_YEAR"
+                    "PREVIOUS_YEAR",
+                    "PREVIOUS_PERIOD"
                 ],
                 "title": "Type43"
             },
@@ -14480,8 +16191,7 @@
                 "enum": [
                     "PREVIOUS_YEAR",
                     "PREVIOUS_PERIOD",
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD"
+                    "PREVIOUS_YEAR"
                 ],
                 "title": "Type44"
             },
@@ -14490,6 +16200,7 @@
                 "enum": [
                     "PREVIOUS_YEAR",
                     "PREVIOUS_PERIOD",
+                    "PREVIOUS_YEAR",
                     "PREVIOUS_PERIOD"
                 ],
                 "title": "Type45"
@@ -14499,7 +16210,6 @@
                 "enum": [
                     "PREVIOUS_YEAR",
                     "PREVIOUS_PERIOD",
-                    "PREVIOUS_YEAR",
                     "PREVIOUS_PERIOD"
                 ],
                 "title": "Type46"
@@ -14507,18 +16217,35 @@
             "Type47": {
                 "type": "string",
                 "enum": [
-                    "attribute_sort"
+                    "PREVIOUS_YEAR",
+                    "PREVIOUS_PERIOD",
+                    "PREVIOUS_YEAR",
+                    "PREVIOUS_PERIOD"
                 ],
                 "title": "Type47"
             },
             "Type48": {
                 "type": "string",
                 "enum": [
-                    "metric_sort"
+                    "attribute_sort"
                 ],
                 "title": "Type48"
             },
             "Type49": {
+                "type": "string",
+                "enum": [
+                    "metric_sort"
+                ],
+                "title": "Type49"
+            },
+            "Type5": {
+                "type": "string",
+                "enum": [
+                    "text_filter"
+                ],
+                "title": "Type5"
+            },
+            "Type50": {
                 "type": "string",
                 "enum": [
                     "SUM",
@@ -14528,185 +16255,206 @@
                     "MED",
                     "NAT"
                 ],
-                "title": "Type49"
+                "title": "Type50"
             },
-            "Type50": {
+            "Type51": {
                 "type": "string",
                 "enum": [
                     "pushpin",
                     "area"
                 ],
-                "title": "Type50"
+                "title": "Type51"
             },
-            "Type53": {
+            "Type54": {
                 "type": "string",
                 "enum": [
                     "solid",
                     "pattern",
                     "outline"
                 ],
-                "title": "Type53"
+                "title": "Type54"
             },
-            "Type62": {
+            "Type55": {
                 "type": "string",
                 "enum": [
-                    "table"
+                    "dashboard"
                 ],
-                "title": "Type62"
+                "title": "Type55"
             },
             "Type63": {
                 "type": "string",
                 "enum": [
-                    "bar_chart"
+                    "table"
                 ],
                 "title": "Type63"
             },
             "Type64": {
                 "type": "string",
                 "enum": [
-                    "column_chart"
+                    "bar_chart"
                 ],
                 "title": "Type64"
             },
             "Type65": {
                 "type": "string",
                 "enum": [
-                    "line_chart"
+                    "column_chart"
                 ],
                 "title": "Type65"
             },
             "Type66": {
                 "type": "string",
                 "enum": [
-                    "area_chart"
+                    "line_chart"
                 ],
                 "title": "Type66"
             },
             "Type67": {
                 "type": "string",
                 "enum": [
-                    "scatter_chart"
+                    "area_chart"
                 ],
                 "title": "Type67"
             },
             "Type68": {
                 "type": "string",
                 "enum": [
-                    "bubble_chart"
+                    "scatter_chart"
                 ],
                 "title": "Type68"
             },
             "Type69": {
                 "type": "string",
                 "enum": [
-                    "pie_chart"
+                    "bubble_chart"
                 ],
                 "title": "Type69"
+            },
+            "Type7": {
+                "type": "string",
+                "enum": [
+                    "metric_value_filter"
+                ],
+                "title": "Type7"
             },
             "Type70": {
                 "type": "string",
                 "enum": [
-                    "donut_chart"
+                    "pie_chart"
                 ],
                 "title": "Type70"
             },
             "Type71": {
                 "type": "string",
                 "enum": [
-                    "treemap_chart"
+                    "donut_chart"
                 ],
                 "title": "Type71"
             },
             "Type72": {
                 "type": "string",
                 "enum": [
-                    "pyramid_chart"
+                    "treemap_chart"
                 ],
                 "title": "Type72"
             },
             "Type73": {
                 "type": "string",
                 "enum": [
-                    "funnel_chart"
+                    "pyramid_chart"
                 ],
                 "title": "Type73"
             },
             "Type74": {
                 "type": "string",
                 "enum": [
-                    "heatmap_chart"
+                    "funnel_chart"
                 ],
                 "title": "Type74"
             },
             "Type75": {
                 "type": "string",
                 "enum": [
-                    "bullet_chart"
+                    "heatmap_chart"
                 ],
                 "title": "Type75"
             },
             "Type76": {
                 "type": "string",
                 "enum": [
-                    "waterfall_chart"
+                    "bullet_chart"
                 ],
                 "title": "Type76"
             },
             "Type77": {
                 "type": "string",
                 "enum": [
-                    "dependency_wheel_chart"
+                    "waterfall_chart"
                 ],
                 "title": "Type77"
             },
             "Type78": {
                 "type": "string",
                 "enum": [
-                    "sankey_chart"
+                    "dependency_wheel_chart"
                 ],
                 "title": "Type78"
             },
             "Type79": {
                 "type": "string",
                 "enum": [
-                    "headline_chart"
+                    "sankey_chart"
                 ],
                 "title": "Type79"
+            },
+            "Type8": {
+                "type": "string",
+                "enum": [
+                    "filter_group"
+                ],
+                "title": "Type8"
             },
             "Type80": {
                 "type": "string",
                 "enum": [
-                    "combo_chart"
+                    "headline_chart"
                 ],
                 "title": "Type80"
             },
             "Type81": {
                 "type": "string",
                 "enum": [
-                    "geo_chart"
+                    "combo_chart"
                 ],
                 "title": "Type81"
             },
             "Type82": {
                 "type": "string",
                 "enum": [
-                    "geo_area_chart"
+                    "geo_chart"
                 ],
                 "title": "Type82"
             },
             "Type83": {
                 "type": "string",
                 "enum": [
-                    "repeater_chart"
+                    "geo_area_chart"
                 ],
                 "title": "Type83"
             },
             "Type84": {
                 "type": "string",
                 "enum": [
-                    "radar_chart"
+                    "repeater_chart"
                 ],
                 "title": "Type84"
+            },
+            "Type85": {
+                "type": "string",
+                "enum": [
+                    "radar_chart"
+                ],
+                "title": "Type85"
             },
             "Type9": {
                 "type": "string",
@@ -14806,14 +16554,12 @@
                     "definition": {
                         "anyOf": [
                             {
-                                "additionalProperties": true,
-                                "type": "object"
+                                "$ref": "#/components/schemas/Dashboard-Input"
                             },
                             {
                                 "type": "null"
                             }
                         ],
-                        "title": "Definition",
                         "description": "The dashboard currently open in the client, as an Analytics as Code (AAC) document. Dashboard model version 2 and version 3 are both accepted; in AAC they differ only in the `version` field, and either keeps its layout in `tabs`. This document is what the assistant edits: it returns the change as an RFC 6902 JSON Patch against exactly this shape, so send the copy the client is holding, including any unsaved edits. Widget order inside a section is what a patch targets, since widget ids are not guaranteed. It also grounds answers about per-widget configuration the widget descriptors do not carry, such as which dashboard filters a widget ignores. Optional."
                     },
                     "filters": {
@@ -14873,7 +16619,8 @@
                                 "type": "null"
                             }
                         ],
-                        "title": "Filters"
+                        "title": "Filters",
+                        "description": "Dashboard filters that reach this widget, as the client resolved them. They can be narrower than the dashboard filter bar. Send an empty list when no active filter applies. Omit the field when the set is unknown. Optional."
                     },
                     "resultId": {
                         "anyOf": [
@@ -15000,7 +16747,8 @@
                                 "type": "null"
                             }
                         ],
-                        "title": "Filters"
+                        "title": "Filters",
+                        "description": "Dashboard filters that reach this widget, as the client resolved them. They can be narrower than the dashboard filter bar. Send an empty list when no active filter applies. Omit the field when the set is unknown. Optional."
                     },
                     "title": {
                         "type": "string",
@@ -15026,6 +16774,21 @@
             },
             "UserContextSwitcherVisualization": {
                 "properties": {
+                    "filters": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/VisualizationFilter"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Filters",
+                        "description": "Dashboard filters that reach this visualization, as the client resolved them. Siblings in one switcher can resolve to different sets, so send them per visualization. Without them an unrendered visualization cannot run under the scope it would render with. Optional."
+                    },
                     "resultId": {
                         "anyOf": [
                             {
@@ -15095,7 +16858,8 @@
                                 "type": "null"
                             }
                         ],
-                        "title": "Filters"
+                        "title": "Filters",
+                        "description": "Dashboard filters that reach this widget, as the client resolved them. They can be narrower than the dashboard filter bar. Send an empty list when no active filter applies. Omit the field when the set is unknown. Optional."
                     },
                     "resultId": {
                         "anyOf": [
@@ -15361,6 +17125,14 @@
                 "title": "ValueOperand",
                 "description": "Literal threshold value."
             },
+            "Version": {
+                "type": "string",
+                "enum": [
+                    "2",
+                    "3"
+                ],
+                "title": "Version"
+            },
             "Viewport": {
                 "type": "string",
                 "enum": [
@@ -15591,7 +17363,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type62",
+                        "$ref": "#/components/schemas/Type63",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -15729,7 +17501,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type71",
+                        "$ref": "#/components/schemas/Type72",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -15865,7 +17637,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type72",
+                        "$ref": "#/components/schemas/Type73",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -16001,7 +17773,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type73",
+                        "$ref": "#/components/schemas/Type74",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -16169,7 +17941,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type74",
+                        "$ref": "#/components/schemas/Type75",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -16312,7 +18084,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type75",
+                        "$ref": "#/components/schemas/Type76",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -16448,7 +18220,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type76",
+                        "$ref": "#/components/schemas/Type77",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -16606,7 +18378,7 @@
                         "description": "A to attribute in this visualisation."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type77",
+                        "$ref": "#/components/schemas/Type78",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -16771,7 +18543,7 @@
                         "description": "A to attribute in this visualisation."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type78",
+                        "$ref": "#/components/schemas/Type79",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -16914,7 +18686,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type79",
+                        "$ref": "#/components/schemas/Type80",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -17048,7 +18820,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type80",
+                        "$ref": "#/components/schemas/Type81",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -17201,7 +18973,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type63",
+                        "$ref": "#/components/schemas/Type64",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -17361,7 +19133,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type81",
+                        "$ref": "#/components/schemas/Type82",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -17514,7 +19286,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type82",
+                        "$ref": "#/components/schemas/Type83",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -17682,7 +19454,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type83",
+                        "$ref": "#/components/schemas/Type84",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -17820,7 +19592,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type84",
+                        "$ref": "#/components/schemas/Type85",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -17973,7 +19745,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type64",
+                        "$ref": "#/components/schemas/Type65",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -18126,7 +19898,7 @@
                         "description": "A list of trend by attributes in this visualisation."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type65",
+                        "$ref": "#/components/schemas/Type66",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -18279,7 +20051,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type66",
+                        "$ref": "#/components/schemas/Type67",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -18439,7 +20211,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type67",
+                        "$ref": "#/components/schemas/Type68",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -18599,7 +20371,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type68",
+                        "$ref": "#/components/schemas/Type69",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -18735,7 +20507,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type69",
+                        "$ref": "#/components/schemas/Type70",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -18871,7 +20643,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type70",
+                        "$ref": "#/components/schemas/Type71",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -19029,6 +20801,55 @@
                     "bottom"
                 ],
                 "title": "VisualizationBottomRankingFilter"
+            },
+            "VisualizationData": {
+                "properties": {
+                    "columns": {
+                        "items": {},
+                        "type": "array",
+                        "title": "Columns",
+                        "description": "Column descriptors, one per result column."
+                    },
+                    "formattedRows": {
+                        "anyOf": [
+                            {
+                                "items": {},
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Formattedrows",
+                        "description": "Display strings keyed identically to `rows`, when a display format is configured."
+                    },
+                    "rowCount": {
+                        "type": "integer",
+                        "title": "Rowcount",
+                        "description": "Size of the full result, before any truncation."
+                    },
+                    "rows": {
+                        "items": {},
+                        "type": "array",
+                        "title": "Rows",
+                        "description": "Result rows, raw values."
+                    },
+                    "truncated": {
+                        "type": "boolean",
+                        "title": "Truncated",
+                        "description": "Whether `rows` holds less than the full result."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "columns",
+                    "rows",
+                    "rowCount",
+                    "truncated"
+                ],
+                "title": "VisualizationData",
+                "description": "One execution's result for a visualization, for a client that cannot execute it itself."
             },
             "VisualizationExcludedResponse": {
                 "properties": {
@@ -19219,6 +21040,17 @@
             },
             "VisualizationPart": {
                 "properties": {
+                    "data": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/VisualizationData"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "The visualization's executed result, when it was fetched for this client. Null for clients that execute the visualization themselves."
+                    },
                     "references": {
                         "anyOf": [
                             {
@@ -19298,7 +21130,7 @@
                         "title": "From"
                     },
                     "granularity": {
-                        "$ref": "#/components/schemas/DateFilterGranularity"
+                        "$ref": "#/components/schemas/app__application__dtos__conversation__user_context__DateFilterGranularity"
                     },
                     "to": {
                         "type": "integer",
@@ -19330,36 +21162,6 @@
                     "to"
                 ],
                 "title": "VisualizationRelativeDateFilter"
-            },
-            "VisualizationSwitcherWidget": {
-                "properties": {
-                    "columns": {
-                        "type": "integer",
-                        "title": "Columns"
-                    },
-                    "id": {
-                        "type": "string",
-                        "title": "Id"
-                    },
-                    "rows": {
-                        "type": "number",
-                        "title": "Rows"
-                    },
-                    "visualizations": {
-                        "items": {
-                            "$ref": "#/components/schemas/DashboardWidget"
-                        },
-                        "type": "array",
-                        "title": "Visualizations"
-                    }
-                },
-                "additionalProperties": false,
-                "type": "object",
-                "required": [
-                    "visualizations"
-                ],
-                "title": "VisualizationSwitcherWidget",
-                "description": "AAC ref: dashboard.json visualization switcher widget."
             },
             "VisualizationTopRankingFilter": {
                 "properties": {
@@ -19396,6 +21198,179 @@
                     "top"
                 ],
                 "title": "VisualizationTopRankingFilter"
+            },
+            "VisualizationWidget": {
+                "properties": {
+                    "columns": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Columns"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "An optional width of the widget in the grid, total width being 12 columns"
+                    },
+                    "date": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Identifier"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "An id of the date dataset to be used for date filtering in this widget"
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "$ref": "#/components/schemas/Description2"
+                            },
+                            {
+                                "$ref": "#/components/schemas/Description3"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description"
+                    },
+                    "id": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Identifier"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "A unique identifier of the widget."
+                    },
+                    "ignored_cross_filtering": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Ignored Cross Filtering",
+                        "description": "Whether cross filtering is disabled for this widget"
+                    },
+                    "ignored_drill_downs": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/IgnoredDrillDown"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Ignored Drill Downs",
+                        "description": "A list of drill downs to be ignored for this widget"
+                    },
+                    "ignored_drill_downs_intersections": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/IgnoredDrillDownsIntersection"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Ignored Drill Downs Intersections",
+                        "description": "A list of drill downs intersections to be ignored for this widget"
+                    },
+                    "ignored_filters": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Ignored Filters",
+                        "description": "A list of dashboard filters to be ignored for this widget"
+                    },
+                    "interactions": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/Interaction"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Interactions"
+                    },
+                    "rows": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Rows",
+                        "description": "An optional height of the widget in the grid, each row being ~20px high"
+                    },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "$ref": "#/components/schemas/Title2"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title"
+                    },
+                    "visualization": {
+                        "type": "string",
+                        "title": "Visualization",
+                        "description": "An id of the visualization to be rendered with the widget"
+                    },
+                    "zoom_data": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Zoom Data",
+                        "description": "Enable zooming to the data for certain types of visualizations"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "visualization"
+                ],
+                "title": "VisualizationWidget"
             },
             "WhatIfAnalysisPart": {
                 "properties": {
@@ -19502,6 +21477,275 @@
                     "adjustments"
                 ],
                 "title": "WhatIfScenarioVariant"
+            },
+            "Widget-Input": {
+                "anyOf": [
+                    {
+                        "$ref": "#/components/schemas/VisualizationWidget"
+                    },
+                    {
+                        "$ref": "#/components/schemas/Widget1"
+                    },
+                    {
+                        "$ref": "#/components/schemas/Widget2"
+                    },
+                    {
+                        "$ref": "#/components/schemas/Widget3-Input"
+                    }
+                ],
+                "title": "Widget"
+            },
+            "Widget-Output": {
+                "anyOf": [
+                    {
+                        "$ref": "#/components/schemas/VisualizationWidget"
+                    },
+                    {
+                        "$ref": "#/components/schemas/Widget1"
+                    },
+                    {
+                        "$ref": "#/components/schemas/Widget2"
+                    },
+                    {
+                        "$ref": "#/components/schemas/Widget3-Output"
+                    }
+                ],
+                "title": "Widget"
+            },
+            "Widget1": {
+                "properties": {
+                    "columns": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Columns"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "An optional width of the widget in the grid, total width being 12 columns"
+                    },
+                    "content": {
+                        "type": "string",
+                        "title": "Content",
+                        "description": "A markdown content of the widget"
+                    },
+                    "id": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Identifier"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "A unique identifier of the widget."
+                    },
+                    "rows": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Rows",
+                        "description": "An optional height of the widget in the grid, each row being ~20px high"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "content"
+                ],
+                "title": "Widget1"
+            },
+            "Widget2": {
+                "properties": {
+                    "columns": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Columns"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "An optional width of the widget in the grid, total width being 12 columns"
+                    },
+                    "id": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Identifier"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "A unique identifier of the widget."
+                    },
+                    "rows": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Rows",
+                        "description": "An optional height of the widget in the grid, each row being ~20px high"
+                    },
+                    "visualizations": {
+                        "items": {
+                            "$ref": "#/components/schemas/VisualizationWidget"
+                        },
+                        "type": "array",
+                        "title": "Visualizations",
+                        "description": "A list of visualizations to be rendered with the widget"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "visualizations"
+                ],
+                "title": "Widget2"
+            },
+            "Widget3-Input": {
+                "properties": {
+                    "columns": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Columns"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "An optional width of the widget within the grid. When the parent container's direction is set to 'row', widget widths can vary up to the width of the container. Widgets are placed next to each other and wrap to the next row when their combined width exceeds that of the container. When the direction is set to 'column', the width does not need to be set, or it should match the width of the container."
+                    },
+                    "container": {
+                        "$ref": "#/components/schemas/Identifier",
+                        "description": "A unique identifier of the widget."
+                    },
+                    "enable_section_headers": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Enable Section Headers",
+                        "description": "Whether header of sections in the layout is enabled. Defaults to true"
+                    },
+                    "layout_direction": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/LayoutDirection"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Layout direction for the container widgets"
+                    },
+                    "rows": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Rows",
+                        "description": "An optional height of the widget within the grid, where each row is approximately 20px high. When the parent container's direction is 'row', the height should be greater than the total height of all rows formed by wrapped widgets in the container where row height is determined by highest widget in the row. When the direction is 'column', each widget occupies one row; therefore, the height must be equal to or greater than the combined height of all widgets in the container."
+                    },
+                    "sections": {
+                        "items": {
+                            "$ref": "#/components/schemas/Section1-Input"
+                        },
+                        "type": "array",
+                        "title": "Sections",
+                        "description": "A list of sections contained in this container"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "container",
+                    "sections"
+                ],
+                "title": "Widget3"
+            },
+            "Widget3-Output": {
+                "properties": {
+                    "columns": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Columns"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "An optional width of the widget within the grid. When the parent container's direction is set to 'row', widget widths can vary up to the width of the container. Widgets are placed next to each other and wrap to the next row when their combined width exceeds that of the container. When the direction is set to 'column', the width does not need to be set, or it should match the width of the container."
+                    },
+                    "container": {
+                        "$ref": "#/components/schemas/Identifier",
+                        "description": "A unique identifier of the widget."
+                    },
+                    "enable_section_headers": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Enable Section Headers",
+                        "description": "Whether header of sections in the layout is enabled. Defaults to true"
+                    },
+                    "layout_direction": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/LayoutDirection"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Layout direction for the container widgets"
+                    },
+                    "rows": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Rows",
+                        "description": "An optional height of the widget within the grid, where each row is approximately 20px high. When the parent container's direction is 'row', the height should be greater than the total height of all rows formed by wrapped widgets in the container where row height is determined by highest widget in the row. When the direction is 'column', each widget occupies one row; therefore, the height must be equal to or greater than the combined height of all widgets in the container."
+                    },
+                    "sections": {
+                        "items": {
+                            "$ref": "#/components/schemas/Section1-Output"
+                        },
+                        "type": "array",
+                        "title": "Sections",
+                        "description": "A list of sections contained in this container"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "container",
+                    "sections"
+                ],
+                "title": "Widget3"
             },
             "Width": {
                 "type": "integer",
@@ -19640,6 +21884,69 @@
                     "CONTAINS"
                 ],
                 "title": "MatchType"
+            },
+            "app__application__dtos__conversation__user_context__DateFilterGranularity": {
+                "type": "string",
+                "enum": [
+                    "SECOND",
+                    "SECOND_OF_MINUTE",
+                    "SECOND_OF_DAY",
+                    "MINUTE",
+                    "MINUTE_OF_DAY",
+                    "HOUR",
+                    "DAY",
+                    "WEEK_US",
+                    "MONTH",
+                    "QUARTER",
+                    "YEAR",
+                    "MINUTE_OF_HOUR",
+                    "HOUR_OF_DAY",
+                    "DAY_OF_WEEK",
+                    "DAY_OF_MONTH",
+                    "DAY_OF_QUARTER",
+                    "DAY_OF_YEAR",
+                    "WEEK_OF_YEAR",
+                    "MONTH_OF_YEAR",
+                    "QUARTER_OF_YEAR",
+                    "FISCAL_DAY_OF_FISCAL_WEEK",
+                    "FISCAL_DAY_OF_FISCAL_MONTH",
+                    "FISCAL_DAY_OF_FISCAL_QUARTER",
+                    "FISCAL_DAY_OF_FISCAL_SEMESTER",
+                    "FISCAL_DAY_OF_FISCAL_YEAR",
+                    "FISCAL_WEEK",
+                    "FISCAL_WEEK_OF_FISCAL_MONTH",
+                    "FISCAL_WEEK_OF_FISCAL_QUARTER",
+                    "FISCAL_WEEK_OF_FISCAL_SEMESTER",
+                    "FISCAL_WEEK_OF_FISCAL_YEAR",
+                    "FISCAL_MONTH",
+                    "FISCAL_MONTH_OF_FISCAL_QUARTER",
+                    "FISCAL_MONTH_OF_FISCAL_SEMESTER",
+                    "FISCAL_MONTH_OF_FISCAL_YEAR",
+                    "FISCAL_QUARTER",
+                    "FISCAL_QUARTER_OF_FISCAL_SEMESTER",
+                    "FISCAL_QUARTER_OF_FISCAL_YEAR",
+                    "FISCAL_SEMESTER",
+                    "FISCAL_SEMESTER_OF_FISCAL_YEAR",
+                    "FISCAL_YEAR"
+                ]
+            },
+            "gooddata_code_convertors__pydantic_models__DateFilterGranularity": {
+                "type": "string",
+                "enum": [
+                    "SECOND",
+                    "MINUTE",
+                    "HOUR",
+                    "DAY",
+                    "WEEK",
+                    "WEEK_US",
+                    "MONTH",
+                    "QUARTER",
+                    "YEAR",
+                    "FISCAL_YEAR",
+                    "FISCAL_QUARTER",
+                    "FISCAL_MONTH"
+                ],
+                "title": "DateFilterGranularity"
             },
             "gooddata_code_convertors__pydantic_models__MatchType": {
                 "type": "string",

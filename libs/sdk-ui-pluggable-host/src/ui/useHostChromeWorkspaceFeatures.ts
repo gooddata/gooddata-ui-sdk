@@ -13,7 +13,7 @@ export interface IHostChromeWorkspaceFeatures {
     settings: IEffectiveSettings;
     canUseAiAssistant: boolean;
     canManageProject: boolean;
-    canCreateVisualization: boolean;
+    canAnalyzeWorkspace: boolean;
     canAccessWorkbench: boolean;
     canFullControl: boolean;
     showSearch: boolean;
@@ -42,7 +42,7 @@ export function useHostChromeWorkspaceFeatures(
         const enableSemanticSearch = !!settings.enableSemanticSearch;
         const canUseAiAssistant = !!ctx.workspacePermissions?.canUseAiAssistant;
         const canManageProject = !!ctx.workspacePermissions?.canManageProject;
-        const canCreateVisualization = !!ctx.workspacePermissions?.canCreateVisualization;
+        const canAnalyzeWorkspace = !!ctx.workspacePermissions?.canAnalyzeWorkspace;
         const canAccessWorkbench = !!ctx.workspacePermissions?.canAccessWorkbench;
         const canFullControl = !!ctx.organizationPermissions?.canManageOrganization;
 
@@ -55,7 +55,7 @@ export function useHostChromeWorkspaceFeatures(
             settings,
             canUseAiAssistant,
             canManageProject,
-            canCreateVisualization,
+            canAnalyzeWorkspace,
             canAccessWorkbench,
             canFullControl,
             showSearch,

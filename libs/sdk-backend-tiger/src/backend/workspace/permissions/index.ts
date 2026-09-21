@@ -53,6 +53,7 @@ export class TigerWorkspacePermissionsFactory implements IWorkspacePermissionsSe
             canAccessWorkbench: canViewWorkspace,
             canExecuteRaw: canViewWorkspace,
             //based on group: ANALYZE
+            canAnalyzeWorkspace,
             canCreateVisualization: canAnalyzeWorkspace,
             canManageAnalyticalDashboard: canAnalyzeWorkspace,
             canCreateAnalyticalDashboard: canAnalyzeWorkspace,

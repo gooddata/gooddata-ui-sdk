@@ -154,6 +154,7 @@ export function buildWidgetsContext(
     resultsIdMap?: Pick<Map<string, string | undefined>, "values" | "get">,
     visualizationSwitcherActiveVisualizations?: Record<string, string>,
     insightsMap?: Pick<Map<ObjRef, IInsight>, "get">,
+    widgetFilters?: Map<string, GenAIUserContextFilter[]>,
 ): { widgets: IGenAIWidgetDescriptor[]; referencedObjects: IGenAIObjectReference[] } {
     const widgets: IGenAIWidgetDescriptor[] = [];
     const referencedObjects: IGenAIObjectReference[] = [];
@@ -179,6 +180,7 @@ export function buildWidgetsContext(
                         insightRef: widget.insight,
                         resultId: resultsIdMap?.get(serializeObjRef(widget.ref)),
                         ...visualizationUrlOf(insightsMap, widget.insight),
+                        filters: widgetFilters?.get(serializeObjRef(widget.ref)),
                     }),
                 );
                 referencedObjects.push({ type: "WIDGET", ref: widget.ref, title: widget.title });
@@ -201,12 +203,14 @@ export function buildWidgetsContext(
                             ? resultsIdMap?.get(serializeObjRef(activeVisualization.ref))
                             : undefined,
                         ...visualizationUrlOf(insightsMap, activeVisualization?.insight),
+                        filters: widgetFilters?.get(serializeObjRef(widget.ref)),
                         // All child insights, so the BE can execute the non-active children
                         // (which have no cached result).
                         visualizations: widget.visualizations.map((v) =>
                             buildWidgetContext(v.title, v.ref, "insight", {
                                 insightRef: v.insight,
                                 ...visualizationUrlOf(insightsMap, v.insight),
+                                filters: widgetFilters?.get(serializeObjRef(v.ref)),
                             }),
                         ),
                     },

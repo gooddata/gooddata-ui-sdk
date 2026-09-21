@@ -1178,7 +1178,7 @@ export function isDateFilter(filter: unknown): filter is DateFilterItem;
 
 // @public
 export interface ISimpleDrillableItemsCommandBody {
-    identifiers?: string[];
+    identifiers?: (string | IObjIdentifierQualifier)[];
     uris?: string[];
 }
 

@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import { idRef } from "@gooddata/sdk-model";
 
-import { collectReferences, excludeReferences } from "./references.js";
+import { collectReferences, excludeReferences, replaceReferences } from "./references.js";
 
 describe("collectReferences", () => {
     it("collects a computed attribute reference under its own object type", () => {
@@ -62,5 +62,56 @@ describe("excludeReferences", () => {
         ]);
 
         expect(Object.keys(remaining)).toEqual(["metric/city"]);
+    });
+});
+
+describe("replaceReferences", () => {
+    // any text will do - what the product puts there is the dashboard's business, not the helper's
+    const removed = "REPLACEMENT";
+
+    it("puts the replacement in place of the reference and leaves the rest as the author wrote it", () => {
+        const content = "Margin held at {metric/margin} while revenue grew {metric/revenue}.";
+
+        expect(replaceReferences(content, [idRef("margin", "measure")], removed)).toEqual(
+            "Margin held at REPLACEMENT while revenue grew {metric/revenue}.",
+        );
+    });
+
+    it("replaces every occurrence, because they all stand for the same object", () => {
+        const content = "{metric/margin} today, {metric/margin} a year ago";
+
+        expect(replaceReferences(content, [idRef("margin", "measure")], removed)).toEqual(
+            "REPLACEMENT today, REPLACEMENT a year ago",
+        );
+    });
+
+    it("replaces every reference it is given in one pass", () => {
+        const content = "Margin {metric/margin} of revenue {metric/revenue} by {label/city}";
+
+        expect(
+            replaceReferences(content, [idRef("margin", "measure"), idRef("city", "displayForm")], removed),
+        ).toEqual("Margin REPLACEMENT of revenue {metric/revenue} by REPLACEMENT");
+    });
+
+    it("keeps the emphasis around the reference, which now holds the replacement", () => {
+        const content = "Margin held at **{metric/margin}** while revenue grew.";
+
+        expect(replaceReferences(content, [idRef("margin", "measure")], removed)).toEqual(
+            "Margin held at **REPLACEMENT** while revenue grew.",
+        );
+    });
+
+    it("keeps a reference of the same id but another type", () => {
+        const content = "{metric/city} in {label/city}";
+
+        expect(replaceReferences(content, [idRef("city", "displayForm")], removed)).toEqual(
+            "{metric/city} in REPLACEMENT",
+        );
+    });
+
+    it("leaves the text alone when it references nothing that was given", () => {
+        const content = "Margin {metric/margin} of revenue";
+
+        expect(replaceReferences(content, [], removed)).toEqual(content);
     });
 });

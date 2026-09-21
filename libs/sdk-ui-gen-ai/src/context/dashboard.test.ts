@@ -220,6 +220,45 @@ describe("buildWidgetsContext", () => {
         });
     });
 
+    it("should include widget filters if provided", () => {
+        const w1Ref = idRef("w1");
+        const w2Ref = idRef("w2");
+        const widgetsMap = new Map([
+            [w1Ref, { type: "insight", title: "W1", ref: w1Ref, insight: idRef("i1") }],
+            [
+                w2Ref,
+                {
+                    type: "visualizationSwitcher",
+                    title: "Switcher",
+                    ref: w2Ref,
+                    visualizations: [
+                        { ref: idRef("w2c"), insight: idRef("i2"), identifier: "v1", title: "V1" },
+                    ],
+                },
+            ],
+        ]) as any;
+
+        const filters = [
+            {
+                type: "attribute_filter",
+                using: "df1",
+                state: { include: ["/uri1"] },
+                title: "Attr",
+            },
+        ] as any;
+
+        const widgetFilters = new Map([
+            [serializeObjRef(w1Ref), filters],
+            [serializeObjRef(w2Ref), filters],
+            [serializeObjRef(idRef("w2c")), filters],
+        ]);
+
+        const result = buildWidgetsContext(widgetsMap, undefined, undefined, undefined, widgetFilters);
+        expect(result.widgets[0].filters).toEqual(filters);
+        expect(result.widgets[1].filters).toEqual(filters);
+        expect(result.widgets[1].visualizations?.[0].filters).toEqual(filters);
+    });
+
     it("should use active visualization title if switcher title is missing", () => {
         const w1Ref = idRef("w1");
         const w1c1Ref = idRef("w1c1");

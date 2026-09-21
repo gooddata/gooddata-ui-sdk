@@ -1514,6 +1514,7 @@ export {
 } from "./model/store/topBar/topBarSelectors.js";
 export type { IUndoEnhancedState, IUndoEntry, IUndoPayload } from "./model/store/_infra/undoEnhancer.js";
 export {
+    type IWidgetTabContext,
     selectLayout,
     selectStash,
     selectScreen,
@@ -1542,6 +1543,8 @@ export {
     selectKpiWidgetPlaceholderCoordinates,
     selectIgnoredDrillDownHierarchiesByWidgetRef,
     selectWidgetLocalIdToTabIdMap,
+    selectAllFiltersForWidgetByRefAcrossTabs,
+    selectAllTabsWidgetContexts,
 } from "./model/store/tabs/layout/layoutSelectors.js";
 export type { IDateFilterConfigState } from "./model/store/tabs/dateFilterConfig/dateFilterConfigState.js";
 export {

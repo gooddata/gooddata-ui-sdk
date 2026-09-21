@@ -15,7 +15,7 @@ import {
 import * as dateFnsLocales from "date-fns/locale";
 import { defaultImport } from "default-import";
 
-import { resolveWeekStartLocale } from "./weekStartDateFnsLocale.js";
+import { resolveWeekStartLocale } from "../utils/weekStartDateFnsLocale.js";
 
 // `@rc-component/picker`'s "es" build ships ESM `export default` syntax without a nested `package.json`
 // marking that directory `"type": "module"`, which defeats NodeNext module resolution's default-import typing

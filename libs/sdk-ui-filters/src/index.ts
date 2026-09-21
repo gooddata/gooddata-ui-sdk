@@ -64,12 +64,14 @@ export {
     revertExcludedCurrentPeriodRange,
 } from "./DateFilter/utils/PeriodExclusion.js";
 export {
-    formatAbsoluteDateRange,
     formatRelativeDateRange,
     getDateFilterRepresentation,
     getDateFilterTitleUsingTranslator,
 } from "./DateFilter/utils/Translations/DateFilterTitle.js";
-export { getLocalizedIcuDateFormatPattern } from "./DateFilter/utils/FormattingUtils.js";
+export {
+    formatAbsoluteDateRange,
+    getLocalizedIcuDateFormatPattern,
+} from "./DateFilter/utils/FormattingUtils.js";
 export { convertDateFilterConfigToDateFilterOptions } from "./DateFilter/utils/DateFilterConfigConversions.js";
 export {
     DEFAULT_DATE_FILTER_PRESET,

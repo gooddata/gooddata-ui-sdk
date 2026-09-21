@@ -68,6 +68,10 @@ function createRasterLayer(source: string) {
     };
 }
 
+function withMercator<T extends object>(style: T) {
+    return { ...style, projection: { type: "mercator" } };
+}
+
 describe("fetchMapStyle", () => {
     it("loads style through backend geo service using getStyleById", async () => {
         const getStyleById = vi.fn().mockResolvedValue(SAMPLE_STYLE);
@@ -76,11 +80,44 @@ describe("fetchMapStyle", () => {
 
         const style = await fetchMapStyle(backend, "standard");
 
-        expect(style).toEqual(SAMPLE_STYLE);
+        expect(style).toEqual(withMercator(SAMPLE_STYLE));
         expect(getStyleById).toHaveBeenCalledWith("standard", {
             language: undefined,
         });
         expect(getDefaultStyle).not.toHaveBeenCalled();
+    });
+
+    it("overrides the globe projection of a basemap style with mercator", async () => {
+        const globeStyle: StyleSpecification = { ...SAMPLE_STYLE, projection: { type: "globe" } };
+        const getStyleById = vi.fn().mockResolvedValue(globeStyle);
+        const getDefaultStyle = vi.fn().mockResolvedValue(globeStyle);
+        const backend = createBackendMock(getDefaultStyle, getStyleById);
+
+        const style = await fetchMapStyle(backend, "standard-light");
+
+        expect(style).toEqual(withMercator(SAMPLE_STYLE));
+        expect(globeStyle.projection).toEqual({ type: "globe" });
+    });
+
+    it("overrides the globe projection of the default style with mercator", async () => {
+        const globeStyle: StyleSpecification = { ...SAMPLE_STYLE, projection: { type: "globe" } };
+        const getStyleById = vi.fn().mockResolvedValue(globeStyle);
+        const getDefaultStyle = vi.fn().mockResolvedValue(globeStyle);
+        const backend = createBackendMock(getDefaultStyle, getStyleById);
+
+        const style = await fetchMapStyle(backend);
+
+        expect(style).toEqual(withMercator(SAMPLE_STYLE));
+    });
+
+    it("adds the mercator projection to a style without projection", async () => {
+        const getStyleById = vi.fn().mockResolvedValue(SAMPLE_STYLE);
+        const getDefaultStyle = vi.fn().mockResolvedValue(SAMPLE_STYLE);
+        const backend = createBackendMock(getDefaultStyle, getStyleById);
+
+        const style = await fetchMapStyle(backend, "standard-light");
+
+        expect(style).toEqual(withMercator(SAMPLE_STYLE));
     });
 
     it("uses getDefaultStyle when basemap is undefined", async () => {
@@ -116,7 +153,7 @@ describe("fetchMapStyle", () => {
 
         const style = await fetchMapStyle(backend, "none");
 
-        expect(style).toEqual(NONE_STYLE);
+        expect(style).toEqual(withMercator(NONE_STYLE));
         expect(getStyleById).toHaveBeenCalledWith("none", {
             language: undefined,
         });
@@ -143,7 +180,7 @@ describe("fetchMapStyle", () => {
 
         const style = await fetchMapStyle(backend, "missing-style");
 
-        expect(style).toEqual(SAMPLE_STYLE);
+        expect(style).toEqual(withMercator(SAMPLE_STYLE));
         expect(getStyleById).toHaveBeenCalledWith("missing-style", {
             language: undefined,
         });
@@ -219,7 +256,7 @@ describe("fetchMapStyle", () => {
 
         const style = await fetchMapStyle(backend, "standard");
 
-        expect(style).toEqual(SAMPLE_STYLE_WITH_URL);
+        expect(style).toEqual(withMercator(SAMPLE_STYLE_WITH_URL));
     });
 
     it("ignores unused vector source without tiles or url", async () => {
@@ -238,7 +275,7 @@ describe("fetchMapStyle", () => {
 
         const result = await fetchMapStyle(backend, "standard");
 
-        expect(result).toEqual(style);
+        expect(result).toEqual(withMercator(style));
         expect(warnSpy).not.toHaveBeenCalled();
         warnSpy.mockRestore();
     });
@@ -261,7 +298,7 @@ describe("fetchMapStyle", () => {
 
         const result = await fetchMapStyle(backend, "standard");
 
-        expect(result).toEqual(style);
+        expect(result).toEqual(withMercator(style));
         expect(warnSpy).not.toHaveBeenCalled();
         warnSpy.mockRestore();
     });
@@ -280,7 +317,7 @@ describe("fetchMapStyle", () => {
 
         const result = await fetchMapStyle(backend, "standard");
 
-        expect(result).toEqual(style);
+        expect(result).toEqual(withMercator(style));
         expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('missing required "data"'));
         warnSpy.mockRestore();
     });
@@ -302,7 +339,7 @@ describe("fetchMapStyle", () => {
 
         const result = await fetchMapStyle(backend, "standard");
 
-        expect(result).toEqual(style);
+        expect(result).toEqual(withMercator(style));
         expect(warnSpy).not.toHaveBeenCalled();
         warnSpy.mockRestore();
     });
@@ -321,7 +358,7 @@ describe("fetchMapStyle", () => {
 
         const result = await fetchMapStyle(backend, "standard");
 
-        expect(result).toEqual(style);
+        expect(result).toEqual(withMercator(style));
         expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining("satellite"));
         warnSpy.mockRestore();
     });
@@ -345,7 +382,7 @@ describe("fetchMapStyle", () => {
 
         const result = await fetchMapStyle(backend, "standard");
 
-        expect(result).toEqual(style);
+        expect(result).toEqual(withMercator(style));
         expect(warnSpy).not.toHaveBeenCalled();
         warnSpy.mockRestore();
     });
@@ -373,7 +410,7 @@ describe("fetchMapStyle", () => {
 
         const result = await fetchMapStyle(backend, "standard");
 
-        expect(result).toEqual(style);
+        expect(result).toEqual(withMercator(style));
         expect(warnSpy).not.toHaveBeenCalled();
         warnSpy.mockRestore();
     });
@@ -400,7 +437,7 @@ describe("fetchMapStyle", () => {
 
         const result = await fetchMapStyle(backend, "standard");
 
-        expect(result).toEqual(style);
+        expect(result).toEqual(withMercator(style));
         expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('missing required "url"'));
         warnSpy.mockRestore();
     });
@@ -422,7 +459,7 @@ describe("fetchMapStyle", () => {
 
         const result = await fetchMapStyle(backend, "standard");
 
-        expect(result).toEqual(style);
+        expect(result).toEqual(withMercator(style));
         expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('missing required "coordinates"'));
         warnSpy.mockRestore();
     });
@@ -450,7 +487,7 @@ describe("fetchMapStyle", () => {
 
         const result = await fetchMapStyle(backend, "standard");
 
-        expect(result).toEqual(style);
+        expect(result).toEqual(withMercator(style));
         expect(warnSpy).not.toHaveBeenCalled();
         warnSpy.mockRestore();
     });
@@ -477,7 +514,7 @@ describe("fetchMapStyle", () => {
 
         const result = await fetchMapStyle(backend, "standard");
 
-        expect(result).toEqual(style);
+        expect(result).toEqual(withMercator(style));
         expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('missing required "urls"'));
         warnSpy.mockRestore();
     });
@@ -506,7 +543,7 @@ describe("fetchMapStyle", () => {
 
         const result = await fetchMapStyle(backend, "standard");
 
-        expect(result).toEqual(style);
+        expect(result).toEqual(withMercator(style));
         expect(warnSpy).not.toHaveBeenCalled();
         warnSpy.mockRestore();
     });
@@ -526,7 +563,7 @@ describe("fetchMapStyle", () => {
 
         const result = await fetchMapStyle(backend, "standard");
 
-        expect(result).toEqual(style);
+        expect(result).toEqual(withMercator(style));
         expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining("unrecognized type"));
         warnSpy.mockRestore();
     });
@@ -558,7 +595,7 @@ describe("fetchMapStyle", () => {
 
         const result = await fetchMapStyle(backend, "standard");
 
-        expect(result).toEqual(style);
+        expect(result).toEqual(withMercator(style));
         expect(warnSpy).not.toHaveBeenCalled();
         warnSpy.mockRestore();
     });
@@ -580,7 +617,7 @@ describe("fetchMapStyle", () => {
 
         const result = await fetchMapStyle(backend, "standard");
 
-        expect(result).toEqual(style);
+        expect(result).toEqual(withMercator(style));
         expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining("should be an absolute URL"));
         warnSpy.mockRestore();
     });
@@ -602,7 +639,7 @@ describe("fetchMapStyle", () => {
 
         const result = await fetchMapStyle(backend, "standard");
 
-        expect(result).toEqual(style);
+        expect(result).toEqual(withMercator(style));
         expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining("should be an absolute URL"));
         warnSpy.mockRestore();
     });
@@ -618,7 +655,7 @@ describe("fetchMapStyle", () => {
 
         const result = await fetchMapStyle(backend, "standard");
 
-        expect(result).toEqual(style);
+        expect(result).toEqual(withMercator(style));
         expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining("missing-source"));
         warnSpy.mockRestore();
     });
