@@ -4,8 +4,7 @@ import cx from "classnames";
 
 import type { IChatConversationLocalItem, IChatConversationMultipartLocalPart } from "../../../model.js";
 import { type IWhatIfDefinition } from "../../../whatIf/whatIfMapping.js";
-
-import { ConversationVisualizationContent } from "./ConversationVisualizationContent.js";
+import { useCustomization } from "../../CustomizationContext.js";
 
 export type ConversationWhatIfContentProps = {
     message: IChatConversationLocalItem;
@@ -20,6 +19,7 @@ export function ConversationWhatIfContent({
     message,
     whatIf,
 }: ConversationWhatIfContentProps) {
+    const { ConversationVisualizationContentComponent } = useCustomization();
     const classNames = cx(
         "gd-gen-ai-chat__conversation__item__content",
         "gd-gen-ai-chat__conversation__item__content--whatIf",
@@ -33,7 +33,7 @@ export function ConversationWhatIfContent({
     return (
         <div className={classNames}>
             {whatIf.scenarios.map((scenario, index) => (
-                <ConversationVisualizationContent
+                <ConversationVisualizationContentComponent
                     key={index}
                     message={message}
                     part={part}

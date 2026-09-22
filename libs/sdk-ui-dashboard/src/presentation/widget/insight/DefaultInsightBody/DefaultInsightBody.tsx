@@ -2,15 +2,18 @@
 
 import { useMemo } from "react";
 
-import { InsightRenderer } from "@gooddata/sdk-ui-ext";
+import {
+    InsightRenderer,
+    convertInsightToLayerTables,
+    convertInsightToTableDefinition,
+    getGeoTableDisplayFormRefs,
+} from "@gooddata/sdk-ui-ext";
 
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { selectCatalogAttributesWithComputed } from "../../../../model/store/catalog/catalogSelectors.js";
 import { selectSettings } from "../../../../model/store/config/configSelectors.js";
 import { selectPreloadedAttributesWithReferences } from "../../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import { useShowAsTable } from "../../showAsTableButton/useShowAsTable.js";
-import { getGeoDefaultDisplayFormRefs } from "../geoDefaultDisplayFormRefs.js";
-import { convertInsightToLayerTables, convertInsightToTableDefinition } from "../insightToTable.js";
 import { LayeredTableView } from "../LayeredTableView.js";
 import { type IInsightBodyProps } from "../types.js";
 
@@ -53,12 +56,7 @@ export function DefaultInsightBody(props: IInsightBodyProps) {
     }
 
     const defaultDisplayFormRefs = isWidgetAsTable
-        ? getGeoDefaultDisplayFormRefs(
-              insight,
-              settings,
-              catalogAttributes,
-              preloadedAttributesWithReferences,
-          )
+        ? getGeoTableDisplayFormRefs(insight, settings, catalogAttributes, preloadedAttributesWithReferences)
         : undefined;
     const insightToShow = isWidgetAsTable
         ? convertInsightToTableDefinition(insight, { settings, defaultDisplayFormRefs })

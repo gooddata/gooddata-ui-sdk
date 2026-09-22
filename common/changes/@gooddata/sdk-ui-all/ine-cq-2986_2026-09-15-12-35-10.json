@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "Keep a label and a computed attribute sharing an identifier apart in custom tooltips",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "ivan.nejezchleb@gooddata.com"
+}

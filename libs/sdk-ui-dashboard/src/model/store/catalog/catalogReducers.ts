@@ -10,11 +10,13 @@ import {
     type ICatalogFact,
     type ICatalogMeasure,
     type IDateHierarchyTemplate,
+    type IdentifierRef,
 } from "@gooddata/sdk-model";
 
 import {
     type CatalogState,
-    type ICatalogMeasureParametersState,
+    type ICatalogFilterParametersState,
+    type ICatalogInsightParametersState,
     type ICatalogParametersState,
 } from "./catalogState.js";
 
@@ -105,11 +107,32 @@ const setCatalogParameters: CatalogReducer<PayloadAction<ICatalogParametersState
     state.parameters = action.payload;
 };
 
-const setCatalogMeasureParameters: CatalogReducer<PayloadAction<ICatalogMeasureParametersState>> = (
+const setCatalogInsightParameters: CatalogReducer<PayloadAction<ICatalogInsightParametersState>> = (
     state,
     action,
 ) => {
-    state.measureParameters = action.payload;
+    state.insightParameters = action.payload;
+};
+
+const mergeCatalogInsightParameters: CatalogReducer<PayloadAction<Record<string, IdentifierRef[]>>> = (
+    state,
+    action,
+) => {
+    Object.assign(state.insightParameters.byInsight, action.payload);
+};
+
+const setCatalogFilterParameters: CatalogReducer<PayloadAction<ICatalogFilterParametersState>> = (
+    state,
+    action,
+) => {
+    state.filterParameters = action.payload;
+};
+
+const mergeCatalogFilterParameters: CatalogReducer<PayloadAction<Record<string, IdentifierRef[]>>> = (
+    state,
+    action,
+) => {
+    Object.assign(state.filterParameters.byRef, action.payload);
 };
 
 export const catalogReducers = {
@@ -119,5 +142,8 @@ export const catalogReducers = {
     updateAttributeHierarchy,
     deleteAttributeHierarchy,
     setCatalogParameters,
-    setCatalogMeasureParameters,
+    setCatalogInsightParameters,
+    mergeCatalogInsightParameters,
+    setCatalogFilterParameters,
+    mergeCatalogFilterParameters,
 };

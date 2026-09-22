@@ -369,3 +369,13 @@ export {
     useObjectAccessLevel,
 } from "./share/useObjectAccessLevel.js";
 export type { IObjectAccessSummary, IObjectShareLabel } from "./share/types.js";
+
+export {
+    type ILayerTableConversionOptions,
+    type ILayerTableDefinition,
+    canConvertToTable,
+    convertInsightToLayerTables,
+    convertInsightToTableDefinition,
+    supportsShowAsTable,
+} from "./insightToTable/insightToTable.js";
+export { getGeoTableDisplayFormRefs } from "./insightToTable/geoDefaultDisplayFormRefs.js";

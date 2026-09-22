@@ -17,4 +17,9 @@
         right: 0;
         border-left: 1px solid var(--gd-palette-complementary-3, #dde4eb);
     }
+
+    &--mode-fullscreen {
+        right: -400px;
+        border-left: 0;
+    }
 }

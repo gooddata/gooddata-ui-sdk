@@ -57,6 +57,7 @@ import { type RootState } from "../../../store/types.js";
 import { getAbsoluteVisualizationHref, getVisualizationHref } from "../../../utils.js";
 import { type IWhatIfRenderableScenario } from "../../../whatIf/whatIfMapping.js";
 import { useConfig } from "../../ConfigContext.js";
+import { type IGenAIAssistantConversationVisualizationContentProps } from "../../customized/types.js";
 import { convertIntersectionToAttributeFilters, mergeFilters } from "../../utils/intersectionUtils.js";
 import { VisualizationErrorBoundary } from "../components/VisualizationErrorBoundary.js";
 import { DrillSelectDropdownMenu } from "../contents/drill/DrillSelectDropdownMenu.js";
@@ -76,7 +77,41 @@ interface IMenuButtonItem {
     id: string;
     title: string;
     icon: ReactNode;
-    ariaAttributes: AriaAttributes;
+    ariaAttributes?: AriaAttributes;
+}
+
+type IVisualisationMenuItemId = "button-save" | "button-open" | "button-copy";
+
+export function getVisibleVisualisationMenuItemIds({
+    scenario,
+    isVisualisationSaved,
+    menuItems,
+}: {
+    scenario?: IWhatIfRenderableScenario;
+    menuItems?: IGenAIAssistantConversationVisualizationContentProps["menuItems"];
+    isVisualisationSaved: boolean;
+}): IVisualisationMenuItemId[] {
+    if (scenario && !scenario.isBaseline) {
+        return [];
+    }
+
+    const showSaveMenuItem = menuItems?.save ?? true;
+    const showOpenInAnalyzeMenuItem = menuItems?.openInAnalyze ?? true;
+    const showCopyLinkMenuItem = menuItems?.copyLink ?? true;
+
+    const items: IVisualisationMenuItemId[] = [];
+
+    if (showSaveMenuItem) {
+        items.push("button-save");
+    }
+    if (showOpenInAnalyzeMenuItem) {
+        items.push("button-open");
+    }
+    if (isVisualisationSaved && showCopyLinkMenuItem) {
+        items.push("button-copy");
+    }
+
+    return items;
 }
 
 export type ConversationVisualizationContentProps = {
@@ -85,6 +120,7 @@ export type ConversationVisualizationContentProps = {
     scenario?: IWhatIfRenderableScenario;
     visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>;
     className?: string;
+    menuItems?: IGenAIAssistantConversationVisualizationContentProps["menuItems"];
 };
 
 export function ConversationVisualizationContent({
@@ -93,6 +129,7 @@ export function ConversationVisualizationContent({
     scenario,
     visualization,
     className,
+    menuItems,
 }: ConversationVisualizationContentProps) {
     const colorPalette = useSelector((state: RootState) => colorPaletteSelector(state));
     const separators = useSelector((state: RootState) => settingsSelector(state)?.separators);
@@ -184,6 +221,7 @@ export function ConversationVisualizationContent({
                         onSave={onSave}
                         onOpen={onOpen}
                         onCopy={onCopy}
+                        menuItems={menuItems}
                         isLoading={part.reporting ?? false}
                     />
                     <Title id={moreButtonDescId} visualization={visualization} scenario={scenario} />
@@ -268,6 +306,8 @@ interface IVisualisationMenuProps {
     onSave: (e: MouseEvent | KeyboardEvent) => void;
     onOpen: (e: MouseEvent | KeyboardEvent, isSaved: boolean) => void;
     onCopy: (e: MouseEvent | KeyboardEvent) => void;
+    //menu items
+    menuItems?: IGenAIAssistantConversationVisualizationContentProps["menuItems"];
 }
 
 function VisualisationMenu({
@@ -283,6 +323,7 @@ function VisualisationMenu({
     onSave,
     onOpen,
     onCopy,
+    menuItems,
 }: IVisualisationMenuProps) {
     const [isMenuButtonOpen, setMenuButtonOpen] = useState(false);
 
@@ -298,70 +339,60 @@ function VisualisationMenu({
     const toggleTableLabel = intl.formatMessage({ id: "gd.gen-ai.visualisation.toggle.table" });
     const toggleTableOrig = intl.formatMessage({ id: "gd.gen-ai.visualisation.toggle.original" });
 
-    const menuItems = useMemo(() => {
-        if (scenario && !scenario.isBaseline) {
-            return [];
-        }
+    const menuItemsList = useMemo(() => {
+        const itemIds = getVisibleVisualisationMenuItemIds({
+            scenario,
+            isVisualisationSaved,
+            menuItems,
+        });
 
-        if (isVisualisationSaved) {
-            return [
-                {
-                    id: "button-save",
-                    title: intl.formatMessage({
-                        id: "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation",
-                    }),
-                    icon: <IconSave width={16} height={16} ariaHidden color="currentColor" />,
-                    ariaAttributes: {
-                        "aria-haspopup": "dialog",
-                    },
-                },
-                {
-                    id: "button-open",
-                    title: intl.formatMessage({
-                        id: "gd.gen-ai.visualisation.menu.button.open_in_analyze",
-                    }),
-                    icon: <IconExternalLink width={16} height={16} ariaHidden color="currentColor" />,
-                    ariaAttributes: {
-                        "aria-description": intl.formatMessage({
-                            id: "gd.gen-ai.visualisation.menu.button.open_in_analyze.description",
+        return itemIds.map((id): IMenuButtonItem => {
+            switch (id) {
+                case "button-save":
+                    return {
+                        id,
+                        title: isVisualisationSaved
+                            ? intl.formatMessage({
+                                  id: "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation",
+                              })
+                            : intl.formatMessage({
+                                  id: "gd.gen-ai.visualisation.menu.button.save_as_visualisation",
+                              }),
+                        icon: <IconSave width={16} height={16} ariaHidden color="currentColor" />,
+                        ariaAttributes: {
+                            "aria-haspopup": "dialog",
+                        },
+                    };
+                case "button-open":
+                    return {
+                        id,
+                        title: intl.formatMessage({
+                            id: "gd.gen-ai.visualisation.menu.button.open_in_analyze",
                         }),
-                    },
-                },
-                {
-                    id: "button-copy",
-                    title: intl.formatMessage({
-                        id: "gd.gen-ai.visualisation.menu.button.copy_visualisation_link",
-                    }),
-                    icon: <IconCopy width={16} height={16} ariaHidden color="currentColor" />,
-                },
-            ] as IMenuButtonItem[];
-        }
-
-        return [
-            {
-                id: "button-save",
-                title: intl.formatMessage({
-                    id: "gd.gen-ai.visualisation.menu.button.save_as_visualisation",
-                }),
-                icon: <IconSave width={16} height={16} ariaHidden color="currentColor" />,
-                ariaAttributes: {
-                    "aria-haspopup": "dialog",
-                },
-            },
-            {
-                id: "button-open",
-                title: intl.formatMessage({
-                    id: "gd.gen-ai.visualisation.menu.button.open_in_analyze",
-                }),
-                icon: <IconExternalLink width={16} height={16} ariaHidden color="currentColor" />,
-                ariaAttributes: {
-                    "aria-description": intl.formatMessage({
-                        id: "gd.gen-ai.visualisation.menu.button.open_in_analyze.description",
-                    }),
-                },
-            },
-        ] as IMenuButtonItem[];
-    }, [intl, isVisualisationSaved, scenario]);
+                        icon: <IconExternalLink width={16} height={16} ariaHidden color="currentColor" />,
+                        ariaAttributes: {
+                            "aria-description": intl.formatMessage({
+                                id: "gd.gen-ai.visualisation.menu.button.open_in_analyze.description",
+                            }),
+                        },
+                    };
+                case "button-copy":
+                    return {
+                        id,
+                        title: intl.formatMessage({
+                            id: "gd.gen-ai.visualisation.menu.button.copy_visualisation_link",
+                        }),
+                        icon: <IconCopy width={16} height={16} ariaHidden color="currentColor" />,
+                    };
+                default:
+                    return {
+                        id,
+                        title: "",
+                        icon: null,
+                    };
+            }
+        });
+    }, [intl, isVisualisationSaved, scenario, menuItems]);
 
     const handleButtonClick = useCallback(
         (e: MouseEvent | KeyboardEvent, item: IMenuButtonItem) => {
@@ -402,7 +433,7 @@ function VisualisationMenu({
                 <UiFocusManager enableAutofocus enableReturnFocusOnUnmount enableFocusTrap>
                     <UiMenu
                         dataTestId="gen-ai-visualization-menu-list"
-                        items={menuItems.map((item) => ({
+                        items={menuItemsList.map((item) => ({
                             type: "interactive",
                             stringTitle: item.title,
                             data: item,
@@ -422,7 +453,7 @@ function VisualisationMenu({
                 </UiFocusManager>
             </Overlay>
         );
-    }, [classes, handleButtonClick, menuId, menuItems, setMenuButtonOpen]);
+    }, [classes, handleButtonClick, menuId, menuItemsList, setMenuButtonOpen]);
 
     if (!config.canAnalyze || hasError) {
         return null;
@@ -456,7 +487,7 @@ function VisualisationMenu({
                     />
                 </div>
             )}
-            {menuItems.length > 0 ? (
+            {menuItemsList.length > 0 ? (
                 <div
                     id={MORE_MENU_BUTTON_ID}
                     className={cx("gd-gen-ai-chat__conversation__visualization__save", classes)}

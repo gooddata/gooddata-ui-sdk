@@ -5,6 +5,7 @@ import { ReactNode, useCallback, useEffect, useMemo } from "react";
 import { type IGenAIUserContext, type PluggableApplicationRegistryItem } from "@gooddata/sdk-model";
 import { type IPlatformContext } from "@gooddata/sdk-pluggable-application-model";
 import { BackendProvider, resolveLocale } from "@gooddata/sdk-ui";
+import { GenAIAssistantMode } from "@gooddata/sdk-ui-gen-ai";
 import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 
 import { getAppLifecycleCallbacks } from "../loader/pluggableApplicationsLoader.js";
@@ -13,10 +14,10 @@ import { getBackend } from "../platformContext/backend.js";
 import { GenAIChatEvent } from "./GenAIChat.js";
 import { e } from "./hostChromeBem.js";
 import { HostIntlProvider } from "./HostIntlProvider.js";
-import { useGenAiRightPanel } from "./useGenAiRightPanel.js";
 import "./HostChat.scss";
 import "@gooddata/sdk-ui-gen-ai/styles/css/main.css";
 
+import { useGenAiRightPanel } from "./useGenAiRightPanel.js";
 import { useHostChromeChat } from "./useHostChromeChat.js";
 import { useHostChromeWorkspaceFeatures } from "./useHostChromeWorkspaceFeatures.js";
 
@@ -73,7 +74,7 @@ export interface IHostChatProps {
     /** Reports the chat open-state so the runtime can forward it to the active app. */
     onOpenChange?: (open: boolean) => void;
     /** Reports the header chat-button state (visibility + open) so the host UI can render it. */
-    onChatStateChange?: (state: { showChatItem: boolean; isOpen: boolean }) => void;
+    onChatStateChange?: (state: { showChatItem: boolean; isOpen: boolean; mode: GenAIAssistantMode }) => void;
     /**
      * Delegates a chat link click to the active application (e.g. an embedded dashboard opening a
      * visualization as an in-place overlay). Returns true if the app handled it.
@@ -144,8 +145,8 @@ export function HostChat({
 
     // Report the header chat-button state so the host UI module can render the button to match.
     useEffect(() => {
-        onChatStateChange?.({ showChatItem, isOpen: chatIsOpen });
-    }, [showChatItem, chatIsOpen, onChatStateChange]);
+        onChatStateChange?.({ showChatItem, isOpen: chatIsOpen, mode: chat.mode });
+    }, [showChatItem, chatIsOpen, onChatStateChange, chat.mode]);
 
     // Effect order matters: the tag-scope effects are declared before the open/ask effect so that,
     // when a tag-scope change and an open/ask request land in the same commit, the host chat is
@@ -201,9 +202,11 @@ export function HostChat({
         ({
             chatIsOpen,
             children,
+            mode,
             enablePanel,
         }: {
             chatIsOpen: boolean;
+            mode: GenAIAssistantMode;
             children: ReactNode;
             enablePanel: boolean;
         }) => {
@@ -212,6 +215,7 @@ export function HostChat({
                     className={e("ai-chat", {
                         chatIsOpen,
                         enablePanel,
+                        mode,
                     })}
                 >
                     {children}
@@ -225,7 +229,7 @@ export function HostChat({
         <HostIntlProvider locale={resolveLocale(ctx.preferredLocale)}>
             <BackendProvider backend={getBackend()}>
                 <ToastsCenterContextProvider>
-                    <Wrapper chatIsOpen={chatIsOpen} enablePanel={enablePanel}>
+                    <Wrapper chatIsOpen={chatIsOpen} mode={chat.mode} enablePanel={enablePanel}>
                         {chat.element}
                     </Wrapper>
                 </ToastsCenterContextProvider>

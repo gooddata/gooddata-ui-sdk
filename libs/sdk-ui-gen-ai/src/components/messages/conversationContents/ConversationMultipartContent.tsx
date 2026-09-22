@@ -8,6 +8,7 @@ import {
     type TextContentObject,
 } from "../../../model.js";
 import { loadWhatIfScenarios } from "../../../whatIf/whatIfMapping.js";
+import { useCustomization } from "../../CustomizationContext.js";
 
 import { ConversationAlertProposalContent } from "./ConversationAlertProposalContent.js";
 import { ConversationClarifyingQuestionsContent } from "./ConversationClarifyingQuestionsContent.js";
@@ -15,7 +16,6 @@ import { ConversationDashboardContent } from "./ConversationDashboardContent.js"
 import { ConversationKdaContent } from "./ConversationKdaContent.js";
 import { ConversationSearchContent } from "./ConversationSearchContent.js";
 import { ConversationTextContent } from "./ConversationTextContent.js";
-import { ConversationVisualizationContent } from "./ConversationVisualizationContent.js";
 import { ConversationWhatIfContent } from "./ConversationWhatIfContent.js";
 
 export type ConversationMultipartContentProps = {
@@ -32,6 +32,7 @@ export function ConversationMultipartContent({
     isLast,
 }: ConversationMultipartContentProps) {
     const intl = useIntl();
+    const { ConversationVisualizationContentComponent } = useCustomization();
     const whatIf = loadWhatIfScenarios(parts);
 
     return (
@@ -72,7 +73,7 @@ export function ConversationMultipartContent({
                 }
                 if (part.type === "visualization" && !whatIf) {
                     return part.visualization ? (
-                        <ConversationVisualizationContent
+                        <ConversationVisualizationContentComponent
                             key={index}
                             message={message}
                             part={part}

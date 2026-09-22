@@ -129,19 +129,27 @@ export interface ITooltipReferenceMaps {
     measures: Record<string, string>;
 
     /**
-     * Display-form identifier → attribute identifier. Lets the resolver register
-     * `{label/<displayFormId>}` AND `{label/<attributeId>}` against the same value
-     * so users may reference an attribute by either id, mirroring Highcharts.
+     * Attribute `localIdentifier` → the reference keys its values are published under.
+     *
+     * Keyed by localIdentifier, not by display-form id, for the same reason measures are:
+     * an LDM identifier is unique only within an object type, so a label and a computed
+     * attribute may share one, while a localIdentifier is unique within the execution.
+     * The keys themselves carry the object type, which is what a reference names.
      */
-    attributes: Record<string, string>;
+    attributes: Record<string, ITooltipAttributeKeys>;
+}
 
-    /**
-     * The ids among {@link ITooltipReferenceMaps.attributes} that name a computed attribute rather
-     * than a label. Their values are published under the `computed_attribute/` key namespace: an
-     * id is unique only within its object type, so a label and a computed attribute may both be
-     * called `tier` and must not answer each other's reference.
-     */
-    computedAttributeIds: string[];
+/**
+ * The reference keys one attribute's values are published under: its display form, and its
+ * parent attribute, so a user may reference it by either id — mirroring Highcharts.
+ *
+ * @internal
+ */
+export interface ITooltipAttributeKeys {
+    /** `<type>/<displayFormId>`, where the type is the label or computed attribute namespace. */
+    displayFormKey: string;
+    /** `<type>/<attributeId>`. Equal to {@link displayFormKey} when the ids coincide. */
+    attributeKey: string;
 }
 
 /**

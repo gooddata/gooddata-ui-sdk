@@ -11,6 +11,7 @@ import {
     type IGenAIAssistantConversationFooterProps,
     type IGenAIAssistantConversationHeaderProps,
     type IGenAIAssistantConversationItemProps,
+    type IGenAIAssistantConversationVisualizationContentProps,
     type IGenAIAssistantFeedbackProps,
     type IGenAIAssistantFollowUpButtonsProps,
     type IGenAIAssistantFollowUpQuestionProps,
@@ -40,6 +41,7 @@ export interface IGenAIAssistantComponents {
     MessageErrorContentComponent: ComponentType<IGenAIAssistantMessageErrorContentProps>;
     MessageReasoningContentComponent: ComponentType<IGenAIAssistantMessageReasoningContentProps>;
     MessageMultipartContentComponent: ComponentType<IGenAIAssistantMessageMultipartContentProps>;
+    ConversationVisualizationContentComponent: ComponentType<IGenAIAssistantConversationVisualizationContentProps>;
     FollowUpButtonsComponent: ComponentType<IGenAIAssistantFollowUpButtonsProps>;
     FollowUpQuestionComponent: ComponentType<IGenAIAssistantFollowUpQuestionProps>;
     FeedbackComponent: ComponentType<IGenAIAssistantFeedbackProps>;

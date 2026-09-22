@@ -108,6 +108,60 @@ describe("buildFiltersContext", () => {
             },
         ]);
     });
+
+    it("should convert absolute date filters with numeric from/to", () => {
+        const filters = [
+            {
+                dateFilter: {
+                    type: "absolute",
+                    from: 20230101,
+                    to: 20230131,
+                    dataSet: idRef("ds1"),
+                    localIdentifier: "df1",
+                },
+            },
+        ] as any;
+
+        const result = buildFiltersContext(filters);
+        expect(result[0]).toMatchObject({
+            from: "20230101",
+            to: "20230131",
+        });
+    });
+
+    it("should ignore relative date filters without from/to", () => {
+        const filters = [
+            {
+                dateFilter: {
+                    type: "relative",
+                    granularity: "GDC.time.month",
+                    localIdentifier: "df2",
+                },
+            },
+        ] as any;
+
+        const result = buildFiltersContext(filters);
+        expect(result.length).toBe(0);
+    });
+
+    it("should convert relative date filters with string from/to", () => {
+        const filters = [
+            {
+                dateFilter: {
+                    type: "relative",
+                    from: "-1",
+                    to: "0",
+                    granularity: "GDC.time.month",
+                    localIdentifier: "df2",
+                },
+            },
+        ] as any;
+        const result = buildFiltersContext(filters);
+        expect(result[0]).toMatchObject({
+            from: -1,
+            to: 0,
+        });
+    });
 });
 
 describe("buildWidgetsContext", () => {

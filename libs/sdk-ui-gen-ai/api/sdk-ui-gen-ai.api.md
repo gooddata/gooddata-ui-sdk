@@ -23,6 +23,7 @@ import { IChatSuggestion } from '@gooddata/sdk-backend-spi';
 import { IChatSuggestions } from '@gooddata/sdk-backend-spi';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IDashboard } from '@gooddata/sdk-model';
+import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IGenAIUserContext } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IListedDashboard } from '@gooddata/sdk-model';
@@ -242,6 +243,9 @@ export function DefaultConversationHeader(_: IGenAIAssistantConversationHeaderPr
 
 // @alpha
 export function DefaultConversationItem(props: IGenAIAssistantConversationItemProps): JSX.Element;
+
+// @alpha
+export function DefaultConversationVisualizationContent(props: IGenAIAssistantConversationVisualizationContentProps): JSX.Element;
 
 // @alpha
 export function DefaultDisclaimer(_props: IGenAIAssistantDisclaimerProps): JSX.Element;
@@ -487,6 +491,20 @@ export type IGenAIAssistantConversationItemProps = {
     menuItemProps: IUiMenuInteractiveItemWrapperProps;
 };
 
+// @alpha
+export type IGenAIAssistantConversationVisualizationContentProps = {
+    message: IChatConversationLocalItem;
+    part: IChatConversationMultipartLocalPart;
+    scenario?: IWhatIfRenderableScenario;
+    visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>;
+    className?: string;
+    menuItems?: {
+        save?: boolean;
+        openInAnalyze?: boolean;
+        copyLink?: boolean;
+    };
+};
+
 // @public
 export type IGenAIAssistantDisclaimerProps = Record<string, never>;
 
@@ -563,6 +581,8 @@ export interface IGenAIAssistantSlots {
     ConversationHeader?: ComponentType<ISlotProps<IGenAIAssistantConversationHeaderProps>>;
     // @alpha
     ConversationItem?: ComponentType<ISlotProps<IGenAIAssistantConversationItemProps>>;
+    // @alpha
+    ConversationVisualizationContent?: ComponentType<ISlotProps<IGenAIAssistantConversationVisualizationContentProps>>;
     Disclaimer?: ComponentType<ISlotProps<IGenAIAssistantDisclaimerProps>>;
     // @alpha
     Feedback?: ComponentType<ISlotProps<IGenAIAssistantFeedbackProps>>;
@@ -705,6 +725,13 @@ export const isChatUserMessageEvent: (event: ChatEvent) => event is ChatUserMess
 // @public
 export const isChatVisualizationErrorEvent: (event: ChatEvent) => event is ChatVisualizationErrorEvent;
 
+// @alpha
+export interface IWhatIfRenderableScenario {
+    execConfig?: IExecutionConfig;
+    isBaseline: boolean;
+    label: string;
+}
+
 // @alpha (undocumented)
 export type LandingScreenProps = IGenAIAssistantLandingScreenProps & {
     LandingScreen?: ComponentType;
@@ -712,7 +739,7 @@ export type LandingScreenProps = IGenAIAssistantLandingScreenProps & {
 
 // @public (undocumented)
 export type LinkHandlerEvent = {
-    type: "setting" | GenAIObjectType;
+    type: "setting" | "report" | GenAIObjectType;
     id: string;
     workspaceId: string;
     newTab: boolean;

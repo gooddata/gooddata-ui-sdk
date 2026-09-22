@@ -1,8 +1,11 @@
 // (C) 2026 GoodData Corporation
 
+import { useRef, useState } from "react";
+
 import { action } from "storybook/actions";
 
-import { UiModalDialog } from "@gooddata/sdk-ui-kit";
+import { IntlWrapper } from "@gooddata/sdk-ui";
+import { UiButton, UiDialogBody, UiDialogFooter, UiDialogHeader, UiModalDialog } from "@gooddata/sdk-ui-kit";
 
 import { type IStoryParameters, State } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
@@ -55,4 +58,46 @@ export const Themed = () => wrapWithTheme(<UiModalDialogExample />);
 Themed.parameters = {
     kind: "themed",
     screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
+} satisfies IStoryParameters;
+
+export function RestrictedContentConfirmation() {
+    const [isOpen, setIsOpen] = useState(true);
+    const cancelButtonRef = useRef<HTMLButtonElement>(null);
+    const close = () => setIsOpen(false);
+
+    return (
+        <div className="screenshot-target">
+            <UiButton label="Edit restricted text" onClick={() => setIsOpen(true)} />
+            <IntlWrapper>
+                <UiModalDialog
+                    variant="confirmation"
+                    isOpen={isOpen}
+                    onClose={close}
+                    width={440}
+                    initialFocus={cancelButtonRef}
+                    accessibilityConfig={{ role: "alertdialog" }}
+                >
+                    <UiDialogHeader title="Remove restricted content?" titleSize="large" onClose={close} />
+                    <UiDialogBody>
+                        Parts of this text are restricted. Editing it will permanently remove the restricted
+                        objects for all users.
+                    </UiDialogBody>
+                    <UiDialogFooter>
+                        <UiButton
+                            ref={cancelButtonRef}
+                            label="Cancel"
+                            variant="secondary"
+                            size="medium"
+                            onClick={close}
+                        />
+                        <UiButton label="Remove and edit" variant="danger" size="medium" onClick={close} />
+                    </UiDialogFooter>
+                </UiModalDialog>
+            </IntlWrapper>
+        </div>
+    );
+}
+RestrictedContentConfirmation.parameters = {
+    kind: "restricted content confirmation",
+    screenshot: { readySelector: { selector: "[role=alertdialog]", state: State.Attached } },
 } satisfies IStoryParameters;

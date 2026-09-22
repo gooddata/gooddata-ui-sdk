@@ -15,7 +15,7 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 
-import { getGeoDefaultDisplayFormRefs } from "./geoDefaultDisplayFormRefs.js";
+import { getGeoTableDisplayFormRefs } from "./geoDefaultDisplayFormRefs.js";
 
 function createDisplayForm(
     id: string,
@@ -80,7 +80,7 @@ function createInsight(visualizationUrl: string, buckets: IBucket[]): IInsight {
     };
 }
 
-describe("getGeoDefaultDisplayFormRefs", () => {
+describe("getGeoTableDisplayFormRefs", () => {
     it("maps choropleth area display form to default label", () => {
         const defaultLabel = createDisplayForm("label.default", "attr", { isDefault: true });
         const areaLabel = createDisplayForm("label.area", "attr");
@@ -94,7 +94,7 @@ describe("getGeoDefaultDisplayFormRefs", () => {
         ]);
         const settings: ISettings = { enableGeoArea: true };
 
-        const result = getGeoDefaultDisplayFormRefs(insight, settings, catalogAttributes);
+        const result = getGeoTableDisplayFormRefs(insight, settings, catalogAttributes);
         const key = serializeObjRef(idRef("label.area", "displayForm"));
         expect(result?.get(key)).toEqual(defaultLabel.ref);
     });
@@ -127,7 +127,7 @@ describe("getGeoDefaultDisplayFormRefs", () => {
         ]);
         const settings: ISettings = { enableNewGeoPushpin: true };
 
-        const result = getGeoDefaultDisplayFormRefs(insight, settings, [], preloaded);
+        const result = getGeoTableDisplayFormRefs(insight, settings, [], preloaded);
         const key = serializeObjRef(idRef("label.location", "displayForm"));
         expect(result?.get(key)).toEqual(defaultLabel.ref);
     });
@@ -150,7 +150,7 @@ describe("getGeoDefaultDisplayFormRefs", () => {
         ]);
         const settings: ISettings = { enableNewGeoPushpin: true };
 
-        const result = getGeoDefaultDisplayFormRefs(insight, settings, catalogAttributes);
+        const result = getGeoTableDisplayFormRefs(insight, settings, catalogAttributes);
         const key = serializeObjRef(idRef("label.location", "displayForm"));
         expect(result?.get(key)).toEqual(defaultLabel.ref);
     });
@@ -168,7 +168,7 @@ describe("getGeoDefaultDisplayFormRefs", () => {
         ]);
         const settings: ISettings = { enableGeoArea: true };
 
-        expect(getGeoDefaultDisplayFormRefs(insight, settings, catalogAttributes)).toBeUndefined();
-        expect(getGeoDefaultDisplayFormRefs(insight, {}, catalogAttributes)).toBeUndefined();
+        expect(getGeoTableDisplayFormRefs(insight, settings, catalogAttributes)).toBeUndefined();
+        expect(getGeoTableDisplayFormRefs(insight, {}, catalogAttributes)).toBeUndefined();
     });
 });

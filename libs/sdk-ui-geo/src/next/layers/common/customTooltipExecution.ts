@@ -73,13 +73,21 @@ export function getAttributeLocalIdsFromBuckets(
  * to its identifying fields. `attrId === undefined` signals "no stable key for
  * this feature" — callers compare against the expected layer attribute id.
  *
+ * `attrLocalId` is the execution-local identifier, which is what the tooltip lookup key is
+ * built from: an LDM id is unique only within an object type, so a label and a computed
+ * attribute can share one (see `buildKeySegment`).
+ *
  * Reuses `parseTooltipPayload` so the JSON-string-or-object handling stays in
  * one place (MapLibre stringifies complex GeoJSON property values when they
  * round-trip through `queryRenderedFeatures`).
  *
  * @internal
  */
-export function readAttrIdentity(payload: JsonValue | undefined): { attrId?: string; uri: string } {
+export function readAttrIdentity(payload: JsonValue | undefined): {
+    attrId?: string;
+    attrLocalId?: string;
+    uri: string;
+} {
     // Pushpin call sites read from GeoJsonProperties (e.g. `properties["locationName"]`),
     // where a missing key yields `undefined` at runtime. The `any` type from
     // @types/geojson hides that from TS, but we want the function to short-circuit
@@ -88,7 +96,7 @@ export function readAttrIdentity(payload: JsonValue | undefined): { attrId?: str
         return { uri: "" };
     }
     const parsed = parseTooltipPayload(payload);
-    return { attrId: parsed?.attrId, uri: parsed?.uri ?? "" };
+    return { attrId: parsed?.attrId, attrLocalId: parsed?.attrLocalId, uri: parsed?.uri ?? "" };
 }
 
 /**

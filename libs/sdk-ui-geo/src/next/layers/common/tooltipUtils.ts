@@ -1,9 +1,11 @@
 // (C) 2025-2026 GoodData Corporation
 
 import { type ISeparators } from "@gooddata/sdk-model";
+import { labelKey } from "@gooddata/sdk-ui-vis-commons";
 
 import { formatValueForTooltip } from "../../map/style/tooltipFormatting.js";
 import { type JsonValue } from "../../utils/guards.js";
+import { type ITooltipReferenceMaps } from "../registry/adapterTypes.js";
 
 export type TooltipPayload = {
     title: string;
@@ -16,6 +18,20 @@ export type TooltipPayload = {
      * execution path to build per-feature lookup keys.
      */
     uri?: string;
+    /**
+     * Bucket `localIdentifier` of the underlying attribute. By convention only set by
+     * attribute payload writers (locationName, segment, tooltipText) — the mirror of
+     * {@link TooltipPayload.localId} for measures, and used the same way: as the lookup key
+     * into `ITooltipReferenceMaps.attributes`, which yields the reference keys the value is
+     * published under.
+     *
+     * Separate from {@link TooltipPayload.attrId} because that one is the LDM identifier
+     * saying WHICH attribute a slot holds, and an LDM identifier is unique only within an
+     * object type: a label and a computed attribute may share one, so the identifier alone
+     * cannot say which of the two a value belongs to. A localIdentifier is unique within the
+     * execution.
+     */
+    attrLocalId?: string;
     fill?: string;
     /**
      * Bucket `localIdentifier` of the underlying measure. By convention only
@@ -64,6 +80,7 @@ export function parseTooltipPayload(item: JsonValue): TooltipPayload | undefined
     const format = typeof parsed["format"] === "string" ? parsed["format"] : undefined;
     const attrId = typeof parsed["attrId"] === "string" ? parsed["attrId"] : undefined;
     const uri = typeof parsed["uri"] === "string" ? parsed["uri"] : undefined;
+    const attrLocalId = typeof parsed["attrLocalId"] === "string" ? parsed["attrLocalId"] : undefined;
     const fill = typeof parsed["fill"] === "string" ? parsed["fill"] : undefined;
     const localId = typeof parsed["localId"] === "string" ? parsed["localId"] : undefined;
 
@@ -72,6 +89,7 @@ export function parseTooltipPayload(item: JsonValue): TooltipPayload | undefined
         value,
         format,
         attrId,
+        attrLocalId,
         uri,
         fill,
         localId,
@@ -82,18 +100,34 @@ export function isTooltipPayloadValid(item: JsonValue): boolean {
     return Boolean(parseTooltipPayload(item));
 }
 
-export function dedupeAttributePayloadsByAttrId(
+/**
+ * Drops the later of two attribute payloads that show the same display form, so a label used
+ * both as location/area and as segment-by appears once in the tooltip.
+ *
+ * The identity is the typed reference key of the display form, not the bare LDM identifier: an
+ * LDM identifier is unique only within an object type, so a label and a computed attribute may
+ * share one, and those are two different objects that both belong in the tooltip. The key comes
+ * from the reference maps, looked up by the payload's localIdentifier; a payload the maps cannot
+ * place is treated as a label, which is what it would have resolved as before.
+ *
+ * @internal
+ */
+export function dedupeAttributePayloads(
     payloads: Array<TooltipPayload | undefined>,
+    referenceMaps: ITooltipReferenceMaps | undefined,
 ): Array<TooltipPayload | undefined> {
-    const seenAttrIds = new Set<string>();
+    const attributeKeysByLocalId = referenceMaps?.attributes ?? {};
+    const seen = new Set<string>();
     return payloads.map((payload) => {
         if (!payload?.attrId) {
             return payload;
         }
-        if (seenAttrIds.has(payload.attrId)) {
+        const keys = payload.attrLocalId ? attributeKeysByLocalId[payload.attrLocalId] : undefined;
+        const identity = keys?.displayFormKey ?? labelKey(payload.attrId);
+        if (seen.has(identity)) {
             return undefined;
         }
-        seenAttrIds.add(payload.attrId);
+        seen.add(identity);
         return payload;
     });
 }

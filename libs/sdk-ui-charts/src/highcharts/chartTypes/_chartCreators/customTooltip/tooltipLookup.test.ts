@@ -9,10 +9,17 @@ import { buildKeySegment, joinKeySegments } from "@gooddata/sdk-ui-vis-commons";
 
 import { buildPointKey } from "./tooltipLookup.js";
 
-function attributeIntersection(args: { displayFormId: string; uri: string }): IDrillEventIntersectionElement {
+function attributeIntersection(args: {
+    displayFormId: string;
+    localIdentifier: string;
+    uri: string;
+}): IDrillEventIntersectionElement {
     return {
         header: {
-            attributeHeader: { identifier: args.displayFormId },
+            attributeHeader: {
+                identifier: args.displayFormId,
+                localIdentifier: args.localIdentifier,
+            },
             attributeHeaderItem: { uri: args.uri, name: "" },
         },
     } as unknown as IDrillEventIntersectionElement;
@@ -24,6 +31,26 @@ function measureIntersection(localIdentifier: string): IDrillEventIntersectionEl
     } as unknown as IDrillEventIntersectionElement;
 }
 
+describe("buildPointKey — attributes sharing a display form id", () => {
+    // An LDM identifier is unique only within an object type, so a label and a computed
+    // attribute may share one. Keying by display form identifier put two segments with the
+    // same identifier into one key, and since joinKeySegments sorts them, the attribute-to-value
+    // pairing was lost: two rows with swapped values collapsed onto one key and the hovered
+    // point resolved against the wrong row. A localIdentifier is unique within an execution.
+    const row = (labelValue: string, computedValue: string) => [
+        attributeIntersection({ displayFormId: "tier", localIdentifier: "a_label", uri: labelValue }),
+        attributeIntersection({ displayFormId: "tier", localIdentifier: "a_ca", uri: computedValue }),
+    ];
+
+    it("keeps two rows apart when their values are swapped", () => {
+        expect(buildPointKey(row("Gold", "Silver"))).not.toBe(buildPointKey(row("Silver", "Gold")));
+    });
+
+    it("still matches the same row built in the opposite order", () => {
+        expect(buildPointKey(row("Gold", "Silver"))).toBe(buildPointKey(row("Gold", "Silver").reverse()));
+    });
+});
+
 describe("buildPointKey", () => {
     it("returns empty key for empty intersection", () => {
         expect(buildPointKey([])).toBe("");
@@ -32,9 +59,25 @@ describe("buildPointKey", () => {
     it("skips measure intersection elements", () => {
         const key = buildPointKey([
             measureIntersection("m_1"),
-            attributeIntersection({ displayFormId: "region.df", uri: "/region/east" }),
+            attributeIntersection({
+                displayFormId: "region.df",
+                localIdentifier: "a_region",
+                uri: "/region/east",
+            }),
         ]);
-        expect(key).toBe(buildKeySegment("region.df", "/region/east"));
+        expect(key).toBe(buildKeySegment("a_region", "/region/east"));
+    });
+
+    it("keys the segment by the localIdentifier, never by the display form id", () => {
+        const key = buildPointKey([
+            attributeIntersection({
+                displayFormId: "region.df",
+                localIdentifier: "a_region",
+                uri: "/region/east",
+            }),
+        ]);
+        expect(key).toBe(buildKeySegment("a_region", "/region/east"));
+        expect(key).not.toContain("region.df");
     });
 
     it("matches a lookup key built from the same segments in a different order", () => {
@@ -44,12 +87,20 @@ describe("buildPointKey", () => {
         // both sides produce identical keys.
         const intersectionFromChart = [
             measureIntersection("m_1"),
-            attributeIntersection({ displayFormId: "child.df", uri: "/child/c1" }),
-            attributeIntersection({ displayFormId: "parent.df", uri: "/parent/p1" }),
+            attributeIntersection({
+                displayFormId: "child.df",
+                localIdentifier: "a_child",
+                uri: "/child/c1",
+            }),
+            attributeIntersection({
+                displayFormId: "parent.df",
+                localIdentifier: "a_parent",
+                uri: "/parent/p1",
+            }),
         ];
         const lookupSideKey = joinKeySegments([
-            buildKeySegment("parent.df", "/parent/p1"),
-            buildKeySegment("child.df", "/child/c1"),
+            buildKeySegment("a_parent", "/parent/p1"),
+            buildKeySegment("a_child", "/child/c1"),
         ]);
 
         expect(buildPointKey(intersectionFromChart)).toBe(lookupSideKey);
@@ -58,14 +109,26 @@ describe("buildPointKey", () => {
     it("matches a lookup key for 2 view-by + stack-by combination", () => {
         const intersectionFromChart = [
             measureIntersection("m_1"),
-            attributeIntersection({ displayFormId: "child.df", uri: "/child/c1" }),
-            attributeIntersection({ displayFormId: "parent.df", uri: "/parent/p1" }),
-            attributeIntersection({ displayFormId: "stack.df", uri: "/stack/s1" }),
+            attributeIntersection({
+                displayFormId: "child.df",
+                localIdentifier: "a_child",
+                uri: "/child/c1",
+            }),
+            attributeIntersection({
+                displayFormId: "parent.df",
+                localIdentifier: "a_parent",
+                uri: "/parent/p1",
+            }),
+            attributeIntersection({
+                displayFormId: "stack.df",
+                localIdentifier: "a_stack",
+                uri: "/stack/s1",
+            }),
         ];
         const lookupSideKey = joinKeySegments([
-            buildKeySegment("parent.df", "/parent/p1"),
-            buildKeySegment("child.df", "/child/c1"),
-            buildKeySegment("stack.df", "/stack/s1"),
+            buildKeySegment("a_parent", "/parent/p1"),
+            buildKeySegment("a_child", "/child/c1"),
+            buildKeySegment("a_stack", "/stack/s1"),
         ]);
 
         expect(buildPointKey(intersectionFromChart)).toBe(lookupSideKey);
@@ -75,11 +138,11 @@ describe("buildPointKey", () => {
         const key = buildPointKey([
             {
                 header: {
-                    attributeHeader: { identifier: "df" },
+                    attributeHeader: { identifier: "region.df", localIdentifier: "a_region" },
                     attributeHeaderItem: { name: "" },
                 },
             } as unknown as IDrillEventIntersectionElement,
         ]);
-        expect(key).toBe(buildKeySegment("df", ""));
+        expect(key).toBe(buildKeySegment("a_region", ""));
     });
 });

@@ -63,8 +63,7 @@ describe("GeoLayersContext", () => {
     it("propagates tooltipReferenceMaps from prepared output to IGeoLayerData", () => {
         const tooltipReferenceMaps: ITooltipReferenceMaps = {
             measures: { m_local: "f_population" },
-            attributes: { "df.city": "attr.city" },
-            computedAttributeIds: [],
+            attributes: { a_city: { displayFormKey: "label/df.city", attributeKey: "label/attr.city" } },
         };
         const layerOutputs = new Map([["L1", makePrepared({ tooltipReferenceMaps })]]);
 

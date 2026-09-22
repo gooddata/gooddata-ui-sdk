@@ -1,0 +1,22 @@
+// (C) 2026 GoodData Corporation
+
+.restricted-placeholder-examples__regular {
+    width: 420px;
+    height: 200px;
+}
+
+.restricted-placeholder-examples {
+    display: flex;
+    gap: 20px;
+
+    &__small {
+        width: 160px;
+        height: 100px;
+        background: var(--gd-palette-complementary-0);
+        border: 1px solid var(--gd-palette-complementary-3);
+
+        &--edit {
+            height: 90px;
+        }
+    }
+}

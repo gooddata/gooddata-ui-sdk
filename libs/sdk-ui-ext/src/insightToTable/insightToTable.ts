@@ -40,6 +40,7 @@ import {
 } from "@gooddata/sdk-model";
 import {
     BucketNames,
+    type GeoTableConversionOptions,
     VisualizationTypes,
     convertGeoInsightToTableDefinition as convertGeoInsightToTableDefinitionShared,
     isGeoVisualizationUsingNewEngine,
@@ -53,7 +54,7 @@ import { resolveGeoDefaultDisplayFormRefs } from "./geoDefaultDisplayFormRefs.js
  *
  * @param insightType - The visualization type to check
  * @returns true if the visualization supports the Show as Table UI feature
- * @public
+ * @internal
  */
 export function supportsShowAsTable(insightType?: string): boolean {
     return (
@@ -70,7 +71,7 @@ export function supportsShowAsTable(insightType?: string): boolean {
  *
  * @param insightType - The visualization type to check
  * @returns true if the visualization can be converted to table format
- * @public
+ * @internal
  */
 export function canConvertToTable(insightType?: string): boolean {
     return insightType !== "table" && insightType !== "repeater" && insightType !== "xirr";
@@ -329,11 +330,6 @@ function transformGeoLocationAttribute(
     return transformGeoBucketAttributeUsingTooltipText(locationBucket, insight, "table_name");
 }
 
-type GeoTableConversionOptions = {
-    settings?: ISettings;
-    defaultDisplayFormRefs?: Map<string, ObjRef>;
-};
-
 function resolveGeoPrimaryAttribute(
     options: GeoTableConversionOptions,
     insight: IInsight,
@@ -485,7 +481,12 @@ export interface ILayerTableDefinition {
     tableInsight: IInsight;
 }
 
-interface ILayerTableConversionOptions {
+/**
+ * Options steering how a multi-layer geo insight is turned into per-layer tables.
+ *
+ * @internal
+ */
+export interface ILayerTableConversionOptions {
     settings?: ISettings;
     catalogAttributes?: ICatalogAttribute[];
     preloadedAttributesWithReferences?: IAttributeWithReferences[];
@@ -580,7 +581,7 @@ export function convertInsightToLayerTables(
  *
  * @param insight - The input insight to convert.
  * @returns IInsight with table visualization or the original insight if conversion is not supported.
- * @public
+ * @internal
  */
 export function convertInsightToTableDefinition(
     insight: IInsight,

@@ -106,7 +106,7 @@ export function GenAIChatOverlay({
 
     const Wrapper = useCallback(
         ({ children }: { children: ReactNode }) => {
-            if (displayMode === "modal") {
+            if (displayMode === "modal" || isFullscreen) {
                 return (
                     <Dialog
                         isModal={isFullscreen}

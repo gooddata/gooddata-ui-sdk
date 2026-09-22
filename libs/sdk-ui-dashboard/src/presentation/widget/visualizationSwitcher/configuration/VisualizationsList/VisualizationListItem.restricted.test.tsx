@@ -101,16 +101,17 @@ describe("VisualizationListItem", () => {
         expect(screen.queryByText("Attrition by team")).not.toBeInTheDocument();
     });
 
-    it("offers a restricted entry removal alone, because its order cannot be judged", () => {
+    it("lets a restricted entry be reordered and removed, like any other", () => {
         const { container } = renderItem(
             visualization("restricted", "Attrition by team", restrictedInsightRef),
         );
 
         openMenu(container);
 
+        // its place in the order is the editor's to keep, even where its content is not theirs to see
+        expect(screen.getByText("Move up")).toBeInTheDocument();
+        expect(screen.getByText("Move down")).toBeInTheDocument();
         expect(screen.getByText("Remove")).toBeInTheDocument();
-        expect(screen.queryByText("Move up")).not.toBeInTheDocument();
-        expect(screen.queryByText("Move down")).not.toBeInTheDocument();
     });
 
     it("keeps title and all three actions for a readable entry", () => {

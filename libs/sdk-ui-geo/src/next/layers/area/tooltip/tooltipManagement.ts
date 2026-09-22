@@ -14,7 +14,7 @@ import { presentTooltip } from "../../common/tooltipPlacement.js";
 import {
     type TooltipFormatConfig,
     type TooltipPayload,
-    dedupeAttributePayloadsByAttrId,
+    dedupeAttributePayloads,
     formatAttributeHtml,
     formatMeasureHtml,
     getTooltipProperties,
@@ -48,7 +48,7 @@ function buildAreaTooltipHtml(
     intl: IntlShape,
     tooltipLookup: IGeoLayerTooltipLookup | undefined,
 ): string | null {
-    const attributeItems = dedupeAttributePayloadsByAttrId([locationName, segment])
+    const attributeItems = dedupeAttributePayloads([locationName, segment], referenceMaps)
         .map((payload) => formatAttributeHtml(payload, tooltipFormatConfig))
         .filter((item): item is string => item !== null);
     const measureItem = formatMeasureHtml(color, separators, tooltipFormatConfig);

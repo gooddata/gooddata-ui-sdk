@@ -12,6 +12,7 @@ import {
     widgetTitle,
 } from "@gooddata/sdk-model";
 import { type VisType } from "@gooddata/sdk-ui";
+import { supportsShowAsTable } from "@gooddata/sdk-ui-ext";
 import { useId } from "@gooddata/sdk-ui-kit";
 
 import { changeVisualizationSwitcherActiveVisualization } from "../../../model/commands/visualizationSwitcher.js";
@@ -28,7 +29,6 @@ import { DashboardItemVisualization } from "../../presentationComponents/Dashboa
 import { getVisTypeCssClass } from "../../presentationComponents/DashboardItems/utils.js";
 import { useInsightExport } from "../common/useInsightExport.js";
 import { InsightWidgetDescriptionTrigger } from "../description/InsightWidgetDescriptionTrigger.js";
-import { supportsShowAsTable } from "../insight/insightToTable.js";
 import { ShowAsTableButton } from "../showAsTableButton/ShowAsTableButton.js";
 import { useShowAsTable } from "../showAsTableButton/useShowAsTable.js";
 import { useAlertingAndScheduling } from "../widget/InsightWidget/useAlertingAndScheduling.js";

@@ -7,7 +7,7 @@ import {
     type IPlatformContext,
     type IPluggableAppTelemetryCallbacks,
 } from "@gooddata/sdk-pluggable-application-model";
-import { useGenAiChatAvailability } from "@gooddata/sdk-ui-gen-ai";
+import { GenAIAssistantMode, useGenAiChatAvailability } from "@gooddata/sdk-ui-gen-ai";
 
 import { getBackend } from "../platformContext/backend.js";
 
@@ -19,6 +19,10 @@ export interface IHostChromeChat {
     element: ReactNode;
     /** Whether the chat dialog is currently open. */
     isOpen: boolean;
+    /**
+     * The mode of the chat dialog.
+     */
+    mode: GenAIAssistantMode;
     /**
      * Whether the chat entry point should be visible in the header. Reflects both the
      * feature-flag/permission gate and the runtime LLM availability probe.
@@ -106,6 +110,7 @@ export function useHostChromeChat({
     const [appendToChat, setAppendToChat] = useState(false);
     const [agentId, setAgentId] = useState<string | undefined>(undefined);
     const [replaceUserContext, setReplaceUserContext] = useState(false);
+    const [mode, setMode] = useState<GenAIAssistantMode>("docked");
     // Bumped on every ask so the chat re-seeds (clears the thread + sends the message) even when the
     // same prompt is asked again — e.g. "Summarize" clicked twice, or repeated after a close (the
     // seeding effect is otherwise keyed on the question text, which does not change on a repeat).
@@ -171,6 +176,9 @@ export function useHostChromeChat({
     const handleChatEvent = useCallback(
         (event: GenAIChatEvent) => {
             telemetry?.trackEvent(event.name, event.payload as unknown as Record<string, unknown>);
+            if (event.name === "chat.mode-changed") {
+                setMode(event.payload.mode);
+            }
             onAppEventReceive?.(event);
         },
         [telemetry, onAppEventReceive],
@@ -216,6 +224,7 @@ export function useHostChromeChat({
         element,
         isOpen: isChatOpen,
         showChatItem,
+        mode,
         open,
         close,
         toggle,

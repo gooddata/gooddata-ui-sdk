@@ -39,13 +39,10 @@
 
     .gd-rich-text-metric-restricted {
         display: inline-flex;
-        align-items: baseline;
-        gap: 4px;
-        color: variables.$gd-color-state-blank;
-
-        &::before {
-            font-size: 12px;
-        }
+        align-items: center;
+        gap: 2px;
+        color: var(--gd-palette-complementary-6);
+        font-weight: 400;
     }
 }
 

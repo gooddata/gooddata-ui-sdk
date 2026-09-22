@@ -27,6 +27,12 @@ export interface IGeoAttributeItem extends IGeoDataItem {
      */
     displayFormId?: string;
     /**
+     * Execution-local identifier of the attribute this data came from. Unique within the
+     * execution, unlike {@link displayFormId}, so it is what identifies a row in the custom
+     * tooltip lookup - see `buildKeySegment`.
+     */
+    localIdentifier?: string;
+    /**
      * Array of string values for the attribute
      */
     data: string[];

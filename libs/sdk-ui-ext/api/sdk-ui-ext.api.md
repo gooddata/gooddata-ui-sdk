@@ -16,12 +16,15 @@ import { Dispatch } from 'react';
 import { EmbedType } from '@gooddata/sdk-ui-kit';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
 import { GeneralAccessValue } from '@gooddata/sdk-ui-kit';
+import { GeoTableConversionOptions } from '@gooddata/sdk-ui';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAlertComparisonOperator } from '@gooddata/sdk-model';
 import { IAlertRelativeArithmeticOperator } from '@gooddata/sdk-model';
 import { IAlertRelativeOperator } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import { IAttributeWithReferences } from '@gooddata/sdk-backend-spi';
 import { IAutomationMetadataObject } from '@gooddata/sdk-model';
+import { ICatalogAttribute } from '@gooddata/sdk-model';
 import { ICatalogAttributeHierarchy } from '@gooddata/sdk-model';
 import { IChartConfig } from '@gooddata/sdk-ui-charts';
 import { IColorPalette } from '@gooddata/sdk-model';
@@ -165,6 +168,9 @@ export type AutomationsScope = "workspace" | "organization";
 // @internal (undocumented)
 export type AutomationsType = Extract<AutomationType, "alert" | "schedule">;
 
+// @internal
+export function canConvertToTable(insightType?: string): boolean;
+
 export { ChartInlineVisualizationType }
 
 // @public
@@ -196,6 +202,12 @@ export type ConditionalFormattingDialogSubmitIntent = {
     mode: "custom";
     rule: IConditionalFormattingRule;
 };
+
+// @internal
+export function convertInsightToLayerTables(insight: IInsight, options: ILayerTableConversionOptions): ILayerTableDefinition[] | undefined;
+
+// @internal
+export function convertInsightToTableDefinition(insight: IInsight, options?: GeoTableConversionOptions): IInsight;
 
 // @internal (undocumented)
 export const CreateUserGroupDialog: {
@@ -300,6 +312,9 @@ export const getComparisonOperatorTitle: (operator: IAlertComparisonOperator, in
 
 // @internal
 export function getEffectiveConditionalFormatting(insight: IInsightDefinition, settings: ISettings | undefined, configOverride?: IConditionalFormatting): IConditionalFormatting | undefined;
+
+// @internal
+export function getGeoTableDisplayFormRefs(insight: IInsight, settings: ISettings | undefined, catalogAttributes: ICatalogAttribute[], preloadedAttributesWithReferences?: IAttributeWithReferences[]): Map<string, ObjRef> | undefined;
 
 // @internal (undocumented)
 export function getInsightSizeInfo(insight: IInsightDefinition, settings: ISettings): IVisualizationSizeInfo;
@@ -827,6 +842,24 @@ export interface IInsightViewProps extends Partial<IVisualizationCallbacks> {
     showTitle?: boolean | string | ((insight: IInsight) => string | undefined);
     TitleComponent?: ComponentType<IInsightTitleProps>;
     workspace?: string;
+}
+
+// @internal
+export interface ILayerTableConversionOptions {
+    // (undocumented)
+    catalogAttributes?: ICatalogAttribute[];
+    // (undocumented)
+    preloadedAttributesWithReferences?: IAttributeWithReferences[];
+    // (undocumented)
+    settings?: ISettings;
+}
+
+// @alpha
+export interface ILayerTableDefinition {
+    layerId: string;
+    layerName: string;
+    layerType: string;
+    tableInsight: IInsight;
 }
 
 // @alpha
@@ -1365,6 +1398,9 @@ export function summaryOtherGranteeCount(summary: IObjectAccessSummary): number;
 
 // @internal
 export function summaryToShareLevel(summary: IObjectAccessSummary): ObjectShareLevel;
+
+// @internal
+export function supportsShowAsTable(insightType?: string): boolean;
 
 // @internal (undocumented)
 export type TelemetryEvent = "multiple-users-deleted" | "multiple-groups-deleted" | "group-deleted" | "user-deleted" | "group-created" | "user-detail-updated" | "group-detail-updated" | "groups-added-to-single-user" | "groups-added-to-multiple-users" | "users-added-to-single-group" | "users-added-to-multiple-groups" | "permission-added-to-single-user" | "permission-added-to-single-group" | "permission-added-to-multiple-users" | "permission-added-to-multiple-groups" | "user-permission-changed-to-hierarchy" | "user-permission-changed-to-single-workspace" | "group-permission-changed-to-hierarchy" | "group-permission-changed-to-single-workspace" | "user-permission-changed-to-view" | "group-permission-changed-to-view" | "user-permission-changed-to-view-save-views" | "group-permission-changed-to-view-save-views" | "user-permission-changed-to-view-export" | "group-permission-changed-to-view-export" | "user-permission-changed-to-view-export-save-views" | "group-permission-changed-to-view-export-save-views" | "user-permission-changed-to-analyze" | "group-permission-changed-to-analyze" | "user-permission-changed-to-analyze-export" | "group-permission-changed-to-analyze-export" | "user-permission-changed-to-manage" | "group-permission-changed-to-manage" | "user-data-source-permission-changed-to-use" | "group-data-source-permission-changed-to-use" | "user-data-source-permission-changed-to-manage" | "group-data-source-permission-changed-to-manage" | "user-role-changed-to-admin" | "user-role-changed-to-member" | "user-marked-system-account" | "user-unmarked-system-account";

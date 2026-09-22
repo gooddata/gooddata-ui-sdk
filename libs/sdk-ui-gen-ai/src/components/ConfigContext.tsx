@@ -17,7 +17,7 @@ export type ConfigContext = {
  * @public
  */
 export type LinkHandlerEvent = {
-    type: "setting" | GenAIObjectType;
+    type: "setting" | "report" | GenAIObjectType;
     id: string;
     workspaceId: string;
     newTab: boolean;

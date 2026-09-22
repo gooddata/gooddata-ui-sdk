@@ -5,51 +5,37 @@
 import { describe, expect, it } from "vitest";
 
 import {
+    type FilterContextItem,
+    type IDashboardAttributeFilter,
+    type IDashboardFilterReference,
+    type IDashboardMeasureValueFilter,
     type IDashboardParameter,
-    type IInsightDefinition,
     type IParameterMetadataObject,
     type IdentifierRef,
+    type ObjRef,
     idRef,
     objRefToString,
+    serializeObjRef,
 } from "@gooddata/sdk-model";
+
+import { type ITabState } from "../tabsState.js";
 
 import {
     classifyParameterReconciliation,
+    collectFilterParameterRoots,
     collectParameterReconciliations,
-    collectReferencedParameterRefs,
+    collectWidgetFilterParameterRefs,
     computeHydratedRuntimeOverride,
+    filterParameterRoots,
     formatDashboardParameter,
+    isDashboardFilterIgnoredByWidget,
     resolveEffectiveParameterValuesForRefs,
+    unionParameterRefs,
 } from "./parametersHelpers.js";
 import { type IDashboardParameterEntry } from "./parametersState.js";
 
 const topNRef: IdentifierRef = idRef("topN", "parameter");
 const sampleSizeRef: IdentifierRef = idRef("sampleSize", "parameter");
-const metricARef: IdentifierRef = idRef("metric-A", "measure");
-const metricBRef: IdentifierRef = idRef("metric-B", "measure");
-
-function makeInsightWithMetrics(metricRefs: IdentifierRef[]): IInsightDefinition {
-    return {
-        insight: {
-            title: "insight",
-            visualizationUrl: "local:test",
-            buckets: [
-                {
-                    items: metricRefs.map((metricRef, idx) => ({
-                        measure: {
-                            localIdentifier: `metric-${idx}`,
-                            definition: { measureDefinition: { item: metricRef } },
-                        },
-                    })),
-                },
-            ],
-            filters: [],
-            sorts: [],
-            properties: {},
-            parameters: [],
-        },
-    };
-}
 
 const topNWorkspace: IParameterMetadataObject = {
     type: "parameter",
@@ -285,32 +271,6 @@ describe("collectParameterReconciliations", () => {
             runtimeOverride: 10,
         };
         expect(collectParameterReconciliations([labelled], [boundedWorkspace])[0].name).toBe("Custom");
-    });
-});
-
-describe("collectReferencedParameterRefs", () => {
-    it("returns refs from metric → parameter dependency map, deduped by ref string", () => {
-        const insight = makeInsightWithMetrics([metricARef, metricBRef]);
-        const measureParameters: Record<string, IdentifierRef[]> = {
-            [objRefToString(metricARef)]: [topNRef, sampleSizeRef],
-            [objRefToString(metricBRef)]: [topNRef],
-        };
-        const result = collectReferencedParameterRefs(insight, measureParameters);
-        expect(result).toEqual([topNRef, sampleSizeRef]);
-    });
-
-    it("returns empty when no metric has dependencies", () => {
-        const insight = makeInsightWithMetrics([metricARef]);
-        const result = collectReferencedParameterRefs(insight, {});
-        expect(result).toEqual([]);
-    });
-
-    it("returns empty for an insight without metric definitions", () => {
-        const insight = makeInsightWithMetrics([]);
-        const result = collectReferencedParameterRefs(insight, {
-            [objRefToString(metricARef)]: [topNRef],
-        });
-        expect(result).toEqual([]);
     });
 });
 
@@ -572,5 +532,189 @@ describe("resolveEffectiveParameterValuesForRefs", () => {
             numberTypedByRef,
         );
         expect(result).toEqual([{ ref: scenarioRef, value: 10 }]);
+    });
+});
+
+describe("dashboard filter parameter dependencies", () => {
+    const computedAttributeRef = idRef("ca1", "computedAttribute");
+    const otherComputedAttributeRef = idRef("ca2", "computedAttribute");
+    const labelRef = idRef("label1", "displayForm");
+    const metricRef = idRef("m1", "measure");
+
+    const attributeFilter = (displayForm: ObjRef, localIdentifier: string): IDashboardAttributeFilter => ({
+        attributeFilter: {
+            displayForm,
+            negativeSelection: false,
+            attributeElements: { values: [] },
+            localIdentifier,
+        },
+    });
+    const measureValueFilter = (
+        measure: ObjRef,
+        localIdentifier: string,
+        dimensionality?: ObjRef[],
+    ): IDashboardMeasureValueFilter => ({
+        dashboardMeasureValueFilter: { measure, localIdentifier, dimensionality },
+    });
+    const dateFilter: FilterContextItem = { dateFilter: { type: "relative", granularity: "GDC.time.date" } };
+
+    const tabWith = (filters: FilterContextItem[]): ITabState =>
+        ({
+            localIdentifier: "tab-1",
+            filterContext: { filterContextDefinition: { filters } },
+        }) as unknown as ITabState;
+
+    describe("unionParameterRefs", () => {
+        it("keeps the first occurrence of each ref across the lists", () => {
+            expect(unionParameterRefs([topNRef, sampleSizeRef], [sampleSizeRef, topNRef])).toEqual([
+                topNRef,
+                sampleSizeRef,
+            ]);
+        });
+    });
+
+    describe("filterParameterRoots", () => {
+        it("roots an attribute filter on a computed attribute at that computed attribute", () => {
+            expect(filterParameterRoots(attributeFilter(computedAttributeRef, "af"))).toEqual([
+                computedAttributeRef,
+            ]);
+        });
+
+        it("has no root for an attribute filter on a plain label - it has no expression to read a parameter", () => {
+            expect(filterParameterRoots(attributeFilter(labelRef, "af"))).toEqual([]);
+        });
+
+        it("roots a measure value filter at its metric and at its computed-attribute dimensions only", () => {
+            expect(
+                filterParameterRoots(
+                    measureValueFilter(metricRef, "mvf", [
+                        otherComputedAttributeRef,
+                        idRef("attr", "attribute"),
+                    ]),
+                ),
+            ).toEqual([metricRef, otherComputedAttributeRef]);
+        });
+
+        it("has no root for a date filter", () => {
+            expect(filterParameterRoots(dateFilter)).toEqual([]);
+        });
+    });
+
+    describe("filterParameterRoots - untyped metric", () => {
+        it("types an untyped measure value filter metric as a measure so the graph does not treat it as an insight", () => {
+            expect(filterParameterRoots(measureValueFilter(idRef("m-untyped"), "mvf"))).toEqual([
+                idRef("m-untyped", "measure"),
+            ]);
+        });
+
+        it("keeps an already typed metric as is", () => {
+            expect(filterParameterRoots(measureValueFilter(metricRef, "mvf"))).toEqual([metricRef]);
+        });
+    });
+
+    describe("collectFilterParameterRoots", () => {
+        it("dedupes roots shared by several filters", () => {
+            expect(
+                collectFilterParameterRoots([
+                    attributeFilter(computedAttributeRef, "af1"),
+                    measureValueFilter(metricRef, "mvf", [computedAttributeRef]),
+                    attributeFilter(computedAttributeRef, "af2"),
+                ]),
+            ).toEqual([computedAttributeRef, metricRef]);
+        });
+    });
+
+    describe("isDashboardFilterIgnoredByWidget", () => {
+        const ignoreAttribute: IDashboardFilterReference = {
+            type: "attributeFilterReference",
+            displayForm: computedAttributeRef,
+        };
+        const ignoreMetric: IDashboardFilterReference = {
+            type: "measureValueFilterReference",
+            measure: metricRef,
+        };
+
+        it("matches an attribute filter by display form", () => {
+            expect(
+                isDashboardFilterIgnoredByWidget(
+                    [ignoreAttribute],
+                    attributeFilter(computedAttributeRef, "af"),
+                ),
+            ).toBe(true);
+            expect(
+                isDashboardFilterIgnoredByWidget(
+                    [ignoreAttribute],
+                    attributeFilter(otherComputedAttributeRef, "af"),
+                ),
+            ).toBe(false);
+        });
+
+        it("matches a measure value filter by metric", () => {
+            expect(
+                isDashboardFilterIgnoredByWidget([ignoreMetric], measureValueFilter(metricRef, "mvf")),
+            ).toBe(true);
+            expect(
+                isDashboardFilterIgnoredByWidget(
+                    [ignoreMetric],
+                    measureValueFilter(idRef("m2", "measure"), "mvf"),
+                ),
+            ).toBe(false);
+        });
+
+        it("does not confuse an attribute ignore with a metric ignore", () => {
+            expect(
+                isDashboardFilterIgnoredByWidget([ignoreMetric], attributeFilter(computedAttributeRef, "af")),
+            ).toBe(false);
+            expect(
+                isDashboardFilterIgnoredByWidget([ignoreAttribute], measureValueFilter(metricRef, "mvf")),
+            ).toBe(false);
+        });
+    });
+
+    describe("collectWidgetFilterParameterRefs", () => {
+        const filterParameters: Record<string, IdentifierRef[]> = {
+            [serializeObjRef(computedAttributeRef)]: [topNRef],
+            [serializeObjRef(metricRef)]: [topNRef, sampleSizeRef],
+        };
+
+        it("unions the parameters of the tab's filters the widget does not ignore, deduped", () => {
+            const tab = tabWith([
+                attributeFilter(computedAttributeRef, "af"),
+                measureValueFilter(metricRef, "mvf"),
+            ]);
+            expect(collectWidgetFilterParameterRefs([], tab, filterParameters)).toEqual([
+                topNRef,
+                sampleSizeRef,
+            ]);
+        });
+
+        it("skips the filters the widget ignores", () => {
+            const tab = tabWith([
+                attributeFilter(computedAttributeRef, "af"),
+                measureValueFilter(metricRef, "mvf"),
+            ]);
+            expect(
+                collectWidgetFilterParameterRefs(
+                    [{ type: "measureValueFilterReference", measure: metricRef }],
+                    tab,
+                    filterParameters,
+                ),
+            ).toEqual([topNRef]);
+        });
+
+        it("returns nothing for a root the map does not know", () => {
+            const tab = tabWith([attributeFilter(otherComputedAttributeRef, "af")]);
+            expect(collectWidgetFilterParameterRefs([], tab, filterParameters)).toEqual([]);
+        });
+
+        it("returns nothing for a tab without a filter context", () => {
+            expect(
+                collectWidgetFilterParameterRefs(
+                    [],
+                    { localIdentifier: "tab-1" } as ITabState,
+                    filterParameters,
+                ),
+            ).toEqual([]);
+        });
     });
 });

@@ -15,6 +15,7 @@ import {
     isInsight,
 } from "@gooddata/sdk-model";
 import { type ILocale, type OnLoadingChanged } from "@gooddata/sdk-ui";
+import { supportsShowAsTable } from "@gooddata/sdk-ui-ext";
 import {
     Button,
     FLOATING_ELEMENT_DATA_ATTR,
@@ -47,7 +48,6 @@ import { useInsightExport } from "../../../common/useInsightExport.js";
 import { useShowAsTable } from "../../../showAsTableButton/useShowAsTable.js";
 import { useInsightWarning } from "../../../widget/InsightWidget/useInsightWarning.js";
 import { InsightWidgetWarningPartialResult } from "../../../widget/warningPartialResult/InsightWidgetWarningPartialResult.js";
-import { supportsShowAsTable } from "../../insightToTable.js";
 
 import { DrillDialog } from "./DrillDialog.js";
 import { DrillDialogInsight } from "./DrillDialogInsight.js";

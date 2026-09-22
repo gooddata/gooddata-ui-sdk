@@ -2,9 +2,12 @@
 
 import {
     DashboardParameterModeValues,
+    type FilterContextItem,
     type IDashboardExportParameter,
+    type IDashboardFilterReference,
     type IDashboardParameter,
     type IDashboardTab,
+    type IInsight,
     type IInsightDefinition,
     type IInsightParameterValue,
     type IParameterDefinition,
@@ -12,12 +15,20 @@ import {
     type IdentifierRef,
     type ObjRef,
     type ParameterValue,
-    insightMeasures,
+    areObjRefsEqual,
+    dashboardAttributeFilterItemDisplayForm,
     insightParameters,
-    isMeasureDefinition,
+    insightRef,
+    isComputedAttributeRef,
+    isDashboardAttributeFilterItem,
+    isDashboardAttributeFilterReference,
+    isDashboardMeasureValueFilter,
+    isDashboardMeasureValueFilterReference,
+    isIdentifierRef,
     isValidParameterValue,
     objRefToString,
     sanitizeParameterValue,
+    serializeObjRef,
 } from "@gooddata/sdk-model";
 
 import { type ITabState } from "../tabsState.js";
@@ -30,39 +41,126 @@ import {
 
 const EMPTY_PARAMETERS: IDashboardParameter[] = [];
 const EMPTY_PARAMETER_VALUES: IInsightParameterValue[] = [];
+const EMPTY_REFS: IdentifierRef[] = [];
 /**
  * @internal
  */
 export const EMPTY_EXPORT_PARAMETERS_BY_TAB: Record<string, IDashboardExportParameter[]> = {};
 
 /**
- * Walks the insight's metric buckets and returns the parameter refs they reference,
- * deduped by ref string. The order matches the first occurrence in the measure traversal.
+ * Concatenates parameter ref lists, keeping the first occurrence of each ref (by `serializeObjRef`).
  *
  * @internal
  */
-export function collectReferencedParameterRefs(
-    insight: IInsightDefinition,
-    measureParameters: Record<string, IdentifierRef[]>,
-): IdentifierRef[] {
+export function unionParameterRefs(...lists: ReadonlyArray<ReadonlyArray<IdentifierRef>>): IdentifierRef[] {
     const seen = new Set<string>();
     const result: IdentifierRef[] = [];
-    for (const measure of insightMeasures(insight)) {
-        const def = measure.measure.definition;
-        if (!isMeasureDefinition(def)) {
-            continue;
-        }
-        const refs = measureParameters[objRefToString(def.measureDefinition.item)] ?? [];
-        for (const ref of refs) {
-            const key = objRefToString(ref);
-            if (seen.has(key)) {
-                continue;
+    for (const list of lists) {
+        for (const ref of list) {
+            const key = serializeObjRef(ref);
+            if (!seen.has(key)) {
+                seen.add(key);
+                result.push(ref);
             }
-            seen.add(key);
-            result.push(ref);
         }
     }
     return result;
+}
+
+/**
+ * The objects a dashboard filter reads through which it can depend on a parameter, as roots for the
+ * references service: a computed attribute an attribute filter filters on, and a measure value filter's
+ * metric plus any computed attribute in its dimensionality. A plain attribute or label has no expression,
+ * so it cannot depend on a parameter and is not a root. Date filters never are.
+ *
+ * @internal
+ */
+export function filterParameterRoots(filter: FilterContextItem): IdentifierRef[] {
+    if (isDashboardAttributeFilterItem(filter)) {
+        const displayForm = dashboardAttributeFilterItemDisplayForm(filter);
+        return isComputedAttributeRef(displayForm) && isIdentifierRef(displayForm)
+            ? [displayForm]
+            : EMPTY_REFS;
+    }
+    if (isDashboardMeasureValueFilter(filter)) {
+        const { measure, dimensionality = [] } = filter.dashboardMeasureValueFilter;
+        return [
+            ...(isIdentifierRef(measure) ? [measureRoot(measure)] : []),
+            ...dimensionality.filter(isComputedAttributeRef).filter(isIdentifierRef),
+        ];
+    }
+    return EMPTY_REFS;
+}
+
+/**
+ * A measure value filter stores its metric as a plain {@link ObjRef} that usually carries no `type`. The
+ * dependency graph resolves an untyped root as an insight, so the metric type is made explicit here; the
+ * same normalized ref is the key both when the map is loaded and when a widget reads it.
+ */
+function measureRoot(measure: IdentifierRef): IdentifierRef {
+    return measure.type ? measure : { ...measure, type: "measure" };
+}
+
+/**
+ * {@link filterParameterRoots} over many filters, deduped by ref.
+ *
+ * @internal
+ */
+export function collectFilterParameterRoots(filters: ReadonlyArray<FilterContextItem>): IdentifierRef[] {
+    return unionParameterRefs(...filters.map(filterParameterRoots));
+}
+
+/**
+ * Whether the widget's `ignoreDashboardFilters` excludes the given dashboard filter from its execution.
+ *
+ * @remarks
+ * Attribute filters are matched by display form. An ignore may instead name the filter's `displayAsLabel`;
+ * that is irrelevant here because only computed-attribute filters produce parameter roots and a computed
+ * attribute has exactly one (fabricated) display form, so it cannot be shown under another label.
+ *
+ * @internal
+ */
+export function isDashboardFilterIgnoredByWidget(
+    ignoreDashboardFilters: ReadonlyArray<IDashboardFilterReference>,
+    filter: FilterContextItem,
+): boolean {
+    if (isDashboardAttributeFilterItem(filter)) {
+        const displayForm = dashboardAttributeFilterItemDisplayForm(filter);
+        return ignoreDashboardFilters.some(
+            (ignored) =>
+                isDashboardAttributeFilterReference(ignored) &&
+                areObjRefsEqual(ignored.displayForm, displayForm),
+        );
+    }
+    if (isDashboardMeasureValueFilter(filter)) {
+        const { measure } = filter.dashboardMeasureValueFilter;
+        return ignoreDashboardFilters.some(
+            (ignored) =>
+                isDashboardMeasureValueFilterReference(ignored) && areObjRefsEqual(ignored.measure, measure),
+        );
+    }
+    return false;
+}
+
+/**
+ * The parameter refs a widget depends on through the dashboard filters of its tab that it does not
+ * ignore, resolved against the filter → parameter dependency map (`catalog.filterParameters.byRef`).
+ *
+ * @internal
+ */
+export function collectWidgetFilterParameterRefs(
+    ignoreDashboardFilters: ReadonlyArray<IDashboardFilterReference>,
+    tab: ITabState,
+    filterParameters: Record<string, IdentifierRef[]>,
+): IdentifierRef[] {
+    const filters = tab.filterContext?.filterContextDefinition?.filters ?? [];
+    const roots = collectFilterParameterRoots(
+        filters.filter((filter) => !isDashboardFilterIgnoredByWidget(ignoreDashboardFilters, filter)),
+    );
+    const result = unionParameterRefs(
+        ...roots.map((root) => filterParameters[serializeObjRef(root)] ?? EMPTY_REFS),
+    );
+    return result.length === 0 ? EMPTY_REFS : result;
 }
 
 /**
@@ -117,25 +215,32 @@ export function resolveEffectiveParameterValuesForRefs(
 
 interface IParameterResolutionContext {
     entries: IDashboardParameterEntry[];
-    measureParameters: Record<string, IdentifierRef[]>;
+    insightParameters: Record<string, IdentifierRef[]>;
+    // Parameters reached through the widget's non-ignored dashboard filters; they apply to whatever
+    // insight the widget executes (its own or a drill target), so they are resolved per widget, not per insight.
+    filterParameterRefs: IdentifierRef[];
     workspaceParameterByRef: Map<string, IParameterMetadataObject>;
     isStringEnabled: boolean;
 }
 
 /**
- * Effective execution parameters for `insight` given a widget's parameter context: resolves the refs
- * the insight references, then applies {@link resolveEffectiveParameterValuesForRefs}.
+ * Effective execution parameters for `insight` given a widget's parameter context: looks up the refs
+ * the insight depends on, adds those the widget's dashboard filters depend on, then applies
+ * {@link resolveEffectiveParameterValuesForRefs}.
  *
  * @internal
  */
 export function resolveEffectiveParameterValuesForInsight(
     context: IParameterResolutionContext | undefined,
-    insight: IInsightDefinition,
+    insight: IInsight,
 ): IInsightParameterValue[] {
     if (!context) {
         return EMPTY_PARAMETER_VALUES;
     }
-    const referencedRefs = collectReferencedParameterRefs(insight, context.measureParameters);
+    const referencedRefs = unionParameterRefs(
+        context.insightParameters[serializeObjRef(insightRef(insight))] ?? EMPTY_REFS,
+        context.filterParameterRefs,
+    );
     return resolveEffectiveParameterValuesForRefs(
         context.entries,
         referencedRefs,

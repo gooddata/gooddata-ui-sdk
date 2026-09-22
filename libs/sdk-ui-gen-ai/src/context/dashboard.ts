@@ -93,7 +93,9 @@ export function buildFiltersContext(
             const { type, granularity, from, to, dataSet } = filter.dateFilter;
             const using = dataSet ? objRefToString(dataSet) : undefined;
 
-            if (type === "absolute" && typeof from === "string" && typeof to === "string") {
+            if (type === "absolute") {
+                const convertedFrom = String(from);
+                const convertedTo = String(to);
                 converted.push({
                     title: DateFilterHelpers.getDateFilterRepresentation(
                         {
@@ -101,23 +103,25 @@ export function buildFiltersContext(
                             type: "absoluteForm",
                             visible: true,
                             localIdentifier: filter.dateFilter.localIdentifier!,
-                            from,
-                            to,
+                            from: convertedFrom,
+                            to: convertedTo,
                         },
                         "en-US",
                         DEFAULT_MESSAGES["en-US"],
                         "full",
                     ),
-                    type: "date_filter",
                     using,
-                    from,
-                    to,
+                    type: "date_filter",
+                    from: convertedFrom,
+                    to: convertedTo,
                 });
             }
 
-            if (type === "relative" && typeof from === "number" && typeof to === "number") {
+            if (type === "relative") {
                 const genAIGranularity = GRANULARITY_TO_GENAI[granularity];
-                if (genAIGranularity) {
+                if (genAIGranularity && from !== undefined && to !== undefined) {
+                    const convertedFrom = typeof from === "number" ? from : parseInt(String(from), 10);
+                    const convertedTo = typeof to === "number" ? to : parseInt(String(to), 10);
                     converted.push({
                         title: DateFilterHelpers.getDateFilterRepresentation(
                             {
@@ -125,18 +129,18 @@ export function buildFiltersContext(
                                 type: "relativeForm",
                                 visible: true,
                                 localIdentifier: filter.dateFilter.localIdentifier!,
-                                from,
-                                to,
+                                from: convertedFrom,
+                                to: convertedTo,
                             },
                             "en-US",
                             DEFAULT_MESSAGES["en-US"],
                             "full",
                         ),
+                        using,
                         granularity: genAIGranularity,
                         type: "date_filter",
-                        using,
-                        from,
-                        to,
+                        from: convertedFrom,
+                        to: convertedTo,
                     });
                 }
             }

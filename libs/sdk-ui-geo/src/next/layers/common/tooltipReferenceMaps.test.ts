@@ -76,10 +76,27 @@ describe("buildTooltipReferenceMaps", () => {
         expect(maps.measures).not.toHaveProperty("arith");
     });
 
-    it("maps display-form identifier → parent attribute identifier", () => {
+    it("maps attribute localIdentifier → the reference keys for its display form and attribute", () => {
         const desc = attributeDescriptor("df.country", "attr.country");
         const maps = buildTooltipReferenceMaps(dataViewWith([], [desc]));
-        expect(maps.attributes).toEqual({ "df.country": "attr.country" });
+        expect(maps.attributes).toEqual({
+            loc: { displayFormKey: "label/df.country", attributeKey: "label/attr.country" },
+        });
+    });
+
+    it("types a computed attribute's keys from its ref, keeping it out of the label namespace", () => {
+        // An LDM identifier is unique only within an object type, so a label may share it with
+        // the computed attribute; the descriptor ref is what separates them.
+        const desc = attributeDescriptor("tier", "tier", {
+            ref: idRef("tier", "computedAttribute"),
+        });
+        const maps = buildTooltipReferenceMaps(dataViewWith([], [desc]));
+        expect(maps.attributes).toEqual({
+            loc: {
+                displayFormKey: "computed_attribute/tier",
+                attributeKey: "computed_attribute/tier",
+            },
+        });
     });
 
     it("falls back to URI when the display-form has no identifier", () => {
@@ -88,7 +105,9 @@ describe("buildTooltipReferenceMaps", () => {
             uri: "/gdc/md/df.country",
         });
         const maps = buildTooltipReferenceMaps(dataViewWith([], [desc]));
-        expect(maps.attributes).toEqual({ "/gdc/md/df.country": "attr.country" });
+        expect(maps.attributes).toEqual({
+            loc: { displayFormKey: "label//gdc/md/df.country", attributeKey: "label/attr.country" },
+        });
     });
 
     it("skips attributes without a parent attribute identifier", () => {

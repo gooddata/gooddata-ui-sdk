@@ -796,11 +796,6 @@ export interface IFeatureFlags {
     productionFeatures?: IProductionFeaturesConfig;
 
     /**
-     * Enable custom Identity Provider
-     */
-    enableSeamlessIdpSwitch?: boolean;
-
-    /**
      * Enable pre-aggregation datasets support in LDM Modeler.
      */
     enablePreAggregationDatasets?: boolean;
@@ -1015,11 +1010,6 @@ export interface IFeatureFlags {
      * `/dashboards/#/workspace/{id}/...` is rendered instead.
      */
     enableShellApplication_dashboards?: boolean;
-
-    /**
-     * Enable NULL-aware joins used for FULL OUTER JOIN conditions.
-     */
-    enableNullableJoins?: boolean;
 
     /**
      * Enable reading logical model dataset extensions (WDF references) directly from the

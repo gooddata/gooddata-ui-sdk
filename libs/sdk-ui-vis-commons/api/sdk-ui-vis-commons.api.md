@@ -34,7 +34,7 @@ export class AttributeColorStrategy extends ColorStrategy {
 }
 
 // @internal (undocumented)
-export function buildKeySegment(displayFormId: string, uri: string): string;
+export function buildKeySegment(localIdentifier: string, uri: string): string;
 
 // @internal
 export function buildLookupTable(dataView: IDataView, meta: ITooltipExecutionMeta, separators?: ISeparators): Map<string, IResolvedReferenceValues>;

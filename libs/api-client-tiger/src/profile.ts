@@ -116,14 +116,13 @@ async function getUserDetails(axios: AxiosInstance, id: string) {
     const firstName = user.data.attributes?.firstname;
     const lastName = user.data.attributes?.lastname;
     const email = user.data.attributes?.email;
+    const name = [firstName, lastName].filter(Boolean).join(" ");
 
     return {
-        ...(firstName &&
-            lastName && {
-                name: `${firstName} ${lastName}`,
-                firstName,
-                lastName,
-            }),
+        // A user with neither name part keeps whatever name the profile already carried.
+        ...(name && { name }),
+        ...(firstName && { firstName }),
+        ...(lastName && { lastName }),
         ...(email && {
             email,
         }),

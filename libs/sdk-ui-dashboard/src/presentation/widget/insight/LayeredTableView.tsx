@@ -4,10 +4,9 @@ import { type ReactElement, useCallback, useId, useLayoutEffect, useMemo, useRef
 
 import { useIntl } from "react-intl";
 
-import { InsightRenderer } from "@gooddata/sdk-ui-ext";
+import { type ILayerTableDefinition, InsightRenderer } from "@gooddata/sdk-ui-ext";
 import { type IUiTab, type IUiTabsAccessibilityConfig, UiTabs } from "@gooddata/sdk-ui-kit";
 
-import { type ILayerTableDefinition } from "./insightToTable.js";
 import { type IInsightBodyProps } from "./types.js";
 
 /**

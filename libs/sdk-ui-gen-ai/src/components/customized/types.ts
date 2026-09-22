@@ -2,7 +2,7 @@
 
 import { type ComponentType } from "react";
 
-import { type IChatSuggestion } from "@gooddata/sdk-backend-spi";
+import { type IChatConversationVisualisationContent, type IChatSuggestion } from "@gooddata/sdk-backend-spi";
 import { type GenAIChatEffort } from "@gooddata/sdk-model";
 import {
     type ISlotProps,
@@ -20,6 +20,7 @@ import {
     type IChatConversationMultipartLocalPart,
     type TextContentObject,
 } from "../../model.js";
+import { type IWhatIfRenderableScenario } from "../../whatIf/whatIfMapping.js";
 import { type IChatMessagesGroup } from "../utils/groupUtility.js";
 
 /**
@@ -248,6 +249,50 @@ export type IGenAIAssistantMessageMultipartContentProps = {
 };
 
 /**
+ * Properties for the ConversationVisualizationContent slot.
+ * @alpha
+ */
+export type IGenAIAssistantConversationVisualizationContentProps = {
+    /**
+     * The message containing the visualization content.
+     */
+    message: IChatConversationLocalItem;
+    /**
+     * The multipart part containing the visualization.
+     */
+    part: IChatConversationMultipartLocalPart;
+    /**
+     * The what-if scenario context for this visualization.
+     */
+    scenario?: IWhatIfRenderableScenario;
+    /**
+     * The visualization payload to render.
+     */
+    visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>;
+    /**
+     * Additional CSS class name.
+     */
+    className?: string;
+    /**
+     * Control visibility of the visualization menu items.
+     */
+    menuItems?: {
+        /**
+         * Whether the save action is shown in the visualization menu.
+         */
+        save?: boolean;
+        /**
+         * Whether the open-in-analyze action is shown in the visualization menu.
+         */
+        openInAnalyze?: boolean;
+        /**
+         * Whether the copy-link action is shown in the visualization menu.
+         */
+        copyLink?: boolean;
+    };
+};
+
+/**
  * Properties for the FollowUpButtons slot.
  * @alpha
  */
@@ -441,6 +486,14 @@ export interface IGenAIAssistantSlots {
      * Custom React component rendered for multipart content of a message.
      */
     MessageMultipartContent?: ComponentType<ISlotProps<IGenAIAssistantMessageMultipartContentProps>>;
+
+    /**
+     * @alpha
+     * Custom React component rendered for a visualization part in multipart content.
+     */
+    ConversationVisualizationContent?: ComponentType<
+        ISlotProps<IGenAIAssistantConversationVisualizationContentProps>
+    >;
 
     /**
      * @alpha

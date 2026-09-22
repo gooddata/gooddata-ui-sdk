@@ -1544,8 +1544,8 @@
         "crowdinContext": "Detailed error message explaining that a visualization is missing and suggesting actions to resolve the issue"
     },
     "widget.error.restricted_insight.message": {
-        "text": "You don't have access to this visualization",
-        "crowdinContext": "Error message shown in place of a dashboard visualization the user is not permitted to see"
+        "text": "You don't have access",
+        "crowdinContext": "Heading of the placeholder standing in for content the user is not permitted to see. Deliberately short and never names the object, which the user may not know exists."
     },
     "widget.error.restricted_insight.description": {
         "text": "Contact your administrator to request access.",

@@ -120,6 +120,7 @@ function buildAreaProperties(args: {
     tooltipUri?: string;
     tooltipTitle?: string;
     tooltipAttrId?: string;
+    tooltipAttrLocalId?: string;
     colorTitle?: string;
     colorValue?: number;
     colorFormat?: string;
@@ -128,6 +129,7 @@ function buildAreaProperties(args: {
     segmentTitle?: string;
     segmentValue?: string;
     segmentAttrId?: string;
+    segmentAttrLocalId?: string;
     /** All segment URIs for this area - used for MapLibre filtering with "in" expression */
     segmentUris?: string[];
 }): GeoJSON.GeoJsonProperties {
@@ -140,6 +142,7 @@ function buildAreaProperties(args: {
         tooltipUri,
         tooltipTitle,
         tooltipAttrId,
+        tooltipAttrLocalId,
         colorTitle,
         colorValue,
         colorFormat,
@@ -148,6 +151,7 @@ function buildAreaProperties(args: {
         segmentTitle,
         segmentValue,
         segmentAttrId,
+        segmentAttrLocalId,
         segmentUris,
     } = args;
     const properties: GeoJSON.GeoJsonProperties = {
@@ -158,6 +162,7 @@ function buildAreaProperties(args: {
             title: tooltipTitle ?? areaNameTitle,
             value: tooltipValue ?? areaIdentifier,
             attrId: tooltipAttrId,
+            attrLocalId: tooltipAttrLocalId,
             uri: tooltipUri ?? areaUri,
         },
         locationIndex: index,
@@ -180,6 +185,7 @@ function buildAreaProperties(args: {
             uri: segmentUris?.[0],
             uris: segmentUris,
             attrId: segmentAttrId,
+            attrLocalId: segmentAttrLocalId,
         };
     }
 
@@ -433,6 +439,7 @@ function createAreaFeatures({
             tooltipUri: areaData.tooltipUri,
             tooltipTitle: tooltipTextTitle,
             tooltipAttrId: tooltipText?.displayFormId ?? area.displayFormId ?? tooltipAttrIds?.locationName,
+            tooltipAttrLocalId: tooltipText?.localIdentifier ?? area.localIdentifier,
             colorTitle,
             colorValue: areaData.colorValue,
             colorFormat,
@@ -441,6 +448,7 @@ function createAreaFeatures({
             segmentTitle: areaData.segmentTitle,
             segmentValue: areaData.segmentValue,
             segmentAttrId: segment?.displayFormId ?? tooltipAttrIds?.segment,
+            segmentAttrLocalId: segment?.localIdentifier,
             segmentUris: areaData.segmentUris,
         });
 

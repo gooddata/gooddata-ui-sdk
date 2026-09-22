@@ -22,7 +22,7 @@ const enabledAbove: ICustomTooltipConfig = {
 const enabledBelow: ICustomTooltipConfig = { ...enabledAbove, placement: "below" };
 const enabledReplace: ICustomTooltipConfig = { ...enabledAbove, placement: "replace" };
 
-const emptyMaps: ITooltipReferenceMaps = { measures: {}, attributes: {}, computedAttributeIds: [] };
+const emptyMaps: ITooltipReferenceMaps = { measures: {}, attributes: {} };
 
 describe("buildCustomTooltipPieces", () => {
     it("returns empty pieces when config is undefined", () => {
@@ -77,7 +77,6 @@ describe("buildCustomTooltipPieces", () => {
         const maps: ITooltipReferenceMaps = {
             measures: { m1: "sales" },
             attributes: {},
-            computedAttributeIds: [],
         };
         const result = buildCustomTooltipPieces(props, cfg, maps, undefined, STRINGS);
         expect(result.sectionHtml).toContain("value: 42");

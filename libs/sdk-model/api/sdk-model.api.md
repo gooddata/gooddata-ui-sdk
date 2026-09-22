@@ -3115,7 +3115,6 @@ export interface IFeatureFlags {
     enableNewGeoPushpin?: boolean;
     enableNewPivotTable?: boolean;
     enableNotificationChannelIdentifiers?: boolean;
-    enableNullableJoins?: boolean;
     enableNullJoins?: boolean;
     // (undocumented)
     enableOidcAuth?: boolean;
@@ -3133,7 +3132,6 @@ export interface IFeatureFlags {
     enableRawExports?: boolean;
     // @alpha
     enableRichTextWidgetFilterConfiguration?: boolean;
-    enableSeamlessIdpSwitch?: boolean;
     enableSecondGranularities?: boolean;
     enableSemanticConditionalFormatting?: boolean;
     enableSemanticSearch?: boolean;

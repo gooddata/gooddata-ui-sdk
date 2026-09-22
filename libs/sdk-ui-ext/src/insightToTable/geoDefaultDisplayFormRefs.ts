@@ -23,7 +23,12 @@ import {
     resolveDefaultDisplayFormRefForDisplayForm,
 } from "@gooddata/sdk-ui";
 
-export function getGeoDefaultDisplayFormRefs(
+/**
+ * The display form each geo attribute is read through when the insight states none of its own.
+ *
+ * @internal
+ */
+export function getGeoTableDisplayFormRefs(
     insight: IInsight,
     settings: ISettings | undefined,
     catalogAttributes: ICatalogAttribute[],

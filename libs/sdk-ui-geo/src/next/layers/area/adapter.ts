@@ -127,12 +127,10 @@ function buildAreaTooltipExecution(
         return null;
     }
 
-    // idRef-only: `buildLookupTable` keys rows by the result descriptor's
-    // identifier. A uriRef-backed display form would produce a hover key the
-    // lookup can't match — skip the whole tooltip execution rather than fetch
-    // values that won't resolve at hover time.
-    const areaAttrId = getAttributeIdRefIdentifier(layer.area);
-    if (!areaAttrId) {
+    // idRef-only: the tooltip-execution backend path cannot resolve a uriRef-backed
+    // display form, so skip the whole tooltip execution rather than fetch values
+    // that won't resolve at hover time.
+    if (!getAttributeIdRefIdentifier(layer.area)) {
         return null;
     }
 
@@ -151,6 +149,11 @@ function buildAreaTooltipExecution(
         return null;
     }
 
+    // The key is built from the execution-local identifier, not the LDM id, because an LDM id
+    // is unique only within an object type — see `buildKeySegment`. It is the same localId the
+    // tooltip execution was sliced by, so the lookup side agrees.
+    const areaAttrLocalId = slicingAttributeLocalIds[0];
+
     const buildFeatureKey: IGeoLayerCustomTooltipExecution["buildFeatureKey"] = (properties) => {
         if (!properties) {
             return null;
@@ -159,7 +162,7 @@ function buildAreaTooltipExecution(
         if (!areaUri) {
             return null;
         }
-        return buildKeySegment(areaAttrId, areaUri);
+        return buildKeySegment(areaAttrLocalId, areaUri);
     };
 
     return { execution: built, buildFeatureKey };

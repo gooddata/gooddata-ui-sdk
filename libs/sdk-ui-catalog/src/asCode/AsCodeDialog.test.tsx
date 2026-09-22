@@ -199,6 +199,24 @@ definition:
         await waitFor(() => expect(onCreated).toHaveBeenCalledWith(created));
     });
 
+    it("does not submit when Enter is pressed inside the editor", async () => {
+        const port = createTestParameterMutationPort({ create: vi.fn() });
+        render(<AsCodeCreateDialog descriptor={withParameterPort(port)} onClose={vi.fn()} />, {
+            wrapper: makeWrapper(),
+        });
+
+        await typeYaml(`id: test
+title: Test parameter
+description: ""
+tags: []
+definition:
+  type: NUMBER
+  defaultValue: 1`);
+        fireEvent.keyDown(screen.getByTestId("yaml-editor"), { key: "Enter", keyCode: 13, which: 13 });
+
+        expect(port.create).not.toHaveBeenCalled();
+    });
+
     it("locks the dialog while a save is in flight", async () => {
         let resolveUpdate: () => void = () => {};
         const onClose = vi.fn();

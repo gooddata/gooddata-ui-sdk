@@ -2,16 +2,18 @@
 
 // @vitest-environment node
 
-import { afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { uriRef } from "@gooddata/sdk-model";
+import { serializeObjRef, uriRef } from "@gooddata/sdk-model";
 
 import { TestCorrelation, TestStash } from "../../../tests/Dashboard.test.helpers.js";
 import { SimpleDashboardIdentifier } from "../../../tests/SimpleDashboard.test.helpers.js";
+import { initializeDashboard } from "../../commands/dashboard.js";
 import { type IAddSectionItems, addSectionItem, undoLayoutChanges } from "../../commands/layout.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { type IDashboardCommandFailed } from "../../events/general.js";
 import { type IDashboardLayoutSectionItemsAdded } from "../../events/layout.js";
+import { selectCatalogInsightParameters } from "../../store/catalog/catalogSelectors.js";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
 import { selectLayout, selectUndoableLayoutCommands } from "../../store/tabs/layout/layoutSelectors.js";
 import { ComplexDashboardIdentifier } from "../../tests/ComplexDashboard.test.helpers.js";
@@ -70,6 +72,33 @@ describe("add section items handler", () => {
 
                 const insight = selectInsightByRef(TestInsightItem.widget!.insight)(Tester.state());
                 expect(insight).toBeDefined();
+            });
+
+            it("should register the parameter dependencies of the added insight", async () => {
+                await preloadedTesterFactory(
+                    (tester) => {
+                        Tester = tester;
+                    },
+                    SimpleDashboardIdentifier,
+                    {
+                        initCommand: initializeDashboard({ settings: { enableParameters: true } }),
+                        backendConfig: { useRefType: "id" },
+                    },
+                );
+                const addedInsightKey = serializeObjRef(TestInsightItem.widget!.insight);
+                expect(selectCatalogInsightParameters(Tester.state())).not.toHaveProperty(addedInsightKey);
+
+                await Tester.dispatchAndWaitFor(
+                    addSectionItem(0, 0, TestInsightItem, false, TestCorrelation),
+                    "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED",
+                );
+
+                await vi.waitFor(() =>
+                    expect(selectCatalogInsightParameters(Tester.state())).toHaveProperty(
+                        addedInsightKey,
+                        [],
+                    ),
+                );
             });
 
             it("should not undo loaded insight", async () => {

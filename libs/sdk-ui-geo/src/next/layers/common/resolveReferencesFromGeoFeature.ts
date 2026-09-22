@@ -3,7 +3,6 @@
 import { type ISeparators } from "@gooddata/sdk-model";
 import {
     type IResolvedReferenceValues,
-    computedAttributeKey,
     labelKey,
     labelReference,
     measureReference,
@@ -43,30 +42,28 @@ export function resolveReferencesFromGeoFeature(
 
     const props = getTooltipProperties(properties);
     const measureLdmByLocalId = referenceMaps?.measures ?? {};
-    const attributeIdByDisplayFormId = referenceMaps?.attributes ?? {};
-    const computedAttributeIds = new Set(referenceMaps?.computedAttributeIds ?? []);
+    const attributeKeysByLocalId = referenceMaps?.attributes ?? {};
 
     const registerAttribute = (payload: TooltipPayload | undefined) => {
         if (!payload?.attrId || payload.value === undefined) {
             return;
         }
         const status = labelReference(String(payload.value));
-        // A computed attribute publishes under its own namespace, so it cannot be answered by -
-        // or answer - a label that happens to share its identifier.
-        const buildKey = computedAttributeIds.has(payload.attrId) ? computedAttributeKey : labelKey;
-        const displayFormKey = buildKey(payload.attrId);
+        // The reference keys come from the maps, looked up by the attribute's localIdentifier -
+        // exactly how a measure resolves its LDM id. They carry the object type, which the
+        // payload's `attrId` cannot: an LDM id is unique only within a type, so a label and a
+        // computed attribute may share one. A payload with no localIdentifier predates this and
+        // is treated as a label, which is what it would have resolved as before.
+        const keys = payload.attrLocalId ? attributeKeysByLocalId[payload.attrLocalId] : undefined;
+        const displayFormKey = keys?.displayFormKey ?? labelKey(payload.attrId);
         if (values[displayFormKey] === undefined) {
             values[displayFormKey] = status;
         }
-        // When `attrId` and the parent attribute id are equal, `attributeKey`
+        // When the display form and the parent attribute ids coincide, `attributeKey`
         // collapses onto `displayFormKey` and the second write is a no-op
         // under first-wins — no self-equality check needed.
-        const attributeId = attributeIdByDisplayFormId[payload.attrId];
-        if (attributeId) {
-            const attributeKey = buildKey(attributeId);
-            if (values[attributeKey] === undefined) {
-                values[attributeKey] = status;
-            }
+        if (keys && values[keys.attributeKey] === undefined) {
+            values[keys.attributeKey] = status;
         }
     };
 

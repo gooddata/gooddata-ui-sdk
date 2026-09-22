@@ -26,6 +26,19 @@
         background-color: var(--gd-palette-complementary-0);
         border-radius: var(--gd-modal-borderRadius);
         box-shadow: 0 2px 8px var(--gd-shadow-color);
+
+        &--variant-confirmation {
+            box-sizing: border-box;
+            border: 1px solid var(--gd-modal-borderColor);
+
+            .gd-ui-kit-dialog-header__title {
+                color: var(--gd-modal-title-color);
+            }
+
+            .gd-ui-kit-dialog-body {
+                color: var(--gd-palette-complementary-8);
+            }
+        }
     }
 }
 

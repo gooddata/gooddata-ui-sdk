@@ -1,11 +1,19 @@
 // (C) 2026 GoodData Corporation
 
-import { type CSSProperties, useCallback, useMemo } from "react";
+import { useCallback, useMemo, useRef } from "react";
 
 import { useIntl } from "react-intl";
 
 import { areObjRefsEqual } from "@gooddata/sdk-model";
-import { UiConfirmDialog, collectReferences, replaceReferences } from "@gooddata/sdk-ui-kit";
+import {
+    UiButton,
+    UiDialogBody,
+    UiDialogFooter,
+    UiDialogHeader,
+    UiModalDialog,
+    collectReferences,
+    replaceReferences,
+} from "@gooddata/sdk-ui-kit";
 
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectRestrictedRichTextReferences } from "../../../model/store/unavailableObjects/unavailableObjectsSelectors.js";
@@ -15,9 +23,6 @@ import { selectRestrictedRichTextReferences } from "../../../model/store/unavail
  * stored as the text itself, and thus is the same for every reader and not localised.
  */
 const RESTRICTED_REFERENCE_REPLACEMENT = "???";
-
-/** The wrapper is there to catch events, and must not take part in the layout it is dropped into. */
-const noBoxOfItsOwn: CSSProperties = { display: "contents" };
 
 /**
  * Whether the text references an object the current user is not allowed to read. A surface that
@@ -57,6 +62,7 @@ export function RestrictedReferencesDialog({
     onCancel,
 }: IRestrictedReferencesDialogProps) {
     const intl = useIntl();
+    const cancelButtonRef = useRef<HTMLButtonElement>(null);
     const restrictedReferences = useDashboardSelector(selectRestrictedRichTextReferences);
 
     const onConfirm = useCallback(() => {
@@ -66,18 +72,43 @@ export function RestrictedReferencesDialog({
     return (
         // the dialog renders in a portal, but React still sends its clicks up this tree, where a
         // widget would take them as "select me" and undo the release the cancel performs
-        <span style={noBoxOfItsOwn} onClick={(event) => event.stopPropagation()}>
-            <UiConfirmDialog
+        <span
+            className="gd-restricted-references-dialog-wrapper"
+            onClick={(event) => event.stopPropagation()}
+        >
+            <UiModalDialog
+                variant="confirmation"
                 isOpen
+                width={440}
+                initialFocus={cancelButtonRef}
                 dataTestId="rich-text-sanitize-references-dialog"
-                title={intl.formatMessage({ id: "richText.restrictedReferences.dialog.header" })}
-                description={intl.formatMessage({ id: "richText.restrictedReferences.dialog.message" })}
-                confirmLabel={intl.formatMessage({ id: "richText.restrictedReferences.dialog.submit" })}
-                confirmVariant="danger"
-                onConfirm={onConfirm}
-                onCancel={onCancel}
+                accessibilityConfig={{ role: "alertdialog" }}
                 onClose={onCancel}
-            />
+            >
+                <UiDialogHeader
+                    title={intl.formatMessage({ id: "richText.restrictedReferences.dialog.header" })}
+                    titleSize="large"
+                    onClose={onCancel}
+                />
+                <UiDialogBody>
+                    {intl.formatMessage({ id: "richText.restrictedReferences.dialog.message" })}
+                </UiDialogBody>
+                <UiDialogFooter>
+                    <UiButton
+                        ref={cancelButtonRef}
+                        label={intl.formatMessage({ id: "cancel" })}
+                        variant="secondary"
+                        size="medium"
+                        onClick={onCancel}
+                    />
+                    <UiButton
+                        label={intl.formatMessage({ id: "richText.restrictedReferences.dialog.submit" })}
+                        variant="danger"
+                        size="medium"
+                        onClick={onConfirm}
+                    />
+                </UiDialogFooter>
+            </UiModalDialog>
         </span>
     );
 }

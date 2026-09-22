@@ -16,6 +16,7 @@ import {
     type ChatResetEvent,
     type ChatUserMessageEvent,
     type LinkHandlerEvent,
+    type ChatModeChangeEvent,
 } from "@gooddata/sdk-ui-gen-ai";
 import { GenAIChatDialogConnected, type GenAIChatConnectedEvent } from "@gooddata/sdk-ui-gen-ai/internal";
 import { HEADER_CHAT_BUTTON_ID, useToastMessage } from "@gooddata/sdk-ui-kit";
@@ -43,6 +44,7 @@ export type GenAIChatEvent =
     | { name: "chat.reset"; payload: ChatResetEvent }
     | { name: "chat.feedback"; payload: ChatFeedbackEvent }
     | { name: "chat.user-message"; payload: ChatUserMessageEvent }
+    | { name: "chat.mode-changed"; payload: ChatModeChangeEvent }
     | { name: "chat.definition-received"; payload: ChatDefinitionReceivedEvent }
     | { name: "chat.assistant-message"; payload: ChatAssistantMessageEvent };
 
@@ -209,6 +211,9 @@ export function GenAIChat({
                     break;
                 case "definition-received":
                     onEvent?.({ name: "chat.definition-received", payload: event.payload });
+                    break;
+                case "mode-changed":
+                    onEvent?.({ name: "chat.mode-changed", payload: event.payload });
                     break;
                 default:
                     break;

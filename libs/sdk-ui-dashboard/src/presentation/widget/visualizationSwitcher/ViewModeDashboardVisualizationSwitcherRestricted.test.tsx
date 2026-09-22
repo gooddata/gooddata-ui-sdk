@@ -124,7 +124,7 @@ describe("ViewModeDashboardVisualizationSwitcherRestricted", () => {
     it("shows the access placeholder in the switcher body", () => {
         const { container } = renderRestricted();
 
-        expect(container.querySelector(".gd-icon-lock")).toBeInTheDocument();
+        expect(container.querySelector(".gd-ui-kit-restricted-placeholder")).toBeInTheDocument();
     });
 
     it("gives the content the positioned box an absolute container measures against", () => {

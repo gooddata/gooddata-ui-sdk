@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "comment": "Remove feature flag `enableNullableJoins`.",
+      "type": "none",
+      "packageName": "@gooddata/sdk-ui-all"
+    }
+  ],
+  "packageName": "@gooddata/sdk-ui-all",
+  "email": "nestor.encinas@gooddata.com"
+}
