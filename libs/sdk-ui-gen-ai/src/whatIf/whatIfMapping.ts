@@ -13,7 +13,7 @@ import type { IChatConversationMultipartLocalPart } from "../model.js";
 
 /**
  * A renderable what-if scenario with optional execution config overrides.
- * @internal
+ * @alpha
  */
 export interface IWhatIfRenderableScenario {
     /**

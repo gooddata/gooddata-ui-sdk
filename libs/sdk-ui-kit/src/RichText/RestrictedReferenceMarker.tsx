@@ -4,13 +4,14 @@ import { type ReactNode, useId } from "react";
 
 import { useIntl } from "react-intl";
 
+import { UiIcon } from "../@ui/UiIcon/UiIcon.js";
 import { UiTooltip } from "../@ui/UiTooltip/UiTooltip.js";
 
 /**
  * @internal
  */
 export interface IRestrictedReferenceMarkerProps {
-    /** The marker as the renderer built it: the lock class and the word that replaces the value. */
+    /** Styling for the inline marker that replaces the inaccessible value. */
     className?: string;
     children?: ReactNode;
 }
@@ -40,6 +41,7 @@ export function RestrictedReferenceMarker({ className, children }: IRestrictedRe
             anchor={
                 // reachable by keyboard, so the reason is not for pointers alone; still not a control
                 <span className={className} tabIndex={0} aria-describedby={reasonId}>
+                    <UiIcon type="lock" size={14} color="complementary-6" layout="block" />
                     {children}
                 </span>
             }

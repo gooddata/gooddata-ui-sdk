@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { RawIntlProvider } from "react-intl";
 import { describe, expect, it, vi } from "vitest";
@@ -101,17 +101,24 @@ describe("RestrictedReferencesDialog", () => {
         expect(screen.getByTestId("state")).toHaveTextContent("true true");
     });
 
-    it("changes nothing and says so when the editor cancels", async () => {
+    it("focuses Cancel and preserves the text when dismissed with Escape", async () => {
         const onSanitized = vi.fn();
         const onCancel = vi.fn();
         renderHarness({ onSanitized, onCancel });
         const user = userEvent.setup();
 
         await user.click(screen.getByRole("button", { name: "edit" }));
-        await user.click(screen.getByRole("button", { name: "Cancel" }));
+        expect(
+            screen.getByRole("alertdialog", { name: "Remove restricted content?" }),
+        ).toHaveAccessibleDescription(
+            "Parts of this text are restricted. Editing it will permanently remove the restricted objects for all users.",
+        );
+        expect(screen.getByRole("button", { name: "Cancel" })).toHaveFocus();
+        await user.keyboard("{Escape}");
 
         expect(onSanitized).not.toHaveBeenCalled();
         expect(onCancel).toHaveBeenCalledTimes(1);
         expect(screen.getByTestId("state")).toHaveTextContent("true false");
+        await waitFor(() => expect(screen.getByRole("button", { name: "edit" })).toHaveFocus());
     });
 });

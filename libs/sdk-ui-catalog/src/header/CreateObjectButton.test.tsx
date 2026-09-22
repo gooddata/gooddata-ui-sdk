@@ -56,7 +56,7 @@ function wrapper({
     children,
     createParameter,
     parameterEnabled,
-    permissions = { canManageProject: true } as IWorkspacePermissions,
+    permissions = { canManageProject: true, canCreateVisualization: true } as IWorkspacePermissions,
     settings,
 }: PropsWithChildren<{
     createParameter?: Mock;
@@ -201,6 +201,26 @@ describe("CreateObjectButton", () => {
 
         expect(await screen.findByText("Identifier already exists")).toBeInTheDocument();
         expect(screen.getByText("Create parameter")).toBeInTheDocument();
+    });
+
+    describe("create visualization permission", () => {
+        it("hides the Visualization item when the user may not create visualizations", () => {
+            render(<CreateObjectButton onCreateObject={vi.fn()} />, {
+                wrapper: ({ children }: PropsWithChildren) =>
+                    wrapper({
+                        children,
+                        permissions: {
+                            canManageProject: true,
+                            canCreateVisualization: false,
+                        } as IWorkspacePermissions,
+                    }),
+            });
+
+            fireEvent.click(screen.getByText("Create"));
+
+            expect(screen.queryByText("Visualization")).not.toBeInTheDocument();
+            expect(screen.getByText("Dashboard")).toBeInTheDocument();
+        });
     });
 
     describe("create metric permission", () => {

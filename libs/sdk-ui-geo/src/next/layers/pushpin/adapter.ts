@@ -281,19 +281,27 @@ function buildPushpinTooltipExecution(
         return null;
     }
 
+    // The key is built from execution-local identifiers, not LDM ids, because an LDM id is
+    // unique only within an object type — see `buildKeySegment`. The guards still compare the
+    // LDM id, which is what identifies WHICH attribute this feature slot holds.
+    const tooltipAttrLocalId = getAttributeLocalIdsFromBuckets(mainDefinition, [BucketNames.TOOLTIP_TEXT])[0];
+    const segmentAttrLocalId = segmentAttrId
+        ? getAttributeLocalIdsFromBuckets(mainDefinition, [BucketNames.SEGMENT])[0]
+        : undefined;
+
     const buildFeatureKey: IGeoLayerCustomTooltipExecution["buildFeatureKey"] = (properties) => {
         if (!properties) {
             return null;
         }
         const locationName = readAttrIdentity(properties["locationName"]);
-        if (locationName.attrId !== tooltipAttrId) {
+        if (locationName.attrId !== tooltipAttrId || !tooltipAttrLocalId) {
             return null;
         }
-        const parts: string[] = [buildKeySegment(locationName.attrId, locationName.uri)];
+        const parts: string[] = [buildKeySegment(tooltipAttrLocalId, locationName.uri)];
 
         if (segmentAttrId) {
             const segment = readAttrIdentity(properties["segment"]);
-            if (segment.attrId !== segmentAttrId) {
+            if (segment.attrId !== segmentAttrId || !segmentAttrLocalId) {
                 return null;
             }
             // Pushpin payload writer substitutes EMPTY_SEGMENT_VALUE for null
@@ -301,7 +309,7 @@ function buildPushpinTooltipExecution(
             // execution result preserves the original null/empty URI, so
             // normalize back here or the key never matches.
             const segmentUri = segment.uri === EMPTY_SEGMENT_VALUE ? "" : segment.uri;
-            parts.push(buildKeySegment(segment.attrId, segmentUri));
+            parts.push(buildKeySegment(segmentAttrLocalId, segmentUri));
         }
         return joinKeySegments(parts);
     };

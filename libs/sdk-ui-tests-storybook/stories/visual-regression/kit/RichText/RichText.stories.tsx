@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
+import { idRef } from "@gooddata/sdk-model";
 import { BackendProvider, IntlWrapper, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { RichText } from "@gooddata/sdk-ui-kit";
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
@@ -81,6 +82,19 @@ function RichTextTest() {
                         <div>
                             <h3 style={headerStyle}>RichText in view mode</h3>
                             <RichText className="custom-rich-text" value={markdown} renderMode="view" />
+                        </div>
+                        <div>
+                            <h3>RichText with restricted references</h3>
+                            <RichText
+                                className="custom-rich-text"
+                                value="Margin held at **{metric/margin}** for {label/region}."
+                                renderMode="view"
+                                referencesEnabled
+                                restrictedReferences={[
+                                    idRef("margin", "measure"),
+                                    idRef("region", "displayForm"),
+                                ]}
+                            />
                         </div>
                         <div>
                             <h3 style={headerStyle}>Empty RichText in edit mode with custom placeholder</h3>

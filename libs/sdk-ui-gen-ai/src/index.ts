@@ -155,10 +155,14 @@ export {
     type IGenAIAssistantFollowUpQuestionProps,
     type IGenAIAssistantFeedbackProps,
     type IGenAIAssistantAgentChooserProps,
+    type IGenAIAssistantConversationVisualizationContentProps,
 } from "./components/customized/types.js";
+
+export { type IWhatIfRenderableScenario } from "./whatIf/whatIfMapping.js";
 
 export { DefaultAssistantMessage } from "./components/customized/AssistantMessage.js";
 export { DefaultMessageErrorContent } from "./components/customized/MessageErrorContent.js";
+export { DefaultConversationVisualizationContent } from "./components/customized/ConversationVisualizationContent.js";
 export { DefaultMessageMultipartContent } from "./components/customized/MessageMultipartContent.js";
 export { DefaultMessageReasoningContent } from "./components/customized/MessageReasoningContent.js";
 export { DefaultMessageTextContent } from "./components/customized/MessageTextContent.js";

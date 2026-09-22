@@ -79,8 +79,7 @@ describe("buildOutputFromLayerData", () => {
     it("propagates tooltipReferenceMaps from layer data to output", () => {
         const tooltipReferenceMaps = {
             measures: { m_local: "f_population" },
-            attributes: { "df.city": "attr.city" },
-            computedAttributeIds: [],
+            attributes: { a_city: { displayFormKey: "label/df.city", attributeKey: "label/attr.city" } },
         };
         const output = buildOutputFromLayerData(createLayerData({ tooltipReferenceMaps }));
 

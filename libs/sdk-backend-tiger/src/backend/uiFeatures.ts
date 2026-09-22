@@ -69,7 +69,6 @@ export enum TigerFeaturesNames {
     EnableDashboardShareDialogLink = "enableDashboardShareDialogLink",
     EnableDashboardPartialRendering = "enableDashboardPartialRendering",
     ProductionFeatures = "productionFeatures",
-    EnableSeamlessIdpSwitch = "enableSeamlessIdpSwitch",
     EnablePreAggregationDatasets = "enablePreAggregationDatasets",
     EnableNewPivotTable = "enableNewPivotTable",
     EnableConditionalFormatting = "enableConditionalFormatting",
@@ -109,7 +108,6 @@ export enum TigerFeaturesNames {
     EnableMeasureValueFilterKD = "enableMeasureValueFilterKD",
     EnableShellApplication = "enableShellApplication",
     EnableShellApplicationDashboards = "enableShellApplication_dashboards",
-    EnableNullableJoins = "enableNullableJoins",
     EnableLogicalModelExtensionsFromParentsCall = "enableLogicalModelExtensionsFromParentsCall",
     EnableDashboardDensitySetting = "enableDashboardDensitySetting",
     EnableDashboardsSearch = "enableDashboardsSearch",
@@ -203,7 +201,6 @@ export type ITigerFeatureFlags = {
     enableDashboardShareDialogLink: (typeof FeatureFlagsValues)["enableDashboardShareDialogLink"][number];
     enableDashboardPartialRendering: (typeof FeatureFlagsValues)["enableDashboardPartialRendering"][number];
     productionFeatures: (typeof FeatureFlagsValues)["productionFeatures"][number];
-    enableSeamlessIdpSwitch: (typeof FeatureFlagsValues)["enableSeamlessIdpSwitch"][number];
     enablePreAggregationDatasets: (typeof FeatureFlagsValues)["enablePreAggregationDatasets"][number];
     enableNewPivotTable: (typeof FeatureFlagsValues)["enableNewPivotTable"][number];
     enableConditionalFormatting: (typeof FeatureFlagsValues)["enableConditionalFormatting"][number];
@@ -243,7 +240,6 @@ export type ITigerFeatureFlags = {
     enableMeasureValueFilterKD: (typeof FeatureFlagsValues)["enableMeasureValueFilterKD"][number];
     enableShellApplication: (typeof FeatureFlagsValues)["enableShellApplication"][number];
     enableShellApplication_dashboards: (typeof FeatureFlagsValues)["enableShellApplication_dashboards"][number];
-    enableNullableJoins: (typeof FeatureFlagsValues)["enableNullableJoins"][number];
     enableLogicalModelExtensionsFromParentsCall: (typeof FeatureFlagsValues)["enableLogicalModelExtensionsFromParentsCall"][number];
     enableDashboardDensitySetting: (typeof FeatureFlagsValues)["enableDashboardDensitySetting"][number];
     enableDashboardsSearch: (typeof FeatureFlagsValues)["enableDashboardsSearch"][number];
@@ -333,7 +329,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDashboardShareDialogLink: false,
     enableDashboardPartialRendering: false,
     productionFeatures: undefined,
-    enableSeamlessIdpSwitch: false,
     enablePreAggregationDatasets: false,
     enableNewPivotTable: true,
     enableConditionalFormatting: true,
@@ -373,7 +368,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableMeasureValueFilterKD: true,
     enableShellApplication: true,
     enableShellApplication_dashboards: true,
-    enableNullableJoins: false,
     enableLogicalModelExtensionsFromParentsCall: false,
     enableDashboardDensitySetting: false,
     enableDashboardsSearch: false,
@@ -463,7 +457,6 @@ export const FeatureFlagsValues = {
     enableDashboardShareDialogLink: [true, false] as const,
     enableDashboardPartialRendering: [true, false] as const,
     productionFeatures: [undefined, {} as IProductionFeaturesConfig] as const,
-    enableSeamlessIdpSwitch: [true, false] as const,
     enablePreAggregationDatasets: [true, false] as const,
     enableNewPivotTable: [true, false] as const,
     enableConditionalFormatting: [true, false] as const,
@@ -503,7 +496,6 @@ export const FeatureFlagsValues = {
     enableDashboardTimezone: [true, false] as const,
     enableShellApplication: [true, false] as const,
     enableShellApplication_dashboards: [false, true] as const,
-    enableNullableJoins: [true, false] as const,
     enableLogicalModelExtensionsFromParentsCall: [true, false] as const,
     enableDashboardDensitySetting: [true, false] as const,
     enableDashboardsSearch: [false, true] as const,

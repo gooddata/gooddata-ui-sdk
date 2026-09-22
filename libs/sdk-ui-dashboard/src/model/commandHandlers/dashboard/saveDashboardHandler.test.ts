@@ -2,7 +2,13 @@
 
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { type IDashboardDefinition, areObjRefsEqual, isInsightWidget } from "@gooddata/sdk-model";
+import {
+    type IDashboardDefinition,
+    type IDashboardLayout,
+    areObjRefsEqual,
+    idRef,
+    isInsightWidget,
+} from "@gooddata/sdk-model";
 
 import { TestCorrelation } from "../../../tests/Dashboard.test.helpers.js";
 import {
@@ -17,6 +23,7 @@ import { type DashboardSaved } from "../../events/dashboard.js";
 import { selectInsights } from "../../store/insights/insightsSelectors.js";
 import { selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
 import { selectFilterContextIdentity } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
 import { selectBasicLayout } from "../../store/tabs/layout/layoutSelectors.js";
 import { selectActiveTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
 import { uiActions } from "../../store/ui/index.js";
@@ -69,6 +76,55 @@ describe("save dashboard handler", () => {
 
             const layout = selectBasicLayout(state);
             expect(isTemporaryIdentity(layout.sections[0].items[0].widget!)).toEqual(false);
+        });
+
+        it("keeps a widget whose insight the user may not read", async () => {
+            // Load a widget with an unavailable insight directly: the add command requires a readable insight.
+            const restrictedInsight = idRef("restricted-insight-the-user-cannot-read", "insight");
+
+            await Tester.dispatchAndWaitFor(
+                addLayoutSection(0, {}, [TestInsightItem], false, TestCorrelation),
+                "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
+            );
+
+            const loadedLayout = selectBasicLayout(Tester.state());
+            const readableItem = loadedLayout.sections[0].items[0];
+            const readableWidget = readableItem.widget;
+            if (!isInsightWidget(readableWidget)) {
+                throw new Error("Expected an insight widget in the loaded layout");
+            }
+            const restrictedItem = {
+                ...readableItem,
+                widget: {
+                    ...readableWidget,
+                    identifier: "widget-on-a-restricted-insight",
+                    ref: idRef("widget-on-a-restricted-insight"),
+                    insight: restrictedInsight,
+                },
+            };
+
+            Tester.dispatch(
+                tabsActions.setLayout({
+                    ...loadedLayout,
+                    sections: [{ ...loadedLayout.sections[0], items: [readableItem, restrictedItem] }],
+                }),
+            );
+            expect(selectBasicLayout(Tester.state()).sections[0].items).toHaveLength(2);
+
+            const event: DashboardSaved = await Tester.dispatchAndWaitFor(
+                saveDashboard(),
+                "GDC.DASH/EVT.SAVED",
+            );
+
+            const savedLayout: IDashboardLayout | undefined = event.payload.dashboard.layout;
+            const savedWidgets =
+                savedLayout?.sections.flatMap((section) => section.items.map((item) => item.widget)) ?? [];
+            expect(savedWidgets).toHaveLength(2);
+            expect(
+                savedWidgets.some(
+                    (widget) => isInsightWidget(widget) && areObjRefsEqual(widget.insight, restrictedInsight),
+                ),
+            ).toBe(true);
         });
 
         it("should save an existing dashboard", async () => {

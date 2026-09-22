@@ -1,10 +1,16 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type MutableRefObject, type ReactNode, useCallback } from "react";
+import { type MutableRefObject, type ReactNode, useCallback, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
-import { type DashboardAttributeFilterItem, type FilterContextItem, type ObjRef } from "@gooddata/sdk-model";
+import {
+    type DashboardAttributeFilterItem,
+    type FilterContextItem,
+    type ObjRef,
+    isDashboardAttributeFilter,
+} from "@gooddata/sdk-model";
+import { useBackendStrict } from "@gooddata/sdk-ui";
 import {
     AttributeFilterButton,
     type IAttributeFilterButtonProps,
@@ -19,6 +25,8 @@ import {
     useIdPrefixed,
 } from "@gooddata/sdk-ui-kit";
 
+import { convertDashboardAttributeFilterElementsUrisToValues } from "../../../../../_staging/dashboard/legacyFilterConvertors.js";
+import { useDashboardComponentsContext } from "../../../../dashboardContexts/DashboardComponentsContext.js";
 import { DefaultDashboardAttributeFilter } from "../../../../filterBar/attributeFilter/DefaultDashboardAttributeFilter.js";
 
 import {
@@ -82,6 +90,8 @@ function AttributeFilterWrapper({
     tabId?: string;
 }) {
     const { onChange, filter } = useAutomationAttributeFilterContext();
+    const { AttributeFilterComponentSet } = useDashboardComponentsContext();
+    const supportElementUris = useBackendStrict().capabilities.supportsElementUris ?? false;
 
     const handleFilterChanged = useCallback(
         (newFilter: DashboardAttributeFilterItem) => {
@@ -90,9 +100,20 @@ function AttributeFilterWrapper({
         [onChange],
     );
 
+    const filterToUse = useMemo(() => {
+        if (supportElementUris || !isDashboardAttributeFilter(filter)) {
+            return filter;
+        }
+        return convertDashboardAttributeFilterElementsUrisToValues(filter);
+    }, [filter, supportElementUris]);
+
+    // Mirrors the resolution in filterBar/filterBar/DefaultFilterBarItem.tsx
+    const DashboardAttributeFilter =
+        AttributeFilterComponentSet?.MainComponentProvider(filterToUse) ?? DefaultDashboardAttributeFilter;
+
     return (
-        <DefaultDashboardAttributeFilter
-            filter={filter}
+        <DashboardAttributeFilter
+            filter={filterToUse}
             onFilterChanged={handleFilterChanged}
             displayAsLabel={displayAsLabel}
             AttributeFilterComponent={AttributeFilter}

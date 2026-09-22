@@ -22,31 +22,41 @@ function renderWithIntl(component: ReactElement) {
 }
 
 describe("RestrictedPlaceholderContent", () => {
-    it("reads as the error tile a missing visualization shows, with a lock", () => {
+    it("gives the reason and the way out of it, under a lock", () => {
         const { container } = renderWithIntl(<RestrictedPlaceholderContent width={600} height={400} />);
 
         expect(screen.getByText("No access to this visualization")).toBeInTheDocument();
         expect(screen.getByText("Ask your administrator for access")).toBeInTheDocument();
-        expect(container.querySelector(".info-label-icon.gd-icon-lock")).toBeInTheDocument();
-        expect(container.querySelector(".gd-icon-warning")).not.toBeInTheDocument();
+        expect(container.querySelector(".gd-ui-kit-restricted-placeholder")).toBeInTheDocument();
         expect(screen.getByTestId("restricted-placeholder")).toBeInTheDocument();
     });
 
+    it("keeps the reason alone on a tile too narrow for the rest", () => {
+        const { container } = renderWithIntl(<RestrictedPlaceholderContent width={240} height={400} />);
+
+        expect(
+            container.querySelector(".gd-ui-kit-restricted-placeholder--size-compact"),
+        ).toBeInTheDocument();
+        expect(screen.getByText("No access to this visualization")).toBeInTheDocument();
+        expect(screen.getByText("Ask your administrator for access")).toHaveClass("sr-only");
+    });
+
     it.each([
-        ["a tile with room", 600, 400],
-        ["a short tile", 338, 100],
-        ["a narrow tile, where the text wraps", 160, 160],
-        ["a tile that has not been measured", undefined, undefined],
-    ])("renders the same on %s, and keeps the text reachable", (_, width, height) => {
+        ["view mode, which gives the tile its full height", 453, 220],
+        ["edit mode, where the same tile is ten pixels shorter", 453, 210],
+    ])("reads the same in %s, because only the width decides", (_, width, height) => {
         const { container } = renderWithIntl(<RestrictedPlaceholderContent width={width} height={height} />);
 
-        // one rendering at every size: the tile clips what does not fit, and the hover bubble carries
-        // the whole message, so the same widget cannot read differently between two render modes
-        expect(screen.getAllByText("No access to this visualization").length).toBeGreaterThan(0);
-        expect(container.querySelector(".gd-bubble-trigger")).toBeInTheDocument();
-        expect(container.querySelector<HTMLElement>(".info-label")!.style.height).toBe("");
-        // it does not shrink on its own, so a narrow tile would carry its centred lock off-screen
-        expect(container.querySelector<HTMLElement>(".gd-restricted-placeholder")!.style.width).toBe("100%");
+        expect(
+            container.querySelector(".gd-ui-kit-restricted-placeholder--size-default"),
+        ).toBeInTheDocument();
+    });
+
+    it("keeps the recovery guidance in the accessible content at the smallest size", () => {
+        const { container } = renderWithIntl(<RestrictedPlaceholderContent width={160} height={160} />);
+
+        expect(screen.getByRole("status")).toHaveTextContent("Ask your administrator for access");
+        expect(container.querySelector("[tabindex='0']")).toBeInTheDocument();
     });
 });
 
@@ -99,6 +109,6 @@ describe("RestrictedPlaceholder", () => {
         );
 
         expect(container.querySelector(".dash-item")).toBeInTheDocument();
-        expect(container.querySelector(".info-label-icon")).toBeInTheDocument();
+        expect(container.querySelector(".gd-ui-kit-restricted-placeholder")).toBeInTheDocument();
     });
 });

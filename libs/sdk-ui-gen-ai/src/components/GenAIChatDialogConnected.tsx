@@ -15,6 +15,7 @@ import {
     type ChatEvent,
     type ChatFeedbackErrorEvent,
     type ChatFeedbackEvent,
+    type ChatModeChangeEvent,
     type ChatOpenedEvent,
     type ChatResetEvent,
     type ChatSaveVisualizationErrorEvent,
@@ -26,6 +27,7 @@ import {
     isChatDefinitionReceivedEvent,
     isChatFeedbackErrorEvent,
     isChatFeedbackEvent,
+    isChatModeChangeEvent,
     isChatOpenedEvent,
     isChatResetEvent,
     isChatSaveVisualizationErrorEvent,
@@ -59,6 +61,7 @@ export type GenAIChatConnectedEvent =
     | { name: "assistant-message"; payload: ChatAssistantMessageEvent }
     | { name: "feedback"; payload: ChatFeedbackEvent }
     | { name: "feedback-error"; payload: ChatFeedbackErrorEvent }
+    | { name: "mode-changed"; payload: ChatModeChangeEvent }
     | { name: "save-visualization-success"; payload: ChatSaveVisualizationSuccessEvent }
     | { name: "save-visualization-error"; payload: ChatSaveVisualizationErrorEvent }
     | { name: "copy-to-clipboard"; payload: ChatCopyToClipboardEvent }
@@ -256,6 +259,8 @@ export function GenAIChatDialogConnected({
                         onEvent({ name: "copy-to-clipboard", payload: event });
                     } else if (isChatDefinitionReceivedEvent(event)) {
                         onEvent({ name: "definition-received", payload: event });
+                    } else if (isChatModeChangeEvent(event)) {
+                        onEvent({ name: "mode-changed", payload: event });
                     }
                 },
             },

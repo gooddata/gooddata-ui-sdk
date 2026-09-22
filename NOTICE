@@ -7,9 +7,9 @@
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2026-9-18
+Date generated: 2026-9-21
 
-Revision ID: bfb2e581b6e1acf58a2f5502e648b8864dae2b2f
+Revision ID: d287888cbc82806bcb9866c66ecff9b2ff92c32b
 
 ================================================================================
 ================================================================================
@@ -13663,7 +13663,7 @@ MIT
 
 Authors: 1075746765@qq.com, afc163@gmail.com, scdzwyxst@gmail.com, smith3816@gmail.com, wasd2144@hotmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/@rc-component/resize-observer
+Project URL: https://react-component.github.io/resize-observer
 Package Download URL: https://registry.npmjs.org/@rc-component/resize-observer/-/resize-observer-1.1.2.tgz
 Dependency Path: @rc-component/picker > @rc-component/overflow > @rc-component/resize-observer > @rc-component/picker > @rc-component/resize-observer > @rc-component/picker > @rc-component/trigger > @rc-component/resize-observer
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -21127,7 +21127,7 @@ MIT
 
 Authors: ljharb@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/call-bind-apply-helpers
+Project URL: https://github.com/ljharb/call-bind-apply-helpers#readme
 Package Download URL: https://registry.npmjs.org/call-bind-apply-helpers/-/call-bind-apply-helpers-1.0.2.tgz
 Dependency Path: @formatjs/cli-lib > @formatjs/ts-transformer > json-stable-stringify > call-bind > set-function-length > get-intrinsic > call-bind-apply-helpers > @formatjs/cli-lib > @types/json-stable-stringify > json-stable-stringify > call-bind > set-function-length > get-intrinsic > call-bind-apply-helpers > @formatjs/cli-lib > json-stable-stringify > call-bind > set-function-length > get-intrinsic > call-bind-apply-helpers > axios > form-data > es-set-tostringtag > get-intrinsic > call-bind-apply-helpers > json-stable-stringify > call-bind > call-bind-apply-helpers > json-stable-stringify > call-bind > get-intrinsic > call-bind-apply-helpers > json-stable-stringify > call-bind > get-intrinsic > get-proto > dunder-proto > call-bind-apply-helpers > json-stable-stringify > call-bind > set-function-length > get-intrinsic > call-bind-apply-helpers > json-stable-stringify > call-bound > call-bind-apply-helpers > json-stable-stringify > call-bound > get-intrinsic > call-bind-apply-helpers
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -30212,7 +30212,7 @@ MIT
 
 Authors: ljharb@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/gopd
+Project URL: https://github.com/ljharb/gopd#readme
 Package Download URL: https://registry.npmjs.org/gopd/-/gopd-1.2.0.tgz
 Dependency Path: @formatjs/cli-lib > @formatjs/ts-transformer > @types/json-stable-stringify > json-stable-stringify > call-bind > set-function-length > gopd > @formatjs/cli-lib > @formatjs/ts-transformer > json-stable-stringify > call-bind > set-function-length > gopd > @formatjs/cli-lib > @types/json-stable-stringify > json-stable-stringify > call-bind > set-function-length > gopd > @formatjs/cli-lib > json-stable-stringify > call-bind > set-function-length > gopd > axios > form-data > es-set-tostringtag > get-intrinsic > gopd > json-stable-stringify > call-bind > get-intrinsic > get-proto > dunder-proto > gopd > json-stable-stringify > call-bind > get-intrinsic > gopd > json-stable-stringify > call-bind > set-function-length > define-data-property > gopd > json-stable-stringify > call-bind > set-function-length > gopd > json-stable-stringify > call-bound > get-intrinsic > gopd
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -38217,7 +38217,7 @@ MIT
 
 Authors: tituswormer@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/mathml-tag-names
+Project URL: https://github.com/wooorm/mathml-tag-names#readme
 Package Download URL: https://registry.npmjs.org/mathml-tag-names/-/mathml-tag-names-2.1.3.tgz
 Dependency Path: stylelint > mathml-tag-names > stylelint-config-standard > stylelint > mathml-tag-names > stylelint-config-standard > stylelint-config-recommended > stylelint > mathml-tag-names > stylelint-order > stylelint > mathml-tag-names > stylelint-plugin-defensive-css > stylelint > mathml-tag-names > stylelint-scss > stylelint > mathml-tag-names
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -43603,7 +43603,7 @@ MIT
 
 Authors: daniel@touchlay.com, npm@joshuakgoldberg.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/node-emoji
+Project URL: https://github.com/omnidan/node-emoji#readme
 Package Download URL: https://registry.npmjs.org/node-emoji/-/node-emoji-2.2.0.tgz
 Dependency Path: remark-emoji > node-emoji
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -64914,4 +64914,4 @@ File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2026-9-18
+Report Generated by FOSSA on 2026-9-21

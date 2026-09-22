@@ -47,9 +47,9 @@ export function buildLookupTable(
             const header = sliceHeaders[i];
             const descriptor = dimDescriptors[i];
             if (header && isResultAttributeHeader(header) && descriptor && "attributeHeader" in descriptor) {
-                const dfId = descriptor.attributeHeader.identifier;
+                const localId = descriptor.attributeHeader.localIdentifier;
                 const uri = header.attributeHeaderItem.uri ?? "";
-                keyParts.push(buildKeySegment(dfId, uri));
+                keyParts.push(buildKeySegment(localId, uri));
             }
         }
         const pointKey = joinKeySegments(keyParts);

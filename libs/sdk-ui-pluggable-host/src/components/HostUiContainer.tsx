@@ -14,6 +14,7 @@ import {
     type IHostUiMountHandle,
 } from "@gooddata/sdk-pluggable-application-model";
 import { resolveLocale, useAutoupdateRef } from "@gooddata/sdk-ui";
+import { GenAIAssistantMode } from "@gooddata/sdk-ui-gen-ai";
 
 import { now } from "../debug.js";
 import { setActiveHostHandle } from "../lib/hostNotifications.js";
@@ -27,9 +28,9 @@ import {
     type IHostChatVisibility,
 } from "../ui/HostChat.js";
 import { HostIntlProvider } from "../ui/HostIntlProvider.js";
-import { PluggableApplicationRenderer } from "../ui/PluggableApplicationRenderer.js";
 
 import "./HostUiContainer.scss";
+import { PluggableApplicationRenderer } from "../ui/PluggableApplicationRenderer.js";
 import { resolveHostUiModule } from "../ui/resolveHostUiModule.js";
 
 import { HostErrorBoundary } from "./HostErrorBoundary.js";
@@ -90,12 +91,23 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate, onError }
     const [aiAssistantOpen, setAiAssistantOpen] = useState(false);
     // Header chat-button state (visibility + open) pushed down to the host UI module so it can render
     // the header button to match the host-owned chat.
-    const [chatButtonState, setChatButtonState] = useState({ showChatItem: false, isOpen: false });
-    const onChatStateChange = useCallback((state: { showChatItem: boolean; isOpen: boolean }) => {
-        setChatButtonState((prev) =>
-            prev.showChatItem === state.showChatItem && prev.isOpen === state.isOpen ? prev : state,
-        );
-    }, []);
+    const [chatButtonState, setChatButtonState] = useState({
+        showChatItem: false,
+        isOpen: false,
+        mode: "docked",
+    });
+    const onChatStateChange = useCallback(
+        (state: { showChatItem: boolean; isOpen: boolean; mode: GenAIAssistantMode }) => {
+            setChatButtonState((prev) =>
+                prev.showChatItem === state.showChatItem &&
+                prev.isOpen === state.isOpen &&
+                prev.mode === state.mode
+                    ? prev
+                    : state,
+            );
+        },
+        [],
+    );
     // Open/close/toggle requests and tag scope driving the host's single chat (HostChat). Sources:
     // app events (via PluggableApplicationRenderer), the header chat button, and the header search.
     const [aiVisibility, setAiVisibility] = useState<IHostChatVisibility | null>(null);

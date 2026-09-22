@@ -3,6 +3,7 @@
 import {
     type KeyboardEvent as ReactKeyboardEvent,
     type ReactNode,
+    type RefObject,
     createContext,
     useCallback,
     useContext,
@@ -57,6 +58,8 @@ export interface IUiModalDialogProps {
     /** Dialog content composed by the caller — typically `UiDialogHeader`,
      *  an optional `UiDialogBody`, and `UiDialogFooter`. */
     children: ReactNode;
+    /** Confirmation styling adds a border and emphasizes the title and body. */
+    variant?: "default" | "confirmation";
     /** Whether the modal is shown. */
     isOpen: boolean;
     /**
@@ -69,13 +72,18 @@ export interface IUiModalDialogProps {
     onClose: () => void;
     /** Card width in px. Defaults to 540. */
     width?: number;
+    /** Initial keyboard focus target. Defaults to the first tabbable element. */
+    initialFocus?: RefObject<HTMLElement | null>;
     /**
      * Overrides for the dialog landmark's accessible name. Usually unnecessary —
      * the landmark auto-wires `aria-labelledby` to the `UiDialogHeader` title
      * via context. For headerless dialogs, pass `ariaLabel`; to point at an
      * external title, pass `ariaLabelledBy`.
      */
-    accessibilityConfig?: Pick<IAccessibilityConfigBase, "ariaLabel" | "ariaLabelledBy">;
+    accessibilityConfig?: Pick<IAccessibilityConfigBase, "ariaLabel" | "ariaLabelledBy"> & {
+        /** Use alertdialog for confirmations that require an immediate response. */
+        role?: "dialog" | "alertdialog";
+    };
     /** Test id forwarded to the overlay element. */
     dataTestId?: string;
 }
@@ -90,9 +98,11 @@ export interface IUiModalDialogProps {
  */
 export function UiModalDialog({
     children,
+    variant,
     isOpen,
     onClose,
     width,
+    initialFocus,
     closeOnOutsideClick,
     accessibilityConfig,
     dataTestId,
@@ -102,8 +112,10 @@ export function UiModalDialog({
     }
     return (
         <OpenModalDialog
+            variant={variant}
             onClose={onClose}
             width={width}
+            initialFocus={initialFocus}
             closeOnOutsideClick={closeOnOutsideClick}
             accessibilityConfig={accessibilityConfig}
             dataTestId={dataTestId}
@@ -120,15 +132,19 @@ export function UiModalDialog({
  */
 function OpenModalDialog({
     children,
+    variant = "default",
     onClose,
     width = 540,
+    initialFocus,
     closeOnOutsideClick = false,
     accessibilityConfig,
     dataTestId,
 }: {
     children: ReactNode;
+    variant?: IUiModalDialogProps["variant"];
     onClose: () => void;
     width?: number;
+    initialFocus?: RefObject<HTMLElement | null>;
     closeOnOutsideClick?: boolean;
     accessibilityConfig?: IUiModalDialogProps["accessibilityConfig"];
     dataTestId?: string;
@@ -260,14 +276,14 @@ function OpenModalDialog({
                 <FloatingOverlay lockScroll className={b()} data-testid={dataTestId} style={{ zIndex }}>
                     <FloatingFocusManager
                         context={context}
-                        initialFocus={hasAutofocusTarget ? initialFocusRef : undefined}
+                        initialFocus={initialFocus ?? (hasAutofocusTarget ? initialFocusRef : undefined)}
                         getInsideElements={getInsideElements}
                     >
                         <div
                             ref={setFloatingRef}
-                            className={e("card")}
+                            className={e("card", { variant })}
                             style={{ width }}
-                            role="dialog"
+                            role={accessibilityConfig?.role ?? "dialog"}
                             aria-modal="true"
                             aria-label={accessibilityConfig?.ariaLabel}
                             aria-labelledby={ariaLabelledBy}

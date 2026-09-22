@@ -253,6 +253,9 @@ export function AsCodeDialog(props: Props) {
             isSubmitDisabled={isSubmitting || loading || isBaseUnrepresentable || (isEdit && !isDirty)}
             isCancelDisabled={isSubmitting}
             shouldCloseOnEscape={!isSubmitting}
+            // The body is a multi-line code editor, so Enter inserts a line break there. Without this
+            // the dialog treats the editor's contenteditable as a text input and saves on Enter.
+            submitOnEnterKey={false}
             onCancel={handleClose}
             onClose={handleClose}
             onSubmit={handleSubmit}

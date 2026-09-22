@@ -1642,8 +1642,10 @@ export type {
     CatalogState,
     CatalogParametersStatus,
     ICatalogParametersState,
-    CatalogMeasureParametersStatus,
-    ICatalogMeasureParametersState,
+    CatalogInsightParametersStatus,
+    ICatalogInsightParametersState,
+    CatalogFilterParametersStatus,
+    ICatalogFilterParametersState,
 } from "./model/store/catalog/catalogState.js";
 export {
     selectCatalogIsLoaded,
@@ -1672,8 +1674,10 @@ export {
     selectCatalogParameters,
     selectCatalogParametersStatus,
     selectCatalogParametersIsLoaded,
-    selectCatalogMeasureParameters,
-    selectCatalogMeasureParametersStatus,
+    selectCatalogInsightParameters,
+    selectCatalogInsightParametersStatus,
+    selectCatalogFilterParameters,
+    selectCatalogFilterParametersStatus,
 } from "./model/store/catalog/catalogSelectors.js";
 export { catalogActions } from "./model/store/catalog/index.js";
 export type {
@@ -2654,7 +2658,7 @@ export type {
     IInsightBodyProps,
     CustomInsightBodyComponent,
 } from "./presentation/widget/insight/types.js";
-export type { ILayerTableDefinition } from "./presentation/widget/insight/insightToTable.js";
+export type { ILayerTableDefinition } from "@gooddata/sdk-ui-ext";
 export { DefaultDashboardInsightMenu } from "./presentation/widget/insightMenu/DefaultDashboardInsightMenu/DefaultDashboardInsightMenu.js";
 export { DefaultDashboardInsightMenuButton } from "./presentation/widget/insightMenu/DefaultDashboardInsightMenu/DefaultDashboardInsightMenuButton.js";
 export { DefaultDashboardInsightMenuTitle } from "./presentation/widget/insightMenu/DefaultDashboardInsightMenu/DefaultDashboardInsightMenuTitle.js";

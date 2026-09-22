@@ -23,7 +23,7 @@ import { presentTooltip } from "../../common/tooltipPlacement.js";
 import {
     type TooltipFormatConfig,
     type TooltipPayload,
-    dedupeAttributePayloadsByAttrId,
+    dedupeAttributePayloads,
     formatAttributeHtml,
     formatMeasureHtml,
     getTooltipProperties,
@@ -184,11 +184,10 @@ export function getTooltipHtml(
     const measuresPayloads = Array.isArray(rawMeasures) ? rawMeasures.map(parseTooltipPayload) : [];
     const segmentPayload = parseTooltipPayload(properties["segment"]);
     const tooltipTextPayload = parseTooltipPayload(properties["tooltipText"]);
-    const [locationAttribute, segmentAttribute, tooltipTextAttribute] = dedupeAttributePayloadsByAttrId([
-        locationPayload,
-        segmentPayload,
-        tooltipTextPayload,
-    ]);
+    const [locationAttribute, segmentAttribute, tooltipTextAttribute] = dedupeAttributePayloads(
+        [locationPayload, segmentPayload, tooltipTextPayload],
+        referenceMaps,
+    );
 
     const tooltipItems: string = [
         formatAttributeHtml(locationAttribute, tooltipFormatConfig),

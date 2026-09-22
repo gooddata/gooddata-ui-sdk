@@ -905,6 +905,11 @@ export { iconPaths } from "./@ui/UiIcon/icons.js";
 export { UiSkeleton, type IUiSkeletonProps } from "./@ui/UiSkeleton/UiSkeleton.js";
 export { UiErrorPage, type IUiErrorPageProps } from "./@ui/UiErrorPage/UiErrorPage.js";
 export {
+    UiRestrictedPlaceholder,
+    type IUiRestrictedPlaceholderProps,
+    type UiRestrictedPlaceholderSize,
+} from "./@ui/UiRestrictedPlaceholder/UiRestrictedPlaceholder.js";
+export {
     UiPagedVirtualList,
     type IUiPagedVirtualListImperativeHandle,
     type IUiPagedVirtualListProps,

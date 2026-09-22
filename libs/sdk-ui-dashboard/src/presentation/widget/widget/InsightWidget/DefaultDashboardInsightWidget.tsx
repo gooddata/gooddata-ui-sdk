@@ -7,6 +7,12 @@ import { useIntl } from "react-intl";
 
 import { type IInsight, insightVisualizationType, widgetTitle } from "@gooddata/sdk-model";
 import { type VisType } from "@gooddata/sdk-ui";
+import {
+    canConvertToTable,
+    convertInsightToTableDefinition,
+    getGeoTableDisplayFormRefs,
+    supportsShowAsTable,
+} from "@gooddata/sdk-ui-ext";
 import { useId } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
@@ -25,12 +31,6 @@ import { useInsightExport } from "../../common/useInsightExport.js";
 import { useWidgetHighlighting } from "../../common/useWidgetHighlighting.js";
 import { useInsightWidgetDescriptionComponent } from "../../description/InsightWidgetDescriptionComponentProvider.js";
 import { DashboardInsight } from "../../insight/DashboardInsight.js";
-import { getGeoDefaultDisplayFormRefs } from "../../insight/geoDefaultDisplayFormRefs.js";
-import {
-    canConvertToTable,
-    convertInsightToTableDefinition,
-    supportsShowAsTable,
-} from "../../insight/insightToTable.js";
 import { ShowAsTableButton } from "../../showAsTableButton/ShowAsTableButton.js";
 import { useShowAsTable } from "../../showAsTableButton/useShowAsTable.js";
 import { InsightWidgetWarningPartialResult } from "../warningPartialResult/InsightWidgetWarningPartialResult.js";
@@ -217,7 +217,7 @@ function DefaultDashboardInsightWidgetCore({
         if (!canConvertToTable(visType) && visType !== "table" && visType !== "repeater") {
             return null;
         }
-        const defaultDisplayFormRefs = getGeoDefaultDisplayFormRefs(
+        const defaultDisplayFormRefs = getGeoTableDisplayFormRefs(
             insight,
             settings,
             catalogAttributes,

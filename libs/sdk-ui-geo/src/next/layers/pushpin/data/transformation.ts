@@ -61,6 +61,7 @@ type BucketItemInfo = {
         index: number;
         name: string;
         displayFormId?: string;
+        localIdentifier?: string;
         data?: string[] | number[] | IGeoLngLat[];
         format?: string;
         uris?: string[];
@@ -212,6 +213,7 @@ function getBucketItemNameAndDataIndex(dv: DataViewFacade): BucketItemInfo {
                 displayFormId:
                     attributeDescriptors[index].attributeHeader.identifier ??
                     attributeDescriptors[index].attributeHeader.uri,
+                localIdentifier: attributeDescriptors[index].attributeHeader.localIdentifier,
             };
         }
     });
@@ -318,6 +320,7 @@ function processSegmentBucket(ctx: IBucketProcessingContext): IGeoSegmentItem | 
         index: segmentBucket.index,
         name: segmentBucket.name,
         displayFormId: segmentBucket.displayFormId,
+        localIdentifier: segmentBucket.localIdentifier,
         data,
         uris,
     };
@@ -345,6 +348,7 @@ function processTooltipTextBucket(ctx: IBucketProcessingContext): IGeoAttributeI
         index: tooltipTextBucket.index,
         name: tooltipTextBucket.name,
         displayFormId: tooltipTextBucket.displayFormId,
+        localIdentifier: tooltipTextBucket.localIdentifier,
         data,
         uris,
     };
@@ -367,6 +371,7 @@ function processGeoIconBucket(ctx: IBucketProcessingContext): IGeoAttributeItem 
         index: geoIconBucket.index,
         name: geoIconBucket.name,
         displayFormId: geoIconBucket.displayFormId,
+        localIdentifier: geoIconBucket.localIdentifier,
         data,
     };
 }

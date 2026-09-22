@@ -1,9 +1,13 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/_variables" as button-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins" as mx;
 @use "variables";
+
+.gd-restricted-references-dialog-wrapper {
+    display: contents;
+}
 
 .gd-rich-text-widget-wrapper {
     width: 100%;

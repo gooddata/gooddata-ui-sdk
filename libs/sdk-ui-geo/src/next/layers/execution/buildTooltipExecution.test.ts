@@ -89,7 +89,7 @@ describe("pushpinAdapter.buildTooltipExecution", () => {
         expect(pushpinAdapter.buildTooltipExecution!(layer, context, definitionWithoutTooltip)).toBeNull();
     });
 
-    it("derives the feature key from properties.locationName.attrId", async () => {
+    it("derives the feature key from the tooltip-text attribute's localIdentifier", async () => {
         const { layer, definition } = await getPreparedPushpinDefinition();
         const context: IGeoAdapterContext = {
             backend,
@@ -98,19 +98,20 @@ describe("pushpinAdapter.buildTooltipExecution", () => {
         };
 
         const built = pushpinAdapter.buildTooltipExecution!(layer, context, definition);
-        // The prepared TOOLTIP_TEXT bucket is sourced from latitudeAttribute, so
-        // its display-form id is "attr.lat". Feature payloads carry the same id
-        // (see pushpin/source.ts → locationNameAttrId).
+        // The prepared TOOLTIP_TEXT bucket is sourced from latitudeAttribute, so the payload's
+        // `attrId` ("attr.lat") is what the guard matches on. The KEY, though, is built from the
+        // bucket attribute's localIdentifier — an LDM id is unique only within an object type,
+        // so a label and a computed attribute could share one (see buildKeySegment).
         const key = built?.buildFeatureKey({
             locationName: { title: "City", attrId: "attr.lat", uri: "/city/cz" },
         });
 
-        expect(key).toBe("attr.lat:/city/cz");
+        expect(key).toBe(buildKeySegment("tooltipText_df", "/city/cz"));
     });
 
-    it("keys off the explicit tooltipText display form when the layer provides one", async () => {
-        // With an explicit tooltip-text attribute, the key must come from THAT
-        // display form, not the location (latitude) one.
+    it("keys off the explicit tooltipText attribute when the layer provides one", async () => {
+        // With an explicit tooltip-text attribute, the guard must match THAT display form, not
+        // the location (latitude) one.
         const tooltipTextAttribute = newAttribute(idRef("attr.region"), (a) => a.localId("ttText"));
         const layer = createPushpinLayer({
             latitude: latitudeAttribute,
@@ -131,7 +132,7 @@ describe("pushpinAdapter.buildTooltipExecution", () => {
             built?.buildFeatureKey({
                 locationName: { title: "Region", attrId: "attr.region", uri: "/region/bohemia" },
             }),
-        ).toBe("attr.region:/region/bohemia");
+        ).toBe(buildKeySegment("tooltipText_df", "/region/bohemia"));
         // A feature still carrying the location df must NOT match the explicit tooltipText key.
         expect(
             built?.buildFeatureKey({
@@ -160,12 +161,12 @@ describe("pushpinAdapter.buildTooltipExecution", () => {
         });
 
         // buildLookupTable keys a row as joinKeySegments over per-attribute
-        // buildKeySegment(dfId, uri). The hover key must use the SAME primitives
+        // buildKeySegment(localIdentifier, uri). The hover key must use the SAME primitives
         // so the two sides meet — joinKeySegments sorts, so segment order can't drift.
         expect(key).toBe(
             joinKeySegments([
-                buildKeySegment("attr.lat", "/city/cz"),
-                buildKeySegment("attr.region", "/region/bohemia"),
+                buildKeySegment("tooltipText_df", "/city/cz"),
+                buildKeySegment("seg", "/region/bohemia"),
             ]),
         );
     });
@@ -193,7 +194,7 @@ describe("pushpinAdapter.buildTooltipExecution", () => {
         });
 
         expect(key).toBe(
-            joinKeySegments([buildKeySegment("attr.lat", "/city/cz"), buildKeySegment("attr.region", "")]),
+            joinKeySegments([buildKeySegment("tooltipText_df", "/city/cz"), buildKeySegment("seg", "")]),
         );
     });
 
@@ -231,5 +232,21 @@ describe("areaAdapter.buildTooltipExecution", () => {
 
         const built = areaAdapter.buildTooltipExecution!(layer, context, definition);
         expect(built).not.toBeNull();
+    });
+
+    it("derives the feature key from the area attribute's localIdentifier", async () => {
+        const { layer, definition } = await getPreparedAreaDefinition();
+        const context: IGeoAdapterContext = {
+            backend,
+            workspace,
+            config: { customTooltip: customTooltipConfig },
+        };
+
+        const built = areaAdapter.buildTooltipExecution!(layer, context, definition);
+        // `buildLookupTable` keys rows by the result descriptor's localIdentifier, so the
+        // hover-side key must be built from the same localId ("area"), not from the display
+        // form id ("attr.city") - an LDM id is unique only within an object type.
+        expect(built?.buildFeatureKey({ areaUri: "/city/cz" })).toBe(buildKeySegment("area", "/city/cz"));
+        expect(built?.buildFeatureKey({ areaUri: "" })).toBeNull();
     });
 });

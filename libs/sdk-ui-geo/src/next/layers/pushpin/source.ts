@@ -65,7 +65,9 @@ interface IPushpinFeatureContext {
     maxSizeFromData: number | undefined;
     hasSize: boolean;
     locationNameAttrId?: string;
+    locationNameAttrLocalId?: string;
     segmentAttrId?: string;
+    segmentAttrLocalId?: string;
 }
 
 const DEFAULT_LOCATION_TITLE = "Location";
@@ -115,7 +117,9 @@ function buildPushpinFeatureProperties(
         maxSizeFromData,
         hasSize,
         locationNameAttrId,
+        locationNameAttrLocalId,
         segmentAttrId,
+        segmentAttrLocalId,
     } = ctx;
 
     const canCalculateSize = hasSize && minSizeFromData !== undefined && maxSizeFromData !== undefined;
@@ -133,6 +137,7 @@ function buildPushpinFeatureProperties(
             title: locationNameTitle,
             value: locationNameData[index],
             attrId: locationNameAttrId,
+            attrLocalId: locationNameAttrLocalId,
             uri: locationNameUris[index],
         },
         locationIndex: index,
@@ -154,6 +159,7 @@ function buildPushpinFeatureProperties(
             value: segmentData[index],
             uri: segmentUris[index] ?? EMPTY_SEGMENT_VALUE,
             attrId: segmentAttrId,
+            attrLocalId: segmentAttrLocalId,
         },
     };
 
@@ -227,7 +233,9 @@ function createPushpinFeatures({
         maxSizeFromData,
         hasSize: size !== undefined,
         locationNameAttrId: tooltipText?.displayFormId ?? tooltipAttrIds?.locationName,
+        locationNameAttrLocalId: tooltipText?.localIdentifier,
         segmentAttrId: segment?.displayFormId ?? tooltipAttrIds?.segment,
+        segmentAttrLocalId: segment?.localIdentifier,
     };
 
     return location.data.reduce(

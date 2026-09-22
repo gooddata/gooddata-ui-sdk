@@ -15,17 +15,19 @@ import {
     type IPlatformContext,
 } from "@gooddata/sdk-pluggable-application-model";
 import { resolveLocale } from "@gooddata/sdk-ui";
+import { GenAIAssistantMode } from "@gooddata/sdk-ui-gen-ai";
 
 import { HostErrorBoundary } from "../components/HostErrorBoundary.js";
 
 import { HostChrome } from "./HostChrome.js";
-import { e } from "./hostChromeBem.js";
 import "./DefaultHostUi.scss";
+import { e } from "./hostChromeBem.js";
 
 /** Host-owned chat button state pushed down from the runtime so the header button can match it. */
 interface IChatButtonState {
     showChatItem: boolean;
     isOpen: boolean;
+    mode?: GenAIAssistantMode;
 }
 
 // ---------------------------------------------------------------------------
@@ -79,7 +81,11 @@ function HostUiBridge({
     const [pageTitle, setPageTitle] = useState<string | undefined>(undefined);
     // The host runtime owns the single chat instance (outside this UI module); it pushes the chat
     // button state here so the header button reflects the chat's availability and open-state.
-    const [chatState, setChatState] = useState<IChatButtonState>({ showChatItem: false, isOpen: false });
+    const [chatState, setChatState] = useState<IChatButtonState>({
+        showChatItem: false,
+        isOpen: false,
+        mode: "docked",
+    });
     const appContainerRef = useRef<HTMLDivElement>(null);
 
     // Layout effect runs in the same synchronous commit as flushSync.
@@ -107,6 +113,7 @@ function HostUiBridge({
                 notification={notification}
                 showChatItem={chatState.showChatItem}
                 chatIsOpen={chatState.isOpen}
+                chatMode={chatState.mode}
                 onChatToggle={onChatToggleRequested}
                 onAskAiAssistant={onAskAiAssistant}
                 appPageTitle={pageTitle}

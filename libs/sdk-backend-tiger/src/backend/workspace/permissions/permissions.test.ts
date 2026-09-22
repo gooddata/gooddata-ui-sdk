@@ -276,4 +276,19 @@ describe("TigerWorkspacePermissionsFactory", () => {
         expect(granted.canCreateMetric).toBe(true);
         expect(notGranted.canCreateMetric).toBe(false);
     });
+
+    it("lets CREATE_VISUALIZATION on top of VIEW create visualizations without the ANALYZE role", async () => {
+        const createFactory = (permissions: Array<TigerPermissionType>) =>
+            new TigerWorkspacePermissionsFactory(
+                getWithDefinedPermissions(permissions)[0] as unknown as TigerAuthenticatedCallGuard,
+                workspaceId,
+            );
+        const granted = await createFactory(["VIEW", "CREATE_VISUALIZATION"]).getPermissionsForCurrentUser();
+        const viewer = await createFactory(["VIEW"]).getPermissionsForCurrentUser();
+        const analyst = await createFactory(["ANALYZE", "VIEW"]).getPermissionsForCurrentUser();
+        expect(granted.canCreateVisualization).toBe(true);
+        expect(granted.canAnalyzeWorkspace).toBe(false);
+        expect(viewer.canCreateVisualization).toBe(false);
+        expect(analyst.canCreateVisualization).toBe(true);
+    });
 });

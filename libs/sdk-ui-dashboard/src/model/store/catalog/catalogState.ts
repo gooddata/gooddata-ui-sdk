@@ -30,22 +30,43 @@ export interface ICatalogParametersState {
 }
 
 /**
- * Status of the dashboard-wide metric → parameter dependency map.
+ * Status of the dashboard-wide insight → parameter dependency map.
  *
  * @alpha
  */
-export type CatalogMeasureParametersStatus = "uninitialized" | "loading" | "loaded" | "failed";
+export type CatalogInsightParametersStatus = "uninitialized" | "loading" | "loaded" | "failed";
 
 /**
- * Maps each referenced metric (keyed by `objRefToString(metricRef)`) to the parameter refs the
- * metric depends on, as reported by the workspace references service. Drives runtime parameter
- * applicability for widget execution.
+ * Maps each dashboard insight (keyed by `serializeObjRef(insightRef)`) to the parameter refs it
+ * depends on through its metrics and computed attributes, as reported by the workspace references
+ * service. Drives runtime parameter applicability for widget execution.
  *
  * @alpha
  */
-export interface ICatalogMeasureParametersState {
-    status: CatalogMeasureParametersStatus;
-    byMetric: Record<string, IdentifierRef[]>;
+export interface ICatalogInsightParametersState {
+    status: CatalogInsightParametersStatus;
+    byInsight: Record<string, IdentifierRef[]>;
+}
+
+/**
+ * Status of the dashboard-wide dashboard-filter → parameter dependency map.
+ *
+ * @alpha
+ */
+export type CatalogFilterParametersStatus = "uninitialized" | "loading" | "loaded" | "failed";
+
+/**
+ * Maps each object a dashboard filter reads (keyed by `serializeObjRef(ref)`: the computed attribute
+ * of an attribute filter, the metric or a computed-attribute dimension of a measure value filter) to
+ * the parameter refs it depends on, as reported by the workspace references service. Complements
+ * {@link ICatalogInsightParametersState} for the parameters a widget reaches only through dashboard
+ * filters, which are not part of its insight.
+ *
+ * @alpha
+ */
+export interface ICatalogFilterParametersState {
+    status: CatalogFilterParametersStatus;
+    byRef: Record<string, IdentifierRef[]>;
 }
 
 /**
@@ -74,7 +95,9 @@ export type CatalogState = {
     /** @alpha */
     parameters: ICatalogParametersState;
     /** @alpha */
-    measureParameters: ICatalogMeasureParametersState;
+    insightParameters: ICatalogInsightParametersState;
+    /** @alpha */
+    filterParameters: ICatalogFilterParametersState;
 };
 
 export const catalogInitialState: CatalogState = {
@@ -86,5 +109,6 @@ export const catalogInitialState: CatalogState = {
     computedAttributes: undefined,
     dateHierarchyTemplates: undefined,
     parameters: { status: "uninitialized", parameters: [] },
-    measureParameters: { status: "uninitialized", byMetric: {} },
+    insightParameters: { status: "uninitialized", byInsight: {} },
+    filterParameters: { status: "uninitialized", byRef: {} },
 };

@@ -7502,12 +7502,16 @@ export interface IUiMenuSubview {
 
 // @internal (undocumented)
 export interface IUiModalDialogProps {
-    accessibilityConfig?: Pick<IAccessibilityConfigBase, "ariaLabel" | "ariaLabelledBy">;
+    accessibilityConfig?: Pick<IAccessibilityConfigBase, "ariaLabel" | "ariaLabelledBy"> & {
+        role?: "dialog" | "alertdialog";
+    };
     children: ReactNode;
     closeOnOutsideClick?: boolean;
     dataTestId?: string;
+    initialFocus?: RefObject<HTMLElement | null>;
     isOpen: boolean;
     onClose: () => void;
+    variant?: "default" | "confirmation";
     width?: number;
 }
 
@@ -7770,6 +7774,21 @@ export interface IUiRadioRowProps {
     tooltip?: string;
     trailing?: ReactNode;
     value?: string;
+}
+
+// @internal (undocumented)
+export interface IUiRestrictedPlaceholderProps {
+    // (undocumented)
+    accessibilityConfig?: {
+        role?: HTMLAttributes<HTMLElement>["role"];
+        ariaLive?: AriaAttributes["aria-live"];
+    };
+    // (undocumented)
+    dataTestId?: string;
+    description?: ReactNode;
+    // (undocumented)
+    size?: UiRestrictedPlaceholderSize;
+    title: ReactNode;
 }
 
 // @internal (undocumented)
@@ -9655,6 +9674,12 @@ export function UiRadioRow(input: IUiRadioRowProps): JSX.Element;
 
 // @internal (undocumented)
 export type UiRefsTree = Record<string, HTMLDivElement | null>;
+
+// @internal
+export function UiRestrictedPlaceholder(input: IUiRestrictedPlaceholderProps): JSX.Element;
+
+// @internal
+export type UiRestrictedPlaceholderSize = "default" | "compact";
 
 // @internal (undocumented)
 export function UiReturnFocusOnUnmount(input: IUiReturnFocusOnUnmountOptions & {

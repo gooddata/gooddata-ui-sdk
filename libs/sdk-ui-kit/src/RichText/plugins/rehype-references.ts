@@ -63,7 +63,7 @@ function createRestrictedMarker(intl: IntlShape, text: TextNode | null) {
         type: "element",
         tagName: RESTRICTED_MARKER_TAG,
         properties: {
-            className: "gd-rich-text-metric-restricted gd-icon-lock",
+            className: "gd-rich-text-metric-restricted",
         },
         position: text?.position ?? undefined,
         children: [{ type: "text", value: intl.formatMessage({ id: "richText.restricted" }) }],

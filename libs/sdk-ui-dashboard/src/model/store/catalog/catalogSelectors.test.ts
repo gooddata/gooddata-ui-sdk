@@ -15,14 +15,20 @@ import {
 import {
     selectAdhocDateHierarchies,
     selectCatalogAttributesWithComputed,
-    selectCatalogMeasureParameters,
-    selectCatalogMeasureParametersStatus,
+    selectCatalogFilterParameters,
+    selectCatalogFilterParametersStatus,
+    selectCatalogInsightParameters,
+    selectCatalogInsightParametersStatus,
     selectCatalogParameters,
     selectCatalogParametersIsLoaded,
     selectCatalogParametersStatus,
 } from "./catalogSelectors.js";
 import { catalogDateDatasets, defaultDateHierarchyTemplates } from "./catalogSelectors.test.helpers.js";
-import { type ICatalogMeasureParametersState, type ICatalogParametersState } from "./catalogState.js";
+import {
+    type ICatalogFilterParametersState,
+    type ICatalogInsightParametersState,
+    type ICatalogParametersState,
+} from "./catalogState.js";
 
 describe("catalogSelectors", () => {
     const createInitialState = (
@@ -100,26 +106,45 @@ describe("catalogSelectors", () => {
     });
 
     describe("catalog measure-parameter dependency selectors", () => {
-        const stateWith = (measureParameters: ICatalogMeasureParametersState): any => ({
-            catalog: { measureParameters },
+        const stateWith = (insightParameters: ICatalogInsightParametersState): any => ({
+            catalog: { insightParameters },
         });
 
         it("returns map and status when loaded", () => {
             const map = { m1: [idRef("topN", "parameter")] };
-            const state = stateWith({ status: "loaded", byMetric: map });
-            expect(selectCatalogMeasureParameters(state)).toEqual(map);
-            expect(selectCatalogMeasureParametersStatus(state)).toBe("loaded");
+            const state = stateWith({ status: "loaded", byInsight: map });
+            expect(selectCatalogInsightParameters(state)).toEqual(map);
+            expect(selectCatalogInsightParametersStatus(state)).toBe("loaded");
         });
 
         it("returns empty map and failed status", () => {
-            const state = stateWith({ status: "failed", byMetric: {} });
-            expect(selectCatalogMeasureParameters(state)).toEqual({});
-            expect(selectCatalogMeasureParametersStatus(state)).toBe("failed");
+            const state = stateWith({ status: "failed", byInsight: {} });
+            expect(selectCatalogInsightParameters(state)).toEqual({});
+            expect(selectCatalogInsightParametersStatus(state)).toBe("failed");
         });
 
         it("returns uninitialized status by default", () => {
-            const state = stateWith({ status: "uninitialized", byMetric: {} });
-            expect(selectCatalogMeasureParametersStatus(state)).toBe("uninitialized");
+            const state = stateWith({ status: "uninitialized", byInsight: {} });
+            expect(selectCatalogInsightParametersStatus(state)).toBe("uninitialized");
+        });
+    });
+
+    describe("catalog filter-parameter dependency selectors", () => {
+        const stateWith = (filterParameters: ICatalogFilterParametersState): any => ({
+            catalog: { filterParameters },
+        });
+
+        it("returns map and status when loaded", () => {
+            const map = { m1: [idRef("topN", "parameter")] };
+            const state = stateWith({ status: "loaded", byRef: map });
+            expect(selectCatalogFilterParameters(state)).toEqual(map);
+            expect(selectCatalogFilterParametersStatus(state)).toBe("loaded");
+        });
+
+        it("returns empty map and failed status", () => {
+            const state = stateWith({ status: "failed", byRef: {} });
+            expect(selectCatalogFilterParameters(state)).toEqual({});
+            expect(selectCatalogFilterParametersStatus(state)).toBe("failed");
         });
     });
 

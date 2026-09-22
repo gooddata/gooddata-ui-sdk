@@ -6,8 +6,8 @@ import { describe, expect, it, vi } from "vitest";
 
 import { type IInsight, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
+import { type ILayerTableDefinition } from "@gooddata/sdk-ui-ext";
 
-import { type ILayerTableDefinition } from "./insightToTable.js";
 import { type ILayeredTableViewProps, LayeredTableView } from "./LayeredTableView.js";
 
 // ---------------------------------------------------------------------------

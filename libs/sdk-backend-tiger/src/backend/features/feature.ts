@@ -474,13 +474,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableSeamlessIdpSwitch,
-            "enableSeamlessIdpSwitch",
-            "BOOLEAN",
-            FeatureFlagsValues.enableSeamlessIdpSwitch,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnablePreAggregationDatasets,
             "enablePreAggregationDatasets",
             "BOOLEAN",
@@ -793,13 +786,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableShellApplication_dashboards",
             "BOOLEAN",
             FeatureFlagsValues.enableShellApplication_dashboards,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableNullableJoins,
-            "enableNullableJoins",
-            "BOOLEAN",
-            FeatureFlagsValues.enableNullableJoins,
         ),
         ...loadFeature(
             features,

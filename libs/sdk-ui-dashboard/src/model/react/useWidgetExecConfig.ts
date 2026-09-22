@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 
-import { type IExecutionConfig, type IInsightDefinition, type ObjRef } from "@gooddata/sdk-model";
+import { type IExecutionConfig, type IInsight, type ObjRef } from "@gooddata/sdk-model";
 
 import { selectEffectiveDashboardTimezone } from "../store/meta/metaSelectors.js";
 import { resolveEffectiveParameterValuesForInsight } from "../store/tabs/parameters/parametersHelpers.js";
@@ -37,11 +37,11 @@ export function useDashboardExecConfig(): IExecutionConfig {
  * drill overlay execute consistently instead of each duplicating (and drifting) the logic.
  *
  * @param ref - source widget whose tab provides the parameter overrides
- * @param insight - the insight being executed (the drill target, not `ref`'s own insight); its metrics
- *   decide which parameters apply
+ * @param insight - the insight being executed (the drill target, not `ref`'s own insight); its
+ *   dependencies decide which parameters apply
  * @internal
  */
-export function useWidgetExecConfig(ref: ObjRef, insight: IInsightDefinition): IExecutionConfig {
+export function useWidgetExecConfig(ref: ObjRef, insight: IInsight): IExecutionConfig {
     const dashboardExecConfig = useDashboardExecConfig();
     const parameterContext = useDashboardSelector(selectWidgetParameterContext(ref));
     const parameterValues = useMemo(

@@ -5,19 +5,24 @@
 import { describe, expect, it } from "vitest";
 
 import {
+    type FilterContextItem,
     type IDashboard,
+    type IDashboardFilterReference,
     type IDashboardParameter,
     type IInsight,
     type IInsightParameterValue,
     type IParameterMetadataObject,
     type IdentifierRef,
+    type ObjRef,
     idRef,
     objRefToString,
+    serializeObjRef,
 } from "@gooddata/sdk-model";
 
 import { type RenderMode } from "../../../../types.js";
 import {
-    type CatalogMeasureParametersStatus,
+    type CatalogFilterParametersStatus,
+    type CatalogInsightParametersStatus,
     type CatalogParametersStatus,
 } from "../../catalog/catalogState.js";
 import { insightsAdapter } from "../../insights/insightsEntityAdapter.js";
@@ -166,10 +171,16 @@ interface IFullStateOptions {
     enableStringParameters?: boolean;
     insights?: IInsight[];
     renderMode?: RenderMode;
-    measureParametersStatus?: CatalogMeasureParametersStatus;
-    measureParameters?: Record<string, IdentifierRef[]>;
+    insightParametersStatus?: CatalogInsightParametersStatus;
+    insightParameters?: Record<string, IdentifierRef[]>;
+    filterParametersStatus?: CatalogFilterParametersStatus;
+    filterParameters?: Record<string, IdentifierRef[]>;
+    // dashboard filters of tab 1 (its applied filter context)
+    tabFilters?: FilterContextItem[];
+    widgetIgnoreDashboardFilters?: IDashboardFilterReference[];
     secondTabEntries?: IDashboardParameterEntry[];
     persistedDashboardHasTabs?: boolean;
+    widgetInsightRef?: ObjRef;
 }
 
 const TAB_ID = "tab-1";
@@ -186,10 +197,15 @@ function makeFullState({
     enableStringParameters = true,
     insights = [],
     renderMode = "view",
-    measureParametersStatus = "loaded",
-    measureParameters: byMetric = {},
+    insightParametersStatus = "loaded",
+    insightParameters: byInsight = {},
+    filterParametersStatus = "loaded",
+    filterParameters: byRef = {},
+    tabFilters,
+    widgetIgnoreDashboardFilters = [],
     secondTabEntries,
     persistedDashboardHasTabs = true,
+    widgetInsightRef = W1_INSIGHT_REF,
 }: IFullStateOptions): DashboardState {
     const persistedDashboard: Partial<IDashboard> | undefined =
         persistedDashboardParameters === undefined
@@ -213,6 +229,9 @@ function makeFullState({
                     localIdentifier: TAB_ID,
                     title: "Tab 1",
                     parameters: { parameters: entries },
+                    ...(tabFilters
+                        ? { filterContext: { filterContextDefinition: { filters: tabFilters } } }
+                        : {}),
                     layout: {
                         layout: {
                             type: "IDashboardLayout",
@@ -227,7 +246,8 @@ function makeFullState({
                                                 type: "insight",
                                                 identifier: "w-1",
                                                 ref: W1_REF,
-                                                insight: W1_INSIGHT_REF,
+                                                insight: widgetInsightRef,
+                                                ignoreDashboardFilters: widgetIgnoreDashboardFilters,
                                             },
                                         },
                                     ],
@@ -252,7 +272,8 @@ function makeFullState({
         backendCapabilities: BACKEND_CAPABILITIES,
         catalog: {
             parameters: { status: catalogStatus, parameters: workspaceParameters },
-            measureParameters: { status: measureParametersStatus, byMetric },
+            insightParameters: { status: insightParametersStatus, byInsight },
+            filterParameters: { status: filterParametersStatus, byRef },
         },
         meta: { persistedDashboard },
         config: { config: { settings: { enableParameters, enableStringParameters } } },
@@ -911,11 +932,9 @@ describe("parameter selectors (per tab)", () => {
         const targetMetricRef = idRef("m-target", "measure");
         // Source widget's own insight references no parameter; the drill target references topN.
         const sourceInsight: IInsight = makeInsightWithMetric(W1_INSIGHT_REF, sourceMetricRef);
-        const targetInsight: IInsight = makeInsightWithMetric(
-            idRef("drill-target", "insight"),
-            targetMetricRef,
-        );
-        const measureParameters = { [objRefToString(targetMetricRef)]: [topNRef] };
+        const targetInsightRef = idRef("drill-target", "insight");
+        const targetInsight: IInsight = makeInsightWithMetric(targetInsightRef, targetMetricRef);
+        const insightParameters = { [serializeObjRef(targetInsightRef)]: [topNRef] };
 
         // Mirrors useWidgetExecConfig: owning-tab context (by source ref) + the executed insight.
         const resolveAgainst = (insight: IInsight, state: DashboardState) =>
@@ -928,7 +947,7 @@ describe("parameter selectors (per tab)", () => {
             const state = makeFullState({
                 entries: [{ parameter: topNParameter, runtimeOverride: 1000 }],
                 insights: [sourceInsight],
-                measureParameters,
+                insightParameters,
             });
             // Old bug: against the source insight (no parameter ref), the override was dropped.
             expect(resolveAgainst(sourceInsight, state)).toEqual([]);
@@ -936,28 +955,170 @@ describe("parameter selectors (per tab)", () => {
             expect(resolveAgainst(targetInsight, state)).toEqual([{ ref: topNRef, value: 1000 }]);
         });
 
-        it("exposes the owning-tab entries and measure→parameter map keyed by the source widget ref", () => {
+        it("exposes the owning-tab entries and insight→parameter map keyed by the source widget ref", () => {
             const ctx = selectWidgetParameterContext(widgetRef)(
                 makeFullState({
                     entries: [{ parameter: topNParameter, runtimeOverride: 1000 }],
                     insights: [sourceInsight],
-                    measureParameters,
+                    insightParameters,
                 }),
             );
             expect(ctx?.entries).toEqual([{ parameter: topNParameter, runtimeOverride: 1000 }]);
-            expect(ctx?.measureParameters).toEqual(measureParameters);
+            expect(ctx?.insightParameters).toEqual(insightParameters);
         });
 
-        it("returns undefined while the measure→parameter map has not loaded", () => {
+        it("returns undefined while the insight→parameter map has not loaded", () => {
             const ctx = selectWidgetParameterContext(widgetRef)(
                 makeFullState({
                     entries: [{ parameter: topNParameter, runtimeOverride: 1000 }],
                     insights: [sourceInsight],
-                    measureParameters,
-                    measureParametersStatus: "loading",
+                    insightParameters,
+                    insightParametersStatus: "loading",
                 }),
             );
             expect(ctx).toBeUndefined();
+        });
+    });
+
+    describe("selectEffectiveParameterValuesForWidget (dashboard filter dependencies)", () => {
+        const widgetRef = W1_REF;
+        const sampleSizeRef = idRef("sampleSize", "parameter");
+        const sampleSizeParameter: IDashboardParameter = {
+            ref: sampleSizeRef,
+            parameterType: "NUMBER",
+            mode: "active",
+        };
+        const computedAttributeRef = idRef("ca1", "computedAttribute");
+        const metricRef = idRef("m1", "measure");
+        // the widget's own insight depends on nothing; every parameter below arrives through a dashboard filter
+        const plainInsight: IInsight = makeInsightWithMetric(W1_INSIGHT_REF, idRef("m0", "measure"));
+        const computedAttributeFilter: FilterContextItem = {
+            attributeFilter: {
+                displayForm: computedAttributeRef,
+                negativeSelection: false,
+                attributeElements: { values: [] },
+                localIdentifier: "af-ca",
+            },
+        };
+        const measureValueFilter: FilterContextItem = {
+            dashboardMeasureValueFilter: { measure: metricRef, localIdentifier: "mvf-m1" },
+        };
+        const filterParameters = {
+            [serializeObjRef(computedAttributeRef)]: [topNRef],
+            [serializeObjRef(metricRef)]: [sampleSizeRef],
+        };
+        const entries: IDashboardParameterEntry[] = [
+            { parameter: topNParameter, runtimeOverride: 25 },
+            { parameter: sampleSizeParameter, runtimeOverride: 99 },
+        ];
+
+        it("injects the parameter a computed-attribute dashboard filter depends on", () => {
+            const state = makeFullState({
+                entries,
+                insights: [plainInsight],
+                tabFilters: [computedAttributeFilter],
+                filterParameters,
+            });
+            expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([
+                { ref: topNRef, value: 25 },
+            ]);
+        });
+
+        it("injects the parameter a measure value filter's metric depends on", () => {
+            const state = makeFullState({
+                entries,
+                insights: [plainInsight],
+                tabFilters: [measureValueFilter],
+                filterParameters,
+            });
+            expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([
+                { ref: sampleSizeRef, value: 99 },
+            ]);
+        });
+
+        it("skips a dashboard filter the widget ignores", () => {
+            const state = makeFullState({
+                entries,
+                insights: [plainInsight],
+                tabFilters: [computedAttributeFilter, measureValueFilter],
+                filterParameters,
+                widgetIgnoreDashboardFilters: [{ type: "measureValueFilterReference", measure: metricRef }],
+            });
+            expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([
+                { ref: topNRef, value: 25 },
+            ]);
+        });
+
+        it("unions filter dependencies with the insight's own, listing a shared parameter once", () => {
+            const state = makeFullState({
+                entries,
+                insights: [plainInsight],
+                insightParameters: { [serializeObjRef(W1_INSIGHT_REF)]: [topNRef] },
+                tabFilters: [computedAttributeFilter, measureValueFilter],
+                filterParameters,
+            });
+            expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([
+                { ref: topNRef, value: 25 },
+                { ref: sampleSizeRef, value: 99 },
+            ]);
+        });
+
+        it("falls back to the insight's own dependencies while the filter map is not loaded", () => {
+            for (const filterParametersStatus of ["uninitialized", "loading", "failed"] as const) {
+                const state = makeFullState({
+                    entries,
+                    insights: [plainInsight],
+                    insightParameters: { [serializeObjRef(W1_INSIGHT_REF)]: [topNRef] },
+                    tabFilters: [measureValueFilter],
+                    filterParameters,
+                    filterParametersStatus,
+                });
+                expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([
+                    { ref: topNRef, value: 25 },
+                ]);
+            }
+        });
+
+        it("resolves the filter dependencies for a drill target executed by the widget too", () => {
+            const targetInsight = makeInsightWithMetric(
+                idRef("drill-target", "insight"),
+                idRef("m9", "measure"),
+            );
+            const state = makeFullState({
+                entries,
+                insights: [plainInsight, targetInsight],
+                tabFilters: [computedAttributeFilter],
+                filterParameters,
+            });
+            expect(
+                resolveEffectiveParameterValuesForInsight(
+                    selectWidgetParameterContext(widgetRef)(state),
+                    targetInsight,
+                ),
+            ).toEqual([{ ref: topNRef, value: 25 }]);
+        });
+
+        it("returns identical reference when an unrelated dashboard filter is added (defFingerprint stability)", () => {
+            const before = makeFullState({ entries, insights: [plainInsight], filterParameters });
+            const after = makeFullState({
+                entries,
+                insights: [plainInsight],
+                filterParameters,
+                tabFilters: [
+                    {
+                        attributeFilter: {
+                            displayForm: idRef("label-plain", "displayForm"),
+                            negativeSelection: false,
+                            attributeElements: { values: [] },
+                            localIdentifier: "af-plain",
+                        },
+                    },
+                ],
+            });
+            expect(selectEffectiveParameterValuesForWidget(widgetRef)(before)).toEqual([]);
+            expect(selectEffectiveParameterValuesForWidget(widgetRef)(after)).toBe(
+                selectEffectiveParameterValuesForWidget(widgetRef)(before),
+            );
         });
     });
 
@@ -966,13 +1127,25 @@ describe("parameter selectors (per tab)", () => {
         const sampleSizeRef = idRef("sampleSize", "parameter");
         const metricRef = idRef("m1", "measure");
         const insightWithTopN: IInsight = makeInsightWithMetric(W1_INSIGHT_REF, metricRef);
-        const depMapTopN = { m1: [topNRef] };
+        const depMapTopN = { [serializeObjRef(W1_INSIGHT_REF)]: [topNRef] };
 
         it("returns runtimeOverride when metric dependency map includes the parameter (insight.parameters empty)", () => {
             const state = makeFullState({
                 entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
                 insights: [insightWithTopN],
-                measureParameters: depMapTopN,
+                insightParameters: depMapTopN,
+            });
+            expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([
+                { ref: topNRef, value: 25 },
+            ]);
+        });
+
+        it("resolves dependencies when the widget insight ref has no type", () => {
+            const state = makeFullState({
+                entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
+                insights: [insightWithTopN],
+                insightParameters: depMapTopN,
+                widgetInsightRef: idRef("insight-1"),
             });
             expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([
                 { ref: topNRef, value: 25 },
@@ -988,7 +1161,7 @@ describe("parameter selectors (per tab)", () => {
                 entries: [{ parameter: topNParameter, runtimeOverride: 999 }],
                 workspaceParameters: [boundedTopN],
                 insights: [insightWithTopN],
-                measureParameters: depMapTopN,
+                insightParameters: depMapTopN,
             });
             expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([
                 { ref: topNRef, value: 10 },
@@ -1002,7 +1175,7 @@ describe("parameter selectors (per tab)", () => {
             const state = makeFullState({
                 entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
                 insights: [insightWithLegacyParam],
-                measureParameters: {},
+                insightParameters: {},
             });
             expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([]);
         });
@@ -1019,7 +1192,7 @@ describe("parameter selectors (per tab)", () => {
                     { parameter: sampleSize, runtimeOverride: 99 },
                 ],
                 insights: [insightWithTopN],
-                measureParameters: depMapTopN,
+                insightParameters: depMapTopN,
             });
             expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([
                 { ref: topNRef, value: 25 },
@@ -1030,7 +1203,7 @@ describe("parameter selectors (per tab)", () => {
             const stateWithoutUnrelated = makeFullState({
                 entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
                 insights: [insightWithTopN],
-                measureParameters: depMapTopN,
+                insightParameters: depMapTopN,
             });
             const sampleSize: IDashboardParameter = {
                 ref: sampleSizeRef,
@@ -1043,7 +1216,7 @@ describe("parameter selectors (per tab)", () => {
                     { parameter: sampleSize, runtimeOverride: 99 },
                 ],
                 insights: [insightWithTopN],
-                measureParameters: depMapTopN,
+                insightParameters: depMapTopN,
             });
             expect(selectEffectiveParameterValuesForWidget(widgetRef)(stateWithoutUnrelated)).toEqual(
                 selectEffectiveParameterValuesForWidget(widgetRef)(stateWithUnrelated),
@@ -1094,7 +1267,7 @@ describe("parameter selectors (per tab)", () => {
                     { parameter: sampleSize, runtimeOverride: 99 },
                 ],
                 insights: [multiMeasureInsight],
-                measureParameters: { m1: [topNRef], m2: [sampleSizeRef] },
+                insightParameters: { [serializeObjRef(W1_INSIGHT_REF)]: [topNRef, sampleSizeRef] },
             });
             const result = selectEffectiveParameterValuesForWidget(widgetRef)(state);
             expect(result).toEqual(
@@ -1146,56 +1319,18 @@ describe("parameter selectors (per tab)", () => {
             const state = makeFullState({
                 entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
                 insights: [arithAndSimpleInsight],
-                measureParameters: depMapTopN,
+                insightParameters: depMapTopN,
             });
             expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([
                 { ref: topNRef, value: 25 },
             ]);
         });
 
-        it("ignores inline / PoP / arithmetic measures without crashing (no dep contribution)", () => {
-            const popOnlyInsight: IInsight = {
-                insight: {
-                    ref: W1_INSIGHT_REF,
-                    identifier: "insight-1",
-                    uri: "/insights/insight-1",
-                    title: "insight-1",
-                    visualizationUrl: "local:test",
-                    buckets: [
-                        {
-                            items: [
-                                {
-                                    measure: {
-                                        localIdentifier: "pop",
-                                        definition: {
-                                            popMeasureDefinition: {
-                                                measureIdentifier: "x",
-                                                popAttribute: idRef("attr-x", "attribute"),
-                                            },
-                                        },
-                                    },
-                                },
-                            ],
-                        },
-                    ],
-                    filters: [],
-                    sorts: [],
-                    properties: {},
-                },
-            } as unknown as IInsight;
-            const state = makeFullState({
-                entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
-                insights: [popOnlyInsight],
-                measureParameters: depMapTopN,
-            });
-            expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([]);
-        });
-
         it("returns empty array when widget has no insight", () => {
             const missingRef = idRef("missing", "insight");
             const state = makeFullState({
                 entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
-                measureParameters: depMapTopN,
+                insightParameters: depMapTopN,
             });
             expect(selectEffectiveParameterValuesForWidget(missingRef)(state)).toEqual([]);
         });
@@ -1205,7 +1340,7 @@ describe("parameter selectors (per tab)", () => {
                 entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
                 enableParameters: false,
                 insights: [insightWithTopN],
-                measureParameters: depMapTopN,
+                insightParameters: depMapTopN,
             });
             expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([]);
         });
@@ -1214,8 +1349,8 @@ describe("parameter selectors (per tab)", () => {
             const state = makeFullState({
                 entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
                 insights: [insightWithTopN],
-                measureParameters: depMapTopN,
-                measureParametersStatus: "uninitialized",
+                insightParameters: depMapTopN,
+                insightParametersStatus: "uninitialized",
             });
             expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([]);
         });
@@ -1224,8 +1359,8 @@ describe("parameter selectors (per tab)", () => {
             const state = makeFullState({
                 entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
                 insights: [insightWithTopN],
-                measureParameters: {},
-                measureParametersStatus: "failed",
+                insightParameters: {},
+                insightParametersStatus: "failed",
             });
             expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([]);
         });
@@ -1237,7 +1372,7 @@ describe("parameter selectors (per tab)", () => {
             const state = makeFullState({
                 entries: [],
                 insights: [insightWithFallback],
-                measureParameters: depMapTopN,
+                insightParameters: depMapTopN,
             });
             expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([
                 { ref: topNRef, value: 5 },
@@ -1255,12 +1390,12 @@ describe("parameter selectors (per tab)", () => {
             const stateWithoutUnrelated = makeFullState({
                 entries: [],
                 insights: [insightWithOnlyRelevantParam],
-                measureParameters: depMapTopN,
+                insightParameters: depMapTopN,
             });
             const stateWithUnrelated = makeFullState({
                 entries: [],
                 insights: [insightWithUnrelatedExtra],
-                measureParameters: depMapTopN,
+                insightParameters: depMapTopN,
             });
             expect(selectEffectiveParameterValuesForWidget(widgetRef)(stateWithoutUnrelated)).toEqual(
                 selectEffectiveParameterValuesForWidget(widgetRef)(stateWithUnrelated),
@@ -1275,7 +1410,7 @@ describe("parameter selectors (per tab)", () => {
                 entries: [],
                 enableParameters: false,
                 insights: [insightWithFallback],
-                measureParameters: depMapTopN,
+                insightParameters: depMapTopN,
             });
             expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([]);
         });
@@ -1289,8 +1424,8 @@ describe("parameter selectors (per tab)", () => {
                 const state = makeFullState({
                     entries: [],
                     insights: [insightWithFallback],
-                    measureParameters: depMapTopN,
-                    measureParametersStatus: status,
+                    insightParameters: depMapTopN,
+                    insightParametersStatus: status,
                 });
                 expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([]);
             },
@@ -1307,7 +1442,7 @@ describe("parameter selectors (per tab)", () => {
             const state = makeFullState({
                 entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
                 insights: [multiMeasureInsight],
-                measureParameters: { m1: [topNRef], m2: [sampleSizeRef] },
+                insightParameters: { [serializeObjRef(W1_INSIGHT_REF)]: [topNRef, sampleSizeRef] },
             });
             const result = selectEffectiveParameterValuesForWidget(widgetRef)(state);
             expect(result).toEqual(
@@ -1326,7 +1461,7 @@ describe("parameter selectors (per tab)", () => {
             const state = makeFullState({
                 entries: [],
                 insights: [insightWithStaleParam],
-                measureParameters: { m1: [] },
+                insightParameters: { [serializeObjRef(W1_INSIGHT_REF)]: [] },
             });
             expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([]);
         });
@@ -1338,7 +1473,7 @@ describe("parameter selectors (per tab)", () => {
             const state = makeFullState({
                 entries: [{ parameter: topNParameter, runtimeOverride: undefined }],
                 insights: [insightWithFallback],
-                measureParameters: depMapTopN,
+                insightParameters: depMapTopN,
             });
             expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([
                 { ref: topNRef, value: 5 },
@@ -1352,7 +1487,7 @@ describe("parameter selectors (per tab)", () => {
             const state = makeFullState({
                 entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
                 insights: [insightWithFallback],
-                measureParameters: depMapTopN,
+                insightParameters: depMapTopN,
             });
             expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([
                 { ref: topNRef, value: 25 },
@@ -1410,10 +1545,11 @@ describe("parameter selectors (per tab)", () => {
                 backendCapabilities: BACKEND_CAPABILITIES,
                 catalog: {
                     parameters: { status: "loaded", parameters: [] },
-                    measureParameters: {
+                    insightParameters: {
                         status: "loaded",
-                        byMetric: { "metric-switcher": [topNRef] },
+                        byInsight: { [serializeObjRef(switcherChildInsightRef)]: [topNRef] },
                     },
+                    filterParameters: { status: "loaded", byRef: {} },
                 },
                 meta: { persistedDashboard: undefined },
                 config: { config: { settings: { enableParameters: true } } },
@@ -1428,7 +1564,7 @@ describe("parameter selectors (per tab)", () => {
     describe("selectReferencedInsightParameterValuesForWidget", () => {
         const widgetRef = W1_REF;
         const metricRef = idRef("m1", "measure");
-        const depMapTopN = { m1: [topNRef] };
+        const depMapTopN = { [serializeObjRef(W1_INSIGHT_REF)]: [topNRef] };
         const boundedTopN: IParameterMetadataObject = {
             ...topNWorkspace,
             definition: { type: "NUMBER", defaultValue: 10, constraints: { min: 0, max: 100 } },
@@ -1442,7 +1578,7 @@ describe("parameter selectors (per tab)", () => {
                 entries: [],
                 workspaceParameters: [boundedTopN],
                 insights: [insightWithBadParam],
-                measureParameters: depMapTopN,
+                insightParameters: depMapTopN,
             });
             expect(selectReferencedInsightParameterValuesForWidget(widgetRef)(state)).toEqual([
                 { ref: topNRef, value: 10 },
@@ -1457,7 +1593,7 @@ describe("parameter selectors (per tab)", () => {
                 entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
                 workspaceParameters: [boundedTopN],
                 insights: [insightWithParam],
-                measureParameters: depMapTopN,
+                insightParameters: depMapTopN,
             });
             expect(selectReferencedInsightParameterValuesForWidget(widgetRef)(state)).toEqual([
                 { ref: topNRef, value: 42 },
@@ -1554,13 +1690,14 @@ describe("parameter selectors (per tab)", () => {
                 backendCapabilities: BACKEND_CAPABILITIES,
                 catalog: {
                     parameters: { status: "loaded", parameters: workspaceParameters },
-                    measureParameters: {
+                    insightParameters: {
                         status: "loaded",
-                        byMetric: {
-                            "metric-A": [topNRef],
-                            "metric-B": [topNRef],
+                        byInsight: {
+                            [serializeObjRef(insightARef)]: [topNRef],
+                            [serializeObjRef(insightBRef)]: [topNRef],
                         },
                     },
+                    filterParameters: { status: "loaded", byRef: {} },
                 },
                 meta: { persistedDashboard: undefined },
                 config: { config: { settings: { enableParameters } } },
@@ -2012,7 +2149,7 @@ describe("parameter selectors (per tab)", () => {
                 const state = makeFullState({
                     entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
                     workspaceParameters: [topNWorkspace],
-                    measureParametersStatus: "uninitialized",
+                    insightParametersStatus: "uninitialized",
                 });
                 expect(selectExportEffectiveParameters(widgetIds)(state)).toEqual({
                     [TAB_ID]: [{ id: "topN", value: "25", title: "Top N", parameterType: "NUMBER" }],
@@ -2249,7 +2386,7 @@ describe("parameter reconciliation selectors", () => {
         // value hydrates into the runtime override, but the flag-off catalog omits its definition.
         const scenarioMetricRef = idRef("m-scenario", "measure");
         const insightWithScenario = makeInsightWithMetric(W1_INSIGHT_REF, scenarioMetricRef);
-        const scenarioDepMap = { "m-scenario": [scenarioRef] };
+        const scenarioDepMap = { [serializeObjRef(W1_INSIGHT_REF)]: [scenarioRef] };
         const stringEntry: IDashboardParameterEntry = {
             parameter: { ...scenarioParameter, value: "Budget" },
             runtimeOverride: "Budget",
@@ -2259,7 +2396,7 @@ describe("parameter reconciliation selectors", () => {
             const state = makeFullState({
                 entries: [stringEntry],
                 insights: [insightWithScenario],
-                measureParameters: scenarioDepMap,
+                insightParameters: scenarioDepMap,
                 enableStringParameters: false,
             });
             expect(selectEffectiveParameterValuesForWidget(W1_REF)(state)).toEqual([]);
@@ -2270,7 +2407,7 @@ describe("parameter reconciliation selectors", () => {
                 entries: [stringEntry],
                 workspaceParameters: [scenarioWorkspace],
                 insights: [insightWithScenario],
-                measureParameters: scenarioDepMap,
+                insightParameters: scenarioDepMap,
             });
             expect(selectEffectiveParameterValuesForWidget(W1_REF)(state)).toEqual([
                 { ref: scenarioRef, value: "Budget" },
@@ -2284,7 +2421,7 @@ describe("parameter reconciliation selectors", () => {
                 entries: [stringEntry, { parameter: topNParameter, runtimeOverride: 25 }],
                 workspaceParameters: [topNWorkspace],
                 insights: [mixedInsight],
-                measureParameters: { "m-scenario": [scenarioRef], "m-topn": [topNRef] },
+                insightParameters: { [serializeObjRef(W1_INSIGHT_REF)]: [scenarioRef, topNRef] },
                 enableStringParameters: false,
             });
             expect(selectEffectiveParameterValuesForWidget(W1_REF)(state)).toEqual([
@@ -2299,7 +2436,7 @@ describe("parameter reconciliation selectors", () => {
             const state = makeFullState({
                 entries: [],
                 insights: [insightWithStringValue],
-                measureParameters: scenarioDepMap,
+                insightParameters: scenarioDepMap,
                 enableStringParameters: false,
             });
             expect(selectEffectiveParameterValuesForWidget(W1_REF)(state)).toEqual([]);
@@ -2313,7 +2450,7 @@ describe("parameter reconciliation selectors", () => {
                 entries: [],
                 workspaceParameters: [scenarioWorkspace],
                 insights: [insightWithStringValue],
-                measureParameters: scenarioDepMap,
+                insightParameters: scenarioDepMap,
             });
             expect(selectEffectiveParameterValuesForWidget(W1_REF)(state)).toEqual([
                 { ref: scenarioRef, value: "Budget" },

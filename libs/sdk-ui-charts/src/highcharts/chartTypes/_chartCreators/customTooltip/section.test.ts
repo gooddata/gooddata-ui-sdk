@@ -29,7 +29,13 @@ const STRINGS: ITooltipLocalizedStrings = {
 function attributeIntersection(displayFormId: string, name: string, uri: string) {
     return {
         header: {
-            attributeHeader: { identifier: displayFormId, formOf: { identifier: displayFormId } },
+            attributeHeader: {
+                identifier: displayFormId,
+                // the lookup key is built from the localIdentifier; these fixtures reuse the
+                // display form id as one so the expected keys below stay readable
+                localIdentifier: displayFormId,
+                formOf: { identifier: displayFormId },
+            },
             attributeHeaderItem: { name, uri },
         },
     };

@@ -11,6 +11,7 @@ import { DefaultConversationDrawerHeader } from "./customized/ConversationDrawer
 import { DefaultConversationFooter } from "./customized/ConversationFooter.js";
 import { DefaultConversationHeader } from "./customized/ConversationHeader.js";
 import { DefaultConversationItem } from "./customized/ConversationItem.js";
+import { DefaultConversationVisualizationContent } from "./customized/ConversationVisualizationContent.js";
 import { DefaultDisclaimer } from "./customized/Disclaimer.js";
 import { DefaultFeedback } from "./customized/Feedback.js";
 import { DefaultFollowUpButtons } from "./customized/FollowUpButtons.js";
@@ -29,6 +30,7 @@ import {
     type IGenAIAssistantConversationFooterProps,
     type IGenAIAssistantConversationHeaderProps,
     type IGenAIAssistantConversationItemProps,
+    type IGenAIAssistantConversationVisualizationContentProps,
     type IGenAIAssistantFeedbackProps,
     type IGenAIAssistantFollowUpButtonsProps,
     type IGenAIAssistantFollowUpQuestionProps,
@@ -196,6 +198,23 @@ function MessageMultipartContentSlotRenderer(props: IGenAIAssistantMessageMultip
     return <DefaultMessageMultipartContent {...props} />;
 }
 
+function ConversationVisualizationContentSlotRenderer(
+    props: IGenAIAssistantConversationVisualizationContentProps,
+) {
+    const { slots } = useContext(customizationContext);
+    const ConversationVisualizationContentSlot = slots?.ConversationVisualizationContent;
+
+    if (ConversationVisualizationContentSlot) {
+        return (
+            <ConversationVisualizationContentSlot
+                Default={DefaultConversationVisualizationContent}
+                defaultProps={props}
+            />
+        );
+    }
+    return <DefaultConversationVisualizationContent {...props} />;
+}
+
 function FollowUpButtonsSlotRenderer(props: IGenAIAssistantFollowUpButtonsProps) {
     const { slots } = useContext(customizationContext);
     const FollowUpButtonsSlot = slots?.FollowUpButtons;
@@ -253,6 +272,7 @@ export function CustomizationProvider({ children, slots }: PropsWithChildren<Cus
             MessageErrorContentComponent: MessageErrorContentSlotRenderer,
             MessageReasoningContentComponent: MessageReasoningContentSlotRenderer,
             MessageMultipartContentComponent: MessageMultipartContentSlotRenderer,
+            ConversationVisualizationContentComponent: ConversationVisualizationContentSlotRenderer,
             FollowUpButtonsComponent: FollowUpButtonsSlotRenderer,
             FollowUpQuestionComponent: FollowUpQuestionSlotRenderer,
             FeedbackComponent: FeedbackSlotRenderer,

@@ -246,7 +246,7 @@ function analyzeItemUrl(baseUrl: string, workspaceId: string, featureFlags: ISet
     return withBaseUrl(baseUrl, `/analyze/#/${workspaceId}/reportId/edit`);
 }
 function canShowAnalyzeItem(workspacePermissions: IWorkspacePermissions): boolean {
-    return Boolean(workspacePermissions.canAnalyzeWorkspace === true);
+    return workspacePermissions.canAnalyzeWorkspace;
 }
 
 function dataItemUrl(

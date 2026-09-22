@@ -26,9 +26,9 @@ export function buildPointKey(intersection: IDrillEventIntersectionElement[]): s
 
     for (const element of intersection) {
         if (isDrillIntersectionAttributeItem(element.header)) {
-            const dfId = element.header.attributeHeader.identifier;
+            const localId = element.header.attributeHeader.localIdentifier;
             const uri = element.header.attributeHeaderItem.uri ?? "";
-            parts.push(buildKeySegment(dfId, uri));
+            parts.push(buildKeySegment(localId, uri));
         }
     }
 

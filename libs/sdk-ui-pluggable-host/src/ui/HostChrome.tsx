@@ -14,6 +14,7 @@ import {
 } from "@gooddata/sdk-pluggable-application-model";
 import { BackendProvider, resolveLocale } from "@gooddata/sdk-ui";
 import { AppHeaderNotifications } from "@gooddata/sdk-ui-application-header";
+import { GenAIAssistantMode } from "@gooddata/sdk-ui-gen-ai";
 import {
     AppHeader,
     DocumentHeader,
@@ -40,7 +41,6 @@ import { useAppPreloadOnHover } from "./useAppPreloadOnHover.js";
 import { useGenAiRightPanel } from "./useGenAiRightPanel.js";
 import { useHostChromePricing } from "./useHostChromePricing.js";
 import { useHostChromeSearch } from "./useHostChromeSearch.js";
-import { useHostChromeWorkspaceFeatures } from "./useHostChromeWorkspaceFeatures.js";
 import "./HostChrome.scss";
 // SDK packages with side-effecting CSS (declared in their own `sideEffects`)
 // must be imported explicitly by consumers; tree-shakers won't grab them otherwise.
@@ -51,6 +51,7 @@ import "@gooddata/sdk-ui-gen-ai/styles/css/main.css";
 import "@gooddata/sdk-ui-semantic-search/styles/css/main.css";
 import "@gooddata/sdk-ui-semantic-search/styles/css/internal.css";
 
+import { useHostChromeWorkspaceFeatures } from "./useHostChromeWorkspaceFeatures.js";
 import { AppHeaderWorkspacePicker } from "./WorkspacePicker.js";
 
 const LOGOUT_MENU_ITEM_KEY = "gs.header.logout";
@@ -81,6 +82,8 @@ export interface IHostChromeProps {
     showChatItem?: boolean;
     /** Whether the host-owned chat is currently open (for the header button's active state). */
     chatIsOpen?: boolean;
+    /** Chat mode for the host-owned chat. */
+    chatMode?: GenAIAssistantMode;
     /** Toggles the host-owned chat; wired to the header chat button. */
     onChatToggle?: () => void;
     /** Hands a question to the host-owned chat; wired to the header search "ask AI" action. */
@@ -109,6 +112,7 @@ export function HostChrome({
     notification = null,
     showChatItem = false,
     chatIsOpen = false,
+    chatMode = "docked",
     onChatToggle,
     onAskAiAssistant,
     appPageTitle,
@@ -280,17 +284,29 @@ export function HostChrome({
         features.settings["enableGenAiRightPanel"] as boolean,
         ctx.embeddingMode !== "none",
     );
-    const Wrapper = useCallback(({ children, chatIsOpen }: { children: ReactNode; chatIsOpen: boolean }) => {
-        return (
-            <main
-                className={e("content", {
-                    chatIsOpen,
-                })}
-            >
-                {children}
-            </main>
-        );
-    }, []);
+    const Wrapper = useCallback(
+        ({
+            children,
+            chatIsOpen,
+            mode,
+        }: {
+            children: ReactNode;
+            chatIsOpen: boolean;
+            mode: GenAIAssistantMode;
+        }) => {
+            return (
+                <main
+                    className={e("content", {
+                        chatIsOpen,
+                        mode,
+                    })}
+                >
+                    {children}
+                </main>
+            );
+        },
+        [],
+    );
 
     return (
         <HostIntlProvider locale={locale} additionalMessages={appMessages}>
@@ -346,7 +362,9 @@ export function HostChrome({
                                 />
                             </div>
                         )}
-                        <Wrapper chatIsOpen={Boolean(chatIsOpen && enablePanel)}>{children}</Wrapper>
+                        <Wrapper chatIsOpen={Boolean(chatIsOpen && enablePanel)} mode={chatMode}>
+                            {children}
+                        </Wrapper>
                         {pricing.element}
                         <HostNotificationDispatcher notification={notification} />
                     </div>

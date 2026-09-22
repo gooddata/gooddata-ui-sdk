@@ -442,26 +442,27 @@ export function App() {
 The `GenAIAssistant` component can be customized using the `slots` prop.
 The following slots are available:
 
-| Slot name                  | Description                                                      |
-| -------------------------- | ---------------------------------------------------------------- |
-| `LandingScreen`            | Custom screen rendered before any messages are sent.             |
-| `Disclaimer`               | Custom content rendered below the chat input.                    |
-| `AgentItem`                | Custom rendering for each agent in the agent chooser.            |
-| `ConversationDrawerHeader` | Custom rendering for the conversations drawer header.            |
-| `ConversationHeader`       | Custom content rendered above each conversation list group.      |
-| `ConversationFooter`       | Custom content rendered below each conversation list group.      |
-| `ConversationDateGrouping` | Custom rendering for date grouping rows in conversation history. |
-| `ConversationItem`         | Custom rendering for each conversation in the history list.      |
-| `UserMessage`              | Custom wrapper for user messages.                                |
-| `AssistantMessage`         | Custom wrapper for assistant messages.                           |
-| `MessageTextContent`       | Custom rendering for text message content.                       |
-| `MessageErrorContent`      | Custom rendering for error message content.                      |
-| `MessageReasoningContent`  | Custom rendering for assistant reasoning content.                |
-| `MessageMultipartContent`  | Custom rendering for complex messages with multiple parts.       |
-| `FollowUpButtons`          | Custom wrapper for the list of follow-up buttons.                |
-| `Feedback`                 | Custom rendering for message feedback buttons.                   |
-| `FollowUpQuestion`         | Custom rendering for an individual follow-up question.           |
-| `AgentChooser`             | Custom rendering for the whole agent chooser component.          |
+| Slot name                          | Description                                                                                                   |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `LandingScreen`                    | Custom screen rendered before any messages are sent.                                                          |
+| `Disclaimer`                       | Custom content rendered below the chat input.                                                                 |
+| `AgentItem`                        | Custom rendering for each agent in the agent chooser.                                                         |
+| `ConversationDrawerHeader`         | Custom rendering for the conversations drawer header.                                                         |
+| `ConversationHeader`               | Custom content rendered above each conversation list group.                                                   |
+| `ConversationFooter`               | Custom content rendered below each conversation list group.                                                   |
+| `ConversationDateGrouping`         | Custom rendering for date grouping rows in conversation history.                                              |
+| `ConversationItem`                 | Custom rendering for each conversation in the history list.                                                   |
+| `UserMessage`                      | Custom wrapper for user messages.                                                                             |
+| `AssistantMessage`                 | Custom wrapper for assistant messages.                                                                        |
+| `MessageTextContent`               | Custom rendering for text message content.                                                                    |
+| `MessageErrorContent`              | Custom rendering for error message content.                                                                   |
+| `MessageReasoningContent`          | Custom rendering for assistant reasoning content.                                                             |
+| `MessageMultipartContent`          | Custom rendering for complex messages with multiple parts.                                                    |
+| `ConversationVisualizationContent` | Custom rendering for visualization parts in multipart messages, including visualization menu item visibility. |
+| `FollowUpButtons`                  | Custom wrapper for the list of follow-up buttons.                                                             |
+| `Feedback`                         | Custom rendering for message feedback buttons.                                                                |
+| `FollowUpQuestion`                 | Custom rendering for an individual follow-up question.                                                        |
+| `AgentChooser`                     | Custom rendering for the whole agent chooser component.                                                       |
 
 ## Initial Assistant Experience
 
@@ -903,6 +904,7 @@ For granular control over message rendering, you can customize specific content 
 - `MessageErrorContent`: Customizes how errors are displayed within the chat.
 - `MessageReasoningContent`: Customizes the rendering of the assistant's reasoning or thought process.
 - `MessageMultipartContent`: Customizes the rendering of complex messages containing multiple parts.
+- `ConversationVisualizationContent`: Customizes rendering and menu actions of visualization parts in multipart content.
 
 Available components:
 
@@ -910,6 +912,7 @@ Available components:
 - `DefaultMessageErrorContent`
 - `DefaultMessageReasoningContent`
 - `DefaultMessageMultipartContent`
+- `DefaultConversationVisualizationContent`
 
 #### Message content slots props
 
@@ -947,6 +950,27 @@ Each content slot receives props specific to the content type:
 | `parts`      | `IChatConversationMultipartLocalPart[]` | The individual parts (text, images, etc.) to be render. |
 | `references` | `TextContentObject[]`                   | Shared metadata object references for all parts.        |
 
+**ConversationVisualizationContent**
+
+| Prop name       | Type                                                              | Description                                              |
+| --------------- | ----------------------------------------------------------------- | -------------------------------------------------------- |
+| `message`       | `IChatConversationItem`                                           | The original message containing the visualization part.  |
+| `part`          | `IChatConversationMultipartLocalPart`                             | The multipart part with visualization metadata.          |
+| `scenario`      | `IWhatIfRenderableScenario`                                       | What-if scenario context used when rendering comparison. |
+| `visualization` | `IChatConversationVisualisationContent["visualization"]`          | The visualization payload to render.                     |
+| `className`     | `string`                                                          | Additional CSS class name for custom styling.            |
+| `menuItems`     | `{ save?: boolean; openInAnalyze?: boolean; copyLink?: boolean }` | Controls visibility of visualization menu actions.       |
+
+Use `menuItems` to disable specific menu actions:
+
+| `menuItems` key | Type      | Description                                  |
+| --------------- | --------- | -------------------------------------------- |
+| `save`          | `boolean` | Show or hide the **Save as Insight** action. |
+| `openInAnalyze` | `boolean` | Show or hide the **Open in Analyze** action. |
+| `copyLink`      | `boolean` | Show or hide the **Copy Link** action.       |
+
+If all three menu actions are disabled (`false`), the visualization menu is hidden.
+
 ```tsx
 import {
     GenAIAssistant,
@@ -954,6 +978,7 @@ import {
     IGenAIAssistantMessageErrorContentProps,
     IGenAIAssistantMessageReasoningContentProps,
     IGenAIAssistantMessageMultipartContentProps,
+    IGenAIAssistantConversationVisualizationContentProps,
 } from "@gooddata/sdk-ui-gen-ai";
 import { ISlotProps } from "@gooddata/sdk-ui-kit";
 
@@ -990,6 +1015,19 @@ const CustomMultipartContent = ({
     </div>
 );
 
+const CustomVisualizationContent = ({
+    Default,
+    defaultProps,
+}: ISlotProps<IGenAIAssistantConversationVisualizationContentProps>) => (
+    <Default
+        {...defaultProps}
+        menuItems={{
+            ...defaultProps.menuItems,
+            copyLink: false,
+        }}
+    />
+);
+
 export const App = () => (
     <GenAIAssistant
         slots={{
@@ -997,6 +1035,7 @@ export const App = () => (
             MessageErrorContent: CustomErrorContent,
             MessageReasoningContent: CustomReasoningContent,
             MessageMultipartContent: CustomMultipartContent,
+            ConversationVisualizationContent: CustomVisualizationContent,
         }}
     />
 );

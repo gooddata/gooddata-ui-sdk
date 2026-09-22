@@ -35,6 +35,7 @@ type BucketItemInfo = {
         index: number;
         name: string;
         displayFormId?: string;
+        localIdentifier?: string;
         data?: string[] | number[];
         format?: string;
         uris?: string[];
@@ -111,7 +112,7 @@ function getAttributeBucketInfo(
     buckets: IBucket[],
     attributeDescriptors: IAttributeDescriptor[],
     bucketName: string,
-): { index: number; name: string; displayFormId?: string } | undefined {
+): { index: number; name: string; displayFormId?: string; localIdentifier?: string } | undefined {
     const bucket = buckets.find((item) => item.localIdentifier === bucketName);
     if (!bucket) {
         return undefined;
@@ -137,6 +138,7 @@ function getAttributeBucketInfo(
         displayFormId:
             attributeDescriptors[index].attributeHeader.identifier ??
             attributeDescriptors[index].attributeHeader.uri,
+        localIdentifier: attributeDescriptors[index].attributeHeader.localIdentifier,
     };
 }
 
@@ -204,6 +206,7 @@ function processAreaBucket(ctx: IAreaBucketProcessingContext): IGeoAreaItem | un
         index: areaBucket.index,
         name: areaBucket.name,
         displayFormId: areaBucket.displayFormId,
+        localIdentifier: areaBucket.localIdentifier,
         data,
         uris,
     };
@@ -232,6 +235,7 @@ function processSegmentBucket(ctx: IAreaBucketProcessingContext): IGeoSegmentIte
         index: segmentBucket.index,
         name: segmentBucket.name,
         displayFormId: segmentBucket.displayFormId,
+        localIdentifier: segmentBucket.localIdentifier,
         data,
         uris,
     };
@@ -259,6 +263,7 @@ function processTooltipTextBucket(ctx: IAreaBucketProcessingContext): IGeoAttrib
         index: tooltipTextBucket.index,
         name: tooltipTextBucket.name,
         displayFormId: tooltipTextBucket.displayFormId,
+        localIdentifier: tooltipTextBucket.localIdentifier,
         data,
         uris,
     };

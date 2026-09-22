@@ -13,6 +13,12 @@ export interface IGeoAreaItem extends IGeoDataItem {
      */
     displayFormId?: string;
     /**
+     * Execution-local identifier of the attribute this data came from. Unique within the
+     * execution, unlike {@link displayFormId}, so it is what identifies a row in the custom
+     * tooltip lookup - see `buildKeySegment`.
+     */
+    localIdentifier?: string;
+    /**
      * Geographic identifiers for areas (e.g., ISO country codes, region IDs)
      */
     data: string[];

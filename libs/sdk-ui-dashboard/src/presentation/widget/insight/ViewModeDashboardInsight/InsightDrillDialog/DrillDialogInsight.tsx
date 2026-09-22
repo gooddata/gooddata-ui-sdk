@@ -21,6 +21,11 @@ import {
     useBackendStrict,
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
+import {
+    convertInsightToLayerTables,
+    convertInsightToTableDefinition,
+    getGeoTableDisplayFormRefs,
+} from "@gooddata/sdk-ui-ext";
 
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import { useWidgetExecConfig } from "../../../../../model/react/useWidgetExecConfig.js";
@@ -40,9 +45,7 @@ import { selectDrillableItems } from "../../../../../model/store/drill/drillSele
 import { selectPermissions } from "../../../../../model/store/permissions/permissionsSelectors.js";
 import { selectPreloadedAttributesWithReferences } from "../../../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import { IntlWrapper } from "../../../../localization/IntlWrapper.js";
-import { getGeoDefaultDisplayFormRefs } from "../../geoDefaultDisplayFormRefs.js";
 import { InsightBody } from "../../InsightBody.js";
-import { convertInsightToLayerTables, convertInsightToTableDefinition } from "../../insightToTable.js";
 import { type IDashboardInsightProps } from "../../types.js";
 import { CustomError } from "../CustomError/CustomError.js";
 import { useInsightPositionStyle } from "../useInsightPositionStyle.js";
@@ -173,7 +176,7 @@ export function DrillDialogInsight({
 
     // Convert insight to table format if needed for drill dialog
     const finalInsight = useMemo(() => {
-        const defaultDisplayFormRefs = getGeoDefaultDisplayFormRefs(
+        const defaultDisplayFormRefs = getGeoTableDisplayFormRefs(
             syncedInsight,
             settings,
             catalogAttributes,

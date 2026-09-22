@@ -124,9 +124,7 @@ export function VisualizationListItem({
                     visualization={visualization}
                     isLast={isLast}
                     isFirst={isFirst}
-                    // the editor cannot read the visualization, so it cannot judge where in the order
-                    // the entry belongs; removal is the only change it can make
-                    shouldRenderActions={shouldRenderActions && !isRestricted}
+                    shouldRenderActions={shouldRenderActions}
                     onMenuButtonClick={onMenuButtonClick}
                     onVisualizationDeleted={onVisualizationDeleted}
                     onVisualizationPositionChange={onVisualizationPositionChange}

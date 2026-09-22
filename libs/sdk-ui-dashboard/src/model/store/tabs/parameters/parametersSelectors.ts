@@ -13,13 +13,17 @@ import {
     type ObjRef,
     type ParameterValue,
     areObjRefsEqual,
+    insightRef,
     objRefToString,
+    serializeObjRef,
 } from "@gooddata/sdk-model";
 
 import { createMemoizedSelector } from "../../_infra/selectors.js";
 import {
-    selectCatalogMeasureParameters,
-    selectCatalogMeasureParametersStatus,
+    selectCatalogFilterParameters,
+    selectCatalogFilterParametersStatus,
+    selectCatalogInsightParameters,
+    selectCatalogInsightParametersStatus,
     selectCatalogParameterByRef,
     selectCatalogParameters,
     selectCatalogParametersIsLoaded,
@@ -47,7 +51,7 @@ import {
     collectAppliedParameterValues,
     collectExportOverrides,
     collectParameterReconciliations,
-    collectReferencedParameterRefs,
+    collectWidgetFilterParameterRefs,
     computeParameterResetTargets,
     computeParameterResetValue,
     displayOverride,
@@ -57,6 +61,7 @@ import {
     smartPersistResolvedEntry,
     ungatedInsightParameterValues,
     ungatedTabEntries,
+    unionParameterRefs,
 } from "./parametersHelpers.js";
 import {
     type IDashboardParameterEntry,
@@ -70,6 +75,7 @@ const EMPTY_PARAMETER_VALUES: IInsightParameterValue[] = [];
 const EMPTY_TABS: IDashboardTab[] = [];
 const EMPTY_RESET_TARGETS: IInsightParameterValue[] = [];
 const EMPTY_RECONCILIATIONS: IParameterReconciliationEntry[] = [];
+const EMPTY_REFS: IdentifierRef[] = [];
 const EMPTY_WORKSPACE_PARAMETERS_BY_REF: Map<string, IParameterMetadataObject> = new Map();
 
 const selectParametersState = createSelector(
@@ -473,7 +479,10 @@ export const selectParameterReconciliationByRef: (
 
 interface IWidgetParameterContext {
     entries: IDashboardParameterEntry[];
-    measureParameters: Record<string, IdentifierRef[]>;
+    insightParameters: Record<string, IdentifierRef[]>;
+    // Parameters the widget depends on through the dashboard filters of its tab that it does not ignore.
+    // Resolved per widget: dashboard filters apply to whatever insight the widget executes.
+    filterParameterRefs: IdentifierRef[];
     // Workspace catalog keyed by ref, so out-of-range runtime values recover to the default at execution.
     workspaceParameterByRef: Map<string, IParameterMetadataObject>;
     // The executed insight can differ from the widget's own (e.g. a drill overlay).
@@ -482,7 +491,13 @@ interface IWidgetParameterContext {
 }
 
 /**
- * Owning-tab parameter entries and the metric → parameter map for a widget, keyed by ref.
+ * Owning-tab parameter entries, the insight → parameter map and the widget's dashboard-filter
+ * parameter refs for a widget, keyed by ref.
+ *
+ * @remarks
+ * The filter half degrades to "no filter dependencies" while its map is not loaded (or failed to load),
+ * so a dashboard whose filter dependency request failed still injects the parameters its insights
+ * depend on.
  *
  * @internal
  */
@@ -494,27 +509,40 @@ export const selectWidgetParameterContext: (
             selectAllTabsInsightWidgetContexts,
             selectEnableParameters,
             selectEnableStringParameters,
-            selectCatalogMeasureParameters,
-            selectCatalogMeasureParametersStatus,
+            selectCatalogInsightParameters,
+            selectCatalogInsightParametersStatus,
+            selectCatalogFilterParameters,
+            selectCatalogFilterParametersStatus,
             selectWorkspaceParametersByRef,
             (
                 contexts,
                 isEnabled,
                 isStringEnabled,
-                measureParameters,
-                measureParametersStatus,
+                insightParameters,
+                insightParametersStatus,
+                filterParameters,
+                filterParametersStatus,
                 workspaceParameterByRef,
             ) => {
-                if (!isEnabled || !ref || measureParametersStatus !== "loaded") {
+                if (!isEnabled || !ref || insightParametersStatus !== "loaded") {
                     return undefined;
                 }
                 const context = contexts.find((ctx) => areObjRefsEqual(ctx.widget.ref, ref));
                 if (!context) {
                     return undefined;
                 }
+                const filterParameterRefs =
+                    filterParametersStatus === "loaded"
+                        ? collectWidgetFilterParameterRefs(
+                              context.widget.ignoreDashboardFilters,
+                              context.tab,
+                              filterParameters,
+                          )
+                        : EMPTY_REFS;
                 return {
                     entries: ungatedTabEntries(context.tab, isStringEnabled),
-                    measureParameters,
+                    insightParameters,
+                    filterParameterRefs,
                     workspaceParameterByRef,
                     widgetInsightRef: context.widget.insight,
                     isStringEnabled,
@@ -530,13 +558,22 @@ const selectWidgetInsightAndReferencedRefs = createMemoizedSelector((ref: ObjRef
         if (!resolved) {
             return undefined;
         }
-        const { entries, measureParameters, workspaceParameterByRef, widgetInsightRef, isStringEnabled } =
-            resolved;
+        const {
+            entries,
+            insightParameters,
+            filterParameterRefs,
+            workspaceParameterByRef,
+            widgetInsightRef,
+            isStringEnabled,
+        } = resolved;
         const insight = insights.get(widgetInsightRef);
         if (!insight) {
             return undefined;
         }
-        const referencedRefs = collectReferencedParameterRefs(insight, measureParameters);
+        const referencedRefs = unionParameterRefs(
+            insightParameters[serializeObjRef(insightRef(insight))] ?? EMPTY_REFS,
+            filterParameterRefs,
+        );
         const insightParameterValues = ungatedInsightParameterValues(insight, isStringEnabled);
         return { insightParameterValues, referencedRefs, entries, workspaceParameterByRef };
     }),
@@ -546,14 +583,14 @@ const selectWidgetInsightAndReferencedRefs = createMemoizedSelector((ref: ObjRef
  * Returns the parameter values to inject into the widget's `IExecutionConfig.parameterValues`.
  *
  * @remarks
- * For each parameter referenced by the widget's metrics (via the dashboard-wide MAQL
- * metric → parameter dependency map), the value is resolved in this order:
+ * For each parameter the widget's insight depends on (via the dashboard-wide
+ * insight → parameter dependency map), the value is resolved in this order:
  *
  * 1. dashboard chip on the widget's tab with `runtimeOverride !== undefined`,
  * 2. else `insight.parameters` entry for that ref (AD-authored per-insight override),
  * 3. else nothing (backend uses workspace default).
  *
- * Parameters not referenced by the widget's metrics are excluded so that adding/removing
+ * Parameters the widget's insight does not depend on are excluded so that adding/removing
  * unrelated parameters does not invalidate the widget's `defFingerprint`. Returns `[]` when
  * `enableParameters` is off or while the dependency map has not been loaded.
  *
@@ -578,7 +615,7 @@ export const selectEffectiveParameterValuesForWidget: (
 
 /**
  * The insight half of {@link selectEffectiveParameterValuesForWidget}: insight-authored values for
- * the metric-referenced refs, flag-gated and ref-filtered, with no dashboard chip overrides.
+ * the refs the insight depends on, flag-gated and ref-filtered, with no dashboard chip overrides.
  *
  * @remarks
  * Raw CSV export inlines a resolved AFM, so it must carry parameters explicitly rather than letting

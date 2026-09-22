@@ -169,6 +169,7 @@ import { IKpiComparisonTypeComparison } from '@gooddata/sdk-model';
 import { IKpiWidget } from '@gooddata/sdk-model';
 import { IKpiWidgetConfiguration } from '@gooddata/sdk-model';
 import { IKpiWidgetDefinition } from '@gooddata/sdk-model';
+import { ILayerTableDefinition } from '@gooddata/sdk-ui-ext';
 import { IListedDashboard } from '@gooddata/sdk-model';
 import { ILoadingProps } from '@gooddata/sdk-ui';
 import { ILocale } from '@gooddata/sdk-ui';
@@ -573,11 +574,17 @@ export const catalogActions: {
     updateAttributeHierarchy: ActionCreatorWithPayload<ICatalogAttributeHierarchy, "catalog/updateAttributeHierarchy">;
     deleteAttributeHierarchy: ActionCreatorWithPayload<ICatalogAttributeHierarchy, "catalog/deleteAttributeHierarchy">;
     setCatalogParameters: ActionCreatorWithPayload<ICatalogParametersState, "catalog/setCatalogParameters">;
-    setCatalogMeasureParameters: ActionCreatorWithPayload<ICatalogMeasureParametersState, "catalog/setCatalogMeasureParameters">;
+    setCatalogInsightParameters: ActionCreatorWithPayload<ICatalogInsightParametersState, "catalog/setCatalogInsightParameters">;
+    mergeCatalogInsightParameters: ActionCreatorWithPayload<Record<string, IdentifierRef[]>, "catalog/mergeCatalogInsightParameters">;
+    setCatalogFilterParameters: ActionCreatorWithPayload<ICatalogFilterParametersState, "catalog/setCatalogFilterParameters">;
+    mergeCatalogFilterParameters: ActionCreatorWithPayload<Record<string, IdentifierRef[]>, "catalog/mergeCatalogFilterParameters">;
 };
 
 // @alpha
-export type CatalogMeasureParametersStatus = "uninitialized" | "loading" | "loaded" | "failed";
+export type CatalogFilterParametersStatus = "uninitialized" | "loading" | "loaded" | "failed";
+
+// @alpha
+export type CatalogInsightParametersStatus = "uninitialized" | "loading" | "loaded" | "failed";
 
 // @alpha
 export type CatalogParametersStatus = "uninitialized" | "loading" | "loaded" | "failed" | "gated-off";
@@ -592,7 +599,8 @@ export type CatalogState = {
     computedAttributes?: ICatalogComputedAttribute[];
     dateHierarchyTemplates?: IDateHierarchyTemplate[];
     parameters: ICatalogParametersState;
-    measureParameters: ICatalogMeasureParametersState;
+    insightParameters: ICatalogInsightParametersState;
+    filterParameters: ICatalogFilterParametersState;
 };
 
 // @public
@@ -3168,11 +3176,19 @@ export interface ICancelRenamingDashboardTabPayload {
 }
 
 // @alpha
-export interface ICatalogMeasureParametersState {
+export interface ICatalogFilterParametersState {
     // (undocumented)
-    byMetric: Record<string, IdentifierRef[]>;
+    byRef: Record<string, IdentifierRef[]>;
     // (undocumented)
-    status: CatalogMeasureParametersStatus;
+    status: CatalogFilterParametersStatus;
+}
+
+// @alpha
+export interface ICatalogInsightParametersState {
+    // (undocumented)
+    byInsight: Record<string, IdentifierRef[]>;
+    // (undocumented)
+    status: CatalogInsightParametersStatus;
 }
 
 // @alpha
@@ -7149,13 +7165,7 @@ export interface IKpiWidgetComparison {
     comparisonType?: IKpiComparisonTypeComparison;
 }
 
-// @alpha
-export interface ILayerTableDefinition {
-    layerId: string;
-    layerName: string;
-    layerType: string;
-    tableInsight: IInsight;
-}
+export { ILayerTableDefinition }
 
 // @beta
 export interface ILayoutCoordinates {
@@ -11330,7 +11340,7 @@ export type RestrictedFiltersPlaceholderComponentProvider = () => CustomRestrict
 export type RestrictedPlaceholderComponentProvider = (widget: IInsightWidget) => CustomRestrictedPlaceholderComponent;
 
 // @alpha
-export function RestrictedPlaceholderContent(_props: IRestrictedPlaceholderContentProps): JSX.Element;
+export function RestrictedPlaceholderContent(input: IRestrictedPlaceholderContentProps): JSX.Element;
 
 // @alpha
 export function revertLastLayoutChange(correlationId?: string): IUndoLayoutChanges;
@@ -11788,14 +11798,20 @@ export const selectCatalogDateDatasets: DashboardSelector<ICatalogDateDataset[]>
 // @public (undocumented)
 export const selectCatalogFacts: DashboardSelector<ICatalogFact[]>;
 
+// @alpha
+export const selectCatalogFilterParameters: DashboardSelector<Record<string, IdentifierRef[]>>;
+
+// @alpha
+export const selectCatalogFilterParametersStatus: DashboardSelector<CatalogFilterParametersStatus>;
+
+// @alpha
+export const selectCatalogInsightParameters: DashboardSelector<Record<string, IdentifierRef[]>>;
+
+// @alpha
+export const selectCatalogInsightParametersStatus: DashboardSelector<CatalogInsightParametersStatus>;
+
 // @alpha (undocumented)
 export const selectCatalogIsLoaded: DashboardSelector<boolean>;
-
-// @alpha
-export const selectCatalogMeasureParameters: DashboardSelector<Record<string, IdentifierRef[]>>;
-
-// @alpha
-export const selectCatalogMeasureParametersStatus: DashboardSelector<CatalogMeasureParametersStatus>;
 
 // @public (undocumented)
 export const selectCatalogMeasures: DashboardSelector<ICatalogMeasure[]>;
