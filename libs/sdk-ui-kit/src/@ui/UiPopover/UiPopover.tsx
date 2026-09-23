@@ -87,8 +87,8 @@ export interface IUiPopoverProps {
     optimalPlacement?: boolean;
     closeText?: string;
     closeVisible?: boolean;
-    initialFocus?: RefObject<HTMLElement> | string;
-    returnFocusTo?: RefObject<HTMLElement> | string;
+    initialFocus?: RefObject<HTMLElement | null> | string;
+    returnFocusTo?: RefObject<HTMLElement | null> | string;
     returnFocusAfterClose?: boolean;
     /**
      * customize if you know that dialog content has some custom focusIn logic which modifies focused element, eg. table which shifts its focus from table wrapper to first table cell

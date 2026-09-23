@@ -158,6 +158,7 @@ export {
 } from "./_staging/dateFilterConfig/dateFilterOptionMapping.js";
 export { convertDateFilterConfigToDateFilterOptions } from "./_staging/dateFilterConfig/dateFilterConfigConverters.js";
 export { dateFilterOptionToDashboardDateFilter } from "./_staging/dashboard/dashboardFilterConverter.js";
+export { dashboardFilterToFilterContextItem } from "./_staging/dashboard/dashboardFilterContext.js";
 export {
     attributeFilterToDashboardAttributeFilter,
     dashboardAttributeFilterToAttributeFilter,

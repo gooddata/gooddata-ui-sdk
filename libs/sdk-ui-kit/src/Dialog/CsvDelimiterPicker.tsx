@@ -214,10 +214,15 @@ export function CsvDelimiterPicker({
 
     const customInputLabel = intl.formatMessage(messages.customInput);
     const menuAriaLabel = intl.formatMessage(messages.menuLabel);
+    const buttonLabel = getButtonLabel(presetLabels, selectedPreset);
 
     return (
         <ValidationContextStore value={validationContextValue}>
-            {label ? <label htmlFor={buttonId}>{label}</label> : null}
+            {label ? (
+                <label className="gd-label gd-csv-delimiter-picker-field-label" htmlFor={buttonId}>
+                    {label}
+                </label>
+            ) : null}
             <div
                 className={cx("gd-csv-delimiter-picker-controls", {
                     "gd-csv-delimiter-picker-controls--column": layout === "column",
@@ -229,13 +234,14 @@ export function CsvDelimiterPicker({
                         <DropdownButton
                             id={buttonId}
                             className="s-csv-delimiter-dropdown"
-                            value={getButtonLabel(presetLabels, selectedPreset)}
+                            value={buttonLabel}
                             isOpen={isOpen}
                             onClick={toggleDropdown}
                             buttonRef={ref}
                             dropdownId={dropdownId}
                             accessibilityConfig={{
-                                ...(label ? {} : { ariaLabel: menuAriaLabel }),
+                                ariaLabel: `${label ?? menuAriaLabel} ${buttonLabel}`,
+                                role: "button",
                                 popupType: "menu",
                             }}
                             isFullWidth={layout === "column"}
@@ -246,6 +252,7 @@ export function CsvDelimiterPicker({
                             items={menuItems.map((item) => ({
                                 ...item,
                                 isSelected: selectedPreset === item.data,
+                                selectionRole: "radio",
                             }))}
                             itemDataTestId={(item) => `s-csv-delimiter-${item.id}`}
                             onSelect={(item) => {

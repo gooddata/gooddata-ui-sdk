@@ -172,6 +172,7 @@ function tab(tabId: string, filter: FilterContextItem): IAutomationFiltersTab {
         tabId,
         tabTitle: tabId,
         availableFilters: [filter],
+        selectableFilters: [filter],
         defaultSelectedFilters: [filter],
         lockedFilters: [],
         hiddenFilters: [],

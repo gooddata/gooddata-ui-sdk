@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-kit: Dropdown, UiDropdown and UiPopover accept a nullable ref for initialFocus and returnFocusTo, which is what useRef produces and what the focus manager behind them already took.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

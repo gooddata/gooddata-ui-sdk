@@ -820,7 +820,7 @@ export abstract class DecoratedWorkspaceInsightsService implements IWorkspaceIns
     // (undocumented)
     getInsightWithAddedFilters<T extends IInsightDefinition>(insight: T, filters: IFilter[]): Promise<T>;
     // (undocumented)
-    getInsightWithCatalogItems(ref: ObjRef): Promise<{
+    getInsightWithCatalogItems(ref: ObjRef, options?: IGetInsightOptions): Promise<{
         insight: IInsight;
         catalogItems: Array<ICatalogFact | ICatalogMeasure | ICatalogAttribute>;
     }>;

@@ -3,6 +3,7 @@
 import { createSelector } from "@reduxjs/toolkit";
 
 import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
+import type { IUnavailableDashboardReference } from "@gooddata/sdk-backend-spi";
 import {
     type FilterContextItem,
     type IDashboardAttributeFilterConfig,
@@ -177,27 +178,45 @@ export const selectExecutableDashboardFiltersByTab: DashboardSelector<Record<str
         ),
     );
 
+function withCommonDateFilterAndWithoutCrossFiltering(
+    dashboardFilters: FilterContextItem[],
+    crossFilteringItems: ICrossFilteringItem[],
+): FilterContextItem[] {
+    const dashboardFiltersWithCommonDateFilter = dashboardFilters.some(isDashboardCommonDateFilter)
+        ? dashboardFilters
+        : [commonDateFilter, ...dashboardFilters];
+
+    return removeCrossFilteringFilters(dashboardFiltersWithCommonDateFilter, crossFilteringItems);
+}
+
 /**
+ * Dashboard filters safe to execute with: the ones the current user may not read are left out.
+ *
  * @alpha
  */
-export const selectDashboardFiltersWithoutCrossFiltering: DashboardSelector<FilterContextItem[]> =
+export const selectExecutableDashboardFiltersWithoutCrossFiltering: DashboardSelector<FilterContextItem[]> =
     createSelector(
         selectExecutableDashboardFilters,
         selectCrossFilteringItems,
-        (dashboardFilters, crossFilteringItems) => {
-            const dashboardFiltersWithCommonDateFilter = dashboardFilters.some(isDashboardCommonDateFilter)
-                ? dashboardFilters
-                : [commonDateFilter, ...dashboardFilters];
+        withCommonDateFilterAndWithoutCrossFiltering,
+    );
 
-            return removeCrossFilteringFilters(dashboardFiltersWithCommonDateFilter, crossFilteringItems);
-        },
+/**
+ * Same as {@link selectExecutableDashboardFiltersWithoutCrossFiltering}, but keeping the filters the
+ * current user may not read, which an automation stores like any other.
+ */
+export const selectAllDashboardFiltersWithoutCrossFiltering: DashboardSelector<FilterContextItem[]> =
+    createSelector(
+        selectFilterContextFilters,
+        selectCrossFilteringItems,
+        withCommonDateFilterAndWithoutCrossFiltering,
     );
 
 /**
  * @alpha
  */
 export const selectDashboardHiddenFilters: DashboardSelector<FilterContextItem[]> = createSelector(
-    selectDashboardFiltersWithoutCrossFiltering,
+    selectExecutableDashboardFiltersWithoutCrossFiltering,
     selectDateFilterConfigOverrides,
     selectDateFilterConfigsOverrides,
     selectAttributeFilterConfigsOverrides,
@@ -221,7 +240,7 @@ export const selectDashboardHiddenFilters: DashboardSelector<FilterContextItem[]
  * @alpha
  */
 export const selectDashboardLockedFilters: DashboardSelector<FilterContextItem[]> = createSelector(
-    selectDashboardFiltersWithoutCrossFiltering,
+    selectExecutableDashboardFiltersWithoutCrossFiltering,
     selectDateFilterConfigOverrides,
     selectDateFilterConfigsOverrides,
     selectAttributeFilterConfigsOverrides,
@@ -246,7 +265,7 @@ export const selectDashboardLockedFilters: DashboardSelector<FilterContextItem[]
  */
 export const selectAutomationAvailableDashboardFilters: DashboardSelector<FilterContextItem[]> =
     createSelector(
-        selectDashboardFiltersWithoutCrossFiltering,
+        selectAllDashboardFiltersWithoutCrossFiltering,
         selectDateFilterConfigOverrides,
         selectDateFilterConfigsOverrides,
         selectAttributeFilterConfigsOverrides,
@@ -275,9 +294,8 @@ export const selectAutomationAvailableDashboardFilters: DashboardSelector<Filter
  */
 export const selectAutomationDefaultSelectedFilters: DashboardSelector<FilterContextItem[]> = createSelector(
     selectAutomationAvailableDashboardFilters,
-    (availableDashboardFilters) => {
-        return removeEmptyDashboardFilters(availableDashboardFilters);
-    },
+    selectUnavailableObjects,
+    automationDefaultSelectedFilters,
 );
 
 /**
@@ -315,17 +333,29 @@ const removeCrossFilteringFilters = (
     });
 };
 
-export function removeEmptyDashboardFilters(filters: FilterContextItem[] = []) {
-    return filters.filter((filter) => {
-        if (isDashboardAttributeFilterItem(filter)) {
-            return !isAllValuesDashboardAttributeFilter(filter);
-        }
-        if (isDashboardMeasureValueFilter(filter)) {
-            return !isAllDashboardMeasureValueFilter(filter);
-        }
+function isEmptyDashboardFilter(filter: FilterContextItem) {
+    if (isDashboardAttributeFilterItem(filter)) {
+        return isAllValuesDashboardAttributeFilter(filter);
+    }
+    if (isDashboardMeasureValueFilter(filter)) {
+        return isAllDashboardMeasureValueFilter(filter);
+    }
 
-        return true;
-    });
+    return false;
+}
+
+/**
+ * Preselects the filters a new automation starts with. A restricted filter is left out, because the
+ * user cannot review what it filters by.
+ */
+function automationDefaultSelectedFilters(
+    filters: FilterContextItem[],
+    unavailableObjects: IUnavailableDashboardReference[],
+) {
+    return filters.filter(
+        (filter) =>
+            !isEmptyDashboardFilter(filter) && !isDashboardFilterRestricted(filter, unavailableObjects),
+    );
 }
 
 function removeHiddenFilters(
@@ -426,7 +456,8 @@ export const isFilterContextItemLocked = (
  */
 export const selectAutomationFiltersByTab: DashboardSelector<IAutomationFiltersTab[]> = createSelector(
     selectTabs,
-    selectExecutableDashboardFiltersByTab,
+    selectFiltersByTab,
+    selectUnavailableObjects,
     selectDateFilterConfigOverridesByTab,
     selectDateFilterConfigsOverridesByTab,
     selectAttributeFilterConfigsOverridesByTab,
@@ -434,6 +465,7 @@ export const selectAutomationFiltersByTab: DashboardSelector<IAutomationFiltersT
     (
         tabs,
         filtersByTab,
+        unavailableObjects,
         dateFilterConfigByTab,
         dateFilterConfigsByTab,
         attributeFilterConfigsByTab,
@@ -476,23 +508,34 @@ export const selectAutomationFiltersByTab: DashboardSelector<IAutomationFiltersT
             // Get available filters (hidden removed)
             const availableFilters = removeHiddenFilters(filtersWithCommonDate, filterConfigurations);
 
+            // A restricted filter cannot gate the user's automation, because they can neither see
+            // nor change it.
+            const unrestrictedFilters = filtersWithCommonDate.filter(
+                (filter) => !isDashboardFilterRestricted(filter, unavailableObjects),
+            );
+            const selectableFilters = removeHiddenFilters(unrestrictedFilters, filterConfigurations);
+
             // Get locked filters
-            const lockedFilters = filtersWithCommonDate.filter((filter) =>
+            const lockedFilters = unrestrictedFilters.filter((filter) =>
                 isFilterContextItemLocked(filter, filterConfigurations),
             );
 
             // Get hidden filters
-            const hiddenFilters = filtersWithCommonDate.filter((filter) =>
+            const hiddenFilters = unrestrictedFilters.filter((filter) =>
                 isFilterContextItemHidden(filter, filterConfigurations),
             );
 
             // Get default selected filters (noop "All" filters removed — attribute and MVF)
-            const defaultSelectedFilters = removeEmptyDashboardFilters(availableFilters);
+            const defaultSelectedFilters = automationDefaultSelectedFilters(
+                availableFilters,
+                unavailableObjects,
+            );
 
             return {
                 tabId,
                 tabTitle,
                 availableFilters,
+                selectableFilters,
                 defaultSelectedFilters,
                 lockedFilters,
                 hiddenFilters,

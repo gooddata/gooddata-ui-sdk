@@ -5,9 +5,12 @@
 import { describe, expect, it } from "vitest";
 
 import { type IUnavailableDashboardReference } from "@gooddata/sdk-backend-spi";
-import { type FilterContextItem, idRef } from "@gooddata/sdk-model";
+import { type FilterContextItem, type IdentifierRef, idRef } from "@gooddata/sdk-model";
 
 import {
+    selectAllDashboardFiltersWithoutCrossFiltering,
+    selectAutomationAvailableDashboardFilters,
+    selectAutomationDefaultSelectedFilters,
     selectExecutableDashboardFilters,
     selectReportedRestrictedDashboardFilters,
     selectRestrictedDashboardFilterCount,
@@ -21,11 +24,15 @@ const combinerOf = (selector: unknown) =>
 
 const restrictedLabel = idRef("restricted-label", "displayForm");
 
-function attributeFilter(localIdentifier: string, displayForm = idRef("label", "displayForm")) {
+function attributeFilter(
+    localIdentifier: string,
+    displayForm = idRef("label", "displayForm"),
+    negativeSelection = false,
+) {
     return {
         attributeFilter: {
             displayForm,
-            negativeSelection: false,
+            negativeSelection,
             attributeElements: { uris: [] },
             localIdentifier,
         },
@@ -95,5 +102,35 @@ describe("restricted filter selectors", () => {
     it("counts what it reports", () => {
         expect(combinerOf(selectRestrictedDashboardFilterCount)([forbiddenFilter])).toBe(1);
         expect(combinerOf(selectRestrictedDashboardFilterCount)([])).toBe(0);
+    });
+});
+
+// negativeSelection with no elements is the "all values" noop
+const allValuesFilter = (localIdentifier: string, displayForm?: IdentifierRef) =>
+    attributeFilter(localIdentifier, displayForm, true);
+
+describe("automation filter selectors", () => {
+    it("keeps a restricted filter available to an automation, unlike the executable ones", () => {
+        const automationFilters = combinerOf(selectAllDashboardFiltersWithoutCrossFiltering)(
+            [visibleFilter, forbiddenFilter],
+            [],
+        );
+        expect(automationFilters).toEqual(expect.arrayContaining([visibleFilter, forbiddenFilter]));
+
+        expect(
+            combinerOf(selectAutomationAvailableDashboardFilters)(automationFilters, undefined, [], []),
+        ).toEqual(expect.arrayContaining([visibleFilter, forbiddenFilter]));
+    });
+
+    it("leaves a restricted filter out of a new automation's preselection", () => {
+        const emptyReadable = allValuesFilter("empty-readable");
+        const emptyForbidden = allValuesFilter("empty-forbidden", restrictedLabel);
+
+        expect(
+            combinerOf(selectAutomationDefaultSelectedFilters)(
+                [visibleFilter, forbiddenFilter, emptyReadable, emptyForbidden],
+                unavailable,
+            ),
+        ).toEqual([visibleFilter]);
     });
 });

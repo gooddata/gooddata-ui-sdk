@@ -7,7 +7,7 @@ import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
 import { type IAnalyticalBackend, type IFilterBaseOptions } from "@gooddata/sdk-backend-spi";
-import { type IInsight, uriRef } from "@gooddata/sdk-model";
+import { type IInsight, type ISemanticSearchResultItem, uriRef } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 
 import { InsightPicker } from "./InsightPicker.js";
@@ -44,6 +44,16 @@ function insight(index: number): IInsight {
 
 const allInsights = Array.from({ length: TOTAL_INSIGHTS }, (_, index) => insight(index));
 
+/** Held by no insight the backend can match, so only the AI endpoint can put it in the list. */
+const SUGGESTION_TITLE = "Quarterly revenue";
+const suggestion = {
+    id: "quarterly-revenue",
+    type: "visualization",
+    title: SUGGESTION_TITLE,
+    description: "",
+    visualizationUrl: "local:table",
+} as unknown as ISemanticSearchResultItem;
+
 interface IInsightsQueryStub {
     withSize: () => IInsightsQueryStub;
     withPage: (page: number) => IInsightsQueryStub;
@@ -53,10 +63,35 @@ interface IInsightsQueryStub {
     query: () => Promise<{ items: IInsight[]; totalCount: number }>;
 }
 
-function createBackend({ insightsAuthor }: { insightsAuthor: string }) {
+function createBackend({
+    insightsAuthor,
+    semanticResults = [],
+}: {
+    insightsAuthor: string;
+    semanticResults?: ISemanticSearchResultItem[];
+}) {
     const createdByFilters: (string[] | undefined)[] = [];
     const queries: { createdBy: string[] | undefined; tags: string[] | undefined }[] = [];
     const searchFilters: (string | undefined)[] = [];
+    const semanticQuestions: string[] = [];
+
+    const getSemanticSearchQuery = () => {
+        const query = {
+            withQuestion: (question: string) => {
+                semanticQuestions.push(question);
+                return query;
+            },
+            withDeepSearch: () => query,
+            withObjectTypes: () => query,
+            withLimit: () => query,
+            withAllowedRelationshipTypes: () => query,
+            withIncludeTags: () => query,
+            withExcludeTags: () => query,
+            query: () => Promise.resolve({ results: semanticResults, relationships: [] }),
+        };
+
+        return query;
+    };
 
     const getInsightsQuery = (): IInsightsQueryStub => {
         let page = 0;
@@ -115,15 +150,22 @@ function createBackend({ insightsAuthor }: { insightsAuthor: string }) {
                     getCreatedBy: () => Promise.resolve({ users: [] }),
                     getTags: () => Promise.resolve({ tags: [] }),
                 }),
+                getSemanticSearchQuery,
             }),
         }),
     } as unknown as IAnalyticalBackend;
 
-    return { backend, createdByFilters, queries, searchFilters };
+    return { backend, createdByFilters, queries, searchFilters, semanticQuestions };
 }
 
 /** Mirrors the consumers: the picker body is mounted only while open, its state is not. */
-function TestPicker({ backend }: { backend: IAnalyticalBackend }) {
+function TestPicker({
+    backend,
+    enableSemanticSearch = false,
+}: {
+    backend: IAnalyticalBackend;
+    enableSemanticSearch?: boolean;
+}) {
     const pickerState = useInsightPickerState(AUTHOR);
     const [isOpen, setIsOpen] = useState(true);
 
@@ -139,7 +181,7 @@ function TestPicker({ backend }: { backend: IAnalyticalBackend }) {
                     <InsightPicker
                         {...pickerState}
                         author={AUTHOR}
-                        enableSemanticSearch={false}
+                        enableSemanticSearch={enableSemanticSearch}
                         onSelect={() => {}}
                     />
                 ) : null}
@@ -184,11 +226,84 @@ function PlainControlledPicker({
     );
 }
 
+/** A caller that starts out saying nothing about semantic search, then allows it. */
+function DefaultPicker({ backend }: { backend: IAnalyticalBackend }) {
+    const pickerState = useInsightPickerState(AUTHOR);
+    const [enableSemanticSearch, setEnableSemanticSearch] = useState<boolean | undefined>(undefined);
+
+    return (
+        <BackendProvider backend={backend}>
+            <WorkspaceProvider workspace="workspace">
+                <button onClick={() => setEnableSemanticSearch(true)}>allow AI search</button>
+                <InsightPicker
+                    {...pickerState}
+                    author={AUTHOR}
+                    enableSemanticSearch={enableSemanticSearch}
+                    onSelect={() => {}}
+                />
+            </WorkspaceProvider>
+        </BackendProvider>
+    );
+}
+
 function searchInput() {
     return screen.getByPlaceholderText(/Search all visualizations/);
 }
 
+/** One slot of the virtualized list, and so one stop for keyboard navigation. */
+const LIST_ITEM_SELECTOR = ".gd-ui-kit-paged-virtual-list__item";
+
+// A call that was never made and one that is merely still pending look alike until every debounce
+// the query passes through has run out.
+const DEBOUNCE_WINDOW_MS = 800;
+
+function afterTheDebounceWindow() {
+    return new Promise((resolve) => setTimeout(resolve, DEBOUNCE_WINDOW_MS));
+}
+
 describe("InsightPicker", () => {
+    // The endpoint is gated on a feature flag only the caller can read, so a picker that was never
+    // told about it must not reach for the AI.
+    it("leaves the AI search endpoint alone until the caller allows it", async () => {
+        const { backend, semanticQuestions } = createBackend({
+            insightsAuthor: AUTHOR,
+            semanticResults: [suggestion],
+        });
+
+        render(<DefaultPicker backend={backend} />);
+        expect(await screen.findByText("Insight 0")).toBeTruthy();
+        await userEvent.type(searchInput(), "eventing");
+        await afterTheDebounceWindow();
+
+        expect(semanticQuestions).toEqual([]);
+        expect(screen.queryByText(SUGGESTION_TITLE)).toBeNull();
+
+        // The same query over the same stub does reach the endpoint once the caller allows it, so
+        // the silence above is the gate rather than a picker that could never have searched.
+        await userEvent.click(screen.getByText("allow AI search"));
+
+        expect(await screen.findByText(SUGGESTION_TITLE)).toBeTruthy();
+        expect(semanticQuestions).toEqual(["eventing"]);
+    });
+
+    it("heads the AI suggestions with their own group label", async () => {
+        const { backend } = createBackend({ insightsAuthor: AUTHOR, semanticResults: [suggestion] });
+
+        render(<TestPicker backend={backend} enableSemanticSearch />);
+        expect(await screen.findByText("Insight 0")).toBeTruthy();
+
+        await userEvent.type(searchInput(), "eventing");
+
+        const suggested = await screen.findByText(SUGGESTION_TITLE);
+        const rows = screen.getAllByText(new RegExp(`${LATE_INSIGHT_TITLE}|Similar|${SUGGESTION_TITLE}`));
+        expect(rows.map((row) => row.textContent)).toEqual([LATE_INSIGHT_TITLE, "Similar", SUGGESTION_TITLE]);
+        // The label rides on the suggestion's own row. A row of its own would take a keyboard stop
+        // on a line there is nothing to select.
+        expect(screen.getByText("Similar").closest(LIST_ITEM_SELECTOR)).toBe(
+            suggested.closest(LIST_ITEM_SELECTOR),
+        );
+    });
+
     it("matches a visualization the title does not, so a description or id still finds it", async () => {
         const { backend } = createBackend({ insightsAuthor: AUTHOR });
 

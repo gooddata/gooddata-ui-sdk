@@ -7,6 +7,7 @@ import { describe, expect, it } from "vitest";
 import {
     type IAttributeDisplayFormMetadataObject,
     type ICatalogAttribute,
+    type ICatalogAttributeHierarchy,
     type ICatalogComputedAttribute,
     type IParameterMetadataObject,
     idRef,
@@ -22,6 +23,7 @@ import {
     selectCatalogParameters,
     selectCatalogParametersIsLoaded,
     selectCatalogParametersStatus,
+    selectDrillableAttributeHierarchies,
 } from "./catalogSelectors.js";
 import { catalogDateDatasets, defaultDateHierarchyTemplates } from "./catalogSelectors.test.helpers.js";
 import {
@@ -226,5 +228,59 @@ describe("catalogSelectors", () => {
                 "Zebra",
             ]);
         });
+    });
+});
+
+describe("drilling through restricted hierarchies", () => {
+    const attributes = catalogDateDatasets[0].dateAttributes.slice(0, 3);
+    const hierarchy: ICatalogAttributeHierarchy = {
+        type: "attributeHierarchy",
+        attributeHierarchy: {
+            type: "attributeHierarchy",
+            id: "hierarchy",
+            uri: "/hierarchy",
+            ref: idRef("hierarchy", "attributeHierarchy"),
+            title: "Hierarchy",
+            description: "",
+            production: true,
+            deprecated: false,
+            unlisted: false,
+            attributes: attributes.map(({ attribute }) => attribute.ref),
+        },
+    };
+
+    it("allows a hierarchy whose complete path is readable", () => {
+        expect(selectDrillableAttributeHierarchies.resultFunc([hierarchy], [], attributes, true)).toEqual([
+            hierarchy,
+        ]);
+    });
+
+    it.each([1, 2])("removes the whole hierarchy when level %s is unavailable", (level) => {
+        const readable = attributes.filter((_, index) => index !== level);
+        expect(selectDrillableAttributeHierarchies.resultFunc([hierarchy], [], readable, true)).toEqual([]);
+    });
+
+    it("does not remove other, fully readable hierarchies", () => {
+        const readableHierarchy: ICatalogAttributeHierarchy = {
+            ...hierarchy,
+            attributeHierarchy: {
+                ...hierarchy.attributeHierarchy,
+                attributes: [attributes[0].attribute.ref, attributes[2].attribute.ref],
+            },
+        };
+        expect(
+            selectDrillableAttributeHierarchies.resultFunc(
+                [hierarchy, readableHierarchy],
+                [],
+                [attributes[0], attributes[2]],
+                true,
+            ),
+        ).toEqual([readableHierarchy]);
+    });
+
+    it("retains existing behavior with partial rendering disabled", () => {
+        expect(
+            selectDrillableAttributeHierarchies.resultFunc([hierarchy], [], [attributes[0]], false),
+        ).toEqual([hierarchy]);
     });
 });

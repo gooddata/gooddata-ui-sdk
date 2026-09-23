@@ -78,3 +78,8 @@
 .gd-dashboard-settings-dialog-date-dataset-dropdown-list-item {
     min-height: 28px;
 }
+
+// tooltip of the "Default" time zone item; the docs link sits on its own line below the text
+.gd-timezone-option__tooltip-link {
+    margin-top: 5px;
+}

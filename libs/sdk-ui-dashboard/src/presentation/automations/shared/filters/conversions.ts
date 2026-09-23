@@ -50,10 +50,27 @@ import { type ExtendedDashboardWidget } from "../../../../model/types/layoutType
 import { removeIgnoredWidgetFilters } from "../../../../model/utils/widgetFilters.js";
 import { type IDashboardFilter } from "../../../../types.js";
 
+/**
+ * The automation's own stored entries, used to keep a restricted filter's name as it was saved.
+ * `TStored` is the flat list, or the per-tab record for {@link getVisibleFiltersByFiltersByTab}.
+ */
+export interface IRestrictedVisibleFiltersFallback<TStored = IAutomationVisibleFilter[]> {
+    storedVisibleFilters: TStored | undefined;
+    isFilterRestricted: (filter: FilterContextItem) => boolean;
+}
+
+function findVisibleFilter(
+    localIdentifier: string | undefined,
+    visibleFilters: IAutomationVisibleFilter[] | undefined,
+): IAutomationVisibleFilter | undefined {
+    return (visibleFilters ?? []).find((visibleFilter) => visibleFilter.localIdentifier === localIdentifier);
+}
+
 export const getVisibleFiltersByFilters = (
     selectedFilters: FilterContextItem[] | undefined,
     visibleFiltersMetadata: IAutomationVisibleFilter[] | undefined,
     storeFilters?: boolean,
+    restrictedFallback?: IRestrictedVisibleFiltersFallback,
 ): IAutomationVisibleFilter[] | undefined => {
     if (!storeFilters) {
         return undefined;
@@ -68,9 +85,13 @@ export const getVisibleFiltersByFilters = (
         )
         .map((selectedFilter) => {
             const selectedLocalIdentifier = dashboardFilterLocalIdentifier(selectedFilter);
-            const targetFilter = (visibleFiltersMetadata ?? []).find((visibleFilter) => {
-                return selectedLocalIdentifier === visibleFilter.localIdentifier;
-            });
+            // A restricted date or measure value filter still resolves a title from the dashboard, so
+            // the stored entry has to win or the saved name is replaced by that derived one.
+            const storedFilter = restrictedFallback?.isFilterRestricted(selectedFilter)
+                ? findVisibleFilter(selectedLocalIdentifier, restrictedFallback.storedVisibleFilters)
+                : undefined;
+            const targetFilter =
+                storedFilter ?? findVisibleFilter(selectedLocalIdentifier, visibleFiltersMetadata);
 
             if (targetFilter && isDashboardDateFilter(selectedFilter)) {
                 return {
@@ -95,6 +116,7 @@ export const getVisibleFiltersByFiltersByTab = (
     filtersByTab: Record<string, FilterContextItem[]> | undefined,
     visibleFiltersMetadata: Record<string, IAutomationVisibleFilter[]> | undefined,
     storeFilters?: boolean,
+    restrictedFallback?: IRestrictedVisibleFiltersFallback<Record<string, IAutomationVisibleFilter[]>>,
 ): Record<string, IAutomationVisibleFilter[]> | undefined => {
     if (!storeFilters || !filtersByTab) {
         return undefined;
@@ -106,6 +128,10 @@ export const getVisibleFiltersByFiltersByTab = (
                 tabFilters,
                 visibleFiltersMetadata?.[tabId],
                 true,
+                restrictedFallback && {
+                    storedVisibleFilters: restrictedFallback.storedVisibleFilters?.[tabId],
+                    isFilterRestricted: restrictedFallback.isFilterRestricted,
+                },
             );
             if (visibleFilters && visibleFilters.length > 0) {
                 acc[tabId] = visibleFilters;

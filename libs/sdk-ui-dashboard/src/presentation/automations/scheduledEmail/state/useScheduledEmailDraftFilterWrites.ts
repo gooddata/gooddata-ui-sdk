@@ -1,9 +1,10 @@
 // (C) 2026 GoodData Corporation
 
-import { type Dispatch, type SetStateAction, useCallback } from "react";
+import { type Dispatch, type SetStateAction, useCallback, useMemo } from "react";
 
 import {
     type FilterContextItem,
+    type IAutomationMetadataObject,
     type IAutomationMetadataObjectDefinition,
     type IAutomationVisibleFilter,
     type IInsight,
@@ -14,6 +15,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import type { IAutomationFiltersTab } from "../../../../model/store/filtering/types.js";
+import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
 import { useScheduledEmailDialogContext } from "../../contexts/ScheduledEmailDialogContext.js";
 import {
     getAppliedDashboardFilters,
@@ -28,6 +30,8 @@ import {
  */
 export interface IUseScheduledEmailDraftFilterWritesProps {
     setEditedAutomation: Dispatch<SetStateAction<IAutomationMetadataObjectDefinition>>;
+    /** The schedule as it was loaded; the source of the visible-filter entries only it can name. */
+    scheduledExportToEdit?: IAutomationMetadataObject;
     widget?: IWidget;
     insight?: IInsight;
     storeFilters: boolean;
@@ -44,6 +48,7 @@ export interface IUseScheduledEmailDraftFilterWritesProps {
  */
 export function useScheduledEmailDraftFilterWrites({
     setEditedAutomation,
+    scheduledExportToEdit,
     widget,
     insight,
     storeFilters,
@@ -58,6 +63,23 @@ export function useScheduledEmailDraftFilterWrites({
     ) => void;
 } {
     const { hiddenFilters: dashboardHiddenFilters, commonDateFilterId } = useScheduledEmailDialogContext();
+    const { isFilterRestricted } = useAutomationsContext();
+    // Read from the loaded schedule, not from the draft: turning the store-filters checkbox off
+    // empties the draft's entries, and turning it back on must restore them.
+    const restrictedFallback = useMemo(
+        () => ({
+            storedVisibleFilters: scheduledExportToEdit?.metadata?.visibleFilters,
+            isFilterRestricted,
+        }),
+        [scheduledExportToEdit, isFilterRestricted],
+    );
+    const restrictedFallbackByTab = useMemo(
+        () => ({
+            storedVisibleFilters: scheduledExportToEdit?.metadata?.visibleFiltersByTab,
+            isFilterRestricted,
+        }),
+        [scheduledExportToEdit, isFilterRestricted],
+    );
     // Re-derived locally (not passed as a prop) so that the `if (isWidget)` branch below narrows
     // `widget`/`insight` via TS's aliased-condition control-flow analysis — this requires the boolean
     // to be declared from those exact variables in this same scope, same as in the parent.
@@ -99,6 +121,7 @@ export function useScheduledEmailDraftFilterWrites({
                         filters,
                         availableFiltersAsVisibleFilters,
                         true,
+                        restrictedFallback,
                     );
 
                     return {
@@ -148,6 +171,7 @@ export function useScheduledEmailDraftFilterWrites({
                         filters,
                         availableFiltersAsVisibleFilters,
                         shouldStoreFilters,
+                        restrictedFallback,
                     );
 
                     return {
@@ -185,6 +209,7 @@ export function useScheduledEmailDraftFilterWrites({
             insight,
             isWidget,
             commonDateFilterId,
+            restrictedFallback,
         ],
     );
 
@@ -216,6 +241,7 @@ export function useScheduledEmailDraftFilterWrites({
                 newFiltersByTab,
                 availableFiltersAsVisibleFiltersByTab,
                 shouldStoreFilters,
+                restrictedFallbackByTab,
             );
 
             // Sync to export definitions AND metadata
@@ -242,7 +268,13 @@ export function useScheduledEmailDraftFilterWrites({
                 },
             }));
         },
-        [storeFilters, setEditedAutomation, availableFiltersAsVisibleFiltersByTab, filtersByTab],
+        [
+            storeFilters,
+            setEditedAutomation,
+            availableFiltersAsVisibleFiltersByTab,
+            filtersByTab,
+            restrictedFallbackByTab,
+        ],
     );
 
     return { applyFiltersToDraft, applyFiltersByTabToDraft };

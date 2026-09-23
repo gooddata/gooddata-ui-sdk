@@ -60,4 +60,7 @@ export const messages = defineMessages({
     resetFilters: {
         id: "insightPicker.resetFilters",
     },
+    suggestions: {
+        id: "insightPicker.suggestions",
+    },
 });

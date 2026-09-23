@@ -45,6 +45,10 @@ vi.mock("../../contexts/ScheduledEmailDialogContext.js", () => ({
     useScheduledEmailDialogContext: mockUseScheduledEmailDialogContext,
 }));
 
+vi.mock("../../contexts/AutomationsContext.js", () => ({
+    useAutomationsContext: () => ({ isFilterRestricted: () => false }),
+}));
+
 vi.mock("../../shared/filters/index.js", () => ({
     getAppliedDashboardFilters: vi.fn(),
     getAppliedWidgetFilters: vi.fn(),
@@ -143,6 +147,7 @@ function fakeFiltersTab(tabId: string, hiddenFilters: FilterContextItem[] = []):
         tabId,
         tabTitle: `Tab ${tabId}`,
         availableFilters: [],
+        selectableFilters: [],
         defaultSelectedFilters: [],
         lockedFilters: [],
         hiddenFilters,
@@ -394,7 +399,10 @@ describe("useScheduledEmailDraftFilterWrites — applyFiltersToDraft storeFilter
         const returned = updater(stateBefore);
 
         expect(getAppliedDashboardFiltersSpy).toHaveBeenCalledWith(filters, SENTINEL_HIDDEN_FILTERS, false);
-        expect(getVisibleFiltersByFiltersSpy).toHaveBeenCalledWith(filters, undefined, false);
+        expect(getVisibleFiltersByFiltersSpy).toHaveBeenCalledWith(filters, undefined, false, {
+            storedVisibleFilters: undefined,
+            isFilterRestricted: expect.any(Function),
+        });
         expect(dashboardRequestPayloadOf(returned.exportDefinitions![0]).content.filters).toBe(
             DASHBOARD_FILTERS_STORE_FALSE,
         );
@@ -414,7 +422,10 @@ describe("useScheduledEmailDraftFilterWrites — applyFiltersByTabToDraft", () =
 
         result.current.applyFiltersByTabToDraft(newFiltersByTab, false);
 
-        expect(getVisibleFiltersByFiltersByTabSpy).toHaveBeenCalledWith(newFiltersByTab, undefined, false);
+        expect(getVisibleFiltersByFiltersByTabSpy).toHaveBeenCalledWith(newFiltersByTab, undefined, false, {
+            storedVisibleFilters: undefined,
+            isFilterRestricted: expect.any(Function),
+        });
 
         const updater = extractUpdater(setEditedAutomation.mock.calls[0][0]);
         const returned = updater(stateBefore);
@@ -500,10 +511,16 @@ describe("useScheduledEmailDraftFilterWrites — rerender / stale-closure guard"
             newFiltersByTab,
             undefined,
             false,
+            { storedVisibleFilters: undefined, isFilterRestricted: expect.any(Function) },
         );
 
         rerender({ ...props, storeFilters: true });
         result.current.applyFiltersByTabToDraft(newFiltersByTab);
-        expect(getVisibleFiltersByFiltersByTabSpy).toHaveBeenLastCalledWith(newFiltersByTab, undefined, true);
+        expect(getVisibleFiltersByFiltersByTabSpy).toHaveBeenLastCalledWith(
+            newFiltersByTab,
+            undefined,
+            true,
+            { storedVisibleFilters: undefined, isFilterRestricted: expect.any(Function) },
+        );
     });
 });

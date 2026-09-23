@@ -34,7 +34,15 @@ export interface IUiListboxInteractiveItem<T> {
     icon?: IconType;
     isDisabled?: boolean;
     data: T;
+    /**
+     * Explanation shown in a tooltip next to the title. Also read by screen readers.
+     */
     tooltip?: string;
+    /**
+     * Rich content rendered in the visual tooltip instead of `tooltip`, e.g. text with a link.
+     * `tooltip` still provides the plain text for screen readers.
+     */
+    tooltipContent?: ReactNode;
 }
 
 /**

@@ -2,6 +2,8 @@
 
 import { beforeEach, describe, expect, it } from "vitest";
 
+import { idRef, isInsightWidget } from "@gooddata/sdk-model";
+
 import { TestCorrelation } from "../../../tests/Dashboard.test.helpers.js";
 import { SimpleDashboardIdentifier } from "../../../tests/SimpleDashboard.test.helpers.js";
 import { saveDashboard, saveDashboardAs } from "../../commands/dashboard.js";
@@ -10,6 +12,7 @@ import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTes
 import { type DashboardCopySaved, type DashboardSaved } from "../../events/dashboard.js";
 import { selectDashboardTitle, selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
 import { selectFilterContextIdentity } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
 import { selectBasicLayout } from "../../store/tabs/layout/layoutSelectors.js";
 import { TestInsightItem } from "../../tests/Layout.test.helpers.js";
 import { isTemporaryIdentity } from "../../utils/dashboardItemUtils.js";
@@ -47,6 +50,26 @@ describe("save as dashboard handler", () => {
             );
 
             expect(initialSaveEvent.payload.newDashboard).toEqual(true);
+            const source = selectBasicLayout(Tester.state()).sections[0].items[0].widget;
+            if (!isInsightWidget(source)) {
+                throw new Error("Expected an insight widget");
+            }
+            Tester.dispatch(
+                tabsActions.replaceWidgetDrillWithoutUndo({
+                    ref: source.ref,
+                    drillDefinitions: [
+                        {
+                            type: "drillToCustomUrl",
+                            transition: "new-window",
+                            origin: { type: "drillFromMeasure", measure: { localIdentifier: "m1" } },
+                            target: {
+                                url: "https://example.com/{dash_attribute_filter_selection(region)}",
+                                references: { "{attribute_title(stale)}": [idRef("stale", "displayForm")] },
+                            },
+                        },
+                    ],
+                }),
+            );
             const originalState = Tester.state();
 
             const event: DashboardCopySaved = await Tester.dispatchAndWaitFor(
@@ -54,6 +77,18 @@ describe("save as dashboard handler", () => {
                 "GDC.DASH/EVT.COPY_SAVED",
             );
 
+            const copiedWidget = event.payload.dashboard.layout?.sections[0].items[0].widget;
+            expect(copiedWidget).toMatchObject({
+                drills: [
+                    {
+                        target: {
+                            references: {
+                                "{dash_attribute_filter_selection(region)}": [idRef("region", "displayForm")],
+                            },
+                        },
+                    },
+                ],
+            });
             expect(event.payload.dashboard.ref).not.toEqual(initialSaveEvent.payload.dashboard.ref);
             expect(event.payload.dashboard.title).toEqual(TestDashboardTitle);
             expect(event.ctx.dashboardRef).toEqual(event.payload.dashboard.ref);

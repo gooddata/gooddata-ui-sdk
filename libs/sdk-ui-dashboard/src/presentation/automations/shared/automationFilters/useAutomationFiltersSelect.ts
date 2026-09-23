@@ -166,6 +166,7 @@ export const useAutomationFiltersSelect = ({
         availableFilters,
         automationFiltersByTab: allFiltersByTab,
         commonDateFilterId,
+        isFilterRestricted,
         parameters: { enabled: parametersEnabled },
     } = useAutomationsContext();
     const availableFiltersWithoutIgnoredWidgetFilters = useMemo(
@@ -232,6 +233,7 @@ export const useAutomationFiltersSelect = ({
             automationToEdit,
             availableFiltersByTab,
             commonDateFilterId,
+            isFilterRestricted,
         );
 
         if (filtersByTabForExistingAutomation) {
@@ -245,6 +247,7 @@ export const useAutomationFiltersSelect = ({
         isDashboardAutomationWithoutStoredFilters,
         commonDateFilterId,
         availableFiltersByTab,
+        isFilterRestricted,
     ]);
 
     // State for edited filters per tab (only used when dashboard tabs are enabled)

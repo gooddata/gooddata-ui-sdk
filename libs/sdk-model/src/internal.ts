@@ -4,6 +4,10 @@
 
 export {
     type IDrillToUrlPlaceholder,
+    type DrillUrlPlaceholderType,
+    DRILL_TO_URL_PLACEHOLDER,
+    getDrillUrlPlaceholderTypes,
+    getDrillToCustomUrlReferenceMap,
     attributeIdentifierToPlaceholder,
     dashboardAttributeFilterToPlaceholder,
     displayFormPlaceholderRef,
@@ -11,6 +15,7 @@ export {
     joinDrillUrlParts,
     placeholderIdentifierText,
     splitDrillUrlParts,
+    getDrillToCustomUrlReferences,
     getAttributeIdentifiersPlaceholdersFromUrl,
     getDashboardAttributeFilterPlaceholdersFromUrl,
     getDashboardMeasureValueFilterPlaceholdersFromUrl,

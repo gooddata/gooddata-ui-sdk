@@ -62,9 +62,13 @@ export interface IWorkspaceInsightsService {
      * Request insight for the given reference together with related catalog items
      *
      * @param ref - insight reference
+     * @param options - specify additional options
      * @returns promise of catalog item of type metric or fact
      */
-    getInsightWithCatalogItems(ref: ObjRef): Promise<{
+    getInsightWithCatalogItems(
+        ref: ObjRef,
+        options?: IGetInsightOptions,
+    ): Promise<{
         insight: IInsight;
         catalogItems: Array<ICatalogFact | ICatalogMeasure | ICatalogAttribute>;
     }>;

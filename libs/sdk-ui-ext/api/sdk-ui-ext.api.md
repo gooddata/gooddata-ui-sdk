@@ -738,7 +738,6 @@ export interface IInsightPickerProps {
     backend?: IAnalyticalBackend;
     // (undocumented)
     enabledVisualizationClassesUrls?: string[];
-    // (undocumented)
     enableSemanticSearch?: boolean;
     excludeTags?: string[];
     includeTags?: string[];

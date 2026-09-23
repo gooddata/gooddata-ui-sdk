@@ -114,6 +114,7 @@ function fakeFiltersTab(tabId: string, hiddenFilters: FilterContextItem[] = []):
         tabId,
         tabTitle: `Tab ${tabId}`,
         availableFilters: [],
+        selectableFilters: [],
         defaultSelectedFilters: [],
         lockedFilters: [],
         hiddenFilters,

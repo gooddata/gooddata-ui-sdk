@@ -20,6 +20,11 @@ export interface IAutomationFiltersTab {
      */
     availableFilters: FilterContextItem[];
     /**
+     * Filters the add-filter dropdown may offer: {@link IAutomationFiltersTab.availableFilters} minus
+     * the ones the user is forbidden to read.
+     */
+    selectableFilters: FilterContextItem[];
+    /**
      * Default selected filters for the tab
      * (no-op filters removed: "all values" attribute filters and "all" measure value filters).
      */

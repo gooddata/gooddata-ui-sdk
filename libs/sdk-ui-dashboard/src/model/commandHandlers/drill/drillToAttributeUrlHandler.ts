@@ -15,11 +15,13 @@ import { type DashboardContext } from "../../types/commonTypes.js";
 
 import { getDrillToUrlFiltersWithResolvedValues } from "./getDrillToUrlFilters.js";
 import { resolveDrillToAttributeUrl } from "./resolveDrillToAttributeUrl.js";
+import { validateDrillAccess } from "./validateDrillAccess.js";
 
 export function* drillToAttributeUrlHandler(
     ctx: DashboardContext,
     cmd: IDrillToAttributeUrl,
 ): SagaIterator<IDashboardDrillToAttributeUrlResolved> {
+    yield call(validateDrillAccess, ctx, cmd, cmd.payload.drillDefinition);
     yield put(
         drillToAttributeUrlRequested(
             ctx,

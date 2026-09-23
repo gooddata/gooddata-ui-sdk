@@ -58,6 +58,7 @@ import { AutomationAttributeFilter } from "./AutomationAttributeFilter.js";
 import { AutomationDateFilter } from "./AutomationDateFilter.js";
 import { AutomationMeasureValueFilter } from "./AutomationMeasureValueFilter.js";
 import { AutomationParameter } from "./AutomationParameter.js";
+import { AutomationRestrictedFilters } from "./AutomationRestrictedFilters.js";
 
 const COLLAPSED_FILTERS_COUNT = 2;
 
@@ -294,6 +295,7 @@ export function AutomationFiltersSelect({
     const { focusAddFilterButton } = flatFiltersData;
 
     const filters = shouldRenderByTab ? [] : flatFiltersData.visibleFilters;
+    const restrictedFilterCount = shouldRenderByTab ? 0 : flatFiltersData.restrictedFilterCount;
     const visibleParameters = shouldRenderByTab ? [] : parameters;
     const attributes = shouldRenderByTab ? [] : flatFiltersData.attributes;
     const dateDatasets = shouldRenderByTab ? [] : flatFiltersData.dateDatasets;
@@ -317,7 +319,7 @@ export function AutomationFiltersSelect({
 
     const intl = useIntl();
     const [isExpanded, setIsExpanded] = useState(showAllFilters);
-    const chipCount = filters.length + visibleParameters.length;
+    const chipCount = filters.length + visibleParameters.length + (restrictedFilterCount > 0 ? 1 : 0);
     const isExpandable = !showAllFilters && chipCount > COLLAPSED_FILTERS_COUNT;
 
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -333,8 +335,9 @@ export function AutomationFiltersSelect({
         ref: parameter.ref,
         title: parameter.title,
     }));
-    const isAddButtonDisabled =
-        availableFilters?.length === selectedFilters?.length && availableParameters.length === 0;
+    // Counting availableFilters would overcount: it keeps the restricted filters, which the dropdown
+    // never offers, so the button would stay enabled over an empty dropdown.
+    const isAddButtonDisabled = !flatFiltersData.hasFiltersToAdd && availableParameters.length === 0;
     const tooltipTextValues = {
         add: intl.formatMessage({ id: "dialogs.automation.filters.add" }),
         addDisabled: intl.formatMessage({ id: "dialogs.automation.filters.addDisabled" }),
@@ -424,10 +427,6 @@ export function AutomationFiltersSelect({
                             onBlur={makeFilterGroupUnfocusable}
                         >
                             {tabFiltersData.processedFiltersByTab.map((tab, index) => {
-                                // Check if all filters for this tab are already selected
-                                const tabEditedFilters = editedFiltersByTab?.[tab.tabId] ?? [];
-                                const tabAvailableFilters =
-                                    filtersByTab?.find((t) => t.tabId === tab.tabId)?.availableFilters ?? [];
                                 const tabParameters = parametersByTab?.[tab.tabId] ?? [];
                                 const tabAvailableParameters = availableParametersByTab?.[tab.tabId] ?? [];
                                 const tabParameterDropdownItems: IParameterDropdownListItem[] =
@@ -437,8 +436,7 @@ export function AutomationFiltersSelect({
                                         title: parameter.title,
                                     }));
                                 const isTabAddButtonDisabled =
-                                    tabEditedFilters.length >= tabAvailableFilters.length &&
-                                    tabAvailableParameters.length === 0;
+                                    !tab.hasFiltersToAdd && tabAvailableParameters.length === 0;
                                 const tabTooltipText = isTabAddButtonDisabled
                                     ? tooltipTextValues.addDisabled
                                     : tooltipTextValues.add;
@@ -450,6 +448,10 @@ export function AutomationFiltersSelect({
                                         tabId={tab.tabId}
                                         canAddItems={!isTabAddButtonDisabled}
                                         filters={tab.visibleFilters}
+                                        restrictedFilterCount={tab.restrictedFilterCount}
+                                        onRestrictedFiltersRemove={() =>
+                                            tabFiltersData.handleTabRestrictedFiltersRemove(tab.tabId)
+                                        }
                                         attributeConfigs={tab.attributeConfigs}
                                         commonDateFilterId={commonDateFilterId}
                                         lockedFilters={tab.lockedFilters}
@@ -579,6 +581,16 @@ export function AutomationFiltersSelect({
                             {/* Filter and parameter chips share one list so the collapsed view
                                 truncates them by a single rule instead of two coupled slices. */}
                             {[
+                                ...(restrictedFilterCount > 0
+                                    ? [
+                                          <AutomationRestrictedFilters
+                                              key="restricted-filters"
+                                              count={restrictedFilterCount}
+                                              onRemove={flatFiltersData.handleRemoveRestrictedFilters}
+                                              isReadOnly={disableFilters}
+                                          />,
+                                      ]
+                                    : []),
                                 ...filters.map((filter) => {
                                     const isCommonDateFilter =
                                         isDashboardCommonDateFilter(filter) ||
@@ -830,6 +842,9 @@ interface IAutomationFiltersTabSectionProps {
     attributeConfigs: IDashboardAttributeFilterConfig[];
     commonDateFilterId: string | undefined;
     lockedFilters: FilterContextItem[];
+    /** How many of the tab's filters the user may not read; reported as one entry, never named */
+    restrictedFilterCount: number;
+    onRestrictedFiltersRemove: () => void;
     onChange: (filter: FilterContextItem | undefined) => void;
     onDelete: (filter: FilterContextItem) => void;
     parameters: IAutomationParameter[];
@@ -856,6 +871,8 @@ function AutomationFiltersTabSection({
     attributeConfigs,
     commonDateFilterId,
     lockedFilters,
+    restrictedFilterCount,
+    onRestrictedFiltersRemove,
     onChange,
     onDelete,
     parameters,
@@ -874,7 +891,7 @@ function AutomationFiltersTabSection({
     const displayTitle = tabTitle || intl.formatMessage({ id: "dialogs.automation.filters.tab.untitled" });
     const tabLabel = intl.formatMessage({ id: "dialogs.automation.filters.tab.label" });
 
-    if (filters.length === 0 && parameters.length === 0 && !canAddItems) {
+    if (filters.length === 0 && parameters.length === 0 && restrictedFilterCount === 0 && !canAddItems) {
         return null;
     }
 
@@ -908,6 +925,13 @@ function AutomationFiltersTabSection({
                     />
                 </div>
                 <div className="gd-automation-filters__tab-filters">
+                    {restrictedFilterCount > 0 ? (
+                        <AutomationRestrictedFilters
+                            count={restrictedFilterCount}
+                            onRemove={onRestrictedFiltersRemove}
+                            isReadOnly={readonlyFilters}
+                        />
+                    ) : null}
                     {filters.map((filter) => {
                         const isCommonDateFilter =
                             isDashboardCommonDateFilter(filter) ||

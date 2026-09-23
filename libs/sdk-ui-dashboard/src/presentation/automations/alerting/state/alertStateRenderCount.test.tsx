@@ -166,6 +166,7 @@ const AUTOMATIONS_CONTEXT: IAutomationsContextValue = {
     widgetLocalIdToTabIdMap: {},
     getCatalogAttributeByRef: () => undefined,
     getAttributeFilterDisplayForm: () => undefined,
+    isFilterRestricted: () => false,
     widgetExistsByRef: () => false,
 };
 

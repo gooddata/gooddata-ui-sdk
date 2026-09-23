@@ -4,13 +4,7 @@ import { type RefObject, useEffect, useRef } from "react";
 
 import { useDispatch } from "react-redux";
 
-import {
-    type FilterContextItem,
-    type IWidget,
-    type ObjRef,
-    idRef,
-    serializeObjRef,
-} from "@gooddata/sdk-model";
+import { type IWidget, type ObjRef, idRef, serializeObjRef } from "@gooddata/sdk-model";
 import {
     type DashboardSelector,
     type DashboardSelectorEvaluator,
@@ -26,6 +20,7 @@ import {
     selectIsNewDashboard,
     selectVisualizationSwitcherActiveVisualizations,
 } from "@gooddata/sdk-ui-dashboard";
+import { dashboardFilterToFilterContextItem } from "@gooddata/sdk-ui-dashboard/internal";
 
 import { setAmbientUserContextAction } from "../../store/chatWindow/chatWindowSlice.js";
 import { mergeContexts } from "../build.js";
@@ -80,7 +75,9 @@ function buildFromDashboard(dashboardSelector: DashboardSelectorEvaluator) {
         widgetFiltersMap.set(
             serializeObjRef(context.widget.ref),
             buildFiltersContext(
-                [...commonDateFilters, ...otherFilters] as unknown as FilterContextItem[],
+                [...commonDateFilters, ...otherFilters]
+                    .map((f) => dashboardFilterToFilterContextItem(f, true))
+                    .filter((f) => !!f),
                 displayForms,
             ),
         );

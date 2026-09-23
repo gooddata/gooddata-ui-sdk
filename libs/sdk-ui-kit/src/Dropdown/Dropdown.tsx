@@ -158,8 +158,8 @@ export interface IDropdownProps {
     closeOnEscape?: boolean;
 
     autofocusOnOpen?: boolean;
-    initialFocus?: RefObject<HTMLElement> | string;
-    returnFocusTo?: RefObject<HTMLElement> | string;
+    initialFocus?: RefObject<HTMLElement | null> | string;
+    returnFocusTo?: RefObject<HTMLElement | null> | string;
 
     accessibilityConfig?: {
         triggerRole?: "button" | "combobox";

@@ -70,7 +70,9 @@ $action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-com
             }
 
             #{$root}__trigger--isLocked:not(:disabled) {
-                border: none;
+                // not `border: none`: dropping the 1px separator resizes the trigger, and
+                // transition-all then animates the label's width and flickers its ellipsis.
+                border-color: transparent;
                 background-color: $background-color;
             }
         }
@@ -205,10 +207,11 @@ $action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-com
             border-right: 1px dashed $border-color;
         }
 
+        // No border-radius: a deletable locked chip keeps the left-only rounding so it butts against
+        // the delete button. A lone trigger is rounded by the :not(--isDeletable) rule below.
         &--isLocked {
             cursor: default;
             color: var(--gd-palette-complementary-7);
-            border-radius: $border-radius;
 
             &:disabled {
                 background-color: transparent;

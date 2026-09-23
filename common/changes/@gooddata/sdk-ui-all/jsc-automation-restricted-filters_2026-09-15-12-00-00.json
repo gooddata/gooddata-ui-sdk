@@ -1,0 +1,15 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-dashboard: Keep the filters a user may not read in an existing automation they save, and report them in the automation filter bar as one removable entry that is never named. A new automation never stores such a filter.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        },
+        {
+            "comment": "sdk-ui-dashboard: Rename selectDashboardFiltersWithoutCrossFiltering to selectExecutableDashboardFiltersWithoutCrossFiltering, so its name says that the filters the user may not read are left out.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

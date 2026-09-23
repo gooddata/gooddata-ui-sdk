@@ -2681,6 +2681,7 @@ export interface IDrillToCustomUrl extends IDrill {
 
 // @public
 export interface IDrillToCustomUrlTarget {
+    references?: Record<string, ObjRef[]>;
     url: string;
 }
 

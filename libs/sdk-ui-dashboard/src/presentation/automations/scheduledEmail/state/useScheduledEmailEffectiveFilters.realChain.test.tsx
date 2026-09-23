@@ -53,6 +53,7 @@ function tab(tabId: string): IAutomationFiltersTab {
         tabId,
         tabTitle: tabId,
         availableFilters: [COMMON_DATE_FILTER],
+        selectableFilters: [COMMON_DATE_FILTER],
         defaultSelectedFilters: [COMMON_DATE_FILTER],
         lockedFilters: [],
         hiddenFilters: [],
@@ -124,6 +125,7 @@ const AUTOMATIONS_CONTEXT: IAutomationsContextValue = {
     widgetLocalIdToTabIdMap: {},
     getCatalogAttributeByRef: () => undefined,
     getAttributeFilterDisplayForm: () => undefined,
+    isFilterRestricted: () => false,
     widgetExistsByRef: () => false,
     scheduleEmailDialogReturnFocusTo: undefined,
 };

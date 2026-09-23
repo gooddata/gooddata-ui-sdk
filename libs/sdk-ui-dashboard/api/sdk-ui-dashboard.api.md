@@ -39,6 +39,7 @@ import { DateFilterType } from '@gooddata/sdk-model';
 import { DateString } from '@gooddata/sdk-model';
 import { Dispatch } from '@reduxjs/toolkit';
 import { Dispatch as Dispatch_2 } from 'react';
+import { DRILL_TO_URL_PLACEHOLDER } from '@gooddata/sdk-model/internal';
 import { DrillDefinition } from '@gooddata/sdk-model';
 import { EmptyValues } from '@gooddata/sdk-model';
 import { EntityId } from '@reduxjs/toolkit';
@@ -1999,23 +2000,7 @@ export type DraggableLayoutItem = InsightDraggableItem | KpiDraggableItem | Rich
 // @alpha
 export function drill(drillEvent: IDashboardDrillEvent, drillContext: IDashboardDrillContext, correlationId?: string): IDrill;
 
-// @internal (undocumented)
-export enum DRILL_TO_URL_PLACEHOLDER {
-    // (undocumented)
-    DRILL_TO_URL_PLACEHOLDER_CLIENT_ID = "{client_id}",
-    // (undocumented)
-    DRILL_TO_URL_PLACEHOLDER_DASHBOARD_ID = "{dashboard_id}",
-    // (undocumented)
-    DRILL_TO_URL_PLACEHOLDER_DATA_PRODUCT_ID = "{data_product_id}",
-    // (undocumented)
-    DRILL_TO_URL_PLACEHOLDER_INSIGHT_ID = "{visualization_id}",
-    // (undocumented)
-    DRILL_TO_URL_PLACEHOLDER_PROJECT_ID = "{project_id}",
-    // (undocumented)
-    DRILL_TO_URL_PLACEHOLDER_WIDGET_ID = "{widget_id}",
-    // (undocumented)
-    DRILL_TO_URL_PLACEHOLDER_WORKSPACE_ID = "{workspace_id}"
-}
+export { DRILL_TO_URL_PLACEHOLDER }
 
 // @internal (undocumented)
 export const drillActions: {
@@ -2990,6 +2975,7 @@ export interface IAutomationFiltersTab {
     defaultSelectedFilters: FilterContextItem[];
     hiddenFilters: FilterContextItem[];
     lockedFilters: FilterContextItem[];
+    selectableFilters: FilterContextItem[];
     tabId: string;
     tabTitle: string;
 }
@@ -3053,6 +3039,7 @@ export interface IAutomationsContextValue {
     getCatalogAttributeByRef: (ref: ObjRef) => ICatalogAttribute | ICatalogDateAttribute | undefined;
     hiddenFilters: FilterContextItem[];
     isExecutionTimestampMode: boolean;
+    isFilterRestricted: (filter: FilterContextItem) => boolean;
     isSecondaryTitleVisible: boolean;
     isWhiteLabeled: boolean;
     locale: ILocale;
@@ -9965,6 +9952,7 @@ export interface IUiState {
     insightNotSavedDialog: {
         open: boolean;
         saveConfirmed: boolean;
+        draftInsightsToPersist: IInsight[];
     };
     // (undocumented)
     kpiAlerts: {
@@ -11880,9 +11868,6 @@ export const selectDashboardDescriptor: DashboardSelector<DashboardDescriptor>;
 export const selectDashboardFiltersApplyMode: DashboardSelector<DashboardFiltersApplyMode>;
 
 // @alpha (undocumented)
-export const selectDashboardFiltersWithoutCrossFiltering: DashboardSelector<FilterContextItem[]>;
-
-// @alpha (undocumented)
 export const selectDashboardHiddenFilters: DashboardSelector<FilterContextItem[]>;
 
 // @public
@@ -12196,6 +12181,9 @@ export const selectExecutableDashboardFilters: DashboardSelector<FilterContextIt
 
 // @alpha
 export const selectExecutableDashboardFiltersByTab: DashboardSelector<Record<string, FilterContextItem[]>>;
+
+// @alpha
+export const selectExecutableDashboardFiltersWithoutCrossFiltering: DashboardSelector<FilterContextItem[]>;
 
 // @alpha (undocumented)
 export const selectExecutionResult: (state: DashboardState, id: EntityId) => {
@@ -13971,6 +13959,7 @@ export const uiActions: {
     openSaveAsDialog: ActionCreatorWithoutPayload<"uiSlice/openSaveAsDialog">;
     closeSaveAsDialog: ActionCreatorWithoutPayload<"uiSlice/closeSaveAsDialog">;
     openInsightNotSavedDialog: ActionCreatorWithoutPayload<"uiSlice/openInsightNotSavedDialog">;
+    setInsightNotSavedDialogDraftInsightsToPersist: ActionCreatorWithPayload<IInsight[], "uiSlice/setInsightNotSavedDialogDraftInsightsToPersist">;
     closeInsightNotSavedDialog: ActionCreatorWithoutPayload<"uiSlice/closeInsightNotSavedDialog">;
     confirmInsightNotSavedDialogSubmit: ActionCreatorWithoutPayload<"uiSlice/confirmInsightNotSavedDialogSubmit">;
     setFilterBarExpanded: ActionCreatorWithPayload<boolean, "uiSlice/setFilterBarExpanded">;

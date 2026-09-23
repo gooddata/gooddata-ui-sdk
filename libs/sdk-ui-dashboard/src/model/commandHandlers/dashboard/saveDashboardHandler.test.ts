@@ -5,9 +5,13 @@ import { beforeEach, describe, expect, it } from "vitest";
 import {
     type IDashboardDefinition,
     type IDashboardLayout,
+    type IDashboardWidget,
+    type IInsightWidget,
+    type ObjRef,
     areObjRefsEqual,
     idRef,
     isInsightWidget,
+    isInsightWidgetDefinition,
 } from "@gooddata/sdk-model";
 
 import { TestCorrelation } from "../../../tests/Dashboard.test.helpers.js";
@@ -27,10 +31,14 @@ import { tabsActions } from "../../store/tabs/index.js";
 import { selectBasicLayout } from "../../store/tabs/layout/layoutSelectors.js";
 import { selectActiveTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
 import { uiActions } from "../../store/ui/index.js";
-import { selectIsInsightNotSavedDialogOpen } from "../../store/ui/uiSelectors.js";
+import {
+    selectInsightNotSavedDialogDraftInsightsToPersist,
+    selectIsInsightNotSavedDialogOpen,
+} from "../../store/ui/uiSelectors.js";
 import { TestInsightItem } from "../../tests/Layout.test.helpers.js";
 import { isTemporaryIdentity } from "../../utils/dashboardItemUtils.js";
 
+import { dashboardWithDrillReferences } from "./dashboardDrillReferences.js";
 import { getDashboardWithSharing } from "./saveDashboardHandler.js";
 
 describe("save dashboard handler", () => {
@@ -178,19 +186,42 @@ describe("save dashboard handler", () => {
             );
 
             const stateWithSection = Tester.state();
-            const firstWidget = selectBasicLayout(stateWithSection).sections[0].items[0].widget;
+            const layoutWithSection = selectBasicLayout(stateWithSection);
+            const firstWidget = layoutWithSection.sections[0].items[0].widget;
             expect(firstWidget && isInsightWidget(firstWidget)).toBe(true);
 
             if (!firstWidget || !isInsightWidget(firstWidget)) {
                 throw new Error("Expected first dashboard widget to be an insight widget.");
             }
 
+            const draftInsightRef = idRef("unsaved-draft-insight-1", "insight");
+
+            Tester.dispatch(
+                tabsActions.setLayout({
+                    ...layoutWithSection,
+                    sections: [
+                        {
+                            ...layoutWithSection.sections[0],
+                            items: [
+                                {
+                                    ...layoutWithSection.sections[0].items[0],
+                                    widget: {
+                                        ...firstWidget,
+                                        insight: draftInsightRef,
+                                    },
+                                },
+                            ],
+                        },
+                    ],
+                }),
+            );
+
             Tester.dispatch({
                 type: "insights/setInsights",
                 payload: [
                     {
                         insight: {
-                            ref: firstWidget.insight,
+                            ref: draftInsightRef,
                             isDraft: true,
                         },
                     },
@@ -215,7 +246,8 @@ describe("save dashboard handler", () => {
             );
 
             const stateWithSection = Tester.state();
-            const firstWidget = selectBasicLayout(stateWithSection).sections[0].items[0].widget;
+            const layoutWithSection = selectBasicLayout(stateWithSection);
+            const firstWidget = layoutWithSection.sections[0].items[0].widget;
             expect(firstWidget && isInsightWidget(firstWidget)).toBe(true);
 
             if (!firstWidget || !isInsightWidget(firstWidget) || !firstTabId) {
@@ -224,12 +256,34 @@ describe("save dashboard handler", () => {
                 );
             }
 
+            const draftInsightRef = idRef("unsaved-draft-insight-2", "insight");
+
+            Tester.dispatch(
+                tabsActions.setLayout({
+                    ...layoutWithSection,
+                    sections: [
+                        {
+                            ...layoutWithSection.sections[0],
+                            items: [
+                                {
+                                    ...layoutWithSection.sections[0].items[0],
+                                    widget: {
+                                        ...firstWidget,
+                                        insight: draftInsightRef,
+                                    },
+                                },
+                            ],
+                        },
+                    ],
+                }),
+            );
+
             Tester.dispatch({
                 type: "insights/setInsights",
                 payload: [
                     {
                         insight: {
-                            ref: firstWidget.insight,
+                            ref: draftInsightRef,
                             isDraft: true,
                         },
                     },
@@ -252,19 +306,42 @@ describe("save dashboard handler", () => {
             );
 
             const stateWithSection = Tester.state();
-            const firstWidget = selectBasicLayout(stateWithSection).sections[0].items[0].widget;
+            const layoutWithSection = selectBasicLayout(stateWithSection);
+            const firstWidget = layoutWithSection.sections[0].items[0].widget;
             expect(firstWidget && isInsightWidget(firstWidget)).toBe(true);
 
             if (!firstWidget || !isInsightWidget(firstWidget)) {
                 throw new Error("Expected first dashboard widget to be an insight widget.");
             }
 
+            const draftInsightRef = idRef("unsaved-draft-insight-3", "insight");
+
+            Tester.dispatch(
+                tabsActions.setLayout({
+                    ...layoutWithSection,
+                    sections: [
+                        {
+                            ...layoutWithSection.sections[0],
+                            items: [
+                                {
+                                    ...layoutWithSection.sections[0].items[0],
+                                    widget: {
+                                        ...firstWidget,
+                                        insight: draftInsightRef,
+                                    },
+                                },
+                            ],
+                        },
+                    ],
+                }),
+            );
+
             Tester.dispatch({
                 type: "insights/setInsights",
                 payload: [
                     {
                         insight: {
-                            ref: firstWidget.insight,
+                            ref: draftInsightRef,
                             title: "Draft insight",
                             isDraft: true,
                         },
@@ -272,12 +349,21 @@ describe("save dashboard handler", () => {
                 ],
             });
 
-            const oldInsightRef = firstWidget.insight;
+            const oldInsightRef = draftInsightRef;
 
             Tester.dispatch(saveDashboard(undefined, TestCorrelation));
             await Tester.wait(200);
 
             expect(selectIsInsightNotSavedDialogOpen(Tester.state())).toBe(true);
+            const draftInsightsToPersistOnDialog = selectInsightNotSavedDialogDraftInsightsToPersist(
+                Tester.state(),
+            );
+            const draftInsightToPersistRef = draftInsightsToPersistOnDialog[0]?.insight.ref;
+
+            expect(draftInsightsToPersistOnDialog).toHaveLength(1);
+            expect(
+                draftInsightToPersistRef && areObjRefsEqual(draftInsightToPersistRef, draftInsightRef),
+            ).toBe(true);
             expect(Tester.emittedEvents().some((event) => event.type === "GDC.DASH/EVT.SAVED")).toBe(false);
 
             Tester.dispatch(uiActions.confirmInsightNotSavedDialogSubmit());
@@ -294,12 +380,13 @@ describe("save dashboard handler", () => {
             const insightsAfterSave = selectInsights(stateAfterSave);
 
             expect(selectIsInsightNotSavedDialogOpen(stateAfterSave)).toBe(false);
+            expect(selectInsightNotSavedDialogDraftInsightsToPersist(stateAfterSave)).toEqual([]);
             expect(savedEvent.correlationId).toBe(TestCorrelation);
             expect(areObjRefsEqual(insightWidgetAfterSave.insight, oldInsightRef)).toBe(true);
             expect(insightsAfterSave.some((insight) => insight.insight.isDraft)).toBe(false);
         });
 
-        it("should ignore pending save when draft insight save is canceled", async () => {
+        it("should save dashboard without warning dialog when draft insight already exists on backend", async () => {
             await Tester.dispatchAndWaitFor(
                 addLayoutSection(0, {}, [TestInsightItem], false, TestCorrelation),
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
@@ -319,6 +406,66 @@ describe("save dashboard handler", () => {
                     {
                         insight: {
                             ref: firstWidget.insight,
+                            title: "Already persisted insight",
+                            isDraft: true,
+                        },
+                    },
+                ],
+            });
+
+            const savedEvent: DashboardSaved = await Tester.dispatchAndWaitFor(
+                saveDashboard(undefined, TestCorrelation),
+                "GDC.DASH/EVT.SAVED",
+            );
+
+            expect(savedEvent.correlationId).toBe(TestCorrelation);
+            expect(selectIsInsightNotSavedDialogOpen(Tester.state())).toBe(false);
+            expect(selectInsightNotSavedDialogDraftInsightsToPersist(Tester.state())).toEqual([]);
+        });
+
+        it("should ignore pending save when draft insight save is canceled", async () => {
+            await Tester.dispatchAndWaitFor(
+                addLayoutSection(0, {}, [TestInsightItem], false, TestCorrelation),
+                "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
+            );
+
+            const stateWithSection = Tester.state();
+            const layoutWithSection = selectBasicLayout(stateWithSection);
+            const firstWidget = layoutWithSection.sections[0].items[0].widget;
+            expect(firstWidget && isInsightWidget(firstWidget)).toBe(true);
+
+            if (!firstWidget || !isInsightWidget(firstWidget)) {
+                throw new Error("Expected first dashboard widget to be an insight widget.");
+            }
+
+            const draftInsightRef = idRef("unsaved-draft-insight-4", "insight");
+
+            Tester.dispatch(
+                tabsActions.setLayout({
+                    ...layoutWithSection,
+                    sections: [
+                        {
+                            ...layoutWithSection.sections[0],
+                            items: [
+                                {
+                                    ...layoutWithSection.sections[0].items[0],
+                                    widget: {
+                                        ...firstWidget,
+                                        insight: draftInsightRef,
+                                    },
+                                },
+                            ],
+                        },
+                    ],
+                }),
+            );
+
+            Tester.dispatch({
+                type: "insights/setInsights",
+                payload: [
+                    {
+                        insight: {
+                            ref: draftInsightRef,
                             title: "Draft insight",
                             isDraft: true,
                         },
@@ -330,11 +477,21 @@ describe("save dashboard handler", () => {
             await Tester.wait(200);
 
             expect(selectIsInsightNotSavedDialogOpen(Tester.state())).toBe(true);
+            const draftInsightsToPersistOnDialog = selectInsightNotSavedDialogDraftInsightsToPersist(
+                Tester.state(),
+            );
+            const draftInsightToPersistRef = draftInsightsToPersistOnDialog[0]?.insight.ref;
+
+            expect(draftInsightsToPersistOnDialog).toHaveLength(1);
+            expect(
+                draftInsightToPersistRef && areObjRefsEqual(draftInsightToPersistRef, draftInsightRef),
+            ).toBe(true);
 
             Tester.dispatch(uiActions.closeInsightNotSavedDialog());
             await Tester.wait(200);
 
             expect(selectIsInsightNotSavedDialogOpen(Tester.state())).toBe(false);
+            expect(selectInsightNotSavedDialogDraftInsightsToPersist(Tester.state())).toEqual([]);
             expect(
                 Tester.emittedEvents().some(
                     (event) =>
@@ -367,7 +524,28 @@ describe("save dashboard handler", () => {
                 throw new Error("Expected first tab widget to be an insight widget and first tab id set.");
             }
 
-            const draftInsightRef = firstTabWidget.insight;
+            const firstTabLayout = selectBasicLayout(stateWithFirstTabSection);
+            const draftInsightRef = idRef("unsaved-draft-insight-5", "insight");
+
+            Tester.dispatch(
+                tabsActions.setLayout({
+                    ...firstTabLayout,
+                    sections: [
+                        {
+                            ...firstTabLayout.sections[0],
+                            items: [
+                                {
+                                    ...firstTabLayout.sections[0].items[0],
+                                    widget: {
+                                        ...firstTabWidget,
+                                        insight: draftInsightRef,
+                                    },
+                                },
+                            ],
+                        },
+                    ],
+                }),
+            );
 
             await Tester.dispatchAndWaitFor(createDashboardTab("Tab 2"), "GDC.DASH/EVT.TAB.SWITCHED");
             const secondTabId = Tester.select(selectActiveTabLocalIdentifier);
@@ -386,7 +564,37 @@ describe("save dashboard handler", () => {
                 throw new Error("Expected second tab widget to be an insight widget and second tab id set.");
             }
 
-            expect(areObjRefsEqual(secondTabWidget.insight, draftInsightRef)).toBe(true);
+            const secondTabLayout = selectBasicLayout(stateWithSecondTabSection);
+
+            Tester.dispatch(
+                tabsActions.setLayout({
+                    ...secondTabLayout,
+                    sections: [
+                        {
+                            ...secondTabLayout.sections[0],
+                            items: [
+                                {
+                                    ...secondTabLayout.sections[0].items[0],
+                                    widget: {
+                                        ...secondTabWidget,
+                                        insight: draftInsightRef,
+                                    },
+                                },
+                            ],
+                        },
+                    ],
+                }),
+            );
+
+            const updatedSecondTabWidget = selectBasicLayout(Tester.state()).sections[0].items[0].widget;
+
+            expect(updatedSecondTabWidget && isInsightWidget(updatedSecondTabWidget)).toBe(true);
+
+            if (!updatedSecondTabWidget || !isInsightWidget(updatedSecondTabWidget)) {
+                throw new Error("Expected second tab widget to be an insight widget.");
+            }
+
+            expect(areObjRefsEqual(updatedSecondTabWidget.insight, draftInsightRef)).toBe(true);
 
             Tester.dispatch({
                 type: "insights/setInsights",
@@ -453,6 +661,95 @@ describe("getDashboardWithSharing", () => {
             expect(shareStatus).toBe(expectedResult.shareStatus);
             expect(isLocked).toBe(expectedResult.isLocked);
             expect(isUnderStrictControl).toBe(expectedResult.isUnderStrictControl);
+        },
+    );
+});
+
+describe("saved custom URL dependencies", () => {
+    it.each(["root", "tab", "nested", "switcher"])(
+        "refreshes dependencies in a %s layout without mutating state",
+        (location) => {
+            const definition = TestInsightItem.widget;
+            if (!isInsightWidgetDefinition(definition)) {
+                throw new Error("Expected an insight widget");
+            }
+            const source: IInsightWidget = {
+                ...definition,
+                ref: idRef("source"),
+                identifier: "source",
+                uri: "source",
+            };
+            const dashboardWithReferences = (references?: Record<string, ObjRef[]>): IDashboardDefinition => {
+                const insightWidget = {
+                    ...source,
+                    drills: [
+                        {
+                            type: "drillToCustomUrl",
+                            transition: "new-window",
+                            origin: { type: "drillFromMeasure", measure: { localIdentifier: "m1" } },
+                            target: {
+                                url: "https://example.com/{dash_attribute_filter_selection(region)}",
+                                references,
+                            },
+                        },
+                    ],
+                } satisfies IDashboardWidget;
+                const baseLayout: IDashboardLayout = {
+                    type: "IDashboardLayout",
+                    sections: [
+                        {
+                            type: "IDashboardLayoutSection",
+                            items: [
+                                {
+                                    ...TestInsightItem,
+                                    widget: insightWidget,
+                                },
+                            ],
+                        },
+                    ],
+                };
+                const widget: IDashboardWidget =
+                    location === "switcher"
+                        ? {
+                              ...source,
+                              type: "visualizationSwitcher",
+                              drills: [],
+                              visualizations: [insightWidget],
+                          }
+                        : { ...baseLayout, ref: idRef("nested"), identifier: "nested", uri: "nested" };
+                const resultLayout =
+                    location === "nested" || location === "switcher"
+                        ? {
+                              ...baseLayout,
+                              sections: [
+                                  { ...baseLayout.sections[0], items: [{ ...TestInsightItem, widget }] },
+                              ],
+                          }
+                        : baseLayout;
+                return location === "tab"
+                    ? {
+                          type: "IDashboard",
+                          shareStatus: "private",
+                          title: "Test",
+                          description: "",
+                          tabs: [{ localIdentifier: "tab", title: "Tab", layout: resultLayout }],
+                      }
+                    : {
+                          type: "IDashboard",
+                          shareStatus: "private",
+                          title: "Test",
+                          description: "",
+                          layout: resultLayout,
+                      };
+            };
+            const stale = { "{attribute_title(removed)}": [idRef("removed", "displayForm")] };
+            const input = dashboardWithReferences(stale);
+            expect(dashboardWithDrillReferences(input, [])).toEqual(
+                dashboardWithReferences({
+                    "{dash_attribute_filter_selection(region)}": [idRef("region", "displayForm")],
+                }),
+            );
+            expect(input).toEqual(dashboardWithReferences(stale));
         },
     );
 });

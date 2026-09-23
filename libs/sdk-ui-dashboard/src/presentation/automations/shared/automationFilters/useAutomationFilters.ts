@@ -2,6 +2,7 @@
 
 import { type MutableRefObject, useCallback, useMemo, useRef, useState } from "react";
 
+import { partition } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import {
@@ -44,22 +45,31 @@ interface IFilterProcessingContext {
     mvfConfigs: IDashboardMeasureValueFilterConfig[];
     isCommonDateFilterHidden: boolean;
     disableDateFilters: boolean;
+    isFilterRestricted: (filter: FilterContextItem) => boolean;
 }
 
 /**
- * Computes visible filters by removing hidden filters.
+ * Computes the filters the bar renders: restricted ones split off to be reported as a count, hidden
+ * ones removed from the rest. Restricted filters stay in the selection, so they are still saved.
+ *
+ * @remarks
+ * Restricted filters are taken out before the hidden check, so one the author hid after the automation
+ * stored it is still counted and removable rather than kept invisibly.
  */
 function computeVisibleFilters(
     selectedFilters: FilterContextItem[],
     context: IFilterProcessingContext,
-): FilterContextItem[] {
-    return getNonHiddenFilters(
-        selectedFilters,
+): { visibleFilters: FilterContextItem[]; restrictedFilters: FilterContextItem[] } {
+    const [restrictedFilters, readableFilters] = partition(selectedFilters, context.isFilterRestricted);
+    const visibleFilters = getNonHiddenFilters(
+        readableFilters,
         context.attributeConfigs,
         context.dateConfigs,
         context.isCommonDateFilterHidden,
         context.disableDateFilters,
     );
+
+    return { visibleFilters, restrictedFilters };
 }
 
 /**
@@ -106,6 +116,10 @@ export interface IProcessedAutomationFiltersTab {
     tabTitle: string;
     /** Visible filters after applying hidden filter logic */
     visibleFilters: FilterContextItem[];
+    /** How many of the tab's selected filters the user is forbidden to access */
+    restrictedFilterCount: number;
+    /** Whether the add-filter dropdown has anything left to offer */
+    hasFiltersToAdd: boolean;
     /** Locked filters for this tab */
     lockedFilters: FilterContextItem[];
     /** Catalog attributes available for Add filter dropdown */
@@ -153,6 +167,7 @@ export const useAutomationFilters = ({
         dateFilterContextConfig: dateFilterConfig,
         commonDateFilterId,
         lockedFilters,
+        isFilterRestricted,
     } = useAutomationsContext();
 
     const [filterAnnouncement, setFilterAnnouncement] = useState<string>("");
@@ -173,6 +188,7 @@ export const useAutomationFilters = ({
             mvfConfigs,
             isCommonDateFilterHidden,
             disableDateFilters,
+            isFilterRestricted,
         }),
         [
             allAttributes,
@@ -183,17 +199,24 @@ export const useAutomationFilters = ({
             mvfConfigs,
             isCommonDateFilterHidden,
             disableDateFilters,
+            isFilterRestricted,
         ],
     );
 
-    const visibleFilters = useMemo(
+    const { visibleFilters, restrictedFilters } = useMemo(
         () => computeVisibleFilters(selectedFilters, processingContext),
         [selectedFilters, processingContext],
     );
 
+    // Dropped once here, so no consumer has to remember to exclude a restricted filter.
+    const selectableFilters = useMemo(
+        () => availableFilters.filter((filter) => !isFilterRestricted(filter)),
+        [availableFilters, isFilterRestricted],
+    );
+
     const nonSelectedFilters = useMemo(
-        () => getNonSelectedFilters(availableFilters, selectedFilters),
-        [availableFilters, selectedFilters],
+        () => getNonSelectedFilters(selectableFilters, selectedFilters),
+        [selectableFilters, selectedFilters],
     );
 
     const attributes = useMemo(
@@ -311,6 +334,26 @@ export const useAutomationFilters = ({
         ],
     );
 
+    const handleRemoveRestrictedFilters = useCallback(() => {
+        const message = intl.formatMessage(
+            { id: "automationFilters.announcement.restrictedFiltersRemoved" },
+            { count: restrictedFilters.length },
+        );
+        announceFiltersChanged(message);
+
+        onFiltersChange(selectedFilters.filter((filter) => !isFilterRestricted(filter)));
+
+        focusFilterGroup();
+    }, [
+        onFiltersChange,
+        focusFilterGroup,
+        announceFiltersChanged,
+        selectedFilters,
+        restrictedFilters,
+        isFilterRestricted,
+        intl,
+    ]);
+
     const handleStoreFiltersChange = useCallback(
         (value: boolean) => {
             onStoreFiltersChange(value, selectedFilters, undefined);
@@ -336,6 +379,9 @@ export const useAutomationFilters = ({
         commonDateFilterId,
         lockedFilters,
         visibleFilters,
+        restrictedFilterCount: restrictedFilters.length,
+        hasFiltersToAdd: nonSelectedFilters.length > 0,
+        handleRemoveRestrictedFilters,
         attributes,
         dateDatasets,
         measures,
@@ -384,6 +430,7 @@ export const useAutomationFiltersByTab = ({
         dateFilterConfigsByTab: dateConfigsByTab,
         dateFilterConfigOverridesByTab: dateFilterConfigByTab,
         measureValueFilterConfigsByTab: mvfConfigsByTab,
+        isFilterRestricted,
     } = useAutomationsContext();
 
     const [filterAnnouncement] = useState<string>("");
@@ -415,17 +462,20 @@ export const useAutomationFiltersByTab = ({
                 mvfConfigs,
                 isCommonDateFilterHidden,
                 disableDateFilters,
+                isFilterRestricted,
             };
 
             // Use edited filters if available, otherwise default selected filters
             const selectedFilters = editedFiltersByTab?.[tabId] ?? tab.defaultSelectedFilters;
-            const availableFilters = tab.availableFilters;
 
             // Apply visible filter logic (removes hidden filters based on config)
-            const visibleFilters = computeVisibleFilters(selectedFilters, processingContext);
+            const { visibleFilters, restrictedFilters } = computeVisibleFilters(
+                selectedFilters,
+                processingContext,
+            );
 
             // Compute non-selected filters for Add dropdown
-            const nonSelectedFilters = getNonSelectedFilters(availableFilters, selectedFilters);
+            const nonSelectedFilters = getNonSelectedFilters(tab.selectableFilters, selectedFilters);
 
             // Compute catalog items for Add dropdown
             const attributes = computeAddDropdownAttributes(nonSelectedFilters, processingContext);
@@ -436,6 +486,8 @@ export const useAutomationFiltersByTab = ({
                 tabId: tab.tabId,
                 tabTitle: tab.tabTitle,
                 visibleFilters,
+                restrictedFilterCount: restrictedFilters.length,
+                hasFiltersToAdd: nonSelectedFilters.length > 0,
                 lockedFilters: tab.lockedFilters,
                 attributes,
                 dateDatasets,
@@ -456,6 +508,7 @@ export const useAutomationFiltersByTab = ({
         dateFilterConfigByTab,
         mvfConfigsByTab,
         disableDateFilters,
+        isFilterRestricted,
     ]);
 
     // Handlers for per-tab filter operations (similar to original hook)
@@ -515,9 +568,11 @@ export const useAutomationFiltersByTab = ({
                 return;
             }
 
+            // Resolves by ObjRef, which is coarser than the local identifier used elsewhere: one
+            // catalog attribute can back several filters, so a restricted one must not be a candidate.
             const availableFilter = resolveTabFilterToAdd(
                 displayForm,
-                tabData.availableFilters,
+                tabData.selectableFilters,
                 attributes,
                 dateDatasets,
             );
@@ -530,6 +585,20 @@ export const useAutomationFiltersByTab = ({
             }
         },
         [editedFiltersByTab, onFiltersByTabChange, filtersByTab],
+    );
+
+    const handleTabRestrictedFiltersRemove = useCallback(
+        (tabId: string) => {
+            if (!editedFiltersByTab || !onFiltersByTabChange) {
+                return;
+            }
+
+            onFiltersByTabChange({
+                ...editedFiltersByTab,
+                [tabId]: (editedFiltersByTab[tabId] ?? []).filter((filter) => !isFilterRestricted(filter)),
+            });
+        },
+        [editedFiltersByTab, onFiltersByTabChange, isFilterRestricted],
     );
 
     const handleStoreFiltersChange = useCallback(
@@ -585,6 +654,7 @@ export const useAutomationFiltersByTab = ({
         handleTabFilterChange,
         handleTabFilterDelete,
         handleTabFilterAdd,
+        handleTabRestrictedFiltersRemove,
         handleStoreFiltersChange,
         makeFilterGroupUnfocusable,
         setAddFilterButtonRefs,

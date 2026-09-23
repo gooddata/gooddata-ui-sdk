@@ -13,11 +13,13 @@ import { type DashboardContext } from "../../types/commonTypes.js";
 
 import { getDrillToUrlFiltersWithResolvedValues } from "./getDrillToUrlFilters.js";
 import { resolveDrillToCustomUrl } from "./resolveDrillToCustomUrl.js";
+import { validateDrillAccess } from "./validateDrillAccess.js";
 
 export function* drillToCustomUrlHandler(
     ctx: DashboardContext,
     cmd: IDrillToCustomUrl,
 ): SagaIterator<IDashboardDrillToCustomUrlResolved> {
+    yield call(validateDrillAccess, ctx, cmd, cmd.payload.drillDefinition);
     yield put(
         drillToCustomUrlRequested(
             ctx,

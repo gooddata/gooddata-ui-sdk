@@ -3,7 +3,7 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { union } from "lodash-es";
 
-import { type ObjRef, areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
+import { type IInsight, type ObjRef, areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
 
 import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
 import { type DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
@@ -137,6 +137,12 @@ export const selectIsInsightNotSavedDialogSaveConfirmed: DashboardSelector<boole
     selectSelf,
     (state) => state.insightNotSavedDialog.saveConfirmed,
 );
+
+/**
+ * @internal
+ */
+export const selectInsightNotSavedDialogDraftInsightsToPersist: DashboardSelector<IInsight[]> =
+    createSelector(selectSelf, (state) => state.insightNotSavedDialog.draftInsightsToPersist);
 
 /**
  * @alpha

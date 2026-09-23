@@ -12,6 +12,7 @@ const SIDELOADED_REFERENCE_TYPES = [
     "analyticalDashboard",
     "measure",
     "computedAttribute",
+    "displayForm",
 ] as const satisfies readonly SupportedDashboardReferenceTypes[];
 
 const SIDELOAD_INCLUDE_BY_TYPE = {
@@ -21,11 +22,13 @@ const SIDELOAD_INCLUDE_BY_TYPE = {
     analyticalDashboard: "analyticalDashboards",
     measure: "metrics",
     computedAttribute: "computedAttributes",
+    displayForm: "labels",
 } as const satisfies Partial<Record<SupportedDashboardReferenceTypes, DashboardInclude>>;
 
 /**
  * Side-loads for a dashboard GET. Filter contexts are always side-loaded because dashboard
- * conversion needs them; labels are fetched from filter-context requests when needed.
+ * conversion needs them. Dashboard dependencies include labels; filter-context labels are also
+ * fetched separately from their owning contexts.
  */
 export function dashboardSideloadIncludes(types: SupportedDashboardReferenceTypes[]): DashboardInclude[] {
     return [

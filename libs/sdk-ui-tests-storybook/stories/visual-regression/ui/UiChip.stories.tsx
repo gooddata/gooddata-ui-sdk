@@ -21,6 +21,7 @@ const isDeletable = propCombination("isDeletable", [true]);
 const isDeletableActive = propCombination("isDeletable", [true], { isActive: true });
 
 const isLocked = propCombination("isLocked", [true]);
+const isLockedDeletable = propCombination("isLocked", [true], { isDeletable: true });
 
 const isActionable = propCombination("isActionable", [true], { iconAction: "prohibited" });
 const isActionableActive = propCombination("isActionable", [true], {
@@ -92,6 +93,7 @@ function UiChipTest({ showCode }: { showCode?: boolean }) {
                     iconAfterActionable,
                     withRenderActionButton,
                     withRenderChipContent,
+                    isLockedDeletable,
                 ]}
                 Component={UiChip}
                 codeSnippet={showCode ? "UiChip" : undefined}

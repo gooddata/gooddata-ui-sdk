@@ -7,11 +7,19 @@ import {
     type AnalyticalDashboardModelV3,
     type JsonApiAnalyticalDashboardOutDocument,
 } from "@gooddata/api-client-tiger";
-import { type IDashboardLayout } from "@gooddata/sdk-model";
+import {
+    type IDashboardDefinition,
+    type IDashboardLayout,
+    idRef,
+    isInsightWidget,
+} from "@gooddata/sdk-model";
 
 import { convertDashboard as convertDashboardDispatcher } from "./fromBackend/analyticalDashboards/AnalyticalDashboardConverter.js";
 import { convertDashboard } from "./fromBackend/analyticalDashboards/v2/AnalyticalDashboardConverter.js";
-import { getDrillToCustomUrlPaths } from "./toBackend/AnalyticalDashboardConverter.js";
+import {
+    convertAnalyticalDashboard,
+    getDrillToCustomUrlPaths,
+} from "./toBackend/AnalyticalDashboardConverter.js";
 
 const layout: IDashboardLayout = {
     type: "IDashboardLayout",
@@ -228,6 +236,94 @@ describe("convertDashboard root vs tabs content", () => {
             meta: {},
         },
         links: { self: "https://example/dashboard-1" },
+    });
+
+    it("round-trips typed URL dependencies in root and tab layouts", () => {
+        const sourceWidget = layout.sections[0].items[1].widget;
+        if (!isInsightWidget(sourceWidget)) {
+            throw new Error("Expected an insight widget");
+        }
+        const references = {
+            "{dash_attribute_filter_selection(region)}": [idRef("region", "displayForm")],
+            "{attribute_filter_selection(computed_attribute/tier)}": [idRef("tier", "computedAttribute")],
+            "{dash_mvf_condition(revenue)}": [idRef("revenue", "measure")],
+        };
+        const url =
+            "https://example.com/?a={dash_attribute_filter_selection(region)}&b={attribute_filter_selection(computed_attribute/tier)}&c={dash_mvf_condition(revenue)}";
+        const sdkLayout: IDashboardLayout = {
+            type: "IDashboardLayout",
+            sections: [
+                {
+                    type: "IDashboardLayoutSection",
+                    items: [
+                        {
+                            type: "IDashboardLayoutItem",
+                            size: { xl: { gridWidth: 6 } },
+                            widget: {
+                                ...sourceWidget,
+                                drills: [
+                                    {
+                                        type: "drillToCustomUrl",
+                                        transition: "new-window",
+                                        origin: {
+                                            type: "drillFromMeasure",
+                                            measure: { localIdentifier: "m1" },
+                                        },
+                                        target: { url, references },
+                                    },
+                                ],
+                            },
+                        },
+                    ],
+                },
+            ],
+        };
+        const definition: IDashboardDefinition = {
+            type: "IDashboard",
+            shareStatus: "private",
+            title: "Dependencies",
+            description: "",
+            layout: sdkLayout,
+            tabs: [{ localIdentifier: "tab", title: "Tab", layout: sdkLayout }],
+        };
+        const content = convertAnalyticalDashboard(definition);
+        const wireLayout = {
+            sections: [
+                {
+                    items: [
+                        {
+                            widget: {
+                                drills: [
+                                    {
+                                        target: {
+                                            references: {
+                                                "{dash_attribute_filter_selection(region)}": [
+                                                    { identifier: { id: "region", type: "label" } },
+                                                ],
+                                                "{attribute_filter_selection(computed_attribute/tier)}": [
+                                                    { identifier: { id: "tier", type: "computedAttribute" } },
+                                                ],
+                                                "{dash_mvf_condition(revenue)}": [
+                                                    { identifier: { id: "revenue", type: "metric" } },
+                                                ],
+                                            },
+                                        },
+                                    },
+                                ],
+                            },
+                        },
+                    ],
+                },
+            ],
+        };
+        expect(content.layout).toMatchObject(wireLayout);
+        expect(content.tabs?.[0].layout).toMatchObject(wireLayout);
+        const restored = convertDashboard(wrapAsDocument(content));
+        const restoredLayout = {
+            sections: [{ items: [{ widget: { drills: [{ target: { url, references } }] } }] }],
+        };
+        expect(restored.layout).toMatchObject(restoredLayout);
+        expect(restored.tabs?.[0].layout).toMatchObject(restoredLayout);
     });
 
     it("V2 tabs-only payload: synthesizes root layout/filter configs from tabs[0] on read", () => {

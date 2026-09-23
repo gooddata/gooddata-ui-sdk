@@ -29,15 +29,13 @@ import { objectTypeToTigerIdType } from "../../../types/refTypeMapping.js";
  * entity itself (a dashboard drilling to itself) is never reported: JSON:API does not repeat the
  * primary resource in `included`.
  *
- * Labels (filter display forms) relate to the filter-context entity, not the dashboard, so they
- * are resolved from each filter context's own document (verified on dev-latest). Display forms
- * referenced elsewhere in dashboard content (e.g. drill-to-URL) are not inspected.
+ * Filter display forms are resolved from each filter context's own document. Labels referenced
+ * directly by dashboard content (including saved custom URL dependencies) are inspected here.
  *
- * Metrics, labels and computed attributes referenced from a rich text widget live inside markdown
- * text rather than as structured refs, so the backend does not link them yet (measured on dev-latest: a dashboard GET
- * with `include=metrics` returns no `metrics` relationship for such a reference, for an
- * administrator as well). They are inspected here because the backend team agreed to report them
- * through this same signal; until it does, nothing is reported and the widget behaves as today.
+ * Dependencies embedded in rich text are extracted by the backend on save; custom URL dependencies
+ * are materialized as structured refs by the frontend. Existing dashboards must be saved again (or
+ * backfilled) before newly supported dependencies are linked. Missing restriction metadata alone
+ * must never be interpreted as a permission denial.
  *
  * Nothing outside this module may interpret the raw availability metadata or relationships;
  * replacing the mechanism must only change this module.
@@ -162,7 +160,7 @@ export function resolveUnavailableReferences(
     document: JsonApiAnalyticalDashboardOutDocument,
     types: SupportedDashboardReferenceTypes[],
 ): IUnavailableDashboardReference[] {
-    const inspected: InspectedType[] = ["filterContext", ...types.filter((type) => type !== "displayForm")];
+    const inspected: InspectedType[] = ["filterContext", ...types];
     return diffInspectedTypes(document as IJsonApiDocumentLike, inspected);
 }
 
@@ -205,7 +203,7 @@ export function resolveUnavailableFilterContextReferences(
 }
 
 /**
- * Labels relate to filter-context entities, not to the dashboard: the dashboard GET side-loads the
+ * Filter labels relate to their filter-context entities: the dashboard GET side-loads the
  * filter contexts as bare items (no `relationships`), so the existence linkage for filter display
  * forms is reachable only through a direct filter-context GET with `include=labels`, hence this one
  * batched extra request. It inspects the contexts of the effective dashboard, so a `filterContextRef`

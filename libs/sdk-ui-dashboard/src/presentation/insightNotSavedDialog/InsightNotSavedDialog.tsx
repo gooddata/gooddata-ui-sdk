@@ -7,9 +7,11 @@ import { useIntl } from "react-intl";
 import { ConfirmDialog, Typography, UiButton, UiIcon } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardDispatch, useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
-import { selectDraftInsightsUsedOnDashboard } from "../../model/store/insights/insightsSelectors.js";
 import { uiActions } from "../../model/store/ui/index.js";
-import { selectIsInsightNotSavedDialogOpen } from "../../model/store/ui/uiSelectors.js";
+import {
+    selectInsightNotSavedDialogDraftInsightsToPersist,
+    selectIsInsightNotSavedDialogOpen,
+} from "../../model/store/ui/uiSelectors.js";
 
 /**
  * @internal
@@ -25,7 +27,7 @@ export function InsightNotSavedDialog() {
     }, [dispatch]);
     const closeDialog = useCallback(() => dispatch(uiActions.closeInsightNotSavedDialog()), [dispatch]);
 
-    const unsavedInsights = useDashboardSelector(selectDraftInsightsUsedOnDashboard);
+    const unsavedInsights = useDashboardSelector(selectInsightNotSavedDialogDraftInsightsToPersist);
 
     if (!isInsightNotSavedDialogOpen) {
         return null;
@@ -37,7 +39,7 @@ export function InsightNotSavedDialog() {
             dataTestId="s-insight-not-saved-dialog"
             headline={intl.formatMessage({ id: "insightNotSavedDialog.headline" })}
             submitButtonText={intl.formatMessage({ id: "insightNotSavedDialog.saveAll" })}
-            cancelButtonText={intl.formatMessage({ id: "insightNotSavedDialog.close" })}
+            cancelButtonText={intl.formatMessage({ id: "insightNotSavedDialog.cancel" })}
             onCancel={closeDialog}
             onSubmit={submitDialog}
         >
@@ -61,7 +63,8 @@ export function InsightNotSavedDialog() {
                     <ul>
                         {unsavedInsights.map((insight) => (
                             <li key={insight.insight.identifier}>
-                                <UiIcon type="visualization" size={18} /> {insight.insight.title}
+                                <UiIcon type="visualization" size={18} color="complementary-5" />{" "}
+                                {insight.insight.title}
                             </li>
                         ))}
                     </ul>

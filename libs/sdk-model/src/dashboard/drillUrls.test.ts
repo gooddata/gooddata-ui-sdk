@@ -2,16 +2,24 @@
 
 import { describe, expect, it } from "vitest";
 
+import { newBucket } from "../execution/buckets/index.js";
+import { newMeasureValueFilter } from "../execution/filter/factory.js";
+import { newArithmeticMeasure, newMeasure, newPreviousPeriodMeasure } from "../execution/measure/factory.js";
+import { type IInsightDefinition } from "../insight/index.js";
 import { type IAttributeDisplayFormMetadataObject } from "../ldm/metadata/attributeDisplayForm/index.js";
 import { idRef, uriRef } from "../objRef/factory.js";
 
 import {
+    DRILL_TO_URL_PLACEHOLDER,
     attributeIdentifierToPlaceholder,
     dashboardAttributeFilterToPlaceholder,
     displayFormPlaceholderRef,
     getAttributeIdentifiersPlaceholdersFromUrl,
     getDashboardAttributeFilterPlaceholdersFromUrl,
     getDashboardMeasureValueFilterPlaceholdersFromUrl,
+    getDrillToCustomUrlReferenceMap,
+    getDrillToCustomUrlReferences,
+    getDrillUrlPlaceholderTypes,
     getInsightAttributeFilterPlaceholdersFromUrl,
     getInsightMeasureValueFilterPlaceholdersFromUrl,
     insightAttributeFilterToPlaceholder,
@@ -176,5 +184,129 @@ describe("drill url placeholders", () => {
                 toBeEncoded: true,
             },
         ]);
+    });
+});
+
+describe("custom URL object dependencies", () => {
+    const metric = newMeasure(idRef("revenue", "measure"), (m) => m.localId("m1"));
+    const other = newMeasure(idRef("cost", "measure"), (m) => m.localId("m2"));
+    const previous = newPreviousPeriodMeasure(metric, [{ dataSet: "date", periodsAgo: 1 }], (m) =>
+        m.localId("previous"),
+    );
+    const arithmetic = newArithmeticMeasure([previous, other], "sum", (m) => m.localId("total"));
+    const insight: IInsightDefinition = {
+        insight: {
+            title: "Source",
+            visualizationUrl: "local:table",
+            buckets: [newBucket("measures", metric, other, previous, arithmetic)],
+            filters: [
+                newMeasureValueFilter(arithmetic, "GREATER_THAN", 10),
+                newMeasureValueFilter(idRef("global", "measure"), "GREATER_THAN", 0),
+            ],
+            sorts: [],
+            properties: {},
+        },
+    };
+
+    it("deduplicates typed references across placeholder families and ignores context identifiers", () => {
+        expect(
+            getDrillToCustomUrlReferences({
+                url: "https://example.com/{workspace_id}/{attribute_title(region)}?a={dash_attribute_filter_selection(region)}&b={attribute_filter_selection(computed_attribute/region)}&c={dash_mvf_condition(revenue)}",
+            }),
+        ).toEqual([
+            idRef("region", "displayForm"),
+            idRef("region", "computedAttribute"),
+            idRef("revenue", "measure"),
+        ]);
+    });
+
+    it("resolves local arithmetic and derived measures to their underlying objects", () => {
+        expect(
+            getDrillToCustomUrlReferences(
+                { url: "https://example.com/?f={mvf_condition(total)}&g={mvf_condition(global)}" },
+                insight,
+            ),
+        ).toEqual([idRef("revenue", "measure"), idRef("cost", "measure"), idRef("global", "measure")]);
+    });
+
+    it("does not mistake an unresolved local measure identifier for a metric identifier", () => {
+        expect(
+            getDrillToCustomUrlReferences({ url: "https://example.com/{mvf_condition(missing)}" }, insight),
+        ).toEqual([]);
+        expect(getDrillToCustomUrlReferences({ url: "https://example.com/{mvf_condition(m1)}" })).toEqual([]);
+    });
+
+    it("preserves saved measure dependencies when the source insight is inaccessible", () => {
+        expect(
+            getDrillToCustomUrlReferences({
+                url: "https://example.com/{mvf_condition(total)}/{attribute_title(region)}",
+                references: {
+                    "{mvf_condition(total)}": [idRef("revenue", "measure"), idRef("cost", "measure")],
+                    "{attribute_title(old-label)}": [idRef("old-label", "displayForm")],
+                },
+            }),
+        ).toEqual([idRef("region", "displayForm"), idRef("revenue", "measure"), idRef("cost", "measure")]);
+    });
+
+    it("replaces stale saved references and clears dependencies when placeholders are removed", () => {
+        const references = {
+            "{mvf_condition(total)}": [idRef("stale", "measure")],
+            "{attribute_title(old)}": [idRef("old", "displayForm")],
+        };
+        expect(
+            getDrillToCustomUrlReferences(
+                { url: "https://example.com/{mvf_condition(total)}", references },
+                insight,
+            ),
+        ).toEqual([idRef("revenue", "measure"), idRef("cost", "measure")]);
+        expect(
+            getDrillToCustomUrlReferences({ url: "https://example.com/{attribute_title(new)}", references }),
+        ).toEqual([idRef("new", "displayForm")]);
+        expect(getDrillToCustomUrlReferences({ url: "https://example.com/", references })).toEqual([]);
+    });
+    it("drops a removed dashboard metric while retaining the unchanged insight placeholder", () => {
+        const original = {
+            url: "https://example.com/?a={dash_mvf_condition(secret)}&b={mvf_condition(total)}",
+        };
+        const references = getDrillToCustomUrlReferenceMap(original, insight);
+        expect(references["{dash_mvf_condition(secret)}"]).toEqual([idRef("secret", "measure")]);
+        expect(
+            getDrillToCustomUrlReferenceMap({
+                url: "https://example.com/?b={mvf_condition(total)}",
+                references,
+            }),
+        ).toEqual({
+            "{mvf_condition(total)}": [idRef("revenue", "measure"), idRef("cost", "measure")],
+        });
+        expect(
+            getDrillToCustomUrlReferences({
+                url: "https://example.com/?b={mvf_condition(other)}",
+                references,
+            }),
+        ).toEqual([]);
+    });
+
+    it("keeps a shared metric when an unchanged insight placeholder still depends on it", () => {
+        const references = getDrillToCustomUrlReferenceMap(
+            {
+                url: "https://example.com/{dash_mvf_condition(revenue)}/{mvf_condition(total)}",
+            },
+            insight,
+        );
+        expect(
+            getDrillToCustomUrlReferences({
+                url: "https://example.com/{mvf_condition(total)}",
+                references,
+            }),
+        ).toEqual([idRef("revenue", "measure"), idRef("cost", "measure")]);
+    });
+
+    it("recognizes repeated context placeholders without storing object dependencies", () => {
+        for (const placeholder of Object.values(DRILL_TO_URL_PLACEHOLDER)) {
+            const url = `https://example.com/${placeholder}/${placeholder}`;
+            expect(getDrillUrlPlaceholderTypes(url)).toEqual([placeholder]);
+            expect(getDrillUrlPlaceholderTypes(url)).toEqual([placeholder]);
+            expect(getDrillToCustomUrlReferenceMap({ url })).toEqual({});
+        }
     });
 });

@@ -79,6 +79,14 @@ export interface IDrillToCustomUrlTarget {
      * Custom url to drill to
      */
     url: string;
+
+    /**
+     * Object dependencies keyed by the exact URL placeholder that produced them when saved.
+     * Local measure identifiers are resolved against the source insight. Backends can use these
+     * references to track dependencies without parsing the URL template. Placeholder keys allow
+     * removed dependencies to be discarded even when the source insight cannot be read.
+     */
+    references?: Record<string, ObjRef[]>;
 }
 
 /**

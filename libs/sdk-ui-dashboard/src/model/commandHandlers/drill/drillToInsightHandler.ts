@@ -1,7 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
-import { put, select } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 
 import { type IDrillToInsight } from "../../commands/drill.js";
 import {
@@ -13,11 +13,13 @@ import { selectInsightByRef, selectInsightByWidgetRef } from "../../store/insigh
 import { type DashboardContext } from "../../types/commonTypes.js";
 
 import { addDrillFiltersToInsight } from "./drillToInsightUtils.js";
+import { validateDrillAccess } from "./validateDrillAccess.js";
 
 export function* drillToInsightHandler(
     ctx: DashboardContext,
     cmd: IDrillToInsight,
 ): SagaIterator<IDashboardDrillToInsightResolved> {
+    yield call(validateDrillAccess, ctx, cmd, cmd.payload.drillDefinition);
     const { drillDefinition, drillEvent } = cmd.payload;
     const insight = yield select(selectInsightByRef(drillDefinition.target));
     yield put(drillToInsightRequested(ctx, insight, drillDefinition, drillEvent, cmd.correlationId));

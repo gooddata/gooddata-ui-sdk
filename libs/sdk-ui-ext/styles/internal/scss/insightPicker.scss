@@ -78,6 +78,35 @@
     }
 }
 
+// The header shares the first suggestion's slot, which is widened by exactly the header's height.
+// Both children are laid out by the list item's own column flex, so the header has to be kept from
+// shrinking and the row given what is left — otherwise the two compete for the slot and the row
+// ends up a different height from every other one.
+.gd-ui-ext-insight-picker-suggestions-group {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    > :last-child {
+        flex: 1 1 auto;
+        min-height: 0;
+        height: auto;
+    }
+}
+
+.gd-ui-ext-insight-picker-suggestions-header {
+    display: flex;
+    align-items: flex-end;
+    gap: 5px;
+    flex: 0 0 auto;
+    box-sizing: border-box;
+    height: 30px;
+    padding: 5px 0 5px 10px;
+    font-size: 12px;
+    line-height: 12px;
+    color: var(--gd-palette-complementary-6, #94a1ad);
+}
+
 .gd-ui-ext-insight-picker-filter-bar {
     display: flex;
     align-items: center;

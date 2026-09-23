@@ -3083,7 +3083,7 @@ export interface IWorkspaceInsightsService {
     getInsights(options?: IInsightsQueryOptions): Promise<IInsightsQueryResult>;
     getInsightsQuery(): IInsightsQuery;
     getInsightWithAddedFilters<T extends IInsightDefinition>(insight: T, filters: IFilter[]): Promise<T>;
-    getInsightWithCatalogItems(ref: ObjRef): Promise<{
+    getInsightWithCatalogItems(ref: ObjRef, options?: IGetInsightOptions): Promise<{
         insight: IInsight;
         catalogItems: Array<ICatalogFact | ICatalogMeasure | ICatalogAttribute>;
     }>;

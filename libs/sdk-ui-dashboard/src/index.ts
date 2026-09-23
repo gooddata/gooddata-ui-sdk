@@ -138,7 +138,7 @@ export {
     isDashboardDependentDateFilter,
 } from "./model/types/dateFilterTypes.js";
 
-export { DRILL_TO_URL_PLACEHOLDER } from "./model/types/drillTypes.js";
+export { DRILL_TO_URL_PLACEHOLDER } from "@gooddata/sdk-model/internal";
 export type {
     DashboardAccessibilityLimitation,
     IInaccessibleDashboard,
@@ -196,7 +196,7 @@ export {
     selectAutomationAvailableDashboardFilters,
     selectAutomationDefaultSelectedFilters,
     selectAutomationFiltersByTab,
-    selectDashboardFiltersWithoutCrossFiltering,
+    selectExecutableDashboardFiltersWithoutCrossFiltering,
     selectDashboardHiddenFilters,
     selectDashboardLockedFilters,
     selectExecutableDashboardFilters,

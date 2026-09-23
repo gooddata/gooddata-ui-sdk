@@ -37,6 +37,10 @@ vi.mock("../../shared/filters/index.js", () => ({
     getVisibleFiltersByFilters: vi.fn(),
 }));
 
+vi.mock("../../contexts/AutomationsContext.js", () => ({
+    useAutomationsContext: () => ({ isFilterRestricted: () => false }),
+}));
+
 vi.mock("../utils/transformation.js", async (importOriginal: () => Promise<Record<string, unknown>>) => {
     const actual = await importOriginal();
     return {
@@ -201,6 +205,27 @@ function makeState(
 // Case 1: applyFiltersToDraft calls setEditedAutomation with an updater
 // ---------------------------------------------------------------------------
 
+describe("useAlertDraftFilterWrites — restricted filter fallback", () => {
+    it("hands the loaded alert's stored visible filters to getVisibleFiltersByFilters", () => {
+        const storedVisibleFilters = [
+            { localIdentifier: "restricted", title: "Region", isAllTimeDateFilter: false },
+        ];
+        const { result } = renderDraftFilterWritesHook({
+            alertToEdit: { metadata: { visibleFilters: storedVisibleFilters } } as IAutomationMetadataObject,
+        });
+
+        result.current.applyFiltersToDraft(SENTINEL_FILTERS);
+        mockSetEditedAutomation.mock.calls[0][0](makeState({ metadata: {} }));
+
+        expect(getVisibleFiltersByFiltersSpy).toHaveBeenCalledWith(
+            SENTINEL_FILTERS,
+            SENTINEL_VISIBLE_FILTERS,
+            true,
+            { storedVisibleFilters, isFilterRestricted: expect.any(Function) },
+        );
+    });
+});
+
 describe("useAlertDraftFilterWrites — applyFiltersToDraft wiring", () => {
     it("calls setEditedAutomation with an updater that invokes the 4 reconciliation helpers with the exact expected args and merges the shape", () => {
         const { result } = renderDraftFilterWritesHook();
@@ -228,6 +253,7 @@ describe("useAlertDraftFilterWrites — applyFiltersToDraft wiring", () => {
             SENTINEL_FILTERS,
             SENTINEL_VISIBLE_FILTERS,
             true,
+            { storedVisibleFilters: undefined, isFilterRestricted: expect.any(Function) },
         );
 
         const mergedArg = transformAlertByAttributeSpy.mock.calls[0][1];

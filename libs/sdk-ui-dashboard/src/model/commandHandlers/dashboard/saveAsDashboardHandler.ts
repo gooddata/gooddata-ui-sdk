@@ -30,6 +30,7 @@ import { accessibleDashboardsActions } from "../../store/accessibleDashboards/in
 import { selectBackendCapabilities } from "../../store/backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectEnableImmediateAttributeFilterDisplayAsLabelMigration } from "../../store/config/configSelectors.js";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
+import { selectInsights } from "../../store/insights/insightsSelectors.js";
 import { listedDashboardsActions } from "../../store/listedDashboards/index.js";
 import { metaActions } from "../../store/meta/index.js";
 import {
@@ -61,6 +62,7 @@ import {
     getMigratedAttributeFilters,
     mergedMigratedAttributeFilters,
 } from "./common/migratedAttributeFilters.js";
+import { dashboardWithDrillReferences } from "./dashboardDrillReferences.js";
 import { processLayout } from "./saveDashboardHandler.js";
 
 type DashboardSaveAsContext = {
@@ -274,10 +276,12 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
         ...pluginsProp,
     };
 
+    const insights: ReturnType<typeof selectInsights> = yield select(selectInsights);
+
     return {
         cmd,
         dashboardFromState,
-        dashboardToSave,
+        dashboardToSave: dashboardWithDrillReferences(dashboardToSave, insights),
     };
 }
 

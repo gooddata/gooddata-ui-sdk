@@ -1,19 +1,26 @@
 // (C) 2026 GoodData Corporation
 
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { type IDashboardParameter, type IDrillToDashboard, idRef } from "@gooddata/sdk-model";
+import {
+    type IDashboardParameter,
+    type IDrillToCustomUrl,
+    type IDrillToDashboard,
+    idRef,
+    objRefToString,
+} from "@gooddata/sdk-model";
 
 import {
     SimpleDashboardIdentifier,
     SimpleSortedTableWidgetRef,
 } from "../../../tests/SimpleDashboard.test.helpers.js";
 import { type IDashboardDrillEvent } from "../../../types.js";
-import { drillToDashboard } from "../../commands/drill.js";
+import { drillToCustomUrl, drillToDashboard } from "../../commands/drill.js";
 import { createDashboardTab, switchDashboardTab } from "../../commands/tabs.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectActiveTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
+import { unavailableObjectsActions } from "../../store/unavailableObjects/index.js";
 
 describe("drillToDashboardHandler parameter inheritance", () => {
     const topNRef = idRef("topN", "parameter");
@@ -44,6 +51,75 @@ describe("drillToDashboardHandler parameter inheritance", () => {
         }, SimpleDashboardIdentifier);
         Tester.dispatch(tabsActions.addParameter({ parameter: topNParameter, workspaceDefault: 5 }));
         Tester.dispatch(tabsActions.setParameterRuntimeValues({ values: [{ ref: topNRef, value: 3 }] }));
+    });
+
+    it("resolves mixed custom URL placeholders through the shared registry", async () => {
+        Tester.dispatch(
+            tabsActions.addMeasureValueFilter({
+                measure: idRef("unfiltered-metric", "measure"),
+                localIdentifier: "mvf",
+                index: -1,
+            }),
+        );
+        const drillDefinition: IDrillToCustomUrl = {
+            type: "drillToCustomUrl",
+            transition: "new-window",
+            origin: selfDrillDefinition.origin,
+            target: {
+                url: "https://example.com/{workspace_id}/{dashboard_id}/{widget_id}?metric={dash_mvf_condition(unfiltered-metric)}&workspace={workspace_id}",
+            },
+        };
+        const event = await Tester.dispatchAndWaitFor(
+            drillToCustomUrl(drillDefinition, drillEvent),
+            "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.RESOLVED",
+        );
+        expect(event.payload.url).toBe(
+            `https://example.com/reference-workspace/${SimpleDashboardIdentifier}/${objRefToString(SimpleSortedTableWidgetRef)}?metric=ALL&workspace=reference-workspace`,
+        );
+    });
+
+    it("rejects a custom URL when a registered placeholder cannot be resolved", async () => {
+        const drillDefinition: IDrillToCustomUrl = {
+            type: "drillToCustomUrl",
+            transition: "new-window",
+            origin: selfDrillDefinition.origin,
+            target: { url: "https://example.com/?metric={mvf_condition(missing-local-measure)}" },
+        };
+        const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => undefined);
+        try {
+            const event = await Tester.dispatchAndWaitFor(
+                drillToCustomUrl(drillDefinition, drillEvent),
+                "GDC.DASH/EVT.COMMAND.FAILED",
+            );
+            expect(event.payload.reason).toBe("USER_ERROR");
+            expect(warnSpy).toHaveBeenCalledExactlyOnceWith(
+                expect.stringContaining(
+                    "could not resolve parameter(s) {mvf_condition(missing-local-measure)}",
+                ),
+            );
+            expect(Tester.emittedEventsDigest().map(({ type }) => type)).not.toContain(
+                "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.RESOLVED",
+            );
+        } finally {
+            warnSpy.mockRestore();
+        }
+    });
+
+    it("rejects a restricted dashboard before emitting a navigation event", async () => {
+        const target = idRef("restricted-target", "analyticalDashboard");
+        Tester.dispatch(
+            unavailableObjectsActions.setUnavailableObjects([
+                { ref: target, type: "analyticalDashboard", reason: "forbidden" },
+            ]),
+        );
+        const event = await Tester.dispatchAndWaitFor(
+            drillToDashboard({ ...selfDrillDefinition, target }, drillEvent),
+            "GDC.DASH/EVT.COMMAND.FAILED",
+        );
+        expect(event.payload.reason).toBe("USER_ERROR");
+        expect(Tester.emittedEventsDigest().map(({ type }) => type)).not.toContain(
+            "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.RESOLVED",
+        );
     });
 
     it("carries the source tab's active parameter overrides in the resolved payload (drill to self)", async () => {

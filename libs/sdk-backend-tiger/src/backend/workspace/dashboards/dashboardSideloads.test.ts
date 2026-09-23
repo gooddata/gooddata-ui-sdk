@@ -30,7 +30,7 @@ describe("dashboardSideloadIncludes", () => {
         ]);
     });
 
-    it("does not side-load labels for displayForm because they are resolved from filter contexts", () => {
-        expect(dashboardSideloadIncludes(["displayForm"])).toEqual(["filterContexts"]);
+    it("side-loads dashboard labels used by custom URL dependencies", () => {
+        expect(dashboardSideloadIncludes(["displayForm"])).toEqual(["filterContexts", "labels"]);
     });
 });

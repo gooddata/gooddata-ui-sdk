@@ -38,6 +38,7 @@ import { selectEnableSecondGranularities } from "../../../model/store/config/con
 import { selectInsightsMap } from "../../../model/store/insights/insightsSelectors.js";
 import { selectDashboardTitle } from "../../../model/store/meta/metaSelectors.js";
 import { selectWidgetByRef } from "../../../model/store/tabs/layout/layoutSelectors.js";
+import { selectIsDrillRestricted } from "../../../model/store/widgetDrills/drillRestrictionSelectors.js";
 import { type DashboardDrillDefinition, isDrillDownDefinition } from "../../../types.js";
 import { useDrillSelectDropdownMenuItems } from "../hooks/useDrillSelectDropdownMenuItems.js";
 import { isDrillToUrl } from "../types.js";
@@ -72,6 +73,7 @@ export function DrillSelectDropdown({
 }: IDrillSelectDropdownProps) {
     const intl = useIntl();
 
+    const isDrillRestricted = useDashboardSelector(selectIsDrillRestricted);
     const dashboardList = useDashboardSelector(selectAccessibleDashboards);
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
     const insights = useDashboardSelector(selectInsightsMap);
@@ -138,6 +140,7 @@ export function DrillSelectDropdown({
             createDrillSelectItems({
                 drillDefinitions: deduplicateDrillIntoUrlItems(drillDefinitions),
                 drillEvent,
+                isDrillRestricted,
                 insights,
                 dashboardList,
                 dashboardTitle,
@@ -148,6 +151,7 @@ export function DrillSelectDropdown({
             }),
         [
             drillDefinitions,
+            isDrillRestricted,
             drillEvent,
             insights,
             dashboardList,
@@ -334,7 +338,9 @@ export const createDrillSelectItems = ({
     widget,
     attributeDisplayForms,
     enableSecondGranularities = false,
+    isDrillRestricted,
 }: {
+    isDrillRestricted: (drill: DashboardDrillDefinition) => boolean;
     drillDefinitions: DashboardDrillDefinition[];
     drillEvent: IDrillEvent;
     insights: ObjRefMap<IInsight>;
@@ -353,6 +359,20 @@ export const createDrillSelectItems = ({
             "Drill to pixel perfect dashboards from insight is not supported.",
         );
 
+        if (isDrillRestricted(drillDefinition)) {
+            return {
+                type: isDrillToInsight(drillDefinition)
+                    ? DrillType.DRILL_TO_INSIGHT
+                    : isDrillToDashboard(drillDefinition)
+                      ? DrillType.DRILL_TO_DASHBOARD
+                      : DrillType.DRILL_TO_URL,
+                name: intl.formatMessage({ id: "drill_modal_picker.restricted" }),
+                drillDefinition,
+                id: stringify(drillDefinition) || "undefined",
+                isRestricted: true,
+                isDisabled: true,
+            };
+        }
         if (isDrillDownDefinition(drillDefinition)) {
             const { title: drillTitle } = drillDefinition;
             const drillTargetIdentifier = isIdentifierRef(drillDefinition.target)

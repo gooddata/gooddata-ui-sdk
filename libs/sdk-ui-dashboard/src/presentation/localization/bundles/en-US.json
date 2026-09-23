@@ -83,9 +83,9 @@
         "text": "Visualizations ({count})",
         "crowdinContext": "Title of the list of draft visualizations. {count} is the number of draft visualizations."
     },
-    "insightNotSavedDialog.close": {
-        "text": "Close",
-        "crowdinContext": "Button label used to close the draft-visualization warning dialog"
+    "insightNotSavedDialog.cancel": {
+        "text": "Cancel",
+        "crowdinContext": "Button label used to cancel the draft-visualization warning dialog"
     },
     "insightNotSavedDialog.saveAll": {
         "text": "Save all",
@@ -496,8 +496,8 @@
         "crowdinContext": "Label of the default time zone picker in the dashboard settings dialog"
     },
     "settingsDashboardDialog.section.timezone.defaultTimezone.tooltip": {
-        "text": "Time zone used for date filters and date values on this dashboard. <a>Learn more</a>",
-        "crowdinContext": "Tooltip of the default time zone picker in the dashboard settings dialog, with a learn more link to the documentation"
+        "text": "Time zone used for date filters and date values on this dashboard.",
+        "crowdinContext": "Tooltip of the default time zone picker in the dashboard settings dialog"
     },
     "settingsDashboardDialog.section.timezone.defaultTimezone.help": {
         "text": "More information",
@@ -510,6 +510,10 @@
     "settingsDashboardDialog.section.timezone.defaultTimezone.workspace.tooltip": {
         "text": "Follows the time zone set for your organization, workspace, or user account. It updates automatically if that setting changes.",
         "crowdinContext": "Tooltip of the default time zone picker item in the dashboard settings dialog"
+    },
+    "settingsDashboardDialog.section.timezone.defaultTimezone.workspace.tooltip.learnMore": {
+        "text": "Learn more",
+        "crowdinContext": "Documentation link shown on its own line below the tooltip of the default time zone picker item in the dashboard settings dialog"
     },
     "settingsDashboardDialog.section.timezone.defaultTimezone.fromBrowser": {
         "text": "Device time zone",
@@ -975,6 +979,10 @@
         "text": "Remove filter",
         "crowdinContext": "Accessibility label for the button that removes a filter from automation"
     },
+    "dialogs.automation.filters.restricted.deleteTooltip": {
+        "text": "{count, plural, one {Remove restricted filter} other {Remove restricted filters}}",
+        "crowdinContext": "Tooltip and accessibility label for the button that removes the filters the user has no access to from the automation being edited. Uses pluralization based on the number of filters."
+    },
     "dialogs.automation.filters.deleteTooltip": {
         "text": "Remove filter",
         "crowdinContext": "Tooltip text for the button that removes a filter from automation"
@@ -1146,6 +1154,10 @@
     "dialogs.export.csv.headline": {
         "text": "Export settings (.csv)",
         "crowdinContext": "Headline of the CSV export settings dialog."
+    },
+    "dialogs.export.csv.submit.disabledTooltip": {
+        "text": "Enter a valid single-character delimiter to export.",
+        "crowdinContext": "Tooltip on the disabled Export button of the CSV export settings dialog, explaining why it cannot be used."
     },
     "dialogs.export.pdf.headline": {
         "text": "Export settings (.pdf)",
@@ -2603,6 +2615,10 @@
         "text": "No rich text content",
         "crowdinContext": "Message shown when rich text component has no content"
     },
+    "drill_modal_picker.restricted": {
+        "text": "Restricted",
+        "crowdinContext": "Disabled drill menu target the user cannot access; replaces its title and shows a lock icon"
+    },
     "visualizationSwitcher.restrictedEntry": {
         "text": "Restricted",
         "crowdinContext": "Stands in for the title of a visualization switcher entry the user is not permitted to see; the real title would name the restricted object"
@@ -3358,6 +3374,10 @@
     "automationFilters.announcement.filterRemoved": {
         "text": "Filter {title} removed.",
         "crowdinContext": "Screen reader announcement when a filter is removed from automation configuration. Example: 'Filter Department removed.'"
+    },
+    "automationFilters.announcement.restrictedFiltersRemoved": {
+        "text": "{count, plural, one {Restricted filter removed.} other {Restricted filters removed.}}",
+        "crowdinContext": "Screen reader announcement when the entry standing in for the filters the user has no access to is removed from the automation. It never names them. Uses pluralization based on the number of filters."
     },
     "automationFilters.announcement.filterChanged": {
         "text": "Filter {title} changed.",

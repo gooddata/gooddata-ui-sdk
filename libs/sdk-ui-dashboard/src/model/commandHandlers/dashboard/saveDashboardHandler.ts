@@ -3,7 +3,7 @@
 import { type AnyAction } from "@reduxjs/toolkit";
 import { type BatchAction, batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
-import { type SagaReturnType, call, put, select, take } from "redux-saga/effects";
+import { type SagaReturnType, all, call, put, select, take } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
 import { isUnexpectedResponseError } from "@gooddata/sdk-backend-spi";
@@ -75,6 +75,8 @@ import { isTemporaryIdentity } from "../../utils/dashboardItemUtils.js";
 import { generateTabLocalIdentifier } from "../../utils/tabLocalIdentifier.js";
 import { changeRenderModeHandler } from "../renderMode/changeRenderModeHandler.js";
 import { switchDashboardTabHandler } from "../tabs/switchDashboardTabHandler.js";
+
+import { dashboardWithDrillReferences } from "./dashboardDrillReferences.js";
 
 type DashboardSaveContext = {
     cmd: ISaveDashboard;
@@ -160,6 +162,36 @@ function* persistDraftInsights(
 
         yield put(insightsActions.setInsights(updatedInsights));
     }
+}
+
+async function draftInsightExistsOnBackend(ctx: DashboardContext, draftInsight: IInsight): Promise<boolean> {
+    const ref = insightRef(draftInsight);
+
+    if (!ref) {
+        return false;
+    }
+
+    try {
+        await ctx.backend.workspace(ctx.workspace).insights().getInsight(ref);
+        return true;
+    } catch (error) {
+        if (isUnexpectedResponseError(error) && error.httpStatus === 404) {
+            return false;
+        }
+
+        throw error;
+    }
+}
+
+function* getDraftInsightsToPersist(
+    ctx: DashboardContext,
+    draftInsightsOnDashboard: IInsight[],
+): SagaIterator<IInsight[]> {
+    const draftInsightsExistenceOnBackend: SagaReturnType<typeof draftInsightExistsOnBackend>[] = yield all(
+        draftInsightsOnDashboard.map((draftInsight) => call(draftInsightExistsOnBackend, ctx, draftInsight)),
+    );
+
+    return draftInsightsOnDashboard.filter((_, index) => !draftInsightsExistenceOnBackend[index]);
 }
 
 type DashboardSaveFn = (
@@ -289,7 +321,7 @@ function processExistingTabs(
 
         const filterContext = tab.filterContext?.filterContextDefinition
             ? ({
-                  ...(tab.filterContext?.filterContextIdentity || {}),
+                  ...tab.filterContext?.filterContextIdentity,
                   ...tab.filterContext.filterContextDefinition,
               } as IFilterContext | ITempFilterContext)
             : undefined;
@@ -518,12 +550,14 @@ function* createDashboardSaveContext(
         layout: layout ? dashboardLayoutRemoveIdentity(layout, isTemporaryIdentity) : undefined,
     };
 
+    const insights: ReturnType<typeof selectInsights> = yield select(selectInsights);
+
     return {
         cmd,
         persistedDashboard,
         dashboardFromState,
         dashboardToSave: getDashboardWithSharing(
-            dashboardToSave,
+            dashboardWithDrillReferences(dashboardToSave, insights),
             capabilities.supportsAccessControl,
             isNewDashboard,
         ),
@@ -658,9 +692,16 @@ export function* saveDashboardHandler(
             selectDraftInsightsUsedOnDashboard,
         );
 
+        const draftInsightsToPersist: SagaReturnType<typeof getDraftInsightsToPersist> = yield call(
+            getDraftInsightsToPersist,
+            ctx,
+            draftInsightsOnDashboard,
+        );
+
         let shouldPersistDraftInsights = isInsightNotSavedDialogSaveConfirmed;
 
-        if (draftInsightsOnDashboard.length > 0 && !shouldPersistDraftInsights) {
+        if (draftInsightsToPersist.length > 0 && !shouldPersistDraftInsights) {
+            yield put(uiActions.setInsightNotSavedDialogDraftInsightsToPersist(draftInsightsToPersist));
             yield put(uiActions.openInsightNotSavedDialog());
 
             const draftInsightDialogAction:
@@ -686,8 +727,8 @@ export function* saveDashboardHandler(
             yield put(uiActions.closeInsightNotSavedDialog());
         }
 
-        if (shouldPersistDraftInsights && draftInsightsOnDashboard.length > 0) {
-            yield call(persistDraftInsights, ctx, cmd, draftInsightsOnDashboard);
+        if (shouldPersistDraftInsights && draftInsightsToPersist.length > 0) {
+            yield call(persistDraftInsights, ctx, cmd, draftInsightsToPersist);
         }
 
         const persistedDashboard: ReturnType<typeof selectPersistedDashboard> =

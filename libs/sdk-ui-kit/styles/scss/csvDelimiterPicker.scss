@@ -24,6 +24,11 @@
     visibility: visible;
 }
 
+.gd-csv-delimiter-picker-field-label {
+    display: block;
+    margin: 0 0 2px;
+}
+
 .gd-csv-delimiter-picker-controls {
     display: flex;
     gap: 10px;

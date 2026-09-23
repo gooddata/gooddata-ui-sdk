@@ -203,6 +203,7 @@ const AUTOMATIONS_FIXTURE: IAutomationsContextValue = {
     getCatalogAttributeByRef: () => undefined,
     getAttributeFilterDisplayForm: () => undefined,
     scheduleEmailDialogReturnFocusTo: undefined,
+    isFilterRestricted: () => false,
     widgetExistsByRef: () => false,
 };
 

@@ -28,6 +28,7 @@ export interface IDrillSelectItem {
     attributeValue?: string | null;
     context?: unknown;
     isDisabled?: boolean;
+    isRestricted?: boolean;
     tooltipText?: string;
 }
 
