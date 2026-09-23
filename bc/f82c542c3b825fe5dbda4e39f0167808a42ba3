@@ -1,0 +1,25 @@
+libs/sdk-ui-tests-e2e/Dockerfile
+  s_ef3da7a097ba74::t_651a09b1700b7e 11,20
+libs/sdk-ui-tests-e2e/Dockerfile_local
+  s_ef3da7a097ba74::t_9d6fcd7827cc0d 3,14
+libs/sdk-ui-tests-e2e/README.md
+  s_ef3da7a097ba74::t_eec5ab58976613 87
+libs/sdk-ui-tests-e2e/docker-compose-isolated.yaml
+  s_ef3da7a097ba74::t_d8c3d6b1143151 37
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "bcf82c542c3b825fe5dbda4e39f0167808a42ba3",
+  "prompts": {},
+  "sessions": {
+    "s_ef3da7a097ba74": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2450e641-5faa-4496-a632-f7a59cd3bc7a",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Petr Benes <petr.benes@gooddata.com>"
+    }
+  }
+}
