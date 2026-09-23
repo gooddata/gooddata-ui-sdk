@@ -40,7 +40,7 @@ let registeredPricingExtension: UseHostPricingExtension | undefined;
  *
  * @remarks
  * This indirection keeps the chrome free of any hard dependency on a specific pricing
- * dialog implementation (e.g. `gdc-pricing-dialog`). The host app supplies
+ * dialog implementation (e.g. `@gooddata/gdc-pricing-dialog`). The host app supplies
  * the extension at boot; removing the extension is a one-line change.
  *
  * Contract:
