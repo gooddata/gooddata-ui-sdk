@@ -15,6 +15,7 @@ import {
 
 import { InsightPickerFilterBar } from "./InsightPickerFilterBar.js";
 import { InsightPickerRow } from "./InsightPickerRow.js";
+import { InsightPickerSuggestionsHeader } from "./InsightPickerSuggestionsHeader.js";
 import { messages } from "./messages.js";
 import { type IInsightPickerItem, type IInsightPickerProps } from "./types.js";
 import { useInsightPickerFilters } from "./useInsightPickerFilters.js";
@@ -44,6 +45,9 @@ function useDebouncedSearchQuery(searchQuery: string, delayMs: number): string {
     return debouncedQuery;
 }
 
+const ITEM_HEIGHT = 50;
+const SUGGESTIONS_HEADER_HEIGHT = 30;
+
 export function InsightPickerCore({
     backend: backendProp,
     workspace: workspaceProp,
@@ -63,7 +67,7 @@ export function InsightPickerCore({
     isAuthorFilterModified,
     tagFilter,
     onTagFilterChange,
-    enableSemanticSearch = true,
+    enableSemanticSearch = false,
     maxHeight = 350,
     width = 700,
     onSelect,
@@ -221,9 +225,19 @@ export function InsightPickerCore({
 
     const totalItems = (totalInsightsCount ?? insights.length) + appendedRelatedItems.length;
 
+    // The group label rides on the first suggestion rather than on a row of its own, which would
+    // take a keyboard stop the user cannot act on.
+    const suggestionsHeaderIndex = appendedRelatedItems.length > 0 ? searchEntries.length : -1;
+
     const shouldLoadNextPage = useCallback(
         (lastItemIndex: number, itemsCount: number) => lastItemIndex >= itemsCount - 5,
         [],
+    );
+
+    const itemHeightGetter = useCallback(
+        (index: number) =>
+            index === suggestionsHeaderIndex ? ITEM_HEIGHT + SUGGESTIONS_HEADER_HEIGHT : ITEM_HEIGHT,
+        [suggestionsHeaderIndex],
     );
 
     const handleItemClick = useCallback(
@@ -291,7 +305,8 @@ export function InsightPickerCore({
                         handleItemClick(entry);
                     }
                 }}
-                itemHeight={50}
+                itemHeight={ITEM_HEIGHT}
+                itemHeightGetter={itemHeightGetter}
                 items={displayItems}
                 itemsCount={totalItems}
                 maxHeight={maxHeight}
@@ -310,24 +325,22 @@ export function InsightPickerCore({
                         itemsGap={0}
                     />
                 )}
-                renderItem={({ item: entry, width: itemWidth }) => {
+                renderItem={({ item: entry, rowIndex, width: itemWidth }) => {
                     const type =
                         (enabledVisualizationClassesUrls.includes(entry.visualizationUrl) &&
                             entry.visualizationUrl?.split(":")[1]) ||
                         "unknown";
                     const isSelected = entry.identifier === selectedInsightId;
 
-                    if (renderItemProp) {
-                        const sourceInsight = insightsByIdentifier.get(entry.identifier);
-                        return renderItemProp({
+                    const row = renderItemProp ? (
+                        renderItemProp({
                             item: entry,
                             type,
                             width: itemWidth,
                             isSelected,
-                            sourceInsight,
-                        });
-                    }
-                    return (
+                            sourceInsight: insightsByIdentifier.get(entry.identifier),
+                        })
+                    ) : (
                         <InsightPickerRow
                             entry={entry}
                             type={type}
@@ -340,6 +353,15 @@ export function InsightPickerCore({
                             onItemClick={handleItemClick}
                             onDescriptionPanelOpen={onDescriptionPanelOpen}
                         />
+                    );
+
+                    return rowIndex === suggestionsHeaderIndex ? (
+                        <div className="gd-ui-ext-insight-picker-suggestions-group">
+                            <InsightPickerSuggestionsHeader />
+                            {row}
+                        </div>
+                    ) : (
+                        row
                     );
                 }}
                 renderNoData={({ hasNoMatchingData }) => (

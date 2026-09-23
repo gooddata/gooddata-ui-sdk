@@ -46,9 +46,6 @@ import { TimezoneOption } from "./TimezoneOption.js";
 import { type IDashboardSettingsDialogProps } from "./types.js";
 import { useDialogData } from "./useDialogData.js";
 
-const DASHBOARD_TIMEZONE_DOC_LINK =
-    "https://www.gooddata.ai/docs/cloud/customize-appearance/manage-timezones/#change-the-time-zone-on-a-dashboard";
-
 /**
  * @alpha
  */
@@ -272,24 +269,9 @@ export function DefaultDashboardSettingsDialog({
                             label={intl.formatMessage({
                                 id: "settingsDashboardDialog.section.timezone.defaultTimezone",
                             })}
-                            tooltip={
-                                <FormattedMessage
-                                    id="settingsDashboardDialog.section.timezone.defaultTimezone.tooltip"
-                                    values={{
-                                        a: (chunks: ReactNode) =>
-                                            isWhiteLabeled ? null : (
-                                                <a
-                                                    href={DASHBOARD_TIMEZONE_DOC_LINK}
-                                                    rel="noopener noreferrer"
-                                                    target="_blank"
-                                                    className="s-timezone-docs-link"
-                                                >
-                                                    {chunks}
-                                                </a>
-                                            ),
-                                    }}
-                                />
-                            }
+                            tooltip={intl.formatMessage({
+                                id: "settingsDashboardDialog.section.timezone.defaultTimezone.tooltip",
+                            })}
                             timezoneConfig={currentData.timezoneConfig}
                             onChange={(timezoneId: string | undefined) => {
                                 setCurrentData({

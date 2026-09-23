@@ -2,7 +2,10 @@
 
 import { type MouseEvent } from "react";
 
-import { type IUser } from "@gooddata/sdk-model";
+import { type IUser, type PluggableApplicationRegistryItem } from "@gooddata/sdk-model";
+import { type IPlatformContext } from "@gooddata/sdk-pluggable-application-model";
+
+import { getActiveInternalApplication, getApplicationHref } from "../loader/routing.js";
 
 /**
  * Builds the display name shown for the current user in the host header.
@@ -32,6 +35,30 @@ export function getUserDisplayName(user: IUser): string {
 export function swapWorkspaceInPath(pathname: string, newWorkspaceId: string): string {
     const replaced = pathname.replace(/^\/workspace\/[^/]+/, `/workspace/${newWorkspaceId}`);
     return replaced === pathname ? `/workspace/${newWorkspaceId}` : replaced;
+}
+
+/**
+ * Returns the path a workspace switch made from `pathname` should land on: the active
+ * application's landing route in the new workspace.
+ *
+ * @remarks
+ * The whole in-app remainder of the path is dropped, screens as well as object ids. The host
+ * cannot tell them apart — it knows an application only by its route base — and a remainder
+ * kept across the switch carries ids of objects that exist in the old workspace only, which
+ * lands the user on a "not found" page. A path no workspace-scoped application claims keeps
+ * the plain workspace swap.
+ */
+export function getWorkspaceSwitchPath(
+    pathname: string,
+    newWorkspaceId: string,
+    apps: PluggableApplicationRegistryItem[],
+    ctx: IPlatformContext,
+): string {
+    const activeApp = getActiveInternalApplication(apps, ctx, pathname);
+    if (activeApp?.applicationScope === "workspace") {
+        return getApplicationHref(activeApp, { ...ctx, currentWorkspaceId: newWorkspaceId });
+    }
+    return swapWorkspaceInPath(pathname, newWorkspaceId);
 }
 
 /**

@@ -59,10 +59,10 @@ export function useExportTimezones(isWidgetSchedule: boolean): {
     const {
         isTimezoneFeatureEnabled = false,
         allowUserOverrideInViewMode = false,
-        configuredTimezoneId = undefined,
-        workspaceTimezone = undefined,
-        effectiveTimezone = undefined,
-        scheduledExportTimezone: explicitTimezone = undefined,
+        configuredTimezoneId,
+        workspaceTimezone,
+        effectiveTimezone,
+        scheduledExportTimezone: explicitTimezone,
     } = exportTimezones ?? {};
 
     const canSelectScheduleTimezone = isTimezoneFeatureEnabled && allowUserOverrideInViewMode;

@@ -2483,6 +2483,10 @@
         "text": "Reset filters",
         "crowdinContext": "Button/tooltip to reset all filters in the insight picker to their defaults."
     },
+    "insightPicker.suggestions": {
+        "text": "Similar",
+        "crowdinContext": "Header of the group of AI-suggested visualizations listed below the visualizations that match the search."
+    },
     "objectShare.confirm.restrict.title": {
         "text": "Restrict access?",
         "crowdinContext": "Title of the confirm dialog shown when the user is about to switch general access from workspace-wide to restricted."

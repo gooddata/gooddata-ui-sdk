@@ -102,6 +102,7 @@ function createAutomationsContextValue(
         widgetLocalIdToTabIdMap: {},
         getCatalogAttributeByRef: () => undefined,
         getAttributeFilterDisplayForm: () => undefined,
+        isFilterRestricted: () => false,
         widgetExistsByRef: () => false,
         scheduleEmailDialogReturnFocusTo: undefined,
     };

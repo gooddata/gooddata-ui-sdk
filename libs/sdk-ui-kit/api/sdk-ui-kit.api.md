@@ -2579,7 +2579,7 @@ export interface IDropdownProps {
     // (undocumented)
     ignoreClicksOnByClass?: string[];
     // (undocumented)
-    initialFocus?: RefObject<HTMLElement> | string;
+    initialFocus?: RefObject<HTMLElement | null> | string;
     // (undocumented)
     isOpen?: boolean;
     onAlign?: (alignment: Alignment) => void;
@@ -2597,7 +2597,7 @@ export interface IDropdownProps {
     // (undocumented)
     renderButton: (props: IDropdownButtonRenderProps) => ReactNode;
     // (undocumented)
-    returnFocusTo?: RefObject<HTMLElement> | string;
+    returnFocusTo?: RefObject<HTMLElement | null> | string;
     // (undocumented)
     shouldTrapFocus?: boolean;
 }
@@ -5777,6 +5777,7 @@ export interface ITimezoneSelectSpecialItem {
     id: string | undefined;
     label: string;
     tooltip?: string;
+    tooltipContent?: ReactNode;
 }
 
 // @internal (undocumented)
@@ -6748,7 +6749,7 @@ export interface IUiDropdownProps {
     enableFocusTrap?: boolean;
     fullWidthButton?: boolean;
     ignoreClicksOnByClass?: string[];
-    initialFocus?: RefObject<HTMLElement> | string;
+    initialFocus?: RefObject<HTMLElement | null> | string;
     isOpen?: boolean;
     offset?: OffsetOptions;
     onClose?: () => void;
@@ -6758,7 +6759,7 @@ export interface IUiDropdownProps {
     placement?: Placement;
     renderBody: (props: IUiDropdownBodyRenderProps) => ReactNode;
     renderButton: (props: IUiDropdownButtonRenderProps) => ReactNode;
-    returnFocusTo?: RefObject<HTMLElement> | string;
+    returnFocusTo?: RefObject<HTMLElement | null> | string;
     width?: number | "same-as-anchor" | "auto";
     zIndex?: number;
 }
@@ -7156,8 +7157,8 @@ export interface IUiListboxInteractiveItem<T> {
     isDisabled?: boolean;
     // (undocumented)
     stringTitle: string;
-    // (undocumented)
     tooltip?: string;
+    tooltipContent?: ReactNode;
     // (undocumented)
     type: "interactive";
 }
@@ -7721,7 +7722,7 @@ export interface IUiPopoverProps {
     // (undocumented)
     id?: string;
     // (undocumented)
-    initialFocus?: RefObject<HTMLElement> | string;
+    initialFocus?: RefObject<HTMLElement | null> | string;
     isOpen?: boolean;
     // (undocumented)
     onClose?: () => void;
@@ -7732,7 +7733,7 @@ export interface IUiPopoverProps {
     // (undocumented)
     returnFocusAfterClose?: boolean;
     // (undocumented)
-    returnFocusTo?: RefObject<HTMLElement> | string;
+    returnFocusTo?: RefObject<HTMLElement | null> | string;
     // (undocumented)
     tabIndex?: number;
     // (undocumented)

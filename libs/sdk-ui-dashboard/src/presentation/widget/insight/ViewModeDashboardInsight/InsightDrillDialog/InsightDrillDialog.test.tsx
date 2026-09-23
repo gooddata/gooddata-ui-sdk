@@ -1,10 +1,14 @@
 // (C) 2026 GoodData Corporation
 
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { IntlProvider } from "react-intl";
 import { describe, expect, it, vi } from "vitest";
 
-import { type IInsight, type IInsightWidget } from "@gooddata/sdk-model";
-import { FLOATING_ELEMENT_DATA_ATTR } from "@gooddata/sdk-ui-kit";
+import { type IInsight, type IInsightWidget, idRef, localIdRef } from "@gooddata/sdk-model";
+import { FLOATING_ELEMENT_DATA_ATTR, UiMenu } from "@gooddata/sdk-ui-kit";
+
+import { DrillType, type IDrillSelectItem } from "../../../../drill/DrillSelect/types.js";
+import { useDrillSelectDropdownMenuItems } from "../../../../drill/hooks/useDrillSelectDropdownMenuItems.js";
 
 // `isolate: false` shares one module graph per worker, so the modules mocked below may already have
 // been evaluated — against their real dependencies — by a test file that ran earlier in the same
@@ -140,5 +144,56 @@ describe("InsightDrillDialog", () => {
 
         expect(onClose).toHaveBeenCalledTimes(1);
         outsideButton.remove();
+    });
+});
+
+function RestrictedDrillMenu({ onSelect }: { onSelect: () => void }) {
+    const restrictedItem: IDrillSelectItem = {
+        id: "restricted-drill",
+        type: DrillType.DRILL_TO_INSIGHT,
+        name: "Restricted",
+        isRestricted: true,
+        isDisabled: true,
+        drillDefinition: {
+            type: "drillToInsight",
+            transition: "pop-up",
+            target: idRef("restricted-insight", "insight"),
+            origin: { type: "drillFromMeasure", measure: localIdRef("measure") },
+        },
+    };
+    const items = useDrillSelectDropdownMenuItems({
+        drillItems: [restrictedItem, { ...restrictedItem, id: "second-restricted-drill" }],
+        drillDownItems: [],
+        drillToUrlItems: [],
+        crossFilteringItems: [],
+        keyDriverAnalysisItems: [],
+        onSelect,
+    });
+    return (
+        <UiMenu
+            items={items}
+            onSelect={(item) => item.data.onSelect()}
+            ariaAttributes={{ id: "restricted-drill-menu", "aria-label": "Drill to" }}
+        />
+    );
+}
+
+describe("restricted drill menu", () => {
+    it("keeps an all-restricted menu readable and prevents pointer and keyboard selection", () => {
+        const onSelect = vi.fn();
+        render(
+            <IntlProvider locale="en-US" messages={{ "drill_modal_picker.drill-into": "Drill into" }}>
+                <RestrictedDrillMenu onSelect={onSelect} />
+            </IntlProvider>,
+        );
+        const entries = screen.getAllByRole("menuitem", { name: "Restricted" });
+        expect(entries).toHaveLength(2);
+        for (const entry of entries) {
+            expect(entry).toHaveAttribute("aria-disabled", "true");
+            fireEvent.click(entry);
+            fireEvent.keyDown(entry, { key: "Enter" });
+            fireEvent.keyDown(entry, { key: " " });
+        }
+        expect(onSelect).not.toHaveBeenCalled();
     });
 });

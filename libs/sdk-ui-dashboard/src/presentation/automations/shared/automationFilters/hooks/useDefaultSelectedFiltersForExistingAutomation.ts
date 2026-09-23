@@ -28,13 +28,33 @@ import {
     getAutomationVisualizationFilters,
 } from "../../utils/automationUtils.js";
 
+/**
+ * Keeps the restricted filters the automation stores but the reconstruction above cannot find: one the
+ * author had already hidden when it was saved never got a visible-filter entry to match on.
+ */
+function withStoredRestrictedFilters(
+    reconstructed: FilterContextItem[],
+    savedFilters: FilterContextItem[] | undefined,
+    isFilterRestricted: (filter: FilterContextItem) => boolean,
+): FilterContextItem[] {
+    const presentIds = new Set(reconstructed.map(dashboardFilterLocalIdentifier));
+    const missing = (savedFilters ?? []).filter(
+        (filter) => isFilterRestricted(filter) && !presentIds.has(dashboardFilterLocalIdentifier(filter)),
+    );
+
+    return missing.length > 0 ? [...reconstructed, ...missing] : reconstructed;
+}
+
 export function useDefaultSelectedFiltersForExistingAutomation(
     automationToEdit?: IAutomationMetadataObject,
     availableVisibleFilters?: IAutomationVisibleFilter[],
     widget?: ExtendedDashboardWidget,
 ) {
-    const { automationAvailableFilters: availableDashboardFilters, commonDateFilterId } =
-        useAutomationsContext();
+    const {
+        automationAvailableFilters: availableDashboardFilters,
+        commonDateFilterId,
+        isFilterRestricted,
+    } = useAutomationsContext();
 
     const savedWidgetAlertFilters = getAutomationAlertFilters(automationToEdit);
     const {
@@ -68,11 +88,15 @@ export function useDefaultSelectedFiltersForExistingAutomation(
 
     const savedVisibleFilters = automationToEdit?.metadata?.visibleFilters ?? [];
 
-    return getDefaultSelectedFiltersByVisibleFilters(
-        savedVisibleFilters,
-        availableWidgetFilters,
+    return withStoredRestrictedFilters(
+        getDefaultSelectedFiltersByVisibleFilters(
+            savedVisibleFilters,
+            availableWidgetFilters,
+            savedFilterContextItems,
+            commonDateFilterId,
+        ),
         savedFilterContextItems,
-        commonDateFilterId,
+        isFilterRestricted,
     );
 }
 
@@ -156,6 +180,7 @@ export function getDefaultSelectedFiltersByTabForExistingAutomation(
     automationToEdit: IAutomationMetadataObject | undefined,
     availableDashboardFiltersByTab: Record<string, FilterContextItem[]> = {},
     commonDateFilterId?: string,
+    isFilterRestricted: (filter: FilterContextItem) => boolean = () => false,
 ): Record<string, FilterContextItem[]> | undefined {
     if (!automationToEdit) {
         return undefined;
@@ -170,26 +195,31 @@ export function getDefaultSelectedFiltersByTabForExistingAutomation(
 
     // If we have visibleFiltersByTab, use it to properly reconstruct filters
     if (savedVisibleFiltersByTab) {
-        return Object.entries(savedVisibleFiltersByTab).reduce<Record<string, FilterContextItem[]>>(
-            (acc, [tabId, savedVisibleFilters]) => {
-                const availableFiltersForTab = availableDashboardFiltersByTab[tabId] ?? [];
-                const savedFiltersForTab = savedFiltersByTab[tabId] ?? [];
+        // A tab whose only stored filter was hidden has no visible-filter entries, so take the tab ids
+        // from both sides or that tab would be skipped entirely.
+        const tabIds = new Set([...Object.keys(savedVisibleFiltersByTab), ...Object.keys(savedFiltersByTab)]);
 
-                const reconstructedFilters = getDefaultSelectedFiltersByVisibleFilters(
-                    savedVisibleFilters,
+        return [...tabIds].reduce<Record<string, FilterContextItem[]>>((acc, tabId) => {
+            const availableFiltersForTab = availableDashboardFiltersByTab[tabId] ?? [];
+            const savedFiltersForTab = savedFiltersByTab[tabId] ?? [];
+
+            const reconstructedFilters = withStoredRestrictedFilters(
+                getDefaultSelectedFiltersByVisibleFilters(
+                    savedVisibleFiltersByTab[tabId] ?? [],
                     availableFiltersForTab,
                     savedFiltersForTab,
                     commonDateFilterId,
-                );
+                ),
+                savedFiltersForTab,
+                isFilterRestricted,
+            );
 
-                if (reconstructedFilters.length > 0) {
-                    acc[tabId] = reconstructedFilters;
-                }
+            if (reconstructedFilters.length > 0) {
+                acc[tabId] = reconstructedFilters;
+            }
 
-                return acc;
-            },
-            {},
-        );
+            return acc;
+        }, {});
     }
     return undefined;
 }

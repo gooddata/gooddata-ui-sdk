@@ -205,16 +205,22 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
      */
     public getInsightWithCatalogItems = async (
         ref: ObjRef,
+        options: IGetInsightOptions = {},
     ): Promise<{
         insight: IInsight;
         catalogItems: Array<ICatalogFact | ICatalogMeasure | ICatalogAttribute>;
     }> => {
-        const { insight, included } = await this.getInsightWithReferences(ref, [
-            "metrics" as const,
-            "attributes" as const,
-            "facts" as const,
-            "labels" as const,
-        ]);
+        const { insight, included } = await this.getInsightWithReferences(
+            ref,
+            [
+                "metrics" as const,
+                "attributes" as const,
+                "facts" as const,
+                "labels" as const,
+                ...(options.loadUserData ? (["createdBy", "modifiedBy"] as const) : []),
+            ],
+            options.loadPermissions,
+        );
 
         // get attributes by labels.id and individual id's, include labels to fully reconstruct catalogue
         const labels = included?.filter(isLabelItem).map((item) => item.id) ?? [];

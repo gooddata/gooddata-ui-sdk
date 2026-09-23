@@ -221,14 +221,49 @@ describe("resolveUnavailableReferences", () => {
         ]);
     });
 
-    it("does not resolve labels from the dashboard document (they relate to filter contexts)", () => {
-        const doc = dashboardDocument({
-            relationships: {
-                labels: { data: [{ id: "label2", type: "label" }] },
+    it("resolves URL-only labels from the dashboard document using explicit backend restrictions", () => {
+        const content = {
+            layout: {
+                sections: [
+                    {
+                        items: [
+                            {
+                                widget: {
+                                    drills: [
+                                        {
+                                            type: "drillToCustomUrl",
+                                            target: {
+                                                url: "https://example.com/{attribute_title(label2)}",
+                                                references: [
+                                                    { identifier: { id: "label2", type: "label" } },
+                                                    { identifier: { id: "deleted", type: "label" } },
+                                                ],
+                                            },
+                                        },
+                                    ],
+                                },
+                            },
+                        ],
+                    },
+                ],
             },
+        };
+        const doc = dashboardDocument({
+            relationships: { labels: { data: [{ id: "label2", type: "label" }] } },
+            content,
+            restricted: [{ id: "label2", type: "label" }],
         });
-
-        expect(resolveUnavailableReferences(doc, ["displayForm"])).toEqual([]);
+        expect(resolveUnavailableReferences(doc, ["displayForm"])).toEqual([
+            { ref: idRef("label2", "displayForm"), type: "displayForm", reason: "forbidden" },
+            { ref: idRef("deleted", "displayForm"), type: "displayForm", reason: "notFound" },
+        ]);
+        expect(resolveUnavailableReferences(doc, ["measure"])).toEqual([]);
+        expect(
+            resolveUnavailableReferences(
+                dashboardDocument({ content: { url: "https://example.com/{attribute_title(label2)}" } }),
+                ["displayForm"],
+            ),
+        ).toEqual([]);
     });
 
     it("classifies a missing drill-target dashboard as notFound without inferring forbidden", () => {

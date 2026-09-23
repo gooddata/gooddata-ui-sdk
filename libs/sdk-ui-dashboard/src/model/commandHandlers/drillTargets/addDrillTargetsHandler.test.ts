@@ -1,10 +1,10 @@
 // (C) 2021-2026 GoodData Corporation
 
-// @vitest-environment node
+// @vitest-environment happy-dom
 
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { uriRef } from "@gooddata/sdk-model";
+import { type InsightDrillDefinition, idRef, localIdRef, uriRef } from "@gooddata/sdk-model";
 import { type IAvailableDrillTargets } from "@gooddata/sdk-ui";
 
 import { TestCorrelation } from "../../../tests/Dashboard.test.helpers.js";
@@ -12,13 +12,18 @@ import {
     SimpleDashboardIdentifier,
     SimpleSortedTableWidgetRef,
 } from "../../../tests/SimpleDashboard.test.helpers.js";
+import { saveDashboard } from "../../commands/dashboard.js";
 import { type IAddDrillTargets, addDrillTargets } from "../../commands/drillTargets.js";
 import { changeRenderMode } from "../../commands/renderMode.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { type IDrillTargetsAdded } from "../../events/drillTargets.js";
 import { type IDashboardCommandFailed } from "../../events/general.js";
 import { selectDrillTargetsByWidgetRef } from "../../store/drillTargets/drillTargetsSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
+import { selectWidgetDrills } from "../../store/tabs/layout/layoutSelectors.js";
 import { selectInvalidDrillWidgetRefs } from "../../store/ui/uiSelectors.js";
+import { unavailableObjectsActions } from "../../store/unavailableObjects/index.js";
+import { selectValidConfiguredDrillsByWidgetRef } from "../../store/widgetDrills/widgetDrillSelectors.js";
 
 describe("addDrillTargetsHandler", () => {
     const availableDrillTargetsMock: IAvailableDrillTargets = {};
@@ -29,6 +34,82 @@ describe("addDrillTargetsHandler", () => {
         await preloadedTesterFactory((tester) => {
             Tester = tester;
         }, SimpleDashboardIdentifier);
+    });
+
+    it("keeps restricted targets through edit validation and save, and exposes them to the menu", async () => {
+        const insight = idRef("restricted-insight", "insight");
+        const dashboard = idRef("restricted-dashboard", "analyticalDashboard");
+        const label = idRef("restricted-label", "displayForm");
+        const origin = {
+            type: "drillFromMeasure",
+            measure: localIdRef("m1"),
+        } satisfies InsightDrillDefinition["origin"];
+        const drills: InsightDrillDefinition[] = [
+            {
+                type: "drillToInsight",
+                origin,
+                target: insight,
+                transition: "pop-up",
+                localIdentifier: "insight-drill",
+            },
+            {
+                type: "drillToDashboard",
+                origin,
+                target: dashboard,
+                transition: "in-place",
+                localIdentifier: "dashboard-drill",
+            },
+            {
+                type: "drillToCustomUrl",
+                origin,
+                target: { url: "https://example.com/?value={attribute_title(restricted-label)}" },
+                transition: "new-window",
+                localIdentifier: "url-drill",
+            },
+        ];
+        Tester.dispatch(
+            unavailableObjectsActions.setUnavailableObjects([
+                { ref: insight, type: "insight", reason: "forbidden" },
+                { ref: dashboard, type: "analyticalDashboard", reason: "forbidden" },
+                { ref: label, type: "displayForm", reason: "forbidden" },
+            ]),
+        );
+        Tester.dispatch(
+            tabsActions.replaceWidgetDrillWithoutUndo({
+                ref: SimpleSortedTableWidgetRef,
+                drillDefinitions: drills,
+            }),
+        );
+        await Tester.dispatchAndWaitFor(
+            changeRenderMode("edit", { resetDashboard: false }),
+            "GDC.DASH/EVT.RENDER_MODE.CHANGED",
+        );
+        await Tester.dispatchAndWaitFor(
+            addDrillTargets(SimpleSortedTableWidgetRef, {
+                measures: [
+                    {
+                        measure: {
+                            measureHeaderItem: { localIdentifier: "m1", name: "Measure", format: "#" },
+                        },
+                        attributes: [],
+                    },
+                ],
+            }),
+            "GDC.DASH/EVT.DRILL_TARGETS.ADDED",
+        );
+        expect(Tester.select(selectWidgetDrills(SimpleSortedTableWidgetRef))).toEqual(drills);
+        expect(Tester.select(selectInvalidDrillWidgetRefs)).toEqual([]);
+        expect(
+            Tester.select(selectValidConfiguredDrillsByWidgetRef(SimpleSortedTableWidgetRef)).map(
+                ({ drillDefinition }) => drillDefinition,
+            ),
+        ).toEqual(drills);
+        await Tester.dispatchAndWaitFor(saveDashboard(), "GDC.DASH/EVT.SAVED");
+        const savedDrills = Tester.select(selectWidgetDrills(SimpleSortedTableWidgetRef));
+        expect(savedDrills).toMatchObject(drills);
+        expect(savedDrills?.[2]).toMatchObject({
+            target: { references: { "{attribute_title(restricted-label)}": [label] } },
+        });
     });
 
     it("should not have invalid drills when drill targets are not set", async () => {

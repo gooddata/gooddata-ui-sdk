@@ -42,6 +42,7 @@ import {
     isCustomWidget,
     isExtendedDashboardLayoutWidget,
 } from "../../../types/layoutTypes.js";
+import { removeIgnoredWidgetFilters } from "../../../utils/widgetFilters.js";
 import { createMemoizedSelector } from "../../_infra/selectors.js";
 import { type IUndoableCommand, createUndoableCommandsMapping } from "../../_infra/undoEnhancer.js";
 import {
@@ -546,7 +547,7 @@ export const selectAllFiltersForWidgetByRefAcrossTabs: (
 
             return calculateWidgetFilters(
                 widget,
-                dashboardFilters,
+                removeIgnoredWidgetFilters(dashboardFilters, widget),
                 crossFilteringFiltersLocalIdentifiers,
                 shouldIgnoreCrossFiltering,
                 allCrossFilteringLocalIdentifiers,

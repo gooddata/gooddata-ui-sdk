@@ -21,6 +21,7 @@ const messages = defineMessages({
     cancel: { id: "cancel" },
     submit: { id: "dialogs.export.submit" },
     delimiterLabel: { id: "dialogs.export.csv.delimiter", defaultMessage: "CSV delimiter" },
+    submitDisabledTooltip: { id: "dialogs.export.csv.submit.disabledTooltip" },
 });
 
 export interface IExportCsvDialogProps {
@@ -51,6 +52,9 @@ export const ExportCsvDialog = memo(function ExportCsvDialog({ onCancel, onSubmi
                     displayCloseButton
                     isPositive
                     isSubmitDisabled={isSubmitDisabled}
+                    submitButtonTooltipText={
+                        isSubmitDisabled ? intl.formatMessage(messages.submitDisabledTooltip) : undefined
+                    }
                     headline={intl.formatMessage(messages.headline)}
                     cancelButtonText={intl.formatMessage(messages.cancel)}
                     submitButtonText={intl.formatMessage(messages.submit)}

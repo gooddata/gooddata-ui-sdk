@@ -64,7 +64,7 @@ which rejects unknown properties, so only the three below are valid.
 
 A value may also be a **bare string**, and tooling has to accept that. It is the
 form of every exported target locale file, and a few legacy entries in
-`en-US.json` still use it (3 in `libs/gdc-analytical-designer-runtime`, 1 in
+`en-US.json` still use it (3 in `libs/gdc-analytical-designer`, 1 in
 `sdk/libs/sdk-ui`). Those carry no `crowdinContext` and get no `.text` suffix in
 Crowdin.
 

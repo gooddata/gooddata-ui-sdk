@@ -1,8 +1,27 @@
 // (C) 2022-2026 GoodData Corporation
 
+import { isMeasureValueFilter, measureValueFilterMeasure } from "../execution/filter/index.js";
+import {
+    type IMeasure,
+    measureArithmeticOperands,
+    measureItem,
+    measureLocalId,
+    measureMasterIdentifier,
+} from "../execution/measure/index.js";
+import { type IInsightDefinition, insightFilters, insightMeasures } from "../insight/index.js";
 import { type IAttributeDisplayFormMetadataObject } from "../ldm/metadata/attributeDisplayForm/index.js";
 import { idRef } from "../objRef/factory.js";
-import { type IdentifierRef, type ObjRef, isComputedAttributeRef, isIdentifierRef } from "../objRef/index.js";
+import {
+    type IdentifierRef,
+    type ObjRef,
+    areObjRefsEqual,
+    isComputedAttributeRef,
+    isIdentifierRef,
+    isLocalIdRef,
+    objRefToString,
+} from "../objRef/index.js";
+
+import { type IDrillToCustomUrlTarget } from "./drill.js";
 
 /**
  * @internal
@@ -29,11 +48,50 @@ function matchAll(regex: RegExp, text: string): RegExpExecArray[] {
 }
 
 const attributeIdentifierSplitRegexp = /(\{attribute_title\(.*?\)\})/;
-const attributeIdentifierMatchRegexp = /\{attribute_title\((.*?)\)\}/g;
-const dashboardAttributeFilterMatchRegexp = /\{dash_attribute_filter_selection\((.*?)\)\}/g;
-const dashboardMeasureValueFilterMatchRegexp = /\{dash_mvf_condition\((.*?)\)\}/g;
-const insightAttributeFilterMatchRegexp = /\{attribute_filter_selection\((.*?)\)\}/g;
-const insightMeasureValueFilterMatchRegexp = /\{mvf_condition\((.*?)\)\}/g;
+
+/** Context placeholders carry no object dependency. @internal */
+export enum DRILL_TO_URL_PLACEHOLDER {
+    DRILL_TO_URL_PLACEHOLDER_PROJECT_ID = "{project_id}",
+    DRILL_TO_URL_PLACEHOLDER_WORKSPACE_ID = "{workspace_id}",
+    DRILL_TO_URL_PLACEHOLDER_INSIGHT_ID = "{visualization_id}",
+    DRILL_TO_URL_PLACEHOLDER_WIDGET_ID = "{widget_id}",
+    DRILL_TO_URL_PLACEHOLDER_DASHBOARD_ID = "{dashboard_id}",
+    DRILL_TO_URL_PLACEHOLDER_CLIENT_ID = "{client_id}",
+    DRILL_TO_URL_PLACEHOLDER_DATA_PRODUCT_ID = "{data_product_id}",
+}
+
+type DrillUrlDependency = "displayForm" | "measure" | "insightMeasure" | "none";
+
+function definePlaceholder<T extends string>(type: T, pattern: RegExp, dependency: DrillUrlDependency) {
+    return { type, pattern, dependency };
+}
+
+/**
+ * Shared grammar for URL resolution and dependency collection. Every entry must declare its
+ * dependency policy; the dashboard resolver exhaustively handles the resulting type union.
+ * @internal
+ */
+const drillUrlPlaceholderDefinitions = [
+    definePlaceholder("attribute_title", /\{attribute_title\((.*?)\)\}/g, "displayForm"),
+    definePlaceholder(
+        "dash_attribute_filter_selection",
+        /\{dash_attribute_filter_selection\((.*?)\)\}/g,
+        "displayForm",
+    ),
+    definePlaceholder(
+        "attribute_filter_selection",
+        /\{attribute_filter_selection\((.*?)\)\}/g,
+        "displayForm",
+    ),
+    definePlaceholder("dash_mvf_condition", /\{dash_mvf_condition\((.*?)\)\}/g, "measure"),
+    definePlaceholder("mvf_condition", /\{mvf_condition\((.*?)\)\}/g, "insightMeasure"),
+    ...Object.values(DRILL_TO_URL_PLACEHOLDER).map((placeholder) =>
+        definePlaceholder(placeholder, new RegExp(placeholder, "g"), "none"),
+    ),
+];
+
+/** Supported grammar keys; URL resolvers must handle every key. @internal */
+export type DrillUrlPlaceholderType = (typeof drillUrlPlaceholderDefinitions)[number]["type"];
 
 /**
  * A placeholder names its target by identifier alone, which used to be enough because every target
@@ -112,14 +170,14 @@ export const dashboardAttributeFilterToPlaceholder = (ref: ObjRef): string =>
 export const insightAttributeFilterToPlaceholder = (ref: ObjRef): string =>
     `{attribute_filter_selection(${placeholderIdentifierText(ref)})}`;
 
-const matchToUrlPlaceholder = (match: any): IDrillToUrlPlaceholder => ({
+const matchToUrlPlaceholder = (match: RegExpExecArray): IDrillToUrlPlaceholder => ({
     placeholder: match[0],
     identifier: placeholderIdentifier(match[1]),
     ref: placeholderToRef(match[1]),
     toBeEncoded: match.index !== 0,
 });
 
-const matchToMeasureUrlPlaceholder = (match: any): IDrillToUrlPlaceholder => ({
+const matchToMeasureUrlPlaceholder = (match: RegExpExecArray): IDrillToUrlPlaceholder => ({
     placeholder: match[0],
     identifier: match[1],
     ref: idRef(match[1], "measure"),
@@ -133,7 +191,7 @@ const splitAttributeIdentifierUrl = (url: string): string[] => url.split(attribu
  */
 export const splitDrillUrlParts = (url: string): IDrillUrlPart[] => {
     return splitAttributeIdentifierUrl(url).map((urlPart: string) => {
-        const match = attributeIdentifierMatchRegexp.exec(urlPart);
+        const match = /\{attribute_title\((.*?)\)\}/.exec(urlPart);
         if (match !== null) {
             return matchToUrlPlaceholder(match).ref;
         }
@@ -162,32 +220,107 @@ export const joinDrillUrlParts = (parts: IDrillUrlPart[] | string): string => {
         .join("");
 };
 
-/**
- * @internal
- */
+/** Parses one registered object-placeholder family using the shared grammar. */
+function getObjectPlaceholders(url: string, type: DrillUrlPlaceholderType): IDrillToUrlPlaceholder[] {
+    const definition = drillUrlPlaceholderDefinitions.find((candidate) => candidate.type === type);
+    if (!definition || definition.dependency === "none") {
+        return [];
+    }
+    return matchAll(definition.pattern, url).map(
+        definition.dependency === "displayForm" ? matchToUrlPlaceholder : matchToMeasureUrlPlaceholder,
+    );
+}
+
+/** @internal */
 export const getAttributeIdentifiersPlaceholdersFromUrl = (url: string): IDrillToUrlPlaceholder[] =>
-    matchAll(attributeIdentifierMatchRegexp, url).map(matchToUrlPlaceholder);
+    getObjectPlaceholders(url, "attribute_title");
 
-/**
- * @internal
- */
+/** @internal */
 export const getDashboardAttributeFilterPlaceholdersFromUrl = (url: string): IDrillToUrlPlaceholder[] =>
-    matchAll(dashboardAttributeFilterMatchRegexp, url).map(matchToUrlPlaceholder);
+    getObjectPlaceholders(url, "dash_attribute_filter_selection");
 
-/**
- * @internal
- */
+/** @internal */
 export const getDashboardMeasureValueFilterPlaceholdersFromUrl = (url: string): IDrillToUrlPlaceholder[] =>
-    matchAll(dashboardMeasureValueFilterMatchRegexp, url).map(matchToMeasureUrlPlaceholder);
+    getObjectPlaceholders(url, "dash_mvf_condition");
 
-/**
- * @internal
- */
+/** @internal */
 export const getInsightAttributeFilterPlaceholdersFromUrl = (url: string): IDrillToUrlPlaceholder[] =>
-    matchAll(insightAttributeFilterMatchRegexp, url).map(matchToUrlPlaceholder);
+    getObjectPlaceholders(url, "attribute_filter_selection");
+
+/** @internal */
+export const getInsightMeasureValueFilterPlaceholdersFromUrl = (url: string): IDrillToUrlPlaceholder[] =>
+    getObjectPlaceholders(url, "mvf_condition");
+
+/** Returns the registered placeholder families present in the URL. @internal */
+export function getDrillUrlPlaceholderTypes(url: string): DrillUrlPlaceholderType[] {
+    return drillUrlPlaceholderDefinitions
+        .filter(({ pattern }) => matchAll(pattern, url).length > 0)
+        .map(({ type }) => type);
+}
+
+/** Resolves local arithmetic/derived measures without interpreting local IDs as object IDs. */
+function localMeasureReferences(identifier: string, measures: IMeasure[], visited: Set<string>): ObjRef[] {
+    if (visited.has(identifier)) {
+        return [];
+    }
+    visited.add(identifier);
+    const measure = measures.find((candidate) => measureLocalId(candidate) === identifier);
+    if (!measure) {
+        return [];
+    }
+    const item = measureItem(measure);
+    if (item) {
+        return [item];
+    }
+    const master = measureMasterIdentifier(measure);
+    const operands = master ? [master] : (measureArithmeticOperands(measure) ?? []);
+    return operands.flatMap((operand) => localMeasureReferences(operand, measures, visited));
+}
 
 /**
+ * Collects dependencies by exact placeholder. Without the source insight, only dependencies saved
+ * for the same insight-filter placeholder can be retained; removed/renamed placeholders disappear.
  * @internal
  */
-export const getInsightMeasureValueFilterPlaceholdersFromUrl = (url: string): IDrillToUrlPlaceholder[] =>
-    matchAll(insightMeasureValueFilterMatchRegexp, url).map(matchToMeasureUrlPlaceholder);
+export function getDrillToCustomUrlReferenceMap(
+    target: IDrillToCustomUrlTarget,
+    insight?: IInsightDefinition,
+): Record<string, ObjRef[]> {
+    const references: Record<string, ObjRef[]> = {};
+    for (const definition of drillUrlPlaceholderDefinitions) {
+        for (const { placeholder, identifier, ref } of getObjectPlaceholders(target.url, definition.type)) {
+            if (definition.dependency !== "insightMeasure") {
+                references[placeholder] = [ref];
+                continue;
+            }
+            if (!insight) {
+                references[placeholder] = target.references?.[placeholder] ?? [];
+                continue;
+            }
+            const filter = insightFilters(insight)
+                .filter(isMeasureValueFilter)
+                .find((candidate) => objRefToString(measureValueFilterMeasure(candidate)) === identifier);
+            if (!filter) {
+                references[placeholder] = [];
+                continue;
+            }
+            const measureRef = measureValueFilterMeasure(filter);
+            references[placeholder] = isLocalIdRef(measureRef)
+                ? localMeasureReferences(measureRef.localIdentifier, insightMeasures(insight), new Set())
+                : [measureRef];
+        }
+    }
+    return references;
+}
+
+/** Returns distinct object dependencies of the current URL for restriction checks. @internal */
+export function getDrillToCustomUrlReferences(
+    target: IDrillToCustomUrlTarget,
+    insight?: IInsightDefinition,
+): ObjRef[] {
+    return Object.values(getDrillToCustomUrlReferenceMap(target, insight))
+        .flat()
+        .filter(
+            (ref, index, refs) => refs.findIndex((candidate) => areObjRefsEqual(candidate, ref)) === index,
+        );
+}

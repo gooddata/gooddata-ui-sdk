@@ -104,6 +104,7 @@ function LoadedAlertingDialogState({ children }: { children: ReactNode }) {
 
     const { applyFiltersToDraft } = useAlertDraftFilterWrites({
         setEditedAutomation: formState.setEditedAutomation,
+        alertToEdit,
         dashboardHiddenFilters,
         commonDateFilterId,
         widget,

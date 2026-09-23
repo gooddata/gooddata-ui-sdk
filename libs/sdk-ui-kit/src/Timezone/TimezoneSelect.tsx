@@ -42,9 +42,14 @@ export interface ITimezoneSelectSpecialItem {
     label: string;
 
     /**
-     * Tooltip of the item.
+     * Tooltip of the item. Also read by screen readers.
      */
     tooltip?: string;
+
+    /**
+     * Rich content rendered in the visual tooltip instead of `tooltip`, e.g. text with a link.
+     */
+    tooltipContent?: ReactNode;
 }
 
 /**
@@ -176,6 +181,7 @@ export function buildListboxItems(
             id: `${SPECIAL_ITEM_ID_PREFIX}${index}`,
             stringTitle: item.label,
             tooltip: showTooltip ? item.tooltip : undefined,
+            tooltipContent: showTooltip ? item.tooltipContent : undefined,
             data: item.id,
         }));
 

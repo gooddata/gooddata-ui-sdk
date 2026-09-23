@@ -4,7 +4,7 @@ import { type ReactElement } from "react";
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
     createGrandTotalColumnDefinition,
@@ -109,10 +109,14 @@ function getHeaderRoot(): HTMLElement {
 }
 
 describe("PivotGroupHeader — total label target for blanked nested groups", () => {
-    beforeEach(async () => {
+    // Reset once for this file's mocks. Cold imports can exceed the default hook timeout on CI;
+    // individual tests only need their mock values reset, not the whole dependency graph reloaded.
+    beforeAll(async () => {
         vi.resetModules();
         ({ PivotGroupHeader } = await import("./PivotGroupHeader.js"));
+    }, 30_000);
 
+    beforeEach(() => {
         usePivotTablePropsMock.mockReturnValue({
             config: {
                 menu: {

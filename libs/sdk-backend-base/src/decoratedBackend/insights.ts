@@ -50,11 +50,14 @@ export abstract class DecoratedWorkspaceInsightsService implements IWorkspaceIns
         return this.decorated.getVisualizationClasses(options);
     }
 
-    public getInsightWithCatalogItems(ref: ObjRef): Promise<{
+    public getInsightWithCatalogItems(
+        ref: ObjRef,
+        options?: IGetInsightOptions,
+    ): Promise<{
         insight: IInsight;
         catalogItems: Array<ICatalogFact | ICatalogMeasure | ICatalogAttribute>;
     }> {
-        return this.decorated.getInsightWithCatalogItems(ref);
+        return this.decorated.getInsightWithCatalogItems(ref, options);
     }
 
     public getInsight(ref: ObjRef, options?: IGetInsightOptions): Promise<IInsight> {

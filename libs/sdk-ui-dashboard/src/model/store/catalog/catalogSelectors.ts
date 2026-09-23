@@ -41,7 +41,7 @@ import {
     selectBackendCapabilities,
     selectSupportsAttributeHierarchies,
 } from "../backendCapabilities/backendCapabilitiesSelectors.js";
-import { selectLocale } from "../config/configSelectors.js";
+import { selectEnableDashboardPartialRendering, selectLocale } from "../config/configSelectors.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
 
 import {
@@ -329,6 +329,28 @@ export const selectAllCatalogAttributeHierarchies: DashboardSelector<
 );
 
 /**
+ * Hierarchies used for drilling must be readable in their entirety. Do not bridge a missing
+ * level, or offer an entry point that will encounter an inaccessible level later.
+ */
+export const selectDrillableAttributeHierarchies = createSelector(
+    selectAllCatalogAttributeHierarchies,
+    selectCatalogAttributes,
+    selectCatalogDateAttributes,
+    selectEnableDashboardPartialRendering,
+    (hierarchies, attributes, dateAttributes, partialRendering) => {
+        if (!partialRendering) {
+            return hierarchies;
+        }
+        const readableAttributes = [...attributes, ...dateAttributes];
+        return hierarchies.filter((hierarchy) =>
+            getHierarchyAttributes(hierarchy).every((ref) =>
+                readableAttributes.some(({ attribute }) => areObjRefsEqual(attribute.ref, ref)),
+            ),
+        );
+    },
+);
+
+/**
  * @alpha
  */
 export const selectAttributesWithDrillDown: DashboardSelector<(ICatalogAttribute | ICatalogDateAttribute)[]> =
@@ -368,7 +390,7 @@ export type HierarchyDescendantsByAttributeId = Record<string, HierarchyDescenda
  */
 export const selectAttributesWithHierarchyDescendants: DashboardSelector<HierarchyDescendantsByAttributeId> =
     createSelector(
-        [selectCatalogAttributes, selectCatalogDateAttributes, selectAllCatalogAttributeHierarchies],
+        [selectCatalogAttributes, selectCatalogDateAttributes, selectDrillableAttributeHierarchies],
         (attributes = [], dateAttributes = [], attributeHierarchies = []) => {
             return getAttributesWithHierarchyDescendants(attributes, dateAttributes, attributeHierarchies);
         },

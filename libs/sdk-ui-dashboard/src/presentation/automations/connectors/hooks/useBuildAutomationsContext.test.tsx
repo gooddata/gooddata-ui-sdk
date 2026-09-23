@@ -129,11 +129,16 @@ vi.mock("../../../../model/store/user/userSelectors.js", () => ({
 vi.mock("../../../../model/store/filtering/dashboardFilterSelectors.js", () => ({
     selectAutomationAvailableDashboardFilters: () => selectors.emptyArray,
     selectAutomationCommonDateFilterId: () => undefined,
+    selectAllDashboardFiltersWithoutCrossFiltering: () => selectors.emptyArray,
     selectAutomationDefaultSelectedFilters: () => selectors.emptyArray,
     selectAutomationFiltersByTab: () => selectors.emptyArray,
-    selectDashboardFiltersWithoutCrossFiltering: () => selectors.emptyArray,
+    selectExecutableDashboardFiltersWithoutCrossFiltering: () => selectors.emptyArray,
     selectDashboardHiddenFilters: () => selectors.emptyArray,
     selectDashboardLockedFilters: () => selectors.emptyArray,
+}));
+
+vi.mock("../../../../model/store/unavailableObjects/unavailableObjectsSelectors.js", () => ({
+    selectUnavailableObjects: () => selectors.emptyArray,
 }));
 
 vi.mock("../../../../model/store/meta/metaSelectors.js", () => ({

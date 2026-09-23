@@ -42,11 +42,14 @@ import {
     measureValueFilterMeasure,
 } from "@gooddata/sdk-model";
 import {
+    DRILL_TO_URL_PLACEHOLDER,
+    type DrillUrlPlaceholderType,
     type IDrillToUrlPlaceholder,
     displayFormPlaceholderRef,
     getAttributeIdentifiersPlaceholdersFromUrl,
     getDashboardAttributeFilterPlaceholdersFromUrl,
     getDashboardMeasureValueFilterPlaceholdersFromUrl,
+    getDrillUrlPlaceholderTypes,
     getInsightAttributeFilterPlaceholdersFromUrl,
     getInsightMeasureValueFilterPlaceholdersFromUrl,
 } from "@gooddata/sdk-model/internal";
@@ -73,7 +76,6 @@ import {
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectAnalyticalWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
-import { DRILL_TO_URL_PLACEHOLDER } from "../../types/drillTypes.js";
 import { type PromiseFnReturnType } from "../../types/sagas.js";
 import { resolveDisplayFormMetadata } from "../../utils/displayFormResolver.js";
 import {
@@ -677,48 +679,41 @@ export function* resolveDrillToCustomUrl(
 ): SagaIterator<string> {
     const customUrl = drillConfig.target.url;
 
-    const attributeIdentifiersReplacements: IDrillToUrlPlaceholderReplacement[] = yield call(
-        getAttributeIdentifiersReplacements,
-        customUrl,
-        event.drillContext.intersection!,
-        ctx,
-    );
-
-    const dashboardAttributeFilterReplacements: IDrillToUrlPlaceholderReplacement[] = yield call(
-        getDashboardAttributeFilterReplacements,
-        customUrl,
-        ctx,
-    );
-
-    const insightAttributeFilterReplacements: IDrillToUrlPlaceholderReplacement[] = yield call(
-        getInsightAttributeFilterReplacements,
-        customUrl,
-        widgetRef,
-    );
-
-    const dashboardMeasureValueFilterReplacements: IDrillToUrlPlaceholderReplacement[] = yield call(
-        getDashboardMeasureValueFilterReplacements,
-        customUrl,
-    );
-
-    const enableMeasureValueFilterKD: ReturnType<typeof selectEnableMeasureValueFilterKD> = yield select(
-        selectEnableMeasureValueFilterKD,
-    );
-    const insightMeasureValueFilterReplacements: IDrillToUrlPlaceholderReplacement[] =
-        enableMeasureValueFilterKD
-            ? yield call(getInsightMeasureValueFilterReplacements, customUrl, widgetRef)
-            : getInsightMeasureValueFilterPlaceholdersFromUrl(customUrl).map(({ placeholder }) => ({
-                  toBeReplaced: placeholder,
-                  replacement: undefined,
-              }));
-
-    const missingReplacements = [
-        ...attributeIdentifiersReplacements,
-        ...dashboardAttributeFilterReplacements,
-        ...insightAttributeFilterReplacements,
-        ...dashboardMeasureValueFilterReplacements,
-        ...insightMeasureValueFilterReplacements,
-    ].filter(({ replacement }) => replacement === undefined);
+    const resolveContext = () => getInsightIdentifiersReplacements(customUrl, widgetRef, ctx);
+    const resolvers: Record<
+        DrillUrlPlaceholderType,
+        () => SagaIterator<IDrillToUrlPlaceholderReplacement[]>
+    > = {
+        attribute_title: () =>
+            getAttributeIdentifiersReplacements(customUrl, event.drillContext.intersection!, ctx),
+        dash_attribute_filter_selection: () => getDashboardAttributeFilterReplacements(customUrl, ctx),
+        attribute_filter_selection: () => getInsightAttributeFilterReplacements(customUrl, widgetRef),
+        dash_mvf_condition: () => getDashboardMeasureValueFilterReplacements(customUrl),
+        mvf_condition: function* () {
+            const enabled: ReturnType<typeof selectEnableMeasureValueFilterKD> = yield select(
+                selectEnableMeasureValueFilterKD,
+            );
+            return enabled
+                ? yield call(getInsightMeasureValueFilterReplacements, customUrl, widgetRef)
+                : getInsightMeasureValueFilterPlaceholdersFromUrl(customUrl).map(({ placeholder }) => ({
+                      toBeReplaced: placeholder,
+                      replacement: undefined,
+                  }));
+        },
+        [DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_PROJECT_ID]: resolveContext,
+        [DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_WORKSPACE_ID]: resolveContext,
+        [DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_INSIGHT_ID]: resolveContext,
+        [DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_WIDGET_ID]: resolveContext,
+        [DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_DASHBOARD_ID]: resolveContext,
+        [DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_CLIENT_ID]: resolveContext,
+        [DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_DATA_PRODUCT_ID]: resolveContext,
+    };
+    const replacements: IDrillToUrlPlaceholderReplacement[] = [];
+    for (const resolve of new Set(getDrillUrlPlaceholderTypes(customUrl).map((type) => resolvers[type]))) {
+        const resolved: IDrillToUrlPlaceholderReplacement[] = yield call(resolve);
+        replacements.push(...resolved);
+    }
+    const missingReplacements = replacements.filter(({ replacement }) => replacement === undefined);
 
     if (missingReplacements.length > 0) {
         // Surface every unresolved placeholder (not just the first) and the URL, so a "Failed to load
@@ -734,22 +729,6 @@ export function* resolveDrillToCustomUrl(
             `Drill to custom URL unable to resolve missing parameter ${missingReplacements[0].toBeReplaced}`,
         );
     }
-
-    const insightIdentifiersReplacements: IDrillToUrlPlaceholderReplacement[] = yield call(
-        getInsightIdentifiersReplacements,
-        customUrl,
-        widgetRef,
-        ctx,
-    );
-
-    const replacements = [
-        ...attributeIdentifiersReplacements,
-        ...dashboardAttributeFilterReplacements,
-        ...insightAttributeFilterReplacements,
-        ...dashboardMeasureValueFilterReplacements,
-        ...insightMeasureValueFilterReplacements,
-        ...insightIdentifiersReplacements,
-    ];
 
     return applyReplacements(customUrl, replacements);
 }

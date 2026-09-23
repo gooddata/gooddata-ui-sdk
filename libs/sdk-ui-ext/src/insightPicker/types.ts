@@ -95,6 +95,10 @@ export interface IInsightPickerProps {
     enabledVisualizationClassesUrls?: string[];
     selectedInsightId?: string;
     metadataTimeZone?: string;
+    /**
+     * Whether the picker may add AI suggestions to the title matches. Only the caller can read the
+     * `enableCatalogSmartSearchResults` flag this is gated on, so it defaults to off.
+     */
     enableSemanticSearch?: boolean;
     maxHeight?: number;
     width?: number;

@@ -30,6 +30,18 @@ describe("TimezoneSelect listbox items", () => {
         expect(items.some((item) => item.type === "interactive" && item.id === selectedId)).toBe(false);
     });
 
+    it("should pass the tooltip and its rich content through only when tooltips are enabled", () => {
+        const items: ITimezoneSelectSpecialItem[] = [
+            { id: undefined, label: "Default", tooltip: "Plain text", tooltipContent: "Rich content" },
+        ];
+
+        const [withTooltip] = buildListboxItems(items, "", true);
+        const [withoutTooltip] = buildListboxItems(items, "", false);
+
+        expect(withTooltip).toMatchObject({ tooltip: "Plain text", tooltipContent: "Rich content" });
+        expect(withoutTooltip).toMatchObject({ tooltip: undefined, tooltipContent: undefined });
+    });
+
     it("should resolve the selected id of a regular timezone to its IANA id", () => {
         expect(getSelectedItemId("Europe/Prague", specialItems)).toBe("Europe/Prague");
     });

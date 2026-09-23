@@ -332,30 +332,22 @@ function collectAllMetric(
         if (alert.alert?.condition.type === "comparison") {
             const left = alert.alert?.condition.left;
             return {
-                primaries: [
-                    ...(left
-                        ? [
-                              newMeasure(left.id, (a) =>
-                                  a.format(left.format).title(left.title).localId(left.id),
-                              ),
-                          ]
-                        : []),
-                ],
+                primaries: left
+                    ? [newMeasure(left.id, (a) => a.format(left.format).title(left.title).localId(left.id))]
+                    : [],
                 others: [],
             };
         }
         if (alert.alert?.condition.type === "anomalyDetection") {
             const measure = alert.alert?.condition.measure;
             return {
-                primaries: [
-                    ...(measure
-                        ? [
-                              newMeasure(measure.id, (a) =>
-                                  a.format(measure.format).title(measure.title).localId(measure.id),
-                              ),
-                          ]
-                        : []),
-                ],
+                primaries: measure
+                    ? [
+                          newMeasure(measure.id, (a) =>
+                              a.format(measure.format).title(measure.title).localId(measure.id),
+                          ),
+                      ]
+                    : [],
                 others: [],
             };
         }

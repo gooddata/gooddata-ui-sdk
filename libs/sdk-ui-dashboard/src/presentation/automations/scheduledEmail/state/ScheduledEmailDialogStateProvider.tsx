@@ -139,6 +139,7 @@ function LoadedScheduledEmailDialogState({ children }: { children: ReactNode }) 
 
     const { applyFiltersToDraft, applyFiltersByTabToDraft } = useScheduledEmailDraftFilterWrites({
         setEditedAutomation: formState.setEditedAutomation,
+        scheduledExportToEdit,
         widget,
         insight,
         storeFilters,

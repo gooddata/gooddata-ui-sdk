@@ -59,13 +59,13 @@ import {
 import {
     type HierarchyDescendant,
     type HierarchyDescendantsByAttributeId,
-    selectAllCatalogAttributeHierarchies,
     selectAllCatalogAttributesMap,
     selectAllCatalogDisplayFormsMap,
     selectAttributesWithDisplayFormLink,
     selectAttributesWithHierarchyDescendants,
     selectCatalogDateAttributes,
     selectCatalogIsLoaded,
+    selectDrillableAttributeHierarchies,
 } from "../catalog/catalogSelectors.js";
 import {
     selectDisableDefaultDrills,
@@ -87,6 +87,8 @@ import {
     selectWidgetDrills,
 } from "../tabs/layout/layoutSelectors.js";
 import { type DashboardSelector } from "../types.js";
+
+import { selectIsDrillRestricted } from "./drillRestrictionSelectors.js";
 
 /**
  * @internal
@@ -422,7 +424,7 @@ export const selectImplicitDrillsDownByWidgetRef: (
         selectSupportsAttributeHierarchies,
         selectInsightByWidgetRef(ref),
         selectIgnoredDrillDownHierarchiesByWidgetRef(ref),
-        selectAllCatalogAttributeHierarchies,
+        selectDrillableAttributeHierarchies,
         selectBackendCapabilities,
         (
             availableDrillTargets,
@@ -621,7 +623,7 @@ export const selectGlobalDrillsDownAttributeHierarchyByWidgetRef: (
     (ref: ObjRef) =>
         createSelector(
             selectDrillTargetsByWidgetRef(ref),
-            selectAllCatalogAttributeHierarchies,
+            selectDrillableAttributeHierarchies,
             selectIgnoredDrillDownHierarchiesByWidgetRef(ref),
             selectSupportsAttributeHierarchies,
             selectInsightByWidgetRef(ref),
@@ -801,8 +803,12 @@ export const selectValidConfiguredDrillsByWidgetRef: (
         selectAllCatalogDisplayFormsMap,
         selectAccessibleDashboardsMap,
         selectInsightsMap,
-        (drills = [], displayFormsMap, accessibleDashboardsMap, insightsMap) => {
+        selectIsDrillRestricted,
+        (drills = [], displayFormsMap, accessibleDashboardsMap, insightsMap, isRestricted) => {
             return drills.filter((drill) => {
+                if (isRestricted(drill.drillDefinition)) {
+                    return true;
+                }
                 switch (drill.drillDefinition.type) {
                     case "drillToAttributeUrl": {
                         return displayFormsMap.get(drill.drillDefinition.target.hyperlinkDisplayForm);
@@ -979,7 +985,7 @@ export const selectImplicitDrillsByAvailableDrillTargets: (
             selectAttributesWithHierarchyDescendants,
             selectAllCatalogAttributesMap,
             selectSupportsAttributeHierarchies,
-            selectAllCatalogAttributeHierarchies,
+            selectDrillableAttributeHierarchies,
             selectBackendCapabilities,
             selectEnableDrillToUrlByDefault,
             (

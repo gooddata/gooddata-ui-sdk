@@ -67,11 +67,13 @@ import {
 } from "./common/intersectionUtils.js";
 import { mergeDashboardAndSourceFilters } from "./common/mergeFilters.js";
 import { getIncludedSourceFiltersForDashboard } from "./common/sourceDrillFilters.js";
+import { validateDrillAccess } from "./validateDrillAccess.js";
 
 export function* drillToDashboardHandler(
     ctx: DashboardContext,
     cmd: IDrillToDashboard,
 ): SagaIterator<IDashboardDrillToDashboardResolved> {
+    yield call(validateDrillAccess, ctx, cmd, cmd.payload.drillDefinition);
     // put start event
     yield put(
         drillToDashboardRequested(

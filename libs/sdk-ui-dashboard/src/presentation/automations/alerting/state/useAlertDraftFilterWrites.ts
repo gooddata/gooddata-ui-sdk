@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type Dispatch, type SetStateAction, useCallback } from "react";
+import { type Dispatch, type SetStateAction, useCallback, useMemo } from "react";
 
 import {
     type FilterContextItem,
@@ -12,6 +12,7 @@ import {
     type WeekStart,
 } from "@gooddata/sdk-model";
 
+import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
 import { getAppliedWidgetFilters, getVisibleFiltersByFilters } from "../../shared/filters/index.js";
 import { type AlertAttribute, type AlertMetric } from "../types.js";
 import { type IMeasureFormatMap } from "../utils/getters.js";
@@ -23,6 +24,8 @@ import { transformAlertByAttribute, transformAlertByMetric } from "../utils/tran
  */
 export interface IUseAlertDraftFilterWritesProps {
     setEditedAutomation: Dispatch<SetStateAction<IAutomationMetadataObjectDefinition | undefined>>;
+    /** The alert as it was loaded; the source of the visible-filter entries only it can name. */
+    alertToEdit?: IAutomationMetadataObject;
     dashboardHiddenFilters: FilterContextItem[];
     commonDateFilterId?: string;
     widget?: IWidget;
@@ -45,6 +48,7 @@ export interface IUseAlertDraftFilterWritesProps {
  */
 export function useAlertDraftFilterWrites({
     setEditedAutomation,
+    alertToEdit,
     dashboardHiddenFilters,
     commonDateFilterId,
     widget,
@@ -59,6 +63,17 @@ export function useAlertDraftFilterWrites({
     weekStart,
     timezone,
 }: IUseAlertDraftFilterWritesProps): { applyFiltersToDraft: (filters: FilterContextItem[]) => void } {
+    const { isFilterRestricted } = useAutomationsContext();
+    // Read from the loaded alert, not from the draft, so an entry the dashboard cannot name survives
+    // every rewrite of the filter list.
+    const restrictedFallback = useMemo(
+        () => ({
+            storedVisibleFilters: alertToEdit?.metadata?.visibleFilters,
+            isFilterRestricted,
+        }),
+        [alertToEdit, isFilterRestricted],
+    );
+
     const applyFiltersToDraft = useCallback(
         (filters: FilterContextItem[]) => {
             setEditedAutomation((s) => {
@@ -79,6 +94,7 @@ export function useAlertDraftFilterWrites({
                     filters,
                     availableFiltersAsVisibleFilters,
                     true,
+                    restrictedFallback,
                 );
 
                 const updatedAutomationWithFilters = {
@@ -122,6 +138,7 @@ export function useAlertDraftFilterWrites({
         [
             setEditedAutomation,
             availableFiltersAsVisibleFilters,
+            restrictedFallback,
             widget,
             insight,
             dashboardHiddenFilters,

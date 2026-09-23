@@ -33,7 +33,7 @@ import { getActiveInternalApplication } from "../loader/routing.js";
 import { getBackend } from "../platformContext/backend.js";
 
 import { buildAppMenu, getLocalizedTitle } from "./appMenuItems.js";
-import { getUserDisplayName, isPlainLeftClick, swapWorkspaceInPath } from "./chromeHelpers.js";
+import { getUserDisplayName, getWorkspaceSwitchPath, isPlainLeftClick } from "./chromeHelpers.js";
 import { b, e } from "./hostChromeBem.js";
 import { HostIntlProvider } from "./HostIntlProvider.js";
 import { HostNotificationDispatcher } from "./HostNotificationDispatcher.js";
@@ -216,14 +216,16 @@ export function HostChrome({
     const handleWorkspaceSelect = useCallback(
         (workspace: IHeaderWorkspace) => {
             const newId = workspace.id;
-            if (!newId) {
+            // The picker reports a click on the current workspace too; navigating would leave the
+            // application's own in-app route (which the host router does not observe) behind.
+            if (!newId || newId === features.workspaceId) {
                 return;
             }
             const search = typeof window === "undefined" ? "" : window.location.search;
-            const newPath = swapWorkspaceInPath(pathname, newId);
+            const newPath = getWorkspaceSwitchPath(pathname, newId, resolvedApplications, ctx);
             onNavigate(`${newPath}${search}`);
         },
-        [pathname, onNavigate],
+        [pathname, onNavigate, resolvedApplications, ctx, features.workspaceId],
     );
 
     const organizationTitle = ctx.organization?.title ?? ctx.organization?.id;

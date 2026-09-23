@@ -72,7 +72,13 @@ export const useDrillSelectDropdownMenuItems = ({
                 type: "interactive" as const,
                 id: `${groupId}-${index}`,
                 stringTitle: getMenuItemStringTitle(item),
-                iconLeft: <UiIcon type={DRILL_ICON_NAME[item.type]} size={16} color="complementary-5" />,
+                iconLeft: (
+                    <UiIcon
+                        type={item.isRestricted ? "lock" : DRILL_ICON_NAME[item.type]}
+                        size={16}
+                        color="complementary-5"
+                    />
+                ),
                 isDisabled: item.isDisabled,
                 tooltip: item.tooltipText,
                 ariaAttributes: {
@@ -85,7 +91,9 @@ export const useDrillSelectDropdownMenuItems = ({
                     type: item.type,
                     drillDefinition: item.drillDefinition,
                     onSelect: () => {
-                        onSelect(item.drillDefinition, item.context);
+                        if (!item.isDisabled) {
+                            onSelect(item.drillDefinition, item.context);
+                        }
                     },
                 },
             })),

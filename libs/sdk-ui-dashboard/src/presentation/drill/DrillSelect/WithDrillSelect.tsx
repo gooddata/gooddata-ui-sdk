@@ -24,8 +24,9 @@ import type { IDashboardCommandFailed } from "../../../model/events/general.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectBackendCapabilities } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectDisableDefaultDrills, selectLocale } from "../../../model/store/config/configSelectors.js";
-import { selectDashboardFiltersWithoutCrossFiltering } from "../../../model/store/filtering/dashboardFilterSelectors.js";
+import { selectExecutableDashboardFiltersWithoutCrossFiltering } from "../../../model/store/filtering/dashboardFilterSelectors.js";
 import { selectWidgetDrills } from "../../../model/store/tabs/layout/layoutSelectors.js";
+import { selectIsDrillRestricted } from "../../../model/store/widgetDrills/drillRestrictionSelectors.js";
 import {
     type DashboardDrillDefinition,
     type IDashboardDrillContext,
@@ -91,7 +92,8 @@ export function WithDrillSelect({
     const [isOpen, setIsOpen] = useState<boolean>(true);
     const locale = useDashboardSelector(selectLocale);
     const disableDefaultDrills = useDashboardSelector(selectDisableDefaultDrills); // TODO: maybe remove?
-    const filters = useDashboardSelector(selectDashboardFiltersWithoutCrossFiltering);
+    const filters = useDashboardSelector(selectExecutableDashboardFiltersWithoutCrossFiltering);
+    const isDrillRestricted = useDashboardSelector(selectIsDrillRestricted);
     const configuredDrills = useDashboardSelector(selectWidgetDrills(widgetRef));
     const { supportsAttributeHierarchies } = useDashboardSelector(selectBackendCapabilities);
 
@@ -109,7 +111,9 @@ export function WithDrillSelect({
                 ? drillDefinitions
                 : filterDrillFromAttributeByPriority(drillDefinitions, configuredDrills);
 
-            const type = getDrillDefinitionType(validDrillDefinitions);
+            const type = validDrillDefinitions.some(isDrillRestricted)
+                ? "multiple"
+                : getDrillDefinitionType(validDrillDefinitions);
             if (type === "single") {
                 onSelect(validDrillDefinitions[0], undefined, drillEvent, s.correlationId, context);
             } else if (type === "multiple") {
@@ -143,6 +147,7 @@ export function WithDrillSelect({
         drills,
         dropdownProps: { correlationId: dropdownProps?.correlationId, drillEvent: dropdownProps?.drillEvent },
         insight,
+        isDrillRestricted,
         handleClose,
     });
     const onSelect = useCallback(
@@ -153,7 +158,11 @@ export function WithDrillSelect({
             correlationId?: string,
             drillContext?: IDashboardDrillContext,
         ) => {
-            const { drills, dropdownProps, insight, handleClose } = onSelectDepsRef.current;
+            const { drills, dropdownProps, insight, handleClose, isDrillRestricted } =
+                onSelectDepsRef.current;
+            if (isDrillRestricted(drillDefinition)) {
+                return;
+            }
 
             const effectiveDrillEvent = drillEvent ?? dropdownProps?.drillEvent;
             const effectiveCorrelationId = correlationId ?? dropdownProps?.correlationId;

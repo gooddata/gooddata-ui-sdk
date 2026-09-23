@@ -2,7 +2,7 @@
 
 import { isEqual } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
-import { type SagaReturnType, all, call, put } from "redux-saga/effects";
+import { type SagaReturnType, all, call, put, select } from "redux-saga/effects";
 
 import {
     type DrillDefinition,
@@ -19,8 +19,12 @@ import { type IDashboardCommand } from "../../commands/base.js";
 import { insightWidgetDrillsRemoved } from "../../events/insight.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { uiActions } from "../../store/ui/index.js";
+import { selectIsDrillRestricted } from "../../store/widgetDrills/drillRestrictionSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
-import { wasDrillFilterConfigurationSanitized } from "../widgets/validation/insightDrillDefinitionUtils.js";
+import {
+    validateDrillDefinitionOrigin,
+    wasDrillFilterConfigurationSanitized,
+} from "../widgets/validation/insightDrillDefinitionUtils.js";
 import {
     getValidationData,
     validateDrillDefinition,
@@ -131,10 +135,11 @@ function* validateInsightDrillDefinitions(
     cmd: IDashboardCommand,
     widget: IInsightWidget,
 ): SagaIterator<IInvalidDrillInfo> {
+    const isRestricted: ReturnType<typeof selectIsDrillRestricted> = yield select(selectIsDrillRestricted);
     const validationData: SagaReturnType<typeof getValidationData> = yield call(
         getValidationData,
         widgetRef(widget),
-        widget.drills,
+        widget.drills.filter((drill) => !isRestricted(drill)),
         ctx,
     );
 
@@ -151,6 +156,16 @@ function* validateInsightDrillDefinitions(
     let hasSanitizedDrillFilterConfig = false;
     const sanitizedDrills = widget.drills.flatMap((drillItem) => {
         try {
+            if (isRestricted(drillItem)) {
+                // Keep the stored target and filters intact for readers who can access them.
+                if (validationData.drillTargets?.availableDrillTargets) {
+                    validateDrillDefinitionOrigin(
+                        drillItem,
+                        validationData.drillTargets.availableDrillTargets,
+                    );
+                }
+                return [drillItem];
+            }
             const validatedDrillDefinition = validateDrillDefinition(drillItem, validationData, ctx, cmd);
             hasSanitizedDrillFilterConfig =
                 hasSanitizedDrillFilterConfig ||

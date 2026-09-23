@@ -2,7 +2,7 @@
 
 import { useCallback, useMemo } from "react";
 
-import type { ObjRef } from "@gooddata/sdk-model";
+import type { FilterContextItem, ObjRef } from "@gooddata/sdk-model";
 
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import {
@@ -35,14 +35,15 @@ import {
     selectMaxAutomationRecipients,
 } from "../../../../model/store/entitlements/entitlementsSelectors.js";
 import {
+    selectAllDashboardFiltersWithoutCrossFiltering,
     selectAutomationAvailableDashboardFilters,
     selectAutomationCommonDateFilterId,
     selectAutomationDefaultSelectedFilters,
     selectAutomationFiltersByTab,
-    selectDashboardFiltersWithoutCrossFiltering,
     selectDashboardHiddenFilters,
     selectDashboardLockedFilters,
 } from "../../../../model/store/filtering/dashboardFilterSelectors.js";
+import { isDashboardFilterRestricted } from "../../../../model/store/filtering/restrictedFilterUtils.js";
 import {
     selectDashboardTimezoneConfig,
     selectEffectiveDashboardTimezone,
@@ -86,6 +87,7 @@ import {
     selectExecutionTimestamp,
     selectScheduleEmailDialogReturnFocusTo,
 } from "../../../../model/store/ui/uiSelectors.js";
+import { selectUnavailableObjects } from "../../../../model/store/unavailableObjects/unavailableObjectsSelectors.js";
 import { selectCurrentUser } from "../../../../model/store/user/userSelectors.js";
 import type {
     IAutomationsContextValue,
@@ -132,7 +134,8 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
     const commonDateFilterId = useDashboardSelector(selectAutomationCommonDateFilterId);
     const lockedFilters = useDashboardSelector(selectDashboardLockedFilters);
     const hiddenFilters = useDashboardSelector(selectDashboardHiddenFilters);
-    const availableFilters = useDashboardSelector(selectDashboardFiltersWithoutCrossFiltering);
+    const availableFilters = useDashboardSelector(selectAllDashboardFiltersWithoutCrossFiltering);
+    const unavailableObjects = useDashboardSelector(selectUnavailableObjects);
     const automationFiltersByTab = useDashboardSelector(selectAutomationFiltersByTab);
     const defaultSelectedFilters = useDashboardSelector(selectAutomationDefaultSelectedFilters);
     const automationAvailableFilters = useDashboardSelector(selectAutomationAvailableDashboardFilters);
@@ -197,6 +200,10 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
         (displayForm: ObjRef) =>
             attrFilterDisplayFormsMap.get(displayForm) ?? catalogDisplayFormsMap.get(displayForm),
         [attrFilterDisplayFormsMap, catalogDisplayFormsMap],
+    );
+    const isFilterRestricted = useCallback(
+        (filter: FilterContextItem) => isDashboardFilterRestricted(filter, unavailableObjects),
+        [unavailableObjects],
     );
     const widgetExistsByRef = useCallback(
         (ref: ObjRef | undefined): boolean => !!ref && widgetsMap.get(ref) !== undefined,
@@ -298,6 +305,7 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
             widgetLocalIdToTabIdMap,
             getCatalogAttributeByRef,
             getAttributeFilterDisplayForm,
+            isFilterRestricted,
             widgetExistsByRef,
             scheduleEmailDialogReturnFocusTo,
         }),
@@ -341,6 +349,7 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
             widgetLocalIdToTabIdMap,
             getCatalogAttributeByRef,
             getAttributeFilterDisplayForm,
+            isFilterRestricted,
             widgetExistsByRef,
             scheduleEmailDialogReturnFocusTo,
         ],

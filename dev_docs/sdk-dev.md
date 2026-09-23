@@ -5,12 +5,12 @@
 The SDK follows layered architecture with several packages (modules) on each layer. Each layer has clear set of responsibilities
 and constraints.
 
--   Layer 1: Platform-specific API clients and their supporting code (models, DTOs and the like)
--   Layer 2: Platform-agnostic domain model, analytical backend SPI, application APIs;
+- Layer 1: Platform-specific API clients and their supporting code (models, DTOs and the like)
+- Layer 2: Platform-agnostic domain model, analytical backend SPI, application APIs;
     > Note: SPI realizations are on this layer as well
--   Layer 3: UI SDK - React components
--   Utility Layer: Standalone, minimum dependency packages containing code utilities and convenience functions that
-    can be used in any other SDK package
+- Layer 3: UI SDK - React components
+- Utility Layer: Standalone, minimum dependency packages containing code utilities and convenience functions that
+  can be used in any other SDK package
 
 The main constraints - hard rules - in the architecture are:
 
@@ -26,10 +26,10 @@ The main constraints - hard rules - in the architecture are:
 
 ### Naming conventions
 
--   All platform-specific API client packages (clients, models and the like) start with `api-` prefix => **Layer 1 packages**
--   All SDK packages have `sdk-` prefix => **Layer 2 packages**
--   All SDK packages which implement Analytical Backend SPI have `sdk-backend-` prefix => **Layer 2 packages**
--   All SDK React packages have `sdk-ui-` prefix => **Layer 3 packages**
+- All platform-specific API client packages (clients, models and the like) start with `api-` prefix => **Layer 1 packages**
+- All SDK packages have `sdk-` prefix => **Layer 2 packages**
+- All SDK packages which implement Analytical Backend SPI have `sdk-backend-` prefix => **Layer 2 packages**
+- All SDK React packages have `sdk-ui-` prefix => **Layer 3 packages**
 
 ### Package rules and guidelines
 
@@ -152,18 +152,18 @@ concerns.
 There are couple of hard rules for utility package(s):
 
 1.  Adding new third party dependencies into existing utility packages is prohibited
-    -   Naturally, third party dependencies are essential when writing utility code on top of a 3rd party library.
-    -   Instead of adding dependency, create a new util package specific for that third party library
-    -   This rule is in place to prevent util dependency bloat
+    - Naturally, third party dependencies are essential when writing utility code on top of a 3rd party library.
+    - Instead of adding dependency, create a new util package specific for that third party library
+    - This rule is in place to prevent util dependency bloat
 2.  Utilities must never depend on SDK packages
 
 ## TypeScript setup
 
 Each project has four TS Config files:
 
--   tsconfig.build.json, tsconfig.build.esm.json - used for production builds
--   tsconfig.dev.json - used for builds on dev workstation, typically used in conjunction with --watch
--   tsconfig.json - base file, used for IDEs
+- tsconfig.build.json, tsconfig.build.esm.json - used for production builds
+- tsconfig.dev.json - used for builds on dev workstation, typically used in conjunction with --watch
+- tsconfig.json - base file, used for IDEs
 
 The TypeScript configuration in `tsconfig.json` uses `baseUrl` and `paths` to link to source directories of
 other dependent SDK projects: this is to enable fully integrated developer experience in the IDE. In this setup,
@@ -176,14 +176,14 @@ The `tsconfig.dev.json` and `tsconfig.build.json` nullify the `baseUrl` and `pat
 
 Here are a few guidelines that apply for all packages in the SDK:
 
--   Keep the each package's API minimal and focused on what is the package responsible for
--   Keep things DRY; always look for existing code to handle the job
--   Keep things in the right packages; see package overview above for hints
--   Every change in the code must be fully unit tested
+- Keep the each package's API minimal and focused on what is the package responsible for
+- Keep things DRY; always look for existing code to handle the job
+- Keep things in the right packages; see package overview above for hints
+- Every change in the code must be fully unit tested
 
-    -   Tests are placed in `tests` directory located in the package that contains the tested file
-    -   The file with the test is named `<testedFile>.test.ts`
-    -   The file with fixtures (mocks) used by the unit test is named `<testedFile>.fixture.ts`
+    - Tests are placed in `tests` directory located in the package that contains the tested file
+    - The file with the test is named `<testedFile>.test.ts`
+    - The file with fixtures (mocks) used by the unit test is named `<testedFile>.fixture.ts`
 
 Then there are specific guidelines for each layer / groups of packages.
 
@@ -191,10 +191,10 @@ Then there are specific guidelines for each layer / groups of packages.
 
 These are low level packages:
 
--   They SHOULD map almost 1-1 to the public REST APIs. There is none or very little magic here
--   REST API specific types & functions working with them MUST be in 'model' package
--   REST API calls MUST be in 'client' package.
--   The API clients MUST be usable from both browser and node.js.
+- They SHOULD map almost 1-1 to the public REST APIs. There is none or very little magic here
+- REST API specific types & functions working with them MUST be in 'model' package
+- REST API calls MUST be in 'client' package.
+- The API clients MUST be usable from both browser and node.js.
 
 ### Layer 2 - Model
 
@@ -209,26 +209,26 @@ to achieve independence on backend implementation.
 
 Here are couple of ground rules:
 
--   Model elements MUST be immutable
--   Model elements MUST be fully encapsulated
-    The package MUST provide functions to inspect and manipulate the elements. Factories and builders are used to
-    construct new instances. Functions are used to access or manipulate properties.
--   Model MUST provide generic, reusable functions to perform routine tasks
-    Sometimes the line can be quite blurry on what still belongs to the model and what not. Consult if you are unsure.
+- Model elements MUST be immutable
+- Model elements MUST be fully encapsulated
+  The package MUST provide functions to inspect and manipulate the elements. Factories and builders are used to
+  construct new instances. Functions are used to access or manipulate properties.
+- Model MUST provide generic, reusable functions to perform routine tasks
+  Sometimes the line can be quite blurry on what still belongs to the model and what not. Consult if you are unsure.
 
 ### Layer 2 - Backend SPI
 
 The SPI defines analytical backend and interactions with it in a platform-agnostic, API-client independent way. The goal
 is to provide fluent API with solid abstractions; the main benefits of this extra layer of indirection are:
 
--   (obviously) independence on particular backend implementation
--   simplification of code in above layers
--   separation of concerns (React components care about WHAT and HOW to visualize, not about WHAT API calls to do)
--   straightforward testability (test backend implementations can be plugged in swiftly)
+- (obviously) independence on particular backend implementation
+- simplification of code in above layers
+- separation of concerns (React components care about WHAT and HOW to visualize, not about WHAT API calls to do)
+- straightforward testability (test backend implementations can be plugged in swiftly)
 
 Here are couple of ground rules for this package:
 
--   Backend SPI MUST NOT expose platform-specific types; e.g. stuff defined in client packages
+- Backend SPI MUST NOT expose platform-specific types; e.g. stuff defined in client packages
 
 ### Testing and testing guidelines
 
@@ -240,27 +240,27 @@ Here are couple of ground rules for this package:
 
     Dev hints:
 
-    -   Use Vitest snapshots to save typing expected result where applicable
+    - Use Vitest snapshots to save typing expected result where applicable
 
 2.  Component tests for non-React code that works with data obtained from backend. Use standardized model and real
     data captured from backend and stored in reference workspace.
 
     Dev hints:
 
-    -   Use sdk-ui-tests to define new test scenarios and recordings for your tests
+    - Use sdk-ui-tests to define new test scenarios and recordings for your tests
 
 3.  Component tests with React Testing Library for React components. The goal of these tests is to quickly 'smoke' the component
     before more expensive tests kick in.
 
     Dev hints:
 
-    -   Minimize the complexity of these tests
-    -   Do not test trivial stuff using complex mechanisms (e.g. testing that props are propagated using spies etc)
-    -   If you find yourself doing complex stuff -> redesign the code under test so that it can be tested easier (extract
-        function)
-    -   If you find yourself doing complex stuff and redesign is not possible and tests are crazy and flaky -> don't
-        do the component tests. Do the end-to-end tests.
-    -   Black-box testing
+    - Minimize the complexity of these tests
+    - Do not test trivial stuff using complex mechanisms (e.g. testing that props are propagated using spies etc)
+    - If you find yourself doing complex stuff -> redesign the code under test so that it can be tested easier (extract
+      function)
+    - If you find yourself doing complex stuff and redesign is not possible and tests are crazy and flaky -> don't
+      do the component tests. Do the end-to-end tests.
+    - Black-box testing
 
 4.  API Regression tests for publicly available React components and pluggable visualizations. The goal of these tests
     is to quickly verify that there are no breaking API changes and that the same API leads to the same results
@@ -268,24 +268,24 @@ Here are couple of ground rules for this package:
 
     Dev hints:
 
-    -   Describe as many scenarios as possible
+    - Describe as many scenarios as possible
 
 5.  Visual Regression tests. The goal of these tests is to verify that using public API of a React components and
     Pluggable Visualizations leads to expected visualization rendered in the browser.
 
     Dev hints:
 
-    -   These tests are fairly cheap to create (share same infra as api regression tests)
-    -   However, they are orders of magnitude more expensive to execute (api regression suite with 2k tests runs for
-        30 sec, visual regression suite with ~1k tests runs for 3mins)
+    - These tests are fairly cheap to create (share same infra as api regression tests)
+    - However, they are orders of magnitude more expensive to execute (api regression suite with 2k tests runs for
+      30 sec, visual regression suite with ~1k tests runs for 3mins)
 
 6.  End-To-End tests. The goal of these tests is to verify (complex) interactions with a rendered React component or
     Pluggable Visualization.
 
     Dev hints:
 
-    -   The BackstopJS is now also usable for end-to-end tests. It is possible to write stories and easily specify
-        what things to click on the rendered component before taking the snapshot
+    - The BackstopJS is now also usable for end-to-end tests. It is possible to write stories and easily specify
+      what things to click on the rendered component before taking the snapshot
 
 #### Reference Workspaces
 
@@ -295,40 +295,54 @@ tasks as feasible.
 
 The entire story goes as follows:
 
--   Reference workspace exists in GoodData Platform - it is realized by a standardized project derived from GoodSales v2
-    demo. It comes with non-trivial LDM and with made-up test data. The workspace can be created automatically and
-    in matter of minute(s).
+- Reference workspace exists in GoodData Platform - it is realized by a standardized project derived from GoodSales v2
+  demo. It comes with non-trivial LDM and with made-up test data. The workspace can be created automatically and
+  in matter of minute(s).
 
--   The catalog-export tool located in this repository can be used to export LDM from the workspace into a TypeScript
-    representation; with facts, measures, attributes and date data sets represented by constants initialized to
-    respective sdk-model instances
+- The catalog-export tool located in this repository can be used to export LDM from the workspace into a TypeScript
+  representation; with facts, measures, attributes and date data sets represented by constants initialized to
+  respective sdk-model instances
 
--   The mock-handling tool also located in this repository can be used to create and maintain data and metadata
-    recordings taken from the reference workspace.
+- The mock-handling tool also located in this repository can be used to create and maintain data and metadata
+  recordings taken from the reference workspace.
 
--   This all comes together in the tools/reference-workspace project; this is where TypeScript code representing
-    LDM exists. This is where we store definitions of what data to capture from the reference workspace living in
-    GoodData platform.
+- This all comes together in the tools/reference-workspace project; this is where TypeScript code representing
+  LDM exists. This is where we store definitions of what data to capture from the reference workspace living in
+  GoodData platform.
 
--   The tools/reference-workspace project is built as any other project and can be depended-on as needed. It contains
-    all the code and recording artifacts. The recordings are accessible through a RecordingIndex - this can be used
-    as input to recordedBackend() implemented in sdk-backend-mockingbird.
+- The tools/reference-workspace project is built as any other project and can be depended-on as needed. It contains
+  all the code and recording artifacts. The recordings are accessible through a RecordingIndex - this can be used
+  as input to recordedBackend() implemented in sdk-backend-mockingbird.
 
 Thus, the tools/reference-workspace project delivers testing infrastructure that SHOULD be used for all types of tests:
 
--   The Reference LDM on its own SHOULD be used in unit tests in the area of execution definition
--   The Reference LDM in conjunction with dummyBackend() SHOULD be used in unit and component tests focused on
-    creating and driving executions (e.g. when results are unimportant)
--   The Reference LDM in conjunction with recordedBackend() SHOULD be used for component tests and end-to-end tests
-    where it is important to have valid data and metadata
+- The Reference LDM on its own SHOULD be used in unit tests in the area of execution definition
+- The Reference LDM in conjunction with dummyBackend() SHOULD be used in unit and component tests focused on
+  creating and driving executions (e.g. when results are unimportant)
+- The Reference LDM in conjunction with recordedBackend() SHOULD be used for component tests and end-to-end tests
+  where it is important to have valid data and metadata
 
 To learn more, please see:
 
--   [tools/reference-workspace](tools/reference-workspace)
--   [tools/catalog-export](tools/catalog-export)
--   [tools/mock-handling](tools/mock-handling)
+- [tools/reference-workspace](tools/reference-workspace)
+- [tools/catalog-export](tools/catalog-export)
+- [tools/mock-handling](tools/mock-handling)
 
 For inspiration how to automatically obtain execution recording definitions (not the data, just the input on
 what data to obtain) please see:
 
--   [libs/sdk-ui-tests](libs/sdk-ui-tests)
+- [libs/sdk-ui-tests](libs/sdk-ui-tests)
+
+## Custom URL drill placeholders
+
+Register new placeholder syntax in `sdk-model/src/dashboard/drillUrl.ts`. Each registry entry must
+declare whether it references a display form (including computed attributes), a metric, an insight-local
+measure, or no object. The dashboard URL resolver is keyed by the registry's type union, so adding a
+placeholder without a resolver produces a TypeScript error. Extend the existing parser and resolver
+tests for the new behavior.
+
+On dashboard Save and Save As, `target.references` stores typed object references keyed by the exact
+placeholder text. Insight-local measures resolve through their source insight to metrics/facts. If that
+insight is unavailable, retain only the saved references for unchanged placeholders; never carry
+dependencies from removed or renamed placeholders into the current URL. Tiger serializes these refs
+as qualifiers so the backend can report restricted objects, including objects used only in URLs.

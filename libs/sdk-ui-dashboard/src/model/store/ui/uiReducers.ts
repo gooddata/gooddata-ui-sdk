@@ -4,6 +4,7 @@ import { type Action, type AnyAction, type CaseReducer, type PayloadAction } fro
 
 import {
     type IDrillToCustomUrl,
+    type IInsight,
     type IInsightWidget,
     type ObjRef,
     areObjRefsEqual,
@@ -45,20 +46,21 @@ const openScheduleEmailDialog: UiReducer<PayloadAction<IScheduleEmailContext & {
 
     if (schedule) {
         state.scheduleEmailDialog.context = {
-            ...(state.scheduleEmailDialog.context || {}),
+            ...state.scheduleEmailDialog.context,
             schedule,
         };
     }
 
     if (widgetRef) {
         state.scheduleEmailDialog.context = {
-            ...(state.scheduleEmailDialog.context || {}),
+            ...state.scheduleEmailDialog.context,
             widgetRef,
         };
 
         if (openedFrom === "widget") {
-            const returnFocusTo = getDashboardInsightMenuButtonId(objRefToString(widgetRef));
-            state.scheduleEmailDialog.returnFocusTo = returnFocusTo;
+            state.scheduleEmailDialog.returnFocusTo = getDashboardInsightMenuButtonId(
+                objRefToString(widgetRef),
+            );
         }
     }
 
@@ -158,9 +160,17 @@ const openInsightNotSavedDialog: UiReducer = (state) => {
     state.insightNotSavedDialog.open = true;
 };
 
+const setInsightNotSavedDialogDraftInsightsToPersist: UiReducer<PayloadAction<IInsight[]>> = (
+    state,
+    action,
+) => {
+    state.insightNotSavedDialog.draftInsightsToPersist = action.payload;
+};
+
 const closeInsightNotSavedDialog: UiReducer = (state) => {
     state.insightNotSavedDialog.open = false;
     state.insightNotSavedDialog.saveConfirmed = false;
+    state.insightNotSavedDialog.draftInsightsToPersist = [];
 };
 
 const confirmInsightNotSavedDialogSubmit: UiReducer = (state) => {
@@ -539,6 +549,7 @@ export const uiReducers = {
     openSaveAsDialog,
     closeSaveAsDialog,
     openInsightNotSavedDialog,
+    setInsightNotSavedDialogDraftInsightsToPersist,
     closeInsightNotSavedDialog,
     confirmInsightNotSavedDialogSubmit,
     setFilterBarExpanded,

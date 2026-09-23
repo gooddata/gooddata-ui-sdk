@@ -447,15 +447,6 @@ $min-content-height: 110px;
         padding: 10px;
     }
 
-    .gd-attachment-settings-dropdown-item {
-        h4 {
-            margin: 0 0 8px 0;
-            color: var(--gd-palette-complementary-7);
-            font-size: 14px;
-            font-weight: 400;
-        }
-    }
-
     .gd-attachment-settings-dropdown-error {
         margin-top: 6px;
         color: var(--gd-message-error-textColor);
@@ -935,7 +926,7 @@ $min-content-height: 110px;
     margin-bottom: $vertical-space;
 }
 
-.gd-divider-without-margin {
+.gd-content-divider.gd-divider-without-margin {
     margin-top: 0;
     margin-bottom: 0;
 }

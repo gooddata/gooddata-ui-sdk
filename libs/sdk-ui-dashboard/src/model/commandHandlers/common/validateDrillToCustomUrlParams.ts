@@ -29,6 +29,7 @@ import { selectDrillTargetsByWidgetRef } from "../../store/drillTargets/drillTar
 import { selectAttributeFilterConfigsOverrides } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectFilterContextAttributeFilterItems } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { uiActions } from "../../store/ui/index.js";
+import { selectIsDrillRestricted } from "../../store/widgetDrills/drillRestrictionSelectors.js";
 import {
     extractDashboardFilterDisplayFormIdentifiers,
     extractDisplayFormIdentifiers,
@@ -70,6 +71,7 @@ function* validateWidgetDrillToCustomUrlParams(widget: IInsightWidget): SagaIter
             invalidDrills: [],
         };
     }
+    const isRestricted: ReturnType<typeof selectIsDrillRestricted> = yield select(selectIsDrillRestricted);
     const displayForms = yield select(selectAllCatalogDisplayFormsMap);
 
     const widgetFilters: IFilter[] = yield call(query, queryWidgetFilters(widget.ref));
@@ -90,7 +92,10 @@ function* validateWidgetDrillToCustomUrlParams(widget: IInsightWidget): SagaIter
         selectAttributeFilterConfigsOverrides,
     );
 
-    return widget.drills.filter(isDrillToCustomUrl).reduce(
+    const readableUrlDrills = widget.drills
+        .filter(isDrillToCustomUrl)
+        .filter((drill) => !isRestricted(drill));
+    return readableUrlDrills.reduce(
         (acc: IInvalidParamsInfo, drillDefinition) => {
             const ids = extractDisplayFormIdentifiers([drillDefinition]);
 

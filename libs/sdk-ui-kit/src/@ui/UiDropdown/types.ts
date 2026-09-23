@@ -124,12 +124,12 @@ export interface IUiDropdownProps {
     /**
      * Element to focus initially when opened.
      */
-    initialFocus?: RefObject<HTMLElement> | string;
+    initialFocus?: RefObject<HTMLElement | null> | string;
 
     /**
      * Element to return focus to when closed.
      */
-    returnFocusTo?: RefObject<HTMLElement> | string;
+    returnFocusTo?: RefObject<HTMLElement | null> | string;
 
     /**
      * Accessibility configuration for trigger and body roles.

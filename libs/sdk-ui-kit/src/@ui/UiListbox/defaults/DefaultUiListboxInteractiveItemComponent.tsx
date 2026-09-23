@@ -62,7 +62,7 @@ export function DefaultUiListboxInteractiveItemComponent<T>({
                                 <UiIcon type="question" size={14} color="complementary-7" />
                             </div>
                         }
-                        content={item.tooltip}
+                        content={item.tooltipContent ?? item.tooltip}
                         triggerBy={["hover"]}
                         accessibilityHidden
                         arrowPlacement="left"

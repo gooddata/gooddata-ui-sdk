@@ -62,7 +62,7 @@ export function useInsightPickerHybridSearch({
     insights,
     searchQuery,
     onSearchChange,
-    enableSemanticSearch = true,
+    enableSemanticSearch = false,
     includeTags,
     excludeTags,
 }: IUseInsightPickerHybridSearchOptions) {

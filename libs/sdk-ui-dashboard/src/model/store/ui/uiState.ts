@@ -1,6 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { type Identifier, type ObjRef, type Uri } from "@gooddata/sdk-model";
+import { type IInsight, type Identifier, type ObjRef, type Uri } from "@gooddata/sdk-model";
 
 import { type DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
 import {
@@ -62,6 +62,7 @@ export interface IUiState {
     insightNotSavedDialog: {
         open: boolean;
         saveConfirmed: boolean;
+        draftInsightsToPersist: IInsight[];
     };
     settingsDialog: {
         open: boolean;
@@ -172,6 +173,7 @@ export const uiInitialState: IUiState = {
     insightNotSavedDialog: {
         open: false,
         saveConfirmed: false,
+        draftInsightsToPersist: [],
     },
     settingsDialog: {
         open: false,

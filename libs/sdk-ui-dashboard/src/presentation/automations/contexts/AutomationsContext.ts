@@ -130,11 +130,13 @@ export interface IAutomationsContextValue {
     lockedFilters: FilterContextItem[];
     /** Dashboard filters configured as hidden; from selectDashboardHiddenFilters. */
     hiddenFilters: FilterContextItem[];
-    /** Dashboard's applied filters with cross-filtering filters removed; from selectDashboardFiltersWithoutCrossFiltering. */
+    /** Dashboard's applied filters with cross-filtering filters removed; from selectAllDashboardFiltersWithoutCrossFiltering. */
     availableFilters: FilterContextItem[];
+    /** Whether the user may not read the object a filter filters by. Such a filter is kept in the automation, but the filter bar reports it as a count instead of rendering it. */
+    isFilterRestricted: (filter: FilterContextItem) => boolean;
     /** Automation-available filters structured per dashboard tab, for whole-dashboard automations on a tabbed dashboard; from selectAutomationFiltersByTab. */
     automationFiltersByTab: IAutomationFiltersTab[];
-    /** Automation-available filters with empty (all-values) filters removed; preselects filters for a new automation. From selectAutomationDefaultSelectedFilters. */
+    /** Automation-available filters with empty (all-values) filters removed, except restricted ones; preselects filters for a new automation. From selectAutomationDefaultSelectedFilters. */
     defaultSelectedFilters: FilterContextItem[];
     /** Dashboard filters available to an automation — hidden filters removed, common date filter included; from selectAutomationAvailableDashboardFilters. */
     automationAvailableFilters: FilterContextItem[];

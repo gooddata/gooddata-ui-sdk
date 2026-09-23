@@ -5,8 +5,8 @@ import { type ReactElement } from "react";
 import { FormattedMessage, defineMessages } from "react-intl";
 
 import { type ObjRef } from "@gooddata/sdk-model";
+import { DRILL_TO_URL_PLACEHOLDER } from "@gooddata/sdk-model/internal";
 
-import { DRILL_TO_URL_PLACEHOLDER } from "../../../../../model/types/drillTypes.js";
 import { DropdownSectionHeader } from "../DropdownSectionHeader.js";
 import { ClientIdParameterDetail } from "../ParameterDetails/ClientIdParameterDetail.js";
 import { DashboardIdParameterDetail } from "../ParameterDetails/DashboardIdParameterDetail.js";
