@@ -2,7 +2,7 @@
 
 import { useIntl } from "react-intl";
 
-import { UiIconButton } from "@gooddata/sdk-ui-kit";
+import { UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 /**
  * Collapses the dashboard sidebar to the icon rail and expands it back.
@@ -23,17 +23,27 @@ export function SidebarCollapseToggle({
 
     return (
         <div className="gd-sidebar-collapse-toggle">
-            <UiIconButton
-                icon={isCollapsed ? "sidePanelExpand" : "sidePanelCollapse"}
-                label={label}
-                size="medium"
-                variant="tertiary"
-                dataTestId="s-dashboard-sidebar-collapse-toggle"
-                accessibilityConfig={{
-                    ariaLabel: label,
-                    ariaExpanded: !isCollapsed,
-                }}
-                onClick={onToggle}
+            <UiTooltip
+                content={label}
+                arrowPlacement="left"
+                triggerBy={["hover", "focus"]}
+                optimalPlacement
+                accessibilityHidden
+                closeOnAnchorClick
+                anchor={
+                    <UiIconButton
+                        icon={isCollapsed ? "sidePanelExpand" : "sidePanelCollapse"}
+                        label={label}
+                        size="medium"
+                        variant="tertiary"
+                        dataTestId="s-dashboard-sidebar-collapse-toggle"
+                        accessibilityConfig={{
+                            ariaLabel: label,
+                            ariaExpanded: !isCollapsed,
+                        }}
+                        onClick={onToggle}
+                    />
+                }
             />
         </div>
     );

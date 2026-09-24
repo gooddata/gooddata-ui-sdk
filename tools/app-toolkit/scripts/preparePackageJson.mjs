@@ -30,7 +30,7 @@ export function readJsonSync(file) {
  */
 
 const GdScriptsReplace = {
-    clean: "rm -rf esm *.log",
+    clean: "rm -rf dist *.log",
     test: null,
     "test-once": null,
     lint: null,
@@ -54,9 +54,7 @@ const TypeScriptDependencies = [
     /^@types\//,
     "@typescript-eslint/eslint-plugin",
     "@typescript-eslint/parser",
-    "ts-loader",
     "typescript",
-    "tslib",
 ];
 
 function removeItems(search, targets) {
@@ -124,8 +122,6 @@ function removeTs(packageJson) {
 
     removeItems(TypeScriptDependencies, devDependencies);
     removeItems(TypeScriptDependencies, dependencies);
-
-    delete packageJson.typings;
 
     if (packageJson.gooddata?.catalogOutput) {
         // Use .js file for catalog export

@@ -23,7 +23,9 @@ import {
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { generateFilterLocalIdentifier } from "../../store/_infra/generators.js";
 import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors.js";
+import { isDashboardFilterRestricted } from "../../store/filtering/restrictedFilterUtils.js";
 import { selectWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
+import { selectUnavailableObjects } from "../../store/unavailableObjects/unavailableObjectsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { getAttributeFilters, removeIgnoredWidgetFilters } from "../../utils/widgetFilters.js";
 
@@ -105,13 +107,21 @@ export function* keyDriverAnalysisHandler(
     });
 
     const widget = yield select(selectWidgetByRef(drillEvent.widgetRef));
-    const widgetFilters = removeIgnoredWidgetFilters(availableFilters, widget);
+    const unavailableObjects: ReturnType<typeof selectUnavailableObjects> =
+        yield select(selectUnavailableObjects);
+    const executableFilters = availableFilters.filter(
+        (filter) => !isDashboardFilterRestricted(filter, unavailableObjects),
+    );
+    const widgetFilters = removeIgnoredWidgetFilters(executableFilters, widget);
     // KDA defines its own date range — drop date filters. Keep attribute and measure value
     // filters so the change analysis respects the rest of the dashboard filter context.
     const attributeFilters = getAttributeFilters(widgetFilters);
     const measureValueFilters = widgetFilters.filter(isDashboardMeasureValueFilter);
 
-    const filters = mergeFilters(intersectionFilters, attributeFilters);
+    // the drill intersection brings its own attribute filters, which the check above did not see
+    const filters = mergeFilters(intersectionFilters, attributeFilters).filter(
+        (filter) => !isDashboardFilterRestricted(filter, unavailableObjects),
+    );
 
     return keyDriverAnalysisResolved(
         ctx,

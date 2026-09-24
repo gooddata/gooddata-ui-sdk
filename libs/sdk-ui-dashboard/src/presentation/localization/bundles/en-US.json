@@ -1935,6 +1935,10 @@
         "text": "Expand panel",
         "crowdinContext": "Tooltip of the button that expands the collapsed dashboard edit mode left panel"
     },
+    "sidebar.rail.visualization": {
+        "text": "Visualization",
+        "crowdinContext": "Tooltip of the visualization item in the collapsed dashboard edit mode left panel; must match the label of that item, which the host application provides"
+    },
     "visualizationsList.dragToAdd": {
         "text": "Drag to add",
         "crowdinContext": "Instruction to drag visualization to dashboard"
@@ -3466,6 +3470,10 @@
     "kdaDialog.dialog.bars.metric.title": {
         "text": "Metric",
         "crowdinContext": "Metric title in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.bars.filters.restricted.reason": {
+        "text": "{count, plural, one {You don't have access to # filter, so the analysis does not use it. Contact your administrator to request access.} other {You don't have access to # filters, so the analysis does not use them. Contact your administrator to request access.}}",
+        "crowdinContext": "Tooltip in Key Driver Analysis explaining why the restricted filters reported by the source dashboard tab are excluded from the analysis. Never names restricted objects."
     },
     "kdaDialog.dialog.bars.filters.title": {
         "text": "Filters",

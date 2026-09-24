@@ -237,3 +237,30 @@ describe("buildAfmExecution ranking filters", () => {
         ]);
     });
 });
+
+describe("buildAfmExecution dimensions", () => {
+    it("leaves the measure dimension empty when the query has no metrics", () => {
+        const query = { fields: { a1: { using: "label/region" } } } as unknown as Query;
+
+        const { execution } = buildAfmExecution(emptyEntities, query);
+
+        expect(execution.execution.measures).toEqual([]);
+        expect(execution.resultSpec.dimensions).toEqual([
+            { localIdentifier: "dim_0", itemIdentifiers: ["a1"], sorting: [] },
+            { localIdentifier: "dim_1", itemIdentifiers: [] },
+        ]);
+    });
+
+    it("puts the measure group in the measure dimension when the query has metrics", () => {
+        const query = {
+            fields: { a1: { using: "label/region" }, m1: { using: "metric/revenue" } },
+        } as unknown as Query;
+
+        const { execution } = buildAfmExecution(emptyEntities, query);
+
+        expect(execution.resultSpec.dimensions).toEqual([
+            { localIdentifier: "dim_0", itemIdentifiers: ["a1"], sorting: [] },
+            { localIdentifier: "dim_1", itemIdentifiers: ["measureGroup"] },
+        ]);
+    });
+});

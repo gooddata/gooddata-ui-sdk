@@ -247,7 +247,7 @@ function buildDimensions(
             },
             {
                 localIdentifier: MEASURES_DIMENSION,
-                itemIdentifiers: ["measureGroup"],
+                itemIdentifiers: execution.measures.length > 0 ? ["measureGroup"] : [],
             },
         ],
         sorting,

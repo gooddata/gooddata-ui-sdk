@@ -6,6 +6,7 @@ import {
     type IGenAIUserContext,
     type IWorkspacePermissions,
     type PluggableApplicationRegistryItem,
+    getPluggableApplicationLocalizedTitle,
 } from "@gooddata/sdk-model";
 import {
     type IAppHeaderOptions,
@@ -32,7 +33,7 @@ import { getAppLifecycleCallbacks } from "../loader/pluggableApplicationsLoader.
 import { getActiveInternalApplication } from "../loader/routing.js";
 import { getBackend } from "../platformContext/backend.js";
 
-import { buildAppMenu, getLocalizedTitle } from "./appMenuItems.js";
+import { buildAppMenu } from "./appMenuItems.js";
 import { getUserDisplayName, getWorkspaceSwitchPath, isPlainLeftClick } from "./chromeHelpers.js";
 import { b, e } from "./hostChromeBem.js";
 import { HostIntlProvider } from "./HostIntlProvider.js";
@@ -269,7 +270,9 @@ export function HostChrome({
     // (omitted) so the tab falls back to the active application's manifest title rather than going blank.
     const documentPageTitle =
         appPageTitle ||
-        (activeApplication ? getLocalizedTitle(activeApplication, ctx.preferredLocale) : undefined);
+        (activeApplication
+            ? getPluggableApplicationLocalizedTitle(activeApplication, ctx.preferredLocale)
+            : undefined);
     const documentBrandTitle = ctx.isExportMode
         ? undefined
         : ctx.whiteLabeling?.enabled

@@ -105,6 +105,10 @@ $sidebar-fade-delay: 0.3s;
             padding: 0 (($sidebar-collapsed-width - $sidebar-item-size) * 0.5);
         }
 
+        .add-item-panel .gd-ui-kit-tooltip__anchor {
+            width: auto;
+        }
+
         .configuration-category {
             margin-bottom: 0;
             padding-top: 10px;

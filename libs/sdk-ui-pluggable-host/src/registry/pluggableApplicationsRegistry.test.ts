@@ -1023,6 +1023,24 @@ describe("resolveApplications", () => {
                 expect(result.map((a) => a.id)).toEqual(["analytical-designer"]);
             });
 
+            it("leaves requiredSettings to the caller when skipSettings is set", () => {
+                const result = resolveApplications({
+                    localApps: [
+                        externalApp({
+                            id: "a",
+                            menuOrder: 1,
+                            requiredSettings: { enableDataSection: true },
+                        }),
+                    ],
+                    remoteRegistry: undefined,
+                    ctx: ctxWith({ userSettings: {}, settings: {} }),
+                    scope: "workspace",
+                    skipSettings: true,
+                });
+
+                expect(result.map((a) => a.id)).toEqual(["a"]);
+            });
+
             it("preserves workspace settings for flags it does not force", () => {
                 const result = resolveApplications({
                     localApps: [

@@ -773,6 +773,9 @@ export function emptyDef(workspace: string): IExecutionDefinition;
 export type EmptyValues = "include" | "exclude" | "only";
 
 // @alpha
+export function evaluateCondition<T extends object>(condition: Condition<T>, actual: T | undefined): boolean;
+
+// @alpha
 export type ExecutionResultCellLimitType = (typeof ExecutionResultCellLimitTypes)[number];
 
 // @alpha
@@ -1037,6 +1040,12 @@ export function getParameterAllowedValueTitle(allowedValue: IParameterAllowedVal
 
 // @alpha
 export function getParameterValueTitle(definition: IParameterDefinition, value: ParameterValue): string;
+
+// @alpha
+export function getPluggableApplicationHref(app: PluggableApplicationRegistryItem, workspaceId?: string): string;
+
+// @alpha
+export function getPluggableApplicationLocalizedTitle(app: PluggableApplicationRegistryItem, locale: ILocale | undefined): string;
 
 // @alpha
 export function getReportTextPlaceholders(text: string): string[];

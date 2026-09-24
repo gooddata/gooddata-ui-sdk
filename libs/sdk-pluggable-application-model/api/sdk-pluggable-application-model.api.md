@@ -228,6 +228,7 @@ export type IPlatformContext = IPlatformContextV1;
 // @alpha
 export interface IPlatformContextV1 {
     auth: IAuthCredentials;
+    availableApplications?: PluggableApplicationRegistryItem[];
     // (undocumented)
     colorPalette?: IColorPalette;
     // (undocumented)

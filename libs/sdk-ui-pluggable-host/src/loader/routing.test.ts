@@ -88,7 +88,7 @@ describe("routing", () => {
         } as unknown as ILocalPluggableApplicationRegistryItemV1;
 
         expect(() => getApplicationHref(app, context(), "/organization")).toThrow(
-            '[host-runtime/routing] Unsupported application scope "unknown-scope" for app "gdc-ai-hub".',
+            '[pluggable-application] Unsupported application scope "unknown-scope" for app "gdc-ai-hub".',
         );
     });
 

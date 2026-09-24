@@ -1672,6 +1672,7 @@ export {
     type Condition,
     type IConditionOr,
     type IConditionAnd,
+    evaluateCondition,
     type RequiredOrganizationPermissions,
     type RequiredWorkspacePermissions,
     type RequiredEntitlements,
@@ -1687,3 +1688,7 @@ export {
     isLocalPluggableApplicationRegistryItem,
     isRemotePluggableApplicationRegistryItem,
 } from "./pluggableApplication/index.js";
+export {
+    getPluggableApplicationHref,
+    getPluggableApplicationLocalizedTitle,
+} from "./pluggableApplication/applicationRouting.js";

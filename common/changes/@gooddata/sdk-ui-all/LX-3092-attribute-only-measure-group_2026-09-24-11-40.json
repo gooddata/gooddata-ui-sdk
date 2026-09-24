@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-code-convertors: Leave the measure dimension empty in buildAfmExecution when the query has no metrics, so attribute-only queries no longer fail in afm-exec-api with \"Result specification refers to measure group, but execution part contains no measures\".",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

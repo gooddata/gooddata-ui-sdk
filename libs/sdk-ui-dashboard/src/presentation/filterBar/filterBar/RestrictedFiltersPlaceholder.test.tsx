@@ -19,6 +19,9 @@ function renderPlaceholder(count: number, onRemove?: () => void) {
 
 describe("RestrictedFiltersPlaceholder", () => {
     it("reports how many filters were left out, never which", () => {
+        renderPlaceholder(0);
+        expect(screen.queryByTestId("restricted-filters")).not.toBeInTheDocument();
+
         renderPlaceholder(1);
         expect(screen.getByText("1 restricted filter")).toBeInTheDocument();
 
