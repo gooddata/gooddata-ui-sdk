@@ -12,7 +12,7 @@ import { initializeDashboard } from "../../../commands/dashboard.js";
 import { addMeasureValueFilter } from "../../../commands/filters.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../DashboardTester.js";
 import { type IDashboardCommandFailed } from "../../../events/general.js";
-import { selectCatalogFilterParameters } from "../../../store/catalog/catalogSelectors.js";
+import { selectCatalogParameterDependencies } from "../../../store/catalog/catalogSelectors.js";
 import { selectMeasureValueFilterConfigsModeMap } from "../../../store/tabs/measureValueFilterConfigs/measureValueFilterConfigsSelectors.js";
 
 describe("addMeasureValueFilterHandler", () => {
@@ -121,7 +121,7 @@ describe("addMeasureValueFilterHandler", () => {
             },
         );
         const metricKey = serializeObjRef(measureRef);
-        expect(selectCatalogFilterParameters(Tester.state())).not.toHaveProperty(metricKey);
+        expect(selectCatalogParameterDependencies(Tester.state())).not.toHaveProperty(metricKey);
 
         await Tester.dispatchAndWaitFor(
             addMeasureValueFilter(measureRef, 0, TestCorrelation, "test-mvf"),
@@ -131,7 +131,7 @@ describe("addMeasureValueFilterHandler", () => {
         // the worker registers after the write; the recorded backend answers with an empty graph, so
         // the metric ends up known with no parameters
         await vi.waitFor(() =>
-            expect(selectCatalogFilterParameters(Tester.state())).toHaveProperty(metricKey, []),
+            expect(selectCatalogParameterDependencies(Tester.state())).toHaveProperty(metricKey, []),
         );
     });
 

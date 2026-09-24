@@ -25,7 +25,7 @@
     "gd.gen-ai.visualization.error.data_too_large": "<b>Дані завеликі.</b> Попросіть зменшити обсяг даних, застосувавши фільтри.",
     "gd.gen-ai.visualization.unavailable": "Не вдалося відобразити візуалізацію.",
     "gd.gen-ai.permission-error": "Недостатньо дозволів",
-    "gd.gen-ai.permission-error.description": "Ви не маєте доступу до чат-бота. Зверніться до свого адміністратора, щоб запросити доступ.",
+    "gd.gen-ai.permission-error.description": "Ви не маєте доступу до чат-бота. Зверніться до адміністратора, щоб надіслати запит на доступ.",
     "gd.gen-ai.input-placeholder": "Поставте запитання тут…",
     "gd.gen-ai.input-label.mac": "Поставте своє запитання. Використовуйте control+space або cmd+I для підказок.",
     "gd.gen-ai.input-label.win": "Поставте своє запитання. Використовуйте control+space або control+I для підказок.",

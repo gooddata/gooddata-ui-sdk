@@ -620,6 +620,7 @@
     "insightPicker.sortDirection.descending": "내림차순",
     "insightPicker.menu.actions": "작업",
     "insightPicker.resetFilters": "필터 재설정",
+    "insightPicker.suggestions": "유사 항목",
     "objectShare.confirm.restrict.title": "액세스를 제한하시겠습니까?",
     "objectShare.confirm.restrict.description": "이렇게 하면 위에 나열된 사용자 및 그룹으로만 액세스가 제한됩니다.",
     "objectShare.confirm.grantWorkspace.title": "작업 공간 전체 액세스를 부여하시겠습니까?",

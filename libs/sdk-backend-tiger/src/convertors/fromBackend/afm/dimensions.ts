@@ -2,7 +2,7 @@
 
 import { groupBy, keyBy, mapValues, uniqBy } from "lodash-es";
 
-import { type ResultDimension, isAttributeHeader } from "@gooddata/api-client-tiger";
+import { type RestApiIdentifier, type ResultDimension, isAttributeHeader } from "@gooddata/api-client-tiger";
 import {
     type IAttributeDisplayFormGeoAreaConfig,
     type IDimensionDescriptor,
@@ -11,9 +11,7 @@ import {
     type ITotalDescriptor,
     type Identifier,
     type ObjRef,
-    attributeLocalId,
     idRef,
-    isComputedAttribute,
     isIdentifierRef,
     isSimpleMeasure,
     measureItem,
@@ -24,13 +22,16 @@ import { convertLabelType } from "../LabelTypeConverter.js";
 
 const DEFAULT_FORMAT = "#,#.##";
 
+function isComputedAttributeIdentifier(identifier: RestApiIdentifier): boolean {
+    return identifier.type === "computedAttribute";
+}
+
 type AttrTotals = Record<Identifier, ITotalDescriptor[]>;
 
 function transformDimension(
     dim: ResultDimension,
     simpleMeasureRefs: Record<string, ObjRef>,
     attrTotals: AttrTotals,
-    computedAttributeLocalIds: Set<string>,
 ): IDimensionDescriptor {
     return {
         headers: dim.headers.map((header): IDimensionItemDescriptor => {
@@ -47,10 +48,9 @@ function transformDimension(
                 // A computed attribute has no real labels; its fabricated display form shares the
                 // computed attribute's own ref. The descriptor refs must keep the honest
                 // `computedAttribute` type so consumers (filters, cross-filtering, drills) resolve
-                // them through the computedAttributes service instead of labels.
-                const isComputedAttributeHeader = computedAttributeLocalIds.has(
-                    h.attributeHeader.localIdentifier,
-                );
+                // them through the computedAttributes service instead of labels. The backend states
+                // the type on the header identifiers.
+                const isComputedAttributeHeader = isComputedAttributeIdentifier(h.attributeHeader.label);
                 const labelRefType = isComputedAttributeHeader ? "computedAttribute" : "displayForm";
                 const attributeRefType = isComputedAttributeHeader ? "computedAttribute" : "attribute";
 
@@ -145,11 +145,6 @@ export function transformResultDimensions(
     const measureRefs: Record<string, ObjRef> = mapValues(keyBy(simpleMeasures, measureLocalId), (m) =>
         measureItem(m),
     );
-    const computedAttributeLocalIds = new Set(
-        def.attributes.filter(isComputedAttribute).map(attributeLocalId),
-    );
 
-    return dimensions.map((dim) =>
-        transformDimension(dim, measureRefs, getAttrTotals(def), computedAttributeLocalIds),
-    );
+    return dimensions.map((dim) => transformDimension(dim, measureRefs, getAttrTotals(def)));
 }

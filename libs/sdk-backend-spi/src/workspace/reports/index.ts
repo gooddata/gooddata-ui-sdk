@@ -10,6 +10,28 @@ import {
     type ObjRef,
 } from "@gooddata/sdk-model";
 
+import { type IExportResult } from "../execution/index.js";
+
+/**
+ * Options for exporting a report to PDF.
+ *
+ * @alpha
+ */
+export interface IReportExportPdfOptions {
+    /**
+     * File name for the export, without the extension.
+     */
+    filename?: string;
+
+    /**
+     * Override the default export result polling timeout (in milliseconds).
+     *
+     * @remarks
+     * If not specified, there is still a default timeout applied.
+     */
+    timeout?: number;
+}
+
 /**
  * Service for managing report page layouts, report templates and reports.
  *
@@ -107,4 +129,12 @@ export interface IWorkspaceReportsService {
      * Delete an existing report.
      */
     deleteReport(ref: ObjRef): Promise<void>;
+
+    /**
+     * Export a report to PDF.
+     *
+     * @remarks
+     * The backend renders the report as it is saved, so unsaved changes are not part of the export.
+     */
+    exportReportToPdf(ref: ObjRef, options?: IReportExportPdfOptions): Promise<IExportResult>;
 }

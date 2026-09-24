@@ -2,10 +2,10 @@
 
 import { useMemo } from "react";
 
-import { type IExecutionConfig, type IInsight, type ObjRef } from "@gooddata/sdk-model";
+import { type IExecutionConfig, type IInsight, type ObjRef, insightRef } from "@gooddata/sdk-model";
 
 import { selectEffectiveDashboardTimezone } from "../store/meta/metaSelectors.js";
-import { resolveEffectiveParameterValuesForInsight } from "../store/tabs/parameters/parametersHelpers.js";
+import { resolveEffectiveParameterValuesForRoots } from "../store/tabs/parameters/parametersHelpers.js";
 import { selectWidgetParameterContext } from "../store/tabs/parameters/parametersSelectors.js";
 import { selectExecutionTimestamp } from "../store/ui/uiSelectors.js";
 
@@ -45,7 +45,7 @@ export function useWidgetExecConfig(ref: ObjRef, insight: IInsight): IExecutionC
     const dashboardExecConfig = useDashboardExecConfig();
     const parameterContext = useDashboardSelector(selectWidgetParameterContext(ref));
     const parameterValues = useMemo(
-        () => resolveEffectiveParameterValuesForInsight(parameterContext, insight),
+        () => resolveEffectiveParameterValuesForRoots(parameterContext, [insightRef(insight)], insight),
         [parameterContext, insight],
     );
     return useMemo(

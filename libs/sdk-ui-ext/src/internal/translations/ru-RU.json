@@ -620,6 +620,7 @@
     "insightPicker.sortDirection.descending": "По убыванию",
     "insightPicker.menu.actions": "Действия",
     "insightPicker.resetFilters": "Сбросить фильтры",
+    "insightPicker.suggestions": "Похожие",
     "objectShare.confirm.restrict.title": "Ограничить доступ?",
     "objectShare.confirm.restrict.description": "Доступ будет ограничен только пользователями и группами, перечисленными выше.",
     "objectShare.confirm.grantWorkspace.title": "Предоставить доступ на уровне всей рабочей области?",

@@ -3131,6 +3131,7 @@ export interface IFeatureFlags {
     enableRankingStrictLimit?: boolean;
     enableRankingWithMvf?: boolean;
     enableRawExports?: boolean;
+    enableReportServerSideExport?: boolean;
     // @alpha
     enableRichTextWidgetFilterConfiguration?: boolean;
     enableSecondGranularities?: boolean;

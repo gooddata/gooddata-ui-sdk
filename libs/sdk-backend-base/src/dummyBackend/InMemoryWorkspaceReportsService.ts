@@ -1,6 +1,12 @@
 // (C) 2026 GoodData Corporation
 
-import { type IWorkspaceReportsService, UnexpectedError } from "@gooddata/sdk-backend-spi";
+import {
+    type IExportResult,
+    type IReportExportPdfOptions,
+    type IWorkspaceReportsService,
+    NotSupported,
+    UnexpectedError,
+} from "@gooddata/sdk-backend-spi";
 import {
     BuiltInReportPageLayouts,
     type IReport,
@@ -178,6 +184,10 @@ export class InMemoryWorkspaceReportsService implements IWorkspaceReportsService
         this.assertExistsAndUnlocked(this.reports, ref, "Report");
         this.reports.delete(refKey(ref));
         return Promise.resolve();
+    }
+
+    public exportReportToPdf(_ref: ObjRef, _options?: IReportExportPdfOptions): Promise<IExportResult> {
+        throw new NotSupported("not supported");
     }
 
     private store<T extends { ref: ObjRef }>(store: Map<string, T>, object: T, what: string): void {

@@ -620,6 +620,7 @@
     "insightPicker.sortDirection.descending": "За спаданням",
     "insightPicker.menu.actions": "Дії",
     "insightPicker.resetFilters": "Скинути фільтри",
+    "insightPicker.suggestions": "Схожі",
     "objectShare.confirm.restrict.title": "Обмежити доступ?",
     "objectShare.confirm.restrict.description": "Це обмежить доступ лише для людей і груп, перелічених вище.",
     "objectShare.confirm.grantWorkspace.title": "Надати доступ у межах робочої області?",

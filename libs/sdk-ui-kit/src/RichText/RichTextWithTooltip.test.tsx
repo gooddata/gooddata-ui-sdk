@@ -28,4 +28,16 @@ describe("RichTextWithTooltip", () => {
         expect(await screen.findByText("restricted")).toBeInTheDocument();
         expect(container.querySelector(".gd-rich-text-metric-restricted")).toBeInTheDocument();
     });
+
+    it("lists the parameter token in the help text", async () => {
+        render(
+            <BackendProvider backend={dummyBackend()}>
+                <WorkspaceProvider workspace="ws-1">
+                    <RichTextWithTooltip value="" renderMode="edit" />
+                </WorkspaceProvider>
+            </BackendProvider>,
+        );
+
+        expect(await screen.findByText(/\{parameter\/parameter_id\}/)).toBeInTheDocument();
+    });
 });

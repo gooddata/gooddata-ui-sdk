@@ -620,6 +620,7 @@
     "insightPicker.sortDirection.descending": "Turun",
     "insightPicker.menu.actions": "Tindakan",
     "insightPicker.resetFilters": "Atur ulang filter",
+    "insightPicker.suggestions": "Serupa",
     "objectShare.confirm.restrict.title": "Batasi akses?",
     "objectShare.confirm.restrict.description": "Ini akan membatasi akses hanya untuk orang dan grup yang tercantum di atas.",
     "objectShare.confirm.grantWorkspace.title": "Berikan akses di seluruh ruang kerja?",

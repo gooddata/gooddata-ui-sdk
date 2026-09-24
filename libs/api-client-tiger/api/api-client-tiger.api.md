@@ -1224,6 +1224,7 @@ export class ActionsExport extends ExportBaseAPI implements ActionsExportInterfa
     createImageExport(requestParameters: ActionsExportCreateImageExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
     createPdfExport(requestParameters: ActionsExportCreatePdfExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
     createRawExport(requestParameters: ActionsExportCreateRawExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
+    createReportExport(requestParameters: ActionsExportCreateReportExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
     createSlidesExport(requestParameters: ActionsExportCreateSlidesExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
     createTabularExport(requestParameters: ActionsExportCreateTabularExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
     getExportedFile(requestParameters: ActionsExportGetExportedFileRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
@@ -1231,6 +1232,8 @@ export class ActionsExport extends ExportBaseAPI implements ActionsExportInterfa
     getImageExportMetadata(requestParameters: ActionsExportGetImageExportMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     getMetadata(requestParameters: ActionsExportGetMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     getRawExport(requestParameters: ActionsExportGetRawExportRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
+    getReportExport(requestParameters: ActionsExportGetReportExportRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
+    getReportExportMetadata(requestParameters: ActionsExportGetReportExportMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     getSlidesExport(requestParameters: ActionsExportGetSlidesExportRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
     getSlidesExportMetadata(requestParameters: ActionsExportGetSlidesExportMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     getTabularExport(requestParameters: ActionsExportGetTabularExportRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
@@ -1247,6 +1250,9 @@ export function ActionsExport_CreatePdfExport(axios: AxiosInstance, basePath: st
 
 // @public
 export function ActionsExport_CreateRawExport(axios: AxiosInstance, basePath: string, requestParameters: ActionsExportCreateRawExportRequest, options?: AxiosRequestConfig, configuration?: ExportConfiguration): AxiosPromise<ExportExportResponse>;
+
+// @public
+export function ActionsExport_CreateReportExport(axios: AxiosInstance, basePath: string, requestParameters: ActionsExportCreateReportExportRequest, options?: AxiosRequestConfig, configuration?: ExportConfiguration): AxiosPromise<ExportExportResponse>;
 
 // @public
 export function ActionsExport_CreateSlidesExport(axios: AxiosInstance, basePath: string, requestParameters: ActionsExportCreateSlidesExportRequest, options?: AxiosRequestConfig, configuration?: ExportConfiguration): AxiosPromise<ExportExportResponse>;
@@ -1270,6 +1276,12 @@ export function ActionsExport_GetMetadata(axios: AxiosInstance, basePath: string
 export function ActionsExport_GetRawExport(axios: AxiosInstance, basePath: string, requestParameters: ActionsExportGetRawExportRequest, options?: AxiosRequestConfig, configuration?: ExportConfiguration): AxiosPromise<File>;
 
 // @public
+export function ActionsExport_GetReportExport(axios: AxiosInstance, basePath: string, requestParameters: ActionsExportGetReportExportRequest, options?: AxiosRequestConfig, configuration?: ExportConfiguration): AxiosPromise<File>;
+
+// @public
+export function ActionsExport_GetReportExportMetadata(axios: AxiosInstance, basePath: string, requestParameters: ActionsExportGetReportExportMetadataRequest, options?: AxiosRequestConfig, configuration?: ExportConfiguration): AxiosPromise<void>;
+
+// @public
 export function ActionsExport_GetSlidesExport(axios: AxiosInstance, basePath: string, requestParameters: ActionsExportGetSlidesExportRequest, options?: AxiosRequestConfig, configuration?: ExportConfiguration): AxiosPromise<File>;
 
 // @public
@@ -1291,6 +1303,9 @@ export function ActionsExportAxiosParamCreator_CreatePdfExport(workspaceId: stri
 export function ActionsExportAxiosParamCreator_CreateRawExport(workspaceId: string, exportRawExportRequest: ExportRawExportRequest, options?: AxiosRequestConfig, configuration?: ExportConfiguration): Promise<ExportRequestArgs>;
 
 // @public
+export function ActionsExportAxiosParamCreator_CreateReportExport(workspaceId: string, exportReportExportRequest: ExportReportExportRequest, xGdcDebug?: boolean, options?: AxiosRequestConfig, configuration?: ExportConfiguration): Promise<ExportRequestArgs>;
+
+// @public
 export function ActionsExportAxiosParamCreator_CreateSlidesExport(workspaceId: string, exportSlidesExportRequest: ExportSlidesExportRequest, xGdcDebug?: boolean, options?: AxiosRequestConfig, configuration?: ExportConfiguration): Promise<ExportRequestArgs>;
 
 // @public
@@ -1310,6 +1325,12 @@ export function ActionsExportAxiosParamCreator_GetMetadata(workspaceId: string, 
 
 // @public
 export function ActionsExportAxiosParamCreator_GetRawExport(workspaceId: string, exportId: string, options?: AxiosRequestConfig, configuration?: ExportConfiguration): Promise<ExportRequestArgs>;
+
+// @public
+export function ActionsExportAxiosParamCreator_GetReportExport(workspaceId: string, exportId: string, options?: AxiosRequestConfig, configuration?: ExportConfiguration): Promise<ExportRequestArgs>;
+
+// @public
+export function ActionsExportAxiosParamCreator_GetReportExportMetadata(workspaceId: string, exportId: string, options?: AxiosRequestConfig, configuration?: ExportConfiguration): Promise<ExportRequestArgs>;
 
 // @public
 export function ActionsExportAxiosParamCreator_GetSlidesExport(workspaceId: string, exportId: string, options?: AxiosRequestConfig, configuration?: ExportConfiguration): Promise<ExportRequestArgs>;
@@ -1345,6 +1366,13 @@ export interface ActionsExportCreatePdfExportRequest {
 export interface ActionsExportCreateRawExportRequest {
     readonly exportRawExportRequest: ExportRawExportRequest;
     readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsExportCreateReportExportRequest {
+    readonly exportReportExportRequest: ExportReportExportRequest;
+    readonly workspaceId: string;
+    readonly xGdcDebug?: boolean;
 }
 
 // @public
@@ -1391,6 +1419,18 @@ export interface ActionsExportGetRawExportRequest {
 }
 
 // @public
+export interface ActionsExportGetReportExportMetadataRequest {
+    readonly exportId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsExportGetReportExportRequest {
+    readonly exportId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface ActionsExportGetSlidesExportMetadataRequest {
     readonly exportId: string;
     readonly workspaceId: string;
@@ -1414,6 +1454,7 @@ export interface ActionsExportInterface {
     createImageExport(requestParameters: ActionsExportCreateImageExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
     createPdfExport(requestParameters: ActionsExportCreatePdfExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
     createRawExport(requestParameters: ActionsExportCreateRawExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
+    createReportExport(requestParameters: ActionsExportCreateReportExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
     createSlidesExport(requestParameters: ActionsExportCreateSlidesExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
     createTabularExport(requestParameters: ActionsExportCreateTabularExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
     getExportedFile(requestParameters: ActionsExportGetExportedFileRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
@@ -1421,6 +1462,8 @@ export interface ActionsExportInterface {
     getImageExportMetadata(requestParameters: ActionsExportGetImageExportMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     getMetadata(requestParameters: ActionsExportGetMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     getRawExport(requestParameters: ActionsExportGetRawExportRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
+    getReportExport(requestParameters: ActionsExportGetReportExportRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
+    getReportExportMetadata(requestParameters: ActionsExportGetReportExportMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     getSlidesExport(requestParameters: ActionsExportGetSlidesExportRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
     getSlidesExportMetadata(requestParameters: ActionsExportGetSlidesExportMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     getTabularExport(requestParameters: ActionsExportGetTabularExportRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
@@ -24250,6 +24293,26 @@ export interface ExportGetImageExport202ResponseInner {
 }
 
 // @public (undocumented)
+export interface ExportGetReportExport202ResponseInner {
+    // (undocumented)
+    'char'?: string;
+    // (undocumented)
+    'direct'?: boolean;
+    // (undocumented)
+    'double'?: number;
+    // (undocumented)
+    'float'?: number;
+    // (undocumented)
+    'int'?: number;
+    // (undocumented)
+    'long'?: number;
+    // (undocumented)
+    'readOnly'?: boolean;
+    // (undocumented)
+    'short'?: number;
+}
+
+// @public (undocumented)
 export interface ExportGetSlidesExport202ResponseInner {
     // (undocumented)
     'char'?: string;
@@ -24654,6 +24717,18 @@ export type ExportRelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum = '
 
 // @public (undocumented)
 export type ExportRelativeDateFilterRelativeDateFilterGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
+
+// @public
+export interface ExportReportExportRequest {
+    'fileName': string;
+    'format': ExportReportExportRequestFormatEnum;
+    'metadata'?: object | null;
+    'reportId': string;
+    'timezoneId'?: string | null;
+}
+
+// @public (undocumented)
+export type ExportReportExportRequestFormatEnum = 'PDF';
 
 // @public
 export type ExportRequest = TabularExportRequest | VisualExportRequest;
@@ -43910,6 +43985,57 @@ export interface RelativeWrapper {
 
 // @public
 export function removeAxiosResponseCacheEntries(axiosInstance: AxiosInstance, ids: readonly string[]): Promise<void>;
+
+// @public
+export class ReportExportExport extends ExportBaseAPI implements ReportExportExportInterface {
+    createReportExport(requestParameters: ReportExportExportCreateReportExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
+    getReportExport(requestParameters: ReportExportExportGetReportExportRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
+    getReportExportMetadata(requestParameters: ReportExportExportGetReportExportMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+}
+
+// @public
+export function ReportExportExport_CreateReportExport(axios: AxiosInstance, basePath: string, requestParameters: ReportExportExportCreateReportExportRequest, options?: AxiosRequestConfig, configuration?: ExportConfiguration): AxiosPromise<ExportExportResponse>;
+
+// @public
+export function ReportExportExport_GetReportExport(axios: AxiosInstance, basePath: string, requestParameters: ReportExportExportGetReportExportRequest, options?: AxiosRequestConfig, configuration?: ExportConfiguration): AxiosPromise<File>;
+
+// @public
+export function ReportExportExport_GetReportExportMetadata(axios: AxiosInstance, basePath: string, requestParameters: ReportExportExportGetReportExportMetadataRequest, options?: AxiosRequestConfig, configuration?: ExportConfiguration): AxiosPromise<void>;
+
+// @public
+export function ReportExportExportAxiosParamCreator_CreateReportExport(workspaceId: string, exportReportExportRequest: ExportReportExportRequest, xGdcDebug?: boolean, options?: AxiosRequestConfig, configuration?: ExportConfiguration): Promise<ExportRequestArgs>;
+
+// @public
+export function ReportExportExportAxiosParamCreator_GetReportExport(workspaceId: string, exportId: string, options?: AxiosRequestConfig, configuration?: ExportConfiguration): Promise<ExportRequestArgs>;
+
+// @public
+export function ReportExportExportAxiosParamCreator_GetReportExportMetadata(workspaceId: string, exportId: string, options?: AxiosRequestConfig, configuration?: ExportConfiguration): Promise<ExportRequestArgs>;
+
+// @public
+export interface ReportExportExportCreateReportExportRequest {
+    readonly exportReportExportRequest: ExportReportExportRequest;
+    readonly workspaceId: string;
+    readonly xGdcDebug?: boolean;
+}
+
+// @public
+export interface ReportExportExportGetReportExportMetadataRequest {
+    readonly exportId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ReportExportExportGetReportExportRequest {
+    readonly exportId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ReportExportExportInterface {
+    createReportExport(requestParameters: ReportExportExportCreateReportExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
+    getReportExport(requestParameters: ReportExportExportGetReportExportRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
+    getReportExportMetadata(requestParameters: ReportExportExportGetReportExportMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+}
 
 // @public
 export class ReportingSettingsApi extends MetadataBaseApi implements ReportingSettingsApiInterface {

@@ -32,7 +32,7 @@ export type EvaluatedMetric = {
 export function useEvaluatedMetricsAndAttributes(
     references: ReferenceMap,
     filters: IFilter[],
-    config: IExecutionConfig & { enabled: boolean; isFiltersLoading?: boolean },
+    config: IExecutionConfig & { enabled: boolean; isExecutionInputLoading?: boolean },
 ) {
     const workspace = useWorkspace();
     const backend = useBackend();
@@ -40,7 +40,8 @@ export function useEvaluatedMetricsAndAttributes(
     const { metrics: labels, countMap } = getLabels(references);
 
     const items = [...metrics, ...labels];
-    const { enabled, isFiltersLoading, ...execConfig } = config;
+    const { enabled, isExecutionInputLoading, ...execConfig } = config;
+    const isWaitingForInput = items.length > 0 && !!isExecutionInputLoading;
 
     const {
         status: executionStatus,
@@ -49,7 +50,7 @@ export function useEvaluatedMetricsAndAttributes(
     } = useExecutionDataView(
         {
             execution:
-                enabled && items.length > 0 && !isFiltersLoading && backend && workspace
+                enabled && items.length > 0 && !isWaitingForInput && backend && workspace
                     ? backend
                           .workspace(workspace)
                           .execution()
@@ -57,7 +58,7 @@ export function useEvaluatedMetricsAndAttributes(
                           .withExecConfig(execConfig)
                     : undefined,
         },
-        [execConfig.timestamp, execConfig.dataSamplingPercentage, execConfig.timezone, isFiltersLoading],
+        [execConfig.timestamp, execConfig.dataSamplingPercentage, execConfig.timezone, isWaitingForInput],
     );
 
     const {
@@ -134,7 +135,7 @@ export function useEvaluatedMetricsAndAttributes(
 
     return {
         loading:
-            isFiltersLoading ||
+            isWaitingForInput ||
             executionStatus === "loading" ||
             loadStatus === "loading" ||
             loadStatus === "pending",
@@ -143,7 +144,10 @@ export function useEvaluatedMetricsAndAttributes(
     };
 }
 
-function getMeasures(references: ReferenceMap) {
+/**
+ * @internal
+ */
+export function getMeasures(references: ReferenceMap) {
     const metrics = Object.values(references)
         .map(({ type, ref }) => (type === "measure" ? ref : null))
         .filter(Boolean);

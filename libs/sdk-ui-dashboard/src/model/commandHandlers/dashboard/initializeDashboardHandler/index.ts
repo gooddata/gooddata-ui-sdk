@@ -60,11 +60,8 @@ import {
     type ResolvedDashboardConfig,
 } from "../../../types/commonTypes.js";
 import { type PromiseFnReturnType } from "../../../types/sagas.js";
-import {
-    collectDashboardFilterContextItems,
-    loadFilterParameterDependencies,
-} from "../../parameters/loadFilterParameterDependencies.js";
-import { loadInsightParameterDependencies } from "../../parameters/loadInsightParameterDependencies.js";
+import { collectDashboardParameterRoots } from "../../parameters/dashboardParameterRoots.js";
+import { loadParameterDependencies } from "../../parameters/loadParameterDependencies.js";
 import { changeDashboardTimezoneOverrideHandler } from "../../timezone/changeDashboardTimezoneOverrideHandler.js";
 import { applyDefaultFilterView } from "../common/filterViews.js";
 import {
@@ -345,26 +342,23 @@ function* loadExistingDashboard(
         undefined, // Don't use any persisted value - always default to first tab if no URL param
     );
     const dashboard = dashboardWithFilterView;
+    const enableParameters = config.settings?.enableParameters ?? false;
 
     const [
         { tabsAttributeFilterConfigs, tabsDateFilterConfig, tabsDateFilterConfigSource },
         workspaceParameters,
-        insightParameterDependencies,
-        filterParameterDependencies,
+        parameterDependencies,
     ]: [
         SagaReturnType<typeof getTabsFilterConfigs>,
         SagaReturnType<typeof loadWorkspaceParametersWithStatus>,
-        PromiseFnReturnType<typeof loadInsightParameterDependencies>,
-        PromiseFnReturnType<typeof loadFilterParameterDependencies>,
+        PromiseFnReturnType<typeof loadParameterDependencies>,
     ] = yield all([
         call(getTabsFilterConfigs, dashboard, config, ctx, cmd),
         call(loadWorkspaceParametersWithStatus, ctx, config.settings),
-        call(loadInsightParameterDependencies, ctx, insights, config.settings?.enableParameters ?? false),
         call(
-            loadFilterParameterDependencies,
+            loadParameterDependencies,
             ctx,
-            collectDashboardFilterContextItems(dashboard),
-            config.settings?.enableParameters ?? false,
+            enableParameters ? collectDashboardParameterRoots(dashboard, insights) : [],
         ),
     ]);
     const workspaceParametersList = Array.isArray(workspaceParameters) ? workspaceParameters : [];
@@ -400,8 +394,13 @@ function* loadExistingDashboard(
             permissionsActions.setPermissions(permissions),
             catalogActions.setCatalogItems(catalogPayload),
             catalogActions.setCatalogParameters(makeCatalogParametersPayload(workspaceParameters)),
-            catalogActions.setCatalogInsightParameters(insightParameterDependencies),
-            catalogActions.setCatalogFilterParameters(filterParameterDependencies),
+            catalogActions.setCatalogParameterDependencies({
+                status: enableParameters ? "loaded" : "uninitialized",
+                byRoot: {},
+                requestedRoots: {},
+            }),
+            catalogActions.mergeCatalogParameterDependencies(parameterDependencies.byRoot),
+            catalogActions.markParameterDependenciesFailed(parameterDependencies.failedRoots),
             ...initActions,
             // NOTE: Tab configs (dateFilterConfig, dateFilterConfigs, attributeFilterConfigs, filterContext)
             // are now initialized as part of the tabs state in initActions via setTabs action
@@ -495,18 +494,12 @@ function* initializeNewDashboard(
             workspaceParametersList,
         );
 
-    const insightParameterDependencies: PromiseFnReturnType<typeof loadInsightParameterDependencies> =
-        yield call(
-            loadInsightParameterDependencies,
-            ctx,
-            insights,
-            config.settings?.enableParameters ?? false,
-        );
-    // a new dashboard starts with the default (date-only) filter context, so there is nothing to
-    // resolve yet; this only records the status so the widgets do not wait for a load that never comes
-    const filterParameterDependencies: PromiseFnReturnType<typeof loadFilterParameterDependencies> =
-        yield call(loadFilterParameterDependencies, ctx, [], config.settings?.enableParameters ?? false);
-
+    const enableParameters = config.settings?.enableParameters ?? false;
+    const parameterDependencies: PromiseFnReturnType<typeof loadParameterDependencies> = yield call(
+        loadParameterDependencies,
+        ctx,
+        enableParameters ? collectDashboardParameterRoots(dashboard, insights) : [],
+    );
     const batch: BatchAction = batchActions(
         [
             backendCapabilitiesActions.setBackendCapabilities(backend.capabilities),
@@ -524,8 +517,13 @@ function* initializeNewDashboard(
                 dateHierarchyTemplates: dateHierarchyTemplates,
             }),
             catalogActions.setCatalogParameters(makeCatalogParametersPayload(workspaceParameters)),
-            catalogActions.setCatalogInsightParameters(insightParameterDependencies),
-            catalogActions.setCatalogFilterParameters(filterParameterDependencies),
+            catalogActions.setCatalogParameterDependencies({
+                status: enableParameters ? "loaded" : "uninitialized",
+                byRoot: {},
+                requestedRoots: {},
+            }),
+            catalogActions.mergeCatalogParameterDependencies(parameterDependencies.byRoot),
+            catalogActions.markParameterDependenciesFailed(parameterDependencies.failedRoots),
             listedDashboardsActions.setListedDashboards(listedDashboards),
             accessibleDashboardsActions.setAccessibleDashboards(listedDashboards),
             executionResultsActions.clearAllExecutionResults(),

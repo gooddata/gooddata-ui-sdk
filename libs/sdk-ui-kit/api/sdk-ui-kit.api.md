@@ -2124,6 +2124,8 @@ export interface IDescriptionPanelProps {
     // (undocumented)
     id?: string;
     // (undocumented)
+    isExecutionInputLoading?: boolean;
+    // (undocumented)
     isLocked?: boolean;
     // (undocumented)
     LoadingComponent?: ComponentType;
@@ -2131,6 +2133,8 @@ export interface IDescriptionPanelProps {
     locale?: string;
     // (undocumented)
     onBubbleOpen?: () => void;
+    // (undocumented)
+    parameterDisplayValues?: ReadonlyMap<string, string>;
     restrictedReferences?: ObjRef[];
     // (undocumented)
     separators?: ISeparators_3;
@@ -4903,7 +4907,7 @@ export interface IRichTextProps {
     // (undocumented)
     execConfig?: IExecutionConfig;
     filters?: IFilter[];
-    isFiltersLoading?: boolean;
+    isExecutionInputLoading?: boolean;
     // (undocumented)
     LoadingComponent?: ComponentType;
     // (undocumented)
@@ -4912,6 +4916,7 @@ export interface IRichTextProps {
     onError?: OnError;
     // @alpha (undocumented)
     onLoadingChanged?: OnLoadingChanged;
+    parameterDisplayValues?: ReadonlyMap<string, string>;
     rawContent?: {
         show: boolean;
         dataAttributes?: Record<string, string>;

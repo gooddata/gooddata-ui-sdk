@@ -620,6 +620,7 @@
     "insightPicker.sortDirection.descending": "Absteigend",
     "insightPicker.menu.actions": "Aktionen",
     "insightPicker.resetFilters": "Filter zurücksetzen",
+    "insightPicker.suggestions": "Ähnlich",
     "objectShare.confirm.restrict.title": "Zugriff beschränken?",
     "objectShare.confirm.restrict.description": "Dadurch wird der Zugriff auf die oben aufgeführten Personen und Gruppen beschränkt.",
     "objectShare.confirm.grantWorkspace.title": "Workspace-weiten Zugriff gewähren?",

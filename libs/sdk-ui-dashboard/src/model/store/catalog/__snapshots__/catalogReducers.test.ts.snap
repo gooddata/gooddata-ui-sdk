@@ -182,12 +182,9 @@ exports[`catalogReducers > addAttributeHierarchy > should add attribute hierarch
       "type": "attributeHierarchy",
     },
   ],
-  "filterParameters": {
-    "byRef": {},
-    "status": "uninitialized",
-  },
-  "insightParameters": {
-    "byInsight": {},
+  "parameterDependencies": {
+    "byRoot": {},
+    "requestedRoots": {},
     "status": "uninitialized",
   },
   "parameters": {
@@ -232,12 +229,9 @@ exports[`catalogReducers > addAttributeHierarchy > should add attribute hierarch
       "type": "attributeHierarchy",
     },
   ],
-  "filterParameters": {
-    "byRef": {},
-    "status": "uninitialized",
-  },
-  "insightParameters": {
-    "byInsight": {},
+  "parameterDependencies": {
+    "byRoot": {},
+    "requestedRoots": {},
     "status": "uninitialized",
   },
   "parameters": {
@@ -363,12 +357,9 @@ exports[`catalogReducers > deleteAttributeHierarchy > should delete attribute hi
       "type": "attributeHierarchy",
     },
   ],
-  "filterParameters": {
-    "byRef": {},
-    "status": "uninitialized",
-  },
-  "insightParameters": {
-    "byInsight": {},
+  "parameterDependencies": {
+    "byRoot": {},
+    "requestedRoots": {},
     "status": "uninitialized",
   },
   "parameters": {
@@ -529,12 +520,9 @@ exports[`catalogReducers > updateAttributeHierarchy > should update attribute hi
       "type": "attributeHierarchy",
     },
   ],
-  "filterParameters": {
-    "byRef": {},
-    "status": "uninitialized",
-  },
-  "insightParameters": {
-    "byInsight": {},
+  "parameterDependencies": {
+    "byRoot": {},
+    "requestedRoots": {},
     "status": "uninitialized",
   },
   "parameters": {

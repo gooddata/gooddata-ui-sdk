@@ -1,10 +1,10 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { type ReactElement, act } from "react";
+import { type ReactElement, type ReactNode, StrictMode, useEffect, useState } from "react";
 
-import { type RenderResult, render } from "@testing-library/react";
+import { type RenderResult, act, render } from "@testing-library/react";
 import { cloneDeep } from "lodash-es";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
@@ -13,25 +13,18 @@ import { type ITheme } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { suppressConsole } from "@gooddata/util";
 
+import { clearCssProperties } from "../cssProperties.js";
+
 import { useTheme, useThemeIsLoading, useThemeStatus, withTheme } from "./Context.js";
 import { isDarkTheme } from "./isDarkTheme.js";
-import { type ThemeModifier, ThemeProvider } from "./ThemeProvider.js";
+import { type IThemeProviderProps, type ThemeModifier, ThemeProvider } from "./ThemeProvider.js";
 
 const renderComponent = async (component: ReactElement): Promise<RenderResult> => {
     let wrappedComponent: RenderResult | undefined;
-    await suppressConsole(
-        () =>
-            act(() => {
-                wrappedComponent = render(component);
-            }),
-        "error",
-        [
-            {
-                type: "startsWith",
-                value: "The current testing environment is not configured to support act(...)",
-            },
-        ],
-    );
+    // Async so the state update from a backend getTheme() still lands inside act.
+    await act(async () => {
+        wrappedComponent = render(component);
+    });
     return wrappedComponent!;
 };
 
@@ -448,7 +441,7 @@ describe("ThemeProvider", () => {
 
         await suppressConsole(
             () =>
-                act(() => {
+                act(async () => {
                     render(
                         <ThemeProvider backend={backend} workspace={workspace} modifier={throwingModifier}>
                             <TestComponentWithTheme />
@@ -456,13 +449,7 @@ describe("ThemeProvider", () => {
                     );
                 }),
             "error",
-            [
-                {
-                    type: "startsWith",
-                    value: "The current testing environment is not configured to support act(...)",
-                },
-                { type: "startsWith", value: "Failed to load or process the theme from the backend." },
-            ],
+            [{ type: "startsWith", value: "Failed to load or process the theme from the backend." }],
         );
 
         // loading gate is released even though theme processing failed - no infinite loading screen,
@@ -482,7 +469,7 @@ describe("ThemeProvider", () => {
 
         await suppressConsole(
             () =>
-                act(() => {
+                act(async () => {
                     render(
                         <ThemeProvider backend={backend} workspace={workspace} modifier={throwingModifier}>
                             <HookTestComponent onValues={onValues} />
@@ -490,13 +477,7 @@ describe("ThemeProvider", () => {
                     );
                 }),
             "error",
-            [
-                {
-                    type: "startsWith",
-                    value: "The current testing environment is not configured to support act(...)",
-                },
-                { type: "startsWith", value: "Failed to load or process the theme from the backend." },
-            ],
+            [{ type: "startsWith", value: "Failed to load or process the theme from the backend." }],
         );
 
         // loading gate is released even though theme processing failed - no infinite loading screen,
@@ -555,6 +536,248 @@ describe("ThemeProvider", () => {
         unmount();
         const themeElementUnmount = document.getElementById("gdc-theme-properties");
         expect(themeElementUnmount && themeElementUnmount.innerHTML.length > 0).toEqual(true);
+    });
+});
+
+describe("nested global ThemeProviders", () => {
+    const outerTheme: ITheme = { palette: { primary: { base: "#aa0000" } } };
+    const changedOuterTheme: ITheme = { palette: { primary: { base: "#00aa00" } } };
+    const innerTheme: ITheme = { palette: { primary: { base: "#0000aa" } } };
+
+    const primaryColor = () =>
+        /--gd-palette-primary-base: ([^;]+);/.exec(
+            document.getElementById("gdc-theme-properties")?.textContent ?? "",
+        )?.[1];
+
+    function pendingThemeBackend() {
+        let resolveTheme: (theme: ITheme) => void = () => {};
+        const pendingTheme = new Promise<ITheme>((resolve) => {
+            resolveTheme = resolve;
+        });
+        const backend = {
+            workspace: () => ({ styling: () => ({ getTheme: () => pendingTheme }) }),
+        } as unknown as IAnalyticalBackend;
+        return { backend, resolveTheme };
+    }
+
+    // Hosted apps (e.g. an embedded Analytical Designer) mount their ThemeProvider a commit after the host's.
+    function MountInLaterCommit({ children }: { children: ReactNode }) {
+        const [ready, setReady] = useState(false);
+        useEffect(() => {
+            setReady(true);
+        }, []);
+        return ready ? children : null;
+    }
+
+    type ProviderProps = Omit<IThemeProviderProps, "children">;
+
+    function Tree({ outer, inner }: { outer: ProviderProps; inner?: ProviderProps }) {
+        return (
+            <ThemeProvider workspace="testWorkspace" {...outer}>
+                {inner ? (
+                    <MountInLaterCommit>
+                        <ThemeProvider workspace="testWorkspace" {...inner} />
+                    </MountInLaterCommit>
+                ) : null}
+            </ThemeProvider>
+        );
+    }
+
+    beforeEach(() => {
+        clearCssProperties();
+    });
+
+    it("should bring back the outer theme when the inner provider unmounts", () => {
+        const { rerender } = render(<Tree outer={{ theme: outerTheme }} inner={{ theme: innerTheme }} />);
+        expect(primaryColor()).toBe("#0000aa");
+
+        rerender(<Tree outer={{ theme: outerTheme }} />);
+
+        expect(primaryColor()).toBe("#aa0000");
+    });
+
+    it("should keep the inner theme while the outer theme changes and show the changed outer theme after the inner unmounts", () => {
+        const { rerender } = render(<Tree outer={{ theme: outerTheme }} inner={{ theme: innerTheme }} />);
+
+        rerender(<Tree outer={{ theme: changedOuterTheme }} inner={{ theme: innerTheme }} />);
+        expect(primaryColor()).toBe("#0000aa");
+
+        rerender(<Tree outer={{ theme: changedOuterTheme }} />);
+        expect(primaryColor()).toBe("#00aa00");
+    });
+
+    it("should show the outer theme that resolved while the inner provider was mounted once the inner unmounts", async () => {
+        const { backend, resolveTheme } = pendingThemeBackend();
+        const { rerender } = render(<Tree outer={{ backend }} inner={{ theme: innerTheme }} />);
+        expect(primaryColor()).toBe("#0000aa");
+
+        await act(async () => {
+            resolveTheme(outerTheme);
+        });
+        expect(primaryColor()).toBe("#0000aa");
+
+        rerender(<Tree outer={{ backend }} />);
+        expect(primaryColor()).toBe("#aa0000");
+    });
+
+    it("should leave no theme behind when the whole tree unmounts with the inner provider mounted", () => {
+        const { unmount } = render(<Tree outer={{ theme: outerTheme }} inner={{ theme: innerTheme }} />);
+
+        unmount();
+
+        expect(document.getElementById("gdc-theme-properties")).toBeNull();
+    });
+
+    it("should show the outer theme when a nested provider mounts in the same commit as the outer one", () => {
+        render(
+            <ThemeProvider theme={outerTheme}>
+                <ThemeProvider theme={innerTheme} />
+            </ThemeProvider>,
+        );
+
+        expect(primaryColor()).toBe("#aa0000");
+    });
+
+    it("should keep the outer theme while the inner provider is still loading", () => {
+        const { backend } = pendingThemeBackend();
+
+        render(<Tree outer={{ theme: outerTheme }} inner={{ backend }} />);
+
+        expect(primaryColor()).toBe("#aa0000");
+    });
+
+    it("should bring back the outer theme when the inner provider unmounts under StrictMode", () => {
+        const { rerender } = render(
+            <StrictMode>
+                <Tree outer={{ theme: outerTheme }} inner={{ theme: innerTheme }} />
+            </StrictMode>,
+        );
+        expect(primaryColor()).toBe("#0000aa");
+
+        rerender(
+            <StrictMode>
+                <Tree outer={{ theme: outerTheme }} />
+            </StrictMode>,
+        );
+
+        expect(primaryColor()).toBe("#aa0000");
+    });
+
+    it("should keep showing the later provider's theme changes after an earlier sibling provider unmounts", () => {
+        const earlier = render(<ThemeProvider theme={outerTheme} />);
+        const later = render(<ThemeProvider theme={innerTheme} />);
+
+        earlier.unmount();
+        expect(primaryColor()).toBe("#0000aa");
+
+        later.rerender(<ThemeProvider theme={changedOuterTheme} />);
+        expect(primaryColor()).toBe("#00aa00");
+    });
+
+    it("should keep the theme when removeGlobalStylesOnUnmout changes while mounted", () => {
+        const { rerender } = render(<ThemeProvider theme={outerTheme} />);
+
+        rerender(<ThemeProvider theme={outerTheme} removeGlobalStylesOnUnmout={false} />);
+
+        expect(primaryColor()).toBe("#aa0000");
+    });
+
+    it("should leave no theme behind when the whole tree unmounts with an inner provider that keeps global styles", () => {
+        const { unmount } = render(
+            <Tree
+                outer={{ theme: outerTheme }}
+                inner={{ theme: innerTheme, removeGlobalStylesOnUnmout: false }}
+            />,
+        );
+
+        unmount();
+
+        expect(document.getElementById("gdc-theme-properties")).toBeNull();
+    });
+
+    it("should show the outer theme between replacing one inner provider that keeps global styles with another", () => {
+        const { rerender } = render(
+            <Tree
+                outer={{ theme: outerTheme }}
+                inner={{ theme: innerTheme, removeGlobalStylesOnUnmout: false }}
+            />,
+        );
+
+        rerender(<Tree outer={{ theme: outerTheme }} />);
+        expect(primaryColor()).toBe("#aa0000");
+
+        rerender(
+            <Tree
+                outer={{ theme: outerTheme }}
+                inner={{ theme: changedOuterTheme, removeGlobalStylesOnUnmout: false }}
+            />,
+        );
+        expect(primaryColor()).toBe("#00aa00");
+    });
+
+    it("should keep an earlier sibling's theme that keeps global styles after a later sibling unmounts", () => {
+        const earlier = render(<ThemeProvider theme={outerTheme} removeGlobalStylesOnUnmout={false} />);
+        const later = render(<ThemeProvider theme={innerTheme} />);
+
+        later.unmount();
+        expect(primaryColor()).toBe("#aa0000");
+
+        earlier.unmount();
+        expect(primaryColor()).toBe("#aa0000");
+    });
+
+    it("should leave no theme behind when a three-level tree unmounts with inner providers that keep global styles", () => {
+        const { unmount } = render(
+            <ThemeProvider theme={outerTheme}>
+                <MountInLaterCommit>
+                    <ThemeProvider theme={changedOuterTheme} removeGlobalStylesOnUnmout={false}>
+                        <MountInLaterCommit>
+                            <ThemeProvider theme={innerTheme} removeGlobalStylesOnUnmout={false} />
+                        </MountInLaterCommit>
+                    </ThemeProvider>
+                </MountInLaterCommit>
+            </ThemeProvider>,
+        );
+        expect(primaryColor()).toBe("#0000aa");
+
+        unmount();
+
+        expect(document.getElementById("gdc-theme-properties")).toBeNull();
+    });
+
+    it("should leave no theme behind when a tree mounted in one commit unmounts with an inner provider that keeps global styles", () => {
+        const { unmount } = render(
+            <ThemeProvider theme={outerTheme}>
+                <ThemeProvider theme={innerTheme} removeGlobalStylesOnUnmout={false} />
+            </ThemeProvider>,
+        );
+
+        unmount();
+
+        expect(document.getElementById("gdc-theme-properties")).toBeNull();
+    });
+
+    it("should keep the theme of a later separate root that keeps global styles after an earlier root unmounts first", () => {
+        const earlier = render(<ThemeProvider theme={outerTheme} />);
+        const later = render(<ThemeProvider theme={innerTheme} removeGlobalStylesOnUnmout={false} />);
+
+        earlier.unmount();
+        later.unmount();
+
+        expect(primaryColor()).toBe("#0000aa");
+    });
+
+    it("should bring back the outer theme when an inner provider that keeps global styles unmounts", () => {
+        const { rerender } = render(
+            <Tree
+                outer={{ theme: outerTheme }}
+                inner={{ theme: innerTheme, removeGlobalStylesOnUnmout: false }}
+            />,
+        );
+
+        rerender(<Tree outer={{ theme: outerTheme }} />);
+
+        expect(primaryColor()).toBe("#aa0000");
     });
 });
 

@@ -620,6 +620,7 @@
     "insightPicker.sortDirection.descending": "Descendente",
     "insightPicker.menu.actions": "Ações",
     "insightPicker.resetFilters": "Redefinir filtros",
+    "insightPicker.suggestions": "Semelhantes",
     "objectShare.confirm.restrict.title": "Restringir acesso?",
     "objectShare.confirm.restrict.description": "Isso restringirá o acesso apenas às pessoas e aos grupos listados acima.",
     "objectShare.confirm.grantWorkspace.title": "Conceder acesso a todo o espaço de trabalho?",

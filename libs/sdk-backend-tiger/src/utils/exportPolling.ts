@@ -7,6 +7,7 @@ import {
     ExportApi_GetExportedFile,
     ExportApi_GetImageExport,
     ExportApi_GetRawExport,
+    ExportApi_GetReportExport,
     ExportApi_GetSlidesExport,
     ExportApi_GetTabularExport,
 } from "@gooddata/api-client-tiger/endpoints/export";
@@ -48,6 +49,8 @@ const EXPORT_GETTERS: Record<
         ExportApi_GetImageExport(client.axios, client.basePath, payload, options),
     getRawExport: (client, payload, options) =>
         ExportApi_GetRawExport(client.axios, client.basePath, payload, options),
+    getReportExport: (client, payload, options) =>
+        ExportApi_GetReportExport(client.axios, client.basePath, payload, options),
     getSlidesExport: (client, payload, options) =>
         ExportApi_GetSlidesExport(client.axios, client.basePath, payload, options),
     getTabularExport: (client, payload, options) =>

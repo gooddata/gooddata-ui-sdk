@@ -265,7 +265,7 @@
     "analyticsCatalog.metric.dialog.delete.submit": "Elimina",
     "analyticsCatalog.metric.delete.success": "Metrica eliminata.",
     "analyticsCatalog.metric.delete.error": "Impossibile eliminare la metrica.",
-    "analyticsCatalog.visualization.dialog.create.title": "Creare una visualizzazione",
+    "analyticsCatalog.visualization.dialog.create.title": "Crea visualizzazione",
     "analyticsCatalog.visualization.dialog.edit.title": "Modifica visualizzazione",
     "analyticsCatalog.visualization.dialog.view.title": "Dettaglio visualizzazione",
     "analyticsCatalog.visualization.dialog.sectionHeader": "Definizione della visualizzazione",

@@ -17,8 +17,8 @@ import {
     type ParameterValue,
     areObjRefsEqual,
     dashboardAttributeFilterItemDisplayForm,
+    getParameterValueTitle,
     insightParameters,
-    insightRef,
     isComputedAttributeRef,
     isDashboardAttributeFilterItem,
     isDashboardAttributeFilterReference,
@@ -143,24 +143,32 @@ export function isDashboardFilterIgnoredByWidget(
 }
 
 /**
- * The parameter refs a widget depends on through the dashboard filters of its tab that it does not
- * ignore, resolved against the filter → parameter dependency map (`catalog.filterParameters.byRef`).
+ * The dependency roots of the dashboard filters of a tab that a widget does not ignore.
  *
  * @internal
  */
-export function collectWidgetFilterParameterRefs(
+export function collectWidgetFilterParameterRoots(
     ignoreDashboardFilters: ReadonlyArray<IDashboardFilterReference>,
     tab: ITabState,
-    filterParameters: Record<string, IdentifierRef[]>,
 ): IdentifierRef[] {
     const filters = tab.filterContext?.filterContextDefinition?.filters ?? [];
-    const roots = collectFilterParameterRoots(
+    return collectFilterParameterRoots(
         filters.filter((filter) => !isDashboardFilterIgnoredByWidget(ignoreDashboardFilters, filter)),
     );
-    const result = unionParameterRefs(
-        ...roots.map((root) => filterParameters[serializeObjRef(root)] ?? EMPTY_REFS),
+}
+
+/**
+ * The parameter refs the given roots depend on, deduped. A root the map does not hold adds none.
+ *
+ * @internal
+ */
+export function collectRootParameterRefs(
+    dependenciesByRoot: Record<string, IdentifierRef[]>,
+    roots: ReadonlyArray<ObjRef>,
+): IdentifierRef[] {
+    return unionParameterRefs(
+        ...roots.map((root) => dependenciesByRoot[serializeObjRef(root)] ?? EMPTY_REFS),
     );
-    return result.length === 0 ? EMPTY_REFS : result;
 }
 
 /**
@@ -215,38 +223,75 @@ export function resolveEffectiveParameterValuesForRefs(
 
 interface IParameterResolutionContext {
     entries: IDashboardParameterEntry[];
-    insightParameters: Record<string, IdentifierRef[]>;
-    // Parameters reached through the widget's non-ignored dashboard filters; they apply to whatever
-    // insight the widget executes (its own or a drill target), so they are resolved per widget, not per insight.
-    filterParameterRefs: IdentifierRef[];
+    dependenciesByRoot: Record<string, IdentifierRef[]>;
+    // Roots of the widget's non-ignored dashboard filters; they apply to whatever insight the widget
+    // executes (its own or a drill target), so they are collected per widget, not per insight.
+    filterRoots: IdentifierRef[];
     workspaceParameterByRef: Map<string, IParameterMetadataObject>;
     isStringEnabled: boolean;
 }
 
 /**
- * Effective execution parameters for `insight` given a widget's parameter context: looks up the refs
- * the insight depends on, adds those the widget's dashboard filters depend on, then applies
- * {@link resolveEffectiveParameterValuesForRefs}.
+ * Effective execution parameters for what `roots` depend on, given a widget's parameter context:
+ * unions the refs of every root and of every root of the widget's dashboard filters, then applies
+ * {@link resolveEffectiveParameterValuesForRefs}. An insight is passed by the hosts that execute one,
+ * so its authored values take part; a text has none. Roots are looked up exactly as they are spelled
+ * here, the way they were loaded.
  *
  * @internal
  */
-export function resolveEffectiveParameterValuesForInsight(
+export function resolveEffectiveParameterValuesForRoots(
     context: IParameterResolutionContext | undefined,
-    insight: IInsight,
+    roots: ObjRef[],
+    insight?: IInsight,
 ): IInsightParameterValue[] {
     if (!context) {
         return EMPTY_PARAMETER_VALUES;
     }
-    const referencedRefs = unionParameterRefs(
-        context.insightParameters[serializeObjRef(insightRef(insight))] ?? EMPTY_REFS,
-        context.filterParameterRefs,
-    );
+    const referencedRefs = collectRootParameterRefs(context.dependenciesByRoot, [
+        ...roots,
+        ...context.filterRoots,
+    ]);
     return resolveEffectiveParameterValuesForRefs(
         context.entries,
         referencedRefs,
-        ungatedInsightParameterValues(insight, context.isStringEnabled),
+        insight ? ungatedInsightParameterValues(insight, context.isStringEnabled) : [],
         context.workspaceParameterByRef,
     );
+}
+
+/**
+ * The text every parameter of the workspace shows, by parameter identifier. Values resolve exactly
+ * as an execution resolves them - chip, then insight-authored value, then the workspace default,
+ * with an invalid value recovered to the default - and are then titled through
+ * {@link getParameterValueTitle}, so a constrained value reads as its allowed-value title.
+ *
+ * @internal
+ */
+export function resolveParameterDisplayValues(
+    context: IParameterResolutionContext,
+    insight?: IInsight,
+): ReadonlyMap<string, string> {
+    const workspaceParameters = [...context.workspaceParameterByRef.values()];
+    const effectiveValues = resolveEffectiveParameterValuesForRefs(
+        context.entries,
+        workspaceParameters.map((parameter) => parameter.ref).filter(isIdentifierRef),
+        insight ? ungatedInsightParameterValues(insight, context.isStringEnabled) : [],
+        context.workspaceParameterByRef,
+    );
+    const valueByRef = new Map(
+        effectiveValues.map((effective) => [objRefToString(effective.ref), effective.value]),
+    );
+    const displayValues = new Map<string, string>();
+    for (const { definition, ref } of workspaceParameters) {
+        // a text names a parameter by identifier, so one referenced by uri cannot be written at all
+        if (!isIdentifierRef(ref)) {
+            continue;
+        }
+        const value = valueByRef.get(objRefToString(ref)) ?? definition.defaultValue;
+        displayValues.set(ref.identifier, getParameterValueTitle(definition, value));
+    }
+    return displayValues;
 }
 
 /**

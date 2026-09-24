@@ -19,12 +19,16 @@ import {
     type TextNode,
 } from "./types.js";
 
-export function rehypeReferences(
-    intl: IntlShape,
-    metrics?: EvaluatedMetric[],
-    separators?: ISeparators,
-    restrictedReferences?: ObjRef[],
-) {
+interface IRehypeReferencesOptions {
+    metrics?: EvaluatedMetric[];
+    separators?: ISeparators;
+    restrictedReferences?: ObjRef[];
+    parameterDisplayValues?: ReadonlyMap<string, string>;
+}
+
+export function rehypeReferences(intl: IntlShape, options: IRehypeReferencesOptions = {}) {
+    const { metrics, separators, restrictedReferences, parameterDisplayValues } = options;
+
     const isRestricted = (ref: IdentifierRef) =>
         !!restrictedReferences?.some((restricted) => areObjRefsEqual(restricted, ref));
 
@@ -32,6 +36,11 @@ export function rehypeReferences(
         return function (tree: Root) {
             iterateTree(tree as HtmlNode, {
                 onTextNodeReference: (text, ref) => {
+                    if (ref.type === "parameter") {
+                        return parameterDisplayValues
+                            ? [createParameterValue(intl, text, parameterDisplayValues.get(ref.identifier))]
+                            : [text];
+                    }
                     if (isRestricted(ref)) {
                         return [createRestrictedMarker(intl, text)];
                     }
@@ -39,7 +48,12 @@ export function rehypeReferences(
                     const { metricDef } = createMetricValue(intl, text, metric!, separators);
                     return [metricDef];
                 },
-                onTextRawReference: (ref) => {
+                onTextRawReference: (ref, id) => {
+                    if (ref.type === "parameter") {
+                        return parameterDisplayValues
+                            ? (parameterDisplayValues.get(ref.identifier) ?? unknownParameterText(intl))
+                            : `{${id}}`;
+                    }
                     // markup cannot be nested in a URL or an alt text, so the marker is its word alone
                     if (isRestricted(ref)) {
                         return intl.formatMessage({ id: "richText.restricted" });
@@ -52,6 +66,27 @@ export function rehypeReferences(
             return tree;
         };
     };
+}
+
+function createParameterValue(intl: IntlShape, text: TextNode | null, value: string | undefined) {
+    return {
+        type: "element",
+        tagName: "span",
+        properties: {
+            className: "gd-rich-text-parameter",
+        },
+        position: text?.position ?? undefined,
+        children: [
+            {
+                type: "text",
+                value: value ?? unknownParameterText(intl),
+            },
+        ],
+    };
+}
+
+function unknownParameterText(intl: IntlShape): string {
+    return `(${intl.formatMessage({ id: "richText.unknown_parameter" })})`;
 }
 
 /**

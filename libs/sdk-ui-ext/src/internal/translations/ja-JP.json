@@ -620,6 +620,7 @@
     "insightPicker.sortDirection.descending": "降順",
     "insightPicker.menu.actions": "アクション",
     "insightPicker.resetFilters": "フィルターをリセット",
+    "insightPicker.suggestions": "類似",
     "objectShare.confirm.restrict.title": "アクセスを制限しますか？",
     "objectShare.confirm.restrict.description": "これにより、アクセスは上記に記載されたユーザーとグループのみに制限されます。",
     "objectShare.confirm.grantWorkspace.title": "ワークスペース全体のアクセス権を付与しますか？",

@@ -620,6 +620,7 @@
     "insightPicker.sortDirection.descending": "Giảm dần",
     "insightPicker.menu.actions": "Hành động",
     "insightPicker.resetFilters": "Đặt lại bộ lọc",
+    "insightPicker.suggestions": "Tương tự",
     "objectShare.confirm.restrict.title": "Hạn chế quyền truy cập?",
     "objectShare.confirm.restrict.description": "Điều này sẽ hạn chế quyền truy cập chỉ cho những người và nhóm được liệt kê ở trên.",
     "objectShare.confirm.grantWorkspace.title": "Cấp quyền truy cập trên toàn không gian làm việc?",

@@ -152,33 +152,31 @@ describe("testing rehype plugin to extract references", () => {
     };
 
     it("replace references ids for real formatted values in text", () => {
-        const walk = rehypeReferences(intl, metrics)();
+        const walk = rehypeReferences(intl, { metrics })();
         const updated = walk(htmlTreeSimpleText as Root);
 
         expect(updated).toMatchSnapshot();
     });
 
     it("replace references ids for real formatted values in links", () => {
-        const walk = rehypeReferences(intl, metrics)();
+        const walk = rehypeReferences(intl, { metrics })();
         const updated = walk(htmlTreeLinkText as Root);
 
         expect(updated).toMatchSnapshot();
     });
 
     it("replace references ids for real formatted values in image", () => {
-        const walk = rehypeReferences(intl, metrics)();
+        const walk = rehypeReferences(intl, { metrics })();
         const updated = walk(htmlTreeImageText as Root);
 
         expect(updated).toMatchSnapshot();
     });
 
     it("marks a restricted reference instead of asking for its value", () => {
-        const walk = rehypeReferences(
-            createIntlMock({ "richText.restricted": "restricted" }),
+        const walk = rehypeReferences(createIntlMock({ "richText.restricted": "restricted" }), {
             metrics,
-            undefined,
-            [{ type: "measure", identifier: "metric_1" }],
-        )();
+            restrictedReferences: [{ type: "measure", identifier: "metric_1" }],
+        })();
         // a tree of its own: the trees above are transformed in place by the tests that use them
         const tree = {
             type: "root",
@@ -210,7 +208,7 @@ describe("testing rehype plugin to extract references", () => {
     it("renders every reference as unretrievable when the execution failed", () => {
         // A rejected execution surfaces as no evaluated values at all — one AFM serves every
         // reference, so none of them resolve. Each must say so rather than render a stray value.
-        const walk = rehypeReferences(intl, [])();
+        const walk = rehypeReferences(intl, { metrics: [] })();
         const tree = {
             type: "root",
             children: [
@@ -250,7 +248,7 @@ describe("testing rehype plugin to extract references", () => {
                 rawValue: "Gold",
             } as unknown as DataPoint,
         } as EvaluatedMetric;
-        const walk = rehypeReferences(intl, [tier])();
+        const walk = rehypeReferences(intl, { metrics: [tier] })();
         const tree = {
             type: "root",
             children: [
@@ -278,8 +276,162 @@ describe("testing rehype plugin to extract references", () => {
         expect(label.properties.className).toContain("gd-rich-text-metric-error");
     });
 
+    it("renders a parameter reference as its display value", () => {
+        const walk = rehypeReferences(intl, { metrics, parameterDisplayValues: new Map([["top_n", "5"]]) })();
+        const tree = {
+            type: "root",
+            children: [
+                {
+                    type: "element",
+                    tagName: "p",
+                    properties: {},
+                    children: [{ type: "text", value: "{parameter/top_n}" }],
+                },
+            ],
+        };
+        const updated = walk(tree as Root) as Root;
+
+        const [span] = (updated.children[0] as unknown as HtmlNode).children as any[];
+        expect(span.tagName).toEqual("span");
+        expect(span.properties.className).toEqual("gd-rich-text-parameter");
+        expect(span.children[0].value).toEqual("5");
+    });
+
+    it("puts a parameter value into link and image attributes", () => {
+        const walk = rehypeReferences(intl, {
+            metrics,
+            parameterDisplayValues: new Map([["region", "west"]]),
+        })();
+        const tree = {
+            type: "root",
+            children: [
+                {
+                    type: "element",
+                    tagName: "p",
+                    properties: {},
+                    children: [
+                        {
+                            type: "element",
+                            tagName: "a",
+                            properties: {
+                                href: "https://www.example.com/{parameter/region}",
+                                title: "Link to {parameter/region}",
+                            },
+                            children: [],
+                        },
+                        {
+                            type: "element",
+                            tagName: "img",
+                            properties: {
+                                alt: "Chart for {parameter/region}",
+                                src: "https://www.example.com/{parameter/region}.png",
+                            },
+                        },
+                    ],
+                },
+            ],
+        };
+        const updated = walk(tree as Root) as Root;
+
+        const [anchor, image] = (updated.children[0] as unknown as HtmlNode).children as any[];
+        expect(anchor.properties.href).toEqual("https://www.example.com/west");
+        expect(anchor.properties.title).toEqual("Link to west");
+        expect(image.properties.alt).toEqual("Chart for west");
+        expect(image.properties.src).toEqual("https://www.example.com/west.png");
+    });
+
+    it("marks a parameter the workspace does not define", () => {
+        const walk = rehypeReferences(createIntlMock({ "richText.unknown_parameter": "unknown parameter" }), {
+            metrics,
+            parameterDisplayValues: new Map(),
+        })();
+        const tree = {
+            type: "root",
+            children: [
+                {
+                    type: "element",
+                    tagName: "p",
+                    properties: {},
+                    children: [
+                        { type: "text", value: "{parameter/gone}" },
+                        {
+                            type: "element",
+                            tagName: "a",
+                            properties: { title: "Link to {parameter/gone}" },
+                            children: [],
+                        },
+                    ],
+                },
+            ],
+        };
+        const updated = walk(tree as Root) as Root;
+
+        const [span, anchor] = (updated.children[0] as unknown as HtmlNode).children as any[];
+        expect(span.children[0].value).toEqual("(unknown parameter)");
+        expect(anchor.properties.title).toEqual("Link to (unknown parameter)");
+    });
+
+    it("marks a parameter named as a member of the object prototype", () => {
+        const walk = rehypeReferences(createIntlMock({ "richText.unknown_parameter": "unknown parameter" }), {
+            metrics,
+            parameterDisplayValues: new Map(),
+        })();
+        const tree = {
+            type: "root",
+            children: [
+                {
+                    type: "element",
+                    tagName: "p",
+                    properties: {},
+                    children: [
+                        { type: "text", value: "{parameter/constructor}" },
+                        {
+                            type: "element",
+                            tagName: "a",
+                            properties: { title: "Link to {parameter/constructor}" },
+                            children: [],
+                        },
+                    ],
+                },
+            ],
+        };
+        const updated = walk(tree as Root) as Root;
+
+        const [span, anchor] = (updated.children[0] as unknown as HtmlNode).children as any[];
+        expect(span.children[0].value).toEqual("(unknown parameter)");
+        expect(anchor.properties.title).toEqual("Link to (unknown parameter)");
+    });
+
+    it("leaves a parameter reference literal where the host supplies no values", () => {
+        const walk = rehypeReferences(intl, { metrics })();
+        const tree = {
+            type: "root",
+            children: [
+                {
+                    type: "element",
+                    tagName: "p",
+                    properties: {},
+                    children: [
+                        { type: "text", value: "{parameter/top_n}" },
+                        {
+                            type: "element",
+                            tagName: "a",
+                            properties: { title: "Link to {parameter/top_n}" },
+                            children: [],
+                        },
+                    ],
+                },
+            ],
+        };
+        const updated = walk(tree as Root) as Root;
+
+        const [text, anchor] = (updated.children[0] as unknown as HtmlNode).children as any[];
+        expect(text.value).toEqual("{parameter/top_n}");
+        expect(anchor.properties.title).toEqual("Link to {parameter/top_n}");
+    });
+
     it("replace references ids for not formatted values in text", () => {
-        const walk = rehypeReferences(intl, metrics1)();
+        const walk = rehypeReferences(intl, { metrics: metrics1 })();
         const updated = walk(htmlTreeSimpleText2 as Root);
 
         expect(updated).toMatchSnapshot();

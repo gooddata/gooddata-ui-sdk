@@ -44,11 +44,7 @@ import {
 import { selectEnableDashboardPartialRendering, selectLocale } from "../config/configSelectors.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
 
-import {
-    type CatalogFilterParametersStatus,
-    type CatalogInsightParametersStatus,
-    type CatalogParametersStatus,
-} from "./catalogState.js";
+import { type CatalogParameterDependenciesStatus, type CatalogParametersStatus } from "./catalogState.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -141,40 +137,30 @@ export const selectCatalogParametersIsLoaded: DashboardSelector<boolean> = creat
 );
 
 /**
- * Returns the dashboard-wide map from serialized insight ref to the parameter refs the insight depends on.
+ * Returns the dashboard-wide map from serialized root ref to the parameter refs that root depends on.
  * The map is populated during dashboard initialization from the workspace references service and extended
- * when insights are added later.
+ * when insights, text references, or dashboard filters add roots later.
  *
  * @alpha
  */
-export const selectCatalogInsightParameters: DashboardSelector<Record<string, IdentifierRef[]>> =
-    createSelector(selectSelf, (state) => state.insightParameters.byInsight);
+export const selectCatalogParameterDependencies: DashboardSelector<Record<string, IdentifierRef[]>> =
+    createSelector(selectSelf, (state) => state.parameterDependencies.byRoot);
 
 /**
- * Returns the load status of the dashboard-wide insight → parameter dependency map.
+ * Returns the load status of the dashboard-wide root → parameter dependency map.
  *
  * @alpha
  */
-export const selectCatalogInsightParametersStatus: DashboardSelector<CatalogInsightParametersStatus> =
-    createSelector(selectSelf, (state) => state.insightParameters.status);
+export const selectCatalogParameterDependenciesStatus: DashboardSelector<CatalogParameterDependenciesStatus> =
+    createSelector(selectSelf, (state) => state.parameterDependencies.status);
 
 /**
- * Returns the dashboard-wide map from the serialized ref of an object a dashboard filter reads (a computed
- * attribute, a metric) to the parameter refs it depends on. Populated during dashboard initialization from
- * the workspace references service and extended when the filter context gains filters on other objects.
+ * Returns pending and failed dependency requests, keyed by serialized root ref.
  *
  * @alpha
  */
-export const selectCatalogFilterParameters: DashboardSelector<Record<string, IdentifierRef[]>> =
-    createSelector(selectSelf, (state) => state.filterParameters.byRef);
-
-/**
- * Returns the load status of the dashboard-wide dashboard-filter → parameter dependency map.
- *
- * @alpha
- */
-export const selectCatalogFilterParametersStatus: DashboardSelector<CatalogFilterParametersStatus> =
-    createSelector(selectSelf, (state) => state.filterParameters.status);
+export const selectCatalogRequestedParameterRoots: DashboardSelector<Record<string, "pending" | "failed">> =
+    createSelector(selectSelf, (state) => state.parameterDependencies.requestedRoots);
 
 /**
  * @alpha

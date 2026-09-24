@@ -121,3 +121,44 @@ describe("RichText restricted marker", () => {
         expect(container.querySelectorAll(".gd-rich-text-metric-restricted")).toHaveLength(2);
     });
 });
+
+describe("RichText parameters", () => {
+    it("renders a parameter reference as the value the host supplies", async () => {
+        renderRichText({
+            value: "Top {parameter/top_n} customers",
+            referencesEnabled: true,
+            parameterDisplayValues: new Map([["top_n", "5"]]),
+        });
+
+        expect(await screen.findByText("5")).toBeInTheDocument();
+    });
+
+    it("renders a text that executes nothing while its execution input loads", async () => {
+        renderRichText({
+            value: "Top {parameter/top_n} customers",
+            referencesEnabled: true,
+            parameterDisplayValues: new Map([["top_n", "5"]]),
+            isExecutionInputLoading: true,
+        });
+
+        expect(await screen.findByText("5")).toBeInTheDocument();
+    });
+
+    it("leaves the token as it was typed where the host supplies no values", async () => {
+        renderRichText({
+            value: "Top {parameter/top_n} customers",
+            referencesEnabled: true,
+        });
+
+        expect(await screen.findByText(/\{parameter\/top_n\}/)).toBeInTheDocument();
+    });
+
+    it("offers the parameter token in the edit placeholder", () => {
+        renderRichText({ value: "", renderMode: "edit" });
+
+        expect(screen.getByRole("textbox")).toHaveAttribute(
+            "placeholder",
+            expect.stringContaining("{parameter/parameter_id}"),
+        );
+    });
+});

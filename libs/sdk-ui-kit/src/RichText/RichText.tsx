@@ -37,6 +37,7 @@ const RICH_TEXT_PLACEHOLDER = `
 {metric/metric_id}
 {label/label_id}
 {computed_attribute/computed_attribute_id}
+{parameter/parameter_id}
 `;
 
 function DefaultLoadingComponent() {
@@ -100,9 +101,15 @@ export interface IRichTextProps {
     restrictedReferences?: ObjRef[];
 
     /**
-     * If true, the filters are loading.
+     * The display text of every parameter the text may name, by parameter identifier. Without it a
+     * `{parameter/<id>}` token stays as it was typed.
      */
-    isFiltersLoading?: boolean;
+    parameterDisplayValues?: ReadonlyMap<string, string>;
+
+    /**
+     * The reference execution waits while the filters, or the parameters they use, load.
+     */
+    isExecutionInputLoading?: boolean;
 
     /**
      * Separators to be used for rendering references.
@@ -136,9 +143,10 @@ function RichTextCore({
     autoResize,
     rawContent,
     filters,
-    isFiltersLoading,
+    isExecutionInputLoading,
     separators,
     restrictedReferences,
+    parameterDisplayValues,
     onLoadingChanged,
     onError,
     LoadingComponent,
@@ -166,9 +174,10 @@ function RichTextCore({
                 <RichTextView
                     value={value}
                     filters={filters}
-                    isFiltersLoading={isFiltersLoading}
+                    isExecutionInputLoading={isExecutionInputLoading}
                     separators={separators}
                     restrictedReferences={restrictedReferences}
+                    parameterDisplayValues={parameterDisplayValues}
                     referencesEnabled={referencesEnabled}
                     allowedMarkdown={allowedMarkdown}
                     LoadingComponent={LoadingComponent}
@@ -251,9 +260,10 @@ interface IRichTextViewProps {
     referencesEnabled?: boolean;
     allowedMarkdown?: readonly RichTextFeature[];
     filters?: IFilter[];
-    isFiltersLoading?: boolean;
+    isExecutionInputLoading?: boolean;
     separators?: ISeparators;
     restrictedReferences?: ObjRef[];
+    parameterDisplayValues?: ReadonlyMap<string, string>;
     execConfig?: IExecutionConfig;
     onLoadingChanged?: OnLoadingChanged;
     onError?: OnError;
@@ -277,9 +287,10 @@ function RichTextView({
     allowedMarkdown,
     emptyElement,
     filters,
-    isFiltersLoading,
+    isExecutionInputLoading,
     separators,
     restrictedReferences,
+    parameterDisplayValues,
     execConfig,
     onError,
     onLoadingChanged,
@@ -291,7 +302,7 @@ function RichTextView({
         filters ?? [],
         {
             enabled: referencesEnabled ?? false,
-            isFiltersLoading,
+            isExecutionInputLoading,
             ...execConfig,
         },
         restrictedReferences,
@@ -333,7 +344,16 @@ function RichTextView({
                 ...(referencesEnabled ? [remarkReferences()] : []),
             ]}
             rehypePlugins={
-                referencesEnabled ? [rehypeReferences(intl, metrics, separators, restrictedReferences)] : []
+                referencesEnabled
+                    ? [
+                          rehypeReferences(intl, {
+                              metrics,
+                              separators,
+                              restrictedReferences,
+                              parameterDisplayValues,
+                          }),
+                      ]
+                    : []
             }
         >
             {value}

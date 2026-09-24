@@ -7,7 +7,7 @@ import { clamp } from "lodash-es";
 import { useLocalStorage } from "@gooddata/sdk-ui";
 
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
-import { selectSettings } from "../../../model/store/config/configSelectors.js";
+import { selectIsAiMode, selectSettings } from "../../../model/store/config/configSelectors.js";
 import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
 
 const SIDEBAR_MIN_WIDTH = 230;
@@ -83,6 +83,7 @@ ResizableSidebarContext.displayName = "ResizableSidebarContext";
 export function useResizableSidebarState(): IResizableSidebar {
     const settings = useDashboardSelector(selectSettings);
     const isEditMode = useDashboardSelector(selectIsInEditMode);
+    const isAiMode = useDashboardSelector(selectIsAiMode);
 
     const isSidebarResizeEnabled = settings?.enableDashboardSidebarResize ?? false;
     const enableEnhancedInsightPicker = settings?.enableEnhancedInsightPicker ?? false;
@@ -98,6 +99,12 @@ export function useResizableSidebarState(): IResizableSidebar {
         COLLAPSED_STORAGE_KEY,
         false,
     );
+
+    useEffect(() => {
+        if (isAiMode) {
+            setPersistedCollapsed(true);
+        }
+    }, [isAiMode, setPersistedCollapsed]);
 
     return useMemo(() => {
         const max = clamp(containerWidth - EDITOR_MIN_WIDTH, SIDEBAR_MIN_WIDTH, SIDEBAR_MAX_WIDTH);

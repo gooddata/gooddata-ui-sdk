@@ -620,6 +620,7 @@
     "insightPicker.sortDirection.descending": "Aflopend",
     "insightPicker.menu.actions": "Acties",
     "insightPicker.resetFilters": "Filters resetten",
+    "insightPicker.suggestions": "Vergelijkbaar",
     "objectShare.confirm.restrict.title": "Toegang beperken?",
     "objectShare.confirm.restrict.description": "Hiermee wordt de toegang beperkt tot alleen de hierboven vermelde personen en groepen.",
     "objectShare.confirm.grantWorkspace.title": "Werkruimtebrede toegang verlenen?",

@@ -30,43 +30,28 @@ export interface ICatalogParametersState {
 }
 
 /**
- * Status of the dashboard-wide insight → parameter dependency map.
+ * Status of the dashboard-wide root → parameter dependency map.
  *
  * @alpha
  */
-export type CatalogInsightParametersStatus = "uninitialized" | "loading" | "loaded" | "failed";
+export type CatalogParameterDependenciesStatus = "uninitialized" | "loaded";
 
 /**
- * Maps each dashboard insight (keyed by `serializeObjRef(insightRef)`) to the parameter refs it
- * depends on through its metrics and computed attributes, as reported by the workspace references
- * service. Drives runtime parameter applicability for widget execution.
+ * Maps each dependency root (an insight, a text reference, or an object a dashboard filter reads; keyed by
+ * `serializeObjRef` of the ref exactly as the caller supplied it) to the parameter refs it depends
+ * on through its metrics and computed attributes, as reported by the workspace references service.
+ * Drives runtime parameter applicability for execution and for display.
  *
  * @alpha
  */
-export interface ICatalogInsightParametersState {
-    status: CatalogInsightParametersStatus;
-    byInsight: Record<string, IdentifierRef[]>;
-}
-
-/**
- * Status of the dashboard-wide dashboard-filter → parameter dependency map.
- *
- * @alpha
- */
-export type CatalogFilterParametersStatus = "uninitialized" | "loading" | "loaded" | "failed";
-
-/**
- * Maps each object a dashboard filter reads (keyed by `serializeObjRef(ref)`: the computed attribute
- * of an attribute filter, the metric or a computed-attribute dimension of a measure value filter) to
- * the parameter refs it depends on, as reported by the workspace references service. Complements
- * {@link ICatalogInsightParametersState} for the parameters a widget reaches only through dashboard
- * filters, which are not part of its insight.
- *
- * @alpha
- */
-export interface ICatalogFilterParametersState {
-    status: CatalogFilterParametersStatus;
-    byRef: Record<string, IdentifierRef[]>;
+export interface ICatalogParameterDependenciesState {
+    status: CatalogParameterDependenciesStatus;
+    byRoot: Record<string, IdentifierRef[]>;
+    /**
+     * Request status keyed by `serializeObjRef`. Successful loads clear the entry. Failed roots
+     * are skipped until initialization or an insight update requests them again.
+     */
+    requestedRoots: Record<string, "pending" | "failed">;
 }
 
 /**
@@ -95,9 +80,7 @@ export type CatalogState = {
     /** @alpha */
     parameters: ICatalogParametersState;
     /** @alpha */
-    insightParameters: ICatalogInsightParametersState;
-    /** @alpha */
-    filterParameters: ICatalogFilterParametersState;
+    parameterDependencies: ICatalogParameterDependenciesState;
 };
 
 export const catalogInitialState: CatalogState = {
@@ -109,6 +92,5 @@ export const catalogInitialState: CatalogState = {
     computedAttributes: undefined,
     dateHierarchyTemplates: undefined,
     parameters: { status: "uninitialized", parameters: [] },
-    insightParameters: { status: "uninitialized", byInsight: {} },
-    filterParameters: { status: "uninitialized", byRef: {} },
+    parameterDependencies: { status: "uninitialized", byRoot: {}, requestedRoots: {} },
 };

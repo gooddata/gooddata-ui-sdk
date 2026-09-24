@@ -99,7 +99,7 @@ export type {
 } from "./workspace/exportDefinitions/index.js";
 
 export type { IWorkspaceExportTemplatesService } from "./workspace/exportTemplates/index.js";
-export type { IWorkspaceReportsService } from "./workspace/reports/index.js";
+export type { IReportExportPdfOptions, IWorkspaceReportsService } from "./workspace/reports/index.js";
 
 export {
     type IElementsQueryFactory,

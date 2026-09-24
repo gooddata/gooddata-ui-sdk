@@ -1101,7 +1101,7 @@
     "userManagement.createUserGroup.dialogTitle": "Crear grupo",
     "userManagement.createUserGroup.inputPlaceholder": "Nombre",
     "richText.placeholder": "Utiliza Markdown para dar estilo al texto y a los datos de referencia:",
-    "richText.tooltip": "Puedes utilizar la sintaxis Markdown para dar estilo a la descripción:",
+    "richText.tooltip": "Puede utilizar la sintaxis Markdown para dar estilo a la descripción:",
     "richText.no_data": "No hay datos",
     "richText.multiple_data": "Varios elementos",
     "richText.no_fetch": "No se pudieron recuperar los datos",

@@ -16,15 +16,13 @@ import {
 } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { useRichTextWidgetFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
+import { useRichTextWidgetInputs } from "../../../_staging/sharedHooks/useRichTextInputs.js";
 import { eagerRemoveSectionItemByWidgetRef } from "../../../model/commands/layout.js";
 import { changeRichTextWidgetContent } from "../../../model/commands/richText.js";
 import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
-import { useDashboardExecConfig } from "../../../model/react/useWidgetExecConfig.js";
 import { useWidgetSelection } from "../../../model/react/useWidgetSelection.js";
-import { selectIsWhiteLabeled, selectSeparators } from "../../../model/store/config/configSelectors.js";
+import { selectIsWhiteLabeled } from "../../../model/store/config/configSelectors.js";
 import { uiActions } from "../../../model/store/ui/index.js";
-import { selectRestrictedRichTextReferences } from "../../../model/store/unavailableObjects/unavailableObjectsSelectors.js";
 import { DASHBOARD_OVERLAYS_FILTER_Z_INDEX } from "../../../presentation/constants/zIndex.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 
@@ -41,15 +39,9 @@ export function EditModeDashboardRichText({ widget, clientWidth, clientHeight }:
     const { isSelected, hasConfigPanelOpen, closeConfigPanel } = useWidgetSelection(widgetRef(widget));
     const previousIsSelected = usePrevious(isSelected);
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
-    const restrictedReferences = useDashboardSelector(selectRestrictedRichTextReferences);
     const intl = useIntl();
 
-    const execConfig = useDashboardExecConfig();
-
     const { menuItems } = useEditableRichTextMenu({ closeMenu: closeConfigPanel, widget });
-
-    const { filters } = useRichTextWidgetFilters(widget);
-    const separators = useDashboardSelector(selectSeparators);
 
     const dispatch = useDashboardDispatch();
     const releaseWidget = useCallback(() => dispatch(uiActions.clearWidgetSelection()), [dispatch]);
@@ -73,6 +65,9 @@ export function EditModeDashboardRichText({ widget, clientWidth, clientHeight }:
     const hasRestrictedReferences = useHasRestrictedReferences(richText);
     const isRichTextEditing = isSelected && !hasRestrictedReferences;
     const isAskingToSanitize = isSelected && hasRestrictedReferences;
+
+    // the editor shows no evaluated references, so a keystroke asks for no parameter dependencies
+    const richTextInputs = useRichTextWidgetInputs(widget, isRichTextEditing ? widget.content : richText);
 
     const [isConfirmDeleteDialogVisible, setIsConfirmDeleteDialogVisible] = useState(false);
     const theme = useTheme();
@@ -120,16 +115,13 @@ export function EditModeDashboardRichText({ widget, clientWidth, clientHeight }:
             ) : null}
             <RichText
                 referencesEnabled
-                filters={filters}
-                separators={separators}
-                restrictedReferences={restrictedReferences}
+                {...richTextInputs}
                 className="gd-rich-text-widget"
                 value={richText}
                 onChange={setRichText}
                 renderMode={isRichTextEditing ? "edit" : "view"}
                 emptyElement={EmptyElement}
                 LoadingComponent={LoadingComponent}
-                execConfig={execConfig}
             />
             {isRichTextEditing && showLink ? (
                 <div className="gd-rich-text-widget-footer">
