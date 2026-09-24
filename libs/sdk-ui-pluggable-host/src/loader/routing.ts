@@ -3,9 +3,8 @@
 import {
     type ApplicationScope,
     type PluggableApplicationRegistryItem,
+    getPluggableApplicationHref,
     isExternalPluggableApplicationRegistryItem,
-    isLocalPluggableApplicationRegistryItem,
-    isRemotePluggableApplicationRegistryItem,
 } from "@gooddata/sdk-model";
 import { type IPlatformContext } from "@gooddata/sdk-pluggable-application-model";
 
@@ -61,61 +60,12 @@ function resolveWorkspaceId(ctx: IPlatformContext, pathname?: string): string | 
     return getWorkspaceIdFromPath(pathname);
 }
 
-function composeInternalAppPath(
-    app: PluggableApplicationRegistryItem,
-    routeBase: string,
-    ctx: IPlatformContext,
-    pathname?: string,
-): string {
-    const scopeBase =
-        app.applicationScope === "organization"
-            ? "/organization"
-            : app.applicationScope === "workspace"
-              ? `/workspace/${resolveWorkspaceId(ctx, pathname) ?? ""}`
-              : undefined;
-
-    if (!scopeBase) {
-        throw new Error(
-            `[host-runtime/routing] Unsupported application scope "${app.applicationScope}" for app "${app.id}".`,
-        );
-    }
-
-    return normalizePath(`${normalizePath(scopeBase)}${ensureLeadingSlash(routeBase)}`);
-}
-
-/**
- * Substitutes `{workspaceId}` placeholders in an external app URL with the
- * currently resolved workspace id. URLs with no placeholder pass through
- * unchanged, so apps that don't care about workspace context can keep using
- * a plain literal URL (e.g. `https://docs.example.com`).
- */
-export function substituteExternalUrlPlaceholders(
-    url: string,
-    ctx: IPlatformContext,
-    pathname?: string,
-): string {
-    if (!url.includes("{workspaceId}")) {
-        return url;
-    }
-    const workspaceId = resolveWorkspaceId(ctx, pathname) ?? "";
-    return url.replaceAll("{workspaceId}", workspaceId);
-}
-
 export function getApplicationHref(
     app: PluggableApplicationRegistryItem,
     ctx: IPlatformContext,
     pathname?: string,
 ): string {
-    if (isExternalPluggableApplicationRegistryItem(app)) {
-        return substituteExternalUrlPlaceholders(app.external.url, ctx, pathname);
-    }
-    if (isLocalPluggableApplicationRegistryItem(app)) {
-        return composeInternalAppPath(app, app.local.routeBase, ctx, pathname);
-    }
-    if (isRemotePluggableApplicationRegistryItem(app)) {
-        return composeInternalAppPath(app, app.remote.routeBase, ctx, pathname);
-    }
-    return "#";
+    return getPluggableApplicationHref(app, resolveWorkspaceId(ctx, pathname));
 }
 
 export function isInternalAppRouteActive(

@@ -4,13 +4,11 @@ import { useMemo } from "react";
 
 import {
     type ApplicationScope,
-    type Condition,
-    type IConditionAnd,
-    type IConditionOr,
     type IPluggableApplicationOrganizationPermissions,
     type LocalPluggableApplicationsRegistry,
     type PluggableApplicationRegistryItem,
     type RemotePluggableApplicationsRegistry,
+    evaluateCondition,
     toPluggableApplicationWorkspacePermissions,
 } from "@gooddata/sdk-model";
 import {
@@ -133,31 +131,6 @@ function filterDisabled(apps: PluggableApplicationRegistryItem[]): PluggableAppl
     return apps.filter((app) => app.isEnabled === undefined || app.isEnabled);
 }
 
-/**
- * Evaluates a Condition<T> against an actual value object.
- *
- * Supports plain object (implicit AND), $or, and $and forms.
- */
-function evaluateCondition<T extends object>(condition: Condition<T>, actual: T | undefined): boolean {
-    if (typeof condition === "object" && condition !== null && "$or" in condition) {
-        return (condition as IConditionOr<T>).$or.some((c) => evaluateCondition(c, actual));
-    }
-    if (typeof condition === "object" && condition !== null && "$and" in condition) {
-        return (condition as IConditionAnd<T>).$and.every((c) => evaluateCondition(c, actual));
-    }
-    if (actual === undefined) {
-        return false;
-    }
-    const plain = condition as Record<string, unknown>;
-    const actualRecord = actual as Record<string, unknown>;
-    return Object.keys(plain).every((key) => {
-        const required = plain[key];
-        const actual = actualRecord[key];
-        // A missing setting is treated as falsy: undefined satisfies a requirement of false.
-        return actual === required || (actual === undefined && required === false);
-    });
-}
-
 function entitlementsToRecord(
     entitlements: IPlatformContext["entitlements"],
 ): Record<string, string | boolean> {
@@ -198,14 +171,17 @@ function appMeetsRequirements(
         requiredEntitlements,
     }: PluggableApplicationRegistryItem,
     ctx: IPlatformContext,
+    skipWorkspacePermissions: boolean,
+    skipSettings: boolean,
 ): boolean {
     if (
         requiredSettings !== undefined &&
+        !skipSettings &&
         !evaluateCondition(requiredSettings, settingsForRequirements(ctx))
     ) {
         return false;
     }
-    if (requiredWorkspacePermissions !== undefined) {
+    if (requiredWorkspacePermissions !== undefined && !skipWorkspacePermissions) {
         const wsPerms = ctx.workspacePermissions
             ? toPluggableApplicationWorkspacePermissions(ctx.workspacePermissions)
             : undefined;
@@ -234,8 +210,10 @@ function appMeetsRequirements(
 function filterByRequirements(
     apps: PluggableApplicationRegistryItem[],
     ctx: IPlatformContext,
+    skipWorkspacePermissions: boolean,
+    skipSettings: boolean,
 ): PluggableApplicationRegistryItem[] {
-    return apps.filter((app) => appMeetsRequirements(app, ctx));
+    return apps.filter((app) => appMeetsRequirements(app, ctx, skipWorkspacePermissions, skipSettings));
 }
 
 function filterByScope(
@@ -283,6 +261,16 @@ interface IResolveApplicationsOptions {
      * Application scope to filter by; if undefined, no apps are returned
      */
     scope: ApplicationScope | undefined;
+    /**
+     * Leaves `requiredWorkspacePermissions` unevaluated, for callers that decide per workspace
+     * rather than for the workspace in `ctx`.
+     */
+    skipWorkspacePermissions?: boolean;
+    /**
+     * Leaves `requiredSettings` unevaluated, for callers that decide against another workspace's
+     * settings rather than those of the active scope.
+     */
+    skipSettings?: boolean;
 }
 
 /**
@@ -295,7 +283,7 @@ interface IResolveApplicationsOptions {
  * 4. Apply overrides from the remote registry to the merged list
  * 5. Filter out disabled applications (isEnabled: false)
  * 6. Filter by application scope - keep only apps whose applicationScope matches scope; if scope is undefined, no apps pass through
- * 7. Filter by requirements - check requiredSettings, requiredWorkspacePermissions, requiredOrganizationPermissions, and requiredEntitlements (embedded and export modes force the shell application flags on)
+ * 7. Filter by requirements - check requiredSettings, requiredWorkspacePermissions, requiredOrganizationPermissions, and requiredEntitlements (embedded and export modes force the shell application flags on; `skipWorkspacePermissions` leaves requiredWorkspacePermissions to the caller)
  * 8. Sort by menuOrder (ascending)
  *
  * @param options - Resolution options; see {@link IResolveApplicationsOptions}
@@ -308,6 +296,8 @@ export function resolveApplications({
     remoteRegistry,
     ctx,
     scope,
+    skipWorkspacePermissions = false,
+    skipSettings = false,
 }: IResolveApplicationsOptions): PluggableApplicationRegistryItem[] {
     const { applications: remoteApps, overrides, allowedStandardApplications } = remoteRegistry ?? {};
     const filteredLocal = filterLocalByBaseUiAccess(
@@ -321,8 +311,36 @@ export function resolveApplications({
                 scope,
             ),
             ctx,
+            skipWorkspacePermissions,
+            skipSettings,
         ),
     );
+}
+
+/**
+ * Resolves the workspace-scoped applications published to pluggable applications through
+ * {@link @gooddata/sdk-pluggable-application-model#IPlatformContextV1.availableApplications}.
+ *
+ * @remarks
+ * Applies every requirement that holds organization-wide and leaves the two that a single workspace
+ * answers — `requiredSettings` and `requiredWorkspacePermissions` — to the consumer, which evaluates
+ * them against each workspace it lists. A feature flag can be turned on for one workspace alone (early
+ * access values resolve into its settings), so deciding here would hide such an application from every
+ * workspace that has it.
+ *
+ * @internal
+ */
+export function resolveAvailableWorkspaceApplications(
+    ctx: IPlatformContext,
+): PluggableApplicationRegistryItem[] {
+    return resolveApplications({
+        localApps: getLocalApplications(),
+        remoteRegistry: getRemoteRegistry(ctx),
+        ctx,
+        scope: "workspace",
+        skipWorkspacePermissions: true,
+        skipSettings: true,
+    });
 }
 
 /**

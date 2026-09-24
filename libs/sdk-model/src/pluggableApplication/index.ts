@@ -195,6 +195,38 @@ export interface IConditionAnd<T> {
 }
 
 /**
+ * Evaluates a {@link Condition} against an actual value object.
+ *
+ * @remarks
+ * Supports the plain-object (implicit AND), `$or` and `$and` forms. A missing property in `actual`
+ * is treated as falsy, so `undefined` satisfies a requirement of `false`.
+ *
+ * @param condition - condition to evaluate
+ * @param actual - actual values to evaluate the condition against
+ * @returns true when the condition is satisfied
+ *
+ * @alpha
+ */
+export function evaluateCondition<T extends object>(condition: Condition<T>, actual: T | undefined): boolean {
+    if (typeof condition === "object" && condition !== null && "$or" in condition) {
+        return (condition as IConditionOr<T>).$or.some((c) => evaluateCondition(c, actual));
+    }
+    if (typeof condition === "object" && condition !== null && "$and" in condition) {
+        return (condition as IConditionAnd<T>).$and.every((c) => evaluateCondition(c, actual));
+    }
+    if (actual === undefined) {
+        return false;
+    }
+    const plain = condition as Record<string, unknown>;
+    const actualRecord = actual as Record<string, unknown>;
+    return Object.keys(plain).every((key) => {
+        const required = plain[key];
+        const actualValue = actualRecord[key];
+        return actualValue === required || (actualValue === undefined && required === false);
+    });
+}
+
+/**
  * Settings and their values that must be set for the pluggable application to be accessible for the currently
  * logged user.
  *

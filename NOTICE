@@ -7,9 +7,9 @@
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2026-9-21
+Date generated: 2026-9-24
 
-Revision ID: d287888cbc82806bcb9866c66ecff9b2ff92c32b
+Revision ID: a3cc69b7a770939c70d7dd00fe468ca5cf8d9429
 
 ================================================================================
 ================================================================================
@@ -3610,7 +3610,7 @@ MIT
 
 Authors: emotion-release-bot@hamil.town, kye.hohenberger@gmail.com, mateuszburzynski@gmail.com, npm@emmas.town
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/@emotion/hash
+Project URL: https://github.com/emotion-js/emotion/tree/main#readme
 Package Download URL: https://registry.npmjs.org/@emotion/hash/-/hash-0.9.2.tgz
 Dependency Path: react-select > @emotion/react > @emotion/babel-plugin > @emotion/hash > react-select > @emotion/react > @emotion/babel-plugin > @emotion/serialize > @emotion/hash > react-select > @emotion/react > @emotion/serialize > @emotion/hash > react-select-async-paginate > react-select > @emotion/react > @emotion/babel-plugin > @emotion/hash > react-select-async-paginate > react-select > @emotion/react > @emotion/babel-plugin > @emotion/serialize > @emotion/hash > react-select-async-paginate > react-select > @emotion/react > @emotion/serialize > @emotion/hash
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -4410,83 +4410,6 @@ Package Title: @floating-ui/dom (1.6.13)
 
 Package Locator: npm+@floating-ui/dom$1.6.13
 
-Package Depth: Direct
---------------------------------------------------------------------------------
-
-Floating UI for the web
-
-* Declared Licenses *
-MIT
---------------------------------------------------------------------------------
-File matches:
-- LICENSE
-  - Copyright (c) 2021 present Floating UI contributors
-- package.json
---------------------------------------------------------------------------------
-
-MIT License
-
-Copyright (c) 2021-present Floating UI contributors
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-* License Header *
-MIT License
-
-Copyright (c) 2021-present Floating UI contributors
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-* Copyrights *
-MIT
-- Copyright (c) 2021 present Floating UI contributors
-
-* Package Info *
-
-Authors: cc.glows@gmail.com, federico.zivolo@gmail.com
-Package Manager: NPM
-Project URL: https://floating-ui.com/
-Package Download URL: https://registry.npmjs.org/@floating-ui/dom/-/dom-1.6.13.tgz
-Dependency Path: @floating-ui/dom > @floating-ui/react-dom > @floating-ui/dom > react-select > @floating-ui/dom > react-select-async-paginate > react-select > @floating-ui/dom
-File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
-
---------------------------------------------------------------------------------
-Package Title: @floating-ui/dom (1.8.0)
-
-Package Locator: npm+@floating-ui/dom$1.8.0
-
 Package Depth: Transitive
 --------------------------------------------------------------------------------
 
@@ -4555,8 +4478,85 @@ MIT
 Authors: cc.glows@gmail.com, federico.zivolo@gmail.com
 Package Manager: NPM
 Project URL: https://floating-ui.com/
+Package Download URL: https://registry.npmjs.org/@floating-ui/dom/-/dom-1.6.13.tgz
+Dependency Path: react-select > @floating-ui/dom > react-select-async-paginate > react-select > @floating-ui/dom
+File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
+
+--------------------------------------------------------------------------------
+Package Title: @floating-ui/dom (1.8.0)
+
+Package Locator: npm+@floating-ui/dom$1.8.0
+
+Package Depth: Direct
+--------------------------------------------------------------------------------
+
+Floating UI for the web
+
+* Declared Licenses *
+MIT
+--------------------------------------------------------------------------------
+File matches:
+- LICENSE
+  - Copyright (c) 2021 present Floating UI contributors
+- package.json
+--------------------------------------------------------------------------------
+
+MIT License
+
+Copyright (c) 2021-present Floating UI contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+* License Header *
+MIT License
+
+Copyright (c) 2021-present Floating UI contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+* Copyrights *
+MIT
+- Copyright (c) 2021 present Floating UI contributors
+
+* Package Info *
+
+Authors: cc.glows@gmail.com, federico.zivolo@gmail.com
+Package Manager: NPM
+Project URL: https://floating-ui.com/
 Package Download URL: https://registry.npmjs.org/@floating-ui/dom/-/dom-1.8.0.tgz
-Dependency Path: @floating-ui/react > @floating-ui/react-dom > @floating-ui/dom
+Dependency Path: @floating-ui/dom > @floating-ui/react > @floating-ui/react-dom > @floating-ui/dom > @floating-ui/react-dom > @floating-ui/dom
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -7731,7 +7731,7 @@ software or this license, under any kind of legal claim._**
 
 Authors: i@izs.me
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/@isaacs/cliui
+Project URL: https://github.com/isaacs/cliui#readme
 Package Download URL: https://registry.npmjs.org/@isaacs/cliui/-/cliui-9.0.0.tgz
 Dependency Path: html-validate > glob > jackspeak > @isaacs/cliui
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -16788,7 +16788,7 @@ MIT
 
 Authors: ts-npm-types@microsoft.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/@types/debug
+Project URL: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/debug
 Package Download URL: https://registry.npmjs.org/@types/debug/-/debug-4.1.13.tgz
 Dependency Path: react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-expression > mdast-util-from-markdown > micromark > @types/debug > react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-jsx > mdast-util-from-markdown > micromark > @types/debug > react-markdown > hast-util-to-jsx-runtime > mdast-util-mdxjs-esm > mdast-util-from-markdown > micromark > @types/debug > react-markdown > remark-parse > mdast-util-from-markdown > micromark > @types/debug > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > @types/debug > remark-gfm > mdast-util-gfm > mdast-util-gfm-footnote > mdast-util-from-markdown > micromark > @types/debug > remark-gfm > mdast-util-gfm > mdast-util-gfm-strikethrough > mdast-util-from-markdown > micromark > @types/debug > remark-gfm > mdast-util-gfm > mdast-util-gfm-table > mdast-util-from-markdown > micromark > @types/debug > remark-gfm > mdast-util-gfm > mdast-util-gfm-task-list-item > mdast-util-from-markdown > micromark > @types/debug > remark-parse > mdast-util-from-markdown > micromark > @types/debug
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -17340,7 +17340,7 @@ MIT
 
 Authors: ts-npm-types@microsoft.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/@types/mdast
+Project URL: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/mdast
 Package Download URL: https://registry.npmjs.org/@types/mdast/-/mdast-4.0.4.tgz
 Dependency Path: @types/mdast > react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-expression > @types/mdast > react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-jsx > @types/mdast > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > @types/mdast > remark-gfm > mdast-util-gfm > mdast-util-gfm-autolink-literal > @types/mdast > remark-gfm > mdast-util-gfm > mdast-util-gfm-autolink-literal > mdast-util-find-and-replace > @types/mdast > remark-gfm > mdast-util-gfm > mdast-util-gfm-footnote > @types/mdast > remark-gfm > mdast-util-gfm > mdast-util-gfm-strikethrough > @types/mdast > remark-gfm > mdast-util-gfm > mdast-util-gfm-table > @types/mdast > remark-gfm > mdast-util-gfm > mdast-util-gfm-task-list-item > @types/mdast
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -17873,7 +17873,7 @@ MIT
 
 Authors: ts-npm-types@microsoft.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/@types/unist
+Project URL: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/unist
 Package Download URL: https://registry.npmjs.org/@types/unist/-/unist-2.0.11.tgz
 Dependency Path: react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-jsx > parse-entities > @types/unist
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -17952,7 +17952,7 @@ MIT
 
 Authors: ts-npm-types@microsoft.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/@types/unist
+Project URL: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/unist
 Package Download URL: https://registry.npmjs.org/@types/unist/-/unist-3.0.3.tgz
 Dependency Path: @types/mdast > @types/unist > @types/unist > react-markdown > hast-util-to-jsx-runtime > @types/hast > @types/unist > react-markdown > hast-util-to-jsx-runtime > @types/unist > react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-jsx > @types/unist > react-markdown > hast-util-to-jsx-runtime > unist-util-position > @types/unist > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > @types/unist > remark-gfm > mdast-util-gfm > mdast-util-gfm-autolink-literal > mdast-util-find-and-replace > unist-util-is > @types/unist > remark-gfm > mdast-util-gfm > mdast-util-to-markdown > @types/unist > unified > @types/unist
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -21206,7 +21206,7 @@ MIT
 
 Authors: ljharb@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/call-bound
+Project URL: https://github.com/ljharb/call-bound#readme
 Package Download URL: https://registry.npmjs.org/call-bound/-/call-bound-1.0.4.tgz
 Dependency Path: @formatjs/cli-lib > @formatjs/ts-transformer > @types/json-stable-stringify > json-stable-stringify > call-bound > @formatjs/cli-lib > @formatjs/ts-transformer > json-stable-stringify > call-bound > @formatjs/cli-lib > @types/json-stable-stringify > json-stable-stringify > call-bound > @formatjs/cli-lib > json-stable-stringify > call-bound > json-stable-stringify > call-bound
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -21650,7 +21650,7 @@ MIT
 
 Authors: tituswormer@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/character-entities
+Project URL: https://github.com/wooorm/character-entities#readme
 Package Download URL: https://registry.npmjs.org/character-entities/-/character-entities-2.0.2.tgz
 Dependency Path: react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-jsx > parse-entities > decode-named-character-reference > character-entities > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > decode-named-character-reference > character-entities > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > decode-named-character-reference > character-entities > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > micromark-core-commonmark > decode-named-character-reference > character-entities > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark-util-decode-string > decode-named-character-reference > character-entities > remark-gfm > mdast-util-gfm > mdast-util-gfm-footnote > mdast-util-to-markdown > micromark-util-decode-string > decode-named-character-reference > character-entities > remark-gfm > mdast-util-gfm > mdast-util-gfm-strikethrough > mdast-util-to-markdown > micromark-util-decode-string > decode-named-character-reference > character-entities > remark-gfm > mdast-util-gfm > mdast-util-gfm-table > mdast-util-to-markdown > micromark-util-decode-string > decode-named-character-reference > character-entities > remark-gfm > mdast-util-gfm > mdast-util-gfm-task-list-item > mdast-util-to-markdown > micromark-util-decode-string > decode-named-character-reference > character-entities > remark-gfm > mdast-util-gfm > mdast-util-to-markdown > micromark-util-decode-string > decode-named-character-reference > character-entities
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -23019,7 +23019,7 @@ MIT
 
 Authors: tituswormer@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/comma-separated-tokens
+Project URL: https://github.com/wooorm/comma-separated-tokens#readme
 Package Download URL: https://registry.npmjs.org/comma-separated-tokens/-/comma-separated-tokens-2.0.3.tgz
 Dependency Path: react-markdown > hast-util-to-jsx-runtime > comma-separated-tokens
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -23343,7 +23343,7 @@ MIT
 
 Authors: blaine.bublitz@gmail.com, thlorenz10@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/convert-source-map
+Project URL: https://github.com/thlorenz/convert-source-map
 Package Download URL: https://registry.npmjs.org/convert-source-map/-/convert-source-map-1.9.0.tgz
 Dependency Path: react-select > @emotion/react > @emotion/babel-plugin > convert-source-map > react-select-async-paginate > react-select > @emotion/react > @emotion/babel-plugin > convert-source-map
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -25413,7 +25413,7 @@ MIT
 
 Authors: luke@lukeed.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/dequal
+Project URL: https://github.com/lukeed/dequal#readme
 Package Download URL: https://registry.npmjs.org/dequal/-/dequal-2.0.3.tgz
 Dependency Path: react-markdown > hast-util-to-jsx-runtime > devlop > dequal > react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-expression > devlop > dequal > react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-jsx > devlop > dequal > react-markdown > hast-util-to-jsx-runtime > mdast-util-mdxjs-esm > devlop > dequal > react-markdown > mdast-util-to-hast > devlop > dequal > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > devlop > dequal > remark-gfm > mdast-util-gfm > mdast-util-gfm-autolink-literal > devlop > dequal > remark-gfm > mdast-util-gfm > mdast-util-gfm-footnote > devlop > dequal > remark-gfm > mdast-util-gfm > mdast-util-gfm-table > devlop > dequal > remark-gfm > mdast-util-gfm > mdast-util-gfm-task-list-item > devlop > dequal
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -25486,7 +25486,7 @@ MIT
 
 Authors: tituswormer@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/devlop
+Project URL: https://github.com/wooorm/devlop#readme
 Package Download URL: https://registry.npmjs.org/devlop/-/devlop-1.1.0.tgz
 Dependency Path: react-markdown > hast-util-to-jsx-runtime > devlop > react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-expression > devlop > react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-jsx > devlop > react-markdown > hast-util-to-jsx-runtime > mdast-util-mdxjs-esm > devlop > react-markdown > mdast-util-to-hast > devlop > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > devlop > remark-gfm > mdast-util-gfm > mdast-util-gfm-autolink-literal > devlop > remark-gfm > mdast-util-gfm > mdast-util-gfm-footnote > devlop > remark-gfm > mdast-util-gfm > mdast-util-gfm-table > devlop > remark-gfm > mdast-util-gfm > mdast-util-gfm-task-list-item > devlop
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -26686,7 +26686,7 @@ MIT
 
 Authors: ljharb@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/es-define-property
+Project URL: https://github.com/ljharb/es-define-property#readme
 Package Download URL: https://registry.npmjs.org/es-define-property/-/es-define-property-1.0.1.tgz
 Dependency Path: @formatjs/cli-lib > @formatjs/ts-transformer > @types/json-stable-stringify > json-stable-stringify > call-bind > set-function-length > has-property-descriptors > es-define-property > @formatjs/cli-lib > @formatjs/ts-transformer > json-stable-stringify > call-bind > set-function-length > has-property-descriptors > es-define-property > @formatjs/cli-lib > @types/json-stable-stringify > json-stable-stringify > call-bind > set-function-length > has-property-descriptors > es-define-property > @formatjs/cli-lib > json-stable-stringify > call-bind > set-function-length > has-property-descriptors > es-define-property > axios > form-data > es-set-tostringtag > get-intrinsic > es-define-property > json-stable-stringify > call-bind > es-define-property > json-stable-stringify > call-bind > get-intrinsic > es-define-property > json-stable-stringify > call-bind > set-function-length > define-data-property > es-define-property > json-stable-stringify > call-bind > set-function-length > has-property-descriptors > es-define-property > json-stable-stringify > call-bound > get-intrinsic > es-define-property
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -26765,7 +26765,7 @@ MIT
 
 Authors: ljharb@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/es-errors
+Project URL: https://github.com/ljharb/es-errors#readme
 Package Download URL: https://registry.npmjs.org/es-errors/-/es-errors-1.3.0.tgz
 Dependency Path: @formatjs/cli-lib > @formatjs/ts-transformer > json-stable-stringify > call-bind > set-function-length > es-errors > @formatjs/cli-lib > json-stable-stringify > call-bind > set-function-length > es-errors > axios > form-data > es-set-tostringtag > es-errors > json-stable-stringify > call-bind > call-bind-apply-helpers > es-errors > json-stable-stringify > call-bind > get-intrinsic > es-errors > json-stable-stringify > call-bind > get-intrinsic > es-object-atoms > es-errors > json-stable-stringify > call-bind > get-intrinsic > get-proto > dunder-proto > es-errors > json-stable-stringify > call-bind > set-function-length > define-data-property > es-errors > json-stable-stringify > call-bind > set-function-length > es-errors > react-select > @emotion/react > @emotion/babel-plugin > babel-plugin-macros > resolve > es-errors
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -29493,7 +29493,7 @@ MIT
 
 Authors: ljharb@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/get-proto
+Project URL: https://github.com/ljharb/get-proto#readme
 Package Download URL: https://registry.npmjs.org/get-proto/-/get-proto-1.0.1.tgz
 Dependency Path: @formatjs/cli-lib > @formatjs/ts-transformer > @types/json-stable-stringify > json-stable-stringify > call-bind > set-function-length > get-intrinsic > get-proto > @formatjs/cli-lib > @formatjs/ts-transformer > json-stable-stringify > call-bind > set-function-length > get-intrinsic > get-proto > @formatjs/cli-lib > @types/json-stable-stringify > json-stable-stringify > call-bind > set-function-length > get-intrinsic > get-proto > @formatjs/cli-lib > json-stable-stringify > call-bind > set-function-length > get-intrinsic > get-proto > @formatjs/cli-lib > json-stable-stringify > call-bound > get-intrinsic > get-proto > axios > form-data > es-set-tostringtag > get-intrinsic > get-proto > axios-cache-interceptor > axios > form-data > es-set-tostringtag > get-intrinsic > get-proto > json-stable-stringify > call-bind > get-intrinsic > get-proto > json-stable-stringify > call-bind > set-function-length > get-intrinsic > get-proto > json-stable-stringify > call-bound > get-intrinsic > get-proto
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -30476,7 +30476,7 @@ MIT
 
 Authors: ljharb@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/has-property-descriptors
+Project URL: https://github.com/inspect-js/has-property-descriptors#readme
 Package Download URL: https://registry.npmjs.org/has-property-descriptors/-/has-property-descriptors-1.0.2.tgz
 Dependency Path: @formatjs/cli-lib > @formatjs/ts-transformer > @types/json-stable-stringify > json-stable-stringify > call-bind > set-function-length > has-property-descriptors > @formatjs/cli-lib > @formatjs/ts-transformer > json-stable-stringify > call-bind > set-function-length > has-property-descriptors > @formatjs/cli-lib > @types/json-stable-stringify > json-stable-stringify > call-bind > set-function-length > has-property-descriptors > @formatjs/cli-lib > json-stable-stringify > call-bind > set-function-length > has-property-descriptors > json-stable-stringify > call-bind > set-function-length > has-property-descriptors
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -30555,7 +30555,7 @@ MIT
 
 Authors: ljharb@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/has-symbols
+Project URL: https://github.com/ljharb/has-symbols#readme
 Package Download URL: https://registry.npmjs.org/has-symbols/-/has-symbols-1.1.0.tgz
 Dependency Path: @formatjs/cli-lib > @formatjs/ts-transformer > @types/json-stable-stringify > json-stable-stringify > call-bind > set-function-length > get-intrinsic > has-symbols > @formatjs/cli-lib > @formatjs/ts-transformer > json-stable-stringify > call-bind > set-function-length > get-intrinsic > has-symbols > @formatjs/cli-lib > @types/json-stable-stringify > json-stable-stringify > call-bind > set-function-length > get-intrinsic > has-symbols > @formatjs/cli-lib > json-stable-stringify > call-bind > set-function-length > get-intrinsic > has-symbols > axios > form-data > es-set-tostringtag > get-intrinsic > has-symbols > axios > form-data > es-set-tostringtag > has-tostringtag > has-symbols > axios-cache-interceptor > axios > form-data > es-set-tostringtag > has-tostringtag > has-symbols > json-stable-stringify > call-bind > get-intrinsic > has-symbols > json-stable-stringify > call-bind > set-function-length > get-intrinsic > has-symbols > json-stable-stringify > call-bound > get-intrinsic > has-symbols
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -34550,7 +34550,7 @@ MIT
 
 Authors: sindresorhus@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/is-plain-obj
+Project URL: https://github.com/sindresorhus/is-plain-obj#readme
 Package Download URL: https://registry.npmjs.org/is-plain-obj/-/is-plain-obj-4.1.0.tgz
 Dependency Path: react-markdown > remark-parse > unified > is-plain-obj > react-markdown > remark-rehype > unified > is-plain-obj > react-markdown > unified > is-plain-obj > remark-emoji > unified > is-plain-obj > remark-gfm > remark-parse > unified > is-plain-obj > remark-gfm > remark-stringify > unified > is-plain-obj > remark-gfm > unified > is-plain-obj > remark-parse > unified > is-plain-obj > unified > is-plain-obj
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -35639,7 +35639,7 @@ MIT
 
 Authors: simon.lydell@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/json-stringify-pretty-compact
+Project URL: https://github.com/lydell/json-stringify-pretty-compact#readme
 Package Download URL: https://registry.npmjs.org/json-stringify-pretty-compact/-/json-stringify-pretty-compact-4.0.0.tgz
 Dependency Path: maplibre-gl > @maplibre/maplibre-gl-style-spec > json-stringify-pretty-compact
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -36102,7 +36102,7 @@ MIT
 
 Authors: luke@lukeed.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/kleur
+Project URL: https://github.com/lukeed/kleur#readme
 Package Download URL: https://registry.npmjs.org/kleur/-/kleur-3.0.3.tgz
 Dependency Path: html-validate > prompts > kleur
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -36175,7 +36175,7 @@ MIT
 
 Authors: luke@lukeed.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/kleur
+Project URL: https://github.com/lukeed/kleur#readme
 Package Download URL: https://registry.npmjs.org/kleur/-/kleur-4.1.5.tgz
 Dependency Path: html-validate > @html-validate/stylish > kleur > html-validate > @sidvind/better-ajv-errors > kleur > html-validate > kleur
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -38143,7 +38143,7 @@ MIT
 
 Authors: ljharb@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/math-intrinsics
+Project URL: https://github.com/es-shims/math-intrinsics#readme
 Package Download URL: https://registry.npmjs.org/math-intrinsics/-/math-intrinsics-1.1.0.tgz
 Dependency Path: @formatjs/cli-lib > @formatjs/ts-transformer > @types/json-stable-stringify > json-stable-stringify > call-bind > set-function-length > get-intrinsic > math-intrinsics > @formatjs/cli-lib > @formatjs/ts-transformer > json-stable-stringify > call-bind > set-function-length > get-intrinsic > math-intrinsics > @formatjs/cli-lib > @types/json-stable-stringify > json-stable-stringify > call-bind > set-function-length > get-intrinsic > math-intrinsics > @formatjs/cli-lib > json-stable-stringify > call-bind > set-function-length > get-intrinsic > math-intrinsics > @formatjs/cli-lib > json-stable-stringify > call-bound > get-intrinsic > math-intrinsics > axios > form-data > es-set-tostringtag > get-intrinsic > math-intrinsics > axios-cache-interceptor > axios > form-data > es-set-tostringtag > get-intrinsic > math-intrinsics > json-stable-stringify > call-bind > get-intrinsic > math-intrinsics > json-stable-stringify > call-bind > set-function-length > get-intrinsic > math-intrinsics > json-stable-stringify > call-bound > get-intrinsic > math-intrinsics
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -39095,7 +39095,7 @@ MIT
 
 Authors: keith@mcknig.ht, tituswormer@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/mdast-util-phrasing
+Project URL: https://github.com/syntax-tree/mdast-util-phrasing#readme
 Package Download URL: https://registry.npmjs.org/mdast-util-phrasing/-/mdast-util-phrasing-4.1.0.tgz
 Dependency Path: react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-expression > mdast-util-to-markdown > mdast-util-phrasing > react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-jsx > mdast-util-to-markdown > mdast-util-phrasing > react-markdown > hast-util-to-jsx-runtime > mdast-util-mdxjs-esm > mdast-util-to-markdown > mdast-util-phrasing > remark-gfm > mdast-util-gfm > mdast-util-gfm-footnote > mdast-util-to-markdown > mdast-util-phrasing > remark-gfm > mdast-util-gfm > mdast-util-gfm-strikethrough > mdast-util-to-markdown > mdast-util-phrasing > remark-gfm > mdast-util-gfm > mdast-util-gfm-table > mdast-util-to-markdown > mdast-util-phrasing > remark-gfm > mdast-util-gfm > mdast-util-gfm-task-list-item > mdast-util-to-markdown > mdast-util-phrasing > remark-gfm > mdast-util-gfm > mdast-util-to-markdown > mdast-util-phrasing > remark-gfm > remark-stringify > mdast-util-to-markdown > mdast-util-phrasing
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -39314,7 +39314,7 @@ MIT
 
 Authors: keith@mcknig.ht, tituswormer@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/mdast-util-to-string
+Project URL: https://github.com/syntax-tree/mdast-util-to-string#readme
 Package Download URL: https://registry.npmjs.org/mdast-util-to-string/-/mdast-util-to-string-4.0.0.tgz
 Dependency Path: react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-expression > mdast-util-to-markdown > mdast-util-to-string > react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-jsx > mdast-util-to-markdown > mdast-util-to-string > react-markdown > hast-util-to-jsx-runtime > mdast-util-mdxjs-esm > mdast-util-to-markdown > mdast-util-to-string > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > mdast-util-to-string > remark-gfm > mdast-util-gfm > mdast-util-gfm-footnote > mdast-util-to-markdown > mdast-util-to-string > remark-gfm > mdast-util-gfm > mdast-util-gfm-strikethrough > mdast-util-to-markdown > mdast-util-to-string > remark-gfm > mdast-util-gfm > mdast-util-gfm-table > mdast-util-to-markdown > mdast-util-to-string > remark-gfm > mdast-util-gfm > mdast-util-gfm-task-list-item > mdast-util-to-markdown > mdast-util-to-string > remark-gfm > mdast-util-gfm > mdast-util-to-markdown > mdast-util-to-string > remark-gfm > remark-stringify > mdast-util-to-markdown > mdast-util-to-string
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -41470,7 +41470,7 @@ MIT
 
 Authors: tituswormer@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/micromark-util-character
+Project URL: https://github.com/micromark/micromark/tree/main#readme
 Package Download URL: https://registry.npmjs.org/micromark-util-character/-/micromark-util-character-2.1.1.tgz
 Dependency Path: remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-destination > micromark-util-character > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-label > micromark-util-character > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-util-character > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > micromark-factory-space > micromark-util-character > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > micromark-util-character > remark-gfm > mdast-util-gfm > mdast-util-gfm-autolink-literal > micromark-util-character > remark-gfm > micromark-extension-gfm > micromark-extension-gfm-autolink-literal > micromark-util-character > remark-gfm > micromark-extension-gfm > micromark-extension-gfm-footnote > micromark-util-character > remark-gfm > micromark-extension-gfm > micromark-extension-gfm-table > micromark-util-character > remark-gfm > micromark-extension-gfm > micromark-extension-gfm-task-list-item > micromark-util-character
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -41908,7 +41908,7 @@ MIT
 
 Authors: tituswormer@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/micromark-util-encode
+Project URL: https://github.com/micromark/micromark/tree/main#readme
 Package Download URL: https://registry.npmjs.org/micromark-util-encode/-/micromark-util-encode-2.0.1.tgz
 Dependency Path: react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-expression > mdast-util-from-markdown > micromark > micromark-util-sanitize-uri > micromark-util-encode > react-markdown > mdast-util-to-hast > micromark-util-sanitize-uri > micromark-util-encode > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > micromark-util-encode > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > micromark-util-sanitize-uri > micromark-util-encode > remark-gfm > mdast-util-gfm > mdast-util-gfm-footnote > mdast-util-from-markdown > micromark > micromark-util-sanitize-uri > micromark-util-encode > remark-gfm > mdast-util-gfm > mdast-util-gfm-strikethrough > mdast-util-from-markdown > micromark > micromark-util-sanitize-uri > micromark-util-encode > remark-gfm > mdast-util-gfm > mdast-util-gfm-table > mdast-util-from-markdown > micromark > micromark-util-sanitize-uri > micromark-util-encode > remark-gfm > mdast-util-gfm > mdast-util-gfm-task-list-item > mdast-util-from-markdown > micromark > micromark-util-sanitize-uri > micromark-util-encode > remark-gfm > micromark-extension-gfm > micromark-extension-gfm-autolink-literal > micromark-util-sanitize-uri > micromark-util-encode > remark-gfm > micromark-extension-gfm > micromark-extension-gfm-footnote > micromark-util-sanitize-uri > micromark-util-encode
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -42200,7 +42200,7 @@ MIT
 
 Authors: tituswormer@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/micromark-util-sanitize-uri
+Project URL: https://github.com/micromark/micromark/tree/main#readme
 Package Download URL: https://registry.npmjs.org/micromark-util-sanitize-uri/-/micromark-util-sanitize-uri-2.0.1.tgz
 Dependency Path: react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-expression > mdast-util-from-markdown > micromark > micromark-util-sanitize-uri > react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-jsx > mdast-util-from-markdown > micromark > micromark-util-sanitize-uri > react-markdown > mdast-util-to-hast > micromark-util-sanitize-uri > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > micromark-util-sanitize-uri > remark-gfm > mdast-util-gfm > mdast-util-gfm-footnote > mdast-util-from-markdown > micromark > micromark-util-sanitize-uri > remark-gfm > mdast-util-gfm > mdast-util-gfm-strikethrough > mdast-util-from-markdown > micromark > micromark-util-sanitize-uri > remark-gfm > mdast-util-gfm > mdast-util-gfm-table > mdast-util-from-markdown > micromark > micromark-util-sanitize-uri > remark-gfm > mdast-util-gfm > mdast-util-gfm-task-list-item > mdast-util-from-markdown > micromark > micromark-util-sanitize-uri > remark-gfm > micromark-extension-gfm > micromark-extension-gfm-autolink-literal > micromark-util-sanitize-uri > remark-gfm > micromark-extension-gfm > micromark-extension-gfm-footnote > micromark-util-sanitize-uri
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -42346,7 +42346,7 @@ MIT
 
 Authors: tituswormer@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/micromark-util-symbol
+Project URL: https://github.com/micromark/micromark/tree/main#readme
 Package Download URL: https://registry.npmjs.org/micromark-util-symbol/-/micromark-util-symbol-2.0.1.tgz
 Dependency Path: remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-destination > micromark-util-symbol > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-factory-label > micromark-util-symbol > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > micromark-core-commonmark > micromark-util-symbol > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > micromark-util-symbol > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark-util-symbol > remark-gfm > micromark-extension-gfm > micromark-extension-gfm-autolink-literal > micromark-util-symbol > remark-gfm > micromark-extension-gfm > micromark-extension-gfm-footnote > micromark-util-symbol > remark-gfm > micromark-extension-gfm > micromark-extension-gfm-strikethrough > micromark-util-symbol > remark-gfm > micromark-extension-gfm > micromark-extension-gfm-table > micromark-util-symbol > remark-gfm > micromark-extension-gfm > micromark-extension-gfm-task-list-item > micromark-util-symbol
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -42498,7 +42498,7 @@ MIT
 
 Authors: brian.woodward@gmail.com, elan.shanker+npm@gmail.com, github@sellside.com, npm@tschinder.de, paul@paulmillr.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/micromatch
+Project URL: https://github.com/micromatch/micromatch
 Package Download URL: https://registry.npmjs.org/micromatch/-/micromatch-4.0.8.tgz
 Dependency Path: @formatjs/cli-lib > fast-glob > micromatch > fast-glob > micromatch > stylelint > fast-glob > micromatch > stylelint > globby > fast-glob > micromatch > stylelint > micromatch > stylelint-config-standard > stylelint > micromatch > stylelint-config-standard > stylelint-config-recommended > stylelint > micromatch > stylelint-order > stylelint > micromatch > stylelint-plugin-defensive-css > stylelint > micromatch > stylelint-scss > stylelint > micromatch
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -44555,7 +44555,7 @@ software or this license, under any kind of legal claim.***
 
 Authors: i@izs.me
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/package-json-from-dist
+Project URL: https://github.com/isaacs/package-json-from-dist#readme
 Package Download URL: https://registry.npmjs.org/package-json-from-dist/-/package-json-from-dist-1.0.1.tgz
 Dependency Path: html-validate > glob > package-json-from-dist
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -45165,7 +45165,7 @@ software or this license, under any kind of legal claim.***
 
 Authors: i@izs.me
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/path-scurry
+Project URL: https://github.com/isaacs/path-scurry#readme
 Package Download URL: https://registry.npmjs.org/path-scurry/-/path-scurry-2.0.2.tgz
 Dependency Path: glob > path-scurry > html-validate > glob > path-scurry
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -52279,7 +52279,7 @@ MIT
 
 Authors: admin@formidablelabs.com, bolin.chris@gmail.com, carbonrobot@gmail.com, exogen@gmail.com, gksander93@gmail.com, hi@robwalker.co, jmcbee1@gmail.com, keith.luchtel@formidable.com, mansoor@msiddeeq.com, mariano.martinez@formidable.com, me@carlos.dev, michael@michaelmerrill.me, npm@formidablelabs.com, ryan@eastridge.me, ryan@loose-bits.com, sarah.wright@formidable.com, sarahmichellemeyer@gmail.com, scott.william.rippey@gmail.com, scott@scottstewart.co, senesealessandro@gmail.com, yankovalera@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/react-fast-compare
+Project URL: https://github.com/FormidableLabs/react-fast-compare
 Package Download URL: https://registry.npmjs.org/react-fast-compare/-/react-fast-compare-3.2.2.tgz
 Dependency Path: react-fast-compare
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -58037,7 +58037,7 @@ MIT
 
 Authors: tituswormer@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/space-separated-tokens
+Project URL: https://github.com/wooorm/space-separated-tokens#readme
 Package Download URL: https://registry.npmjs.org/space-separated-tokens/-/space-separated-tokens-2.0.2.tgz
 Dependency Path: react-markdown > hast-util-to-jsx-runtime > space-separated-tokens
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -60990,7 +60990,7 @@ MIT
 
 Authors: tituswormer@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/trim-lines
+Project URL: https://github.com/wooorm/trim-lines#readme
 Package Download URL: https://registry.npmjs.org/trim-lines/-/trim-lines-3.0.1.tgz
 Dependency Path: react-markdown > mdast-util-to-hast > trim-lines > react-markdown > remark-rehype > mdast-util-to-hast > trim-lines
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -62794,7 +62794,7 @@ MIT
 
 Authors: keith@mcknig.ht, tituswormer@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/unist-util-is
+Project URL: https://github.com/syntax-tree/unist-util-is#readme
 Package Download URL: https://registry.npmjs.org/unist-util-is/-/unist-util-is-6.0.1.tgz
 Dependency Path: react-markdown > mdast-util-to-hast > unist-util-visit > unist-util-is > react-markdown > mdast-util-to-hast > unist-util-visit > unist-util-visit-parents > unist-util-is > react-markdown > unist-util-visit > unist-util-visit-parents > unist-util-is > remark-gfm > mdast-util-gfm > mdast-util-gfm-autolink-literal > mdast-util-find-and-replace > unist-util-is > remark-gfm > mdast-util-gfm > mdast-util-gfm-autolink-literal > mdast-util-find-and-replace > unist-util-visit-parents > unist-util-is > remark-gfm > mdast-util-gfm > mdast-util-gfm-footnote > mdast-util-to-markdown > unist-util-visit > unist-util-visit-parents > unist-util-is > remark-gfm > mdast-util-gfm > mdast-util-gfm-strikethrough > mdast-util-to-markdown > unist-util-visit > unist-util-visit-parents > unist-util-is > remark-gfm > mdast-util-gfm > mdast-util-gfm-table > mdast-util-to-markdown > unist-util-visit > unist-util-visit-parents > unist-util-is > remark-gfm > mdast-util-gfm > mdast-util-to-markdown > mdast-util-phrasing > unist-util-is > remark-gfm > mdast-util-gfm > mdast-util-to-markdown > unist-util-visit > unist-util-visit-parents > unist-util-is
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -62867,7 +62867,7 @@ MIT
 
 Authors: keith@mcknig.ht, tituswormer@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/unist-util-position
+Project URL: https://github.com/syntax-tree/unist-util-position#readme
 Package Download URL: https://registry.npmjs.org/unist-util-position/-/unist-util-position-5.0.0.tgz
 Dependency Path: react-markdown > hast-util-to-jsx-runtime > unist-util-position > react-markdown > mdast-util-to-hast > unist-util-position > react-markdown > remark-rehype > mdast-util-to-hast > unist-util-position
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -63230,7 +63230,7 @@ SOFTWARE.
 
 Authors: mateuszburzynski@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/use-composed-ref
+Project URL: https://github.com/Andarist/use-composed-ref#readme
 Package Download URL: https://registry.npmjs.org/use-composed-ref/-/use-composed-ref-1.4.0.tgz
 Dependency Path: react-textarea-autosize > use-composed-ref
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -63243,7 +63243,7 @@ Package Locator: npm+use-is-mounted-ref$1.5.0
 Package Depth: Transitive
 --------------------------------------------------------------------------------
 
-📦 useIsMountedRef is a React Hook to check when the component is mounted.
+📦 React Hooks for mount state tracking and auto-cleanup with AbortController.
 
 * Declared Licenses *
 MIT
@@ -63309,7 +63309,7 @@ MIT
 
 Authors: helder.burato@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/use-is-mounted-ref
+Project URL: https://github.com/helderberto/use-is-mounted-ref#readme
 Package Download URL: https://registry.npmjs.org/use-is-mounted-ref/-/use-is-mounted-ref-1.5.0.tgz
 Dependency Path: react-select-async-paginate > use-is-mounted-ref
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -63388,7 +63388,7 @@ MIT
 
 Authors: mateuszburzynski@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/use-isomorphic-layout-effect
+Project URL: https://github.com/Andarist/use-isomorphic-layout-effect#readme
 Package Download URL: https://registry.npmjs.org/use-isomorphic-layout-effect/-/use-isomorphic-layout-effect-1.2.1.tgz
 Dependency Path: react-select > use-isomorphic-layout-effect > react-select-async-paginate > react-select > use-isomorphic-layout-effect > react-select-async-paginate > use-latest > use-isomorphic-layout-effect > react-textarea-autosize > use-latest > use-isomorphic-layout-effect
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -63467,7 +63467,7 @@ MIT
 
 Authors: mateuszburzynski@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/use-latest
+Project URL: https://github.com/Andarist/use-latest#readme
 Package Download URL: https://registry.npmjs.org/use-latest/-/use-latest-1.3.0.tgz
 Dependency Path: react-select-async-paginate > use-latest > react-textarea-autosize > use-latest
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -64914,4 +64914,4 @@ File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2026-9-21
+Report Generated by FOSSA on 2026-9-24

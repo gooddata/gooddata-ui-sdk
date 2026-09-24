@@ -18,8 +18,6 @@ OXFMT_BIN="${PACKAGE_DIR}/node_modules/.bin/oxfmt"
 PREPARE_PACKAGE_JSON="node ${PACKAGE_DIR}/scripts/preparePackageJson.mjs"
 
 REACT_APP_TEMPLATE_DIR="${PACKAGE_DIR}/../react-app-template"
-JS_CONFIG_TEMPLATES="${REACT_APP_TEMPLATE_DIR}/configTemplates/js"
-TS_CONFIG_TEMPLATES="${REACT_APP_TEMPLATE_DIR}/configTemplates/ts"
 BUILD_DIR="${PACKAGE_DIR}/build"
 JS_BUILD_DIR="${BUILD_DIR}/react-app-template.js"
 TS_BUILD_DIR="${BUILD_DIR}/react-app-template.ts"
@@ -36,16 +34,21 @@ mkdir "${BUILD_DIR}"
 tsc -p tsconfig.build.json
 
 #######################################################################
-# Build react-app-template for Typescript
+# Assemble the language-independent part of the template
 #######################################################################
 
 # copy sources & essential config from application template project
 # this will be used as-is for TypeScript template
 mkdir -p "${TS_BUILD_DIR}/src"
 cp -R "${REACT_APP_TEMPLATE_DIR}/src" "${TS_BUILD_DIR}"
+# Vite serves public/ from the root and copies its contents verbatim into dist/
+cp -R "${REACT_APP_TEMPLATE_DIR}/public" "${TS_BUILD_DIR}"
 cp "${REACT_APP_TEMPLATE_DIR}/package.json" "${TS_BUILD_DIR}"
-cp "${REACT_APP_TEMPLATE_DIR}/webpack.config.cjs" "${TS_BUILD_DIR}"
+cp "${REACT_APP_TEMPLATE_DIR}/vite.config.ts" "${TS_BUILD_DIR}"
+# Vite's entry point. Its <script src> names src/index.tsx; the JS section below derives its own copy from it.
+cp "${REACT_APP_TEMPLATE_DIR}/index.html" "${TS_BUILD_DIR}"
 cp "${REACT_APP_TEMPLATE_DIR}/.gitignore" "${TS_BUILD_DIR}"
+cp "${REACT_APP_TEMPLATE_DIR}/.env.template" "${TS_BUILD_DIR}/.env"
 cp "${REACT_APP_TEMPLATE_DIR}/README.template.md" "${TS_BUILD_DIR}/README.md"
 
 $PREPARE_PACKAGE_JSON remove-gd-stuff "${TS_BUILD_DIR}"
@@ -53,11 +56,21 @@ $PREPARE_PACKAGE_JSON remove-gd-stuff "${TS_BUILD_DIR}"
 # 'fork-off' the JS template build dir at this point before adding TypeScript specific configs
 cp -R "${TS_BUILD_DIR}" "${JS_BUILD_DIR}"
 
-# copy over the extra files for the TypeScript project
-[ -e "$TS_CONFIG_TEMPLATES" ] && find "$TS_CONFIG_TEMPLATES" -type f -name '*' -exec cp {} "${TS_BUILD_DIR}" ";"
+#######################################################################
+# Build react-app-template for Typescript
+#######################################################################
 
-# create archive with TypeScript template
-tar -czf "${TS_TAR}" -C "${TS_BUILD_DIR}" .
+# The template type-checks with the same tsconfig it is developed against (noEmit - Vite transpiles), so ship
+# that file rather than a copy that drifts.
+cp "${REACT_APP_TEMPLATE_DIR}/tsconfig.json" "${TS_BUILD_DIR}"
+
+grep -q 'src="/src/index.tsx"' "${TS_BUILD_DIR}/index.html" || { echo "TS template index.html does not load src/index.tsx" >&2; exit 1; }
+
+# create archive with TypeScript template.
+# COPYFILE_DISABLE stops macOS bsdtar from adding AppleDouble "._<name>" entries for files that carry extended
+# attributes (the cp'd build copies do). node-tar extracts those as plain files, so a scaffolded app would get a
+# binary "._.env" next to ".env". GNU tar on Linux CI ignores the variable.
+COPYFILE_DISABLE=1 tar -czf "${TS_TAR}" -C "${TS_BUILD_DIR}" .
 
 #######################################################################
 # Build react-app-template for JavaScript
@@ -65,8 +78,9 @@ tar -czf "${TS_TAR}" -C "${TS_BUILD_DIR}" .
 
 $PREPARE_PACKAGE_JSON remove-ts "${JS_BUILD_DIR}"
 
-# copy over the extra files for the JavaScript project
-[ -e "$JS_CONFIG_TEMPLATES" ] && find "$JS_CONFIG_TEMPLATES" -type f -name '*' -exec cp {} "${JS_BUILD_DIR}" ";"
+# index.html is identical for both languages except for the entry point it loads. Derive the JS copy from the
+# root one so the two cannot drift.
+sed 's#src="/src/index\.tsx"#src="/src/index.jsx"#' "${REACT_APP_TEMPLATE_DIR}/index.html" >"${JS_BUILD_DIR}/index.html"
 
 # transpile TypeScript template files to JavaScript (type-strip only; JSX and ESM preserved).
 # tsc (jsx: preserve) emits .ts -> .js and .tsx -> .jsx directly. tsconfig.babel.json sets
@@ -77,8 +91,14 @@ $PREPARE_PACKAGE_JSON remove-ts "${JS_BUILD_DIR}"
 # remove TypeScript source files (leaving the emitted .js / .jsx in place)
 find "${JS_BUILD_DIR}" -type f \( -iname \*.ts -o -iname \*.tsx \) -exec rm -rf {} \;
 
-# format transpiled files as format was broken during transpile process
-$OXFMT_BIN ${JS_BUILD_DIR}/**/*
+# format transpiled files as format was broken during transpile process.
+# Restricted to the JavaScript sources: the template now has a root public/ directory, which the previous
+# '**/*' glob would have handed to oxfmt as a binary favicon.
+test -f "${JS_BUILD_DIR}/vite.config.js" || { echo "JS template has no vite.config.js (tsc did not emit it)" >&2; exit 1; }
+find "${JS_BUILD_DIR}/src" -type f \( -name '*.js' -o -name '*.jsx' \) -exec "${OXFMT_BIN}" {} +
+"${OXFMT_BIN}" "${JS_BUILD_DIR}/vite.config.js"
 
-# build tar with JavaScript bootstrap files
-tar -czf "${JS_TAR}" -C "${JS_BUILD_DIR}" .
+grep -q 'src="/src/index.jsx"' "${JS_BUILD_DIR}/index.html" || { echo "JS template index.html does not load src/index.jsx" >&2; exit 1; }
+
+# build tar with JavaScript bootstrap files (COPYFILE_DISABLE: see the TypeScript archive above)
+COPYFILE_DISABLE=1 tar -czf "${JS_TAR}" -C "${JS_BUILD_DIR}" .

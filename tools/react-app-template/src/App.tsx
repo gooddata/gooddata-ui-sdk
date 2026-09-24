@@ -7,7 +7,7 @@ import img from "./assets/gooddata-logo.svg";
 import { backend } from "./backend.js";
 import { Insights } from "./catalog.js";
 
-// Workspace ID is injected by WebPack based on the value in package.json
+// Workspace ID is injected at build time by Vite, based on the value in package.json
 const workspaceId = WORKSPACE_ID;
 
 export function App() {

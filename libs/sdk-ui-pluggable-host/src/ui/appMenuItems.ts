@@ -5,6 +5,7 @@ import { type MouseEvent } from "react";
 import {
     type ILocale,
     type PluggableApplicationRegistryItem,
+    getPluggableApplicationLocalizedTitle,
     isExternalPluggableApplicationRegistryItem,
 } from "@gooddata/sdk-model";
 import { DefaultApplicationId, type IPlatformContext } from "@gooddata/sdk-pluggable-application-model";
@@ -33,19 +34,6 @@ const NAV_MSG_PREFIX = "shellApplication.menuItem.";
 
 function navMessageKey(appId: string): string {
     return `${NAV_MSG_PREFIX}${appId}`;
-}
-
-export function getLocalizedTitle(
-    app: PluggableApplicationRegistryItem,
-    locale: ILocale | undefined,
-): string {
-    if (locale && app.localizedTitle) {
-        const localizedTitle = app.localizedTitle[locale];
-        if (localizedTitle) {
-            return localizedTitle;
-        }
-    }
-    return app.title;
 }
 
 export interface IAppMenuResult {
@@ -97,7 +85,7 @@ export function buildAppMenu(
         const isActive = !isExternal && isInternalAppRouteActive(app, ctx, pathname);
         const key = navMessageKey(app.id);
 
-        messages[key] = getLocalizedTitle(app, locale);
+        messages[key] = getPluggableApplicationLocalizedTitle(app, locale);
 
         return {
             key,

@@ -1,3 +1,6 @@
+# Vite reads .env, .env.local and .env.[mode]; any of them may hold TIGER_API_TOKEN.
 .env
+.env.*
+!.env.template
 dist
 node_modules

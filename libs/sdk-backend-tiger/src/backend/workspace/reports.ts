@@ -56,6 +56,9 @@ import { handleExportResultPolling } from "../../utils/exportPolling.js";
 
 const auditInclude = ["createdBy" as const, "modifiedBy" as const];
 
+// The backend orders a never-modified object by its creation time.
+const byLastChange = ["modifiedAt,desc"];
+
 function findBuiltInPageLayout(ref: ObjRef): IReportPageLayout | undefined {
     return BuiltInReportPageLayouts.find((layout) => areObjRefsEqual(layout.ref, ref));
 }
@@ -158,6 +161,7 @@ export class TigerWorkspaceReportsService implements IWorkspaceReportsService {
                     workspaceId: this.workspace,
                     metaInclude: ["origin"],
                     include: auditInclude,
+                    sort: byLastChange,
                     page,
                     size,
                 }).then((response) =>
@@ -236,6 +240,7 @@ export class TigerWorkspaceReportsService implements IWorkspaceReportsService {
                     workspaceId: this.workspace,
                     metaInclude: ["origin"],
                     include: auditInclude,
+                    sort: byLastChange,
                     page,
                     size,
                 }).then((response) =>

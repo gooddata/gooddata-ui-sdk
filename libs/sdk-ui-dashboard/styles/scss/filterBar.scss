@@ -2,6 +2,7 @@
 @use "sass:color";
 @use "variables";
 @use "zIndexes";
+@use "restrictedFiltersNotice";
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/variables" as button-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/maqlPalette" as maql-palette;
@@ -219,40 +220,9 @@ $attribute-filter-drag-handle-left: 10px;
         }
     }
 
-    .dash-filters-restricted {
-        display: flex;
-        align-items: center;
+    .gd-restricted-filters {
         margin: 7px 11px 7px $default_space;
     }
-
-    .dash-filters-restricted-notice {
-        box-sizing: border-box;
-        display: inline-flex;
-        align-items: center;
-        gap: 7px;
-        min-height: 42px;
-        padding: 5px 10px;
-        border: none;
-        background: none;
-        color: kit-variables.$gd-color-text;
-        font-family: inherit;
-        font-size: 12px;
-        font-weight: bold;
-        line-height: 16px;
-        white-space: nowrap;
-        cursor: default;
-
-        &--actionable {
-            cursor: pointer;
-        }
-    }
-}
-
-.dash-filters-restricted-tooltip {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
 }
 
 .button-filter-bar-show-all {

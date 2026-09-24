@@ -3,10 +3,12 @@
 import { useIntl } from "react-intl";
 
 import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
+import { selectRestrictedDashboardFilterCount } from "../../model/store/filtering/dashboardFilterSelectors.js";
 import { selectAttributeFilterConfigsOverrides } from "../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { AttributeBar } from "../components/bars/AttributeBar.js";
 import { DateBar } from "../components/bars/DateBar.js";
 import { KdaBar } from "../components/KdaBar.js";
+import { KdaRestrictedFiltersNotice } from "../components/KdaRestrictedFiltersNotice.js";
 
 import { AddFilterButton } from "./AddFilterButton.js";
 import { useAttributeFiltersChangeHandler } from "./hooks/useAttributeFiltersChangeHandler.js";
@@ -16,6 +18,7 @@ export function FiltersBar() {
     const intl = useIntl();
 
     const attributeConfigs = useDashboardSelector(selectAttributeFilterConfigsOverrides);
+    const restrictedFilterCount = useDashboardSelector(selectRestrictedDashboardFilterCount);
 
     const { attributeFilters, onChangeAttributeFilter, onDeleteAttributeFilter } =
         useAttributeFiltersChangeHandler();
@@ -26,6 +29,7 @@ export function FiltersBar() {
             title={intl.formatMessage({ id: "kdaDialog.dialog.bars.filters.title" })}
             content={
                 <>
+                    <KdaRestrictedFiltersNotice count={restrictedFilterCount} />
                     <DateBar options={options} isAvailable={isAvailable} onPeriodChange={onPeriodChange} />
                     {attributeFilters.map((attributeFilter, i) => (
                         <AttributeBar

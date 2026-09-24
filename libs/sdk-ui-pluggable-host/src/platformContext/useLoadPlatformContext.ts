@@ -9,6 +9,7 @@ import { type IEffectiveSettings, type IPlatformContext } from "@gooddata/sdk-pl
 
 import { isProduction } from "../lib/isProduction.js";
 import { getApplicationScopeFromPath, getWorkspaceIdFromPath } from "../loader/routing.js";
+import { resolveAvailableWorkspaceApplications } from "../registry/pluggableApplicationsRegistry.js";
 
 import { getBackend } from "./backend.js";
 import {
@@ -113,7 +114,12 @@ export function useLoadPlatformContext(): IPlatformContextLoadResult<IPlatformCo
             preferredLocale,
         };
 
-        return { state: "ready", ctx: { ...backendContext.ctx, ...routeCtx, theme: effectiveTheme } };
+        const ctx: IPlatformContext = { ...backendContext.ctx, ...routeCtx, theme: effectiveTheme };
+
+        return {
+            state: "ready",
+            ctx: { ...ctx, availableApplications: resolveAvailableWorkspaceApplications(ctx) },
+        };
     }, [
         backendContext,
         applicationScope,
@@ -161,19 +167,23 @@ export function useLoadPlatformContext(): IPlatformContextLoadResult<IPlatformCo
             preferredLocale,
             theme,
         } = lastReady.result.ctx;
+        // Resolved again rather than carried over: the applications are derived from the CURRENT
+        // backend context (registry, entitlements, organization permissions), which a refresh may
+        // have changed even though the workspace-scoped values below are still the previous ones.
+        const ctx: IPlatformContext = {
+            ...backendContext.ctx,
+            currentApplicationScope,
+            currentWorkspaceId,
+            workspacePermissions,
+            workspaceSettings,
+            colorPalette,
+            settings,
+            preferredLocale,
+            theme,
+        };
         return {
             state: "ready",
-            ctx: {
-                ...backendContext.ctx,
-                currentApplicationScope,
-                currentWorkspaceId,
-                workspacePermissions,
-                workspaceSettings,
-                colorPalette,
-                settings,
-                preferredLocale,
-                theme,
-            },
+            ctx: { ...ctx, availableApplications: resolveAvailableWorkspaceApplications(ctx) },
         };
     }, [backendContext, lastReady, workspaceId]);
 

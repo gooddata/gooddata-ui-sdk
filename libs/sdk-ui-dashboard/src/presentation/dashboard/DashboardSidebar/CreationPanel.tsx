@@ -1,12 +1,12 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { useMemo, useState } from "react";
+import { Fragment, type ReactNode, useMemo, useState } from "react";
 
 import cx from "classnames";
 import { compact, sortBy } from "lodash-es";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { Typography, UiIconButton } from "@gooddata/sdk-ui-kit";
+import { Typography, UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectSupportsRichTextWidgets } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
@@ -20,6 +20,7 @@ import {
     type VisualizationSwitcherWidgetComponentSet,
 } from "../../componentDefinition/types.js";
 import {
+    type DraggableContentItemType,
     type IWrapCreatePanelItemWithDragComponent,
     type IWrapInsightListItemWithDragComponent,
 } from "../../dragAndDrop/types.js";
@@ -27,6 +28,14 @@ import {
 import { DraggableInsightList } from "./DraggableInsightList/DraggableInsightList.js";
 import { SidebarCollapseToggle } from "./SidebarCollapseToggle.js";
 import { useResizableSidebar } from "./SidebarResizeContext.js";
+
+const RAIL_TOOLTIPS: Partial<Record<DraggableContentItemType, ReactNode>> = {
+    "insight-placeholder": <FormattedMessage id="sidebar.rail.visualization" />,
+    "attributeFilter-placeholder": <FormattedMessage id="addPanel.filter" />,
+    dashboardLayoutListItem: <FormattedMessage id="addPanel.dashboardLayout" />,
+    visualizationSwitcherListItem: <FormattedMessage id="addPanel.visualizationSwitcher" />,
+    richTextListItem: <FormattedMessage id="addPanel.richText" />,
+};
 
 interface ICreationPanelProps {
     className?: string;
@@ -63,11 +72,27 @@ export function CreationPanel(props: ICreationPanelProps) {
         ]);
 
         return sortBy(items, (item) => item.priority ?? 0).map(({ CreatePanelListItemComponent, type }) => {
-            return (
+            const listItem = (
                 <CreatePanelListItemComponent
-                    key={type}
                     WrapCreatePanelItemWithDragComponent={WrapCreatePanelItemWithDragComponent}
                     disabled={isAiGenerating}
+                />
+            );
+            const tooltip = RAIL_TOOLTIPS[type];
+
+            if (!isCollapsed || !tooltip) {
+                return <Fragment key={type}>{listItem}</Fragment>;
+            }
+
+            return (
+                <UiTooltip
+                    key={type}
+                    anchor={listItem}
+                    content={tooltip}
+                    arrowPlacement="left"
+                    triggerBy={["hover"]}
+                    optimalPlacement
+                    accessibilityHidden
                 />
             );
         });
@@ -80,6 +105,7 @@ export function CreationPanel(props: ICreationPanelProps) {
         supportsRichText,
         WrapCreatePanelItemWithDragComponent,
         isAiGenerating,
+        isCollapsed,
     ]);
 
     return (
@@ -113,19 +139,29 @@ export function CreationPanel(props: ICreationPanelProps) {
                 >
                     {canCollapse ? (
                         <div className="gd-sidebar-rail-search">
-                            <UiIconButton
-                                icon="search"
-                                label={intl.formatMessage({ id: "sidebar.search" })}
-                                size="medium"
-                                variant="tertiary"
-                                dataTestId="s-dashboard-sidebar-rail-search"
-                                accessibilityConfig={{
-                                    ariaLabel: intl.formatMessage({ id: "sidebar.search" }),
-                                }}
-                                onClick={() => {
-                                    setFocusSearch(true);
-                                    setCollapsed(false);
-                                }}
+                            <UiTooltip
+                                content={intl.formatMessage({ id: "sidebar.search" })}
+                                arrowPlacement="left"
+                                triggerBy={["hover", "focus"]}
+                                optimalPlacement
+                                accessibilityHidden
+                                closeOnAnchorClick
+                                anchor={
+                                    <UiIconButton
+                                        icon="search"
+                                        label={intl.formatMessage({ id: "sidebar.search" })}
+                                        size="medium"
+                                        variant="tertiary"
+                                        dataTestId="s-dashboard-sidebar-rail-search"
+                                        accessibilityConfig={{
+                                            ariaLabel: intl.formatMessage({ id: "sidebar.search" }),
+                                        }}
+                                        onClick={() => {
+                                            setFocusSearch(true);
+                                            setCollapsed(false);
+                                        }}
+                                    />
+                                }
                             />
                         </div>
                     ) : null}

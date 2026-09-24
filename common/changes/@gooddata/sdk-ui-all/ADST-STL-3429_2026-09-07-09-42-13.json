@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "app-toolkit: scaffold applications with Vite instead of webpack.",
+            "type": "patch"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

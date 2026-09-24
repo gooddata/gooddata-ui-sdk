@@ -1,21 +1,19 @@
 {
     "exclude": ["**/tests", "**/test"],
-    "include": ["src/**/*", "src/**/*.json"],
+    "include": ["src/**/*", "src/**/*.json", "vite.config.ts"],
     "compilerOptions": {
-        "rootDir": "./src",
-        "outDir": "./esm",
         "target": "ES2022",
         "lib": ["ES2022", "DOM"],
         "module": "NodeNext",
         "moduleResolution": "NodeNext",
         "jsx": "react-jsx",
-        "importHelpers": true,
-        "incremental": false,
+        "isolatedModules": true,
         "resolveJsonModule": true,
         "strict": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "noImplicitReturns": true,
-        "declaration": true
+        "skipLibCheck": true,
+        "noEmit": true
     }
 }

@@ -8,6 +8,8 @@ const getAllPageLayouts = vi.fn();
 const getPageLayout = vi.fn();
 const updatePageLayout = vi.fn();
 const deletePageLayout = vi.fn();
+const getAllTemplates = vi.fn();
+const getAllReports = vi.fn();
 
 vi.mock("@gooddata/api-client-tiger/endpoints/entitiesObjects", () => ({
     EntitiesApi_GetAllEntitiesReportPageLayouts: (...args: unknown[]) => getAllPageLayouts(...args),
@@ -15,12 +17,12 @@ vi.mock("@gooddata/api-client-tiger/endpoints/entitiesObjects", () => ({
     EntitiesApi_UpdateEntityReportPageLayouts: (...args: unknown[]) => updatePageLayout(...args),
     EntitiesApi_DeleteEntityReportPageLayouts: (...args: unknown[]) => deletePageLayout(...args),
     EntitiesApi_CreateEntityReportPageLayouts: vi.fn(),
-    EntitiesApi_GetAllEntitiesReportTemplates: vi.fn(),
+    EntitiesApi_GetAllEntitiesReportTemplates: (...args: unknown[]) => getAllTemplates(...args),
     EntitiesApi_GetEntityReportTemplates: vi.fn(),
     EntitiesApi_CreateEntityReportTemplates: vi.fn(),
     EntitiesApi_UpdateEntityReportTemplates: vi.fn(),
     EntitiesApi_DeleteEntityReportTemplates: vi.fn(),
-    EntitiesApi_GetAllEntitiesReports: vi.fn(),
+    EntitiesApi_GetAllEntitiesReports: (...args: unknown[]) => getAllReports(...args),
     EntitiesApi_GetEntityReports: vi.fn(),
     EntitiesApi_CreateEntityReports: vi.fn(),
     EntitiesApi_UpdateEntityReports: vi.fn(),
@@ -40,6 +42,8 @@ const builtInRef = BuiltInReportPageLayouts[0]!.ref;
 beforeEach(() => {
     vi.clearAllMocks();
     getAllPageLayouts.mockResolvedValue({ data: { data: [] } });
+    getAllTemplates.mockResolvedValue({ data: { data: [] } });
+    getAllReports.mockResolvedValue({ data: { data: [] } });
 });
 
 describe("TigerWorkspaceReportsService page layouts", () => {
@@ -114,6 +118,28 @@ describe("TigerWorkspaceReportsService page layouts", () => {
             expect.anything(),
             expect.anything(),
             expect.objectContaining({ workspaceId: "ws1", objectId: "layout1" }),
+        );
+    });
+});
+
+describe("TigerWorkspaceReportsService listings", () => {
+    it("asks the backend for the most recently changed templates first", async () => {
+        await newService().getReportTemplates();
+
+        expect(getAllTemplates).toHaveBeenCalledWith(
+            expect.anything(),
+            expect.anything(),
+            expect.objectContaining({ sort: ["modifiedAt,desc"] }),
+        );
+    });
+
+    it("asks the backend for the most recently changed reports first", async () => {
+        await newService().getReports();
+
+        expect(getAllReports).toHaveBeenCalledWith(
+            expect.anything(),
+            expect.anything(),
+            expect.objectContaining({ sort: ["modifiedAt,desc"] }),
         );
     });
 });

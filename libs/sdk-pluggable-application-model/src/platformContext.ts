@@ -12,6 +12,7 @@ import {
     type IWhiteLabeling,
     type IWorkspacePermissions,
     type ObjRef,
+    type PluggableApplicationRegistryItem,
 } from "@gooddata/sdk-model";
 
 /**
@@ -229,6 +230,23 @@ export interface IPlatformContextV1 {
 
     currentWorkspaceId?: string;
     currentApplicationScope?: ApplicationScope;
+
+    /**
+     * Workspace-scoped applications available to the current user, sorted by `menuOrder`.
+     *
+     * @remarks
+     * The host resolves these from the local and remote registries and applies every requirement it can
+     * evaluate organization-wide: `isEnabled`, the allowed-standard-applications list, BASE_UI_ACCESS,
+     * `requiredOrganizationPermissions` and `requiredEntitlements`.
+     *
+     * The two requirements a single workspace answers — `requiredWorkspacePermissions` and
+     * `requiredSettings` — are deliberately NOT applied, because an application listing several
+     * workspaces has to decide per workspace. Evaluate them with `evaluateCondition` against that
+     * workspace's `toPluggableApplicationWorkspacePermissions(permissions)` and its settings. A feature
+     * flag can be on for one workspace alone (early access values resolve into its settings), so a
+     * decision taken here would hide the application from every workspace that has it.
+     */
+    availableApplications?: PluggableApplicationRegistryItem[];
 
     embeddingMode: EmbeddingMode;
     isExportMode?: boolean;
