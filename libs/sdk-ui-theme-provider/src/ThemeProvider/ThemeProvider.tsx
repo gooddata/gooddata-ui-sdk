@@ -1,18 +1,26 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { type ReactNode, useEffect, useState } from "react";
+import { type ReactNode, createContext, useContext, useEffect, useState } from "react";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { type ITheme } from "@gooddata/sdk-model";
 import { useBackend, useWorkspace } from "@gooddata/sdk-ui";
 
-import { clearCssProperties, setCssProperties } from "../cssProperties.js";
+import {
+    type IGlobalThemeOwner,
+    createGlobalThemeOwner,
+    registerGlobalThemeOwner,
+    setGlobalThemeOwnerRemovesStylesWhenLast,
+    setGlobalThemeOwnerState,
+    unregisterGlobalThemeOwner,
+} from "../globalThemeOwners.js";
 
 import { ThemeContextProvider, type ThemeStatus } from "./Context.js";
-import { isDarkTheme } from "./isDarkTheme.js";
 import { prepareTheme } from "./prepareTheme.js";
 
 const identity = <T,>(v: T): T => v;
+
+const ParentGlobalThemeOwnerContext = createContext<IGlobalThemeOwner | null>(null);
 
 /**
  * @public
@@ -68,6 +76,12 @@ export interface IThemeProviderProps {
     /**
      * Should ThemeProvider remove global styles during the unmount phase?
      *
+     * @remarks
+     * Only applies when no other global ThemeProvider with a loaded theme remains mounted; otherwise
+     * the theme of the last registered one with a loaded theme is shown again. When a provider with
+     * this set unmounts while descendant ThemeProviders stay mounted, the global styles are removed
+     * once the last of them unmounts, whatever their own setting.
+     *
      * Default: true
      */
     removeGlobalStylesOnUnmout?: boolean;
@@ -105,11 +119,23 @@ export function ThemeProvider({
     const [referenceTheme, setReferenceTheme] = useState(themeParam ?? {});
     const [isLoading, setIsLoading] = useState(false);
     const [status, setStatus] = useState<ThemeStatus>("pending");
+    const parentOwner = useContext(ParentGlobalThemeOwnerContext);
+    const [owner] = useState(() => createGlobalThemeOwner(removeGlobalStylesOnUnmout, parentOwner));
+
+    // Declared first: writes to an owner that is not registered are ignored.
+    useEffect(() => {
+        registerGlobalThemeOwner(owner);
+        return () => {
+            unregisterGlobalThemeOwner(owner);
+        };
+    }, [owner]);
 
     useEffect(() => {
-        // Marks the in-flight getTheme() as stale once this effect is torn down - either because the
-        // workspace/backend changed or because the component unmounted. Without it a late resolution
-        // would re-inject the global styles that the unmount cleanup below has just removed.
+        setGlobalThemeOwnerRemovesStylesWhenLast(owner, removeGlobalStylesOnUnmout);
+    }, [owner, removeGlobalStylesOnUnmout]);
+
+    useEffect(() => {
+        // Keeps a slow getTheme() for a previous workspace/backend from overwriting the newer theme.
         let cancelled = false;
 
         // A malformed theme (e.g. an unparseable color) must never block rendering. Preparing and
@@ -125,15 +151,14 @@ export function ThemeProvider({
                     : prepareTheme(themeToApply, true);
                 setTheme(preparedTheme);
                 setReferenceTheme(preparedReferenceTheme);
-                clearCssProperties();
-                setCssProperties(preparedTheme, isDarkTheme(preparedTheme));
+                setGlobalThemeOwnerState(owner, { theme: preparedTheme });
             } catch (error) {
                 console.error("Failed to apply the theme, falling back to the default theme.", error);
                 // reset both channels (context theme and global CSS) to the default theme so
                 // context consumers stay consistent with the cleared CSS variables
                 setTheme({});
                 setReferenceTheme({});
-                clearCssProperties();
+                setGlobalThemeOwnerState(owner, "cleared");
             } finally {
                 setIsLoading(false);
                 setStatus("success");
@@ -148,7 +173,7 @@ export function ThemeProvider({
 
         const fetchData = async () => {
             if (!backend || !workspace) {
-                clearCssProperties();
+                setGlobalThemeOwnerState(owner, "cleared");
                 return;
             }
 
@@ -169,7 +194,7 @@ export function ThemeProvider({
                     // context consumers stay consistent with the cleared CSS variables
                     setTheme({});
                     setReferenceTheme({});
-                    clearCssProperties();
+                    setGlobalThemeOwnerState(owner, "cleared");
                     setIsLoading(false);
                     setStatus("success");
                 }
@@ -181,15 +206,7 @@ export function ThemeProvider({
         return () => {
             cancelled = true;
         };
-    }, [themeParam, workspace, backend, modifier, enableComplementaryPalette]);
-
-    useEffect(() => {
-        return () => {
-            if (removeGlobalStylesOnUnmout) {
-                clearCssProperties();
-            }
-        };
-    }, [removeGlobalStylesOnUnmout]);
+    }, [owner, themeParam, workspace, backend, modifier, enableComplementaryPalette]);
 
     return (
         <ThemeContextProvider
@@ -198,7 +215,9 @@ export function ThemeProvider({
             themeIsLoading={isLoading}
             themeStatus={status}
         >
-            {children}
+            <ParentGlobalThemeOwnerContext.Provider value={owner}>
+                {children}
+            </ParentGlobalThemeOwnerContext.Provider>
         </ThemeContextProvider>
     );
 }

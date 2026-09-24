@@ -5,12 +5,10 @@ import { type ComponentType, useCallback, useEffect, useState } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { type IFilter, type ISeparators } from "@gooddata/sdk-model";
+import { type IFilter, type IInsight, type ObjRef } from "@gooddata/sdk-model";
 import { type IAlignPoint, RichTextWithTooltip } from "@gooddata/sdk-ui-kit";
 
-import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
-import { useDashboardExecConfig } from "../../../../../model/react/useWidgetExecConfig.js";
-import { selectRestrictedRichTextReferences } from "../../../../../model/store/unavailableObjects/unavailableObjectsSelectors.js";
+import { useRichTextInputs } from "../../../../../_staging/sharedHooks/useRichTextInputs.js";
 import {
     RestrictedReferencesDialog,
     useHasRestrictedReferences,
@@ -27,7 +25,8 @@ interface IInsightDescriptionProps {
     setDescription: (newDescription: string) => void;
     LoadingComponent?: ComponentType;
     insightFilters?: IFilter[];
-    separators?: ISeparators;
+    widgetRef: ObjRef;
+    insight?: IInsight;
 }
 
 export function InsightDescription({
@@ -36,7 +35,8 @@ export function InsightDescription({
     readOnly = false,
     LoadingComponent,
     insightFilters,
-    separators,
+    widgetRef,
+    insight,
 }: IInsightDescriptionProps) {
     const intl = useIntl();
     const placeholder = intl.formatMessage({
@@ -45,9 +45,6 @@ export function InsightDescription({
     // what the editor asked for; whether it is the question or the editor follows from the text
     const [isEditingRequested, setIsEditingRequested] = useState(false);
     const [richTextValue, setRichTextValue] = useState(description);
-
-    const execConfig = useDashboardExecConfig();
-    const restrictedReferences = useDashboardSelector(selectRestrictedRichTextReferences);
 
     useEffect(() => {
         setRichTextValue(description);
@@ -69,6 +66,13 @@ export function InsightDescription({
     const hasRestrictedReferences = useHasRestrictedReferences(richTextValue);
     const isRichTextEditing = isEditingRequested && !hasRestrictedReferences;
     const isAskingToSanitize = isEditingRequested && hasRestrictedReferences;
+
+    // the editor shows no evaluated references, so a keystroke asks for no parameter dependencies
+    const richTextInputs = useRichTextInputs(
+        isRichTextEditing ? description : richTextValue,
+        insightFilters,
+        { widgetRef, insight },
+    );
 
     // the rewrite is committed at once: it was confirmed, and it is not a keystroke. The editor was
     // already asked for, so the description opens as soon as the text no longer holds a reference
@@ -120,10 +124,7 @@ export function InsightDescription({
                     tooltipAlignPoints={richTextTooltipAlignPoints}
                     referencesEnabled
                     LoadingComponent={LoadingComponent}
-                    filters={insightFilters}
-                    separators={separators}
-                    restrictedReferences={restrictedReferences}
-                    execConfig={execConfig}
+                    {...richTextInputs}
                 />
             </div>
             {isAskingToSanitize ? (

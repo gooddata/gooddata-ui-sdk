@@ -1173,6 +1173,11 @@ export interface IFeatureFlags {
     enableBusinessBriefingReportsApp?: boolean;
 
     /**
+     * Export Business Briefing reports to PDF on the backend instead of in the browser.
+     */
+    enableReportServerSideExport?: boolean;
+
+    /**
      * Enable the write and export postMessage commands for embedded dashboards and Analytical Designer.
      *
      * @remarks

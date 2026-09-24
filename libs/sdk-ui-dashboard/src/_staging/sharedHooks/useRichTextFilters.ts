@@ -21,30 +21,15 @@ import {
     queryDateDatasetsForInsight,
 } from "../../model/queries/insights.js";
 import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
-import { useDashboardQueryProcessing } from "../../model/react/useDashboardQueryProcessing.js";
+import {
+    type QueryProcessingStatus,
+    useDashboardQueryProcessing,
+} from "../../model/react/useDashboardQueryProcessing.js";
 import { useWidgetFilters } from "../../model/react/useWidgetFilters.js";
 import { selectExecutableDashboardFilters } from "../../model/store/filtering/dashboardFilterSelectors.js";
 import { selectSectionHeadersDateDataSet } from "../../model/store/meta/metaSelectors.js";
 
-/**
- * Result of {@link useRichTextWidgetFilters} and {@link useSectionDescriptionFilters} hooks.
- */
-interface IRichTextFiltersResult {
-    /**
-     * Filters to apply to Rich Text content.
-     */
-    filters: IFilter[];
-
-    /**
-     * Whether the filters are still loading.
-     */
-    loading: boolean;
-
-    /**
-     * Error that occurred while loading filters, if any.
-     */
-    error?: Error;
-}
+const NO_FILTERS: IFilter[] = [];
 
 /**
  * Hook for obtaining effective filters for Rich Text widgets.
@@ -55,21 +40,13 @@ interface IRichTextFiltersResult {
  * - Validates filters against backend
  *
  * @param widget - Rich Text or Insight widget to get filters for
- * @returns filters, loading state, and error
+ * @returns filters; `undefined` while they load
  *
  * @internal
  */
-export function useRichTextWidgetFilters(widget: IRichTextWidget | IInsightWidget): IRichTextFiltersResult {
-    const widgetFiltersQuery = useWidgetFilters(widget);
-
-    return useMemo(
-        () => ({
-            filters: widgetFiltersQuery.result ?? [],
-            loading: widgetFiltersQuery.status === "pending" || widgetFiltersQuery.status === "running",
-            error: widgetFiltersQuery.error,
-        }),
-        [widgetFiltersQuery.result, widgetFiltersQuery.status, widgetFiltersQuery.error],
-    );
+export function useRichTextWidgetFilters(widget: IRichTextWidget | IInsightWidget): IFilter[] | undefined {
+    const { result, status } = useWidgetFilters(widget);
+    return isLoading(status) ? undefined : (result ?? NO_FILTERS);
 }
 
 /**
@@ -78,11 +55,11 @@ export function useRichTextWidgetFilters(widget: IRichTextWidget | IInsightWidge
  * Section descriptions always receive all dashboard filters (no ignoring),
  * and use the dashboard-level date dataset configuration.
  *
- * @returns filters, loading state, and error
+ * @returns filters; `undefined` while they load
  *
  * @internal
  */
-export function useSectionDescriptionFilters(): IRichTextFiltersResult {
+export function useSectionDescriptionFilters(): IFilter[] | undefined {
     const dashboardFilters = useDashboardSelector(selectExecutableDashboardFilters);
     const sectionHeadersDateDataSet = useDashboardSelector(selectSectionHeadersDateDataSet);
 
@@ -90,7 +67,6 @@ export function useSectionDescriptionFilters(): IRichTextFiltersResult {
         run: queryDateDatasets,
         result,
         status,
-        error,
     } = useDashboardQueryProcessing<
         IQueryInsightDateDatasets,
         IInsightDateDatasets,
@@ -138,14 +114,11 @@ export function useSectionDescriptionFilters(): IRichTextFiltersResult {
         return convertedFilters;
     }, [dashboardFilters, tempWidget]);
 
-    return useMemo(
-        () => ({
-            filters,
-            loading: status === "pending" || status === "running",
-            error,
-        }),
-        [filters, status, error],
-    );
+    return isLoading(status) ? undefined : filters;
+}
+
+function isLoading(status: QueryProcessingStatus): boolean {
+    return status === "pending" || status === "running";
 }
 
 function createTempRichText(dateDataset: ICatalogDateDataset | undefined): IRichTextWidget {

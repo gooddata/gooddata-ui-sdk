@@ -620,6 +620,7 @@
     "insightPicker.sortDirection.descending": "降序",
     "insightPicker.menu.actions": "操作",
     "insightPicker.resetFilters": "重置筛选器",
+    "insightPicker.suggestions": "相似",
     "objectShare.confirm.restrict.title": "限制访问权限？",
     "objectShare.confirm.restrict.description": "这会将访问权限限制为仅限上方列出的人员和组。",
     "objectShare.confirm.grantWorkspace.title": "授予整个工作区访问权限？",

@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "Tiger result converter reads the computedAttribute type from AFM attribute header identifiers instead of deriving it from the execution definition.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "ivan.nejezchleb@gooddata.com"
+}

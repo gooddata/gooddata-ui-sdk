@@ -620,6 +620,7 @@
     "insightPicker.sortDirection.descending": "Laskeva",
     "insightPicker.menu.actions": "Toiminnot",
     "insightPicker.resetFilters": "Nollaa suodattimet",
+    "insightPicker.suggestions": "Samankaltaiset",
     "objectShare.confirm.restrict.title": "Rajoitetaanko käyttöoikeutta?",
     "objectShare.confirm.restrict.description": "Tämä rajoittaa käyttöoikeuden vain yllä lueteltuihin henkilöihin ja ryhmiin.",
     "objectShare.confirm.grantWorkspace.title": "Myönnetäänkö koko työtilan kattava käyttöoikeus?",

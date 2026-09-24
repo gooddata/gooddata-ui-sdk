@@ -10,6 +10,8 @@ import {
     type IDashboardFilterReference,
     type IDashboardMeasureValueFilter,
     type IDashboardParameter,
+    type IInsight,
+    type IInsightParameterValue,
     type IParameterMetadataObject,
     type IdentifierRef,
     type ObjRef,
@@ -24,12 +26,14 @@ import {
     classifyParameterReconciliation,
     collectFilterParameterRoots,
     collectParameterReconciliations,
-    collectWidgetFilterParameterRefs,
+    collectRootParameterRefs,
+    collectWidgetFilterParameterRoots,
     computeHydratedRuntimeOverride,
     filterParameterRoots,
     formatDashboardParameter,
     isDashboardFilterIgnoredByWidget,
     resolveEffectiveParameterValuesForRefs,
+    resolveParameterDisplayValues,
     unionParameterRefs,
 } from "./parametersHelpers.js";
 import { type IDashboardParameterEntry } from "./parametersState.js";
@@ -671,21 +675,14 @@ describe("dashboard filter parameter dependencies", () => {
         });
     });
 
-    describe("collectWidgetFilterParameterRefs", () => {
-        const filterParameters: Record<string, IdentifierRef[]> = {
-            [serializeObjRef(computedAttributeRef)]: [topNRef],
-            [serializeObjRef(metricRef)]: [topNRef, sampleSizeRef],
-        };
-
-        it("unions the parameters of the tab's filters the widget does not ignore, deduped", () => {
+    describe("collectWidgetFilterParameterRoots", () => {
+        it("collects the roots of the tab's filters the widget does not ignore, deduped", () => {
             const tab = tabWith([
                 attributeFilter(computedAttributeRef, "af"),
                 measureValueFilter(metricRef, "mvf"),
+                attributeFilter(computedAttributeRef, "af-2"),
             ]);
-            expect(collectWidgetFilterParameterRefs([], tab, filterParameters)).toEqual([
-                topNRef,
-                sampleSizeRef,
-            ]);
+            expect(collectWidgetFilterParameterRoots([], tab)).toEqual([computedAttributeRef, metricRef]);
         });
 
         it("skips the filters the widget ignores", () => {
@@ -694,27 +691,150 @@ describe("dashboard filter parameter dependencies", () => {
                 measureValueFilter(metricRef, "mvf"),
             ]);
             expect(
-                collectWidgetFilterParameterRefs(
+                collectWidgetFilterParameterRoots(
                     [{ type: "measureValueFilterReference", measure: metricRef }],
                     tab,
-                    filterParameters,
                 ),
-            ).toEqual([topNRef]);
-        });
-
-        it("returns nothing for a root the map does not know", () => {
-            const tab = tabWith([attributeFilter(otherComputedAttributeRef, "af")]);
-            expect(collectWidgetFilterParameterRefs([], tab, filterParameters)).toEqual([]);
+            ).toEqual([computedAttributeRef]);
         });
 
         it("returns nothing for a tab without a filter context", () => {
-            expect(
-                collectWidgetFilterParameterRefs(
-                    [],
-                    { localIdentifier: "tab-1" } as ITabState,
-                    filterParameters,
-                ),
-            ).toEqual([]);
+            expect(collectWidgetFilterParameterRoots([], { localIdentifier: "tab-1" } as ITabState)).toEqual(
+                [],
+            );
+        });
+    });
+
+    describe("collectRootParameterRefs", () => {
+        const dependenciesByRoot: Record<string, IdentifierRef[]> = {
+            [serializeObjRef(computedAttributeRef)]: [topNRef],
+            [serializeObjRef(metricRef)]: [topNRef, sampleSizeRef],
+        };
+
+        it("unions the parameters of every root, deduped", () => {
+            expect(collectRootParameterRefs(dependenciesByRoot, [computedAttributeRef, metricRef])).toEqual([
+                topNRef,
+                sampleSizeRef,
+            ]);
+        });
+
+        it("returns nothing for a root the map does not know", () => {
+            expect(collectRootParameterRefs(dependenciesByRoot, [otherComputedAttributeRef])).toEqual([]);
         });
     });
 });
+
+describe("resolveParameterDisplayValues", () => {
+    const contextWith = (
+        entries: IDashboardParameterEntry[],
+        workspaceParameters: IParameterMetadataObject[] = [topNWorkspace],
+    ) => ({
+        entries,
+        dependenciesByRoot: {},
+        filterRoots: [],
+        workspaceParameterByRef: new Map(
+            workspaceParameters.map((parameter) => [objRefToString(parameter.ref), parameter]),
+        ),
+        isStringEnabled: true,
+    });
+
+    const topNParameter: IDashboardParameter = { ref: topNRef, parameterType: "NUMBER", mode: "active" };
+
+    it("shows the workspace default where nothing overrides it", () => {
+        expect(resolveParameterDisplayValues(contextWith([]))).toEqual(new Map([["topN", "10"]]));
+    });
+
+    it("shows the applied chip value", () => {
+        expect(
+            resolveParameterDisplayValues(contextWith([{ parameter: topNParameter, runtimeOverride: 25 }])),
+        ).toEqual(new Map([["topN", "25"]]));
+    });
+
+    it("never shows the value the user is still staging", () => {
+        expect(
+            resolveParameterDisplayValues(
+                contextWith([{ parameter: topNParameter, runtimeOverride: 25, workingOverride: 99 }]),
+            ),
+        ).toEqual(new Map([["topN", "25"]]));
+    });
+
+    it("shows the workspace default for an out-of-range chip value, as the execution does", () => {
+        expect(
+            resolveParameterDisplayValues(
+                contextWith([{ parameter: topNParameter, runtimeOverride: 999 }], [boundedWorkspace]),
+            ),
+        ).toEqual(new Map([["topN", "10"]]));
+    });
+
+    it("shows the insight-authored value where no chip claims the parameter", () => {
+        const insight = insightWithParameters([{ ref: topNRef, value: 5 }]);
+        expect(resolveParameterDisplayValues(contextWith([]), insight)).toEqual(new Map([["topN", "5"]]));
+    });
+
+    it("lets the chip beat the insight-authored value", () => {
+        const insight = insightWithParameters([{ ref: topNRef, value: 5 }]);
+        expect(
+            resolveParameterDisplayValues(
+                contextWith([{ parameter: topNParameter, runtimeOverride: 25 }]),
+                insight,
+            ),
+        ).toEqual(new Map([["topN", "25"]]));
+    });
+
+    it("shows the title of an allowed value, not the value itself", () => {
+        const scenarioParameter: IDashboardParameter = {
+            ref: scenarioRef,
+            parameterType: "STRING",
+            mode: "active",
+        };
+        expect(
+            resolveParameterDisplayValues(
+                contextWith(
+                    [{ parameter: scenarioParameter, runtimeOverride: "budget" }],
+                    [enumScenarioWorkspace],
+                ),
+            ),
+        ).toEqual(new Map([["scenario", "Budget Plan"]]));
+    });
+
+    it("covers every workspace parameter, not only the ones with an entry", () => {
+        const sampleSizeWorkspace: IParameterMetadataObject = {
+            ...topNWorkspace,
+            id: "sampleSize",
+            uri: "/sampleSize",
+            ref: sampleSizeRef,
+            title: "Sample size",
+            definition: { type: "NUMBER", defaultValue: 100 },
+        };
+        expect(
+            resolveParameterDisplayValues(
+                contextWith(
+                    [{ parameter: topNParameter, runtimeOverride: 25 }],
+                    [topNWorkspace, sampleSizeWorkspace],
+                ),
+            ),
+        ).toEqual(
+            new Map([
+                ["topN", "25"],
+                ["sampleSize", "100"],
+            ]),
+        );
+    });
+});
+
+function insightWithParameters(parameters: IInsightParameterValue[]): IInsight {
+    return {
+        insight: {
+            ref: idRef("insight-1", "insight"),
+            identifier: "insight-1",
+            uri: "/insights/insight-1",
+            title: "insight-1",
+            visualizationUrl: "local:test",
+            buckets: [],
+            filters: [],
+            sorts: [],
+            properties: {},
+            parameters,
+        },
+    } as unknown as IInsight;
+}

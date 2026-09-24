@@ -280,7 +280,7 @@
     "analyticsCatalog.visualization.load.error": "No se pudo cargar la visualización.",
     "analyticsCatalog.visualization.dialog.delete.title": "Eliminar visualización",
     "analyticsCatalog.visualization.dialog.delete.body": "¿Seguro que desea eliminar <b>{name}</b>?",
-    "analyticsCatalog.visualization.dialog.delete.usageWarning": "Esta visualización se utiliza en {count, plural, one {# panel} other {# paneles}}. Eliminarla puede afectarles.",
+    "analyticsCatalog.visualization.dialog.delete.usageWarning": "Esta visualización se utiliza en {count, plural, one {# panel} other {# paneles}}. Eliminarla puede dañarlos.",
     "analyticsCatalog.visualization.dialog.delete.submit": "Eliminar",
     "analyticsCatalog.visualization.delete.success": "Visualización eliminada.",
     "analyticsCatalog.visualization.delete.error": "No se pudo eliminar la visualización.",

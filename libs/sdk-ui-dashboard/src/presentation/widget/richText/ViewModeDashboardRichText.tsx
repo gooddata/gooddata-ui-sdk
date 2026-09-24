@@ -4,14 +4,11 @@ import { useIntl } from "react-intl";
 
 import { RichText } from "@gooddata/sdk-ui-kit";
 
-import { useRichTextWidgetFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
+import { useRichTextWidgetInputs } from "../../../_staging/sharedHooks/useRichTextInputs.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
-import { useDashboardExecConfig } from "../../../model/react/useWidgetExecConfig.js";
-import { selectSeparators } from "../../../model/store/config/configSelectors.js";
 import { DASHBOARD_SUMMARY_MACRO } from "../../../model/store/dashboardSummaryWorkflow/constants.js";
 import { selectCurrentDashboardSummaryWorkflowStatus } from "../../../model/store/dashboardSummaryWorkflow/dashboardSummaryWorkflowSelectors.js";
 import { selectCurrentDashboardSummary } from "../../../model/store/listedDashboards/listedDashboardsSummarySelectors.js";
-import { selectRestrictedRichTextReferences } from "../../../model/store/unavailableObjects/unavailableObjectsSelectors.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 
 import { type IDashboardRichTextProps } from "./types.js";
@@ -26,9 +23,6 @@ export function ViewModeDashboardRichText({
     onError,
 }: IDashboardRichTextProps) {
     const intl = useIntl();
-    const { filters } = useRichTextWidgetFilters(widget);
-    const separators = useDashboardSelector(selectSeparators);
-    const restrictedReferences = useDashboardSelector(selectRestrictedRichTextReferences);
     const { LoadingComponent } = useDashboardComponentsContext();
     const dashboardSummary = useDashboardSelector(selectCurrentDashboardSummary);
     const summaryWorkflowStatus = useDashboardSelector(selectCurrentDashboardSummaryWorkflowStatus);
@@ -59,22 +53,19 @@ export function ViewModeDashboardRichText({
 
     const raw = widget?.content ?? "";
     const value = raw.split(DASHBOARD_SUMMARY_MACRO).join(summaryWorkflowReplaceString);
-    const execConfig = useDashboardExecConfig();
+    const richTextInputs = useRichTextWidgetInputs(widget, value);
 
     return (
         <RichText
             referencesEnabled
             className="gd-rich-text-widget"
             value={value}
-            filters={filters}
-            separators={separators}
-            restrictedReferences={restrictedReferences}
+            {...richTextInputs}
             renderMode="view"
             rawContent={{
                 show: !!richTextExportData,
                 dataAttributes: richTextExportData?.markdown,
             }}
-            execConfig={execConfig}
             onLoadingChanged={onLoadingChanged}
             onError={onError}
             LoadingComponent={LoadingComponent}

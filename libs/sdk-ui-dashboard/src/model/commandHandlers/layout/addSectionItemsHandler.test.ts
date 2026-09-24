@@ -13,7 +13,7 @@ import { type IAddSectionItems, addSectionItem, undoLayoutChanges } from "../../
 import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { type IDashboardCommandFailed } from "../../events/general.js";
 import { type IDashboardLayoutSectionItemsAdded } from "../../events/layout.js";
-import { selectCatalogInsightParameters } from "../../store/catalog/catalogSelectors.js";
+import { selectCatalogParameterDependencies } from "../../store/catalog/catalogSelectors.js";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
 import { selectLayout, selectUndoableLayoutCommands } from "../../store/tabs/layout/layoutSelectors.js";
 import { ComplexDashboardIdentifier } from "../../tests/ComplexDashboard.test.helpers.js";
@@ -86,7 +86,9 @@ describe("add section items handler", () => {
                     },
                 );
                 const addedInsightKey = serializeObjRef(TestInsightItem.widget!.insight);
-                expect(selectCatalogInsightParameters(Tester.state())).not.toHaveProperty(addedInsightKey);
+                expect(selectCatalogParameterDependencies(Tester.state())).not.toHaveProperty(
+                    addedInsightKey,
+                );
 
                 await Tester.dispatchAndWaitFor(
                     addSectionItem(0, 0, TestInsightItem, false, TestCorrelation),
@@ -94,7 +96,7 @@ describe("add section items handler", () => {
                 );
 
                 await vi.waitFor(() =>
-                    expect(selectCatalogInsightParameters(Tester.state())).toHaveProperty(
+                    expect(selectCatalogParameterDependencies(Tester.state())).toHaveProperty(
                         addedInsightKey,
                         [],
                     ),

@@ -9,16 +9,10 @@ import { type IAlignPoint, RichTextWithTooltip } from "@gooddata/sdk-ui-kit";
 
 import { type IDashboardLayoutSectionFacade } from "../../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 import { serializeLayoutSectionPath } from "../../../../_staging/layout/coordinates.js";
-import { useSectionDescriptionFilters } from "../../../../_staging/sharedHooks/useRichTextFilters.js";
+import { useSectionDescriptionInputs } from "../../../../_staging/sharedHooks/useRichTextInputs.js";
 import { changeNestedLayoutSectionHeader } from "../../../../model/commands/layout.js";
-import {
-    useDashboardDispatch,
-    useDashboardSelector,
-} from "../../../../model/react/DashboardStoreProvider.js";
-import { useDashboardExecConfig } from "../../../../model/react/useWidgetExecConfig.js";
-import { selectSeparators } from "../../../../model/store/config/configSelectors.js";
+import { useDashboardDispatch } from "../../../../model/react/DashboardStoreProvider.js";
 import { uiActions } from "../../../../model/store/ui/index.js";
-import { selectRestrictedRichTextReferences } from "../../../../model/store/unavailableObjects/unavailableObjectsSelectors.js";
 import { useDashboardComponentsContext } from "../../../dashboardContexts/DashboardComponentsContext.js";
 import {
     RestrictedReferencesDialog,
@@ -42,9 +36,6 @@ export function SectionHeaderEditable({
     section,
 }: ISectionHeaderEditableProps): ReactElement {
     const { LoadingComponent } = useDashboardComponentsContext();
-    const { filters, loading } = useSectionDescriptionFilters();
-    const separators = useDashboardSelector(selectSeparators);
-    const restrictedReferences = useDashboardSelector(selectRestrictedRichTextReferences);
 
     const title = getTitle(rawTitle);
     const intl = useIntl();
@@ -134,7 +125,8 @@ export function SectionHeaderEditable({
     const serializedSectionIndex = serializeLayoutSectionPath(section.index());
     const isNestedLayout = section.layout().path() !== undefined;
 
-    const execConfig = useDashboardExecConfig();
+    // the editor shows no evaluated references, so a keystroke asks for no parameter dependencies
+    const richTextInputs = useSectionDescriptionInputs(isRichTextEditing ? rawDescription : richTextValue);
 
     return (
         <div className={cx("gd-row-header-edit", { "gd-row-header-edit--nested": isNestedLayout })}>
@@ -179,12 +171,8 @@ export function SectionHeaderEditable({
                         tooltipAlignPoints={richTextTooltipAlignPoints}
                         autoResize
                         referencesEnabled
-                        filters={filters}
-                        isFiltersLoading={loading}
-                        separators={separators}
-                        restrictedReferences={restrictedReferences}
+                        {...richTextInputs}
                         LoadingComponent={LoadingComponent}
-                        execConfig={execConfig}
                     />
                 </div>
             </div>

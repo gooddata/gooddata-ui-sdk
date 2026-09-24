@@ -3,12 +3,9 @@
 import { objRefToString, widgetRef } from "@gooddata/sdk-model";
 import { simplifyText } from "@gooddata/util";
 
-import { useRichTextWidgetFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
+import { useRichTextWidgetInputs } from "../../../_staging/sharedHooks/useRichTextInputs.js";
 import { type DescriptionTooltipOpenedData } from "../../../model/events/userInteraction.js";
-import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { useDashboardUserInteraction } from "../../../model/react/useDashboardUserInteraction.js";
-import { useDashboardExecConfig } from "../../../model/react/useWidgetExecConfig.js";
-import { selectRestrictedRichTextReferences } from "../../../model/store/unavailableObjects/unavailableObjectsSelectors.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 
 import { DescriptionClickTrigger } from "./DescriptionClickTrigger.js";
@@ -16,15 +13,13 @@ import { type IInsightWidgetDescriptionTriggerProps } from "./types.js";
 import { useInsightWidgetDescription } from "./useInsightWidgetDescription.js";
 
 export function InsightWidgetDescriptionTrigger(props: IInsightWidgetDescriptionTriggerProps) {
-    const { widget } = props;
+    const { widget, insight } = props;
     const { isVisible, description } = useInsightWidgetDescription(props);
     const widgetRefAsString = objRefToString(widgetRef(widget));
 
     const userInteraction = useDashboardUserInteraction();
 
-    const execConfig = useDashboardExecConfig();
-    const { filters } = useRichTextWidgetFilters(widget);
-    const restrictedReferences = useDashboardSelector(selectRestrictedRichTextReferences);
+    const richTextInputs = useRichTextWidgetInputs(widget, description ?? "", insight);
     const { LoadingComponent } = useDashboardComponentsContext();
 
     const eventPayload: DescriptionTooltipOpenedData = {
@@ -40,10 +35,8 @@ export function InsightWidgetDescriptionTrigger(props: IInsightWidgetDescription
                 description={description}
                 onOpen={() => userInteraction.descriptionTooltipOpened(eventPayload)}
                 useReferences
-                filters={filters}
-                restrictedReferences={restrictedReferences}
+                {...richTextInputs}
                 LoadingComponent={LoadingComponent}
-                execConfig={execConfig}
             />
         );
     }

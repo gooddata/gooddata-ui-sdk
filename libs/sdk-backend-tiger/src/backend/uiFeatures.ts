@@ -132,6 +132,7 @@ export enum TigerFeaturesNames {
     EnableAbsoluteDateFilterGranularity = "enableAbsoluteDateFilterGranularity",
     EnableComputedAttributes = "enableComputedAttributes",
     EnableBusinessBriefingReportsApp = "enableBusinessBriefingReportsApp",
+    EnableReportServerSideExport = "enableReportServerSideExport",
     EnableEmbeddingWriteCommands = "enableEmbeddingWriteCommands",
 }
 
@@ -260,6 +261,7 @@ export type ITigerFeatureFlags = {
     enableAbsoluteDateFilterGranularity: (typeof FeatureFlagsValues)["enableAbsoluteDateFilterGranularity"][number];
     enableComputedAttributes: (typeof FeatureFlagsValues)["enableComputedAttributes"][number];
     enableBusinessBriefingReportsApp: (typeof FeatureFlagsValues)["enableBusinessBriefingReportsApp"][number];
+    enableReportServerSideExport: (typeof FeatureFlagsValues)["enableReportServerSideExport"][number];
     enableEmbeddingWriteCommands: (typeof FeatureFlagsValues)["enableEmbeddingWriteCommands"][number];
 };
 
@@ -388,6 +390,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAbsoluteDateFilterGranularity: false,
     enableComputedAttributes: false,
     enableBusinessBriefingReportsApp: false,
+    enableReportServerSideExport: false,
     enableEmbeddingWriteCommands: false,
 };
 
@@ -516,5 +519,6 @@ export const FeatureFlagsValues = {
     enableAbsoluteDateFilterGranularity: [true, false] as const,
     enableComputedAttributes: [true, false] as const,
     enableBusinessBriefingReportsApp: [false, true] as const,
+    enableReportServerSideExport: [false, true] as const,
     enableEmbeddingWriteCommands: [true, false] as const,
 };

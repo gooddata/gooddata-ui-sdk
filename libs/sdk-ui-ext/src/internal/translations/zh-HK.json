@@ -620,6 +620,7 @@
     "insightPicker.sortDirection.descending": "遞減",
     "insightPicker.menu.actions": "所作所為",
     "insightPicker.resetFilters": "重設篩選器",
+    "insightPicker.suggestions": "相似",
     "objectShare.confirm.restrict.title": "限制存取權？",
     "objectShare.confirm.restrict.description": "這將限制只有上方列出的人員和群組可存取。",
     "objectShare.confirm.grantWorkspace.title": "授予整個工作區的存取權？",

@@ -12,8 +12,7 @@ import {
 import { type IBackendCapabilities } from "@gooddata/sdk-backend-spi";
 import { type Identifier, type ObjRef, idRef } from "@gooddata/sdk-model";
 
-import { newFilterParameterDependenciesWorker } from "./commandHandlers/parameters/filterParameterDependenciesWorker.js";
-import { newInsightParameterDependenciesWorker } from "./commandHandlers/parameters/insightParameterDependenciesWorker.js";
+import { newParameterDependenciesWorker } from "./commandHandlers/parameters/parameterDependenciesWorker.js";
 import { newRenderingWorker } from "./commandHandlers/render/renderingWorker.js";
 import { type IRenderingWorkerConfiguration } from "./commandHandlers/render/types.js";
 import { type DashboardCommandType } from "./commands/base.js";
@@ -42,8 +41,7 @@ export class DashboardTester extends HeadlessDashboard {
             queryServices: config?.queryServices,
             backgroundWorkers: [
                 newRenderingWorker(config?.renderingWorkerConfig || {}),
-                newInsightParameterDependenciesWorker(),
-                newFilterParameterDependenciesWorker(),
+                newParameterDependenciesWorker(),
             ],
             customizationFns: config?.customizationFns,
         };

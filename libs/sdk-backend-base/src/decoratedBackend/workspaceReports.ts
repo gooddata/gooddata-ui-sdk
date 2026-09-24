@@ -1,6 +1,10 @@
 // (C) 2026 GoodData Corporation
 
-import { type IWorkspaceReportsService } from "@gooddata/sdk-backend-spi";
+import {
+    type IExportResult,
+    type IReportExportPdfOptions,
+    type IWorkspaceReportsService,
+} from "@gooddata/sdk-backend-spi";
 import {
     type IReport,
     type IReportDefinition,
@@ -78,5 +82,9 @@ export abstract class DecoratedWorkspaceReportsService implements IWorkspaceRepo
 
     public deleteReport(ref: ObjRef): Promise<void> {
         return this.decorated.deleteReport(ref);
+    }
+
+    public exportReportToPdf(ref: ObjRef, options?: IReportExportPdfOptions): Promise<IExportResult> {
+        return this.decorated.exportReportToPdf(ref, options);
     }
 }

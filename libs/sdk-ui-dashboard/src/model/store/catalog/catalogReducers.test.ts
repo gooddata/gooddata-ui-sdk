@@ -21,8 +21,7 @@ describe("catalogReducers", () => {
     const prepareState = (attributeHierarchies?: ICatalogAttributeHierarchy[]): CatalogState => ({
         attributeHierarchies,
         parameters: { status: "uninitialized", parameters: [] },
-        insightParameters: { status: "uninitialized", byInsight: {} },
-        filterParameters: { status: "uninitialized", byRef: {} },
+        parameterDependencies: { status: "uninitialized", byRoot: {}, requestedRoots: {} },
     });
 
     describe("setCatalogItems", () => {
@@ -77,39 +76,29 @@ describe("catalogReducers", () => {
         });
     });
 
-    describe("setCatalogInsightParameters", () => {
+    describe("setCatalogParameterDependencies", () => {
         const insightRef = idRef("insight-1", "insight");
         const paramRef = idRef("topN", "parameter");
 
         it("stores the insight → parameters map and transitions status to loaded", () => {
             const state = prepareState();
             const newState = produce(state, (draft) => {
-                const action = catalogActions.setCatalogInsightParameters({
+                const action = catalogActions.setCatalogParameterDependencies({
                     status: "loaded",
-                    byInsight: { [serializeObjRef(insightRef)]: [paramRef] },
+                    byRoot: { [serializeObjRef(insightRef)]: [paramRef] },
+                    requestedRoots: {},
                 });
-                catalogReducers.setCatalogInsightParameters(draft, action);
+                catalogReducers.setCatalogParameterDependencies(draft, action);
             });
-            expect(newState.insightParameters).toEqual({
+            expect(newState.parameterDependencies).toEqual({
                 status: "loaded",
-                byInsight: { [serializeObjRef(insightRef)]: [paramRef] },
+                byRoot: { [serializeObjRef(insightRef)]: [paramRef] },
+                requestedRoots: {},
             });
-        });
-
-        it("records failed status with empty map", () => {
-            const state = prepareState();
-            const newState = produce(state, (draft) => {
-                const action = catalogActions.setCatalogInsightParameters({
-                    status: "failed",
-                    byInsight: {},
-                });
-                catalogReducers.setCatalogInsightParameters(draft, action);
-            });
-            expect(newState.insightParameters).toEqual({ status: "failed", byInsight: {} });
         });
     });
 
-    describe("mergeCatalogInsightParameters", () => {
+    describe("mergeCatalogParameterDependencies", () => {
         const insightRef = idRef("insight-1", "insight");
         const addedInsightRef = idRef("insight-2", "insight");
         const paramRef = idRef("topN", "parameter");
@@ -117,93 +106,84 @@ describe("catalogReducers", () => {
 
         it("adds the new insights to the loaded map and keeps the existing entries", () => {
             const loaded = produce(prepareState(), (draft) => {
-                catalogReducers.setCatalogInsightParameters(
+                catalogReducers.setCatalogParameterDependencies(
                     draft,
-                    catalogActions.setCatalogInsightParameters({
+                    catalogActions.setCatalogParameterDependencies({
                         status: "loaded",
-                        byInsight: { [serializeObjRef(insightRef)]: [paramRef] },
+                        byRoot: { [serializeObjRef(insightRef)]: [paramRef] },
+                        requestedRoots: {},
                     }),
                 );
             });
             const newState = produce(loaded, (draft) => {
-                catalogReducers.mergeCatalogInsightParameters(
+                catalogReducers.mergeCatalogParameterDependencies(
                     draft,
-                    catalogActions.mergeCatalogInsightParameters({
+                    catalogActions.mergeCatalogParameterDependencies({
                         [serializeObjRef(addedInsightRef)]: [otherParamRef],
                     }),
                 );
             });
-            expect(newState.insightParameters).toEqual({
+            expect(newState.parameterDependencies).toEqual({
                 status: "loaded",
-                byInsight: {
+                byRoot: {
                     [serializeObjRef(insightRef)]: [paramRef],
                     [serializeObjRef(addedInsightRef)]: [otherParamRef],
                 },
+                requestedRoots: {},
+            });
+        });
+
+        it("clears the mark of every root it merges", () => {
+            const pending = produce(prepareState(), (draft) => {
+                catalogReducers.markParameterDependenciesPending(
+                    draft,
+                    catalogActions.markParameterDependenciesPending([insightRef, addedInsightRef]),
+                );
+            });
+            const newState = produce(pending, (draft) => {
+                catalogReducers.mergeCatalogParameterDependencies(
+                    draft,
+                    catalogActions.mergeCatalogParameterDependencies({
+                        [serializeObjRef(insightRef)]: [paramRef],
+                    }),
+                );
+            });
+            expect(newState.parameterDependencies.requestedRoots).toEqual({
+                [serializeObjRef(addedInsightRef)]: "pending",
             });
         });
     });
 
-    describe("setCatalogFilterParameters", () => {
-        const metricRef = idRef("m1", "measure");
-        const paramRef = idRef("topN", "parameter");
+    describe("markParameterDependenciesPending and markParameterDependenciesFailed", () => {
+        const insightRef = idRef("insight-1", "insight");
 
-        it("stores the filter root → parameters map and transitions status to loaded", () => {
+        it("marks a root pending", () => {
             const newState = produce(prepareState(), (draft) => {
-                catalogReducers.setCatalogFilterParameters(
+                catalogReducers.markParameterDependenciesPending(
                     draft,
-                    catalogActions.setCatalogFilterParameters({
-                        status: "loaded",
-                        byRef: { [serializeObjRef(metricRef)]: [paramRef] },
-                    }),
+                    catalogActions.markParameterDependenciesPending([insightRef]),
                 );
             });
-            expect(newState.filterParameters).toEqual({
-                status: "loaded",
-                byRef: { [serializeObjRef(metricRef)]: [paramRef] },
+            expect(newState.parameterDependencies.requestedRoots).toEqual({
+                [serializeObjRef(insightRef)]: "pending",
             });
         });
 
-        it("records failed status with empty map", () => {
-            const newState = produce(prepareState(), (draft) => {
-                catalogReducers.setCatalogFilterParameters(
+        it("marks a pending root failed", () => {
+            const pending = produce(prepareState(), (draft) => {
+                catalogReducers.markParameterDependenciesPending(
                     draft,
-                    catalogActions.setCatalogFilterParameters({ status: "failed", byRef: {} }),
+                    catalogActions.markParameterDependenciesPending([insightRef]),
                 );
             });
-            expect(newState.filterParameters).toEqual({ status: "failed", byRef: {} });
-        });
-    });
-
-    describe("mergeCatalogFilterParameters", () => {
-        const metricRef = idRef("m1", "measure");
-        const computedAttributeRef = idRef("ca1", "computedAttribute");
-        const paramRef = idRef("topN", "parameter");
-        const otherParamRef = idRef("sampleSize", "parameter");
-
-        it("adds the new roots to the loaded map and keeps the existing entries", () => {
-            const loaded = produce(prepareState(), (draft) => {
-                catalogReducers.setCatalogFilterParameters(
+            const newState = produce(pending, (draft) => {
+                catalogReducers.markParameterDependenciesFailed(
                     draft,
-                    catalogActions.setCatalogFilterParameters({
-                        status: "loaded",
-                        byRef: { [serializeObjRef(metricRef)]: [paramRef] },
-                    }),
+                    catalogActions.markParameterDependenciesFailed([insightRef]),
                 );
             });
-            const newState = produce(loaded, (draft) => {
-                catalogReducers.mergeCatalogFilterParameters(
-                    draft,
-                    catalogActions.mergeCatalogFilterParameters({
-                        [serializeObjRef(computedAttributeRef)]: [otherParamRef],
-                    }),
-                );
-            });
-            expect(newState.filterParameters).toEqual({
-                status: "loaded",
-                byRef: {
-                    [serializeObjRef(metricRef)]: [paramRef],
-                    [serializeObjRef(computedAttributeRef)]: [otherParamRef],
-                },
+            expect(newState.parameterDependencies.requestedRoots).toEqual({
+                [serializeObjRef(insightRef)]: "failed",
             });
         });
     });

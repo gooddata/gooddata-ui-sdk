@@ -2,16 +2,14 @@
 
 import { useMemo } from "react";
 
+import { insightWidgetDescription } from "../../../_staging/insight/insightWidgetDescription.js";
+
 import { type IInsightWidgetDescriptionTriggerProps } from "./types.js";
 
 export const useInsightWidgetDescription = (props: IInsightWidgetDescriptionTriggerProps) => {
     const { widget, insight } = props;
 
-    const description = useMemo(() => {
-        return widget.configuration?.description?.source === "widget" || !insight
-            ? widget.description
-            : insight.insight.summary;
-    }, [widget, insight]);
+    const description = useMemo(() => insightWidgetDescription(widget, insight), [widget, insight]);
     const trimmedDescription = useMemo(() => description?.trim(), [description]);
 
     const visible = widget.configuration?.description?.visible ?? true;

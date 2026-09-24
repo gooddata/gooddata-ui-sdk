@@ -2,15 +2,9 @@
 
 import { type ComponentType } from "react";
 
-import {
-    type IExecutionConfig,
-    type IFilter,
-    type IInsight,
-    type IInsightWidget,
-    type ObjRef,
-    type ScreenSize,
-} from "@gooddata/sdk-model";
+import { type IInsight, type IInsightWidget, type ScreenSize } from "@gooddata/sdk-model";
 
+import { type IRichTextInputs } from "../../../_staging/sharedHooks/useRichTextInputs.js";
 import { type DescriptionExportData } from "../../export/types.js";
 
 export interface IInsightWidgetDescriptionTriggerProps {
@@ -20,14 +14,11 @@ export interface IInsightWidgetDescriptionTriggerProps {
     exportData?: DescriptionExportData;
 }
 
-export interface IDescriptionClickTriggerProps {
+export interface IDescriptionClickTriggerProps extends IRichTextInputs {
     className: string;
     description?: string;
     onOpen?: () => void;
     useReferences?: boolean;
     LoadingComponent?: ComponentType;
-    filters?: IFilter[];
-    restrictedReferences?: ObjRef[];
-    execConfig?: IExecutionConfig;
     id?: string;
 }

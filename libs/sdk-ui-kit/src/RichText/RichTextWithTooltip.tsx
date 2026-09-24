@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { type ReactElement, useMemo } from "react";
+import { type ReactElement } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -27,6 +27,8 @@ const descriptionMarkdown = (
         {"{metric/metric_id}"}
         <br />
         {"{label/label_id}"}
+        <br />
+        {"{parameter/parameter_id}"}
     </>
 );
 
@@ -41,90 +43,22 @@ export interface IRichTextWithTooltipProps extends IRichTextProps {
 }
 
 function RichTextWithTooltipCore({
-    value,
-    onChange,
-    renderMode,
-    editPlaceholder,
-    editRows,
-    emptyElement,
-    className,
     showTooltip = true,
     tooltipAlignPoints = alignPoints,
     tooltipDescription,
     tooltipMarkdown = descriptionMarkdown,
-    autoResize,
-    referencesEnabled,
-    allowedMarkdown,
-    filters,
-    separators,
-    restrictedReferences,
-    onLoadingChanged,
-    onError,
-    LoadingComponent,
-    rawContent,
-    execConfig,
+    ...richTextProps
 }: IRichTextWithTooltipProps) {
     const intl = useIntl();
     const description = tooltipDescription ?? intl.formatMessage({ id: "richText.tooltip" });
 
-    const Component = useMemo(() => {
-        return (
-            <RichText
-                value={value}
-                onChange={onChange}
-                renderMode={renderMode}
-                editPlaceholder={editPlaceholder}
-                editRows={editRows}
-                emptyElement={emptyElement}
-                className={className}
-                autoResize={autoResize}
-                referencesEnabled={referencesEnabled}
-                allowedMarkdown={allowedMarkdown}
-                filters={filters}
-                separators={separators}
-                restrictedReferences={restrictedReferences}
-                LoadingComponent={LoadingComponent}
-                onLoadingChanged={onLoadingChanged}
-                onError={onError}
-                rawContent={rawContent}
-                execConfig={{
-                    timestamp: execConfig?.timestamp,
-                    dataSamplingPercentage: execConfig?.dataSamplingPercentage,
-                    // omit when undefined so it does not bust the execution's defFingerprint
-                    ...(execConfig?.timezone ? { timezone: execConfig.timezone } : {}),
-                }}
-            />
-        );
-    }, [
-        value,
-        onChange,
-        renderMode,
-        editPlaceholder,
-        editRows,
-        emptyElement,
-        className,
-        autoResize,
-        referencesEnabled,
-        allowedMarkdown,
-        filters,
-        restrictedReferences,
-        LoadingComponent,
-        onLoadingChanged,
-        onError,
-        rawContent,
-        separators,
-        execConfig?.timestamp,
-        execConfig?.dataSamplingPercentage,
-        execConfig?.timezone,
-    ]);
-
     if (!showTooltip) {
-        return Component;
+        return <RichText {...richTextProps} />;
     }
 
     return (
         <BubbleHoverTrigger showDelay={0} hideDelay={0} openOnInit>
-            {Component}
+            <RichText {...richTextProps} />
             {showTooltip ? (
                 <Bubble
                     alignPoints={tooltipAlignPoints}

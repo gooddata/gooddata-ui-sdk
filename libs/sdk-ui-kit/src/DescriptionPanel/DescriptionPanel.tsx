@@ -79,9 +79,11 @@ export interface IDescriptionPanelProps {
     useReferences?: boolean;
     LoadingComponent?: ComponentType;
     filters?: IFilter[];
+    isExecutionInputLoading?: boolean;
     separators?: ISeparators;
     /** References the current user is not allowed to read; each renders as a marker in place of its value. */
     restrictedReferences?: ObjRef[];
+    parameterDisplayValues?: ReadonlyMap<string, string>;
     execConfig?: IExecutionConfig;
     id?: string;
 }
@@ -153,8 +155,10 @@ function DescriptionPanelContentCore({
     useReferences = false,
     LoadingComponent,
     filters,
+    isExecutionInputLoading,
     separators,
     restrictedReferences,
+    parameterDisplayValues,
     execConfig,
     id,
 }: IDescriptionPanelProps) {
@@ -179,8 +183,10 @@ function DescriptionPanelContentCore({
                         renderMode="view"
                         referencesEnabled={useReferences}
                         filters={filters}
+                        isExecutionInputLoading={isExecutionInputLoading}
                         separators={separators}
                         restrictedReferences={restrictedReferences}
+                        parameterDisplayValues={parameterDisplayValues}
                         LoadingComponent={LoadingComponent}
                         execConfig={execConfig}
                     />

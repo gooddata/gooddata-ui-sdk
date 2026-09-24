@@ -1642,10 +1642,8 @@ export type {
     CatalogState,
     CatalogParametersStatus,
     ICatalogParametersState,
-    CatalogInsightParametersStatus,
-    ICatalogInsightParametersState,
-    CatalogFilterParametersStatus,
-    ICatalogFilterParametersState,
+    CatalogParameterDependenciesStatus,
+    ICatalogParameterDependenciesState,
 } from "./model/store/catalog/catalogState.js";
 export {
     selectCatalogIsLoaded,
@@ -1674,10 +1672,9 @@ export {
     selectCatalogParameters,
     selectCatalogParametersStatus,
     selectCatalogParametersIsLoaded,
-    selectCatalogInsightParameters,
-    selectCatalogInsightParametersStatus,
-    selectCatalogFilterParameters,
-    selectCatalogFilterParametersStatus,
+    selectCatalogParameterDependencies,
+    selectCatalogParameterDependenciesStatus,
+    selectCatalogRequestedParameterRoots,
 } from "./model/store/catalog/catalogSelectors.js";
 export { catalogActions } from "./model/store/catalog/index.js";
 export type {

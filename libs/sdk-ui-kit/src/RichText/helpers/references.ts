@@ -106,7 +106,7 @@ export function createReference(parts: RegExpExecArray): {
  * Compared case-insensitively, the way the reference regex matches the prefix - otherwise a
  * prefix the regex accepts could still resolve to nothing and be left as literal text.
  */
-function normalizeType(type: string): "displayForm" | "measure" | "computedAttribute" | null {
+function normalizeType(type: string): "displayForm" | "measure" | "computedAttribute" | "parameter" | null {
     switch (type.toLowerCase()) {
         case "label":
         case "displayform":
@@ -116,6 +116,8 @@ function normalizeType(type: string): "displayForm" | "measure" | "computedAttri
             return "measure";
         case "computed_attribute":
             return "computedAttribute";
+        case "parameter":
+            return "parameter";
         default:
             return null;
     }

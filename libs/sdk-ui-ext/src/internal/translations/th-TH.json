@@ -620,6 +620,7 @@
     "insightPicker.sortDirection.descending": "จากมากไปน้อย",
     "insightPicker.menu.actions": "การดำเนินการ",
     "insightPicker.resetFilters": "รีเซ็ตตัวกรอง",
+    "insightPicker.suggestions": "คล้ายกัน",
     "objectShare.confirm.restrict.title": "จำกัดการเข้าถึงหรือไม่?",
     "objectShare.confirm.restrict.description": "การดำเนินการนี้จะจำกัดการเข้าถึงไว้เฉพาะบุคคลและกลุ่มที่ระบุไว้ด้านบน",
     "objectShare.confirm.grantWorkspace.title": "ให้สิทธิ์การเข้าถึงทั่วทั้งพื้นที่ทำงานหรือไม่?",

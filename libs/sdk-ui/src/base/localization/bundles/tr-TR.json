@@ -90,7 +90,7 @@
     "visualizations.totals.resetLabel.action": "Varsayılana sıfırla",
     "visualizations.totals.dropdown.title.sum": "Toplam",
     "visualizations.totals.dropdown.title.avg": "Ortalama",
-    "visualizations.totals.dropdown.title.min": "Dakika",
+    "visualizations.totals.dropdown.title.min": "Minimum",
     "visualizations.totals.dropdown.title.max": "Maksimum",
     "visualizations.totals.dropdown.title.nat": "Toplama (Genel Toplam)",
     "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "Rollup (Toplam) toplama, görselleştirmeyi metrik değeriyle filtrelerken kullanılamaz. Rollup (Toplam) kullanmak için filtre çubuğundan tüm metrik değeri filtrelerini kaldırın.",

@@ -10,6 +10,7 @@ import {
     type IInsight,
     type IInsightWidget,
     type IInsightWidgetDescriptionConfiguration,
+    type ObjRef,
     insightTitle,
     insightVisualizationType,
     isInsight,
@@ -32,12 +33,9 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import { DOWNLOADER_ID } from "../../../../../_staging/fileUtils/downloadFile.js";
-import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
-import { useDashboardExecConfig } from "../../../../../model/react/useWidgetExecConfig.js";
+import { useRichTextInputs } from "../../../../../_staging/sharedHooks/useRichTextInputs.js";
 import { useWidgetExecutionsHandler } from "../../../../../model/react/useWidgetExecutionsHandler.js";
-import { selectSeparators } from "../../../../../model/store/config/configSelectors.js";
 import { DRILL_MODAL_EXECUTION_PSEUDO_REF } from "../../../../../model/store/executionResults/constants.js";
-import { selectRestrictedRichTextReferences } from "../../../../../model/store/unavailableObjects/unavailableObjectsSelectors.js";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../../constants/zIndex.js";
 import { useDashboardComponentsContext } from "../../../../dashboardContexts/DashboardComponentsContext.js";
 import { WithDrillSelect } from "../../../../drill/DrillSelect/WithDrillSelect.js";
@@ -274,6 +272,8 @@ export function InsightDrillDialog(props: IInsightDrillDialogProps): ReactElemen
                                             isOpen={isOpen}
                                             isMobileDevice={isMobileDevice}
                                             description={description}
+                                            widgetRef={widget.ref}
+                                            insight={props.insight}
                                             widgetFilters={widgetFilters}
                                             LoadingComponent={LoadingComponent}
                                         />
@@ -362,6 +362,8 @@ interface IInsightDrillDialogDescriptionContentProps {
     isMobileDevice: boolean;
     isOpen: boolean;
     description: string;
+    widgetRef: ObjRef;
+    insight: IInsight;
     widgetFilters?: IFilter[];
     LoadingComponent?: ComponentType;
 }
@@ -371,12 +373,12 @@ function InsightDrillDialogDescriptionContent({
     isOpen,
     isMobileDevice,
     description,
+    widgetRef,
+    insight,
     widgetFilters,
     LoadingComponent,
 }: IInsightDrillDialogDescriptionContentProps) {
-    const separators = useDashboardSelector(selectSeparators);
-    const restrictedReferences = useDashboardSelector(selectRestrictedRichTextReferences);
-    const execConfig = useDashboardExecConfig();
+    const richTextInputs = useRichTextInputs(description, widgetFilters, { widgetRef, insight });
 
     return (
         <div
@@ -389,12 +391,9 @@ function InsightDrillDialogDescriptionContent({
             <div className="drill-dialog-insight-container-description-content">
                 <RichText
                     value={description}
-                    execConfig={execConfig}
                     renderMode="view"
                     referencesEnabled
-                    filters={widgetFilters}
-                    separators={separators}
-                    restrictedReferences={restrictedReferences}
+                    {...richTextInputs}
                     LoadingComponent={LoadingComponent}
                 />
             </div>

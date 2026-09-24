@@ -2576,6 +2576,12 @@ export interface IReferencesService {
     getReferences(root: IdentifierRef | IdentifierRef[], opts?: IReferencesOption): Promise<IReferencesResult>;
 }
 
+// @alpha
+export interface IReportExportPdfOptions {
+    filename?: string;
+    timeout?: number;
+}
+
 // @public
 export interface IRequestCorrelationMetadata {
     readonly [key: string]: string;
@@ -3152,6 +3158,7 @@ export interface IWorkspaceReportsService {
     deleteReport(ref: ObjRef): Promise<void>;
     deleteReportPageLayout(ref: ObjRef): Promise<void>;
     deleteReportTemplate(ref: ObjRef): Promise<void>;
+    exportReportToPdf(ref: ObjRef, options?: IReportExportPdfOptions): Promise<IExportResult>;
     getReport(ref: ObjRef): Promise<IReport>;
     getReportPageLayout(ref: ObjRef): Promise<IReportPageLayout>;
     getReportPageLayouts(): Promise<IReportPageLayout[]>;

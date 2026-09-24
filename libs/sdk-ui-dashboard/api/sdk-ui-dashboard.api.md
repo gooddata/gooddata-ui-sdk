@@ -575,17 +575,14 @@ export const catalogActions: {
     updateAttributeHierarchy: ActionCreatorWithPayload<ICatalogAttributeHierarchy, "catalog/updateAttributeHierarchy">;
     deleteAttributeHierarchy: ActionCreatorWithPayload<ICatalogAttributeHierarchy, "catalog/deleteAttributeHierarchy">;
     setCatalogParameters: ActionCreatorWithPayload<ICatalogParametersState, "catalog/setCatalogParameters">;
-    setCatalogInsightParameters: ActionCreatorWithPayload<ICatalogInsightParametersState, "catalog/setCatalogInsightParameters">;
-    mergeCatalogInsightParameters: ActionCreatorWithPayload<Record<string, IdentifierRef[]>, "catalog/mergeCatalogInsightParameters">;
-    setCatalogFilterParameters: ActionCreatorWithPayload<ICatalogFilterParametersState, "catalog/setCatalogFilterParameters">;
-    mergeCatalogFilterParameters: ActionCreatorWithPayload<Record<string, IdentifierRef[]>, "catalog/mergeCatalogFilterParameters">;
+    setCatalogParameterDependencies: ActionCreatorWithPayload<ICatalogParameterDependenciesState, "catalog/setCatalogParameterDependencies">;
+    mergeCatalogParameterDependencies: ActionCreatorWithPayload<Record<string, IdentifierRef[]>, "catalog/mergeCatalogParameterDependencies">;
+    markParameterDependenciesPending: ActionCreatorWithPayload<IdentifierRef[], "catalog/markParameterDependenciesPending">;
+    markParameterDependenciesFailed: ActionCreatorWithPayload<IdentifierRef[], "catalog/markParameterDependenciesFailed">;
 };
 
 // @alpha
-export type CatalogFilterParametersStatus = "uninitialized" | "loading" | "loaded" | "failed";
-
-// @alpha
-export type CatalogInsightParametersStatus = "uninitialized" | "loading" | "loaded" | "failed";
+export type CatalogParameterDependenciesStatus = "uninitialized" | "loaded";
 
 // @alpha
 export type CatalogParametersStatus = "uninitialized" | "loading" | "loaded" | "failed" | "gated-off";
@@ -600,8 +597,7 @@ export type CatalogState = {
     computedAttributes?: ICatalogComputedAttribute[];
     dateHierarchyTemplates?: IDateHierarchyTemplate[];
     parameters: ICatalogParametersState;
-    insightParameters: ICatalogInsightParametersState;
-    filterParameters: ICatalogFilterParametersState;
+    parameterDependencies: ICatalogParameterDependenciesState;
 };
 
 // @public
@@ -3163,19 +3159,12 @@ export interface ICancelRenamingDashboardTabPayload {
 }
 
 // @alpha
-export interface ICatalogFilterParametersState {
+export interface ICatalogParameterDependenciesState {
     // (undocumented)
-    byRef: Record<string, IdentifierRef[]>;
+    byRoot: Record<string, IdentifierRef[]>;
+    requestedRoots: Record<string, "pending" | "failed">;
     // (undocumented)
-    status: CatalogFilterParametersStatus;
-}
-
-// @alpha
-export interface ICatalogInsightParametersState {
-    // (undocumented)
-    byInsight: Record<string, IdentifierRef[]>;
-    // (undocumented)
-    status: CatalogInsightParametersStatus;
+    status: CatalogParameterDependenciesStatus;
 }
 
 // @alpha
@@ -11786,23 +11775,17 @@ export const selectCatalogDateDatasets: DashboardSelector<ICatalogDateDataset[]>
 // @public (undocumented)
 export const selectCatalogFacts: DashboardSelector<ICatalogFact[]>;
 
-// @alpha
-export const selectCatalogFilterParameters: DashboardSelector<Record<string, IdentifierRef[]>>;
-
-// @alpha
-export const selectCatalogFilterParametersStatus: DashboardSelector<CatalogFilterParametersStatus>;
-
-// @alpha
-export const selectCatalogInsightParameters: DashboardSelector<Record<string, IdentifierRef[]>>;
-
-// @alpha
-export const selectCatalogInsightParametersStatus: DashboardSelector<CatalogInsightParametersStatus>;
-
 // @alpha (undocumented)
 export const selectCatalogIsLoaded: DashboardSelector<boolean>;
 
 // @public (undocumented)
 export const selectCatalogMeasures: DashboardSelector<ICatalogMeasure[]>;
+
+// @alpha
+export const selectCatalogParameterDependencies: DashboardSelector<Record<string, IdentifierRef[]>>;
+
+// @alpha
+export const selectCatalogParameterDependenciesStatus: DashboardSelector<CatalogParameterDependenciesStatus>;
 
 // @alpha
 export const selectCatalogParameters: DashboardSelector<IParameterMetadataObject[]>;
@@ -11812,6 +11795,9 @@ export const selectCatalogParametersIsLoaded: DashboardSelector<boolean>;
 
 // @alpha
 export const selectCatalogParametersStatus: DashboardSelector<CatalogParametersStatus>;
+
+// @alpha
+export const selectCatalogRequestedParameterRoots: DashboardSelector<Record<string, "pending" | "failed">>;
 
 // @public
 export const selectColorPalette: DashboardSelector<IColorPalette>;

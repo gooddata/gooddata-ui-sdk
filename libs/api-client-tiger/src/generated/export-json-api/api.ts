@@ -861,6 +861,17 @@ export interface ExportGetImageExport202ResponseInner {
     'short'?: number;
 }
 
+export interface ExportGetReportExport202ResponseInner {
+    'char'?: string;
+    'direct'?: boolean;
+    'double'?: number;
+    'float'?: number;
+    'int'?: number;
+    'long'?: number;
+    'readOnly'?: boolean;
+    'short'?: number;
+}
+
 export interface ExportGetSlidesExport202ResponseInner {
     'char'?: string;
     'direct'?: boolean;
@@ -1360,6 +1371,34 @@ export type ExportRelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum = '
 export type ExportRelativeDateFilterRelativeDateFilterGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
 
 /**
+ * Export request object describing the export properties and metadata for report exports.
+ */
+export interface ExportReportExportRequest {
+    /**
+     * File name to be used for retrieving the pdf document.
+     */
+    'fileName': string;
+    /**
+     * Requested resulting file type.
+     */
+    'format': ExportReportExportRequestFormatEnum;
+    /**
+     * Metadata definition in free-form JSON format.
+     */
+    'metadata'?: object | null;
+    /**
+     * Report identifier
+     */
+    'reportId': string;
+    /**
+     * Time zone the export should be rendered in, as an IANA identifier (e.g. \'Asia/Kolkata\') or a GMT offset (e.g. \'GMT+01:00\'). When omitted, the workspace time zone setting is used.
+     */
+    'timezoneId'?: string | null;
+}
+
+export type ExportReportExportRequestFormatEnum = 'PDF';
+
+/**
  * Additional settings.
  */
 export interface ExportSettings {
@@ -1834,6 +1873,73 @@ export async function ActionsExportAxiosParamCreator_CreateRawExport(
 
 // ActionsExport FP - ActionsExportAxiosParamCreator
 /**
+ * Note: This API is an experimental and is going to change. Please, use it accordingly. A report export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+ * @summary (EXPERIMENTAL) Create report export request
+ * @param {string} workspaceId 
+ * @param {ExportReportExportRequest} exportReportExportRequest 
+ * @param {boolean} [xGdcDebug] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsExportAxiosParamCreator_CreateReportExport(
+    workspaceId: string, exportReportExportRequest: ExportReportExportRequest, xGdcDebug?: boolean, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('createReportExport', 'workspaceId', workspaceId)
+    // verify required parameter 'exportReportExportRequest' is not null or undefined
+    assertParamExists('createReportExport', 'exportReportExportRequest', exportReportExportRequest)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/report`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (xGdcDebug !== undefined && xGdcDebug !== null) {
+        localVarHeaderParameter['X-Gdc-Debug'] = String(JSON.stringify(xGdcDebug));
+    }
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof exportReportExportRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(exportReportExportRequest !== undefined ? exportReportExportRequest : {})
+        : exportReportExportRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsExport FP - ActionsExportAxiosParamCreator
+/**
  * Note: This API is an experimental and is going to change. Please, use it accordingly. A slides export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
  * @summary (EXPERIMENTAL) Create slides export request
  * @param {string} workspaceId 
@@ -2216,6 +2322,104 @@ export async function ActionsExportAxiosParamCreator_GetRawExport(
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
+export async function ActionsExportAxiosParamCreator_GetReportExport(
+    workspaceId: string, exportId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getReportExport', 'workspaceId', workspaceId)
+    // verify required parameter 'exportId' is not null or undefined
+    assertParamExists('getReportExport', 'exportId', exportId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/report/{exportId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"exportId"}}`, encodeURIComponent(String(exportId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsExport FP - ActionsExportAxiosParamCreator
+/**
+ * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/report endpoint. The metadata structure is not verified.
+ * @summary (EXPERIMENTAL) Retrieve metadata context
+ * @param {string} workspaceId 
+ * @param {string} exportId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsExportAxiosParamCreator_GetReportExportMetadata(
+    workspaceId: string, exportId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getReportExportMetadata', 'workspaceId', workspaceId)
+    // verify required parameter 'exportId' is not null or undefined
+    assertParamExists('getReportExportMetadata', 'exportId', exportId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/report/{exportId}/metadata`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"exportId"}}`, encodeURIComponent(String(exportId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsExport FP - ActionsExportAxiosParamCreator
+/**
+ * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+ * @summary (EXPERIMENTAL) Retrieve exported files
+ * @param {string} workspaceId 
+ * @param {string} exportId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
 export async function ActionsExportAxiosParamCreator_GetSlidesExport(
     workspaceId: string, exportId: string, 
     options: AxiosRequestConfig = {},
@@ -2460,6 +2664,32 @@ export async function ActionsExport_CreateRawExport(
 
 // ActionsExport Api FP
 /**
+ * Note: This API is an experimental and is going to change. Please, use it accordingly. A report export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+ * @summary (EXPERIMENTAL) Create report export request
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsExportCreateReportExportRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsExport_CreateReportExport(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsExportCreateReportExportRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ExportExportResponse> {
+    const localVarAxiosArgs = await ActionsExportAxiosParamCreator_CreateReportExport(
+        requestParameters.workspaceId, requestParameters.exportReportExportRequest, requestParameters.xGdcDebug, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsExport Api FP
+/**
  * Note: This API is an experimental and is going to change. Please, use it accordingly. A slides export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
  * @summary (EXPERIMENTAL) Create slides export request
  * @param {AxiosInstance} axios Axios instance.
@@ -2646,6 +2876,58 @@ export async function ActionsExport_GetRawExport(
  * @summary (EXPERIMENTAL) Retrieve exported files
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
+ * @param {ActionsExportGetReportExportRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsExport_GetReportExport(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsExportGetReportExportRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<File> {
+    const localVarAxiosArgs = await ActionsExportAxiosParamCreator_GetReportExport(
+        requestParameters.workspaceId, requestParameters.exportId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsExport Api FP
+/**
+ * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/report endpoint. The metadata structure is not verified.
+ * @summary (EXPERIMENTAL) Retrieve metadata context
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsExportGetReportExportMetadataRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsExport_GetReportExportMetadata(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsExportGetReportExportMetadataRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await ActionsExportAxiosParamCreator_GetReportExportMetadata(
+        requestParameters.workspaceId, requestParameters.exportId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsExport Api FP
+/**
+ * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+ * @summary (EXPERIMENTAL) Retrieve exported files
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
  * @param {ActionsExportGetSlidesExportRequest} requestParameters Request parameters.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
@@ -2765,6 +3047,16 @@ export interface ActionsExportInterface {
     createRawExport(requestParameters: ActionsExportCreateRawExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
 
     /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. A report export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+     * @summary (EXPERIMENTAL) Create report export request
+     * @param {ActionsExportCreateReportExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsExportInterface
+     */
+    createReportExport(requestParameters: ActionsExportCreateReportExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
+
+    /**
      * Note: This API is an experimental and is going to change. Please, use it accordingly. A slides export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
      * @summary (EXPERIMENTAL) Create slides export request
      * @param {ActionsExportCreateSlidesExportRequest} requestParameters Request parameters.
@@ -2833,6 +3125,26 @@ export interface ActionsExportInterface {
      * @memberof ActionsExportInterface
      */
     getRawExport(requestParameters: ActionsExportGetRawExportRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
+
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+     * @summary (EXPERIMENTAL) Retrieve exported files
+     * @param {ActionsExportGetReportExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsExportInterface
+     */
+    getReportExport(requestParameters: ActionsExportGetReportExportRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
+
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/report endpoint. The metadata structure is not verified.
+     * @summary (EXPERIMENTAL) Retrieve metadata context
+     * @param {ActionsExportGetReportExportMetadataRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsExportInterface
+     */
+    getReportExportMetadata(requestParameters: ActionsExportGetReportExportMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
      * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
@@ -2969,6 +3281,34 @@ export interface ActionsExportCreateRawExportRequest {
      * @memberof ActionsExportCreateRawExport
      */
     readonly exportRawExportRequest: ExportRawExportRequest
+}
+
+/**
+ * Request parameters for createReportExport operation in ActionsExport.
+ * @export
+ * @interface ActionsExportCreateReportExportRequest
+ */
+export interface ActionsExportCreateReportExportRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionsExportCreateReportExport
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {ExportReportExportRequest}
+     * @memberof ActionsExportCreateReportExport
+     */
+    readonly exportReportExportRequest: ExportReportExportRequest
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ActionsExportCreateReportExport
+     */
+    readonly xGdcDebug?: boolean
 }
 
 /**
@@ -3126,6 +3466,48 @@ export interface ActionsExportGetRawExportRequest {
 }
 
 /**
+ * Request parameters for getReportExport operation in ActionsExport.
+ * @export
+ * @interface ActionsExportGetReportExportRequest
+ */
+export interface ActionsExportGetReportExportRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionsExportGetReportExport
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionsExportGetReportExport
+     */
+    readonly exportId: string
+}
+
+/**
+ * Request parameters for getReportExportMetadata operation in ActionsExport.
+ * @export
+ * @interface ActionsExportGetReportExportMetadataRequest
+ */
+export interface ActionsExportGetReportExportMetadataRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionsExportGetReportExportMetadata
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionsExportGetReportExportMetadata
+     */
+    readonly exportId: string
+}
+
+/**
  * Request parameters for getSlidesExport operation in ActionsExport.
  * @export
  * @interface ActionsExportGetSlidesExportRequest
@@ -3244,6 +3626,18 @@ export class ActionsExport extends BaseAPI implements ActionsExportInterface {
     }
 
     /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. A report export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+     * @summary (EXPERIMENTAL) Create report export request
+     * @param {ActionsExportCreateReportExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsExport
+     */
+    public createReportExport(requestParameters: ActionsExportCreateReportExportRequest, options?: AxiosRequestConfig) {
+        return ActionsExport_CreateReportExport(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
      * Note: This API is an experimental and is going to change. Please, use it accordingly. A slides export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
      * @summary (EXPERIMENTAL) Create slides export request
      * @param {ActionsExportCreateSlidesExportRequest} requestParameters Request parameters.
@@ -3325,6 +3719,30 @@ export class ActionsExport extends BaseAPI implements ActionsExportInterface {
      */
     public getRawExport(requestParameters: ActionsExportGetRawExportRequest, options?: AxiosRequestConfig) {
         return ActionsExport_GetRawExport(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+     * @summary (EXPERIMENTAL) Retrieve exported files
+     * @param {ActionsExportGetReportExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsExport
+     */
+    public getReportExport(requestParameters: ActionsExportGetReportExportRequest, options?: AxiosRequestConfig) {
+        return ActionsExport_GetReportExport(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/report endpoint. The metadata structure is not verified.
+     * @summary (EXPERIMENTAL) Retrieve metadata context
+     * @param {ActionsExportGetReportExportMetadataRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsExport
+     */
+    public getReportExportMetadata(requestParameters: ActionsExportGetReportExportMetadataRequest, options?: AxiosRequestConfig) {
+        return ActionsExport_GetReportExportMetadata(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -4025,6 +4443,403 @@ export class RawExportExport extends BaseAPI implements RawExportExportInterface
      */
     public getRawExport(requestParameters: RawExportExportGetRawExportRequest, options?: AxiosRequestConfig) {
         return RawExportExport_GetRawExport(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+}
+
+
+// ReportExportExport FP - ReportExportExportAxiosParamCreator
+/**
+ * Note: This API is an experimental and is going to change. Please, use it accordingly. A report export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+ * @summary (EXPERIMENTAL) Create report export request
+ * @param {string} workspaceId 
+ * @param {ExportReportExportRequest} exportReportExportRequest 
+ * @param {boolean} [xGdcDebug] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ReportExportExportAxiosParamCreator_CreateReportExport(
+    workspaceId: string, exportReportExportRequest: ExportReportExportRequest, xGdcDebug?: boolean, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('createReportExport', 'workspaceId', workspaceId)
+    // verify required parameter 'exportReportExportRequest' is not null or undefined
+    assertParamExists('createReportExport', 'exportReportExportRequest', exportReportExportRequest)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/report`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (xGdcDebug !== undefined && xGdcDebug !== null) {
+        localVarHeaderParameter['X-Gdc-Debug'] = String(JSON.stringify(xGdcDebug));
+    }
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof exportReportExportRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(exportReportExportRequest !== undefined ? exportReportExportRequest : {})
+        : exportReportExportRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ReportExportExport FP - ReportExportExportAxiosParamCreator
+/**
+ * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+ * @summary (EXPERIMENTAL) Retrieve exported files
+ * @param {string} workspaceId 
+ * @param {string} exportId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ReportExportExportAxiosParamCreator_GetReportExport(
+    workspaceId: string, exportId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getReportExport', 'workspaceId', workspaceId)
+    // verify required parameter 'exportId' is not null or undefined
+    assertParamExists('getReportExport', 'exportId', exportId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/report/{exportId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"exportId"}}`, encodeURIComponent(String(exportId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ReportExportExport FP - ReportExportExportAxiosParamCreator
+/**
+ * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/report endpoint. The metadata structure is not verified.
+ * @summary (EXPERIMENTAL) Retrieve metadata context
+ * @param {string} workspaceId 
+ * @param {string} exportId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ReportExportExportAxiosParamCreator_GetReportExportMetadata(
+    workspaceId: string, exportId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getReportExportMetadata', 'workspaceId', workspaceId)
+    // verify required parameter 'exportId' is not null or undefined
+    assertParamExists('getReportExportMetadata', 'exportId', exportId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/report/{exportId}/metadata`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"exportId"}}`, encodeURIComponent(String(exportId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+
+// ReportExportExport Api FP
+/**
+ * Note: This API is an experimental and is going to change. Please, use it accordingly. A report export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+ * @summary (EXPERIMENTAL) Create report export request
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ReportExportExportCreateReportExportRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ReportExportExport_CreateReportExport(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ReportExportExportCreateReportExportRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ExportExportResponse> {
+    const localVarAxiosArgs = await ReportExportExportAxiosParamCreator_CreateReportExport(
+        requestParameters.workspaceId, requestParameters.exportReportExportRequest, requestParameters.xGdcDebug, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ReportExportExport Api FP
+/**
+ * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+ * @summary (EXPERIMENTAL) Retrieve exported files
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ReportExportExportGetReportExportRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ReportExportExport_GetReportExport(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ReportExportExportGetReportExportRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<File> {
+    const localVarAxiosArgs = await ReportExportExportAxiosParamCreator_GetReportExport(
+        requestParameters.workspaceId, requestParameters.exportId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ReportExportExport Api FP
+/**
+ * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/report endpoint. The metadata structure is not verified.
+ * @summary (EXPERIMENTAL) Retrieve metadata context
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ReportExportExportGetReportExportMetadataRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ReportExportExport_GetReportExportMetadata(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ReportExportExportGetReportExportMetadataRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await ReportExportExportAxiosParamCreator_GetReportExportMetadata(
+        requestParameters.workspaceId, requestParameters.exportId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+/**
+ * ReportExportExport - interface
+ * @export
+ * @interface ReportExportExport
+ */
+export interface ReportExportExportInterface {
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. A report export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+     * @summary (EXPERIMENTAL) Create report export request
+     * @param {ReportExportExportCreateReportExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportExportExportInterface
+     */
+    createReportExport(requestParameters: ReportExportExportCreateReportExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
+
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+     * @summary (EXPERIMENTAL) Retrieve exported files
+     * @param {ReportExportExportGetReportExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportExportExportInterface
+     */
+    getReportExport(requestParameters: ReportExportExportGetReportExportRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
+
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/report endpoint. The metadata structure is not verified.
+     * @summary (EXPERIMENTAL) Retrieve metadata context
+     * @param {ReportExportExportGetReportExportMetadataRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportExportExportInterface
+     */
+    getReportExportMetadata(requestParameters: ReportExportExportGetReportExportMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+}
+
+/**
+ * Request parameters for createReportExport operation in ReportExportExport.
+ * @export
+ * @interface ReportExportExportCreateReportExportRequest
+ */
+export interface ReportExportExportCreateReportExportRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportExportExportCreateReportExport
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {ExportReportExportRequest}
+     * @memberof ReportExportExportCreateReportExport
+     */
+    readonly exportReportExportRequest: ExportReportExportRequest
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ReportExportExportCreateReportExport
+     */
+    readonly xGdcDebug?: boolean
+}
+
+/**
+ * Request parameters for getReportExport operation in ReportExportExport.
+ * @export
+ * @interface ReportExportExportGetReportExportRequest
+ */
+export interface ReportExportExportGetReportExportRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportExportExportGetReportExport
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportExportExportGetReportExport
+     */
+    readonly exportId: string
+}
+
+/**
+ * Request parameters for getReportExportMetadata operation in ReportExportExport.
+ * @export
+ * @interface ReportExportExportGetReportExportMetadataRequest
+ */
+export interface ReportExportExportGetReportExportMetadataRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportExportExportGetReportExportMetadata
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportExportExportGetReportExportMetadata
+     */
+    readonly exportId: string
+}
+
+/**
+ * ReportExportExport - object-oriented interface
+ * @export
+ * @class ReportExportExport
+ * @extends {BaseAPI}
+ */
+export class ReportExportExport extends BaseAPI implements ReportExportExportInterface {
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. A report export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+     * @summary (EXPERIMENTAL) Create report export request
+     * @param {ReportExportExportCreateReportExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportExportExport
+     */
+    public createReportExport(requestParameters: ReportExportExportCreateReportExportRequest, options?: AxiosRequestConfig) {
+        return ReportExportExport_CreateReportExport(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+     * @summary (EXPERIMENTAL) Retrieve exported files
+     * @param {ReportExportExportGetReportExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportExportExport
+     */
+    public getReportExport(requestParameters: ReportExportExportGetReportExportRequest, options?: AxiosRequestConfig) {
+        return ReportExportExport_GetReportExport(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/report endpoint. The metadata structure is not verified.
+     * @summary (EXPERIMENTAL) Retrieve metadata context
+     * @param {ReportExportExportGetReportExportMetadataRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportExportExport
+     */
+    public getReportExportMetadata(requestParameters: ReportExportExportGetReportExportMetadataRequest, options?: AxiosRequestConfig) {
+        return ReportExportExport_GetReportExportMetadata(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 }
 

@@ -11,12 +11,12 @@ import {
     type ICatalogMeasure,
     type IDateHierarchyTemplate,
     type IdentifierRef,
+    serializeObjRef,
 } from "@gooddata/sdk-model";
 
 import {
     type CatalogState,
-    type ICatalogFilterParametersState,
-    type ICatalogInsightParametersState,
+    type ICatalogParameterDependenciesState,
     type ICatalogParametersState,
 } from "./catalogState.js";
 
@@ -107,33 +107,40 @@ const setCatalogParameters: CatalogReducer<PayloadAction<ICatalogParametersState
     state.parameters = action.payload;
 };
 
-const setCatalogInsightParameters: CatalogReducer<PayloadAction<ICatalogInsightParametersState>> = (
+const setCatalogParameterDependencies: CatalogReducer<PayloadAction<ICatalogParameterDependenciesState>> = (
     state,
     action,
 ) => {
-    state.insightParameters = action.payload;
+    state.parameterDependencies = action.payload;
 };
 
-const mergeCatalogInsightParameters: CatalogReducer<PayloadAction<Record<string, IdentifierRef[]>>> = (
+const mergeCatalogParameterDependencies: CatalogReducer<PayloadAction<Record<string, IdentifierRef[]>>> = (
     state,
     action,
 ) => {
-    Object.assign(state.insightParameters.byInsight, action.payload);
+    Object.assign(state.parameterDependencies.byRoot, action.payload);
+    for (const key of Object.keys(action.payload)) {
+        delete state.parameterDependencies.requestedRoots[key];
+    }
 };
 
-const setCatalogFilterParameters: CatalogReducer<PayloadAction<ICatalogFilterParametersState>> = (
-    state,
-    action,
-) => {
-    state.filterParameters = action.payload;
+const markParameterDependenciesPending: CatalogReducer<PayloadAction<IdentifierRef[]>> = (state, action) => {
+    markRequestedRoots(state, action.payload, "pending");
 };
 
-const mergeCatalogFilterParameters: CatalogReducer<PayloadAction<Record<string, IdentifierRef[]>>> = (
-    state,
-    action,
-) => {
-    Object.assign(state.filterParameters.byRef, action.payload);
+/**
+ * Marks roots the references service rejected, or that nothing can load. They are never requested
+ * again, and a text waiting for them executes with the parameters it has.
+ */
+const markParameterDependenciesFailed: CatalogReducer<PayloadAction<IdentifierRef[]>> = (state, action) => {
+    markRequestedRoots(state, action.payload, "failed");
 };
+
+function markRequestedRoots(state: CatalogState, roots: IdentifierRef[], mark: "pending" | "failed"): void {
+    for (const root of roots) {
+        state.parameterDependencies.requestedRoots[serializeObjRef(root)] = mark;
+    }
+}
 
 export const catalogReducers = {
     setCatalogItems,
@@ -142,8 +149,8 @@ export const catalogReducers = {
     updateAttributeHierarchy,
     deleteAttributeHierarchy,
     setCatalogParameters,
-    setCatalogInsightParameters,
-    mergeCatalogInsightParameters,
-    setCatalogFilterParameters,
-    mergeCatalogFilterParameters,
+    setCatalogParameterDependencies,
+    mergeCatalogParameterDependencies,
+    markParameterDependenciesPending,
+    markParameterDependenciesFailed,
 };

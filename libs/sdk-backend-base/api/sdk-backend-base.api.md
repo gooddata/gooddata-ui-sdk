@@ -136,6 +136,7 @@ import { IPreparedExecutionOptions } from '@gooddata/sdk-backend-spi';
 import { IRawExportCustomOverrides } from '@gooddata/sdk-backend-spi';
 import { IReport } from '@gooddata/sdk-model';
 import { IReportDefinition } from '@gooddata/sdk-model';
+import { IReportExportPdfOptions } from '@gooddata/sdk-backend-spi';
 import { IReportPageLayout } from '@gooddata/sdk-model';
 import { IReportPageLayoutDefinition } from '@gooddata/sdk-model';
 import { IReportTemplate } from '@gooddata/sdk-model';
@@ -856,6 +857,8 @@ export abstract class DecoratedWorkspaceReportsService implements IWorkspaceRepo
     // (undocumented)
     deleteReportTemplate(ref: ObjRef): Promise<void>;
     // (undocumented)
+    exportReportToPdf(ref: ObjRef, options?: IReportExportPdfOptions): Promise<IExportResult>;
+    // (undocumented)
     getReport(ref: ObjRef): Promise<IReport>;
     // (undocumented)
     getReportPageLayout(ref: ObjRef): Promise<IReportPageLayout>;
@@ -1210,6 +1213,8 @@ export class InMemoryWorkspaceReportsService implements IWorkspaceReportsService
     deleteReportPageLayout(ref: ObjRef): Promise<void>;
     // (undocumented)
     deleteReportTemplate(ref: ObjRef): Promise<void>;
+    // (undocumented)
+    exportReportToPdf(_ref: ObjRef, _options?: IReportExportPdfOptions): Promise<IExportResult>;
     // (undocumented)
     getReport(ref: ObjRef): Promise<IReport>;
     // (undocumented)

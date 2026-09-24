@@ -26,6 +26,19 @@ describe("collectReferences", () => {
         );
     });
 
+    it("collects a parameter reference under its own object type", () => {
+        expect(collectReferences("Top {parameter/top_n} of {metric/revenue}")).toEqual({
+            "parameter/top_n": {
+                ref: idRef("top_n", "parameter"),
+                type: "parameter",
+            },
+            "metric/revenue": {
+                ref: idRef("revenue", "measure"),
+                type: "measure",
+            },
+        });
+    });
+
     it("ignores an unknown prefix", () => {
         expect(collectReferences("{fact/revenue}")).toEqual({});
     });

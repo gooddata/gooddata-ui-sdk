@@ -71,17 +71,27 @@ describe("transformResultDimensions", () => {
         });
     });
 
-    it("should keep the computedAttribute ref type on computed attribute descriptors", () => {
-        const computedAttributeDimensions: ResultDimension[] = [
+    const computedAttributeExpectation = {
+        attributeHeader: {
+            ref: idRef("ca_1", "computedAttribute"),
+            primaryLabel: idRef("ca_1", "computedAttribute"),
+            formOf: {
+                ref: idRef("ca_1", "computedAttribute"),
+            },
+        },
+    };
+
+    function computedAttributeDimensions(identifierType: string): ResultDimension[] {
+        return [
             {
                 headers: [
                     {
                         attributeHeader: {
-                            label: { id: "ca_1", type: "label" },
+                            label: { id: "ca_1", type: identifierType },
                             localIdentifier: "caLocal",
                             labelName: "Computed",
-                            primaryLabel: { id: "ca_1", type: "label" },
-                            attribute: { id: "ca_1", type: "attribute" },
+                            primaryLabel: { id: "ca_1", type: identifierType },
+                            attribute: { id: "ca_1", type: identifierType },
                             attributeName: "Computed",
                             valueType: "TEXT",
                         },
@@ -90,19 +100,46 @@ describe("transformResultDimensions", () => {
                 localIdentifier: "headers1",
             },
         ];
-        const def = newDefForItems("test", [
-            newAttribute(idRef("ca_1", "computedAttribute"), (a) => a.localId("caLocal")),
-        ]);
+    }
 
-        const [dimension] = transformResultDimensions(computedAttributeDimensions, def);
+    it("should keep the computedAttribute ref type when the backend states it on the header", () => {
+        // the execution definition does not know the attribute is computed; the header alone decides
+        const def = newDefForItems("test", [newAttribute("ca_1", (a) => a.localId("caLocal"))]);
+
+        const [dimension] = transformResultDimensions(computedAttributeDimensions("computedAttribute"), def);
+
+        expect(dimension.headers[0]).toMatchObject(computedAttributeExpectation);
+    });
+
+    it("should keep displayForm ref type on a regular label", () => {
+        const def = newDefForItems("test", [newAttribute("label_1", (a) => a.localId("caLocal"))]);
+        const [dimension] = transformResultDimensions(
+            [
+                {
+                    headers: [
+                        {
+                            attributeHeader: {
+                                label: { id: "label_1", type: "label" },
+                                localIdentifier: "caLocal",
+                                labelName: "Label",
+                                primaryLabel: { id: "label_1", type: "label" },
+                                attribute: { id: "attr_1", type: "attribute" },
+                                attributeName: "Attr",
+                                valueType: "TEXT",
+                            },
+                        },
+                    ],
+                    localIdentifier: "headers1",
+                },
+            ],
+            def,
+        );
 
         expect(dimension.headers[0]).toMatchObject({
             attributeHeader: {
-                ref: idRef("ca_1", "computedAttribute"),
-                primaryLabel: idRef("ca_1", "computedAttribute"),
-                formOf: {
-                    ref: idRef("ca_1", "computedAttribute"),
-                },
+                ref: idRef("label_1", "displayForm"),
+                primaryLabel: idRef("label_1", "displayForm"),
+                formOf: { ref: idRef("attr_1", "attribute") },
             },
         });
     });

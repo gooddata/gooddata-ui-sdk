@@ -2,11 +2,7 @@
 
 import { DescriptionPanelContent } from "@gooddata/sdk-ui-kit";
 
-import { useRichTextWidgetFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
-import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
-import { useDashboardExecConfig } from "../../../model/react/useWidgetExecConfig.js";
-import { selectSeparators } from "../../../model/store/config/configSelectors.js";
-import { selectRestrictedRichTextReferences } from "../../../model/store/unavailableObjects/unavailableObjectsSelectors.js";
+import { useRichTextWidgetInputs } from "../../../_staging/sharedHooks/useRichTextInputs.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 
 import { type IInsightWidgetDescriptionTriggerProps } from "./types.js";
@@ -18,12 +14,9 @@ import { useInsightWidgetDescription } from "./useInsightWidgetDescription.js";
  * It is hidden, but holds the export data and content for exporter.
  */
 export function ExportModeInsightWidgetDescription(props: IInsightWidgetDescriptionTriggerProps) {
-    const { exportData, widget } = props;
+    const { exportData, widget, insight } = props;
     const { isVisible, description } = useInsightWidgetDescription(props);
-    const { filters } = useRichTextWidgetFilters(widget);
-    const separators = useDashboardSelector(selectSeparators);
-    const restrictedReferences = useDashboardSelector(selectRestrictedRichTextReferences);
-    const execConfig = useDashboardExecConfig();
+    const richTextInputs = useRichTextWidgetInputs(widget, description ?? "", insight);
     const { LoadingComponent } = useDashboardComponentsContext();
 
     if (!isVisible) {
@@ -35,11 +28,8 @@ export function ExportModeInsightWidgetDescription(props: IInsightWidgetDescript
             <DescriptionPanelContent
                 description={description}
                 useReferences
-                filters={filters}
-                separators={separators}
-                restrictedReferences={restrictedReferences}
+                {...richTextInputs}
                 LoadingComponent={LoadingComponent}
-                execConfig={execConfig}
             />
         </div>
     );

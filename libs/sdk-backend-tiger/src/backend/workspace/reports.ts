@@ -20,7 +20,13 @@ import {
     EntitiesApi_UpdateEntityReportTemplates,
     EntitiesApi_UpdateEntityReports,
 } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
-import { type IWorkspaceReportsService, UnexpectedError } from "@gooddata/sdk-backend-spi";
+import { ExportApi_CreateReportExport } from "@gooddata/api-client-tiger/endpoints/export";
+import {
+    type IExportResult,
+    type IReportExportPdfOptions,
+    type IWorkspaceReportsService,
+    UnexpectedError,
+} from "@gooddata/sdk-backend-spi";
 import {
     BuiltInReportPageLayouts,
     type IReport,
@@ -46,6 +52,7 @@ import {
 } from "../../convertors/toBackend/ReportsConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 import { objRefToIdentifier } from "../../utils/api.js";
+import { handleExportResultPolling } from "../../utils/exportPolling.js";
 
 const auditInclude = ["createdBy" as const, "modifiedBy" as const];
 
@@ -296,6 +303,33 @@ export class TigerWorkspaceReportsService implements IWorkspaceReportsService {
                 objectId,
             }),
         );
+    };
+
+    public exportReportToPdf = async (
+        ref: ObjRef,
+        options?: IReportExportPdfOptions,
+    ): Promise<IExportResult> => {
+        const reportId = objRefToIdentifier(ref, this.authCall);
+        return this.authCall(async (client) => {
+            const reportExport = await ExportApi_CreateReportExport(client.axios, client.basePath, {
+                workspaceId: this.workspace,
+                exportReportExportRequest: {
+                    format: "PDF",
+                    reportId,
+                    fileName: options?.filename ?? "",
+                },
+            });
+
+            return handleExportResultPolling(
+                client,
+                {
+                    workspaceId: this.workspace,
+                    exportId: reportExport.data.exportResult,
+                },
+                "getReportExport",
+                options?.timeout,
+            );
+        });
     };
 
     private newObjectId(ref: ObjRef | undefined, what: string): string {

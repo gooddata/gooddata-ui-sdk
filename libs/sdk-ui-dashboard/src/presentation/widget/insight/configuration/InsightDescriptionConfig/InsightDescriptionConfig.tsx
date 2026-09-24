@@ -15,7 +15,6 @@ import {
 
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import { useWidgetFilters } from "../../../../../model/react/useWidgetFilters.js";
-import { selectSeparators } from "../../../../../model/store/config/configSelectors.js";
 import { selectInsightByRef } from "../../../../../model/store/insights/insightsSelectors.js";
 import { useDashboardComponentsContext } from "../../../../dashboardContexts/DashboardComponentsContext.js";
 
@@ -96,7 +95,6 @@ export function InsightDescriptionConfig({
 
     const { LoadingComponent } = useDashboardComponentsContext();
     const insight = useDashboardSelector(selectInsightByRef(widget.insight));
-    const separators = useDashboardSelector(selectSeparators);
     const { result } = useWidgetFilters(widget, insight);
 
     const [widgetDescriptionState, setWidgetDescriptionState] = useState(
@@ -205,7 +203,8 @@ export function InsightDescriptionConfig({
                             readOnly={widgetDescriptionState.config === "insight"}
                             LoadingComponent={LoadingComponent}
                             insightFilters={result}
-                            separators={separators}
+                            widgetRef={widget.ref}
+                            insight={insight}
                         />
                     ) : null}
                 </div>

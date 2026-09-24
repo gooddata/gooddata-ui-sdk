@@ -14,7 +14,7 @@ const NO_RESTRICTED_REFERENCES: ObjRef[] = [];
 export function useEvaluatedReferences(
     value: string,
     filters: IFilter[],
-    config: IExecutionConfig & { enabled: boolean; isFiltersLoading?: boolean },
+    config: IExecutionConfig & { enabled: boolean; isExecutionInputLoading?: boolean },
     restrictedReferences: ObjRef[] = NO_RESTRICTED_REFERENCES,
 ) {
     const isEmptyValue = useMemo(() => !value?.replace(/\s/g, ""), [value]);
@@ -27,12 +27,7 @@ export function useEvaluatedReferences(
         loading,
         result: metrics,
         error: metricsError,
-    } = useEvaluatedMetricsAndAttributes(references, filters, {
-        ...config,
-        // Mark filters as loaded when there are no references to resolve to speed up loading.
-        // The query that sets this value runs no matter if there are references or not.
-        isFiltersLoading: Object.keys(references).length > 0 && !!config.isFiltersLoading,
-    });
+    } = useEvaluatedMetricsAndAttributes(references, filters, config);
 
     return {
         isEmptyValue,

@@ -4423,6 +4423,10 @@
         "text": "Data could not be retrieved",
         "crowdinContext": "Data could not be retrieved from the server"
     },
+    "richText.unknown_parameter": {
+        "text": "unknown parameter",
+        "crowdinContext": "Stands inline in a sentence in place of a parameter the workspace does not define; keep it lower case, it is not a sentence of its own"
+    },
     "richText.restricted": {
         "text": "restricted",
         "crowdinContext": "Stands inline in a sentence in place of a value the user has no access to; keep it lower case, it is not a sentence of its own"

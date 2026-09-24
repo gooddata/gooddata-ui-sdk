@@ -21,7 +21,7 @@ export type TextNode = HtmlNode & { value: string };
  *
  * @internal
  */
-export const REFERENCE_REGEX_SPLIT = /(\{(?:label|metric|computed_attribute)\/[a-z0-9._-]*\})/gi;
+export const REFERENCE_REGEX_SPLIT = /(\{(?:label|metric|computed_attribute|parameter)\/[a-z0-9._-]*\})/gi;
 
 /**
  * Capture groups, relied on by every consumer: 1 = the whole `{…}`, 2 = `prefix/identifier`,
@@ -29,7 +29,7 @@ export const REFERENCE_REGEX_SPLIT = /(\{(?:label|metric|computed_attribute)\/[a
  *
  * @internal
  */
-export const REFERENCE_REGEX_MATCH = /(\{((label|metric|computed_attribute)\/([a-z0-9._-]*))\})/gi;
+export const REFERENCE_REGEX_MATCH = /(\{((label|metric|computed_attribute|parameter)\/([a-z0-9._-]*))\})/gi;
 
 /**
  * The element the reference plugin leaves in place of a value the user may not read. It has a tag

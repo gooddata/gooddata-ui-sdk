@@ -6,7 +6,7 @@ import { type IMeasure, type IMeasureDefinition, idRef, measureLocalId } from "@
 
 import { type ReferenceMap } from "../helpers/references.js";
 
-import { getLabels } from "./useEvaluatedMetricsAndAttributes.js";
+import { getLabels, getMeasures } from "./useEvaluatedMetricsAndAttributes.js";
 
 describe("getLabels", () => {
     const aggregationOf = (measure: IMeasure) =>
@@ -60,5 +60,19 @@ describe("getLabels", () => {
 
         expect(metrics.map(measureLocalId)).toEqual(["m_max_0", "m_count_0", "m_max_1", "m_count_1"]);
         expect(countMap).toEqual({ m_max_0: "m_count_0", m_max_1: "m_count_1" });
+    });
+});
+
+describe("parameter references", () => {
+    const references: ReferenceMap = {
+        "parameter/top_n": { ref: idRef("top_n", "parameter"), type: "parameter" },
+    };
+
+    it("is never executed as a measure", () => {
+        expect(getMeasures(references)).toEqual([]);
+    });
+
+    it("is never executed as a label", () => {
+        expect(getLabels(references).metrics).toEqual([]);
     });
 });

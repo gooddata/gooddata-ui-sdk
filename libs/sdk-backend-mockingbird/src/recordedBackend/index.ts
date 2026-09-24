@@ -606,6 +606,12 @@ function recordedWorkspace(
                 createReport: (report) => Promise.resolve({ ...report, ref: idRef("recordedReport") }),
                 updateReport: (report) => Promise.resolve(report),
                 deleteReport: () => Promise.resolve(),
+                exportReportToPdf: () =>
+                    Promise.resolve({
+                        uri: "/example/export.pdf",
+                        objectUrl: "blob:/01345454545454",
+                        fileName: "export.pdf",
+                    }),
             };
         },
     };
