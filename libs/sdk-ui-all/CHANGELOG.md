@@ -1,6 +1,60 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 17 Sep 2026 06:44:22 GMT and should not be manually modified.
+This log was last generated on Thu, 24 Sep 2026 05:43:46 GMT and should not be manually modified.
+
+## 11.58.0
+
+Thu, 24 Sep 2026 05:43:46 GMT
+
+### Minor changes
+
+- sdk-ui-filters: Align the absolute date filter with the design spec — calendar icon inside each period picker field, manual-entry formats w/Y, M/yyyy and QQQ/yyyy, a day-level preview of the picked period, and week-granularity filter button labels like 'Week 15/2026 – Week 17/2026'
+
+### Patches
+
+- The deprecated, never-populated data props were removed from the automation dialog props types (alertToEdit, widget, insight, notificationChannels, isLoading and the management/scheduled-email equivalents); read the data from the dialog contexts instead.
+- sdk-ui-dashboard: Alerting and scheduled email dialogs render attribute filters through the dashboard's attribute filter component set, so a customized attribute filter component applies there too
+
+### Updates
+
+- sdk-ui-dashboard: Add `DashboardParametersChanged` event; route parameter writes through `changeParameterValues`
+- sdk-ui-dashboard: Root parameter dependencies at insights. Rename `catalog.measureParameters` to `catalog.insightParameters` and `selectCatalogMeasureParameters` to `selectCatalogInsightParameters`; add `mergeCatalogInsightParameters`
+- sdk-ui-kit: Add `parameterDisplayValues` to `RichText`, resolving `{parameter/<id>}` in text
+- sdk-ui-dashboard: Resolve `{parameter/<id>}` in rich text and descriptions; execute text references with the dashboard's parameter values; consolidate insight and filter dependency state, types, selectors, and catalog actions into the shared `parameterDependencies` API
+- sdk-ui-dashboard: Use the dashboard separators in the widget description popup
+- sdk-ui-gen-ai: Remove old chatbot from code at all.
+- sdk-ui-gen-ai: Enhance widget filter handling across dashboard tabs.
+- sdk-ui-gen-ai: Add customizable visualization content slot in GenAI assistant.
+- sdk-ui-dashboard: disable restricted drill targets and persist typed custom URL dependencies when saving dashboards
+- Tiger result converter reads the computedAttribute type from AFM attribute header identifiers instead of deriving it from the execution definition.
+- Move the time zone docs link to the Default item tooltip; listbox and TimezoneSelect items accept tooltipContent
+- Drillable items post message accepts a typed identifier reference, so a computed attribute can be told from a label of the same identifier
+- sdk-ui-dashboard: attribute filter commands reject references to computed attributes when computed attributes are not enabled in the workspace
+- Aggregate a computed attribute rich text reference exactly like a label
+- Keep a label and a computed attribute sharing an identifier apart in custom tooltips
+- sdk-ui-dashboard: Re-execute widgets when a parameter used by a dashboard filter changes; add `catalog.filterParameters` and its selectors
+- sdk-ui-catalog: Enter inside the parameter and computed attribute YAML editor inserts a line break instead of saving the dialog
+- sdk-ui-dashboard: Keep the filters a user may not read in an existing automation they save, and report them in the automation filter bar as one removable entry that is never named. A new automation never stores such a filter.
+- sdk-ui-dashboard: Rename selectDashboardFiltersWithoutCrossFiltering to selectExecutableDashboardFiltersWithoutCrossFiltering, so its name says that the filters the user may not read are left out.
+- sdk-ui-kit: Render a locked UiChip that is also deletable as one chip, instead of rounding the label into its own pill next to the delete button.
+- sdk-ui-all: A text that references an object the reader cannot access now gives the reason on its marker, and an editor can replace every such reference in that text with a placeholder after confirming it; a rich text widget holding one cannot be resized and offers removal alone.
+- sdk-ui-kit: CSV delimiter picker exposes the selected delimiter as a checked menu radio item with a button trigger, gates aria-controls on the open state, uses the design-system label style, and export dialogs explain a disabled submit button ; sdk-ui-dashboard: attachment settings popups no longer gain extra spacing above the footer divider
+- Remove feature flag `enableNullableJoins`.
+- Deprecate enableAmplitudeTracker and stop resolving it; the Amplitude integration was removed
+- sdk-ui-geo: prepare geo charts for the authenticated location API
+- sdk-ui-geo: upgrade maplibre-gl to 6.x (GHSA-jrc7-96c5-q579). Geo charts now need WebGL2. The MapLibre worker ships as a separate file, with other minor adjustments.
+- maplibre-gl 6 makes webpack warn "Critical dependency: the request of a dependency is an expression". Add the `maplibre-gl.mjs` parser rule to your webpack config, see the webpack rules in react-app-template.
+- Gate the insight picker's semantic search on enableCatalogSmartSearchResults and head its suggestions with a group label
+- sdk-ui-kit: Dropdown, UiDropdown and UiPopover accept a nullable ref for initialFocus and returnFocusTo, which is what useRef produces and what the focus manager behind them already took.
+- sdk-ui-pluggable-host: A workspace switch now lands on the active application's landing route in the new workspace, instead of carrying object ids of the previous workspace over.
+- sdk-ui-gen-ai: Render geo pushpin and choropleth charts in the AI assistant chat.
+- Assistant links to reports open the Reports app; the Reports module enables the host assistant
+- sdk-ui-catalog: Load the current user's permissions on a visualization behind the enableVisualizationPermissions feature flag, so Share and Edit on its detail follow them.
+- sdk-ui-catalog: Share a visualization from its catalog detail, behind the enableVisualizationPermissions feature flag.
+- sdk-backend-spi: `getInsightWithCatalogItems` accepts the same options as `getInsight`, so a visualization can be read together with the user's permissions on it.
+- gdc-dashboards-runtime: Open the embedded editor from a widget's Edit item for users who may edit that visualization but not create one.
+- sdk-model: Add the canAnalyzeWorkspace workspace permission; Analytical Designer, the Analytics Catalog and the AI assistant gate on it instead of on canCreateVisualization.
+- sdk-ui-catalog: Offer creating a visualization only to users with the `CREATE_VISUALIZATION` workspace permission.
 
 ## 11.57.0
 

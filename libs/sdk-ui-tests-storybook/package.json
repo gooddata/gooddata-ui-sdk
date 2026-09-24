@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-tests-storybook",
-    "version": "11.58.0-alpha.6",
+    "version": "11.59.0-alpha.0",
     "description": "GoodData React components storybook",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",
