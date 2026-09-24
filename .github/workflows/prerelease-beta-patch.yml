@@ -38,4 +38,3 @@ jobs:
         secrets: inherit
         with:
             source-branch: ${{ needs.check-input-version-param.outputs.branch }}
-            author-name: ${{ github.actor }}

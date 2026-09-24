@@ -75,7 +75,7 @@
         "@gooddata/oxlint-config": "workspace:*",
         "@microsoft/api-documenter": "7.30.10",
         "@microsoft/api-extractor": "7.58.12",
-        "@openapitools/openapi-generator-cli": "2.40.1",
+        "@openapitools/openapi-generator-cli": "2.41.0",
         "@types/lodash-es": "4.17.12",
         "@typescript-eslint/eslint-plugin": "8.58.0",
         "@typescript-eslint/parser": "8.58.0",
