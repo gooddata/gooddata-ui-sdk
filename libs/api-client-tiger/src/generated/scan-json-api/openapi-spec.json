@@ -1261,7 +1261,8 @@
                             "MONGODB",
                             "CRATEDB",
                             "AILAKEHOUSE",
-                            "DENODO"
+                            "DENODO",
+                            "TRINO"
                         ]
                     },
                     "url": {

@@ -320,14 +320,20 @@ function convertMultipartPart(
             };
         }
         case "kda":
+            if (!part.kda) {
+                return undefined;
+            }
             return {
                 type: "kda",
-                kda: convertKda(part.kda as AiKeyDriverAnalysis, dateNormalizer, locale, timezone),
+                kda: convertKda(part.kda, dateNormalizer, locale, timezone),
             };
         case "whatIf":
+            if (!part.whatIf) {
+                return undefined;
+            }
             return {
                 type: "whatIf",
-                whatIf: convertWhatIf(part.whatIf as AiWhatIfScenario),
+                whatIf: convertWhatIf(part.whatIf),
             };
         case "searchResults":
             return {

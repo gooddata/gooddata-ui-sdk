@@ -32,7 +32,7 @@ import { validateComputedAttributeYaml } from "./computedAttributeValidation.js"
 import { COMPUTED_ATTRIBUTE_FEATURE_FLAG } from "./gate.js";
 
 const COMPUTED_ATTRIBUTE_DOCS_URL =
-    "https://www.gooddata.ai/docs/cloud/api-and-sdk/vs-code-extension/structures/#computed-attribute";
+    "https://www.gooddata.ai/docs/cloud/create-metrics/computed-attributes/#yaml-definition";
 
 const messages = defineMessages({
     createTitle: { id: "analyticsCatalog.computedAttribute.dialog.create.title" },

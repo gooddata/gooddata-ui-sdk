@@ -101,6 +101,12 @@ const legendTooltipOptions = {
     },
 };
 
+const defaultsChartOptions = {
+    enableChartSorting: true,
+    enableReversedStacking: true,
+    enableSeparateTotalLabels: true,
+};
+
 const SLICED_CHARTS: Record<string, typeof PieChart> = {
     "local:pie": PieChart,
     "local:donut": DonutChart,
@@ -665,6 +671,7 @@ const renderAreaChart = (
             filters={filters}
             sortBy={sortBy}
             config={{
+                ...defaultsChartOptions,
                 ...visualizationTooltipOptions,
                 ...legendTooltipOptions,
                 colorPalette,
@@ -710,6 +717,7 @@ const renderBarChart = (
             stackBy={stack[0]}
             sortBy={sortBy}
             config={{
+                ...defaultsChartOptions,
                 ...visualizationTooltipOptions,
                 ...legendTooltipOptions,
                 colorPalette,
@@ -751,11 +759,12 @@ const renderColumnChart = (
         <ColumnChart
             locale={locale}
             height={VIS_HEIGHT}
-            measures={metrics}
+            measures={stack[0] ? [metrics[0]] : metrics}
             viewBy={view}
             stackBy={stack[0]}
             sortBy={sortBy}
             config={{
+                ...defaultsChartOptions,
                 ...visualizationTooltipOptions,
                 ...legendTooltipOptions,
                 colorPalette,
@@ -816,6 +825,7 @@ const renderLineChart = (
             filters={filters}
             sortBy={sortBy}
             config={{
+                ...defaultsChartOptions,
                 ...visualizationTooltipOptions,
                 ...legendTooltipOptions,
                 colorPalette,
@@ -864,6 +874,7 @@ const renderSlicedChart = (
             filters={filters}
             sortBy={sortBy}
             config={{
+                ...defaultsChartOptions,
                 ...visualizationTooltipOptions,
                 ...legendTooltipOptions,
                 colorPalette,
@@ -908,6 +919,7 @@ const renderBubbleChart = (
             filters={filters}
             sortBy={sortBy}
             config={{
+                ...defaultsChartOptions,
                 ...visualizationTooltipOptions,
                 ...legendTooltipOptions,
                 colorPalette,
@@ -952,6 +964,7 @@ const renderBulletChart = (
             filters={filters}
             sortBy={sortBy}
             config={{
+                ...defaultsChartOptions,
                 ...visualizationTooltipOptions,
                 ...legendTooltipOptions,
                 colorPalette,
@@ -997,6 +1010,7 @@ const renderComboChart = (
             filters={filters}
             sortBy={sortBy}
             config={{
+                ...defaultsChartOptions,
                 ...visualizationTooltipOptions,
                 ...legendTooltipOptions,
                 colorPalette,
@@ -1044,6 +1058,7 @@ const renderFlowDiagram = (
             filters={filters}
             sortBy={sortBy}
             config={{
+                ...defaultsChartOptions,
                 ...visualizationTooltipOptions,
                 ...legendTooltipOptions,
                 colorPalette,
@@ -1094,6 +1109,7 @@ const renderScatterPlot = (
             filters={filters}
             sortBy={sortBy}
             config={{
+                ...defaultsChartOptions,
                 ...visualizationTooltipOptions,
                 ...legendTooltipOptions,
                 colorPalette,
@@ -1138,6 +1154,7 @@ const renderRadarChart = (
             filters={filters}
             sortBy={sortBy}
             config={{
+                ...defaultsChartOptions,
                 ...visualizationTooltipOptions,
                 ...legendTooltipOptions,
                 colorPalette,
@@ -1182,6 +1199,7 @@ const renderTreemap = (
             segmentBy={segment[0]}
             filters={filters}
             config={{
+                ...defaultsChartOptions,
                 ...visualizationTooltipOptions,
                 ...legendTooltipOptions,
                 colorPalette,
@@ -1225,6 +1243,7 @@ const renderHeatmap = (
             filters={filters}
             sortBy={sortBy.length ? sortBy : undefined}
             config={{
+                ...defaultsChartOptions,
                 ...visualizationTooltipOptions,
                 ...legendTooltipOptions,
                 colorPalette,
@@ -1269,6 +1288,7 @@ const renderWaterfallChart = (
             filters={filters}
             sortBy={sortBy}
             config={{
+                ...defaultsChartOptions,
                 ...visualizationTooltipOptions,
                 ...legendTooltipOptions,
                 colorPalette,
@@ -1311,6 +1331,7 @@ const renderRepeater = (
             viewBy={view[0]}
             filters={filters}
             config={{
+                ...defaultsChartOptions,
                 colorPalette,
                 separators: props.separators,
                 inlineVisualizations: visualization.insight.properties["inlineVisualizations"],
@@ -1382,6 +1403,7 @@ const renderPushpinChart = (
                 filters={filters}
                 sortBy={sortBy}
                 config={{
+                    ...defaultsChartOptions,
                     ...legendTooltipOptions,
                     colorPalette,
                     separators: props.separators,
@@ -1428,6 +1450,7 @@ const renderChoroplethChart = (
                 filters={filters}
                 sortBy={sortBy}
                 config={{
+                    ...defaultsChartOptions,
                     ...legendTooltipOptions,
                     colorPalette,
                     separators: props.separators,
@@ -1514,6 +1537,7 @@ const renderHeadline = (
                 secondaryMeasures={secondary_metrics}
                 filters={filters}
                 config={{
+                    ...defaultsChartOptions,
                     ...visualizationTooltipOptions,
                     ...getHeadlineComparison(metrics),
                     colorPalette,

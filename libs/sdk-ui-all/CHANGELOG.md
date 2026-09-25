@@ -1,6 +1,28 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 24 Sep 2026 05:43:46 GMT and should not be manually modified.
+This log was last generated on Fri, 25 Sep 2026 12:40:14 GMT and should not be manually modified.
+
+## 11.59.0
+
+Fri, 25 Sep 2026 12:40:14 GMT
+
+### Patches
+
+- app-toolkit: scaffold applications with Vite instead of webpack.
+
+### Updates
+
+- sdk-code-convertors: Leave the measure dimension empty in buildAfmExecution when the query has no metrics, so attribute-only queries no longer fail in afm-exec-api with "Result specification refers to measure group, but execution part contains no measures".
+- sdk-ui-gen-ai: Load state management for agents and catalog items.
+- sdk-pluggable-application-model: Publish the workspace-scoped applications available to the user in the platform context, so a pluggable application can build its own application menu.
+- sdk-ui-gen-ai: Add `pageSize` support to workspace catalog.
+- sdk-backend-spi, sdk-backend-tiger: Add `getAvailableThemes` and `getAvailableColorPalettes` to the workspace styling service; they list the workspace-level themes and color palettes a workspace can use, its own and those inherited from parent workspaces. sdk-ui-kit: Styling picker items that share an identifier but differ in type no longer collide
+- sdk-ui-dashboard: key driver analysis leaves out filters the user cannot read and shows how many it left out.
+- sdk-ui-geo: pin maplibre-gl to 6.10.0 so that the map worker matches the main-thread maplibre-gl version.
+- sdk-backend-tiger: `getReports` and `getReportTemplates` return the most recently changed objects first.
+- sdk-ui-gen-ai: Show a MAQL definition in the chat as the full MAQL query instead of a row of metric chips.
+- sdk-ui-dashboard: Name every icon in the collapsed edit-mode left panel with a hover tooltip.
+- gdc-analytical-designer: The multi-dashboard save dialog offers a copy only to users who may create visualizations.
 
 ## 11.58.0
 

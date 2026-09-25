@@ -49,7 +49,7 @@ export function* loadCatalogItemsInternal() {
         const backend: IAnalyticalBackend = yield getContext("backend");
         const workspace: string = yield getContext("workspace");
 
-        const catalogService = backend.workspace(workspace).catalog().load;
+        const catalogService = backend.workspace(workspace).catalog().withPageSize(1000).load;
         const catalogServiceCall = catalogService.bind(catalogService);
 
         const results: Awaited<ReturnType<typeof catalogServiceCall>> = yield call(catalogServiceCall);

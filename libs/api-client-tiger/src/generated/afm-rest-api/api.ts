@@ -109,24 +109,6 @@ export type AbsoluteGranularityDateFilterAbsoluteGranularityDateFilterGranularit
 export type AbstractMeasureValueFilter = ComparisonMeasureValueFilter | CompoundMeasureValueFilter | RangeMeasureValueFilter | RankingFilter;
 
 /**
- * Object, with which the user is actively working.
- */
-export interface ActiveObjectIdentification {
-    /**
-     * Object ID.
-     */
-    'id': string;
-    /**
-     * Object type, e.g. dashboard.
-     */
-    'type': string;
-    /**
-     * Workspace ID.
-     */
-    'workspaceId': string;
-}
-
-/**
  * Request to add a data source to an AI Lake Database instance
  */
 export interface AddDatabaseDataSourceRequest {
@@ -299,24 +281,6 @@ export interface AfmValidObjectsResponse {
 }
 
 /**
- * AI usage metadata returned after the interaction (e.g. current query count vs. entitlement limit).
- */
-export interface AiUsageMetadataItem {
-    /**
-     * Type of usage counter, e.g. AI_QUERIES.
-     */
-    'counterType': string;
-    /**
-     * Current usage value after this request.
-     */
-    'currentValue': number;
-    /**
-     * Entitlement limit. 0 means unlimited.
-     */
-    'limit': number;
-}
-
-/**
  * An all-time date filter that does not restrict by date range. Controls how rows with empty (null/missing) date values are handled.
  */
 export interface AllTimeDateFilter {
@@ -341,27 +305,6 @@ export type AllTimeDateFilterAllTimeDateFilterEmptyValueHandlingEnum = 'INCLUDE'
 export type AllTimeDateFilterAllTimeDateFilterGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
 
 /**
- * Allowed relationship type combination.
- */
-export interface AllowedRelationshipType {
-    /**
-     * If true, allows target objects that are not part of any relationship (orphans) to be included in results. If false, orphan target objects will be excluded even if they directly match the search query. Default is true (orphans are allowed).
-     */
-    'allowOrphans'?: boolean;
-    /**
-     * Source object type (e.g., \'dashboard\', \'visualization\', \'metric\').
-     */
-    'sourceType': AllowedRelationshipTypeSourceTypeEnum;
-    /**
-     * Target object type (e.g., \'visualization\', \'metric\', \'attribute\').
-     */
-    'targetType': AllowedRelationshipTypeTargetTypeEnum;
-}
-
-export type AllowedRelationshipTypeSourceTypeEnum = 'attribute' | 'metric' | 'fact' | 'label' | 'date' | 'dataset' | 'visualization' | 'dashboard';
-export type AllowedRelationshipTypeTargetTypeEnum = 'attribute' | 'metric' | 'fact' | 'label' | 'date' | 'dataset' | 'visualization' | 'dashboard';
-
-/**
  * Request to run ANALYZE TABLE for tables in a database instance
  */
 export interface AnalyzeStatisticsRequest {
@@ -370,18 +313,6 @@ export interface AnalyzeStatisticsRequest {
      */
     'tableNames'?: Array<string>;
 }
-
-/**
- * Anomaly detection configuration.
- */
-export interface AnomalyDetectionConfig {
-    /**
-     * Outlier sensitivity level.
-     */
-    'sensitivity': AnomalyDetectionConfigSensitivityEnum;
-}
-
-export type AnomalyDetectionConfigSensitivityEnum = 'LOW' | 'MEDIUM' | 'HIGH';
 
 export interface AnomalyDetectionRequest {
     /**
@@ -531,16 +462,6 @@ export interface AttributeItem {
     'showAllValues'?: boolean;
 }
 
-export interface AttributeNegativeFilter {
-    'exclude': Array<string>;
-    'using': string;
-}
-
-export interface AttributePositiveFilter {
-    'include': Array<string>;
-    'using': string;
-}
-
 /**
  * Header containing the information related to attributes.
  */
@@ -644,52 +565,6 @@ export interface BoundedFilter {
 export type BoundedFilterGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
 
 /**
- * Certification state of the object. Who certified and when are never exposed here.
- */
-export interface CertificationInfo {
-    /**
-     * Optional message describing the certification.
-     */
-    'certificationMessage'?: string;
-    /**
-     * Certification status, e.g. CERTIFIED.
-     */
-    'status': string;
-}
-
-/**
- * Change analysis specification.
- */
-export interface ChangeAnalysisParams {
-    /**
-     * The analyzed time period
-     */
-    'analyzedPeriod': string;
-    /**
-     * Attributes to analyze for significant changes
-     */
-    'attributes': Array<AttributeItem>;
-    'dateAttribute': AttributeItem;
-    /**
-     * Optional filters to apply
-     */
-    'filters': Array<FilterDefinition>;
-    'measure': MeasureItem;
-    /**
-     * The title of the measure being analyzed
-     */
-    'measureTitle': string;
-    /**
-     * The reference time period
-     */
-    'referencePeriod': string;
-    /**
-     * Whether to use smart attribute selection
-     */
-    'useSmartAttributeSelection': boolean;
-}
-
-/**
  * Request for change analysis computation
  */
 export interface ChangeAnalysisRequest {
@@ -744,198 +619,6 @@ export interface ChangeAnalysisResult {
      * The change analysis result data containing significant changes.
      */
     'data': Array<MetricValueChange>;
-}
-
-/**
- * List of chat history interactions.
- */
-export interface ChatHistoryInteraction {
-    'changeAnalysisParams'?: ChangeAnalysisParams;
-    /**
-     * Chat History interaction ID. Unique ID for each interaction.
-     */
-    'chatHistoryInteractionId': string;
-    'createdVisualizations'?: CreatedVisualizations;
-    /**
-     * Error response in anything fails.
-     */
-    'errorResponse'?: string;
-    'foundObjects'?: FoundObjects;
-    /**
-     * Has the interaction already finished? Can be used for polling when interaction is in progress.
-     */
-    'interactionFinished': boolean;
-    /**
-     * User question
-     */
-    'question': string;
-    'reasoning'?: Reasoning;
-    'routing': RouteResult;
-    'semanticSearch'?: SearchResult;
-    /**
-     * Text response for general questions.
-     */
-    'textResponse'?: string;
-    /**
-     * Chat History thread suffix appended to ID generated by backend. Enables more chat windows.
-     */
-    'threadIdSuffix'?: string;
-    /**
-     * User feedback.
-     */
-    'userFeedback'?: ChatHistoryInteractionUserFeedbackEnum;
-}
-
-export type ChatHistoryInteractionUserFeedbackEnum = 'POSITIVE' | 'NEGATIVE' | 'NONE';
-
-export interface ChatHistoryRequest {
-    /**
-     * Return chat history records only after this interaction ID. If empty, complete chat history is returned.
-     */
-    'chatHistoryInteractionId'?: string;
-    /**
-     * User feedback.
-     */
-    'reset'?: boolean;
-    /**
-     * Response state indicating the outcome of the AI interaction.
-     */
-    'responseState'?: ChatHistoryRequestResponseStateEnum;
-    'savedVisualization'?: SavedVisualization;
-    /**
-     * Chat History thread suffix appended to ID generated by backend. Enables more chat windows.
-     */
-    'threadIdSuffix'?: string;
-    /**
-     * User feedback.
-     */
-    'userFeedback'?: ChatHistoryRequestUserFeedbackEnum;
-    /**
-     * User text feedback for the interaction.
-     */
-    'userTextFeedback'?: string;
-}
-
-export type ChatHistoryRequestResponseStateEnum = 'SUCCESSFUL' | 'UNEXPECTED_ERROR' | 'NOT_FOUND_ATTRIBUTES' | 'TOO_MANY_DATA_POINTS' | 'NO_DATA' | 'NO_RESULTS' | 'OUT_OF_TOPIC';
-export type ChatHistoryRequestUserFeedbackEnum = 'POSITIVE' | 'NEGATIVE' | 'NONE';
-
-export interface ChatHistoryResult {
-    /**
-     * List of chat history interactions.
-     */
-    'interactions': Array<ChatHistoryInteraction>;
-    /**
-     * The conversation thread ID.
-     */
-    'threadId': string;
-}
-
-export interface ChatRequest {
-    /**
-     * Filter relationships and search results based on allowed relationship type combinations. When specified, only relationships matching the allowed types are returned (e.g. for view-only users).
-     */
-    'allowedRelationshipTypes'?: Array<AllowedRelationshipType>;
-    /**
-     * If true, includes hidden objects in search and visualization building. If false (default), excludes objects where isHidden=true.
-     */
-    'includeHidden'?: boolean;
-    /**
-     * Maximum number of created results.
-     */
-    'limitCreate'?: number;
-    /**
-     * Maximum number of relevant objects included into context for LLM (for each object type).
-     */
-    'limitCreateContext'?: number;
-    /**
-     * Maximum number of search results.
-     */
-    'limitSearch'?: number;
-    /**
-     * List of object types to filter the search and visualization building. If empty or null, all object types are considered.
-     */
-    'objectTypes'?: Array<ChatRequestObjectTypesEnum>;
-    /**
-     * User question
-     */
-    'question': string;
-    /**
-     * Score, above which we return found objects. Below this score objects are not relevant.
-     */
-    'relevantScoreThreshold'?: number;
-    /**
-     * Score, above which we return found object(s) and don\'t call LLM to create new objects.
-     */
-    'searchScoreThreshold'?: number;
-    /**
-     * Chat History thread suffix appended to ID generated by backend. Enables more chat windows.
-     */
-    'threadIdSuffix'?: string;
-    /**
-     * Temporary for experiments. Ratio of title score to descriptor score.
-     */
-    'titleToDescriptorRatio'?: number;
-    'userContext'?: UserContext;
-}
-
-export type ChatRequestObjectTypesEnum = 'attribute' | 'metric' | 'fact' | 'label' | 'date' | 'dataset' | 'visualization' | 'dashboard';
-
-export interface ChatResult {
-    'changeAnalysisParams'?: ChangeAnalysisParams;
-    /**
-     * Chat History interaction ID. Unique ID for each interaction.
-     */
-    'chatHistoryInteractionId'?: string;
-    'createdVisualizations'?: CreatedVisualizations;
-    /**
-     * Error response in anything fails.
-     */
-    'errorResponse'?: string;
-    'foundObjects'?: FoundObjects;
-    'reasoning'?: Reasoning;
-    'routing'?: RouteResult;
-    'semanticSearch'?: SearchResult;
-    /**
-     * Text response for general questions.
-     */
-    'textResponse'?: string;
-    /**
-     * Chat History thread suffix appended to ID generated by backend. Enables more chat windows.
-     */
-    'threadIdSuffix'?: string;
-    /**
-     * AI usage metadata returned after the interaction (e.g. current query count vs. entitlement limit).
-     */
-    'usage'?: Array<AiUsageMetadataItem>;
-}
-
-export interface ChatUsageResponse {
-    /**
-     * Number of interactions in the time window
-     */
-    'interactionCount': number;
-    /**
-     * Maximum number of interactions in the time window any user can do in the workspace
-     */
-    'interactionLimit': number;
-    /**
-     * Time window in hours
-     */
-    'timeWindowHours': number;
-}
-
-/**
- * Clustering configuration.
- */
-export interface ClusteringConfig {
-    /**
-     * Number of clusters to create
-     */
-    'numberOfClusters': number;
-    /**
-     * Clustering algorithm threshold
-     */
-    'threshold': number;
 }
 
 export interface ClusteringRequest {
@@ -1020,83 +703,22 @@ export interface CompoundMeasureValueFilterCompoundMeasureValueFilter {
     'treatNullValuesAs'?: number;
 }
 
-/**
- * List of created visualization objects
- */
-export interface CreatedVisualization {
-    'config'?: VisualizationConfig;
-    /**
-     * List of attributes representing the dimensionality of the new visualization
-     */
-    'dimensionality': Array<DimAttribute>;
-    /**
-     * List of filters to be applied to the new visualization
-     */
-    'filters': Array<CreatedVisualizationFiltersInner>;
-    /**
-     * Proposed ID of the new visualization
-     */
-    'id': string;
-    /**
-     * List of metrics to be used in the new visualization
-     */
-    'metrics': Array<Metric>;
-    /**
-     * Saved visualization ID.
-     */
-    'savedVisualizationId'?: string;
-    /**
-     * Suggestions for next steps
-     */
-    'suggestions': Array<Suggestion>;
-    /**
-     * Proposed title of the new visualization
-     */
-    'title': string;
-    /**
-     * Visualization type requested in question
-     */
-    'visualizationType': CreatedVisualizationVisualizationTypeEnum;
+export interface DashboardSummaryRequestDto {
+    'aiModel'?: string;
+    'customUserPrompt'?: string;
+    'dashboardId': string;
+    'dryRun'?: boolean;
+    'gooddataHost'?: string;
+    'gooddataToken'?: string;
+    'keyMetricIds'?: Array<string>;
+    'referenceQuarter'?: string;
+    'temperature'?: number;
 }
 
-export type CreatedVisualizationVisualizationTypeEnum = 'TABLE' | 'HEADLINE' | 'BAR' | 'LINE' | 'PIE' | 'COLUMN' | 'SCATTER';
-
-/**
- * @type CreatedVisualizationFiltersInner
- */
-export type CreatedVisualizationFiltersInner = AttributeNegativeFilter | AttributePositiveFilter | DateAbsoluteFilter | DateRelativeFilter | GenAiRankingFilter;
-
-/**
- * Visualization definitions created by AI.
- */
-export interface CreatedVisualizations {
-    /**
-     * List of created visualization objects
-     */
-    'objects': Array<CreatedVisualization>;
-    /**
-     * DEPRECATED: Use top-level reasoning.steps instead. Reasoning from LLM. Description of how and why the answer was generated.
-     * @deprecated
-     */
-    'reasoning': string;
-    /**
-     * List of suggestions for next steps. Filled when no visualization was created, suggests alternatives.
-     */
-    'suggestions': Array<Suggestion>;
-}
-
-/**
- * Dashboard the user is currently viewing.
- */
-export interface DashboardContext {
-    /**
-     * Dashboard object ID.
-     */
-    'id': string;
-    /**
-     * Widgets currently visible on the dashboard.
-     */
-    'widgets': Array<WidgetDescriptor>;
+export interface DashboardSummaryResponseDto {
+    'message': string;
+    'runId': string;
+    'status': string;
 }
 
 /**
@@ -1159,26 +781,11 @@ export interface DatabaseInstance {
     'storageIds': Array<string>;
 }
 
-export interface DateAbsoluteFilter {
-    'from': string;
-    'to': string;
-    'using': string;
-}
-
 /**
  * @type DateFilter
  * Abstract filter definition type for dates.
  */
 export type DateFilter = AbsoluteDateFilter | AbsoluteGranularityDateFilter | AllTimeDateFilter | RelativeDateFilter;
-
-export interface DateRelativeFilter {
-    'from': number;
-    'granularity': DateRelativeFilterGranularityEnum;
-    'to': number;
-    'using': string;
-}
-
-export type DateRelativeFilterGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
 
 /**
  * Filter definition type specified by label and values.
@@ -1217,26 +824,6 @@ export interface DependsOnDateFilter {
 export interface DependsOnMatchFilter {
     'matchFilter': MatchAttributeFilter;
 }
-
-/**
- * List of attributes representing the dimensionality of the new visualization
- */
-export interface DimAttribute {
-    /**
-     * ID of the object
-     */
-    'id': string;
-    /**
-     * Title of attribute.
-     */
-    'title': string;
-    /**
-     * Object type
-     */
-    'type': DimAttributeTypeEnum;
-}
-
-export type DimAttributeTypeEnum = 'attribute';
 
 /**
  * Single dimension description.
@@ -1363,20 +950,6 @@ export interface ElementsResponse {
 }
 
 export type ElementsResponseGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
-
-/**
- * Structured error, present when the search could not run (e.g. metadata sync in progress). Absent on success.
- */
-export interface ErrorInfo {
-    /**
-     * Stable machine-readable error code. Switch on this for localized client messages.
-     */
-    'reason': string;
-    /**
-     * HTTP-like semantic status (e.g. 503 when the workspace is still syncing).
-     */
-    'statusCode': number;
-}
 
 /**
  * Links to the execution result.
@@ -1540,6 +1113,12 @@ export interface FailedOperation extends Operation {
 
 export type FailedOperationStatusEnum = 'failed';
 
+export interface FeedbackRequestDto {
+    'sentiment': FeedbackRequestDtoSentimentEnum;
+}
+
+export type FeedbackRequestDtoSentimentEnum = 'POSITIVE' | 'NEGATIVE';
+
 /**
  * Specifies what is used for filtering.
  */
@@ -1564,24 +1143,6 @@ export type FilterDefinition = AbsoluteDateFilter | AbsoluteGranularityDateFilte
  */
 export type FilterDefinitionForSimpleMeasure = AttributeFilter | DateFilter;
 
-/**
- * Forecast configuration.
- */
-export interface ForecastConfig {
-    /**
-     * Confidence interval boundary value.
-     */
-    'confidenceLevel': number;
-    /**
-     * Number of future periods that should be forecasted
-     */
-    'forecastPeriod': number;
-    /**
-     * Whether the input data is seasonal
-     */
-    'seasonal': boolean;
-}
-
 export interface ForecastRequest {
     /**
      * Confidence interval boundary value.
@@ -1604,30 +1165,6 @@ export interface ForecastResult {
     'prediction': Array<number | null>;
     'upperBound': Array<number | null>;
 }
-
-/**
- * List of objects found by similarity search and post-processed by LLM.
- */
-export interface FoundObjects {
-    /**
-     * List of objects found with a similarity search.
-     */
-    'objects': Array<SearchResultObject>;
-    /**
-     * DEPRECATED: Use top-level reasoning.steps instead. Reasoning from LLM. Description of how and why the answer was generated.
-     * @deprecated
-     */
-    'reasoning': string;
-}
-
-export interface GenAiRankingFilter {
-    'dimensionality'?: Array<string>;
-    'measures': Array<string>;
-    'operator': GenAiRankingFilterOperatorEnum;
-    'value': number;
-}
-
-export type GenAiRankingFilterOperatorEnum = 'TOP' | 'BOTTOM';
 
 export interface GenerateDescriptionRequest {
     /**
@@ -1768,35 +1305,6 @@ export interface InlineMeasureDefinitionInline {
      */
     'maql': string;
 }
-
-/**
- * Insight widget displaying a visualization.
- */
-export interface InsightWidgetDescriptor {
-    /**
-     * Filters currently applied to the dashboard.
-     */
-    'filters'?: Array<FilterDefinition>;
-    /**
-     * Signed result ID for this widget\'s cached execution result.
-     */
-    'resultId'?: string;
-    /**
-     * Widget title as displayed on the dashboard.
-     */
-    'title': string;
-    /**
-     * Visualization object ID referenced by this insight widget.
-     */
-    'visualizationId': string;
-    /**
-     * Widget object ID.
-     */
-    'widgetId': string;
-    'widgetType': InsightWidgetDescriptorWidgetTypeEnum;
-}
-
-export type InsightWidgetDescriptorWidgetTypeEnum = 'insight';
 
 /**
  * JSON:API-compatible single-resource response envelope
@@ -1989,6 +1497,34 @@ export interface KeyDriversResult {
     'data': object;
 }
 
+export interface KnowledgeRecommendationsRequestDto {
+    'aiModel'?: string;
+    'analyticalDashboardId'?: string;
+    'analyzedValue'?: number;
+    'comparisonType': KnowledgeRecommendationsRequestDtoComparisonTypeEnum;
+    'direction'?: KnowledgeRecommendationsRequestDtoDirectionEnum;
+    'dryRun'?: boolean;
+    'gooddataHost'?: string;
+    'gooddataToken'?: string;
+    'limit'?: number;
+    'maxTokens'?: number;
+    'metricId': string;
+    'minScore'?: number;
+    'referenceValue'?: number;
+    'temperature'?: number;
+    'widgetId'?: string;
+    'widgetName'?: string;
+}
+
+export type KnowledgeRecommendationsRequestDtoComparisonTypeEnum = 'MONTH' | 'QUARTER' | 'YEAR';
+export type KnowledgeRecommendationsRequestDtoDirectionEnum = 'INCREASED' | 'DECREASED';
+
+export interface KnowledgeRecommendationsResponseDto {
+    'message': string;
+    'runId': string;
+    'status': string;
+}
+
 export interface ListLlmProviderModelsRequest {
     'providerConfig': LlmProviderConfig;
 }
@@ -2156,31 +1692,6 @@ export interface MemoryItemUser {
 }
 
 /**
- * List of metrics to be used in the new visualization
- */
-export interface Metric {
-    /**
-     * Agg function. Empty if a stored metric is used.
-     */
-    'aggFunction'?: MetricAggFunctionEnum;
-    /**
-     * ID of the object
-     */
-    'id': string;
-    /**
-     * Title of metric.
-     */
-    'title': string;
-    /**
-     * Object type
-     */
-    'type': MetricTypeEnum;
-}
-
-export type MetricAggFunctionEnum = 'COUNT' | 'SUM' | 'MIN' | 'MAX' | 'AVG' | 'MEDIAN';
-export type MetricTypeEnum = 'metric' | 'fact' | 'attribute';
-
-/**
  * (EXPERIMENTAL) Override for a catalog metric definition.
  */
 export interface MetricDefinitionOverride {
@@ -2193,9 +1704,11 @@ export interface MetricDefinitionOverride {
  */
 export interface MetricValueChange {
     /**
-     * The name of the attribute being analyzed
+     * Deprecated: bare id of the analyzed label or computed attribute, without its type. Use attributeRef instead.
+     * @deprecated
      */
     'attributeName': string;
+    'attributeRef': AfmObjectIdentifierLabel;
     /**
      * The value of the attribute being analyzed
      */
@@ -2272,27 +1785,6 @@ export interface NegativeAttributeFilterNegativeAttributeFilter {
      * If true, indicates that the values in notInElements were filled free-form, otherwise they have been picked from existing elements.
      */
     'usesArbitraryValues'?: boolean;
-}
-
-export interface ObjectReference {
-    /**
-     * Object identifier (e.g. widget ID, metric ID).
-     */
-    'id': string;
-    /**
-     * Type of the referenced object.
-     */
-    'type': ObjectReferenceTypeEnum;
-}
-
-export type ObjectReferenceTypeEnum = 'WIDGET' | 'METRIC' | 'ATTRIBUTE' | 'DASHBOARD';
-
-export interface ObjectReferenceGroup {
-    'context'?: ObjectReference;
-    /**
-     * Objects the user explicitly referenced within this context.
-     */
-    'objects': Array<ObjectReference>;
 }
 
 /**
@@ -2712,34 +2204,6 @@ export interface RankingFilterRankingFilter {
 export type RankingFilterRankingFilterOperatorEnum = 'TOP' | 'BOTTOM';
 
 /**
- * Reasoning wrapper containing steps taken during request handling.
- */
-export interface Reasoning {
-    /**
-     * Final answer/reasoning from the use case result.
-     */
-    'answer'?: string;
-    /**
-     * Steps taken during processing, showing the AI\'s reasoning process.
-     */
-    'steps': Array<ReasoningStep>;
-}
-
-/**
- * Steps taken during processing, showing the AI\'s reasoning process.
- */
-export interface ReasoningStep {
-    /**
-     * Detailed thoughts/messages within this step.
-     */
-    'thoughts': Array<Thought>;
-    /**
-     * Title describing this reasoning step.
-     */
-    'title': string;
-}
-
-/**
  * A date filter specifying a time interval that is relative to the current date. For example, last week, next month, and so on. Field dataset is representing qualifier of date dimension. The \'from\' and \'to\' properties mark the boundaries of the interval. If \'from\' is omitted, all values earlier than \'to\' are included. If \'to\' is omitted, all values later than \'from\' are included. It is not allowed to omit both.
  */
 export interface RelativeDateFilter {
@@ -2826,47 +2290,6 @@ export interface ResultSpec {
 }
 
 /**
- * Rich text widget displaying static content. Has no execution result.
- */
-export interface RichTextWidgetDescriptor {
-    /**
-     * Markdown/text content of the rich text widget.
-     */
-    'content'?: string;
-    /**
-     * Filters currently applied to the dashboard.
-     */
-    'filters'?: Array<FilterDefinition>;
-    /**
-     * Widget title as displayed on the dashboard.
-     */
-    'title': string;
-    /**
-     * Widget object ID.
-     */
-    'widgetId': string;
-    'widgetType': RichTextWidgetDescriptorWidgetTypeEnum;
-}
-
-export type RichTextWidgetDescriptorWidgetTypeEnum = 'richText';
-
-/**
- * Question -> Use Case routing. May contain final answer is a special use case is not required.
- */
-export interface RouteResult {
-    /**
-     * Explanation why LLM picked this use case.
-     */
-    'reasoning': string;
-    /**
-     * Use case where LLM routed based on question.
-     */
-    'useCase': RouteResultUseCaseEnum;
-}
-
-export type RouteResultUseCaseEnum = 'INVALID' | 'GENERAL' | 'SEARCH' | 'CREATE_VISUALIZATION' | 'EXTEND_VISUALIZATION' | 'HOWTO' | 'CHANGE_ANALYSIS' | 'ALERT';
-
-/**
  * Request to run an AI Lake Service Command
  */
 export interface RunServiceCommandRequest {
@@ -2878,126 +2301,6 @@ export interface RunServiceCommandRequest {
      * The payload to pass to the command
      */
     'payload'?: object | null;
-}
-
-/**
- * Created and saved visualization IDs.
- */
-export interface SavedVisualization {
-    /**
-     * Created visualization ID.
-     */
-    'createdVisualizationId': string;
-    /**
-     * Saved visualization ID.
-     */
-    'savedVisualizationId': string;
-}
-
-export interface SearchRelationshipObject {
-    /**
-     * Source object ID.
-     */
-    'sourceObjectId': string;
-    /**
-     * Source object title.
-     */
-    'sourceObjectTitle': string;
-    /**
-     * Source object type, e.g. dashboard.
-     */
-    'sourceObjectType': string;
-    /**
-     * Source workspace ID. If relationship is dashboard->visualization, this is the workspace where the dashboard is located.
-     */
-    'sourceWorkspaceId': string;
-    /**
-     * Target object ID.
-     */
-    'targetObjectId': string;
-    /**
-     * Target object title.
-     */
-    'targetObjectTitle': string;
-    /**
-     * Target object type, e.g. visualization.
-     */
-    'targetObjectType': string;
-    /**
-     * Target workspace ID. If relationship is dashboard->visualization, this is the workspace where the visualization is located.
-     */
-    'targetWorkspaceId': string;
-}
-
-/**
- * Semantic search result payload.
- */
-export interface SearchResult {
-    'error'?: ErrorInfo;
-    /**
-     * DEPRECATED: Use top-level reasoning.steps instead. If something is not working properly this field will contain explanation.
-     * @deprecated
-     */
-    'reasoning': string;
-    'relationships': Array<SearchRelationshipObject>;
-    'results': Array<SearchResultObject>;
-}
-
-export interface SearchResultObject {
-    'certification'?: CertificationInfo;
-    /**
-     * Timestamp when object was created.
-     */
-    'createdAt'?: string;
-    /**
-     * Object description.
-     */
-    'description'?: string;
-    /**
-     * Object ID.
-     */
-    'id': string;
-    /**
-     * If true, this object is hidden from AI search results by default.
-     */
-    'isHidden'?: boolean;
-    /**
-     * Timestamp when object was last modified.
-     */
-    'modifiedAt'?: string;
-    /**
-     * Result score calculated by a similarity search algorithm (cosine_distance).
-     */
-    'score'?: number;
-    /**
-     * Result score for descriptor containing(now) description and tags.
-     */
-    'scoreDescriptor'?: number;
-    /**
-     * Result score for exact match(id/title). 1/1000. Other scores are multiplied by this.
-     */
-    'scoreExactMatch'?: number;
-    /**
-     * Result score for object title.
-     */
-    'scoreTitle'?: number;
-    'tags'?: Array<string>;
-    /**
-     * Object title.
-     */
-    'title': string;
-    /**
-     * Object type, e.g. dashboard.
-     */
-    'type': string;
-    /**
-     * If the object is visualization, this field defines the type of visualization.
-     */
-    'visualizationUrl'?: string;
-    /**
-     * Workspace ID.
-     */
-    'workspaceId': string;
 }
 
 /**
@@ -3124,20 +2427,6 @@ export interface SucceededOperation extends Operation {
 
 export type SucceededOperationStatusEnum = 'succeeded';
 
-/**
- * List of suggestions for next steps. Filled when no visualization was created, suggests alternatives.
- */
-export interface Suggestion {
-    /**
-     * Suggestion button label
-     */
-    'label': string;
-    /**
-     * Suggestion query
-     */
-    'query': string;
-}
-
 export interface TestLlmProviderByIdRequest {
     /**
      * Models overrides.
@@ -3167,16 +2456,6 @@ export interface TestLlmProviderResponse {
      * Whether the LLM provider is reachable.
      */
     'providerReachable': boolean;
-}
-
-/**
- * Detailed thoughts/messages within this step.
- */
-export interface Thought {
-    /**
-     * The text content of this thought.
-     */
-    'text': string;
 }
 
 /**
@@ -3318,13 +2597,6 @@ export interface TriggerQualityIssuesCalculationResponse {
 export type TriggerQualityIssuesCalculationResponseStatusEnum = 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED' | 'DISABLED';
 
 /**
- * Ambient UI state: what the user is currently looking at (dashboard, visible widgets).
- */
-export interface UIContext {
-    'dashboard'?: DashboardContext;
-}
-
-/**
  * Request to update the data source associated with an AI Lake Database instance
  */
 export interface UpdateDatabaseDataSourceRequest {
@@ -3356,18 +2628,6 @@ export interface UpdateDatabaseDataSourceResponse {
     'dataSourceName': string;
 }
 
-/**
- * User context with ambient UI state (view) and explicitly referenced objects.
- */
-export interface UserContext {
-    'activeObject'?: ActiveObjectIdentification;
-    /**
-     * Groups of explicitly referenced objects, each optionally scoped by a context (e.g. a dashboard context with widget references).
-     */
-    'referencedObjects'?: Array<ObjectReferenceGroup>;
-    'view'?: UIContext;
-}
-
 export interface ValidateByItem {
     /**
      * Specifies entity used for valid elements computation.
@@ -3379,16 +2639,6 @@ export interface ValidateByItem {
     'type': string;
 }
 
-/**
- * Visualization config for smart-function rendering.
- */
-export interface VisualizationConfig {
-    'anomalyDetection'?: AnomalyDetectionConfig;
-    'clustering'?: ClusteringConfig;
-    'forecast'?: ForecastConfig;
-    'whatIf'?: WhatIfScenarioConfig;
-}
-
 export interface VisualizationObjectExecution {
     /**
      * Additional AFM filters merged on top of the visualization object\'s own filters.
@@ -3397,93 +2647,26 @@ export interface VisualizationObjectExecution {
     'settings'?: ExecutionSettings;
 }
 
-/**
- * Visualization switcher widget allowing users to toggle between multiple visualizations.
- */
-export interface VisualizationSwitcherWidgetDescriptor {
-    /**
-     * ID of the currently active visualization in the switcher.
-     */
-    'activeVisualizationId': string;
-    /**
-     * Filters currently applied to the dashboard.
-     */
-    'filters'?: Array<FilterDefinition>;
-    /**
-     * Signed result ID for the currently active visualization\'s execution result.
-     */
-    'resultId'?: string;
-    /**
-     * Widget title as displayed on the dashboard.
-     */
-    'title': string;
-    /**
-     * IDs of all visualizations available in the switcher.
-     */
-    'visualizationIds': Array<string>;
-    /**
-     * Widget object ID.
-     */
-    'widgetId': string;
-    'widgetType': VisualizationSwitcherWidgetDescriptorWidgetTypeEnum;
+export interface WorkflowDashboardSummaryRequestDto {
+    'customUserPrompt'?: string;
+    'dashboardId': string;
+    'keyMetricIds'?: Array<string>;
+    'referenceQuarter'?: string;
 }
 
-export type VisualizationSwitcherWidgetDescriptorWidgetTypeEnum = 'visualizationSwitcher';
-
-/**
- * Measure adjustments for this scenario
- */
-export interface WhatIfMeasureAdjustmentConfig {
-    /**
-     * ID of the metric or fact to adjust
-     */
-    'metricId': string;
-    /**
-     * Type: metric or fact
-     */
-    'metricType': string;
-    /**
-     * Alternative MAQL expression for this scenario
-     */
-    'scenarioMaql': string;
+export interface WorkflowDashboardSummaryResponseDto {
+    'message': string;
+    'runId': string;
+    'status': string;
 }
 
-/**
- * What-if scenario configuration.
- */
-export interface WhatIfScenarioConfig {
-    /**
-     * Whether baseline (unmodified) values are included
-     */
-    'includeBaseline': boolean;
-    /**
-     * Scenarios with alternative measure calculations
-     */
-    'scenarios': Array<WhatIfScenarioItem>;
-}
-
-/**
- * Scenarios with alternative measure calculations
- */
-export interface WhatIfScenarioItem {
-    /**
-     * Measure adjustments for this scenario
-     */
-    'adjustments': Array<WhatIfMeasureAdjustmentConfig>;
-    /**
-     * Human-readable scenario label
-     */
-    'label': string;
-}
-
-/**
- * Descriptor for a widget on the dashboard.
- */
-export interface WidgetDescriptor {
-    'filters'?: Array<FilterDefinition>;
-    'title': string;
-    'widgetId': string;
-    'widgetType': string;
+export interface WorkflowStatusResponseDto {
+    'currentPhase'?: string;
+    'error'?: string;
+    'message': string;
+    'result'?: { [key: string]: object; };
+    'runId': string;
+    'status': string;
 }
 
 
@@ -3619,16 +2802,17 @@ export async function AILakeApiAxiosParamCreator_AnalyzeStatistics(
 
 // AILakeApi FP - AILakeApiAxiosParamCreator
 /**
- * (BETA) Deletes an existing database in the organization\'s AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.
+ * (BETA) Deletes an existing database in the organization\'s AI Lake. A database that still contains tables is not deleted, unless cascade is set. With cascade, every table in the database is dropped first, which cannot be undone. Returns an operation-id in the operation-id header the client can use to poll for the progress.
  * @summary (BETA) Delete an existing AILake Database instance
  * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
+ * @param {boolean} [cascade] Drop every table in the database before the database itself.
  * @param {string} [operationId] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function AILakeApiAxiosParamCreator_DeprovisionAiLakeDatabaseInstance(
-    instanceId: string, operationId?: string, 
+    instanceId: string, cascade?: boolean, operationId?: string, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -3645,6 +2829,10 @@ export async function AILakeApiAxiosParamCreator_DeprovisionAiLakeDatabaseInstan
     const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
+
+    if (cascade !== undefined) {
+        localVarQueryParameter['cascade'] = cascade;
+    }
 
     if (operationId !== undefined && operationId !== null) {
         localVarHeaderParameter['operation-id'] = String(operationId);
@@ -4330,7 +3518,7 @@ export async function AILakeApi_AnalyzeStatistics(
 
 // AILakeApi Api FP
 /**
- * (BETA) Deletes an existing database in the organization\'s AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.
+ * (BETA) Deletes an existing database in the organization\'s AI Lake. A database that still contains tables is not deleted, unless cascade is set. With cascade, every table in the database is dropped first, which cannot be undone. Returns an operation-id in the operation-id header the client can use to poll for the progress.
  * @summary (BETA) Delete an existing AILake Database instance
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -4346,7 +3534,7 @@ export async function AILakeApi_DeprovisionAiLakeDatabaseInstance(
     configuration?: Configuration,
 ): AxiosPromise<void> {
     const localVarAxiosArgs = await AILakeApiAxiosParamCreator_DeprovisionAiLakeDatabaseInstance(
-        requestParameters.instanceId, requestParameters.operationId, 
+        requestParameters.instanceId, requestParameters.cascade, requestParameters.operationId, 
         options || {},
         configuration,
     );
@@ -4667,7 +3855,7 @@ export interface AILakeApiInterface {
     analyzeStatistics(requestParameters: AILakeApiAnalyzeStatisticsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
-     * (BETA) Deletes an existing database in the organization\'s AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.
+     * (BETA) Deletes an existing database in the organization\'s AI Lake. A database that still contains tables is not deleted, unless cascade is set. With cascade, every table in the database is dropped first, which cannot be undone. Returns an operation-id in the operation-id header the client can use to poll for the progress.
      * @summary (BETA) Delete an existing AILake Database instance
      * @param {AILakeApiDeprovisionAiLakeDatabaseInstanceRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -4849,6 +4037,13 @@ export interface AILakeApiDeprovisionAiLakeDatabaseInstanceRequest {
      * @memberof AILakeApiDeprovisionAiLakeDatabaseInstance
      */
     readonly instanceId: string
+
+    /**
+     * Drop every table in the database before the database itself.
+     * @type {boolean}
+     * @memberof AILakeApiDeprovisionAiLakeDatabaseInstance
+     */
+    readonly cascade?: boolean
 
     /**
      * 
@@ -5149,7 +4344,7 @@ export class AILakeApi extends BaseAPI implements AILakeApiInterface {
     }
 
     /**
-     * (BETA) Deletes an existing database in the organization\'s AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.
+     * (BETA) Deletes an existing database in the organization\'s AI Lake. A database that still contains tables is not deleted, unless cascade is set. With cascade, every table in the database is dropped first, which cannot be undone. Returns an operation-id in the operation-id header the client can use to poll for the progress.
      * @summary (BETA) Delete an existing AILake Database instance
      * @param {AILakeApiDeprovisionAiLakeDatabaseInstanceRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -5425,16 +4620,17 @@ export async function AILakeDatabasesApiAxiosParamCreator_AnalyzeStatistics(
 
 // AILakeDatabasesApi FP - AILakeDatabasesApiAxiosParamCreator
 /**
- * (BETA) Deletes an existing database in the organization\'s AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.
+ * (BETA) Deletes an existing database in the organization\'s AI Lake. A database that still contains tables is not deleted, unless cascade is set. With cascade, every table in the database is dropped first, which cannot be undone. Returns an operation-id in the operation-id header the client can use to poll for the progress.
  * @summary (BETA) Delete an existing AILake Database instance
  * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
+ * @param {boolean} [cascade] Drop every table in the database before the database itself.
  * @param {string} [operationId] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function AILakeDatabasesApiAxiosParamCreator_DeprovisionAiLakeDatabaseInstance(
-    instanceId: string, operationId?: string, 
+    instanceId: string, cascade?: boolean, operationId?: string, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -5451,6 +4647,10 @@ export async function AILakeDatabasesApiAxiosParamCreator_DeprovisionAiLakeDatab
     const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
+
+    if (cascade !== undefined) {
+        localVarQueryParameter['cascade'] = cascade;
+    }
 
     if (operationId !== undefined && operationId !== null) {
         localVarHeaderParameter['operation-id'] = String(operationId);
@@ -5919,7 +5119,7 @@ export async function AILakeDatabasesApi_AnalyzeStatistics(
 
 // AILakeDatabasesApi Api FP
 /**
- * (BETA) Deletes an existing database in the organization\'s AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.
+ * (BETA) Deletes an existing database in the organization\'s AI Lake. A database that still contains tables is not deleted, unless cascade is set. With cascade, every table in the database is dropped first, which cannot be undone. Returns an operation-id in the operation-id header the client can use to poll for the progress.
  * @summary (BETA) Delete an existing AILake Database instance
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -5935,7 +5135,7 @@ export async function AILakeDatabasesApi_DeprovisionAiLakeDatabaseInstance(
     configuration?: Configuration,
 ): AxiosPromise<void> {
     const localVarAxiosArgs = await AILakeDatabasesApiAxiosParamCreator_DeprovisionAiLakeDatabaseInstance(
-        requestParameters.instanceId, requestParameters.operationId, 
+        requestParameters.instanceId, requestParameters.cascade, requestParameters.operationId, 
         options || {},
         configuration,
     );
@@ -6152,7 +5352,7 @@ export interface AILakeDatabasesApiInterface {
     analyzeStatistics(requestParameters: AILakeDatabasesApiAnalyzeStatisticsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
-     * (BETA) Deletes an existing database in the organization\'s AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.
+     * (BETA) Deletes an existing database in the organization\'s AI Lake. A database that still contains tables is not deleted, unless cascade is set. With cascade, every table in the database is dropped first, which cannot be undone. Returns an operation-id in the operation-id header the client can use to poll for the progress.
      * @summary (BETA) Delete an existing AILake Database instance
      * @param {AILakeDatabasesApiDeprovisionAiLakeDatabaseInstanceRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6294,6 +5494,13 @@ export interface AILakeDatabasesApiDeprovisionAiLakeDatabaseInstanceRequest {
      * @memberof AILakeDatabasesApiDeprovisionAiLakeDatabaseInstance
      */
     readonly instanceId: string
+
+    /**
+     * Drop every table in the database before the database itself.
+     * @type {boolean}
+     * @memberof AILakeDatabasesApiDeprovisionAiLakeDatabaseInstance
+     */
+    readonly cascade?: boolean
 
     /**
      * 
@@ -6503,7 +5710,7 @@ export class AILakeDatabasesApi extends BaseAPI implements AILakeDatabasesApiInt
     }
 
     /**
-     * (BETA) Deletes an existing database in the organization\'s AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.
+     * (BETA) Deletes an existing database in the organization\'s AI Lake. A database that still contains tables is not deleted, unless cascade is set. With cascade, every table in the database is dropped first, which cannot be undone. Returns an operation-id in the operation-id header the client can use to poll for the progress.
      * @summary (BETA) Delete an existing AILake Database instance
      * @param {AILakeDatabasesApiDeprovisionAiLakeDatabaseInstanceRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -7120,23 +6327,20 @@ export class AILakeServicesOperationsApi extends BaseAPI implements AILakeServic
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * (BETA) Combines multiple use cases such as search, create visualizations, ...
- * @summary (BETA) Chat with AI
+ * Removed. Use POST /api/v1/ai/workspaces/{workspaceId}/chat (AI Assistant) instead.
+ * @summary (REMOVED) Chat with AI
  * @param {string} workspaceId Workspace identifier
- * @param {ChatRequest} chatRequest 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ActionsApiAxiosParamCreator_AiChat(
-    workspaceId: string, chatRequest: ChatRequest, 
+    workspaceId: string, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
     // verify required parameter 'workspaceId' is not null or undefined
     assertParamExists('aiChat', 'workspaceId', workspaceId)
-    // verify required parameter 'chatRequest' is not null or undefined
-    assertParamExists('aiChat', 'chatRequest', chatRequest)
     const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chat`
         .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -7151,14 +6355,6 @@ export async function ActionsApiAxiosParamCreator_AiChat(
 
 
     
-    const consumes = [
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
     localVarRequestOptions.headers = {
@@ -7166,12 +6362,6 @@ export async function ActionsApiAxiosParamCreator_AiChat(
         ...headersFromBaseOptions,
         ...options.headers,
     };
-    const needsSerialization =
-        typeof chatRequest !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(chatRequest !== undefined ? chatRequest : {})
-        : chatRequest || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -7182,23 +6372,20 @@ export async function ActionsApiAxiosParamCreator_AiChat(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * (BETA) Post thread ID (and optionally interaction ID) to get full/partial chat history.
- * @summary (BETA) Get Chat History
+ * Removed. Chat history is served by the AI Assistant API.
+ * @summary (REMOVED) Get Chat History
  * @param {string} workspaceId Workspace identifier
- * @param {ChatHistoryRequest} chatHistoryRequest 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ActionsApiAxiosParamCreator_AiChatHistory(
-    workspaceId: string, chatHistoryRequest: ChatHistoryRequest, 
+    workspaceId: string, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
     // verify required parameter 'workspaceId' is not null or undefined
     assertParamExists('aiChatHistory', 'workspaceId', workspaceId)
-    // verify required parameter 'chatHistoryRequest' is not null or undefined
-    assertParamExists('aiChatHistory', 'chatHistoryRequest', chatHistoryRequest)
     const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chatHistory`
         .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -7213,14 +6400,6 @@ export async function ActionsApiAxiosParamCreator_AiChatHistory(
 
 
     
-    const consumes = [
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
     localVarRequestOptions.headers = {
@@ -7228,12 +6407,6 @@ export async function ActionsApiAxiosParamCreator_AiChatHistory(
         ...headersFromBaseOptions,
         ...options.headers,
     };
-    const needsSerialization =
-        typeof chatHistoryRequest !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(chatHistoryRequest !== undefined ? chatHistoryRequest : {})
-        : chatHistoryRequest || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -7244,23 +6417,20 @@ export async function ActionsApiAxiosParamCreator_AiChatHistory(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * (BETA) Combines multiple use cases such as search, create visualizations, ...
- * @summary (BETA) Chat with AI
+ * Removed. Use POST /api/v1/ai/workspaces/{workspaceId}/chat (AI Assistant) instead.
+ * @summary (REMOVED) Chat with AI
  * @param {string} workspaceId Workspace identifier
- * @param {ChatRequest} chatRequest 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ActionsApiAxiosParamCreator_AiChatStream(
-    workspaceId: string, chatRequest: ChatRequest, 
+    workspaceId: string, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
     // verify required parameter 'workspaceId' is not null or undefined
     assertParamExists('aiChatStream', 'workspaceId', workspaceId)
-    // verify required parameter 'chatRequest' is not null or undefined
-    assertParamExists('aiChatStream', 'chatRequest', chatRequest)
     const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chatStream`
         .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -7275,14 +6445,6 @@ export async function ActionsApiAxiosParamCreator_AiChatStream(
 
 
     
-    const consumes = [
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
     localVarRequestOptions.headers = {
@@ -7290,12 +6452,6 @@ export async function ActionsApiAxiosParamCreator_AiChatStream(
         ...headersFromBaseOptions,
         ...options.headers,
     };
-    const needsSerialization =
-        typeof chatRequest !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(chatRequest !== undefined ? chatRequest : {})
-        : chatRequest || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -7306,8 +6462,8 @@ export async function ActionsApiAxiosParamCreator_AiChatStream(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * Returns usage statistics of chat for a user in a workspace.
- * @summary Get Chat Usage
+ * Removed. Chat usage is served by the AI Assistant API.
+ * @summary (REMOVED) Get Chat Usage
  * @param {string} workspaceId Workspace identifier
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
@@ -7533,6 +6689,102 @@ export async function ActionsApiAxiosParamCreator_CancelExecutions(
     localVarRequestOptions.data = needsSerialization
         ? JSON.stringify(afmCancelTokens !== undefined ? afmCancelTokens : {})
         : afmCancelTokens || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * 
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} runId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_CancelWorkflow(
+    workspaceId: string, runId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('cancelWorkflow', 'workspaceId', workspaceId)
+    // verify required parameter 'runId' is not null or undefined
+    assertParamExists('cancelWorkflow', 'runId', runId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/workflow/{runId}/cancel`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"runId"}}`, encodeURIComponent(String(runId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * 
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} runId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_CancelWorkflow1(
+    workspaceId: string, runId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('cancelWorkflow1', 'workspaceId', workspaceId)
+    // verify required parameter 'runId' is not null or undefined
+    assertParamExists('cancelWorkflow1', 'runId', runId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/agent/{runId}/cancel`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"runId"}}`, encodeURIComponent(String(runId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
 
     return {
         url: toPathString(localVarUrlObj),
@@ -8323,6 +7575,128 @@ export async function ActionsApiAxiosParamCreator_ForecastResult(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
+ * 
+ * @param {string} workspaceId Workspace identifier
+ * @param {WorkflowDashboardSummaryRequestDto} workflowDashboardSummaryRequestDto 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_GenerateDashboardSummary(
+    workspaceId: string, workflowDashboardSummaryRequestDto: WorkflowDashboardSummaryRequestDto, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('generateDashboardSummary', 'workspaceId', workspaceId)
+    // verify required parameter 'workflowDashboardSummaryRequestDto' is not null or undefined
+    assertParamExists('generateDashboardSummary', 'workflowDashboardSummaryRequestDto', workflowDashboardSummaryRequestDto)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/workflow/dashboardSummary`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof workflowDashboardSummaryRequestDto !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(workflowDashboardSummaryRequestDto !== undefined ? workflowDashboardSummaryRequestDto : {})
+        : workflowDashboardSummaryRequestDto || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * 
+ * @param {string} workspaceId Workspace identifier
+ * @param {DashboardSummaryRequestDto} dashboardSummaryRequestDto 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_GenerateDashboardSummary1(
+    workspaceId: string, dashboardSummaryRequestDto: DashboardSummaryRequestDto, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('generateDashboardSummary1', 'workspaceId', workspaceId)
+    // verify required parameter 'dashboardSummaryRequestDto' is not null or undefined
+    assertParamExists('generateDashboardSummary1', 'dashboardSummaryRequestDto', dashboardSummaryRequestDto)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/agent/dashboardSummary`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof dashboardSummaryRequestDto !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(dashboardSummaryRequestDto !== undefined ? dashboardSummaryRequestDto : {})
+        : dashboardSummaryRequestDto || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
  * Generates a description for the specified analytics object. Returns description and a note with details if generation was not performed.
  * @summary Generate Description for Analytics Object
  * @param {string} workspaceId Workspace identifier
@@ -8375,6 +7749,67 @@ export async function ActionsApiAxiosParamCreator_GenerateDescription(
     localVarRequestOptions.data = needsSerialization
         ? JSON.stringify(generateDescriptionRequest !== undefined ? generateDescriptionRequest : {})
         : generateDescriptionRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * 
+ * @param {string} workspaceId Workspace identifier
+ * @param {KnowledgeRecommendationsRequestDto} knowledgeRecommendationsRequestDto 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_GenerateKnowledgeRecommendations(
+    workspaceId: string, knowledgeRecommendationsRequestDto: KnowledgeRecommendationsRequestDto, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('generateKnowledgeRecommendations', 'workspaceId', workspaceId)
+    // verify required parameter 'knowledgeRecommendationsRequestDto' is not null or undefined
+    assertParamExists('generateKnowledgeRecommendations', 'knowledgeRecommendationsRequestDto', knowledgeRecommendationsRequestDto)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/agent/knowledgeRecommendations`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof knowledgeRecommendationsRequestDto !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(knowledgeRecommendationsRequestDto !== undefined ? knowledgeRecommendationsRequestDto : {})
+        : knowledgeRecommendationsRequestDto || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -8512,6 +7947,102 @@ export async function ActionsApiAxiosParamCreator_GetQualityIssuesCalculationSta
     const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/issues/status/{processId}`
         .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
         .replace(`{${"processId"}}`, encodeURIComponent(String(processId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * 
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} runId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_GetWorkflowStatus(
+    workspaceId: string, runId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getWorkflowStatus', 'workspaceId', workspaceId)
+    // verify required parameter 'runId' is not null or undefined
+    assertParamExists('getWorkflowStatus', 'runId', runId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/workflow/{runId}/status`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"runId"}}`, encodeURIComponent(String(runId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * 
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} runId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_GetWorkflowStatus1(
+    workspaceId: string, runId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getWorkflowStatus1', 'workspaceId', workspaceId)
+    // verify required parameter 'runId' is not null or undefined
+    assertParamExists('getWorkflowStatus1', 'runId', runId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/agent/{runId}/status`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"runId"}}`, encodeURIComponent(String(runId)));
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
     const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
     let baseOptions;
@@ -9366,6 +8897,71 @@ export async function ActionsApiAxiosParamCreator_TriggerQualityIssuesCalculatio
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
+ * 
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} runId 
+ * @param {FeedbackRequestDto} feedbackRequestDto 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_UserFeedback(
+    workspaceId: string, runId: string, feedbackRequestDto: FeedbackRequestDto, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('userFeedback', 'workspaceId', workspaceId)
+    // verify required parameter 'runId' is not null or undefined
+    assertParamExists('userFeedback', 'runId', runId)
+    // verify required parameter 'feedbackRequestDto' is not null or undefined
+    assertParamExists('userFeedback', 'feedbackRequestDto', feedbackRequestDto)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/agent/{runId}/feedback`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"runId"}}`, encodeURIComponent(String(runId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof feedbackRequestDto !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(feedbackRequestDto !== undefined ? feedbackRequestDto : {})
+        : feedbackRequestDto || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
  * Permanently removed. Use POST /api/v1/actions/ai/llmProvider/test instead. Always returns 410 Gone.
  * @summary Validate LLM Endpoint (Removed)
  * @param {*} [options] Override http request option.
@@ -9453,8 +9049,8 @@ export async function ActionsApiAxiosParamCreator_ValidateLLMEndpointById(
 
 // ActionsApi Api FP
 /**
- * (BETA) Combines multiple use cases such as search, create visualizations, ...
- * @summary (BETA) Chat with AI
+ * Removed. Use POST /api/v1/ai/workspaces/{workspaceId}/chat (AI Assistant) instead.
+ * @summary (REMOVED) Chat with AI
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {ActionsApiAiChatRequest} requestParameters Request parameters.
@@ -9467,9 +9063,9 @@ export async function ActionsApi_AiChat(
     requestParameters: ActionsApiAiChatRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<ChatResult> {
+): AxiosPromise<void> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_AiChat(
-        requestParameters.workspaceId, requestParameters.chatRequest, 
+        requestParameters.workspaceId, 
         options || {},
         configuration,
     );
@@ -9479,8 +9075,8 @@ export async function ActionsApi_AiChat(
 
 // ActionsApi Api FP
 /**
- * (BETA) Post thread ID (and optionally interaction ID) to get full/partial chat history.
- * @summary (BETA) Get Chat History
+ * Removed. Chat history is served by the AI Assistant API.
+ * @summary (REMOVED) Get Chat History
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {ActionsApiAiChatHistoryRequest} requestParameters Request parameters.
@@ -9493,9 +9089,9 @@ export async function ActionsApi_AiChatHistory(
     requestParameters: ActionsApiAiChatHistoryRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<ChatHistoryResult> {
+): AxiosPromise<void> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_AiChatHistory(
-        requestParameters.workspaceId, requestParameters.chatHistoryRequest, 
+        requestParameters.workspaceId, 
         options || {},
         configuration,
     );
@@ -9505,8 +9101,8 @@ export async function ActionsApi_AiChatHistory(
 
 // ActionsApi Api FP
 /**
- * (BETA) Combines multiple use cases such as search, create visualizations, ...
- * @summary (BETA) Chat with AI
+ * Removed. Use POST /api/v1/ai/workspaces/{workspaceId}/chat (AI Assistant) instead.
+ * @summary (REMOVED) Chat with AI
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {ActionsApiAiChatStreamRequest} requestParameters Request parameters.
@@ -9519,9 +9115,9 @@ export async function ActionsApi_AiChatStream(
     requestParameters: ActionsApiAiChatStreamRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<Array<object>> {
+): AxiosPromise<void> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_AiChatStream(
-        requestParameters.workspaceId, requestParameters.chatRequest, 
+        requestParameters.workspaceId, 
         options || {},
         configuration,
     );
@@ -9531,8 +9127,8 @@ export async function ActionsApi_AiChatStream(
 
 // ActionsApi Api FP
 /**
- * Returns usage statistics of chat for a user in a workspace.
- * @summary Get Chat Usage
+ * Removed. Chat usage is served by the AI Assistant API.
+ * @summary (REMOVED) Get Chat Usage
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {ActionsApiAiChatUsageRequest} requestParameters Request parameters.
@@ -9545,7 +9141,7 @@ export async function ActionsApi_AiChatUsage(
     requestParameters: ActionsApiAiChatUsageRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<ChatUsageResponse> {
+): AxiosPromise<void> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_AiChatUsage(
         requestParameters.workspaceId, 
         options || {},
@@ -9626,6 +9222,56 @@ export async function ActionsApi_CancelExecutions(
 ): AxiosPromise<AfmCancelTokens> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_CancelExecutions(
         requestParameters.workspaceId, requestParameters.afmCancelTokens, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
+ * 
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiCancelWorkflowRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_CancelWorkflow(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiCancelWorkflowRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<{ [key: string]: string; }> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_CancelWorkflow(
+        requestParameters.workspaceId, requestParameters.runId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
+ * 
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiCancelWorkflow1Request} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_CancelWorkflow1(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiCancelWorkflow1Request, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<{ [key: string]: string; }> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_CancelWorkflow1(
+        requestParameters.workspaceId, requestParameters.runId, 
         options || {},
         configuration,
     );
@@ -9947,6 +9593,56 @@ export async function ActionsApi_ForecastResult(
 
 // ActionsApi Api FP
 /**
+ * 
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiGenerateDashboardSummaryRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_GenerateDashboardSummary(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiGenerateDashboardSummaryRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<WorkflowDashboardSummaryResponseDto> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_GenerateDashboardSummary(
+        requestParameters.workspaceId, requestParameters.workflowDashboardSummaryRequestDto, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
+ * 
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiGenerateDashboardSummary1Request} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_GenerateDashboardSummary1(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiGenerateDashboardSummary1Request, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<DashboardSummaryResponseDto> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_GenerateDashboardSummary1(
+        requestParameters.workspaceId, requestParameters.dashboardSummaryRequestDto, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
  * Generates a description for the specified analytics object. Returns description and a note with details if generation was not performed.
  * @summary Generate Description for Analytics Object
  * @param {AxiosInstance} axios Axios instance.
@@ -9964,6 +9660,31 @@ export async function ActionsApi_GenerateDescription(
 ): AxiosPromise<GenerateDescriptionResponse> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_GenerateDescription(
         requestParameters.workspaceId, requestParameters.generateDescriptionRequest, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
+ * 
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiGenerateKnowledgeRecommendationsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_GenerateKnowledgeRecommendations(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiGenerateKnowledgeRecommendationsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<KnowledgeRecommendationsResponseDto> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_GenerateKnowledgeRecommendations(
+        requestParameters.workspaceId, requestParameters.knowledgeRecommendationsRequestDto, 
         options || {},
         configuration,
     );
@@ -10042,6 +9763,56 @@ export async function ActionsApi_GetQualityIssuesCalculationStatus(
 ): AxiosPromise<QualityIssuesCalculationStatusResponse> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_GetQualityIssuesCalculationStatus(
         requestParameters.workspaceId, requestParameters.processId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
+ * 
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiGetWorkflowStatusRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_GetWorkflowStatus(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiGetWorkflowStatusRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<WorkflowStatusResponseDto> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_GetWorkflowStatus(
+        requestParameters.workspaceId, requestParameters.runId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
+ * 
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiGetWorkflowStatus1Request} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_GetWorkflowStatus1(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiGetWorkflowStatus1Request, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<WorkflowStatusResponseDto> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_GetWorkflowStatus1(
+        requestParameters.workspaceId, requestParameters.runId, 
         options || {},
         configuration,
     );
@@ -10441,6 +10212,31 @@ export async function ActionsApi_TriggerQualityIssuesCalculation(
 
 // ActionsApi Api FP
 /**
+ * 
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiUserFeedbackRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_UserFeedback(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiUserFeedbackRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<{ [key: string]: string; }> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_UserFeedback(
+        requestParameters.workspaceId, requestParameters.runId, requestParameters.feedbackRequestDto, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
  * Permanently removed. Use POST /api/v1/actions/ai/llmProvider/test instead. Always returns 410 Gone.
  * @summary Validate LLM Endpoint (Removed)
  * @param {AxiosInstance} axios Axios instance.
@@ -10497,44 +10293,48 @@ export async function ActionsApi_ValidateLLMEndpointById(
  */
 export interface ActionsApiInterface {
     /**
-     * (BETA) Combines multiple use cases such as search, create visualizations, ...
-     * @summary (BETA) Chat with AI
+     * Removed. Use POST /api/v1/ai/workspaces/{workspaceId}/chat (AI Assistant) instead.
+     * @summary (REMOVED) Chat with AI
      * @param {ActionsApiAiChatRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof ActionsApiInterface
      */
-    aiChat(requestParameters: ActionsApiAiChatRequest, options?: AxiosRequestConfig): AxiosPromise<ChatResult>;
+    aiChat(requestParameters: ActionsApiAiChatRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
-     * (BETA) Post thread ID (and optionally interaction ID) to get full/partial chat history.
-     * @summary (BETA) Get Chat History
+     * Removed. Chat history is served by the AI Assistant API.
+     * @summary (REMOVED) Get Chat History
      * @param {ActionsApiAiChatHistoryRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof ActionsApiInterface
      */
-    aiChatHistory(requestParameters: ActionsApiAiChatHistoryRequest, options?: AxiosRequestConfig): AxiosPromise<ChatHistoryResult>;
+    aiChatHistory(requestParameters: ActionsApiAiChatHistoryRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
-     * (BETA) Combines multiple use cases such as search, create visualizations, ...
-     * @summary (BETA) Chat with AI
+     * Removed. Use POST /api/v1/ai/workspaces/{workspaceId}/chat (AI Assistant) instead.
+     * @summary (REMOVED) Chat with AI
      * @param {ActionsApiAiChatStreamRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof ActionsApiInterface
      */
-    aiChatStream(requestParameters: ActionsApiAiChatStreamRequest, options?: AxiosRequestConfig): AxiosPromise<Array<object>>;
+    aiChatStream(requestParameters: ActionsApiAiChatStreamRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
-     * Returns usage statistics of chat for a user in a workspace.
-     * @summary Get Chat Usage
+     * Removed. Chat usage is served by the AI Assistant API.
+     * @summary (REMOVED) Get Chat Usage
      * @param {ActionsApiAiChatUsageRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof ActionsApiInterface
      */
-    aiChatUsage(requestParameters: ActionsApiAiChatUsageRequest, options?: AxiosRequestConfig): AxiosPromise<ChatUsageResponse>;
+    aiChatUsage(requestParameters: ActionsApiAiChatUsageRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
      * (EXPERIMENTAL) Computes anomaly detection.
@@ -10567,6 +10367,24 @@ export interface ActionsApiInterface {
      * @memberof ActionsApiInterface
      */
     cancelExecutions(requestParameters: ActionsApiCancelExecutionsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmCancelTokens>;
+
+    /**
+     * 
+     * @param {ActionsApiCancelWorkflowRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    cancelWorkflow(requestParameters: ActionsApiCancelWorkflowRequest, options?: AxiosRequestConfig): AxiosPromise<{ [key: string]: string; }>;
+
+    /**
+     * 
+     * @param {ActionsApiCancelWorkflow1Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    cancelWorkflow1(requestParameters: ActionsApiCancelWorkflow1Request, options?: AxiosRequestConfig): AxiosPromise<{ [key: string]: string; }>;
 
     /**
      * Computes change analysis for the provided execution definition.
@@ -10689,6 +10507,24 @@ export interface ActionsApiInterface {
     forecastResult(requestParameters: ActionsApiForecastResultRequest, options?: AxiosRequestConfig): AxiosPromise<ForecastResult>;
 
     /**
+     * 
+     * @param {ActionsApiGenerateDashboardSummaryRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    generateDashboardSummary(requestParameters: ActionsApiGenerateDashboardSummaryRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowDashboardSummaryResponseDto>;
+
+    /**
+     * 
+     * @param {ActionsApiGenerateDashboardSummary1Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    generateDashboardSummary1(requestParameters: ActionsApiGenerateDashboardSummary1Request, options?: AxiosRequestConfig): AxiosPromise<DashboardSummaryResponseDto>;
+
+    /**
      * Generates a description for the specified analytics object. Returns description and a note with details if generation was not performed.
      * @summary Generate Description for Analytics Object
      * @param {ActionsApiGenerateDescriptionRequest} requestParameters Request parameters.
@@ -10697,6 +10533,15 @@ export interface ActionsApiInterface {
      * @memberof ActionsApiInterface
      */
     generateDescription(requestParameters: ActionsApiGenerateDescriptionRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateDescriptionResponse>;
+
+    /**
+     * 
+     * @param {ActionsApiGenerateKnowledgeRecommendationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    generateKnowledgeRecommendations(requestParameters: ActionsApiGenerateKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<KnowledgeRecommendationsResponseDto>;
 
     /**
      * Generates a title for the specified analytics object. Returns title and a note with details if generation was not performed.
@@ -10727,6 +10572,24 @@ export interface ActionsApiInterface {
      * @memberof ActionsApiInterface
      */
     getQualityIssuesCalculationStatus(requestParameters: ActionsApiGetQualityIssuesCalculationStatusRequest, options?: AxiosRequestConfig): AxiosPromise<QualityIssuesCalculationStatusResponse>;
+
+    /**
+     * 
+     * @param {ActionsApiGetWorkflowStatusRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    getWorkflowStatus(requestParameters: ActionsApiGetWorkflowStatusRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowStatusResponseDto>;
+
+    /**
+     * 
+     * @param {ActionsApiGetWorkflowStatus1Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    getWorkflowStatus1(requestParameters: ActionsApiGetWorkflowStatus1Request, options?: AxiosRequestConfig): AxiosPromise<WorkflowStatusResponseDto>;
 
     /**
      * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
@@ -10880,6 +10743,15 @@ export interface ActionsApiInterface {
     triggerQualityIssuesCalculation(requestParameters: ActionsApiTriggerQualityIssuesCalculationRequest, options?: AxiosRequestConfig): AxiosPromise<TriggerQualityIssuesCalculationResponse>;
 
     /**
+     * 
+     * @param {ActionsApiUserFeedbackRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    userFeedback(requestParameters: ActionsApiUserFeedbackRequest, options?: AxiosRequestConfig): AxiosPromise<{ [key: string]: string; }>;
+
+    /**
      * Permanently removed. Use POST /api/v1/actions/ai/llmProvider/test instead. Always returns 410 Gone.
      * @summary Validate LLM Endpoint (Removed)
      * @param {*} [options] Override http request option.
@@ -10914,13 +10786,6 @@ export interface ActionsApiAiChatRequest {
      * @memberof ActionsApiAiChat
      */
     readonly workspaceId: string
-
-    /**
-     * 
-     * @type {ChatRequest}
-     * @memberof ActionsApiAiChat
-     */
-    readonly chatRequest: ChatRequest
 }
 
 /**
@@ -10935,13 +10800,6 @@ export interface ActionsApiAiChatHistoryRequest {
      * @memberof ActionsApiAiChatHistory
      */
     readonly workspaceId: string
-
-    /**
-     * 
-     * @type {ChatHistoryRequest}
-     * @memberof ActionsApiAiChatHistory
-     */
-    readonly chatHistoryRequest: ChatHistoryRequest
 }
 
 /**
@@ -10956,13 +10814,6 @@ export interface ActionsApiAiChatStreamRequest {
      * @memberof ActionsApiAiChatStream
      */
     readonly workspaceId: string
-
-    /**
-     * 
-     * @type {ChatRequest}
-     * @memberof ActionsApiAiChatStream
-     */
-    readonly chatRequest: ChatRequest
 }
 
 /**
@@ -11068,6 +10919,48 @@ export interface ActionsApiCancelExecutionsRequest {
      * @memberof ActionsApiCancelExecutions
      */
     readonly afmCancelTokens: AfmCancelTokens
+}
+
+/**
+ * Request parameters for cancelWorkflow operation in ActionsApi.
+ * @export
+ * @interface ActionsApiCancelWorkflowRequest
+ */
+export interface ActionsApiCancelWorkflowRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiCancelWorkflow
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionsApiCancelWorkflow
+     */
+    readonly runId: string
+}
+
+/**
+ * Request parameters for cancelWorkflow1 operation in ActionsApi.
+ * @export
+ * @interface ActionsApiCancelWorkflow1Request
+ */
+export interface ActionsApiCancelWorkflow1Request {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiCancelWorkflow1
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionsApiCancelWorkflow1
+     */
+    readonly runId: string
 }
 
 /**
@@ -11435,6 +11328,48 @@ export interface ActionsApiForecastResultRequest {
 }
 
 /**
+ * Request parameters for generateDashboardSummary operation in ActionsApi.
+ * @export
+ * @interface ActionsApiGenerateDashboardSummaryRequest
+ */
+export interface ActionsApiGenerateDashboardSummaryRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiGenerateDashboardSummary
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {WorkflowDashboardSummaryRequestDto}
+     * @memberof ActionsApiGenerateDashboardSummary
+     */
+    readonly workflowDashboardSummaryRequestDto: WorkflowDashboardSummaryRequestDto
+}
+
+/**
+ * Request parameters for generateDashboardSummary1 operation in ActionsApi.
+ * @export
+ * @interface ActionsApiGenerateDashboardSummary1Request
+ */
+export interface ActionsApiGenerateDashboardSummary1Request {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiGenerateDashboardSummary1
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {DashboardSummaryRequestDto}
+     * @memberof ActionsApiGenerateDashboardSummary1
+     */
+    readonly dashboardSummaryRequestDto: DashboardSummaryRequestDto
+}
+
+/**
  * Request parameters for generateDescription operation in ActionsApi.
  * @export
  * @interface ActionsApiGenerateDescriptionRequest
@@ -11453,6 +11388,27 @@ export interface ActionsApiGenerateDescriptionRequest {
      * @memberof ActionsApiGenerateDescription
      */
     readonly generateDescriptionRequest: GenerateDescriptionRequest
+}
+
+/**
+ * Request parameters for generateKnowledgeRecommendations operation in ActionsApi.
+ * @export
+ * @interface ActionsApiGenerateKnowledgeRecommendationsRequest
+ */
+export interface ActionsApiGenerateKnowledgeRecommendationsRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiGenerateKnowledgeRecommendations
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {KnowledgeRecommendationsRequestDto}
+     * @memberof ActionsApiGenerateKnowledgeRecommendations
+     */
+    readonly knowledgeRecommendationsRequestDto: KnowledgeRecommendationsRequestDto
 }
 
 /**
@@ -11509,6 +11465,48 @@ export interface ActionsApiGetQualityIssuesCalculationStatusRequest {
      * @memberof ActionsApiGetQualityIssuesCalculationStatus
      */
     readonly processId: string
+}
+
+/**
+ * Request parameters for getWorkflowStatus operation in ActionsApi.
+ * @export
+ * @interface ActionsApiGetWorkflowStatusRequest
+ */
+export interface ActionsApiGetWorkflowStatusRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiGetWorkflowStatus
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionsApiGetWorkflowStatus
+     */
+    readonly runId: string
+}
+
+/**
+ * Request parameters for getWorkflowStatus1 operation in ActionsApi.
+ * @export
+ * @interface ActionsApiGetWorkflowStatus1Request
+ */
+export interface ActionsApiGetWorkflowStatus1Request {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiGetWorkflowStatus1
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionsApiGetWorkflowStatus1
+     */
+    readonly runId: string
 }
 
 /**
@@ -11855,6 +11853,34 @@ export interface ActionsApiTriggerQualityIssuesCalculationRequest {
 }
 
 /**
+ * Request parameters for userFeedback operation in ActionsApi.
+ * @export
+ * @interface ActionsApiUserFeedbackRequest
+ */
+export interface ActionsApiUserFeedbackRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiUserFeedback
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionsApiUserFeedback
+     */
+    readonly runId: string
+
+    /**
+     * 
+     * @type {FeedbackRequestDto}
+     * @memberof ActionsApiUserFeedback
+     */
+    readonly feedbackRequestDto: FeedbackRequestDto
+}
+
+/**
  * Request parameters for validateLLMEndpointById operation in ActionsApi.
  * @export
  * @interface ActionsApiValidateLLMEndpointByIdRequest
@@ -11876,10 +11902,11 @@ export interface ActionsApiValidateLLMEndpointByIdRequest {
  */
 export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     /**
-     * (BETA) Combines multiple use cases such as search, create visualizations, ...
-     * @summary (BETA) Chat with AI
+     * Removed. Use POST /api/v1/ai/workspaces/{workspaceId}/chat (AI Assistant) instead.
+     * @summary (REMOVED) Chat with AI
      * @param {ActionsApiAiChatRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof ActionsApi
      */
@@ -11888,10 +11915,11 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * (BETA) Post thread ID (and optionally interaction ID) to get full/partial chat history.
-     * @summary (BETA) Get Chat History
+     * Removed. Chat history is served by the AI Assistant API.
+     * @summary (REMOVED) Get Chat History
      * @param {ActionsApiAiChatHistoryRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof ActionsApi
      */
@@ -11900,10 +11928,11 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * (BETA) Combines multiple use cases such as search, create visualizations, ...
-     * @summary (BETA) Chat with AI
+     * Removed. Use POST /api/v1/ai/workspaces/{workspaceId}/chat (AI Assistant) instead.
+     * @summary (REMOVED) Chat with AI
      * @param {ActionsApiAiChatStreamRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof ActionsApi
      */
@@ -11912,10 +11941,11 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * Returns usage statistics of chat for a user in a workspace.
-     * @summary Get Chat Usage
+     * Removed. Chat usage is served by the AI Assistant API.
+     * @summary (REMOVED) Get Chat Usage
      * @param {ActionsApiAiChatUsageRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof ActionsApi
      */
@@ -11959,6 +11989,28 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      */
     public cancelExecutions(requestParameters: ActionsApiCancelExecutionsRequest, options?: AxiosRequestConfig) {
         return ActionsApi_CancelExecutions(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @param {ActionsApiCancelWorkflowRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public cancelWorkflow(requestParameters: ActionsApiCancelWorkflowRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_CancelWorkflow(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @param {ActionsApiCancelWorkflow1Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public cancelWorkflow1(requestParameters: ActionsApiCancelWorkflow1Request, options?: AxiosRequestConfig) {
+        return ActionsApi_CancelWorkflow1(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -12106,6 +12158,28 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
+     * 
+     * @param {ActionsApiGenerateDashboardSummaryRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public generateDashboardSummary(requestParameters: ActionsApiGenerateDashboardSummaryRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_GenerateDashboardSummary(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @param {ActionsApiGenerateDashboardSummary1Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public generateDashboardSummary1(requestParameters: ActionsApiGenerateDashboardSummary1Request, options?: AxiosRequestConfig) {
+        return ActionsApi_GenerateDashboardSummary1(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
      * Generates a description for the specified analytics object. Returns description and a note with details if generation was not performed.
      * @summary Generate Description for Analytics Object
      * @param {ActionsApiGenerateDescriptionRequest} requestParameters Request parameters.
@@ -12115,6 +12189,17 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      */
     public generateDescription(requestParameters: ActionsApiGenerateDescriptionRequest, options?: AxiosRequestConfig) {
         return ActionsApi_GenerateDescription(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @param {ActionsApiGenerateKnowledgeRecommendationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public generateKnowledgeRecommendations(requestParameters: ActionsApiGenerateKnowledgeRecommendationsRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_GenerateKnowledgeRecommendations(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -12151,6 +12236,28 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      */
     public getQualityIssuesCalculationStatus(requestParameters: ActionsApiGetQualityIssuesCalculationStatusRequest, options?: AxiosRequestConfig) {
         return ActionsApi_GetQualityIssuesCalculationStatus(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @param {ActionsApiGetWorkflowStatusRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public getWorkflowStatus(requestParameters: ActionsApiGetWorkflowStatusRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_GetWorkflowStatus(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @param {ActionsApiGetWorkflowStatus1Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public getWorkflowStatus1(requestParameters: ActionsApiGetWorkflowStatus1Request, options?: AxiosRequestConfig) {
+        return ActionsApi_GetWorkflowStatus1(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -12332,6 +12439,17 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      */
     public triggerQualityIssuesCalculation(requestParameters: ActionsApiTriggerQualityIssuesCalculationRequest, options?: AxiosRequestConfig) {
         return ActionsApi_TriggerQualityIssuesCalculation(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @param {ActionsApiUserFeedbackRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public userFeedback(requestParameters: ActionsApiUserFeedbackRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_UserFeedback(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -14624,23 +14742,20 @@ export class ComputationApi extends BaseAPI implements ComputationApiInterface {
 
 // SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
 /**
- * (BETA) Combines multiple use cases such as search, create visualizations, ...
- * @summary (BETA) Chat with AI
+ * Removed. Use POST /api/v1/ai/workspaces/{workspaceId}/chat (AI Assistant) instead.
+ * @summary (REMOVED) Chat with AI
  * @param {string} workspaceId Workspace identifier
- * @param {ChatRequest} chatRequest 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function SmartFunctionsApiAxiosParamCreator_AiChat(
-    workspaceId: string, chatRequest: ChatRequest, 
+    workspaceId: string, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
     // verify required parameter 'workspaceId' is not null or undefined
     assertParamExists('aiChat', 'workspaceId', workspaceId)
-    // verify required parameter 'chatRequest' is not null or undefined
-    assertParamExists('aiChat', 'chatRequest', chatRequest)
     const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chat`
         .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -14655,14 +14770,6 @@ export async function SmartFunctionsApiAxiosParamCreator_AiChat(
 
 
     
-    const consumes = [
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
     localVarRequestOptions.headers = {
@@ -14670,12 +14777,6 @@ export async function SmartFunctionsApiAxiosParamCreator_AiChat(
         ...headersFromBaseOptions,
         ...options.headers,
     };
-    const needsSerialization =
-        typeof chatRequest !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(chatRequest !== undefined ? chatRequest : {})
-        : chatRequest || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -14686,23 +14787,20 @@ export async function SmartFunctionsApiAxiosParamCreator_AiChat(
 
 // SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
 /**
- * (BETA) Post thread ID (and optionally interaction ID) to get full/partial chat history.
- * @summary (BETA) Get Chat History
+ * Removed. Chat history is served by the AI Assistant API.
+ * @summary (REMOVED) Get Chat History
  * @param {string} workspaceId Workspace identifier
- * @param {ChatHistoryRequest} chatHistoryRequest 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function SmartFunctionsApiAxiosParamCreator_AiChatHistory(
-    workspaceId: string, chatHistoryRequest: ChatHistoryRequest, 
+    workspaceId: string, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
     // verify required parameter 'workspaceId' is not null or undefined
     assertParamExists('aiChatHistory', 'workspaceId', workspaceId)
-    // verify required parameter 'chatHistoryRequest' is not null or undefined
-    assertParamExists('aiChatHistory', 'chatHistoryRequest', chatHistoryRequest)
     const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chatHistory`
         .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -14717,14 +14815,6 @@ export async function SmartFunctionsApiAxiosParamCreator_AiChatHistory(
 
 
     
-    const consumes = [
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
     localVarRequestOptions.headers = {
@@ -14732,12 +14822,6 @@ export async function SmartFunctionsApiAxiosParamCreator_AiChatHistory(
         ...headersFromBaseOptions,
         ...options.headers,
     };
-    const needsSerialization =
-        typeof chatHistoryRequest !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(chatHistoryRequest !== undefined ? chatHistoryRequest : {})
-        : chatHistoryRequest || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -14748,23 +14832,20 @@ export async function SmartFunctionsApiAxiosParamCreator_AiChatHistory(
 
 // SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
 /**
- * (BETA) Combines multiple use cases such as search, create visualizations, ...
- * @summary (BETA) Chat with AI
+ * Removed. Use POST /api/v1/ai/workspaces/{workspaceId}/chat (AI Assistant) instead.
+ * @summary (REMOVED) Chat with AI
  * @param {string} workspaceId Workspace identifier
- * @param {ChatRequest} chatRequest 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function SmartFunctionsApiAxiosParamCreator_AiChatStream(
-    workspaceId: string, chatRequest: ChatRequest, 
+    workspaceId: string, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
     // verify required parameter 'workspaceId' is not null or undefined
     assertParamExists('aiChatStream', 'workspaceId', workspaceId)
-    // verify required parameter 'chatRequest' is not null or undefined
-    assertParamExists('aiChatStream', 'chatRequest', chatRequest)
     const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chatStream`
         .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -14779,14 +14860,6 @@ export async function SmartFunctionsApiAxiosParamCreator_AiChatStream(
 
 
     
-    const consumes = [
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
     localVarRequestOptions.headers = {
@@ -14794,12 +14867,6 @@ export async function SmartFunctionsApiAxiosParamCreator_AiChatStream(
         ...headersFromBaseOptions,
         ...options.headers,
     };
-    const needsSerialization =
-        typeof chatRequest !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(chatRequest !== undefined ? chatRequest : {})
-        : chatRequest || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -14810,8 +14877,8 @@ export async function SmartFunctionsApiAxiosParamCreator_AiChatStream(
 
 // SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
 /**
- * Returns usage statistics of chat for a user in a workspace.
- * @summary Get Chat Usage
+ * Removed. Chat usage is served by the AI Assistant API.
+ * @summary (REMOVED) Get Chat Usage
  * @param {string} workspaceId Workspace identifier
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
@@ -15951,8 +16018,8 @@ export async function SmartFunctionsApiAxiosParamCreator_ValidateLLMEndpointById
 
 // SmartFunctionsApi Api FP
 /**
- * (BETA) Combines multiple use cases such as search, create visualizations, ...
- * @summary (BETA) Chat with AI
+ * Removed. Use POST /api/v1/ai/workspaces/{workspaceId}/chat (AI Assistant) instead.
+ * @summary (REMOVED) Chat with AI
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {SmartFunctionsApiAiChatRequest} requestParameters Request parameters.
@@ -15965,9 +16032,9 @@ export async function SmartFunctionsApi_AiChat(
     requestParameters: SmartFunctionsApiAiChatRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<ChatResult> {
+): AxiosPromise<void> {
     const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_AiChat(
-        requestParameters.workspaceId, requestParameters.chatRequest, 
+        requestParameters.workspaceId, 
         options || {},
         configuration,
     );
@@ -15977,8 +16044,8 @@ export async function SmartFunctionsApi_AiChat(
 
 // SmartFunctionsApi Api FP
 /**
- * (BETA) Post thread ID (and optionally interaction ID) to get full/partial chat history.
- * @summary (BETA) Get Chat History
+ * Removed. Chat history is served by the AI Assistant API.
+ * @summary (REMOVED) Get Chat History
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {SmartFunctionsApiAiChatHistoryRequest} requestParameters Request parameters.
@@ -15991,9 +16058,9 @@ export async function SmartFunctionsApi_AiChatHistory(
     requestParameters: SmartFunctionsApiAiChatHistoryRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<ChatHistoryResult> {
+): AxiosPromise<void> {
     const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_AiChatHistory(
-        requestParameters.workspaceId, requestParameters.chatHistoryRequest, 
+        requestParameters.workspaceId, 
         options || {},
         configuration,
     );
@@ -16003,8 +16070,8 @@ export async function SmartFunctionsApi_AiChatHistory(
 
 // SmartFunctionsApi Api FP
 /**
- * (BETA) Combines multiple use cases such as search, create visualizations, ...
- * @summary (BETA) Chat with AI
+ * Removed. Use POST /api/v1/ai/workspaces/{workspaceId}/chat (AI Assistant) instead.
+ * @summary (REMOVED) Chat with AI
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {SmartFunctionsApiAiChatStreamRequest} requestParameters Request parameters.
@@ -16017,9 +16084,9 @@ export async function SmartFunctionsApi_AiChatStream(
     requestParameters: SmartFunctionsApiAiChatStreamRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<Array<object>> {
+): AxiosPromise<void> {
     const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_AiChatStream(
-        requestParameters.workspaceId, requestParameters.chatRequest, 
+        requestParameters.workspaceId, 
         options || {},
         configuration,
     );
@@ -16029,8 +16096,8 @@ export async function SmartFunctionsApi_AiChatStream(
 
 // SmartFunctionsApi Api FP
 /**
- * Returns usage statistics of chat for a user in a workspace.
- * @summary Get Chat Usage
+ * Removed. Chat usage is served by the AI Assistant API.
+ * @summary (REMOVED) Get Chat Usage
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {SmartFunctionsApiAiChatUsageRequest} requestParameters Request parameters.
@@ -16043,7 +16110,7 @@ export async function SmartFunctionsApi_AiChatUsage(
     requestParameters: SmartFunctionsApiAiChatUsageRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<ChatUsageResponse> {
+): AxiosPromise<void> {
     const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_AiChatUsage(
         requestParameters.workspaceId, 
         options || {},
@@ -16579,44 +16646,48 @@ export async function SmartFunctionsApi_ValidateLLMEndpointById(
  */
 export interface SmartFunctionsApiInterface {
     /**
-     * (BETA) Combines multiple use cases such as search, create visualizations, ...
-     * @summary (BETA) Chat with AI
+     * Removed. Use POST /api/v1/ai/workspaces/{workspaceId}/chat (AI Assistant) instead.
+     * @summary (REMOVED) Chat with AI
      * @param {SmartFunctionsApiAiChatRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof SmartFunctionsApiInterface
      */
-    aiChat(requestParameters: SmartFunctionsApiAiChatRequest, options?: AxiosRequestConfig): AxiosPromise<ChatResult>;
+    aiChat(requestParameters: SmartFunctionsApiAiChatRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
-     * (BETA) Post thread ID (and optionally interaction ID) to get full/partial chat history.
-     * @summary (BETA) Get Chat History
+     * Removed. Chat history is served by the AI Assistant API.
+     * @summary (REMOVED) Get Chat History
      * @param {SmartFunctionsApiAiChatHistoryRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof SmartFunctionsApiInterface
      */
-    aiChatHistory(requestParameters: SmartFunctionsApiAiChatHistoryRequest, options?: AxiosRequestConfig): AxiosPromise<ChatHistoryResult>;
+    aiChatHistory(requestParameters: SmartFunctionsApiAiChatHistoryRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
-     * (BETA) Combines multiple use cases such as search, create visualizations, ...
-     * @summary (BETA) Chat with AI
+     * Removed. Use POST /api/v1/ai/workspaces/{workspaceId}/chat (AI Assistant) instead.
+     * @summary (REMOVED) Chat with AI
      * @param {SmartFunctionsApiAiChatStreamRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof SmartFunctionsApiInterface
      */
-    aiChatStream(requestParameters: SmartFunctionsApiAiChatStreamRequest, options?: AxiosRequestConfig): AxiosPromise<Array<object>>;
+    aiChatStream(requestParameters: SmartFunctionsApiAiChatStreamRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
-     * Returns usage statistics of chat for a user in a workspace.
-     * @summary Get Chat Usage
+     * Removed. Chat usage is served by the AI Assistant API.
+     * @summary (REMOVED) Get Chat Usage
      * @param {SmartFunctionsApiAiChatUsageRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof SmartFunctionsApiInterface
      */
-    aiChatUsage(requestParameters: SmartFunctionsApiAiChatUsageRequest, options?: AxiosRequestConfig): AxiosPromise<ChatUsageResponse>;
+    aiChatUsage(requestParameters: SmartFunctionsApiAiChatUsageRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
      * (EXPERIMENTAL) Computes anomaly detection.
@@ -16836,13 +16907,6 @@ export interface SmartFunctionsApiAiChatRequest {
      * @memberof SmartFunctionsApiAiChat
      */
     readonly workspaceId: string
-
-    /**
-     * 
-     * @type {ChatRequest}
-     * @memberof SmartFunctionsApiAiChat
-     */
-    readonly chatRequest: ChatRequest
 }
 
 /**
@@ -16857,13 +16921,6 @@ export interface SmartFunctionsApiAiChatHistoryRequest {
      * @memberof SmartFunctionsApiAiChatHistory
      */
     readonly workspaceId: string
-
-    /**
-     * 
-     * @type {ChatHistoryRequest}
-     * @memberof SmartFunctionsApiAiChatHistory
-     */
-    readonly chatHistoryRequest: ChatHistoryRequest
 }
 
 /**
@@ -16878,13 +16935,6 @@ export interface SmartFunctionsApiAiChatStreamRequest {
      * @memberof SmartFunctionsApiAiChatStream
      */
     readonly workspaceId: string
-
-    /**
-     * 
-     * @type {ChatRequest}
-     * @memberof SmartFunctionsApiAiChatStream
-     */
-    readonly chatRequest: ChatRequest
 }
 
 /**
@@ -17329,10 +17379,11 @@ export interface SmartFunctionsApiValidateLLMEndpointByIdRequest {
  */
 export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInterface {
     /**
-     * (BETA) Combines multiple use cases such as search, create visualizations, ...
-     * @summary (BETA) Chat with AI
+     * Removed. Use POST /api/v1/ai/workspaces/{workspaceId}/chat (AI Assistant) instead.
+     * @summary (REMOVED) Chat with AI
      * @param {SmartFunctionsApiAiChatRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof SmartFunctionsApi
      */
@@ -17341,10 +17392,11 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
     }
 
     /**
-     * (BETA) Post thread ID (and optionally interaction ID) to get full/partial chat history.
-     * @summary (BETA) Get Chat History
+     * Removed. Chat history is served by the AI Assistant API.
+     * @summary (REMOVED) Get Chat History
      * @param {SmartFunctionsApiAiChatHistoryRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof SmartFunctionsApi
      */
@@ -17353,10 +17405,11 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
     }
 
     /**
-     * (BETA) Combines multiple use cases such as search, create visualizations, ...
-     * @summary (BETA) Chat with AI
+     * Removed. Use POST /api/v1/ai/workspaces/{workspaceId}/chat (AI Assistant) instead.
+     * @summary (REMOVED) Chat with AI
      * @param {SmartFunctionsApiAiChatStreamRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof SmartFunctionsApi
      */
@@ -17365,10 +17418,11 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
     }
 
     /**
-     * Returns usage statistics of chat for a user in a workspace.
-     * @summary Get Chat Usage
+     * Removed. Chat usage is served by the AI Assistant API.
+     * @summary (REMOVED) Get Chat Usage
      * @param {SmartFunctionsApiAiChatUsageRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof SmartFunctionsApi
      */
