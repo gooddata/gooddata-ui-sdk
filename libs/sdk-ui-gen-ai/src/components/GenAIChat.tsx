@@ -7,12 +7,15 @@ import { useDashboardAmbientContext } from "../context/hooks/useDashboardAmbient
 import { IntlWrapper } from "../localization/IntlWrapper.js";
 import { PermissionsProvider } from "../permissions/PermissionsContext.js";
 import { usePermissions } from "../permissions/usePermissions.js";
+import type { GenAIInitializeOnStart } from "../types.js";
 
 import { ConfigProvider, type GenAIAssistantMode, type LinkHandlerEvent } from "./ConfigContext.js";
 import { CustomizationProvider } from "./CustomizationProvider.js";
 import { type IGenAIAssistantSlots } from "./customized/types.js";
 import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
 import { GenAiStore, type GenAiStoreProps } from "./GenAiStore.js";
+
+const DEPENDENCIES_TO_LOAD = ["catalogItems", "agents"] as GenAIInitializeOnStart;
 
 /**
  * Properties for the GenAIAssistant component.
@@ -139,6 +142,7 @@ export function GenAIAssistant(props: GenAIAssistantProps) {
                 isPreview={isPreview}
                 allowInteractionIntelligence={allowInteractionIntelligence}
                 providedStore={providedStore}
+                initializeOnStart={DEPENDENCIES_TO_LOAD}
             >
                 <BackendProvider backend={effectiveBackend}>
                     <WorkspaceProvider workspace={effectiveWorkspace}>

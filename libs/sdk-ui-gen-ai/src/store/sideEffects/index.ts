@@ -2,6 +2,7 @@
 
 import { call, fork, takeEvery, takeLatest, takeLeading } from "redux-saga/effects";
 
+import { type GenAIInitializeOnStart } from "../../types.js";
 import {
     initContextObjectsAction,
     loadContextObjectsNextPageAction,
@@ -26,8 +27,8 @@ import {
 } from "../messages/messagesSlice.js";
 
 import { onConversationActivity } from "./conversationSession.js";
-import { loadAgents } from "./loadAgents.js";
-import { loadCatalogItems } from "./loadCatalogItems.js";
+import { loadAgents, loadAgentsInternal } from "./loadAgents.js";
+import { loadCatalogItems, loadCatalogItemsInternal } from "./loadCatalogItems.js";
 import { loadColorPalette } from "./loadColorPalette.js";
 import {
     initContextObjects,
@@ -54,7 +55,10 @@ import { onVisualizationSuccessSave } from "./onVisualizationSuccessSave.js";
  * One saga to rule them all.
  * @internal
  */
-export function* rootSaga() {
+export function* rootSaga(initializeOnStart: GenAIInitializeOnStart) {
+    const initialLoadAgents = initializeOnStart.includes("agents");
+    const initialLoadCatalogItems = initializeOnStart.includes("catalogItems");
+
     yield takeLatest(loadThreadAction.type, onThreadLoad);
     yield takeLatest(clearThreadAction.type, onThreadClear);
     // Re-sync the active conversation with the backend when the chat is (re)opened so that
@@ -81,9 +85,17 @@ export function* rootSaga() {
         [newMessageAction.type, evaluateMessageCompleteAction.type, setCurrentConversationAction.type],
         onConversationActivity,
     );
+    yield takeLeading(setOpenAction.type, loadAgents);
+    yield takeLeading(setOpenAction.type, loadCatalogItems);
     yield fork(onEvent);
+    //load data
     yield call(loadColorPalette);
     yield call(loadSettings);
-    yield call(loadAgents);
-    yield call(loadCatalogItems);
+    // this can be long running, so we want to run it as fork
+    if (initialLoadAgents) {
+        yield fork(loadAgentsInternal);
+    }
+    if (initialLoadCatalogItems) {
+        yield fork(loadCatalogItemsInternal);
+    }
 }

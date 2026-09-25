@@ -29,6 +29,7 @@ import {
 import { type ChatEventHandler, EventDispatcher } from "../store/events.js";
 import { OptionsDispatcher } from "../store/options.js";
 import { getStore } from "../store/store.js";
+import { type GenAIInitializeOnStart } from "../types.js";
 import { toContextListItem } from "../utils.js";
 
 export const useGenAIStore = (
@@ -45,6 +46,7 @@ export const useGenAIStore = (
         dashboards?: IListedDashboard[];
         visualizations?: IInsight[];
         isPreview?: boolean;
+        initializeOnStart?: GenAIInitializeOnStart;
         allowInteractionIntelligence?: boolean;
         onLinkClick?: (linkClickEvent: LinkHandlerEvent) => string | undefined;
         allowNativeLinks?: boolean;
@@ -62,6 +64,7 @@ export const useGenAIStore = (
         dashboards,
         visualizations,
         isPreview,
+        initializeOnStart,
         allowInteractionIntelligence,
         onLinkClick,
         allowNativeLinks,
@@ -85,8 +88,17 @@ export const useGenAIStore = (
             optionsDispatcher,
             isPreview,
             allowInteractionIntelligence,
+            initializeOnStart,
         );
-    }, [backend, workspace, eventDispatcher, optionsDispatcher, isPreview, allowInteractionIntelligence]);
+    }, [
+        backend,
+        workspace,
+        eventDispatcher,
+        optionsDispatcher,
+        isPreview,
+        allowInteractionIntelligence,
+        initializeOnStart,
+    ]);
 
     useEffect(() => {
         if (colorPalette) {

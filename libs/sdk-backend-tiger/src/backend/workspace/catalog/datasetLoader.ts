@@ -168,6 +168,7 @@ export async function loadAttributesAndDateDatasetsAndHierarchies(
     loadDateDatasets?: boolean,
     loadAttributeHierarchies?: boolean,
     signal?: AbortSignal,
+    pageSize?: number,
 ): Promise<CatalogItem[]> {
     const includeObjects: EntitiesApiGetAllEntitiesAttributesRequest["include"] = ["labels", "defaultView"];
     // Include dataset relationship when loading attributes as well, so attribute catalog items
@@ -189,6 +190,9 @@ export async function loadAttributesAndDateDatasetsAndHierarchies(
         params,
         {
             signal,
+            params: {
+                size: pageSize,
+            },
         },
     ).then(MetadataUtilities.mergeEntitiesResults);
 

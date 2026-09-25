@@ -65,6 +65,24 @@ interface IActiveStyleSetting {
     type?: "theme" | "workspaceTheme" | "colorPalette" | "workspaceColorPalette";
 }
 
+interface IOriginAwareEntity {
+    id: string;
+    meta?: { origin?: { originType: "NATIVE" | "PARENT" } };
+}
+
+// A workspace and its parent may each own an object with the same id. The workspace's own one is
+// the one its settings resolve to, and keeping both would give the list two identical references.
+const preferNativeById = <T extends IOriginAwareEntity>(entities: T[]): T[] => {
+    const byId = new Map<string, T>();
+    for (const entity of entities) {
+        const existing = byId.get(entity.id);
+        if (!existing || entity.meta?.origin?.originType === "NATIVE") {
+            byId.set(entity.id, entity);
+        }
+    }
+    return entities.filter((entity) => byId.get(entity.id) === entity);
+};
+
 export class TigerWorkspaceStyling implements IWorkspaceStylingService {
     private settingsService: TigerWorkspaceSettings;
 
@@ -213,6 +231,19 @@ export class TigerWorkspaceStyling implements IWorkspaceStylingService {
         );
     }
 
+    public async getAvailableThemes(): Promise<IThemeMetadataObject[]> {
+        return await this.authCall((client) =>
+            MetadataUtilities.getAllPagesOf(client, EntitiesApi_GetAllEntitiesWorkspaceThemes, {
+                workspaceId: this.workspace,
+                origin: "ALL",
+                metaInclude: ["origin"],
+                sort: ["name"],
+            })
+                .then(MetadataUtilities.mergeEntitiesResults)
+                .then((themes) => preferNativeById(themes.data).map(convertThemeWithLinks)),
+        );
+    }
+
     /**
      * Create a new theme on the workspace level.
      *
@@ -294,6 +325,25 @@ export class TigerWorkspaceStyling implements IWorkspaceStylingService {
                         )
                         .map(convertColorPaletteWithLinks);
                 }),
+        );
+    }
+
+    public async getAvailableColorPalettes(): Promise<IColorPaletteMetadataObject[]> {
+        return await this.authCall((client) =>
+            MetadataUtilities.getAllPagesOf(client, EntitiesApi_GetAllEntitiesWorkspaceColorPalettes, {
+                workspaceId: this.workspace,
+                origin: "ALL",
+                metaInclude: ["origin"],
+                sort: ["name"],
+            })
+                .then(MetadataUtilities.mergeEntitiesResults)
+                .then((colorPalettes) =>
+                    preferNativeById(colorPalettes.data)
+                        .filter((colorPaletteData) =>
+                            isValidColorPalette(getColorPaletteFromMDObject(colorPaletteData)),
+                        )
+                        .map(convertColorPaletteWithLinks),
+                ),
         );
     }
 

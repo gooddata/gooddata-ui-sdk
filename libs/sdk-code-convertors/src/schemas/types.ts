@@ -19,6 +19,9 @@ import type {
     Parameter,
     Plugin,
     Query,
+    Report,
+    ReportPageLayout,
+    ReportTemplate,
     Section,
     Visualisation,
 } from "@gooddata/sdk-code-schemas/v1";
@@ -45,6 +48,12 @@ export type AacParameter = Parameter;
 export type AacPlugin = Plugin;
 /** @public */
 export type AacQuery = Query;
+/** @alpha */
+export type AacReport = Report;
+/** @alpha */
+export type AacReportPageLayout = ReportPageLayout;
+/** @alpha */
+export type AacReportTemplate = ReportTemplate;
 /** @public */
 export type AacSection = Section;
 /** @public */

@@ -33,6 +33,8 @@ import { DeclarativeLabel } from '@gooddata/api-client-tiger';
 import { DeclarativeMetric } from '@gooddata/api-client-tiger';
 import { DeclarativeParameter } from '@gooddata/api-client-tiger';
 import { DeclarativeReference } from '@gooddata/api-client-tiger';
+import { DeclarativeReport } from '@gooddata/api-client-tiger';
+import { DeclarativeReportPageLayout } from '@gooddata/api-client-tiger';
 import { DeclarativeTable } from '@gooddata/api-client-tiger';
 import { DeclarativeVisualizationObject } from '@gooddata/api-client-tiger';
 import type { Fields } from '@gooddata/sdk-code-schemas/v1';
@@ -76,6 +78,12 @@ import { IPositiveAttributeFilterBody } from '@gooddata/sdk-model';
 import { IPreviousPeriodMeasureDefinition } from '@gooddata/sdk-model';
 import { IRankingFilterBody } from '@gooddata/sdk-model';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
+import { IReportContentPage } from '@gooddata/sdk-model';
+import { IReportDefinition } from '@gooddata/sdk-model';
+import { IReportPageLayout } from '@gooddata/sdk-model';
+import { IReportPageLayoutDefinition } from '@gooddata/sdk-model';
+import { IReportTemplate } from '@gooddata/sdk-model';
+import { IReportTemplateDefinition } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
 import { ITotal } from '@gooddata/sdk-model';
 import { JsonApiVisualizationObjectOut } from '@gooddata/api-client-tiger';
@@ -93,6 +101,10 @@ import type { PoPMetricField } from '@gooddata/sdk-code-schemas/v1';
 import type { PreviousPeriodMetricField } from '@gooddata/sdk-code-schemas/v1';
 import type { Query } from '@gooddata/sdk-code-schemas/v1';
 import type { QueryFilters } from '@gooddata/sdk-code-schemas/v1';
+import type { Report as Report_2 } from '@gooddata/sdk-code-schemas/v1';
+import type { ReportPageBody } from '@gooddata/sdk-code-schemas/v1';
+import type { ReportPageLayout } from '@gooddata/sdk-code-schemas/v1';
+import type { ReportTemplate } from '@gooddata/sdk-code-schemas/v1';
 import type { RichTextWidget } from '@gooddata/sdk-code-schemas/v1';
 import { Scalar } from 'yaml';
 import type { Section } from '@gooddata/sdk-code-schemas/v1';
@@ -142,6 +154,15 @@ export type AacPlugin = Plugin_2;
 
 // @public (undocumented)
 export type AacQuery = Query;
+
+// @alpha (undocumented)
+export type AacReport = Report_2;
+
+// @alpha (undocumented)
+export type AacReportPageLayout = ReportPageLayout;
+
+// @alpha (undocumented)
+export type AacReportTemplate = ReportTemplate;
 
 // @public (undocumented)
 export type AacSection = Section;
@@ -1469,6 +1490,18 @@ export function declarativeRankingFilterToYaml(rankingFilter: IRankingFilterBody
 export function declarativeRelativeDateFilterToYaml(relativeDateFilter: IRelativeDateFilter["relativeDateFilter"], input: DateFilterEmitOptions): {
     yaml: YAMLMap;
     carried: WrittenFilter[];
+};
+
+// @alpha (undocumented)
+export function declarativeReportPageLayoutToYaml(layout: DeclarativeReportPageLayout): {
+    content: string;
+    json: ReportPageLayout;
+};
+
+// @alpha (undocumented)
+export function declarativeReportToYaml(report: DeclarativeReport): {
+    content: string;
+    json: Report_2;
 };
 
 // @internal (undocumented)
@@ -3452,6 +3485,27 @@ export function repeaterChartSave(fields: Visualisation["query"]["fields"] | und
     } | undefined;
 } | undefined;
 
+// @alpha
+export function reportDefinitionToYaml(report: IReportDefinition): {
+    content: string;
+    json: Report_2;
+};
+
+// @alpha
+export function reportPageLayoutDefinitionToYaml(layout: IReportPageLayout | IReportPageLayoutDefinition): {
+    content: string;
+    json: ReportPageLayout;
+};
+
+// @internal
+export function reportPageToAacPage(page: IReportContentPage): ReportPageBody;
+
+// @alpha (undocumented)
+export function reportTemplateDefinitionToYaml(template: IReportTemplate | IReportTemplateDefinition): {
+    content: string;
+    json: ReportTemplate;
+};
+
 // @public (undocumented)
 export function resolveIdFromFileName(fileName: FilePath): string;
 
@@ -4322,6 +4376,18 @@ export type YamlPostProcessors = {
     }>;
 };
 
+// @alpha
+export function yamlReportDocumentToDeclarative(input: Report_2, errorContext?: IErrorContext): DeclarativeReport;
+
+// @alpha (undocumented)
+export function yamlReportPageLayoutToDeclarative(input: ReportPageLayout, errorContext?: IErrorContext): DeclarativeReportPageLayout;
+
+// @alpha (undocumented)
+export function yamlReportPageLayoutToDefinition(input: ReportPageLayout, errorContext?: IErrorContext): IReportPageLayoutDefinition;
+
+// @alpha (undocumented)
+export function yamlReportTemplateToDefinition(input: ReportTemplate, errorContext?: IErrorContext): IReportTemplateDefinition;
+
 // @internal (undocumented)
 export function yamlReportToDeclarative(entities: ExportEntities, input: Visualisation): {
     buckets: VisualisationDefinition["buckets"];
@@ -4333,6 +4399,9 @@ export function yamlReportToDeclarative(entities: ExportEntities, input: Visuali
     }>;
     attributeFilterConfigs?: IAttributeFilterConfigs;
 };
+
+// @alpha
+export function yamlReportToDefinition(input: Report_2, errorContext?: IErrorContext): IReportDefinition;
 
 // @internal (undocumented)
 export function yamlReportTotalToDeclarative(totals: Total[] | undefined, attributeIdentifier: string): ITotal[];

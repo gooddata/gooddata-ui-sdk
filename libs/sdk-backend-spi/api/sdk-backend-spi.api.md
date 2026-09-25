@@ -2891,6 +2891,7 @@ export interface IWorkspaceCatalogFactoryMethods<TFactory, TOptions> {
     includeTags(tags: ObjRef[]): TFactory;
     withGroups(loadGroups: boolean): TFactory;
     withOptions(options: Partial<TOptions>): TFactory;
+    withPageSize(pageSize: number): TFactory;
     withSignal(signal: AbortSignal): TFactory;
 }
 
@@ -2902,6 +2903,7 @@ export interface IWorkspaceCatalogFactoryOptions {
     includeTags: ObjRef[];
     loadGroups?: boolean;
     loadPermissions?: boolean;
+    pageSize?: number;
     production?: boolean;
     search?: string;
     types: CatalogItemType[];
@@ -3279,6 +3281,8 @@ export interface IWorkspaceStylingService {
     deleteTheme(themeRef: ObjRef): Promise<void>;
     getActiveColorPalette(): Promise<ObjRef | undefined>;
     getActiveTheme(): Promise<ObjRef | undefined>;
+    getAvailableColorPalettes(): Promise<IColorPaletteMetadataObject[]>;
+    getAvailableThemes(): Promise<IThemeMetadataObject[]>;
     getColorPalette(): Promise<IColorPalette>;
     getColorPaletteByRef(colorPaletteRef: ObjRef): Promise<IColorPalette | undefined>;
     getColorPalettes(): Promise<IColorPaletteMetadataObject[]>;

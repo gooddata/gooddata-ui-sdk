@@ -20,6 +20,7 @@ import { chatWindowSliceName } from "../store/chatWindow/chatWindowSlice.js";
 import { type ChatEventHandler } from "../store/events.js";
 import { messagesSliceName } from "../store/messages/messagesSlice.js";
 import { type GenAiStore as GenAiStoreType } from "../store/store.js";
+import { type GenAIInitializeOnStart } from "../types.js";
 
 import {
     ConfigProvider,
@@ -136,6 +137,12 @@ export type GenAiStoreProps = {
      * @internal
      */
     allowInteractionIntelligence?: boolean;
+
+    /**
+     * @internal
+     * Whether to load the Gen AI store on start.
+     */
+    initializeOnStart?: GenAIInitializeOnStart;
 };
 
 /**
@@ -260,6 +267,7 @@ function InternalStore({
     isPreview,
     allowInteractionIntelligence,
     colorPalette,
+    initializeOnStart,
 }: GenAiStoreProps) {
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
@@ -275,6 +283,7 @@ function InternalStore({
         dashboards,
         visualizations,
         isPreview,
+        initializeOnStart,
         allowInteractionIntelligence,
         allowNativeLinks,
         onLinkClick,

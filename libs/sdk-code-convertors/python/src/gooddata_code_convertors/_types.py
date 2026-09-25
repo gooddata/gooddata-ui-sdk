@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 4d368ca704d390ba0890e3e00d6a5ce9ff26400e32f701eb3b903fb96595761f
+# schema-hash: d896a1ffb7eafb6d884637d11d9117f2ed26efde25b9302ef2a3fcddb98e8885
 
 from __future__ import annotations
 
@@ -70,11 +70,13 @@ __all__ = [
     "Fields",
     "Format",
     "GeoAreaConfig",
+    "HeadingSlot",
     "Identifier",
     "IgnoredDrillDown",
     "IgnoredDrillDown1",
     "IgnoredDrillDown2",
     "IgnoredDrillDownsIntersection",
+    "ImageSlot",
     "Interaction",
     "InteractionClickOn",
     "InteractionFilters",
@@ -95,6 +97,8 @@ __all__ = [
     "LayerItem1",
     "LayerItem2",
     "LayerItemBase",
+    "LayoutColumn",
+    "LayoutRow",
     "LineStyleMapping",
     "LineStyleMapping1",
     "Locale",
@@ -108,6 +112,7 @@ __all__ = [
     "MvfCondition3",
     "NumberParameterDefinition",
     "OpenUrl",
+    "ParagraphSlot",
     "Parameter",
     "ParameterAllowedValue",
     "ParameterDefinition",
@@ -150,6 +155,34 @@ __all__ = [
     "QueryTextFilter2",
     "Reference",
     "Relative",
+    "Report",
+    "ReportAlignment",
+    "ReportBackground",
+    "ReportBackground1",
+    "ReportBackgroundImage",
+    "ReportBackgroundImage1",
+    "ReportBackgroundImage2",
+    "ReportBoxStyle",
+    "ReportImage",
+    "ReportImage1",
+    "ReportImageStyle",
+    "ReportLayoutNode",
+    "ReportPageBody",
+    "ReportPageFormat",
+    "ReportPageKind",
+    "ReportPageLayout",
+    "ReportPeriod",
+    "ReportPlaceholder",
+    "ReportPlaceholder1",
+    "ReportSlotId",
+    "ReportTemplate",
+    "ReportText",
+    "ReportText1",
+    "ReportTextStyle",
+    "ReportTextStyle1",
+    "ReportTextType",
+    "ReportVariable",
+    "ReportWeight",
     "Rule",
     "Section",
     "SimpleColorItem",
@@ -198,6 +231,7 @@ __all__ = [
     "Visualisation7",
     "Visualisation8",
     "Visualisation9",
+    "VisualizationSlot",
     "VisualizationWidget",
     "Widget",
     "Widget1",
@@ -712,6 +746,68 @@ class ConditionalFormatting(TypedDict):
 
 
 Locale: TypeAlias = str
+
+
+ReportPageFormat: TypeAlias = Literal['widescreen', 'a4Portrait', 'letterPortrait']
+
+
+ReportPageKind: TypeAlias = Literal['cover', 'section', 'content']
+
+
+class ReportPeriod(TypedDict):
+    start: str
+    end: str
+
+
+class ReportPlaceholder1(TypedDict):
+    hint: NotRequired[str]
+    required: NotRequired[bool]
+
+
+ReportPlaceholder: TypeAlias = bool | str | ReportPlaceholder1
+
+
+ReportSlotId: TypeAlias = Identifier
+
+
+class ReportText1(TypedDict):
+    text: NotRequired[str]
+    prompt: NotRequired[str]
+    generated_at: NotRequired[str]
+
+
+ReportText: TypeAlias = str | ReportText1
+
+
+ReportWeight: TypeAlias = float
+
+
+ReportAlignment: TypeAlias = Literal['start', 'center', 'end']
+
+
+class ReportImageStyle(TypedDict):
+    horizontal_align: NotRequired[ReportAlignment]
+    vertical_align: NotRequired[ReportAlignment]
+
+
+ReportTextType: TypeAlias = Literal['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'largeText', 'normalText', 'smallText']
+
+
+class ReportBackgroundImage1(TypedDict):
+    ref: Identifier
+
+
+class ReportBackgroundImage2(TypedDict):
+    id: ReportSlotId
+    url: NotRequired[str]
+    asset: NotRequired[Identifier]
+    alt_text: NotRequired[str]
+    fit: NotRequired[Literal['contain', 'cover', 'fill']]
+    style: NotRequired[ReportImageStyle]
+    placeholder: NotRequired[ReportPlaceholder]
+
+
+ReportBackgroundImage: TypeAlias = ReportBackgroundImage1 | ReportBackgroundImage2
 
 
 class AttributeHierarchy(TypedDict):
@@ -1253,6 +1349,32 @@ class Config(TypedDict):
     conditional_formatting: NotRequired[ConditionalFormatting]
 
 
+class ReportImage1(TypedDict):
+    url: NotRequired[str]
+    asset: NotRequired[Identifier]
+    alt_text: NotRequired[str]
+    fit: NotRequired[Literal['contain', 'cover', 'fill']]
+    style: NotRequired[ReportImageStyle]
+    placeholder: NotRequired[ReportPlaceholder]
+
+
+ReportImage: TypeAlias = str | ReportImage1
+
+
+class ReportVariable(TypedDict):
+    name: str
+    title: NotRequired[Title]
+    description: NotRequired[Description]
+    default: NotRequired[str]
+
+
+class ReportBackground1(TypedDict):
+    image: ReportBackgroundImage
+
+
+ReportBackground: TypeAlias = str | ReportBackground1
+
+
 class DashboardFilterGroup(TypedDict):
     type: Literal['filter_group']
     title: str
@@ -1316,6 +1438,13 @@ ParameterDefinition: TypeAlias = StringParameterDefinition | NumberParameterDefi
 QuerySort: TypeAlias = QueryAttributeSort | QueryMetricSort
 
 
+class ImageSlot(TypedDict):
+    id: ReportSlotId
+    weight: NotRequired[ReportWeight]
+    image: ReportImage
+    placeholder: NotRequired[ReportPlaceholder]
+
+
 class BucketItem1(TypedDict):
     field: NotRequired[str]
     format: NotRequired[str]
@@ -1358,6 +1487,25 @@ class Parameter(TypedDict):
 
 
 QueryFilters: TypeAlias = dict[str, QueryFilter]
+
+
+class ReportBoxStyle(TypedDict):
+    background: NotRequired[ReportBackground]
+    border_radius: NotRequired[float]
+    padding: NotRequired[float]
+
+
+class ReportTextStyle1(TypedDict):
+    type: NotRequired[ReportTextType]
+    color: NotRequired[str]
+    horizontal_align: NotRequired[ReportAlignment]
+    vertical_align: NotRequired[ReportAlignment]
+    background: NotRequired[ReportBackground]
+    border_radius: NotRequired[float]
+    padding: NotRequired[float]
+
+
+ReportTextStyle: TypeAlias = ReportTextType | ReportTextStyle1
 
 
 class Widget2(TypedDict):
@@ -1439,6 +1587,36 @@ QueryField: TypeAlias = (
     | QueryField13
     | QueryField2
 )
+
+
+class VisualizationSlot(TypedDict):
+    id: ReportSlotId
+    weight: NotRequired[ReportWeight]
+    visualization: str | None
+    title: NotRequired[str | Literal[False]]
+    show_title: NotRequired[bool]
+    properties: NotRequired[dict[str, Any]]
+    date: NotRequired[Identifier]
+    ignore_report_period: NotRequired[bool]
+    filters: NotRequired[DashboardFilters]
+    ignored_filters: NotRequired[list[str]]
+    placeholder: NotRequired[ReportPlaceholder]
+
+
+class HeadingSlot(TypedDict):
+    id: ReportSlotId
+    weight: NotRequired[ReportWeight]
+    heading: ReportText
+    style: NotRequired[ReportTextStyle]
+    placeholder: NotRequired[ReportPlaceholder]
+
+
+class ParagraphSlot(TypedDict):
+    id: ReportSlotId
+    weight: NotRequired[ReportWeight]
+    paragraph: ReportText
+    style: NotRequired[ReportTextStyle]
+    placeholder: NotRequired[ReportPlaceholder]
 
 
 LayerItem: TypeAlias = LayerItemBase | LayerItem1 | LayerItem2
@@ -1972,6 +2150,9 @@ Metadata: TypeAlias = Union[
     AttributeHierarchy,
     Parameter,
     Visualisation,
+    "Report",
+    "ReportTemplate",
+    "ReportPageLayout",
 ]
 
 
@@ -2021,6 +2202,55 @@ class Widget3(TypedDict):
 Widget: TypeAlias = VisualizationWidget | Widget1 | Widget2 | Widget3
 
 
+class Report(TypedDict):
+    id: Identifier
+    type: Literal['report']
+    title: Title
+    description: NotRequired[Description]
+    tags: NotRequired[Tags]
+    period: ReportPeriod
+    pages: list[ReportPageBody]
+    filters: NotRequired[DashboardFilters]
+    variables: NotRequired[list[ReportVariable]]
+    variable_values: NotRequired[dict[str, str]]
+
+
+class LayoutColumn(TypedDict):
+    weight: NotRequired[ReportWeight]
+    column: list[ReportLayoutNode]
+    style: NotRequired[ReportBoxStyle]
+
+
+class LayoutRow(TypedDict):
+    weight: NotRequired[ReportWeight]
+    row: list[ReportLayoutNode]
+    style: NotRequired[ReportBoxStyle]
+
+
+class ReportPageLayout(TypedDict):
+    id: Identifier
+    type: Literal['report_page_layout']
+    title: Title
+    description: NotRequired[Description]
+    tags: NotRequired[Tags]
+    kind: NotRequired[ReportPageKind]
+    format: NotRequired[ReportPageFormat]
+    style: NotRequired[ReportBoxStyle]
+    layout: ReportLayoutNode
+    filters: NotRequired[DashboardFilters]
+
+
+class ReportTemplate(TypedDict):
+    id: Identifier
+    type: Literal['report_template']
+    title: Title
+    description: NotRequired[Description]
+    tags: NotRequired[Tags]
+    pages: list[ReportPageBody]
+    filters: NotRequired[DashboardFilters]
+    variables: NotRequired[list[ReportVariable]]
+
+
 class Dashboard(TypedDict):
     id: Identifier
     type: Literal['dashboard']
@@ -2040,3 +2270,22 @@ class Dashboard(TypedDict):
     plugins: NotRequired[list[Plugins | Identifier]]
     tabs: NotRequired[list[Tab]]
     permissions: NotRequired[Permissions]
+
+
+ReportLayoutNode: TypeAlias = (
+    LayoutColumn
+    | LayoutRow
+    | VisualizationSlot
+    | HeadingSlot
+    | ParagraphSlot
+    | ImageSlot
+)
+
+
+class ReportPageBody(TypedDict):
+    id: Identifier
+    kind: NotRequired[ReportPageKind]
+    format: NotRequired[ReportPageFormat]
+    style: NotRequired[ReportBoxStyle]
+    layout: ReportLayoutNode
+    filters: NotRequired[DashboardFilters]

@@ -342,6 +342,9 @@ export type GenAIConversationsProps = Omit<GenAiStoreProps, "children"> & {
     slots?: IGenAIAssistantSlots;
 };
 
+// @internal (undocumented)
+export type GenAIInitializeOnStart = ("catalogItems" | "agents")[];
+
 // @public
 export function GenAiInteractionIntelligence(input: IGenAiInteractionIntelligenceProps): JSX.Element | null;
 
@@ -370,6 +373,7 @@ export type GenAiStoreProps = {
     children: ReactNode | ((genAIStore: EnhancedStore) => ReactNode);
     isPreview?: boolean;
     allowInteractionIntelligence?: boolean;
+    initializeOnStart?: GenAIInitializeOnStart;
 };
 
 // @public

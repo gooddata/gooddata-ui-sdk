@@ -347,6 +347,58 @@ describe("TigerWorkspaceStyling workspace object management", () => {
         expect(themes[0]).toMatchObject({ id: "t-1", type: "theme", title: "Brand" });
     });
 
+    it("lists the workspace themes the workspace can use, own and inherited, with their scope", async () => {
+        vi.mocked(EntitiesApi_GetAllEntitiesWorkspaceThemes).mockResolvedValue(
+            listResponse([
+                {
+                    id: "t-parent",
+                    type: "workspaceTheme",
+                    attributes: { name: "Parent", content: themeContent },
+                    links: { self: "u" },
+                    meta: { origin: { originType: "PARENT", originId: "parent" } },
+                },
+            ]),
+        );
+
+        const styling = new TigerWorkspaceStyling(authCall, WORKSPACE);
+        const themes = await styling.getAvailableThemes();
+
+        expect(vi.mocked(EntitiesApi_GetAllEntitiesWorkspaceThemes).mock.calls[0][2]).toMatchObject({
+            workspaceId: WORKSPACE,
+            origin: "ALL",
+            metaInclude: ["origin"],
+        });
+        expect(themes).toEqual([
+            expect.objectContaining({ ref: idRef("t-parent", "workspaceTheme"), title: "Parent" }),
+        ]);
+    });
+
+    it("keeps the workspace's own theme when a parent has one with the same id", async () => {
+        vi.mocked(EntitiesApi_GetAllEntitiesWorkspaceThemes).mockResolvedValue(
+            listResponse([
+                {
+                    id: "t-1",
+                    type: "workspaceTheme",
+                    attributes: { name: "Parent", content: themeContent },
+                    links: { self: "u" },
+                    meta: { origin: { originType: "PARENT", originId: "parent" } },
+                },
+                {
+                    id: "t-1",
+                    type: "workspaceTheme",
+                    attributes: { name: "Own", content: themeContent },
+                    links: { self: "u" },
+                    meta: { origin: { originType: "NATIVE", originId: WORKSPACE } },
+                },
+            ]),
+        );
+
+        const styling = new TigerWorkspaceStyling(authCall, WORKSPACE);
+        const themes = await styling.getAvailableThemes();
+
+        expect(themes.map(({ title }) => title)).toEqual(["Own"]);
+    });
+
     it("deletes a workspace theme by object id scoped to the workspace", async () => {
         vi.mocked(EntitiesApi_DeleteEntityWorkspaceThemes).mockResolvedValue(
             {} as unknown as Awaited<AxiosPromise>,
@@ -429,6 +481,65 @@ describe("TigerWorkspaceStyling workspace object management", () => {
         });
         expect(palettes).toHaveLength(1);
         expect(palettes[0]).toMatchObject({ id: "cp-1", type: "colorPalette", title: "Brand" });
+    });
+
+    it("lists the workspace color palettes the workspace can use, filtering invalid entries", async () => {
+        vi.mocked(EntitiesApi_GetAllEntitiesWorkspaceColorPalettes).mockResolvedValue(
+            listResponse([
+                {
+                    id: "cp-parent",
+                    type: "workspaceColorPalette",
+                    attributes: { name: "Parent", content: paletteContent },
+                    links: { self: "u" },
+                    meta: { origin: { originType: "PARENT", originId: "parent" } },
+                },
+                {
+                    id: "cp-broken",
+                    type: "workspaceColorPalette",
+                    attributes: { name: "Broken", content: { colorPalette: "nope" } },
+                    links: { self: "u" },
+                    meta: { origin: { originType: "NATIVE", originId: WORKSPACE } },
+                },
+            ]),
+        );
+
+        const styling = new TigerWorkspaceStyling(authCall, WORKSPACE);
+        const palettes = await styling.getAvailableColorPalettes();
+
+        expect(vi.mocked(EntitiesApi_GetAllEntitiesWorkspaceColorPalettes).mock.calls[0][2]).toMatchObject({
+            workspaceId: WORKSPACE,
+            origin: "ALL",
+            metaInclude: ["origin"],
+        });
+        expect(palettes).toEqual([
+            expect.objectContaining({ ref: idRef("cp-parent", "workspaceColorPalette"), title: "Parent" }),
+        ]);
+    });
+
+    it("keeps the workspace's own color palette when a parent has one with the same id", async () => {
+        vi.mocked(EntitiesApi_GetAllEntitiesWorkspaceColorPalettes).mockResolvedValue(
+            listResponse([
+                {
+                    id: "cp-1",
+                    type: "workspaceColorPalette",
+                    attributes: { name: "Own", content: paletteContent },
+                    links: { self: "u" },
+                    meta: { origin: { originType: "NATIVE", originId: WORKSPACE } },
+                },
+                {
+                    id: "cp-1",
+                    type: "workspaceColorPalette",
+                    attributes: { name: "Parent", content: paletteContent },
+                    links: { self: "u" },
+                    meta: { origin: { originType: "PARENT", originId: "parent" } },
+                },
+            ]),
+        );
+
+        const styling = new TigerWorkspaceStyling(authCall, WORKSPACE);
+        const palettes = await styling.getAvailableColorPalettes();
+
+        expect(palettes.map(({ title }) => title)).toEqual(["Own"]);
     });
 
     it("deletes a workspace color palette by object id scoped to the workspace", async () => {

@@ -120,6 +120,11 @@ export const catalogItemsSelector: (state: RootState) => CatalogItem[] = createS
     },
 );
 
+export const catalogItemsStateSelector: (state: RootState) => RootState["chatWindow"]["catalogItemsState"] =
+    createSelector(chatWindowSliceSelector, (state) => {
+        return state.catalogItemsState;
+    });
+
 export const contextObjectsSelector: (state: RootState) => ContextObjectsState = createSelector(
     chatWindowSliceSelector,
     (state) => state.contextObjects,

@@ -770,6 +770,12 @@ class DummyWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         public signal?: AbortSignal,
     ) {}
 
+    public withPageSize(pageSize: number): IWorkspaceCatalogFactory {
+        return this.withOptions({
+            pageSize,
+        });
+    }
+
     public withOptions(options: Partial<IWorkspaceCatalogFactoryOptions>): IWorkspaceCatalogFactory {
         const newOptions = {
             ...this.options,
@@ -873,6 +879,13 @@ class DummyWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCatalogAva
         },
         public signal?: AbortSignal,
     ) {}
+
+    // oxlint-disable-next-line sonarjs/no-identical-functions
+    public withPageSize(pageSize: number): IWorkspaceCatalogAvailableItemsFactory {
+        return this.withOptions({
+            pageSize,
+        });
+    }
 
     public excludeTags(excludeTags: ObjRef[]): IWorkspaceCatalogAvailableItemsFactory {
         return this.withOptions({

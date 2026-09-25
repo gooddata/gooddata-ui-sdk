@@ -884,7 +884,8 @@ function sourceInsightFilterIdToDeclarative(
     return null;
 }
 
-function yamlIgnoredFilterToDeclarative(input: string): IDashboardFilterReference | null {
+/** @internal */
+export function yamlIgnoredFilterToDeclarative(input: string): IDashboardFilterReference | null {
     const ref = parseReferenceObject(input);
 
     if (ref?.type === "label" || ref?.type === "computed_attribute") {

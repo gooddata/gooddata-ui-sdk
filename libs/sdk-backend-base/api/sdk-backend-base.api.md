@@ -678,6 +678,8 @@ export abstract class DecoratedWorkspaceCatalogFactory implements IWorkspaceCata
     // (undocumented)
     withOptions(options: IWorkspaceCatalogFactoryOptions): IWorkspaceCatalogFactory;
     // (undocumented)
+    withPageSize(pageSize: number): IWorkspaceCatalogFactory;
+    // (undocumented)
     withSignal(signal: AbortSignal): IWorkspaceCatalogFactory;
     // (undocumented)
     workspace: string;

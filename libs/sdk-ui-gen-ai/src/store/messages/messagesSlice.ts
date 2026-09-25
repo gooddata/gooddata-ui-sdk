@@ -68,6 +68,10 @@ type MessagesSliceState = {
      */
     agents: GenAIAgent[] | undefined;
     /**
+     * Loading state of the agents.
+     */
+    agentsState: "pending" | "loading" | "loaded";
+    /**
      * Conversation data
      */
     conversationsData: Record<string, StoredConversation>;
@@ -117,6 +121,7 @@ const initialState: MessagesSliceState = {
     agents: undefined,
     conversationsData: {},
     refocus: 0,
+    agentsState: "pending",
 };
 
 const setNormalizedConversations = (state: MessagesSliceState, conversations: IChatConversationLocal[]) => {
@@ -326,12 +331,6 @@ const messagesSlice = createSlice({
         },
         clearThreadErrorAction: (state, { payload: { error } }: PayloadAction<{ error: Error }>) => {
             state.globalError = errorToObject(error);
-            const data = getConversationData(state.conversationsData, state.currentConversation?.localId);
-            delete data?.asyncProcess;
-        },
-        clearThreadSuccessAction: (state) => {
-            state.loaded = false;
-            delete state.globalError;
             const data = getConversationData(state.conversationsData, state.currentConversation?.localId);
             delete data?.asyncProcess;
         },
@@ -801,6 +800,10 @@ const messagesSlice = createSlice({
         },
         setAgentsAction: (state, { payload }: PayloadAction<{ agents: GenAIAgent[] | undefined }>) => {
             state.agents = payload.agents;
+            state.agentsState = "loaded";
+        },
+        setAgentsLoadingAction: (state) => {
+            state.agentsState = "loading";
         },
         setGlobalErrorAction: (state, { payload: { error } }: PayloadAction<{ error: Error }>) => {
             state.globalError = errorToObject(error);
@@ -1235,7 +1238,6 @@ export const {
     loadConversationsSuccessAction,
     loadConversationSuccessAction,
     clearThreadErrorAction,
-    clearThreadSuccessAction,
     clearConversationSuccessAction,
     evaluateConversationTitleAction,
     evaluateMessageAction,
@@ -1263,6 +1265,7 @@ export const {
     applyPendingAgentSwitchAction,
     revertAgentSwitchAction,
     setAgentsAction,
+    setAgentsLoadingAction,
     pinConversationAction,
     pinConversationSuccessAction,
     pinConversationFailureAction,

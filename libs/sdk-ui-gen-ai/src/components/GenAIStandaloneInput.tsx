@@ -11,6 +11,7 @@ import { SyntaxHighlightingInput } from "@gooddata/sdk-ui-kit";
 
 import { useGenAIStandaloneInputData } from "../hooks/useGenAIStandaloneInputData.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
+import type { GenAIInitializeOnStart } from "../types.js";
 
 import { useCompletion } from "./completion/useCompletion.js";
 import { CustomizationProvider } from "./CustomizationProvider.js";
@@ -158,6 +159,8 @@ function StandaloneInputContent({
     );
 }
 
+const DEPENDENCIES_TO_LOAD = ["catalogItems", "agents"] as GenAIInitializeOnStart;
+
 /**
  * @internal
  */
@@ -168,7 +171,12 @@ export function GenAIStandaloneInput(props: GenAIStandaloneInputProps) {
 
     return (
         <IntlWrapper locale={locale}>
-            <GenAiStore {...props} backend={effectiveBackend} workspace={effectiveWorkspace}>
+            <GenAiStore
+                {...props}
+                backend={effectiveBackend}
+                workspace={effectiveWorkspace}
+                initializeOnStart={DEPENDENCIES_TO_LOAD}
+            >
                 <CustomizationProvider slots={slots}>
                     <StandaloneInputContent {...rest} />
                 </CustomizationProvider>

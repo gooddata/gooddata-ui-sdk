@@ -58,6 +58,12 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         return new TigerWorkspaceCatalogFactory(this.authCall, this.workspace, this.options, signal);
     }
 
+    public withPageSize(pageSize: number): IWorkspaceCatalogFactory {
+        return this.withOptions({
+            pageSize,
+        });
+    }
+
     public withOptions = (options: Partial<IWorkspaceCatalogFactoryOptions>): IWorkspaceCatalogFactory => {
         const newOptions = {
             ...this.options,
@@ -166,6 +172,7 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
                 loadDateDataSets,
                 loadAttributeHierarchies,
                 this.signal,
+                this.options.pageSize,
             ),
         );
     };
@@ -187,6 +194,9 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
             return MetadataUtilities.getAllPagesOf(client, EntitiesApi_GetAllEntitiesMetrics, params, {
                 headers: ValidateRelationsHeader,
                 signal: this.signal,
+                params: {
+                    size: this.options.pageSize,
+                },
             })
                 .then(MetadataUtilities.mergeEntitiesResults)
                 .then(MetadataUtilities.filterValidEntities);
@@ -206,6 +216,9 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         const facts = await this.authCall((client) => {
             return MetadataUtilities.getAllPagesOf(client, EntitiesApi_GetAllEntitiesFacts, params, {
                 signal: this.signal,
+                params: {
+                    size: this.options.pageSize,
+                },
             }).then(MetadataUtilities.mergeEntitiesResults);
         });
 
@@ -227,6 +240,9 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
                 params,
                 {
                     signal: this.signal,
+                    params: {
+                        size: this.options.pageSize,
+                    },
                 },
             ).then(MetadataUtilities.mergeEntitiesResults);
         });

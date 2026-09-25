@@ -91,6 +91,12 @@ export interface IWorkspaceCatalogFactoryOptions {
      * Default: false
      */
     loadPermissions?: boolean;
+
+    /**
+     * Page size of items to load.
+     * Default: 250
+     */
+    pageSize?: number;
 }
 
 /**
@@ -293,6 +299,14 @@ export interface IWorkspaceCatalogFactoryMethods<TFactory, TOptions> {
      * @returns catalog factory
      */
     withGroups(loadGroups: boolean): TFactory;
+
+    /**
+     * Setup whether catalog should fetch production ready items.
+     * Default: 250
+     *
+     * @param pageSize - page size of items
+     */
+    withPageSize(pageSize: number): TFactory;
 
     /**
      * Setup catalog to fetch only items for specific options

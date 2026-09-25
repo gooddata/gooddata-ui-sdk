@@ -1,0 +1,581 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "ReportPageCommon",
+    "description": "Shared definitions of a report page body, used by report, report template and report page layout",
+    "$defs": {
+        "alignment": {
+            "$id": "/gaac/reportAlignment",
+            "title": "Report Content Alignment",
+            "type": "string",
+            "enum": ["start", "center", "end"]
+        },
+        "pageKind": {
+            "$id": "/gaac/reportPageKind",
+            "title": "Report Page Kind",
+            "type": "string",
+            "enum": ["cover", "section", "content"],
+            "description": "Editor hint only, for template galleries, default styling and AI context. Geometry always comes from the layout."
+        },
+        "pageFormat": {
+            "$id": "/gaac/reportPageFormat",
+            "title": "Report Page Format",
+            "type": "string",
+            "enum": ["widescreen", "a4Portrait", "letterPortrait"],
+            "description": "Page proportions the layout was authored for. Defaults to widescreen."
+        },
+        "textType": {
+            "$id": "/gaac/reportTextType",
+            "title": "Report Text Type",
+            "type": "string",
+            "enum": ["h1", "h2", "h3", "h4", "h5", "h6", "largeText", "normalText", "smallText"],
+            "description": "Size the text is rendered at. Headings default to h1, paragraphs to normalText. The size owns the typography that goes with it; the rest of the style overrides ink and placement on top of it."
+        },
+        "boxStyle": {
+            "$id": "/gaac/reportBoxStyle",
+            "title": "Report Box Style",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "background": {
+                    "$ref": "/gaac/reportBackground",
+                    "description": "What the box paints behind its content."
+                },
+                "border_radius": {
+                    "type": "number",
+                    "description": "Corner radius in percent of the page width. Content reaching into a rounded corner is clipped."
+                },
+                "padding": {
+                    "type": "number",
+                    "description": "Inset of the box's own content, in percent of the page width. Insets only inward."
+                }
+            }
+        },
+        "background": {
+            "$id": "/gaac/reportBackground",
+            "title": "Report Background",
+            "description": "A bare string is a color. An image is written as a mapping.",
+            "oneOf": [
+                {
+                    "type": "string",
+                    "description": "CSS color value painted behind the content."
+                },
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "image": {
+                            "$ref": "/gaac/reportBackgroundImage",
+                            "description": "Image painted behind the content."
+                        }
+                    },
+                    "required": ["image"]
+                }
+            ]
+        },
+        "textStyle": {
+            "$id": "/gaac/reportTextStyle",
+            "title": "Report Text Style",
+            "description": "A bare string is the text type. Anything more is written as a mapping.",
+            "oneOf": [
+                {
+                    "$ref": "/gaac/reportTextType"
+                },
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "type": {
+                            "$ref": "/gaac/reportTextType"
+                        },
+                        "color": {
+                            "type": "string",
+                            "description": "CSS color value of the text."
+                        },
+                        "horizontal_align": {
+                            "$ref": "/gaac/reportAlignment"
+                        },
+                        "vertical_align": {
+                            "$ref": "/gaac/reportAlignment"
+                        },
+                        "background": {
+                            "$ref": "/gaac/reportBackground"
+                        },
+                        "border_radius": {
+                            "type": "number"
+                        },
+                        "padding": {
+                            "type": "number"
+                        }
+                    }
+                }
+            ]
+        },
+        "imageStyle": {
+            "$id": "/gaac/reportImageStyle",
+            "title": "Report Image Style",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "horizontal_align": {
+                    "$ref": "/gaac/reportAlignment"
+                },
+                "vertical_align": {
+                    "$ref": "/gaac/reportAlignment"
+                }
+            },
+            "description": "Placement overrides for the drawn image; centered on both axes by default."
+        },
+        "placeholder": {
+            "$id": "/gaac/reportPlaceholder",
+            "title": "Report Slot Placeholder",
+            "description": "Metadata of a slot intentionally left unfilled. A bare true marks it required; a bare string is the authoring hint.",
+            "oneOf": [
+                {
+                    "type": "boolean",
+                    "description": "True marks the slot required: the report is not complete until it is filled."
+                },
+                {
+                    "type": "string",
+                    "description": "Authoring hint shown in the empty slot."
+                },
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "hint": {
+                            "type": "string",
+                            "description": "Authoring hint shown in the empty slot."
+                        },
+                        "required": {
+                            "type": "boolean",
+                            "description": "When true, a report is not considered complete until this slot is filled."
+                        }
+                    }
+                }
+            ]
+        },
+        "text": {
+            "$id": "/gaac/reportText",
+            "title": "Report Text",
+            "description": "A bare string is the text itself. AI-written text is a mapping carrying the prompt and the generation it produced.",
+            "oneOf": [
+                {
+                    "type": "string",
+                    "description": "Markdown with {variable} placeholders, resolved at render time."
+                },
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "text": {
+                            "type": "string",
+                            "description": "Markdown with {variable} placeholders. Alongside a prompt this is the materialized generation, stored so the report renders without re-invoking AI."
+                        },
+                        "prompt": {
+                            "type": "string",
+                            "description": "Instruction for the generator. Its presence makes this an AI-written text; supports {variables}."
+                        },
+                        "generated_at": {
+                            "type": "string",
+                            "description": "ISO 8601 timestamp of the stored generation. Only meaningful alongside a prompt."
+                        }
+                    }
+                }
+            ]
+        },
+        "image": {
+            "$id": "/gaac/reportImage",
+            "title": "Report Image",
+            "description": "A bare string is the image URL. Anything more is written as a mapping. The id belongs to whatever draws the image, not to the image itself.",
+            "oneOf": [
+                {
+                    "type": "string",
+                    "description": "Image URL, supporting {variables} - a logo uses {logo}."
+                },
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "not": {
+                        "required": ["url", "asset"]
+                    },
+                    "properties": {
+                        "url": {
+                            "type": "string",
+                            "description": "Image URL, supporting {variables} - a logo uses {logo}. Mutually exclusive with asset."
+                        },
+                        "asset": {
+                            "$ref": "/gaac/identifier",
+                            "description": "Backend-managed asset rendered as the image. Mutually exclusive with url."
+                        },
+                        "alt_text": {
+                            "type": "string"
+                        },
+                        "fit": {
+                            "type": "string",
+                            "enum": ["contain", "cover", "fill"],
+                            "description": "How the image fills its area: kept whole inside it, filling it and cropped to do so, or stretched to its shape. Defaults to contain."
+                        },
+                        "style": {
+                            "$ref": "/gaac/reportImageStyle"
+                        },
+                        "placeholder": {
+                            "$ref": "/gaac/reportPlaceholder"
+                        }
+                    }
+                }
+            ]
+        },
+        "layoutNode": {
+            "$id": "/gaac/reportLayoutNode",
+            "title": "Report Layout Node",
+            "description": "A node of the page layout. A node carrying column or row splits its area along that direction; every other node draws content, told apart by the content key it carries.",
+            "type": "object",
+            "not": {
+                "allOf": [
+                    { "not": { "required": ["column"] } },
+                    { "not": { "required": ["row"] } },
+                    { "not": { "required": ["visualization"] } },
+                    { "not": { "required": ["heading"] } },
+                    { "not": { "required": ["paragraph"] } },
+                    { "not": { "required": ["image"] } }
+                ]
+            },
+            "allOf": [
+                {
+                    "if": {
+                        "required": ["column"]
+                    },
+                    "then": {
+                        "$ref": "#/$defs/layoutColumn"
+                    }
+                },
+                {
+                    "if": {
+                        "required": ["row"]
+                    },
+                    "then": {
+                        "$ref": "#/$defs/layoutRow"
+                    }
+                },
+                {
+                    "if": {
+                        "required": ["visualization"]
+                    },
+                    "then": {
+                        "$ref": "#/$defs/visualizationSlot"
+                    }
+                },
+                {
+                    "if": {
+                        "required": ["heading"]
+                    },
+                    "then": {
+                        "$ref": "#/$defs/headingSlot"
+                    }
+                },
+                {
+                    "if": {
+                        "required": ["paragraph"]
+                    },
+                    "then": {
+                        "$ref": "#/$defs/paragraphSlot"
+                    }
+                },
+                {
+                    "if": {
+                        "required": ["image"]
+                    },
+                    "then": {
+                        "$ref": "#/$defs/imageSlot"
+                    }
+                }
+            ]
+        },
+        "layoutColumn": {
+            "title": "Report Layout Column",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "weight": {
+                    "$ref": "/gaac/reportWeight"
+                },
+                "column": {
+                    "type": "array",
+                    "description": "Children laid out vertically.",
+                    "items": {
+                        "$ref": "/gaac/reportLayoutNode"
+                    }
+                },
+                "style": {
+                    "$ref": "/gaac/reportBoxStyle",
+                    "description": "Paint of this container's box. Never affects how children are laid out."
+                }
+            },
+            "required": ["column"]
+        },
+        "layoutRow": {
+            "title": "Report Layout Row",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "weight": {
+                    "$ref": "/gaac/reportWeight"
+                },
+                "row": {
+                    "type": "array",
+                    "description": "Children laid out horizontally.",
+                    "items": {
+                        "$ref": "/gaac/reportLayoutNode"
+                    }
+                },
+                "style": {
+                    "$ref": "/gaac/reportBoxStyle",
+                    "description": "Paint of this container's box. Never affects how children are laid out."
+                }
+            },
+            "required": ["row"]
+        },
+        "weight": {
+            "$id": "/gaac/reportWeight",
+            "title": "Report Layout Weight",
+            "type": "number",
+            "description": "Fractional weight of this node inside its parent. Defaults to 1; sibling weights [2, 1] render a 2/3 + 1/3 split."
+        },
+        "slotId": {
+            "$id": "/gaac/reportSlotId",
+            "$ref": "/gaac/identifier",
+            "description": "An id for this area, unique within the page. It is what a report fills when it takes this page from a template, so an id written down here survives edits to the layout around it."
+        },
+        "visualizationSlot": {
+            "title": "Report Visualization Slot",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "$ref": "/gaac/reportSlotId"
+                },
+                "weight": {
+                    "$ref": "/gaac/reportWeight"
+                },
+                "visualization": {
+                    "type": ["string", "null"],
+                    "description": "An id of the visualization to be rendered in this area. Null leaves the area declared but empty, which renders a placeholder.",
+                    "$semantic": {
+                        "type": "reference",
+                        "source": "visualisation.id"
+                    }
+                },
+                "title": {
+                    "description": "Title rendered above the visualization; supports {variables}. False hides it.",
+                    "oneOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "boolean",
+                            "enum": [false]
+                        }
+                    ]
+                },
+                "show_title": {
+                    "type": "boolean",
+                    "description": "Whether the title is rendered. Only needed to hide a title that is kept written down; a title of false hides it and drops the text."
+                },
+                "properties": {
+                    "type": "object",
+                    "description": "Visualization properties overriding the insight's own."
+                },
+                "date": {
+                    "$ref": "/gaac/identifier",
+                    "description": "An id of the date dataset the report's period is applied to as an absolute date filter. Omitted leaves the backend date dataset resolution to decide.",
+                    "$semantic": {
+                        "type": "reference",
+                        "source": "dateDataset.id"
+                    }
+                },
+                "ignore_report_period": {
+                    "type": "boolean",
+                    "description": "When true, the implicit date filter derived from the report's period is not applied here."
+                },
+                "filters": {
+                    "$ref": "/gaac/dashboardFilters",
+                    "description": "Filters applied on top of the effective page and report filters. A filter targeting the same object replaces the inherited one."
+                },
+                "ignored_filters": {
+                    "type": "array",
+                    "description": "A list of report and page filters ignored here.",
+                    "items": {
+                        "type": "string",
+                        "description": "An id of the label, attribute, computed attribute, metric or date to be ignored",
+                        "$semantic": {
+                            "type": "reference",
+                            "sources": [
+                                "dateDataset.id",
+                                "attribute.id",
+                                "label.id",
+                                "computedAttribute.id",
+                                "metric.id"
+                            ]
+                        }
+                    }
+                },
+                "placeholder": {
+                    "$ref": "/gaac/reportPlaceholder"
+                }
+            },
+            "required": ["id", "visualization"]
+        },
+        "headingSlot": {
+            "title": "Report Heading Slot",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "$ref": "/gaac/reportSlotId"
+                },
+                "weight": {
+                    "$ref": "/gaac/reportWeight"
+                },
+                "heading": {
+                    "$ref": "/gaac/reportText",
+                    "description": "A line of display text. It carries no markup of its own: what is typed in it is what it renders."
+                },
+                "style": {
+                    "$ref": "/gaac/reportTextStyle"
+                },
+                "placeholder": {
+                    "$ref": "/gaac/reportPlaceholder"
+                }
+            },
+            "required": ["id", "heading"]
+        },
+        "paragraphSlot": {
+            "title": "Report Paragraph Slot",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "$ref": "/gaac/reportSlotId"
+                },
+                "weight": {
+                    "$ref": "/gaac/reportWeight"
+                },
+                "paragraph": {
+                    "$ref": "/gaac/reportText",
+                    "description": "Prose, written as markdown."
+                },
+                "style": {
+                    "$ref": "/gaac/reportTextStyle"
+                },
+                "placeholder": {
+                    "$ref": "/gaac/reportPlaceholder"
+                }
+            },
+            "required": ["id", "paragraph"]
+        },
+        "imageSlot": {
+            "title": "Report Image Slot",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "$ref": "/gaac/reportSlotId"
+                },
+                "weight": {
+                    "$ref": "/gaac/reportWeight"
+                },
+                "image": {
+                    "$ref": "/gaac/reportImage"
+                },
+                "placeholder": {
+                    "$ref": "/gaac/reportPlaceholder"
+                }
+            },
+            "required": ["id", "image"]
+        },
+        "pageBody": {
+            "$id": "/gaac/reportPageBody",
+            "title": "Report Page Body",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "$ref": "/gaac/identifier",
+                    "description": "An id for this page, unique within the document."
+                },
+                "kind": {
+                    "$ref": "/gaac/reportPageKind"
+                },
+                "format": {
+                    "$ref": "/gaac/reportPageFormat"
+                },
+                "style": {
+                    "$ref": "/gaac/reportBoxStyle",
+                    "description": "Paint of the page itself, behind everything the layout places."
+                },
+                "layout": {
+                    "$ref": "/gaac/reportLayoutNode",
+                    "description": "Root of the page layout."
+                },
+                "filters": {
+                    "$ref": "/gaac/dashboardFilters",
+                    "description": "Page filters, merged over the report's own. A filter targeting the same object replaces the inherited one; a visualization's own filters apply on top."
+                }
+            },
+            "required": ["id", "layout"]
+        },
+        "backgroundImage": {
+            "$id": "/gaac/reportBackgroundImage",
+            "title": "Report Background Image",
+            "description": "The image a box paints behind its content. It is drawn from a slot of its own, which is what keeps a backdrop fillable and gives it placeholder metadata, so it is written down with an id - or it names an image another box on the page already wrote down.",
+            "oneOf": [
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "ref": {
+                            "$ref": "/gaac/identifier",
+                            "description": "An id of an image already written down elsewhere on this page, drawn here as well."
+                        }
+                    },
+                    "required": ["ref"]
+                },
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "not": {
+                        "required": ["url", "asset"]
+                    },
+                    "properties": {
+                        "id": {
+                            "$ref": "/gaac/reportSlotId"
+                        },
+                        "url": {
+                            "type": "string",
+                            "description": "Image URL, supporting {variables} - a logo uses {logo}. Mutually exclusive with asset."
+                        },
+                        "asset": {
+                            "$ref": "/gaac/identifier",
+                            "description": "Backend-managed asset rendered as the image. Mutually exclusive with url."
+                        },
+                        "alt_text": {
+                            "type": "string"
+                        },
+                        "fit": {
+                            "type": "string",
+                            "enum": ["contain", "cover", "fill"],
+                            "description": "How the image fills its area: kept whole inside it, filling it and cropped to do so, or stretched to its shape. Defaults to contain."
+                        },
+                        "style": {
+                            "$ref": "/gaac/reportImageStyle"
+                        },
+                        "placeholder": {
+                            "$ref": "/gaac/reportPlaceholder"
+                        }
+                    },
+                    "required": ["id"]
+                }
+            ]
+        }
+    }
+}

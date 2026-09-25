@@ -72,6 +72,10 @@ type ChatWindowSliceState = {
      */
     catalogItems?: CatalogItem[];
     /**
+     * Indicates whether catalog items are loading.
+     */
+    catalogItemsState: "pending" | "loading" | "loaded";
+    /**
      * Dashboards and visualizations offered by the context chooser, on top of the ambient ones.
      */
     contextObjects: ContextObjectsState;
@@ -149,6 +153,7 @@ const initialState: ChatWindowSliceState = {
     inputValue: "",
     isPreview: undefined,
     allowInteractionIntelligence: undefined,
+    catalogItemsState: "pending",
 };
 
 export const getInitialChatWindowState = ({
@@ -225,6 +230,10 @@ const chatWindowSlice = createSlice({
         },
         setCatalogItemsActions: (state, { payload }: PayloadAction<CatalogItem[] | undefined>) => {
             state.catalogItems = payload;
+            state.catalogItemsState = "loaded";
+        },
+        setCatalogItemsLoadingAction: (state) => {
+            state.catalogItemsState = "loading";
         },
         setInputValueAction: (state, { payload: { value } }: PayloadAction<{ value: string }>) => {
             state.inputValue = value;
@@ -398,6 +407,7 @@ export const {
     setObjectTypesAction,
     setTagsAction,
     setCatalogItemsActions,
+    setCatalogItemsLoadingAction,
     setInputValueAction,
     initContextObjectsAction,
     loadContextObjectsNextPageAction,

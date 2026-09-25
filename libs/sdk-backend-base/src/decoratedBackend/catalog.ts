@@ -39,6 +39,10 @@ export abstract class DecoratedWorkspaceCatalogFactory implements IWorkspaceCata
         this.options = this.decorated.options;
     }
 
+    public withPageSize(pageSize: number): IWorkspaceCatalogFactory {
+        return this.createNew(this.decorated.withPageSize(pageSize));
+    }
+
     public forDataset(dataset: ObjRef): IWorkspaceCatalogFactory {
         return this.createNew(this.decorated.forDataset(dataset));
     }

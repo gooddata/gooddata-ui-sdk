@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-code-schemas",
-    "version": "11.59.0-alpha.1",
+    "version": "11.59.0-alpha.2",
     "description": "GoodData AAC JSON Schema types and compiled schemas",
     "license": "MIT",
     "author": "GoodData",
@@ -51,7 +51,7 @@
     "devDependencies": {
         "@gooddata/eslint-config": "workspace:*",
         "@gooddata/oxlint-config": "workspace:*",
-        "@microsoft/api-extractor": "7.58.12",
+        "@microsoft/api-extractor": "7.59.2",
         "@typescript-eslint/eslint-plugin": "8.58.0",
         "@typescript-eslint/parser": "8.58.0",
         "dependency-cruiser": "17.3.10",
