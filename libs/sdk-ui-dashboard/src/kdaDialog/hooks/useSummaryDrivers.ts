@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 
-import { type ObjRef, objRefToString } from "@gooddata/sdk-model";
+import { type ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 
 import { type IKdaItemGroup } from "../internalTypes.js";
 import { useKdaState } from "../providers/KdaState.js";
@@ -16,7 +16,7 @@ export function useSummaryDrivers() {
     return useMemo(() => {
         //Groups
         const groups = state.items.reduce<Record<string, IKdaItemGroup>>((prev, { data }) => {
-            const ref = objRefToString(data.attribute);
+            const ref = serializeObjRef(data.attribute);
             if (!prev[ref]) {
                 prev[ref] = createKdaGroup(
                     ref,
@@ -35,7 +35,7 @@ export function useSummaryDrivers() {
 
         //Selected fill empty groups
         state.selectedAttributes.reduce((prev, current) => {
-            const ref = objRefToString(current);
+            const ref = serializeObjRef(current);
             if (!prev[ref]) {
                 const attribute = attributeFinder(current);
                 if (attribute) {

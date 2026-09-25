@@ -1150,6 +1150,27 @@
                     }
                 ],
                 "responses": {
+                    "200": {
+                        "description": "Binary export result.",
+                        "headers": {
+                            "Content-Disposition": {
+                                "style": "simple",
+                                "schema": {
+                                    "pattern": "attachment; filename='[^']+'",
+                                    "type": "string",
+                                    "example": "attachment; filename='result.pdf'"
+                                }
+                            }
+                        },
+                        "content": {
+                            "application/pdf": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    },
                     "202": {
                         "description": "Request is accepted, provided exportId exists, but export is not yet ready.",
                         "content": {
@@ -1190,27 +1211,6 @@
                                             }
                                         }
                                     }
-                                }
-                            }
-                        }
-                    },
-                    "200": {
-                        "description": "Binary export result.",
-                        "headers": {
-                            "Content-Disposition": {
-                                "style": "simple",
-                                "schema": {
-                                    "pattern": "attachment; filename='[^']+'",
-                                    "type": "string",
-                                    "example": "attachment; filename='result.pdf'"
-                                }
-                            }
-                        },
-                        "content": {
-                            "application/pdf": {
-                                "schema": {
-                                    "type": "string",
-                                    "format": "binary"
                                 }
                             }
                         }

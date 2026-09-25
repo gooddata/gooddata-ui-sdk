@@ -5,7 +5,7 @@ import { type ChangeEvent } from "react";
 import { cloneDeep, set } from "lodash-es";
 import { useIntl } from "react-intl";
 
-import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
+import { UiTooltip, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../locales.js";
 import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
@@ -27,6 +27,7 @@ export function DistinctPointShapesControl({
     pushData,
 }: IDistinctPointShapesControlProps) {
     const intl = useIntl();
+    const tooltipId = useIdPrefixed("distinct-point-shapes-tooltip");
 
     const onValueChanged = (event: ChangeEvent<HTMLInputElement>) => {
         const clonedProperties = cloneDeep(properties);
@@ -35,29 +36,31 @@ export function DistinctPointShapesControl({
         pushData?.({ properties: clonedProperties });
     };
 
+    const hasTooltip = disabled;
+
     return (
-        <BubbleHoverTrigger showDelay={0} hideDelay={0}>
-            <label className="input-checkbox-label">
-                <input
-                    checked={checked}
-                    disabled={disabled}
-                    type="checkbox"
-                    className="input-checkbox s-distinct-points-shapes"
-                    onChange={onValueChanged}
-                />
-                <span className="input-label-text">
-                    {getTranslation(messages["canvasDistinctPointShapesLabel"].id, intl)}
-                </span>
-            </label>
-            {disabled ? (
-                <Bubble
-                    className="bubble-primary continuous-line-tooltip"
-                    alignPoints={[{ align: "cr cl" }]}
-                    arrowOffsets={{ "cr cl": [-75, 0] }}
-                >
-                    {getTranslation(messages["canvasDistinctPointShapesTooltip"].id, intl)}
-                </Bubble>
-            ) : null}
-        </BubbleHoverTrigger>
+        <UiTooltip
+            id={tooltipId}
+            component="span"
+            arrowPlacement="left"
+            triggerBy={["hover", "focus"]}
+            disabled={!hasTooltip}
+            content={getTranslation(messages["canvasDistinctPointShapesTooltip"].id, intl)}
+            anchor={
+                <label className="input-checkbox-label">
+                    <input
+                        checked={checked}
+                        disabled={disabled}
+                        type="checkbox"
+                        className="input-checkbox s-distinct-points-shapes"
+                        onChange={onValueChanged}
+                        aria-describedby={hasTooltip ? tooltipId : undefined}
+                    />
+                    <span className="input-label-text">
+                        {getTranslation(messages["canvasDistinctPointShapesLabel"].id, intl)}
+                    </span>
+                </label>
+            }
+        />
     );
 }
