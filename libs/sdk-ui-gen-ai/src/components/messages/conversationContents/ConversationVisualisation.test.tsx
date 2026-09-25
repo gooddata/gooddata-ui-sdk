@@ -219,6 +219,37 @@ describe("ConversationVisualisation", () => {
     });
 
     it.each([
+        ["local:area", "AreaChart"],
+        ["local:bar", "BarChart"],
+        ["local:bubble", "BubbleChart"],
+        ["local:bullet", "BulletChart"],
+        ["local:column", "ColumnChart"],
+        ["local:combo2", "ComboChart"],
+        ["local:line", "LineChart"],
+        ["local:pie", "PieChart"],
+        ["local:donut", "DonutChart"],
+        ["local:pyramid", "PyramidChart"],
+        ["local:funnel", "FunnelChart"],
+        ["local:radar", "RadarChart"],
+        ["local:repeater", "Repeater"],
+        ["local:treemap", "Treemap"],
+        ["local:sankey", "SankeyChart"],
+        ["local:dependencywheel", "DependencyWheelChart"],
+        ["local:scatter", "ScatterPlot"],
+        ["local:headline", "Headline"],
+        ["local:waterfall", "WaterfallChart"],
+        ["local:heatmap", "Heatmap"],
+    ])("applies default chart options to %s", (visualizationUrl, component) => {
+        renderVisualisation(visualizationUrl);
+
+        expect(lastProps.get(component)?.config).toMatchObject({
+            enableChartSorting: true,
+            enableReversedStacking: true,
+            enableSeparateTotalLabels: true,
+        });
+    });
+
+    it.each([
         ["local:pie", "PieChart"],
         ["local:donut", "DonutChart"],
         ["local:pyramid", "PyramidChart"],
@@ -293,6 +324,45 @@ describe("ConversationVisualisation", () => {
         expect(lastProps.get("BarChart")).toMatchObject({
             measures: [newMeasure("m1"), newMeasure("m2")],
             viewBy: viewAttribute,
+            stackBy: undefined,
+        });
+    });
+
+    it("renders a stacked column with only the first measure", () => {
+        const stackAttribute = newAttribute("region");
+
+        renderVisualisation(
+            "local:column",
+            {},
+            {
+                buckets: [
+                    newBucket("measures", newMeasure("m1"), newMeasure("m2")),
+                    newBucket("view", newAttribute("category")),
+                    newBucket("stack", stackAttribute),
+                ],
+            },
+        );
+
+        expect(lastProps.get("ColumnChart")).toMatchObject({
+            measures: [newMeasure("m1")],
+            stackBy: stackAttribute,
+        });
+    });
+
+    it("renders an unstacked column with all measures", () => {
+        renderVisualisation(
+            "local:column",
+            {},
+            {
+                buckets: [
+                    newBucket("measures", newMeasure("m1"), newMeasure("m2")),
+                    newBucket("view", newAttribute("category")),
+                ],
+            },
+        );
+
+        expect(lastProps.get("ColumnChart")).toMatchObject({
+            measures: [newMeasure("m1"), newMeasure("m2")],
             stackBy: undefined,
         });
     });

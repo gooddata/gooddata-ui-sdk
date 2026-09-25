@@ -10,6 +10,8 @@ import { useSummaryDrivers } from "../../hooks/useSummaryDrivers.js";
 import { type IKdaItemGroup } from "../../internalTypes.js";
 import { useKdaState } from "../../providers/KdaState.js";
 
+import { getAttributeKey } from "./useKdaAttributesSelection.js";
+
 const SEARCH_BAR_THRESHOLD = 7;
 
 export function useKdaValidAttributes() {
@@ -27,7 +29,7 @@ export function useKdaValidAttributes() {
                 const group = list.find((item) =>
                     a.displayForms.some((df) => areObjRefsEqual(df.ref, item.displayForm)),
                 );
-                mapAttributes.set(a.attribute.id, group);
+                mapAttributes.set(getAttributeKey(a), group);
                 return [a, group] as const;
             })
             .sort(([, a], [, b]) => {

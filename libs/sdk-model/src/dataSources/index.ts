@@ -31,7 +31,8 @@ export type DataSourceType =
     | "MONGODB"
     | "FLEXCONNECT"
     | "AILAKEHOUSE"
-    | "DRILL";
+    | "DRILL"
+    | "TRINO";
 
 /**
  * @alpha

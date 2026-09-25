@@ -603,7 +603,7 @@ export const DataSourceAccessSourceValue: {
 };
 
 // @alpha (undocumented)
-export type DataSourceType = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "CRATEDB" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "DENODO" | "STARROCKS" | "ATHENA" | "SINGLESTORE" | "MOTHERDUCK" | "MONGODB" | "FLEXCONNECT" | "AILAKEHOUSE" | "DRILL";
+export type DataSourceType = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "CRATEDB" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "DENODO" | "STARROCKS" | "ATHENA" | "SINGLESTORE" | "MOTHERDUCK" | "MONGODB" | "FLEXCONNECT" | "AILAKEHOUSE" | "DRILL" | "TRINO";
 
 // @public
 export type DataValue = null | string | number;

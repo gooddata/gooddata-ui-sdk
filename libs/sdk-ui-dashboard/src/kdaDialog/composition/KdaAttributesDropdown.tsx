@@ -134,7 +134,7 @@ export function KdaAttributesDropdown({
                             searchString={searchString}
                             onSearch={setSearchString}
                             renderItem={(itemProps) => {
-                                const group = mapAttributes.get(itemProps.item.attribute.id);
+                                const group = mapAttributes.get(getAttributeKey(itemProps.item));
                                 const driverCount = group?.significantDrivers.length ?? 0;
                                 const count = driverCount > 0 ? `(${driverCount})` : "-";
                                 const countAriaLabel =

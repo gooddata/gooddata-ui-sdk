@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-geo",
-    "version": "11.59.0-alpha.2",
+    "version": "11.60.0-alpha.0",
     "description": "GoodData.UI SDK - Geo Charts",
     "license": "MIT",
     "author": "GoodData Corporation",
@@ -68,7 +68,7 @@
         "default-import": "1.1.5",
         "lodash-es": "^4.17.23",
         "mapbox-gl": "^2.6.1",
-        "maplibre-gl": "^6.10.0",
+        "maplibre-gl": "6.10.0",
         "react-intl": "10.1.25",
         "react-measure": "^2.5.2",
         "ts-invariant": "0.10.3",

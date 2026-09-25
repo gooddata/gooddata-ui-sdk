@@ -24,7 +24,9 @@ type UnmappedTypes =
     | "ENABLE_QUERY_TAGS"
     | "CERTIFY_PARENT_OBJECTS"
     | "HLL_TYPE"
-    | "REPORTS_BRAND_KIT";
+    | "REPORTS_BRAND_KIT"
+    | "CONVERSATION_RETENTION_DAYS"
+    | "ENABLE_AI_DATA_OBFUSCATION";
 
 // Only mandatory types
 type MandatoryTypes = Exclude<AllSettingsType, UnmappedTypes>;

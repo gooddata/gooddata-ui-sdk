@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/playground",
-    "version": "11.59.0-alpha.2",
+    "version": "11.60.0-alpha.0",
     "private": true,
     "description": "GoodData.UI SDK - Developer Playground",
     "license": "LicenseRef-LICENSE",
@@ -63,7 +63,7 @@
         "eslint-plugin-react": "7.37.5",
         "eslint-plugin-sonarjs": "3.0.6",
         "lodash-es": "^4.17.23",
-        "maplibre-gl": "^6.10.0",
+        "maplibre-gl": "6.10.0",
         "npm-run-all": "4.1.5",
         "oxfmt": "0.68.0",
         "oxlint": "1.83.0",

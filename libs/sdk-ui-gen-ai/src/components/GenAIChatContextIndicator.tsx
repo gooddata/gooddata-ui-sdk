@@ -105,9 +105,10 @@ export function GenAIChatContextIndicator({ onUpdate }: GenAIChatContextIndicato
         setSearch("");
     }, [setSearch]);
 
+    const isSelected = Boolean(selectedContext || references.length > 0);
     const announcement = useContextChangeAnnouncement(selectedContext, references);
 
-    if (!isContextSetupEnabled) {
+    if (!isContextSetupEnabled || !isSelected) {
         return null;
     }
 

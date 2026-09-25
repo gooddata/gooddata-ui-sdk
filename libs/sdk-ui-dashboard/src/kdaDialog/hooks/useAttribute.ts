@@ -27,9 +27,10 @@ export function useAttribute() {
                 areObjRefsEqual(ref, a.attribute.ref) ||
                 a.attribute.displayForms.some((df) => areObjRefsEqual(df.ref, ref));
 
-            // Key driver refs come back untyped (the changeAnalysis response has no type
-            // discriminator), so an id shared by a label and a computed attribute is ambiguous.
-            // Plain attributes are matched first to make the resolution deterministic.
+            // A key driver ref carries its type (`displayForm` or `computedAttribute`), so a label and a
+            // computed attribute with the same id resolve to different catalog items. A backend without
+            // `attributeRef` sends the ref untyped; then only the id compares, and matching plain
+            // attributes first keeps that resolution deterministic.
             return (
                 attributes.find(matches) ??
                 computedAttributes.map(catalogComputedAttributeAsCatalogAttribute).find(matches) ??

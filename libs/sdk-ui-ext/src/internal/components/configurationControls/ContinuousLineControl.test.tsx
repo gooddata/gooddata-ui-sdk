@@ -9,6 +9,8 @@ import { InternalIntlWrapper } from "../../utils/internalIntlProvider.js";
 
 import { ContinuousLineControl, type IContinuousLineControlProps } from "./ContinuousLineControl.js";
 
+const PAST_TOOLTIP_SHOW_DELAY_MS = 600;
+
 describe("ContinuousLineControl", () => {
     const defaultProps = {
         properties: {},
@@ -61,16 +63,20 @@ describe("ContinuousLineControl", () => {
         expect(pushData).toBeCalledWith({ properties: set({}, `controls.continuousLine.enabled`, true) });
     });
 
-    it("should display the tooltip when hovering to the checkbox", async () => {
-        const pushData = vi.fn();
-        createComponent({
-            properties: {},
-            pushData,
-        });
+    it("should display the tooltip when hovering the label", async () => {
+        createComponent();
 
-        await userEvent.hover(screen.getByRole("checkbox"));
-        expect(document.querySelector(".content")!.innerHTML).toEqual(
+        await userEvent.hover(screen.getByText("Continuous line"));
+        expect(await screen.findByRole("tooltip", { hidden: true })).toHaveTextContent(
             "Draw a line between points with missing values.",
         );
+    });
+
+    it("should not display the tooltip when the checkbox is disabled", async () => {
+        createComponent({ disabled: true });
+
+        await userEvent.hover(screen.getByText("Continuous line"));
+        await new Promise((resolve) => setTimeout(resolve, PAST_TOOLTIP_SHOW_DELAY_MS));
+        expect(screen.queryByRole("tooltip", { hidden: true })).not.toBeInTheDocument();
     });
 });

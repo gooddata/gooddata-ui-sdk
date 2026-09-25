@@ -2,9 +2,13 @@
 
 import { useCallback, useMemo, useState } from "react";
 
-import { type ICatalogAttribute } from "@gooddata/sdk-model";
+import { type ICatalogAttribute, serializeObjRef } from "@gooddata/sdk-model";
 
-export const getAttributeKey = (item: ICatalogAttribute) => item.attribute.id;
+/**
+ * Keys the item by its typed ref, so that a label and a computed attribute with the same id are two rows.
+ * objRefToString would drop the `type` and collapse the two into one.
+ */
+export const getAttributeKey = (item: ICatalogAttribute) => serializeObjRef(item.attribute.ref);
 export const getAttributeTitle = (item: ICatalogAttribute) => item.attribute.title;
 
 export function useKdaAttributesSelection(

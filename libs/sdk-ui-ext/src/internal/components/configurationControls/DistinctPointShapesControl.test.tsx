@@ -12,6 +12,8 @@ import {
     type IDistinctPointShapesControlProps,
 } from "./DistintcPointShapesControl.js";
 
+const PAST_TOOLTIP_SHOW_DELAY_MS = 600;
+
 describe("DistinctPointShapesControl", () => {
     const defaultProps = {
         properties: {},
@@ -65,17 +67,20 @@ describe("DistinctPointShapesControl", () => {
         });
     });
 
-    it("should display the tooltip when checkbox is disabled", async () => {
-        const pushData = vi.fn();
-        createComponent({
-            properties: {},
-            pushData,
-            disabled: true,
-        });
+    it("should display the tooltip when the checkbox is disabled", async () => {
+        createComponent({ disabled: true });
 
-        await userEvent.hover(screen.getByRole("checkbox"));
-        expect(document.querySelector(".content")!.innerHTML).toEqual(
+        await userEvent.hover(screen.getByText("Distinct point shapes"));
+        expect(await screen.findByRole("tooltip", { hidden: true })).toHaveTextContent(
             "Property is not applicable for this configuration of the visualization",
         );
+    });
+
+    it("should not display the tooltip when the checkbox is enabled", async () => {
+        createComponent();
+
+        await userEvent.hover(screen.getByText("Distinct point shapes"));
+        await new Promise((resolve) => setTimeout(resolve, PAST_TOOLTIP_SHOW_DELAY_MS));
+        expect(screen.queryByRole("tooltip", { hidden: true })).not.toBeInTheDocument();
     });
 });
