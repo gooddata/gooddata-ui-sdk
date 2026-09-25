@@ -4,7 +4,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { type ITheme } from "@gooddata/sdk-model";
+import { type ITheme, idRef } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
 import { useMediaQuery } from "../responsive/useMediaQuery.js";
@@ -55,6 +55,29 @@ describe("StylingPicker", () => {
         expect(screen.getByText("Default")).toBeInTheDocument();
 
         expect(screen.getByLabelText("default_theme")).toBeChecked();
+    });
+
+    it("should render items that share an identifier but differ in type", () => {
+        const consoleErrorSpy = vi.spyOn(console, "error");
+        const content = customItemsMock[0].content;
+
+        try {
+            renderComponent({
+                customItems: [
+                    { ref: idRef("shared", "theme"), name: "Organization theme", content },
+                    { ref: idRef("shared", "workspaceTheme"), name: "Workspace theme", content },
+                ],
+            });
+
+            expect(screen.getByText("Organization theme")).toBeInTheDocument();
+            expect(screen.getByText("Workspace theme")).toBeInTheDocument();
+            const duplicateKeyErrors = consoleErrorSpy.mock.calls.filter(([message]) =>
+                String(message).includes("same key"),
+            );
+            expect(duplicateKeyErrors).toEqual([]);
+        } finally {
+            consoleErrorSpy.mockRestore();
+        }
     });
 
     it("should be loading", () => {

@@ -52,6 +52,29 @@ describe("MarkdownComponent", () => {
         expect(screen.getByText("italic").tagName.toLowerCase()).toBe("em");
     });
 
+    it("renders a MAQL definition as the full MAQL query, each reference titled as in the metric editor", () => {
+        render(
+            withStoreAndIntl(
+                <MarkdownComponent
+                    allowMarkdown
+                    references={[
+                        { id: "total_returns", type: "metric", title: "Total Returns" },
+                        { id: "total_sales", type: "metric", title: "Total Sales" },
+                    ]}
+                >
+                    {"**Formula:** `SELECT {metric/total_returns} / {metric/total_sales}`"}
+                </MarkdownComponent>,
+            ),
+        );
+
+        expect(document.querySelector("code")).toHaveTextContent(
+            "SELECT Total Returns {metric/total_returns} / Total Sales {metric/total_sales}",
+        );
+
+        const chips = document.querySelectorAll("code .gd-gen-ai-chat__message__object.metric");
+        expect([...chips].map((chip) => chip.textContent)).toEqual(["Total Returns", "Total Sales"]);
+    });
+
     it("renders a reference chip wrapped in a tooltip anchor", () => {
         render(
             withStoreAndIntl(

@@ -49,6 +49,12 @@ export class RecordedCatalogFactory implements IWorkspaceCatalogFactory {
         private readonly signal?: AbortSignal,
     ) {}
 
+    public withPageSize = (pageSize: number): IWorkspaceCatalogFactory => {
+        return this.withOptions({
+            pageSize,
+        });
+    };
+
     public forDataset = (dataset: ObjRef): IWorkspaceCatalogFactory => {
         return this.withOptions({
             dataset,
@@ -223,6 +229,12 @@ class RecordedAvailableCatalogFactory implements IWorkspaceCatalogAvailableItems
     public excludeTags = (tags: ObjRef[]): IWorkspaceCatalogAvailableItemsFactory => {
         return this.withOptions({
             excludeTags: tags,
+        });
+    };
+
+    public withPageSize = (pageSize: number): IWorkspaceCatalogAvailableItemsFactory => {
+        return this.withOptions({
+            pageSize,
         });
     };
 

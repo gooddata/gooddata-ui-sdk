@@ -1,0 +1,92 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "ReportPageLayoutType",
+    "description": "JSON schema for Gooddata Analytics Report Page Layout",
+    "allOf": [
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "report_page_layout"
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "$ref": "#/$defs/report_page_layout"
+            }
+        }
+    ],
+    "properties": {
+        "type": {
+            "type": "string",
+            "enum": ["report_page_layout"]
+        }
+    },
+    "required": ["type"],
+    "$defs": {
+        "report_page_layout": {
+            "$id": "/gaac/report_page_layout",
+            "title": "ReportPageLayout",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "$ref": "/gaac/identifier",
+                    "description": "A unique identifier of the report page layout.",
+                    "$semantic": [
+                        {
+                            "type": "uniqueness",
+                            "source": "reportPageLayout.id",
+                            "code": "core.uniqueness.reportPageLayouts.id"
+                        },
+                        {
+                            "type": "definition",
+                            "source": "reportPageLayout.id"
+                        }
+                    ]
+                },
+                "type": {
+                    "type": "string",
+                    "enum": ["report_page_layout"]
+                },
+                "title": {
+                    "$ref": "/gaac/title",
+                    "description": "A human readable title for the report page layout."
+                },
+                "description": {
+                    "$ref": "/gaac/description",
+                    "description": "An optional description of the report page layout."
+                },
+                "tags": {
+                    "$ref": "/gaac/tags",
+                    "description": "A list of strings - metadata tags of this report page layout."
+                },
+                "kind": {
+                    "$ref": "/gaac/reportPageKind"
+                },
+                "format": {
+                    "$ref": "/gaac/reportPageFormat"
+                },
+                "style": {
+                    "$ref": "/gaac/reportBoxStyle",
+                    "description": "Paint of the page itself, behind everything the layout places."
+                },
+                "layout": {
+                    "$ref": "/gaac/reportLayoutNode",
+                    "description": "Root of the page layout tree."
+                },
+                "filters": {
+                    "$ref": "/gaac/dashboardFilters",
+                    "description": "Page filters, carried into the template and report content this page is copied into."
+                }
+            },
+            "$semantic": {
+                "type": "snippet",
+                "snippets": ["report_page_layout"]
+            },
+            "required": ["id", "type", "title", "layout"],
+            "description": "A reusable page. Its content fields are the same page body a report and a report template carry inline, so a field added to /gaac/reportPageBody belongs here too: JSON Schema cannot compose the two, because the page body closes itself to the entity's own id, title and tags."
+        }
+    }
+}

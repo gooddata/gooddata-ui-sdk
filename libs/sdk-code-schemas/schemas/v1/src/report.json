@@ -1,0 +1,144 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "ReportType",
+    "description": "JSON schema for Gooddata Analytics Report",
+    "allOf": [
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "report"
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "$ref": "#/$defs/report"
+            }
+        }
+    ],
+    "properties": {
+        "type": {
+            "type": "string",
+            "enum": ["report"]
+        }
+    },
+    "required": ["type"],
+    "$defs": {
+        "report": {
+            "$id": "/gaac/report",
+            "title": "Report",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "$ref": "/gaac/identifier",
+                    "description": "A unique identifier of the report.",
+                    "$semantic": [
+                        {
+                            "type": "uniqueness",
+                            "source": "report.id",
+                            "code": "core.uniqueness.reports.id"
+                        },
+                        {
+                            "type": "definition",
+                            "source": "report.id"
+                        }
+                    ]
+                },
+                "type": {
+                    "type": "string",
+                    "enum": ["report"]
+                },
+                "title": {
+                    "$ref": "/gaac/title",
+                    "description": "A human readable title for the report."
+                },
+                "description": {
+                    "$ref": "/gaac/description",
+                    "description": "An optional description of the report."
+                },
+                "tags": {
+                    "$ref": "/gaac/tags",
+                    "description": "A list of strings - metadata tags of this report."
+                },
+                "period": {
+                    "$ref": "/gaac/reportPeriod",
+                    "description": "The finished period the report covers. It is not a filter: at execution time it materializes as an absolute date filter on each visualization's date dataset, at the lowest precedence, which a visualization opts out of with ignore_report_period."
+                },
+                "pages": {
+                    "type": "array",
+                    "description": "Ordered pages of the report. A page is a deep copy taken when it was added, and never changes with the page layout or template it came from.",
+                    "items": {
+                        "$ref": "/gaac/reportPageBody"
+                    }
+                },
+                "filters": {
+                    "$ref": "/gaac/dashboardFilters",
+                    "description": "Report filters; pages and visualizations may extend or override them."
+                },
+                "variables": {
+                    "type": "array",
+                    "description": "Custom variables the report's text can interpolate as {name}. Built-in variable names win a collision.",
+                    "items": {
+                        "$ref": "/gaac/reportVariable"
+                    }
+                },
+                "variable_values": {
+                    "type": "object",
+                    "description": "Values for the declared variables, keyed by variable name. A variable with no value here falls back to its default.",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "$semantic": {
+                "type": "snippet",
+                "snippets": ["report"]
+            },
+            "required": ["id", "type", "title", "period", "pages"]
+        },
+        "period": {
+            "$id": "/gaac/reportPeriod",
+            "title": "Report Period",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "start": {
+                    "type": "string",
+                    "description": "Reported period start, ISO 8601 date (YYYY-MM-DD), inclusive.",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                },
+                "end": {
+                    "type": "string",
+                    "description": "Reported period end, ISO 8601 date (YYYY-MM-DD), inclusive.",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                }
+            },
+            "required": ["start", "end"]
+        },
+        "variable": {
+            "$id": "/gaac/reportVariable",
+            "title": "Report Variable",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Name the variable is referenced by from text, as {name}."
+                },
+                "title": {
+                    "$ref": "/gaac/title"
+                },
+                "description": {
+                    "$ref": "/gaac/description"
+                },
+                "default": {
+                    "type": "string",
+                    "description": "Value used when the report gives the variable none."
+                }
+            },
+            "required": ["name"]
+        }
+    }
+}

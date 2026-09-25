@@ -77,6 +77,22 @@ describe("rehypeReferences", () => {
         expect(classNameOf(plugin()(tree as unknown as never))).toContain("metric");
     });
 
+    it("keeps the text around a resolved reference instead of dropping it", () => {
+        const { text, tokens } = extractReferences('SELECT {metric/my_assets} WHERE x = "Yes"');
+        const tree = { type: "root", children: [{ type: "text", value: text }] };
+        const plugin = rehypeReferences([{ id: "my_assets", type: "metric", title: "My Assets" }], tokens);
+
+        const result = plugin()(tree as unknown as never) as unknown as {
+            children: { type: string; value?: string }[];
+        };
+
+        expect(result.children.map((child) => child.value ?? "[chip]")).toEqual([
+            "SELECT ",
+            "[chip]",
+            ' WHERE x = "Yes"',
+        ]);
+    });
+
     it("restores the original token text when no reference matches the placeholder", () => {
         const original = "Pick one: {metric/spend_amount_-_txn_-_cutcgco} or something else.";
         const { text, tokens } = extractReferences(original);

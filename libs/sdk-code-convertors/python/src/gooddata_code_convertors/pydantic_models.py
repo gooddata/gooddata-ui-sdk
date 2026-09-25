@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 4d368ca704d390ba0890e3e00d6a5ce9ff26400e32f701eb3b903fb96595761f
+# schema-hash: d896a1ffb7eafb6d884637d11d9117f2ed26efde25b9302ef2a3fcddb98e8885
 
 from __future__ import annotations
 
@@ -123,6 +123,7 @@ __all__ = [
     "Fact",
     "FactIdentifier",
     "Fields",
+    "Fit",
     "Format",
     "Function",
     "GeoAreaConfig",
@@ -132,11 +133,13 @@ __all__ = [
     "Granularity2",
     "Granularity3",
     "GridLineShape",
+    "HeadingSlot",
     "Identifier",
     "IgnoredDrillDown",
     "IgnoredDrillDown1",
     "IgnoredDrillDown2",
     "IgnoredDrillDownsIntersection",
+    "ImageSlot",
     "Interaction",
     "InteractionClickOn",
     "InteractionFilters",
@@ -157,7 +160,9 @@ __all__ = [
     "LayerItem1",
     "LayerItem2",
     "LayerItemBase",
+    "LayoutColumn",
     "LayoutDirection",
+    "LayoutRow",
     "LineStyleMapping",
     "LineStyleMapping1",
     "Locale",
@@ -192,6 +197,7 @@ __all__ = [
     "Operator5",
     "Operator6",
     "Operator7",
+    "ParagraphSlot",
     "Parameter",
     "Parameter1",
     "ParameterAllowedValue",
@@ -246,6 +252,37 @@ __all__ = [
     "Reference",
     "Relative",
     "RenderAs",
+    "Report",
+    "Report1",
+    "ReportAlignment",
+    "ReportBackground",
+    "ReportBackground1",
+    "ReportBackgroundImage",
+    "ReportBackgroundImage1",
+    "ReportBackgroundImage2",
+    "ReportBoxStyle",
+    "ReportImage",
+    "ReportImage1",
+    "ReportImageStyle",
+    "ReportLayoutNode",
+    "ReportPageBody",
+    "ReportPageFormat",
+    "ReportPageKind",
+    "ReportPageLayout",
+    "ReportPageLayout1",
+    "ReportPeriod",
+    "ReportPlaceholder",
+    "ReportPlaceholder1",
+    "ReportSlotId",
+    "ReportTemplate",
+    "ReportTemplate1",
+    "ReportText",
+    "ReportText1",
+    "ReportTextStyle",
+    "ReportTextStyle1",
+    "ReportTextType",
+    "ReportVariable",
+    "ReportWeight",
     "RowHeight",
     "Rule",
     "Scope",
@@ -317,9 +354,9 @@ __all__ = [
     "Type54",
     "Type55",
     "Type56",
+    "Type57",
+    "Type58",
     "Type59",
-    "Type60",
-    "Type61",
     "Type62",
     "Type63",
     "Type64",
@@ -346,7 +383,13 @@ __all__ = [
     "Type83",
     "Type84",
     "Type85",
+    "Type86",
+    "Type87",
+    "Type88",
+    "Type89",
     "Type9",
+    "Type90",
+    "Type91",
     "Using",
     "Using1",
     "Using2",
@@ -382,6 +425,7 @@ __all__ = [
     "Visualisation7",
     "Visualisation8",
     "Visualisation9",
+    "VisualizationSlot",
     "VisualizationWidget",
     "Widget",
     "Widget1",
@@ -2022,6 +2066,18 @@ class Function(Enum):
     NAT = 'NAT'
 
 
+class Type50(Enum):
+    report = 'report'
+
+
+class Type51(Enum):
+    report_page_layout = 'report_page_layout'
+
+
+class Type52(Enum):
+    report_template = 'report_template'
+
+
 class Axis(Enum):
     primary = 'primary'
     secondary = 'secondary'
@@ -2052,7 +2108,7 @@ class BucketGeoAreaItem(RootModel[str]):
     root: str = Field(..., title='Geo Area Bucket')
 
 
-class Type50(Enum):
+class Type53(Enum):
     SUM = 'SUM'
     AVG = 'AVG'
     MAX = 'MAX'
@@ -2065,16 +2121,16 @@ class BucketLocationItem(RootModel[str]):
     root: str = Field(..., title='Location Bucket')
 
 
-class Type51(Enum):
+class Type54(Enum):
     pushpin = 'pushpin'
     area = 'area'
 
 
-class Type52(Enum):
+class Type55(Enum):
     attribute_hierarchy = 'attribute_hierarchy'
 
 
-class Type53(Enum):
+class Type56(Enum):
     computed_attribute = 'computed_attribute'
 
 
@@ -2095,7 +2151,7 @@ class DataLabelsStyle(Enum):
     backplate = 'backplate'
 
 
-class Type54(Enum):
+class Type57(Enum):
     solid = 'solid'
     pattern = 'pattern'
     outline = 'outline'
@@ -2129,7 +2185,7 @@ class PatternNameMapping(Enum):
 
 
 class ChartFill(BaseModel):
-    type: Type54 | None = None
+    type: Type57 | None = None
     pattern_name_mapping: dict[str, PatternNameMapping] | None = None
 
 
@@ -2462,11 +2518,11 @@ class ConditionalFormatting(BaseModel):
     )
 
 
-class Type55(Enum):
+class Type58(Enum):
     dashboard = 'dashboard'
 
 
-class Type56(Enum):
+class Type59(Enum):
     dataset = 'dataset'
     dataset_1 = 'dataset'
 
@@ -2483,7 +2539,7 @@ class DatasetType5(Enum):
     auxiliary = 'auxiliary'
 
 
-class Type59(Enum):
+class Type62(Enum):
     date = 'date'
 
 
@@ -2531,112 +2587,282 @@ class Locale(RootModel[constr(pattern=r'^[a-zA-Z]{2,3}(-[a-zA-Z0-9]{1,8})*$')]):
     )
 
 
-class Type60(Enum):
+class Type63(Enum):
     metric = 'metric'
 
 
-class Type61(Enum):
+class Type64(Enum):
     parameter = 'parameter'
 
 
-class Type62(Enum):
+class Type65(Enum):
     plugin = 'plugin'
+
+
+class Type66(Enum):
+    report = 'report'
+
+
+class Fit(Enum):
+    contain = 'contain'
+    cover = 'cover'
+    fill = 'fill'
+
+
+class ReportPageFormat(Enum):
+    widescreen = 'widescreen'
+    a4Portrait = 'a4Portrait'
+    letterPortrait = 'letterPortrait'
+
+
+class ReportPageKind(Enum):
+    cover = 'cover'
+    section = 'section'
+    content = 'content'
+
+
+class ReportPeriod(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    start: constr(pattern=r'^\d{4}-\d{2}-\d{2}$') = Field(
+        ..., description='Reported period start, ISO 8601 date (YYYY-MM-DD), inclusive.'
+    )
+    end: constr(pattern=r'^\d{4}-\d{2}-\d{2}$') = Field(
+        ..., description='Reported period end, ISO 8601 date (YYYY-MM-DD), inclusive.'
+    )
+
+
+class ReportPlaceholder1(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    hint: str | None = Field(
+        None, description='Authoring hint shown in the empty slot.'
+    )
+    required: bool | None = Field(
+        None,
+        description='When true, a report is not considered complete until this slot is filled.',
+    )
+
+
+class ReportPlaceholder(RootModel[bool | str | ReportPlaceholder1]):
+    root: bool | str | ReportPlaceholder1 = Field(
+        ...,
+        description='Metadata of a slot intentionally left unfilled. A bare true marks it required; a bare string is the authoring hint.',
+        title='Report Slot Placeholder',
+    )
+
+
+class ReportSlotId(RootModel[Identifier]):
+    root: Identifier = Field(
+        ...,
+        description='An id for this area, unique within the page. It is what a report fills when it takes this page from a template, so an id written down here survives edits to the layout around it.',
+    )
+
+
+class ReportText1(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    text: str | None = Field(
+        None,
+        description='Markdown with {variable} placeholders. Alongside a prompt this is the materialized generation, stored so the report renders without re-invoking AI.',
+    )
+    prompt: str | None = Field(
+        None,
+        description='Instruction for the generator. Its presence makes this an AI-written text; supports {variables}.',
+    )
+    generated_at: str | None = Field(
+        None,
+        description='ISO 8601 timestamp of the stored generation. Only meaningful alongside a prompt.',
+    )
+
+
+class ReportText(RootModel[str | ReportText1]):
+    root: str | ReportText1 = Field(
+        ...,
+        description='A bare string is the text itself. AI-written text is a mapping carrying the prompt and the generation it produced.',
+        title='Report Text',
+    )
+
+
+class ReportWeight(RootModel[float]):
+    root: float = Field(
+        ...,
+        description='Fractional weight of this node inside its parent. Defaults to 1; sibling weights [2, 1] render a 2/3 + 1/3 split.',
+        title='Report Layout Weight',
+    )
+
+
+class Type67(Enum):
+    report_page_layout = 'report_page_layout'
+
+
+class Type68(Enum):
+    report_template = 'report_template'
 
 
 class Title(RootModel[constr(max_length=255)]):
     root: constr(max_length=255)
 
 
-class Type63(Enum):
+class Type69(Enum):
     table = 'table'
 
 
-class Type64(Enum):
+class Type70(Enum):
     bar_chart = 'bar_chart'
 
 
-class Type65(Enum):
+class Type71(Enum):
     column_chart = 'column_chart'
 
 
-class Type66(Enum):
+class Type72(Enum):
     line_chart = 'line_chart'
 
 
-class Type67(Enum):
+class Type73(Enum):
     area_chart = 'area_chart'
 
 
-class Type68(Enum):
+class Type74(Enum):
     scatter_chart = 'scatter_chart'
 
 
-class Type69(Enum):
+class Type75(Enum):
     bubble_chart = 'bubble_chart'
 
 
-class Type70(Enum):
+class Type76(Enum):
     pie_chart = 'pie_chart'
 
 
-class Type71(Enum):
+class Type77(Enum):
     donut_chart = 'donut_chart'
 
 
-class Type72(Enum):
+class Type78(Enum):
     treemap_chart = 'treemap_chart'
 
 
-class Type73(Enum):
+class Type79(Enum):
     pyramid_chart = 'pyramid_chart'
 
 
-class Type74(Enum):
+class Type80(Enum):
     funnel_chart = 'funnel_chart'
 
 
-class Type75(Enum):
+class Type81(Enum):
     heatmap_chart = 'heatmap_chart'
 
 
-class Type76(Enum):
+class Type82(Enum):
     bullet_chart = 'bullet_chart'
 
 
-class Type77(Enum):
+class Type83(Enum):
     waterfall_chart = 'waterfall_chart'
 
 
-class Type78(Enum):
+class Type84(Enum):
     dependency_wheel_chart = 'dependency_wheel_chart'
 
 
-class Type79(Enum):
+class Type85(Enum):
     sankey_chart = 'sankey_chart'
 
 
-class Type80(Enum):
+class Type86(Enum):
     headline_chart = 'headline_chart'
 
 
-class Type81(Enum):
+class Type87(Enum):
     combo_chart = 'combo_chart'
 
 
-class Type82(Enum):
+class Type88(Enum):
     geo_chart = 'geo_chart'
 
 
-class Type83(Enum):
+class Type89(Enum):
     geo_area_chart = 'geo_area_chart'
 
 
-class Type84(Enum):
+class Type90(Enum):
     repeater_chart = 'repeater_chart'
 
 
-class Type85(Enum):
+class Type91(Enum):
     radar_chart = 'radar_chart'
+
+
+class ReportAlignment(Enum):
+    start = 'start'
+    center = 'center'
+    end = 'end'
+
+
+class ReportImageStyle(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    horizontal_align: ReportAlignment | None = None
+    vertical_align: ReportAlignment | None = None
+
+
+class ReportTextType(Enum):
+    h1 = 'h1'
+    h2 = 'h2'
+    h3 = 'h3'
+    h4 = 'h4'
+    h5 = 'h5'
+    h6 = 'h6'
+    largeText = 'largeText'
+    normalText = 'normalText'
+    smallText = 'smallText'
+
+
+class ReportBackgroundImage1(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    ref: Identifier = Field(
+        ...,
+        description='An id of an image already written down elsewhere on this page, drawn here as well.',
+    )
+
+
+class ReportBackgroundImage2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    id: ReportSlotId
+    url: str | None = Field(
+        None,
+        description='Image URL, supporting {variables} - a logo uses {logo}. Mutually exclusive with asset.',
+    )
+    asset: Identifier | None = Field(
+        None,
+        description='Backend-managed asset rendered as the image. Mutually exclusive with url.',
+    )
+    alt_text: str | None = None
+    fit: Fit | None = Field(
+        None,
+        description='How the image fills its area: kept whole inside it, filling it and cropped to do so, or stretched to its shape. Defaults to contain.',
+    )
+    style: ReportImageStyle | None = None
+    placeholder: ReportPlaceholder | None = None
+
+
+class ReportBackgroundImage(RootModel[ReportBackgroundImage1 | ReportBackgroundImage2]):
+    root: ReportBackgroundImage1 | ReportBackgroundImage2 = Field(
+        ...,
+        description='The image a box paints behind its content. It is drawn from a slot of its own, which is what keeps a backdrop fillable and gives it placeholder metadata, so it is written down with an id - or it names an image another box on the page already wrote down.',
+        title='Report Background Image',
+    )
 
 
 class AttributeHierarchy1(BaseModel):
@@ -3500,7 +3726,7 @@ class TotalItem(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type50
+    type: Type53
     title: Title | None = Field(None, description='A total title.')
     using: str = Field(
         ..., description='Local metric identifier to use for this total.'
@@ -3514,7 +3740,7 @@ class AttributeHierarchy(BaseModel):
     id: Identifier = Field(
         ..., description='A unique identifier of the attribute hierarchy.'
     )
-    type: Type52
+    type: Type55
     title: Title | None = Field(
         None,
         description='An optional human readable title for the attribute hierarchy. Will be derived from id if not provided explicitly.',
@@ -3541,7 +3767,7 @@ class ComputedAttribute(BaseModel):
         ...,
         description='A unique identifier of the computed attribute. Must not collide with the identifier of an attribute or a label.',
     )
-    type: Type53
+    type: Type56
     title: Title | None = Field(
         None,
         description='An optional human readable title for the computed attribute. Will be derived from id if not provided explicitly.',
@@ -3740,7 +3966,7 @@ class DateDataset(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the date instance.')
-    type: Type59
+    type: Type62
     title: Title | None = Field(
         None,
         description='An optional human readable title for the date instance. Will be derived from id if not provided explicitly.',
@@ -3765,7 +3991,7 @@ class Metric(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the metric.')
-    type: Type60
+    type: Type63
     title: Title | None = Field(
         None,
         description='An optional human readable title for the metric. Will be derived from id if not provided explicitly.',
@@ -3794,7 +4020,7 @@ class Plugin(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the plugin.')
-    type: Type62
+    type: Type65
     title: Title | None = Field(
         None,
         description='An optional human readable title for the plugin. Will be derived from id if not provided explicitly.',
@@ -3808,6 +4034,66 @@ class Plugin(BaseModel):
     url: constr(
         pattern=r'[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)'
     ) = Field(..., description='URL of the plugin.')
+
+
+class ReportImage1(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    url: str | None = Field(
+        None,
+        description='Image URL, supporting {variables} - a logo uses {logo}. Mutually exclusive with asset.',
+    )
+    asset: Identifier | None = Field(
+        None,
+        description='Backend-managed asset rendered as the image. Mutually exclusive with url.',
+    )
+    alt_text: str | None = None
+    fit: Fit | None = Field(
+        None,
+        description='How the image fills its area: kept whole inside it, filling it and cropped to do so, or stretched to its shape. Defaults to contain.',
+    )
+    style: ReportImageStyle | None = None
+    placeholder: ReportPlaceholder | None = None
+
+
+class ReportImage(RootModel[str | ReportImage1]):
+    root: str | ReportImage1 = Field(
+        ...,
+        description='A bare string is the image URL. Anything more is written as a mapping. The id belongs to whatever draws the image, not to the image itself.',
+        title='Report Image',
+    )
+
+
+class ReportVariable(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    name: str = Field(
+        ..., description='Name the variable is referenced by from text, as {name}.'
+    )
+    title: Title | None = None
+    description: Description | None = None
+    default: str | None = Field(
+        None, description='Value used when the report gives the variable none.'
+    )
+
+
+class ReportBackground1(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    image: ReportBackgroundImage = Field(
+        ..., description='Image painted behind the content.'
+    )
+
+
+class ReportBackground(RootModel[str | ReportBackground1]):
+    root: str | ReportBackground1 = Field(
+        ...,
+        description='A bare string is a color. An image is written as a mapping.',
+        title='Report Background',
+    )
 
 
 class DashboardFilterGroup(BaseModel):
@@ -3967,6 +4253,16 @@ class QuerySort(RootModel[QueryAttributeSort | QueryMetricSort]):
     root: QueryAttributeSort | QueryMetricSort = Field(..., title='Sort')
 
 
+class ImageSlot(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    id: ReportSlotId
+    weight: ReportWeight | None = None
+    image: ReportImage
+    placeholder: ReportPlaceholder | None = None
+
+
 class BucketItem1(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
@@ -4001,7 +4297,7 @@ class LayerItemBase(BaseModel):
         None,
         description='An optional human readable title for the layer. Will be derived from id if not provided explicitly.',
     )
-    type: Type51 | None = Field(
+    type: Type54 | None = Field(
         None, description='Type of visualisation for this layer.'
     )
     config: Config | None = Field(
@@ -4050,7 +4346,7 @@ class Parameter(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the parameter.')
-    type: Type61
+    type: Type64
     title: Title | None = Field(
         None,
         description='An optional human readable title for the parameter. Will be derived from id if not provided explicitly.',
@@ -4073,6 +4369,44 @@ class QueryFilters(RootModel[dict[str, QueryFilter]]):
     )
     root: dict[constr(pattern=r'^(?!\.)[.A-Za-z0-9_-]{1,255}$'), QueryFilter] = Field(
         ..., title='Query Filters'
+    )
+
+
+class ReportBoxStyle(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    background: ReportBackground | None = Field(
+        None, description='What the box paints behind its content.'
+    )
+    border_radius: float | None = Field(
+        None,
+        description='Corner radius in percent of the page width. Content reaching into a rounded corner is clipped.',
+    )
+    padding: float | None = Field(
+        None,
+        description="Inset of the box's own content, in percent of the page width. Insets only inward.",
+    )
+
+
+class ReportTextStyle1(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    type: ReportTextType | None = None
+    color: str | None = Field(None, description='CSS color value of the text.')
+    horizontal_align: ReportAlignment | None = None
+    vertical_align: ReportAlignment | None = None
+    background: ReportBackground | None = None
+    border_radius: float | None = None
+    padding: float | None = None
+
+
+class ReportTextStyle(RootModel[ReportTextType | ReportTextStyle1]):
+    root: ReportTextType | ReportTextStyle1 = Field(
+        ...,
+        description='A bare string is the text type. Anything more is written as a mapping.',
+        title='Report Text Style',
     )
 
 
@@ -4287,6 +4621,70 @@ class QueryField(
     ) = Field(..., title='Field')
 
 
+class VisualizationSlot(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    id: ReportSlotId
+    weight: ReportWeight | None = None
+    visualization: str | None = Field(
+        ...,
+        description='An id of the visualization to be rendered in this area. Null leaves the area declared but empty, which renders a placeholder.',
+    )
+    title: str | Title2 | None = Field(
+        None,
+        description='Title rendered above the visualization; supports {variables}. False hides it.',
+    )
+    show_title: bool | None = Field(
+        None,
+        description='Whether the title is rendered. Only needed to hide a title that is kept written down; a title of false hides it and drops the text.',
+    )
+    properties: dict[str, Any] | None = Field(
+        None, description="Visualization properties overriding the insight's own."
+    )
+    date: Identifier | None = Field(
+        None,
+        description="An id of the date dataset the report's period is applied to as an absolute date filter. Omitted leaves the backend date dataset resolution to decide.",
+    )
+    ignore_report_period: bool | None = Field(
+        None,
+        description="When true, the implicit date filter derived from the report's period is not applied here.",
+    )
+    filters: DashboardFilters | None = Field(
+        None,
+        description='Filters applied on top of the effective page and report filters. A filter targeting the same object replaces the inherited one.',
+    )
+    ignored_filters: list[str] | None = Field(
+        None, description='A list of report and page filters ignored here.'
+    )
+    placeholder: ReportPlaceholder | None = None
+
+
+class HeadingSlot(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    id: ReportSlotId
+    weight: ReportWeight | None = None
+    heading: ReportText = Field(
+        ...,
+        description='A line of display text. It carries no markup of its own: what is typed in it is what it renders.',
+    )
+    style: ReportTextStyle | None = None
+    placeholder: ReportPlaceholder | None = None
+
+
+class ParagraphSlot(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    id: ReportSlotId
+    weight: ReportWeight | None = None
+    paragraph: ReportText = Field(..., description='Prose, written as markdown.')
+    style: ReportTextStyle | None = None
+    placeholder: ReportPlaceholder | None = None
+
+
 class LayerItem(RootModel[LayerItemBase | LayerItem1 | LayerItem2]):
     root: LayerItemBase | LayerItem1 | LayerItem2
 
@@ -4316,7 +4714,7 @@ class Dataset5(BaseModel):
         regex_engine="python-re",
     )
     id: Identifier = Field(..., description='A unique identifier of the dataset.')
-    type: Type56
+    type: Type59
     title: Title | None = Field(
         None,
         description='An optional human readable title for the dataset. Will be derived from id if not provided explicitly.',
@@ -4362,7 +4760,7 @@ class Dataset6(BaseModel):
         regex_engine="python-re",
     )
     id: Identifier = Field(..., description='A unique identifier of the dataset.')
-    type: Type56
+    type: Type59
     title: Title | None = Field(
         None,
         description='An optional human readable title for the dataset. Will be derived from id if not provided explicitly.',
@@ -4408,7 +4806,7 @@ class Dataset7(BaseModel):
         regex_engine="python-re",
     )
     id: Identifier = Field(..., description='A unique identifier of the dataset.')
-    type: Type56
+    type: Type59
     title: Title | None = Field(
         None,
         description='An optional human readable title for the dataset. Will be derived from id if not provided explicitly.',
@@ -4595,7 +4993,7 @@ class Visualisation1(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type63 = Field(..., description='Type of visualisation.')
+    type: Type69 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -4641,7 +5039,7 @@ class Visualisation2(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type64 = Field(..., description='Type of visualisation.')
+    type: Type70 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -4684,7 +5082,7 @@ class Visualisation3(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type65 = Field(..., description='Type of visualisation.')
+    type: Type71 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -4727,7 +5125,7 @@ class Visualisation4(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type66 = Field(..., description='Type of visualisation.')
+    type: Type72 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -4770,7 +5168,7 @@ class Visualisation5(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type67 = Field(..., description='Type of visualisation.')
+    type: Type73 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -4813,7 +5211,7 @@ class Visualisation6(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type68 = Field(..., description='Type of visualisation.')
+    type: Type74 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -4856,7 +5254,7 @@ class Visualisation7(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type69 = Field(..., description='Type of visualisation.')
+    type: Type75 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -4899,7 +5297,7 @@ class Visualisation8(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type70 = Field(..., description='Type of visualisation.')
+    type: Type76 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -4939,7 +5337,7 @@ class Visualisation9(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type71 = Field(..., description='Type of visualisation.')
+    type: Type77 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -4979,7 +5377,7 @@ class Visualisation10(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type72 = Field(..., description='Type of visualisation.')
+    type: Type78 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5019,7 +5417,7 @@ class Visualisation11(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type73 = Field(..., description='Type of visualisation.')
+    type: Type79 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5059,7 +5457,7 @@ class Visualisation12(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type74 = Field(..., description='Type of visualisation.')
+    type: Type80 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5099,7 +5497,7 @@ class Visualisation13(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type75 = Field(..., description='Type of visualisation.')
+    type: Type81 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5145,7 +5543,7 @@ class Visualisation14(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type76 = Field(..., description='Type of visualisation.')
+    type: Type82 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5185,7 +5583,7 @@ class Visualisation15(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type77 = Field(..., description='Type of visualisation.')
+    type: Type83 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5225,7 +5623,7 @@ class Visualisation16(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type78 = Field(..., description='Type of visualisation.')
+    type: Type84 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5271,7 +5669,7 @@ class Visualisation17(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type79 = Field(..., description='Type of visualisation.')
+    type: Type85 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5317,7 +5715,7 @@ class Visualisation18(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type80 = Field(..., description='Type of visualisation.')
+    type: Type86 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5355,7 +5753,7 @@ class Visualisation19(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type81 = Field(..., description='Type of visualisation.')
+    type: Type87 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5395,7 +5793,7 @@ class Visualisation20(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type82 = Field(..., description='Type of visualisation.')
+    type: Type88 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5439,7 +5837,7 @@ class Visualisation21(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type83 = Field(..., description='Type of visualisation.')
+    type: Type89 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5483,7 +5881,7 @@ class Visualisation22(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type84 = Field(..., description='Type of visualisation.')
+    type: Type90 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5529,7 +5927,7 @@ class Visualisation23(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type85 = Field(..., description='Type of visualisation.')
+    type: Type91 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5746,12 +6144,137 @@ class Widget3(BaseModel):
     )
 
 
+class Report1(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    id: Identifier = Field(..., description='A unique identifier of the report.')
+    type: Type50
+    title: Title = Field(..., description='A human readable title for the report.')
+    description: Description | None = Field(
+        None, description='An optional description of the report.'
+    )
+    tags: Tags | None = Field(
+        None, description='A list of strings - metadata tags of this report.'
+    )
+    period: ReportPeriod = Field(
+        ...,
+        description="The finished period the report covers. It is not a filter: at execution time it materializes as an absolute date filter on each visualization's date dataset, at the lowest precedence, which a visualization opts out of with ignore_report_period.",
+    )
+    pages: list[ReportPageBody] = Field(
+        ...,
+        description='Ordered pages of the report. A page is a deep copy taken when it was added, and never changes with the page layout or template it came from.',
+    )
+    filters: DashboardFilters | None = Field(
+        None,
+        description='Report filters; pages and visualizations may extend or override them.',
+    )
+    variables: list[ReportVariable] | None = Field(
+        None,
+        description="Custom variables the report's text can interpolate as {name}. Built-in variable names win a collision.",
+    )
+    variable_values: dict[str, str] | None = Field(
+        None,
+        description='Values for the declared variables, keyed by variable name. A variable with no value here falls back to its default.',
+    )
+
+
+class LayoutColumn(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    weight: ReportWeight | None = None
+    column: list[ReportLayoutNode] = Field(
+        ..., description='Children laid out vertically.'
+    )
+    style: ReportBoxStyle | None = Field(
+        None,
+        description="Paint of this container's box. Never affects how children are laid out.",
+    )
+
+
+class LayoutRow(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    weight: ReportWeight | None = None
+    row: list[ReportLayoutNode] = Field(
+        ..., description='Children laid out horizontally.'
+    )
+    style: ReportBoxStyle | None = Field(
+        None,
+        description="Paint of this container's box. Never affects how children are laid out.",
+    )
+
+
+class ReportPageLayout1(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    id: Identifier = Field(
+        ..., description='A unique identifier of the report page layout.'
+    )
+    type: Type51
+    title: Title = Field(
+        ..., description='A human readable title for the report page layout.'
+    )
+    description: Description | None = Field(
+        None, description='An optional description of the report page layout.'
+    )
+    tags: Tags | None = Field(
+        None,
+        description='A list of strings - metadata tags of this report page layout.',
+    )
+    kind: ReportPageKind | None = None
+    format: ReportPageFormat | None = None
+    style: ReportBoxStyle | None = Field(
+        None,
+        description='Paint of the page itself, behind everything the layout places.',
+    )
+    layout: ReportLayoutNode = Field(..., description='Root of the page layout tree.')
+    filters: DashboardFilters | None = Field(
+        None,
+        description='Page filters, carried into the template and report content this page is copied into.',
+    )
+
+
+class ReportTemplate1(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    id: Identifier = Field(
+        ..., description='A unique identifier of the report template.'
+    )
+    type: Type52
+    title: Title = Field(
+        ..., description='A human readable title for the report template.'
+    )
+    description: Description | None = Field(
+        None, description='An optional description of the report template.'
+    )
+    tags: Tags | None = Field(
+        None, description='A list of strings - metadata tags of this report template.'
+    )
+    pages: list[ReportPageBody] = Field(
+        ...,
+        description='Ordered pages of the template. A report created from the template deep-copies them and keeps no reference back, so the report stays frozen while the template evolves.',
+    )
+    filters: DashboardFilters | None = Field(
+        None,
+        description='Template filters; pages and visualizations may extend or override them.',
+    )
+    variables: list[ReportVariable] | None = Field(
+        None,
+        description="Custom variables the template's text can interpolate as {name}. A report created from it gives them values.",
+    )
+
+
 class Dashboard(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the dashboard.')
-    type: Type55
+    type: Type58
     version: Version | None = Field(
         None,
         description='Dashboard model version. "2" (default if omitted) — legacy shape: root-level sections/filters are also mirrored into a default tab, producing a declarative model with duplicated content for backward compatibility with older SDK readers. "3" — clean shape: tabs are the sole source of layout and filters; root sections/filters in YAML are still allowed as an authoring shortcut but are wrapped into a single synthetic tab without duplication. Use "3" for new dashboards; "2" exists to keep existing files round-trippable.',
@@ -5810,8 +6333,149 @@ class Dashboard(BaseModel):
     )
 
 
+class Report(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    id: Identifier = Field(..., description='A unique identifier of the report.')
+    type: Type66
+    title: Title = Field(..., description='A human readable title for the report.')
+    description: Description | None = Field(
+        None, description='An optional description of the report.'
+    )
+    tags: Tags | None = Field(
+        None, description='A list of strings - metadata tags of this report.'
+    )
+    period: ReportPeriod = Field(
+        ...,
+        description="The finished period the report covers. It is not a filter: at execution time it materializes as an absolute date filter on each visualization's date dataset, at the lowest precedence, which a visualization opts out of with ignore_report_period.",
+    )
+    pages: list[ReportPageBody] = Field(
+        ...,
+        description='Ordered pages of the report. A page is a deep copy taken when it was added, and never changes with the page layout or template it came from.',
+    )
+    filters: DashboardFilters | None = Field(
+        None,
+        description='Report filters; pages and visualizations may extend or override them.',
+    )
+    variables: list[ReportVariable] | None = Field(
+        None,
+        description="Custom variables the report's text can interpolate as {name}. Built-in variable names win a collision.",
+    )
+    variable_values: dict[str, str] | None = Field(
+        None,
+        description='Values for the declared variables, keyed by variable name. A variable with no value here falls back to its default.',
+    )
+
+
+class ReportPageBody(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    id: Identifier = Field(
+        ..., description='An id for this page, unique within the document.'
+    )
+    kind: ReportPageKind | None = None
+    format: ReportPageFormat | None = None
+    style: ReportBoxStyle | None = Field(
+        None,
+        description='Paint of the page itself, behind everything the layout places.',
+    )
+    layout: ReportLayoutNode = Field(..., description='Root of the page layout.')
+    filters: DashboardFilters | None = Field(
+        None,
+        description="Page filters, merged over the report's own. A filter targeting the same object replaces the inherited one; a visualization's own filters apply on top.",
+    )
+
+
+class ReportPageLayout(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    id: Identifier = Field(
+        ..., description='A unique identifier of the report page layout.'
+    )
+    type: Type67
+    title: Title = Field(
+        ..., description='A human readable title for the report page layout.'
+    )
+    description: Description | None = Field(
+        None, description='An optional description of the report page layout.'
+    )
+    tags: Tags | None = Field(
+        None,
+        description='A list of strings - metadata tags of this report page layout.',
+    )
+    kind: ReportPageKind | None = None
+    format: ReportPageFormat | None = None
+    style: ReportBoxStyle | None = Field(
+        None,
+        description='Paint of the page itself, behind everything the layout places.',
+    )
+    layout: ReportLayoutNode = Field(..., description='Root of the page layout tree.')
+    filters: DashboardFilters | None = Field(
+        None,
+        description='Page filters, carried into the template and report content this page is copied into.',
+    )
+
+
+class ReportTemplate(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    id: Identifier = Field(
+        ..., description='A unique identifier of the report template.'
+    )
+    type: Type68
+    title: Title = Field(
+        ..., description='A human readable title for the report template.'
+    )
+    description: Description | None = Field(
+        None, description='An optional description of the report template.'
+    )
+    tags: Tags | None = Field(
+        None, description='A list of strings - metadata tags of this report template.'
+    )
+    pages: list[ReportPageBody] = Field(
+        ...,
+        description='Ordered pages of the template. A report created from the template deep-copies them and keeps no reference back, so the report stays frozen while the template evolves.',
+    )
+    filters: DashboardFilters | None = Field(
+        None,
+        description='Template filters; pages and visualizations may extend or override them.',
+    )
+    variables: list[ReportVariable] | None = Field(
+        None,
+        description="Custom variables the template's text can interpolate as {name}. A report created from it gives them values.",
+    )
+
+
 class Widget(RootModel[VisualizationWidget | Widget1 | Widget2 | Widget3]):
     root: VisualizationWidget | Widget1 | Widget2 | Widget3 = Field(..., title='Widget')
+
+
+class ReportLayoutNode(
+    RootModel[
+        LayoutColumn
+        | LayoutRow
+        | VisualizationSlot
+        | HeadingSlot
+        | ParagraphSlot
+        | ImageSlot
+    ]
+):
+    root: (
+        LayoutColumn
+        | LayoutRow
+        | VisualizationSlot
+        | HeadingSlot
+        | ParagraphSlot
+        | ImageSlot
+    ) = Field(
+        ...,
+        description='A node of the page layout. A node carrying column or row splits its area along that direction; every other node draws content, told apart by the content key it carries.',
+        title='Report Layout Node',
+    )
 
 
 class Metadata(
@@ -5825,6 +6489,9 @@ class Metadata(
         | AttributeHierarchy
         | Parameter
         | Visualisation
+        | Report
+        | ReportTemplate
+        | ReportPageLayout
     ]
 ):
     root: (
@@ -5837,9 +6504,20 @@ class Metadata(
         | AttributeHierarchy
         | Parameter
         | Visualisation
+        | Report
+        | ReportTemplate
+        | ReportPageLayout
     ) = Field(..., description='JSON schema for Gooddata Analytics', title='Metadata')
 
 
 Dashboard1.model_rebuild()
 Section.model_rebuild()
 Section1.model_rebuild()
+Report1.model_rebuild()
+LayoutColumn.model_rebuild()
+LayoutRow.model_rebuild()
+ReportPageLayout1.model_rebuild()
+ReportTemplate1.model_rebuild()
+Report.model_rebuild()
+ReportPageBody.model_rebuild()
+ReportPageLayout.model_rebuild()

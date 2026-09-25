@@ -2,7 +2,7 @@
 
 import { type ReactElement } from "react";
 
-import { type ObjRef, areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
+import { type ObjRef, areObjRefsEqual, serializeObjRef } from "@gooddata/sdk-model";
 
 import { DialogListEmpty } from "../../Dialog/DialogList/DialogListEmpty.js";
 import {
@@ -43,7 +43,7 @@ export function StylingSettingList<T extends StylingPickerItemContent>({
         <div className="gd-styling-picker-list s-styling-picker-list">
             {items.map((item) => (
                 <StylingSettingListItem<T>
-                    key={item.ref ? objRefToString(item.ref) : "default"}
+                    key={item.ref ? serializeObjRef(item.ref) : "default"}
                     item={item}
                     itemToColorPreview={itemToColorPreview}
                     isSelected={areObjRefsEqual(item.ref, selectedItemRef)}

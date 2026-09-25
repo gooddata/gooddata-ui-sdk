@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@gooddata/sdk-ui-all",
+      "comment": "sdk-ui-gen-ai: Show a MAQL definition in the chat as the full MAQL query instead of a row of metric chips.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@gooddata/sdk-ui-all"
+}

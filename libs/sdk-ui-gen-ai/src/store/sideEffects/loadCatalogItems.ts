@@ -1,20 +1,42 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { call, getContext, put } from "redux-saga/effects";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import { call, getContext, put, select } from "redux-saga/effects";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
-import { setCatalogItemsActions } from "../chatWindow/chatWindowSlice.js";
+import { catalogItemsStateSelector } from "../chatWindow/chatWindowSelectors.js";
+import { setCatalogItemsActions, setCatalogItemsLoadingAction } from "../chatWindow/chatWindowSlice.js";
 import { type OptionsDispatcher } from "../options.js";
+import type { RootState } from "../types.js";
 
 /**
  * Load catalog items palette from the backend.
  * @internal
  */
-export function* loadCatalogItems() {
+export function* loadCatalogItems({ payload: { isOpen } }: PayloadAction<{ isOpen: boolean }>) {
+    if (!isOpen) {
+        return;
+    }
+
+    yield call(loadCatalogItemsInternal);
+}
+
+/**
+ * Load catalog items palette from the backend.
+ * @internal
+ */
+export function* loadCatalogItemsInternal() {
     const options: OptionsDispatcher = yield getContext("optionsDispatcher");
 
+    const state: RootState["chatWindow"]["catalogItemsState"] = yield select(catalogItemsStateSelector);
+    if (state === "loaded" || state === "loading") {
+        return;
+    }
+
     try {
+        yield put(setCatalogItemsLoadingAction());
+
         const catalogItems = options.getCatalogItems();
 
         if (catalogItems) {

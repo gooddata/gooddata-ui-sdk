@@ -60,6 +60,13 @@ export const threadIdSelector: (state: RootState) => string | undefined = create
     (state) => state.threadId,
 );
 
+export const agentsStateSelector: (state: RootState) => RootState["messages"]["agentsState"] = createSelector(
+    messagesSliceSelector,
+    (state) => {
+        return state.agentsState;
+    },
+);
+
 export const conversationMessagesSelector: (state: RootState) => IChatConversationLocalItem[] =
     createSelector(messagesSliceSelector, (state) => {
         const data = state.conversationsData[state.currentConversation?.localId ?? ""];

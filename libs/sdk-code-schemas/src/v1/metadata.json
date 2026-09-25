@@ -72,6 +72,18 @@
             "then": { "$ref": "#/$global/gaac/visualisation" }
         },
         {
+            "if": { "properties": { "type": { "const": "report" } }, "required": ["type"] },
+            "then": { "$ref": "#/$global/gaac/report" }
+        },
+        {
+            "if": { "properties": { "type": { "const": "report_template" } }, "required": ["type"] },
+            "then": { "$ref": "#/$global/gaac/report_template" }
+        },
+        {
+            "if": { "properties": { "type": { "const": "report_page_layout" } }, "required": ["type"] },
+            "then": { "$ref": "#/$global/gaac/report_page_layout" }
+        },
+        {
             "if": { "not": { "properties": { "type": { "type": "string" } }, "required": ["type"] } },
             "then": {
                 "$semantic": {
@@ -107,7 +119,10 @@
                         "repeater_chart",
                         "radar_chart",
                         "attribute_hierarchy",
-                        "parameter"
+                        "parameter",
+                        "report",
+                        "report_template",
+                        "report_page_layout"
                     ]
                 }
             }
@@ -147,7 +162,10 @@
                 "repeater_chart",
                 "radar_chart",
                 "attribute_hierarchy",
-                "parameter"
+                "parameter",
+                "report",
+                "report_template",
+                "report_page_layout"
             ]
         }
     },
@@ -2605,6 +2623,160 @@
                 "required": ["type"],
                 "$defs": {}
             },
+            "report": {
+                "title": "Report",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "id": {
+                        "$ref": "#/$global/gaac/identifier",
+                        "description": "A unique identifier of the report.",
+                        "$semantic": [
+                            {
+                                "type": "uniqueness",
+                                "source": "report.id",
+                                "code": "core.uniqueness.reports.id"
+                            },
+                            { "type": "definition", "source": "report.id" }
+                        ]
+                    },
+                    "type": { "type": "string", "enum": ["report"] },
+                    "title": {
+                        "$ref": "#/$global/gaac/title",
+                        "description": "A human readable title for the report."
+                    },
+                    "description": {
+                        "$ref": "#/$global/gaac/description",
+                        "description": "An optional description of the report."
+                    },
+                    "tags": {
+                        "$ref": "#/$global/gaac/tags",
+                        "description": "A list of strings - metadata tags of this report."
+                    },
+                    "period": {
+                        "$ref": "#/$global/gaac/reportPeriod",
+                        "description": "The finished period the report covers. It is not a filter: at execution time it materializes as an absolute date filter on each visualization's date dataset, at the lowest precedence, which a visualization opts out of with ignore_report_period."
+                    },
+                    "pages": {
+                        "type": "array",
+                        "description": "Ordered pages of the report. A page is a deep copy taken when it was added, and never changes with the page layout or template it came from.",
+                        "items": { "$ref": "#/$global/gaac/reportPageBody" }
+                    },
+                    "filters": {
+                        "$ref": "#/$global/gaac/dashboardFilters",
+                        "description": "Report filters; pages and visualizations may extend or override them."
+                    },
+                    "variables": {
+                        "type": "array",
+                        "description": "Custom variables the report's text can interpolate as {name}. Built-in variable names win a collision.",
+                        "items": { "$ref": "#/$global/gaac/reportVariable" }
+                    },
+                    "variable_values": {
+                        "type": "object",
+                        "description": "Values for the declared variables, keyed by variable name. A variable with no value here falls back to its default.",
+                        "additionalProperties": { "type": "string" }
+                    }
+                },
+                "$semantic": { "type": "snippet", "snippets": ["report"] },
+                "required": ["id", "type", "title", "period", "pages"]
+            },
+            "report_template": {
+                "title": "ReportTemplate",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "id": {
+                        "$ref": "#/$global/gaac/identifier",
+                        "description": "A unique identifier of the report template.",
+                        "$semantic": [
+                            {
+                                "type": "uniqueness",
+                                "source": "reportTemplate.id",
+                                "code": "core.uniqueness.reportTemplates.id"
+                            },
+                            { "type": "definition", "source": "reportTemplate.id" }
+                        ]
+                    },
+                    "type": { "type": "string", "enum": ["report_template"] },
+                    "title": {
+                        "$ref": "#/$global/gaac/title",
+                        "description": "A human readable title for the report template."
+                    },
+                    "description": {
+                        "$ref": "#/$global/gaac/description",
+                        "description": "An optional description of the report template."
+                    },
+                    "tags": {
+                        "$ref": "#/$global/gaac/tags",
+                        "description": "A list of strings - metadata tags of this report template."
+                    },
+                    "pages": {
+                        "type": "array",
+                        "description": "Ordered pages of the template. A report created from the template deep-copies them and keeps no reference back, so the report stays frozen while the template evolves.",
+                        "items": { "$ref": "#/$global/gaac/reportPageBody" }
+                    },
+                    "filters": {
+                        "$ref": "#/$global/gaac/dashboardFilters",
+                        "description": "Template filters; pages and visualizations may extend or override them."
+                    },
+                    "variables": {
+                        "type": "array",
+                        "description": "Custom variables the template's text can interpolate as {name}. A report created from it gives them values.",
+                        "items": { "$ref": "#/$global/gaac/reportVariable" }
+                    }
+                },
+                "$semantic": { "type": "snippet", "snippets": ["report_template"] },
+                "required": ["id", "type", "title", "pages"]
+            },
+            "report_page_layout": {
+                "title": "ReportPageLayout",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "id": {
+                        "$ref": "#/$global/gaac/identifier",
+                        "description": "A unique identifier of the report page layout.",
+                        "$semantic": [
+                            {
+                                "type": "uniqueness",
+                                "source": "reportPageLayout.id",
+                                "code": "core.uniqueness.reportPageLayouts.id"
+                            },
+                            { "type": "definition", "source": "reportPageLayout.id" }
+                        ]
+                    },
+                    "type": { "type": "string", "enum": ["report_page_layout"] },
+                    "title": {
+                        "$ref": "#/$global/gaac/title",
+                        "description": "A human readable title for the report page layout."
+                    },
+                    "description": {
+                        "$ref": "#/$global/gaac/description",
+                        "description": "An optional description of the report page layout."
+                    },
+                    "tags": {
+                        "$ref": "#/$global/gaac/tags",
+                        "description": "A list of strings - metadata tags of this report page layout."
+                    },
+                    "kind": { "$ref": "#/$global/gaac/reportPageKind" },
+                    "format": { "$ref": "#/$global/gaac/reportPageFormat" },
+                    "style": {
+                        "$ref": "#/$global/gaac/reportBoxStyle",
+                        "description": "Paint of the page itself, behind everything the layout places."
+                    },
+                    "layout": {
+                        "$ref": "#/$global/gaac/reportLayoutNode",
+                        "description": "Root of the page layout tree."
+                    },
+                    "filters": {
+                        "$ref": "#/$global/gaac/dashboardFilters",
+                        "description": "Page filters, carried into the template and report content this page is copied into."
+                    }
+                },
+                "$semantic": { "type": "snippet", "snippets": ["report_page_layout"] },
+                "required": ["id", "type", "title", "layout"],
+                "description": "A reusable page. Its content fields are the same page body a report and a report template carry inline, so a field added to /gaac/reportPageBody belongs here too: JSON Schema cannot compose the two, because the page body closes itself to the entity's own id, title and tags."
+            },
             "identifier": { "title": "Id", "type": "string", "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$" },
             "title": { "type": "string", "maxLength": 255 },
             "description": { "type": "string", "maxLength": 10000 },
@@ -2729,6 +2901,321 @@
                 "type": "string",
                 "pattern": "^fact/(?!\\.)[.A-Za-z0-9_-]{1,255}$",
                 "$semantic": { "type": "reference", "source": "fact.id", "typePrefix": true }
+            },
+            "reportPeriod": {
+                "title": "Report Period",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "start": {
+                        "type": "string",
+                        "description": "Reported period start, ISO 8601 date (YYYY-MM-DD), inclusive.",
+                        "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                    },
+                    "end": {
+                        "type": "string",
+                        "description": "Reported period end, ISO 8601 date (YYYY-MM-DD), inclusive.",
+                        "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                    }
+                },
+                "required": ["start", "end"]
+            },
+            "reportPageBody": {
+                "title": "Report Page Body",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "id": {
+                        "$ref": "#/$global/gaac/identifier",
+                        "description": "An id for this page, unique within the document."
+                    },
+                    "kind": { "$ref": "#/$global/gaac/reportPageKind" },
+                    "format": { "$ref": "#/$global/gaac/reportPageFormat" },
+                    "style": {
+                        "$ref": "#/$global/gaac/reportBoxStyle",
+                        "description": "Paint of the page itself, behind everything the layout places."
+                    },
+                    "layout": {
+                        "$ref": "#/$global/gaac/reportLayoutNode",
+                        "description": "Root of the page layout."
+                    },
+                    "filters": {
+                        "$ref": "#/$global/gaac/dashboardFilters",
+                        "description": "Page filters, merged over the report's own. A filter targeting the same object replaces the inherited one; a visualization's own filters apply on top."
+                    }
+                },
+                "required": ["id", "layout"]
+            },
+            "reportVariable": {
+                "title": "Report Variable",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name the variable is referenced by from text, as {name}."
+                    },
+                    "title": { "$ref": "#/$global/gaac/title" },
+                    "description": { "$ref": "#/$global/gaac/description" },
+                    "default": {
+                        "type": "string",
+                        "description": "Value used when the report gives the variable none."
+                    }
+                },
+                "required": ["name"]
+            },
+            "reportBackground": {
+                "title": "Report Background",
+                "description": "A bare string is a color. An image is written as a mapping.",
+                "oneOf": [
+                    { "type": "string", "description": "CSS color value painted behind the content." },
+                    {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                            "image": {
+                                "$ref": "#/$global/gaac/reportBackgroundImage",
+                                "description": "Image painted behind the content."
+                            }
+                        },
+                        "required": ["image"]
+                    }
+                ]
+            },
+            "reportBackgroundImage": {
+                "title": "Report Background Image",
+                "description": "The image a box paints behind its content. It is drawn from a slot of its own, which is what keeps a backdrop fillable and gives it placeholder metadata, so it is written down with an id - or it names an image another box on the page already wrote down.",
+                "oneOf": [
+                    {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                            "ref": {
+                                "$ref": "#/$global/gaac/identifier",
+                                "description": "An id of an image already written down elsewhere on this page, drawn here as well."
+                            }
+                        },
+                        "required": ["ref"]
+                    },
+                    {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "not": { "required": ["url", "asset"] },
+                        "properties": {
+                            "id": { "$ref": "#/$global/gaac/reportSlotId" },
+                            "url": {
+                                "type": "string",
+                                "description": "Image URL, supporting {variables} - a logo uses {logo}. Mutually exclusive with asset."
+                            },
+                            "asset": {
+                                "$ref": "#/$global/gaac/identifier",
+                                "description": "Backend-managed asset rendered as the image. Mutually exclusive with url."
+                            },
+                            "alt_text": { "type": "string" },
+                            "fit": {
+                                "type": "string",
+                                "enum": ["contain", "cover", "fill"],
+                                "description": "How the image fills its area: kept whole inside it, filling it and cropped to do so, or stretched to its shape. Defaults to contain."
+                            },
+                            "style": { "$ref": "#/$global/gaac/reportImageStyle" },
+                            "placeholder": { "$ref": "#/$global/gaac/reportPlaceholder" }
+                        },
+                        "required": ["id"]
+                    }
+                ]
+            },
+            "reportTextType": {
+                "title": "Report Text Type",
+                "type": "string",
+                "enum": ["h1", "h2", "h3", "h4", "h5", "h6", "largeText", "normalText", "smallText"],
+                "description": "Size the text is rendered at. Headings default to h1, paragraphs to normalText. The size owns the typography that goes with it; the rest of the style overrides ink and placement on top of it."
+            },
+            "reportAlignment": {
+                "title": "Report Content Alignment",
+                "type": "string",
+                "enum": ["start", "center", "end"]
+            },
+            "reportImageStyle": {
+                "title": "Report Image Style",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "horizontal_align": { "$ref": "#/$global/gaac/reportAlignment" },
+                    "vertical_align": { "$ref": "#/$global/gaac/reportAlignment" }
+                },
+                "description": "Placement overrides for the drawn image; centered on both axes by default."
+            },
+            "reportPlaceholder": {
+                "title": "Report Slot Placeholder",
+                "description": "Metadata of a slot intentionally left unfilled. A bare true marks it required; a bare string is the authoring hint.",
+                "oneOf": [
+                    {
+                        "type": "boolean",
+                        "description": "True marks the slot required: the report is not complete until it is filled."
+                    },
+                    { "type": "string", "description": "Authoring hint shown in the empty slot." },
+                    {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                            "hint": {
+                                "type": "string",
+                                "description": "Authoring hint shown in the empty slot."
+                            },
+                            "required": {
+                                "type": "boolean",
+                                "description": "When true, a report is not considered complete until this slot is filled."
+                            }
+                        }
+                    }
+                ]
+            },
+            "reportWeight": {
+                "title": "Report Layout Weight",
+                "type": "number",
+                "description": "Fractional weight of this node inside its parent. Defaults to 1; sibling weights [2, 1] render a 2/3 + 1/3 split."
+            },
+            "reportLayoutNode": {
+                "title": "Report Layout Node",
+                "description": "A node of the page layout. A node carrying column or row splits its area along that direction; every other node draws content, told apart by the content key it carries.",
+                "type": "object",
+                "not": {
+                    "allOf": [
+                        { "not": { "required": ["column"] } },
+                        { "not": { "required": ["row"] } },
+                        { "not": { "required": ["visualization"] } },
+                        { "not": { "required": ["heading"] } },
+                        { "not": { "required": ["paragraph"] } },
+                        { "not": { "required": ["image"] } }
+                    ]
+                },
+                "allOf": [
+                    { "if": { "required": ["column"] }, "then": { "$ref": "#/$defs/layoutColumn" } },
+                    { "if": { "required": ["row"] }, "then": { "$ref": "#/$defs/layoutRow" } },
+                    {
+                        "if": { "required": ["visualization"] },
+                        "then": { "$ref": "#/$defs/visualizationSlot" }
+                    },
+                    { "if": { "required": ["heading"] }, "then": { "$ref": "#/$defs/headingSlot" } },
+                    { "if": { "required": ["paragraph"] }, "then": { "$ref": "#/$defs/paragraphSlot" } },
+                    { "if": { "required": ["image"] }, "then": { "$ref": "#/$defs/imageSlot" } }
+                ]
+            },
+            "reportBoxStyle": {
+                "title": "Report Box Style",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "background": {
+                        "$ref": "#/$global/gaac/reportBackground",
+                        "description": "What the box paints behind its content."
+                    },
+                    "border_radius": {
+                        "type": "number",
+                        "description": "Corner radius in percent of the page width. Content reaching into a rounded corner is clipped."
+                    },
+                    "padding": {
+                        "type": "number",
+                        "description": "Inset of the box's own content, in percent of the page width. Insets only inward."
+                    }
+                }
+            },
+            "reportSlotId": {
+                "$ref": "#/$global/gaac/identifier",
+                "description": "An id for this area, unique within the page. It is what a report fills when it takes this page from a template, so an id written down here survives edits to the layout around it."
+            },
+            "reportText": {
+                "title": "Report Text",
+                "description": "A bare string is the text itself. AI-written text is a mapping carrying the prompt and the generation it produced.",
+                "oneOf": [
+                    {
+                        "type": "string",
+                        "description": "Markdown with {variable} placeholders, resolved at render time."
+                    },
+                    {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                            "text": {
+                                "type": "string",
+                                "description": "Markdown with {variable} placeholders. Alongside a prompt this is the materialized generation, stored so the report renders without re-invoking AI."
+                            },
+                            "prompt": {
+                                "type": "string",
+                                "description": "Instruction for the generator. Its presence makes this an AI-written text; supports {variables}."
+                            },
+                            "generated_at": {
+                                "type": "string",
+                                "description": "ISO 8601 timestamp of the stored generation. Only meaningful alongside a prompt."
+                            }
+                        }
+                    }
+                ]
+            },
+            "reportTextStyle": {
+                "title": "Report Text Style",
+                "description": "A bare string is the text type. Anything more is written as a mapping.",
+                "oneOf": [
+                    { "$ref": "#/$global/gaac/reportTextType" },
+                    {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                            "type": { "$ref": "#/$global/gaac/reportTextType" },
+                            "color": { "type": "string", "description": "CSS color value of the text." },
+                            "horizontal_align": { "$ref": "#/$global/gaac/reportAlignment" },
+                            "vertical_align": { "$ref": "#/$global/gaac/reportAlignment" },
+                            "background": { "$ref": "#/$global/gaac/reportBackground" },
+                            "border_radius": { "type": "number" },
+                            "padding": { "type": "number" }
+                        }
+                    }
+                ]
+            },
+            "reportImage": {
+                "title": "Report Image",
+                "description": "A bare string is the image URL. Anything more is written as a mapping. The id belongs to whatever draws the image, not to the image itself.",
+                "oneOf": [
+                    {
+                        "type": "string",
+                        "description": "Image URL, supporting {variables} - a logo uses {logo}."
+                    },
+                    {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "not": { "required": ["url", "asset"] },
+                        "properties": {
+                            "url": {
+                                "type": "string",
+                                "description": "Image URL, supporting {variables} - a logo uses {logo}. Mutually exclusive with asset."
+                            },
+                            "asset": {
+                                "$ref": "#/$global/gaac/identifier",
+                                "description": "Backend-managed asset rendered as the image. Mutually exclusive with url."
+                            },
+                            "alt_text": { "type": "string" },
+                            "fit": {
+                                "type": "string",
+                                "enum": ["contain", "cover", "fill"],
+                                "description": "How the image fills its area: kept whole inside it, filling it and cropped to do so, or stretched to its shape. Defaults to contain."
+                            },
+                            "style": { "$ref": "#/$global/gaac/reportImageStyle" },
+                            "placeholder": { "$ref": "#/$global/gaac/reportPlaceholder" }
+                        }
+                    }
+                ]
+            },
+            "reportPageKind": {
+                "title": "Report Page Kind",
+                "type": "string",
+                "enum": ["cover", "section", "content"],
+                "description": "Editor hint only, for template galleries, default styling and AI context. Geometry always comes from the layout."
+            },
+            "reportPageFormat": {
+                "title": "Report Page Format",
+                "type": "string",
+                "enum": ["widescreen", "a4Portrait", "letterPortrait"],
+                "description": "Page proportions the layout was authored for. Defaults to widescreen."
             },
             "query": {
                 "$schema": "http://json-schema.org/draft-07/schema#",
@@ -7340,6 +7827,295 @@
                 }
             },
             "required": ["type", "metrics", "direction"]
+        },
+        "report": {
+            "title": "Report",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "$ref": "#/$global/gaac/identifier",
+                    "description": "A unique identifier of the report.",
+                    "$semantic": [
+                        { "type": "uniqueness", "source": "report.id", "code": "core.uniqueness.reports.id" },
+                        { "type": "definition", "source": "report.id" }
+                    ]
+                },
+                "type": { "type": "string", "enum": ["report"] },
+                "title": {
+                    "$ref": "#/$global/gaac/title",
+                    "description": "A human readable title for the report."
+                },
+                "description": {
+                    "$ref": "#/$global/gaac/description",
+                    "description": "An optional description of the report."
+                },
+                "tags": {
+                    "$ref": "#/$global/gaac/tags",
+                    "description": "A list of strings - metadata tags of this report."
+                },
+                "period": {
+                    "$ref": "#/$global/gaac/reportPeriod",
+                    "description": "The finished period the report covers. It is not a filter: at execution time it materializes as an absolute date filter on each visualization's date dataset, at the lowest precedence, which a visualization opts out of with ignore_report_period."
+                },
+                "pages": {
+                    "type": "array",
+                    "description": "Ordered pages of the report. A page is a deep copy taken when it was added, and never changes with the page layout or template it came from.",
+                    "items": { "$ref": "#/$global/gaac/reportPageBody" }
+                },
+                "filters": {
+                    "$ref": "#/$global/gaac/dashboardFilters",
+                    "description": "Report filters; pages and visualizations may extend or override them."
+                },
+                "variables": {
+                    "type": "array",
+                    "description": "Custom variables the report's text can interpolate as {name}. Built-in variable names win a collision.",
+                    "items": { "$ref": "#/$global/gaac/reportVariable" }
+                },
+                "variable_values": {
+                    "type": "object",
+                    "description": "Values for the declared variables, keyed by variable name. A variable with no value here falls back to its default.",
+                    "additionalProperties": { "type": "string" }
+                }
+            },
+            "$semantic": { "type": "snippet", "snippets": ["report"] },
+            "required": ["id", "type", "title", "period", "pages"]
+        },
+        "layoutColumn": {
+            "title": "Report Layout Column",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "weight": { "$ref": "#/$global/gaac/reportWeight" },
+                "column": {
+                    "type": "array",
+                    "description": "Children laid out vertically.",
+                    "items": { "$ref": "#/$global/gaac/reportLayoutNode" }
+                },
+                "style": {
+                    "$ref": "#/$global/gaac/reportBoxStyle",
+                    "description": "Paint of this container's box. Never affects how children are laid out."
+                }
+            },
+            "required": ["column"]
+        },
+        "layoutRow": {
+            "title": "Report Layout Row",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "weight": { "$ref": "#/$global/gaac/reportWeight" },
+                "row": {
+                    "type": "array",
+                    "description": "Children laid out horizontally.",
+                    "items": { "$ref": "#/$global/gaac/reportLayoutNode" }
+                },
+                "style": {
+                    "$ref": "#/$global/gaac/reportBoxStyle",
+                    "description": "Paint of this container's box. Never affects how children are laid out."
+                }
+            },
+            "required": ["row"]
+        },
+        "visualizationSlot": {
+            "title": "Report Visualization Slot",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": { "$ref": "#/$global/gaac/reportSlotId" },
+                "weight": { "$ref": "#/$global/gaac/reportWeight" },
+                "visualization": {
+                    "type": ["string", "null"],
+                    "description": "An id of the visualization to be rendered in this area. Null leaves the area declared but empty, which renders a placeholder.",
+                    "$semantic": { "type": "reference", "source": "visualisation.id" }
+                },
+                "title": {
+                    "description": "Title rendered above the visualization; supports {variables}. False hides it.",
+                    "oneOf": [{ "type": "string" }, { "type": "boolean", "enum": [false] }]
+                },
+                "show_title": {
+                    "type": "boolean",
+                    "description": "Whether the title is rendered. Only needed to hide a title that is kept written down; a title of false hides it and drops the text."
+                },
+                "properties": {
+                    "type": "object",
+                    "description": "Visualization properties overriding the insight's own."
+                },
+                "date": {
+                    "$ref": "#/$global/gaac/identifier",
+                    "description": "An id of the date dataset the report's period is applied to as an absolute date filter. Omitted leaves the backend date dataset resolution to decide.",
+                    "$semantic": { "type": "reference", "source": "dateDataset.id" }
+                },
+                "ignore_report_period": {
+                    "type": "boolean",
+                    "description": "When true, the implicit date filter derived from the report's period is not applied here."
+                },
+                "filters": {
+                    "$ref": "#/$global/gaac/dashboardFilters",
+                    "description": "Filters applied on top of the effective page and report filters. A filter targeting the same object replaces the inherited one."
+                },
+                "ignored_filters": {
+                    "type": "array",
+                    "description": "A list of report and page filters ignored here.",
+                    "items": {
+                        "type": "string",
+                        "description": "An id of the label, attribute, computed attribute, metric or date to be ignored",
+                        "$semantic": {
+                            "type": "reference",
+                            "sources": [
+                                "dateDataset.id",
+                                "attribute.id",
+                                "label.id",
+                                "computedAttribute.id",
+                                "metric.id"
+                            ]
+                        }
+                    }
+                },
+                "placeholder": { "$ref": "#/$global/gaac/reportPlaceholder" }
+            },
+            "required": ["id", "visualization"]
+        },
+        "headingSlot": {
+            "title": "Report Heading Slot",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": { "$ref": "#/$global/gaac/reportSlotId" },
+                "weight": { "$ref": "#/$global/gaac/reportWeight" },
+                "heading": {
+                    "$ref": "#/$global/gaac/reportText",
+                    "description": "A line of display text. It carries no markup of its own: what is typed in it is what it renders."
+                },
+                "style": { "$ref": "#/$global/gaac/reportTextStyle" },
+                "placeholder": { "$ref": "#/$global/gaac/reportPlaceholder" }
+            },
+            "required": ["id", "heading"]
+        },
+        "paragraphSlot": {
+            "title": "Report Paragraph Slot",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": { "$ref": "#/$global/gaac/reportSlotId" },
+                "weight": { "$ref": "#/$global/gaac/reportWeight" },
+                "paragraph": {
+                    "$ref": "#/$global/gaac/reportText",
+                    "description": "Prose, written as markdown."
+                },
+                "style": { "$ref": "#/$global/gaac/reportTextStyle" },
+                "placeholder": { "$ref": "#/$global/gaac/reportPlaceholder" }
+            },
+            "required": ["id", "paragraph"]
+        },
+        "imageSlot": {
+            "title": "Report Image Slot",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": { "$ref": "#/$global/gaac/reportSlotId" },
+                "weight": { "$ref": "#/$global/gaac/reportWeight" },
+                "image": { "$ref": "#/$global/gaac/reportImage" },
+                "placeholder": { "$ref": "#/$global/gaac/reportPlaceholder" }
+            },
+            "required": ["id", "image"]
+        },
+        "report_page_layout": {
+            "title": "ReportPageLayout",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "$ref": "#/$global/gaac/identifier",
+                    "description": "A unique identifier of the report page layout.",
+                    "$semantic": [
+                        {
+                            "type": "uniqueness",
+                            "source": "reportPageLayout.id",
+                            "code": "core.uniqueness.reportPageLayouts.id"
+                        },
+                        { "type": "definition", "source": "reportPageLayout.id" }
+                    ]
+                },
+                "type": { "type": "string", "enum": ["report_page_layout"] },
+                "title": {
+                    "$ref": "#/$global/gaac/title",
+                    "description": "A human readable title for the report page layout."
+                },
+                "description": {
+                    "$ref": "#/$global/gaac/description",
+                    "description": "An optional description of the report page layout."
+                },
+                "tags": {
+                    "$ref": "#/$global/gaac/tags",
+                    "description": "A list of strings - metadata tags of this report page layout."
+                },
+                "kind": { "$ref": "#/$global/gaac/reportPageKind" },
+                "format": { "$ref": "#/$global/gaac/reportPageFormat" },
+                "style": {
+                    "$ref": "#/$global/gaac/reportBoxStyle",
+                    "description": "Paint of the page itself, behind everything the layout places."
+                },
+                "layout": {
+                    "$ref": "#/$global/gaac/reportLayoutNode",
+                    "description": "Root of the page layout tree."
+                },
+                "filters": {
+                    "$ref": "#/$global/gaac/dashboardFilters",
+                    "description": "Page filters, carried into the template and report content this page is copied into."
+                }
+            },
+            "$semantic": { "type": "snippet", "snippets": ["report_page_layout"] },
+            "required": ["id", "type", "title", "layout"],
+            "description": "A reusable page. Its content fields are the same page body a report and a report template carry inline, so a field added to /gaac/reportPageBody belongs here too: JSON Schema cannot compose the two, because the page body closes itself to the entity's own id, title and tags."
+        },
+        "report_template": {
+            "title": "ReportTemplate",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "$ref": "#/$global/gaac/identifier",
+                    "description": "A unique identifier of the report template.",
+                    "$semantic": [
+                        {
+                            "type": "uniqueness",
+                            "source": "reportTemplate.id",
+                            "code": "core.uniqueness.reportTemplates.id"
+                        },
+                        { "type": "definition", "source": "reportTemplate.id" }
+                    ]
+                },
+                "type": { "type": "string", "enum": ["report_template"] },
+                "title": {
+                    "$ref": "#/$global/gaac/title",
+                    "description": "A human readable title for the report template."
+                },
+                "description": {
+                    "$ref": "#/$global/gaac/description",
+                    "description": "An optional description of the report template."
+                },
+                "tags": {
+                    "$ref": "#/$global/gaac/tags",
+                    "description": "A list of strings - metadata tags of this report template."
+                },
+                "pages": {
+                    "type": "array",
+                    "description": "Ordered pages of the template. A report created from the template deep-copies them and keeps no reference back, so the report stays frozen while the template evolves.",
+                    "items": { "$ref": "#/$global/gaac/reportPageBody" }
+                },
+                "filters": {
+                    "$ref": "#/$global/gaac/dashboardFilters",
+                    "description": "Template filters; pages and visualizations may extend or override them."
+                },
+                "variables": {
+                    "type": "array",
+                    "description": "Custom variables the template's text can interpolate as {name}. A report created from it gives them values.",
+                    "items": { "$ref": "#/$global/gaac/reportVariable" }
+                }
+            },
+            "$semantic": { "type": "snippet", "snippets": ["report_template"] },
+            "required": ["id", "type", "title", "pages"]
         },
         "bucketItem": {
             "title": "Bucket",

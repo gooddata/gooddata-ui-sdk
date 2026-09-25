@@ -14,6 +14,7 @@ export {
     type GenAIChatProps,
     type GenAIAssistantProps,
 } from "./components/GenAIChat.js";
+export { type GenAIInitializeOnStart } from "./types.js";
 export { GenAIConversations, type GenAIConversationsProps } from "./components/GenAiConversations.js";
 export { GenAiStore, type GenAiStoreProps } from "./components/GenAiStore.js";
 export {

@@ -109,6 +109,12 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
         private readonly signal?: AbortSignal,
     ) {}
 
+    public withPageSize(pageSize: number): IWorkspaceCatalogAvailableItemsFactory {
+        return this.withOptions({
+            pageSize,
+        });
+    }
+
     public withOptions(
         options: Partial<IWorkspaceCatalogWithAvailableItemsFactoryOptions>,
     ): IWorkspaceCatalogAvailableItemsFactory {

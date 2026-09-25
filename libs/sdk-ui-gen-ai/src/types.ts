@@ -196,3 +196,8 @@ export type ContextObjectListState = {
  * @internal
  */
 export type ContextObjectsState = Record<ContextObjectKind, ContextObjectListState>;
+
+/**
+ * @internal
+ */
+export type GenAIInitializeOnStart = ("catalogItems" | "agents")[];

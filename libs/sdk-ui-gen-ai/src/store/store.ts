@@ -6,6 +6,8 @@ import defaultReduxSaga from "redux-saga";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
+import { type GenAIInitializeOnStart } from "../types.js";
+
 import {
     chatWindowSliceName,
     chatWindowSliceReducer,
@@ -36,6 +38,7 @@ export const getStore = (
     optionsDispatcher: OptionsDispatcher,
     isPreview: boolean | undefined,
     allowInteractionIntelligence: boolean | undefined,
+    initializeOnStart?: GenAIInitializeOnStart,
 ): GenAiStore => {
     const sagaMiddleware = createSagaMiddleware({
         context: {
@@ -67,7 +70,7 @@ export const getStore = (
         },
     }) as GenAiStore;
 
-    sagaMiddleware.run(rootSaga);
+    sagaMiddleware.run(rootSaga, initializeOnStart ?? []);
 
     // Save optionsDispatcher
     store.optionsDispatcher = optionsDispatcher;

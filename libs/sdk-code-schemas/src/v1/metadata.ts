@@ -21,7 +21,10 @@ export type Metadata2 =
     | Metadata21
     | Metadata24
     | Metadata27
-    | Metadata30;
+    | Metadata30
+    | Metadata33
+    | Metadata36
+    | Metadata39;
 /**
  * JSON schema for Gooddata Analytics
  */
@@ -1212,7 +1215,215 @@ export type Tags36 = string[];
  * JSON schema for Gooddata Analytics
  */
 export type Metadata30 = Metadata31 & Metadata32;
-export type Metadata32 = {
+export type Metadata32 = Report;
+/**
+ * A unique identifier of the report.
+ */
+export type Id45 = string;
+/**
+ * A list of strings - metadata tags of this report.
+ */
+export type Tags37 = string[];
+/**
+ * An id for this page, unique within the document.
+ */
+export type Id46 = string;
+/**
+ * Editor hint only, for template galleries, default styling and AI context. Geometry always comes from the layout.
+ */
+export type ReportPageKind = "cover" | "section" | "content";
+/**
+ * Page proportions the layout was authored for. Defaults to widescreen.
+ */
+export type ReportPageFormat = "widescreen" | "a4Portrait" | "letterPortrait";
+/**
+ * What the box paints behind its content.
+ */
+export type ReportBackground = ReportBackground1 | ReportBackground2;
+/**
+ * CSS color value painted behind the content.
+ */
+export type ReportBackground1 = string;
+/**
+ * Image painted behind the content.
+ */
+export type ReportBackgroundImage = ReportBackgroundImage1 | ReportBackgroundImage2;
+/**
+ * An id of an image already written down elsewhere on this page, drawn here as well.
+ */
+export type Id47 = string;
+/**
+ * An id for this area, unique within the page. It is what a report fills when it takes this page from a template, so an id written down here survives edits to the layout around it.
+ */
+export type Id48 = string;
+/**
+ * Backend-managed asset rendered as the image. Mutually exclusive with url.
+ */
+export type Id49 = string;
+export type ReportContentAlignment = "start" | "center" | "end";
+/**
+ * Metadata of a slot intentionally left unfilled. A bare true marks it required; a bare string is the authoring hint.
+ */
+export type ReportSlotPlaceholder = ReportSlotPlaceholder1 | ReportSlotPlaceholder2 | ReportSlotPlaceholder3;
+/**
+ * True marks the slot required: the report is not complete until it is filled.
+ */
+export type ReportSlotPlaceholder1 = boolean;
+/**
+ * Authoring hint shown in the empty slot.
+ */
+export type ReportSlotPlaceholder2 = string;
+/**
+ * Root of the page layout.
+ */
+export type ReportLayoutNode =
+    | ReportLayoutNode1
+    | ReportLayoutNode3
+    | ReportLayoutNode4
+    | ReportLayoutNode5
+    | ReportLayoutNode6
+    | ReportLayoutNode7;
+/**
+ * A node of the page layout. A node carrying column or row splits its area along that direction; every other node draws content, told apart by the content key it carries.
+ */
+export type ReportLayoutNode1 = ReportLayoutColumn;
+/**
+ * Fractional weight of this node inside its parent. Defaults to 1; sibling weights [2, 1] render a 2/3 + 1/3 split.
+ */
+export type ReportLayoutWeight = number;
+/**
+ * A node of the page layout. A node carrying column or row splits its area along that direction; every other node draws content, told apart by the content key it carries.
+ */
+export type ReportLayoutNode2 =
+    | ReportLayoutNode1
+    | ReportLayoutNode3
+    | ReportLayoutNode4
+    | ReportLayoutNode5
+    | ReportLayoutNode6
+    | ReportLayoutNode7;
+/**
+ * A node of the page layout. A node carrying column or row splits its area along that direction; every other node draws content, told apart by the content key it carries.
+ */
+export type ReportLayoutNode3 = ReportLayoutRow;
+/**
+ * A node of the page layout. A node carrying column or row splits its area along that direction; every other node draws content, told apart by the content key it carries.
+ */
+export type ReportLayoutNode4 = ReportVisualizationSlot;
+/**
+ * An id of the date dataset the report's period is applied to as an absolute date filter. Omitted leaves the backend date dataset resolution to decide.
+ */
+export type Id50 = string;
+/**
+ * A node of the page layout. A node carrying column or row splits its area along that direction; every other node draws content, told apart by the content key it carries.
+ */
+export type ReportLayoutNode5 = ReportHeadingSlot;
+/**
+ * A line of display text. It carries no markup of its own: what is typed in it is what it renders.
+ */
+export type ReportText = ReportText1 | ReportText2;
+/**
+ * Markdown with \{variable\} placeholders, resolved at render time.
+ */
+export type ReportText1 = string;
+/**
+ * A bare string is the text type. Anything more is written as a mapping.
+ */
+export type ReportTextStyle = ReportTextStyle1 | ReportTextStyle2;
+/**
+ * A bare string is the text type. Anything more is written as a mapping.
+ */
+export type ReportTextStyle1 =
+    | "h1"
+    | "h2"
+    | "h3"
+    | "h4"
+    | "h5"
+    | "h6"
+    | "largeText"
+    | "normalText"
+    | "smallText";
+/**
+ * Size the text is rendered at. Headings default to h1, paragraphs to normalText. The size owns the typography that goes with it; the rest of the style overrides ink and placement on top of it.
+ */
+export type ReportTextType =
+    | "h1"
+    | "h2"
+    | "h3"
+    | "h4"
+    | "h5"
+    | "h6"
+    | "largeText"
+    | "normalText"
+    | "smallText";
+/**
+ * A bare string is a color. An image is written as a mapping.
+ */
+export type ReportBackground3 = ReportBackground1 | ReportBackground2;
+/**
+ * A node of the page layout. A node carrying column or row splits its area along that direction; every other node draws content, told apart by the content key it carries.
+ */
+export type ReportLayoutNode6 = ReportParagraphSlot;
+/**
+ * Prose, written as markdown.
+ */
+export type ReportText3 = ReportText1 | ReportText2;
+/**
+ * A node of the page layout. A node carrying column or row splits its area along that direction; every other node draws content, told apart by the content key it carries.
+ */
+export type ReportLayoutNode7 = ReportImageSlot;
+/**
+ * A bare string is the image URL. Anything more is written as a mapping. The id belongs to whatever draws the image, not to the image itself.
+ */
+export type ReportImage = ReportImage1 | ReportImage2;
+/**
+ * Image URL, supporting \{variables\} - a logo uses \{logo\}.
+ */
+export type ReportImage1 = string;
+/**
+ * Backend-managed asset rendered as the image. Mutually exclusive with url.
+ */
+export type Id51 = string;
+/**
+ * JSON schema for Gooddata Analytics
+ */
+export type Metadata33 = Metadata34 & Metadata35;
+export type Metadata35 = ReportTemplate;
+/**
+ * A unique identifier of the report template.
+ */
+export type Id52 = string;
+/**
+ * A list of strings - metadata tags of this report template.
+ */
+export type Tags38 = string[];
+/**
+ * JSON schema for Gooddata Analytics
+ */
+export type Metadata36 = Metadata37 & Metadata38;
+export type Metadata38 = ReportPageLayout;
+/**
+ * A unique identifier of the report page layout.
+ */
+export type Id53 = string;
+/**
+ * A list of strings - metadata tags of this report page layout.
+ */
+export type Tags39 = string[];
+/**
+ * A node of the page layout. A node carrying column or row splits its area along that direction; every other node draws content, told apart by the content key it carries.
+ */
+export type ReportLayoutNode8 =
+    | ReportLayoutNode1
+    | ReportLayoutNode3
+    | ReportLayoutNode4
+    | ReportLayoutNode5
+    | ReportLayoutNode6
+    | ReportLayoutNode7;
+/**
+ * JSON schema for Gooddata Analytics
+ */
+export type Metadata39 = Metadata40 & Metadata41;
+export type Metadata41 = {
     [k: string]: unknown;
 };
 
@@ -1248,7 +1459,10 @@ export interface Metadata1 {
         | "repeater_chart"
         | "radar_chart"
         | "attribute_hierarchy"
-        | "parameter";
+        | "parameter"
+        | "report"
+        | "report_template"
+        | "report_page_layout";
     [k: string]: unknown;
 }
 export interface Metadata4 {
@@ -1283,7 +1497,10 @@ export interface Metadata4 {
         | "repeater_chart"
         | "radar_chart"
         | "attribute_hierarchy"
-        | "parameter";
+        | "parameter"
+        | "report"
+        | "report_template"
+        | "report_page_layout";
     [k: string]: unknown;
 }
 export interface NormalDataset {
@@ -1737,7 +1954,10 @@ export interface Metadata7 {
         | "repeater_chart"
         | "radar_chart"
         | "attribute_hierarchy"
-        | "parameter";
+        | "parameter"
+        | "report"
+        | "report_template"
+        | "report_page_layout";
     [k: string]: unknown;
 }
 export interface DateDataset {
@@ -1824,7 +2044,10 @@ export interface Metadata10 {
         | "repeater_chart"
         | "radar_chart"
         | "attribute_hierarchy"
-        | "parameter";
+        | "parameter"
+        | "report"
+        | "report_template"
+        | "report_page_layout";
     [k: string]: unknown;
 }
 export interface Metric {
@@ -1889,7 +2112,10 @@ export interface Metadata13 {
         | "repeater_chart"
         | "radar_chart"
         | "attribute_hierarchy"
-        | "parameter";
+        | "parameter"
+        | "report"
+        | "report_template"
+        | "report_page_layout";
     [k: string]: unknown;
 }
 export interface ComputedAttribute {
@@ -1979,7 +2205,10 @@ export interface Metadata16 {
         | "repeater_chart"
         | "radar_chart"
         | "attribute_hierarchy"
-        | "parameter";
+        | "parameter"
+        | "report"
+        | "report_template"
+        | "report_page_layout";
     [k: string]: unknown;
 }
 export interface Dashboard {
@@ -2316,6 +2545,16 @@ export interface DashboardFilters {
      * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
      * This interface was referenced by `DashboardFilters1`'s JSON-Schema definition
      * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters2`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters3`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters4`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters5`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters6`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
      */
     [k: string]:
         | DashboardAbsoluteDateFilter
@@ -2496,6 +2735,16 @@ export interface DashboardFilters1 {
      * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
      * This interface was referenced by `DashboardFilters1`'s JSON-Schema definition
      * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters2`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters3`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters4`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters5`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters6`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
      */
     [k: string]:
         | DashboardAbsoluteDateFilter
@@ -2546,7 +2795,10 @@ export interface Metadata19 {
         | "repeater_chart"
         | "radar_chart"
         | "attribute_hierarchy"
-        | "parameter";
+        | "parameter"
+        | "report"
+        | "report_template"
+        | "report_page_layout";
     [k: string]: unknown;
 }
 export interface Plugin {
@@ -2598,7 +2850,10 @@ export interface Metadata22 {
         | "repeater_chart"
         | "radar_chart"
         | "attribute_hierarchy"
-        | "parameter";
+        | "parameter"
+        | "report"
+        | "report_template"
+        | "report_page_layout";
     [k: string]: unknown;
 }
 export interface AttributeHierarchy {
@@ -2650,7 +2905,10 @@ export interface Metadata25 {
         | "repeater_chart"
         | "radar_chart"
         | "attribute_hierarchy"
-        | "parameter";
+        | "parameter"
+        | "report"
+        | "report_template"
+        | "report_page_layout";
     [k: string]: unknown;
 }
 export interface Parameter {
@@ -2761,7 +3019,10 @@ export interface Metadata28 {
         | "repeater_chart"
         | "radar_chart"
         | "attribute_hierarchy"
-        | "parameter";
+        | "parameter"
+        | "report"
+        | "report_template"
+        | "report_page_layout";
     [k: string]: unknown;
 }
 export interface Table {
@@ -12905,6 +13166,592 @@ export interface Metadata31 {
         | "repeater_chart"
         | "radar_chart"
         | "attribute_hierarchy"
-        | "parameter";
+        | "parameter"
+        | "report"
+        | "report_template"
+        | "report_page_layout";
+    [k: string]: unknown;
+}
+export interface Report {
+    id: Id45;
+    type: "report";
+    /**
+     * A human readable title for the report.
+     */
+    title: string;
+    /**
+     * An optional description of the report.
+     */
+    description?: string;
+    tags?: Tags37;
+    period: ReportPeriod;
+    /**
+     * Ordered pages of the report. A page is a deep copy taken when it was added, and never changes with the page layout or template it came from.
+     */
+    pages: ReportPageBody[];
+    filters?: DashboardFilters4;
+    /**
+     * Custom variables the report's text can interpolate as \{name\}. Built-in variable names win a collision.
+     */
+    variables?: ReportVariable[];
+    /**
+     * Values for the declared variables, keyed by variable name. A variable with no value here falls back to its default.
+     */
+    variable_values?: {
+        [k: string]: string;
+    };
+}
+/**
+ * The finished period the report covers. It is not a filter: at execution time it materializes as an absolute date filter on each visualization's date dataset, at the lowest precedence, which a visualization opts out of with ignore_report_period.
+ */
+export interface ReportPeriod {
+    /**
+     * Reported period start, ISO 8601 date (YYYY-MM-DD), inclusive.
+     */
+    start: string;
+    /**
+     * Reported period end, ISO 8601 date (YYYY-MM-DD), inclusive.
+     */
+    end: string;
+}
+export interface ReportPageBody {
+    id: Id46;
+    kind?: ReportPageKind;
+    format?: ReportPageFormat;
+    style?: ReportBoxStyle;
+    layout: ReportLayoutNode;
+    filters?: DashboardFilters3;
+}
+/**
+ * Paint of the page itself, behind everything the layout places.
+ */
+export interface ReportBoxStyle {
+    background?: ReportBackground;
+    /**
+     * Corner radius in percent of the page width. Content reaching into a rounded corner is clipped.
+     */
+    border_radius?: number;
+    /**
+     * Inset of the box's own content, in percent of the page width. Insets only inward.
+     */
+    padding?: number;
+}
+/**
+ * A bare string is a color. An image is written as a mapping.
+ */
+export interface ReportBackground2 {
+    image: ReportBackgroundImage;
+}
+/**
+ * The image a box paints behind its content. It is drawn from a slot of its own, which is what keeps a backdrop fillable and gives it placeholder metadata, so it is written down with an id - or it names an image another box on the page already wrote down.
+ */
+export interface ReportBackgroundImage1 {
+    ref: Id47;
+}
+/**
+ * The image a box paints behind its content. It is drawn from a slot of its own, which is what keeps a backdrop fillable and gives it placeholder metadata, so it is written down with an id - or it names an image another box on the page already wrote down.
+ */
+export interface ReportBackgroundImage2 {
+    id: Id48;
+    /**
+     * Image URL, supporting \{variables\} - a logo uses \{logo\}. Mutually exclusive with asset.
+     */
+    url?: string;
+    asset?: Id49;
+    alt_text?: string;
+    /**
+     * How the image fills its area: kept whole inside it, filling it and cropped to do so, or stretched to its shape. Defaults to contain.
+     */
+    fit?: "contain" | "cover" | "fill";
+    style?: ReportImageStyle;
+    placeholder?: ReportSlotPlaceholder;
+}
+/**
+ * Placement overrides for the drawn image; centered on both axes by default.
+ */
+export interface ReportImageStyle {
+    horizontal_align?: ReportContentAlignment;
+    vertical_align?: ReportContentAlignment;
+}
+/**
+ * Metadata of a slot intentionally left unfilled. A bare true marks it required; a bare string is the authoring hint.
+ */
+export interface ReportSlotPlaceholder3 {
+    /**
+     * Authoring hint shown in the empty slot.
+     */
+    hint?: string;
+    /**
+     * When true, a report is not considered complete until this slot is filled.
+     */
+    required?: boolean;
+}
+export interface ReportLayoutColumn {
+    weight?: ReportLayoutWeight;
+    /**
+     * Children laid out vertically.
+     */
+    column: ReportLayoutNode2[];
+    style?: ReportBoxStyle2;
+}
+export interface ReportLayoutRow {
+    weight?: ReportLayoutWeight;
+    /**
+     * Children laid out horizontally.
+     */
+    row: ReportLayoutNode2[];
+    style?: ReportBoxStyle1;
+}
+/**
+ * Paint of this container's box. Never affects how children are laid out.
+ */
+export interface ReportBoxStyle1 {
+    background?: ReportBackground;
+    /**
+     * Corner radius in percent of the page width. Content reaching into a rounded corner is clipped.
+     */
+    border_radius?: number;
+    /**
+     * Inset of the box's own content, in percent of the page width. Insets only inward.
+     */
+    padding?: number;
+}
+export interface ReportVisualizationSlot {
+    id: Id48;
+    weight?: ReportLayoutWeight;
+    /**
+     * An id of the visualization to be rendered in this area. Null leaves the area declared but empty, which renders a placeholder.
+     */
+    visualization: string | null;
+    /**
+     * Title rendered above the visualization; supports \{variables\}. False hides it.
+     */
+    title?: string | false;
+    /**
+     * Whether the title is rendered. Only needed to hide a title that is kept written down; a title of false hides it and drops the text.
+     */
+    show_title?: boolean;
+    /**
+     * Visualization properties overriding the insight's own.
+     */
+    properties?: {
+        [k: string]: unknown;
+    };
+    date?: Id50;
+    /**
+     * When true, the implicit date filter derived from the report's period is not applied here.
+     */
+    ignore_report_period?: boolean;
+    filters?: DashboardFilters2;
+    /**
+     * A list of report and page filters ignored here.
+     */
+    ignored_filters?: string[];
+    placeholder?: ReportSlotPlaceholder;
+}
+/**
+ * Filters applied on top of the effective page and report filters. A filter targeting the same object replaces the inherited one.
+ */
+export interface DashboardFilters2 {
+    /**
+     * This interface was referenced by `DashboardFilters`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters1`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters2`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters3`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters4`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters5`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters6`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     */
+    [k: string]:
+        | DashboardAbsoluteDateFilter
+        | DashboardRelativeDateFilter
+        | DashboardAttributeFilter
+        | DashboardTextFilter
+        | DashboardMetricValueFilter
+        | DashboardFilterGroup;
+}
+export interface ReportHeadingSlot {
+    id: Id48;
+    weight?: ReportLayoutWeight;
+    heading: ReportText;
+    style?: ReportTextStyle;
+    placeholder?: ReportSlotPlaceholder;
+}
+/**
+ * A bare string is the text itself. AI-written text is a mapping carrying the prompt and the generation it produced.
+ */
+export interface ReportText2 {
+    /**
+     * Markdown with \{variable\} placeholders. Alongside a prompt this is the materialized generation, stored so the report renders without re-invoking AI.
+     */
+    text?: string;
+    /**
+     * Instruction for the generator. Its presence makes this an AI-written text; supports \{variables\}.
+     */
+    prompt?: string;
+    /**
+     * ISO 8601 timestamp of the stored generation. Only meaningful alongside a prompt.
+     */
+    generated_at?: string;
+}
+/**
+ * A bare string is the text type. Anything more is written as a mapping.
+ */
+export interface ReportTextStyle2 {
+    type?: ReportTextType;
+    /**
+     * CSS color value of the text.
+     */
+    color?: string;
+    horizontal_align?: ReportContentAlignment;
+    vertical_align?: ReportContentAlignment;
+    background?: ReportBackground3;
+    border_radius?: number;
+    padding?: number;
+}
+export interface ReportParagraphSlot {
+    id: Id48;
+    weight?: ReportLayoutWeight;
+    paragraph: ReportText3;
+    style?: ReportTextStyle;
+    placeholder?: ReportSlotPlaceholder;
+}
+export interface ReportImageSlot {
+    id: Id48;
+    weight?: ReportLayoutWeight;
+    image: ReportImage;
+    placeholder?: ReportSlotPlaceholder;
+}
+/**
+ * A bare string is the image URL. Anything more is written as a mapping. The id belongs to whatever draws the image, not to the image itself.
+ */
+export interface ReportImage2 {
+    /**
+     * Image URL, supporting \{variables\} - a logo uses \{logo\}. Mutually exclusive with asset.
+     */
+    url?: string;
+    asset?: Id51;
+    alt_text?: string;
+    /**
+     * How the image fills its area: kept whole inside it, filling it and cropped to do so, or stretched to its shape. Defaults to contain.
+     */
+    fit?: "contain" | "cover" | "fill";
+    style?: ReportImageStyle;
+    placeholder?: ReportSlotPlaceholder;
+}
+/**
+ * Paint of this container's box. Never affects how children are laid out.
+ */
+export interface ReportBoxStyle2 {
+    background?: ReportBackground;
+    /**
+     * Corner radius in percent of the page width. Content reaching into a rounded corner is clipped.
+     */
+    border_radius?: number;
+    /**
+     * Inset of the box's own content, in percent of the page width. Insets only inward.
+     */
+    padding?: number;
+}
+/**
+ * Page filters, merged over the report's own. A filter targeting the same object replaces the inherited one; a visualization's own filters apply on top.
+ */
+export interface DashboardFilters3 {
+    /**
+     * This interface was referenced by `DashboardFilters`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters1`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters2`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters3`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters4`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters5`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters6`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     */
+    [k: string]:
+        | DashboardAbsoluteDateFilter
+        | DashboardRelativeDateFilter
+        | DashboardAttributeFilter
+        | DashboardTextFilter
+        | DashboardMetricValueFilter
+        | DashboardFilterGroup;
+}
+/**
+ * Report filters; pages and visualizations may extend or override them.
+ */
+export interface DashboardFilters4 {
+    /**
+     * This interface was referenced by `DashboardFilters`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters1`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters2`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters3`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters4`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters5`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters6`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     */
+    [k: string]:
+        | DashboardAbsoluteDateFilter
+        | DashboardRelativeDateFilter
+        | DashboardAttributeFilter
+        | DashboardTextFilter
+        | DashboardMetricValueFilter
+        | DashboardFilterGroup;
+}
+export interface ReportVariable {
+    /**
+     * Name the variable is referenced by from text, as \{name\}.
+     */
+    name: string;
+    title?: string;
+    description?: string;
+    /**
+     * Value used when the report gives the variable none.
+     */
+    default?: string;
+}
+export interface Metadata34 {
+    type:
+        | "dataset"
+        | "date"
+        | "metric"
+        | "computed_attribute"
+        | "dashboard"
+        | "plugin"
+        | "table"
+        | "bar_chart"
+        | "column_chart"
+        | "line_chart"
+        | "area_chart"
+        | "scatter_chart"
+        | "bubble_chart"
+        | "pie_chart"
+        | "donut_chart"
+        | "treemap_chart"
+        | "pyramid_chart"
+        | "funnel_chart"
+        | "heatmap_chart"
+        | "bullet_chart"
+        | "waterfall_chart"
+        | "dependency_wheel_chart"
+        | "sankey_chart"
+        | "headline_chart"
+        | "combo_chart"
+        | "geo_chart"
+        | "geo_area_chart"
+        | "repeater_chart"
+        | "radar_chart"
+        | "attribute_hierarchy"
+        | "parameter"
+        | "report"
+        | "report_template"
+        | "report_page_layout";
+    [k: string]: unknown;
+}
+export interface ReportTemplate {
+    id: Id52;
+    type: "report_template";
+    /**
+     * A human readable title for the report template.
+     */
+    title: string;
+    /**
+     * An optional description of the report template.
+     */
+    description?: string;
+    tags?: Tags38;
+    /**
+     * Ordered pages of the template. A report created from the template deep-copies them and keeps no reference back, so the report stays frozen while the template evolves.
+     */
+    pages: ReportPageBody[];
+    filters?: DashboardFilters5;
+    /**
+     * Custom variables the template's text can interpolate as \{name\}. A report created from it gives them values.
+     */
+    variables?: ReportVariable[];
+}
+/**
+ * Template filters; pages and visualizations may extend or override them.
+ */
+export interface DashboardFilters5 {
+    /**
+     * This interface was referenced by `DashboardFilters`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters1`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters2`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters3`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters4`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters5`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters6`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     */
+    [k: string]:
+        | DashboardAbsoluteDateFilter
+        | DashboardRelativeDateFilter
+        | DashboardAttributeFilter
+        | DashboardTextFilter
+        | DashboardMetricValueFilter
+        | DashboardFilterGroup;
+}
+export interface Metadata37 {
+    type:
+        | "dataset"
+        | "date"
+        | "metric"
+        | "computed_attribute"
+        | "dashboard"
+        | "plugin"
+        | "table"
+        | "bar_chart"
+        | "column_chart"
+        | "line_chart"
+        | "area_chart"
+        | "scatter_chart"
+        | "bubble_chart"
+        | "pie_chart"
+        | "donut_chart"
+        | "treemap_chart"
+        | "pyramid_chart"
+        | "funnel_chart"
+        | "heatmap_chart"
+        | "bullet_chart"
+        | "waterfall_chart"
+        | "dependency_wheel_chart"
+        | "sankey_chart"
+        | "headline_chart"
+        | "combo_chart"
+        | "geo_chart"
+        | "geo_area_chart"
+        | "repeater_chart"
+        | "radar_chart"
+        | "attribute_hierarchy"
+        | "parameter"
+        | "report"
+        | "report_template"
+        | "report_page_layout";
+    [k: string]: unknown;
+}
+/**
+ * A reusable page. Its content fields are the same page body a report and a report template carry inline, so a field added to /gaac/reportPageBody belongs here too: JSON Schema cannot compose the two, because the page body closes itself to the entity's own id, title and tags.
+ */
+export interface ReportPageLayout {
+    id: Id53;
+    type: "report_page_layout";
+    /**
+     * A human readable title for the report page layout.
+     */
+    title: string;
+    /**
+     * An optional description of the report page layout.
+     */
+    description?: string;
+    tags?: Tags39;
+    kind?: ReportPageKind;
+    format?: ReportPageFormat;
+    style?: ReportBoxStyle3;
+    layout: ReportLayoutNode8;
+    filters?: DashboardFilters6;
+}
+/**
+ * Paint of the page itself, behind everything the layout places.
+ */
+export interface ReportBoxStyle3 {
+    background?: ReportBackground;
+    /**
+     * Corner radius in percent of the page width. Content reaching into a rounded corner is clipped.
+     */
+    border_radius?: number;
+    /**
+     * Inset of the box's own content, in percent of the page width. Insets only inward.
+     */
+    padding?: number;
+}
+/**
+ * Page filters, carried into the template and report content this page is copied into.
+ */
+export interface DashboardFilters6 {
+    /**
+     * This interface was referenced by `DashboardFilters`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters1`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters2`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters3`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters4`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters5`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters6`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     */
+    [k: string]:
+        | DashboardAbsoluteDateFilter
+        | DashboardRelativeDateFilter
+        | DashboardAttributeFilter
+        | DashboardTextFilter
+        | DashboardMetricValueFilter
+        | DashboardFilterGroup;
+}
+export interface Metadata40 {
+    type:
+        | "dataset"
+        | "date"
+        | "metric"
+        | "computed_attribute"
+        | "dashboard"
+        | "plugin"
+        | "table"
+        | "bar_chart"
+        | "column_chart"
+        | "line_chart"
+        | "area_chart"
+        | "scatter_chart"
+        | "bubble_chart"
+        | "pie_chart"
+        | "donut_chart"
+        | "treemap_chart"
+        | "pyramid_chart"
+        | "funnel_chart"
+        | "heatmap_chart"
+        | "bullet_chart"
+        | "waterfall_chart"
+        | "dependency_wheel_chart"
+        | "sankey_chart"
+        | "headline_chart"
+        | "combo_chart"
+        | "geo_chart"
+        | "geo_area_chart"
+        | "repeater_chart"
+        | "radar_chart"
+        | "attribute_hierarchy"
+        | "parameter"
+        | "report"
+        | "report_template"
+        | "report_page_layout";
     [k: string]: unknown;
 }

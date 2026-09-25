@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-backend-spi, sdk-backend-tiger: Add `getAvailableThemes` and `getAvailableColorPalettes` to the workspace styling service; they list the workspace-level themes and color palettes a workspace can use, its own and those inherited from parent workspaces. sdk-ui-kit: Styling picker items that share an identifier but differ in type no longer collide",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

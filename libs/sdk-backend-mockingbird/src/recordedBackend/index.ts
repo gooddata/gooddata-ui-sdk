@@ -455,12 +455,18 @@ function recordedWorkspace(
                 getThemes(): Promise<IThemeMetadataObject[]> {
                     return Promise.resolve([]);
                 },
+                getAvailableThemes(): Promise<IThemeMetadataObject[]> {
+                    return Promise.resolve([]);
+                },
                 createTheme: resolveTheme,
                 updateTheme: resolveTheme,
                 deleteTheme(): Promise<void> {
                     return Promise.resolve(undefined);
                 },
                 getColorPalettes(): Promise<IColorPaletteMetadataObject[]> {
+                    return Promise.resolve([]);
+                },
+                getAvailableColorPalettes(): Promise<IColorPaletteMetadataObject[]> {
                     return Promise.resolve([]);
                 },
                 getColorPaletteByRef(): Promise<IColorPalette | undefined> {

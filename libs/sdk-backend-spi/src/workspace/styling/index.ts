@@ -92,9 +92,27 @@ export interface IWorkspaceStylingService {
     /**
      * Request all themes defined on the workspace level.
      *
+     * @remarks
+     * The workspace's own themes, which are the ones it can manage. A theme inherited from a parent
+     * workspace is not among them; use {@link IWorkspaceStylingService.getAvailableThemes} for those.
+     *
      * @returns promise of array of theme metadata objects
      */
     getThemes(): Promise<IThemeMetadataObject[]>;
+
+    /**
+     * Request all workspace-level themes the workspace can use.
+     *
+     * @remarks
+     * The workspace's own themes plus those inherited from its parent workspaces. Unlike
+     * {@link IWorkspaceStylingService.getThemes}, the result includes themes the workspace cannot manage.
+     * Each reference is an `idRef` typed `"workspaceTheme"`, so it can be passed to
+     * {@link IWorkspaceStylingService.setActiveTheme} as is. Organization themes are not included; read
+     * them from the organization styling service.
+     *
+     * @returns promise of array of theme metadata objects
+     */
+    getAvailableThemes(): Promise<IThemeMetadataObject[]>;
 
     /**
      * Create a new theme on the workspace level.
@@ -125,12 +143,27 @@ export interface IWorkspaceStylingService {
      *
      * @remarks
      * The workspace's own palettes, which are the ones it can manage. A palette inherited from a
-     * parent workspace is not among them; use {@link IWorkspaceStylingService.getColorPaletteByRef}
-     * to read one that is merely referenced.
+     * parent workspace is not among them; use {@link IWorkspaceStylingService.getAvailableColorPalettes}
+     * to list those, or {@link IWorkspaceStylingService.getColorPaletteByRef} to read one that is merely
+     * referenced.
      *
      * @returns promise of array of color palette metadata objects
      */
     getColorPalettes(): Promise<IColorPaletteMetadataObject[]>;
+
+    /**
+     * Request all workspace-level color palettes the workspace can use.
+     *
+     * @remarks
+     * The workspace's own palettes plus those inherited from its parent workspaces. Unlike
+     * {@link IWorkspaceStylingService.getColorPalettes}, the result includes palettes the workspace cannot
+     * manage. Each reference is an `idRef` typed `"workspaceColorPalette"`, so it can be passed to
+     * {@link IWorkspaceStylingService.setActiveColorPalette} as is. Palettes with invalid content are left out.
+     * Organization color palettes are not included; read them from the organization styling service.
+     *
+     * @returns promise of array of color palette metadata objects
+     */
+    getAvailableColorPalettes(): Promise<IColorPaletteMetadataObject[]>;
 
     /**
      * Read one color palette by reference, wherever the workspace can see it.

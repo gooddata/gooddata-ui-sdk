@@ -257,6 +257,14 @@ $dataset_color: #952f8e;
         }
     }
 
+    code .gd-gen-ai-chat__message__object {
+        top: 0;
+        padding: 0 2px;
+        border-radius: 3px;
+        font-size: inherit;
+        line-height: inherit;
+    }
+
     .gd-ui-kit-tooltip__anchor {
         display: inline-flex;
     }
@@ -973,6 +981,15 @@ $dataset_color: #952f8e;
     // List contents should be styled same as a pargraph
     & li {
         @include typo-mixins.gd-paragraph;
+    }
+
+    & pre {
+        white-space: pre-wrap;
+    }
+
+    & pre,
+    & code {
+        word-break: break-word;
     }
 
     // Tool call content

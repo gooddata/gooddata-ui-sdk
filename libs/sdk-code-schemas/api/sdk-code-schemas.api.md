@@ -840,6 +840,41 @@ interface DashboardFilters1 {
     [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
 }
 
+// Warning: (ae-missing-release-tag) "DashboardFilters2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface DashboardFilters2 {
+    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
+}
+
+// Warning: (ae-missing-release-tag) "DashboardFilters3" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface DashboardFilters3 {
+    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
+}
+
+// Warning: (ae-missing-release-tag) "DashboardFilters4" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface DashboardFilters4 {
+    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
+}
+
+// Warning: (ae-missing-release-tag) "DashboardFilters5" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface DashboardFilters5 {
+    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
+}
+
+// Warning: (ae-missing-release-tag) "DashboardFilters6" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface DashboardFilters6 {
+    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
+}
+
 // Warning: (ae-missing-release-tag) "DashboardMetricValueFilter" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public
@@ -1518,10 +1553,55 @@ type Id43 = string;
 // @public
 type Id44 = string;
 
+// Warning: (ae-missing-release-tag) "Id45" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Id45 = string;
+
+// Warning: (ae-missing-release-tag) "Id46" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Id46 = string;
+
+// Warning: (ae-missing-release-tag) "Id47" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Id47 = string;
+
+// Warning: (ae-missing-release-tag) "Id48" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Id48 = string;
+
+// Warning: (ae-missing-release-tag) "Id49" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Id49 = string;
+
 // Warning: (ae-missing-release-tag) "Id5" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
 type Id5 = string;
+
+// Warning: (ae-missing-release-tag) "Id50" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Id50 = string;
+
+// Warning: (ae-missing-release-tag) "Id51" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Id51 = string;
+
+// Warning: (ae-missing-release-tag) "Id52" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Id52 = string;
+
+// Warning: (ae-missing-release-tag) "Id53" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Id53 = string;
 
 // Warning: (ae-missing-release-tag) "Id6" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
@@ -2016,7 +2096,7 @@ interface Metadata1 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter";
+    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata10" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -2026,7 +2106,7 @@ interface Metadata10 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter";
+    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata11" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -2046,7 +2126,7 @@ interface Metadata13 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter";
+    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata14" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -2066,7 +2146,7 @@ interface Metadata16 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter";
+    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata17" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -2086,13 +2166,13 @@ interface Metadata19 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter";
+    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-type Metadata2 = Metadata3 | Metadata6 | Metadata9 | Metadata12 | Metadata15 | Metadata18 | Metadata21 | Metadata24 | Metadata27 | Metadata30;
+type Metadata2 = Metadata3 | Metadata6 | Metadata9 | Metadata12 | Metadata15 | Metadata18 | Metadata21 | Metadata24 | Metadata27 | Metadata30 | Metadata33 | Metadata36 | Metadata39;
 
 // Warning: (ae-missing-release-tag) "Metadata20" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
@@ -2111,7 +2191,7 @@ interface Metadata22 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter";
+    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata23" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -2131,7 +2211,7 @@ interface Metadata25 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter";
+    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata26" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -2151,7 +2231,7 @@ interface Metadata28 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter";
+    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata29" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -2176,15 +2256,58 @@ interface Metadata31 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter";
+    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata32" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-type Metadata32 = {
+type Metadata32 = Report_2;
+
+// Warning: (ae-missing-release-tag) "Metadata33" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Metadata33 = Metadata34 & Metadata35;
+
+// Warning: (ae-missing-release-tag) "Metadata34" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface Metadata34 {
+    // (undocumented)
     [k: string]: unknown;
-};
+    // (undocumented)
+    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout";
+}
+
+// Warning: (ae-missing-release-tag) "Metadata35" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+type Metadata35 = ReportTemplate;
+
+// Warning: (ae-missing-release-tag) "Metadata36" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Metadata36 = Metadata37 & Metadata38;
+
+// Warning: (ae-missing-release-tag) "Metadata37" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface Metadata37 {
+    // (undocumented)
+    [k: string]: unknown;
+    // (undocumented)
+    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout";
+}
+
+// Warning: (ae-missing-release-tag) "Metadata38" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+type Metadata38 = ReportPageLayout;
+
+// Warning: (ae-missing-release-tag) "Metadata39" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Metadata39 = Metadata40 & Metadata41;
 
 // Warning: (ae-missing-release-tag) "Metadata4" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
@@ -2193,8 +2316,25 @@ interface Metadata4 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter";
+    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout";
 }
+
+// Warning: (ae-missing-release-tag) "Metadata40" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface Metadata40 {
+    // (undocumented)
+    [k: string]: unknown;
+    // (undocumented)
+    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout";
+}
+
+// Warning: (ae-missing-release-tag) "Metadata41" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+type Metadata41 = {
+    [k: string]: unknown;
+};
 
 // Warning: (ae-missing-release-tag) "Metadata5" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
@@ -2213,7 +2353,7 @@ interface Metadata7 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter";
+    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata8" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -4150,6 +4290,195 @@ export const metadata_v1: {
                 required: string[];
                 $defs: {};
             };
+            report: {
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                properties: {
+                    id: {
+                        $ref: string;
+                        description: string;
+                        $semantic: ({
+                            type: string;
+                            source: string;
+                            code: string;
+                        } | {
+                            code?: undefined;
+                            type: string;
+                            source: string;
+                        })[];
+                    };
+                    type: {
+                        type: string;
+                        enum: string[];
+                    };
+                    title: {
+                        $ref: string;
+                        description: string;
+                    };
+                    description: {
+                        $ref: string;
+                        description: string;
+                    };
+                    tags: {
+                        $ref: string;
+                        description: string;
+                    };
+                    period: {
+                        $ref: string;
+                        description: string;
+                    };
+                    pages: {
+                        type: string;
+                        description: string;
+                        items: {
+                            $ref: string;
+                        };
+                    };
+                    filters: {
+                        $ref: string;
+                        description: string;
+                    };
+                    variables: {
+                        type: string;
+                        description: string;
+                        items: {
+                            $ref: string;
+                        };
+                    };
+                    variable_values: {
+                        type: string;
+                        description: string;
+                        additionalProperties: {
+                            type: string;
+                        };
+                    };
+                };
+                $semantic: {
+                    type: string;
+                    snippets: string[];
+                };
+                required: string[];
+            };
+            report_template: {
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                properties: {
+                    id: {
+                        $ref: string;
+                        description: string;
+                        $semantic: ({
+                            type: string;
+                            source: string;
+                            code: string;
+                        } | {
+                            code?: undefined;
+                            type: string;
+                            source: string;
+                        })[];
+                    };
+                    type: {
+                        type: string;
+                        enum: string[];
+                    };
+                    title: {
+                        $ref: string;
+                        description: string;
+                    };
+                    description: {
+                        $ref: string;
+                        description: string;
+                    };
+                    tags: {
+                        $ref: string;
+                        description: string;
+                    };
+                    pages: {
+                        type: string;
+                        description: string;
+                        items: {
+                            $ref: string;
+                        };
+                    };
+                    filters: {
+                        $ref: string;
+                        description: string;
+                    };
+                    variables: {
+                        type: string;
+                        description: string;
+                        items: {
+                            $ref: string;
+                        };
+                    };
+                };
+                $semantic: {
+                    type: string;
+                    snippets: string[];
+                };
+                required: string[];
+            };
+            report_page_layout: {
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                properties: {
+                    id: {
+                        $ref: string;
+                        description: string;
+                        $semantic: ({
+                            type: string;
+                            source: string;
+                            code: string;
+                        } | {
+                            code?: undefined;
+                            type: string;
+                            source: string;
+                        })[];
+                    };
+                    type: {
+                        type: string;
+                        enum: string[];
+                    };
+                    title: {
+                        $ref: string;
+                        description: string;
+                    };
+                    description: {
+                        $ref: string;
+                        description: string;
+                    };
+                    tags: {
+                        $ref: string;
+                        description: string;
+                    };
+                    kind: {
+                        $ref: string;
+                    };
+                    format: {
+                        $ref: string;
+                    };
+                    style: {
+                        $ref: string;
+                        description: string;
+                    };
+                    layout: {
+                        $ref: string;
+                        description: string;
+                    };
+                    filters: {
+                        $ref: string;
+                        description: string;
+                    };
+                };
+                $semantic: {
+                    type: string;
+                    snippets: string[];
+                };
+                required: string[];
+                description: string;
+            };
             identifier: {
                 title: string;
                 type: string;
@@ -4335,6 +4664,373 @@ export const metadata_v1: {
                     source: string;
                     typePrefix: boolean;
                 };
+            };
+            reportPeriod: {
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                properties: {
+                    start: {
+                        type: string;
+                        description: string;
+                        pattern: string;
+                    };
+                    end: {
+                        type: string;
+                        description: string;
+                        pattern: string;
+                    };
+                };
+                required: string[];
+            };
+            reportPageBody: {
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                properties: {
+                    id: {
+                        $ref: string;
+                        description: string;
+                    };
+                    kind: {
+                        $ref: string;
+                    };
+                    format: {
+                        $ref: string;
+                    };
+                    style: {
+                        $ref: string;
+                        description: string;
+                    };
+                    layout: {
+                        $ref: string;
+                        description: string;
+                    };
+                    filters: {
+                        $ref: string;
+                        description: string;
+                    };
+                };
+                required: string[];
+            };
+            reportVariable: {
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                properties: {
+                    name: {
+                        type: string;
+                        description: string;
+                    };
+                    title: {
+                        $ref: string;
+                    };
+                    description: {
+                        $ref: string;
+                    };
+                    default: {
+                        type: string;
+                        description: string;
+                    };
+                };
+                required: string[];
+            };
+            reportBackground: {
+                title: string;
+                description: string;
+                oneOf: ({
+                    properties?: undefined;
+                    required?: undefined;
+                    additionalProperties?: undefined;
+                    type: string;
+                    description: string;
+                } | {
+                    description?: undefined;
+                    type: string;
+                    additionalProperties: boolean;
+                    properties: {
+                        image: {
+                            $ref: string;
+                            description: string;
+                        };
+                    };
+                    required: string[];
+                })[];
+            };
+            reportBackgroundImage: {
+                title: string;
+                description: string;
+                oneOf: ({
+                    not?: undefined;
+                    type: string;
+                    additionalProperties: boolean;
+                    properties: {
+                        ref: {
+                            $ref: string;
+                            description: string;
+                        };
+                        id?: undefined;
+                        url?: undefined;
+                        asset?: undefined;
+                        alt_text?: undefined;
+                        fit?: undefined;
+                        style?: undefined;
+                        placeholder?: undefined;
+                    };
+                    required: string[];
+                } | {
+                    type: string;
+                    additionalProperties: boolean;
+                    not: {
+                        required: string[];
+                    };
+                    properties: {
+                        ref?: undefined;
+                        id: {
+                            $ref: string;
+                        };
+                        url: {
+                            type: string;
+                            description: string;
+                        };
+                        asset: {
+                            $ref: string;
+                            description: string;
+                        };
+                        alt_text: {
+                            type: string;
+                        };
+                        fit: {
+                            type: string;
+                            enum: string[];
+                            description: string;
+                        };
+                        style: {
+                            $ref: string;
+                        };
+                        placeholder: {
+                            $ref: string;
+                        };
+                    };
+                    required: string[];
+                })[];
+            };
+            reportTextType: {
+                title: string;
+                type: string;
+                enum: string[];
+                description: string;
+            };
+            reportAlignment: {
+                title: string;
+                type: string;
+                enum: string[];
+            };
+            reportImageStyle: {
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                properties: {
+                    horizontal_align: {
+                        $ref: string;
+                    };
+                    vertical_align: {
+                        $ref: string;
+                    };
+                };
+                description: string;
+            };
+            reportPlaceholder: {
+                title: string;
+                description: string;
+                oneOf: ({
+                    properties?: undefined;
+                    additionalProperties?: undefined;
+                    type: string;
+                    description: string;
+                } | {
+                    description?: undefined;
+                    type: string;
+                    additionalProperties: boolean;
+                    properties: {
+                        hint: {
+                            type: string;
+                            description: string;
+                        };
+                        required: {
+                            type: string;
+                            description: string;
+                        };
+                    };
+                })[];
+            };
+            reportWeight: {
+                title: string;
+                type: string;
+                description: string;
+            };
+            reportLayoutNode: {
+                title: string;
+                description: string;
+                type: string;
+                not: {
+                    allOf: {
+                        not: {
+                            required: string[];
+                        };
+                    }[];
+                };
+                allOf: {
+                    if: {
+                        required: string[];
+                    };
+                    then: {
+                        $ref: string;
+                    };
+                }[];
+            };
+            reportBoxStyle: {
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                properties: {
+                    background: {
+                        $ref: string;
+                        description: string;
+                    };
+                    border_radius: {
+                        type: string;
+                        description: string;
+                    };
+                    padding: {
+                        type: string;
+                        description: string;
+                    };
+                };
+            };
+            reportSlotId: {
+                $ref: string;
+                description: string;
+            };
+            reportText: {
+                title: string;
+                description: string;
+                oneOf: ({
+                    properties?: undefined;
+                    additionalProperties?: undefined;
+                    type: string;
+                    description: string;
+                } | {
+                    description?: undefined;
+                    type: string;
+                    additionalProperties: boolean;
+                    properties: {
+                        text: {
+                            type: string;
+                            description: string;
+                        };
+                        prompt: {
+                            type: string;
+                            description: string;
+                        };
+                        generated_at: {
+                            type: string;
+                            description: string;
+                        };
+                    };
+                })[];
+            };
+            reportTextStyle: {
+                title: string;
+                description: string;
+                oneOf: ({
+                    properties?: undefined;
+                    type?: undefined;
+                    additionalProperties?: undefined;
+                    $ref: string;
+                } | {
+                    $ref?: undefined;
+                    type: string;
+                    additionalProperties: boolean;
+                    properties: {
+                        type: {
+                            $ref: string;
+                        };
+                        color: {
+                            type: string;
+                            description: string;
+                        };
+                        horizontal_align: {
+                            $ref: string;
+                        };
+                        vertical_align: {
+                            $ref: string;
+                        };
+                        background: {
+                            $ref: string;
+                        };
+                        border_radius: {
+                            type: string;
+                        };
+                        padding: {
+                            type: string;
+                        };
+                    };
+                })[];
+            };
+            reportImage: {
+                title: string;
+                description: string;
+                oneOf: ({
+                    properties?: undefined;
+                    not?: undefined;
+                    additionalProperties?: undefined;
+                    type: string;
+                    description: string;
+                } | {
+                    description?: undefined;
+                    type: string;
+                    additionalProperties: boolean;
+                    not: {
+                        required: string[];
+                    };
+                    properties: {
+                        url: {
+                            type: string;
+                            description: string;
+                        };
+                        asset: {
+                            $ref: string;
+                            description: string;
+                        };
+                        alt_text: {
+                            type: string;
+                        };
+                        fit: {
+                            type: string;
+                            enum: string[];
+                            description: string;
+                        };
+                        style: {
+                            $ref: string;
+                        };
+                        placeholder: {
+                            $ref: string;
+                        };
+                    };
+                })[];
+            };
+            reportPageKind: {
+                title: string;
+                type: string;
+                enum: string[];
+                description: string;
+            };
+            reportPageFormat: {
+                title: string;
+                type: string;
+                enum: string[];
+                description: string;
             };
             query: {
                 $schema: string;
@@ -7652,9 +8348,9 @@ export const metadata_v1: {
                     type: string;
                     additionalProperties: boolean;
                     properties: {
+                        id?: undefined;
                         content?: undefined;
                         visualizations?: undefined;
-                        id?: undefined;
                         container: {
                             $ref: string;
                             description: string;
@@ -9843,6 +10539,378 @@ export const metadata_v1: {
             };
             required: string[];
         };
+        report: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                id: {
+                    $ref: string;
+                    description: string;
+                    $semantic: ({
+                        type: string;
+                        source: string;
+                        code: string;
+                    } | {
+                        code?: undefined;
+                        type: string;
+                        source: string;
+                    })[];
+                };
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                title: {
+                    $ref: string;
+                    description: string;
+                };
+                description: {
+                    $ref: string;
+                    description: string;
+                };
+                tags: {
+                    $ref: string;
+                    description: string;
+                };
+                period: {
+                    $ref: string;
+                    description: string;
+                };
+                pages: {
+                    type: string;
+                    description: string;
+                    items: {
+                        $ref: string;
+                    };
+                };
+                filters: {
+                    $ref: string;
+                    description: string;
+                };
+                variables: {
+                    type: string;
+                    description: string;
+                    items: {
+                        $ref: string;
+                    };
+                };
+                variable_values: {
+                    type: string;
+                    description: string;
+                    additionalProperties: {
+                        type: string;
+                    };
+                };
+            };
+            $semantic: {
+                type: string;
+                snippets: string[];
+            };
+            required: string[];
+        };
+        layoutColumn: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                weight: {
+                    $ref: string;
+                };
+                column: {
+                    type: string;
+                    description: string;
+                    items: {
+                        $ref: string;
+                    };
+                };
+                style: {
+                    $ref: string;
+                    description: string;
+                };
+            };
+            required: string[];
+        };
+        layoutRow: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                weight: {
+                    $ref: string;
+                };
+                row: {
+                    type: string;
+                    description: string;
+                    items: {
+                        $ref: string;
+                    };
+                };
+                style: {
+                    $ref: string;
+                    description: string;
+                };
+            };
+            required: string[];
+        };
+        visualizationSlot: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                id: {
+                    $ref: string;
+                };
+                weight: {
+                    $ref: string;
+                };
+                visualization: {
+                    type: string[];
+                    description: string;
+                    $semantic: {
+                        type: string;
+                        source: string;
+                    };
+                };
+                title: {
+                    description: string;
+                    oneOf: ({
+                        enum?: undefined;
+                        type: string;
+                    } | {
+                        type: string;
+                        enum: boolean[];
+                    })[];
+                };
+                show_title: {
+                    type: string;
+                    description: string;
+                };
+                properties: {
+                    type: string;
+                    description: string;
+                };
+                date: {
+                    $ref: string;
+                    description: string;
+                    $semantic: {
+                        type: string;
+                        source: string;
+                    };
+                };
+                ignore_report_period: {
+                    type: string;
+                    description: string;
+                };
+                filters: {
+                    $ref: string;
+                    description: string;
+                };
+                ignored_filters: {
+                    type: string;
+                    description: string;
+                    items: {
+                        type: string;
+                        description: string;
+                        $semantic: {
+                            type: string;
+                            sources: string[];
+                        };
+                    };
+                };
+                placeholder: {
+                    $ref: string;
+                };
+            };
+            required: string[];
+        };
+        headingSlot: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                id: {
+                    $ref: string;
+                };
+                weight: {
+                    $ref: string;
+                };
+                heading: {
+                    $ref: string;
+                    description: string;
+                };
+                style: {
+                    $ref: string;
+                };
+                placeholder: {
+                    $ref: string;
+                };
+            };
+            required: string[];
+        };
+        paragraphSlot: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                id: {
+                    $ref: string;
+                };
+                weight: {
+                    $ref: string;
+                };
+                paragraph: {
+                    $ref: string;
+                    description: string;
+                };
+                style: {
+                    $ref: string;
+                };
+                placeholder: {
+                    $ref: string;
+                };
+            };
+            required: string[];
+        };
+        imageSlot: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                id: {
+                    $ref: string;
+                };
+                weight: {
+                    $ref: string;
+                };
+                image: {
+                    $ref: string;
+                };
+                placeholder: {
+                    $ref: string;
+                };
+            };
+            required: string[];
+        };
+        report_page_layout: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                id: {
+                    $ref: string;
+                    description: string;
+                    $semantic: ({
+                        type: string;
+                        source: string;
+                        code: string;
+                    } | {
+                        code?: undefined;
+                        type: string;
+                        source: string;
+                    })[];
+                };
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                title: {
+                    $ref: string;
+                    description: string;
+                };
+                description: {
+                    $ref: string;
+                    description: string;
+                };
+                tags: {
+                    $ref: string;
+                    description: string;
+                };
+                kind: {
+                    $ref: string;
+                };
+                format: {
+                    $ref: string;
+                };
+                style: {
+                    $ref: string;
+                    description: string;
+                };
+                layout: {
+                    $ref: string;
+                    description: string;
+                };
+                filters: {
+                    $ref: string;
+                    description: string;
+                };
+            };
+            $semantic: {
+                type: string;
+                snippets: string[];
+            };
+            required: string[];
+            description: string;
+        };
+        report_template: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                id: {
+                    $ref: string;
+                    description: string;
+                    $semantic: ({
+                        type: string;
+                        source: string;
+                        code: string;
+                    } | {
+                        code?: undefined;
+                        type: string;
+                        source: string;
+                    })[];
+                };
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                title: {
+                    $ref: string;
+                    description: string;
+                };
+                description: {
+                    $ref: string;
+                    description: string;
+                };
+                tags: {
+                    $ref: string;
+                    description: string;
+                };
+                pages: {
+                    type: string;
+                    description: string;
+                    items: {
+                        $ref: string;
+                    };
+                };
+                filters: {
+                    $ref: string;
+                    description: string;
+                };
+                variables: {
+                    type: string;
+                    description: string;
+                    items: {
+                        $ref: string;
+                    };
+                };
+            };
+            $semantic: {
+                type: string;
+                snippets: string[];
+            };
+            required: string[];
+        };
         bucketItem: {
             title: string;
             $semantic: {
@@ -10816,6 +11884,477 @@ interface RepeaterChart {
     view_by?: Bucket[];
 }
 
+// Warning: (ae-missing-release-tag) "Report" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface Report_2 {
+    description?: string;
+    // (undocumented)
+    filters?: DashboardFilters4;
+    // (undocumented)
+    id: Id45;
+    pages: ReportPageBody[];
+    // (undocumented)
+    period: ReportPeriod;
+    // (undocumented)
+    tags?: Tags37;
+    title: string;
+    // (undocumented)
+    type: "report";
+    variable_values?: {
+        [k: string]: string;
+    };
+    variables?: ReportVariable[];
+}
+
+// Warning: (ae-missing-release-tag) "ReportBackground" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ReportBackground = ReportBackground1 | ReportBackground2;
+
+// Warning: (ae-missing-release-tag) "ReportBackground1" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ReportBackground1 = string;
+
+// Warning: (ae-missing-release-tag) "ReportBackground2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface ReportBackground2 {
+    // (undocumented)
+    image: ReportBackgroundImage;
+}
+
+// Warning: (ae-missing-release-tag) "ReportBackground3" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ReportBackground3 = ReportBackground1 | ReportBackground2;
+
+// Warning: (ae-missing-release-tag) "ReportBackgroundImage" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ReportBackgroundImage = ReportBackgroundImage1 | ReportBackgroundImage2;
+
+// Warning: (ae-missing-release-tag) "ReportBackgroundImage1" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface ReportBackgroundImage1 {
+    // (undocumented)
+    ref: Id47;
+}
+
+// Warning: (ae-missing-release-tag) "ReportBackgroundImage2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface ReportBackgroundImage2 {
+    // (undocumented)
+    alt_text?: string;
+    // (undocumented)
+    asset?: Id49;
+    fit?: "contain" | "cover" | "fill";
+    // (undocumented)
+    id: Id48;
+    // (undocumented)
+    placeholder?: ReportSlotPlaceholder;
+    // (undocumented)
+    style?: ReportImageStyle;
+    url?: string;
+}
+
+// Warning: (ae-missing-release-tag) "ReportBoxStyle" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface ReportBoxStyle {
+    // (undocumented)
+    background?: ReportBackground;
+    border_radius?: number;
+    padding?: number;
+}
+
+// Warning: (ae-missing-release-tag) "ReportBoxStyle1" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface ReportBoxStyle1 {
+    // (undocumented)
+    background?: ReportBackground;
+    border_radius?: number;
+    padding?: number;
+}
+
+// Warning: (ae-missing-release-tag) "ReportBoxStyle2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface ReportBoxStyle2 {
+    // (undocumented)
+    background?: ReportBackground;
+    border_radius?: number;
+    padding?: number;
+}
+
+// Warning: (ae-missing-release-tag) "ReportBoxStyle3" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface ReportBoxStyle3 {
+    // (undocumented)
+    background?: ReportBackground;
+    border_radius?: number;
+    padding?: number;
+}
+
+// Warning: (ae-missing-release-tag) "ReportContentAlignment" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+type ReportContentAlignment = "start" | "center" | "end";
+
+// Warning: (ae-missing-release-tag) "ReportHeadingSlot" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface ReportHeadingSlot {
+    // (undocumented)
+    heading: ReportText;
+    // (undocumented)
+    id: Id48;
+    // (undocumented)
+    placeholder?: ReportSlotPlaceholder;
+    // (undocumented)
+    style?: ReportTextStyle;
+    // (undocumented)
+    weight?: ReportLayoutWeight;
+}
+
+// Warning: (ae-missing-release-tag) "ReportImage" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ReportImage = ReportImage1 | ReportImage2;
+
+// Warning: (ae-missing-release-tag) "ReportImage1" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ReportImage1 = string;
+
+// Warning: (ae-missing-release-tag) "ReportImage2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface ReportImage2 {
+    // (undocumented)
+    alt_text?: string;
+    // (undocumented)
+    asset?: Id51;
+    fit?: "contain" | "cover" | "fill";
+    // (undocumented)
+    placeholder?: ReportSlotPlaceholder;
+    // (undocumented)
+    style?: ReportImageStyle;
+    url?: string;
+}
+
+// Warning: (ae-missing-release-tag) "ReportImageSlot" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface ReportImageSlot {
+    // (undocumented)
+    id: Id48;
+    // (undocumented)
+    image: ReportImage;
+    // (undocumented)
+    placeholder?: ReportSlotPlaceholder;
+    // (undocumented)
+    weight?: ReportLayoutWeight;
+}
+
+// Warning: (ae-missing-release-tag) "ReportImageStyle" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface ReportImageStyle {
+    // (undocumented)
+    horizontal_align?: ReportContentAlignment;
+    // (undocumented)
+    vertical_align?: ReportContentAlignment;
+}
+
+// Warning: (ae-missing-release-tag) "ReportLayoutColumn" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface ReportLayoutColumn {
+    column: ReportLayoutNode2[];
+    // (undocumented)
+    style?: ReportBoxStyle2;
+    // (undocumented)
+    weight?: ReportLayoutWeight;
+}
+
+// Warning: (ae-missing-release-tag) "ReportLayoutNode" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ReportLayoutNode = ReportLayoutNode1 | ReportLayoutNode3 | ReportLayoutNode4 | ReportLayoutNode5 | ReportLayoutNode6 | ReportLayoutNode7;
+
+// Warning: (ae-missing-release-tag) "ReportLayoutNode1" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ReportLayoutNode1 = ReportLayoutColumn;
+
+// Warning: (ae-missing-release-tag) "ReportLayoutNode2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ReportLayoutNode2 = ReportLayoutNode1 | ReportLayoutNode3 | ReportLayoutNode4 | ReportLayoutNode5 | ReportLayoutNode6 | ReportLayoutNode7;
+
+// Warning: (ae-missing-release-tag) "ReportLayoutNode3" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ReportLayoutNode3 = ReportLayoutRow;
+
+// Warning: (ae-missing-release-tag) "ReportLayoutNode4" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ReportLayoutNode4 = ReportVisualizationSlot;
+
+// Warning: (ae-missing-release-tag) "ReportLayoutNode5" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ReportLayoutNode5 = ReportHeadingSlot;
+
+// Warning: (ae-missing-release-tag) "ReportLayoutNode6" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ReportLayoutNode6 = ReportParagraphSlot;
+
+// Warning: (ae-missing-release-tag) "ReportLayoutNode7" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ReportLayoutNode7 = ReportImageSlot;
+
+// Warning: (ae-missing-release-tag) "ReportLayoutNode8" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ReportLayoutNode8 = ReportLayoutNode1 | ReportLayoutNode3 | ReportLayoutNode4 | ReportLayoutNode5 | ReportLayoutNode6 | ReportLayoutNode7;
+
+// Warning: (ae-missing-release-tag) "ReportLayoutRow" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface ReportLayoutRow {
+    row: ReportLayoutNode2[];
+    // (undocumented)
+    style?: ReportBoxStyle1;
+    // (undocumented)
+    weight?: ReportLayoutWeight;
+}
+
+// Warning: (ae-missing-release-tag) "ReportLayoutWeight" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ReportLayoutWeight = number;
+
+// Warning: (ae-missing-release-tag) "ReportPageBody" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface ReportPageBody {
+    // (undocumented)
+    filters?: DashboardFilters3;
+    // (undocumented)
+    format?: ReportPageFormat;
+    // (undocumented)
+    id: Id46;
+    // (undocumented)
+    kind?: ReportPageKind;
+    // (undocumented)
+    layout: ReportLayoutNode;
+    // (undocumented)
+    style?: ReportBoxStyle;
+}
+
+// Warning: (ae-missing-release-tag) "ReportPageFormat" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ReportPageFormat = "widescreen" | "a4Portrait" | "letterPortrait";
+
+// Warning: (ae-missing-release-tag) "ReportPageKind" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ReportPageKind = "cover" | "section" | "content";
+
+// Warning: (ae-missing-release-tag) "ReportPageLayout" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface ReportPageLayout {
+    description?: string;
+    // (undocumented)
+    filters?: DashboardFilters6;
+    // (undocumented)
+    format?: ReportPageFormat;
+    // (undocumented)
+    id: Id53;
+    // (undocumented)
+    kind?: ReportPageKind;
+    // (undocumented)
+    layout: ReportLayoutNode8;
+    // (undocumented)
+    style?: ReportBoxStyle3;
+    // (undocumented)
+    tags?: Tags39;
+    title: string;
+    // (undocumented)
+    type: "report_page_layout";
+}
+
+// Warning: (ae-missing-release-tag) "ReportParagraphSlot" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface ReportParagraphSlot {
+    // (undocumented)
+    id: Id48;
+    // (undocumented)
+    paragraph: ReportText3;
+    // (undocumented)
+    placeholder?: ReportSlotPlaceholder;
+    // (undocumented)
+    style?: ReportTextStyle;
+    // (undocumented)
+    weight?: ReportLayoutWeight;
+}
+
+// Warning: (ae-missing-release-tag) "ReportPeriod" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface ReportPeriod {
+    end: string;
+    start: string;
+}
+
+// Warning: (ae-missing-release-tag) "ReportSlotPlaceholder" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ReportSlotPlaceholder = ReportSlotPlaceholder1 | ReportSlotPlaceholder2 | ReportSlotPlaceholder3;
+
+// Warning: (ae-missing-release-tag) "ReportSlotPlaceholder1" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ReportSlotPlaceholder1 = boolean;
+
+// Warning: (ae-missing-release-tag) "ReportSlotPlaceholder2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ReportSlotPlaceholder2 = string;
+
+// Warning: (ae-missing-release-tag) "ReportSlotPlaceholder3" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface ReportSlotPlaceholder3 {
+    hint?: string;
+    required?: boolean;
+}
+
+// Warning: (ae-missing-release-tag) "ReportTemplate" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface ReportTemplate {
+    description?: string;
+    // (undocumented)
+    filters?: DashboardFilters5;
+    // (undocumented)
+    id: Id52;
+    pages: ReportPageBody[];
+    // (undocumented)
+    tags?: Tags38;
+    title: string;
+    // (undocumented)
+    type: "report_template";
+    variables?: ReportVariable[];
+}
+
+// Warning: (ae-missing-release-tag) "ReportText" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ReportText = ReportText1 | ReportText2;
+
+// Warning: (ae-missing-release-tag) "ReportText1" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ReportText1 = string;
+
+// Warning: (ae-missing-release-tag) "ReportText2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface ReportText2 {
+    generated_at?: string;
+    prompt?: string;
+    text?: string;
+}
+
+// Warning: (ae-missing-release-tag) "ReportText3" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ReportText3 = ReportText1 | ReportText2;
+
+// Warning: (ae-missing-release-tag) "ReportTextStyle" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ReportTextStyle = ReportTextStyle1 | ReportTextStyle2;
+
+// Warning: (ae-missing-release-tag) "ReportTextStyle1" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ReportTextStyle1 = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "largeText" | "normalText" | "smallText";
+
+// Warning: (ae-missing-release-tag) "ReportTextStyle2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface ReportTextStyle2 {
+    // (undocumented)
+    background?: ReportBackground3;
+    // (undocumented)
+    border_radius?: number;
+    color?: string;
+    // (undocumented)
+    horizontal_align?: ReportContentAlignment;
+    // (undocumented)
+    padding?: number;
+    // (undocumented)
+    type?: ReportTextType;
+    // (undocumented)
+    vertical_align?: ReportContentAlignment;
+}
+
+// Warning: (ae-missing-release-tag) "ReportTextType" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ReportTextType = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "largeText" | "normalText" | "smallText";
+
+// Warning: (ae-missing-release-tag) "ReportVariable" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface ReportVariable {
+    default?: string;
+    // (undocumented)
+    description?: string;
+    name: string;
+    // (undocumented)
+    title?: string;
+}
+
+// Warning: (ae-missing-release-tag) "ReportVisualizationSlot" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface ReportVisualizationSlot {
+    // (undocumented)
+    date?: Id50;
+    // (undocumented)
+    filters?: DashboardFilters2;
+    // (undocumented)
+    id: Id48;
+    ignore_report_period?: boolean;
+    ignored_filters?: string[];
+    // (undocumented)
+    placeholder?: ReportSlotPlaceholder;
+    properties?: {
+        [k: string]: unknown;
+    };
+    show_title?: boolean;
+    title?: string | false;
+    visualization: string | null;
+    // (undocumented)
+    weight?: ReportLayoutWeight;
+}
+
 // Warning: (ae-missing-release-tag) "RichTextWidget" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
@@ -11187,6 +12726,21 @@ type Tags35 = string[];
 //
 // @public
 type Tags36 = string[];
+
+// Warning: (ae-missing-release-tag) "Tags37" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Tags37 = string[];
+
+// Warning: (ae-missing-release-tag) "Tags38" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Tags38 = string[];
+
+// Warning: (ae-missing-release-tag) "Tags39" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Tags39 = string[];
 
 // Warning: (ae-missing-release-tag) "Tags4" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
@@ -11627,6 +13181,52 @@ declare namespace v1 {
         Tags36,
         Metadata30,
         Metadata32,
+        Id45,
+        Tags37,
+        Id46,
+        ReportPageKind,
+        ReportPageFormat,
+        ReportBackground,
+        ReportBackground1,
+        ReportBackgroundImage,
+        Id47,
+        Id48,
+        Id49,
+        ReportContentAlignment,
+        ReportSlotPlaceholder,
+        ReportSlotPlaceholder1,
+        ReportSlotPlaceholder2,
+        ReportLayoutNode,
+        ReportLayoutNode1,
+        ReportLayoutWeight,
+        ReportLayoutNode2,
+        ReportLayoutNode3,
+        ReportLayoutNode4,
+        Id50,
+        ReportLayoutNode5,
+        ReportText,
+        ReportText1,
+        ReportTextStyle,
+        ReportTextStyle1,
+        ReportTextType,
+        ReportBackground3,
+        ReportLayoutNode6,
+        ReportText3,
+        ReportLayoutNode7,
+        ReportImage,
+        ReportImage1,
+        Id51,
+        Metadata33,
+        Metadata35,
+        Id52,
+        Tags38,
+        Metadata36,
+        Metadata38,
+        Id53,
+        Tags39,
+        ReportLayoutNode8,
+        Metadata39,
+        Metadata41,
         Metadata1,
         Metadata4,
         NormalDataset,
@@ -11806,7 +13406,39 @@ declare namespace v1 {
         RadarChart,
         Query22,
         VisualisationConfig23,
-        Metadata31
+        Metadata31,
+        Report_2 as Report,
+        ReportPeriod,
+        ReportPageBody,
+        ReportBoxStyle,
+        ReportBackground2,
+        ReportBackgroundImage1,
+        ReportBackgroundImage2,
+        ReportImageStyle,
+        ReportSlotPlaceholder3,
+        ReportLayoutColumn,
+        ReportLayoutRow,
+        ReportBoxStyle1,
+        ReportVisualizationSlot,
+        DashboardFilters2,
+        ReportHeadingSlot,
+        ReportText2,
+        ReportTextStyle2,
+        ReportParagraphSlot,
+        ReportImageSlot,
+        ReportImage2,
+        ReportBoxStyle2,
+        DashboardFilters3,
+        DashboardFilters4,
+        ReportVariable,
+        Metadata34,
+        ReportTemplate,
+        DashboardFilters5,
+        Metadata37,
+        ReportPageLayout,
+        ReportBoxStyle3,
+        DashboardFilters6,
+        Metadata40
     }
 }
 

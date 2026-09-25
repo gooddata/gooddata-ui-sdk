@@ -9,6 +9,8 @@ import { type TextContentObject } from "../../../model.js";
 import { PLACEHOLDER_START, getPlaceholderRegex } from "./reference-placeholder.js";
 import { type HtmlNode, type TextNode } from "./types.js";
 
+const VERBATIM_TAG_NAMES = ["code", "pre"];
+
 /**
  * `tokens` must be the `tokens` array `extractReferences()` returned for the same
  * Markdown text — placeholders are resolved by looking up their embedded index in it.
@@ -67,24 +69,19 @@ function iterateTree(
     callbacks: {
         onTextNodeReference: (text: TextNode, obj: TextContentObject) => Parent[];
     },
+    verbatim = false,
 ): Parent[] {
     if (node.type === "text") {
         const value = (node as TextNode).value;
         if (!value.includes(PLACEHOLDER_START)) {
             return [node];
         }
-        const res = iterateReferenceMatch(value, references, tokens, (ref) => {
-            return callbacks.onTextNodeReference(node as TextNode, ref);
-        });
-        if (res.length) {
-            return res;
-        }
-        (node as TextNode).value = restoreUnresolvedPlaceholders(value, tokens);
-        return [node];
+        return splitTextNode(node as TextNode, references, tokens, callbacks.onTextNodeReference, verbatim);
     }
+    const inVerbatim = verbatim || VERBATIM_TAG_NAMES.includes(node.tagName);
     if (node.children) {
         node.children = node.children.reduce((acc, child) => {
-            return [...acc, ...iterateTree(child as HtmlNode, references, tokens, callbacks)];
+            return [...acc, ...iterateTree(child as HtmlNode, references, tokens, callbacks, inVerbatim)];
         }, [] as Node[]);
         return [node];
     }
@@ -92,38 +89,61 @@ function iterateTree(
 }
 
 /**
- * Replaces any placeholder occurrences left in a text node (i.e. ones that did not
- * resolve to a reference chip) with their original `{type/id}` token text, so the
+ * Replaces placeholder occurrences with their original `{type/id}` token text, so the
  * output never leaks a raw placeholder sentinel (an invisible PUA-wrapped digit)
  * as visible text.
  */
-function restoreUnresolvedPlaceholders(value: string, tokens: string[]): string {
+function restorePlaceholders(value: string, tokens: string[]): string {
     return value.replace(getPlaceholderRegex(), (match, indexStr: string) => {
         const originalToken = tokens[Number(indexStr)];
         return originalToken ?? match;
     });
 }
 
-function iterateReferenceMatch<T>(
-    value: string,
+function splitTextNode(
+    text: TextNode,
     references: TextContentObject[],
     tokens: string[],
-    onMatch: (obj: TextContentObject) => T[],
-): T[] {
-    const items: T[] = [];
+    onTextNodeReference: (text: TextNode, obj: TextContentObject) => Parent[],
+    verbatim: boolean,
+): Parent[] {
+    const nodes: Parent[] = [];
     const regex = getPlaceholderRegex();
+    let lastIndex = 0;
 
-    let match = regex.exec(value);
+    const pushText = (value: string) => {
+        if (value) {
+            const textNode: TextNode = { ...text, value: restorePlaceholders(value, tokens) };
+            nodes.push(textNode);
+        }
+    };
+
+    let match = regex.exec(text.value);
     while (match) {
         const originalToken = tokens[Number(match[1])];
-        if (originalToken) {
-            const [type, id] = originalToken.slice(1, -1).split("/");
-            const ref = references.find((ref) => ref.id === id && ref.type === type);
-            if (ref) {
-                items.push(...onMatch(ref));
+        const ref = resolveReference(originalToken, references);
+        if (ref) {
+            pushText(text.value.slice(lastIndex, match.index));
+            nodes.push(...onTextNodeReference(text, ref));
+            if (verbatim) {
+                pushText(` ${originalToken}`);
             }
+            lastIndex = match.index + match[0].length;
         }
-        match = regex.exec(value);
+        match = regex.exec(text.value);
     }
-    return items;
+    pushText(text.value.slice(lastIndex));
+
+    return nodes;
+}
+
+function resolveReference(
+    originalToken: string | undefined,
+    references: TextContentObject[],
+): TextContentObject | undefined {
+    if (!originalToken) {
+        return undefined;
+    }
+    const [type, id] = originalToken.slice(1, -1).split("/");
+    return references.find((ref) => ref.id === id && ref.type === type);
 }

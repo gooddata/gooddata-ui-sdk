@@ -1,0 +1,91 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "ReportTemplateType",
+    "description": "JSON schema for Gooddata Analytics Report Template",
+    "allOf": [
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "report_template"
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "$ref": "#/$defs/report_template"
+            }
+        }
+    ],
+    "properties": {
+        "type": {
+            "type": "string",
+            "enum": ["report_template"]
+        }
+    },
+    "required": ["type"],
+    "$defs": {
+        "report_template": {
+            "$id": "/gaac/report_template",
+            "title": "ReportTemplate",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "$ref": "/gaac/identifier",
+                    "description": "A unique identifier of the report template.",
+                    "$semantic": [
+                        {
+                            "type": "uniqueness",
+                            "source": "reportTemplate.id",
+                            "code": "core.uniqueness.reportTemplates.id"
+                        },
+                        {
+                            "type": "definition",
+                            "source": "reportTemplate.id"
+                        }
+                    ]
+                },
+                "type": {
+                    "type": "string",
+                    "enum": ["report_template"]
+                },
+                "title": {
+                    "$ref": "/gaac/title",
+                    "description": "A human readable title for the report template."
+                },
+                "description": {
+                    "$ref": "/gaac/description",
+                    "description": "An optional description of the report template."
+                },
+                "tags": {
+                    "$ref": "/gaac/tags",
+                    "description": "A list of strings - metadata tags of this report template."
+                },
+                "pages": {
+                    "type": "array",
+                    "description": "Ordered pages of the template. A report created from the template deep-copies them and keeps no reference back, so the report stays frozen while the template evolves.",
+                    "items": {
+                        "$ref": "/gaac/reportPageBody"
+                    }
+                },
+                "filters": {
+                    "$ref": "/gaac/dashboardFilters",
+                    "description": "Template filters; pages and visualizations may extend or override them."
+                },
+                "variables": {
+                    "type": "array",
+                    "description": "Custom variables the template's text can interpolate as {name}. A report created from it gives them values.",
+                    "items": {
+                        "$ref": "/gaac/reportVariable"
+                    }
+                }
+            },
+            "$semantic": {
+                "type": "snippet",
+                "snippets": ["report_template"]
+            },
+            "required": ["id", "type", "title", "pages"]
+        }
+    }
+}
