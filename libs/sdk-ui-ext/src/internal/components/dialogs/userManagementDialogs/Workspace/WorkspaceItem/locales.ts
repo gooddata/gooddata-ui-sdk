@@ -52,6 +52,7 @@ export const workspaceGranularPermissionMessages = defineMessages({
     CREATE_AUTOMATION: { id: "userManagement.workspace.permission.createAutomation" },
     CREATE_METRIC: { id: "userManagement.workspace.permission.createMetric" },
     CREATE_VISUALIZATION: { id: "userManagement.workspace.permission.createVisualization" },
+    CREATE_COMPUTED_ATTRIBUTE: { id: "userManagement.workspace.permission.createComputedAttribute" },
     USE_AI_ASSISTANT: { id: "userManagement.workspace.permission.useAiAssistant" },
     viewDescription: { id: "userManagement.workspace.granularPermission.view.description" },
     analyzeDescription: { id: "userManagement.workspace.granularPermission.analyze.description" },
@@ -71,6 +72,9 @@ export const granularTooltipMessages = defineMessages({
     CREATE_AUTOMATION: { id: "userManagement.workspace.permission.createAutomation.tooltip" },
     CREATE_METRIC: { id: "userManagement.workspace.permission.createMetric.tooltip" },
     CREATE_VISUALIZATION: { id: "userManagement.workspace.permission.createVisualization.tooltip" },
+    CREATE_COMPUTED_ATTRIBUTE: {
+        id: "userManagement.workspace.permission.createComputedAttribute.tooltip",
+    },
     USE_AI_ASSISTANT: { id: "userManagement.workspace.permission.useAiAssistant.tooltip" },
 });
 
@@ -96,6 +100,8 @@ export const getGranularPermissionTitle = (permission: WorkspacePermission) => {
             return workspaceGranularPermissionMessages.CREATE_METRIC;
         case "CREATE_VISUALIZATION":
             return workspaceGranularPermissionMessages.CREATE_VISUALIZATION;
+        case "CREATE_COMPUTED_ATTRIBUTE":
+            return workspaceGranularPermissionMessages.CREATE_COMPUTED_ATTRIBUTE;
         case "USE_AI_ASSISTANT":
             return workspaceGranularPermissionMessages.USE_AI_ASSISTANT;
         default:

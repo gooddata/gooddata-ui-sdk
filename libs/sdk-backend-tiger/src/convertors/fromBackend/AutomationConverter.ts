@@ -138,7 +138,9 @@ const convertDashboard = (
 
 const convertWorkspace = (
     relationships: JsonApiWorkspaceAutomationOutRelationships,
-    included?: JsonApiWorkspaceAutomationOutIncludes[],
+    // Organization-level automations carry a workspace in their includes, workspace-level ones
+    // carry a visualization object; neither union contains the other, so accept both.
+    included?: Array<JsonApiWorkspaceAutomationOutIncludes | JsonApiAutomationOutIncludes>,
 ) => {
     // Check if organization level relationships - includes workspace
     if (relationships && "workspace" in relationships) {

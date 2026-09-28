@@ -506,6 +506,7 @@ exports[`initialize dashboard handler > for any dashboard > should resolve permi
   "canAnalyzeWorkspace": true,
   "canCreateAnalyticalDashboard": true,
   "canCreateAutomation": true,
+  "canCreateComputedAttribute": true,
   "canCreateFilterView": true,
   "canCreateMetric": true,
   "canCreateReport": true,

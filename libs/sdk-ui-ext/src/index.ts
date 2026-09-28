@@ -353,7 +353,7 @@ export type {
     IRuleEdit,
     ObjectSharePermissionLevel,
 } from "./share/objectShareController.types.js";
-export { useApplyObjectPermissions } from "./share/useApplyObjectPermissions.js";
+export { applyObjectShareDraft, useApplyObjectPermissions } from "./share/useApplyObjectPermissions.js";
 export { useCopyObjectPermissions } from "./share/useCopyObjectPermissions.js";
 export {
     accessListToSummary,

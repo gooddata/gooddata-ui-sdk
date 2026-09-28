@@ -28,6 +28,7 @@ export interface IAddWorkspaceProps {
     editWorkspace?: IGrantedWorkspace;
     areMetricPermissionsEnabled?: boolean;
     isCreateVisualizationWorkspacePermissionEnabled?: boolean;
+    areComputedAttributesEnabled?: boolean;
 }
 
 export function AddWorkspace({
@@ -41,6 +42,7 @@ export function AddWorkspace({
     editWorkspace,
     areMetricPermissionsEnabled,
     isCreateVisualizationWorkspacePermissionEnabled,
+    areComputedAttributesEnabled,
 }: IAddWorkspaceProps) {
     const intl = useIntl();
     const { addedWorkspaces, isProcessing, onAdd, onChange, onOverwriteSelect } = useAddWorkspace(
@@ -109,6 +111,7 @@ export function AddWorkspace({
                 isCreateVisualizationWorkspacePermissionEnabled={
                     isCreateVisualizationWorkspacePermissionEnabled
                 }
+                areComputedAttributesEnabled={areComputedAttributesEnabled}
             />
         </ConfirmDialogBase>
     );

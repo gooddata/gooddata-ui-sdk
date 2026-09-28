@@ -28,6 +28,7 @@ function getPermission(permissions: Array<TigerPermissionType>) {
     const canCreateAutomation = hasPermission(permissions, "CREATE_AUTOMATION");
     const canUseAiAssistant = hasPermission(permissions, "USE_AI_ASSISTANT");
     const canCreateMetric = hasPermission(permissions, "CREATE_METRIC");
+    const canCreateComputedAttribute = hasPermission(permissions, "CREATE_COMPUTED_ATTRIBUTE");
 
     return {
         canViewWorkspace,
@@ -40,6 +41,7 @@ function getPermission(permissions: Array<TigerPermissionType>) {
         canCreateAutomation,
         canUseAiAssistant,
         canCreateMetric,
+        canCreateComputedAttribute,
     };
 }
 
@@ -55,6 +57,7 @@ function processPermissions(permissions: Array<TigerPermissionType>): IWorkspace
         canCreateAutomation,
         canUseAiAssistant,
         canCreateMetric,
+        canCreateComputedAttribute,
     } = getPermission(permissions);
 
     return {
@@ -90,6 +93,7 @@ function processPermissions(permissions: Array<TigerPermissionType>): IWorkspace
         canCreateFilterView,
         canCreateAutomation,
         canCreateMetric,
+        canCreateComputedAttribute,
     };
 }
 
@@ -141,6 +145,7 @@ describe("TigerWorkspacePermissionsFactory", () => {
             canCreateScheduledMail: false,
             canAnalyzeWorkspace: false,
             canCreateVisualization: false,
+            canCreateComputedAttribute: false,
             canExecuteRaw: true,
             canExportReport: false,
             canExportTabular: false,
@@ -189,6 +194,7 @@ describe("TigerWorkspacePermissionsFactory", () => {
             canCreateScheduledMail: false,
             canAnalyzeWorkspace: true,
             canCreateVisualization: true,
+            canCreateComputedAttribute: false,
             canExecuteRaw: true,
             canExportReport: false,
             canExportTabular: false,
@@ -237,6 +243,7 @@ describe("TigerWorkspacePermissionsFactory", () => {
             canCreateScheduledMail: false,
             canAnalyzeWorkspace: true,
             canCreateVisualization: true,
+            canCreateComputedAttribute: false,
             canExecuteRaw: true,
             canExportReport: false,
             canExportTabular: false,
@@ -290,5 +297,22 @@ describe("TigerWorkspacePermissionsFactory", () => {
         expect(granted.canAnalyzeWorkspace).toBe(false);
         expect(viewer.canCreateVisualization).toBe(false);
         expect(analyst.canCreateVisualization).toBe(true);
+    });
+
+    it("maps the granular CREATE_COMPUTED_ATTRIBUTE permission", async () => {
+        const createFactory = (permissions: Array<TigerPermissionType>) =>
+            new TigerWorkspacePermissionsFactory(
+                getWithDefinedPermissions(permissions)[0] as unknown as TigerAuthenticatedCallGuard,
+                workspaceId,
+            );
+
+        const granted = await createFactory([
+            "VIEW",
+            "CREATE_COMPUTED_ATTRIBUTE",
+        ]).getPermissionsForCurrentUser();
+        const analyst = await createFactory(["ANALYZE", "VIEW"]).getPermissionsForCurrentUser();
+
+        expect(granted.canCreateComputedAttribute).toBe(true);
+        expect(analyst.canCreateComputedAttribute).toBe(false);
     });
 });

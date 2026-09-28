@@ -21,6 +21,7 @@ export interface IAddWorkspaceToSubjectsProps extends IWithTelemetryProps {
     onClose: () => void;
     areMetricPermissionsEnabled?: boolean;
     isCreateVisualizationWorkspacePermissionEnabled?: boolean;
+    areComputedAttributesEnabled?: boolean;
 }
 
 function AddWorkspaceToSubjectsComponent({
@@ -31,6 +32,7 @@ function AddWorkspaceToSubjectsComponent({
     onClose,
     areMetricPermissionsEnabled,
     isCreateVisualizationWorkspacePermissionEnabled,
+    areComputedAttributesEnabled,
 }: IAddWorkspaceToSubjectsProps) {
     return (
         <OrganizationIdProvider organizationId={organizationId}>
@@ -53,6 +55,7 @@ function AddWorkspaceToSubjectsComponent({
                     isCreateVisualizationWorkspacePermissionEnabled={
                         isCreateVisualizationWorkspacePermissionEnabled
                     }
+                    areComputedAttributesEnabled={areComputedAttributesEnabled}
                 />
             </Overlay>
         </OrganizationIdProvider>

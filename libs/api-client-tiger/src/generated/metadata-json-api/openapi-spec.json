@@ -9994,6 +9994,7 @@
                                     "userIdentifiers",
                                     "exportDefinitions",
                                     "users",
+                                    "visualizationObjects",
                                     "automationResults",
                                     "notificationChannel",
                                     "analyticalDashboard",
@@ -10004,7 +10005,7 @@
                                 ]
                             }
                         },
-                        "example": "notificationChannel,analyticalDashboard,createdBy,modifiedBy,exportDefinitions,recipients,automationResults"
+                        "example": "notificationChannel,analyticalDashboard,createdBy,modifiedBy,exportDefinitions,recipients,visualizationObjects,automationResults"
                     },
                     {
                         "$ref": "#/components/parameters/page"
@@ -10106,6 +10107,7 @@
                                     "userIdentifiers",
                                     "exportDefinitions",
                                     "users",
+                                    "visualizationObjects",
                                     "automationResults",
                                     "notificationChannel",
                                     "analyticalDashboard",
@@ -10116,7 +10118,7 @@
                                 ]
                             }
                         },
-                        "example": "notificationChannel,analyticalDashboard,createdBy,modifiedBy,exportDefinitions,recipients,automationResults"
+                        "example": "notificationChannel,analyticalDashboard,createdBy,modifiedBy,exportDefinitions,recipients,visualizationObjects,automationResults"
                     },
                     {
                         "name": "metaInclude",
@@ -10312,6 +10314,7 @@
                                     "userIdentifiers",
                                     "exportDefinitions",
                                     "users",
+                                    "visualizationObjects",
                                     "automationResults",
                                     "notificationChannel",
                                     "analyticalDashboard",
@@ -10322,7 +10325,7 @@
                                 ]
                             }
                         },
-                        "example": "notificationChannel,analyticalDashboard,createdBy,modifiedBy,exportDefinitions,recipients,automationResults"
+                        "example": "notificationChannel,analyticalDashboard,createdBy,modifiedBy,exportDefinitions,recipients,visualizationObjects,automationResults"
                     },
                     {
                         "name": "X-GDC-VALIDATE-RELATIONS",
@@ -10431,6 +10434,7 @@
                                     "userIdentifiers",
                                     "exportDefinitions",
                                     "users",
+                                    "visualizationObjects",
                                     "automationResults",
                                     "notificationChannel",
                                     "analyticalDashboard",
@@ -10441,7 +10445,7 @@
                                 ]
                             }
                         },
-                        "example": "notificationChannel,analyticalDashboard,createdBy,modifiedBy,exportDefinitions,recipients,automationResults"
+                        "example": "notificationChannel,analyticalDashboard,createdBy,modifiedBy,exportDefinitions,recipients,visualizationObjects,automationResults"
                     }
                 ],
                 "requestBody": {
@@ -10572,6 +10576,7 @@
                                     "userIdentifiers",
                                     "exportDefinitions",
                                     "users",
+                                    "visualizationObjects",
                                     "automationResults",
                                     "notificationChannel",
                                     "analyticalDashboard",
@@ -10582,7 +10587,7 @@
                                 ]
                             }
                         },
-                        "example": "notificationChannel,analyticalDashboard,createdBy,modifiedBy,exportDefinitions,recipients,automationResults"
+                        "example": "notificationChannel,analyticalDashboard,createdBy,modifiedBy,exportDefinitions,recipients,visualizationObjects,automationResults"
                     }
                 ],
                 "requestBody": {
@@ -27419,9 +27424,9 @@
                 },
                 "x-gdc-security-info": {
                     "permissions": [
-                        "MANAGE"
+                        "CREATE_COMPUTED_ATTRIBUTE"
                     ],
-                    "description": "Contains minimal permission level required to manage this object type."
+                    "description": "Contains minimal permission level required to create Computed Attributes"
                 }
             }
         },
@@ -36586,6 +36591,7 @@
                             "CREATE_FILTER_VIEW",
                             "CREATE_METRIC",
                             "CREATE_VISUALIZATION",
+                            "CREATE_COMPUTED_ATTRIBUTE",
                             "VIEW"
                         ]
                     }
@@ -37490,6 +37496,7 @@
                             "CREATE_FILTER_VIEW",
                             "CREATE_METRIC",
                             "CREATE_VISUALIZATION",
+                            "CREATE_COMPUTED_ATTRIBUTE",
                             "VIEW"
                         ]
                     }
@@ -42024,6 +42031,17 @@
                                         "$ref": "#/components/schemas/JsonApiUserToManyLinkage"
                                     }
                                 }
+                            },
+                            "visualizationObjects": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiVisualizationObjectToManyLinkage"
+                                    }
+                                }
                             }
                         }
                     },
@@ -42092,6 +42110,9 @@
                     },
                     {
                         "$ref": "#/components/schemas/JsonApiUserIdentifierOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiVisualizationObjectOutWithLinks"
                     }
                 ]
             },
@@ -63131,6 +63152,7 @@
                                         "CREATE_FILTER_VIEW",
                                         "CREATE_METRIC",
                                         "CREATE_VISUALIZATION",
+                                        "CREATE_COMPUTED_ATTRIBUTE",
                                         "VIEW"
                                     ]
                                 }
@@ -67268,6 +67290,7 @@
                                 "CREATE_FILTER_VIEW",
                                 "CREATE_METRIC",
                                 "CREATE_VISUALIZATION",
+                                "CREATE_COMPUTED_ATTRIBUTE",
                                 "VIEW"
                             ]
                         }
@@ -67296,6 +67319,7 @@
                                 "CREATE_FILTER_VIEW",
                                 "CREATE_METRIC",
                                 "CREATE_VISUALIZATION",
+                                "CREATE_COMPUTED_ATTRIBUTE",
                                 "VIEW"
                             ]
                         }
@@ -67732,6 +67756,7 @@
                                 "CREATE_FILTER_VIEW",
                                 "CREATE_METRIC",
                                 "CREATE_VISUALIZATION",
+                                "CREATE_COMPUTED_ATTRIBUTE",
                                 "VIEW"
                             ]
                         }
@@ -67753,6 +67778,7 @@
                                 "CREATE_FILTER_VIEW",
                                 "CREATE_METRIC",
                                 "CREATE_VISUALIZATION",
+                                "CREATE_COMPUTED_ATTRIBUTE",
                                 "VIEW"
                             ]
                         }
