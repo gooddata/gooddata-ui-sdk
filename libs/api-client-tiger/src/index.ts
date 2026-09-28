@@ -2041,6 +2041,7 @@ export {
     type JsonApiAutomationOutIncludes,
     type JsonApiAutomationOutList,
     type JsonApiAutomationOutRelationships,
+    type JsonApiAutomationOutRelationshipsVisualizationObjects,
     type JsonApiAutomationOutTypeEnum,
     type JsonApiAutomationOutWithLinks,
     type JsonApiAutomationOutWithLinksTypeEnum,

@@ -116,6 +116,7 @@ export const AssignedWorkspacePermissionValue: {
     readonly CREATE_AUTOMATION: "CREATE_AUTOMATION";
     readonly CREATE_METRIC: "CREATE_METRIC";
     readonly CREATE_VISUALIZATION: "CREATE_VISUALIZATION";
+    readonly CREATE_COMPUTED_ATTRIBUTE: "CREATE_COMPUTED_ATTRIBUTE";
     readonly USE_AI_ASSISTANT: "USE_AI_ASSISTANT";
 };
 
@@ -8204,6 +8205,10 @@ export type WorkspacePermission =
 * Whether the current user has permissions to create an automation.
 */
 | "canCreateAutomation"
+/**
+* Whether the current user has permissions to create a computed attribute object via API.
+*/
+| "canCreateComputedAttribute"
 /**
 * Whether the current user has permissions to use AI Assistant.
 */

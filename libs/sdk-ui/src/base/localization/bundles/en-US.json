@@ -3947,6 +3947,14 @@
         "text": "Adds CREATE_AUTOMATIONS permission to create automated alerts and scheduled exports.",
         "crowdinContext": "Create automation permission tooltip"
     },
+    "userManagement.workspace.permission.createComputedAttribute": {
+        "text": "Computed attributes",
+        "crowdinContext": "Name of the workspace permission that allows user to create, edit or delete computed attributes in workspace."
+    },
+    "userManagement.workspace.permission.createComputedAttribute.tooltip": {
+        "text": "Adds CREATE_COMPUTED_ATTRIBUTE permission to create and manage new computed attributes. To manage any other computed attribute, the user needs access to it.",
+        "crowdinContext": "Create computed attribute permission tooltip"
+    },
     "userManagement.workspace.permission.createMetric": {
         "text": "Metrics",
         "crowdinContext": "Name of the workspace permission that allows user to create, edit or delete metrics in workspace."

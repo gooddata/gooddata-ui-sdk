@@ -110,6 +110,9 @@ export const AI_OPERATORS: {
     readonly ANOMALY_DETECTION: "ANOMALY_DETECTION";
 };
 
+// @internal
+export function applyObjectShareDraft(backend: IAnalyticalBackend, workspace: string, target: IObjectPermissionsObject, draft: IObjectShareDraft): Promise<boolean>;
+
 // @internal (undocumented)
 export const ARITHMETIC_OPERATORS: {
     readonly ARITHMETIC_OPERATOR_DIFFERENCE: "DIFFERENCE";
@@ -398,6 +401,8 @@ export interface IAddUsersToUserGroupsDialogProps extends IWithTelemetryProps {
 
 // @internal (undocumented)
 export interface IAddWorkspaceToSubjectsProps extends IWithTelemetryProps {
+    // (undocumented)
+    areComputedAttributesEnabled?: boolean;
     // (undocumented)
     areMetricPermissionsEnabled?: boolean;
     // (undocumented)
@@ -1253,6 +1258,8 @@ export interface IUsePagedDropdownResult {
 // @internal (undocumented)
 export interface IUserEditDialogProps extends IWithTelemetryProps {
     // (undocumented)
+    areComputedAttributesEnabled?: boolean;
+    // (undocumented)
     areMetricPermissionsEnabled?: boolean;
     // (undocumented)
     changeUserMembership?: boolean;
@@ -1280,6 +1287,8 @@ export interface IUserEditDialogProps extends IWithTelemetryProps {
 
 // @internal (undocumented)
 export interface IUserGroupEditDialogProps extends IWithTelemetryProps {
+    // (undocumented)
+    areComputedAttributesEnabled?: boolean;
     // (undocumented)
     areMetricPermissionsEnabled?: boolean;
     // (undocumented)

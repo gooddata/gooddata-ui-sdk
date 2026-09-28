@@ -33,6 +33,7 @@ import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IAuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
+import { IAvailableAccessGrantee } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { ICatalogAttribute } from '@gooddata/sdk-model';
 import { ICatalogAttributeHierarchy } from '@gooddata/sdk-model';
@@ -100,6 +101,7 @@ import { IGetDashboardPluginOptions } from '@gooddata/sdk-backend-spi';
 import { IGetInsightOptions } from '@gooddata/sdk-backend-spi';
 import { IGetScheduledMailOptions } from '@gooddata/sdk-backend-spi';
 import { IGetVisualizationClassesOptions } from '@gooddata/sdk-backend-spi';
+import { IGranularAccessGrantee } from '@gooddata/sdk-model';
 import { IGroupableCatalogItemBase } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
@@ -125,7 +127,9 @@ import { IMetadataObjectIdentity } from '@gooddata/sdk-model';
 import { IMetricFormatOverrideSetting } from '@gooddata/sdk-model';
 import { InsightDrillDefinition } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
+import { IObjectAccessList } from '@gooddata/sdk-model';
 import { IObjectCertificationWrite } from '@gooddata/sdk-model';
+import { IObjectPermissionsObject } from '@gooddata/sdk-backend-spi';
 import { IOrganizationExportTemplatesService } from '@gooddata/sdk-backend-spi';
 import { IOutliersConfig } from '@gooddata/sdk-backend-spi';
 import { IOutliersResult } from '@gooddata/sdk-backend-spi';
@@ -174,6 +178,7 @@ import { IWorkspaceExportTemplatesService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceFactsService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceInsightsService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceMeasuresService } from '@gooddata/sdk-backend-spi';
+import { IWorkspaceObjectPermissionsService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceReportsService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceSettingsService } from '@gooddata/sdk-backend-spi';
@@ -842,6 +847,19 @@ export abstract class DecoratedWorkspaceInsightsService implements IWorkspaceIns
 }
 
 // @alpha
+export abstract class DecoratedWorkspaceObjectPermissionsService implements IWorkspaceObjectPermissionsService {
+    protected constructor(decorated: IWorkspaceObjectPermissionsService);
+    // (undocumented)
+    protected readonly decorated: IWorkspaceObjectPermissionsService;
+    // (undocumented)
+    getAccessList(target: IObjectPermissionsObject): Promise<IObjectAccessList>;
+    // (undocumented)
+    getAvailableAssignees(target?: IObjectPermissionsObject): Promise<IAvailableAccessGrantee[]>;
+    // (undocumented)
+    manageObjectPermissions(target: IObjectPermissionsObject, grantees: IGranularAccessGrantee[]): Promise<void>;
+}
+
+// @alpha
 export abstract class DecoratedWorkspaceReportsService implements IWorkspaceReportsService {
     protected constructor(decorated: IWorkspaceReportsService);
     // (undocumented)
@@ -981,6 +999,7 @@ export type DecoratorFactories = {
     organizationExportTemplates?: OrganizationExportTemplatesDecoratorFactory;
     workspaceExportTemplates?: WorkspaceExportTemplatesDecoratorFactory;
     workspaceReports?: WorkspaceReportsDecoratorFactory;
+    objectPermissions?: ObjectPermissionsDecoratorFactory;
 };
 
 // @internal (undocumented)
@@ -1488,6 +1507,9 @@ export class Normalizer {
     // (undocumented)
     readonly original: IExecutionDefinition;
 }
+
+// @alpha (undocumented)
+export type ObjectPermissionsDecoratorFactory = (objectPermissions: IWorkspaceObjectPermissionsService, workspace: string) => IWorkspaceObjectPermissionsService;
 
 // @alpha (undocumented)
 export type OrganizationExportTemplatesDecoratorFactory = (exportTemplates: IOrganizationExportTemplatesService, organizationId: string) => IOrganizationExportTemplatesService;

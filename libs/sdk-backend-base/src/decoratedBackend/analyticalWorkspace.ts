@@ -193,6 +193,12 @@ export class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
     }
 
     public objectPermissions(): IWorkspaceObjectPermissionsService {
+        const { objectPermissions } = this.factories;
+
+        if (objectPermissions) {
+            return objectPermissions(this.decorated.objectPermissions(), this.workspace);
+        }
+
         return this.decorated.objectPermissions();
     }
 

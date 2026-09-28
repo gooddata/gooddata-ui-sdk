@@ -40,6 +40,7 @@ import {
     type IGetInsightOptions,
     type IMeasureExpressionToken,
     type IMeasureReferencing,
+    type IObjectPermissionsObject,
     type IOrganizationExportTemplatesService,
     type IOutliersConfig,
     type IOutliersResult,
@@ -58,6 +59,7 @@ import {
     type IWorkspaceFactsService,
     type IWorkspaceInsightsService,
     type IWorkspaceMeasuresService,
+    type IWorkspaceObjectPermissionsService,
     type IWorkspaceSettings,
     type IWorkspaceSettingsService,
     type ValidationContext,
@@ -84,6 +86,7 @@ import {
     type IFactMetadataObject,
     type IFiscalYear,
     type IGeoJsonFeature,
+    type IGranularAccessGrantee,
     type IInsight,
     type IInsightDefinitionWithOptionalIdentity,
     type IMeasure,
@@ -127,6 +130,7 @@ import { DecoratedWorkspaceFactsService } from "../decoratedBackend/facts.js";
 import { decoratedBackend } from "../decoratedBackend/index.js";
 import { DecoratedWorkspaceInsightsService } from "../decoratedBackend/insights.js";
 import { DecoratedWorkspaceMeasuresService } from "../decoratedBackend/measures.js";
+import { DecoratedWorkspaceObjectPermissionsService } from "../decoratedBackend/objectPermissions.js";
 import { DecoratedOrganizationExportTemplatesService } from "../decoratedBackend/organizationExportTemplates.js";
 import { DecoratedSecuritySettingsService } from "../decoratedBackend/securitySettings.js";
 import {
@@ -140,6 +144,7 @@ import {
     type GeoDecoratorFactory,
     type InsightsDecoratorFactory,
     type MeasuresDecoratorFactory,
+    type ObjectPermissionsDecoratorFactory,
     type OrganizationExportTemplatesDecoratorFactory,
     type SecuritySettingsDecoratorFactory,
     type WorkspaceExportTemplatesDecoratorFactory,
@@ -2426,6 +2431,34 @@ function cachedInsights(ctx: CachingContext): InsightsDecoratorFactory {
     return (original, workspace) => new WithInsightsCaching(original, ctx, workspace);
 }
 
+// A cached insight carries the caller's own permissions, so a sharing change must not serve it stale.
+class WithInsightPermissionsInvalidation extends DecoratedWorkspaceObjectPermissionsService {
+    constructor(
+        decorated: IWorkspaceObjectPermissionsService,
+        private readonly ctx: CachingContext,
+        private readonly workspace: string,
+    ) {
+        super(decorated);
+    }
+
+    public override async manageObjectPermissions(
+        target: IObjectPermissionsObject,
+        grantees: IGranularAccessGrantee[],
+    ): Promise<void> {
+        try {
+            await super.manageObjectPermissions(target, grantees);
+        } finally {
+            if (target.kind === "insight") {
+                getOrCreateInsightsCache(this.ctx, this.workspace).insights.clear();
+            }
+        }
+    }
+}
+
+function insightPermissionsInvalidation(ctx: CachingContext): ObjectPermissionsDecoratorFactory {
+    return (original, workspace) => new WithInsightPermissionsInvalidation(original, ctx, workspace);
+}
+
 //
 // FACTS CACHING
 //
@@ -3877,6 +3910,7 @@ export function withCaching(
     const computedAttributes = attributeCaching ? cachedComputedAttributes(ctx) : (v: any) => v;
     const automations = automationsCaching ? cachedAutomations(ctx) : (v: any) => v;
     const insights = insightsCaching ? cachedInsights(ctx) : (v: any) => v;
+    const objectPermissions = insightsCaching ? insightPermissionsInvalidation(ctx) : undefined;
     const facts = factsCaching ? cachedFacts(ctx) : (v: any) => v;
     const measures = measuresCaching ? cachedMeasures(ctx) : (v: any) => v;
     const datasets = datasetsCaching ? cachedDatasets(ctx) : (v: any) => v;
@@ -3908,6 +3942,7 @@ export function withCaching(
         organizationExportTemplates,
         workspaceExportTemplates,
         geo,
+        objectPermissions,
     });
 }
 

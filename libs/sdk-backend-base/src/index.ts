@@ -42,6 +42,7 @@ export type {
     OrganizationExportTemplatesDecoratorFactory,
     WorkspaceExportTemplatesDecoratorFactory,
     WorkspaceReportsDecoratorFactory,
+    ObjectPermissionsDecoratorFactory,
 } from "./decoratedBackend/types.js";
 
 export {
@@ -54,6 +55,8 @@ export {
 export { DecoratedWorkspaceDashboardsService } from "./decoratedBackend/dashboards.js";
 
 export { DecoratedWorkspaceInsightsService } from "./decoratedBackend/insights.js";
+
+export { DecoratedWorkspaceObjectPermissionsService } from "./decoratedBackend/objectPermissions.js";
 
 export {
     type WorkspaceCatalogWrapper,

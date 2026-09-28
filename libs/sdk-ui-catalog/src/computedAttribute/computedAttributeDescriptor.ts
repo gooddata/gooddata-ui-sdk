@@ -29,7 +29,7 @@ import {
 } from "./computedAttributeMutationPort.js";
 import { serializeComputedAttributeToYaml } from "./computedAttributeSerialization.js";
 import { validateComputedAttributeYaml } from "./computedAttributeValidation.js";
-import { COMPUTED_ATTRIBUTE_FEATURE_FLAG } from "./gate.js";
+import { COMPUTED_ATTRIBUTE_FEATURE_FLAG, useCanCreateComputedAttribute } from "./gate.js";
 
 const COMPUTED_ATTRIBUTE_DOCS_URL =
     "https://www.gooddata.ai/docs/cloud/create-metrics/computed-attributes/#yaml-definition";
@@ -110,6 +110,7 @@ export const computedAttributeDescriptor = defineAsCodeDescriptor<
     objectType: ObjectTypes.COMPUTED_ATTRIBUTE,
     docsUrl: COMPUTED_ATTRIBUTE_DOCS_URL,
     featureFlag: COMPUTED_ATTRIBUTE_FEATURE_FLAG,
+    useCreateGate: useCanCreateComputedAttribute,
     messages,
     useEditing: useComputedAttributeEditing,
     createMutationPort: createComputedAttributeMutationAdapter,

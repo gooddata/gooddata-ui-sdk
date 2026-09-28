@@ -5,6 +5,7 @@ import { describe, expect, it, vi } from "vitest";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import {
     type IAnalyticalBackend,
+    type IAnalyticalWorkspace,
     type IAttributeWithReferences,
     type ICollectionItemsConfig,
     type ICollectionItemsResult,
@@ -28,6 +29,7 @@ import {
     type IWorkspaceFactsService,
     type IWorkspaceInsightsService,
     type IWorkspaceMeasuresService,
+    type IWorkspaceObjectPermissionsService,
 } from "@gooddata/sdk-backend-spi";
 import {
     type IAbsoluteDateFilter,
@@ -686,6 +688,27 @@ class CallCountingInsightsService extends DecoratedWorkspaceInsightsService {
     public override async updateInsight(insight: IInsight): Promise<IInsight> {
         return insight;
     }
+}
+
+const acceptingObjectPermissions: IWorkspaceObjectPermissionsService = {
+    getAccessList: async () => ({ grants: [] }),
+    manageObjectPermissions: async () => {},
+    getAvailableAssignees: async () => [],
+};
+
+function withAcceptingObjectPermissions(backend: IAnalyticalBackend): IAnalyticalBackend {
+    const workspace = (id: string): IAnalyticalWorkspace => {
+        const original = backend.workspace(id);
+        return new Proxy(original, {
+            get: (target, prop) =>
+                prop === "objectPermissions"
+                    ? () => acceptingObjectPermissions
+                    : Reflect.get(target, prop, target),
+        });
+    };
+    return new Proxy(backend, {
+        get: (target, prop) => (prop === "workspace" ? workspace : Reflect.get(target, prop, target)),
+    });
 }
 
 function createInsightCountingBackend(getter: InsightGetter): {
@@ -1495,6 +1518,34 @@ describe("withCaching", () => {
 
             // the edit invalidated the cache, so the second read hits the backend again
             expect(counter.calls).toEqual(2);
+        });
+
+        it("invalidates the getInsight cache after the insight's sharing changes", async () => {
+            const insight = createTestInsight("insight-1");
+            const { backend, counter } = createInsightCountingBackend(async () => insight);
+            const cachedBackend = withCachingForTests(withAcceptingObjectPermissions(backend));
+            const workspace = cachedBackend.workspace("test");
+
+            await workspace.insights().getInsight(REF);
+            await workspace.objectPermissions().manageObjectPermissions({ kind: "insight", ref: REF }, []);
+            await workspace.insights().getInsight(REF);
+
+            expect(counter.calls).toEqual(2);
+        });
+
+        it("keeps the getInsight cache when another object's sharing changes", async () => {
+            const insight = createTestInsight("insight-1");
+            const { backend, counter } = createInsightCountingBackend(async () => insight);
+            const cachedBackend = withCachingForTests(withAcceptingObjectPermissions(backend));
+            const workspace = cachedBackend.workspace("test");
+
+            await workspace.insights().getInsight(REF);
+            await workspace
+                .objectPermissions()
+                .manageObjectPermissions({ kind: "measure", ref: idRef("m", "measure") }, []);
+            await workspace.insights().getInsight(REF);
+
+            expect(counter.calls).toEqual(1);
         });
 
         it("resets insights cache", async () => {

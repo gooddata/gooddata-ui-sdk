@@ -108,6 +108,10 @@ export type WorkspacePermission =
      */
     | "canCreateAutomation"
     /**
+     * Whether the current user has permissions to create a computed attribute object via API.
+     */
+    | "canCreateComputedAttribute"
+    /**
      * Whether the current user has permissions to use AI Assistant.
      */
     | "canUseAiAssistant";

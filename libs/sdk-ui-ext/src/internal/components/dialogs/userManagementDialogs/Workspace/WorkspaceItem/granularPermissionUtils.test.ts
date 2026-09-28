@@ -30,6 +30,7 @@ describe("granularPermissionUtils", () => {
 
             expect(implied).toContain("CREATE_VISUALIZATION");
             expect(implied).toContain("CREATE_METRIC");
+            expect(implied).toContain("CREATE_COMPUTED_ATTRIBUTE");
             expect(implied).not.toContain("USE_AI_ASSISTANT");
         });
     });
@@ -39,6 +40,7 @@ describe("granularPermissionUtils", () => {
             expect(isPermissionDisabled("CREATE_VISUALIZATION", "ANALYZE", [])).toBe(true);
             expect(isPermissionDisabled("CREATE_FILTER_VIEW", "ANALYZE", [])).toBe(true);
             expect(isPermissionDisabled("CREATE_METRIC", "ANALYZE", [])).toBe(false);
+            expect(isPermissionDisabled("CREATE_COMPUTED_ATTRIBUTE", "ANALYZE", [])).toBe(false);
         });
 
         it("leaves CREATE_VISUALIZATION grantable under VIEW", () => {
@@ -88,10 +90,40 @@ describe("granularPermissionUtils", () => {
         });
     });
 
+    describe("CREATE_COMPUTED_ATTRIBUTE", () => {
+        it("stays grantable on top of VIEW and ANALYZE", () => {
+            expect(getGranularPermissions(["VIEW", "CREATE_COMPUTED_ATTRIBUTE"])).toContain(
+                "CREATE_COMPUTED_ATTRIBUTE",
+            );
+            expect(getGranularPermissions(["ANALYZE", "CREATE_COMPUTED_ATTRIBUTE"])).toContain(
+                "CREATE_COMPUTED_ATTRIBUTE",
+            );
+        });
+
+        it("survives sanitization as an explicit grant under ANALYZE", () => {
+            expect(removeRedundantPermissions(["ANALYZE", "CREATE_COMPUTED_ATTRIBUTE"])).toEqual([
+                "ANALYZE",
+                "CREATE_COMPUTED_ATTRIBUTE",
+            ]);
+        });
+
+        it("is collapsed into MANAGE, which already implies it", () => {
+            expect(removeRedundantPermissions(["MANAGE", "CREATE_COMPUTED_ATTRIBUTE"])).toEqual(["MANAGE"]);
+            expect(getGranularPermissions(["MANAGE"])).toContain("CREATE_COMPUTED_ATTRIBUTE");
+            expect(isPermissionDisabled("CREATE_COMPUTED_ATTRIBUTE", "MANAGE", [])).toBe(true);
+        });
+    });
+
     describe("getGranularPermissionTitle", () => {
         it("resolves the CREATE_VISUALIZATION label", () => {
             expect(getGranularPermissionTitle("CREATE_VISUALIZATION").id).toBe(
                 "userManagement.workspace.permission.createVisualization",
+            );
+        });
+
+        it("resolves the CREATE_COMPUTED_ATTRIBUTE label", () => {
+            expect(getGranularPermissionTitle("CREATE_COMPUTED_ATTRIBUTE").id).toBe(
+                "userManagement.workspace.permission.createComputedAttribute",
             );
         });
     });

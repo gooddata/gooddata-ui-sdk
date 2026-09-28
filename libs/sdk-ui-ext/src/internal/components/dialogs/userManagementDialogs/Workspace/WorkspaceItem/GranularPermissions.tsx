@@ -30,6 +30,7 @@ import { QuestionMarkIcon } from "./QuestionMarkIcon.js";
 const granularPermissions: IPermissionsItem[] = [
     { id: "CREATE_AUTOMATION", enabled: true },
     { id: "USE_AI_ASSISTANT", enabled: true },
+    { id: "CREATE_COMPUTED_ATTRIBUTE", enabled: true },
     { id: "EXPORT", enabled: true },
     { id: "EXPORT_PDF", enabled: true, group: true },
     { id: "EXPORT_TABULAR", enabled: true, group: true },
@@ -44,6 +45,7 @@ interface IGranularPermissionsProps {
     showRedundancyWarningMessage: boolean;
     areMetricPermissionsEnabled?: boolean;
     isCreateVisualizationWorkspacePermissionEnabled?: boolean;
+    areComputedAttributesEnabled?: boolean;
 }
 
 export function GranularPermissions({
@@ -52,6 +54,7 @@ export function GranularPermissions({
     showRedundancyWarningMessage,
     areMetricPermissionsEnabled = false,
     isCreateVisualizationWorkspacePermissionEnabled = false,
+    areComputedAttributesEnabled = false,
 }: IGranularPermissionsProps) {
     const intl = useIntl();
     const { permissions: selectedPermissions = [], isHierarchical = false } = workspace ?? {};
@@ -61,7 +64,8 @@ export function GranularPermissions({
     const granularItems = granularPermissions.filter(
         ({ id }) =>
             (id !== "CREATE_METRIC" || areMetricPermissionsEnabled) &&
-            (id !== "CREATE_VISUALIZATION" || isCreateVisualizationWorkspacePermissionEnabled),
+            (id !== "CREATE_VISUALIZATION" || isCreateVisualizationWorkspacePermissionEnabled) &&
+            (id !== "CREATE_COMPUTED_ATTRIBUTE" || areComputedAttributesEnabled),
     );
 
     const handleChange = useCallback(

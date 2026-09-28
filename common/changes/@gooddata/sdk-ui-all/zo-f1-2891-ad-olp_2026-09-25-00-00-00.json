@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "gdc-analytical-designer: Share a visualization from its header.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}
