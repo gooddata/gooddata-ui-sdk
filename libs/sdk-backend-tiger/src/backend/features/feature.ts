@@ -754,6 +754,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableImprovedMetricDateFilter,
+            "enableImprovedMetricDateFilter",
+            "BOOLEAN",
+            FeatureFlagsValues.enableImprovedMetricDateFilter,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableDashboardFilterGroups,
             "enableDashboardFilterGroups",
             "BOOLEAN",
@@ -835,13 +842,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableEnhancedInsightPicker",
             "BOOLEAN",
             FeatureFlagsValues.enableEnhancedInsightPicker,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableAnalyticalDesignerRemoteModule,
-            "enableShellApplication_analyticalDesigner",
-            "BOOLEAN",
-            FeatureFlagsValues.enableShellApplication_analyticalDesigner,
         ),
         ...loadFeature(
             features,

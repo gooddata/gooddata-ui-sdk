@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 
 import { type DashboardContext } from "../../types/commonTypes.js";
@@ -12,19 +13,30 @@ export async function loadWorkspaceAutomationsCount({
     return result.totalCount ?? 0;
 }
 
+export interface ILoadDashboardUserAutomationsOptions {
+    dashboardId: string;
+    userId: string;
+    filterByUser: boolean;
+    externalRecipient: string | undefined;
+    includeUnavailableReferences: boolean;
+}
+
 export function loadDashboardUserAutomations(
     ctx: DashboardContext,
-    dashboardId: string,
-    userId: string,
-    filterByUser: boolean,
-    externalRecipient: string | undefined,
+    {
+        dashboardId,
+        userId,
+        filterByUser,
+        externalRecipient,
+        includeUnavailableReferences,
+    }: ILoadDashboardUserAutomationsOptions,
 ): Promise<IAutomationMetadataObject[]> {
     const { backend, workspace } = ctx;
 
     let dashboardQuery = backend
         .workspace(workspace)
         .automations()
-        .getAutomationsQuery()
+        .getAutomationsQuery({ includeUnavailableReferences })
         .withSorting(["title,asc", "createdAt,asc"])
         .withDashboard(dashboardId);
 

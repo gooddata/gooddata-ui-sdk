@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 /**
  * Type of automation supported across workspaces and organizations.
@@ -26,4 +26,12 @@ export interface IGetAutomationsQueryOptions {
      * Defaults to false.
      */
     includeAutomationResult?: boolean;
+
+    /**
+     * Specify if referenced objects should be checked for access, so restricted ones appear in `unavailable`.
+     *
+     * @remarks
+     * Currently covers visualizations. Defaults to false.
+     */
+    includeUnavailableReferences?: boolean;
 }

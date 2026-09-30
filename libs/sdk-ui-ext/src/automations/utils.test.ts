@@ -2,9 +2,14 @@
 
 import { describe, expect, it } from "vitest";
 
-import { type IAutomationRecipient } from "@gooddata/sdk-model";
+import {
+    type IAutomationMetadataObject,
+    type IAutomationRecipient,
+    type ObjectType,
+    idRef,
+} from "@gooddata/sdk-model";
 
-import { getRecipientName } from "./utils.js";
+import { getRecipientName, isAutomationRestricted } from "./utils.js";
 
 describe("automations utils", () => {
     describe("getRecipientName", () => {
@@ -68,6 +73,37 @@ describe("automations utils", () => {
             } satisfies IAutomationRecipient;
 
             expect(getRecipientName(recipient)).toBe("g1");
+        });
+    });
+
+    describe("isAutomationRestricted", () => {
+        const automation = (unavailable?: IAutomationMetadataObject["unavailable"]) =>
+            ({ id: "a1", type: "automation", unavailable }) as IAutomationMetadataObject;
+        const forbidden = (id: string, type: ObjectType) =>
+            ({ ref: idRef(id, type), type, reason: "forbidden" }) as const;
+
+        it("is not restricted when permissions were not checked", () => {
+            expect(isAutomationRestricted(automation())).toBe(false);
+        });
+
+        it("is not restricted when nothing is restricted", () => {
+            expect(isAutomationRestricted(automation([]))).toBe(false);
+        });
+
+        it.each<ObjectType>([
+            "insight",
+            "analyticalDashboard",
+            "measure",
+            "attribute",
+            "displayForm",
+            "fact",
+            "computedAttribute",
+            "attributeHierarchy",
+            "userDataFilter",
+        ])("locks the automation when a referenced %s is restricted", (type) => {
+            const item = automation([forbidden("x", type)]);
+
+            expect(isAutomationRestricted(item)).toBe(true);
         });
     });
 });

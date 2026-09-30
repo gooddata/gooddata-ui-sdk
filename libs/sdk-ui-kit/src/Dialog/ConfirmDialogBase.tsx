@@ -51,7 +51,7 @@ export const ConfirmDialogBase = memo<IConfirmDialogBaseProps>(function ConfirmD
         }
 
         return {
-            ...(dialogBaseProps.accessibilityConfig ?? {}),
+            ...dialogBaseProps.accessibilityConfig,
             titleElementId,
             isModal: true,
         };

@@ -26,6 +26,7 @@ export {
 export type { IBackendCapabilities } from "./backend/capabilities.js";
 
 export type { IUserSettings, IWorkspaceSettings, IUserWorkspaceSettings } from "./common/settings.js";
+export type { UnavailableReferenceReason } from "./workspace/dashboards/unavailableReference.js";
 
 export type { IUserService } from "./user/index.js";
 export type { IUserSettingsService } from "./user/settings/index.js";
@@ -336,7 +337,6 @@ export type {
     IDashboardReferences,
     IDashboardWithReferences,
     IUnavailableDashboardReference,
-    UnavailableReferenceReason,
     IDashboardsQuery,
     IDashboardsQueryResult,
     IRawExportCustomOverride,

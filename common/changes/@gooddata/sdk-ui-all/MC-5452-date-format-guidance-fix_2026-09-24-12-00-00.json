@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-filters: Static period filter's date format hint and error messages now show a user-facing format spelling (e.g. \"M/YYYY\") instead of raw date-fns tokens, and the Week worked example now matches what the field actually parses.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

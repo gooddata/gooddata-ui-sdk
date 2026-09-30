@@ -3,6 +3,7 @@
 import {
     type InputHTMLAttributes,
     type KeyboardEvent,
+    type MouseEvent,
     forwardRef,
     useCallback,
     useContext,
@@ -19,14 +20,16 @@ interface IAccessibleFieldInputProps extends InputHTMLAttributes<HTMLInputElemen
 
 /**
  * Replaces the plain `<input>` rc-picker renders for each half of the date range, adding the accessibility
- * attributes our a11y model needs - a label, an invalid state, and a description pointing at a format hint
- * or an error - plus that field's own leading calendar icon. Typing, masking and focus stay with rc-picker.
+ * attributes our a11y model needs - a visible label that doubles as the accessible name, an invalid state,
+ * and a description pointing at a format hint or an error - plus that field's own leading calendar icon and
+ * bordered box. Typing, masking and focus stay with rc-picker.
  *
  * @remarks
- * The icon is rendered here because rc-picker's own icon props render once for the whole range control,
- * not once per field. Returning a fragment is safe: rc-picker reaches the input through `ref`.
- * The icon is inert - `aria-hidden` plus `pointer-events: none` - so it adds no tab stop, and it is
- * positioned over the input rather than beside it, so a click on it activates this field.
+ * The label and the icon are rendered here because rc-picker's own icon props render once for the whole
+ * range control, not once per field, and rc-picker has no per-field label slot. Returning a fragment is
+ * safe: rc-picker reaches the input through `ref`. The icon is inert - `aria-hidden` plus
+ * `pointer-events: none` - so it adds no tab stop, and it is positioned over the input rather than beside
+ * it, so a click on it activates this field.
  *
  * Two facts are only observable here: whether the typed text failed to parse, and whether the field is
  * currently blank. Both are reported upward raw, via an effect; the surrounding picker turns them into an
@@ -43,6 +46,13 @@ export const AccessibleFieldInput = forwardRef<HTMLInputElement, IAccessibleFiel
     const ignoreEnter = accessibility?.ignoreEnter ?? false;
     const hasParseError = rcPickerInvalid === true;
     const isBlank = !props.value;
+
+    // Focuses the field while the click is still bubbling: rc-picker moves focus to the start field on any click
+    // that finds focus outside the picker, and the label's own focusing runs only after the click, so the start
+    // field would be focused and blurred first, which commits it and marks it touched.
+    const handleLabelClick = useCallback((e: MouseEvent<HTMLLabelElement>) => {
+        e.currentTarget.control?.focus();
+    }, []);
 
     useEffect(() => {
         if (side) {
@@ -112,23 +122,33 @@ export const AccessibleFieldInput = forwardRef<HTMLInputElement, IAccessibleFiel
 
     return (
         <>
-            <span className="gd-icon-calendar" aria-hidden="true" />
-            <input
-                ref={ref}
-                {...restProps}
-                date-range={side}
-                onKeyDown={handleKeyDown}
-                aria-label={field?.ariaLabel}
-                // `hasParseError` looks redundant with `field.errorKind` (resolveFieldErrorKind already
-                // returns "invalid" whenever hasParseError), but isn't: hasParseError reflects this render, while
-                // field.errorKind comes from the parent's state, which only catches up after this component's
-                // effect fires post-commit. Dropping it would leave aria-invalid="false" for one render right
-                // after the first unparsable keystroke.
-                aria-invalid={field ? hasParseError || field.errorKind !== undefined : rcPickerInvalid}
-                aria-describedby={
-                    field ? (field.errorKind === undefined ? field.hintId : field.errorId) : undefined
-                }
-            />
+            {field ? (
+                <label
+                    className="gd-period-range-picker__label"
+                    htmlFor={props.id}
+                    onClick={handleLabelClick}
+                >
+                    {field.label}
+                </label>
+            ) : null}
+            <span className="gd-period-range-picker__field">
+                <span className="gd-icon-calendar" aria-hidden="true" />
+                <input
+                    ref={ref}
+                    {...restProps}
+                    date-range={side}
+                    onKeyDown={handleKeyDown}
+                    // `hasParseError` looks redundant with `field.errorKind` (resolveFieldErrorKind already
+                    // returns "invalid" whenever hasParseError), but isn't: hasParseError reflects this render, while
+                    // field.errorKind comes from the parent's state, which only catches up after this component's
+                    // effect fires post-commit. Dropping it would leave aria-invalid="false" for one render right
+                    // after the first unparsable keystroke.
+                    aria-invalid={field ? hasParseError || field.errorKind !== undefined : rcPickerInvalid}
+                    aria-describedby={
+                        field ? (field.errorKind === undefined ? field.hintId : field.errorId) : undefined
+                    }
+                />
+            </span>
         </>
     );
 });

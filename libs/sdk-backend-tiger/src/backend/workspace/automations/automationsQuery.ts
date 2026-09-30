@@ -16,6 +16,7 @@ import {
 import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 
 import { convertAutomationListToAutomations } from "../../../convertors/fromBackend/AutomationConverter.js";
+import { AUTOMATION_RESTRICTION_INCLUDES } from "../../../convertors/fromBackend/AutomationRestrictedReferencesConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from "../../common/automations.js";
 
@@ -122,6 +123,9 @@ export class AutomationsQuery implements IAutomationsQuery {
                 const includeAutomationResult = this.options?.includeAutomationResult
                     ? ["automationResults" as const]
                     : [];
+                const includeUnavailableReferences = this.options?.includeUnavailableReferences
+                    ? Object.values(AUTOMATION_RESTRICTION_INCLUDES)
+                    : [];
 
                 const filterObj = this.constructFilter();
 
@@ -139,6 +143,7 @@ export class AutomationsQuery implements IAutomationsQuery {
                             "exportDefinitions",
                             "analyticalDashboard",
                             ...includeAutomationResult,
+                            ...includeUnavailableReferences,
                         ],
                         origin: "NATIVE", // ensures that no inherited automations are returned
                         size: limit,

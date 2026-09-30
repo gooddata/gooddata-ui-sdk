@@ -146,6 +146,12 @@ export const messages = defineMessages({
     menuEditUnavailable: {
         id: "automations.menu.edit.unavailable",
     },
+    menuEditRestricted: {
+        id: "automations.menu.edit.restricted",
+    },
+    restrictedTooltip: {
+        id: "automations.restricted.tooltip",
+    },
     iconTooltipStatus: {
         id: "automations.icon.tooltip.status",
     },

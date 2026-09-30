@@ -140,6 +140,10 @@
             line-height: var(--gd-table-multi-line-line-height);
         }
 
+        &--locked {
+            opacity: 0.5;
+        }
+
         &--color {
             @each $key, $value in themeColorsMap.$theme-colors-map {
                 &-#{$key} {
@@ -168,6 +172,10 @@
             text-overflow: ellipsis;
             overflow: hidden;
             white-space: nowrap;
+
+            &--locked {
+                opacity: 0.5;
+            }
         }
     }
 

@@ -25,6 +25,91 @@ describe("mapLegacyUrlToHost", () => {
     });
 
     it.each([
+        ["/analyze/", "#/ws1/insight1/edit", "", "/workspace/ws1/analyze/#/insight1/edit"],
+        [
+            "/analyze/",
+            "#/ws1/insight1/edit?sourceDashboard=d1",
+            "",
+            "/workspace/ws1/analyze/#/insight1/edit?sourceDashboard=d1",
+        ],
+        [
+            "/analyze/",
+            "#/ws1/reportId/edit?dataset=ds1",
+            "",
+            "/workspace/ws1/analyze/#/reportId/edit?dataset=ds1",
+        ],
+        ["/analyze/", "#/ws1/obj/123", "", "/workspace/ws1/analyze/#/obj/123"],
+        ["/analyze/", "#/ws1/insight1/debug", "", "/workspace/ws1/analyze/#/insight1/debug"],
+        [
+            "/analyze/embedded/",
+            "#/ws1?externalProviderId=p1",
+            "",
+            "/embedded/workspace/ws1/analyze/#?externalProviderId=p1",
+        ],
+        [
+            "/analyze/embedded/",
+            "#/ws1/insight1/edit?showEmbedButton=true",
+            "?locale=en",
+            "/embedded/workspace/ws1/analyze/?locale=en#/insight1/edit?showEmbedButton=true",
+        ],
+    ])("maps the legacy AD URL %s%s (search %s) to %s", (pathname, hash, search, expected) => {
+        expect(mapLegacyUrlToHost(location(pathname, hash, search))).toBe(expected);
+    });
+
+    it.each([
+        ["#/ws1/?aibuilder=v1", "", "/workspace/ws1/analyze/?aibuilder=v1"],
+        ["#/ws1?aibuilder=v1", "", "/workspace/ws1/analyze/?aibuilder=v1"],
+        ["#/ws1/?aibuilder=v1", "?x=1", "/workspace/ws1/analyze/?x=1&aibuilder=v1"],
+        ["#/ws1/?dataset=ds1&aibuilder=v1", "", "/workspace/ws1/analyze/?aibuilder=v1#/?dataset=ds1"],
+    ])("moves the AI builder draft of %s (search %s) to the query string: %s", (hash, search, expected) => {
+        expect(mapLegacyUrlToHost(location("/analyze/", hash, search))).toBe(expected);
+    });
+
+    it("leaves a hash parameter that only starts like aibuilder in the hash", () => {
+        expect(mapLegacyUrlToHost(location("/analyze/", "#/ws1/?aibuilderX=v1"))).toBe(
+            "/workspace/ws1/analyze/#/?aibuilderX=v1",
+        );
+    });
+
+    it.each([
+        ["#/client/prod1:client1/insight1/edit", "", "/analyze"],
+        ["#/client/prod1:client1/insight1/edit?dataset=ds1", "?x=1", "/analyze?x=1"],
+        ["#/client/prod1:client1/insight1/edit/reload", "", "/analyze"],
+    ])(
+        "sends the workspace-less client URL %s (search %s) to the bare AD landing %s",
+        (hash, search, expected) => {
+            expect(mapLegacyUrlToHost(location("/analyze/", hash, search))).toBe(expected);
+        },
+    );
+
+    it("leaves an embedded client URL alone", () => {
+        expect(
+            mapLegacyUrlToHost(location("/analyze/embedded/", "#/client/prod1:client1/insight1/edit")),
+        ).toBeNull();
+    });
+
+    it.each([
+        ["#/client/insight1/edit", "/workspace/client/analyze/#/insight1/edit"],
+        ["#/client/sales:quarter/edit", "/workspace/client/analyze/#/sales:quarter/edit"],
+        ["#/client/sales:quarter/edit/reload", "/workspace/client/analyze/#/sales:quarter/edit/reload"],
+    ])("keeps a workspace named client on the workspace route: %s", (hash, expected) => {
+        expect(mapLegacyUrlToHost(location("/analyze/", hash))).toBe(expected);
+    });
+
+    it("sends the standalone AD access-denied page to the host root", () => {
+        expect(mapLegacyUrlToHost(location("/analyze/403.html"))).toBe("/");
+    });
+
+    it.each([
+        ["/analyze", ""],
+        ["/analyze/", ""],
+        ["/analyze/", "#/"],
+        ["/analyze/embedded/", ""],
+    ])("leaves the bare AD landing %s%s to the host redirect", (pathname, hash) => {
+        expect(mapLegacyUrlToHost(location(pathname, hash))).toBeNull();
+    });
+
+    it.each([
         ["/workspaces", "/organization/settings/workspaces"],
         ["/workspaces/ws1", "/organization/settings/workspaces/ws1"],
         ["/workspaces/ws1/configuration", "/organization/settings/workspaces/ws1/configuration"],

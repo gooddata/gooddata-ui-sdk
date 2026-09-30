@@ -11,6 +11,7 @@ import {
     type IChatSuggestions,
     isChatConversationItem,
 } from "@gooddata/sdk-backend-spi";
+import { type AgentCustomSkill } from "@gooddata/sdk-model";
 
 /**
  * @public
@@ -37,6 +38,10 @@ export type GenAIAgent = {
      * The date and time when the agent was last used.
      */
     lastUsedAt?: string;
+    /**
+     * A list of skills that the agent can perform.
+     */
+    effectiveSkills?: AgentCustomSkill[];
 };
 
 /**

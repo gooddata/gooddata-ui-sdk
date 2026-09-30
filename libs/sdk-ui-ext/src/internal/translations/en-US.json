@@ -2031,6 +2031,14 @@
         "text": "Edit action is unavailable, no associated dashboard",
         "crowdinContext": "Tooltip for edit action when dashboard ID is missing"
     },
+    "automations.menu.edit.restricted": {
+        "text": "You can't edit this automation because you don't have access to some of the objects it uses.",
+        "crowdinContext": "Tooltip for the disabled edit action of a scheduled export or alert that uses a visualization or another object the current user is not allowed to see"
+    },
+    "automations.restricted.tooltip": {
+        "text": "You don't have access to some of the objects used in this automation, so it can't be opened.",
+        "crowdinContext": "Tooltip of the lock icon next to the name of a scheduled export or alert that uses a visualization or another object the current user is not allowed to see"
+    },
     "automations.icon.tooltip.header.schedule": {
         "text": "Export failed",
         "crowdinContext": "Header for schedule icon tooltip"

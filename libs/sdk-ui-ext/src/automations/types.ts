@@ -208,6 +208,14 @@ export interface IUserContextValue {
     canPauseAutomation: (automation: IAutomationMetadataObject) => boolean;
     canResumeAutomation: (automation: IAutomationMetadataObject) => boolean;
     canTriggerAutomation: (automation: IAutomationMetadataObject) => boolean;
+    /**
+     * Whether the current user's workspace settings have loaded; a failed load counts as loaded.
+     */
+    areSettingsLoaded: boolean;
+    /**
+     * Whether the workspace list checks automations for restricted objects (`enableDashboardPartialRendering`).
+     */
+    isPartialRenderingEnabled: boolean;
 }
 
 export interface IAutomationsState {
@@ -258,6 +266,8 @@ export interface IUseLoadAutomationsProps {
     statusFilterQuery: IAutomationFilterQuery;
     createdByFilterQuery: IAutomationFilterQuery;
     includeAutomationResult: boolean;
+    includeUnavailableReferences: boolean;
+    isReady: boolean;
     scope: AutomationsScope;
     setState: Dispatch<SetStateAction<IAutomationsState>>;
     onLoad?: AutomationsOnLoad;
@@ -331,6 +341,7 @@ export interface IAutomationService {
 
 export interface IAutomationsQueryParams {
     includeAutomationResult?: boolean;
+    includeUnavailableReferences?: boolean;
     pageSize?: number;
     page?: number;
     search?: string;
@@ -392,7 +403,7 @@ export interface IAutomationIconTooltipProps {
 }
 
 export interface IAutomationIconProps {
-    type: AutomationsType | IAutomationLastRunStatus | "automationDetails";
+    type: AutomationsType | IAutomationLastRunStatus | "automationDetails" | "restricted";
     automation?: IAutomationMetadataObject;
     state?: IAutomationState;
     timezone?: string;

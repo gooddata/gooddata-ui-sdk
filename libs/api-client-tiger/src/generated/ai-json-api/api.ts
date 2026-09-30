@@ -74,6 +74,10 @@ export interface AiAgentListItemResponse {
     'lastUsedAt'?: string | null;
     'modifiedAt'?: string | null;
     'name': string;
+    /**
+     * Names of the skills this agent can use in this workspace, as listed by GET /api/v1/ai/agent/skills.
+     */
+    'skills'?: Array<AiSkillName>;
 }
 
 /**
@@ -4386,15 +4390,40 @@ export interface AiSingleChoiceControl {
 export type AiSingleChoiceControlTypeEnum = 'singleChoice';
 
 /**
+ * Name of a skill an agent can be configured with.
+ */
+
+export const AiSkillName = {
+    ALERT: 'alert',
+    ANOMALY_DETECTION: 'anomaly_detection',
+    CLUSTERING: 'clustering',
+    FORECASTING: 'forecasting',
+    KEY_DRIVER_ANALYSIS: 'key_driver_analysis',
+    METRIC: 'metric',
+    SCHEDULE_EXPORT: 'schedule_export',
+    VISUALIZATION: 'visualization',
+    VISUALIZATION_SUMMARY: 'visualization_summary',
+    DASHBOARD_SUMMARY: 'dashboard_summary',
+    WHAT_IF_ANALYSIS: 'what_if_analysis',
+    KNOWLEDGE: 'knowledge',
+    DASHBOARD_BUILDER: 'dashboard_builder',
+    DASHBOARD_EDITOR: 'dashboard_editor'
+} as const;
+
+export type AiSkillName = typeof AiSkillName[keyof typeof AiSkillName];
+
+
+/**
  * A single skill available to the organization.
  */
 export interface AiSkillResponse {
     'description': string;
     'examples': Array<string>;
-    'name': string;
+    'name': AiSkillName;
     'tags': Array<string>;
     'title': string;
 }
+
 
 /**
  * Which skills the turn could reach for, and which this call left active.

@@ -37,6 +37,7 @@ export const tigerIdTypeToObjectType: {
     filterContext: "filterContext",
     dashboardPlugin: "dashboardPlugin",
     parameter: "parameter",
+    attributeHierarchy: "attributeHierarchy",
 };
 
 /**

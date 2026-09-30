@@ -13,7 +13,7 @@ export {
 } from "./configurations/eslint.js";
 export { headersPlugin, headersRules } from "./configurations/headers.js";
 export { importEsmPlugin, importEsmRules } from "./configurations/import-esm.js";
-export { importXRules } from "./configurations/import-x.js";
+export { importXOverrides, importXRules } from "./configurations/import-x.js";
 export {
     noBarrelFilesOverrides,
     noBarrelFilesPlugin,

@@ -6,6 +6,7 @@ import {
     convertGenAiTypeToReferenceType,
     convertReferenceTypeToGenAiType,
     generateTitleFromQuestion,
+    getVisualizationHref,
 } from "./utils.js";
 
 describe("generateTitleFromQuestion", () => {
@@ -85,5 +86,15 @@ describe("convertGenAiTypeToReferenceType", () => {
 
     it("should return DASHBOARD for unknown types", () => {
         expect(convertGenAiTypeToReferenceType("unknown" as any)).toBe("DASHBOARD");
+    });
+});
+
+describe("getVisualizationHref", () => {
+    it("should return the hosted edit route for a saved visualization", () => {
+        expect(getVisualizationHref("ws1", "vis1", "saved")).toBe("/workspace/ws1/analyze/#/vis1/edit");
+    });
+
+    it("should carry the AI builder id in the search for a draft visualization", () => {
+        expect(getVisualizationHref("ws1", "vis1", "draft")).toBe("/workspace/ws1/analyze/?aibuilder=vis1");
     });
 });

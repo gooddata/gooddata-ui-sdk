@@ -1110,6 +1110,9 @@ export interface IRuleEdit {
     settled?: IRuleEdit;
 }
 
+// @internal
+export const isAutomationRestricted: (automation: IAutomationMetadataObject) => boolean;
+
 // @beta
 export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition;
 

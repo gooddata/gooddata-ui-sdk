@@ -18,6 +18,10 @@ import {
     type IAutomationsState,
 } from "./types.js";
 import { useAutomationsSmallLayout } from "./useAutomationsSmallLayout.js";
+import { useUser } from "./UserContext.js";
+import { isAutomationRestricted } from "./utils.js";
+
+const isItemClickable = (automation: IAutomationMetadataObject) => !isAutomationRestricted(automation);
 
 export const useAutomationsState = ({
     type,
@@ -104,6 +108,8 @@ export const useAutomationsState = ({
         workspacesFilterQuery,
     } = useAutomationFilters(preselectedFilters, availableFilters);
 
+    const { areSettingsLoaded, isPartialRenderingEnabled } = useUser();
+
     const { status: dataLoadingStatus, error } = useLoadAutomations({
         type,
         pageSize,
@@ -115,6 +121,8 @@ export const useAutomationsState = ({
         statusFilterQuery,
         createdByFilterQuery,
         includeAutomationResult,
+        includeUnavailableReferences: isPartialRenderingEnabled,
+        isReady: areSettingsLoaded,
         scope,
         onLoad,
         setState,
@@ -308,6 +316,7 @@ export const useAutomationsState = ({
         containerRef,
         handleSort,
         handleItemClick,
+        isItemClickable,
         loadNextPage,
         setSearch,
         setSelectedIds,

@@ -39,7 +39,8 @@ export type TigerMetadataType =
     | "visualizationObject"
     | "filterContext"
     | "dashboardPlugin"
-    | "parameter";
+    | "parameter"
+    | "attributeHierarchy";
 
 /**
  * Tiger entity types

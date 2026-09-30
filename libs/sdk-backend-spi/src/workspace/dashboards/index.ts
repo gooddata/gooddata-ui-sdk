@@ -26,6 +26,7 @@ import type {
     IObjectCertificationWrite,
     IScheduledMail,
     IScheduledMailDefinition,
+    IUnavailableReference,
     IWidget,
     IWidgetAlert,
     IWidgetAlertDefinition,
@@ -40,37 +41,11 @@ import type { QueryMethod } from "../../common/query.js";
 import type { IExportResult } from "../execution/index.js";
 
 /**
- * Reason why a referenced object could not be returned with the dashboard.
- *
- * @alpha
- */
-export type UnavailableReferenceReason = "forbidden" | "notFound";
-
-/**
  * A dashboard reference that was requested but could not be returned.
  *
- * @remarks
- * "forbidden" means the object exists but the current user lacks permission to read it;
- * "notFound" means the object does not exist (deleted or dangling reference).
- *
  * @alpha
  */
-export interface IUnavailableDashboardReference {
-    /**
-     * Reference to the unavailable object.
-     */
-    ref: ObjRef;
-
-    /**
-     * Type of the unavailable object.
-     */
-    type: ObjectType;
-
-    /**
-     * Why the object could not be returned.
-     */
-    reason: UnavailableReferenceReason;
-}
+export type IUnavailableDashboardReference = IUnavailableReference;
 
 /**
  * Dashboard referenced objects

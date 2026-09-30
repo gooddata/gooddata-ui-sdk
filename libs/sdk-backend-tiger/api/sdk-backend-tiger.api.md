@@ -485,7 +485,7 @@ export class TigerJwtAuthProvider extends TigerTokenAuthProvider {
 }
 
 // @public
-export type TigerMetadataType = "analyticalDashboard" | "visualizationObject" | "filterContext" | "dashboardPlugin" | "parameter";
+export type TigerMetadataType = "analyticalDashboard" | "visualizationObject" | "filterContext" | "dashboardPlugin" | "parameter" | "attributeHierarchy";
 
 // @public
 export type TigerObjectType = TigerAfmType | TigerMetadataType;

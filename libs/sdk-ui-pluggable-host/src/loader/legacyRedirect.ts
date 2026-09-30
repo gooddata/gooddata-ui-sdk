@@ -27,6 +27,57 @@ function toHashHostUrl(
     return `${prefix}/workspace/${workspaceId}/${app}/${search}${hash}`;
 }
 
+const AI_BUILDER_PARAM_PREFIX = "aibuilder=";
+
+// Hosted AD links carry `aibuilder` in the query string, not in the hash query.
+function liftAiBuilderToSearch(remainder: string, search: string): { remainder: string; search: string } {
+    const queryStart = remainder.indexOf("?");
+    if (queryStart === -1) {
+        return { remainder, search };
+    }
+    const params = remainder.slice(queryStart + 1).split("&");
+    const lifted = params.filter((param) => param.startsWith(AI_BUILDER_PARAM_PREFIX));
+    if (lifted.length === 0) {
+        return { remainder, search };
+    }
+    const kept = params.filter((param) => !param.startsWith(AI_BUILDER_PARAM_PREFIX));
+    const hashRest = `${remainder.slice(0, queryStart)}${kept.length ? `?${kept.join("&")}` : ""}`;
+    return {
+        remainder: hashRest === "/" ? "" : hashRest,
+        search: `${search ? `${search}&` : "?"}${lifted.join("&")}`,
+    };
+}
+
+// The report and the literal edit action must follow <product>:<client>, so a `client` workspace
+// with a colon in an insight id (#/client/<id>/edit[/reload]) does not match.
+const CLIENT_HASH = /^#\/client\/[-\w]+:[-\w]+\/[^/?]+\/edit(?:\/reload)?(?:[?]|$)/;
+
+// AD legacy hash: #/<ws>/<rest> — workspace is the bare first segment.
+function mapLegacyAnalyzeUrl(pathname: string, hash: string, search: string): string | null {
+    const embedded = isUnder(pathname, "/analyze/embedded");
+
+    // The standalone app sent users without BASE_UI_ACCESS here. The host root applies the same
+    // restriction and lands the user on an application they are permitted to use.
+    if (pathname === "/analyze/403.html") {
+        return "/";
+    }
+
+    // #/client/<product>:<client>/<report>/edit has no workspace id, and no backend the host
+    // supports can resolve a client to a workspace. Outside an embedding, fall back to the bare
+    // landing, which opens AD in the remembered or first workspace. Inside an embedding, leave the
+    // URL alone: a landing in some other workspace must not replace the embedded insight.
+    if (CLIENT_HASH.test(hash)) {
+        return embedded ? null : `/analyze${search}`;
+    }
+
+    const match = /^#\/([^/?]+)(.*)$/.exec(hash);
+    if (!match) {
+        return null;
+    }
+    const lifted = liftAiBuilderToSearch(match[2], search);
+    return toHashHostUrl(embedded, "analyze", match[1], lifted.remainder, lifted.search);
+}
+
 // Where the standalone home-ui pages live inside the host: the gdc-home-ui module is mounted
 // on the organization scope under this route base, and keeps the legacy path shape below it.
 const HOME_UI_ROUTE_BASE = "/organization/settings";
@@ -70,12 +121,8 @@ export function mapLegacyUrlToHost(location: ILegacyLocation): string | null {
             : null;
     }
 
-    // AD legacy hash: #/<ws>/<rest> — workspace is the bare first segment.
     if (isUnder(pathname, "/analyze")) {
-        const match = /^#\/([^/?]+)(.*)$/.exec(hash);
-        return match
-            ? toHashHostUrl(isUnder(pathname, "/analyze/embedded"), "analyze", match[1], match[2], search)
-            : null;
+        return mapLegacyAnalyzeUrl(pathname, hash, search);
     }
 
     // Metric editor (standalone only): hash #/<ws>[/rest] becomes the path /workspace/<ws>/metrics[/rest].

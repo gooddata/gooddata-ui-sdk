@@ -25,9 +25,6 @@ type CustomHyperlinkProps = CustomHyperlinkOwnProps & {
  */
 export function CustomHyperlinkComponent({ href, text, settings }: CustomHyperlinkProps) {
     const { linkHandler, allowNativeLinks, canManage, canAnalyze } = useConfig();
-    const enableShellApplication_analyticalDesigner = Boolean(
-        settings?.enableShellApplication_analyticalDesigner,
-    );
     const enableShellApplication_dashboards = Boolean(settings?.enableShellApplication_dashboards);
     const canManageMetrics = canManage || canAnalyze;
     const canManageVisualisations = canManage || canAnalyze;
@@ -58,13 +55,7 @@ export function CustomHyperlinkComponent({ href, text, settings }: CustomHyperli
             return null;
         }
 
-        const itemUrl = getItemUrl(
-            workspaceId,
-            id,
-            type,
-            enableShellApplication_analyticalDesigner,
-            enableShellApplication_dashboards,
-        );
+        const itemUrl = getItemUrl(workspaceId, id, type, enableShellApplication_dashboards);
 
         if (!itemUrl) {
             return null;
@@ -76,7 +67,7 @@ export function CustomHyperlinkComponent({ href, text, settings }: CustomHyperli
             id,
             itemUrl,
         };
-    }, [href, enableShellApplication_analyticalDesigner, enableShellApplication_dashboards]);
+    }, [href, enableShellApplication_dashboards]);
 
     if (!parsedRef) {
         return plainText;
@@ -128,14 +119,11 @@ const getItemUrl = (
     workspaceId: string,
     id: string,
     objectType: string,
-    enableShellApplication_analyticalDesigner?: boolean,
     enableShellApplication_dashboards?: boolean,
 ) => {
     switch (objectType) {
         case "visualization":
-            return enableShellApplication_analyticalDesigner
-                ? `/workspace/${workspaceId}/analyze/#/${id}/edit`
-                : `/analyze/#/${workspaceId}/${id}/edit`;
+            return `/workspace/${workspaceId}/analyze/#/${id}/edit`;
         case "dashboard":
             return enableShellApplication_dashboards
                 ? `/workspace/${workspaceId}/dashboards/#/dashboard/${id}`

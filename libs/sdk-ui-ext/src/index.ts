@@ -106,7 +106,11 @@ export type {
     AutomationsOnLoad,
     IEditAutomation,
 } from "./automations/types.js";
-export { getComparisonOperatorTitle, getRelativeOperatorTitle } from "./automations/utils.js";
+export {
+    getComparisonOperatorTitle,
+    getRelativeOperatorTitle,
+    isAutomationRestricted,
+} from "./automations/utils.js";
 export {
     COMPARISON_OPERATORS,
     RELATIVE_OPERATORS,

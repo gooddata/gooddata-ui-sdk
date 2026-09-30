@@ -24,7 +24,7 @@ describe("generateHeaderMenuItemsGroups", () => {
                 },
                 {
                     className: "s-menu-analyze",
-                    href: "/analyze/#/TestWorkspaceId/reportId/edit",
+                    href: "/workspace/TestWorkspaceId/analyze/#/reportId/edit",
                     key: "gs.header.analyze",
                 },
                 {
@@ -66,7 +66,7 @@ describe("generateHeaderMenuItemsGroups", () => {
                 },
                 {
                     className: "s-menu-analyze",
-                    href: "/analyze/#/TestWorkspaceId/reportId/edit",
+                    href: "/workspace/TestWorkspaceId/analyze/#/reportId/edit",
                     key: "gs.header.analyze",
                 },
                 {
@@ -107,7 +107,7 @@ describe("generateHeaderMenuItemsGroups", () => {
                 },
                 {
                     className: "s-menu-analyze",
-                    href: "/analyze/#/TestWorkspaceId/reportId/edit",
+                    href: "/workspace/TestWorkspaceId/analyze/#/reportId/edit",
                     key: "gs.header.analyze",
                 },
                 {
@@ -143,7 +143,7 @@ describe("generateHeaderMenuItemsGroups", () => {
                 },
                 {
                     className: "s-menu-analyze",
-                    href: "/analyze/#/TestWorkspaceId/reportId/edit",
+                    href: "/workspace/TestWorkspaceId/analyze/#/reportId/edit",
                     key: "gs.header.analyze",
                 },
                 {
@@ -179,7 +179,7 @@ describe("generateHeaderMenuItemsGroups", () => {
                 },
                 {
                     className: "s-menu-analyze",
-                    href: "/analyze/#/TestWorkspaceId/reportId/edit",
+                    href: "/workspace/TestWorkspaceId/analyze/#/reportId/edit",
                     key: "gs.header.analyze",
                 },
                 {
@@ -215,7 +215,7 @@ describe("generateHeaderMenuItemsGroups", () => {
                 },
                 {
                     className: "s-menu-analyze",
-                    href: "/analyze/#/TestWorkspaceId/reportId/edit",
+                    href: "/workspace/TestWorkspaceId/analyze/#/reportId/edit",
                     key: "gs.header.analyze",
                 },
                 {
@@ -251,7 +251,7 @@ describe("generateHeaderMenuItemsGroups", () => {
                 },
                 {
                     className: "s-menu-analyze",
-                    href: "/analyze/#/TestWorkspaceId/reportId/edit",
+                    href: "/workspace/TestWorkspaceId/analyze/#/reportId/edit",
                     key: "gs.header.analyze",
                 },
                 {
@@ -280,7 +280,7 @@ describe("generateHeaderMenuItemsGroups", () => {
                 },
                 {
                     className: "s-menu-analyze",
-                    href: "/analyze/#/TestWorkspaceId/reportId/edit",
+                    href: "/workspace/TestWorkspaceId/analyze/#/reportId/edit",
                     key: "gs.header.analyze",
                 },
                 {
@@ -310,7 +310,7 @@ describe("generateHeaderMenuItemsGroups", () => {
                 },
                 {
                     className: "s-menu-analyze",
-                    href: "/analyze/#/TestWorkspaceId/reportId/edit",
+                    href: "/workspace/TestWorkspaceId/analyze/#/reportId/edit",
                     key: "gs.header.analyze",
                 },
                 {
@@ -345,7 +345,7 @@ describe("generateHeaderMenuItemsGroups", () => {
                 },
                 {
                     className: "s-menu-analyze",
-                    href: "/analyze/#/TestWorkspaceId/reportId/edit",
+                    href: "/workspace/TestWorkspaceId/analyze/#/reportId/edit",
                     key: "gs.header.analyze",
                 },
                 {
@@ -382,7 +382,7 @@ describe("generateHeaderMenuItemsGroups", () => {
                 },
                 {
                     className: "s-menu-analyze",
-                    href: "/analyze/#/TestWorkspaceId/reportId/edit",
+                    href: "/workspace/TestWorkspaceId/analyze/#/reportId/edit",
                     key: "gs.header.analyze",
                 },
             ],

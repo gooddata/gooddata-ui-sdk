@@ -1,5 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
+import { uniqBy } from "lodash-es";
+
 import {
     type EntitiesApiGetAllEntitiesAttributesRequest,
     type ITigerClientBase,
@@ -10,6 +12,7 @@ import {
     type JsonApiDatasetOutWithLinks,
     type JsonApiLabelOutWithLinks,
     MetadataUtilities,
+    type RestrictedObject,
 } from "@gooddata/api-client-tiger";
 import { EntitiesApi_GetAllEntitiesAttributes } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import {
@@ -17,6 +20,7 @@ import {
     type ICatalogAttribute,
     type ICatalogAttributeHierarchy,
     type ICatalogDateDataset,
+    type IUnavailableReference,
 } from "@gooddata/sdk-model";
 
 import {
@@ -26,6 +30,10 @@ import {
 } from "../../../convertors/fromBackend/CatalogConverter.js";
 import { isSupportedTigerGranularity } from "../../../convertors/fromBackend/dateGranularityConversions.js";
 import { convertAttributeHierarchy } from "../../../convertors/fromBackend/HierarchyConverter.js";
+import {
+    getForbiddenReferences,
+    getRelationshipIds,
+} from "../../../convertors/fromBackend/RestrictedReferencesConverter.js";
 
 import { addRsqlFilterToParams } from "./rsqlFilter.js";
 
@@ -79,7 +87,42 @@ function isGeoLabel(label: JsonApiLabelOutWithLinks): boolean {
     );
 }
 
-function createNonDateAttributes(attributes: JsonApiAttributeOutList): ICatalogAttribute[] {
+/**
+ * Restricted objects listed by any page, each once: attributes on different pages can link the same
+ * object. Undefined when no page carries restriction data.
+ */
+export function collectRestrictedObjects(pages: JsonApiAttributeOutList[]): RestrictedObject[] | undefined {
+    if (!pages.some((page) => page.meta?.restricted)) {
+        return undefined;
+    }
+    return uniqBy(
+        pages.flatMap((page) => page.meta?.restricted ?? []),
+        ({ id, type }) => `${type}/${id}`,
+    );
+}
+
+/**
+ * Restricted objects of the response that the attribute references: the attribute hierarchies it
+ * belongs to. Undefined when the response carries no restriction data.
+ */
+export function resolveAttributeUnavailableReferences(
+    attribute: JsonApiAttributeOutWithLinks,
+    restricted: RestrictedObject[] | undefined,
+): IUnavailableReference[] | undefined {
+    if (!restricted) {
+        return undefined;
+    }
+    return getForbiddenReferences(
+        "attributeHierarchy",
+        getRelationshipIds(attribute.relationships, "attributeHierarchies"),
+        restricted,
+    );
+}
+
+function createNonDateAttributes(
+    attributes: JsonApiAttributeOutList,
+    restricted: RestrictedObject[] | undefined,
+): ICatalogAttribute[] {
     const nonDateAttributes = attributes.data.filter((attr) => attr.attributes?.granularity === undefined);
 
     return nonDateAttributes.map((attribute) => {
@@ -92,7 +135,11 @@ function createNonDateAttributes(attributes: JsonApiAttributeOutList): ICatalogA
         // use the defaultView if available, fall back to primary: exactly one label is guaranteed to be primary
         const defaultLabel = defaultViewLabel ?? allLabels.filter((label) => label.attributes!.primary)[0];
 
-        return convertAttribute(attribute, defaultLabel, geoLabels, allLabels, dataSet);
+        const unavailable = resolveAttributeUnavailableReferences(attribute, restricted);
+        return {
+            ...convertAttribute(attribute, defaultLabel, geoLabels, allLabels, dataSet),
+            ...(unavailable ? { unavailable } : {}),
+        };
     });
 }
 
@@ -184,7 +231,7 @@ export async function loadAttributesAndDateDatasetsAndHierarchies(
         rsqlFilter,
     );
 
-    const attributes = await MetadataUtilities.getAllPagesOfParallel(
+    const pages = await MetadataUtilities.getAllPagesOfParallel(
         client,
         EntitiesApi_GetAllEntitiesAttributes,
         params,
@@ -194,12 +241,15 @@ export async function loadAttributesAndDateDatasetsAndHierarchies(
                 size: pageSize,
             },
         },
-    ).then(MetadataUtilities.mergeEntitiesResults);
+    );
+    const attributes = MetadataUtilities.mergeEntitiesResults(pages);
+    // the attribute hierarchies relationship is only in the response when they were requested
+    const restricted = loadAttributeHierarchies ? collectRestrictedObjects(pages) : undefined;
 
     const catalogItems: CatalogItem[] = [];
 
     if (loadAttributes) {
-        const nonDateAttributes = createNonDateAttributes(attributes);
+        const nonDateAttributes = createNonDateAttributes(attributes, restricted);
         catalogItems.push(...nonDateAttributes);
     }
     if (loadDateDatasets) {

@@ -100,9 +100,9 @@ describe("routing", () => {
         });
 
         it("falls back to the workspace id from pathname when ctx.currentWorkspaceId is unset", () => {
-            const app = externalApp("/analyze/#/{workspaceId}");
+            const app = externalApp("/external/#/{workspaceId}");
             const href = getApplicationHref(app, context(), "/workspace/ws-2/catalog/objects");
-            expect(href).toBe("/analyze/#/ws-2");
+            expect(href).toBe("/external/#/ws-2");
         });
 
         it("substitutes empty string when no workspace is resolvable", () => {

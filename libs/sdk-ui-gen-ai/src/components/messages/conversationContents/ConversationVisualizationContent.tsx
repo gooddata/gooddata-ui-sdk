@@ -85,10 +85,12 @@ type IVisualisationMenuItemId = "button-save" | "button-open" | "button-copy";
 export function getVisibleVisualisationMenuItemIds({
     scenario,
     isVisualisationSaved,
+    hasError,
     menuItems,
 }: {
     scenario?: IWhatIfRenderableScenario;
     menuItems?: IGenAIAssistantConversationVisualizationContentProps["menuItems"];
+    hasError?: boolean;
     isVisualisationSaved: boolean;
 }): IVisualisationMenuItemId[] {
     if (scenario && !scenario.isBaseline) {
@@ -101,10 +103,13 @@ export function getVisibleVisualisationMenuItemIds({
 
     const items: IVisualisationMenuItemId[] = [];
 
-    if (showSaveMenuItem) {
+    if (showSaveMenuItem && !hasError) {
         items.push("button-save");
     }
-    if (showOpenInAnalyzeMenuItem) {
+    if (showOpenInAnalyzeMenuItem && !hasError) {
+        items.push("button-open");
+    }
+    if (isVisualisationSaved && showOpenInAnalyzeMenuItem && hasError) {
         items.push("button-open");
     }
     if (isVisualisationSaved && showCopyLinkMenuItem) {
@@ -343,6 +348,7 @@ function VisualisationMenu({
         const itemIds = getVisibleVisualisationMenuItemIds({
             scenario,
             isVisualisationSaved,
+            hasError,
             menuItems,
         });
 
@@ -392,7 +398,7 @@ function VisualisationMenu({
                     };
             }
         });
-    }, [intl, isVisualisationSaved, scenario, menuItems]);
+    }, [intl, isVisualisationSaved, scenario, menuItems, hasError]);
 
     const handleButtonClick = useCallback(
         (e: MouseEvent | KeyboardEvent, item: IMenuButtonItem) => {
@@ -465,7 +471,7 @@ function VisualisationMenu({
                 active: isMenuButtonOpen,
             })}
         >
-            {visualization?.insight.visualizationUrl === "local:table" ? null : (
+            {!hasError && visualization?.insight.visualizationUrl === "local:table" ? null : (
                 <div className={cx("gd-gen-ai-chat__conversation__visualization__table")}>
                     <UiTooltip
                         triggerBy={["focus", "hover"]}
@@ -738,9 +744,6 @@ function useHandlers({ visualization, setSaveDialogOpen }: IUseHandlersProps) {
     const config = useConfig();
     const dispatch = useDispatch();
     const workspaceId = useWorkspaceStrict();
-    const useHostedAnalyticalDesigner = Boolean(
-        useSelector(settingsSelector)?.enableShellApplication_analyticalDesigner,
-    );
 
     const onSave = useCallback(() => {
         setSaveDialogOpen("save");
@@ -759,7 +762,6 @@ function useHandlers({ visualization, setSaveDialogOpen }: IUseHandlersProps) {
                         workspaceId,
                         visualization.insight.identifier,
                         visualizationStatus,
-                        useHostedAnalyticalDesigner,
                     );
                 } else {
                     config.linkHandler?.({
@@ -772,7 +774,6 @@ function useHandlers({ visualization, setSaveDialogOpen }: IUseHandlersProps) {
                             workspaceId,
                             visualization.insight.identifier,
                             visualizationStatus,
-                            useHostedAnalyticalDesigner,
                         ),
                         visualization,
                         visualizationStatus,
@@ -784,7 +785,7 @@ function useHandlers({ visualization, setSaveDialogOpen }: IUseHandlersProps) {
                 setSaveDialogOpen("explore");
             }
         },
-        [config, setSaveDialogOpen, visualization, workspaceId, useHostedAnalyticalDesigner],
+        [config, setSaveDialogOpen, visualization, workspaceId],
     );
 
     const onCopy = useCallback(
@@ -800,7 +801,6 @@ function useHandlers({ visualization, setSaveDialogOpen }: IUseHandlersProps) {
                     workspaceId,
                     visualization.insight.identifier,
                     visualizationStatus,
-                    useHostedAnalyticalDesigner,
                 );
             } else {
                 link = config.linkHandler?.({
@@ -813,7 +813,6 @@ function useHandlers({ visualization, setSaveDialogOpen }: IUseHandlersProps) {
                         workspaceId,
                         visualization.insight.identifier,
                         visualizationStatus,
-                        useHostedAnalyticalDesigner,
                     ),
                     visualization,
                     visualizationStatus,
@@ -825,7 +824,7 @@ function useHandlers({ visualization, setSaveDialogOpen }: IUseHandlersProps) {
                 dispatch(copyToClipboardAction({ content: link }));
             }
         },
-        [visualization, config, workspaceId, useHostedAnalyticalDesigner, dispatch],
+        [visualization, config, workspaceId, dispatch],
     );
 
     return {

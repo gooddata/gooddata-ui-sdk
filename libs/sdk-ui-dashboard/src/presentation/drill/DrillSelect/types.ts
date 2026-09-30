@@ -2,6 +2,7 @@
 
 import { type IAvailableDrillTargetAttribute, type IAvailableDrillTargetMeasure } from "@gooddata/sdk-ui";
 
+import { type IRestrictedDrillDown } from "../../../model/store/widgetDrills/widgetDrillSelectors.js";
 import {
     type DashboardDrillDefinition,
     type IDashboardDrillContext,
@@ -20,7 +21,7 @@ export enum DrillType {
     KEY_DRIVER_ANALYSIS = "key-driver-analysis",
 }
 
-export interface IDrillSelectItem {
+export interface ISelectableDrillSelectItem {
     type: DrillType;
     id: string;
     name: string;
@@ -28,12 +29,29 @@ export interface IDrillSelectItem {
     attributeValue?: string | null;
     context?: unknown;
     isDisabled?: boolean;
-    isRestricted?: boolean;
     tooltipText?: string;
+}
+
+/**
+ * A drill the user cannot open. It carries no drill definition: it is never executed, and its
+ * target is never named.
+ */
+export interface IRestrictedDrillSelectItem {
+    type: DrillType;
+    id: string;
+    name: string;
+    isRestricted: true;
+}
+
+export type IDrillSelectItem = ISelectableDrillSelectItem | IRestrictedDrillSelectItem;
+
+export function isRestrictedDrillSelectItem(item: IDrillSelectItem): item is IRestrictedDrillSelectItem {
+    return "isRestricted" in item;
 }
 
 export interface IDrillSelectContext {
     drillDefinitions: DashboardDrillDefinition[];
+    restrictedDrillDowns: IRestrictedDrillDown[];
     drillEvent: IDashboardDrillEvent;
     drillContext?: IDashboardDrillContext;
     correlationId?: string;

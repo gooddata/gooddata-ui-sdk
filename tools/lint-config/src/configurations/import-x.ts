@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { Rules } from "../types.js";
+import { IOverride, Rules } from "../types.js";
 
 export const importXRules: Rules = {
     named: "error",
@@ -10,5 +10,14 @@ export const importXRules: Rules = {
     "no-named-as-default": "warn",
     "no-named-as-default-member": "warn",
     "no-duplicates": "warn",
-    "no-unassigned-import": "error",
+    "no-unassigned-import": ["error", { allow: ["**/*.css", "**/*.scss"] }],
 };
+
+export const importXOverrides: IOverride[] = [
+    {
+        files: ["**/vitest.setup.ts", "**/vitest.setup.tsx"],
+        rules: {
+            "no-unassigned-import": "off",
+        },
+    },
+];

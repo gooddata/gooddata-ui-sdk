@@ -425,11 +425,13 @@ export interface IAdExportInsightCommandBody {
 
 // @public
 export interface IAdOpenInsightCommandBody {
+    // @deprecated
     clientId?: string;
     dataset?: string;
     excludeObjectsWithTags?: string;
     includeObjectsWithTags?: string;
     insightId?: string;
+    // @deprecated
     productId?: string;
     projectId?: string;
     reportId?: string;

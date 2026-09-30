@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type CSSProperties, type ComponentType } from "react";
 
@@ -163,8 +163,8 @@ export function ComponentTableRow<TProps extends object>({
                         {(columnsBy?.values ?? [undefined]).map((columnValue) => {
                             const props = {
                                 ...baseProps,
-                                ...(columnsBy?.baseProps ?? {}),
-                                ...(row.baseProps ?? {}),
+                                ...columnsBy?.baseProps,
+                                ...row.baseProps,
                                 [row.prop]: rowValue,
                                 ...(columnsBy ? { [columnsBy.prop]: columnValue } : {}),
                             } as TProps;

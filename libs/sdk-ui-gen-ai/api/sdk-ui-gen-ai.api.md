@@ -6,6 +6,7 @@
 
 import { ActionCreatorWithoutPayload } from '@reduxjs/toolkit';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
+import { AgentCustomSkill } from '@gooddata/sdk-model';
 import { CatalogItem } from '@gooddata/sdk-model';
 import { ComponentType } from 'react';
 import { DashboardSelectorEvaluator } from '@gooddata/sdk-ui-dashboard';
@@ -292,6 +293,11 @@ export function DefaultMessageTextContent(props: IGenAIAssistantMessageTextConte
 // @alpha
 export function DefaultUserMessage(props: IGenAIAssistantUserMessageProps): JSX.Element;
 
+// @public (undocumented)
+export const deleteConversationAction: ActionCreatorWithPayload<    {
+conversation: IChatConversationLocal;
+}, "messages/deleteConversationAction">;
+
 // @public
 export type GenAIAgent = {
     id: string;
@@ -299,6 +305,7 @@ export type GenAIAgent = {
     description?: string;
     modifiedAt?: string;
     lastUsedAt?: string;
+    effectiveSkills?: AgentCustomSkill[];
 };
 
 // @public
@@ -766,6 +773,18 @@ export const makeUserItem: (content?: IChatConversationLocalContent, id?: string
 
 // @public (undocumented)
 export const newMessageAction: ActionCreatorWithPayload<IChatConversationLocalItem, "messages/newMessageAction">;
+
+// @public (undocumented)
+export const pinConversationAction: ActionCreatorWithPayload<    {
+conversation: IChatConversationLocal;
+pinned: boolean;
+}, "messages/pinConversationAction">;
+
+// @public (undocumented)
+export const renameConversationAction: ActionCreatorWithPayload<    {
+conversation: IChatConversationLocal;
+title: string;
+}, "messages/renameConversationAction">;
 
 // @public (undocumented)
 export const setAmbientUserContextAction: ActionCreatorWithPayload<    {

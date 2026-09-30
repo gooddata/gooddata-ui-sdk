@@ -156,6 +156,10 @@ export {
     serializeObjRef,
     deserializeObjRef,
 } from "./objRef/index.js";
+export {
+    type IUnavailableReference,
+    type UnavailableReferenceReason,
+} from "./objRef/unavailableReference.js";
 
 export {
     type IDimension,

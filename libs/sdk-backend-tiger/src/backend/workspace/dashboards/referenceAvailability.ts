@@ -14,6 +14,10 @@ import type {
 } from "@gooddata/sdk-backend-spi";
 import { type IDashboard, idRef, isIdentifierRef } from "@gooddata/sdk-model";
 
+import {
+    getForbiddenReferences,
+    getRelationshipIds,
+} from "../../../convertors/fromBackend/RestrictedReferencesConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { objectTypeToTigerIdType } from "../../../types/refTypeMapping.js";
 
@@ -37,8 +41,9 @@ import { objectTypeToTigerIdType } from "../../../types/refTypeMapping.js";
  * backfilled) before newly supported dependencies are linked. Missing restriction metadata alone
  * must never be interpreted as a permission denial.
  *
- * Nothing outside this module may interpret the raw availability metadata or relationships;
- * replacing the mechanism must only change this module.
+ * Reading `meta.restricted` against relationships is shared with automations in
+ * `RestrictedReferencesConverter`; nothing else may interpret the raw availability metadata or
+ * relationships.
  */
 
 type InspectedType = SupportedDashboardReferenceTypes | "filterContext";
@@ -61,11 +66,6 @@ const RELATIONSHIP_KEYS = {
 
 type RelationshipKey = (typeof RELATIONSHIP_KEYS)[InspectedType];
 
-interface ILinkage {
-    id: string;
-    type: string;
-}
-
 /** Structural view shared by dashboard and filter-context JSON:API documents. */
 interface IJsonApiDocumentLike {
     data: {
@@ -77,20 +77,6 @@ interface IJsonApiDocumentLike {
     meta?: {
         restricted?: RestrictedObject[];
     };
-}
-
-function isLinkage(value: unknown): value is ILinkage {
-    return (
-        typeof value === "object" &&
-        value !== null &&
-        typeof (value as ILinkage).id === "string" &&
-        typeof (value as ILinkage).type === "string"
-    );
-}
-
-function relationshipIds(document: IJsonApiDocumentLike, key: RelationshipKey): Set<string> {
-    const data: unknown = document.data.relationships?.[key]?.data;
-    return new Set(Array.isArray(data) ? data.filter(isLinkage).map((linkage) => linkage.id) : []);
 }
 
 /**
@@ -127,18 +113,9 @@ function diffInspectedTypes(
     for (const type of inspected) {
         const tigerType = objectTypeToTigerIdType[type];
         const selfId = document.data.type === tigerType ? document.data.id : undefined;
-        const related = relationshipIds(document, RELATIONSHIP_KEYS[type]);
-        const restricted = document.meta?.restricted ?? [];
+        const related = getRelationshipIds(document.data.relationships, RELATIONSHIP_KEYS[type]);
 
-        for (const linkage of restricted) {
-            if (linkage.type === tigerType && linkage.id !== selfId && related.has(linkage.id)) {
-                unavailable.push({
-                    ref: idRef(linkage.id, type),
-                    type,
-                    reason: "forbidden",
-                });
-            }
-        }
+        unavailable.push(...getForbiddenReferences(type, related, document.meta?.restricted ?? [], selfId));
         for (const id of contentRefIds.get(tigerType) ?? []) {
             if (id !== selfId && !related.has(id)) {
                 unavailable.push({

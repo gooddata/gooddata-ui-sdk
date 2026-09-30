@@ -19,8 +19,16 @@ import { UiAsyncTableToolbar } from "./UiAsyncTableToolbar.js";
 import { getColumnWidth, getItemKey } from "./utils.js";
 
 function AsyncTableCore<T extends { id: string } | { ref: ObjRef }>(props: IUiAsyncTableProps<T>) {
-    const { width, itemHeight, isLargeRow, renderHeader, renderItem, renderEmptyState, shouldLoadNextPage } =
-        useAsyncTable<T>(props);
+    const {
+        width,
+        itemHeight,
+        isLargeRow,
+        renderHeader,
+        renderItem,
+        renderEmptyState,
+        shouldLoadNextPage,
+        handleItemClick,
+    } = useAsyncTable<T>(props);
 
     const {
         filters,
@@ -81,7 +89,7 @@ function AsyncTableCore<T extends { id: string } | { ref: ObjRef }>(props: IUiAs
                     skeletonItemsCount={skeletonItemsCount}
                     hasNextPage={hasNextPage}
                     isLoading={isLoading}
-                    onItemClick={props.onItemClick}
+                    onItemClick={props.onItemClick ? handleItemClick : undefined}
                     loadNextPage={loadNextPage}
                     columns={columns}
                     bulkActions={bulkActions}
@@ -111,9 +119,21 @@ const useAsyncTable = <T extends { id: string } | { ref: ObjRef }>({
     setSelectedItemIds,
     variant,
     onItemClick,
+    isItemClickable,
     accessibilityConfig,
 }: IUiAsyncTableProps<T>) => {
     const isSmall = variant === "small";
+
+    const handleItemClick = useCallback(
+        (item: T) => {
+            if (isItemClickable && !isItemClickable(item)) {
+                return;
+            }
+            onItemClick?.(item);
+        },
+        [onItemClick, isItemClickable],
+    );
+
     const handleColumnClick = useCallback(
         (key?: keyof T) => {
             if (key !== undefined) {
@@ -181,7 +201,7 @@ const useAsyncTable = <T extends { id: string } | { ref: ObjRef }>({
                     isSelected={isItemSelected(item)}
                     hasCheckbox={!!bulkActions}
                     isLarge={isLargeRow}
-                    onClick={onItemClick}
+                    onClick={onItemClick && isItemClickable?.(item) !== false ? onItemClick : undefined}
                     isFocused={isFocused}
                     focusedColumnIndex={focusedColumnIndex}
                     focusedElementRef={focusedItemRef}
@@ -195,6 +215,7 @@ const useAsyncTable = <T extends { id: string } | { ref: ObjRef }>({
             onItemSelect,
             isItemSelected,
             onItemClick,
+            isItemClickable,
             bulkActions,
             isLargeRow,
             accessibilityConfig,
@@ -246,6 +267,7 @@ const useAsyncTable = <T extends { id: string } | { ref: ObjRef }>({
         shouldLoadNextPage,
         onItemSelect,
         isItemSelected,
+        handleItemClick,
     };
 };
 

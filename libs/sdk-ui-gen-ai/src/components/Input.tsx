@@ -46,11 +46,8 @@ const msgs = defineMessages({
     placeholder: {
         id: "gd.gen-ai.input-placeholder",
     },
-    labelMac: {
-        id: "gd.gen-ai.input-label.mac",
-    },
-    labelWin: {
-        id: "gd.gen-ai.input-label.win",
+    label: {
+        id: "gd.gen-ai.input-label",
     },
 });
 
@@ -163,9 +160,7 @@ function InputComponent({ autofocus = false, canManage, canAnalyze, targetRef }:
                         <SyntaxHighlightingInput
                             className="gd-gen-ai-chat__input__mc"
                             placeholder={intl.formatMessage(msgs.placeholder)}
-                            label={
-                                isMac ? intl.formatMessage(msgs.labelMac) : intl.formatMessage(msgs.labelWin)
-                            }
+                            label={intl.formatMessage(msgs.label)}
                             value={value}
                             autocompletion={{
                                 aboveCursor: true,

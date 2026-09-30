@@ -103,6 +103,7 @@ export enum TigerFeaturesNames {
     EnableAlertOncePerInterval = "enableAlertOncePerInterval",
     EnableFiscalCalendars = "enableFiscalCalendars",
     EnableSecondGranularities = "enableSecondGranularities",
+    EnableImprovedMetricDateFilter = "enableImprovedMetricDateFilter",
     EnableDashboardFilterGroups = "enableDashboardFilterGroups",
     EnableDashboardTimezone = "enableDashboardTimezone",
     EnableMeasureValueFilterKD = "enableMeasureValueFilterKD",
@@ -121,7 +122,6 @@ export enum TigerFeaturesNames {
     EnableMekkoChart = "enableMekkoChart",
     EnableLineChartStyling = "enableLineChartStyling",
     EnableDonutDataLabels = "enableDonutDataLabels",
-    EnableAnalyticalDesignerRemoteModule = "enableShellApplication_analyticalDesigner",
     EnableDashboardSidebarResize = "enableDashboardSidebarResize",
     EnableExportTimeoutFix = "enableExportTimeoutFix",
     EnableAiAssistantEmbedding = "enableAiAssistantEmbedding",
@@ -236,6 +236,7 @@ export type ITigerFeatureFlags = {
     enableAlertOncePerInterval: (typeof FeatureFlagsValues)["enableAlertOncePerInterval"][number];
     enableFiscalCalendars: (typeof FeatureFlagsValues)["enableFiscalCalendars"][number];
     enableSecondGranularities: (typeof FeatureFlagsValues)["enableSecondGranularities"][number];
+    enableImprovedMetricDateFilter: (typeof FeatureFlagsValues)["enableImprovedMetricDateFilter"][number];
     enableDashboardFilterGroups: (typeof FeatureFlagsValues)["enableDashboardFilterGroups"][number];
     enableDashboardTimezone: (typeof FeatureFlagsValues)["enableDashboardTimezone"][number];
     enableMeasureValueFilterKD: (typeof FeatureFlagsValues)["enableMeasureValueFilterKD"][number];
@@ -254,7 +255,6 @@ export type ITigerFeatureFlags = {
     enableUserDataFiltersUi: (typeof FeatureFlagsValues)["enableUserDataFiltersUi"][number];
     enableEnhancedInsightPicker: (typeof FeatureFlagsValues)["enableEnhancedInsightPicker"][number];
     enableAiLlmAnthropicProvider: (typeof FeatureFlagsValues)["enableAiLlmAnthropicProvider"][number];
-    enableShellApplication_analyticalDesigner: (typeof FeatureFlagsValues)["enableShellApplication_analyticalDesigner"][number];
     enableDashboardSidebarResize: (typeof FeatureFlagsValues)["enableDashboardSidebarResize"][number];
     enableExportTimeoutFix: (typeof FeatureFlagsValues)["enableExportTimeoutFix"][number];
     enableDashboardPersistentFiltersAcrossTabs: (typeof FeatureFlagsValues)["enableDashboardPersistentFiltersAcrossTabs"][number];
@@ -365,6 +365,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAlertOncePerInterval: false,
     enableFiscalCalendars: true,
     enableSecondGranularities: true,
+    enableImprovedMetricDateFilter: false,
     enableDashboardFilterGroups: true,
     enableDashboardTimezone: false,
     enableMeasureValueFilterKD: true,
@@ -383,7 +384,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableUserDataFiltersUi: false,
     enableEnhancedInsightPicker: false,
     enableAiLlmAnthropicProvider: false,
-    enableShellApplication_analyticalDesigner: true,
     enableDashboardSidebarResize: true,
     enableExportTimeoutFix: false,
     enableDashboardPersistentFiltersAcrossTabs: false,
@@ -494,6 +494,7 @@ export const FeatureFlagsValues = {
     enableAlertOncePerInterval: [true, false] as const,
     enableFiscalCalendars: [true, false] as const,
     enableSecondGranularities: [true, false] as const,
+    enableImprovedMetricDateFilter: [true, false] as const,
     enableDashboardFilterGroups: [true, false] as const,
     enableMeasureValueFilterKD: [false, true] as const,
     enableDashboardTimezone: [true, false] as const,
@@ -512,7 +513,6 @@ export const FeatureFlagsValues = {
     enableUserDataFiltersUi: [true, false] as const,
     enableEnhancedInsightPicker: [true, false] as const,
     enableAiLlmAnthropicProvider: [true, false] as const,
-    enableShellApplication_analyticalDesigner: [true, false] as const,
     enableDashboardSidebarResize: [true, false] as const,
     enableExportTimeoutFix: [true, false] as const,
     enableDashboardPersistentFiltersAcrossTabs: [true, false] as const,

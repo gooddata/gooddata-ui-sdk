@@ -8,6 +8,7 @@ import { UiRestrictedPlaceholder } from "@gooddata/sdk-ui-kit";
 
 import { type CustomRestrictedPlaceholderComponent } from "../../dashboardContexts/types.js";
 import { type WidgetExportData } from "../../export/types.js";
+import { restrictedWidgetContentExportData } from "../../export/useExportData.js";
 import { DashboardItem } from "../../presentationComponents/DashboardItems/DashboardItem.js";
 import { DashboardItemVisualization } from "../../presentationComponents/DashboardItems/DashboardItemVisualization.js";
 
@@ -94,7 +95,10 @@ export function RestrictedPlaceholder({
                     // the wrapper the insight path also puts here: it is the positioned box the
                     // content's absolutely sized container resolves its 100% height against, and
                     // without it that box is the padded dash item, so the content overflows the tile
-                    <div className="visualization-content">
+                    <div
+                        className="visualization-content"
+                        {...(exportData ? restrictedWidgetContentExportData : {})}
+                    >
                         <Content width={clientWidth} height={clientHeight} />
                     </div>
                 )}

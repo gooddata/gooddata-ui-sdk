@@ -59,6 +59,7 @@ export const useAutomationService = (scope: AutomationsScope): IAutomationServic
                         .automations()
                         .getAutomationsQuery({
                             includeAutomationResult: params?.includeAutomationResult,
+                            includeUnavailableReferences: params?.includeUnavailableReferences,
                         })
                         .withSize(params?.pageSize)
                         .withPage(params?.page)

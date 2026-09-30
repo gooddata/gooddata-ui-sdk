@@ -62,7 +62,7 @@ export const WrappedTimepicker = memo(function WrappedTimepicker({
     overlayZIndex = 0,
     skipNormalizeTime = false,
     timeAnchor = TIME_ANCHOR,
-    timeFormat = undefined,
+    timeFormat,
     closeOnParentScroll,
 }: TimePickerProps) {
     const intl = useIntl();

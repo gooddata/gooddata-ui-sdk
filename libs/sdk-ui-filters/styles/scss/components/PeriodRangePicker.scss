@@ -24,21 +24,41 @@ $period-picker-shadow: 0 2px 5px 0 var(--gd-shadow-color-from-theme, rgba(31, 53
 
     // The shared root is just a layout row now - each field renders its own bordered box below (the two
     // <input>s already exist as separate DOM nodes; only the box chrome moved onto them), per the target
-    // design's two-separate-fields look.
+    // design's two-separate-fields look. Both columns stretch to the height of the taller one.
     .rc-picker {
         position: relative;
         display: flex;
-        align-items: center;
+        align-items: stretch;
         box-sizing: border-box;
         width: 100%;
         gap: 4px;
     }
 
+    // A column of the label and the field box; the border sits on the field box only, so it doesn't wrap the label.
     .rc-picker-input {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 0;
+        min-width: 0;
+    }
+
+    // Fills its column above the field box, gap included, with the text at the bottom. rc-picker focuses the
+    // start field on any click outside both inputs, so every click above a box has to land on its label. It
+    // also keeps both boxes level when one label wraps.
+    &__label {
+        display: flex;
+        flex: 1 0 auto;
+        align-items: flex-end;
+        padding-bottom: 4px;
+        color: kit-variables.$gd-medium-gray;
+        font-size: 13px;
+        cursor: pointer;
+    }
+
+    &__field {
         position: relative;
-        display: inline-flex;
+        display: flex;
         align-items: center;
-        flex: auto;
         box-sizing: border-box;
         padding: 0 10px;
         border: 1px solid kit-variables.$gd-border-color;
@@ -438,7 +458,7 @@ $period-picker-shadow: 0 2px 5px 0 var(--gd-shadow-color-from-theme, rgba(31, 53
     // ---------------------------------------------------------------------------------------------
 
     &.gd-period-range-picker-mobile {
-        .rc-picker-input > input {
+        .gd-period-range-picker__field > input {
             font-size: 16px; // Prevent iPhone zoom on focus
         }
     }

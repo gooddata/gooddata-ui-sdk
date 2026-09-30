@@ -157,6 +157,7 @@ import { ISortItem } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
 import { IThemeDefinition } from '@gooddata/sdk-model';
 import { IThemeMetadataObject } from '@gooddata/sdk-model';
+import type { IUnavailableReference } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
 import { IUserGroup } from '@gooddata/sdk-model';
 import { IUserSettings } from '@gooddata/sdk-model';
@@ -185,6 +186,7 @@ import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { OrganizationPermissionAssignment } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
+import { UnavailableReferenceReason } from '@gooddata/sdk-model';
 import { UserDataFilter } from '@gooddata/sdk-model';
 import { UserDataFilterDefinition } from '@gooddata/sdk-model';
 
@@ -1772,6 +1774,7 @@ export interface IGetAutomationsOptions {
 // @alpha
 export interface IGetAutomationsQueryOptions {
     includeAutomationResult?: boolean;
+    includeUnavailableReferences?: boolean;
 }
 
 // @public
@@ -2753,11 +2756,7 @@ export interface ITextExpressionToken {
 }
 
 // @alpha
-export interface IUnavailableDashboardReference {
-    reason: UnavailableReferenceReason;
-    ref: ObjRef;
-    type: ObjectType;
-}
+export type IUnavailableDashboardReference = IUnavailableReference;
 
 // @public
 export type IUpdateMetadataObjectMetaPayload = Partial<IMetadataObjectBase> & IMetadataObjectIdentity & {
@@ -3400,8 +3399,7 @@ export class TimeoutError extends AnalyticalBackendError {
     constructor(message: string, cause?: Error);
 }
 
-// @alpha
-export type UnavailableReferenceReason = "forbidden" | "notFound";
+export { UnavailableReferenceReason }
 
 // @public
 export class UnexpectedError extends AnalyticalBackendError {

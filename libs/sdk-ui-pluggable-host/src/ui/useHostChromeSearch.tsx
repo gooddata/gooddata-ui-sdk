@@ -51,9 +51,6 @@ export function useHostChromeSearch({
                 metadataTimeZone={features.settings.metadataTimeZone}
                 isTrial={isTrial}
                 enableUseGenAIChat={features.showChat}
-                useHostedAnalyticalDesigner={Boolean(
-                    features.settings.enableShellApplication_analyticalDesigner,
-                )}
                 useHostedDashboards={Boolean(features.settings.enableShellApplication_dashboards)}
                 onAskAiAssistant={onAskAiAssistant}
                 onEvent={handleSearchEvent}

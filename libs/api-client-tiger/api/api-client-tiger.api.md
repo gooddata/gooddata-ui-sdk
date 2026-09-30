@@ -3007,6 +3007,7 @@ interface AiAgentListItemResponse {
     'modifiedAt'?: string | null;
     // (undocumented)
     'name': string;
+    'skills'?: Array<AiSkillName>;
 }
 export { AiAgentListItemResponse }
 export { AiAgentListItemResponse as GenAiApiAgentListItemResponse }
@@ -7462,13 +7463,34 @@ export interface AiSingleChoiceControl {
 export type AiSingleChoiceControlTypeEnum = 'singleChoice';
 
 // @public
+export const AiSkillName: {
+    readonly ALERT: 'alert';
+    readonly ANOMALY_DETECTION: 'anomaly_detection';
+    readonly CLUSTERING: 'clustering';
+    readonly FORECASTING: 'forecasting';
+    readonly KEY_DRIVER_ANALYSIS: 'key_driver_analysis';
+    readonly METRIC: 'metric';
+    readonly SCHEDULE_EXPORT: 'schedule_export';
+    readonly VISUALIZATION: 'visualization';
+    readonly VISUALIZATION_SUMMARY: 'visualization_summary';
+    readonly DASHBOARD_SUMMARY: 'dashboard_summary';
+    readonly WHAT_IF_ANALYSIS: 'what_if_analysis';
+    readonly KNOWLEDGE: 'knowledge';
+    readonly DASHBOARD_BUILDER: 'dashboard_builder';
+    readonly DASHBOARD_EDITOR: 'dashboard_editor';
+};
+
+// @public (undocumented)
+export type AiSkillName = typeof AiSkillName[keyof typeof AiSkillName];
+
+// @public
 export interface AiSkillResponse {
     // (undocumented)
     'description': string;
     // (undocumented)
     'examples': Array<string>;
     // (undocumented)
-    'name': string;
+    'name': AiSkillName;
     // (undocumented)
     'tags': Array<string>;
     // (undocumented)

@@ -1036,8 +1036,7 @@ $dataset_color: #952f8e;
     &--dashboard {
         display: grid;
 
-        .gd-gen-ai-chat__conversation__item__content-alertProposal-header,
-        .gd-gen-ai-chat__conversation__item__content-dashboard-header {
+        .gd-gen-ai-chat__conversation__item__content-alertProposal-header {
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -1059,8 +1058,7 @@ $dataset_color: #952f8e;
             color: kit-variables.$gd-color-link;
         }
 
-        .gd-gen-ai-chat__conversation__item__content-alertProposal-frame,
-        .gd-gen-ai-chat__conversation__item__content-dashboard-frame {
+        .gd-gen-ai-chat__conversation__item__content-alertProposal-frame {
             display: flex;
             max-height: 500px;
             padding: 10px;
@@ -1078,14 +1076,12 @@ $dataset_color: #952f8e;
                 margin: 0;
             }
 
-            .gd-gen-ai-chat__conversation__item__content-alertProposal-item-title,
-            .gd-gen-ai-chat__conversation__item__content-dashboard-item-title {
+            .gd-gen-ai-chat__conversation__item__content-alertProposal-item-title {
                 display: inline-block;
                 margin-right: 5px;
             }
 
-            .gd-gen-ai-chat__conversation__item__content-alertProposal-item-description,
-            .gd-gen-ai-chat__conversation__item__content-dashboard-item-description {
+            .gd-gen-ai-chat__conversation__item__content-alertProposal-item-description {
                 display: inline;
 
                 p {
@@ -1110,8 +1106,7 @@ $dataset_color: #952f8e;
                 color: kit-variables.$gd-color-state-blank;
             }
 
-            .gd-gen-ai-chat__conversation__item__content-alertProposal-item-buttons,
-            .gd-gen-ai-chat__conversation__item__content-dashboard-item-buttons {
+            .gd-gen-ai-chat__conversation__item__content-alertProposal-item-buttons {
                 display: flex;
                 align-items: center;
                 justify-content: flex-end;
@@ -1138,6 +1133,53 @@ $dataset_color: #952f8e;
 
             .alertProposal-operand {
                 display: inline-block;
+            }
+        }
+
+        .gd-gen-ai-chat__conversation__item__content-dashboard-frame {
+            display: flex;
+            max-height: 500px;
+            padding: 10px;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            align-self: stretch;
+            border-radius: 8px;
+            border: 1px solid kit-variables.$gd-border-color;
+            background: kit-variables.$gd-color-white;
+            overflow-y: auto;
+            overscroll-behavior: auto;
+
+            .gd-gen-ai-chat__conversation__item__content-dashboard-icon {
+                flex-grow: 0;
+                flex-shrink: 0;
+            }
+
+            .gd-gen-ai-chat__conversation__item__content-dashboard-content {
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+
+                &-title {
+                    align-self: stretch;
+                    color: var(--gd-palette-complementary-8);
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: 23px;
+                }
+
+                &-date {
+                    color: var(--gd-palette-complementary-7);
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: normal;
+                }
+            }
+
+            .gd-gen-ai-chat__conversation__item__content-dashboard-item-buttons {
+                flex-grow: 0;
             }
         }
     }
@@ -1378,6 +1420,10 @@ $dataset_color: #952f8e;
             .gd-gen-ai-chat__conversation__visualization__save button:not(:focus):not(:focus-visible) {
                 opacity: 1;
             }
+        }
+
+        &:empty {
+            display: none;
         }
     }
 

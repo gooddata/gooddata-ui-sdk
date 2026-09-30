@@ -3,7 +3,7 @@
 import { type KeyboardEvent, type MouseEvent, useMemo } from "react";
 
 import cx from "classnames";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import { useSelector } from "react-redux";
 
 import type { IDashboard, IInsight } from "@gooddata/sdk-model";
@@ -25,7 +25,7 @@ export type ConversationDashboardContentProps = {
 };
 
 export function ConversationDashboardContent(props: ConversationDashboardContentProps) {
-    const { className, dashboard, insights, saved } = props;
+    const { className, dashboard, insights, saved, message } = props;
     const intl = useIntl();
     const config = useConfig();
 
@@ -80,52 +80,50 @@ export function ConversationDashboardContent(props: ConversationDashboardContent
 
     return (
         <div className={classNames}>
-            <div className="gd-gen-ai-chat__conversation__item__content-dashboard-header">
-                <UiIcon
-                    type="dashboard"
-                    size={14}
-                    color="complementary-6"
-                    backgroundSize={26}
-                    backgroundColor="complementary-2"
-                />
-                <FormattedMessage id="gd.gen-ai.dashboard.title" />
-            </div>
             <div className="gd-gen-ai-chat__conversation__item__content-dashboard-frame">
-                <ul>
-                    <li className="gd-gen-ai-chat__conversation__item__content-dashboard-item">
-                        <div className="gd-gen-ai-chat__conversation__item__content-dashboard-item-title">
-                            {intl.formatMessage({ id: "gd.gen-ai.dashboard.name" })}:
-                        </div>
-                        <div
-                            className={cx(
-                                "gd-gen-ai-chat__conversation__item__content-dashboard-item-description",
-                                "gd-gen-ai-chat__conversation__item__content-dashboard-item-bold",
-                            )}
-                        >
-                            <p>{dashboard.title}</p>
-                        </div>
-                    </li>
-                    <li className="gd-gen-ai-chat__conversation__item__content-dashboard-item">
-                        <div className="gd-gen-ai-chat__conversation__item__content-dashboard-item-title">
-                            {intl.formatMessage({ id: "gd.gen-ai.dashboard.description" })}:
-                        </div>
-                        <div
-                            className={
-                                "gd-gen-ai-chat__conversation__item__content-dashboard-item-description"
-                            }
-                        >
-                            <p>{dashboard.description}</p>
-                        </div>
-                    </li>
-                </ul>
+                <div className="gd-gen-ai-chat__conversation__item__content-dashboard-icon">
+                    <UiIcon
+                        type="dashboard"
+                        size={14}
+                        color="complementary-6"
+                        backgroundSize={26}
+                        backgroundColor="complementary-2"
+                    />
+                </div>
+                <div className="gd-gen-ai-chat__conversation__item__content-dashboard-content">
+                    <div className="gd-gen-ai-chat__conversation__item__content-dashboard-content-title">
+                        {dashboard.title}
+                    </div>
+                    <div className="gd-gen-ai-chat__conversation__item__content-dashboard-content-date">
+                        {Intl.DateTimeFormat(intl.locale, {
+                            dateStyle: "medium",
+                            timeStyle: "short",
+                        }).format(showDate(dashboard.created, message.createdAt))}
+                    </div>
+                </div>
                 <div className="gd-gen-ai-chat__conversation__item__content-dashboard-item-buttons">
                     <UiButton
                         label={intl.formatMessage({ id: "gd.gen-ai.dashboard.open-dashboard" })}
-                        variant="tertiary"
+                        variant="secondary"
                         onClick={handleOpenDashboard}
                     />
                 </div>
             </div>
         </div>
     );
+}
+
+function showDate(...args: (string | number)[]): Date {
+    const dates = args.map((arg) => {
+        if (typeof arg === "string") {
+            if (!isNaN(Date.parse(arg))) {
+                return new Date(arg);
+            }
+        }
+        if (typeof arg === "number") {
+            return new Date(arg);
+        }
+        return null;
+    });
+    return dates.find((date) => date !== null) ?? new Date();
 }
