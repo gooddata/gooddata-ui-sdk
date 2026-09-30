@@ -2,7 +2,7 @@
 
 import { type ReactNode, useState } from "react";
 
-import { act, fireEvent, render, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { parse } from "date-fns";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -150,6 +150,10 @@ function describedByText(input: HTMLInputElement): string | undefined {
     return id ? (document.getElementById(id)?.textContent ?? undefined) : undefined;
 }
 
+function hintText(): string {
+    return document.querySelector(".gd-period-range-picker__hint")?.textContent ?? "";
+}
+
 /**
  * Once opened at least once, rc-picker keeps its panel container mounted (for its own close transition) and
  * merely toggles a "hidden" class on the dropdown wrapper around it - so an already-opened calendar's closed
@@ -195,13 +199,11 @@ describe("PeriodRangePicker", () => {
         it("renders one leading icon inside each field box, and none trailing the row", () => {
             renderPicker("GDC.time.month");
 
-            const fieldBoxes = Array.from(document.querySelectorAll(".rc-picker-input"));
+            const fieldBoxes = Array.from(document.querySelectorAll(".gd-period-range-picker__field"));
             expect(fieldBoxes).toHaveLength(2);
             for (const box of fieldBoxes) {
                 const icon = box.querySelector(".gd-icon-calendar");
                 expect(icon).toBeInTheDocument();
-                // Leading, not trailing: rc-picker renders our component ahead of nothing else in the box,
-                // so the icon has to be the first child for the input text to sit after it.
                 expect(box.firstElementChild).toBe(icon);
                 expect(icon).toHaveAttribute("aria-hidden", "true");
             }
@@ -215,6 +217,15 @@ describe("PeriodRangePicker", () => {
                 '.s-period-range-picker input, .s-period-range-picker button, .s-period-range-picker [tabindex]:not([tabindex="-1"])',
             );
             expect(focusable).toHaveLength(2);
+        });
+    });
+
+    describe("placeholder", () => {
+        it.each(granularities)("shows the same placeholder in both empty fields for %s", (granularity) => {
+            renderPicker(granularity, {});
+            const [startInput, endInput] = getFields();
+            expect(startInput).toHaveAttribute("placeholder", "Type or select");
+            expect(endInput).toHaveAttribute("placeholder", "Type or select");
         });
     });
 
@@ -239,43 +250,39 @@ describe("PeriodRangePicker", () => {
     describe("format hint worked example", () => {
         const FIXED_RANGE: IPeriodRange = { from: "2026-03-01", to: "2026-05-31" };
 
-        function hintText(): string {
-            return document.querySelector(".gd-period-range-picker__hint")?.textContent ?? "";
-        }
-
-        it("keeps the Day hint exactly as before - no worked example", () => {
+        it("shows the Day hint with no worked example", () => {
             renderPicker("GDC.time.date", FIXED_RANGE);
-            expect(hintText()).toBe("Use date format yyyy-MM-dd.");
+            expect(hintText()).toBe("Date format: YYYY-MM-dd");
         });
 
         it("adds a worked example to the Week hint", () => {
             renderPicker("GDC.time.week_us", FIXED_RANGE);
-            expect(hintText()).toBe("Use date format w/yyyy (e.g. 13/2026).");
+            expect(hintText()).toBe("Date format: W/YYYY (e.g. 13/2026)");
         });
 
         it("adds a worked example to the Month hint", () => {
             renderPicker("GDC.time.month", FIXED_RANGE);
-            expect(hintText()).toBe("Use date format M/yyyy (e.g. 3/2026).");
+            expect(hintText()).toBe("Date format: M/YYYY (e.g. 3/2026)");
         });
 
         it("adds a worked example to the Quarter hint", () => {
             renderPicker("GDC.time.quarter", FIXED_RANGE);
-            expect(hintText()).toBe("Use date format QQQ/yyyy (e.g. Q1/2026).");
+            expect(hintText()).toBe("Date format: Q/YYYY (e.g. Q1/2026)");
         });
 
         it("adds a worked example to the Year hint", () => {
             renderPicker("GDC.time.year", FIXED_RANGE);
-            expect(hintText()).toBe("Use date format yyyy (e.g. 2026).");
+            expect(hintText()).toBe("Date format: YYYY (e.g. 2026)");
         });
 
-        it("includes the worked example in the invalid-date error for a non-Day granularity", () => {
-            renderPicker("GDC.time.month", { from: undefined, to: undefined });
-            openPicker();
-            const [startInput] = getFields();
-            typeIntoField(startInput, "garbage");
-            expect(describedByText(startInput)).toBe(
-                "Error: Invalid start date — use M/yyyy format (e.g. 3/2026).",
-            );
+        it("shows a Day hint given an ICU-style pattern with year rewritten for display", () => {
+            renderPicker("GDC.time.date", FIXED_RANGE, false, undefined, "M/d/y");
+            expect(hintText()).toBe("Date format: M/d/YYYY");
+        });
+
+        it("shows a Day hint with a quoted literal as the text to type", () => {
+            renderPicker("GDC.time.date", FIXED_RANGE, false, undefined, "yyyy-'test'-MM-dd");
+            expect(hintText()).toBe("Date format: YYYY-test-MM-dd");
         });
     });
 
@@ -340,7 +347,7 @@ describe("PeriodRangePicker", () => {
             openPicker();
             const [startInput] = getFields();
             typeIntoField(startInput, "garbage");
-            expect(describedByText(startInput)).toContain("Invalid start date");
+            expect(describedByText(startInput)).toContain("Invalid start month");
             expect(getPreview()).toHaveTextContent("Preview: \u2013");
         });
 
@@ -356,7 +363,7 @@ describe("PeriodRangePicker", () => {
             openPicker();
             const [startInput] = getFields();
             typeIntoField(startInput, "9/2026");
-            expect(describedByText(startInput)).toContain("set a date before the end date");
+            expect(describedByText(startInput)).toContain("end period can't be before the start period");
             expect(getPreview()).toHaveTextContent("Preview: \u2013");
         });
 
@@ -952,7 +959,7 @@ describe("PeriodRangePicker", () => {
             expect(startInput.value).toBe("2026-03-01");
             expect(endInput.value).toBe("2026-05-31");
             // The hint must agree with what the field itself actually accepts.
-            expect(describedByText(startInput)).toContain("yyyy-MM-dd");
+            expect(describedByText(startInput)).toContain("YYYY-MM-dd");
         });
 
         it("flags invalid typed input as aria-invalid and clears it once corrected", () => {
@@ -1188,12 +1195,35 @@ describe("PeriodRangePicker", () => {
     });
 
     describe("accessibility", () => {
-        it("labels the start and end fields distinctly for screen readers", () => {
-            renderPicker("GDC.time.date");
+        it.each([
+            ["GDC.time.date", "Start date", "End date"],
+            ["GDC.time.week_us", "Start week", "End week"],
+            ["GDC.time.month", "Start month", "End month"],
+            ["GDC.time.quarter", "Start quarter", "End quarter"],
+            ["GDC.time.year", "Start year", "End year"],
+        ] as const)(
+            "labels the %s fields visibly, as their accessible name",
+            (granularity, startLabel, endLabel) => {
+                renderPicker(granularity);
+                const [startInput, endInput] = getFields();
+                expect(screen.getByRole("textbox", { name: startLabel })).toBe(startInput);
+                expect(screen.getByRole("textbox", { name: endLabel })).toBe(endInput);
+            },
+        );
+
+        it("focuses the end field, not the start field, when its label is clicked from outside the picker", () => {
+            renderPicker("GDC.time.month", { from: undefined, to: undefined });
             const [startInput, endInput] = getFields();
-            expect(startInput).toHaveAttribute("aria-label");
-            expect(endInput).toHaveAttribute("aria-label");
-            expect(startInput.getAttribute("aria-label")).not.toBe(endInput.getAttribute("aria-label"));
+            const endLabel = screen.getByText("End month");
+            // Unlike a browser, the test DOM clicks the control before React sees the label click; cancel it.
+            endLabel.addEventListener("click", (e) => e.preventDefault());
+
+            fireEvent.mouseDown(endLabel);
+            fireEvent.click(endLabel);
+            fireEvent.click(endInput);
+
+            expect(document.activeElement).toBe(endInput);
+            expect(startInput).toHaveAttribute("aria-invalid", "false");
         });
 
         it("marks the start and end fields with a date-range attribute", () => {
@@ -1436,15 +1466,15 @@ describe("PeriodRangePicker", () => {
             expect(dayHint.id).toBeTruthy();
             expect(monthHint.id).toBeTruthy();
             expect(dayHint.id).not.toBe(monthHint.id);
-            expect(dayHint.textContent).toContain("yyyy-MM-dd");
-            expect(monthHint.textContent).not.toContain("yyyy-MM-dd");
+            expect(dayHint.textContent).toContain("YYYY-MM-dd");
+            expect(monthHint.textContent).not.toContain("YYYY-MM-dd");
 
             const [dayStartInput, dayEndInput] = fieldsIn(dayContainer);
             const [monthStartInput, monthEndInput] = fieldsIn(monthContainer);
             expect(dayStartInput.getAttribute("aria-describedby")).toBe(dayHint.id);
             expect(monthStartInput.getAttribute("aria-describedby")).toBe(monthHint.id);
-            expect(describedByText(dayStartInput)).toContain("yyyy-MM-dd");
-            expect(describedByText(monthStartInput)).not.toContain("yyyy-MM-dd");
+            expect(describedByText(dayStartInput)).toContain("YYYY-MM-dd");
+            expect(describedByText(monthStartInput)).not.toContain("YYYY-MM-dd");
 
             // Errors: blur each empty start field to trigger the "empty" error state, then confirm the
             // rendered error ids are likewise unique and each field resolves to a node inside its OWN
@@ -1464,7 +1494,7 @@ describe("PeriodRangePicker", () => {
         });
     });
 
-    // Exercises getFieldErrorMessage's ERROR_MESSAGE_IDS lookup directly - the "accessibility" cases above
+    // Exercises the error message id lookup directly - the "accessibility" cases above
     // only assert *that* a message is shown, not the exact text nor that it differs correctly by side.
     describe("field error messages", () => {
         it("shows the empty-date message immediately after clearing a field that held a valid value, before any blur", () => {
@@ -1506,7 +1536,7 @@ describe("PeriodRangePicker", () => {
             openPicker();
             const [startInput] = getFields();
             typeIntoField(startInput, "not-a-date");
-            expect(describedByText(startInput)).toBe("Error: Invalid start date — use dd/MM/yyyy format.");
+            expect(describedByText(startInput)).toBe("Error: Invalid start date — use dd/MM/YYYY format.");
         });
 
         it("shows the invalid-date message with the active format on an unparseable end field", () => {
@@ -1514,7 +1544,7 @@ describe("PeriodRangePicker", () => {
             openPicker();
             const [, endInput] = getFields();
             typeIntoField(endInput, "not-a-date");
-            expect(describedByText(endInput)).toBe("Error: Invalid end date — use dd/MM/yyyy format.");
+            expect(describedByText(endInput)).toBe("Error: Invalid end date — use dd/MM/YYYY format.");
         });
 
         it("keeps the invalid-date message after blurring a still-garbled start field", () => {
@@ -1523,29 +1553,78 @@ describe("PeriodRangePicker", () => {
             const [startInput, endInput] = getFields();
             typeIntoField(startInput, "garbage");
             tabToNextField(startInput, endInput);
-            expect(describedByText(startInput)).toBe("Error: Invalid start date — use yyyy-MM-dd format.");
+            expect(describedByText(startInput)).toBe("Error: Invalid start date — use YYYY-MM-dd format.");
         });
 
-        it("shows the start-after-end message on the start field when start is edited after the end date", () => {
+        it("shows the order message on the start field when start is edited after the end date", () => {
             renderPicker("GDC.time.date", { from: "2026-03-01", to: "2026-03-05" });
             openPicker();
             const [startInput] = getFields();
             typeIntoField(startInput, "2026-03-10");
             expect(describedByText(startInput)).toBe(
-                "Error: Invalid start date — set a date before the end date.",
+                "Error: The end period can't be before the start period.",
             );
         });
 
-        it("shows the end-before-start message on the end field when end is edited before the start date", () => {
+        it("shows the order message on the end field when end is edited before the start date", () => {
             renderPicker("GDC.time.date", { from: "2026-03-10", to: "2026-03-20" });
             openPicker();
             const [, endInput] = getFields();
             fireEvent.focus(endInput);
             typeIntoField(endInput, "2026-03-01");
-            expect(describedByText(endInput)).toBe(
-                "Error: Invalid end date — set a date after the start date.",
-            );
+            expect(describedByText(endInput)).toBe("Error: The end period can't be before the start period.");
         });
+
+        it.each([
+            ["GDC.time.week_us", "week", "W/YYYY", "13/2026"],
+            ["GDC.time.month", "month", "M/YYYY", "3/2026"],
+            ["GDC.time.quarter", "quarter", "Q/YYYY", "Q1/2026"],
+            ["GDC.time.year", "year", "YYYY", "2026"],
+        ] as const)(
+            "names the %s fields by their unit in the empty and invalid messages",
+            (granularity, unit, displayFormat, example) => {
+                renderPicker(granularity, { from: "2026-03-01", to: "2026-05-31" });
+                openPicker();
+                const [startInput, endInput] = getFields();
+
+                typeIntoField(startInput, "");
+                typeIntoField(endInput, "");
+                expect(describedByText(startInput)).toBe(
+                    `Error: Start ${unit} is empty — enter a valid ${unit} to continue.`,
+                );
+                expect(describedByText(endInput)).toBe(
+                    `Error: End ${unit} is empty — enter a valid ${unit} to continue.`,
+                );
+
+                typeIntoField(startInput, "garbage");
+                typeIntoField(endInput, "garbage");
+                expect(describedByText(startInput)).toBe(
+                    `Error: Invalid start ${unit} — use ${displayFormat} format (e.g. ${example}).`,
+                );
+                expect(describedByText(endInput)).toBe(
+                    `Error: Invalid end ${unit} — use ${displayFormat} format (e.g. ${example}).`,
+                );
+            },
+        );
+
+        it.each(granularities)(
+            "shows the worked example in the invalid messages exactly when the %s hint does",
+            (granularity) => {
+                const workedExample = (text: string | undefined) =>
+                    /\(e\.g\. (.+)\)\.?$/.exec(text ?? "")?.[1];
+                renderPicker(granularity, { from: undefined, to: undefined });
+                openPicker();
+                const [startInput, endInput] = getFields();
+                const hintExample = workedExample(hintText());
+
+                typeIntoField(startInput, "garbage");
+                typeIntoField(endInput, "garbage");
+                for (const message of [describedByText(startInput), describedByText(endInput)]) {
+                    expect(message).not.toContain("{");
+                    expect(workedExample(message)).toBe(hintExample);
+                }
+            },
+        );
     });
 
     describe("controlled parent round-trip", () => {

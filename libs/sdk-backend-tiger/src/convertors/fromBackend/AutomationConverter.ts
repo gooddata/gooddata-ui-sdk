@@ -30,6 +30,7 @@ import {
     type MeasureItem,
     type RangeWrapper,
     type RelativeWrapper,
+    type RestrictedObject,
 } from "@gooddata/api-client-tiger";
 import {
     type DateFilterGranularity,
@@ -73,6 +74,7 @@ import { fixNumber } from "../../utils/fixNumber.js";
 import { convertFilter } from "./afm/FilterConverter.js";
 import { convertMeasure } from "./afm/MeasureConverter.js";
 import { convertAttribute } from "./AttributeConvertor.js";
+import { resolveAutomationUnavailableReferences } from "./AutomationRestrictedReferencesConverter.js";
 import {
     convertDashboardTabularExportRequest,
     convertExportDefinitionMdObject as convertExportDefinitionMdObjectFromBackend,
@@ -209,6 +211,7 @@ const convertAutomationResult = (
 export function convertAutomation(
     automation: JsonApiAutomationOutWithLinks | JsonApiWorkspaceAutomationOutWithLinks,
     included: JsonApiAutomationOutIncludes[],
+    restricted?: RestrictedObject[],
 ): IAutomationMetadataObject {
     const { id, attributes = {}, relationships = {} } = automation;
     const {
@@ -296,6 +299,8 @@ export function convertAutomation(
               metadata,
           }
         : {};
+    const unavailable = resolveAutomationUnavailableReferences(automation, restricted);
+    const unavailableObj = unavailable ? { unavailable } : {};
 
     return {
         // Core
@@ -303,6 +308,7 @@ export function convertAutomation(
         ...evaluationModeObj,
         ...alertObj,
         ...metadataObj,
+        ...unavailableObj,
         // Common metadata object properties
         type: "automation",
         id,
@@ -337,7 +343,7 @@ export const convertAutomationListToAutomations = (
     automationList: JsonApiAutomationOutList,
 ): IAutomationMetadataObject[] => {
     return automationList.data.map((automationObject) =>
-        convertAutomation(automationObject, automationList.included ?? []),
+        convertAutomation(automationObject, automationList.included ?? [], automationList.meta?.restricted),
     );
 };
 

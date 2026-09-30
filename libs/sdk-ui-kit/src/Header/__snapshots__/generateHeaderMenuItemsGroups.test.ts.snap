@@ -11,7 +11,7 @@ exports[`generateHeaderMenuItemsGroups > should return absolute paths for Panthe
     },
     {
       "className": "s-menu-analyze",
-      "href": "https://cdnUrl/analyze/#/TestWorkspaceId/reportId/edit",
+      "href": "https://cdnUrl/workspace/TestWorkspaceId/analyze/#/reportId/edit",
       "isActiveByStartWith": undefined,
       "key": "gs.header.analyze",
     },
@@ -42,7 +42,7 @@ exports[`generateHeaderMenuItemsGroups > should return correct absolute paths fo
     },
     {
       "className": "s-menu-analyze",
-      "href": "https://cdnUr/analyze/#/TestWorkspaceId/reportId/edit",
+      "href": "https://cdnUr/workspace/TestWorkspaceId/analyze/#/reportId/edit",
       "isActiveByStartWith": undefined,
       "key": "gs.header.analyze",
     },
@@ -73,7 +73,7 @@ exports[`generateHeaderMenuItemsGroups > should return relative paths for Panthe
     },
     {
       "className": "s-menu-analyze",
-      "href": "/analyze/#/TestWorkspaceId/reportId/edit",
+      "href": "/workspace/TestWorkspaceId/analyze/#/reportId/edit",
       "isActiveByStartWith": undefined,
       "key": "gs.header.analyze",
     },

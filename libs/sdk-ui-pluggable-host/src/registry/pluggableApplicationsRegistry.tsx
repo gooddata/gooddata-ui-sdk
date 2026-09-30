@@ -149,7 +149,7 @@ function toPluggableApplicationOrganizationPermissions(
     };
 }
 
-// Forces the two shell flags on. A flag source that cannot be reached resolves them false, which
+// Forces the dashboards shell flag on. A flag source that cannot be reached resolves it false, which
 // leaves only the legacy external twin eligible; route matching skips external apps, so an embedded
 // or export URL would then match nothing.
 function settingsForRequirements(ctx: IPlatformContext): IPlatformContext["settings"] {
@@ -159,7 +159,6 @@ function settingsForRequirements(ctx: IPlatformContext): IPlatformContext["setti
     return {
         ...ctx.settings,
         enableShellApplication_dashboards: true,
-        enableShellApplication_analyticalDesigner: true,
     };
 }
 

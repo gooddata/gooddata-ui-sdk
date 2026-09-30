@@ -42,6 +42,11 @@ export interface IUiAsyncTableProps<T extends { id: string } | { ref: ObjRef }> 
     totalItemsCount?: number;
     columns: Array<IUiAsyncTableColumn<T>>;
     onItemClick?: (item: T) => void;
+    /**
+     * Whether the row reacts to `onItemClick` by mouse or keyboard. Default: every row does.
+     * A non-clickable row has no pointer cursor; its menu and checkbox still work.
+     */
+    isItemClickable?: (item: T) => boolean;
     scrollToIndex?: number;
 
     //default: add up all column widths
@@ -123,6 +128,10 @@ export interface IUiAsyncTableColumn<T> {
     //only affects getTextContent
     textColor?: ThemeColor;
     bold?: boolean;
+    /**
+     * Whether the item's text is shown locked (dimmed); for multi-line content, only its first line.
+     */
+    isLocked?: (item: T) => boolean;
     sortable?: boolean;
     align?: "left" | "center" | "right";
     getAccessibilityConfig?: (item: T) => IUiAsyncTableColumnAccessibilityConfig;

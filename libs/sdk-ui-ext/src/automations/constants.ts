@@ -205,6 +205,10 @@ export const AUTOMATION_ICON_CONFIGS: Record<string, IUiIconProps> = {
         color: "complementary-6",
         size: 16,
     },
+    restricted: {
+        type: "lock",
+        ...titleIconProps,
+    },
     SUCCESS: {
         type: "checkCircle",
         color: "success",

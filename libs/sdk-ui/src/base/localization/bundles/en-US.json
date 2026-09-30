@@ -1471,6 +1471,38 @@
         "text": "End date",
         "crowdinContext": "Displayed as label of input where user enters a date that marks the end of date range."
     },
+    "filters.staticPeriod.weekFrom": {
+        "text": "Start week",
+        "crowdinContext": "Displayed as label of input where user enters the week that marks the start of the period range."
+    },
+    "filters.staticPeriod.weekTo": {
+        "text": "End week",
+        "crowdinContext": "Displayed as label of input where user enters the week that marks the end of the period range."
+    },
+    "filters.staticPeriod.monthFrom": {
+        "text": "Start month",
+        "crowdinContext": "Displayed as label of input where user enters the month that marks the start of the period range."
+    },
+    "filters.staticPeriod.monthTo": {
+        "text": "End month",
+        "crowdinContext": "Displayed as label of input where user enters the month that marks the end of the period range."
+    },
+    "filters.staticPeriod.quarterFrom": {
+        "text": "Start quarter",
+        "crowdinContext": "Displayed as label of input where user enters the quarter that marks the start of the period range."
+    },
+    "filters.staticPeriod.quarterTo": {
+        "text": "End quarter",
+        "crowdinContext": "Displayed as label of input where user enters the quarter that marks the end of the period range."
+    },
+    "filters.staticPeriod.yearFrom": {
+        "text": "Start year",
+        "crowdinContext": "Displayed as label of input where user enters the year that marks the start of the period range."
+    },
+    "filters.staticPeriod.yearTo": {
+        "text": "End year",
+        "crowdinContext": "Displayed as label of input where user enters the year that marks the end of the period range."
+    },
     "filters.staticPeriod.timeTo": {
         "text": "End time",
         "crowdinContext": "Displayed as label of input where user enters a time that marks the end of date range."
@@ -1483,9 +1515,17 @@
         "text": "Use date format {format}.",
         "crowdinContext": "Date input field hint. The {format} placeholder shows the expected date format pattern (e.g., 'MM/DD/YYYY')."
     },
+    "filters.staticPeriod.dateFormatLabel": {
+        "text": "Date format: {format}",
+        "crowdinContext": "Short label under the period range picker's Day fields naming the accepted date pattern; {format} is a pattern such as 'M/d/YYYY' or 'dd/MM/YYYY'."
+    },
     "filters.staticPeriod.dateFormatHintWithExample": {
-        "text": "Use date format {format} (e.g. {example}).",
-        "crowdinContext": "Date input field hint for the period range picker's Week/Month/Quarter/Year granularities. The {format} placeholder shows the expected date format pattern (e.g., 'M/yyyy'), and {example} shows a worked example of a valid value in that format (e.g., '3/2026')."
+        "text": "Date format: {format} (e.g. {example})",
+        "crowdinContext": "Date input field hint for the period range picker's Week/Month/Quarter/Year granularities. The {format} placeholder shows the expected date format pattern (e.g., 'M/YYYY'), and {example} shows a worked example of a valid value in that format (e.g., '3/2026')."
+    },
+    "filters.staticPeriod.placeholder": {
+        "text": "Type or select",
+        "crowdinContext": "Placeholder shown in the empty start and end inputs of the static period range picker, telling users they can type a period or select it from the calendar."
     },
     "filters.staticPeriod.rangePreview": {
         "text": "Preview: {range}",
@@ -1793,11 +1833,7 @@
     },
     "filters.staticPeriod.errors.invalidStartDate": {
         "text": "Error: Invalid start date — use {format} format.",
-        "crowdinContext": "Placeholder '{format}' is used for showing date format. Example 'Error: Start date is not in MM/dd/yyyy format'."
-    },
-    "filters.staticPeriod.errors.invalidStartDateWithExample": {
-        "text": "Error: Invalid start date — use {format} format (e.g. {example}).",
-        "crowdinContext": "Shown for the period range picker's Week/Month/Quarter/Year granularities. Placeholder '{format}' shows the expected date format (e.g. 'M/yyyy'), and '{example}' shows a worked example of a valid value in that format (e.g. '3/2026')."
+        "crowdinContext": "Shown in the date filter's absolute range form when the typed start date is not a valid date. Placeholder '{format}' shows the expected date format (e.g. 'dd/MM/YYYY'). Example: 'Error: Invalid start date — use dd/MM/YYYY format.'"
     },
     "filters.staticPeriod.errors.startDateAfterEndDate": {
         "text": "Error: Invalid start date — set a date before the end date.",
@@ -1813,11 +1849,7 @@
     },
     "filters.staticPeriod.errors.invalidEndDate": {
         "text": "Error: Invalid end date — use {format} format.",
-        "crowdinContext": "Placeholder '{format}' is used for showing date format. Example 'Error: End date is not in MM/dd/yyyy format'."
-    },
-    "filters.staticPeriod.errors.invalidEndDateWithExample": {
-        "text": "Error: Invalid end date — use {format} format (e.g. {example}).",
-        "crowdinContext": "Shown for the period range picker's Week/Month/Quarter/Year granularities. Placeholder '{format}' shows the expected date format (e.g. 'M/yyyy'), and '{example}' shows a worked example of a valid value in that format (e.g. '3/2026')."
+        "crowdinContext": "Shown in the date filter's absolute range form when the typed end date is not a valid date. Placeholder '{format}' shows the expected date format (e.g. 'dd/MM/YYYY'). Example: 'Error: Invalid end date — use dd/MM/YYYY format.'"
     },
     "filters.staticPeriod.errors.endDateBeforeStartDate": {
         "text": "Error: Invalid end date — set a date after the start date.",
@@ -1826,6 +1858,74 @@
     "filters.staticPeriod.errors.endTimeBeforeStartTime": {
         "text": "Error: Invalid end time — set a time after the start time.",
         "crowdinContext": "This error is displayed once there is a datetime range and End time is before Start time."
+    },
+    "filters.staticPeriod.errors.endPeriodBeforeStartPeriod": {
+        "text": "Error: The end period can't be before the start period.",
+        "crowdinContext": "Shown in the period range picker, under whichever of the start and end inputs the user edited last, when the end is before the start. Used for every granularity (day, week, month, quarter, year), so it names no unit."
+    },
+    "filters.staticPeriod.errors.emptyStartWeek": {
+        "text": "Error: Start week is empty — enter a valid week to continue.",
+        "crowdinContext": "Shown in the period range picker, under the 'Start week' input, when the user left it empty."
+    },
+    "filters.staticPeriod.errors.emptyEndWeek": {
+        "text": "Error: End week is empty — enter a valid week to continue.",
+        "crowdinContext": "Shown in the period range picker, under the 'End week' input, when the user left it empty."
+    },
+    "filters.staticPeriod.errors.invalidStartWeekWithExample": {
+        "text": "Error: Invalid start week — use {format} format (e.g. {example}).",
+        "crowdinContext": "Shown in the period range picker, under the 'Start week' input, when the typed value is not a valid week. Placeholder '{format}' shows the expected format (e.g. 'W/YYYY'), and '{example}' shows a worked example of a valid value in that format (e.g. '13/2026')."
+    },
+    "filters.staticPeriod.errors.invalidEndWeekWithExample": {
+        "text": "Error: Invalid end week — use {format} format (e.g. {example}).",
+        "crowdinContext": "Shown in the period range picker, under the 'End week' input, when the typed value is not a valid week. Placeholder '{format}' shows the expected format (e.g. 'W/YYYY'), and '{example}' shows a worked example of a valid value in that format (e.g. '13/2026')."
+    },
+    "filters.staticPeriod.errors.emptyStartMonth": {
+        "text": "Error: Start month is empty — enter a valid month to continue.",
+        "crowdinContext": "Shown in the period range picker, under the 'Start month' input, when the user left it empty."
+    },
+    "filters.staticPeriod.errors.emptyEndMonth": {
+        "text": "Error: End month is empty — enter a valid month to continue.",
+        "crowdinContext": "Shown in the period range picker, under the 'End month' input, when the user left it empty."
+    },
+    "filters.staticPeriod.errors.invalidStartMonthWithExample": {
+        "text": "Error: Invalid start month — use {format} format (e.g. {example}).",
+        "crowdinContext": "Shown in the period range picker, under the 'Start month' input, when the typed value is not a valid month. Placeholder '{format}' shows the expected format (e.g. 'M/YYYY'), and '{example}' shows a worked example of a valid value in that format (e.g. '3/2026')."
+    },
+    "filters.staticPeriod.errors.invalidEndMonthWithExample": {
+        "text": "Error: Invalid end month — use {format} format (e.g. {example}).",
+        "crowdinContext": "Shown in the period range picker, under the 'End month' input, when the typed value is not a valid month. Placeholder '{format}' shows the expected format (e.g. 'M/YYYY'), and '{example}' shows a worked example of a valid value in that format (e.g. '3/2026')."
+    },
+    "filters.staticPeriod.errors.emptyStartQuarter": {
+        "text": "Error: Start quarter is empty — enter a valid quarter to continue.",
+        "crowdinContext": "Shown in the period range picker, under the 'Start quarter' input, when the user left it empty."
+    },
+    "filters.staticPeriod.errors.emptyEndQuarter": {
+        "text": "Error: End quarter is empty — enter a valid quarter to continue.",
+        "crowdinContext": "Shown in the period range picker, under the 'End quarter' input, when the user left it empty."
+    },
+    "filters.staticPeriod.errors.invalidStartQuarterWithExample": {
+        "text": "Error: Invalid start quarter — use {format} format (e.g. {example}).",
+        "crowdinContext": "Shown in the period range picker, under the 'Start quarter' input, when the typed value is not a valid quarter. Placeholder '{format}' shows the expected format (e.g. 'Q/YYYY'), and '{example}' shows a worked example of a valid value in that format (e.g. 'Q1/2026')."
+    },
+    "filters.staticPeriod.errors.invalidEndQuarterWithExample": {
+        "text": "Error: Invalid end quarter — use {format} format (e.g. {example}).",
+        "crowdinContext": "Shown in the period range picker, under the 'End quarter' input, when the typed value is not a valid quarter. Placeholder '{format}' shows the expected format (e.g. 'Q/YYYY'), and '{example}' shows a worked example of a valid value in that format (e.g. 'Q1/2026')."
+    },
+    "filters.staticPeriod.errors.emptyStartYear": {
+        "text": "Error: Start year is empty — enter a valid year to continue.",
+        "crowdinContext": "Shown in the period range picker, under the 'Start year' input, when the user left it empty."
+    },
+    "filters.staticPeriod.errors.emptyEndYear": {
+        "text": "Error: End year is empty — enter a valid year to continue.",
+        "crowdinContext": "Shown in the period range picker, under the 'End year' input, when the user left it empty."
+    },
+    "filters.staticPeriod.errors.invalidStartYearWithExample": {
+        "text": "Error: Invalid start year — use {format} format (e.g. {example}).",
+        "crowdinContext": "Shown in the period range picker, under the 'Start year' input, when the typed value is not a valid year. Placeholder '{format}' shows the expected format (e.g. 'YYYY'), and '{example}' shows a worked example of a valid value in that format (e.g. '2026')."
+    },
+    "filters.staticPeriod.errors.invalidEndYearWithExample": {
+        "text": "Error: Invalid end year — use {format} format (e.g. {example}).",
+        "crowdinContext": "Shown in the period range picker, under the 'End year' input, when the typed value is not a valid year. Placeholder '{format}' shows the expected format (e.g. 'YYYY'), and '{example}' shows a worked example of a valid value in that format (e.g. '2026')."
     },
     "filters.locked.filter.tooltip": {
         "text": "This filter is locked",

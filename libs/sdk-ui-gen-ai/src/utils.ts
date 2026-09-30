@@ -26,20 +26,11 @@ export function toContextListItem(
     };
 }
 
-export function getVisualizationHref(
-    wsId: string,
-    visId: string,
-    status: "draft" | "saved",
-    useHostedAnalyticalDesigner?: boolean,
-) {
+export function getVisualizationHref(wsId: string, visId: string, status: "draft" | "saved") {
     if (status === "draft") {
-        return useHostedAnalyticalDesigner
-            ? `/workspace/${wsId}/analyze/?aibuilder=${visId}`
-            : `/analyze/#/${wsId}/?aibuilder=${visId}`;
+        return `/workspace/${wsId}/analyze/?aibuilder=${visId}`;
     }
-    return useHostedAnalyticalDesigner
-        ? `/workspace/${wsId}/analyze/#/${visId}/edit`
-        : `/analyze/#/${wsId}/${visId}/edit`;
+    return `/workspace/${wsId}/analyze/#/${visId}/edit`;
 }
 
 export function getDashboardHref(
@@ -58,13 +49,8 @@ export function getDashboardHref(
         : `/dashboards/#/workspace/${wsId}/${dasId}/tab/defaultTabId`;
 }
 
-export function getAbsoluteVisualizationHref(
-    wsId: string,
-    visId: string,
-    status: "draft" | "saved",
-    useHostedAnalyticalDesigner?: boolean,
-) {
-    return `${window.location.origin}${getVisualizationHref(wsId, visId, status, useHostedAnalyticalDesigner)}`;
+export function getAbsoluteVisualizationHref(wsId: string, visId: string, status: "draft" | "saved") {
+    return `${window.location.origin}${getVisualizationHref(wsId, visId, status)}`;
 }
 
 export function getSettingHref(section: string, action?: string) {

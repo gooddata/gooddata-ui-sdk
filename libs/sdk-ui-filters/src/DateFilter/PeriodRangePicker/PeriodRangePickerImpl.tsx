@@ -35,7 +35,7 @@ import * as rcZhCN from "@rc-component/picker/locale/zh_CN";
 import * as rcZhTW from "@rc-component/picker/locale/zh_TW";
 import { format, isValid, parse } from "date-fns";
 import { defaultImport } from "default-import";
-import { defineMessages, useIntl } from "react-intl";
+import { type MessageDescriptor, defineMessages, useIntl } from "react-intl";
 
 import { type ILocale, useDebounce, useDebouncedState } from "@gooddata/sdk-ui";
 import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
@@ -48,12 +48,17 @@ import { getWeekStartDateFnsLocale, resolveWeekStartLocale } from "../utils/week
 
 import { AccessibleFieldInput } from "./AccessibleFieldInput.js";
 import { DateFnsRangePicker } from "./dateFnsRangePicker.js";
+import { toDisplayDateFormat } from "./displayDateFormat.js";
 import {
-    ERROR_MESSAGE_IDS,
+    EMPTY_MESSAGE_IDS,
+    INVALID_MESSAGE_IDS_WITHOUT_EXAMPLE,
+    INVALID_MESSAGE_IDS_WITH_EXAMPLE,
     type IPeriodRangeAccessibility,
+    ORDER_ERROR_MESSAGE_ID,
     PeriodRangeAccessibilityContext,
     type PeriodRangeFieldErrorKind,
     type PeriodRangeSide,
+    granularityHasHintExample,
     isBlockingFieldError,
     resolveFieldErrorKind,
 } from "./periodRangePickerAccessibility.js";
@@ -121,18 +126,17 @@ const GRANULARITY_TO_FIELD_FORMATS: Record<
 };
 
 // The format shown to the user, in the hint panel and in the "invalid" error message, for granularities
-// that have no user-configurable date format.
-//
-// Week deliberately does not reuse what its field actually parses: the field needs the week-numbering
-// year, but spelling it that way here would read as a typo next to the other granularities, so all
-// hints show the same year format. Do not collapse the two into one source - Week will stop parsing.
-// The difference is invisible except in the week straddling a year boundary, where the two spellings
-// pick different years and the hint names a value the field rejects - a rejection, never a wrong range.
-const GRANULARITY_TO_HINT_FORMAT: Record<Exclude<PeriodRangePickerGranularity, "GDC.time.date">, string> = {
-    "GDC.time.week_us": "w/yyyy",
-    "GDC.time.month": DATE_FNS_PICKER_FORMATS.fieldMonthFormat,
-    "GDC.time.quarter": DATE_FNS_PICKER_FORMATS.fieldQuarterFormat,
-    "GDC.time.year": DATE_FNS_PICKER_FORMATS.fieldYearFormat,
+// that have no user-configurable date format. These are the user-facing spellings from the MC-5452
+// design, not date-fns tokens - they must never reach `format`/`parse`. Some deliberately differ from
+// what the field above actually parses: Quarter shows "Q" but the field spells "QQQ" (e.g. "Q1").
+const GRANULARITY_TO_DISPLAY_FORMAT: Record<
+    Exclude<PeriodRangePickerGranularity, "GDC.time.date">,
+    string
+> = {
+    "GDC.time.week_us": "W/YYYY",
+    "GDC.time.month": "M/YYYY",
+    "GDC.time.quarter": "Q/YYYY",
+    "GDC.time.year": "YYYY",
 };
 
 // A fixed sample date for the format hint's worked example
@@ -142,20 +146,10 @@ const HINT_EXAMPLE_DATE = new Date(2026, 2, 25);
 export const PREVIEW_ANNOUNCEMENT_DELAY = 1000;
 
 const messages = defineMessages({
-    dateFormatHint: { id: "filters.staticPeriod.dateFormatHint" },
+    dateFormatLabel: { id: "filters.staticPeriod.dateFormatLabel" },
     dateFormatHintWithExample: { id: "filters.staticPeriod.dateFormatHintWithExample" },
-    invalidStartDateWithExample: { id: "filters.staticPeriod.errors.invalidStartDateWithExample" },
-    invalidEndDateWithExample: { id: "filters.staticPeriod.errors.invalidEndDateWithExample" },
+    placeholder: { id: "filters.staticPeriod.placeholder" },
 });
-
-// The with-example counterpart to ERROR_MESSAGE_IDS's "invalid" entry, kept as a small side map rather
-// than folded into that Record - which keeps ERROR_MESSAGE_IDS's compile-time completeness guarantee
-// (one id pair per PeriodRangeFieldErrorKind) intact instead of reshaping it around a with/without-example
-// axis that only applies to one error kind.
-const INVALID_MESSAGE_IDS_WITH_EXAMPLE: Record<PeriodRangeSide, string> = {
-    start: messages.invalidStartDateWithExample.id,
-    end: messages.invalidEndDateWithExample.id,
-};
 
 // rc-picker's locale files carry the same ESM-`export default`-without-`"type": "module"` packaging quirk as
 // its `generate/dateFns` module (see dateFnsRangePicker.tsx), so the default export is unwrapped via
@@ -216,6 +210,31 @@ const GRANULARITY_TO_PICKER_MODE: Record<
     "GDC.time.month": "month",
     "GDC.time.quarter": "quarter",
     "GDC.time.year": "year",
+};
+
+// Registered through `defineMessages` because the message extractor cannot follow ids read through a lookup.
+const fieldLabelMessages = defineMessages({
+    dateFrom: { id: "filters.staticPeriod.dateFrom" },
+    dateTo: { id: "filters.staticPeriod.dateTo" },
+    weekFrom: { id: "filters.staticPeriod.weekFrom" },
+    weekTo: { id: "filters.staticPeriod.weekTo" },
+    monthFrom: { id: "filters.staticPeriod.monthFrom" },
+    monthTo: { id: "filters.staticPeriod.monthTo" },
+    quarterFrom: { id: "filters.staticPeriod.quarterFrom" },
+    quarterTo: { id: "filters.staticPeriod.quarterTo" },
+    yearFrom: { id: "filters.staticPeriod.yearFrom" },
+    yearTo: { id: "filters.staticPeriod.yearTo" },
+});
+
+const GRANULARITY_TO_FIELD_LABELS: Record<
+    PeriodRangePickerGranularity,
+    Record<PeriodRangeSide, MessageDescriptor>
+> = {
+    "GDC.time.date": { start: fieldLabelMessages.dateFrom, end: fieldLabelMessages.dateTo },
+    "GDC.time.week_us": { start: fieldLabelMessages.weekFrom, end: fieldLabelMessages.weekTo },
+    "GDC.time.month": { start: fieldLabelMessages.monthFrom, end: fieldLabelMessages.monthTo },
+    "GDC.time.quarter": { start: fieldLabelMessages.quarterFrom, end: fieldLabelMessages.quarterTo },
+    "GDC.time.year": { start: fieldLabelMessages.yearFrom, end: fieldLabelMessages.yearTo },
 };
 
 function parsePeriodBoundary(value: string | undefined): Date | null {
@@ -304,6 +323,9 @@ export function PeriodRangePickerImpl({
     const hintId = useIdPrefixed("gd-period-range-picker-hint");
     const startErrorId = useIdPrefixed("gd-period-range-picker-start-error");
     const endErrorId = useIdPrefixed("gd-period-range-picker-end-error");
+    const startInputId = useIdPrefixed("gd-period-range-picker-start-input");
+    const endInputId = useIdPrefixed("gd-period-range-picker-end-input");
+    const inputIds = useMemo(() => ({ start: startInputId, end: endInputId }), [startInputId, endInputId]);
 
     const pickerMode = GRANULARITY_TO_PICKER_MODE[granularity];
     const value = useMemo(() => parseRangeValue({ from: range.from, to: range.to }), [range.from, range.to]);
@@ -482,11 +504,12 @@ export function PeriodRangePickerImpl({
 
     // When no per-workspace dateFormat is set, fall back to the same format the picker itself uses by
     // default, so the hint text always matches what the picker actually expects. Once time granularity is
-    // supported, this fallback will need to switch too.
-    const hintFormat: string =
+    // supported, this fallback will need to switch too. Day shows the account's pattern in its display
+    // spelling, the other granularities a fixed one.
+    const displayFormat: string =
         granularity === "GDC.time.date"
-            ? (dateFormat ?? DATE_FNS_PICKER_FORMATS.fieldDateFormat)
-            : GRANULARITY_TO_HINT_FORMAT[granularity];
+            ? toDisplayDateFormat(dateFormat ?? DATE_FNS_PICKER_FORMATS.fieldDateFormat)
+            : GRANULARITY_TO_DISPLAY_FORMAT[granularity];
 
     // Day is left to the locale, which already carries the account's own date format.
     const fieldFormats =
@@ -499,17 +522,19 @@ export function PeriodRangePickerImpl({
         [intl.locale, weekStart],
     );
 
-    // A worked example alongside the format token pattern (e.g. "M/yyyy (e.g. 3/2026)"), so a caller who
-    // doesn't recognize date-fns tokens can still tell what to type.
+    // A worked example alongside the display format (e.g. "M/YYYY (e.g. 3/2026)"), so a caller who
+    // doesn't recognize the format string can still tell what to type. Built from the field's own real
+    // date-fns format - fieldFormats[0] - rather than the display string, so the example always matches
+    // what the field actually parses (in particular, Week's week-numbering year).
     const hintExample = useMemo(
         () =>
-            granularity === "GDC.time.date"
-                ? undefined
-                : format(HINT_EXAMPLE_DATE, hintFormat, {
+            granularityHasHintExample(granularity) && fieldFormats
+                ? format(HINT_EXAMPLE_DATE, fieldFormats[0], {
                       locale: resolveWeekStartLocale(weekStartLocaleKey),
                       useAdditionalWeekYearTokens: true,
-                  }),
-        [granularity, hintFormat, weekStartLocaleKey],
+                  })
+                : undefined,
+        [granularity, fieldFormats, weekStartLocaleKey],
     );
 
     // Day fields already spell out exact days, so a preview there would just repeat the inputs. Every other
@@ -584,13 +609,13 @@ export function PeriodRangePickerImpl({
     const accessibility = useMemo<IPeriodRangeAccessibility>(
         () => ({
             start: {
-                ariaLabel: intl.formatMessage({ id: "filters.date.accessibility.label.from" }),
+                label: intl.formatMessage(GRANULARITY_TO_FIELD_LABELS[granularity].start),
                 errorKind: fieldErrorKind.start,
                 errorId: startErrorId,
                 hintId,
             },
             end: {
-                ariaLabel: intl.formatMessage({ id: "filters.date.accessibility.label.to" }),
+                label: intl.formatMessage(GRANULARITY_TO_FIELD_LABELS[granularity].end),
                 errorKind: fieldErrorKind.end,
                 errorId: endErrorId,
                 hintId,
@@ -604,6 +629,7 @@ export function PeriodRangePickerImpl({
         }),
         [
             intl,
+            granularity,
             fieldErrorKind.start,
             fieldErrorKind.end,
             handleFieldStateChange,
@@ -619,17 +645,24 @@ export function PeriodRangePickerImpl({
 
     const getFieldErrorMessage = (side: PeriodRangeSide): string | undefined => {
         const kind = fieldErrorKind[side];
-        if (!kind) {
-            return undefined;
+        switch (kind) {
+            case undefined:
+                return undefined;
+            case "order":
+                return intl.formatMessage({ id: ORDER_ERROR_MESSAGE_ID });
+            case "empty":
+                return intl.formatMessage({ id: EMPTY_MESSAGE_IDS[granularity][side] });
+            case "invalid":
+                return granularityHasHintExample(granularity)
+                    ? intl.formatMessage(
+                          { id: INVALID_MESSAGE_IDS_WITH_EXAMPLE[granularity][side] },
+                          { format: displayFormat, example: hintExample },
+                      )
+                    : intl.formatMessage(
+                          { id: INVALID_MESSAGE_IDS_WITHOUT_EXAMPLE[granularity][side] },
+                          { format: displayFormat },
+                      );
         }
-        if (kind === "invalid" && hintExample !== undefined) {
-            return intl.formatMessage(
-                { id: INVALID_MESSAGE_IDS_WITH_EXAMPLE[side] },
-                { format: hintFormat, example: hintExample },
-            );
-        }
-        const id = ERROR_MESSAGE_IDS[kind][side];
-        return intl.formatMessage({ id }, kind === "invalid" ? { format: hintFormat } : undefined);
     };
 
     // weekStart and dateFormat are workspace settings independent of display language, so Week/Day override the
@@ -665,6 +698,7 @@ export function PeriodRangePickerImpl({
     );
 
     const getPopupContainer = useCallback(() => wrapperRef.current ?? document.body, []);
+    const placeholder = intl.formatMessage(messages.placeholder);
 
     return (
         <div
@@ -678,6 +712,7 @@ export function PeriodRangePickerImpl({
             <PeriodRangeAccessibilityContext.Provider value={accessibility}>
                 <DateFnsRangePicker
                     picker={pickerMode}
+                    id={inputIds}
                     value={value}
                     onChange={handleChange}
                     onCalendarChange={handleCalendarChange}
@@ -688,6 +723,7 @@ export function PeriodRangePickerImpl({
                     getPopupContainer={getPopupContainer}
                     locale={locale}
                     format={fieldFormats}
+                    placeholder={[placeholder, placeholder]}
                     allowClear={false}
                     order={false}
                     allowEmpty={[true, true]}
@@ -701,9 +737,9 @@ export function PeriodRangePickerImpl({
             </PeriodRangeAccessibilityContext.Provider>
             <div id={hintId} className="gd-period-range-picker__hint">
                 {hintExample === undefined
-                    ? intl.formatMessage(messages.dateFormatHint, { format: hintFormat })
+                    ? intl.formatMessage(messages.dateFormatLabel, { format: displayFormat })
                     : intl.formatMessage(messages.dateFormatHintWithExample, {
-                          format: hintFormat,
+                          format: displayFormat,
                           example: hintExample,
                       })}
                 {customRangeHint}

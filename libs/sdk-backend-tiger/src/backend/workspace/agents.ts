@@ -111,6 +111,7 @@ function agentToModel(agent: AiAgentListItemResponse): IAgent {
         name: agent.name,
         description: agent.description ?? undefined,
         availableToAll: agent.isAvailableToAll,
+        effectiveSkills: agent.skills,
         modifiedAt: agent.modifiedAt ?? undefined,
         lastUsedAt: agent.lastUsedAt ?? undefined,
     };

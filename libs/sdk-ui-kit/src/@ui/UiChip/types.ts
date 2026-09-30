@@ -55,6 +55,8 @@ export interface IUiChipProps {
     buttonRef?: MutableRefObject<HTMLButtonElement>;
     renderChipContent?: (content: ReactNode) => ReactNode;
     renderActionButton?: (button: ReactNode) => ReactNode;
+    actionIconTooltip?: string;
+    tooltip?: string;
 }
 
 export interface IChipContentProps {
@@ -77,6 +79,7 @@ export interface IChipContentProps {
     dataTestId?: string;
     buttonRef: MutableRefObject<HTMLButtonElement> | RefObject<HTMLButtonElement | null>;
     styleObj?: CSSProperties;
+    tooltip?: string;
 }
 
 export interface IChipDeleteButtonProps {
@@ -94,4 +97,5 @@ export interface IChipActionButtonProps {
     actionAriaDescribedBy?: string;
     actionIcon?: IconType;
     dataTestId?: string;
+    tooltip?: string;
 }

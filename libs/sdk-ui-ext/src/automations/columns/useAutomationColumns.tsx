@@ -18,7 +18,13 @@ import {
 import { messages } from "../messages.js";
 import { type AutomationsColumnName, type IUseAutomationColumnsProps } from "../types.js";
 import { useUser } from "../UserContext.js";
-import { getNextRunFromCron, getWidgetId, getWidgetName, getWorkspaceId } from "../utils.js";
+import {
+    getNextRunFromCron,
+    getWidgetId,
+    getWidgetName,
+    getWorkspaceId,
+    isAutomationRestricted,
+} from "../utils.js";
 
 import { AutomationIcon } from "./AutomationIcon.js";
 import { AutomationMenu } from "./AutomationMenu.js";
@@ -65,11 +71,17 @@ export const useAutomationColumns = ({
             ["title"]: {
                 label: intl.formatMessage(messages.columnName),
                 key: "title",
-                renderRoleIcon: (item) => <AutomationIcon type={type} state={item.state} />,
+                renderRoleIcon: (item) =>
+                    isAutomationRestricted(item) ? (
+                        <AutomationIcon type="restricted" />
+                    ) : (
+                        <AutomationIcon type={type} state={item.state} />
+                    ),
                 getMultiLineTextContent: (item) => [
                     formatCellValue(item.title),
                     formatCellValue(formatAutomationSubtitle(item, intl)),
                 ],
+                isLocked: isAutomationRestricted,
                 renderSuffixIcon: isSmall
                     ? (item) => (
                           <AutomationIcon type="automationDetails" automation={item} timezone={timezone} />
@@ -99,6 +111,9 @@ export const useAutomationColumns = ({
                 label: intl.formatMessage(messages.columnWidget),
                 getTextContent: (item) => formatCellValue(getWidgetName(item, type)),
                 getTextHref: (item) => {
+                    if (isAutomationRestricted(item)) {
+                        return undefined;
+                    }
                     return widgetUrlBuilder({
                         workspaceId: getWorkspaceId(item, workspace),
                         dashboardId: item.dashboard?.id,

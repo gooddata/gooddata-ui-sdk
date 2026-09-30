@@ -5886,6 +5886,7 @@ export interface IUiAsyncTableColumn<T> {
     getTextHref?: (item: T) => string | undefined;
     // (undocumented)
     getTextTitle?: (item: T) => string;
+    isLocked?: (item: T) => boolean;
     // (undocumented)
     key?: keyof T;
     // (undocumented)
@@ -5991,6 +5992,7 @@ export interface IUiAsyncTableProps<T extends {
     hideHeader?: boolean;
     // (undocumented)
     isFiltersTooLarge?: boolean;
+    isItemClickable?: (item: T) => boolean;
     // (undocumented)
     isLoading?: boolean;
     // (undocumented)
@@ -6313,6 +6315,8 @@ export interface IUiChipProps {
     // (undocumented)
     accessibilityConfig?: IUiChipAccessibilityConfig;
     // (undocumented)
+    actionIconTooltip?: string;
+    // (undocumented)
     buttonRef?: MutableRefObject<HTMLButtonElement>;
     // (undocumented)
     dataTestId?: string;
@@ -6358,6 +6362,8 @@ export interface IUiChipProps {
     renderChipContent?: (content: ReactNode) => ReactNode;
     // (undocumented)
     tag?: string;
+    // (undocumented)
+    tooltip?: string;
     // (undocumented)
     variant?: "normal" | "inactive";
 }

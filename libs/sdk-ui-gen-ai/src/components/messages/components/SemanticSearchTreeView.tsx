@@ -52,7 +52,6 @@ export function SemanticSearchTreeViewImpl({
     const settings = useSelector(settingsSelector);
 
     const canEdit = canFullControl || canManage || canAnalyze;
-    const useHostAnalyticalDesigner = Boolean(settings?.enableShellApplication_analyticalDesigner);
     const useHostDashboards = Boolean(settings?.enableShellApplication_dashboards);
 
     const items = buildSemanticSearchTreeViewItems({
@@ -64,7 +63,6 @@ export function SemanticSearchTreeViewImpl({
         canEdit,
         uiPathOptions: {
             useHostedMetricEditor: true,
-            useHostedAnalyticalDesigner: useHostAnalyticalDesigner,
             useHostedLdmModeler: true,
             useHostedDashboards: useHostDashboards,
         },

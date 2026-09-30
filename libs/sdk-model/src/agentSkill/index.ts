@@ -118,6 +118,12 @@ export interface IAgent {
     customSkills?: AgentCustomSkill[] | null;
 
     /**
+     * List of currently effective skills that the agent can use. Its depends of feature flags and allowed
+     * skills by agent. Server also can disable skill by some conditions.
+     */
+    effectiveSkills?: AgentCustomSkill[];
+
+    /**
      * Whether AI Knowledge base is enabled.
      */
     aiKnowledge?: boolean;

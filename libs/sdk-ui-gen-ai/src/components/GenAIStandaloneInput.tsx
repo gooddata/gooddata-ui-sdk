@@ -6,11 +6,13 @@ import type { EditorView } from "@codemirror/view";
 import cx from "classnames";
 import { defineMessages, useIntl } from "react-intl";
 
+import { type AgentCustomSkill } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { SyntaxHighlightingInput } from "@gooddata/sdk-ui-kit";
 
 import { useGenAIStandaloneInputData } from "../hooks/useGenAIStandaloneInputData.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
+import { type GenAIAgent } from "../model.js";
 import type { GenAIInitializeOnStart } from "../types.js";
 
 import { useCompletion } from "./completion/useCompletion.js";
@@ -45,6 +47,10 @@ export type GenAIStandaloneInputProps = Omit<GenAiStoreProps, "children"> & {
      */
     onAgentSet?: (agentId: string) => void;
     /**
+     * Callback called when the agents are loaded.
+     */
+    onAgentsLoaded?: (agents: GenAIAgent[]) => void;
+    /**
      * Additional class name for the input container.
      */
     className?: string;
@@ -68,27 +74,39 @@ export type GenAIStandaloneInputProps = Omit<GenAiStoreProps, "children"> & {
      * Customization slots for the assistant.
      */
     slots?: IGenAIAssistantSlots;
+    /**
+     * Skills an agent must support to be listed in the input.
+     */
+    requiredSkills?: AgentCustomSkill[];
 };
 
 function StandaloneInputContent({
     onStart,
     onAgentSet,
+    onAgentsLoaded,
     className,
     canManage,
     canAnalyze,
     placeholder,
     autofocus = true,
+    requiredSkills,
 }: Omit<GenAIStandaloneInputProps, keyof GenAiStoreProps>) {
     const intl = useIntl();
     const [value, setValue] = useState("");
     const [editorApi, setApi] = useState<EditorView | null>(null);
-    const { selectedAgentId, agentSwitchingEnabled } = useGenAIStandaloneInputData();
+    const { selectedAgentId, agentSwitchingEnabled, agents } = useGenAIStandaloneInputData(requiredSkills);
 
     useEffect(() => {
         if (selectedAgentId) {
             onAgentSet?.(selectedAgentId);
         }
     }, [selectedAgentId, onAgentSet]);
+
+    useEffect(() => {
+        if (agents) {
+            onAgentsLoaded?.(agents);
+        }
+    }, [agents, onAgentsLoaded]);
 
     const { isFullscreen, isBigScreen, isSmallScreen } = useFullscreenCheck();
 
@@ -147,6 +165,7 @@ function StandaloneInputContent({
                         />
                     </div>
                     <GenAiChatAgentSwitching
+                        agentsOverride={agents}
                         disabled={!value.trim()}
                         agentDropdownDisabled={false}
                         isAssistantLoading={false}

@@ -30,7 +30,6 @@ export interface ISemanticSearchProps {
     metadataTimeZone?: string;
     isTrial?: boolean;
     enableUseGenAIChat?: boolean;
-    useHostedAnalyticalDesigner?: boolean;
     useHostedDashboards?: boolean;
     onAskAiAssistant?: (question: string) => void;
     onEvent?: (event: SemanticSearchEvent) => void;
@@ -45,7 +44,6 @@ export function SemanticSearch({
     canFullControl = false,
     isTrial = false,
     enableUseGenAIChat = false,
-    useHostedAnalyticalDesigner = false,
     useHostedDashboards = false,
     onAskAiAssistant,
     onEvent,
@@ -125,7 +123,6 @@ export function SemanticSearch({
             metadataTimezone={metadataTimeZone}
             uiPathOptions={{
                 useHostedMetricEditor: true,
-                useHostedAnalyticalDesigner,
                 useHostedLdmModeler: true,
                 useHostedDashboards,
             }}

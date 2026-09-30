@@ -1266,18 +1266,28 @@ export const {
     revertAgentSwitchAction,
     setAgentsAction,
     setAgentsLoadingAction,
-    pinConversationAction,
     pinConversationSuccessAction,
     pinConversationFailureAction,
-    renameConversationAction,
     renameConversationSuccessAction,
     renameConversationFailureAction,
-    deleteConversationAction,
     deleteConversationStartAction,
     deleteConversationSuccessAction,
     deleteConversationFailureAction,
     filledFormAction,
     refocusInput,
+
+    /**
+     * @public
+     */
+    renameConversationAction,
+    /**
+     * @public
+     */
+    pinConversationAction,
+    /**
+     * @public
+     */
+    deleteConversationAction,
     /**
      * @public
      */

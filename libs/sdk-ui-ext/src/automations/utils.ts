@@ -26,6 +26,15 @@ export const getWorkspaceId = (
     return automation.workspace?.id ?? fallbackWorkspaceId;
 };
 
+/**
+ * Whether the automation references objects the current user may not read. Such an automation is locked
+ * and cannot be opened for editing.
+ *
+ * @internal
+ */
+export const isAutomationRestricted = (automation: IAutomationMetadataObject): boolean =>
+    !!automation.unavailable?.some((reference) => reference.reason === "forbidden");
+
 export const defaultEditAutomation = (
     automation: IAutomationMetadataObject,
     workspaceId: string | undefined,

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { UiAsyncTable } from "@gooddata/sdk-ui-kit";
@@ -22,6 +22,7 @@ export function AutomationsCore(props: IAutomationsCoreProps) {
         containerRef,
         handleSort,
         handleItemClick,
+        isItemClickable,
         loadNextPage,
         setSearch,
         setSelectedIds,
@@ -53,6 +54,7 @@ export function AutomationsCore(props: IAutomationsCoreProps) {
                 loadNextPage={loadNextPage}
                 onSort={handleSort}
                 onItemClick={handleItemClick}
+                isItemClickable={isItemClickable}
                 sortBy={sortBy}
                 sortDirection={sortDirection}
                 bulkActions={bulkActions}

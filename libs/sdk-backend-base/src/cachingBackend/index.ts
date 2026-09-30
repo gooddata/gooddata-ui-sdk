@@ -2099,6 +2099,7 @@ class CachedAutomationsQueryFactory extends DecoratedAutomationsQuery {
         decorated: IAutomationsQuery,
         private readonly ctx: CachingContext,
         private readonly workspace: string,
+        private readonly options: IGetAutomationsQueryOptions = {},
     ) {
         super(decorated);
     }
@@ -2178,7 +2179,8 @@ class CachedAutomationsQueryFactory extends DecoratedAutomationsQuery {
 
     public override query(): Promise<IAutomationsQueryResult> {
         const cache = getOrCreateAutomationsCache(this.ctx, this.workspace);
-        const key = stringify(this.settings) || "undefined";
+        // the options change what the results contain, so they are part of the key
+        const key = stringify({ ...this.settings, options: this.options }) || "undefined";
 
         const result = cache.queries.get(key);
 
@@ -2316,6 +2318,7 @@ class WithAutomationsCaching extends DecoratedWorkspaceAutomationsService {
             super.getAutomationsQuery(options),
             this.ctx,
             this.workspace,
+            options,
         );
     }
 }

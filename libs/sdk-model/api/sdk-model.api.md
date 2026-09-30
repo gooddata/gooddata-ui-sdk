@@ -1139,6 +1139,7 @@ export interface IAgent {
     createdBy?: IUser;
     customSkills?: AgentCustomSkill[] | null;
     description?: string;
+    effectiveSkills?: AgentCustomSkill[];
     enabled?: boolean;
     instructions?: IAgentInstruction[];
     isPreview?: boolean;
@@ -1593,6 +1594,7 @@ export type IAutomationLastRunStatus = "SUCCESS" | "FAILED";
 export interface IAutomationMetadataObject extends IAutomationMetadataObjectBase, IMetadataObject, IAuditable {
     // (undocumented)
     type: "automation";
+    unavailable?: IUnavailableReference[];
 }
 
 // @alpha (undocumented)
@@ -1762,6 +1764,8 @@ export interface ICatalogAttribute extends IGroupableCatalogItemBase {
     displayForms: IAttributeDisplayFormMetadataObject[];
     geoPinDisplayForms: IAttributeDisplayFormMetadataObject[];
     type: "attribute";
+    // @alpha
+    unavailable?: IUnavailableReference[];
 }
 
 // @public
@@ -3108,6 +3112,7 @@ export interface IFeatureFlags {
     enableHighchartsAccessibility?: boolean;
     enableHLL?: boolean;
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
+    enableImprovedMetricDateFilter?: boolean;
     enableImprovedRankingFilter?: boolean;
     enableLineChartStyling?: boolean;
     enableLogicalModelExtensionsFromParentsCall?: boolean;
@@ -3148,7 +3153,6 @@ export interface IFeatureFlags {
     enableSemanticConditionalFormatting?: boolean;
     enableSemanticSearch?: boolean;
     enableShellApplication?: boolean;
-    enableShellApplication_analyticalDesigner?: boolean;
     enableShellApplication_dashboards?: boolean;
     // (undocumented)
     enableSingleStoreDataSource?: boolean;
@@ -6852,6 +6856,13 @@ export interface ITotalLocatorItemBody {
     totalFunction: string;
 }
 
+// @alpha
+export interface IUnavailableReference {
+    reason: UnavailableReferenceReason;
+    ref: ObjRef;
+    type: ObjectType;
+}
+
 // @public
 export interface IUpperBoundedFilter {
     // (undocumented)
@@ -8011,6 +8022,9 @@ export function totalIsNative(total: ITotal): boolean;
 
 // @public
 export type TotalType = "sum" | "avg" | "max" | "min" | "med" | "nat";
+
+// @alpha
+export type UnavailableReferenceReason = "forbidden" | "notFound";
 
 // @internal
 export function updateAttributeElementsItems(attributeElements: IAttributeElements, newItems: Array<string | null>): IAttributeElements;

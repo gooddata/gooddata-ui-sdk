@@ -1,7 +1,9 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 import { type IDataSetMetadataObject } from "../../../ldm/metadata/dataSet/index.js";
+import { type IUnavailableReference } from "../../../objRef/unavailableReference.js";
 import { type IAttributeMetadataObject } from "../../metadata/attribute/index.js";
 import { type IAttributeDisplayFormMetadataObject } from "../../metadata/attributeDisplayForm/index.js";
 import { type IGroupableCatalogItemBase } from "../group/index.js";
@@ -41,6 +43,17 @@ export interface ICatalogAttribute extends IGroupableCatalogItemBase {
      * Attribute's display forms that contain geo pins (lat; lng) pairs.
      */
     geoPinDisplayForms: IAttributeDisplayFormMetadataObject[];
+
+    /**
+     * Referenced objects the current user may not read: the attribute hierarchies this attribute
+     * belongs to.
+     *
+     * @remarks
+     * Undefined when object permissions were not checked.
+     *
+     * @alpha
+     */
+    unavailable?: IUnavailableReference[];
 }
 
 /**

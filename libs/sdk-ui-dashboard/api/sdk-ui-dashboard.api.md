@@ -12010,7 +12010,7 @@ export const selectDraggingWidgetTriggeringDropZoneType: DashboardSelector<DropZ
 export const selectDrillableItems: DashboardSelector<ExplicitDrill[]>;
 
 // @internal (undocumented)
-export const selectDrillableItemsByAvailableDrillTargets: (availableDrillTargets: IAvailableDrillTargets | undefined, ignoredDrillDownHierarchies: IDrillDownReference[] | undefined, disableDrillIntoURL: boolean | undefined) => DashboardSelector<IHeaderPredicate[]>;
+export const selectDrillableItemsByAvailableDrillTargets: (availableDrillTargets: IAvailableDrillTargets | undefined, ignoredDrillDownHierarchies: IDrillDownReference[] | undefined, disableDrillIntoURL: boolean | undefined, disableDrillDown?: boolean) => DashboardSelector<IHeaderPredicate[]>;
 
 // @internal (undocumented)
 export const selectDrillableItemsByWidgetRef: (ref: ObjRef) => DashboardSelector<ExplicitDrill[]>;

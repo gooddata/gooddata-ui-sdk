@@ -9,7 +9,11 @@ import { convertError } from "@gooddata/sdk-ui";
 import { type IRefreshAutomations } from "../../commands/scheduledEmail.js";
 import { automationsRefreshed } from "../../events/scheduledEmail.js";
 import { automationsActions } from "../../store/automations/index.js";
-import { selectExternalRecipient, selectIsReadOnly } from "../../store/config/configSelectors.js";
+import {
+    selectEnableDashboardPartialRendering,
+    selectExternalRecipient,
+    selectIsReadOnly,
+} from "../../store/config/configSelectors.js";
 import { selectDashboardId } from "../../store/meta/metaSelectors.js";
 import { selectCanManageWorkspace } from "../../store/permissions/permissionsSelectors.js";
 import { selectCurrentUser } from "../../store/user/userSelectors.js";
@@ -26,6 +30,9 @@ export function* refreshAutomationsHandlers(ctx: DashboardContext, cmd: IRefresh
     const isReadOnly: ReturnType<typeof selectIsReadOnly> = yield select(selectIsReadOnly);
     const externalRecipient: ReturnType<typeof selectExternalRecipient> =
         yield select(selectExternalRecipient);
+    const isPartialRenderingEnabled: ReturnType<typeof selectEnableDashboardPartialRendering> = yield select(
+        selectEnableDashboardPartialRendering,
+    );
 
     if (!dashboardId || !user || isReadOnly) {
         return;
@@ -38,14 +45,13 @@ export function* refreshAutomationsHandlers(ctx: DashboardContext, cmd: IRefresh
             PromiseFnReturnType<typeof loadDashboardUserAutomations>,
             PromiseFnReturnType<typeof loadWorkspaceAutomationsCount>,
         ] = yield all([
-            call(
-                loadDashboardUserAutomations,
-                ctx,
+            call(loadDashboardUserAutomations, ctx, {
                 dashboardId,
-                user.login,
-                !canManageAutomations,
+                userId: user.login,
+                filterByUser: !canManageAutomations,
                 externalRecipient,
-            ),
+                includeUnavailableReferences: isPartialRenderingEnabled,
+            }),
             call(loadWorkspaceAutomationsCount, ctx),
         ]);
 

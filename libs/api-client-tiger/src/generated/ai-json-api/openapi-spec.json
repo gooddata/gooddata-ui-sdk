@@ -2604,6 +2604,14 @@
                     "name": {
                         "type": "string",
                         "title": "Name"
+                    },
+                    "skills": {
+                        "items": {
+                            "$ref": "#/components/schemas/SkillName"
+                        },
+                        "type": "array",
+                        "title": "Skills",
+                        "description": "Names of the skills this agent can use in this workspace, as listed by GET /api/v1/ai/agent/skills."
                     }
                 },
                 "type": "object",
@@ -15212,6 +15220,27 @@
                 "title": "SingleChoiceControl",
                 "description": "Pick exactly one option — radio buttons, or rows that submit on click.\n\nThe only control there is for now; a later one (multiple choice, a date range, a catalog\nobject picker) becomes another member of ``ClarifyingQuestionControl`` without changing any\npayload a client has already seen."
             },
+            "SkillName": {
+                "type": "string",
+                "enum": [
+                    "alert",
+                    "anomaly_detection",
+                    "clustering",
+                    "forecasting",
+                    "key_driver_analysis",
+                    "metric",
+                    "schedule_export",
+                    "visualization",
+                    "visualization_summary",
+                    "dashboard_summary",
+                    "what_if_analysis",
+                    "knowledge",
+                    "dashboard_builder",
+                    "dashboard_editor"
+                ],
+                "title": "SkillName",
+                "description": "Name of a skill an agent can be configured with."
+            },
             "SkillResponse": {
                 "properties": {
                     "description": {
@@ -15226,8 +15255,7 @@
                         "title": "Examples"
                     },
                     "name": {
-                        "type": "string",
-                        "title": "Name"
+                        "$ref": "#/components/schemas/SkillName"
                     },
                     "tags": {
                         "items": {

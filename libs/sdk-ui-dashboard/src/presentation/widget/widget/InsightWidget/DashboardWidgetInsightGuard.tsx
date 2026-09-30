@@ -7,6 +7,7 @@ import { useIsWidgetRestricted } from "../../../../model/react/useIsWidgetRestri
 import { selectInsightsMap } from "../../../../model/store/insights/insightsSelectors.js";
 import { useDashboardComponentsContext } from "../../../dashboardContexts/DashboardComponentsContext.js";
 import { RestrictedPlaceholder } from "../../common/RestrictedPlaceholder.js";
+import { useResolveRestrictedRender } from "../../common/useResolveRestrictedRender.js";
 
 import { type IDefaultDashboardInsightWidgetProps } from "./types.js";
 
@@ -28,6 +29,7 @@ export function DashboardWidgetInsightGuard(props: IDashboardWidgetInsightGuardP
     const { widget, screen, dashboardItemClasses, exportData, Component, RestrictedComponent } = props;
     const insights = useDashboardSelector(selectInsightsMap);
     const isRestricted = useIsWidgetRestricted(widget);
+    useResolveRestrictedRender(widget.ref, isRestricted);
     const { RestrictedPlaceholderComponentProvider } = useDashboardComponentsContext();
 
     // view, edit and export modes all reach the widget through this guard, so this is the single

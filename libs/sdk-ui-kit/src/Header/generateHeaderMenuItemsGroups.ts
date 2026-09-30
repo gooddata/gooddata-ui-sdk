@@ -130,7 +130,7 @@ function createInsightsItemsGroup(
         canShowKpisItem(workspacePermissions, hasAnalyticalDashboards),
     );
 
-    const analyzeUrl = analyzeItemUrl(baseUrl, workspaceId, featureFlags);
+    const analyzeUrl = analyzeItemUrl(baseUrl, workspaceId);
     pushConditionally(
         insightItemsGroup,
         createIHeaderMenuItem(HEADER_ITEM_ID_ANALYZE, "s-menu-analyze", analyzeUrl),
@@ -239,11 +239,8 @@ function canShowKpisItem(
     return Boolean(hasAnalyticalDashboards || workspacePermissions.canCreateAnalyticalDashboard === true);
 }
 
-function analyzeItemUrl(baseUrl: string, workspaceId: string, featureFlags: ISettings): string {
-    if (featureFlags.enableShellApplication_analyticalDesigner) {
-        return withBaseUrl(baseUrl, `/workspace/${workspaceId}/analyze/#/reportId/edit`);
-    }
-    return withBaseUrl(baseUrl, `/analyze/#/${workspaceId}/reportId/edit`);
+function analyzeItemUrl(baseUrl: string, workspaceId: string): string {
+    return withBaseUrl(baseUrl, `/workspace/${workspaceId}/analyze/#/reportId/edit`);
 }
 function canShowAnalyzeItem(workspacePermissions: IWorkspacePermissions): boolean {
     return workspacePermissions.canAnalyzeWorkspace;

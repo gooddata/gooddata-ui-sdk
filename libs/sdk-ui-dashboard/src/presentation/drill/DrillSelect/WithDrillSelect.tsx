@@ -8,6 +8,7 @@ import { v4 as uuid } from "uuid";
 import {
     type IInsight,
     type ObjRef,
+    isAttributeDescriptor,
     isCrossFiltering,
     isDrillToAttributeUrl,
     isDrillToCustomUrl,
@@ -18,15 +19,25 @@ import {
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
 import { OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
 
+import { getDrillSourceLocalIdentifierFromEvent } from "../../../_staging/drills/drillingUtils.js";
 import type { DashboardDrillCommand } from "../../../model/commands/drill.js";
 import type { IDashboardKeyDriverCombinationItem } from "../../../model/events/drill.js";
 import type { IDashboardCommandFailed } from "../../../model/events/general.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectBackendCapabilities } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
-import { selectDisableDefaultDrills, selectLocale } from "../../../model/store/config/configSelectors.js";
+import { selectAllCatalogAttributesMap } from "../../../model/store/catalog/catalogSelectors.js";
+import {
+    selectDisableDefaultDrills,
+    selectEnableDashboardPartialRendering,
+    selectLocale,
+} from "../../../model/store/config/configSelectors.js";
 import { selectExecutableDashboardFiltersWithoutCrossFiltering } from "../../../model/store/filtering/dashboardFilterSelectors.js";
-import { selectWidgetDrills } from "../../../model/store/tabs/layout/layoutSelectors.js";
+import {
+    selectIgnoredDrillDownHierarchiesByWidgetRef,
+    selectWidgetDrills,
+} from "../../../model/store/tabs/layout/layoutSelectors.js";
 import { selectIsDrillRestricted } from "../../../model/store/widgetDrills/drillRestrictionSelectors.js";
+import { getRestrictedDrillDowns } from "../../../model/store/widgetDrills/widgetDrillSelectors.js";
 import {
     type DashboardDrillDefinition,
     type IDashboardDrillContext,
@@ -94,31 +105,63 @@ export function WithDrillSelect({
     const disableDefaultDrills = useDashboardSelector(selectDisableDefaultDrills); // TODO: maybe remove?
     const filters = useDashboardSelector(selectExecutableDashboardFiltersWithoutCrossFiltering);
     const isDrillRestricted = useDashboardSelector(selectIsDrillRestricted);
+    const catalogAttributes = useDashboardSelector(selectAllCatalogAttributesMap);
+    const ignoredHierarchies = useDashboardSelector(selectIgnoredDrillDownHierarchiesByWidgetRef(widgetRef));
+    const enablePartialRendering = useDashboardSelector(selectEnableDashboardPartialRendering);
     const configuredDrills = useDashboardSelector(selectWidgetDrills(widgetRef));
     const { supportsAttributeHierarchies } = useDashboardSelector(selectBackendCapabilities);
+    // useDrills keeps the success handler of the first render; the catalog loads after it
+    const restrictedDrillDownDepsRef = useAutoupdateRef({
+        catalogAttributes,
+        ignoredHierarchies,
+        enablePartialRendering,
+        supportsAttributeHierarchies,
+        insight,
+    });
 
     const drills = useDrills({
         onDrill: onDrillStart,
         onDrillSuccess: (s) => {
-            if (disableDefaultDrills || s.payload.drillEvent.drillDefinitions.length === 0) {
-                return;
-            }
             const drillDefinitions = s.payload.drillEvent.drillDefinitions;
             const drillEvent = s.payload.drillEvent;
             const context = s.payload.drillContext;
+            const drillSources = getDrillSourceLocalIdentifierFromEvent(drillEvent);
+            const clickedAttributes = (drillEvent.drillContext.intersection ?? [])
+                .map(({ header }) => header)
+                .filter(isAttributeDescriptor)
+                .filter(({ attributeHeader }) => drillSources.includes(attributeHeader.localIdentifier));
+            const deps = restrictedDrillDownDepsRef.current;
+            const restrictedDrillDowns = getRestrictedDrillDowns(
+                clickedAttributes,
+                deps.catalogAttributes,
+                deps.ignoredHierarchies ?? [],
+                {
+                    supportsAttributeHierarchies: deps.supportsAttributeHierarchies,
+                    enablePartialRendering: deps.enablePartialRendering,
+                    disableDrillDown: deps.insight.insight.properties["controls"]?.disableDrillDown,
+                },
+            );
+            if (
+                disableDefaultDrills ||
+                (drillDefinitions.length === 0 && restrictedDrillDowns.length === 0)
+            ) {
+                return;
+            }
 
             const validDrillDefinitions = supportsAttributeHierarchies
                 ? drillDefinitions
                 : filterDrillFromAttributeByPriority(drillDefinitions, configuredDrills);
 
-            const type = validDrillDefinitions.some(isDrillRestricted)
-                ? "multiple"
-                : getDrillDefinitionType(validDrillDefinitions);
+            const type =
+                restrictedDrillDowns.length > 0 || validDrillDefinitions.some(isDrillRestricted)
+                    ? "multiple"
+                    : getDrillDefinitionType(validDrillDefinitions);
             if (type === "single") {
                 onSelect(validDrillDefinitions[0], undefined, drillEvent, s.correlationId, context);
             } else if (type === "multiple") {
                 setDropdownProps({
                     drillDefinitions: validDrillDefinitions,
+                    restrictedDrillDowns,
                     drillEvent: drillEvent,
                     drillContext: context,
                     correlationId: s.correlationId,

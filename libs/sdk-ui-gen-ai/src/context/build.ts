@@ -30,9 +30,7 @@ export function mergeContexts(...contexts: (IGenAIUserContext | undefined)[]): I
         }
 
         const dashboard = mergeDashboard(context.view?.dashboard, acc.view?.dashboard);
-        const view = {
-            ...(dashboard ? { dashboard } : {}),
-        };
+        const view = dashboard ? { dashboard } : {};
 
         const activeObject = mergeActiveObject(context.activeObject, acc.activeObject);
         const referencedObjects = [...(acc?.referencedObjects ?? []), ...(context?.referencedObjects ?? [])];

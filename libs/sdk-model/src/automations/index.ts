@@ -12,6 +12,7 @@ import {
 } from "../exports/index.js";
 import { type IMetadataObject, type IMetadataObjectDefinition } from "../ldm/metadata/types.js";
 import { type Identifier, type ObjRef } from "../objRef/index.js";
+import { type IUnavailableReference } from "../objRef/unavailableReference.js";
 
 /**
  * @public
@@ -198,6 +199,14 @@ export interface IAutomationVisibleFilter {
 export interface IAutomationMetadataObject
     extends IAutomationMetadataObjectBase, IMetadataObject, IAuditable {
     type: "automation";
+
+    /**
+     * Referenced objects the current user may not read.
+     *
+     * @remarks
+     * Undefined when object permissions were not checked.
+     */
+    unavailable?: IUnavailableReference[];
 }
 
 /**

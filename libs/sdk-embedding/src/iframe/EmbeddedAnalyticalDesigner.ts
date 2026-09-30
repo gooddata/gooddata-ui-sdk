@@ -335,16 +335,16 @@ export interface IAdOpenInsightCommandBody {
     projectId?: string;
 
     /**
-     * Client id - Each client has an identifier unique within the domain
+     * Client id
      *
-     * Note: use the combination of the data product ID and client ID instead of the project ID
+     * @deprecated Analytical Designer ignores this value. Use projectId.
      */
     clientId?: string;
 
     /**
-     * Product id - A data product contains multiple segments. And a segment has clients assigned to it
+     * Product id
      *
-     * Note: use the combination of the data product ID and client ID instead of the project ID
+     * @deprecated Analytical Designer ignores this value. Use projectId.
      */
     productId?: string;
 

@@ -352,3 +352,12 @@ export const useMetaPaletteData = (): {
         },
     };
 };
+
+/**
+ * The content element a restricted placeholder gives an export: finished from the start, and
+ * without the visualization's type or dimensions, which would name the withheld object.
+ */
+export const restrictedWidgetContentExportData: WidgetExportDataAttributes = {
+    "data-export-type": "widget-content",
+    "data-export-visualization-status": "loaded",
+};

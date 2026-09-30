@@ -1,8 +1,10 @@
 // (C) 2026 GoodData Corporation
 
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
+
+import { type AgentCustomSkill } from "@gooddata/sdk-model";
 
 import { agentSwitchingEnabledSelector } from "../store/chatWindow/chatWindowSelectors.js";
 import {
@@ -15,10 +17,10 @@ import { setSelectedAgentAction } from "../store/messages/messagesSlice.js";
 /**
  * @public
  */
-export function useGenAIStandaloneInputData() {
+export function useGenAIStandaloneInputData(requiredSkills?: AgentCustomSkill[]) {
     const dispatch = useDispatch();
-    const agents = useSelector(agentsSelector);
-    const selectedAgentId = useSelector(selectedAgentIdSelector);
+    const agentsList = useSelector(agentsSelector);
+    const currentAgentId = useSelector(selectedAgentIdSelector);
     const conversationsLoaded = useSelector(conversationsLoadedSelector);
     const agentSwitchingEnabled = useSelector(agentSwitchingEnabledSelector);
 
@@ -28,6 +30,21 @@ export function useGenAIStandaloneInputData() {
         },
         [dispatch],
     );
+
+    const agents = useMemo(() => {
+        if (requiredSkills) {
+            return agentsList?.filter((agent) => {
+                return requiredSkills.every((skill) => {
+                    return agent?.effectiveSkills?.includes(skill);
+                });
+            });
+        }
+        return agentsList;
+    }, [requiredSkills, agentsList]);
+
+    const selectedAgentId = agents?.find((agent) => agent.id === currentAgentId)
+        ? currentAgentId
+        : agents?.[0]?.id;
 
     return {
         agents,

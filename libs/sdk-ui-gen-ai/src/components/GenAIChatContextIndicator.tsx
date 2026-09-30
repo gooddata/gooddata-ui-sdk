@@ -39,6 +39,15 @@ const msgs = defineMessages({
     focusOn: {
         id: "gd.gen-ai.context.focus_on",
     },
+    stopUsingContext: {
+        id: "gd.gen-ai.context.stop_using_context",
+    },
+    startUsingContext: {
+        id: "gd.gen-ai.context.start_using_context",
+    },
+    context: {
+        id: "gd.gen-ai.context.context",
+    },
 });
 
 type GenAIChatContextIndicatorOwnProps = {
@@ -149,6 +158,12 @@ export function GenAIChatContextIndicator({ onUpdate }: GenAIChatContextIndicato
                                     {...getIconByObject(item)}
                                     label={getSelectedTitle(selectedContext, emptyReferenceLabel)}
                                     iconAction={selectedContext.activated ? "visible" : "invisible"}
+                                    actionIconTooltip={
+                                        selectedContext.activated
+                                            ? intl.formatMessage(msgs.stopUsingContext)
+                                            : intl.formatMessage(msgs.startUsingContext)
+                                    }
+                                    tooltip={intl.formatMessage(msgs.context)}
                                     variant={selectedContext.activated ? "normal" : "inactive"}
                                     onClick={toggleDropdown}
                                     onAction={onAmbientToggleHandler()}

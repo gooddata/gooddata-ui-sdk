@@ -24,7 +24,6 @@ interface IUserProviderProps {
 export function UserProvider({ children, scope }: IUserProviderProps) {
     const [currentUser, setCurrentUser] = useState<IUser | null>(null);
     const [canManageWorkspace, setCanManageWorkspace] = useState<boolean>(false);
-    const [enableAutomationTrigger, setEnableAutomationTrigger] = useState<boolean>(false);
 
     const backend = useBackend();
     const workspace = useWorkspace();
@@ -56,21 +55,23 @@ export function UserProvider({ children, scope }: IUserProviderProps) {
         [backend],
     );
 
-    useCancelablePromise(
+    const hasSettings = !!backend && !!workspace;
+    const { result: settings, status: settingsStatus } = useCancelablePromise(
         {
-            promise:
-                backend && workspace
-                    ? async () => backend.workspace(workspace).settings().getSettingsForCurrentUser()
-                    : null,
-            onSuccess: (result) => {
-                setEnableAutomationTrigger(result?.enableAutomationTrigger ?? false);
-            },
+            promise: hasSettings
+                ? async () => backend.workspace(workspace).settings().getSettingsForCurrentUser()
+                : null,
             onError: (error) => {
                 console.error(error);
             },
         },
         [backend, workspace],
     );
+    const enableAutomationTrigger = settings?.enableAutomationTrigger ?? false;
+    // A failed load counts as loaded, so the automations still load without the settings.
+    const areSettingsLoaded = !hasSettings || settingsStatus === "success" || settingsStatus === "error";
+    const isPartialRenderingEnabled =
+        scope === "workspace" && (settings?.enableDashboardPartialRendering ?? false);
 
     // Compare by login since current user doesn't have id property,
     // login is the only property that is guaranteed to be unique for current user
@@ -146,6 +147,8 @@ export function UserProvider({ children, scope }: IUserProviderProps) {
         canPauseAutomation,
         canResumeAutomation,
         canTriggerAutomation,
+        areSettingsLoaded,
+        isPartialRenderingEnabled,
     };
 
     return <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>;

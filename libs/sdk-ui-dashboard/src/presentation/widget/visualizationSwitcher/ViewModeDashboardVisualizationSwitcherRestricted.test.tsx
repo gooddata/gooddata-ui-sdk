@@ -12,9 +12,11 @@ import {
     unavailableObjectsActions,
     unavailableObjectsSliceReducer,
 } from "../../../model/store/unavailableObjects/index.js";
+import { type WidgetExportData } from "../../export/types.js";
 
 const mockUseDashboardSelector = vi.fn();
 const mockContentProvider = vi.fn();
+const mockDispatch = vi.fn();
 
 // `isolate: false` shares one module graph per worker, so the module mocked below may already have
 // been evaluated against its real dependencies by a test file that ran earlier in the same worker.
@@ -24,7 +26,7 @@ vi.hoisted(() => {
 
 vi.mock("../../../model/react/DashboardStoreProvider.js", () => ({
     useDashboardSelector: (selector: unknown) => mockUseDashboardSelector(selector),
-    useDashboardDispatch: () => vi.fn(),
+    useDashboardDispatch: () => mockDispatch,
 }));
 
 vi.mock("../../dashboardContexts/DashboardComponentsContext.js", () => ({
@@ -72,7 +74,7 @@ const messages = {
     "widget.error.restricted_insight.description": "Ask your administrator for access",
 };
 
-function renderRestricted() {
+function renderRestricted(exportData?: WidgetExportData) {
     const entry: IUnavailableDashboardReference = {
         ref: restricted.insight,
         type: "insight",
@@ -95,6 +97,7 @@ function renderRestricted() {
                 widget={switcher}
                 activeVisualization={restricted}
                 screen="xl"
+                exportData={exportData}
                 onActiveVisualizationChange={vi.fn()}
             />
         </IntlProvider>,
@@ -106,6 +109,16 @@ describe("ViewModeDashboardVisualizationSwitcherRestricted", () => {
         mockUseDashboardSelector.mockReset();
         mockContentProvider.mockReset();
         mockContentProvider.mockImplementation(() => RestrictedPlaceholderContent);
+        mockDispatch.mockReset();
+    });
+
+    it("reports the restricted active visualization as rendered, so a dashboard export does not wait for it", () => {
+        renderRestricted();
+
+        expect(mockDispatch.mock.calls.map(([command]) => [command.type, command.payload.id])).toEqual([
+            ["GDC.DASH/CMD.RENDER.ASYNC.REQUEST", "restricted"],
+            ["GDC.DASH/CMD.RENDER.ASYNC.RESOLVE", "restricted"],
+        ]);
     });
 
     it("renders the consumer's replacement content in the switcher body", () => {
@@ -156,5 +169,26 @@ describe("ViewModeDashboardVisualizationSwitcherRestricted", () => {
         const { container } = renderRestricted();
 
         expect(container.querySelectorAll(".gd-absolute-row").length).toBe(0);
+    });
+
+    it("gives a slides export one finished content element, without the withheld visualization's type", () => {
+        const { container } = renderRestricted({
+            section: { "data-export-type": "widget" },
+            widget: {
+                "data-export-type": "widget-content",
+                "data-export-visualization-type": "table",
+                "data-export-visualization-dimension-0": "Attrition by team",
+            },
+            title: { "data-export-type": "widget-title" },
+        });
+
+        const contents = container.querySelectorAll('[data-export-type="widget-content"]');
+        expect(contents).toHaveLength(1);
+        expect(contents[0]).toHaveAttribute("data-export-visualization-status", "loaded");
+        expect(contents[0]).toContainElement(screen.getByTestId("restricted-placeholder"));
+        expect(container.querySelector("[data-export-visualization-type]")).toBeNull();
+        // the exportable wrapper around the switcher already marks the widget; a second mark would
+        // make the exporter count the switcher twice
+        expect(container.querySelector('[data-export-type="widget"]')).toBeNull();
     });
 });

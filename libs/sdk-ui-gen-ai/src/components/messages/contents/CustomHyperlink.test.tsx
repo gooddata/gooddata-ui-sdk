@@ -108,15 +108,9 @@ describe("CustomHyperlinkComponent", () => {
             "/workspace/workspace_1/dashboards/#/dashboard/dashboard_1",
         ],
         [
-            "visualization using legacy shell URL",
+            "visualization",
             "gooddata://visualization?ws=workspace_1&id=insight_1",
             {},
-            "/analyze/#/workspace_1/insight_1/edit",
-        ],
-        [
-            "visualization using workspace shell URL",
-            "gooddata://visualization?ws=workspace_1&id=insight_1",
-            { enableShellApplication_analyticalDesigner: true },
             "/workspace/workspace_1/analyze/#/insight_1/edit",
         ],
         [

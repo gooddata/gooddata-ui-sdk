@@ -28,6 +28,7 @@ import {
     type IAutomationsPendingAction,
     type IEditAutomation,
 } from "../types.js";
+import { isAutomationRestricted } from "../utils.js";
 
 const { b } = bem("gd-ui-ext-automation-menu-item");
 
@@ -80,9 +81,16 @@ export function AutomationMenu({
     const { addSuccess } = useToastMessage();
     const menuWrapperRef = useRef<HTMLDivElement>(null);
     const menuItemRefs = useRef<Map<string, HTMLElement>>(new Map());
+    const editActionRestricted = isAutomationRestricted(item);
     const editActionUnavailable = useMemo(() => {
-        return !item.dashboard?.id;
-    }, [item.dashboard?.id]);
+        return !item.dashboard?.id || editActionRestricted;
+    }, [item.dashboard?.id, editActionRestricted]);
+    let editActionTooltip: string | undefined;
+    if (editActionRestricted) {
+        editActionTooltip = intl.formatMessage(messages.menuEditRestricted);
+    } else if (editActionUnavailable) {
+        editActionTooltip = intl.formatMessage(messages.menuEditUnavailable);
+    }
 
     const setMenuItemRef = useCallback(
         (itemId: string) => (element: HTMLDivElement | HTMLButtonElement | null) => {
@@ -164,7 +172,7 @@ export function AutomationMenu({
                 label: intl.formatMessage(messages.menuEdit),
                 onClick: onEdit,
                 disabled: editActionUnavailable,
-                tooltip: editActionUnavailable ? intl.formatMessage(messages.menuEditUnavailable) : undefined,
+                tooltip: editActionTooltip,
             });
         }
 
@@ -228,6 +236,7 @@ export function AutomationMenu({
         canTrigger,
         automationsType,
         editActionUnavailable,
+        editActionTooltip,
         intl,
         onEdit,
         onUnsubscribe,

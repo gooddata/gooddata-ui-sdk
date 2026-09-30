@@ -111,13 +111,9 @@
         "text": "Ask here…",
         "crowdinContext": "Placeholder text in the input field where users type their questions to the AI chatbot"
     },
-    "gd.gen-ai.input-label.mac": {
-        "text": "Ask your question. Use control+space or cmd+I for suggestions.",
+    "gd.gen-ai.input-label": {
+        "text": "Ask your question. Type @ for suggestions.",
         "crowdinContext": "Label for the input field where users type their questions to the AI chatbot"
-    },
-    "gd.gen-ai.input-label.win": {
-        "text": "Ask your question. Use control+space or control+I for suggestions.",
-        "crowdinContext": "Label for the input field where Windows users type their questions to the AI chatbot"
     },
     "gd.gen-ai.context.add_context": {
         "text": "Add context",
@@ -126,6 +122,18 @@
     "gd.gen-ai.context.focus_on": {
         "text": "Focus on",
         "crowdinContext": "Label for popover that shows current view context"
+    },
+    "gd.gen-ai.context.stop_using_context": {
+        "text": "Stop using this context",
+        "crowdinContext": "Tooltip for toggle button to stop using context"
+    },
+    "gd.gen-ai.context.start_using_context": {
+        "text": "Use this context",
+        "crowdinContext": "Tooltip for toggle button to start using context"
+    },
+    "gd.gen-ai.context.context": {
+        "text": "Context helps focus AI responses without limiting other workspace data. Select to focus on it or turn it off.",
+        "crowdinContext": "Tooltip explaining the purpose of the context in the AI chatbot"
     },
     "gd.gen-ai.context.close": {
         "text": "Close add context",
@@ -543,20 +551,8 @@
         "text": "Yearly",
         "crowdinContext": "Year trigger interval for alert in alert proposal dialog."
     },
-    "gd.gen-ai.dashboard.title": {
-        "text": "Dashboard",
-        "crowdinContext": "Title shown above dashboard proposal."
-    },
-    "gd.gen-ai.dashboard.name": {
-        "text": "Name",
-        "crowdinContext": "Name for dashboard proposal."
-    },
-    "gd.gen-ai.dashboard.description": {
-        "text": "Description",
-        "crowdinContext": "Description for dashboard proposal."
-    },
     "gd.gen-ai.dashboard.open-dashboard": {
-        "text": "Open dashboard",
+        "text": "Open",
         "crowdinContext": "Open dashboard button label."
     },
     "gd.gen-ai.alert-proposal.summary.trigger": {

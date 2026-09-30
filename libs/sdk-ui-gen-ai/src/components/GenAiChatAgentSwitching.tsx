@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
+import { type GenAIAgent } from "../model.js";
 import {
     agentSwitchingActiveSelector,
     agentSwitchingEnabledSelector,
@@ -47,6 +48,7 @@ type GenAiChatAgentSwitchingOwnProps = {
     setBusy?: (busy: boolean) => void;
     setNoAgents?: (noAgents: boolean) => void;
     leftContent?: ReactNode;
+    agentsOverride?: GenAIAgent[];
 };
 
 type GenAiChatAgentSwitchingStateProps = {
@@ -86,6 +88,7 @@ function GenAiChatAgentSwitchingCore({
     setBusy,
     setNoAgents,
     leftContent,
+    agentsOverride,
 }: GenAiChatAgentSwitchingOwnProps &
     GenAiChatAgentSwitchingStateProps &
     IGenAiChatAgentSwitchingDispatchProps) {
@@ -99,7 +102,7 @@ function GenAiChatAgentSwitchingCore({
         agentSwitchingActive,
         assistantLoading: isAssistantLoading,
         conversationsLoading: isConversationsLoading,
-        agents,
+        agents: agentsOverride ?? agents,
         selectedAgentId,
     });
 

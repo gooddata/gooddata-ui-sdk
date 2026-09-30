@@ -949,21 +949,6 @@ describe("resolveApplications", () => {
                 ];
             }
 
-            function analyticalDesignerPair() {
-                return [
-                    externalApp({
-                        id: "analytical-designer",
-                        menuOrder: 1,
-                        requiredSettings: { enableShellApplication_analyticalDesigner: true },
-                    }),
-                    externalApp({
-                        id: "analytical-designer-legacy",
-                        menuOrder: 1,
-                        requiredSettings: { enableShellApplication_analyticalDesigner: false },
-                    }),
-                ];
-            }
-
             it("keeps the legacy app when the flag is absent on an ordinary page", () => {
                 const result = resolveApplications({
                     localApps: dashboardsPair(),
@@ -1010,17 +995,6 @@ describe("resolveApplications", () => {
                 });
 
                 expect(result.map((a) => a.id)).toEqual(["dashboards"]);
-            });
-
-            it("keeps the shell analytical designer when its flag is absent on an export", () => {
-                const result = resolveApplications({
-                    localApps: analyticalDesignerPair(),
-                    remoteRegistry: undefined,
-                    ctx: ctxWith({ userSettings: {}, isExportMode: true }),
-                    scope: "workspace",
-                });
-
-                expect(result.map((a) => a.id)).toEqual(["analytical-designer"]);
             });
 
             it("leaves requiredSettings to the caller when skipSettings is set", () => {

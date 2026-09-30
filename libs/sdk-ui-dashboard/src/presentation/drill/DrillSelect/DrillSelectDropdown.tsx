@@ -25,6 +25,7 @@ import {
     isDrillToLegacyDashboard,
     isIdentifierRef,
     isKeyDriveAnalysis,
+    objRefToString,
 } from "@gooddata/sdk-model";
 import { type IDrillEvent, UnexpectedSdkError } from "@gooddata/sdk-ui";
 import { type IAlignPoint, Overlay, UiFocusManager, UiMenu } from "@gooddata/sdk-ui-kit";
@@ -39,6 +40,7 @@ import { selectInsightsMap } from "../../../model/store/insights/insightsSelecto
 import { selectDashboardTitle } from "../../../model/store/meta/metaSelectors.js";
 import { selectWidgetByRef } from "../../../model/store/tabs/layout/layoutSelectors.js";
 import { selectIsDrillRestricted } from "../../../model/store/widgetDrills/drillRestrictionSelectors.js";
+import { type IRestrictedDrillDown } from "../../../model/store/widgetDrills/widgetDrillSelectors.js";
 import { type DashboardDrillDefinition, isDrillDownDefinition } from "../../../types.js";
 import { useDrillSelectDropdownMenuItems } from "../hooks/useDrillSelectDropdownMenuItems.js";
 import { isDrillToUrl } from "../types.js";
@@ -52,7 +54,12 @@ import { getDrillToCustomUrlMissingAttributes } from "../utils/drillToCustomUrlU
 import { getKdaKeyDriverCombinations, getKeyDriverCombinationItemTitle } from "../utils/kdaUtils.js";
 
 import { DrillSelectDropdownMenuItem } from "./DrillSelectDropdownMenuItem.js";
-import { DrillType, type IDrillSelectContext, type IDrillSelectItem } from "./types.js";
+import {
+    DrillType,
+    type IDrillSelectContext,
+    type IDrillSelectItem,
+    type IRestrictedDrillSelectItem,
+} from "./types.js";
 
 export interface IDrillSelectDropdownProps extends IDrillSelectContext {
     dropDownAnchorClass: string;
@@ -69,6 +76,7 @@ export function DrillSelectDropdown({
     onCloseReturnFocus,
     onSelect,
     drillDefinitions,
+    restrictedDrillDowns,
     drillEvent,
 }: IDrillSelectDropdownProps) {
     const intl = useIntl();
@@ -136,8 +144,8 @@ export function DrillSelectDropdown({
     );
 
     const drillSelectItems = useMemo(
-        () =>
-            createDrillSelectItems({
+        (): IDrillSelectItem[] => [
+            ...createDrillSelectItems({
                 drillDefinitions: deduplicateDrillIntoUrlItems(drillDefinitions),
                 drillEvent,
                 isDrillRestricted,
@@ -149,8 +157,11 @@ export function DrillSelectDropdown({
                 widget: widget as IWidget,
                 enableSecondGranularities,
             }),
+            ...createRestrictedDrillDownItems(restrictedDrillDowns, intl),
+        ],
         [
             drillDefinitions,
+            restrictedDrillDowns,
             isDrillRestricted,
             drillEvent,
             insights,
@@ -164,19 +175,18 @@ export function DrillSelectDropdown({
     );
 
     const grouped = groupBy(drillSelectItems, (item) => {
-        if (isDrillDownDefinition(item.drillDefinition)) {
-            return "drillDown";
+        switch (item.type) {
+            case DrillType.DRILL_DOWN:
+                return "drillDown";
+            case DrillType.DRILL_TO_URL:
+                return "drillToUrl";
+            case DrillType.CROSS_FILTERING:
+                return "crossFiltering";
+            case DrillType.KEY_DRIVER_ANALYSIS:
+                return "keyDriverAnalysis";
+            default:
+                return "drill";
         }
-        if (isDrillToUrl(item.drillDefinition)) {
-            return "drillToUrl";
-        }
-        if (isCrossFiltering(item.drillDefinition)) {
-            return "crossFiltering";
-        }
-        if (isKeyDriveAnalysis(item.drillDefinition)) {
-            return "keyDriverAnalysis";
-        }
-        return "drill";
     });
 
     const menuItems = useDrillSelectDropdownMenuItems({
@@ -328,6 +338,17 @@ function calculateAlignPoints(anchorClass: string, drillEvent?: IDrillEvent): IA
     ];
 }
 
+const createRestrictedDrillDownItems = (
+    restrictedDrillDowns: IRestrictedDrillDown[],
+    intl: IntlShape,
+): IRestrictedDrillSelectItem[] =>
+    restrictedDrillDowns.map(({ hierarchyRef, originLocalIdentifier }) => ({
+        type: DrillType.DRILL_DOWN,
+        name: intl.formatMessage({ id: "drill_modal_picker.restricted" }),
+        id: `restricted-drill-down-${originLocalIdentifier}-${objRefToString(hierarchyRef)}`,
+        isRestricted: true,
+    }));
+
 export const createDrillSelectItems = ({
     drillDefinitions,
     drillEvent,
@@ -367,10 +388,8 @@ export const createDrillSelectItems = ({
                       ? DrillType.DRILL_TO_DASHBOARD
                       : DrillType.DRILL_TO_URL,
                 name: intl.formatMessage({ id: "drill_modal_picker.restricted" }),
-                drillDefinition,
                 id: stringify(drillDefinition) || "undefined",
                 isRestricted: true,
-                isDisabled: true,
             };
         }
         if (isDrillDownDefinition(drillDefinition)) {

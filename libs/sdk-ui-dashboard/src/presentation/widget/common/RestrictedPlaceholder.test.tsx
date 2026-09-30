@@ -6,6 +6,8 @@ import { render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 import { describe, expect, it } from "vitest";
 
+import { type WidgetExportData } from "../../export/types.js";
+
 import { RestrictedPlaceholder, RestrictedPlaceholderContent } from "./RestrictedPlaceholder.js";
 
 const messages = {
@@ -110,5 +112,58 @@ describe("RestrictedPlaceholder", () => {
 
         expect(container.querySelector(".dash-item")).toBeInTheDocument();
         expect(container.querySelector(".gd-ui-kit-restricted-placeholder")).toBeInTheDocument();
+    });
+
+    describe("in an export", () => {
+        const exportData = {
+            section: { "data-export-type": "widget" },
+            widget: {
+                "data-export-type": "widget-content",
+                "data-export-widget-type": "insight",
+                "data-export-visualization-type": "table",
+                "data-export-visualization-dimension-0": "Confidential revenue",
+            },
+        } satisfies WidgetExportData;
+
+        it("gives the export a finished content element, so slides can print the tile", () => {
+            const { container } = renderWithIntl(
+                <RestrictedPlaceholder
+                    screen="xl"
+                    dashboardItemClasses="s-dash-item-0"
+                    exportData={exportData}
+                    Content={RestrictedPlaceholderContent}
+                />,
+            );
+
+            const content = container.querySelector('[data-export-type="widget-content"]');
+            expect(content).toHaveAttribute("data-export-visualization-status", "loaded");
+            expect(content).toContainElement(screen.getByTestId("restricted-placeholder"));
+        });
+
+        it("does not pass the withheld visualization's type or dimensions to the export", () => {
+            const { container } = renderWithIntl(
+                <RestrictedPlaceholder
+                    screen="xl"
+                    dashboardItemClasses="s-dash-item-0"
+                    exportData={exportData}
+                    Content={RestrictedPlaceholderContent}
+                />,
+            );
+
+            expect(container.querySelector("[data-export-visualization-type]")).toBeNull();
+            expect(container.innerHTML).not.toContain("Confidential revenue");
+        });
+
+        it("adds no export attributes outside an export", () => {
+            const { container } = renderWithIntl(
+                <RestrictedPlaceholder
+                    screen="xl"
+                    dashboardItemClasses="s-dash-item-0"
+                    Content={RestrictedPlaceholderContent}
+                />,
+            );
+
+            expect(container.querySelector("[data-export-type]")).toBeNull();
+        });
     });
 });

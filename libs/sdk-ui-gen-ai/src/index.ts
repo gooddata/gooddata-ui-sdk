@@ -89,6 +89,9 @@ export {
     startNewConversationAction,
     setCurrentConversationAction,
     setSelectedAgentAction,
+    renameConversationAction,
+    deleteConversationAction,
+    pinConversationAction,
 } from "./store/messages/messagesSlice.js";
 export {
     setFullscreenAction,

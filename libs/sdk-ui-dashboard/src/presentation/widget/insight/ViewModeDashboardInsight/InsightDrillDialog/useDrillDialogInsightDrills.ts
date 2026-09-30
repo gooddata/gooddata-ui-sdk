@@ -74,6 +74,7 @@ export const useDrillDialogInsightDrills = ({
             drillTargets,
             widget.ignoredDrillDownHierarchies,
             disableDrillIntoURL,
+            disableDrillDownOnInsight,
         ),
     );
     const onDrill = onDrillFn

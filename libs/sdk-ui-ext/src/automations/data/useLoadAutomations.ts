@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCancelablePromise } from "@gooddata/sdk-ui";
 
@@ -17,6 +17,8 @@ export const useLoadAutomations = ({
     createdByFilterQuery,
     statusFilterQuery,
     includeAutomationResult,
+    includeUnavailableReferences,
+    isReady,
     scope,
     setState,
     onLoad,
@@ -27,22 +29,25 @@ export const useLoadAutomations = ({
 
     const { status: dataLoadingStatus, error } = useCancelablePromise(
         {
-            promise: async () =>
-                promiseGetAutomationsQuery({
-                    includeAutomationResult,
-                    pageSize,
-                    page: state.page,
-                    search: state.search,
-                    dashboardFilterQuery,
-                    recipientsFilterQuery,
-                    externalRecipientsFilterQuery,
-                    workspacesFilterQuery,
-                    createdByFilterQuery,
-                    statusFilterQuery,
-                    sortBy: state.sortBy,
-                    sortDirection: state.sortDirection,
-                    type,
-                }),
+            promise: isReady
+                ? async () =>
+                      promiseGetAutomationsQuery({
+                          includeAutomationResult,
+                          includeUnavailableReferences,
+                          pageSize,
+                          page: state.page,
+                          search: state.search,
+                          dashboardFilterQuery,
+                          recipientsFilterQuery,
+                          externalRecipientsFilterQuery,
+                          workspacesFilterQuery,
+                          createdByFilterQuery,
+                          statusFilterQuery,
+                          sortBy: state.sortBy,
+                          sortDirection: state.sortDirection,
+                          type,
+                      })
+                : null,
             onSuccess: (result) => {
                 const newAutomations = [...state.automations, ...result.items];
                 setState((state) => ({
@@ -77,8 +82,9 @@ export const useLoadAutomations = ({
                 onLoad?.(state.automations, isInitial);
             },
         },
-        [state.page, state.invalidationId],
+        [state.page, state.invalidationId, isReady],
     );
 
-    return { status: dataLoadingStatus, error };
+    // Waiting for settings counts as loading, so the empty state does not flash.
+    return { status: isReady ? dataLoadingStatus : "loading", error };
 };

@@ -8,6 +8,7 @@ import {
     type AttributeDisplayFormType,
     type DrillDefinition,
     type DrillOrigin,
+    type IAttributeDescriptor,
     type IAttributeDisplayFormMetadataObject,
     type ICatalogAttribute,
     type ICatalogAttributeHierarchy,
@@ -21,6 +22,7 @@ import {
     areObjRefsEqual,
     getHierarchyAttributes,
     getHierarchyRef,
+    isAttributeHierarchyReference,
     isCatalogAttribute,
     isDrillFromAttribute,
     isDrillFromMeasure,
@@ -69,6 +71,7 @@ import {
 } from "../catalog/catalogSelectors.js";
 import {
     selectDisableDefaultDrills,
+    selectEnableDashboardPartialRendering,
     selectEnableDrillToUrlByDefault,
     selectEnableKda,
     selectEnableSecondGranularities,
@@ -454,6 +457,112 @@ export const selectImplicitDrillsDownByWidgetRef: (
 
             return [];
         },
+    ),
+);
+
+/**
+ * A drill down through a hierarchy the user cannot read. Only the hierarchy and the clicked
+ * attribute are known, so it is listed as restricted and cannot be opened.
+ *
+ * @internal
+ */
+export interface IRestrictedDrillDown {
+    hierarchyRef: ObjRef;
+    originLocalIdentifier: string;
+}
+
+/**
+ * When restricted drill downs are listed: only with partial rendering on, and only where drilling
+ * down is possible at all.
+ *
+ * @internal
+ */
+export interface IRestrictedDrillDownConditions {
+    supportsAttributeHierarchies?: boolean;
+    enablePartialRendering: boolean;
+    disableDrillDown?: boolean;
+}
+
+/**
+ * The restricted drill downs of the given drill attributes: one for every restricted hierarchy an
+ * attribute belongs to, unless the widget ignores that hierarchy for it. The same rule serves the
+ * dashboard, the drill dialog and the drill menu.
+ *
+ * @internal
+ */
+export function getRestrictedDrillDowns(
+    attributes: IAttributeDescriptor[],
+    catalogAttributes: ObjRefMap<ICatalogAttribute | ICatalogDateAttribute>,
+    ignoredHierarchies: IDrillDownReference[],
+    {
+        supportsAttributeHierarchies,
+        enablePartialRendering,
+        disableDrillDown,
+    }: IRestrictedDrillDownConditions,
+): IRestrictedDrillDown[] {
+    if (!supportsAttributeHierarchies || !enablePartialRendering || disableDrillDown) {
+        return [];
+    }
+    return attributes.flatMap(({ attributeHeader }) => {
+        const attributeRef = attributeHeader.formOf.ref;
+        const catalogAttribute = catalogAttributes.get(attributeRef);
+        const unavailable = isCatalogAttribute(catalogAttribute) ? (catalogAttribute.unavailable ?? []) : [];
+        return unavailable
+            .filter(
+                ({ ref, type }) =>
+                    type === "attributeHierarchy" &&
+                    !ignoredHierarchies.some(
+                        (reference) =>
+                            isAttributeHierarchyReference(reference) &&
+                            areObjRefsEqual(reference.attributeHierarchy, ref) &&
+                            areObjRefsEqual(reference.attribute, attributeRef),
+                    ),
+            )
+            .map(({ ref }) => ({
+                hierarchyRef: ref,
+                originLocalIdentifier: attributeHeader.localIdentifier,
+            }));
+    });
+}
+
+const restrictedDrillDownPredicates = (restrictedDrillDowns: IRestrictedDrillDown[]): IHeaderPredicate[] =>
+    restrictedDrillDowns.map(({ originLocalIdentifier }) =>
+        HeaderPredicates.localIdentifierMatch(originLocalIdentifier),
+    );
+
+/**
+ * @internal
+ */
+export const selectRestrictedDrillDownsByWidgetRef: (
+    ref: ObjRef,
+) => DashboardSelector<IRestrictedDrillDown[]> = createMemoizedSelector((ref: ObjRef) =>
+    createSelector(
+        selectDrillTargetsByWidgetRef(ref),
+        selectAllCatalogAttributesMap,
+        selectIgnoredDrillDownHierarchiesByWidgetRef(ref),
+        selectSupportsAttributeHierarchies,
+        selectEnableDashboardPartialRendering,
+        selectInsightByWidgetRef(ref),
+        (
+            availableDrillTargets,
+            catalogAttributes,
+            ignoredHierarchies = [],
+            supportsAttributeHierarchies,
+            enablePartialRendering,
+            widgetInsight,
+        ) =>
+            getRestrictedDrillDowns(
+                (availableDrillTargets?.availableDrillTargets?.attributes ?? []).map(
+                    ({ attribute }) => attribute,
+                ),
+                catalogAttributes,
+                ignoredHierarchies,
+                {
+                    supportsAttributeHierarchies,
+                    enablePartialRendering,
+                    disableDrillDown: widgetInsight?.insight?.properties?.["controls"]?.disableDrillDown,
+                },
+            ),
     ),
 );
 
@@ -860,6 +969,10 @@ const selectImplicitDrillDownPredicates = createMemoizedSelector((ref: ObjRef) =
     }),
 );
 
+const selectRestrictedDrillDownPredicates = createMemoizedSelector((ref: ObjRef) =>
+    createSelector(selectRestrictedDrillDownsByWidgetRef(ref), restrictedDrillDownPredicates),
+);
+
 const selectConfiguredDrillPredicates = createMemoizedSelector((ref: ObjRef) =>
     createSelector(selectValidConfiguredDrillsByWidgetRef(ref), (configuredDrills = []) => {
         return configuredDrills.flatMap((drill) => drill.predicates);
@@ -934,6 +1047,7 @@ export const selectDrillableItemsByWidgetRef: (ref: ObjRef) => DashboardSelector
             selectDrillableItems,
             selectConfiguredDrillPredicates(ref),
             selectImplicitDrillDownPredicates(ref),
+            selectRestrictedDrillDownPredicates(ref),
             selectImplicitDrillToUrlPredicates(ref),
             selectCrossFilteringPredicates(ref),
             selectKeyDriverAnalysisPredicates(ref),
@@ -942,6 +1056,7 @@ export const selectDrillableItemsByWidgetRef: (ref: ObjRef) => DashboardSelector
                 drillableItems,
                 configuredDrills,
                 implicitDrillDownDrills,
+                restrictedDrillDownDrills,
                 implicitDrillToUrlDrills,
                 crossFilteringDrills,
                 keyDriverAnalysisDrills,
@@ -952,6 +1067,7 @@ export const selectDrillableItemsByWidgetRef: (ref: ObjRef) => DashboardSelector
                     resolvedDrillableItems.push(
                         ...configuredDrills,
                         ...implicitDrillDownDrills,
+                        ...restrictedDrillDownDrills,
                         ...implicitDrillToUrlDrills,
                         ...crossFilteringDrills,
                         ...keyDriverAnalysisDrills,
@@ -1027,11 +1143,13 @@ export const selectDrillableItemsByAvailableDrillTargets: (
     availableDrillTargets: IAvailableDrillTargets | undefined,
     ignoredDrillDownHierarchies: IDrillDownReference[] | undefined,
     disableDrillIntoURL: boolean | undefined,
+    disableDrillDown?: boolean,
 ) => DashboardSelector<IHeaderPredicate[]> = createMemoizedSelector(
     (
         availableDrillTargets: IAvailableDrillTargets | undefined,
         ignoredDrillDownHierarchies: IDrillDownReference[] | undefined,
         disableDrillIntoURL: boolean | undefined,
+        disableDrillDown?: boolean,
     ) =>
         createSelector(
             selectImplicitDrillsByAvailableDrillTargets(
@@ -1039,8 +1157,20 @@ export const selectDrillableItemsByAvailableDrillTargets: (
                 ignoredDrillDownHierarchies,
                 disableDrillIntoURL,
             ),
-            (implicitDrillDowns) => {
-                return implicitDrillDowns.flatMap((implicitDrill) => implicitDrill.predicates);
+            selectAllCatalogAttributesMap,
+            selectSupportsAttributeHierarchies,
+            selectEnableDashboardPartialRendering,
+            (implicitDrillDowns, catalogAttributes, supportsAttributeHierarchies, enablePartialRendering) => {
+                const restrictedDrillDowns = getRestrictedDrillDowns(
+                    (availableDrillTargets?.attributes ?? []).map(({ attribute }) => attribute),
+                    catalogAttributes,
+                    ignoredDrillDownHierarchies ?? [],
+                    { supportsAttributeHierarchies, enablePartialRendering, disableDrillDown },
+                );
+                return [
+                    ...implicitDrillDowns.flatMap((implicitDrill) => implicitDrill.predicates),
+                    ...restrictedDrillDownPredicates(restrictedDrillDowns),
+                ];
             },
         ),
 );

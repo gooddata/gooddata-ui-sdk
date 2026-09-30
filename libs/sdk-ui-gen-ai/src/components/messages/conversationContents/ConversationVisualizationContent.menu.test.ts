@@ -88,4 +88,24 @@ describe("getVisibleVisualisationMenuItemIds", () => {
             }),
         ).toEqual([]);
     });
+
+    it("if has error and visualization is saved, show open and copy buttons", () => {
+        expect(
+            getVisibleVisualisationMenuItemIds({
+                scenario: baselineScenario,
+                isVisualisationSaved: true,
+                hasError: true,
+            }),
+        ).toEqual(["button-open", "button-copy"]);
+    });
+
+    it("if has error and visualization is not saved do not show anything", () => {
+        expect(
+            getVisibleVisualisationMenuItemIds({
+                scenario: baselineScenario,
+                isVisualisationSaved: false,
+                hasError: true,
+            }),
+        ).toEqual([]);
+    });
 });

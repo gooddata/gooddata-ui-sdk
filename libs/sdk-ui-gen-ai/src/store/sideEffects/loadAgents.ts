@@ -78,5 +78,6 @@ function agentToOption(agent: IAgent): GenAIAgent {
         description: agent.description,
         modifiedAt: agent.modifiedAt,
         lastUsedAt: agent.lastUsedAt,
+        effectiveSkills: agent.effectiveSkills,
     };
 }

@@ -219,7 +219,7 @@ function StylingEditorDialogCore<T extends StylingPickerItemContent>({
         name: string,
     ): IStylingPickerItem<T> => {
         return {
-            ...(original || {}),
+            ...original,
             content,
             name,
         };

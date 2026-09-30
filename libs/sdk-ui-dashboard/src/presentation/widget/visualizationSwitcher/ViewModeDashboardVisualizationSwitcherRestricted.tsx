@@ -7,8 +7,10 @@ import { useId } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 import { type WidgetExportData } from "../../export/types.js";
+import { restrictedWidgetContentExportData } from "../../export/useExportData.js";
 import { DashboardItem } from "../../presentationComponents/DashboardItems/DashboardItem.js";
 import { DashboardItemVisualization } from "../../presentationComponents/DashboardItems/DashboardItemVisualization.js";
+import { useResolveRestrictedRender } from "../common/useResolveRestrictedRender.js";
 import { VisualizationSwitcherNavigationHeader } from "../widget/VisualizationSwitcherWidget/VisualizationSwitcherNavigationHeader.js";
 
 export interface IViewModeDashboardVisualizationSwitcherRestrictedProps {
@@ -34,6 +36,8 @@ export function ViewModeDashboardVisualizationSwitcherRestricted({
     const titleId = useId();
     const { RestrictedPlaceholderComponentProvider } = useDashboardComponentsContext();
     const Content = RestrictedPlaceholderComponentProvider(activeVisualization);
+    // this component renders only while the active entry is restricted
+    useResolveRestrictedRender(activeVisualization.ref, true);
 
     return (
         <DashboardItem
@@ -59,7 +63,10 @@ export function ViewModeDashboardVisualizationSwitcherRestricted({
                     // the same wrapper the readable path uses, so the content takes the space below
                     // the entry list instead of the whole tile, which would centre it over the title
                     <div className="gd-visualization-switcher-visible-visualization">
-                        <div className="visualization-content">
+                        <div
+                            className="visualization-content"
+                            {...(exportData ? restrictedWidgetContentExportData : {})}
+                        >
                             <Content width={clientWidth} height={clientHeight} />
                         </div>
                     </div>

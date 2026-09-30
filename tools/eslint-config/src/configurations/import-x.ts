@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type IPackage, importXRules, scopeRules } from "@gooddata/lint-config";
+import { type IPackage, importXOverrides, importXRules, scopeRules } from "@gooddata/lint-config";
 
 import type { IDualConfiguration } from "../types.js";
 
@@ -21,6 +21,10 @@ const commonConfiguration = {
         "import-x/extensions": [".js", ".jsx", ".mjs", ".cjs"],
     },
     overrides: [
+        ...importXOverrides.map((override) => ({
+            ...override,
+            rules: scopeRules(override.rules, "import-x"),
+        })),
         {
             files: ["**/*.ts", "**/*.cts", "**/*.mts", "**/*.tsx"],
             settings: {

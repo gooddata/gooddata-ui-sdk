@@ -19,6 +19,12 @@ describe("getUIPath", () => {
         ).toBe("/workspace/workspace-id/metrics/metric/metric-id");
     });
 
+    it("returns hosted analytical designer path for visualizations", () => {
+        expect(getUIPath("visualization", "vis-id", "workspace-id")).toBe(
+            "/workspace/workspace-id/analyze/#/vis-id/edit",
+        );
+    });
+
     it("returns legacy modeler path for data objects by default", () => {
         expect(getUIPath("dataset", "ds-id", "workspace-id")).toBe("/modeler/#/workspace-id");
         expect(getUIPath("attribute", "attr-id", "workspace-id")).toBe("/modeler/#/workspace-id");

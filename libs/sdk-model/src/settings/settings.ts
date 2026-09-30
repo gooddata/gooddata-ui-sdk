@@ -974,6 +974,12 @@ export interface IFeatureFlags {
     enableSecondGranularities?: boolean;
 
     /**
+     * Enable the metric-level date filter that shares its presets, forms and preset derivation with
+     * the insight-level date filter in Analytical Designer.
+     */
+    enableImprovedMetricDateFilter?: boolean;
+
+    /**
      * Enable dashboard filter groups.
      *
      * Filter group are items in a filter bar which groups regular attribute filters into a logical groups.
@@ -1133,14 +1139,6 @@ export interface IFeatureFlags {
      * Enable Anthropic provider in LLM configuration.
      */
     enableAiLlmAnthropicProvider?: boolean;
-
-    /**
-     * Per-app sub-flag under enableShellApplication. When true (and
-     * enableShellApplication is also true), Analytical Designer runs as a
-     * pluggable app inside the host. When false, the legacy standalone AD
-     * served at the /analyze hash route is rendered instead.
-     */
-    enableShellApplication_analyticalDesigner?: boolean;
 
     /**
      * Enables Resizable Dashboard sidebar in edit mode.

@@ -8,7 +8,7 @@ import { defineMessages, useIntl } from "react-intl";
 import { type IUiMenuItem, type IconType, UiIcon } from "@gooddata/sdk-ui-kit";
 
 import { type DashboardDrillDefinition } from "../../../types.js";
-import { DrillType, type IDrillSelectItem } from "../DrillSelect/types.js";
+import { DrillType, type IDrillSelectItem, isRestrictedDrillSelectItem } from "../DrillSelect/types.js";
 
 const groupMenuItemMessages = defineMessages({
     drillDown: { id: "drill_modal_picker.drill-down" },
@@ -28,13 +28,15 @@ const DRILL_ICON_NAME: Record<DrillType, IconType> = {
 };
 
 function getMenuItemStringTitle(item: IDrillSelectItem): string {
+    if (isRestrictedDrillSelectItem(item)) {
+        return item.name;
+    }
     return compact([item.name, item.attributeValue ? `(${item.attributeValue})` : null]).join(" ");
 }
 
 export interface IDrillSelectDropdownMenuItemData {
     interactive: {
         type: DrillType;
-        drillDefinition: DashboardDrillDefinition;
         onSelect: () => void;
     };
 }
@@ -68,35 +70,38 @@ export const useDrillSelectDropdownMenuItems = ({
             id: groupId,
             stringTitle: formatMessage({ id: groupTitle }),
             data: `${groupTitle} Data`,
-            subItems: items.map((item, index) => ({
-                type: "interactive" as const,
-                id: `${groupId}-${index}`,
-                stringTitle: getMenuItemStringTitle(item),
-                iconLeft: (
-                    <UiIcon
-                        type={item.isRestricted ? "lock" : DRILL_ICON_NAME[item.type]}
-                        size={16}
-                        color="complementary-5"
-                    />
-                ),
-                isDisabled: item.isDisabled,
-                tooltip: item.tooltipText,
-                ariaAttributes: {
-                    "aria-haspopup":
-                        item.type === DrillType.DRILL_TO_INSIGHT || item.type === DrillType.DRILL_DOWN
-                            ? "dialog"
-                            : undefined,
-                },
-                data: {
-                    type: item.type,
-                    drillDefinition: item.drillDefinition,
-                    onSelect: () => {
-                        if (!item.isDisabled) {
-                            onSelect(item.drillDefinition, item.context);
-                        }
+            subItems: items.map((item, index) => {
+                const isRestricted = isRestrictedDrillSelectItem(item);
+                return {
+                    type: "interactive" as const,
+                    id: `${groupId}-${index}`,
+                    stringTitle: getMenuItemStringTitle(item),
+                    iconLeft: (
+                        <UiIcon
+                            type={isRestricted ? "lock" : DRILL_ICON_NAME[item.type]}
+                            size={16}
+                            color="complementary-5"
+                        />
+                    ),
+                    isDisabled: isRestricted || item.isDisabled,
+                    tooltip: isRestricted ? undefined : item.tooltipText,
+                    ariaAttributes: {
+                        "aria-haspopup":
+                            !isRestricted &&
+                            (item.type === DrillType.DRILL_TO_INSIGHT || item.type === DrillType.DRILL_DOWN)
+                                ? ("dialog" as const)
+                                : undefined,
                     },
-                },
-            })),
+                    data: {
+                        type: item.type,
+                        onSelect: () => {
+                            if (!isRestricted && !item.isDisabled) {
+                                onSelect(item.drillDefinition, item.context);
+                            }
+                        },
+                    },
+                };
+            }),
         });
 
         const drillDownMenuItems =

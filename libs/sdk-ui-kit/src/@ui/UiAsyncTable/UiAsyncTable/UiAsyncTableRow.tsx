@@ -215,13 +215,17 @@ const useRenderCellContent = <T extends { id: string } | { ref: ObjRef }>({
             getTextContent: ((item: T) => string | ReactNode) | undefined,
             getMultiLineTextContent: ((item: T) => Array<string>) | undefined,
             renderSuffixIcon: ((item: T) => ReactNode) | undefined,
+            isLocked: IUiAsyncTableColumn<T>["isLocked"],
         ) => {
             if (getMultiLineTextContent) {
                 return getMultiLineTextContent(item).map((line, index) => {
                     const isFirst = index === 0;
                     return (
                         <span className={e("text-line", { first: isFirst })} key={index}>
-                            <span id={isFirst ? labelId : undefined} className={e("text-line-content")}>
+                            <span
+                                id={isFirst ? labelId : undefined}
+                                className={e("text-line-content", { locked: isFirst && !!isLocked?.(item) })}
+                            >
                                 {line}
                             </span>
                             {renderSuffixIcon && isFirst
@@ -250,6 +254,7 @@ const useRenderCellContent = <T extends { id: string } | { ref: ObjRef }>({
             getTextHref: ((item: T) => string | undefined) | undefined,
             renderSuffixIcon: ((item: T) => ReactNode) | undefined,
             textColor: IUiAsyncTableColumn<T>["textColor"],
+            isLocked: IUiAsyncTableColumn<T>["isLocked"],
             focusedElementRef: Ref<HTMLElement>,
             isCellFocused: boolean,
         ) => {
@@ -260,6 +265,7 @@ const useRenderCellContent = <T extends { id: string } | { ref: ObjRef }>({
                 getTextContent,
                 getMultiLineTextContent,
                 renderSuffixIcon,
+                isLocked,
             );
             const title = getTextTitle
                 ? getTextTitle(item)
@@ -278,6 +284,7 @@ const useRenderCellContent = <T extends { id: string } | { ref: ObjRef }>({
                         className={e("text", {
                             "multi-line": !!getMultiLineTextContent,
                             color: !getMultiLineTextContent && textColor ? textColor : false,
+                            locked: !getMultiLineTextContent && !!isLocked?.(item),
                         })}
                     >
                         {textContent}
@@ -303,6 +310,7 @@ const useRenderCellContent = <T extends { id: string } | { ref: ObjRef }>({
                 getTextHref,
                 getAccessibilityConfig,
                 textColor,
+                isLocked,
                 key,
             }: IUiAsyncTableColumn<T>,
             labelId: string | undefined,
@@ -340,6 +348,7 @@ const useRenderCellContent = <T extends { id: string } | { ref: ObjRef }>({
                         getTextHref,
                         renderSuffixIcon,
                         textColor,
+                        isLocked,
                         focusedElementRef,
                         isCellFocused,
                     )}

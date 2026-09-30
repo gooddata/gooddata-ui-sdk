@@ -38,6 +38,7 @@ import {
     isSingleSelectionFilter,
 } from "@gooddata/sdk-model";
 import { convertError } from "@gooddata/sdk-ui";
+import { isAutomationRestricted } from "@gooddata/sdk-ui-ext";
 
 import {
     getAutomationAlertParameters,
@@ -63,6 +64,7 @@ import {
     selectCatalogParametersIsLoaded,
 } from "../../store/catalog/catalogSelectors.js";
 import {
+    selectEnableDashboardPartialRendering,
     selectEnableNotificationChannelIdentifiers,
     selectEnableParameters,
     selectEnableStringParameters,
@@ -124,6 +126,9 @@ export function* initializeAutomationsHandler(
         yield select(selectExternalRecipient);
     const openAutomationOnLoad: ReturnType<typeof selectOpenAutomationOnLoad> =
         yield select(selectOpenAutomationOnLoad);
+    const isPartialRenderingEnabled: ReturnType<typeof selectEnableDashboardPartialRendering> = yield select(
+        selectEnableDashboardPartialRendering,
+    );
 
     if (
         !dashboardId ||
@@ -145,14 +150,13 @@ export function* initializeAutomationsHandler(
             PromiseFnReturnType<typeof loadWorkspaceAutomationsCount>,
             PromiseFnReturnType<typeof loadNotificationChannels>,
         ] = yield all([
-            call(
-                loadDashboardUserAutomations,
-                ctx,
+            call(loadDashboardUserAutomations, ctx, {
                 dashboardId,
-                user.login,
-                !canManageAutomations,
+                userId: user.login,
+                filterByUser: !canManageAutomations,
                 externalRecipient,
-            ),
+                includeUnavailableReferences: isPartialRenderingEnabled,
+            }),
             call(loadWorkspaceAutomationsCount, ctx),
             call(loadNotificationChannels, ctx, enableNotificationChannelIdentifiers),
         ]);
@@ -358,7 +362,7 @@ export function* initializeAutomationsHandler(
                 yield call(changeParameterValuesHandler, ctx, changeParameterValues(change));
             }
 
-            if (targetAutomation && openAutomationOnLoad) {
+            if (targetAutomation && openAutomationOnLoad && !isAutomationRestricted(targetAutomation)) {
                 const widgetRef = targetWidget && idRef(targetWidget);
 
                 if (targetAutomation.alert) {

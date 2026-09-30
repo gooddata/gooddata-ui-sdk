@@ -1147,6 +1147,27 @@ describe("withCaching", () => {
         expect(second).not.toBe(first);
     });
 
+    it("evicts workspace automations query with different query options", () => {
+        const backend = withCachingForTests();
+
+        const first = backend
+            .workspace("test")
+            .automations()
+            .getAutomationsQuery({ includeUnavailableReferences: true })
+            .withPage(2)
+            .withSize(5)
+            .query();
+        const second = backend
+            .workspace("test")
+            .automations()
+            .getAutomationsQuery()
+            .withPage(2)
+            .withSize(5)
+            .query();
+
+        expect(second).not.toBe(first);
+    });
+
     it("calls onCacheReady during construction", () => {
         let cacheControl: CacheControl | undefined;
 

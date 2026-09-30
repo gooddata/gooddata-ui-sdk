@@ -13,9 +13,9 @@ import {
     unavailableObjectsActions,
     unavailableObjectsSliceReducer,
 } from "../../../../model/store/unavailableObjects/index.js";
-
 const mockUseDashboardSelector = vi.fn();
 const mockPlaceholderProvider = vi.fn();
+const mockDispatch = vi.fn();
 
 // `isolate: false` shares one module graph per worker, so the module mocked below may already have
 // been evaluated against its real dependencies by a test file that ran earlier in the same worker,
@@ -26,6 +26,7 @@ vi.hoisted(() => {
 
 vi.mock("../../../../model/react/DashboardStoreProvider.js", () => ({
     useDashboardSelector: (selector: unknown) => mockUseDashboardSelector(selector),
+    useDashboardDispatch: () => mockDispatch,
 }));
 
 vi.mock("../../../dashboardContexts/DashboardComponentsContext.js", () => ({
@@ -119,6 +120,7 @@ describe("DashboardWidgetInsightGuard", () => {
         mockUseDashboardSelector.mockReset();
         mockPlaceholderProvider.mockReset();
         mockPlaceholderProvider.mockImplementation(() => DefaultPlaceholderStandIn);
+        mockDispatch.mockReset();
     });
 
     afterEach(() => {
@@ -175,6 +177,21 @@ describe("DashboardWidgetInsightGuard", () => {
         expect(screen.queryByText("the default placeholder")).not.toBeInTheDocument();
         // the withheld insight must not be handed to the replacement
         expect(mockPlaceholderProvider).toHaveBeenCalledWith(widget);
+    });
+
+    it("reports a restricted widget as rendered, so a dashboard export does not wait for it", () => {
+        renderGuard(stateWith({ ref: insightRef, type: "insight", reason: "forbidden" }));
+
+        expect(mockDispatch.mock.calls.map(([command]) => [command.type, command.payload.id])).toEqual([
+            ["GDC.DASH/CMD.RENDER.ASYNC.REQUEST", "widget-1"],
+            ["GDC.DASH/CMD.RENDER.ASYNC.RESOLVE", "widget-1"],
+        ]);
+    });
+
+    it("leaves the render report to the widget itself when the widget is readable", () => {
+        renderGuard(stateWith());
+
+        expect(mockDispatch).not.toHaveBeenCalled();
     });
 
     it("renders the widget when its insight is only missing", () => {

@@ -26,6 +26,8 @@ export function UiChip({
     maxWidth,
     iconBefore,
     iconAfter,
+    tooltip,
+    actionIconTooltip,
     iconColor = "primary",
     onClick,
     onKeyDown,
@@ -78,6 +80,7 @@ export function UiChip({
             dataTestId={dataTestId}
             buttonRef={effectiveButtonRef}
             styleObj={styleObj}
+            tooltip={tooltip}
         />
     );
 
@@ -97,6 +100,7 @@ export function UiChip({
             actionAriaLabel={actionAriaLabel}
             actionAriaDescribedBy={actionAriaDescribedBy}
             dataTestId={dataTestId}
+            tooltip={actionIconTooltip}
         />
     ) : null;
 

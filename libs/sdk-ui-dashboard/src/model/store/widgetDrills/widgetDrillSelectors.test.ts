@@ -4,13 +4,23 @@
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { type ObjRef, objRefToString } from "@gooddata/sdk-model";
+import {
+    type ICatalogAttribute,
+    type IDrillDownReference,
+    type ObjRef,
+    idRef,
+    objRefToString,
+} from "@gooddata/sdk-model";
 import { type Matcher, suppressConsole } from "@gooddata/util";
 
 import { selectDrillTargetsByWidgetRef } from "../drillTargets/drillTargetsSelectors.js";
 import { selectIgnoredDrillDownHierarchiesByWidgetRef } from "../tabs/layout/layoutSelectors.js";
 
-import { selectGlobalDrillsDownAttributeHierarchyByWidgetRef } from "./widgetDrillSelectors.js";
+import {
+    selectDrillableItemsByAvailableDrillTargets,
+    selectGlobalDrillsDownAttributeHierarchyByWidgetRef,
+    selectRestrictedDrillDownsByWidgetRef,
+} from "./widgetDrillSelectors.js";
 import {
     availableDrillTargets,
     catalogAttributeHierarchies,
@@ -153,6 +163,133 @@ describe("widgetDrillSelectors", () => {
                     initialState,
                 ),
             ).toEqual([]);
+        });
+    });
+
+    describe("selectRestrictedDrillDownsByWidgetRef", () => {
+        const hierarchyRefs = catalogAttributeHierarchies.map(
+            ({ attributeHierarchy }) => attributeHierarchy.ref,
+        );
+        // every hierarchy of the fixture is restricted for the user; its levels are readable attributes
+        const catalogAttribute = (identifier: string): ICatalogAttribute =>
+            ({
+                type: "attribute",
+                attribute: {
+                    type: "attribute",
+                    id: identifier,
+                    uri: "",
+                    ref: idRef(identifier, "attribute"),
+                },
+                displayForms: [],
+                geoPinDisplayForms: [],
+                unavailable: hierarchyRefs.map((ref) => ({
+                    ref,
+                    type: "attributeHierarchy",
+                    reason: "forbidden",
+                })),
+            }) as unknown as ICatalogAttribute;
+        const stateWith = (enableDashboardPartialRendering: boolean): any => ({
+            catalog: {
+                attributes: ["f_owner.region_id", "f_owner.department_id", "attr.f_product.product"].map(
+                    catalogAttribute,
+                ),
+                dateDatasets: [],
+            },
+            config: { config: { settings: { enableDashboardPartialRendering } } },
+            backendCapabilities: { backendCapabilities: { supportsAttributeHierarchies: true } },
+        });
+        const state = stateWith(true);
+        let ignored: IDrillDownReference[] = [];
+
+        beforeEach(() => {
+            isDisableDrillDown = false;
+            vi.mocked(selectDrillTargetsByWidgetRef).mockImplementation(() => () => availableDrillTargets);
+            vi.mocked(selectIgnoredDrillDownHierarchiesByWidgetRef).mockImplementation(() => () => ignored);
+        });
+
+        afterEach(() => {
+            ignored = [];
+            vi.clearAllMocks();
+        });
+
+        const drillAttributes = availableDrillTargets.availableDrillTargets?.attributes ?? [];
+        const originOf = (attributeId: string) =>
+            drillAttributes.find(
+                ({ attribute }) => attribute.attributeHeader.formOf.identifier === attributeId,
+            )!.attribute.attributeHeader.localIdentifier;
+        // the mocked insight selector returns a new object per call, which reselect warns about
+        const select = async (selectState = state) =>
+            (
+                await suppressConsole(
+                    () => selectRestrictedDrillDownsByWidgetRef(widgetRef)({ ...selectState }),
+                    "warn",
+                    [
+                        {
+                            type: "startsWith",
+                            value: "An input selector returned a different result when passed same arguments",
+                        },
+                    ],
+                )
+            ).map(({ originLocalIdentifier, hierarchyRef }) => [
+                originLocalIdentifier,
+                objRefToString(hierarchyRef),
+            ]);
+        const [hierarchy2, hierarchy1] = hierarchyRefs.map(objRefToString);
+
+        it("lists every restricted hierarchy a drill attribute belongs to", async () => {
+            expect(await select()).toEqual(
+                expect.arrayContaining([
+                    [originOf("f_owner.region_id"), hierarchy2],
+                    [originOf("f_owner.region_id"), hierarchy1],
+                ]),
+            );
+        });
+
+        it("respects hierarchies the widget ignores for that attribute", async () => {
+            ignored = ignoredHierarchies;
+            const drillDowns = await select();
+            expect(drillDowns).toContainEqual([originOf("f_owner.department_id"), hierarchy2]);
+            expect(drillDowns).not.toContainEqual([originOf("f_owner.department_id"), hierarchy1]);
+        });
+
+        it("makes the attributes of restricted drill downs clickable in the drill dialog", () => {
+            const dialogState: any = { ...state, catalog: { attributes: [], dateDatasets: [] } };
+            const readableOnly = selectDrillableItemsByAvailableDrillTargets(
+                availableDrillTargets.availableDrillTargets,
+                [],
+                true,
+            )(dialogState);
+            const withRestricted = selectDrillableItemsByAvailableDrillTargets(
+                availableDrillTargets.availableDrillTargets,
+                [],
+                true,
+            )({ ...state });
+            expect(withRestricted.length).toBeGreaterThan(readableOnly.length);
+        });
+
+        it("keeps restricted drill downs unclickable in the drill dialog when drilling down is disabled", () => {
+            const dialogState: any = { ...state, catalog: { attributes: [], dateDatasets: [] } };
+            const readableOnly = selectDrillableItemsByAvailableDrillTargets(
+                availableDrillTargets.availableDrillTargets,
+                [],
+                true,
+            )(dialogState);
+            const disabled = selectDrillableItemsByAvailableDrillTargets(
+                availableDrillTargets.availableDrillTargets,
+                [],
+                true,
+                true,
+            )({ ...state });
+            expect(disabled).toHaveLength(readableOnly.length);
+        });
+
+        it("lists nothing with partial rendering off", async () => {
+            expect(await select(stateWith(false))).toEqual([]);
+        });
+
+        it("lists nothing when the visualization disables drilling down", async () => {
+            isDisableDrillDown = true;
+            expect(await select()).toEqual([]);
         });
     });
 });
