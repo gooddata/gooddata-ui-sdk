@@ -505,6 +505,79 @@ describe("dashboard conversion", () => {
             });
         });
 
+        it("should keep an All time date filter bound to a data set", () => {
+            const input = makeDashboard({
+                filters: {
+                    main_date: {
+                        type: "date_filter",
+                        granularity: "YEAR",
+                        from: -2,
+                        to: 0,
+                    },
+                    second_date: {
+                        type: "date_filter",
+                        granularity: "YEAR",
+                        date: "date",
+                        title: "Order date",
+                    },
+                } as any,
+            });
+
+            const { dashboard, filterContext } = yamlDashboardToDeclarative(emptyEntities, input);
+            const { json } = declarativeDashboardToYaml(
+                emptyFromEntities,
+                dashboard,
+                filterContext ? [filterContext] : [],
+            );
+
+            expect(json.filters?.["main_date"]).toEqual({
+                type: "date_filter",
+                granularity: "YEAR",
+                from: -2,
+                to: 0,
+            });
+            expect(json.filters?.["second_date"]).toEqual({
+                type: "date_filter",
+                granularity: "YEAR",
+                date: "date",
+                title: "Order date",
+            });
+        });
+
+        it("should omit an All time common date filter", () => {
+            const input = makeDashboard({
+                filters: {
+                    main_date: {
+                        type: "date_filter",
+                        granularity: "YEAR",
+                    },
+                    second_date: {
+                        type: "date_filter",
+                        granularity: "YEAR",
+                        date: "date",
+                        from: -1,
+                        to: 0,
+                    },
+                } as any,
+            });
+
+            const { dashboard, filterContext } = yamlDashboardToDeclarative(emptyEntities, input);
+            const { json } = declarativeDashboardToYaml(
+                emptyFromEntities,
+                dashboard,
+                filterContext ? [filterContext] : [],
+            );
+
+            expect(json.filters?.["main_date"]).toBeUndefined();
+            expect(json.filters?.["second_date"]).toEqual({
+                type: "date_filter",
+                granularity: "YEAR",
+                date: "date",
+                from: -1,
+                to: 0,
+            });
+        });
+
         it("should round-trip dashboard text filters", () => {
             const input = makeDashboard({
                 filters: {

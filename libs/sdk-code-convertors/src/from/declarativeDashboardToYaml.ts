@@ -41,6 +41,7 @@ import {
     isComparisonCondition,
     isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
+    isDashboardCommonDateFilter,
     isDashboardDateFilter,
     isDashboardMatchAttributeFilter,
     isDashboardMeasureValueFilter,
@@ -1083,7 +1084,8 @@ export function declarativeFilterContextToYaml(
     const declarativeFilters = content?.filters ?? [];
 
     declarativeFilters.forEach((filter) => {
-        if (isDashboardDateFilter(filter) && isNoopAllTimeDashboardDateFilter(filter)) {
+        // Date filters bound to a data set are explicit controls, so only the common one is omitted.
+        if (isDashboardCommonDateFilter(filter) && isNoopAllTimeDashboardDateFilter(filter)) {
             return;
         }
 
@@ -1135,12 +1137,7 @@ export function declarativeFilterContextToYaml(
     });
 
     // create default date if config is specified but no common date
-    const commonFilter = declarativeFilters.find((filter) => {
-        if (isDashboardDateFilter(filter)) {
-            return !filter.dateFilter.dataSet;
-        }
-        return false;
-    });
+    const commonFilter = declarativeFilters.find(isDashboardCommonDateFilter);
     if (!commonFilter && dateFilterConfig) {
         const filter: IDashboardDateFilter = {
             dateFilter: {

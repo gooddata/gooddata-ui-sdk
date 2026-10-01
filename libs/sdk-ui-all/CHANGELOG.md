@@ -1,6 +1,41 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Fri, 25 Sep 2026 12:40:14 GMT and should not be manually modified.
+This log was last generated on Thu, 01 Oct 2026 06:36:59 GMT and should not be manually modified.
+
+## 11.60.0
+
+Thu, 01 Oct 2026 06:36:59 GMT
+
+### Patches
+
+- sdk-model, sdk-backend-tiger: remove the enableShellApplication_analyticalDesigner feature flag; Analytical Designer links always target the host-application route
+
+### Updates
+
+- sdk-ui-filters: Static period filter's date format hint and error messages now show a user-facing format spelling (e.g. "M/YYYY") instead of raw date-fns tokens, and the Week worked example now matches what the field actually parses.
+- sdk-ui-filters: Show start and end labels above the period range picker fields, name the fields the same way in their empty and invalid errors, and show one error for a range that ends before it starts.
+- sdk-ui-gen-ai: For error state visualisation that is saved, allow open it in edit.
+- sdk-ui-gen-ai: Support null values in dashboardSelector to clear previously set ambient context.
+- sdk-ui-filters: Show a "Type or select" placeholder in empty period range picker fields.
+- sdk-ui-catalog: computed attribute creation is gated on the new canCreateComputedAttribute workspace permission.
+- sdk-ui-ext: user management dialog can grant the computed attribute workspace permission; new AssignedWorkspacePermissionValue.CREATE_COMPUTED_ATTRIBUTE.
+- Add enableImprovedMetricDateFilter feature flag
+- sdk-code-convertors: Keep All time date filters bound to a data set when converting dashboards to YAML.
+- sdk-ui-dashboard: Stop counting hidden restricted attribute and measure value filters in the automation restricted filter entry, and hide hidden measure value filters from the automation filter bar.
+- sdk-ui-kit: UiAsyncTable columns can show an item's text as locked.
+- sdk-ui-ext: A locked automation shows its name dimmed in the automations list.
+- sdk-backend-tiger: Automations are also locked when they use restricted metrics, attributes, labels, facts or computed attributes.
+- sdk-ui-kit: UiAsyncTable rows can opt out of item click.
+- sdk-ui-ext: Automations that use objects the current user cannot access are locked in the automations list and cannot be edited.
+- sdk-ui-dashboard: the attribute filter configuration opens on a dashboard with filters the user cannot read.
+- sdk-ui-dashboard: a drill down through an attribute hierarchy the user cannot read shows a disabled Restricted entry instead of disappearing.
+- sdk-ui-dashboard: Let dashboard exports finish on restricted placeholders.
+- sdk-ui-kit: add UiResizableSidebar, a shared drag-to-resize and collapsible side panel with a full-height handle bar, a boolean rail or fully hidden collapsed mode, an edge trigger that expands a hidden sidebar and focus hand-off between collapse toggles
+- sdk-ui-dashboard: the edit-mode sidebar is built on UiResizableSidebar; it keeps its icon rail, the collapse toggle moved in front of the panel headline and stays in place in the rail, the resize handle is a full-height bar, and collapse is also enabled by the new enableCollapsibleLeftSidebar setting
+- sdk-embedding: Deprecate clientId and productId in IAdOpenInsightCommandBody. Analytical Designer ignores them; use projectId.
+- sdk-ui-pluggable-host: mapLegacyUrlToHost maps the AD client, AI builder and access-denied legacy URLs to host URLs.
+- sdk-ui-pivot: Fix pivot table columns not filling the available width when the table's container becomes visible after being mounted at zero width (e.g. an inactive Visualization Switcher tab), and hide the table while columns are re-sized on such a re-show instead of briefly showing unsized columns. A pivot table mounted in a zero-width container now calls afterRender once its container gets a width, not while it is still hidden.
+- gdc-analytical-designer: Share a visualization from its header.
 
 ## 11.59.0
 
