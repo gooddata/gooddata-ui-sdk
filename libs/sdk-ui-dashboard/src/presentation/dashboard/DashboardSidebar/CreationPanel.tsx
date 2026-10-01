@@ -27,8 +27,9 @@ import {
 
 import { DraggableInsightList } from "./DraggableInsightList/DraggableInsightList.js";
 import { SidebarCollapseToggle } from "./SidebarCollapseToggle.js";
-import { useResizableSidebar } from "./SidebarResizeContext.js";
+import { useResizableSidebar } from "./useResizableSidebarState.js";
 
+// Names of the palette items while the collapsed icon rail shows them without their labels.
 const RAIL_TOOLTIPS: Partial<Record<DraggableContentItemType, ReactNode>> = {
     "insight-placeholder": <FormattedMessage id="sidebar.rail.visualization" />,
     "attributeFilter-placeholder": <FormattedMessage id="addPanel.filter" />,
@@ -54,7 +55,9 @@ export function CreationPanel(props: ICreationPanelProps) {
     const supportsRichText = useDashboardSelector(selectSupportsRichTextWidgets);
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
     const isAiGenerating = useDashboardSelector(selectIsAiGenerating);
-    const { canCollapse, isCollapsed, setCollapsed } = useResizableSidebar();
+    const { canCollapse, isCollapsed, setCollapsed, hasRail: keepsRail } = useResizableSidebar();
+    const hasRail = canCollapse && keepsRail;
+    const isRailCollapsed = hasRail && isCollapsed;
     const [focusSearch, setFocusSearch] = useState<boolean | undefined>(undefined);
     const AttributeFilterComponentSet = props.AttributeFilterComponentSet!;
     const InsightWidgetComponentSet = props.InsightWidgetComponentSet!;
@@ -80,7 +83,7 @@ export function CreationPanel(props: ICreationPanelProps) {
             );
             const tooltip = RAIL_TOOLTIPS[type];
 
-            if (!isCollapsed || !tooltip) {
+            if (!isRailCollapsed || !tooltip) {
                 return <Fragment key={type}>{listItem}</Fragment>;
             }
 
@@ -105,16 +108,13 @@ export function CreationPanel(props: ICreationPanelProps) {
         supportsRichText,
         WrapCreatePanelItemWithDragComponent,
         isAiGenerating,
-        isCollapsed,
+        isRailCollapsed,
     ]);
 
     return (
         <div className={cx("configuration-panel creation-panel", className)}>
             <div className="configuration-panel-content">
                 <div className="gd-creation-panel-header flex-panel-item-nostretch">
-                    <Typography tagName="h2">
-                        <FormattedMessage id="visualizationsList.dragToAdd" />
-                    </Typography>
                     {canCollapse ? (
                         <SidebarCollapseToggle
                             isCollapsed={isCollapsed}
@@ -124,6 +124,9 @@ export function CreationPanel(props: ICreationPanelProps) {
                             }}
                         />
                     ) : null}
+                    <Typography tagName="h2">
+                        <FormattedMessage id="visualizationsList.dragToAdd" />
+                    </Typography>
                 </div>
                 <div
                     className="configuration-category drag-to-add"
@@ -137,7 +140,7 @@ export function CreationPanel(props: ICreationPanelProps) {
                     role="group"
                     aria-label={intl.formatMessage({ id: "visualizationsList.savedVisualizations" })}
                 >
-                    {canCollapse ? (
+                    {hasRail ? (
                         <div className="gd-sidebar-rail-search">
                             <UiTooltip
                                 content={intl.formatMessage({ id: "sidebar.search" })}

@@ -271,6 +271,7 @@ export const getNonHiddenFilters = (
     filters: FilterContextItem[] | undefined,
     attributeConfigs: IDashboardAttributeFilterConfig[],
     dateConfigs: IDashboardDateFilterConfigItem[],
+    mvfConfigs: IDashboardMeasureValueFilterConfig[],
     isCommonDateFilterHidden: boolean,
     disableDateFilters: boolean,
 ): FilterContextItem[] => {
@@ -288,6 +289,10 @@ export const getNonHiddenFilters = (
                 areObjRefsEqual(date.dateDataSet, filter.dateFilter.dataSet),
             );
             return config?.config.mode !== "hidden" && !disableDateFilters;
+        } else if (isDashboardMeasureValueFilter(filter)) {
+            const localIdentifier = filter.dashboardMeasureValueFilter.localIdentifier;
+            const config = mvfConfigs.find((mvf) => mvf.localIdentifier === localIdentifier);
+            return config?.mode !== "hidden";
         } else {
             // New filter types (arbitrary, match) - show by default
             return true;

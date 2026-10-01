@@ -507,6 +507,8 @@
     "automations.menu.resume": "Tiếp tục",
     "automations.menu.ariaLabel": "Hành động cho {title}",
     "automations.menu.edit.unavailable": "Hành động chỉnh sửa không khả dụng, không có bảng điều khiển được liên kết",
+    "automations.menu.edit.restricted": "Bạn không thể chỉnh sửa tác vụ tự động này vì bạn không có quyền truy cập vào một số đối tượng mà tác vụ sử dụng.",
+    "automations.restricted.tooltip": "Bạn không có quyền truy cập vào một số đối tượng được sử dụng trong tác vụ tự động này, vì vậy không thể mở tác vụ.",
     "automations.icon.tooltip.header.schedule": "Xuất thất bại",
     "automations.icon.tooltip.header.alert": "Cảnh báo thất bại",
     "automations.icon.tooltip.status": "Trạng thái",

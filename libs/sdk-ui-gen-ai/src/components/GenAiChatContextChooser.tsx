@@ -57,10 +57,6 @@ export function GenAiChatContextChooser({ onAddContext }: GenAiChatContextChoose
         [dispatch, setSearch],
     );
 
-    if (!ambient) {
-        return null;
-    }
-
     return (
         <div className="gd-gen-ai-chat__input__context">
             <Dropdown

@@ -44,6 +44,22 @@ describe("resolveAutomationUnavailableReferences", () => {
         expect(resolveAutomationUnavailableReferences(alertOnVisY, [visX])).toEqual([]);
     });
 
+    it.each([
+        ["metrics", "metric", "measure"],
+        ["attributes", "attribute", "attribute"],
+        ["labels", "label", "displayForm"],
+        ["facts", "fact", "fact"],
+        ["computedAttributes", "computedAttribute", "computedAttribute"],
+    ] as const)("reports a restricted object related under %s", (relationship, tigerType, type) => {
+        const alertOnObject = automation("alert", {
+            [relationship]: { data: [{ id: "obj", type: tigerType }] },
+        });
+
+        expect(
+            resolveAutomationUnavailableReferences(alertOnObject, [{ id: "obj", type: tigerType }]),
+        ).toEqual([{ ref: idRef("obj", type), type, reason: "forbidden" }]);
+    });
+
     it("matches the type as well as the id", () => {
         const metricWithSameId: RestrictedObject = { id: "vis-X", type: "metric" };
 

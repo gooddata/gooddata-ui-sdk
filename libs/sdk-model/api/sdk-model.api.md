@@ -3055,6 +3055,7 @@ export interface IFeatureFlags {
     enableCatalogTrendingObjects?: boolean;
     enableCertification?: boolean;
     enableChangeAnalysis?: boolean;
+    enableCollapsibleLeftSidebar?: boolean;
     enableColumnLevelPermissions?: boolean;
     enableComputedAttributes?: boolean;
     enableConditionalFormatting?: boolean;

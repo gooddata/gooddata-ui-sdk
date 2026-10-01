@@ -49,25 +49,22 @@ interface IFilterProcessingContext {
 }
 
 /**
- * Computes the filters the bar renders: restricted ones split off to be reported as a count, hidden
- * ones removed from the rest. Restricted filters stay in the selection, so they are still saved.
- *
- * @remarks
- * Restricted filters are taken out before the hidden check, so one the author hid after the automation
- * stored it is still counted and removable rather than kept invisibly.
+ * Computes the filters the bar renders: hidden ones removed, then restricted ones split off to be
+ * reported as a count. Restricted filters stay in the selection, so they are still saved.
  */
 function computeVisibleFilters(
     selectedFilters: FilterContextItem[],
     context: IFilterProcessingContext,
 ): { visibleFilters: FilterContextItem[]; restrictedFilters: FilterContextItem[] } {
-    const [restrictedFilters, readableFilters] = partition(selectedFilters, context.isFilterRestricted);
-    const visibleFilters = getNonHiddenFilters(
-        readableFilters,
+    const nonHiddenFilters = getNonHiddenFilters(
+        selectedFilters,
         context.attributeConfigs,
         context.dateConfigs,
+        context.mvfConfigs,
         context.isCommonDateFilterHidden,
         context.disableDateFilters,
     );
+    const [restrictedFilters, visibleFilters] = partition(nonHiddenFilters, context.isFilterRestricted);
 
     return { visibleFilters, restrictedFilters };
 }

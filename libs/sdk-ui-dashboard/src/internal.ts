@@ -177,3 +177,9 @@ export { type IKdaProps, KdaProvider } from "./kdaDialog/providers/Kda.js";
 export { KdaDialog } from "./kdaDialog/dialog/KdaDialog.js";
 export { KdaDialogController } from "./kdaDialog/dialog/KdaDialogController.js";
 export { type IIntlWrapperProps, IntlWrapper } from "./presentation/localization/IntlWrapper.js";
+export {
+    type IDashboardSidebarChromeProps,
+    DashboardSidebarChrome,
+} from "./presentation/dashboard/DashboardSidebar/DashboardSidebarChrome.js";
+export { SidebarCollapseToggle } from "./presentation/dashboard/DashboardSidebar/SidebarCollapseToggle.js";
+export { SidebarHeaderToggle } from "./presentation/dashboard/DashboardSidebar/SidebarHeaderToggle.js";

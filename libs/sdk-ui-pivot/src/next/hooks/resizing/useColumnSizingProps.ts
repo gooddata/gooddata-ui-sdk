@@ -1,10 +1,11 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { useCallback } from "react";
+import { type RefObject, useCallback } from "react";
 
 import { UnexpectedSdkError, useDebounce } from "@gooddata/sdk-ui";
 
 import { type AgGridOnColumnResized, type AgGridProps } from "../../types/agGrid.js";
+import { type IGridSizingState } from "../../types/internal.js";
 
 import { useColumnSizingDefault } from "./useColumnSizingDefault.js";
 import { useColumnSizingForAutoResize } from "./useColumnSizingForAutoResize.js";
@@ -18,14 +19,16 @@ import { useSyncColumnWidths } from "./useSyncColumnWidths.js";
  *
  * @internal
  */
-export function useColumnSizingProps(): (agGridReactProps: AgGridProps) => AgGridProps {
+export function useColumnSizingProps(
+    gridSizingStateRef: RefObject<IGridSizingState>,
+): (agGridReactProps: AgGridProps) => AgGridProps {
     const { initSyncColumnWidths } = useSyncColumnWidths();
     const { handleManualResize } = useManualResize();
 
     const columnSizingForAutoResize = useColumnSizingForAutoResize();
-    const columnSizingForFullHorizontalSpace = useColumnSizingForFullHorizontalSpace();
+    const columnSizingForFullHorizontalSpace = useColumnSizingForFullHorizontalSpace(gridSizingStateRef);
     const columnSizingForFullHorizontalSpaceAndAutoResize =
-        useColumnSizingForFullHorizontalSpaceAndAutoResize();
+        useColumnSizingForFullHorizontalSpaceAndAutoResize(gridSizingStateRef);
     const columnSizingForDefault = useColumnSizingDefault();
 
     const columnSizingProps =

@@ -325,7 +325,7 @@ export type GenAIAssistantProps = Omit<GenAiStoreProps, "children"> & {
     disableManage?: boolean;
     disableAnalyze?: boolean;
     disableFullControl?: boolean;
-    dashboardSelector?: DashboardSelectorEvaluator;
+    dashboardSelector?: DashboardSelectorEvaluator | null;
     slots?: IGenAIAssistantSlots;
     className?: string;
     mode?: GenAIAssistantMode;
@@ -765,10 +765,10 @@ export type LinkHandlerEvent = {
     action: "copy" | "open";
 };
 
-// @internal
+// @public
 export const makeAssistantItem: (content?: IChatConversationLocalContent, id?: string, complete?: boolean) => IChatConversationLocalItem;
 
-// @internal
+// @public
 export const makeUserItem: (content?: IChatConversationLocalContent, id?: string) => IChatConversationLocalItem;
 
 // @public (undocumented)

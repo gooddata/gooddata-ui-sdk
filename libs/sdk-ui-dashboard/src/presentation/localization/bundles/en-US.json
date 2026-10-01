@@ -1927,13 +1927,17 @@
         "text": "Collapse panel",
         "crowdinContext": "Tooltip of the button that collapses the dashboard edit mode left panel"
     },
-    "sidebar.search": {
-        "text": "Search visualizations",
-        "crowdinContext": "Tooltip of the button that expands the collapsed dashboard edit mode left panel to its visualization search"
-    },
     "sidebar.expand": {
         "text": "Expand panel",
         "crowdinContext": "Tooltip of the button that expands the collapsed dashboard edit mode left panel"
+    },
+    "sidebar.resize": {
+        "text": "Resize panel",
+        "crowdinContext": "Accessible name of the drag handle that resizes the dashboard edit mode left panel"
+    },
+    "sidebar.search": {
+        "text": "Search visualizations",
+        "crowdinContext": "Tooltip of the button that expands the collapsed dashboard edit mode left panel to its visualization search"
     },
     "sidebar.rail.visualization": {
         "text": "Visualization",

@@ -507,6 +507,8 @@
     "automations.menu.resume": "Продолжить",
     "automations.menu.ariaLabel": "Действия для {title}",
     "automations.menu.edit.unavailable": "Действие редактирования недоступно, нет связанной панели инструментов",
+    "automations.menu.edit.restricted": "Вы не можете изменить эту автоматизацию, поскольку у вас нет доступа к некоторым используемым в ней объектам.",
+    "automations.restricted.tooltip": "У вас нет доступа к некоторым объектам, используемым в этой автоматизации, поэтому ее невозможно открыть.",
     "automations.icon.tooltip.header.schedule": "Экспорт не выполнен",
     "automations.icon.tooltip.header.alert": "Оповещение не удалось",
     "automations.icon.tooltip.status": "Статус",

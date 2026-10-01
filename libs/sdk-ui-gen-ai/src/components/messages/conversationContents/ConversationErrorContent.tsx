@@ -54,7 +54,7 @@ export function ConversationErrorContent({
         <div className={classNames}>
             <div className={cx("gd-gen-ai-chat__error-info")}>
                 <div className={cx("gd-gen-ai-chat__content")}>
-                    <p>
+                    <div className={cx("gd-gen-ai-chat__error-message")}>
                         {reason === "METADATA_SYNC_IN_PROGRESS" ? (
                             <FormattedMessage
                                 id="gd.gen-ai.global-error.sync-in-progress"
@@ -68,7 +68,9 @@ export function ConversationErrorContent({
                                 values={components}
                             />
                         ) : (
-                            <MarkdownComponent allowMarkdown={useMarkdown}>{message}</MarkdownComponent>
+                            <div className={cx("gd-gen-ai-chat__error-raw")}>
+                                <MarkdownComponent allowMarkdown={useMarkdown}>{message}</MarkdownComponent>
+                            </div>
                         )}
                         <span className={cx("gd-gen-ai-chat__show-more")}>
                             <UiButton
@@ -82,7 +84,7 @@ export function ConversationErrorContent({
                                 }
                             />
                         </span>
-                    </p>
+                    </div>
                 </div>
             </div>
             {showMore ? (

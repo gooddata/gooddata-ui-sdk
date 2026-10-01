@@ -507,6 +507,8 @@
     "automations.menu.resume": "恢复",
     "automations.menu.ariaLabel": "行动 {title}",
     "automations.menu.edit.unavailable": "编辑操作不可用，没有关联的仪表板",
+    "automations.menu.edit.restricted": "您无法编辑此自动化，因为您无权访问它使用的部分对象。",
+    "automations.restricted.tooltip": "您无权访问此自动化中使用的部分对象，因此无法打开它。",
     "automations.icon.tooltip.header.schedule": "导出失败",
     "automations.icon.tooltip.header.alert": "警报失败",
     "automations.icon.tooltip.status": "状态",

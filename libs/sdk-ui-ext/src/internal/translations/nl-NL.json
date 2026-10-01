@@ -507,6 +507,8 @@
     "automations.menu.resume": "Hervatten",
     "automations.menu.ariaLabel": "Acties voor {title}",
     "automations.menu.edit.unavailable": "Bewerk actie is niet beschikbaar, geen bijbehorend dashboard",
+    "automations.menu.edit.restricted": "U kunt deze automatisering niet bewerken omdat u geen toegang hebt tot enkele van de objecten die hiervoor worden gebruikt.",
+    "automations.restricted.tooltip": "U hebt geen toegang tot enkele van de objecten die in deze automatisering worden gebruikt. Daarom kan deze niet worden geopend.",
     "automations.icon.tooltip.header.schedule": "Export mislukt",
     "automations.icon.tooltip.header.alert": "Waarschuwing mislukt",
     "automations.icon.tooltip.status": "Status",

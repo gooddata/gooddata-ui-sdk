@@ -57,7 +57,8 @@ export function DragLayerComponent() {
         return {
             position,
             pointerEvents: "none",
-            zIndex: DASHBOARD_HEADER_OVERLAYS_Z_INDEX + 1,
+            // Above the resizable sidebar, which sits one level over the header (see sidebar.scss).
+            zIndex: DASHBOARD_HEADER_OVERLAYS_Z_INDEX + 2,
             left: 0,
             top: 0,
             width: "100%",

@@ -148,7 +148,7 @@ export const makeConversationItem = (item: IChatConversationItem): IChatConversa
 
 /**
  * Make a new assistant message item.
- * @internal
+ * @public
  */
 export const makeAssistantItem = (
     content?: IChatConversationLocalContent,
@@ -170,7 +170,7 @@ export const makeAssistantItem = (
 
 /**
  * Make a new user message item.
- * @internal
+ * @public
  */
 export const makeUserItem = (
     content?: IChatConversationLocalContent,

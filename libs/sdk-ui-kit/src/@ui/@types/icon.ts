@@ -189,4 +189,5 @@ export type IconType =
     | "pieChart"
     | "timezone"
     | "sidePanelCollapse"
+    | "sidePanel"
     | "sidePanelExpand";

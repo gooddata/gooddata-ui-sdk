@@ -852,6 +852,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableCollapsibleLeftSidebar,
+            "enableCollapsibleLeftSidebar",
+            "BOOLEAN",
+            FeatureFlagsValues.enableCollapsibleLeftSidebar,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableExportTimeoutFix,
             "enableExportTimeoutFix",
             "BOOLEAN",

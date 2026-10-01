@@ -2,19 +2,21 @@
 
 import { useIntl } from "react-intl";
 
-import { UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
+import { UiResizableSidebarCollapseToggle, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 /**
- * Collapses the dashboard sidebar to the icon rail and expands it back.
+ * The kit sidebar collapse toggle with the dashboard's translated labels and tooltip.
  *
  * @internal
  */
 export function SidebarCollapseToggle({
     isCollapsed,
     onToggle,
+    dataTestId = "s-dashboard-sidebar-collapse-toggle",
 }: {
     isCollapsed: boolean;
     onToggle: () => void;
+    dataTestId?: string;
 }) {
     const intl = useIntl();
     const label = isCollapsed
@@ -31,17 +33,12 @@ export function SidebarCollapseToggle({
                 accessibilityHidden
                 closeOnAnchorClick
                 anchor={
-                    <UiIconButton
-                        icon={isCollapsed ? "sidePanelExpand" : "sidePanelCollapse"}
-                        label={label}
-                        size="medium"
-                        variant="tertiary"
-                        dataTestId="s-dashboard-sidebar-collapse-toggle"
-                        accessibilityConfig={{
-                            ariaLabel: label,
-                            ariaExpanded: !isCollapsed,
-                        }}
-                        onClick={onToggle}
+                    <UiResizableSidebarCollapseToggle
+                        isCollapsed={isCollapsed}
+                        onToggle={onToggle}
+                        collapseLabel={intl.formatMessage({ id: "sidebar.collapse" })}
+                        expandLabel={intl.formatMessage({ id: "sidebar.expand" })}
+                        dataTestId={dataTestId}
                     />
                 }
             />

@@ -31,7 +31,7 @@ export interface IGetAutomationsQueryOptions {
      * Specify if referenced objects should be checked for access, so restricted ones appear in `unavailable`.
      *
      * @remarks
-     * Currently covers visualizations. Defaults to false.
+     * Covers visualizations, metrics, attributes, labels, facts and computed attributes. Defaults to false.
      */
     includeUnavailableReferences?: boolean;
 }

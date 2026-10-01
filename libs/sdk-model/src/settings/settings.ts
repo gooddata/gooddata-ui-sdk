@@ -1146,6 +1146,12 @@ export interface IFeatureFlags {
     enableDashboardSidebarResize?: boolean;
 
     /**
+     * Enables collapsing the left sidebar on the workspace screens. Resizing it by drag is controlled
+     * separately by {@link IFeatureFlags.enableDashboardSidebarResize}.
+     */
+    enableCollapsibleLeftSidebar?: boolean;
+
+    /**
      * Enables per-series line style and weight configuration for line-based charts.
      */
     enableLineChartStyling?: boolean;

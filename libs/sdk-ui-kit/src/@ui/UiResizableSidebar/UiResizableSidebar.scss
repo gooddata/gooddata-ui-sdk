@@ -1,0 +1,132 @@
+// (C) 2026 GoodData Corporation
+
+@use "../../../styles/scss/variables";
+
+$slide-duration: 0.5s;
+$handle-hit-width: 8px;
+$handle-bar-width: 4px;
+$expand-trigger-width: 10px;
+
+.gd-ui-kit-resizable-sidebar {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 auto;
+    // No explicit height: the flex column stretches it, and a percentage would confine a sticky child.
+    transition: width var(--resizable-sidebar-slide-duration, #{$slide-duration});
+
+    // Lift the sidebar above sibling content during a drag so the indicator bar is not covered by
+    // content with its own stacking context. Consumers whose content paints above the sidebar at rest
+    // (e.g. a sticky header) raise the sidebar above it themselves, so the bar shows on hover too.
+    &--dragging,
+    &:has(.gd-ui-kit-resizable-sidebar__handle:focus) {
+        z-index: 9999;
+        transition: none;
+    }
+
+    &--hidden {
+        overflow: hidden;
+    }
+
+    &__collapse-toggle {
+        display: flex;
+    }
+
+    // Expands a hidden sidebar from its edge. A 10px hit area overlays the content edge without taking
+    // layout space; the bar rests 10px outside and slides in on hover and keyboard focus.
+    &__expand-trigger {
+        position: sticky;
+        z-index: 2;
+        top: 0;
+        flex: 0 0 auto;
+        align-self: flex-start;
+        width: $expand-trigger-width;
+        height: 100vh;
+        margin-right: -$expand-trigger-width;
+        padding: 0;
+        overflow: hidden;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: $expand-trigger-width;
+            background-color: color-mix(in srgb, var(--gd-palette-complementary-8, #464e56) 30%, transparent);
+            transform: translateX(-100%);
+            transition: var(--gd-transition-all);
+        }
+
+        &:focus-visible {
+            outline: none;
+        }
+
+        &:hover::before,
+        &:focus-visible::before {
+            transform: translateX(0);
+        }
+    }
+
+    // The hit area is wider than the bar; the bar is centered over the sidebar's right edge so it follows
+    // the width transition, and follows the pointer while dragging. It must be a direct child of the
+    // sidebar, not of a sticky descendant: a composited sticky layer keeps stale pixels in the strip the
+    // handle overhangs when the sidebar shrinks.
+    &__handle {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 100%;
+        transform: translateX(-50%);
+        z-index: 2;
+        width: $handle-hit-width;
+        padding: 0;
+        background: transparent;
+        border: 0;
+        cursor: col-resize;
+        // Keeps the browser from claiming the first touchmove for panning before pointer capture engages.
+        touch-action: none;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: $handle-bar-width;
+            background-color: variables.$gd-palette-primary-base;
+            opacity: 0;
+            transition: var(--gd-transition-all);
+        }
+
+        &:focus {
+            outline: none;
+        }
+
+        &:disabled {
+            cursor: initial;
+        }
+
+        &--dragging {
+            left: 0;
+            transform: translateX(calc(var(--resizable-sidebar-drag-x, 0px) - 50%));
+        }
+
+        // A disabled handle (resize unavailable) must not advertise a drag.
+        &:not(:disabled):hover::before,
+        &:focus::before,
+        &--dragging::before {
+            opacity: 1;
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gd-ui-kit-resizable-sidebar {
+        transition: none;
+    }
+}

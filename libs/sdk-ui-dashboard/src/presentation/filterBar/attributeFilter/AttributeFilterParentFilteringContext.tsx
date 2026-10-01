@@ -65,6 +65,15 @@ export type IAttributeFilterParentFiltering = ReturnType<typeof useParentsConfig
         defaultAttributeFilterTitle?: string;
         attributeFilterDisplayForm: ObjRef;
         availableDatasetsForFilter: IAttributeOrMeasure[];
+        /**
+         * The attribute filter being configured.
+         */
+        filterItem: DashboardAttributeFilterItem;
+        /**
+         * The other attribute filters of the filter context this filter can be configured against;
+         * filters the user may not read are left out.
+         */
+        neighborFilters: DashboardAttributeFilterItem[];
     } & ReturnType<typeof useLimitingItemsConfiguration> &
     ReturnType<typeof useDependentDateFiltersConfiguration>;
 
@@ -391,6 +400,8 @@ export function AttributeFilterParentFilteringProvider({
                 onLimitingItemsUpdate,
                 onLimitingItemsChange,
                 availableDatasetsForFilter,
+                filterItem,
+                neighborFilters,
                 dependentDateFilters,
                 dependentCommonDateFilter,
                 onDependentDateFiltersSelect,
@@ -507,6 +518,7 @@ export function AttributeFilterNoopParentFilteringProvider({
             onLimitingItemsUpdate: noop,
             onLimitingItemsChange: noop,
             availableDatasetsForFilter: [],
+            neighborFilters: [],
             dependentDateFilters: [],
             dependentCommonDateFilter: undefined,
             onDependentDateFiltersSelect: noop,

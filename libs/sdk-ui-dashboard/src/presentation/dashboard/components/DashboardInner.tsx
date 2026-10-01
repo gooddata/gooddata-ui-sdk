@@ -9,6 +9,7 @@ import {
     OverlayControllerProvider,
     ToastsCenter,
     ToastsCenterContextProvider,
+    UiResizableSidebarProvider,
 } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
@@ -38,10 +39,7 @@ import { DashboardContent } from "../DashboardContent.js";
 import { DashboardHeader } from "../DashboardHeader/DashboardHeader.js";
 import { DashboardSidebar } from "../DashboardSidebar/DashboardSidebar.js";
 import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeAwareDashboardSidebar.js";
-import {
-    ResizableSidebarProvider,
-    useResizableSidebarState,
-} from "../DashboardSidebar/SidebarResizeContext.js";
+import { useResizableSidebarState } from "../DashboardSidebar/useResizableSidebarState.js";
 import { type IDashboardProps } from "../types.js";
 
 import { DashboardScreenSizeProvider } from "./DashboardScreenSizeContext.js";
@@ -91,7 +89,7 @@ export function DashboardInner(props: IDashboardProps) {
 
     const resizableSidebar = useResizableSidebarState();
 
-    // When the sidebar can be resized or is collapsed to the icon rail, expose its live width so the
+    // When the sidebar can be resized or is collapsed (hidden), expose its live width so the
     // sibling content area can subtract it (see `--gd-dashboard-sidebar-width` in sdk-dashboard.scss).
     // Otherwise leave it unset so the content falls back to the static per-breakpoint sidebar width.
     const dashboardsRootStyle =
@@ -109,7 +107,7 @@ export function DashboardInner(props: IDashboardProps) {
                 </OverlayControllerProvider>
 
                 {/* we need wrapping element for drag layer and dashboard for proper rendering in flex layout */}
-                <ResizableSidebarProvider value={resizableSidebar}>
+                <UiResizableSidebarProvider value={resizableSidebar}>
                     <div
                         className={cx("component-root", {
                             "sdk-edit-mode-on": isEditMode,
@@ -167,7 +165,7 @@ export function DashboardInner(props: IDashboardProps) {
                         </div>
                         <Toolbar />
                     </div>
-                </ResizableSidebarProvider>
+                </UiResizableSidebarProvider>
             </ToastsCenterContextProvider>
         </IntlWrapper>
     );

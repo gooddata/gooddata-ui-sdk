@@ -17,6 +17,7 @@ import {
     selectEffectiveDashboardTimezone,
     selectPersistedDashboard,
 } from "../../../model/store/meta/metaSelectors.js";
+import { SidebarHeaderToggle } from "../../dashboard/DashboardSidebar/SidebarHeaderToggle.js";
 import { useCancelButtonProps } from "../buttonBar/button/cancelButton/DefaultCancelButton.js";
 import { useEditButtonProps } from "../buttonBar/button/editButton/DefaultEditButton.js";
 import { useSaveAsNewButtonProps } from "../buttonBar/button/saveAsButton/DefaultSaveAsNewButton.js";
@@ -127,6 +128,7 @@ function TopBarCore({
             <div className={"dash-header-inner"}>
                 {/* No customization from useDashboardComponentsContext for now */}
                 <DefaultLockedStatus {...lockedStatusProps} />
+                <SidebarHeaderToggle />
                 <Title {...titleProps} />
                 {/* No customization from useDashboardComponentsContext for now */}
                 <DefaultShareStatus {...shareStatusProps} />

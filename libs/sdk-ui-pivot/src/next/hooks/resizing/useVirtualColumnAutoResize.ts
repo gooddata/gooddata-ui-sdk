@@ -1,6 +1,6 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { useCallback, useRef } from "react";
+import { type RefObject, useCallback, useRef } from "react";
 
 import { type GridApi, type VirtualColumnsChangedEvent } from "ag-grid-enterprise";
 import { debounce } from "lodash-es";
@@ -8,6 +8,7 @@ import { debounce } from "lodash-es";
 import { usePrevious } from "@gooddata/sdk-ui";
 
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
+import { getColumnsPendingAutoResize } from "../../features/resizing/getColumnsPendingAutoResize.js";
 import {
     type AgGridColumn,
     type AgGridOnVirtualColumnsChanged,
@@ -24,14 +25,14 @@ import { type AgGridRowData } from "../../types/internal.js";
  *
  * @internal
  */
-export function useVirtualColumnAutoResize(): (agGridReactProps: AgGridProps) => AgGridProps {
+export function useVirtualColumnAutoResize(
+    processedColumnsRef: RefObject<Set<string>>,
+): (agGridReactProps: AgGridProps) => AgGridProps {
     const { config } = usePivotTableProps();
     const { columnSizing, columnHeadersPosition } = config;
     const { defaultWidth } = columnSizing;
 
     const shouldAutoResizeDisplayedColumns = defaultWidth === "autoresizeAll" || defaultWidth === "viewport";
-
-    const processedColumnsRef = useRef<Set<string>>(new Set());
 
     const previousColumnHeadersPosition = usePrevious(columnHeadersPosition);
 
@@ -45,11 +46,7 @@ export function useVirtualColumnAutoResize(): (agGridReactProps: AgGridProps) =>
             if (columns.length > 0) {
                 // Only auto-size columns that haven't been processed yet, help with lagging a bit
                 // Also skip columns that have a width set as it may be fixed by column config
-                const newColumns = columns.filter(
-                    (col) =>
-                        !processedColumnsRef.current.has(col.getId()) &&
-                        (col.getColDef().width === undefined || col.getColDef().width === null),
-                );
+                const newColumns = getColumnsPendingAutoResize(columns, processedColumnsRef.current);
                 if (newColumns.length > 0) {
                     api.autoSizeColumns(newColumns, false);
                     // Mark columns as processed

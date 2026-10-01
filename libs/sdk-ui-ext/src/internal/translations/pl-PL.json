@@ -507,6 +507,8 @@
     "automations.menu.resume": "Wznów",
     "automations.menu.ariaLabel": "Akcje dla {title}",
     "automations.menu.edit.unavailable": "Edycja jest niedostępna, brak powiązanego dashboardu",
+    "automations.menu.edit.restricted": "Nie możesz edytować tej automatyzacji, ponieważ nie masz dostępu do niektórych używanych przez nią obiektów.",
+    "automations.restricted.tooltip": "Nie masz dostępu do niektórych obiektów używanych w tej automatyzacji, dlatego nie można jej otworzyć.",
     "automations.icon.tooltip.header.schedule": "Eksport nie powiódł się",
     "automations.icon.tooltip.header.alert": "Alert zakończony niepowodzeniem",
     "automations.icon.tooltip.status": "Status",
