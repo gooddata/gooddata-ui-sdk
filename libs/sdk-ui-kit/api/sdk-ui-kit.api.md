@@ -1922,7 +1922,7 @@ export function IconTrash(input: IIconProps): JSX.Element;
 export function IconTreeMap(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export type IconType = "aiAgent" | "aiAgentDisabled" | "brain" | "brainDisabled" | "check" | "checkCircle" | "certification" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "edit" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "infoCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "clockPaused" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "geoCollection" | "geoCollectionUpload" | "minimize" | "shrink" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderSmall" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "levelUp" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minus" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "building" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "ldmKey" | "ldmLabel" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "alignLeft" | "alignCenter" | "alignRight" | "alignTop" | "alignMiddle" | "alignBottom" | "bold" | "italic" | "imageContain" | "imageCover" | "imageFill" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "history" | "history2" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "externalLink" | "click" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "aiDocument" | "recommendation" | "streamUp" | "streamDown" | "stream" | "density" | "parameter" | "pin" | "unpin" | "speechBubble" | "pieChart" | "timezone" | "sidePanelCollapse" | "sidePanelExpand";
+export type IconType = "aiAgent" | "aiAgentDisabled" | "brain" | "brainDisabled" | "check" | "checkCircle" | "certification" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "edit" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "infoCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "clockPaused" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "geoCollection" | "geoCollectionUpload" | "minimize" | "shrink" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderSmall" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "levelUp" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minus" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "building" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "ldmKey" | "ldmLabel" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "alignLeft" | "alignCenter" | "alignRight" | "alignTop" | "alignMiddle" | "alignBottom" | "bold" | "italic" | "imageContain" | "imageCover" | "imageFill" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "history" | "history2" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "externalLink" | "click" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "aiDocument" | "recommendation" | "streamUp" | "streamDown" | "stream" | "density" | "parameter" | "pin" | "unpin" | "speechBubble" | "pieChart" | "timezone" | "sidePanelCollapse" | "sidePanel" | "sidePanelExpand";
 
 // @internal (undocumented)
 export function IconUndo(input: IIconProps): JSX.Element;
@@ -7789,6 +7789,87 @@ export interface IUiRadioRowProps {
 }
 
 // @internal (undocumented)
+export interface IUiResizableSidebarCollapseToggleProps {
+    collapseLabel: string;
+    // (undocumented)
+    dataTestId?: string;
+    expandLabel: string;
+    // (undocumented)
+    isCollapsed: boolean;
+    // (undocumented)
+    onToggle: () => void;
+}
+
+// @internal (undocumented)
+export interface IUiResizableSidebarExpandTriggerProps {
+    // (undocumented)
+    dataTestId?: string;
+    label: string;
+    // (undocumented)
+    onExpand: () => void;
+}
+
+// @internal (undocumented)
+export interface IUiResizableSidebarHandleProps {
+    // (undocumented)
+    accessibilityConfig?: Pick<IAccessibilityConfigBase, "ariaLabel" | "ariaLabelledBy" | "ariaControls">;
+    // (undocumented)
+    dataTestId?: string;
+}
+
+// @internal (undocumented)
+export interface IUiResizableSidebarProps {
+    children: ReactNode;
+    // (undocumented)
+    dataTestId?: string;
+    keyboardStep?: number;
+    state?: IUiResizableSidebarState;
+}
+
+// @internal (undocumented)
+export interface IUiResizableSidebarProviderProps {
+    // (undocumented)
+    children: ReactNode;
+    // (undocumented)
+    value: IUiResizableSidebarState;
+}
+
+// @internal
+export interface IUiResizableSidebarState {
+    // (undocumented)
+    canCollapse: boolean;
+    // (undocumented)
+    canResize: boolean;
+    expandedWidth: number;
+    hasRail: boolean;
+    // (undocumented)
+    isCollapsed: boolean;
+    // (undocumented)
+    max: number;
+    // (undocumented)
+    min: number;
+    // (undocumented)
+    setCollapsed: (collapsed: boolean) => void;
+    // (undocumented)
+    setWidth: (width: number) => void;
+    width: number;
+}
+
+// @internal (undocumented)
+export interface IUiResizableSidebarStateOptions {
+    collapsedStorageKey: string;
+    hasRail?: boolean;
+    // (undocumented)
+    isCollapsible: boolean;
+    // (undocumented)
+    isResizable: boolean;
+    maxWidth: number;
+    minContentWidth?: number;
+    minWidth: number;
+    widthStorageKey: string;
+}
+
+// @internal (undocumented)
 export interface IUiRestrictedPlaceholderProps {
     // (undocumented)
     accessibilityConfig?: {
@@ -9408,6 +9489,9 @@ export function Typography(input: ITypographyProps): JSX.Element;
 export type TypographyTagName = "h1" | "h2" | "h3" | "p";
 
 // @internal
+export const UI_RESIZABLE_SIDEBAR_RAIL_WIDTH = 48;
+
+// @internal
 export function UiAddGranteeDialog(input: IUiAddGranteeDialogProps): JSX.Element;
 
 // @internal
@@ -9686,6 +9770,21 @@ export function UiRadioRow(input: IUiRadioRowProps): JSX.Element;
 
 // @internal (undocumented)
 export type UiRefsTree = Record<string, HTMLDivElement | null>;
+
+// @internal
+export function UiResizableSidebar(input: IUiResizableSidebarProps): ReactElement;
+
+// @internal
+export function UiResizableSidebarCollapseToggle(input: IUiResizableSidebarCollapseToggleProps): ReactElement;
+
+// @internal
+export function UiResizableSidebarExpandTrigger(input: IUiResizableSidebarExpandTriggerProps): ReactElement;
+
+// @internal
+export function UiResizableSidebarHandle(input: IUiResizableSidebarHandleProps): ReactElement;
+
+// @internal
+export function UiResizableSidebarProvider(input: IUiResizableSidebarProviderProps): JSX.Element;
 
 // @internal
 export function UiRestrictedPlaceholder(input: IUiRestrictedPlaceholderProps): JSX.Element;
@@ -10069,6 +10168,12 @@ export const useUiFocusManagerConnectors: <T extends HTMLElement = HTMLElement>(
 
 // @internal (undocumented)
 export const useUiFocusTrapConnectors: <T extends HTMLElement = HTMLElement>(focusCheckFn: (element: HTMLElement) => boolean) => IUiFocusHelperConnectors<T>;
+
+// @internal
+export function useUiResizableSidebar(fallback?: IUiResizableSidebarState): IUiResizableSidebarState;
+
+// @internal
+export function useUiResizableSidebarState(input: IUiResizableSidebarStateOptions): IUiResizableSidebarState;
 
 // @internal (undocumented)
 export const useUiReturnFocusOnUnmountConnectors: <T extends HTMLElement = HTMLElement>(input?: IUiReturnFocusOnUnmountOptions) => IUiFocusHelperConnectors<T>;

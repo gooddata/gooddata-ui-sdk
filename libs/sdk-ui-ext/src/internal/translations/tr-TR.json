@@ -507,6 +507,8 @@
     "automations.menu.resume": "Devam et",
     "automations.menu.ariaLabel": "{title} için Eylemler",
     "automations.menu.edit.unavailable": "Düzenleme eylemi kullanılamıyor, ilişkili pano yok",
+    "automations.menu.edit.restricted": "Kullandığı bazı nesnelere erişiminiz olmadığı için bu otomasyonu düzenleyemezsiniz.",
+    "automations.restricted.tooltip": "Bu otomasyonda kullanılan bazı nesnelere erişiminiz olmadığı için otomasyon açılamıyor.",
     "automations.icon.tooltip.header.schedule": "Dışa aktarma başarısız oldu",
     "automations.icon.tooltip.header.alert": "Uyarı başarısız oldu",
     "automations.icon.tooltip.status": "Durum",

@@ -507,6 +507,8 @@
     "automations.menu.resume": "Jatka",
     "automations.menu.ariaLabel": "Toiminnot kohteelle {title}",
     "automations.menu.edit.unavailable": "Muokkaa toimintoa ei ole käytettävissä, siihen ei ole liitetty ohjauspaneelia",
+    "automations.menu.edit.restricted": "Et voi muokata tätä automaatiota, koska sinulla ei ole käyttöoikeutta joihinkin sen käyttämiin objekteihin.",
+    "automations.restricted.tooltip": "Sinulla ei ole käyttöoikeutta joihinkin tässä automaatiossa käytettyihin objekteihin, joten sitä ei voi avata.",
     "automations.icon.tooltip.header.schedule": "Vienti epäonnistui",
     "automations.icon.tooltip.header.alert": "Hälytys epäonnistui",
     "automations.icon.tooltip.status": "Tila",

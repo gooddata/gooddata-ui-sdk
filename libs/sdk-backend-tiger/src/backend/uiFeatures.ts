@@ -123,6 +123,7 @@ export enum TigerFeaturesNames {
     EnableLineChartStyling = "enableLineChartStyling",
     EnableDonutDataLabels = "enableDonutDataLabels",
     EnableDashboardSidebarResize = "enableDashboardSidebarResize",
+    EnableCollapsibleLeftSidebar = "enableCollapsibleLeftSidebar",
     EnableExportTimeoutFix = "enableExportTimeoutFix",
     EnableAiAssistantEmbedding = "enableAiAssistantEmbedding",
     EnableAiContextSetup = "enableAiContextSetup",
@@ -256,6 +257,7 @@ export type ITigerFeatureFlags = {
     enableEnhancedInsightPicker: (typeof FeatureFlagsValues)["enableEnhancedInsightPicker"][number];
     enableAiLlmAnthropicProvider: (typeof FeatureFlagsValues)["enableAiLlmAnthropicProvider"][number];
     enableDashboardSidebarResize: (typeof FeatureFlagsValues)["enableDashboardSidebarResize"][number];
+    enableCollapsibleLeftSidebar: (typeof FeatureFlagsValues)["enableCollapsibleLeftSidebar"][number];
     enableExportTimeoutFix: (typeof FeatureFlagsValues)["enableExportTimeoutFix"][number];
     enableDashboardPersistentFiltersAcrossTabs: (typeof FeatureFlagsValues)["enableDashboardPersistentFiltersAcrossTabs"][number];
     enableAbsoluteDateFilterGranularity: (typeof FeatureFlagsValues)["enableAbsoluteDateFilterGranularity"][number];
@@ -385,6 +387,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableEnhancedInsightPicker: false,
     enableAiLlmAnthropicProvider: false,
     enableDashboardSidebarResize: true,
+    enableCollapsibleLeftSidebar: false,
     enableExportTimeoutFix: false,
     enableDashboardPersistentFiltersAcrossTabs: false,
     enableAbsoluteDateFilterGranularity: false,
@@ -514,6 +517,7 @@ export const FeatureFlagsValues = {
     enableEnhancedInsightPicker: [true, false] as const,
     enableAiLlmAnthropicProvider: [true, false] as const,
     enableDashboardSidebarResize: [true, false] as const,
+    enableCollapsibleLeftSidebar: [true, false] as const,
     enableExportTimeoutFix: [true, false] as const,
     enableDashboardPersistentFiltersAcrossTabs: [true, false] as const,
     enableAbsoluteDateFilterGranularity: [true, false] as const,

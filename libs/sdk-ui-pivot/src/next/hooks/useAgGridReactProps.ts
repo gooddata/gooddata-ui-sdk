@@ -1,11 +1,13 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 
 import { AG_GRID_DEFAULT_PROPS } from "../constants/agGridDefaultProps.js";
 import { type AgGridProps } from "../types/agGrid.js";
+import { type IGridSizingState } from "../types/internal.js";
 
 import { useColumnSizingProps } from "./resizing/useColumnSizingProps.js";
+import { useResizeOnGridSizeChanged } from "./resizing/useResizeOnGridSizeChanged.js";
 import { useVirtualColumnAutoResize } from "./resizing/useVirtualColumnAutoResize.js";
 import { useAccessibilityModeProps } from "./useAccessibilityProps.js";
 import { useAfterRenderCallback } from "./useAfterRenderCallback.js";
@@ -35,7 +37,8 @@ export function useAgGridReactProps() {
     const enhanceWithServerSideRowModel = useDataLoadingProps();
     const enhanceWithColumnDefs = useColumnDefsProps();
     const enhanceWithPivoting = usePivotingProps();
-    const enhanceWithColumnSizing = useColumnSizingProps();
+    const gridSizingStateRef = useRef<IGridSizingState>({ hasRenderedFirstData: false, isSized: false });
+    const enhanceWithColumnSizing = useColumnSizingProps(gridSizingStateRef);
     const enhanceWithSorting = useSortingProps();
     const enhanceWithInteractions = useInteractionProps();
     const enhanceWithCellSelection = useCellSelectionProps();
@@ -48,7 +51,12 @@ export function useAgGridReactProps() {
     const enhanceWithTheme = useThemeProps();
     const enhanceWithHeaderComponents = useHeaderComponents();
     const enhanceWithAfterRender = useAfterRenderCallback();
-    const enhanceWithVirtualColumnAutoResize = useVirtualColumnAutoResize();
+    const autoResizedColumnsRef = useRef<Set<string>>(new Set());
+    const enhanceWithVirtualColumnAutoResize = useVirtualColumnAutoResize(autoResizedColumnsRef);
+    const enhanceWithResizeOnGridSizeChanged = useResizeOnGridSizeChanged(
+        autoResizedColumnsRef,
+        gridSizingStateRef,
+    );
     const enhanceWithFocusManagement = useFocusManagementProps();
 
     return useMemo<AgGridProps>(() => {
@@ -71,6 +79,7 @@ export function useAgGridReactProps() {
             enhanceWithHeaderComponents,
             enhanceWithAfterRender,
             enhanceWithVirtualColumnAutoResize,
+            enhanceWithResizeOnGridSizeChanged,
             enhanceWithFocusManagement,
         ].reduce((acc, fn) => fn(acc), AG_GRID_DEFAULT_PROPS);
     }, [
@@ -92,6 +101,7 @@ export function useAgGridReactProps() {
         enhanceWithHeaderComponents,
         enhanceWithAfterRender,
         enhanceWithVirtualColumnAutoResize,
+        enhanceWithResizeOnGridSizeChanged,
         enhanceWithFocusManagement,
     ]);
 }

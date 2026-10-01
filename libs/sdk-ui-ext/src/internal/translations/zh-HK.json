@@ -507,6 +507,8 @@
     "automations.menu.resume": "恢復",
     "automations.menu.ariaLabel": "行動 {title}",
     "automations.menu.edit.unavailable": "編輯動作無法使用，沒有相關聯的儀表板",
+    "automations.menu.edit.restricted": "您無法編輯此自動化，因為您沒有權限存取它所使用的部分物件。",
+    "automations.restricted.tooltip": "您沒有權限存取此自動化所使用的部分物件，因此無法開啟它。",
     "automations.icon.tooltip.header.schedule": "導出失敗",
     "automations.icon.tooltip.header.alert": "警報失敗",
     "automations.icon.tooltip.status": "地位",

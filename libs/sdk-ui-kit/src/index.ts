@@ -1399,3 +1399,32 @@ export {
     type UiToastKind,
     type UiToastMessage,
 } from "./@ui/UiToast/types.js";
+export {
+    UiResizableSidebar,
+    type IUiResizableSidebarProps,
+} from "./@ui/UiResizableSidebar/UiResizableSidebar.js";
+export {
+    UiResizableSidebarHandle,
+    type IUiResizableSidebarHandleProps,
+} from "./@ui/UiResizableSidebar/UiResizableSidebarHandle.js";
+export {
+    UiResizableSidebarProvider,
+    useUiResizableSidebar,
+    type IUiResizableSidebarProviderProps,
+} from "./@ui/UiResizableSidebar/UiResizableSidebarContext.js";
+export {
+    useUiResizableSidebarState,
+    UI_RESIZABLE_SIDEBAR_RAIL_WIDTH,
+} from "./@ui/UiResizableSidebar/useUiResizableSidebarState.js";
+export {
+    type IUiResizableSidebarState,
+    type IUiResizableSidebarStateOptions,
+} from "./@ui/UiResizableSidebar/types.js";
+export {
+    UiResizableSidebarCollapseToggle,
+    type IUiResizableSidebarCollapseToggleProps,
+} from "./@ui/UiResizableSidebar/UiResizableSidebarCollapseToggle.js";
+export {
+    UiResizableSidebarExpandTrigger,
+    type IUiResizableSidebarExpandTriggerProps,
+} from "./@ui/UiResizableSidebar/UiResizableSidebarExpandTrigger.js";

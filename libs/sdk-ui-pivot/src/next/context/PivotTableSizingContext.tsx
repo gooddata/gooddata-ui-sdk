@@ -1,13 +1,16 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type ReactNode, createContext, useContext, useMemo, useState } from "react";
+import { type ReactNode, createContext, useCallback, useContext, useMemo, useState } from "react";
 
 type IPivotTableSizingStateContext = {
     containerWidth: number;
+    isContainerWidthMeasured: boolean;
+    resizeOnShowCount: number;
 };
 
 type IPivotTableSizingActionsContext = {
     setContainerWidth: (width: number) => void;
+    markResizeOnShow: () => void;
 };
 
 // Keep state and actions in separate contexts so components that only dispatch
@@ -19,20 +22,31 @@ const PivotTableSizingActionsContext = createContext<IPivotTableSizingActionsCon
  * @internal
  */
 export function PivotTableSizingProvider({ children }: { children: ReactNode }) {
-    const [containerWidth, setContainerWidth] = useState(0);
+    const [containerWidth, setContainerWidthState] = useState(0);
+    const [isContainerWidthMeasured, setIsContainerWidthMeasured] = useState(false);
+    const setContainerWidth = useCallback((width: number) => {
+        setContainerWidthState(width);
+        setIsContainerWidthMeasured(true);
+    }, []);
+    const [resizeOnShowCount, setResizeOnShowCount] = useState(0);
+
+    const markResizeOnShow = useCallback(() => setResizeOnShowCount((count) => count + 1), []);
 
     const stateValue = useMemo<IPivotTableSizingStateContext>(
         () => ({
             containerWidth,
+            isContainerWidthMeasured,
+            resizeOnShowCount,
         }),
-        [containerWidth],
+        [containerWidth, isContainerWidthMeasured, resizeOnShowCount],
     );
 
     const actionsValue = useMemo<IPivotTableSizingActionsContext>(
         () => ({
             setContainerWidth,
+            markResizeOnShow,
         }),
-        [setContainerWidth],
+        [setContainerWidth, markResizeOnShow],
     );
 
     return (

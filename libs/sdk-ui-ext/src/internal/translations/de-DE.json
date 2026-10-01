@@ -507,6 +507,8 @@
     "automations.menu.resume": "Fortsetzen",
     "automations.menu.ariaLabel": "Aktionen für {title}",
     "automations.menu.edit.unavailable": "Bearbeitungsaktion ist nicht verfügbar, kein zugeordnetes Dashboard",
+    "automations.menu.edit.restricted": "Sie können diese Automatisierung nicht bearbeiten, weil Sie auf einige der von ihr verwendeten Objekte keinen Zugriff haben.",
+    "automations.restricted.tooltip": "Sie haben keinen Zugriff auf einige der in dieser Automatisierung verwendeten Objekte, daher kann sie nicht geöffnet werden.",
     "automations.icon.tooltip.header.schedule": "Export fehlgeschlagen",
     "automations.icon.tooltip.header.alert": "Warnung fehlgeschlagen",
     "automations.icon.tooltip.status": "Status",

@@ -507,6 +507,8 @@
     "automations.menu.resume": "Reanudar",
     "automations.menu.ariaLabel": "Acciones para {title}",
     "automations.menu.edit.unavailable": "La acción de edición no está disponible, no hay cuadro de mando asociado",
+    "automations.menu.edit.restricted": "No puede editar esta automatización porque no tiene acceso a algunos de los objetos que utiliza.",
+    "automations.restricted.tooltip": "No tiene acceso a algunos de los objetos utilizados en esta automatización, por lo que no se puede abrir.",
     "automations.icon.tooltip.header.schedule": "Error de exportación",
     "automations.icon.tooltip.header.alert": "Alerta fallida",
     "automations.icon.tooltip.status": "Estado",

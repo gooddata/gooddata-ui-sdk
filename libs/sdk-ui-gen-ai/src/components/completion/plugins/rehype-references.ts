@@ -76,7 +76,7 @@ function iterateTree(
         if (!value.includes(PLACEHOLDER_START)) {
             return [node];
         }
-        return splitTextNode(node as TextNode, references, tokens, callbacks.onTextNodeReference, verbatim);
+        return splitTextNode(node as TextNode, references, tokens, callbacks.onTextNodeReference);
     }
     const inVerbatim = verbatim || VERBATIM_TAG_NAMES.includes(node.tagName);
     if (node.children) {
@@ -105,7 +105,6 @@ function splitTextNode(
     references: TextContentObject[],
     tokens: string[],
     onTextNodeReference: (text: TextNode, obj: TextContentObject) => Parent[],
-    verbatim: boolean,
 ): Parent[] {
     const nodes: Parent[] = [];
     const regex = getPlaceholderRegex();
@@ -125,9 +124,6 @@ function splitTextNode(
         if (ref) {
             pushText(text.value.slice(lastIndex, match.index));
             nodes.push(...onTextNodeReference(text, ref));
-            if (verbatim) {
-                pushText(` ${originalToken}`);
-            }
             lastIndex = match.index + match[0].length;
         }
         match = regex.exec(text.value);

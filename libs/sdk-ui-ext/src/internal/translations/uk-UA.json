@@ -507,6 +507,8 @@
     "automations.menu.resume": "Відновити",
     "automations.menu.ariaLabel": "Дії для {title}",
     "automations.menu.edit.unavailable": "Дія редагування недоступна, немає пов'язаного дашборду",
+    "automations.menu.edit.restricted": "Ви не можете редагувати цю автоматизацію, оскільки не маєте доступу до деяких об’єктів, які вона використовує.",
+    "automations.restricted.tooltip": "Ви не маєте доступу до деяких об’єктів, використаних у цій автоматизації, тому її неможливо відкрити.",
     "automations.icon.tooltip.header.schedule": "Помилка експорту",
     "automations.icon.tooltip.header.alert": "Помилка оповіщення",
     "automations.icon.tooltip.status": "Статус",

@@ -111,7 +111,9 @@ export const typescriptRulesNativeSupported: Rules<"@typescript-eslint"> = {
     ...typescriptRulesCommon,
 };
 
-// todo: https://github.com/oxc-project/oxc/issues/2180
+// todo:
+//  https://github.com/oxc-project/oxc/issues/2180
+//  https://github.com/oxc-project/tsgolint/issues/186
 export const typescriptRulesNativeNotSupported: Rules<"@typescript-eslint"> = {
     "@typescript-eslint/naming-convention": [
         "error",

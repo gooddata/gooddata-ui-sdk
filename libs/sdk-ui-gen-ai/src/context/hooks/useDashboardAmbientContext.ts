@@ -26,13 +26,13 @@ import { setAmbientUserContextAction } from "../../store/chatWindow/chatWindowSl
 import { mergeContexts } from "../build.js";
 import { buildDashboardContext, buildFiltersContext, buildWidgetsContext } from "../dashboard.js";
 
-export function useDashboardAmbientContext(dashboardSelector?: DashboardSelectorEvaluator) {
+export function useDashboardAmbientContext(dashboardSelector?: DashboardSelectorEvaluator | null) {
     const dispatch = useDispatch();
     const used = useRef(false);
 
     useEffect(() => {
         const context = dashboardSelector ? buildFromDashboard(dashboardSelector) : undefined;
-        setContext(dispatch, context, used);
+        setContext(dispatch, context, used, dashboardSelector);
     }, [dashboardSelector, dispatch]);
 }
 
@@ -40,12 +40,13 @@ function setContext(
     dispatch: ReturnType<typeof useDispatch>,
     context: ReturnType<typeof buildFromDashboard>,
     used: RefObject<boolean>,
+    dashboardSelector?: DashboardSelectorEvaluator | null,
 ) {
     if (context) {
         dispatch(setAmbientUserContextAction({ userContext: context }));
         used.current = true;
     }
-    if (!context && used.current) {
+    if (!context && (used.current || dashboardSelector === null)) {
         dispatch(setAmbientUserContextAction({ userContext: undefined }));
         used.current = false;
     }

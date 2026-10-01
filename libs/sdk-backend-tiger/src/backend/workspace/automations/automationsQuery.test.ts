@@ -40,13 +40,24 @@ describe("AutomationsQuery", () => {
         });
     });
 
-    it("includes visualizations when unavailable references are requested", async () => {
-        expect(await requestedIncludes({ includeUnavailableReferences: true })).toContain(
-            "visualizationObjects",
+    const restrictionIncludes: NonNullable<EntitiesApiGetAllEntitiesAutomationsRequest["include"]> = [
+        "visualizationObjects",
+        "metrics",
+        "attributes",
+        "labels",
+        "facts",
+        "computedAttributes",
+    ];
+
+    it("includes the checked objects when unavailable references are requested", async () => {
+        expect(await requestedIncludes({ includeUnavailableReferences: true })).toEqual(
+            expect.arrayContaining(restrictionIncludes),
         );
     });
 
-    it("does not include visualizations by default", async () => {
-        expect(await requestedIncludes()).not.toContain("visualizationObjects");
+    it("does not include the checked objects by default", async () => {
+        const includes = await requestedIncludes();
+
+        expect(restrictionIncludes.filter((include) => includes?.includes(include))).toEqual([]);
     });
 });

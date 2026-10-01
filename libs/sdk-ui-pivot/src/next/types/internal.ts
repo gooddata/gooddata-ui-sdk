@@ -78,3 +78,11 @@ export interface IPivotTableNextResolvedProps extends Omit<
     sortBy?: ISortItem[];
     totals?: ITotal[];
 }
+
+/**
+ * @internal
+ */
+export interface IGridSizingState {
+    hasRenderedFirstData: boolean;
+    isSized: boolean;
+}

@@ -507,6 +507,8 @@
     "automations.menu.resume": "다시 시작",
     "automations.menu.ariaLabel": "{title}에 대한 작업",
     "automations.menu.edit.unavailable": "편집 작업을 사용할 수 없습니다, 관련 대시보드가 없습니다",
+    "automations.menu.edit.restricted": "이 자동화에서 사용하는 일부 개체에 대한 액세스 권한이 없으므로 자동화를 편집할 수 없습니다.",
+    "automations.restricted.tooltip": "이 자동화에서 사용하는 일부 개체에 대한 액세스 권한이 없으므로 자동화를 열 수 없습니다.",
     "automations.icon.tooltip.header.schedule": "내보내기 실패",
     "automations.icon.tooltip.header.alert": "경고 실패",
     "automations.icon.tooltip.status": "상태",

@@ -5,16 +5,16 @@
 ```ts
 
 import { APIResponse } from '@playwright/test';
-import { Fixtures } from '@playwright/test';
+import type { Fixtures as Fixtures_2 } from '@playwright/test';
 import { Locator } from '@playwright/test';
 import { Page } from '@playwright/test';
-import { PlaywrightTestArgs } from '@playwright/test';
-import { PlaywrightTestOptions } from '@playwright/test';
-import { PlaywrightWorkerArgs } from '@playwright/test';
-import { PlaywrightWorkerOptions } from '@playwright/test';
+import type { PlaywrightTestArgs } from '@playwright/test';
+import type { PlaywrightTestOptions } from '@playwright/test';
+import type { PlaywrightWorkerArgs } from '@playwright/test';
+import type { PlaywrightWorkerOptions } from '@playwright/test';
 import { Route } from '@playwright/test';
-import { test } from '@playwright/test';
-import { TestDetails } from '@playwright/test';
+import type { test } from '@playwright/test';
+import type { TestDetails } from '@playwright/test';
 
 // @internal (undocumented)
 export const API_TOKEN: string;
@@ -36,6 +36,9 @@ export type BaseTestArgs = PlaywrightTestArgs & PlaywrightTestOptions;
 // @internal (undocumented)
 export type BaseWorkerArgs = PlaywrightWorkerArgs & PlaywrightWorkerOptions;
 
+// @internal (undocumented)
+export type Callback = () => void;
+
 // @internal
 export function clickByBoundingBox(page: Page, locator: Locator, options?: {
     useMouseUpDown?: boolean;
@@ -44,7 +47,28 @@ export function clickByBoundingBox(page: Page, locator: Locator, options?: {
 }): Promise<void>;
 
 // @internal (undocumented)
-export function createTest<T extends Record<string, unknown> = {}, W extends Record<string, unknown> = {}>(options?: ICreateTestOptions<T, W>): IE2eTest;
+export function createTest<T extends {} = {}, W extends {} = {}>(options: ICreateTestOptions<T, W>): ITest;
+
+// @internal (undocumented)
+export type DescribeConfigure = typeof test.describe.configure;
+
+// @internal (undocumented)
+export type DescribeFixme = typeof test.describe.fixme;
+
+// @internal (undocumented)
+export type DescribeOnly = typeof test.describe.only;
+
+// @internal (undocumented)
+export type DescribeParallel = typeof test.describe.parallel;
+
+// @internal (undocumented)
+export type DescribeSerial = typeof test.describe.serial;
+
+// @internal (undocumented)
+export type DescribeSkip = typeof test.describe.skip;
+
+// @internal (undocumented)
+export type Fixtures<T extends {} = {}, W extends {} = {}> = Fixtures_2<T, W, BaseTestArgs, BaseWorkerArgs>;
 
 // @internal (undocumented)
 export const getBaseUrl: (defaultValue?: string) => string;
@@ -80,52 +104,41 @@ export function hoverByBoundingBox(page: Page, locator: Locator, options?: {
 }): Promise<void>;
 
 // @internal (undocumented)
-export interface ICreateTestOptions<T extends Record<string, unknown> = {}, W extends Record<string, unknown> = {}> {
+export interface ICreateTestOptions<T extends {} = {}, W extends {} = {}> extends ICustomCreateTestOptions {
     // (undocumented)
-    featureHubResponse?: IFeatureHubEnvironment[];
+    fixtures?: Fixtures<T, W>;
+}
+
+// @internal (undocumented)
+export interface ICustomCreateTestOptions {
     // (undocumented)
-    fixtures?: Fixtures<T, W, BaseTestArgs & T, BaseWorkerArgs & W>;
+    featureHubResponse: IFeatureHubEnvironment[];
     // (undocumented)
     goodmock?: IGoodmockOptions;
 }
 
 // @internal (undocumented)
-export interface IDescribeFunction {
+export interface IDescribe extends IDescribeFunction {
     // (undocumented)
-    (suiteName: string, specName: string, fn: () => void): void;
+    configure: DescribeConfigure;
     // (undocumented)
-    (suiteName: string, specName: string, details: IE2eTestDetails, fn: () => void): void;
+    fixme: DescribeFixme;
     // (undocumented)
-    skip: {
-        (suiteName: string, specName: string, fn: () => void): void;
-        (suiteName: string, specName: string, details: IE2eTestDetails, fn: () => void): void;
-    };
+    only: DescribeOnly;
+    // (undocumented)
+    parallel: DescribeParallel;
+    // (undocumented)
+    serial: DescribeSerial;
+    // (undocumented)
+    skip: IDescribeFunction;
 }
 
-// @internal (undocumented)
-export type IE2eTest = typeof test & {
-    topLevelDescribe: IDescribeFunction;
-    describe: {
-        (title: string, callback: () => void): void;
-        (title: string, details: IE2eTestDetails, callback: () => void): void;
-        skip: {
-            (title: string, callback: () => void): void;
-            (title: string, details: IE2eTestDetails, callback: () => void): void;
-        };
-        only: (typeof test)["describe"]["only"];
-        configure: (typeof test)["describe"]["configure"];
-        fixme: (typeof test)["describe"]["fixme"];
-        serial: (typeof test)["describe"]["serial"];
-        parallel: (typeof test)["describe"]["parallel"];
-    };
-};
-
-// @internal (undocumented)
-export interface IE2eTestDetails extends TestDetails {
+// @internal
+export interface IDescribeFunction {
     // (undocumented)
-    additionalWindowProperties?: Record<string, unknown>;
+    (title: string, callback: Callback): void;
     // (undocumented)
-    workspaceSettings?: Record<string, unknown>;
+    (title: string, details: ITestDetails, callback: Callback): void;
 }
 
 // @internal (undocumented)
@@ -219,6 +232,34 @@ export interface ISnapshotAndSaveRecordingOptions {
 }
 
 // @internal (undocumented)
+export type ITest = Test & {
+    topLevelDescribe: ITopLevelDescribe;
+    describe: IDescribe;
+};
+
+// @internal (undocumented)
+export interface ITestDetails extends TestDetails {
+    // (undocumented)
+    additionalWindowProperties?: WindowProperties;
+    // (undocumented)
+    workspaceSettings?: WorkspaceSettings;
+}
+
+// @internal (undocumented)
+export interface ITopLevelDescribe extends ITopLevelDescribeFunction {
+    // (undocumented)
+    skip: ITopLevelDescribeFunction;
+}
+
+// @internal
+export interface ITopLevelDescribeFunction {
+    // (undocumented)
+    (suiteName: string, specName: string, fn: Callback): void;
+    // (undocumented)
+    (suiteName: string, specName: string, details: ITestDetails, fn: Callback): void;
+}
+
+// @internal (undocumented)
 export interface IWorkspaceIdMapping {
     // (undocumented)
     sourceWorkspaceId: string;
@@ -243,6 +284,15 @@ export function snapshotAndSaveRecording(host: string, mappingFilePath: string, 
 
 // @internal
 export function startRecording(host: string, backendHost: string): Promise<void>;
+
+// @internal (undocumented)
+export type Test = typeof test;
+
+// @internal (undocumented)
+export type WindowProperties = Record<string, unknown>;
+
+// @internal (undocumented)
+export type WorkspaceSettings = Record<string, unknown>;
 
 // (No @packageDocumentation comment for this package)
 

@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useMemo, useRef } from "react";
 
 import { type IntlShape } from "react-intl";
-import { invariant } from "ts-invariant";
 
 import {
     type DashboardAttributeFilterConfigMode,
@@ -24,10 +23,6 @@ import {
     selectBackendCapabilities,
     selectSupportsSingleSelectDependentFilters,
 } from "../../../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
-import {
-    selectFilterContextAttributeFilterItems,
-    selectOtherContextAttributeFilterItems,
-} from "../../../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import { ConfigModeSelect } from "../../../configuration/ConfigurationModeSelect.js";
 import { AttributeTitleRenaming } from "../../../configuration/title/AttributeTitleRenaming.js";
 import { useAttributeFilterParentFiltering } from "../../AttributeFilterParentFilteringContext.js";
@@ -104,26 +99,11 @@ export function AttributeFilterConfiguration({
         };
     }, [closeHandler]);
 
-    const neighborFilters = useDashboardSelector(selectOtherContextAttributeFilterItems(filterRef));
     const supportsSingleSelectDependentFilters = useDashboardSelector(
         selectSupportsSingleSelectDependentFilters,
     );
     const capabilities = useDashboardSelector(selectBackendCapabilities);
     const showDependentFiltersConfiguration = !capabilities.supportsAttributeFilterElementsLimiting;
-
-    const neighborFilterDisplayForms = useMemo(() => {
-        return neighborFilters.map((filter) => dashboardAttributeFilterItemDisplayForm(filter));
-    }, [neighborFilters]);
-
-    const currentFilterItem = useDashboardSelector(selectFilterContextAttributeFilterItems).find((filter) =>
-        neighborFilters.every(
-            (neighborFilter) =>
-                dashboardAttributeFilterItemLocalIdentifier(filter) !==
-                dashboardAttributeFilterItemLocalIdentifier(neighborFilter),
-        ),
-    );
-
-    invariant(currentFilterItem, "Cannot find current filter in the filter context store.");
 
     const {
         title,
@@ -149,7 +129,15 @@ export function AttributeFilterConfiguration({
         dependentDateFilters,
         dependentCommonDateFilter,
         onDependentDateFiltersSelect,
+        filterItem: currentFilterItem,
+        neighborFilters,
     } = useAttributeFilterParentFiltering();
+
+    // Loaded for the readable neighbours only: metadata of a restricted one cannot be read, and one
+    // failed lookup would fail the whole configuration panel.
+    const neighborFilterDisplayForms = useMemo(() => {
+        return neighborFilters.map((filter) => dashboardAttributeFilterItemDisplayForm(filter));
+    }, [neighborFilters]);
 
     const disableParentFiltersList = selectionMode === "single" && !supportsSingleSelectDependentFilters;
 

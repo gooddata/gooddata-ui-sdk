@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-pivot: Fix pivot table columns not filling the available width when the table's container becomes visible after being mounted at zero width (e.g. an inactive Visualization Switcher tab), and hide the table while columns are re-sized on such a re-show instead of briefly showing unsized columns. A pivot table mounted in a zero-width container now calls afterRender once its container gets a width, not while it is still hidden.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

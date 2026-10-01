@@ -28,7 +28,7 @@ import { DrillableItemsRefProvider } from "./context/DrillableItemsRefContext.js
 import { HeaderMenuProvider } from "./context/HeaderMenuContext.js";
 import { InitialExecutionContextProvider } from "./context/InitialExecutionContext.js";
 import { PivotTablePropsProvider, usePivotTableProps } from "./context/PivotTablePropsContext.js";
-import { PivotTableSizingProvider, usePivotTableSizingActions } from "./context/PivotTableSizingContext.js";
+import { PivotTableSizingProvider } from "./context/PivotTableSizingContext.js";
 import { RuntimeErrorProvider, useRuntimeError } from "./context/RuntimeErrorContext.js";
 import { TableReadyProvider } from "./context/TableReadyContext.js";
 import { TotalLabelProvider } from "./context/TotalLabelContext.js";
@@ -144,7 +144,6 @@ function PivotTableNextWithInitialization() {
 function RenderPivotTableNextAgGrid() {
     const agGridReactProps = useAgGridReactProps();
     const { config } = usePivotTableProps();
-    const { setContainerWidth } = usePivotTableSizingActions();
     const clearCellSelection = useClearCellSelection();
 
     useMemo(() => {
@@ -210,9 +209,6 @@ function RenderPivotTableNextAgGrid() {
                 };
                 return (
                     <div
-                        ref={(element) => {
-                            if (element) setContainerWidth(element.clientWidth);
-                        }}
                         className={b()}
                         style={containerStyle}
                         onMouseDown={stopEventOnResize}

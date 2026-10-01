@@ -5,6 +5,8 @@ import { userEvent } from "@testing-library/user-event";
 import { RawIntlProvider } from "react-intl";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
+import { type IUiResizableSidebarState } from "@gooddata/sdk-ui-kit";
+
 import { type DraggableContentItemType } from "../../dragAndDrop/types.js";
 import { createInternalIntl } from "../../localization/createInternalIntl.js";
 
@@ -16,13 +18,20 @@ vi.mock("./DraggableInsightList/DraggableInsightList.js", () => ({
     DraggableInsightList: () => null,
 }));
 
-const sidebar = {
+const sidebar: IUiResizableSidebarState = {
+    width: 230,
+    expandedWidth: 230,
+    min: 230,
+    max: 500,
+    canResize: true,
+    setWidth: vi.fn(),
     canCollapse: true,
+    hasRail: true,
     isCollapsed: false,
     setCollapsed: vi.fn(),
 };
 
-vi.mock("./SidebarResizeContext.js", () => ({
+vi.mock("./useResizableSidebarState.js", () => ({
     useResizableSidebar: () => sidebar,
 }));
 
@@ -57,6 +66,7 @@ function panel() {
 describe("CreationPanel", () => {
     beforeEach(() => {
         sidebar.isCollapsed = false;
+        sidebar.hasRail = true;
     });
 
     it("names the palette item on hover once the panel is only an icon rail", async () => {
@@ -76,5 +86,14 @@ describe("CreationPanel", () => {
         rerender(panel());
 
         await expect(screen.findByText("Visualization")).rejects.toThrow();
+    });
+
+    it("offers the rail search shortcut only when the sidebar collapses to a rail", () => {
+        const { rerender } = render(panel());
+        expect(screen.getByRole("button", { name: "Search visualizations" })).toBeInTheDocument();
+
+        sidebar.hasRail = false;
+        rerender(panel());
+        expect(screen.queryByRole("button", { name: "Search visualizations" })).not.toBeInTheDocument();
     });
 });

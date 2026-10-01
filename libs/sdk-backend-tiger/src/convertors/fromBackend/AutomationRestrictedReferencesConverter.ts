@@ -21,6 +21,11 @@ type AutomationInclude = NonNullable<EntitiesApiGetAllEntitiesAutomationsRequest
  */
 export const AUTOMATION_RESTRICTION_INCLUDES = {
     insight: "visualizationObjects",
+    measure: "metrics",
+    attribute: "attributes",
+    displayForm: "labels",
+    fact: "facts",
+    computedAttribute: "computedAttributes",
 } as const satisfies Partial<Record<TigerCompatibleObjectType, AutomationInclude>>;
 
 type InspectedType = keyof typeof AUTOMATION_RESTRICTION_INCLUDES;

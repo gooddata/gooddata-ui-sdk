@@ -1,10 +1,11 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { useCallback } from "react";
+import { type RefObject, useCallback } from "react";
 
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
 import { usePivotTableSizing } from "../../context/PivotTableSizingContext.js";
 import { type AgGridColumnDef, type AgGridOnColumnResized, type AgGridProps } from "../../types/agGrid.js";
+import { type IGridSizingState } from "../../types/internal.js";
 import { useGetAgGridColumns } from "../columns/useGetAgGridColumns.js";
 import { useUpdateAgGridColumnDefs } from "../columns/useUpdateAgGridColumnDefs.js";
 
@@ -19,7 +20,9 @@ const autoSizeStrategy: AgGridProps["autoSizeStrategy"] = {
  *
  * @internal
  */
-export function useColumnSizingForFullHorizontalSpaceAndAutoResize() {
+export function useColumnSizingForFullHorizontalSpaceAndAutoResize(
+    gridSizingStateRef: RefObject<IGridSizingState>,
+) {
     const { config } = usePivotTableProps();
     const { columnSizing } = config;
     const { defaultWidth, growToFit } = columnSizing;
@@ -73,8 +76,10 @@ export function useColumnSizingForFullHorizontalSpaceAndAutoResize() {
             if (updatedColDefs) {
                 updateAgGridColumnDefs(updatedColDefs as AgGridColumnDef[], params.api);
             }
+
+            gridSizingStateRef.current.isSized = true;
         },
-        [containerWidth, getAgGridColumns, updateAgGridColumnDefs],
+        [containerWidth, getAgGridColumns, gridSizingStateRef, updateAgGridColumnDefs],
     );
 
     return isColumnSizingForGrowToFitAndAutoResize

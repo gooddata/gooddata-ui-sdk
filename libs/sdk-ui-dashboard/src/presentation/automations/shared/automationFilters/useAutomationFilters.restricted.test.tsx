@@ -94,11 +94,11 @@ describe("useAutomationFilters with restricted filters", () => {
         expect(result.current.attributes).toEqual([READABLE_ATTRIBUTE]);
     });
 
-    it("still reports a restricted filter the author hid after it was stored", () => {
+    it("does not report a hidden restricted filter", () => {
         const { result } = renderAutomationFilters([READABLE, RESTRICTED], vi.fn(), ["restricted"]);
 
         expect(result.current.visibleFilters).toEqual([READABLE]);
-        expect(result.current.restrictedFilterCount).toBe(1);
+        expect(result.current.restrictedFilterCount).toBe(0);
     });
 
     it("reports nothing to add when the only unselected filter is restricted", () => {

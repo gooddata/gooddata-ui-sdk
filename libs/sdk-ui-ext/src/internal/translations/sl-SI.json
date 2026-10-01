@@ -507,6 +507,8 @@
     "automations.menu.resume": "Nadaljuj",
     "automations.menu.ariaLabel": "Dejavnosti za {title}",
     "automations.menu.edit.unavailable": "Urejanje dejanja ni na voljo, ni povezane nadzorne plošče",
+    "automations.menu.edit.restricted": "Te avtomatizacije ne morete urejati, ker nimate dostopa do nekaterih objektov, ki jih uporablja.",
+    "automations.restricted.tooltip": "Nimate dostopa do nekaterih objektov, uporabljenih v tej avtomatizaciji, zato je ni mogoče odpreti.",
     "automations.icon.tooltip.header.schedule": "Izvoz ni uspel",
     "automations.icon.tooltip.header.alert": "Opozorilo ni uspelo",
     "automations.icon.tooltip.status": "Stanje",

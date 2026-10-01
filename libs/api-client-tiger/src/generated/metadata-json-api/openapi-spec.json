@@ -9995,6 +9995,11 @@
                                     "exportDefinitions",
                                     "users",
                                     "visualizationObjects",
+                                    "metrics",
+                                    "attributes",
+                                    "labels",
+                                    "facts",
+                                    "computedAttributes",
                                     "automationResults",
                                     "notificationChannel",
                                     "analyticalDashboard",
@@ -10005,7 +10010,7 @@
                                 ]
                             }
                         },
-                        "example": "notificationChannel,analyticalDashboard,createdBy,modifiedBy,exportDefinitions,recipients,visualizationObjects,automationResults"
+                        "example": "notificationChannel,analyticalDashboard,createdBy,modifiedBy,exportDefinitions,recipients,visualizationObjects,metrics,attributes,labels,facts,computedAttributes,automationResults"
                     },
                     {
                         "$ref": "#/components/parameters/page"
@@ -10108,6 +10113,11 @@
                                     "exportDefinitions",
                                     "users",
                                     "visualizationObjects",
+                                    "metrics",
+                                    "attributes",
+                                    "labels",
+                                    "facts",
+                                    "computedAttributes",
                                     "automationResults",
                                     "notificationChannel",
                                     "analyticalDashboard",
@@ -10118,7 +10128,7 @@
                                 ]
                             }
                         },
-                        "example": "notificationChannel,analyticalDashboard,createdBy,modifiedBy,exportDefinitions,recipients,visualizationObjects,automationResults"
+                        "example": "notificationChannel,analyticalDashboard,createdBy,modifiedBy,exportDefinitions,recipients,visualizationObjects,metrics,attributes,labels,facts,computedAttributes,automationResults"
                     },
                     {
                         "name": "metaInclude",
@@ -10315,6 +10325,11 @@
                                     "exportDefinitions",
                                     "users",
                                     "visualizationObjects",
+                                    "metrics",
+                                    "attributes",
+                                    "labels",
+                                    "facts",
+                                    "computedAttributes",
                                     "automationResults",
                                     "notificationChannel",
                                     "analyticalDashboard",
@@ -10325,7 +10340,7 @@
                                 ]
                             }
                         },
-                        "example": "notificationChannel,analyticalDashboard,createdBy,modifiedBy,exportDefinitions,recipients,visualizationObjects,automationResults"
+                        "example": "notificationChannel,analyticalDashboard,createdBy,modifiedBy,exportDefinitions,recipients,visualizationObjects,metrics,attributes,labels,facts,computedAttributes,automationResults"
                     },
                     {
                         "name": "X-GDC-VALIDATE-RELATIONS",
@@ -10435,6 +10450,11 @@
                                     "exportDefinitions",
                                     "users",
                                     "visualizationObjects",
+                                    "metrics",
+                                    "attributes",
+                                    "labels",
+                                    "facts",
+                                    "computedAttributes",
                                     "automationResults",
                                     "notificationChannel",
                                     "analyticalDashboard",
@@ -10445,7 +10465,7 @@
                                 ]
                             }
                         },
-                        "example": "notificationChannel,analyticalDashboard,createdBy,modifiedBy,exportDefinitions,recipients,visualizationObjects,automationResults"
+                        "example": "notificationChannel,analyticalDashboard,createdBy,modifiedBy,exportDefinitions,recipients,visualizationObjects,metrics,attributes,labels,facts,computedAttributes,automationResults"
                     }
                 ],
                 "requestBody": {
@@ -10577,6 +10597,11 @@
                                     "exportDefinitions",
                                     "users",
                                     "visualizationObjects",
+                                    "metrics",
+                                    "attributes",
+                                    "labels",
+                                    "facts",
+                                    "computedAttributes",
                                     "automationResults",
                                     "notificationChannel",
                                     "analyticalDashboard",
@@ -10587,7 +10612,7 @@
                                 ]
                             }
                         },
-                        "example": "notificationChannel,analyticalDashboard,createdBy,modifiedBy,exportDefinitions,recipients,visualizationObjects,automationResults"
+                        "example": "notificationChannel,analyticalDashboard,createdBy,modifiedBy,exportDefinitions,recipients,visualizationObjects,metrics,attributes,labels,facts,computedAttributes,automationResults"
                     }
                 ],
                 "requestBody": {
@@ -41966,6 +41991,17 @@
                                     }
                                 }
                             },
+                            "attributes": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiAttributeToManyLinkage"
+                                    }
+                                }
+                            },
                             "automationResults": {
                                 "required": [
                                     "data"
@@ -41974,6 +42010,17 @@
                                 "properties": {
                                     "data": {
                                         "$ref": "#/components/schemas/JsonApiAutomationResultToManyLinkage"
+                                    }
+                                }
+                            },
+                            "computedAttributes": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiComputedAttributeToManyLinkage"
                                     }
                                 }
                             },
@@ -41996,6 +42043,39 @@
                                 "properties": {
                                     "data": {
                                         "$ref": "#/components/schemas/JsonApiExportDefinitionToManyLinkage"
+                                    }
+                                }
+                            },
+                            "facts": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiFactToManyLinkage"
+                                    }
+                                }
+                            },
+                            "labels": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiLabelToManyLinkage"
+                                    }
+                                }
+                            },
+                            "metrics": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiMetricToManyLinkage"
                                     }
                                 }
                             },
@@ -42097,10 +42177,25 @@
                         "$ref": "#/components/schemas/JsonApiAnalyticalDashboardOutWithLinks"
                     },
                     {
+                        "$ref": "#/components/schemas/JsonApiAttributeOutWithLinks"
+                    },
+                    {
                         "$ref": "#/components/schemas/JsonApiAutomationResultOutWithLinks"
                     },
                     {
+                        "$ref": "#/components/schemas/JsonApiComputedAttributeOutWithLinks"
+                    },
+                    {
                         "$ref": "#/components/schemas/JsonApiExportDefinitionOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiFactOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiLabelOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiMetricOutWithLinks"
                     },
                     {
                         "$ref": "#/components/schemas/JsonApiNotificationChannelOutWithLinks"

@@ -59,7 +59,7 @@ export type GenAIAssistantProps = Omit<GenAiStoreProps, "children"> & {
      * If its provided, the chat will automatically load the dashboards and related data
      * from it.
      */
-    dashboardSelector?: DashboardSelectorEvaluator;
+    dashboardSelector?: DashboardSelectorEvaluator | null;
 
     /**
      * Customizations for the Gen AI assistant.

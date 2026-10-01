@@ -1,27 +1,27 @@
 # Web Components Test Files
 
-This directory contains HTML test files for automating web components tests with Cypress.
+This directory contains the HTML test file for web components tests with Playwright.
 
 ## Files
 
 - `dashboard-test.html` - Test file for `<gd-dashboard>` component
-- `insight-test.html` - Test file for `<gd-insight>` component
 
 ## Usage
 
-These HTML files are served by SimpleWebserver and accessed via Cypress tests. The configuration (host, workspace ID, dashboard/insight ID) is injected dynamically by Cypress before the page loads.
+This HTML file is served by `tiny_web_server` (see [`../../README.md`](../../README.md)) for local testing. The Playwright suite in `e2e/sdk-ui-web-components-e2e` uses its own copy in `e2e/sdk-ui-web-components-e2e/static/web-components/`.
+
+The configuration (host, workspace ID, dashboard ID) is injected by the Playwright test (`page.addInitScript`) before the page loads. Without it, the page falls back to `config.js`, which `tiny_web_server` generates on startup from `.env` / environment variables (`HOST`, `TEST_WORKSPACE_ID`, `TEST_DASHBOARD_ID`). Playwright-injected config takes priority.
 
 ## Configuration
 
-The test files expect a `window.__WC_TEST_CONFIG__` object with the following properties:
+The test file expects a `window.__WC_TEST_CONFIG__` object with the following properties:
 
 ```javascript
 {
-    host: string,           // GoodData server URL - ALWAYS from environment variables (getHost())
-    workspaceId: string,   // Workspace ID - ALWAYS from environment variables (getWorkspaceID())
-    dashboardId?: string,  // Dashboard ID - Defined in test spec (for dashboard-test.html)
-    insightId?: string,    // Insight ID - Defined in test spec (for insight-test.html)
-    auth?: string,         // Authentication method (default: "sso")
+    host: string,           // GoodData server URL - ALWAYS from environment variables (HOST)
+    workspaceId: string,   // Workspace ID - ALWAYS from environment variables (TEST_WORKSPACE_ID)
+    dashboardId?: string,  // Dashboard ID - Defined in test spec (falls back to a hard-coded ID)
+    auth?: string,         // Authentication method ("sso")
     locale?: string,       // Locale (e.g., "en-US", "cs-CZ")
     readonly?: boolean     // Readonly mode for dashboard
 }
@@ -29,53 +29,53 @@ The test files expect a `window.__WC_TEST_CONFIG__` object with the following pr
 
 **Important:**
 
-- `host` and `workspaceId` are **always** taken from environment variables (via `getHost()` and `getWorkspaceID()` from `gdc-e2e-utils`)
-- `dashboardId` and `insightId` are **defined in the test spec** files
+- `host` and `workspaceId` are **always** taken from environment variables (via `BACKEND_HOST` and `getWorkspaceId()` from `@gooddata/sdk-e2e-utils`)
+- `dashboardId` is **defined in the test spec** file
 
 ## Running Tests
 
-1. Start SimpleWebserver:
+1. Start `tiny_web_server` (manual testing of this page):
 
     ```bash
-    cd e2e/gdc-dashboards-e2e
-    npm run start-simple-web-server
+    cd sdk/libs/sdk-ui-web-components/tiny_web_server
+    go run .
     ```
 
-2. Run Cypress tests:
+    Then open `https://localhost:3001/web-components/dashboard-test.html`.
+
+2. Run Playwright tests (requires `IMAGE_URL`, `E2E_IMAGE_URL`, `HOST`, `TIGER_API_TOKEN` and `TEST_WORKSPACE_ID`):
     ```bash
-    npm run run-integrated
+    cd e2e/sdk-ui-web-components-e2e
+    docker compose -f docker-compose.yaml up --abort-on-container-exit --exit-code-from e2e-tests
     ```
 
 Or run specific test file:
 
 ```bash
-cd e2e/gdc-dashboards-e2e
-rushx test --spec "cypress/integration/webComponentDashboard.spec.ts"
-# or
-rushx test --spec "cypress/integration/webComponents.spec.ts"
+cd e2e/sdk-ui-web-components-e2e
+FILTER=webComponentDashboard.spec.ts docker compose -f docker-compose.yaml up --abort-on-container-exit --exit-code-from e2e-tests
 ```
 
 ## Test Files Location
 
-- Cypress test for dashboard rendering: `e2e/gdc-dashboards-e2e/cypress/integration/webComponentDashboard.spec.ts`
-- Cypress test (general): `e2e/gdc-dashboards-e2e/cypress/integration/webComponents.spec.ts`
-- Helper utilities: `e2e/gdc-dashboards-e2e/cypress/support/utils/webComponentHelper.ts`
+- Playwright test for dashboard rendering: `e2e/sdk-ui-web-components-e2e/playwright/tests/webComponentDashboard.spec.ts`
+- Helper utilities: `e2e/sdk-ui-web-components-e2e/playwright/helpers/web-component-dashboard.ts`
 
-## SimpleWebserver Setup
+## tiny_web_server Setup
 
-**Important:** SimpleWebserver must be running before executing web component tests. It serves the HTML files on `https://localhost:3001` and is required for ES module imports to work correctly.
+**Important:** `tiny_web_server` must be running before opening this page locally. It serves the HTML file on `https://localhost:3001` and is required for ES module imports to work correctly.
 
-The SimpleWebserver:
+The `tiny_web_server`:
 
-- Runs on port 3001 (HTTPS)
-- Serves static files from `SimpleWebserver/static/` directory
+- Runs on port 3001 (HTTPS, self-signed certificate)
+- Serves static files from `tiny_web_server/static/` directory
 - Required for web component tests because ES modules cannot be loaded from `data:` URLs or `file://` protocol
 
-To start SimpleWebserver:
+To start `tiny_web_server`:
 
 ```bash
-cd e2e/gdc-dashboards-e2e
-npm run start-simple-web-server
+cd sdk/libs/sdk-ui-web-components/tiny_web_server
+go run .
 ```
 
-The server will start automatically when running integrated tests via `npm run run-integrated-with-plugins-server`.
+In the integrated Playwright run, the harness is served by the `application` sidecar (production nginx image) on `http://application:8080` instead. When `BASE_URL` is unset or equal to `HOST` (smoke/release), Playwright starts `tiny_web_server` automatically via its `webServer` config.

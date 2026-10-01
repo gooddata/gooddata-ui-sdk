@@ -507,6 +507,8 @@
     "automations.menu.resume": "履歴書",
     "automations.menu.ariaLabel": "アクション{title}",
     "automations.menu.edit.unavailable": "編集アクションが利用できない、関連するダッシュボードがない",
+    "automations.menu.edit.restricted": "この自動化で使用されている一部のオブジェクトへのアクセス権がないため、編集できません。",
+    "automations.restricted.tooltip": "この自動化で使用されている一部のオブジェクトへのアクセス権がないため、開くことができません。",
     "automations.icon.tooltip.header.schedule": "エクスポート失敗",
     "automations.icon.tooltip.header.alert": "アラート失敗",
     "automations.icon.tooltip.status": "ステータス",

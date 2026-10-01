@@ -19,6 +19,8 @@ import { type Mock, vi } from "vitest";
 export const useTotalLabelContextMock: Mock = vi.fn();
 export const usePivotTablePropsMock: Mock = vi.fn();
 export const useCurrentDataViewMock: Mock = vi.fn();
+export const usePivotTableSizingMock: Mock = vi.fn();
+export const usePivotTableSizingActionsMock: Mock = vi.fn();
 
 interface IMockAgGridApiResult {
     agGridApi: null;
