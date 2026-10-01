@@ -43,6 +43,8 @@ import {
     type GenAIObjectType,
     type IAllowedRelationshipType,
     type IDashboardDefinition,
+    type IFilterContext,
+    type IFilterContextDefinition,
     type IGenAIDashboardContext,
     type IGenAIUserContext,
     type IGenAIWidgetDescriptor,
@@ -602,38 +604,46 @@ function convertUserContext(userContext: IGenAIUserContext | undefined): AiSendM
 }
 
 function convertDashboard(dashboard: IDashboardDefinition) {
-    const filterContext = dashboard.filterContext ?? dashboard.tabs?.[0].filterContext;
-    const ref = filterContext?.ref;
+    const filterContexts: (IFilterContext | IFilterContextDefinition)[] =
+        (dashboard.tabs
+            ?.map((tab) => tab.filterContext)
+            .filter((t) => Boolean(t && !isTempFilterContext(t))) as IFilterContext[]) ?? [];
 
-    const dashboardContent = convertAnalyticalDashboard(
+    if (dashboard.filterContext && !isTempFilterContext(dashboard.filterContext)) {
+        filterContexts.unshift(dashboard.filterContext);
+    }
+
+    const dashboardDef = convertAnalyticalDashboard(
         dashboard,
-        filterContext?.ref,
+        filterContexts[0]?.ref,
         true,
         true,
         true,
         true,
     );
 
-    const { json } = declarativeDashboardToYaml(
-        [],
-        {
-            id: dashboard.identifier ?? "",
-            content: dashboardContent,
-            title: dashboard.title,
-            tags: dashboard.tags ?? [],
-            description: dashboard.description,
-        },
-        filterContext && ref && !isTempFilterContext(filterContext)
-            ? [
-                  {
-                      id: isIdentifierRef(ref) ? ref.identifier : ref.uri,
-                      title: filterContext.title,
-                      description: filterContext.description,
-                      content: convertFilterContextToBackend(filterContext),
-                  },
-              ]
-            : [],
-    );
+    const dashboardContent = {
+        id: dashboard.identifier ?? "",
+        content: dashboardDef,
+        title: dashboard.title,
+        tags: dashboard.tags ?? [],
+        description: dashboard.description,
+    };
+    const filterContextsContents = filterContexts
+        .map((filterContext) => {
+            if (!filterContext.ref) {
+                return null;
+            }
+            return {
+                id: isIdentifierRef(filterContext.ref) ? filterContext.ref.identifier : filterContext.ref.uri,
+                title: filterContext.title,
+                description: filterContext.description,
+                content: convertFilterContextToBackend(filterContext),
+            };
+        })
+        .filter((f) => !!f);
+
+    const { json } = declarativeDashboardToYaml([], dashboardContent, filterContextsContents);
 
     return json;
 }
