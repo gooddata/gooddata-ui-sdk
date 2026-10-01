@@ -8,7 +8,13 @@ import {
     GenAiApi_PostMessages,
     GenAiApi_SwitchAgent,
 } from "@gooddata/api-client-tiger/endpoints/genAI";
-import { idRef } from "@gooddata/sdk-model";
+import {
+    type IDashboardDefinition,
+    type IFilterContext,
+    type ITempFilterContext,
+    idRef,
+    newRelativeDashboardDateFilter,
+} from "@gooddata/sdk-model";
 
 import type { DateNormalizer } from "../../../convertors/fromBackend/dateFormatting/types.js";
 import type { TigerAuthenticatedCallGuard } from "../../../types/index.js";
@@ -173,6 +179,74 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
         } as unknown as Awaited<AxiosPromise>);
     });
 
+    const createPersistedFilterContext = (identifier: string): IFilterContext => {
+        return {
+            ref: idRef(identifier, "filterContext"),
+            identifier,
+            uri: `/gdc/md/workspace/obj/${identifier}`,
+            title: `${identifier} title`,
+            description: `${identifier} description`,
+            filters: [
+                newRelativeDashboardDateFilter(
+                    "GDC.time.month",
+                    -1,
+                    0,
+                    idRef(`${identifier}.dataset`, "dataSet"),
+                ),
+            ],
+        };
+    };
+
+    const createTempFilterContext = (identifier: string): ITempFilterContext => {
+        return {
+            created: "2026-01-01 00:00:00",
+            ref: idRef(identifier, "filterContext"),
+            uri: `/gdc/internal/temp/filterContexts/${identifier}`,
+            filters: [
+                newRelativeDashboardDateFilter(
+                    "GDC.time.month",
+                    -1,
+                    0,
+                    idRef(`${identifier}.dataset`, "dataSet"),
+                ),
+            ],
+        };
+    };
+
+    const emptyLayout: IDashboardDefinition["layout"] = {
+        type: "IDashboardLayout",
+        sections: [{ type: "IDashboardLayoutSection", items: [] }],
+    };
+
+    const createDashboardDefinition = (
+        rootFilterContext: IFilterContext | undefined,
+        tabFilterContext: IFilterContext | ITempFilterContext | undefined,
+        withTabs = true,
+    ): IDashboardDefinition => {
+        return {
+            type: "IDashboard",
+            identifier: "dashboard-1",
+            title: "Dashboard",
+            description: "Dashboard description",
+            tags: [],
+            shareStatus: "shared",
+            layout: emptyLayout,
+            ...(rootFilterContext ? { filterContext: rootFilterContext } : {}),
+            ...(withTabs
+                ? {
+                      tabs: [
+                          {
+                              localIdentifier: "tab-1",
+                              title: "Tab 1",
+                              layout: emptyLayout,
+                              ...(tabFilterContext ? { filterContext: tabFilterContext } : {}),
+                          },
+                      ],
+                  }
+                : {}),
+        };
+    };
+
     it("should send richText widget content in the dashboard view context", async () => {
         const query = new ChatConversationThreadQuery(authCall, dateNormalizer, {
             workspaceId: "workspace",
@@ -332,5 +406,103 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
         const request = vi.mocked(GenAiApi_PostMessages).mock.calls[0][2];
         const dashboard = request.aiSendMessageRequest.userContext?.view?.dashboard;
         expect(dashboard).not.toHaveProperty("activeTabId");
+    });
+
+    it("should include persisted root filter context in dashboard definition payload", async () => {
+        const rootFilterContext = createPersistedFilterContext("root-filter-context");
+
+        const query = new ChatConversationThreadQuery(authCall, dateNormalizer, {
+            workspaceId: "workspace",
+            conversationId: "conversation",
+            userQuestion: "Summarize",
+            userContext: {
+                view: {
+                    dashboard: {
+                        ref: idRef("dashboard-1", "analyticalDashboard"),
+                        widgets: [],
+                        definition: createDashboardDefinition(rootFilterContext, undefined, false),
+                    },
+                },
+            },
+        });
+
+        query.stream([]);
+
+        const request = vi.mocked(GenAiApi_PostMessages).mock.calls[0][2];
+        const parsedDefinition = request.aiSendMessageRequest.userContext?.view?.dashboard?.definition as {
+            filters?: Record<string, unknown>;
+        };
+
+        expect(Object.keys(parsedDefinition.filters ?? {})).toHaveLength(1);
+        expect(Object.keys(parsedDefinition.filters ?? {})[0]).toContain(
+            "root-filter-context.dataset_0_dateFilter",
+        );
+    });
+
+    it("should include persisted tab filter context in dashboard definition payload", async () => {
+        const rootFilterContext = createPersistedFilterContext("root-filter-context");
+        const tabFilterContext = createPersistedFilterContext("tab-filter-context");
+
+        const query = new ChatConversationThreadQuery(authCall, dateNormalizer, {
+            workspaceId: "workspace",
+            conversationId: "conversation",
+            userQuestion: "Summarize",
+            userContext: {
+                view: {
+                    dashboard: {
+                        ref: idRef("dashboard-1", "analyticalDashboard"),
+                        widgets: [],
+                        definition: createDashboardDefinition(rootFilterContext, tabFilterContext),
+                    },
+                },
+            },
+        });
+
+        query.stream([]);
+
+        const request = vi.mocked(GenAiApi_PostMessages).mock.calls[0][2];
+        const parsedDefinition = request.aiSendMessageRequest.userContext?.view?.dashboard?.definition as {
+            tabs?: Array<{
+                filters?: Record<string, unknown>;
+            }>;
+        };
+
+        expect(Object.keys(parsedDefinition.tabs?.[0]?.filters ?? {})).toHaveLength(1);
+        expect(Object.keys(parsedDefinition.tabs?.[0]?.filters ?? {})[0]).toContain(
+            "tab-filter-context.dataset_0_dateFilter",
+        );
+    });
+
+    it("should skip temporary tab filter contexts in dashboard definition payload", async () => {
+        const rootFilterContext = createPersistedFilterContext("root-filter-context");
+        const tabFilterContext = createTempFilterContext("temp-tab-filter-context");
+
+        const query = new ChatConversationThreadQuery(authCall, dateNormalizer, {
+            workspaceId: "workspace",
+            conversationId: "conversation",
+            userQuestion: "Summarize",
+            userContext: {
+                view: {
+                    dashboard: {
+                        ref: idRef("dashboard-1", "analyticalDashboard"),
+                        widgets: [],
+                        definition: createDashboardDefinition(rootFilterContext, tabFilterContext),
+                    },
+                },
+            },
+        });
+
+        query.stream([]);
+
+        const request = vi.mocked(GenAiApi_PostMessages).mock.calls[0][2];
+        const parsedDefinition = request.aiSendMessageRequest.userContext?.view?.dashboard?.definition as {
+            tabs?: Array<{
+                filters?: {
+                    items?: unknown[];
+                };
+            }>;
+        };
+
+        expect(parsedDefinition.tabs?.[0]?.filters).toBeUndefined();
     });
 });
