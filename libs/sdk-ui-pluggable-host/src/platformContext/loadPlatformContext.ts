@@ -40,7 +40,7 @@ function throwIfAborted(signal?: AbortSignal) {
  * and the module should only care about the second part.
  * Here we are crossing the boundaries, and the host app is checking the full URL.
  * The proper fix requires larger changes not only here, but in gdc-nas as well.
- * This is scheduled to happen with the gdc-reports module.
+ * This is scheduled to happen with the gdc-publisher module.
  *
  * @internal - exported for testing
  */

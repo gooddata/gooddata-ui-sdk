@@ -30,7 +30,7 @@ test.topLevelDescribe(
             },
         );
 
-        test.describe("Dashboard actions", () => {
+        test.describe("Dashboard actions", {}, () => {
             test(
                 "should able to delete dashboard after save as new",
                 {

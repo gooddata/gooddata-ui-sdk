@@ -47,6 +47,12 @@ export interface IUiAsyncTableProps<T extends { id: string } | { ref: ObjRef }> 
      * A non-clickable row has no pointer cursor; its menu and checkbox still work.
      */
     isItemClickable?: (item: T) => boolean;
+    /**
+     * Tooltip shown over the whole row on hover, and while the row is active during keyboard navigation
+     * (Escape dismisses it), e.g. to explain why it can't be opened.
+     * Default: no tooltip. Not applied to rows drawn by a custom `renderItem`.
+     */
+    getItemTooltip?: (item: T) => string | undefined;
     scrollToIndex?: number;
 
     //default: add up all column widths
@@ -129,7 +135,7 @@ export interface IUiAsyncTableColumn<T> {
     textColor?: ThemeColor;
     bold?: boolean;
     /**
-     * Whether the item's text is shown locked (dimmed); for multi-line content, only its first line.
+     * Whether the item is shown locked, with a lock icon before its text; for multi-line content, before its first line.
      */
     isLocked?: (item: T) => boolean;
     sortable?: boolean;
@@ -232,6 +238,9 @@ export interface IUiAsyncTableRowProps<T extends { id: string } | { ref: ObjRef 
     focusedColumnIndex?: number;
     focusedElementRef?: Ref<HTMLElement>;
     accessibilityConfig?: IUiAsyncTableAccessibilityConfig<T>;
+    tooltip?: string;
+    /** Opens the tooltip for keyboard navigation; hover opens it on its own. */
+    isTooltipOpen?: boolean;
 }
 
 export type UiAsyncTableCheckboxProps = {
@@ -298,12 +307,14 @@ export interface IUiAsyncTableBodyProps<T extends { id: string } | { ref: ObjRef
     scrollToIndex?: number;
     isLargeRow?: boolean;
     shouldLoadNextPage?: (lastItemIndex: number, itemsCount: number) => boolean;
+    getItemTooltip?: (item: T) => string | undefined;
     renderItem: (
         item: T,
         itemIndex: number,
         focusedItemRef: Ref<HTMLElement>,
         isFocused: boolean,
-        focusedColumnIndex?: number,
+        focusedColumnIndex: number | undefined,
+        isTooltipOpen: boolean,
     ) => ReactNode;
 }
 

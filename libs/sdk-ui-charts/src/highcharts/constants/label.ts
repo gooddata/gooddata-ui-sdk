@@ -1,10 +1,10 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ITheme } from "@gooddata/sdk-model";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { styleVariables } from "../chartTypes/_chartCreators/styles/variables.js";
-import { type CSSObject } from "../lib/index.js";
+import { type CSSObject, type DataLabelsOptions } from "../lib/index.js";
 import { isHighContrastMode } from "../utils/highContrastMode.js";
 
 export const getWhiteLabelStyle = (theme?: ITheme | null): CSSObject => {
@@ -39,7 +39,7 @@ export const getBackplateStackedLabelStyling = (
     };
 };
 
-export const getBackplateLabelStyling = (theme?: ITheme | null): Highcharts.DataLabelsOptions => {
+export const getBackplateLabelStyling = (theme?: ITheme | null) => {
     return {
         style: getBackplateLabelStyle(theme),
         color: getBackplateLabelColor(theme),
@@ -58,7 +58,7 @@ export const getBackplateLabelStyling = (theme?: ITheme | null): Highcharts.Data
                   },
               }
             : {}),
-    };
+    } satisfies DataLabelsOptions;
 };
 
 export const getBackplateLabelStyle = (theme?: ITheme | null): CSSObject => {

@@ -104,6 +104,9 @@ export default defineConfig(({ mode }): UserConfig => {
             chunkSizeWarningLimit: 15000,
             rolldownOptions: {
                 input: resolve(__dirname, "index.html"),
+                checks: {
+                    pluginTimings: false,
+                },
             },
         },
     };

@@ -3,7 +3,7 @@
 import { cloneDeep, set } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
-import { type IBucket } from "@gooddata/sdk-model";
+import { type IBucket, newBucket, newInsightDefinition, newMeasure } from "@gooddata/sdk-model";
 import { BucketNames, OverTimeComparisonTypes, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { ATTRIBUTE, DATE, METRIC } from "../constants/bucket.js";
@@ -65,6 +65,8 @@ import {
     getFirstMasterWithDerived,
     getFirstValidMeasure,
     getItemsFromBuckets,
+    getLineStyleMeasureIdsFromMdObject,
+    getLineStyleSeriesMeasureLocalIds,
     hasDerivedBucketItems,
     isComparisonAvailable,
     isDateBucketItem,
@@ -3111,5 +3113,67 @@ describe("isComparisonAvailable", () => {
             ],
         };
         expect(isComparisonAvailable(newReferencePoint.buckets, newReferencePoint.filters)).toBe(true);
+    });
+});
+
+describe("getLineStyleMeasureIdsFromMdObject", () => {
+    const primaryMeasure = newMeasure("primary", (m) => m.localId("m1"));
+    const secondaryMeasure = newMeasure("secondary", (m) => m.localId("m2"));
+
+    function insightOf(type: string) {
+        return newInsightDefinition(`local:${type}`, (i) =>
+            i.buckets([
+                newBucket(BucketNames.MEASURES, primaryMeasure),
+                newBucket(BucketNames.SECONDARY_MEASURES, secondaryMeasure),
+            ]),
+        );
+    }
+
+    it("should return all measures for a non-combo chart", () => {
+        expect(getLineStyleMeasureIdsFromMdObject(insightOf("area"), undefined)).toEqual(["m1", "m2"]);
+    });
+
+    it("should use the rendering defaults of a combo chart (column primary, line secondary)", () => {
+        expect(getLineStyleMeasureIdsFromMdObject(insightOf("combo2"), undefined)).toEqual(["m2"]);
+    });
+
+    it.each`
+        primaryChartType | secondaryChartType | expected
+        ${"column"}      | ${"column"}        | ${[]}
+        ${"area"}        | ${"column"}        | ${["m1"]}
+        ${"line"}        | ${"area"}          | ${["m1", "m2"]}
+    `(
+        "should return line and area measures of a combo chart for $primaryChartType/$secondaryChartType",
+        ({ primaryChartType, secondaryChartType, expected }) => {
+            expect(
+                getLineStyleMeasureIdsFromMdObject(insightOf("combo2"), {
+                    controls: { primaryChartType, secondaryChartType },
+                }),
+            ).toEqual(expected);
+        },
+    );
+});
+
+describe("getLineStyleSeriesMeasureLocalIds", () => {
+    it("should return measures of measure buckets with a line or area chart type", () => {
+        const buckets = [
+            {
+                localIdentifier: BucketNames.MEASURES,
+                chartType: "column",
+                items: [{ localIdentifier: "m1" }],
+            },
+            {
+                localIdentifier: BucketNames.SECONDARY_MEASURES,
+                chartType: "line",
+                items: [{ localIdentifier: "m2" }, { localIdentifier: "m3" }],
+            },
+            { localIdentifier: BucketNames.VIEW, chartType: "line", items: [{ localIdentifier: "a1" }] },
+        ] as IBucketOfFun[];
+
+        expect(getLineStyleSeriesMeasureLocalIds(buckets)).toEqual(["m2", "m3"]);
+    });
+
+    it("should return no measures when there are no buckets", () => {
+        expect(getLineStyleSeriesMeasureLocalIds(undefined)).toEqual([]);
     });
 });

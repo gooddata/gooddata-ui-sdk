@@ -26,6 +26,7 @@ import {
 } from "../_util/common.js";
 import { canComboChartBeStackedInPercent } from "../comboChart/comboChartOptions.js";
 
+import { type IConfiguratorContext } from "./configuratorContext.js";
 import { formatAsPercent, getLabelStyle, getTotalsVisibilityConfig } from "./dataLabelsHelpers.js";
 import { isPrimaryYAxis } from "./isPrimaryYAxis.js";
 
@@ -198,7 +199,7 @@ export function getYAxisConfiguration(
         // disable stack labels for primary Y axis when there is 'Stack to 100%' on
         const stackLabelEnabled = (index !== 0 || !stacksToPercent) && !!stackingDataLabelEnabled;
         return {
-            ...(axis ?? {}),
+            ...axis,
             stackLabels: {
                 enabled: stackLabelEnabled,
             },
@@ -365,12 +366,12 @@ export function convertMinMaxFromPercentToNumber(
     return { yAxis };
 }
 
-export function getOptionalStackingConfiguration(
-    chartOptions: IChartOptions,
-    config: HighchartsOptions,
-    chartConfig: IChartConfig = {},
-    drillConfig?: IDrillConfig,
-): HighchartsOptions {
+export function getOptionalStackingConfiguration({
+    chartOptions,
+    highchartsOptions: config,
+    chartConfig,
+    drillConfig,
+}: IConfiguratorContext): HighchartsOptions {
     const { type } = chartOptions;
     // supportedStackingAttributesChartTypes not include empty string so cast undefined to empty string is ok
     return (supportedStackingAttributesChartTypes as string[]).includes(type ?? "")

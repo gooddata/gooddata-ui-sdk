@@ -115,28 +115,32 @@ const isAreaChartStackingEnabled = (options: IChartConfig) => {
     return stackMeasures;
 };
 
+function getHeatmapCategories(
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
+    stackByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
+    emptyHeaderTitle: string,
+): [string[], string[]] {
+    return [
+        viewByAttribute
+            ? viewByAttribute.items.map((item) =>
+                  valueWithEmptyHandling(getMappingHeaderFormattedName(item), emptyHeaderTitle),
+              )
+            : [""],
+        stackByAttribute
+            ? stackByAttribute.items.map((item) =>
+                  valueWithEmptyHandling(getMappingHeaderFormattedName(item), emptyHeaderTitle),
+              )
+            : [""],
+    ];
+}
+
 function getCategories(
     type: string | undefined,
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
     viewByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
     stackByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
     emptyHeaderTitle: string,
-): any[] {
-    // We need an explicit any[] return type otherwise the code down the line no longer type checks, no time to fix all of it now
-    if (isHeatmap(type)) {
-        return [
-            viewByAttribute
-                ? viewByAttribute.items.map((item) =>
-                      valueWithEmptyHandling(getMappingHeaderFormattedName(item), emptyHeaderTitle),
-                  )
-                : [""],
-            stackByAttribute
-                ? stackByAttribute.items.map((item) =>
-                      valueWithEmptyHandling(getMappingHeaderFormattedName(item), emptyHeaderTitle),
-                  )
-                : [""],
-        ];
-    }
+) {
     if (isScatterPlot(type)) {
         return stackByAttribute
             ? stackByAttribute.items.map((item) =>
@@ -499,9 +503,10 @@ export function getChartOptions(
 
     let initialSeries = assignYAxes(drillableSeries, yAxes);
 
-    let categories = viewByParentAttribute
+    const treeCategories = viewByParentAttribute
         ? getCategoriesForTwoAttributes(viewByAttribute, viewByParentAttribute, emptyHeaderTitle)
-        : getCategories(type, measureGroup, viewByAttribute, stackByAttribute, emptyHeaderTitle);
+        : undefined;
+    let categories = getCategories(type, measureGroup, viewByAttribute, stackByAttribute, emptyHeaderTitle);
 
     // When custom sorting is enabled and is chart which does the auto-sorting,
     // need to skip this, so the sort specified by the user does not get override.
@@ -528,7 +533,7 @@ export function getChartOptions(
             });
         // categories need to be sorted in exactly the same order as dataPoints
         categories = categories.map(
-            (_category: any, dataPointIndex: number) => categories[indexSortOrder[dataPointIndex]],
+            (_category, dataPointIndex: number) => categories[indexSortOrder[dataPointIndex]],
         );
         initialSeries[0].data = sortedDataPoints;
     }
@@ -662,6 +667,7 @@ export function getChartOptions(
     }
 
     if (isHeatmap(type)) {
+        const heatmapCategories = getHeatmapCategories(viewByAttribute, stackByAttribute, emptyHeaderTitle);
         const { xAxisProps, yAxisProps } = getChartProperties(config, type);
         return {
             type,
@@ -677,7 +683,7 @@ export function getChartOptions(
             yAxes,
             data: {
                 series,
-                categories,
+                categories: heatmapCategories,
             },
             actions: {
                 tooltip: generateTooltipHeatmapFn(
@@ -689,7 +695,7 @@ export function getChartOptions(
                 pointDescription: generateDescriptionHeatmapFn(
                     xAxes,
                     yAxes,
-                    categories,
+                    heatmapCategories,
                     unwrap(measureGroup.items[0]).format,
                     viewByAttribute?.formOf?.name,
                     config,
@@ -917,7 +923,7 @@ export function getChartOptions(
         yAxes,
         data: {
             series: outSeries,
-            categories: outCategories,
+            categories: treeCategories ?? outCategories,
         },
         actions: {
             tooltip: tooltipFactory,

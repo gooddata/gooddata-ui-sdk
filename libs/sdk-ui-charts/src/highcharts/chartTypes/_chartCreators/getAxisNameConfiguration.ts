@@ -6,8 +6,11 @@ import { VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { type IAxisNameConfig } from "../../../interfaces/chartConfig.js";
 import { ALIGN_LEFT, ALIGN_RIGHT, ROTATE_NEGATIVE_90_DEGREES } from "../../constants/axisLabel.js";
+import { type HighchartsOptions } from "../../lib/index.js";
 import { type IAxis, type IChartOptions } from "../../typings/unsafe.js";
 import { isOneOfTypes, isRadarChart } from "../_util/common.js";
+
+import { type IConfiguratorContext } from "./configuratorContext.js";
 
 type HighchartsAxisTitle = XAxisTitleOptions | YAxisTitleOptions;
 
@@ -71,7 +74,7 @@ function getHighchartsAxisTitleConfiguration(
     return title;
 }
 
-export function getAxisNameConfiguration(chartOptions: IChartOptions): { xAxis: any; yAxis: any } {
+export function getAxisNameConfiguration({ chartOptions }: IConfiguratorContext): HighchartsOptions {
     const configGetter = axisNameConfigGetter(chartOptions);
     return {
         xAxis: configGetter("x"),

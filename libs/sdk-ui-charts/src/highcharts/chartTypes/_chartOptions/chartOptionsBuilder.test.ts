@@ -63,12 +63,13 @@ import { type StackingType } from "../../constants/stacking.js";
 import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 import {
     type IChartOptions,
+    type IChartOptionsData,
     type ITooltipFactory,
     type IUnsafeHighchartsTooltipPoint,
 } from "../../typings/unsafe.js";
 import { MeasureColorStrategy } from "../_chartColoring/measure.js";
 import { GRAY } from "../_util/color.js";
-import { customEscape, isNegativeValueIncluded } from "../_util/common.js";
+import { customEscape, isNegativeValueIncluded, isPerAxisCategories } from "../_util/common.js";
 import { findMeasureGroupInDimensions } from "../_util/executionResultHelper.js";
 import { generateChartOptions, getMVS, getMVSForViewByTwoAttributes } from "../_util/helper.js";
 import { BubbleChartColorStrategy } from "../bubbleChart/bubbleChartColoring.js";
@@ -107,6 +108,16 @@ function getSeriesItemDataParameters(dv: DataViewFacade, seriesIndex: any) {
 }
 
 const emptyDataView = DataViewFacade.for(dummyDataView(emptyDef("testWorkspace")));
+
+/**
+ * Some tests use `categories[0][0]` in the test's code. However, the type of `categories` is not only `string[][]`.
+ * This function asserts that the type of `categories` is `string[][]`.
+ */
+function assertPerAxisCategories(
+    categories: IChartOptionsData["categories"],
+): asserts categories is string[][] {
+    expect(isPerAxisCategories(categories)).toBe(true);
+}
 
 describe("chartOptionsBuilder", () => {
     const DEFAULT_TOOLTIP_CONTENT_WIDTH = 320;
@@ -1526,7 +1537,9 @@ describe("chartOptionsBuilder", () => {
                         const pointDescription = chartOptions.actions?.pointDescription;
                         expect(pointDescription).toBeDefined();
 
-                        const categoryValue = chartOptions.data!.categories![0][0];
+                        assertPerAxisCategories(chartOptions.data?.categories);
+                        const categories = chartOptions.data?.categories;
+                        const categoryValue = categories[0][0];
                         const description = pointDescription!({
                             x: 0,
                             y: 0,
@@ -1553,7 +1566,9 @@ describe("chartOptionsBuilder", () => {
                         const pointDescription = chartOptions.actions?.pointDescription;
                         expect(pointDescription).toBeDefined();
 
-                        const categoryValue = chartOptions.data!.categories![0][0];
+                        assertPerAxisCategories(chartOptions.data?.categories);
+                        const categories = chartOptions.data?.categories;
+                        const categoryValue = categories[0][0];
                         const description = pointDescription!({
                             x: 0,
                             y: 0,

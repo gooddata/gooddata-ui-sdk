@@ -81,6 +81,22 @@ describe("UiGranteeRowControls", () => {
         expect(screen.getByRole("menuitem", { name: /Remove access/i })).toBeInTheDocument();
     });
 
+    it("omits the Label access row when the primary label is the only one", () => {
+        renderControls({ labels: [LABELS[0]!], selectedLabelIds: ["id"], onRemoveAccess: () => {} });
+        openPermissionMenu();
+        expect(screen.queryByRole("menuitem", { name: /label access/i })).not.toBeInTheDocument();
+        expect(screen.getByRole("menuitem", { name: /Remove access/i })).toBeInTheDocument();
+    });
+
+    it("keeps the Label access row for a grantee whose other label is locked", () => {
+        renderControls({
+            labels: [LABELS[0]!, { id: "email", label: "Customer Email", locked: true }],
+            selectedLabelIds: ["id", "email"],
+        });
+        openPermissionMenu();
+        expect(screen.getByRole("menuitem", { name: /label access/i })).toBeInTheDocument();
+    });
+
     it("shows the effective-permission warning badge only when the inherited level is higher", () => {
         const { rerender } = renderControls({ permissionLevel: "VIEW" });
         // No badge when the assigned permission is already effective.

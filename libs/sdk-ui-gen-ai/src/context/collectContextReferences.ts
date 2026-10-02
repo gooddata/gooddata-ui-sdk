@@ -52,6 +52,7 @@ export function collectContextReferences(
                 where: "referencedObjects",
                 title: item.title || placeholderTitle || id,
                 type: convertReferenceTypeToGenAiType(item.type),
+                visualizationUrl: item.visualizationUrl,
             });
         });
     });

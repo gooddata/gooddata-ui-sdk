@@ -235,6 +235,27 @@ $sidebar-fade-delay: 0.3s;
     }
 }
 
+.gd-sidebar-container--rail.gd-sidebar-container--collapsed .gd-dropzone-delete {
+    top: $sidebar-header-height;
+    right: auto;
+    width: $sidebar-collapsed-width * 2;
+
+    .gd-dropzone-message {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+        font-size: 12px;
+
+        &::before {
+            line-height: 1;
+            font-size: 24px;
+            text-orientation: sideways;
+        }
+    }
+}
+
 // Rail mode: the search shortcut is hidden while expanded and fades in with the rail.
 .gd-sidebar-rail-search {
     position: absolute;

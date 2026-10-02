@@ -2625,7 +2625,7 @@
     },
     "drill_modal_picker.restricted": {
         "text": "Restricted",
-        "crowdinContext": "Disabled drill menu target the user cannot access; replaces its title and shows a lock icon"
+        "crowdinContext": "Replaces the title of a drill target the user cannot access: a disabled drill menu item with a lock icon, or the drill to URL target button in the widget's Interactions settings"
     },
     "visualizationSwitcher.restrictedEntry": {
         "text": "Restricted",

@@ -129,115 +129,104 @@ export function columnChartLoad(props: VisualisationConfig<ColumnChartConfigProp
     return loadConfig(props, (key, value) => {
         switch (key) {
             case "colorMapping":
-                return [["colors", loadColorMapping(value as (typeof DEFAULTS)["colorMapping"])]];
+                return [["colors", loadColorMapping(value)]];
             case "dataLabels": {
-                const val = value as (typeof DEFAULTS)["dataLabels"];
                 return [
-                    ["data_labels", getValueOrDefault(val.visible, DEFAULTS.dataLabels.visible, "bool_auto")],
+                    [
+                        "data_labels",
+                        getValueOrDefault(value.visible, DEFAULTS.dataLabels.visible, "bool_auto"),
+                    ],
                     [
                         "data_totals",
-                        getValueOrDefault(val.totalsVisible, DEFAULTS.dataLabels.totalsVisible, "bool_auto"),
+                        getValueOrDefault(
+                            value.totalsVisible,
+                            DEFAULTS.dataLabels.totalsVisible,
+                            "bool_auto",
+                        ),
                     ],
-                    ["data_labels_style", getValueOrDefault(val.style, DEFAULTS.dataLabels.style)],
+                    ["data_labels_style", getValueOrDefault(value.style, DEFAULTS.dataLabels.style)],
                 ];
             }
             case "chartFill": {
-                return [
-                    [
-                        "chart_fill",
-                        loadChartFill(value as (typeof DEFAULTS)["chartFill"], DEFAULTS.chartFill),
-                    ],
-                ];
+                return [["chart_fill", loadChartFill(value, DEFAULTS.chartFill)]];
             }
             case "legend": {
-                const val = value as (typeof DEFAULTS)["legend"];
                 return [
-                    ["legend_enabled", getValueOrDefault(val.enabled, DEFAULTS.legend.enabled, "bool")],
-                    ["legend_position", getValueOrDefault(val.position, DEFAULTS.legend.position)],
+                    ["legend_enabled", getValueOrDefault(value.enabled, DEFAULTS.legend.enabled, "bool")],
+                    ["legend_position", getValueOrDefault(value.position, DEFAULTS.legend.position)],
                 ];
             }
             case "stackMeasuresToPercent":
                 return [
                     [
                         "stack_measures_to_100",
-                        getValueOrDefault(value as boolean, DEFAULTS.stackMeasuresToPercent, "bool"),
+                        getValueOrDefault(value, DEFAULTS.stackMeasuresToPercent, "bool"),
                     ],
                 ];
             case "stackMeasures":
-                return [
-                    ["stack_measures", getValueOrDefault(value as boolean, DEFAULTS.stackMeasures, "bool")],
-                ];
+                return [["stack_measures", getValueOrDefault(value, DEFAULTS.stackMeasures, "bool")]];
             case "xaxis": {
-                const val = value as (typeof DEFAULTS)["xaxis"];
                 return [
                     [
                         "xaxis_name_position",
-                        getValueOrDefault(val.name?.position, DEFAULTS.xaxis.name.position),
+                        getValueOrDefault(value.name?.position, DEFAULTS.xaxis.name.position),
                     ],
                     [
                         "xaxis_name_visible",
-                        getValueOrDefault(val.name?.visible, DEFAULTS.xaxis.name.visible, "bool"),
+                        getValueOrDefault(value.name?.visible, DEFAULTS.xaxis.name.visible, "bool"),
                     ],
-                    ["xaxis_rotation", getValueOrDefault(val.rotation, DEFAULTS.xaxis.rotation)],
-                    ["xaxis_visible", getValueOrDefault(val.visible, DEFAULTS.xaxis.visible, "bool")],
+                    ["xaxis_rotation", getValueOrDefault(value.rotation, DEFAULTS.xaxis.rotation)],
+                    ["xaxis_visible", getValueOrDefault(value.visible, DEFAULTS.xaxis.visible, "bool")],
                     [
                         "xaxis_labels",
-                        getValueOrDefault(val.labelsEnabled, DEFAULTS.xaxis.labelsEnabled, "bool"),
+                        getValueOrDefault(value.labelsEnabled, DEFAULTS.xaxis.labelsEnabled, "bool"),
                     ],
                 ];
             }
             case "yaxis": {
-                const val = value as (typeof DEFAULTS)["yaxis"];
                 return [
-                    ["yaxis_format", getValueOrDefault(val.format, DEFAULTS.yaxis.format)],
-                    ["yaxis_max", getValueOrDefault(val.max, DEFAULTS.yaxis.max, "number")],
-                    ["yaxis_min", getValueOrDefault(val.min, DEFAULTS.yaxis.min, "number")],
+                    ["yaxis_format", getValueOrDefault(value.format, DEFAULTS.yaxis.format)],
+                    ["yaxis_max", getValueOrDefault(value.max, DEFAULTS.yaxis.max, "number")],
+                    ["yaxis_min", getValueOrDefault(value.min, DEFAULTS.yaxis.min, "number")],
                     [
                         "yaxis_name_position",
-                        getValueOrDefault(val.name?.position, DEFAULTS.yaxis.name.position),
+                        getValueOrDefault(value.name?.position, DEFAULTS.yaxis.name.position),
                     ],
                     [
                         "yaxis_name_visible",
-                        getValueOrDefault(val.name?.visible, DEFAULTS.yaxis.name.visible, "bool"),
+                        getValueOrDefault(value.name?.visible, DEFAULTS.yaxis.name.visible, "bool"),
                     ],
                     [
                         "yaxis_labels",
-                        getValueOrDefault(val.labelsEnabled, DEFAULTS.yaxis.labelsEnabled, "bool"),
+                        getValueOrDefault(value.labelsEnabled, DEFAULTS.yaxis.labelsEnabled, "bool"),
                     ],
-                    ["yaxis_rotation", getValueOrDefault(val.rotation, DEFAULTS.yaxis.rotation)],
-                    ["yaxis_visible", getValueOrDefault(val.visible, DEFAULTS.yaxis.visible, "bool")],
+                    ["yaxis_rotation", getValueOrDefault(value.rotation, DEFAULTS.yaxis.rotation)],
+                    ["yaxis_visible", getValueOrDefault(value.visible, DEFAULTS.yaxis.visible, "bool")],
                 ];
             }
             case "grid": {
-                const val = value as (typeof DEFAULTS)["grid"];
-                return [["grid_enabled", getValueOrDefault(val.enabled, DEFAULTS.grid.enabled, "bool")]];
+                return [["grid_enabled", getValueOrDefault(value.enabled, DEFAULTS.grid.enabled, "bool")]];
             }
             case "disableDrillDown":
-                return [
-                    [
-                        "disable_drill_down",
-                        getValueOrDefault(value as boolean, DEFAULTS.disableDrillDown, "bool"),
-                    ],
-                ];
+                return [["disable_drill_down", getValueOrDefault(value, DEFAULTS.disableDrillDown, "bool")]];
             case "disableDrillIntoURL":
                 // Org-specific default (enableDrillToUrlByDefault); always serialise when set so it round-trips.
-                return [["disable_drill_into_url", value === undefined ? undefined : !!value]];
+                return [["disable_drill_into_url", Boolean(value)]];
             case "disableAlerts":
-                return [
-                    ["disable_alerts", getValueOrDefault(value as boolean, DEFAULTS.disableAlerts, "bool")],
-                ];
+                return [["disable_alerts", getValueOrDefault(value, DEFAULTS.disableAlerts, "bool")]];
             case "disableScheduledExports":
                 return [
                     [
                         "disable_scheduled_exports",
-                        getValueOrDefault(value as boolean, DEFAULTS.disableScheduledExports, "bool"),
+                        getValueOrDefault(value, DEFAULTS.disableScheduledExports, "bool"),
                     ],
                 ];
             case "disableKeyDriveAnalysisOn":
-                return [["disable_key_drive_analysis", loadDisableKda(value as Record<string, boolean>)]];
+                return [["disable_key_drive_analysis", loadDisableKda(value)]];
             case "customTooltip":
-                return [["custom_tooltip", loadCustomTooltip(value as (typeof DEFAULTS)["customTooltip"])]];
+                return [["custom_tooltip", loadCustomTooltip(value)]];
             default:
+                key satisfies never; // Check that no key is forgotten in the cases above
                 return [];
         }
     });

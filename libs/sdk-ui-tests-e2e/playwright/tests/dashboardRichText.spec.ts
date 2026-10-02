@@ -16,7 +16,7 @@ test.topLevelDescribe(
     "dashboardRichText",
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
-        test.describe("Isolated", () => {
+        test.describe("Isolated", {}, () => {
             test.beforeEach(async ({ page }) => {
                 await visit(page, "dashboard/rich-text");
             });
@@ -86,7 +86,7 @@ test.topLevelDescribe(
             );
         });
 
-        test.describe("integrated", () => {
+        test.describe("integrated", {}, () => {
             test(
                 "should remove rich text widget and save it",
                 { tag: ["@pre-merge-integrated"] },

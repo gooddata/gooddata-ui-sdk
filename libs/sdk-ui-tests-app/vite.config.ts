@@ -145,6 +145,9 @@ export default defineConfig(({ mode }) => {
                     }
                     warn(logLevel, warning);
                 },
+                checks: {
+                    pluginTimings: false,
+                },
             },
         },
         define: {

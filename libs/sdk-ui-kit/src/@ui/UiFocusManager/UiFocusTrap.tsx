@@ -1,11 +1,20 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type ReactElement, type ReactNode, cloneElement, useCallback, useMemo, useState } from "react";
+import {
+    type KeyboardEvent,
+    type ReactElement,
+    type ReactNode,
+    cloneElement,
+    useCallback,
+    useMemo,
+    useState,
+} from "react";
 
 import { type NavigationDirection } from "../../typings/navigation.js";
 import { getFocusableElements } from "../../utils/domUtilities.js";
 import { makeKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 
+import { isModalOwnedEvent } from "./modalOwnedEvents.js";
 import { type IUiFocusHelperConnectors } from "./types.js";
 import { focusAndEnsureReachableElement, getNextFocusableElement } from "./utils.js";
 
@@ -31,20 +40,25 @@ export const useUiFocusTrapConnectors = <T extends HTMLElement = HTMLElement>(
         [element, focusCheckFn],
     );
 
-    const handleKeyDown = useMemo(
-        () =>
-            makeKeyboardNavigation({
-                onFocusNext: [{ code: "Tab", modifiers: ["!Shift"] }],
-                onFocusPrevious: [{ code: "Tab", modifiers: ["Shift"] }],
-            })(
-                {
-                    onFocusNext: handleMoveFocus("forward"),
-                    onFocusPrevious: handleMoveFocus("backward"),
-                },
-                { shouldPreventDefault: true, shouldStopPropagation: true },
-            ),
-        [handleMoveFocus],
-    );
+    const handleKeyDown = useMemo(() => {
+        const handleTab = makeKeyboardNavigation({
+            onFocusNext: [{ code: "Tab", modifiers: ["!Shift"] }],
+            onFocusPrevious: [{ code: "Tab", modifiers: ["Shift"] }],
+        })(
+            {
+                onFocusNext: handleMoveFocus("forward"),
+                onFocusPrevious: handleMoveFocus("backward"),
+            },
+            { shouldPreventDefault: true, shouldStopPropagation: true },
+        );
+
+        return (event: KeyboardEvent) => {
+            if (isModalOwnedEvent(event.nativeEvent)) {
+                return;
+            }
+            handleTab(event);
+        };
+    }, [handleMoveFocus]);
 
     return useMemo(() => ({ ref: setElement, onKeyDown: handleKeyDown }), [handleKeyDown]);
 };

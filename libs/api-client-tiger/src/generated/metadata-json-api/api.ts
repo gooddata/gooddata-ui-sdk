@@ -6010,6 +6010,7 @@ export type JsonApiAutomationOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
 
 export interface JsonApiAutomationOutRelationships {
     'analyticalDashboard'?: JsonApiAutomationOutRelationshipsAnalyticalDashboard;
+    'analyticalDashboards'?: JsonApiAutomationOutRelationshipsAnalyticalDashboards;
     'attributes'?: JsonApiAutomationOutRelationshipsAttributes;
     'automationResults'?: JsonApiAutomationOutRelationshipsAutomationResults;
     'computedAttributes'?: JsonApiAutomationOutRelationshipsComputedAttributes;
@@ -6026,6 +6027,13 @@ export interface JsonApiAutomationOutRelationships {
 
 export interface JsonApiAutomationOutRelationshipsAnalyticalDashboard {
     'data': JsonApiAnalyticalDashboardLinkage | null;
+}
+
+export interface JsonApiAutomationOutRelationshipsAnalyticalDashboards {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiAnalyticalDashboardLinkage>;
 }
 
 export interface JsonApiAutomationOutRelationshipsAttributes {
@@ -17491,7 +17499,7 @@ export interface RestrictedObject {
     'type': RestrictedObjectTypeEnum;
 }
 
-export type RestrictedObjectTypeEnum = 'attribute' | 'attributeHierarchy' | 'computedAttribute' | 'fact' | 'label' | 'metric' | 'userDataFilter' | 'visualizationObject';
+export type RestrictedObjectTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'computedAttribute' | 'fact' | 'label' | 'metric' | 'userDataFilter' | 'visualizationObject';
 
 export interface RsaSpecification {
     'alg': RsaSpecificationAlgEnum;

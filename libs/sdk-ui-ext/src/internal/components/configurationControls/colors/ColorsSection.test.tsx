@@ -92,6 +92,50 @@ async function advance(ms: number) {
     await act(() => vi.advanceTimersByTimeAsync(ms));
 }
 
+function measureColorAssignment(localIdentifier: string, value: string) {
+    const headerItem: IMeasureDescriptor = {
+        measureHeaderItem: { localIdentifier, name: localIdentifier, format: "#,##0" },
+    };
+    return { headerItem, color: { type: "guid" as const, value } };
+}
+
+const measureColors: IColorConfiguration = {
+    colorPalette: DefaultColorPalette,
+    colorAssignments: [measureColorAssignment("m1", "1"), measureColorAssignment("m2", "2")],
+};
+
+describe("ColorsSection line styles", () => {
+    it("should offer line styles on every measure when no measure restriction is given", () => {
+        const { container } = createComponent({ colors: measureColors, supportsLineStyles: true });
+
+        expect(container.querySelectorAll(".gd-line-style-item-trigger")).toHaveLength(2);
+        expect(screen.getByText("Colors and styles")).toBeInTheDocument();
+    });
+
+    it("should offer line styles only on the listed measures", () => {
+        const { container } = createComponent({
+            colors: measureColors,
+            supportsLineStyles: true,
+            lineStyleMeasureLocalIds: ["m2"],
+        });
+
+        expect(container.querySelectorAll(".gd-line-style-item-trigger")).toHaveLength(1);
+        expect(screen.getByText("Colors and styles")).toBeInTheDocument();
+    });
+
+    it("should hide line styles when no measure supports them", () => {
+        const { container } = createComponent({
+            colors: measureColors,
+            supportsLineStyles: true,
+            lineStyleMeasureLocalIds: [],
+        });
+
+        expect(container.querySelectorAll(".gd-line-style-item-trigger")).toHaveLength(0);
+        expect(screen.getByText("Colors")).toBeInTheDocument();
+        expect(screen.queryByText("Colors and styles")).not.toBeInTheDocument();
+    });
+});
+
 describe("ColorsSection", () => {
     beforeEach(() => {
         vi.useFakeTimers();

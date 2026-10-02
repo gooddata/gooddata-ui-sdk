@@ -232,6 +232,11 @@ export default defineConfig(({ mode }) => {
         plugins: [react()],
         build: {
             chunkSizeWarningLimit: 15000, // Increased to suppress warnings for large chunks
+            rolldownOptions: {
+                checks: {
+                    pluginTimings: false,
+                },
+            },
         },
         optimizeDeps: {
             exclude: [

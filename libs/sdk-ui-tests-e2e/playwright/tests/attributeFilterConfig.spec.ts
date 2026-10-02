@@ -20,7 +20,7 @@ test.topLevelDescribe(
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         //Cover ticket: RAIL-4671
-        test.describe("Config attribute filter", () => {
+        test.describe("Config attribute filter", {}, () => {
             test(
                 "Should reset display form value dropdown after cancel attribute panel",
                 { tag: ["@pre-merge-integrated"] },

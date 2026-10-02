@@ -11,49 +11,29 @@ import type {
 /**
  * @internal
  */
-export type BaseTestArgs = PlaywrightTestArgs & PlaywrightTestOptions;
+export type PlaywrightBaseTestArgs = PlaywrightTestArgs & PlaywrightTestOptions;
 
 /**
  * @internal
  */
-export type BaseWorkerArgs = PlaywrightWorkerArgs & PlaywrightWorkerOptions;
+export type PlaywrightBaseWorkerArgs = PlaywrightWorkerArgs & PlaywrightWorkerOptions;
 
 /**
  * @internal
  */
-export type Test = typeof test;
+export type PlaywrightTest = typeof test;
 
 /**
  * @internal
  */
-export type Describe = typeof test.describe;
+export type PlaywrightDescribeConfigure = typeof test.describe.configure;
 
 /**
  * @internal
  */
-export type DescribeOnly = typeof test.describe.only;
+export type PlaywrightDescribeSerial = typeof test.describe.serial;
 
 /**
  * @internal
  */
-export type DescribeConfigure = typeof test.describe.configure;
-
-/**
- * @internal
- */
-export type DescribeFixme = typeof test.describe.fixme;
-
-/**
- * @internal
- */
-export type DescribeSerial = typeof test.describe.serial;
-
-/**
- * @internal
- */
-export type DescribeParallel = typeof test.describe.parallel;
-
-/**
- * @internal
- */
-export type DescribeSkip = typeof test.describe.skip;
+export type PlaywrightDescribeParallel = typeof test.describe.parallel;

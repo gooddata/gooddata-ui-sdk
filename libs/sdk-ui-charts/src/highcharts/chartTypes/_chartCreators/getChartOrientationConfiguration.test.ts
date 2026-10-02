@@ -4,40 +4,45 @@
 
 import { describe, expect, it } from "vitest";
 
+import { makeCtx } from "./configurator.test.utils.js";
 import { getChartOrientationConfiguration } from "./getChartOrientationConfiguration.js";
 
 describe("getChartOrientationConfiguration", () => {
     it("should return empty object when the chart type is not waterfall", () => {
-        const customConfig = getChartOrientationConfiguration(
-            {
+        const ctx = makeCtx({
+            chartOptions: {
                 type: "column",
             },
-            {},
-        );
+        });
+
+        const customConfig = getChartOrientationConfiguration(ctx);
 
         expect(customConfig).toEqual({});
     });
 
     it("should return empty object when the chart type is waterfall and the orientation is horizontal", () => {
-        const customConfig = getChartOrientationConfiguration(
-            {
+        const ctx = makeCtx({
+            chartOptions: {
                 type: "waterfall",
             },
-            {},
-            { orientation: { position: "horizontal" } },
-        );
+            chartConfig: { orientation: { position: "horizontal" } },
+        });
+
+        const customConfig = getChartOrientationConfiguration(ctx);
 
         expect(customConfig).toEqual({});
     });
 
     it("should return custom configuration when the chart type is waterfall and the orientation is vertical", () => {
-        const customConfig = getChartOrientationConfiguration(
-            {
+        const ctx = makeCtx({
+            chartOptions: {
                 type: "waterfall",
             },
-            { plotOptions: { waterfall: {} } },
-            { orientation: { position: "vertical" } },
-        );
+            highchartsOptions: { plotOptions: { waterfall: {} } },
+            chartConfig: { orientation: { position: "vertical" } },
+        });
+
+        const customConfig = getChartOrientationConfiguration(ctx);
 
         expect(customConfig.chart).toEqual({ inverted: true });
         expect(customConfig.plotOptions!.waterfall).toEqual({
@@ -47,11 +52,11 @@ describe("getChartOrientationConfiguration", () => {
     });
 
     it("should ellipsis the label on xAxis", () => {
-        const customConfig = getChartOrientationConfiguration(
-            {
+        const ctx = makeCtx({
+            chartOptions: {
                 type: "waterfall",
             },
-            {
+            highchartsOptions: {
                 plotOptions: { waterfall: {} },
                 xAxis: [
                     {
@@ -62,8 +67,10 @@ describe("getChartOrientationConfiguration", () => {
                     },
                 ],
             },
-            { orientation: { position: "vertical" } },
-        );
+            chartConfig: { orientation: { position: "vertical" } },
+        });
+
+        const customConfig = getChartOrientationConfiguration(ctx);
 
         expect(customConfig.chart).toEqual({ inverted: true });
         expect(customConfig.xAxis).toEqual([

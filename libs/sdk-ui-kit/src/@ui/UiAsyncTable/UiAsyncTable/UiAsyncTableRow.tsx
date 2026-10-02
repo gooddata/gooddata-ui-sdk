@@ -1,11 +1,13 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type MouseEvent, type ReactNode, type Ref, useCallback } from "react";
+import { type MouseEvent, type ReactNode, type Ref, useCallback, useId } from "react";
 
 import { type ObjRef } from "@gooddata/sdk-model";
 
 import { Dropdown } from "../../../Dropdown/Dropdown.js";
+import { UiIcon } from "../../UiIcon/UiIcon.js";
 import { UiIconButton } from "../../UiIconButton/UiIconButton.js";
+import { UiTooltip } from "../../UiTooltip/UiTooltip.js";
 import { e } from "../asyncTableBem.js";
 import {
     type IUiAsyncTableColumn,
@@ -33,9 +35,12 @@ export function UiAsyncTableRow<T extends { id: string } | { ref: ObjRef }>({
     focusedColumnIndex,
     focusedElementRef,
     accessibilityConfig,
+    tooltip,
+    isTooltipOpen,
 }: IUiAsyncTableRowProps<T>) {
     const { renderCellContent } = useRenderCellContent<T>({ isLarge: isLarge ?? false });
     const isRowFocused = isFocused && focusedColumnIndex === undefined;
+    const tooltipId = useId();
 
     const handleRowClick = useCallback(
         (e: MouseEvent<HTMLDivElement>) => {
@@ -53,7 +58,7 @@ export function UiAsyncTableRow<T extends { id: string } | { ref: ObjRef }>({
         [onClick, item],
     );
 
-    return (
+    const row = (
         <div
             onClick={handleRowClick}
             className={e("row", {
@@ -66,6 +71,7 @@ export function UiAsyncTableRow<T extends { id: string } | { ref: ObjRef }>({
             id={item ? getRowId(getItemKey(item)) : undefined}
             aria-rowindex={itemIndex + 1}
             aria-labelledby={getRowLabelId(itemIndex)}
+            aria-describedby={tooltip ? tooltipId : undefined}
         >
             {hasCheckbox && item ? (
                 <UiAsyncTableCheckbox
@@ -108,6 +114,21 @@ export function UiAsyncTableRow<T extends { id: string } | { ref: ObjRef }>({
                 );
             })}
         </div>
+    );
+
+    return tooltip ? (
+        <UiTooltip
+            id={tooltipId}
+            anchor={row}
+            content={tooltip}
+            triggerBy={["hover"]}
+            // keyboard navigation opens it via the grid, see UiAsyncTableBody; otherwise hover drives it
+            isOpen={isTooltipOpen || undefined}
+            optimalPlacement
+            anchorWrapperStyles={{ width: "100%" }}
+        />
+    ) : (
+        row
     );
 }
 
@@ -222,10 +243,8 @@ const useRenderCellContent = <T extends { id: string } | { ref: ObjRef }>({
                     const isFirst = index === 0;
                     return (
                         <span className={e("text-line", { first: isFirst })} key={index}>
-                            <span
-                                id={isFirst ? labelId : undefined}
-                                className={e("text-line-content", { locked: isFirst && !!isLocked?.(item) })}
-                            >
+                            {isFirst && isLocked?.(item) ? <LockIcon /> : null}
+                            <span id={isFirst ? labelId : undefined} className={e("text-line-content")}>
                                 {line}
                             </span>
                             {renderSuffixIcon && isFirst
@@ -284,9 +303,9 @@ const useRenderCellContent = <T extends { id: string } | { ref: ObjRef }>({
                         className={e("text", {
                             "multi-line": !!getMultiLineTextContent,
                             color: !getMultiLineTextContent && textColor ? textColor : false,
-                            locked: !getMultiLineTextContent && !!isLocked?.(item),
                         })}
                     >
+                        {!getMultiLineTextContent && isLocked?.(item) ? <LockIcon /> : null}
                         {textContent}
                     </div>
                 </WithConditionalAnchor>
@@ -373,3 +392,11 @@ const useRenderCellContent = <T extends { id: string } | { ref: ObjRef }>({
         renderCellContent,
     };
 };
+
+function LockIcon() {
+    return (
+        <span className={e("lock-icon")}>
+            <UiIcon type="lock" size={14} color="complementary-6" layout="block" />
+        </span>
+    );
+}

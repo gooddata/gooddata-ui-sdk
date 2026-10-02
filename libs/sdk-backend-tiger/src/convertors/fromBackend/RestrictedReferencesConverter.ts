@@ -29,12 +29,14 @@ function isLinkage(value: unknown): value is ILinkage {
 }
 
 /**
- * Ids linked by the entity's to-many relationship stored under the given key.
+ * Ids linked by the entity's relationship stored under the given key.
+ * Handles both to-many (array of linkages) and to-one (single linkage or null) relationships.
  */
 export function getRelationshipIds(relationships: object | undefined, key: string): Set<string> {
     const data: unknown = (relationships as Partial<Record<string, { data?: unknown }>> | undefined)?.[key]
         ?.data;
-    return new Set(Array.isArray(data) ? data.filter(isLinkage).map((linkage) => linkage.id) : []);
+    const linkages: unknown[] = Array.isArray(data) ? data : [data];
+    return new Set(linkages.filter(isLinkage).map((linkage) => linkage.id));
 }
 
 /**

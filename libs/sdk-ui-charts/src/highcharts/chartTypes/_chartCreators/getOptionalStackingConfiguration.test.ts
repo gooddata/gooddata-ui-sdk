@@ -12,6 +12,7 @@ import { type StackingType } from "../../constants/stacking.js";
 import { type CSSObject, type HighchartsOptions } from "../../lib/index.js";
 import { type IChartOptions, type ISeriesItem, type IStackMeasuresConfig } from "../../typings/unsafe.js";
 
+import { makeCtx } from "./configurator.test.utils.js";
 import {
     convertMinMaxFromPercentToNumber,
     getOptionalStackingConfiguration,
@@ -25,9 +26,12 @@ import {
 
 describe("getOptionalStackingConfiguration", () => {
     it("should return empty configuration to not supported chart type", () => {
-        expect(getOptionalStackingConfiguration({ type: VisualizationTypes.LINE }, undefined as any)).toEqual(
-            {},
-        );
+        const ctx = makeCtx({
+            chartOptions: { type: VisualizationTypes.LINE },
+            highchartsOptions: undefined,
+        });
+
+        expect(getOptionalStackingConfiguration(ctx)).toEqual({});
     });
 
     it("should set drillConfig to X axis", () => {

@@ -1,15 +1,11 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type IResultAttributeHeader } from "@gooddata/sdk-model";
 import { getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 
 import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
-
-type NameAndCategories = {
-    name: string;
-    categories: string[];
-};
+import { type ICategoryGroup } from "../../typings/unsafe.js";
 
 /**
  * Transform
@@ -33,13 +29,13 @@ export function getCategoriesForTwoAttributes(
     viewByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
     viewByParentAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
     emptyHeaderTitle: string,
-): NameAndCategories[] {
+): ICategoryGroup[] {
     const keys: string[] = [];
     const children = viewByAttribute?.items ?? [];
     const parent = viewByParentAttribute?.items ?? [];
 
     const combinedResult = parent.reduce(
-        (result: Record<string, NameAndCategories>, parentAttr: IResultAttributeHeader, index: number) => {
+        (result: Record<string, ICategoryGroup>, parentAttr: IResultAttributeHeader, index: number) => {
             const uri = parentAttr?.attributeHeaderItem?.uri ?? "";
             const name = valueWithEmptyHandling(getMappingHeaderFormattedName(parentAttr), emptyHeaderTitle);
             const value = valueWithEmptyHandling(

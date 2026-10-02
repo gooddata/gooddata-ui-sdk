@@ -366,68 +366,55 @@ export function tableLoad(props: VisualisationConfig<TableConfigProperties>) {
     return loadConfig(props, (key, value) => {
         switch (key) {
             case "columnWidths": {
-                return [["widths", loadColumnsWidth(value as (typeof DEFAULTS)["columnWidths"])]];
+                return [["widths", loadColumnsWidth(value)]];
             }
             case "columnHeadersPosition": {
-                const val = value as (typeof DEFAULTS)["columnHeadersPosition"];
-                return [["column_header", getValueOrDefault(val, DEFAULTS.columnHeadersPosition)]];
+                return [["column_header", getValueOrDefault(value, DEFAULTS.columnHeadersPosition)]];
             }
             case "measureGroupDimension": {
-                const val = value as (typeof DEFAULTS)["measureGroupDimension"];
-                return [["metrics_in", getValueOrDefault(val, DEFAULTS.measureGroupDimension)]];
+                return [["metrics_in", getValueOrDefault(value, DEFAULTS.measureGroupDimension)]];
             }
             case "disableDrillDown":
-                return [
-                    [
-                        "disable_drill_down",
-                        getValueOrDefault(value as boolean, DEFAULTS.disableDrillDown, "bool"),
-                    ],
-                ];
+                return [["disable_drill_down", getValueOrDefault(value, DEFAULTS.disableDrillDown, "bool")]];
             case "disableDrillIntoURL":
                 // Always serialise the explicit value when present. The platform default is
                 // org-specific (`enableDrillToUrlByDefault`), so omitting a value that matches
                 // a hardcoded default would lose the setting on round-trip in orgs whose default
                 // differs.
-                return [["disable_drill_into_url", value === undefined ? undefined : !!value]];
+                return [["disable_drill_into_url", Boolean(value)]];
             case "disableAlerts":
-                return [
-                    ["disable_alerts", getValueOrDefault(value as boolean, DEFAULTS.disableAlerts, "bool")],
-                ];
+                return [["disable_alerts", getValueOrDefault(value, DEFAULTS.disableAlerts, "bool")]];
             case "disableScheduledExports":
                 return [
                     [
                         "disable_scheduled_exports",
-                        getValueOrDefault(value as boolean, DEFAULTS.disableScheduledExports, "bool"),
+                        getValueOrDefault(value, DEFAULTS.disableScheduledExports, "bool"),
                     ],
                 ];
             case "disableKeyDriveAnalysisOn":
-                return [["disable_key_drive_analysis", loadDisableKda(value as Record<string, boolean>)]];
+                return [["disable_key_drive_analysis", loadDisableKda(value)]];
             case "textWrapping": {
-                const val = value as (typeof DEFAULTS)["textWrapping"];
-                return [["text_wrapping", loadTextWrapping(val)]];
+                return [["text_wrapping", loadTextWrapping(value)]];
             }
             case "pagination": {
-                const val = value as (typeof DEFAULTS)["pagination"];
-                return [["pagination", getValueOrDefault(val.enabled, DEFAULTS.pagination.enabled, "bool")]];
+                return [
+                    ["pagination", getValueOrDefault(value.enabled, DEFAULTS.pagination.enabled, "bool")],
+                ];
             }
             case "pageSize":
-                return [["page_size", getValueOrDefault(value as number, DEFAULTS.pageSize, "number")]];
+                return [["page_size", getValueOrDefault(value, DEFAULTS.pageSize, "number")]];
             case "enableAccessibility":
                 return [
-                    [
-                        "enable_accessibility",
-                        getValueOrDefault(value as boolean, DEFAULTS.enableAccessibility, "bool"),
-                    ],
+                    ["enable_accessibility", getValueOrDefault(value, DEFAULTS.enableAccessibility, "bool")],
                 ];
             case "grandTotalsPosition": {
-                const val = value as (typeof DEFAULTS)["grandTotalsPosition"];
-                return [["grand_totals_position", getValueOrDefault(val, DEFAULTS.grandTotalsPosition)]];
+                return [["grand_totals_position", getValueOrDefault(value, DEFAULTS.grandTotalsPosition)]];
             }
             case "conditionalFormatting": {
-                const val = value as (typeof DEFAULTS)["conditionalFormatting"];
-                return [["conditional_formatting", loadConditionalFormatting(val)]];
+                return [["conditional_formatting", loadConditionalFormatting(value)]];
             }
             default:
+                key satisfies never; // Check that no key is forgotten in the cases above
                 return [];
         }
     });

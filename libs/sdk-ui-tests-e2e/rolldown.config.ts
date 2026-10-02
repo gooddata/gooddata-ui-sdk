@@ -40,4 +40,7 @@ export default defineConfig({
     ],
     platform: "node",
     treeshake: true,
+    checks: {
+        pluginTimings: false,
+    },
 });

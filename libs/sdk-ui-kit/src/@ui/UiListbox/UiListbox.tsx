@@ -4,6 +4,7 @@ import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } fro
 
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
 
+import { useMediaQuery } from "../../responsive/useMediaQuery.js";
 import { makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 import { MenuDivider } from "../UiMenu/components/MenuDivider.js";
 import { collapseSeparators } from "../UiMenu/itemUtils.js";
@@ -17,7 +18,10 @@ import {
     type IUiListboxInteractiveItem,
     type IUiListboxItem,
     type IUiListboxProps,
+    type UiListboxView,
 } from "./types.js";
+
+const DEFAULT_SUPPORTED_VIEWS: UiListboxView[] = ["mobile", "desktop"];
 
 /**
  * An accessible listbox component that can be navigated by keyboard.
@@ -48,11 +52,14 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
     shouldCloseOnSelect = true,
     isDisabledFocusable = false,
     isCompact = false,
+    supportedViews = DEFAULT_SUPPORTED_VIEWS,
 
     reference,
     ariaAttributes,
 }: IUiListboxProps<InteractiveItemData, StaticItemData>): ReactNode {
     const items = useMemo(() => collapseSeparators(rawItems), [rawItems]);
+    const isMobileDevice = useMediaQuery("mobileDevice");
+    const isMobile = isMobileDevice && supportedViews.includes("mobile");
     const isItemFocusable = useCallback(
         (item?: IUiListboxItem<InteractiveItemData, StaticItemData>) => {
             if (item?.type !== "interactive") {
@@ -192,7 +199,11 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
     );
 
     return (
-        <div className={b()} style={{ width, maxWidth, maxHeight }} data-testid={dataTestId}>
+        <div
+            className={b({ mobile: isMobile })}
+            style={{ width, maxWidth, maxHeight }}
+            data-testid={dataTestId}
+        >
             <ul
                 className={e("items")}
                 ref={reference}

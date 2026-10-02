@@ -13,6 +13,7 @@ import {
     type HTMLDOMElement,
     type SVGAttributes,
     type SVGDOMElement,
+    type SeriesOptionsType,
     type StackItemObject,
     type TooltipPositionerPointObject,
     type YAxisOptions,
@@ -127,7 +128,7 @@ export interface ISeriesItem {
     lineWidth?: number;
     userOptions?: any;
     visible?: boolean;
-    type?: string;
+    type?: SeriesOptionsType["type"];
     isDrillable?: boolean;
     legendIndex?: number;
     seriesIndex?: number;
@@ -159,7 +160,7 @@ export interface ISeriesMarker {
 
 export interface IChartOptionsData {
     series?: any[];
-    categories?: string[][];
+    categories?: string[][] | string[] | ICategoryGroup[];
 }
 
 export type ITooltipFactory = (
@@ -321,6 +322,12 @@ export interface ICategoryParent {
     name: string;
     leaves?: number;
     categories?: string[];
+}
+
+// A parent category with its children, as consumed by the grouped-categories plugin.
+export interface ICategoryGroup {
+    name: string;
+    categories: string[];
 }
 
 // since applying 'grouped-categories' plugin, 'category' type is replaced from string to object in highchart

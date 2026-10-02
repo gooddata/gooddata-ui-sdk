@@ -2,6 +2,7 @@
 
 // @vitest-environment node
 
+import { type SeriesOptionsType } from "highcharts";
 import { describe, expect, it } from "vitest";
 
 import { VisualizationTypes } from "@gooddata/sdk-ui";
@@ -9,6 +10,7 @@ import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { type StackingType } from "../../constants/stacking.js";
 import { type IChartOptions, type ISeriesItem } from "../../typings/unsafe.js";
 
+import { makeCtx } from "./configurator.test.utils.js";
 import {
     convertNumberToPercent,
     getMinMaxInfo,
@@ -18,27 +20,32 @@ import {
 describe("getZeroAlignConfiguration", () => {
     const numberToYValue = (y: number | null) => ({ y });
 
-    const SERIES: ISeriesItem[] = [
+    const SERIES: SeriesOptionsType[] = [
         {
+            type: "column",
             yAxis: 0,
             data: [null, -250, -175, -30, 10, 50, 90, 150].map(numberToYValue),
         },
         {
+            type: "column",
             yAxis: 1,
             data: [100, 500, 900, 1500, 2400, 1100, 350, null].map(numberToYValue),
         },
     ];
 
     it("should return empty config without axis", () => {
-        const result = getZeroAlignConfiguration({}, {});
+        const ctx = makeCtx();
+        const result = getZeroAlignConfiguration(ctx);
         expect(result).toEqual({});
     });
 
     it("should return empty config with single axis", () => {
-        const config = {
-            yAxis: [{}],
-        };
-        const result = getZeroAlignConfiguration({}, config);
+        const ctx = makeCtx({
+            highchartsOptions: {
+                yAxis: [{}],
+            },
+        });
+        const result = getZeroAlignConfiguration(ctx);
         expect(result).toEqual({});
     });
 
@@ -51,12 +58,14 @@ describe("getZeroAlignConfiguration", () => {
             min: 0,
             max: 1000,
         };
-        const config = {
-            yAxis: [leftAxisConfig, rightAxisConfig],
-            series: SERIES,
-        };
+        const ctx = makeCtx({
+            highchartsOptions: {
+                yAxis: [leftAxisConfig, rightAxisConfig],
+                series: SERIES,
+            },
+        });
 
-        const result = getZeroAlignConfiguration({}, config);
+        const result = getZeroAlignConfiguration(ctx);
         expect(result).toEqual({
             yAxis: [
                 {
@@ -70,12 +79,14 @@ describe("getZeroAlignConfiguration", () => {
     });
 
     it("should return yAxis with calculated min/max and 'isUserMinMax' is false on both Y axes", () => {
-        const config = {
-            yAxis: [{}, {}],
-            series: SERIES,
-        };
+        const ctx = makeCtx({
+            highchartsOptions: {
+                yAxis: [{}, {}],
+                series: SERIES,
+            },
+        });
 
-        const result = getZeroAlignConfiguration({}, config);
+        const result = getZeroAlignConfiguration(ctx);
         expect(result).toEqual({
             yAxis: [
                 {
@@ -93,18 +104,14 @@ describe("getZeroAlignConfiguration", () => {
     });
 
     it("should return yAxis with calculated min/max and 'isUserMinMax' is false on single Y axis", () => {
-        const config = {
-            yAxis: [
-                {
-                    min: -100,
-                    max: 100,
-                },
-                {},
-            ],
-            series: SERIES,
-        };
+        const ctx = makeCtx({
+            highchartsOptions: {
+                yAxis: [{ min: -100, max: 100 }, {}],
+                series: SERIES,
+            },
+        });
 
-        const result = getZeroAlignConfiguration({}, config);
+        const result = getZeroAlignConfiguration(ctx);
         expect(result).toEqual({
             yAxis: [
                 {
@@ -122,23 +129,27 @@ describe("getZeroAlignConfiguration", () => {
     });
 
     describe("line chart", () => {
-        const POSITIVE_CHART_SERIES: ISeriesItem[] = [
+        const POSITIVE_CHART_SERIES: SeriesOptionsType[] = [
             {
+                type: "line",
                 yAxis: 0,
                 data: [250, 175, 30, 10, 50, 90, 150].map(numberToYValue),
             },
             {
+                type: "line",
                 yAxis: 1,
                 data: [100, 500, 900, 1500, 2400, 1100, 350].map(numberToYValue),
             },
         ];
 
-        const NEGATIVE_CHART_SERIES: ISeriesItem[] = [
+        const NEGATIVE_CHART_SERIES: SeriesOptionsType[] = [
             {
+                type: "line",
                 yAxis: 0,
                 data: [-250, -175, -30, -10, -50, -90, -150].map(numberToYValue),
             },
             {
+                type: "line",
                 yAxis: 1,
                 data: [-100, -500, -900, -1500, -2400, -1100, -350].map(numberToYValue),
             },
@@ -149,12 +160,15 @@ describe("getZeroAlignConfiguration", () => {
         };
 
         it("should return min equal to data min for positive data", () => {
-            const config = {
-                yAxis: [{}, {}],
-                series: POSITIVE_CHART_SERIES,
-            };
+            const ctx = makeCtx({
+                chartOptions: CHART_OPTIONS,
+                highchartsOptions: {
+                    yAxis: [{}, {}],
+                    series: POSITIVE_CHART_SERIES,
+                },
+            });
 
-            const result = getZeroAlignConfiguration(CHART_OPTIONS, config);
+            const result = getZeroAlignConfiguration(ctx);
             expect(result).toEqual({
                 yAxis: [
                     {
@@ -172,12 +186,15 @@ describe("getZeroAlignConfiguration", () => {
         });
 
         it("should return min equal to data min for negative data", () => {
-            const config = {
-                yAxis: [{}, {}],
-                series: NEGATIVE_CHART_SERIES,
-            };
+            const ctx = makeCtx({
+                chartOptions: CHART_OPTIONS,
+                highchartsOptions: {
+                    yAxis: [{}, {}],
+                    series: NEGATIVE_CHART_SERIES,
+                },
+            });
 
-            const result = getZeroAlignConfiguration(CHART_OPTIONS, config);
+            const result = getZeroAlignConfiguration(ctx);
             expect(result).toEqual({
                 yAxis: [
                     {
@@ -195,12 +212,15 @@ describe("getZeroAlignConfiguration", () => {
         });
 
         it("should return min/max equal to data min/max", () => {
-            const config = {
-                yAxis: [{}, {}],
-                series: [...POSITIVE_CHART_SERIES, ...NEGATIVE_CHART_SERIES],
-            };
+            const ctx = makeCtx({
+                chartOptions: CHART_OPTIONS,
+                highchartsOptions: {
+                    yAxis: [{}, {}],
+                    series: [...POSITIVE_CHART_SERIES, ...NEGATIVE_CHART_SERIES],
+                },
+            });
 
-            const result = getZeroAlignConfiguration(CHART_OPTIONS, config);
+            const result = getZeroAlignConfiguration(ctx);
             expect(result).toEqual({
                 yAxis: [
                     {
@@ -518,21 +538,17 @@ describe("getZeroAlignConfiguration", () => {
 
         it.each([[VisualizationTypes.COLUMN], [VisualizationTypes.LINE]])(
             "should hide left Y axis when min > max in %s chart",
-            (chartType: any) => {
-                const chartOptions = {
-                    type: chartType,
-                };
-                const config = {
-                    yAxis: [
-                        {
-                            min: 100,
-                            max: 10,
-                        },
-                        {},
-                    ],
-                    series: SERIES,
-                };
-                const result = getZeroAlignConfiguration(chartOptions, config);
+            (chartType) => {
+                const ctx = makeCtx({
+                    chartOptions: {
+                        type: chartType,
+                    },
+                    highchartsOptions: {
+                        yAxis: [{ min: 100, max: 10 }, {}],
+                        series: SERIES.map((series) => ({ ...series, type: chartType })),
+                    },
+                });
+                const result = getZeroAlignConfiguration(ctx);
                 expect(result).toEqual({
                     yAxis: [
                         {
@@ -542,17 +558,21 @@ describe("getZeroAlignConfiguration", () => {
                     ],
                     series: [
                         {
+                            type: chartType,
                             yAxis: 0,
                             visible: false,
                         },
                         {
+                            type: chartType,
                             yAxis: 0,
                             visible: false,
                         },
                         {
+                            type: chartType,
                             yAxis: 1,
                         },
                         {
+                            type: chartType,
                             yAxis: 1,
                         },
                     ],
@@ -561,23 +581,19 @@ describe("getZeroAlignConfiguration", () => {
         );
 
         it("should hide left and right Y axes when min>max and min=max in column chart", () => {
-            const chartOptions = {
-                type: VisualizationTypes.COLUMN,
-            };
-            const config = {
-                yAxis: [
-                    {
-                        min: 100,
-                        max: 10,
-                    },
-                    {
-                        min: 100,
-                        max: 100,
-                    },
-                ],
-                series: SERIES,
-            };
-            const result = getZeroAlignConfiguration(chartOptions, config);
+            const ctx = makeCtx({
+                chartOptions: {
+                    type: VisualizationTypes.COLUMN,
+                },
+                highchartsOptions: {
+                    yAxis: [
+                        { min: 100, max: 10 },
+                        { min: 100, max: 100 },
+                    ],
+                    series: SERIES.map((series) => ({ ...series, type: "column" })),
+                },
+            });
+            const result = getZeroAlignConfiguration(ctx);
             expect(result).toEqual({
                 yAxis: [
                     {
@@ -589,18 +605,22 @@ describe("getZeroAlignConfiguration", () => {
                 ],
                 series: [
                     {
+                        type: "column",
                         yAxis: 0,
                         visible: false,
                     },
                     {
+                        type: "column",
                         yAxis: 0,
                         visible: false,
                     },
                     {
+                        type: "column",
                         yAxis: 1,
                         visible: false,
                     },
                     {
+                        type: "column",
                         yAxis: 1,
                         visible: false,
                     },
@@ -609,23 +629,19 @@ describe("getZeroAlignConfiguration", () => {
         });
 
         it("should hide left axis when min>max and not hide right axis when min=max in line chart", () => {
-            const chartOptions = {
-                type: VisualizationTypes.LINE,
-            };
-            const config = {
-                yAxis: [
-                    {
-                        min: 100,
-                        max: 10,
-                    },
-                    {
-                        min: 100,
-                        max: 100,
-                    },
-                ],
-                series: SERIES,
-            };
-            const result = getZeroAlignConfiguration(chartOptions, config);
+            const ctx = makeCtx({
+                chartOptions: {
+                    type: VisualizationTypes.LINE,
+                },
+                highchartsOptions: {
+                    yAxis: [
+                        { min: 100, max: 10 },
+                        { min: 100, max: 100 },
+                    ],
+                    series: SERIES.map((series) => ({ ...series, type: "line" })),
+                },
+            });
+            const result = getZeroAlignConfiguration(ctx);
             expect(result).toEqual({
                 yAxis: [
                     {
@@ -635,17 +651,21 @@ describe("getZeroAlignConfiguration", () => {
                 ],
                 series: [
                     {
+                        type: "line",
                         yAxis: 0,
                         visible: false,
                     },
                     {
+                        type: "line",
                         yAxis: 0,
                         visible: false,
                     },
                     {
+                        type: "line",
                         yAxis: 1,
                     },
                     {
+                        type: "line",
                         yAxis: 1,
                     },
                 ],
@@ -653,9 +673,6 @@ describe("getZeroAlignConfiguration", () => {
         });
 
         it("should hide left column axis when min>max and not hide right line axis when min=max in combo chart", () => {
-            const chartOptions = {
-                type: VisualizationTypes.COMBO,
-            };
             const series = [
                 {
                     type: VisualizationTypes.COLUMN,
@@ -678,20 +695,19 @@ describe("getZeroAlignConfiguration", () => {
                     data: [20, 200],
                 },
             ];
-            const config = {
-                yAxis: [
-                    {
-                        min: 100,
-                        max: 10,
-                    },
-                    {
-                        min: 100,
-                        max: 100,
-                    },
-                ],
-                series,
-            };
-            const result = getZeroAlignConfiguration(chartOptions, config);
+            const ctx = makeCtx({
+                chartOptions: {
+                    type: VisualizationTypes.COMBO,
+                },
+                highchartsOptions: {
+                    yAxis: [
+                        { min: 100, max: 10 },
+                        { min: 100, max: 100 },
+                    ],
+                    series,
+                },
+            });
+            const result = getZeroAlignConfiguration(ctx);
             expect(result).toEqual({
                 yAxis: [
                     {
@@ -723,9 +739,6 @@ describe("getZeroAlignConfiguration", () => {
         });
 
         it("should hide Y axes when min>max in combo chart", () => {
-            const chartOptions = {
-                type: VisualizationTypes.COMBO,
-            };
             const series = [
                 {
                     type: VisualizationTypes.COLUMN,
@@ -748,20 +761,19 @@ describe("getZeroAlignConfiguration", () => {
                     data: [20, 200],
                 },
             ];
-            const config = {
-                yAxis: [
-                    {
-                        min: 100,
-                        max: 10,
-                    },
-                    {
-                        min: 200,
-                        max: 100,
-                    },
-                ],
-                series,
-            };
-            const result = getZeroAlignConfiguration(chartOptions, config);
+            const ctx = makeCtx({
+                chartOptions: {
+                    type: VisualizationTypes.COMBO,
+                },
+                highchartsOptions: {
+                    yAxis: [
+                        { min: 100, max: 10 },
+                        { min: 200, max: 100 },
+                    ],
+                    series,
+                },
+            });
+            const result = getZeroAlignConfiguration(ctx);
             expect(result).toEqual({
                 yAxis: [
                     {

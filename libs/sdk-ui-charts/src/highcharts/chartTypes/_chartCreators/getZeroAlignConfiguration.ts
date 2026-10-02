@@ -14,13 +14,11 @@
 import { compact, partial, sum, zip } from "lodash-es";
 
 import { type StackingType } from "../../constants/stacking.js";
-import {
-    type IChartOptions,
-    type IHighChartAxis,
-    type ISeriesDataItem,
-    type ISeriesItem,
-} from "../../typings/unsafe.js";
+import { type HighchartsOptions, type SeriesOptionsType } from "../../lib/index.js";
+import { type IHighChartAxis } from "../../typings/unsafe.js";
 import { isComboChart, isLineChart } from "../_util/common.js";
+
+import { type IConfiguratorContext } from "./configuratorContext.js";
 
 export interface ICanon {
     min?: number;
@@ -204,15 +202,23 @@ export function getMinMaxInfo(config: any, stacking: StackingType, type: string 
 /**
  * Get series on related axis
  */
-function getSeriesOnAxis(series: ISeriesItem[], axisIndex: number): ISeriesItem[] {
-    return series.filter((item: ISeriesItem): boolean => item.yAxis === axisIndex);
+function getSeriesOnAxis(series: SeriesOptionsType[], axisIndex: number): SeriesOptionsType[] {
+    return series.filter((item): boolean => item.yAxis === axisIndex);
 }
 
 /**
  * Get y value in series
  */
-function getYDataInSeries(series: ISeriesItem): number[] {
-    return series.data!.map((item: ISeriesDataItem): number => item.y!);
+function getYDataInSeries(series: SeriesOptionsType): number[] {
+    if ("data" in series && Array.isArray(series.data)) {
+        return series.data.map((item) =>
+            typeof item === "object" && item !== null && !Array.isArray(item) && "y" in item
+                ? Number(item.y)
+                : NaN,
+        );
+    } else {
+        return [];
+    }
 }
 
 /**
@@ -289,7 +295,7 @@ export function convertNumberToPercent(yData: number[][]): number[][] {
  * By comparing total of positive value to get max and total of negative value to get min
  */
 function getDataMinMaxOnStackedChart(
-    series: ISeriesItem[],
+    series: SeriesOptionsType[],
     stacking: StackingType,
     opposite: boolean,
 ): IMinMax {
@@ -306,9 +312,9 @@ function getDataMinMaxOnStackedChart(
  * Get data min/max in normal chart
  * By comparing min max value in all series in axis
  */
-function getDataMinMax(series: ISeriesItem[], isLineChart: boolean): IMinMax {
+function getDataMinMax(series: SeriesOptionsType[], isLineChart: boolean): IMinMax {
     const { min, max } = series.reduce(
-        (result: IMinMax, item: ISeriesItem): IMinMax => {
+        (result: IMinMax, item): IMinMax => {
             const yData = getYDataInSeries(item);
             return {
                 min: Math.min(result.min!, ...yData),
@@ -326,19 +332,19 @@ function getDataMinMax(series: ISeriesItem[], isLineChart: boolean): IMinMax {
     };
 }
 
-function isLineChartType(series: ISeriesItem[], axisIndex: number, type: string | undefined): boolean {
+function isLineChartType(series: SeriesOptionsType[], axisIndex: number, type: string | undefined): boolean {
     if (isLineChart(type)) {
         return true;
     }
     if (isComboChart(type)) {
-        return getSeriesOnAxis(series, axisIndex).every((item: ISeriesItem) => isLineChart(item.type));
+        return getSeriesOnAxis(series, axisIndex).every((item) => isLineChart(item.type));
     }
     return false;
 }
 
 function getExtremeByChartTypeOnAxis(
     extreme: number,
-    series: ISeriesItem[],
+    series: SeriesOptionsType[],
     axisIndex: number,
     type: string | undefined,
 ): number {
@@ -366,7 +372,7 @@ function hasInvalidAxis(minmax: IMinMaxInfo[]): boolean {
  * Hide invalid axis by setting 'visible' to false
  */
 function hideInvalidAxis(config: any, minmax: IMinMaxInfo[], type: string | undefined) {
-    const series: ISeriesItem[] = config.series.map((item: ISeriesItem) => {
+    const series: SeriesOptionsType[] = config.series.map((item: SeriesOptionsType) => {
         const { yAxis, type } = item;
         return type ? { yAxis, type } : { yAxis };
     });
@@ -388,7 +394,7 @@ function hideInvalidAxis(config: any, minmax: IMinMaxInfo[], type: string | unde
     yAxis.forEach((axis: Partial<IHighChartAxis>, index: number) => {
         const { visible } = axis;
         if (visible === false) {
-            series.forEach((item: ISeriesItem) => {
+            series.forEach((item) => {
                 if (item.yAxis === index) {
                     item.visible = false;
                 }
@@ -402,10 +408,13 @@ function hideInvalidAxis(config: any, minmax: IMinMaxInfo[], type: string | unde
 /**
  * Calculate new min/max to make Y axes aligned
  */
-export function getZeroAlignConfiguration(chartOptions: IChartOptions, config: any): any {
+export function getZeroAlignConfiguration({
+    chartOptions,
+    highchartsOptions: config,
+}: IConfiguratorContext): HighchartsOptions {
     const { stacking, type } = chartOptions;
     const { yAxis } = config;
-    const isDualAxis = (yAxis || []).length === 2;
+    const isDualAxis = Array.isArray(yAxis) && yAxis.length === 2;
 
     if (!isDualAxis) {
         return {};
@@ -424,9 +433,11 @@ export function getZeroAlignConfiguration(chartOptions: IChartOptions, config: a
         return {
             yAxis: [
                 {
+                    // @ts-expect-error This is expected as legacy code appends custom properties to Highcharts types. Such properties should ideally moved somewhere else in the future.
                     isUserMinMax: true,
                 },
                 {
+                    // @ts-expect-error This is expected as legacy code appends custom properties to Highcharts types. Such properties should ideally moved somewhere else in the future.
                     isUserMinMax: true,
                 },
             ],
@@ -438,8 +449,8 @@ export function getZeroAlignConfiguration(chartOptions: IChartOptions, config: a
         const { min, max } = minmax[axisIndex];
         const newMinMax = getMinMax(
             axisIndex,
-            getExtremeByChartTypeOnAxis(min!, config.series, axisIndex, type),
-            getExtremeByChartTypeOnAxis(max!, config.series, axisIndex, type),
+            getExtremeByChartTypeOnAxis(min!, config.series ?? [], axisIndex, type),
+            getExtremeByChartTypeOnAxis(max!, config.series ?? [], axisIndex, type),
             minmax,
         );
         return {

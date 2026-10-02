@@ -5,8 +5,7 @@ import { type ReactElement } from "react";
 import { render } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
-import { type IDrillConfig, VisualizationTypes } from "@gooddata/sdk-ui";
+import { VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { type IChartConfig } from "../../interfaces/chartConfig.js";
 import { getHighchartsOptions } from "../chartTypes/_chartCreators/highChartsCreators.js";
@@ -193,37 +192,26 @@ vi.mock("highcharts/modules/pattern-fill.js", () => ({}));
 vi.mock("highcharts/modules/sankey.js", () => ({}));
 vi.mock("highcharts/modules/dependency-wheel.js", () => ({}));
 
+import { makeCtx } from "../chartTypes/_chartCreators/highchartsOptions.test.utils.js";
+import { type IChartOptions } from "../typings/unsafe.js";
+
 // Now import the mocked modules
 import { Chart } from "./Chart.js";
 import { FLUID_LEGEND_THRESHOLD, HighChartsRenderer } from "./HighChartsRenderer.js";
 
 // Helper function to create component
 function createComponent(customProps: any = {}, zoomable = false) {
-    const chartOptions = {
+    const chartOptions: IChartOptions = {
         type: VisualizationTypes.BAR,
         ...customProps.chartOptions,
     };
 
-    const dataView = dummyDataView({
-        attributes: [],
-        buckets: [],
-        dimensions: [],
-        filters: [],
-        measures: [],
-        sortBy: [],
-        workspace: "",
-    });
-
-    const drillConfig: IDrillConfig = {
-        dataView,
-        onDrill: (f: any) => f,
-    };
     const zoomableChartConfig: IChartConfig = {
         zoomInsight: zoomable,
     };
     const chartProps = {
         chartOptions,
-        hcOptions: getHighchartsOptions(chartOptions, drillConfig, zoomableChartConfig),
+        hcOptions: getHighchartsOptions(makeCtx({ chartOptions, chartConfig: zoomableChartConfig })),
         legend: {
             enabled: false,
             items: [

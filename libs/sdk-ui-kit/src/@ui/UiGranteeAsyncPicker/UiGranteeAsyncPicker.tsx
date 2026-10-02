@@ -101,9 +101,9 @@ export interface IUiGranteeAsyncPickerProps {
     /** Fires when the user picks Remove access in the row's permission menu. */
     onRemove?: (grantee: IUiPickedGrantee) => void;
     /**
-     * Labels the picked grantees can be scoped to. Non-empty adds a Label access
-     * drill-in to each row's permission menu, so a scope can be narrowed before the
-     * grantee is granted anything. The row renders `grantee.labelIds`, which the consumer
+     * Labels the picked grantees can be scoped to. Adds a Label access drill-in to each
+     * row's permission menu, unless the only labels are primary ones, so a scope can be
+     * narrowed before the grantee is granted anything. The row renders `grantee.labelIds`, which the consumer
      * owns. Requires `onLabelsChange`: without somewhere to put the pick, the drill-in
      * stays hidden rather than offering an Apply that discards it.
      */

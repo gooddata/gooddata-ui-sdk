@@ -123,7 +123,7 @@ describe("CustomHyperlinkComponent", () => {
             "report",
             "gooddata://report?ws=workspace_1&id=report/1",
             {},
-            "/workspace/workspace_1/reports/report/report%2F1",
+            "/workspace/workspace_1/publisher/report/report%2F1",
         ],
     ])("renders native link for %s", (_description, href, settings, expectedHref) => {
         renderCustomHyperlinkComponent({

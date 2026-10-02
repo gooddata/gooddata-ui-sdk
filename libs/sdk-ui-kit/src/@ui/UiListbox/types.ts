@@ -105,6 +105,11 @@ export type UiListboxAriaAttributes = Omit<IDropdownBodyRenderProps["ariaAttribu
 /**
  * @internal
  */
+export type UiListboxView = "mobile" | "desktop";
+
+/**
+ * @internal
+ */
 export interface IUiListboxProps<InteractiveItemData, StaticItemData = ReactNode> {
     items: IUiListboxItem<InteractiveItemData, StaticItemData>[];
 
@@ -142,6 +147,7 @@ export interface IUiListboxProps<InteractiveItemData, StaticItemData = ReactNode
     shouldCloseOnSelect?: boolean;
     isDisabledFocusable?: boolean;
     isCompact?: boolean;
+    supportedViews?: UiListboxView[];
 
     ariaAttributes: UiListboxAriaAttributes;
 

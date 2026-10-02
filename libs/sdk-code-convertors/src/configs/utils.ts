@@ -2,6 +2,8 @@
 
 import { Pair, YAMLMap } from "yaml";
 
+import type { Visualisation } from "@gooddata/sdk-code-schemas/v1";
+
 import { entryWithSpace } from "../utils/yamlUtils.js";
 
 /** @public */
@@ -48,9 +50,21 @@ export function getValueOrDefault<T>(
     return undefined;
 }
 
+/**
+ * The following utility drops the `[key: string]: unknown` that are present in the generated AAC `config.json` schema
+ * It does so via `as string`. Another way to achieve this (without this type gymnastic) is to set an `additionalProperties: false`
+ * in the JSON schema, so that `[key: string]: unknown` is not present there. This could be a breaking change for some users though.
+ */
+type KnownKeys<T> = {
+    [K in keyof T as string extends K ? never : number extends K ? never : K]: T[K];
+};
+type YamlConfig = KnownKeys<NonNullable<Visualisation["config"]>>;
+type ConfigEntry = { [K in keyof YamlConfig]-?: [key: K, value: unknown] }[keyof YamlConfig];
+type LoaderArgs<T> = { [K in keyof T]: [key: K, value: T[K]] }[keyof T];
+
 export function loadConfig<T>(
     props: VisualisationConfig<T>,
-    loader: <K extends keyof T>(key: K, value: T[K]) => [string, any][],
+    loader: (...args: LoaderArgs<T>) => ConfigEntry[],
 ) {
     const properties = props?.controls;
     const keys = Object.keys(properties ?? {}) as Array<keyof T>;
@@ -64,7 +78,7 @@ export function loadConfig<T>(
             const data = loader(key, properties[key]);
             data.forEach(([newKey, newValue]) => {
                 if (newValue !== undefined) {
-                    addInPath(config, newKey.split("."), newValue);
+                    config.add(new Pair(newKey, newValue));
                 }
             });
         }
@@ -87,19 +101,4 @@ export function saveConfigObject<T extends object>(obj: T | undefined): T | unde
         return undefined;
     }
     return obj;
-}
-
-function addInPath(base: YAMLMap, path: string[], newValue: any) {
-    let current = base;
-    path.forEach((key, index) => {
-        if (index === path.length - 1) {
-            current.add(new Pair(key, newValue));
-        } else if (current.has(key)) {
-            current = current.get(key) as YAMLMap;
-        } else {
-            const map = new YAMLMap();
-            current.add(new Pair(key, map));
-            current = map;
-        }
-    });
 }

@@ -140,10 +140,6 @@
             line-height: var(--gd-table-multi-line-line-height);
         }
 
-        &--locked {
-            opacity: 0.5;
-        }
-
         &--color {
             @each $key, $value in themeColorsMap.$theme-colors-map {
                 &-#{$key} {
@@ -172,10 +168,6 @@
             text-overflow: ellipsis;
             overflow: hidden;
             white-space: nowrap;
-
-            &--locked {
-                opacity: 0.5;
-            }
         }
     }
 
@@ -195,6 +187,14 @@
 
     &__role-icon {
         margin-right: var(--gd-spacing-10px);
+    }
+
+    &__lock-icon {
+        display: inline-flex;
+        flex: none;
+        align-self: center;
+        margin-right: var(--gd-spacing-5px);
+        vertical-align: middle;
     }
 
     &__prefix-icon {

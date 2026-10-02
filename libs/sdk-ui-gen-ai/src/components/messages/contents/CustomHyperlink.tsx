@@ -131,8 +131,8 @@ const getItemUrl = (
         case "metric":
             return `/workspace/${workspaceId}/metrics/metric/${id}`;
         case "report":
-            // Encoded like the Reports app's own route builder, so an id with a slash stays one segment.
-            return `/workspace/${workspaceId}/reports/report/${encodeURIComponent(id)}`;
+            // Encoded like the Publisher app's own route builder, so an id with a slash stays one segment.
+            return `/workspace/${workspaceId}/publisher/report/${encodeURIComponent(id)}`;
         default:
             return null;
     }

@@ -27,8 +27,11 @@ import { ConditionalScopedThemeProvider } from "@gooddata/sdk-ui-theme-provider"
 import { useOverlayZIndexWithRegister } from "../../Overlay/OverlayContext.js";
 import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { bem } from "../@utils/bem.js";
+import { markModalOwnedEvent } from "../UiFocusManager/modalOwnedEvents.js";
 
 const { b, e } = bem("gd-ui-kit-modal-dialog");
+
+const markModalKeyDown = (event: ReactKeyboardEvent) => markModalOwnedEvent(event.nativeEvent);
 
 interface IUiDialogContext {
     titleId: string;
@@ -273,7 +276,15 @@ function OpenModalDialog({
     return (
         <FloatingPortal>
             <ConditionalScopedThemeProvider>
-                <FloatingOverlay lockScroll className={b()} data-testid={dataTestId} style={{ zIndex }}>
+                <FloatingOverlay
+                    lockScroll
+                    className={b()}
+                    data-testid={dataTestId}
+                    style={{ zIndex }}
+                    // The card, the focus guards and the menus portaled from the card all bubble
+                    // through here before reaching a focus trap around the opener.
+                    onKeyDown={markModalKeyDown}
+                >
                     <FloatingFocusManager
                         context={context}
                         initialFocus={initialFocus ?? (hasAutofocusTarget ? initialFocusRef : undefined)}

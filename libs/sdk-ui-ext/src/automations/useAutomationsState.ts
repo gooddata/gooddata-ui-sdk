@@ -2,6 +2,8 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
+import { useIntl } from "react-intl";
+
 import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { useWorkspace } from "@gooddata/sdk-ui";
 import { type IUiAsyncTableBulkAction } from "@gooddata/sdk-ui-kit";
@@ -12,6 +14,7 @@ import { useAutomationColumns } from "./columns/useAutomationColumns.js";
 import { AutomationsDefaultState } from "./constants.js";
 import { useLoadAutomations } from "./data/useLoadAutomations.js";
 import { useAutomationFilters } from "./filters/useAutomationFilters.js";
+import { messages } from "./messages.js";
 import {
     type IAutomationsCoreProps,
     type IAutomationsPendingAction,
@@ -303,6 +306,16 @@ export const useAutomationsState = ({
         automationsLength: state.automations.length,
     });
 
+    const intl = useIntl();
+    const restrictedTooltip = intl.formatMessage(
+        type === "alert" ? messages.restrictedAlertTooltip : messages.restrictedScheduleTooltip,
+    );
+    const getItemTooltip = useCallback(
+        (automation: IAutomationMetadataObject) =>
+            isAutomationRestricted(automation) ? restrictedTooltip : undefined,
+        [restrictedTooltip],
+    );
+
     return {
         state,
         filters,
@@ -317,6 +330,7 @@ export const useAutomationsState = ({
         handleSort,
         handleItemClick,
         isItemClickable,
+        getItemTooltip,
         loadNextPage,
         setSearch,
         setSelectedIds,

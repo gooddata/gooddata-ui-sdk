@@ -23,6 +23,7 @@ export function AutomationsCore(props: IAutomationsCoreProps) {
         handleSort,
         handleItemClick,
         isItemClickable,
+        getItemTooltip,
         loadNextPage,
         setSearch,
         setSelectedIds,
@@ -55,6 +56,7 @@ export function AutomationsCore(props: IAutomationsCoreProps) {
                 onSort={handleSort}
                 onItemClick={handleItemClick}
                 isItemClickable={isItemClickable}
+                getItemTooltip={getItemTooltip}
                 sortBy={sortBy}
                 sortDirection={sortDirection}
                 bulkActions={bulkActions}

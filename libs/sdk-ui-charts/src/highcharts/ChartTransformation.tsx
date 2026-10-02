@@ -161,14 +161,13 @@ export const ChartTransformation = memo(
         const legendOptions: ILegendOptions = buildLegendOptions(config.legend, chartOptions, theme, intl);
         const validationResult = validateData(config.limits, chartOptions);
         const drillConfig = { dataView, onDrill };
-        const hcOptions = getHighchartsOptions(
+        const hcOptions = getHighchartsOptions({
             chartOptions,
             drillConfig,
-            config,
-            dataView.definition,
+            chartConfig: config,
             intl,
             theme,
-        );
+        });
 
         useEffect(() => {
             let isFilteringRecommended = false;

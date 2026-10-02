@@ -7,8 +7,9 @@
         "**/*.fixtures.ts",
         "**/*.test.helpers.ts",
         "**/*.test.helpers.tsx",
+        "**/*.test.utils.ts",
+        "**/*.test.utils.tsx",
         "**/test/helper.ts",
-        "**/*.test.helpers.ts",
         "**/tests/*Mock.ts"
     ],
     "include": ["src/**/*"],

@@ -10,7 +10,7 @@ test.beforeEach(async ({ page }) => {
     await injectAuthHeader(page, API_TOKEN);
 });
 
-test.topLevelDescribe("Boiler app Chart", "boilerapp", () => {
+test.topLevelDescribe("Boiler app Chart", "boilerapp", {}, () => {
     test(`check boiler app tiger`, { tag: ["@checklist_boiler_tiger"] }, async ({ page }) => {
         await page.goto("/");
 

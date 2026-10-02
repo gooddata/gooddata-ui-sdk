@@ -128,7 +128,7 @@ test.topLevelDescribe(
             },
         );
 
-        test.describe("Date filtering on insight", () => {
+        test.describe("Date filtering on insight", {}, () => {
             test.beforeEach(async ({ page }) => {
                 await visit(page, "dashboard/dashboard-date-filtering-on-insight-scenario");
                 await enterEditMode(page);

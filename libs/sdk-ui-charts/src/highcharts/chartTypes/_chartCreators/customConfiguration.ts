@@ -7,7 +7,7 @@ import { type IntlShape } from "react-intl";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { type ITheme, isMeasureFormatInPercent } from "@gooddata/sdk-model";
-import { type ChartType, type IDrillConfig, VisualizationTypes } from "@gooddata/sdk-ui";
+import { type ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
 import { buildTooltipLocalizedStrings, getLighterColor, isPatternObject } from "@gooddata/sdk-ui-vis-commons";
 
 import { type IAxisConfig, type IChartConfig } from "../../../interfaces/chartConfig.js";
@@ -15,6 +15,9 @@ import { getBlackLabelStyle } from "../../constants/label.js";
 import {
     type AxisLabelsFormatterCallbackFunction,
     type HighchartsOptions,
+    type PlotTreemapDataLabelsOptions,
+    type PlotTreemapOptions,
+    type SeriesOptionsType,
     type XAxisOptions,
     type YAxisOptions,
 } from "../../lib/index.js";
@@ -42,17 +45,21 @@ import {
     isBulletChart,
     isColumnChart,
     isComboChart,
+    isFlatCategories,
     isHeatmap,
     isInvertedChartType,
     isOneOfTypes,
+    isPerAxisCategories,
     isRotationInRange,
     isScatterPlot,
     isSupportingJoinedAttributeAxisName,
+    isTreeCategories,
     percentFormatter,
 } from "../_util/common.js";
 import { canComboChartBeStackedInPercent } from "../comboChart/comboChartOptions.js";
 
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from "./commonConfiguration.js";
+import { type IConfiguratorContext } from "./configuratorContext.js";
 import { getCustomTooltipSection, getCustomTooltipSeparator } from "./customTooltip/section.js";
 import {
     formatAsPercent,
@@ -76,6 +83,7 @@ import {
     shouldXAxisStartOnTickOnBubbleScatter,
     shouldYAxisStartOnTickOnBubbleScatter,
 } from "./helpers.js";
+import { type IHighchartsOptionsContext } from "./highchartsOptionsContext.js";
 import { styleVariables } from "./styles/variables.js";
 
 // Extended interfaces for Highcharts types with additional runtime properties
@@ -90,7 +98,6 @@ interface IExtendedChart extends Highcharts.Chart {
 
 interface IExtendedPoint extends Highcharts.Point {
     drilldown?: boolean;
-    value?: number;
     node?: { val: number };
     z?: number;
     format?: string;
@@ -139,8 +146,8 @@ export const TOOLTIP_VIEWPORT_MARGIN_TOP = 20;
 
 const BAR_WIDTH_WHEN_TOTAL_LABELS_AVAILABLE = "90%";
 
-const escapeAngleBrackets = (str: any) => {
-    return str?.replace(/</g, "&lt;")?.replace(/>/g, "&gt;");
+const escapeAngleBrackets = (str: string) => {
+    return str.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 };
 
 function getAxisTitleConfiguration<T extends XAxisOptions | YAxisOptions>(axis: IAxis): T {
@@ -155,11 +162,7 @@ function getAxisTitleConfiguration<T extends XAxisOptions | YAxisOptions>(axis: 
     ) as T;
 }
 
-function getTitleConfiguration(
-    chartOptions: IChartOptions,
-    _config: HighchartsOptions,
-    chartConfig?: IChartConfig,
-): HighchartsOptions {
+function getTitleConfiguration({ chartOptions, chartConfig }: IConfiguratorContext): HighchartsOptions {
     const { yAxes = [], xAxes = [] } = chartOptions;
     const yAxis = yAxes.map((axis) => getAxisTitleConfiguration<YAxisOptions>(axis));
     const xAxis = xAxes.map((axis) => getAxisTitleConfiguration<XAxisOptions>(axis));
@@ -240,11 +243,7 @@ export function formatOverlapping(this: Highcharts.AxisLabelsFormatterContextObj
     );
 }
 
-function hideOverlappedLabels(
-    chartOptions: IChartOptions,
-    _config: HighchartsOptions,
-    chartConfig?: IChartConfig,
-): HighchartsOptions {
+function hideOverlappedLabels({ chartOptions, chartConfig }: IConfiguratorContext): HighchartsOptions {
     const rotation = Number(chartOptions?.xAxisProps?.rotation ?? "0");
 
     // rotate labels for charts that are horizontal (bar, bullet, waterfall with vertical orientation config)
@@ -556,7 +555,10 @@ function getInteractionMessage(
     return isDrillable && intl ? `<div class="gd-viz-tooltip-interaction">${message}</div>` : "";
 }
 
-function formatLabel(value: any, format: string | undefined, config: IChartConfig = {}) {
+type LabelValue = number | string | null | undefined;
+function formatLabel(value: NonNullable<LabelValue>, format?: string, config?: IChartConfig): string;
+function formatLabel(value: LabelValue, format?: string, config?: IChartConfig): string | null;
+function formatLabel(value: LabelValue, format?: string, config: IChartConfig = {}): string | null {
     // no labels for missing values
     if (value === null || value === undefined) {
         return null;
@@ -564,8 +566,7 @@ function formatLabel(value: any, format: string | undefined, config: IChartConfi
 
     const { separators } = config;
 
-    const parsedNumber: number | null =
-        value === null || undefined ? null : typeof value === "string" ? parseFloat(value) : value;
+    const parsedNumber = typeof value === "string" ? parseFloat(value) : value;
 
     // Based on the tests, when a format is not provided, we should refrain from formatting the value using the formatter, as the default format "#,##0.00" will be used.
     // Additionally, the test necessitates that the value should remain unformatted.
@@ -574,7 +575,7 @@ function formatLabel(value: any, format: string | undefined, config: IChartConfi
         return escapeAngleBrackets(formatted.formattedValue);
     }
 
-    return parsedNumber!.toString();
+    return parsedNumber.toString();
 }
 
 function labelFormatter(this: IDataLabelFormatterContext, config?: IChartConfig) {
@@ -586,10 +587,10 @@ function axisLabelFormatter(
     config: IChartConfig,
     format: string | undefined,
 ) {
-    return this.value === 0 ? 0 : formatLabel(this.value, format, config);
+    return this.value === 0 ? "0" : formatLabel(this.value, format, config);
 }
 
-export function percentageDataLabelFormatter(this: any, config?: IChartConfig): string {
+export function percentageDataLabelFormatter(this: any, config?: IChartConfig) {
     // suppose that chart has one Y axis by default
     const isSingleAxis = (this.series?.chart?.yAxis?.length ?? 1) === 1;
     const isPrimaryAxis = !(this.series?.yAxis?.opposite ?? false);
@@ -613,8 +614,8 @@ export function firstValuePercentageLabelFormatter(this: any, config?: IChartCon
     return `${formatted} (${percFormatted}%)`;
 }
 
-function labelFormatterHeatmap(this: { point: IExtendedPoint }, options: any) {
-    return formatLabel(this.point.value, options.formatGD, options.config);
+function labelFormatterHeatmap(this: { point: IExtendedPoint }, config: IChartConfig, options: any) {
+    return formatLabel(this.point.value, options.formatGD, config);
 }
 
 function level1LabelsFormatter(this: { point: IExtendedPoint }, config?: IChartConfig) {
@@ -680,13 +681,11 @@ function stackLabelFormatter(this: IStackLabelFormatterContext, config?: IChartC
     return showStackLabel ? formatLabel(this.total, this.axis?.userOptions?.defaultFormat, config) : null;
 }
 
-function getTooltipConfiguration(
-    chartOptions: IChartOptions,
-    _config?: any,
-    chartConfig?: IChartConfig,
-    _drillConfig?: IDrillConfig,
-    intl?: IntlShape,
-): HighchartsOptions {
+function getTooltipConfiguration({
+    chartOptions,
+    chartConfig,
+    intl,
+}: IConfiguratorContext): HighchartsOptions {
     const tooltipAction = chartOptions.actions?.tooltip;
     const chartType = chartOptions.type;
     const { stacking } = chartOptions;
@@ -727,7 +726,7 @@ function getTooltipConfiguration(
 
 function getTreemapLabelsConfiguration(
     isMultiLevel: boolean,
-    styling: Highcharts.DataLabelsOptions,
+    styling: PlotTreemapDataLabelsOptions,
     config?: IChartConfig,
     labelsConfig?: object,
 ) {
@@ -770,7 +769,7 @@ function getTreemapLabelsConfiguration(
                     ...smallLabelInCenter,
                 },
             ],
-        };
+        } satisfies PlotTreemapOptions;
     } else {
         return {
             dataLabels: {
@@ -782,7 +781,7 @@ function getTreemapLabelsConfiguration(
                     ...smallLabelInCenter,
                 },
             ],
-        };
+        } satisfies PlotTreemapOptions;
     }
 }
 
@@ -833,14 +832,11 @@ function getPieLabelDataLabelsConfig(
     return [{ ...defaultLabelsConfig, style: insideStyle, verticalAlign: "middle" }];
 }
 
-function getDataLabelsConfiguration(
-    chartOptions: IChartOptions,
-    _config: any,
-    chartConfig?: IChartConfig,
-    _drillConfig?: IDrillConfig,
-    _intl?: IntlShape,
-    theme?: ITheme,
-) {
+function getDataLabelsConfiguration({
+    chartOptions,
+    chartConfig,
+    theme,
+}: IConfiguratorContext): HighchartsOptions {
     const { stacking, yAxes = [], type } = chartOptions;
     const { stackMeasuresToPercent = false, enableSeparateTotalLabels = false } = chartConfig || {};
 
@@ -864,7 +860,8 @@ function getDataLabelsConfiguration(
 
     const styling = getLabelsStyling(type, stacking, theme, isBackplate);
 
-    const yAxis = yAxes.map((axis: any) => ({
+    // @ts-expect-error This is expected as legacy code appends custom properties to Highcharts types. Such properties should ideally moved somewhere else in the future.
+    const yAxis: YAxisOptions[] = yAxes.map((axis) => ({
         defaultFormat: axis?.format,
     }));
 
@@ -900,6 +897,7 @@ function getDataLabelsConfiguration(
 
     return {
         plotOptions: {
+            // @ts-expect-error This is expected as legacy code appends custom properties to Highcharts types. Such properties should ideally be moved somewhere else in the future.
             gdcOptions: {
                 dataLabels: {
                     visible: labelsVisible,
@@ -941,8 +939,7 @@ function getDataLabelsConfiguration(
             },
             heatmap: {
                 dataLabels: {
-                    formatter: labelFormatterHeatmap,
-                    config: chartConfig,
+                    formatter: partial(labelFormatterHeatmap, chartConfig),
                     ...heatmapLabelsConfig,
                 },
             },
@@ -989,26 +986,26 @@ function getDataLabelsConfiguration(
             pyramid: {
                 dataLabels: {
                     ...DEFAULT_LABELS_CONFIG,
-                    inside: "true",
+                    inside: true,
                 },
             },
             funnel: {
                 dataLabels: {
                     ...DEFAULT_LABELS_CONFIG,
                     formatter: partial(funnelFormatter, chartConfig),
-                    inside: "true",
+                    inside: true,
                 },
             },
             sankey: {
                 dataLabels: {
                     ...DEFAULT_LABELS_CONFIG,
-                    formatter: () => {},
+                    formatter: () => undefined,
                 },
             },
             dependencywheel: {
                 dataLabels: {
                     ...DEFAULT_LABELS_CONFIG,
-                    formatter: () => {},
+                    formatter: () => undefined,
                 },
             },
         },
@@ -1016,7 +1013,7 @@ function getDataLabelsConfiguration(
     };
 }
 
-function getDataPointsConfiguration(_chartOptions: IChartOptions, _config: any, chartConfig?: IChartConfig) {
+function getDataPointsConfiguration({ chartConfig }: IConfiguratorContext): HighchartsOptions {
     const dataPointsVisible = chartConfig?.dataPoints?.visible ?? true;
     const dataPointsConfig = {
         marker: {
@@ -1043,11 +1040,7 @@ function isNonStackingConfiguration(chartOptions: IChartOptions, chartConfig?: I
     return false;
 }
 
-function getStackingConfiguration(
-    chartOptions: IChartOptions,
-    _config: any,
-    chartConfig?: IChartConfig,
-): HighchartsOptions {
+function getStackingConfiguration({ chartOptions, chartConfig }: IConfiguratorContext): HighchartsOptions {
     const { stacking, yAxes = [], type } = chartOptions;
 
     if (!stacking) {
@@ -1117,7 +1110,7 @@ function getSeries(series: any) {
 
                 return {
                     ...dataItem,
-                    name: escapeAngleBrackets(dataItem.name),
+                    name: dataItem.name && escapeAngleBrackets(dataItem.name),
                 };
             }),
         };
@@ -1128,17 +1121,18 @@ function getHeatmapDataConfiguration(chartOptions: IChartOptions): HighchartsOpt
     const data = chartOptions.data || EMPTY_DATA;
     const series = data.series;
     const categories = data.categories ?? [];
+    const [xCategories = [], yCategories = []] = isPerAxisCategories(categories) ? categories : [];
 
     return {
         series,
         xAxis: [
             {
-                categories: categories[0] || [],
+                categories: xCategories,
             },
         ],
         yAxis: [
             {
-                categories: categories[1] || [],
+                categories: yCategories,
             },
         ],
         colorAxis: {
@@ -1147,18 +1141,24 @@ function getHeatmapDataConfiguration(chartOptions: IChartOptions): HighchartsOpt
     };
 }
 
-export function escapeCategories(dataCategories: any[] | undefined): any {
-    return dataCategories?.map((category) => {
-        return typeof category === "string"
-            ? escapeAngleBrackets(category)
-            : {
-                  name: escapeAngleBrackets(category.name),
-                  categories: category.categories?.map(escapeAngleBrackets),
-              };
-    });
+export function escapeCategories(
+    dataCategories: IChartOptionsData["categories"],
+): IChartOptionsData["categories"] {
+    if (isFlatCategories(dataCategories)) {
+        return dataCategories.map(escapeAngleBrackets);
+    }
+
+    if (isTreeCategories(dataCategories)) {
+        return dataCategories.map(({ name, categories }) => ({
+            name: escapeAngleBrackets(name),
+            categories: categories.map(escapeAngleBrackets),
+        }));
+    }
+
+    return dataCategories?.map((category) => category.map(escapeAngleBrackets));
 }
 
-function getDataConfiguration(chartOptions: IChartOptions): HighchartsOptions {
+function getDataConfiguration({ chartOptions }: IConfiguratorContext): HighchartsOptions {
     const data = chartOptions.data || EMPTY_DATA;
     const series = getSeries(data.series);
     const { type } = chartOptions;
@@ -1186,6 +1186,7 @@ function getDataConfiguration(chartOptions: IChartOptions): HighchartsOptions {
         series,
         xAxis: [
             {
+                // @ts-expect-error This is expected as legacy code appends custom properties to Highcharts types. Such properties should ideally moved somewhere else in the future.
                 categories,
             },
         ],
@@ -1257,8 +1258,11 @@ function getHeatMapHoverColor(config: any) {
     return getLighterColor(resultColor, 0.2);
 }
 
-function getHoverStyles({ type }: any, config: any) {
-    let seriesMapFn = (..._: any[]) => {};
+function getHoverStyles({
+    chartOptions: { type },
+    highchartsOptions: config,
+}: IConfiguratorContext): HighchartsOptions {
+    let seriesMapFn: (series: any, config?: HighchartsOptions) => SeriesOptionsType;
 
     switch (type) {
         case VisualizationTypes.LINE:
@@ -1347,18 +1351,11 @@ function getHoverStyles({ type }: any, config: any) {
             throw new Error(`Undefined chart type "${type}".`);
     }
     return {
-        series: config.series.map((item: any) => seriesMapFn(item, config)),
+        series: config.series?.map((item) => seriesMapFn(item, config)),
     };
 }
 
-function getGridConfiguration(
-    chartOptions: IChartOptions,
-    _config: any,
-    _chartConfig: IChartConfig,
-    _drillConfig: any,
-    _intl: any,
-    theme: ITheme,
-) {
+function getGridConfiguration({ chartOptions, theme }: IConfiguratorContext): HighchartsOptions {
     const gridEnabled = chartOptions.grid?.enabled ?? true;
     const { yAxes = [], xAxes = [] } = chartOptions;
     const gridColor =
@@ -1389,7 +1386,7 @@ export function areAxisLabelsEnabled(
 
     const { type } = chartOptions;
     const categories = isHeatmap(type) ? data.categories : escapeCategories(data.categories);
-    const categoriesFlag = shouldCheckForEmptyCategories ? !isEmpty(compact(categories)) : true;
+    const categoriesFlag = shouldCheckForEmptyCategories ? !isEmpty(compact<unknown>(categories)) : true;
 
     const axisOptions = chartOptions?.[axisPropsName] as IAxisConfig;
     const visible = axisOptions?.visible ?? true;
@@ -1713,14 +1710,7 @@ const getXAxisConfiguration = (
     });
 };
 
-function getAxesConfiguration(
-    chartOptions: IChartOptions,
-    _config: any,
-    chartConfig: IChartConfig,
-    _drillConfig: any,
-    _intl: any,
-    theme: ITheme,
-): HighchartsOptions {
+function getAxesConfiguration({ chartOptions, chartConfig, theme }: IConfiguratorContext): HighchartsOptions {
     const isHighContrast = isHighContrastMode();
     const axisValueColor = isHighContrast
         ? "CanvasText"
@@ -1753,7 +1743,9 @@ function getAxesConfiguration(
     };
 }
 
-function getTargetCursorConfigurationForBulletChart({ type, data }: IChartOptions) {
+function getTargetCursorConfigurationForBulletChart({
+    chartOptions: { type, data },
+}: IConfiguratorContext): HighchartsOptions {
     if (!isBulletChart(type)) {
         return {};
     }
@@ -1765,11 +1757,7 @@ function getTargetCursorConfigurationForBulletChart({ type, data }: IChartOption
     return isTargetDrillable ? { plotOptions: { bullet: { cursor: "pointer" } } } : {};
 }
 
-function getZoomingAndPanningConfiguration(
-    _chartOptions: IChartOptions,
-    _config: any,
-    chartConfig?: IChartConfig,
-): HighchartsOptions | undefined {
+function getZoomingAndPanningConfiguration({ chartConfig }: IConfiguratorContext): HighchartsOptions {
     return chartConfig?.zoomInsight
         ? {
               chart: {
@@ -1789,10 +1777,10 @@ function getZoomingAndPanningConfiguration(
                   },
               },
           }
-        : undefined;
+        : {};
 }
 
-function getReversedStacking(chartOptions: IChartOptions, _config: any, chartConfig?: IChartConfig) {
+function getReversedStacking({ chartOptions, chartConfig }: IConfiguratorContext): HighchartsOptions {
     const { yAxes = [] } = chartOptions;
     const hasAnyStackOptionSelected =
         chartConfig?.stackMeasures ||
@@ -1814,14 +1802,14 @@ function getReversedStacking(chartOptions: IChartOptions, _config: any, chartCon
     };
 }
 
-export function getCustomizedConfiguration(
-    chartOptions: IChartOptions,
-    chartConfig?: IChartConfig,
-    drillConfig?: IDrillConfig,
-    intl?: IntlShape,
-    theme?: ITheme,
-): HighchartsOptions {
-    const configurators = [
+export function getCustomizedConfiguration({
+    chartOptions,
+    chartConfig,
+    drillConfig,
+    intl,
+    theme,
+}: IHighchartsOptionsContext): HighchartsOptions {
+    const configurators: Configurator[] = [
         getTitleConfiguration,
         getAxesConfiguration,
         getStackingConfiguration,
@@ -1846,9 +1834,17 @@ export function getCustomizedConfiguration(
         getChartOrientationConfiguration,
         getChartHighlightingConfiguration,
     ];
-    const commonData = configurators.reduce((config: HighchartsOptions, configurator: any) => {
-        return merge(config, configurator(chartOptions, config, chartConfig, drillConfig, intl, theme));
-    }, {});
+    const commonData = configurators.reduce(
+        (highchartsOptions: HighchartsOptions, configurator: Configurator) => {
+            return merge(
+                highchartsOptions,
+                configurator({ chartOptions, highchartsOptions, chartConfig, drillConfig, intl, theme }),
+            );
+        },
+        {},
+    );
 
     return merge({}, commonData);
 }
+
+type Configurator = (ctx: IConfiguratorContext) => HighchartsOptions;

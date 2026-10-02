@@ -26,6 +26,11 @@ export default defineConfig({
     build: {
         outDir: "esm",
         chunkSizeWarningLimit: 10000,
+        rolldownOptions: {
+            checks: {
+                pluginTimings: false,
+            },
+        },
     },
     server: {
         port: 8080,

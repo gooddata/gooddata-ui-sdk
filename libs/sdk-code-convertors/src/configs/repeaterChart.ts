@@ -62,66 +62,36 @@ export function repeaterChartLoad(props: VisualisationConfig<RepeaterChartConfig
     return loadConfig(props, (key, value) => {
         switch (key) {
             case "columnWidths": {
-                return [["widths", loadColumnsWidth(value as (typeof DEFAULTS)["columnWidths"])]];
+                return [["widths", loadColumnsWidth(value)]];
             }
             case "colorMapping": {
-                return [["colors", loadColorMapping(value as (typeof DEFAULTS)["colorMapping"])]];
+                return [["colors", loadColorMapping(value)]];
             }
             case "rowHeight": {
-                return [
-                    [
-                        "row_height",
-                        getValueOrDefault(value as (typeof DEFAULTS)["rowHeight"], DEFAULTS.rowHeight),
-                    ],
-                ];
+                return [["row_height", getValueOrDefault(value, DEFAULTS.rowHeight)]];
             }
             case "cellVerticalAlign": {
-                return [
-                    [
-                        "cell_vertical_align",
-                        getValueOrDefault(
-                            value as (typeof DEFAULTS)["cellVerticalAlign"],
-                            DEFAULTS.cellVerticalAlign,
-                        ),
-                    ],
-                ];
+                return [["cell_vertical_align", getValueOrDefault(value, DEFAULTS.cellVerticalAlign)]];
             }
             case "cellTextWrapping": {
-                return [
-                    [
-                        "cell_text_wrapping",
-                        getValueOrDefault(
-                            value as (typeof DEFAULTS)["cellTextWrapping"],
-                            DEFAULTS.cellTextWrapping,
-                        ),
-                    ],
-                ];
+                return [["cell_text_wrapping", getValueOrDefault(value, DEFAULTS.cellTextWrapping)]];
             }
             case "cellImageSizing": {
-                return [
-                    [
-                        "cell_image_sizing",
-                        getValueOrDefault(
-                            value as (typeof DEFAULTS)["cellImageSizing"],
-                            DEFAULTS.cellImageSizing,
-                        ),
-                    ],
-                ];
+                return [["cell_image_sizing", getValueOrDefault(value, DEFAULTS.cellImageSizing)]];
             }
             case "disableAlerts":
-                return [
-                    ["disable_alerts", getValueOrDefault(value as boolean, DEFAULTS.disableAlerts, "bool")],
-                ];
+                return [["disable_alerts", getValueOrDefault(value, DEFAULTS.disableAlerts, "bool")]];
             case "disableScheduledExports":
                 return [
                     [
                         "disable_scheduled_exports",
-                        getValueOrDefault(value as boolean, DEFAULTS.disableScheduledExports, "bool"),
+                        getValueOrDefault(value, DEFAULTS.disableScheduledExports, "bool"),
                     ],
                 ];
             case "disableKeyDriveAnalysisOn":
-                return [["disable_key_drive_analysis", loadDisableKda(value as Record<string, boolean>)]];
+                return [["disable_key_drive_analysis", loadDisableKda(value)]];
             default:
+                key satisfies never; // Check that no key is forgotten in the cases above
                 return [];
         }
     });

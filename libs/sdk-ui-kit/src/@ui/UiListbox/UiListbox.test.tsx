@@ -6,6 +6,8 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import cx from "classnames";
 import { describe, expect, it, vi } from "vitest";
 
+import { useMediaQuery } from "../../responsive/useMediaQuery.js";
+
 import { b, e } from "./listboxBem.js";
 import {
     type IUiListboxInteractiveItemProps,
@@ -13,6 +15,10 @@ import {
     type IUiListboxStaticItemProps,
 } from "./types.js";
 import { UiListbox } from "./UiListbox.js";
+
+vi.mock("../../responsive/useMediaQuery.js", () => ({
+    useMediaQuery: vi.fn(() => false),
+}));
 
 describe("UiListbox", () => {
     const mockItems: IUiListboxItem<string>[] = [
@@ -327,6 +333,16 @@ describe("UiListbox", () => {
 
         const listboxContainer = document.querySelector(`.${b()}`);
         expect(listboxContainer).toHaveStyle({ maxWidth: `${maxWidth}px` });
+    });
+
+    it.each([
+        { supportedViews: undefined, isMobile: true },
+        { supportedViews: ["desktop"], isMobile: false },
+    ])("should apply mobile layout on mobile device for $supportedViews", ({ supportedViews, isMobile }) => {
+        vi.mocked(useMediaQuery).mockReturnValue(true);
+        renderListbox({ supportedViews });
+
+        expect(document.querySelector(`.${b()}`)).toHaveClass(b({ mobile: isMobile }), { exact: true });
     });
 
     it("should call onUnhandledKeyDown for unhandled key events", () => {

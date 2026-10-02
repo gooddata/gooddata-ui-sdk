@@ -1,15 +1,10 @@
 // (C) 2007-2026 GoodData Corporation
 
-import {
-    type PlotBarDataLabelsOptions,
-    type PlotBubbleDataLabelsOptions,
-    type XAxisOptions,
-} from "highcharts";
+import { type PlotBarDataLabelsOptions, type PlotBubbleDataLabelsOptions } from "highcharts";
 import { omit, set } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
-import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
-import { type IDrillConfig, VisualizationTypes, createIntlMock } from "@gooddata/sdk-ui";
+import { VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { type IChartConfig, type IDataLabelsConfig } from "../../../interfaces/chartConfig.js";
 import {
@@ -24,6 +19,7 @@ import {
 } from "../_chartOptions/chartCapabilities.js";
 import { immutableSet } from "../_util/common.js";
 
+import { makeCtx as makeConfiguratorCtx } from "./configurator.test.utils.js";
 import {
     TOOLTIP_PADDING,
     TOOLTIP_VIEWPORT_MARGIN_TOP,
@@ -37,6 +33,7 @@ import {
     percentageDataLabelFormatter,
 } from "./customConfiguration.js";
 import { getChartHighlightingConfiguration } from "./getChartHighlightingConfiguration.js";
+import { makeCtx, makeDrillConfig } from "./highchartsOptions.test.utils.js";
 
 function getData(dataValues: Partial<ISeriesDataItem>[]) {
     return {
@@ -70,6 +67,19 @@ function getChartZoomConfig(chartConfig: any): void {
     };
 }
 
+/**
+ * Many tests here use `result.xAxis[0]` and similar in the code. The trouble is that `xAxis` can also be a non
+ * array (i.e. XAxisOptions and not XAxisOptions[]) per Highcharts types, which in turn creates type errors for
+ * such expressions. Developers are then resorting to casting the whole result of `getCustomizedConfiguration()`
+ * to any, which is not ideal for catching typos/errors or having proper intellisense.
+ *
+ * The following function asserts that the provided expression is an array and then provides proper typing
+ * inference without casting.
+ */
+function assertArray(value: unknown): asserts value is unknown[] {
+    expect(Array.isArray(value)).toBe(true);
+}
+
 const chartOptions: IChartOptions = {
     type: VisualizationTypes.LINE,
     yAxes: [{ label: "atitle" }],
@@ -85,12 +95,12 @@ const chartOptions: IChartOptions = {
 
 describe("getCustomizedConfiguration", () => {
     it("should escape series names", () => {
-        const result = getCustomizedConfiguration(chartOptions);
+        const result = getCustomizedConfiguration(makeCtx({ chartOptions }));
         expect(result.series![0].name).toEqual("&lt;b&gt;aaa&lt;/b&gt;");
     });
 
     it("should escape data items in series", () => {
-        const result = getCustomizedConfiguration(chartOptions);
+        const result = getCustomizedConfiguration(makeCtx({ chartOptions }));
         const serie: any = result.series![0];
         const point: any = serie.data[0];
         expect(point.name).toEqual("&lt;b&gt;bbb&lt;/b&gt;");
@@ -98,78 +108,100 @@ describe("getCustomizedConfiguration", () => {
 
     it('should handle "%" format on axis and use label formatter', () => {
         const chartOptionsWithFormat = immutableSet(chartOptions, "yAxes[0].format", "0.00 %");
-        const resultWithoutFormat: any = getCustomizedConfiguration(chartOptions);
-        const resultWithFormat: any = getCustomizedConfiguration(chartOptionsWithFormat);
+        const resultWithoutFormat = getCustomizedConfiguration(makeCtx({ chartOptions }));
+        const resultWithFormat = getCustomizedConfiguration(
+            makeCtx({ chartOptions: chartOptionsWithFormat }),
+        );
 
-        expect(resultWithoutFormat.yAxis[0].labels.formatter).toBeUndefined();
-        expect(resultWithFormat.yAxis[0].labels.formatter).toBeDefined();
+        assertArray(resultWithoutFormat.yAxis);
+        expect(resultWithoutFormat.yAxis[0].labels!.formatter).toBeUndefined();
+        expect(resultWithFormat.yAxis).toMatchObject([{ labels: { formatter: expect.any(Function) } }]);
     });
 
     it("should set formatter for xAxis labels to prevent overlapping for bar chart with 90 rotation", () => {
-        const result: any = getCustomizedConfiguration({
-            ...chartOptions,
-            type: "bar",
-            xAxisProps: {
-                rotation: "90",
-            },
-        });
+        const result = getCustomizedConfiguration(
+            makeCtx({
+                chartOptions: {
+                    ...chartOptions,
+                    type: "bar",
+                    xAxisProps: {
+                        rotation: "90",
+                    },
+                },
+            }),
+        );
 
-        expect(result.xAxis[0].labels.formatter).toBe(formatOverlapping);
+        expect(result.xAxis).toMatchObject([{ labels: { formatter: formatOverlapping } }]);
     });
 
     it("should set formatter for xAxis labels to prevent overlapping for stacking bar chart with 90 rotation", () => {
-        const result: any = getCustomizedConfiguration({
-            ...chartOptions,
-            isViewByTwoAttributes: true,
-            type: "bar",
-            xAxisProps: {
-                rotation: "90",
-            },
-        });
+        const result = getCustomizedConfiguration(
+            makeCtx({
+                chartOptions: {
+                    ...chartOptions,
+                    isViewByTwoAttributes: true,
+                    type: "bar",
+                    xAxisProps: {
+                        rotation: "90",
+                    },
+                },
+            }),
+        );
 
-        expect(result.xAxis[0].labels.formatter).toBe(formatOverlappingForParentAttribute);
+        expect(result.xAxis).toMatchObject([{ labels: { formatter: formatOverlappingForParentAttribute } }]);
     });
 
     it("shouldn't set formatter for xAxis by default", () => {
-        const result: any = getCustomizedConfiguration(chartOptions);
+        const result = getCustomizedConfiguration(makeCtx({ chartOptions }));
 
-        expect(result.xAxis[0].labels.formatter).toBeUndefined();
+        assertArray(result.xAxis);
+        expect(result.xAxis[0].labels!.formatter).toBeUndefined();
     });
 
     it("should set connectNulls for stacked Area chart", () => {
-        const result = getCustomizedConfiguration({
-            ...chartOptions,
-            type: VisualizationTypes.AREA,
-            stacking: "normal",
-        });
+        const result = getCustomizedConfiguration(
+            makeCtx({
+                chartOptions: {
+                    ...chartOptions,
+                    type: VisualizationTypes.AREA,
+                    stacking: "normal",
+                },
+            }),
+        );
 
         expect(result.plotOptions!.series!.connectNulls).toBeTruthy();
     });
 
     it("should NOT set connectNulls for NON stacked Area chart", () => {
-        const result = getCustomizedConfiguration({
-            ...chartOptions,
-            type: VisualizationTypes.AREA,
-            stacking: null,
-        });
+        const result = getCustomizedConfiguration(
+            makeCtx({
+                chartOptions: {
+                    ...chartOptions,
+                    type: VisualizationTypes.AREA,
+                    stacking: null,
+                },
+            }),
+        );
 
         expect(result.plotOptions!.series).toEqual({});
     });
 
     it("should set load event in configuration", () => {
-        const result = getCustomizedConfiguration(chartOptions);
+        const result = getCustomizedConfiguration(makeCtx({ chartOptions }));
 
         expect(result.chart!.events).toEqual({ load: expect.any(Function) });
     });
 
     it("should NOT set stacking for the Area chart only has one metric", () => {
         const result = getCustomizedConfiguration(
-            {
-                ...chartOptions,
-                type: VisualizationTypes.AREA,
-                stacking: "normal",
-            },
-            { continuousLine: { enabled: true } },
+            makeCtx({
+                chartOptions: {
+                    ...chartOptions,
+                    type: VisualizationTypes.AREA,
+                    stacking: "normal",
+                },
+                chartConfig: { continuousLine: { enabled: true } },
+            }),
         );
 
         expect(result.plotOptions!.series!.stacking).toBeUndefined();
@@ -177,26 +209,28 @@ describe("getCustomizedConfiguration", () => {
 
     it("should set stacking for the Area chart has more than one metric", () => {
         const result = getCustomizedConfiguration(
-            {
-                ...chartOptions,
-                type: VisualizationTypes.AREA,
-                stacking: "normal",
-                data: {
-                    series: [
-                        {
-                            color: "rgb(20,178,226)",
-                            data: ["45", "56"],
-                            name: "Sum of Value",
-                        },
-                        {
-                            color: "rgb(20,178,226)",
-                            data: ["45", "56"],
-                            name: "Sum of Value1",
-                        },
-                    ],
+            makeCtx({
+                chartOptions: {
+                    ...chartOptions,
+                    type: VisualizationTypes.AREA,
+                    stacking: "normal",
+                    data: {
+                        series: [
+                            {
+                                color: "rgb(20,178,226)",
+                                data: ["45", "56"],
+                                name: "Sum of Value",
+                            },
+                            {
+                                color: "rgb(20,178,226)",
+                                data: ["45", "56"],
+                                name: "Sum of Value1",
+                            },
+                        ],
+                    },
                 },
-            },
-            { continuousLine: { enabled: true } },
+                chartConfig: { continuousLine: { enabled: true } },
+            }),
         );
 
         expect(result.plotOptions!.series!.stacking).toBe("normal");
@@ -204,12 +238,14 @@ describe("getCustomizedConfiguration", () => {
 
     it("should set stacking for the Combo chart has the primary chart type is Area", () => {
         const result = getCustomizedConfiguration(
-            {
-                ...chartOptions,
-                type: VisualizationTypes.COMBO,
-                stacking: "normal",
-            },
-            { continuousLine: { enabled: true }, primaryChartType: "area" },
+            makeCtx({
+                chartOptions: {
+                    ...chartOptions,
+                    type: VisualizationTypes.COMBO,
+                    stacking: "normal",
+                },
+                chartConfig: { continuousLine: { enabled: true }, primaryChartType: "area" },
+            }),
         );
 
         expect(result.plotOptions!.series!.stacking).toBe("normal");
@@ -217,12 +253,14 @@ describe("getCustomizedConfiguration", () => {
 
     it("should set stacking for the chart if the stackingMeasures is true", () => {
         const result = getCustomizedConfiguration(
-            {
-                ...chartOptions,
-                type: VisualizationTypes.AREA,
-                stacking: "normal",
-            },
-            { continuousLine: { enabled: true }, stackMeasures: true },
+            makeCtx({
+                chartOptions: {
+                    ...chartOptions,
+                    type: VisualizationTypes.AREA,
+                    stacking: "normal",
+                },
+                chartConfig: { continuousLine: { enabled: true }, stackMeasures: true },
+            }),
         );
 
         expect(result.plotOptions!.series!.stacking).toBe("normal");
@@ -230,153 +268,155 @@ describe("getCustomizedConfiguration", () => {
 
     it("should NOT set stacking for the Combo chart has the secondary chart type is Area", () => {
         const result = getCustomizedConfiguration(
-            {
-                ...chartOptions,
-                type: VisualizationTypes.COMBO,
-                stacking: "normal",
-            },
-            { continuousLine: { enabled: true }, secondaryChartType: "area" },
+            makeCtx({
+                chartOptions: {
+                    ...chartOptions,
+                    type: VisualizationTypes.COMBO,
+                    stacking: "normal",
+                },
+                chartConfig: { continuousLine: { enabled: true }, secondaryChartType: "area" },
+            }),
         );
 
         expect(result.plotOptions!.series!.stacking).toBeUndefined();
     });
 
     it("should NOT set connectNulls for stacked Line chart", () => {
-        const result = getCustomizedConfiguration({
-            ...chartOptions,
-            stacking: "normal",
-        });
+        const result = getCustomizedConfiguration(
+            makeCtx({
+                chartOptions: {
+                    ...chartOptions,
+                    stacking: "normal",
+                },
+            }),
+        );
 
         expect(result.plotOptions!.series!.connectNulls).toBeUndefined();
     });
 
     describe("getAxesConfiguration", () => {
         it("should set Y axis configuration from properties", () => {
-            const result: any = getCustomizedConfiguration({
-                ...chartOptions,
-                yAxisProps: {
-                    min: "20",
-                    max: "30",
-                    labelsEnabled: false,
-                    visible: false,
-                },
-            });
+            const result = getCustomizedConfiguration(
+                makeCtx({
+                    chartOptions: {
+                        ...chartOptions,
+                        yAxisProps: {
+                            min: "20",
+                            max: "30",
+                            labelsEnabled: false,
+                            visible: false,
+                        },
+                    },
+                }),
+            );
 
             const expectedResult = {
-                ...result.yAxis[0],
                 min: 20,
                 max: 30,
                 labels: {
-                    ...result.yAxis[0].labels,
                     enabled: false,
                 },
                 title: {
-                    ...result.yAxis[0].title,
                     text: null,
                 },
             };
-            expect(result.yAxis[0]).toEqual(expectedResult);
+            expect(result.yAxis).toMatchObject([expectedResult]);
         });
 
         it("should set X axis configurations from properties", () => {
-            const result: any = getCustomizedConfiguration({
-                ...chartOptions,
-                xAxisProps: {
-                    visible: false,
-                    labelsEnabled: false,
-                    rotation: "60",
-                },
-            });
+            const result = getCustomizedConfiguration(
+                makeCtx({
+                    chartOptions: {
+                        ...chartOptions,
+                        xAxisProps: {
+                            visible: false,
+                            labelsEnabled: false,
+                            rotation: "60",
+                        },
+                    },
+                }),
+            );
 
             const expectedResult = {
-                ...result.xAxis[0],
                 title: {
-                    ...result.xAxis[0].title,
                     text: null,
                 },
                 labels: {
-                    ...result.xAxis[0].labels,
                     enabled: false,
                     rotation: -60,
                 },
             };
 
-            expect(result.xAxis[0]).toEqual(expectedResult);
+            expect(result.xAxis).toMatchObject([expectedResult]);
         });
 
         it("should not set chart and X axis configurations when the zooming is disabled", () => {
-            const result: any = getCustomizedConfiguration(
-                {
-                    ...chartOptions,
-                },
-                {
-                    zoomInsight: false,
-                },
+            const result = getCustomizedConfiguration(
+                makeCtx({
+                    chartOptions: {
+                        ...chartOptions,
+                    },
+                    chartConfig: {
+                        zoomInsight: false,
+                    },
+                }),
             );
-            const xAxisResult = {
-                ...result.xAxis[0],
-                minRange: undefined,
-            };
 
-            expect(result.xAxis[0]).toEqual(xAxisResult);
+            assertArray(result.xAxis);
+            expect(result.xAxis[0].minRange).toBeUndefined();
             expect(omit(result.chart, "events")).toEqual({});
         });
 
         it("should set chart and X axis configurations with the minRange = 2 when the zooming is enabled and the categories are larger than 2", () => {
-            const intl = createIntlMock();
-            const result: any = getCustomizedConfiguration(
-                {
-                    ...chartOptions,
-                    data: {
-                        ...chartOptions.data,
-                        categories: [["column 1"], ["column 2"], ["column 3"]],
+            const result = getCustomizedConfiguration(
+                makeCtx({
+                    chartOptions: {
+                        ...chartOptions,
+                        data: {
+                            ...chartOptions.data,
+                            categories: [["column 1"], ["column 2"], ["column 3"]],
+                        },
                     },
-                },
-                {
-                    zoomInsight: true,
-                },
-                undefined,
-                intl,
+                    chartConfig: {
+                        zoomInsight: true,
+                    },
+                }),
             );
             const expectedResult = {
-                ...result.xAxis[0],
                 minRange: 2,
             };
             const chartResult = getChartZoomConfig(result.chart);
 
-            expect(result.xAxis[0]).toEqual(expectedResult);
+            expect(result.xAxis).toMatchObject([expectedResult]);
             expect(result.chart).toEqual(chartResult);
         });
 
         it("should set chart and X axis configurations with the minRange is default value (undefined) when the zooming is enabled and the categories <= 2", () => {
-            const intl = createIntlMock();
-            const result: any = getCustomizedConfiguration(
-                {
-                    ...chartOptions,
-                    data: {
-                        ...chartOptions.data,
-                        categories: [["column 1", "column 2"]],
+            const result = getCustomizedConfiguration(
+                makeCtx({
+                    chartOptions: {
+                        ...chartOptions,
+                        data: {
+                            ...chartOptions.data,
+                            categories: [["column 1", "column 2"]],
+                        },
                     },
-                },
-                {
-                    zoomInsight: true,
-                },
-                undefined,
-                intl,
+                    chartConfig: {
+                        zoomInsight: true,
+                    },
+                }),
             );
-            const expectedResult = {
-                ...result.xAxis[0],
-                minRange: undefined,
-            };
             const chartResult = getChartZoomConfig(result.chart);
 
-            expect(result.xAxis[0]).toEqual(expectedResult);
+            assertArray(result.xAxis);
+            expect(result.xAxis[0].minRange).toBeUndefined();
             expect(result.chart).toEqual(chartResult);
         });
 
         it("should set X axis configurations with style", () => {
-            const result: any = getCustomizedConfiguration(chartOptions);
-            expect(result.xAxis[0].title.style).toEqual({
+            const result = getCustomizedConfiguration(makeCtx({ chartOptions }));
+            assertArray(result.xAxis);
+            expect(result.xAxis[0].title?.style).toEqual({
                 color: "#6d7680",
                 font: '14px gdcustomfont, Avenir, "Helvetica Neue", Arial, sans-serif',
                 textOverflow: "ellipsis",
@@ -385,152 +425,156 @@ describe("getCustomizedConfiguration", () => {
         });
 
         it("should enable axis label for scatter plot when x and y are not set", () => {
-            const result: any = getCustomizedConfiguration({
-                ...chartOptions,
-                type: VisualizationTypes.SCATTER,
-            });
+            const result = getCustomizedConfiguration(
+                makeCtx({
+                    chartOptions: {
+                        ...chartOptions,
+                        type: VisualizationTypes.SCATTER,
+                    },
+                }),
+            );
 
             const expectedXAxisResult = {
-                ...result.xAxis[0],
                 labels: {
-                    ...result.xAxis[0].labels,
                     enabled: true,
                 },
             };
             const expectedYAxisResult = {
-                ...result.yAxis[0],
                 labels: {
-                    ...result.yAxis[0].labels,
                     enabled: true,
                 },
             };
 
-            expect(result.xAxis[0]).toEqual(expectedXAxisResult);
-            expect(result.yAxis[0]).toEqual(expectedYAxisResult);
+            expect(result.xAxis).toMatchObject([expectedXAxisResult]);
+            expect(result.yAxis).toMatchObject([expectedYAxisResult]);
         });
 
         it("should disable xAxis labels when x axis is disabled in scatter", () => {
-            const result: any = getCustomizedConfiguration({
-                ...chartOptions,
-                xAxisProps: {
-                    visible: false,
-                },
-                type: VisualizationTypes.SCATTER,
-            });
+            const result = getCustomizedConfiguration(
+                makeCtx({
+                    chartOptions: {
+                        ...chartOptions,
+                        xAxisProps: {
+                            visible: false,
+                        },
+                        type: VisualizationTypes.SCATTER,
+                    },
+                }),
+            );
 
             const expectedXAxisResult = {
-                ...result.xAxis[0],
                 labels: {
-                    ...result.xAxis[0].labels,
                     enabled: false,
                 },
             };
             const expectedYAxisResult = {
-                ...result.yAxis[0],
                 labels: {
-                    ...result.yAxis[0].labels,
                     enabled: true,
                 },
             };
 
-            expect(result.xAxis[0]).toEqual(expectedXAxisResult);
-            expect(result.yAxis[0]).toEqual(expectedYAxisResult);
+            expect(result.xAxis).toMatchObject([expectedXAxisResult]);
+            expect(result.yAxis).toMatchObject([expectedYAxisResult]);
         });
 
         it("should disable labels when labels are disabled in bubble", () => {
-            const result: any = getCustomizedConfiguration({
-                ...chartOptions,
-                xAxisProps: {
-                    labelsEnabled: false,
-                },
-                type: VisualizationTypes.BUBBLE,
-            });
+            const result = getCustomizedConfiguration(
+                makeCtx({
+                    chartOptions: {
+                        ...chartOptions,
+                        xAxisProps: {
+                            labelsEnabled: false,
+                        },
+                        type: VisualizationTypes.BUBBLE,
+                    },
+                }),
+            );
 
             const expectedXAxisResult = {
-                ...result.xAxis[0],
                 labels: {
-                    ...result.xAxis[0].labels,
                     enabled: false,
                 },
             };
             const expectedYAxisResult = {
-                ...result.yAxis[0],
                 labels: {
-                    ...result.yAxis[0].labels,
                     enabled: true,
                 },
             };
 
-            expect(result.xAxis[0]).toEqual(expectedXAxisResult);
-            expect(result.yAxis[0]).toEqual(expectedYAxisResult);
+            expect(result.xAxis).toMatchObject([expectedXAxisResult]);
+            expect(result.yAxis).toMatchObject([expectedYAxisResult]);
         });
 
         it("should enable labels for heatmap when categories are not empty", () => {
-            const result: any = getCustomizedConfiguration({
-                ...chartOptions,
-                data: {
-                    ...chartOptions.data,
-                    categories: [["c1", "c2"]],
-                },
-                type: VisualizationTypes.HEATMAP,
-            });
+            const result = getCustomizedConfiguration(
+                makeCtx({
+                    chartOptions: {
+                        ...chartOptions,
+                        data: {
+                            ...chartOptions.data,
+                            categories: [["c1", "c2"]],
+                        },
+                        type: VisualizationTypes.HEATMAP,
+                    },
+                }),
+            );
 
             const expectedXAxisResult = {
-                ...result.xAxis[0],
                 labels: {
-                    ...result.xAxis[0].labels,
                     enabled: true,
                 },
             };
             const expectedYAxisResult = {
-                ...result.yAxis[0],
                 labels: {
-                    ...result.yAxis[0].labels,
                     enabled: true,
                 },
             };
 
-            expect(result.xAxis[0]).toEqual(expectedXAxisResult);
-            expect(result.yAxis[0]).toEqual(expectedYAxisResult);
+            expect(result.xAxis).toMatchObject([expectedXAxisResult]);
+            expect(result.yAxis).toMatchObject([expectedYAxisResult]);
         });
 
         it("should disable lables for heatmap when categories are empty", () => {
-            const result: any = getCustomizedConfiguration({
-                ...chartOptions,
-                data: {
-                    ...chartOptions.data,
-                    categories: [],
-                },
-                type: VisualizationTypes.HEATMAP,
-            });
+            const result = getCustomizedConfiguration(
+                makeCtx({
+                    chartOptions: {
+                        ...chartOptions,
+                        data: {
+                            ...chartOptions.data,
+                            categories: [],
+                        },
+                        type: VisualizationTypes.HEATMAP,
+                    },
+                }),
+            );
 
             const expectedXAxisResult = {
-                ...result.xAxis[0],
                 labels: {
-                    ...result.xAxis[0].labels,
                     enabled: false,
                 },
             };
             const expectedYAxisResult = {
-                ...result.yAxis[0],
                 labels: {
-                    ...result.yAxis[0].labels,
                     enabled: false,
                 },
             };
 
-            expect(result.xAxis[0]).toEqual(expectedXAxisResult);
-            expect(result.yAxis[0]).toEqual(expectedYAxisResult);
+            expect(result.xAxis).toMatchObject([expectedXAxisResult]);
+            expect(result.yAxis).toMatchObject([expectedYAxisResult]);
         });
 
         it("should set extremes for y axis when x axis scale changed", () => {
-            const result = getCustomizedConfiguration({
-                ...chartOptions,
-                xAxisProps: {
-                    min: "20",
-                    max: "30",
-                },
-            });
+            const result = getCustomizedConfiguration(
+                makeCtx({
+                    chartOptions: {
+                        ...chartOptions,
+                        xAxisProps: {
+                            min: "20",
+                            max: "30",
+                        },
+                    },
+                }),
+            );
 
             const expectedPlotOptions = {
                 getExtremesFromAll: true,
@@ -539,117 +583,153 @@ describe("getCustomizedConfiguration", () => {
         });
 
         it("should set axis line width to 1 in scatter plot when axis is enabled", () => {
-            const result: any = getCustomizedConfiguration({
-                ...chartOptions,
-                yAxisProps: {
-                    visible: true,
-                },
-                xAxisProps: {
-                    visible: true,
-                },
-                type: VisualizationTypes.SCATTER,
-            });
+            const result = getCustomizedConfiguration(
+                makeCtx({
+                    chartOptions: {
+                        ...chartOptions,
+                        yAxisProps: {
+                            visible: true,
+                        },
+                        xAxisProps: {
+                            visible: true,
+                        },
+                        type: VisualizationTypes.SCATTER,
+                    },
+                }),
+            );
 
+            assertArray(result.xAxis);
+            assertArray(result.yAxis);
             expect(result.xAxis[0].lineWidth).toEqual(1);
             expect(result.yAxis[0].lineWidth).toEqual(1);
         });
 
         it("should not set axis line when in column and axis is enabled", () => {
-            const result: any = getCustomizedConfiguration({
-                ...chartOptions,
-                yAxisProps: {
-                    visible: true,
-                },
-                xAxisProps: {
-                    visible: true,
-                },
-                type: VisualizationTypes.COLUMN,
-            });
+            const result = getCustomizedConfiguration(
+                makeCtx({
+                    chartOptions: {
+                        ...chartOptions,
+                        yAxisProps: {
+                            visible: true,
+                        },
+                        xAxisProps: {
+                            visible: true,
+                        },
+                        type: VisualizationTypes.COLUMN,
+                    },
+                }),
+            );
 
+            assertArray(result.xAxis);
+            assertArray(result.yAxis);
             expect(result.xAxis[0].lineWidth).toBeUndefined();
             expect(result.yAxis[0].lineWidth).toBeUndefined();
         });
 
         it("should set axis line width to 0 when axis is disabled", () => {
-            const result: any = getCustomizedConfiguration({
-                ...chartOptions,
-                yAxisProps: {
-                    visible: false,
-                },
-                xAxisProps: {
-                    visible: false,
-                },
-            });
+            const result = getCustomizedConfiguration(
+                makeCtx({
+                    chartOptions: {
+                        ...chartOptions,
+                        yAxisProps: {
+                            visible: false,
+                        },
+                        xAxisProps: {
+                            visible: false,
+                        },
+                    },
+                }),
+            );
 
-            expect(result.xAxis[0].lineWidth).toEqual(0);
-            expect(result.yAxis[0].lineWidth).toEqual(0);
+            expect(result.xAxis).toMatchObject([{ lineWidth: 0 }]);
+            expect(result.yAxis).toMatchObject([{ lineWidth: 0 }]);
         });
 
         it("should set attribute axis title when chart config 'enableJoinedAttributeAxisName' is true", () => {
-            const result: any = getCustomizedConfiguration(
-                {
-                    ...chartOptions,
-                    type: VisualizationTypes.BAR,
-                    isViewByTwoAttributes: true,
-                },
-                {
-                    enableJoinedAttributeAxisName: true,
-                },
+            const result = getCustomizedConfiguration(
+                makeCtx({
+                    chartOptions: {
+                        ...chartOptions,
+                        type: VisualizationTypes.BAR,
+                        isViewByTwoAttributes: true,
+                    },
+                    chartConfig: {
+                        enableJoinedAttributeAxisName: true,
+                    },
+                }),
             );
 
-            expect(result.xAxis[0].title.text).toEqual(chartOptions.xAxes![0].label);
+            expect(result.xAxis).toMatchObject([{ title: { text: chartOptions.xAxes![0].label } }]);
         });
     });
 
     describe("gridline configuration", () => {
         it("should set gridline width to 0 when grid is disabled", () => {
-            const result: any = getCustomizedConfiguration({ ...chartOptions, grid: { enabled: false } });
-            expect(result.yAxis[0].gridLineWidth).toEqual(0);
+            const result = getCustomizedConfiguration(
+                makeCtx({ chartOptions: { ...chartOptions, grid: { enabled: false } } }),
+            );
+            expect(result.yAxis).toMatchObject([{ gridLineWidth: 0 }]);
         });
 
         it("should set gridline width on xAxis on 1 for Scatterplot when enabled", () => {
             const customConfig = { grid: { enabled: true }, type: VisualizationTypes.SCATTER };
-            const result: any = getCustomizedConfiguration({ ...chartOptions, ...customConfig });
-            expect(result.xAxis[0].gridLineWidth).toEqual(1);
+            const result = getCustomizedConfiguration(
+                makeCtx({ chartOptions: { ...chartOptions, ...customConfig } }),
+            );
+            expect(result.xAxis).toMatchObject([{ gridLineWidth: 1 }]);
         });
 
         it("should set gridline width on xAxis on 1 for Bubblechart when enabled", () => {
             const customConfig = { grid: { enabled: true }, type: VisualizationTypes.BUBBLE };
-            const result: any = getCustomizedConfiguration({ ...chartOptions, ...customConfig });
-            expect(result.xAxis[0].gridLineWidth).toEqual(1);
+            const result = getCustomizedConfiguration(
+                makeCtx({ chartOptions: { ...chartOptions, ...customConfig } }),
+            );
+            expect(result.xAxis).toMatchObject([{ gridLineWidth: 1 }]);
         });
 
         it("should set gridline width on xAxis on 0 for Scatterplot when disabled", () => {
             const customConfig = { grid: { enabled: false }, type: VisualizationTypes.SCATTER };
-            const result: any = getCustomizedConfiguration({ ...chartOptions, ...customConfig });
-            expect(result.xAxis[0].gridLineWidth).toEqual(0);
+            const result = getCustomizedConfiguration(
+                makeCtx({ chartOptions: { ...chartOptions, ...customConfig } }),
+            );
+            expect(result.xAxis).toMatchObject([{ gridLineWidth: 0 }]);
         });
 
         it("should set gridline width on xAxis on 0 for Bubblechart when disabled", () => {
             const customConfig = { grid: { enabled: false }, type: VisualizationTypes.BUBBLE };
-            const result: any = getCustomizedConfiguration({ ...chartOptions, ...customConfig });
-            expect(result.xAxis[0].gridLineWidth).toEqual(0);
+            const result = getCustomizedConfiguration(
+                makeCtx({ chartOptions: { ...chartOptions, ...customConfig } }),
+            );
+            expect(result.xAxis).toMatchObject([{ gridLineWidth: 0 }]);
         });
     });
 
     describe("labels configuration", () => {
         it("should set two levels labels for multi-level treemap", () => {
-            const result = getCustomizedConfiguration({
-                ...chartOptions,
-                type: VisualizationTypes.TREEMAP,
-                stacking: "normal",
-            });
+            const result = getCustomizedConfiguration(
+                makeCtx({
+                    chartOptions: {
+                        ...chartOptions,
+                        type: VisualizationTypes.TREEMAP,
+                        stacking: "normal",
+                    },
+                }),
+            );
 
             const treemapConfig = result.plotOptions!.treemap;
             expect(treemapConfig!.levels!.length).toEqual(2);
         });
 
         it("should set one level labels for single-level treemap", () => {
-            const result = getCustomizedConfiguration({
-                ...chartOptions,
-                type: VisualizationTypes.TREEMAP,
-                stacking: null,
-            });
+            const result = getCustomizedConfiguration(
+                makeCtx({
+                    chartOptions: {
+                        ...chartOptions,
+                        type: VisualizationTypes.TREEMAP,
+                        stacking: null,
+                    },
+                }),
+            );
 
             const treemapConfig = result.plotOptions!.treemap;
             expect(treemapConfig!.levels!.length).toEqual(1);
@@ -657,16 +737,18 @@ describe("getCustomizedConfiguration", () => {
 
         it("should set global HCH dataLabels config according user config for treemap", () => {
             const result = getCustomizedConfiguration(
-                {
-                    ...chartOptions,
-                    type: VisualizationTypes.TREEMAP,
-                    stacking: null,
-                },
-                {
-                    dataLabels: {
-                        visible: true,
+                makeCtx({
+                    chartOptions: {
+                        ...chartOptions,
+                        type: VisualizationTypes.TREEMAP,
+                        stacking: null,
                     },
-                },
+                    chartConfig: {
+                        dataLabels: {
+                            visible: true,
+                        },
+                    },
+                }),
             );
 
             const treemapConfig = result.plotOptions!.treemap;
@@ -698,15 +780,17 @@ describe("getCustomizedConfiguration", () => {
 
             it("should draw label when bubble is inside chart area", () => {
                 const result = getCustomizedConfiguration(
-                    {
-                        ...chartOptions,
-                        type: VisualizationTypes.BUBBLE,
-                    },
-                    {
-                        dataLabels: {
-                            visible: true,
+                    makeCtx({
+                        chartOptions: {
+                            ...chartOptions,
+                            type: VisualizationTypes.BUBBLE,
                         },
-                    },
+                        chartConfig: {
+                            dataLabels: {
+                                visible: true,
+                            },
+                        },
+                    }),
                 );
 
                 setMinMax(result, 0, 10, 0, 10);
@@ -722,15 +806,17 @@ describe("getCustomizedConfiguration", () => {
 
             it("should not draw dataLabel when label is outside chart area", () => {
                 const result = getCustomizedConfiguration(
-                    {
-                        ...chartOptions,
-                        type: VisualizationTypes.BUBBLE,
-                    },
-                    {
-                        dataLabels: {
-                            visible: true,
+                    makeCtx({
+                        chartOptions: {
+                            ...chartOptions,
+                            type: VisualizationTypes.BUBBLE,
                         },
-                    },
+                        chartConfig: {
+                            dataLabels: {
+                                visible: true,
+                            },
+                        },
+                    }),
                 );
 
                 setMinMax(result, 0, 10, 0, 10);
@@ -746,15 +832,17 @@ describe("getCustomizedConfiguration", () => {
 
             it("should show data label when min and max are not defined", () => {
                 const result = getCustomizedConfiguration(
-                    {
-                        ...chartOptions,
-                        type: VisualizationTypes.BUBBLE,
-                    },
-                    {
-                        dataLabels: {
-                            visible: true,
+                    makeCtx({
+                        chartOptions: {
+                            ...chartOptions,
+                            type: VisualizationTypes.BUBBLE,
                         },
-                    },
+                        chartConfig: {
+                            dataLabels: {
+                                visible: true,
+                            },
+                        },
+                    }),
                 );
 
                 setPoint(result, 5, 11, 5);
@@ -828,19 +916,23 @@ describe("getCustomizedConfiguration", () => {
                 allowedOverlap: boolean,
                 dataLabelsEnabled: boolean,
             ) => {
-                const result: any = getCustomizedConfiguration(
-                    {
-                        ...chartOptions,
-                        isViewByTwoAttributes: true,
-                        type: chartType,
-                        stacking: "normal",
-                    },
-                    { stacking: true, dataLabels },
+                const result = getCustomizedConfiguration(
+                    makeCtx({
+                        chartOptions: {
+                            ...chartOptions,
+                            isViewByTwoAttributes: true,
+                            type: chartType,
+                            stacking: "normal",
+                        },
+                        chartConfig: { stacking: true, dataLabels },
+                    }),
                 );
 
-                expect(result.plotOptions.gdcOptions.dataLabels).toEqual(expectedGdcOption);
-                expect(result.plotOptions.bar.dataLabels.allowOverlap).toEqual(allowedOverlap);
-                expect(result.plotOptions.bar.dataLabels.enabled).toEqual(dataLabelsEnabled);
+                // @ts-expect-error This is expected as legacy code appends custom properties to Highcharts types. Such properties should ideally moved somewhere else in the future.
+                expect(result.plotOptions?.gdcOptions).toEqual({ dataLabels: expectedGdcOption });
+                expect(result.plotOptions).toMatchObject({
+                    bar: { dataLabels: { allowOverlap: allowedOverlap, enabled: dataLabelsEnabled } },
+                });
             },
         );
     });
@@ -854,15 +946,19 @@ describe("getCustomizedConfiguration", () => {
         it.each(CHART_TYPES)(
             "should follow pointer for %s chart when data max is above axis max",
             (chartType: string) => {
-                const result = getCustomizedConfiguration({
-                    ...chartOptions,
-                    actions: { tooltip: () => "" },
-                    data: getData([{ y: 100 }, { y: 101 }]),
-                    type: chartType,
-                    yAxisProps: {
-                        max: "50",
-                    },
-                });
+                const result = getCustomizedConfiguration(
+                    makeCtx({
+                        chartOptions: {
+                            ...chartOptions,
+                            actions: { tooltip: () => "" },
+                            data: getData([{ y: 100 }, { y: 101 }]),
+                            type: chartType,
+                            yAxisProps: {
+                                max: "50",
+                            },
+                        },
+                    }),
+                );
 
                 expect(result.tooltip!.followPointer).toBeTruthy();
             },
@@ -871,30 +967,38 @@ describe("getCustomizedConfiguration", () => {
         it.each(CHART_TYPES)(
             "should not follow pointer for %s chart when data max is below axis max",
             (chartType: string) => {
-                const result = getCustomizedConfiguration({
-                    ...chartOptions,
-                    actions: { tooltip: () => "" },
-                    data: getData([{ y: 0 }, { y: 1 }]),
-                    type: chartType,
-                    yAxisProps: {
-                        max: "50",
-                    },
-                });
+                const result = getCustomizedConfiguration(
+                    makeCtx({
+                        chartOptions: {
+                            ...chartOptions,
+                            actions: { tooltip: () => "" },
+                            data: getData([{ y: 0 }, { y: 1 }]),
+                            type: chartType,
+                            yAxisProps: {
+                                max: "50",
+                            },
+                        },
+                    }),
+                );
 
                 expect(result.tooltip!.followPointer).toBeFalsy();
             },
         );
 
         it("should follow pointer for pie chart should be false by default", () => {
-            const result = getCustomizedConfiguration({
-                ...chartOptions,
-                actions: { tooltip: () => "" },
-                data: getData([{ y: 100 }, { y: 101 }]),
-                type: VisualizationTypes.PIE,
-                yAxisProps: {
-                    max: "50",
-                },
-            });
+            const result = getCustomizedConfiguration(
+                makeCtx({
+                    chartOptions: {
+                        ...chartOptions,
+                        actions: { tooltip: () => "" },
+                        data: getData([{ y: 100 }, { y: 101 }]),
+                        type: VisualizationTypes.PIE,
+                        yAxisProps: {
+                            max: "50",
+                        },
+                    },
+                }),
+            );
 
             expect(result?.tooltip?.followPointer).toBeFalsy();
         });
@@ -1009,7 +1113,7 @@ describe("getCustomizedConfiguration", () => {
 
         it("should return number for not supported chart", () => {
             const newChartOptions = { type: VisualizationTypes.LINE, yAxes: [{ label: "" }] };
-            const configuration = getCustomizedConfiguration(newChartOptions);
+            const configuration = getCustomizedConfiguration(makeCtx({ chartOptions: newChartOptions }));
             const formatter: any =
                 (configuration?.plotOptions?.bar?.dataLabels as PlotBarDataLabelsOptions)?.formatter ??
                 (() => {});
@@ -1023,7 +1127,7 @@ describe("getCustomizedConfiguration", () => {
             ["dual axis chart without 'Stack to 100%'", 2],
         ])("should return number for %s", (_description: string, axisNumber: number) => {
             const chartOptions = { type: VisualizationTypes.COLUMN, yAxes: Array(axisNumber).fill({}) };
-            const configuration = getCustomizedConfiguration(chartOptions);
+            const configuration = getCustomizedConfiguration(makeCtx({ chartOptions }));
             const formatter: any =
                 (configuration?.plotOptions?.bar?.dataLabels as PlotBarDataLabelsOptions)?.formatter ??
                 (() => {});
@@ -1042,7 +1146,9 @@ describe("getCustomizedConfiguration", () => {
             (_description: string, opposite: boolean, axisNumber: number, expectation: string) => {
                 const chartOptions = { type: VisualizationTypes.COLUMN, yAxes: Array(axisNumber).fill({}) };
                 const config = { stackMeasuresToPercent: true };
-                const configuration = getCustomizedConfiguration(chartOptions, config);
+                const configuration = getCustomizedConfiguration(
+                    makeCtx({ chartOptions, chartConfig: config }),
+                );
                 const formatter: any =
                     (configuration?.plotOptions?.bar?.dataLabels as PlotBarDataLabelsOptions)?.formatter ??
                     (() => {});
@@ -1054,9 +1160,14 @@ describe("getCustomizedConfiguration", () => {
 
         describe("mekko (variwide) data labels", () => {
             const getVariwideFormatter = (chartOptions: any) => {
-                const configuration = getCustomizedConfiguration(chartOptions, {
-                    stackMeasuresToPercent: true,
-                });
+                const configuration = getCustomizedConfiguration(
+                    makeCtx({
+                        chartOptions,
+                        chartConfig: {
+                            stackMeasuresToPercent: true,
+                        },
+                    }),
+                );
                 return (
                     ((configuration?.plotOptions as any)?.variwide?.dataLabels?.formatter as any) ??
                     (() => {})
@@ -1205,37 +1316,28 @@ describe("getCustomizedConfiguration", () => {
     describe("get X axis with drill config", () => {
         const chartTypes = supportedStackingAttributesChartTypes.map((chartType: string) => [chartType]);
 
-        const dataView = dummyDataView({
-            attributes: [],
-            buckets: [],
-            dimensions: [],
-            filters: [],
-            measures: [],
-            sortBy: [],
-            workspace: "",
-        });
-
-        const drillConfig: IDrillConfig = {
-            dataView,
-            onDrill: () => false,
-        };
-
         it.each(chartTypes)('should set "drillConfig" to xAxis to %s chart', (chartType: string) => {
-            const result: any = getCustomizedConfiguration(
-                { type: chartType, data: { series: [] } },
-                {},
-                drillConfig,
+            const drillConfig = makeDrillConfig({ onDrill: () => false });
+            const result = getCustomizedConfiguration(
+                makeCtx({
+                    chartOptions: { type: chartType, data: { series: [] } },
+                    drillConfig,
+                }),
             );
 
-            expect(result.xAxis[0].drillConfig).toEqual(drillConfig);
+            expect(result.xAxis).toMatchObject([{ drillConfig }]);
         });
 
         it('should not set "drillConfig" to unsupported chart type', () => {
-            const result: any = getCustomizedConfiguration(
-                { type: VisualizationTypes.LINE },
-                {},
-                drillConfig,
+            const result = getCustomizedConfiguration(
+                makeCtx({
+                    chartOptions: { type: VisualizationTypes.LINE },
+                    drillConfig: makeDrillConfig({ onDrill: () => false }),
+                }),
             );
+
+            assertArray(result.xAxis);
+            // @ts-expect-error This is expected as legacy code appends custom properties to Highcharts types. Such properties should ideally moved somewhere else in the future.
             expect(result.xAxis[0].drillConfig).toBeFalsy();
         });
     });
@@ -1283,12 +1385,16 @@ describe("getCustomizedConfiguration", () => {
         };
 
         it("should set the target cursor to pointer if the target is drillable", () => {
-            const result = getCustomizedConfiguration(chartOptionsWithDrillableTarget);
+            const result = getCustomizedConfiguration(
+                makeCtx({ chartOptions: chartOptionsWithDrillableTarget }),
+            );
             expect(result.plotOptions!.bullet!.cursor).toBe("pointer");
         });
 
         it("should not set the target cursor to pointer if the target is not drillable", () => {
-            const result = getCustomizedConfiguration(chartOptionsWithNonDrillableTarget);
+            const result = getCustomizedConfiguration(
+                makeCtx({ chartOptions: chartOptionsWithNonDrillableTarget }),
+            );
             expect(result.plotOptions!.bullet).toBe(undefined);
         });
     });
@@ -1301,15 +1407,20 @@ describe("charts without a category axis", () => {
     it.each([[VisualizationTypes.SANKEY], [VisualizationTypes.DEPENDENCY_WHEEL]])(
         "should not set x axis categories for %s",
         (type: string) => {
-            const result = getCustomizedConfiguration({
-                type,
-                data: {
-                    series: [{ data: [{ name: "node", y: 1 }] }],
-                    categories: [[""]],
-                },
-            } as IChartOptions);
+            const result = getCustomizedConfiguration(
+                makeCtx({
+                    chartOptions: {
+                        type,
+                        data: {
+                            series: [{ data: [{ name: "node", y: 1 }] }],
+                            categories: [[""]],
+                        },
+                    },
+                }),
+            );
 
-            expect((result.xAxis as XAxisOptions[])?.[0]?.categories).toBeUndefined();
+            assertArray(result.xAxis);
+            expect(result.xAxis[0]?.categories).toBeUndefined();
         },
     );
 });
@@ -1340,6 +1451,17 @@ describe("escapeCategories", () => {
                 name: "&lt;span&gt;Sales&lt;/span&gt;",
                 categories: ["&lt;div&gt;sale1&lt;/div&gt;", "&lt;sale2/&gt;", "&lt;sale3&gt;&lt;/sale3&gt;"],
             },
+        ]);
+    });
+
+    it("should escape per-axis categories", () => {
+        const categories = escapeCategories([
+            ["cat1", "<cat2/>"],
+            ["<div>2023</div>", "2024"],
+        ]);
+        expect(categories).toEqual([
+            ["cat1", "&lt;cat2/&gt;"],
+            ["&lt;div&gt;2023&lt;/div&gt;", "2024"],
         ]);
     });
 });
@@ -1374,7 +1496,7 @@ describe("getFormatterProperty", () => {
             "#.##X",
         ).formatter as any;
         const result = formatter.call({ value: 0 });
-        expect(result).toEqual(0);
+        expect(result).toEqual("0");
     });
 
     it("should return no formatter", () => {
@@ -1385,13 +1507,15 @@ describe("getFormatterProperty", () => {
 
 describe("highlighting configuration", () => {
     it("should return load event", () => {
-        const result = getChartHighlightingConfiguration(chartOptions, {}, {});
+        const result = getChartHighlightingConfiguration(makeConfiguratorCtx({ chartOptions }));
 
         expect(result.chart!.events).toEqual({ load: expect.any(Function) });
     });
 
     it.each([["pie"], ["donut"]])("should not return load event", (type: string) => {
-        const result = getChartHighlightingConfiguration({ ...chartOptions, type }, {}, {});
+        const result = getChartHighlightingConfiguration(
+            makeConfiguratorCtx({ chartOptions: { ...chartOptions, type } }),
+        );
 
         expect(result.chart!.events).toEqual({});
     });
@@ -1415,15 +1539,25 @@ describe("pie chart label placement modes", () => {
         options: IChartOptions,
         config: IChartConfig,
     ): Highcharts.SeriesPieDataLabelsOptionsObject[] =>
-        getCustomizedConfiguration(options, {
-            enableDonutDataLabels: true,
-            ...config,
-        }).plotOptions?.pie?.dataLabels as Highcharts.SeriesPieDataLabelsOptionsObject[];
+        getCustomizedConfiguration(
+            makeCtx({
+                chartOptions: options,
+                chartConfig: {
+                    enableDonutDataLabels: true,
+                    ...config,
+                },
+            }),
+        ).plotOptions?.pie?.dataLabels as Highcharts.SeriesPieDataLabelsOptionsObject[];
 
     it("falls back to legacy plain-object config when enableDonutDataLabels flag is off", () => {
-        const result = getCustomizedConfiguration(evenPieOptions, {
-            dataLabels: { visible: true },
-        });
+        const result = getCustomizedConfiguration(
+            makeCtx({
+                chartOptions: evenPieOptions,
+                chartConfig: {
+                    dataLabels: { visible: true },
+                },
+            }),
+        );
         const pieDataLabels = result.plotOptions?.pie?.dataLabels;
         expect(Array.isArray(pieDataLabels)).toBe(false);
         expect(pieDataLabels).toEqual(expect.objectContaining({ verticalAlign: "middle" }));

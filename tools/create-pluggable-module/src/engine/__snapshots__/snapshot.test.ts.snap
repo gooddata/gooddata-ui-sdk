@@ -459,6 +459,9 @@ export default defineConfig(({ mode }): UserConfig => {
             chunkSizeWarningLimit: 15000,
             rolldownOptions: {
                 input: resolve(__dirname, "index.html"),
+                checks: {
+                    pluginTimings: false,
+                },
             },
         },
     };
@@ -1374,6 +1377,9 @@ export default defineConfig(({ mode, command }): UserConfig => {
                     entryFileNames: "static/js/[name].[hash].js",
                     chunkFileNames: "static/js/[name].[hash].chunk.js",
                     assetFileNames: "static/[hash][extname]",
+                },
+                checks: {
+                    pluginTimings: false,
                 },
             },
         },

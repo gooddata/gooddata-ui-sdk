@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { cloneDeep, set } from "lodash-es";
+import { cloneDeep, set, unset } from "lodash-es";
 
 import {
     type IAttributeOrMeasure,
@@ -16,7 +16,7 @@ import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { type StackingType } from "../../constants/stacking.js";
 import { type ISeriesItem } from "../../typings/unsafe.js";
 import { isSolidFill } from "../_chartOptions/patternFillOptions.js";
-import { isAreaChart, isLineChart } from "../_util/common.js";
+import { isAreaChart, isColumnChart, isLineChart } from "../_util/common.js";
 
 export const CHART_ORDER: Record<string, number> = {
     [VisualizationTypes.AREA]: 1,
@@ -81,6 +81,11 @@ export function getComboChartSeries(
 
     // Enforce solid color for any line series so that chart fill (pattern/outline) does not affect lines
     updatedSeries.forEach((series: ISeriesItem, index: number) => {
+        if (isColumnChart(series.type)) {
+            unset(updatedSeries, [index, "dashStyle"]);
+            unset(updatedSeries, [index, "lineWidth"]);
+        }
+
         const color = series.color;
         const baseColor: string | undefined =
             series.borderColor ?? (typeof color === "string" ? color : undefined);

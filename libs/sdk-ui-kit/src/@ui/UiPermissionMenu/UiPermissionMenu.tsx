@@ -8,7 +8,11 @@ import { olpPermissionMessages } from "../../locales.js";
 import { type IconType } from "../@types/icon.js";
 import { bem } from "../@utils/bem.js";
 import { UiIcon } from "../UiIcon/UiIcon.js";
-import { type IUiLabelsChecklistItem, UiLabelsChecklist } from "../UiLabelsChecklist/UiLabelsChecklist.js";
+import {
+    type IUiLabelsChecklistItem,
+    UiLabelsChecklist,
+    hasNonPrimaryLabelsChecklistItem,
+} from "../UiLabelsChecklist/UiLabelsChecklist.js";
 import { UiPopover } from "../UiPopover/UiPopover.js";
 import { UiTooltip } from "../UiTooltip/UiTooltip.js";
 
@@ -62,8 +66,9 @@ export interface IUiPermissionMenuProps {
      */
     disabledLevelTooltips?: Partial<Record<PermissionMenuLevel, string>>;
     /**
-     * Non-empty enables a labels row that drills into {@link UiLabelsChecklist}
-     * within the menu — for rows whose menu hosts every action (no "⋯" menu).
+     * Enables a labels row that drills into {@link UiLabelsChecklist} within the menu — for
+     * rows whose menu hosts every action (no "⋯" menu). Offered unless the only labels are
+     * primary ones; locked non-primary items still show, read-only.
      */
     labels?: ReadonlyArray<IUiLabelsChecklistItem>;
     /** Locked items are always treated as selected. */
@@ -133,7 +138,8 @@ export function UiPermissionMenu({
     removeAccessLabel,
     dataTestId,
 }: IUiPermissionMenuProps) {
-    const hasLabels = (labels?.length ?? 0) > 0;
+    // Decided once here, so the popover width and the labels row can't disagree.
+    const hasLabels = hasNonPrimaryLabelsChecklistItem(labels);
     return (
         <UiPopover
             anchor={anchor}
@@ -147,6 +153,7 @@ export function UiPermissionMenu({
                     disabledTooltip={disabledTooltip}
                     disabledLevelTooltips={disabledLevelTooltips}
                     labels={labels}
+                    hasLabels={hasLabels}
                     selectedLabelIds={selectedLabelIds}
                     onLabelsChange={onLabelsChange}
                     onRemoveAccess={onRemoveAccess}
@@ -168,6 +175,8 @@ interface IMenuBodyProps {
     disabledTooltip?: string;
     disabledLevelTooltips?: Partial<Record<PermissionMenuLevel, string>>;
     labels?: ReadonlyArray<IUiLabelsChecklistItem>;
+    /** Whether the labels row is offered — decided by the menu, see {@link UiPermissionMenu}. */
+    hasLabels: boolean;
     selectedLabelIds?: ReadonlyArray<string>;
     onLabelsChange?: (selectedIds: string[]) => void;
     onRemoveAccess?: () => void;
@@ -185,6 +194,7 @@ function MenuBody({
     disabledTooltip,
     disabledLevelTooltips,
     labels,
+    hasLabels,
     selectedLabelIds,
     onLabelsChange,
     onRemoveAccess,
@@ -209,8 +219,6 @@ function MenuBody({
         next();
         onClose();
     };
-
-    const hasLabels = (labels?.length ?? 0) > 0;
 
     const levelItem = (level: PermissionMenuLevel, label: string): IPermissionItem => {
         const disabled = disabledLevels?.includes(level) ?? false;

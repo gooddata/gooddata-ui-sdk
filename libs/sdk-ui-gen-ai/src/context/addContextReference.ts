@@ -54,6 +54,7 @@ export function addContextReference(context: StoreContext, reference?: IGenAICon
             ref: reference.ref,
             title: reference.title,
             type: convertGenAiTypeToReferenceType(reference.type),
+            visualizationUrl: reference.visualizationUrl,
         });
 
         return {

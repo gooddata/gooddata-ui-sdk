@@ -1,9 +1,9 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { type HighchartsOptions, type SeriesAreaOptions } from "../../lib/index.js";
-import { type IChartOptions } from "../../typings/unsafe.js";
 import { isAreaChart, isComboChart } from "../_util/common.js";
+
+import { type IConfiguratorContext } from "./configuratorContext.js";
 
 const removeStacking = (series: SeriesAreaOptions[]) =>
     series.map((seriesItem: SeriesAreaOptions) =>
@@ -16,11 +16,11 @@ const removeStacking = (series: SeriesAreaOptions[]) =>
               },
     );
 
-export function getContinuousLineConfiguration(
-    chartOptions: IChartOptions,
-    config: HighchartsOptions,
-    chartConfig?: IChartConfig,
-) {
+export function getContinuousLineConfiguration({
+    chartOptions,
+    highchartsOptions: config,
+    chartConfig,
+}: IConfiguratorContext): HighchartsOptions {
     const isContinuousLineEnabled = chartConfig?.continuousLine?.enabled ?? false;
     if (!isContinuousLineEnabled || chartConfig?.stackMeasures) {
         return {};
@@ -36,6 +36,10 @@ export function getContinuousLineConfiguration(
                 connectNulls: isContinuousLineEnabled,
             },
         },
+        // @ts-expect-error `removeStacking()` sets `{ stack: null, stacking: null }`, but Highcharts accepts
+        // only `undefined` for these properties. We can't set `undefined` there though, because lodash'es `merge()`
+        // function (in `getCustomizedConfiguration()`) then doesn't update the value to `undefined` (i.e. clears the value),
+        // but ignores it and keeps previous value, which is exactly what we don't want here.
         series: sanitizedSeries,
     };
 }

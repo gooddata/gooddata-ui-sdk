@@ -6,36 +6,41 @@ import { describe, expect, it } from "vitest";
 
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
-import { type IChartOptions } from "../../typings/unsafe.js";
-
+import { makeCtx } from "./configurator.test.utils.js";
 import { getAxisLabelConfigurationForDualBarChart } from "./getAxisLabelConfigurationForDualBarChart.js";
 
 describe("getAxisLabelConfigurationForDualBarChart", () => {
     it("should return empty axis label config on single bar chart", () => {
-        const chartOptions: IChartOptions = {
-            type: VisualizationTypes.BAR,
-            yAxes: [{ label: "" }],
-        };
-        const axisConfig = getAxisLabelConfigurationForDualBarChart(chartOptions);
+        const ctx = makeCtx({
+            chartOptions: {
+                type: VisualizationTypes.BAR,
+                yAxes: [{ label: "" }],
+            },
+        });
+        const axisConfig = getAxisLabelConfigurationForDualBarChart(ctx);
         expect(axisConfig).toEqual({});
     });
 
     it("should return empty axis label config on not dual bar chart", () => {
-        const chartOptions: IChartOptions = {
-            type: VisualizationTypes.COLUMN,
-            yAxes: [{ label: "" }, { label: "" }],
-        };
-        const axisConfig = getAxisLabelConfigurationForDualBarChart(chartOptions);
+        const ctx = makeCtx({
+            chartOptions: {
+                type: VisualizationTypes.COLUMN,
+                yAxes: [{ label: "" }, { label: "" }],
+            },
+        });
+        const axisConfig = getAxisLabelConfigurationForDualBarChart(ctx);
         expect(axisConfig).toEqual({});
     });
 
     it("should return empty Y axis label config on not-90-rotation bar chart", () => {
-        const chartOptions: IChartOptions = {
-            type: VisualizationTypes.BAR,
-            yAxes: [{ label: "" }, { label: "" }],
-        };
-        const axisConfig = getAxisLabelConfigurationForDualBarChart(chartOptions);
-        expect(axisConfig).toEqual({ yAxis: [undefined, undefined] });
+        const ctx = makeCtx({
+            chartOptions: {
+                type: VisualizationTypes.BAR,
+                yAxes: [{ label: "" }, { label: "" }],
+            },
+        });
+        const axisConfig = getAxisLabelConfigurationForDualBarChart(ctx);
+        expect(axisConfig).toEqual({ yAxis: [{}, {}] });
     });
 
     it.each([
@@ -56,7 +61,7 @@ describe("getAxisLabelConfigurationForDualBarChart", () => {
                         y: 8,
                     },
                 },
-                undefined,
+                {},
             ],
         ],
         [
@@ -70,7 +75,7 @@ describe("getAxisLabelConfigurationForDualBarChart", () => {
                 },
             },
             [
-                undefined,
+                {},
                 {
                     labels: {
                         align: "left",
@@ -182,12 +187,14 @@ describe("getAxisLabelConfigurationForDualBarChart", () => {
     ])(
         "should return Y axis label config of %s axis on bar chart",
         (_axisPosition: any, axisPropsOptions: any, expectedConfig: any) => {
-            const chartOptions: IChartOptions = {
-                type: VisualizationTypes.BAR,
-                yAxes: [{}, {}],
-                ...axisPropsOptions,
-            };
-            const axisConfig = getAxisLabelConfigurationForDualBarChart(chartOptions);
+            const ctx = makeCtx({
+                chartOptions: {
+                    type: VisualizationTypes.BAR,
+                    yAxes: [{}, {}],
+                    ...axisPropsOptions,
+                },
+            });
+            const axisConfig = getAxisLabelConfigurationForDualBarChart(ctx);
             expect(axisConfig).toEqual({
                 yAxis: expectedConfig,
             });

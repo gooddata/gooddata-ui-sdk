@@ -29477,6 +29477,8 @@ export interface JsonApiAutomationOutRelationships {
     // (undocumented)
     'analyticalDashboard'?: JsonApiAutomationOutRelationshipsAnalyticalDashboard;
     // (undocumented)
+    'analyticalDashboards'?: JsonApiAutomationOutRelationshipsAnalyticalDashboards;
+    // (undocumented)
     'attributes'?: JsonApiAutomationOutRelationshipsAttributes;
     // (undocumented)
     'automationResults'?: JsonApiAutomationOutRelationshipsAutomationResults;
@@ -29506,6 +29508,11 @@ export interface JsonApiAutomationOutRelationships {
 export interface JsonApiAutomationOutRelationshipsAnalyticalDashboard {
     // (undocumented)
     'data': JsonApiAnalyticalDashboardLinkage | null;
+}
+
+// @public (undocumented)
+export interface JsonApiAutomationOutRelationshipsAnalyticalDashboards {
+    'data': Array<JsonApiAnalyticalDashboardLinkage>;
 }
 
 // @public (undocumented)
@@ -44056,7 +44063,7 @@ export interface RestrictedObject {
 }
 
 // @public (undocumented)
-export type RestrictedObjectTypeEnum = 'attribute' | 'attributeHierarchy' | 'computedAttribute' | 'fact' | 'label' | 'metric' | 'userDataFilter' | 'visualizationObject';
+export type RestrictedObjectTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'computedAttribute' | 'fact' | 'label' | 'metric' | 'userDataFilter' | 'visualizationObject';
 
 // @public
 export interface ResultActionsApiInterface {

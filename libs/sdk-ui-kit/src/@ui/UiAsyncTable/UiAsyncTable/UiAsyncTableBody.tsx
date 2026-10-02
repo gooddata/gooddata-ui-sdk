@@ -1,6 +1,15 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type FocusEvent, type Ref, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+    type FocusEvent,
+    type KeyboardEvent,
+    type Ref,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 
 import { type ObjRef } from "@gooddata/sdk-model";
 
@@ -27,6 +36,7 @@ export function UiAsyncTableBody<T extends { id: string } | { ref: ObjRef }>({
     scrollToIndex,
     isLargeRow,
     shouldLoadNextPage,
+    getItemTooltip,
     renderItem,
 }: IUiAsyncTableBodyProps<T>) {
     const SkeletonItem = useSkeletonItem(columns, bulkActions, isLargeRow ?? false);
@@ -35,6 +45,44 @@ export function UiAsyncTableBody<T extends { id: string } | { ref: ObjRef }>({
 
     const { handleKeyDown, handleFocus, focusedRowIndex, focusedColumnIndex, focusedItemRef } =
         useAsyncTableBodyKeyboardNavigation(items.length, columns.length, !!bulkActions, scrollToIndex);
+
+    // The grid keeps DOM focus and marks the active row virtually, so the active row's tooltip is opened
+    // from here: while the grid has focus, until Escape dismisses it for that row.
+    const [isGridFocused, setIsGridFocused] = useState(false);
+    const [isTooltipDismissed, setIsTooltipDismissed] = useState(false);
+    const [prevFocusedRowIndex, setPrevFocusedRowIndex] = useState(focusedRowIndex);
+    if (prevFocusedRowIndex !== focusedRowIndex) {
+        setPrevFocusedRowIndex(focusedRowIndex);
+        setIsTooltipDismissed(false);
+    }
+    const focusedItem = focusedRowIndex === undefined ? undefined : items[focusedRowIndex];
+    const isTooltipOpen =
+        isGridFocused && !isTooltipDismissed && !!focusedItem && !!getItemTooltip?.(focusedItem);
+
+    const handleKeyDownWithTooltip = useCallback(
+        (e: KeyboardEvent) => {
+            if (isTooltipOpen && e.key === "Escape") {
+                // keep Escape from also closing a surrounding dialog
+                e.stopPropagation();
+                setIsTooltipDismissed(true);
+                return;
+            }
+            handleKeyDown(e);
+        },
+        [isTooltipOpen, handleKeyDown],
+    );
+    const handleGridFocus = useCallback(
+        (e: FocusEvent) => {
+            setIsGridFocused(true);
+            handleFocus(e);
+        },
+        [handleFocus],
+    );
+    const handleGridBlur = useCallback((e: FocusEvent) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
+            setIsGridFocused(false);
+        }
+    }, []);
 
     const activeDescendantId = useMemo(() => {
         if (focusedRowIndex === undefined || focusedRowIndex < 0 || focusedRowIndex >= items.length) {
@@ -65,11 +113,12 @@ export function UiAsyncTableBody<T extends { id: string } | { ref: ObjRef }>({
                 scrollToIndex={scrollToIndex ?? focusedRowIndex}
                 shouldLoadNextPage={shouldLoadNextPage}
                 tabIndex={items.length ? 0 : -1}
-                customKeyboardNavigationHandler={handleKeyDown}
-                onFocus={handleFocus}
+                customKeyboardNavigationHandler={handleKeyDownWithTooltip}
+                onFocus={handleGridFocus}
                 listboxProps={{
                     "aria-activedescendant": activeDescendantId,
                     ref: gridRef,
+                    onBlur: handleGridBlur,
                 }}
             >
                 {(item: T, focusedIndex?: number) => {
@@ -80,6 +129,7 @@ export function UiAsyncTableBody<T extends { id: string } | { ref: ObjRef }>({
                         focusedItemRef as Ref<HTMLElement>,
                         itemIndex === focusedRowIndex,
                         focusedColumnIndex,
+                        itemIndex === focusedRowIndex && isTooltipOpen,
                     );
                 }}
             </UiPagedVirtualList>

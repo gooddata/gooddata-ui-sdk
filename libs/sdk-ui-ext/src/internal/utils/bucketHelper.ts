@@ -27,7 +27,7 @@ import {
     OverTimeComparisonTypes,
     VisualizationTypes,
 } from "@gooddata/sdk-ui";
-import { isBulletChart, isComboChart, isLineChart } from "@gooddata/sdk-ui-charts";
+import { isAreaChart, isBulletChart, isComboChart, isLineChart } from "@gooddata/sdk-ui-charts";
 
 import { subtitles, titles } from "../../locales.js";
 import { ATTRIBUTE, BUCKETS, DATE, METRIC, SHOW_ON_SECONDARY_AXIS } from "../constants/bucket.js";
@@ -1372,6 +1372,45 @@ export function getChartFillIgnoredMeasureIdsFromMdObject(
         );
     }
     return [];
+}
+
+export function isLineStyleSeriesChartType(chartType: string | undefined): boolean {
+    return isLineChart(chartType) || isAreaChart(chartType);
+}
+
+export function getLineStyleSeriesMeasureLocalIds(buckets: IBucketOfFun[] | undefined): string[] {
+    return (buckets ?? [])
+        .filter(
+            (bucket) =>
+                (bucket.localIdentifier === BucketNames.MEASURES ||
+                    bucket.localIdentifier === BucketNames.SECONDARY_MEASURES) &&
+                isLineStyleSeriesChartType(bucket.chartType),
+        )
+        .flatMap((bucket) => bucket.items.map((item) => item.localIdentifier));
+}
+
+export function getLineStyleMeasureIdsFromMdObject(
+    insight: IInsightDefinition | undefined,
+    properties: IVisualizationProperties | undefined,
+): string[] {
+    if (!insight) {
+        return [];
+    }
+
+    if (!isComboChart(insightVisualizationType(insight))) {
+        return bucketsMeasures(insightBuckets(insight)).map(asLocalIdentifier);
+    }
+
+    const primaryChartType = properties?.controls?.["primaryChartType"] ?? VisualizationTypes.COLUMN;
+    const secondaryChartType = properties?.controls?.["secondaryChartType"] ?? VisualizationTypes.LINE;
+    const lineStyleBuckets: string[] = [
+        ...(isLineStyleSeriesChartType(primaryChartType) ? [BucketNames.MEASURES] : []),
+        ...(isLineStyleSeriesChartType(secondaryChartType) ? [BucketNames.SECONDARY_MEASURES] : []),
+    ];
+    if (lineStyleBuckets.length === 0) {
+        return [];
+    }
+    return bucketsMeasures(insightBuckets(insight, ...lineStyleBuckets)).map(asLocalIdentifier);
 }
 
 /**

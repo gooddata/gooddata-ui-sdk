@@ -36,6 +36,7 @@ import { selectIsInEditMode, selectIsInViewMode } from "../renderMode/renderMode
 import { selectIsLayoutEmpty } from "../tabs/layout/layoutSelectors.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
 import { selectMenuButtonItemsVisibility } from "../ui/uiSelectors.js";
+import { selectHasCopyBlockingReferences } from "../unavailableObjects/copyBlockingReferences.js";
 
 /**
  * @internal
@@ -163,7 +164,8 @@ export const selectIsSaveAsNewButtonVisible: DashboardSelector<boolean> = create
     selectCanCreateAnalyticalDashboard,
     selectIsExport,
     selectIsReadOnly,
-    (isSaveAsButtonHidden, isDashboardEditable, canCreateDashboard, isExport, isReadOnly) => {
+    selectHasCopyBlockingReferences,
+    (isSaveAsButtonHidden, isDashboardEditable, canCreateDashboard, isExport, isReadOnly, isCopyBlocked) => {
         /*
          * The reasoning behind this condition is as follows. Do not show separate Save As button if:
          *
@@ -175,9 +177,15 @@ export const selectIsSaveAsNewButtonVisible: DashboardSelector<boolean> = create
          * 4.  dashboard is not in export mode
          * 5.  If the user cannot create dashboards - e.g. does not have permissions to do so (is viewer for example).
          * 6.  If the dashboard is in read-only mode.
+         * 7.  If the backend would refuse the copy because the dashboard references objects the user may not read.
          */
         return (
-            !isSaveAsButtonHidden && !isDashboardEditable && !isExport && canCreateDashboard && !isReadOnly
+            !isSaveAsButtonHidden &&
+            !isDashboardEditable &&
+            !isExport &&
+            canCreateDashboard &&
+            !isReadOnly &&
+            !isCopyBlocked
         );
     },
 );
@@ -250,16 +258,19 @@ export const selectSaveAsVisible: DashboardSelector<boolean> = createSelector(
     selectCanCreateAnalyticalDashboard,
     selectIsSaveAsNewButtonHidden,
     selectMenuButtonItemsVisibility,
+    selectHasCopyBlockingReferences,
     (
         isStandaloneSaveAsNewButtonVisible,
         canCreateDashboard,
         isSaveAsNewHidden,
         menuButtonItemsVisibility,
+        isCopyBlocked,
     ) => {
         return (
             !isStandaloneSaveAsNewButtonVisible &&
             canCreateDashboard &&
             !isSaveAsNewHidden &&
+            !isCopyBlocked &&
             (menuButtonItemsVisibility.saveAsNewButton ?? true)
         );
     },

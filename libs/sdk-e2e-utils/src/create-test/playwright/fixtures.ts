@@ -4,7 +4,7 @@
 
 import type { Fixtures as PlaywrightFixtures } from "@playwright/test";
 
-import { type BaseTestArgs, type BaseWorkerArgs } from "./playwright-types.js";
+import { type PlaywrightBaseTestArgs, type PlaywrightBaseWorkerArgs } from "./playwright-types.js";
 
 /**
  * @internal
@@ -12,6 +12,6 @@ import { type BaseTestArgs, type BaseWorkerArgs } from "./playwright-types.js";
 export type Fixtures<T extends {} = {}, W extends {} = {}> = PlaywrightFixtures<
     T,
     W,
-    BaseTestArgs,
-    BaseWorkerArgs
+    PlaywrightBaseTestArgs,
+    PlaywrightBaseWorkerArgs
 >;

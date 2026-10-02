@@ -27,8 +27,17 @@ export interface IColoredItemsListProps {
     chartFill?: IChartFillConfig;
     chartFillIgnoredMeasures: string[];
     supportsLineStyles?: boolean;
+    lineStyleMeasureLocalIds?: string[];
     onLineStyleChange?: (item: IColoredItem, lineStyle: LineStyle) => void;
     onLineWidthChange?: (item: IColoredItem, lineWidth: 1 | 2 | 3 | 4) => void;
+}
+
+function isLineStyleItem(item: IColoredItem, lineStyleMeasureLocalIds: string[] | undefined) {
+    return (
+        isMeasureDescriptor(item.mappingHeader) &&
+        (lineStyleMeasureLocalIds === undefined ||
+            lineStyleMeasureLocalIds.includes(item.mappingHeader.measureHeaderItem.localIdentifier))
+    );
 }
 
 function isChartFillIgnoredMeasure(item: IColoredItem, chartFillIgnoredMeasures: string[]) {
@@ -50,6 +59,7 @@ export const ColoredItemsList = memo(function ColoredItemsList(props: IColoredIt
         chartFill,
         chartFillIgnoredMeasures,
         supportsLineStyles,
+        lineStyleMeasureLocalIds,
         onLineStyleChange,
         onLineWidthChange,
     } = props;
@@ -122,7 +132,7 @@ export const ColoredItemsList = memo(function ColoredItemsList(props: IColoredIt
                         isDerivedMeasureItem && item.isCustomMapped && onResetItem
                             ? () => onResetItem(item)
                             : undefined;
-                    if (supportsLineStyles && isMeasureDescriptor(item.mappingHeader)) {
+                    if (supportsLineStyles && isLineStyleItem(item, lineStyleMeasureLocalIds)) {
                         return (
                             <LineStyleColoredItem
                                 colorPalette={colorPalette}

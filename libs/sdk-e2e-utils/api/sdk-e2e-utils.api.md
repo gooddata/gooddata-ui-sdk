@@ -31,13 +31,16 @@ export const authHeader: (token: string) => {
 export const BACKEND_HOST: string;
 
 // @internal (undocumented)
-export type BaseTestArgs = PlaywrightTestArgs & PlaywrightTestOptions;
-
-// @internal (undocumented)
-export type BaseWorkerArgs = PlaywrightWorkerArgs & PlaywrightWorkerOptions;
-
-// @internal (undocumented)
 export type Callback = () => void;
+
+// @internal
+export type CallSignatures<F> = F extends {
+    (...args: infer A1): infer R1;
+    (...args: infer A2): infer R2;
+} ? {
+    (...args: A1): R1;
+    (...args: A2): R2;
+} : never;
 
 // @internal
 export function clickByBoundingBox(page: Page, locator: Locator, options?: {
@@ -47,28 +50,10 @@ export function clickByBoundingBox(page: Page, locator: Locator, options?: {
 }): Promise<void>;
 
 // @internal (undocumented)
-export function createTest<T extends {} = {}, W extends {} = {}>(options: ICreateTestOptions<T, W>): ITest;
+export function createTest<T extends {} = {}, W extends {} = {}>(options: ICreateTestOptions<T, W>): Test;
 
 // @internal (undocumented)
-export type DescribeConfigure = typeof test.describe.configure;
-
-// @internal (undocumented)
-export type DescribeFixme = typeof test.describe.fixme;
-
-// @internal (undocumented)
-export type DescribeOnly = typeof test.describe.only;
-
-// @internal (undocumented)
-export type DescribeParallel = typeof test.describe.parallel;
-
-// @internal (undocumented)
-export type DescribeSerial = typeof test.describe.serial;
-
-// @internal (undocumented)
-export type DescribeSkip = typeof test.describe.skip;
-
-// @internal (undocumented)
-export type Fixtures<T extends {} = {}, W extends {} = {}> = Fixtures_2<T, W, BaseTestArgs, BaseWorkerArgs>;
+export type Fixtures<T extends {} = {}, W extends {} = {}> = Fixtures_2<T, W, PlaywrightBaseTestArgs, PlaywrightBaseWorkerArgs>;
 
 // @internal (undocumented)
 export const getBaseUrl: (defaultValue?: string) => string;
@@ -106,7 +91,7 @@ export function hoverByBoundingBox(page: Page, locator: Locator, options?: {
 // @internal (undocumented)
 export interface ICreateTestOptions<T extends {} = {}, W extends {} = {}> extends ICustomCreateTestOptions {
     // (undocumented)
-    fixtures?: Fixtures<T, W>;
+    fixtures?: Fixtures_2<T, W>;
 }
 
 // @internal (undocumented)
@@ -120,23 +105,21 @@ export interface ICustomCreateTestOptions {
 // @internal (undocumented)
 export interface IDescribe extends IDescribeFunction {
     // (undocumented)
-    configure: DescribeConfigure;
+    configure: PlaywrightDescribeConfigure;
     // (undocumented)
-    fixme: DescribeFixme;
+    fixme: IDescribeFunction;
     // (undocumented)
-    only: DescribeOnly;
+    only: IDescribeFunction;
     // (undocumented)
-    parallel: DescribeParallel;
+    parallel: PlaywrightDescribeParallel;
     // (undocumented)
-    serial: DescribeSerial;
+    serial: PlaywrightDescribeSerial;
     // (undocumented)
     skip: IDescribeFunction;
 }
 
 // @internal
 export interface IDescribeFunction {
-    // (undocumented)
-    (title: string, callback: Callback): void;
     // (undocumented)
     (title: string, details: ITestDetails, callback: Callback): void;
 }
@@ -232,12 +215,6 @@ export interface ISnapshotAndSaveRecordingOptions {
 }
 
 // @internal (undocumented)
-export type ITest = Test & {
-    topLevelDescribe: ITopLevelDescribe;
-    describe: IDescribe;
-};
-
-// @internal (undocumented)
 export interface ITestDetails extends TestDetails {
     // (undocumented)
     additionalWindowProperties?: WindowProperties;
@@ -253,8 +230,6 @@ export interface ITopLevelDescribe extends ITopLevelDescribeFunction {
 
 // @internal
 export interface ITopLevelDescribeFunction {
-    // (undocumented)
-    (suiteName: string, specName: string, fn: Callback): void;
     // (undocumented)
     (suiteName: string, specName: string, details: ITestDetails, fn: Callback): void;
 }
@@ -274,6 +249,28 @@ export function loadMappings(host: string, mappingFilePath: string): Promise<voi
 export function mockLogRequests(host: string): Promise<void>;
 
 // @internal
+export type Override<T, U> = CallSignatures<T> & Omit<T, keyof U> & U;
+
+// @internal (undocumented)
+export type PlaywrightBaseTestArgs = PlaywrightTestArgs & PlaywrightTestOptions;
+
+// @internal (undocumented)
+export type PlaywrightBaseWorkerArgs = PlaywrightWorkerArgs & PlaywrightWorkerOptions;
+
+// @internal (undocumented)
+export type PlaywrightDescribeConfigure = typeof test.describe.configure;
+
+// @internal (undocumented)
+export type PlaywrightDescribeParallel = typeof test.describe.parallel;
+
+// @internal (undocumented)
+export type PlaywrightDescribeSerial = typeof test.describe.serial;
+
+// @internal (undocumented)
+type PlaywrightTest_2 = typeof test;
+export { PlaywrightTest_2 as PlaywrightTest }
+
+// @internal
 export function resetMappings(host: string): Promise<void>;
 
 // @internal
@@ -286,7 +283,10 @@ export function snapshotAndSaveRecording(host: string, mappingFilePath: string, 
 export function startRecording(host: string, backendHost: string): Promise<void>;
 
 // @internal (undocumented)
-export type Test = typeof test;
+export type Test = Override<PlaywrightTest_2, {
+    topLevelDescribe: ITopLevelDescribe;
+    describe: IDescribe;
+}>;
 
 // @internal (undocumented)
 export type WindowProperties = Record<string, unknown>;
