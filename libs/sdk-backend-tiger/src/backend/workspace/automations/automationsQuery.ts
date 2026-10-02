@@ -124,8 +124,19 @@ export class AutomationsQuery implements IAutomationsQuery {
                     ? ["automationResults" as const]
                     : [];
                 const includeUnavailableReferences = this.options?.includeUnavailableReferences
-                    ? Object.values(AUTOMATION_RESTRICTION_INCLUDES)
+                    ? Object.values(AUTOMATION_RESTRICTION_INCLUDES).flat()
                     : [];
+
+                const include: NonNullable<EntitiesApiGetAllEntitiesAutomationsRequest["include"]> = [
+                    "createdBy",
+                    "modifiedBy",
+                    "notificationChannel",
+                    "recipients",
+                    "exportDefinitions",
+                    "analyticalDashboard",
+                    ...includeAutomationResult,
+                    ...includeUnavailableReferences,
+                ];
 
                 const filterObj = this.constructFilter();
 
@@ -135,16 +146,7 @@ export class AutomationsQuery implements IAutomationsQuery {
                         ...metaIncludeObj,
                         ...filterObj,
                         ...this.sort,
-                        include: [
-                            "createdBy",
-                            "modifiedBy",
-                            "notificationChannel",
-                            "recipients",
-                            "exportDefinitions",
-                            "analyticalDashboard",
-                            ...includeAutomationResult,
-                            ...includeUnavailableReferences,
-                        ],
+                        include: [...new Set(include)],
                         origin: "NATIVE", // ensures that no inherited automations are returned
                         size: limit,
                         page: offset / limit,

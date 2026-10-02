@@ -194,188 +194,175 @@ export function comboChartLoad(props: VisualisationConfig<ComboChartConfigProper
     return loadConfig(props, (key, value) => {
         switch (key) {
             case "colorMapping":
-                return [["colors", loadColorMapping(value as (typeof DEFAULTS)["colorMapping"])]];
+                return [["colors", loadColorMapping(value)]];
             case "continuousLine": {
-                const val = value as (typeof DEFAULTS)["continuousLine"];
                 return [
                     [
                         "continuous_line",
-                        getValueOrDefault(val.enabled, DEFAULTS.continuousLine.enabled, "bool"),
+                        getValueOrDefault(value.enabled, DEFAULTS.continuousLine.enabled, "bool"),
                     ],
                 ];
             }
             case "distinctPointShapes": {
-                const val = value as (typeof DEFAULTS)["distinctPointShapes"];
                 const distinctPointShapes = {
-                    enabled: getValueOrDefault(val.enabled, DEFAULTS.distinctPointShapes.enabled, "bool"),
+                    enabled: getValueOrDefault(value.enabled, DEFAULTS.distinctPointShapes.enabled, "bool"),
                     point_shape_mapping:
-                        val.pointShapeMapping ?? DEFAULTS.distinctPointShapes.pointShapeMapping,
+                        value.pointShapeMapping ?? DEFAULTS.distinctPointShapes.pointShapeMapping,
                 };
                 return [["distinct_point_shapes", distinctPointShapes]];
             }
             case "chartFill": {
+                return [["chart_fill", loadChartFill(value, DEFAULTS.chartFill)]];
+            }
+            case "dataPoints": {
                 return [
                     [
-                        "chart_fill",
-                        loadChartFill(value as (typeof DEFAULTS)["chartFill"], DEFAULTS.chartFill),
+                        "data_points",
+                        getValueOrDefault(value.visible, DEFAULTS.dataPoints.visible, "bool_auto"),
                     ],
                 ];
             }
-            case "dataPoints": {
-                const val = value as (typeof DEFAULTS)["dataPoints"];
-                return [
-                    ["data_points", getValueOrDefault(val.visible, DEFAULTS.dataPoints.visible, "bool_auto")],
-                ];
-            }
             case "dataLabels": {
-                const val = value as (typeof DEFAULTS)["dataLabels"];
                 return [
-                    ["data_labels", getValueOrDefault(val.visible, DEFAULTS.dataLabels.visible, "bool_auto")],
-                    ["data_labels_style", getValueOrDefault(val.style, DEFAULTS.dataLabels.style)],
+                    [
+                        "data_labels",
+                        getValueOrDefault(value.visible, DEFAULTS.dataLabels.visible, "bool_auto"),
+                    ],
+                    ["data_labels_style", getValueOrDefault(value.style, DEFAULTS.dataLabels.style)],
                 ];
             }
             case "legend": {
-                const val = value as (typeof DEFAULTS)["legend"];
                 return [
-                    ["legend_enabled", getValueOrDefault(val.enabled, DEFAULTS.legend.enabled, "bool")],
-                    ["legend_position", getValueOrDefault(val.position, DEFAULTS.legend.position)],
+                    ["legend_enabled", getValueOrDefault(value.enabled, DEFAULTS.legend.enabled, "bool")],
+                    ["legend_position", getValueOrDefault(value.position, DEFAULTS.legend.position)],
                 ];
             }
             case "stackMeasuresToPercent":
                 return [
                     [
                         "stack_measures_to_100",
-                        getValueOrDefault(value as boolean, DEFAULTS.stackMeasuresToPercent, "bool"),
+                        getValueOrDefault(value, DEFAULTS.stackMeasuresToPercent, "bool"),
                     ],
                 ];
             case "stackMeasures":
-                return [
-                    ["stack_measures", getValueOrDefault(value as boolean, DEFAULTS.stackMeasures, "bool")],
-                ];
+                return [["stack_measures", getValueOrDefault(value, DEFAULTS.stackMeasures, "bool")]];
             case "xaxis": {
-                const val = value as (typeof DEFAULTS)["xaxis"];
                 return [
                     [
                         "xaxis_name_position",
-                        getValueOrDefault(val.name?.position, DEFAULTS.xaxis.name.position),
+                        getValueOrDefault(value.name?.position, DEFAULTS.xaxis.name.position),
                     ],
                     [
                         "xaxis_name_visible",
-                        getValueOrDefault(val.name?.visible, DEFAULTS.xaxis.name.visible, "bool"),
+                        getValueOrDefault(value.name?.visible, DEFAULTS.xaxis.name.visible, "bool"),
                     ],
-                    ["xaxis_rotation", getValueOrDefault(val.rotation, DEFAULTS.xaxis.rotation)],
-                    ["xaxis_visible", getValueOrDefault(val.visible, DEFAULTS.xaxis.visible, "bool")],
+                    ["xaxis_rotation", getValueOrDefault(value.rotation, DEFAULTS.xaxis.rotation)],
+                    ["xaxis_visible", getValueOrDefault(value.visible, DEFAULTS.xaxis.visible, "bool")],
                     [
                         "xaxis_labels",
-                        getValueOrDefault(val.labelsEnabled, DEFAULTS.xaxis.labelsEnabled, "bool"),
+                        getValueOrDefault(value.labelsEnabled, DEFAULTS.xaxis.labelsEnabled, "bool"),
                     ],
                 ];
             }
             case "primaryChartType":
-                return [
-                    ["yaxis_primary_type", getValueOrDefault(value as string, DEFAULTS.primaryChartType)],
-                ];
+                return [["yaxis_primary_type", getValueOrDefault(value, DEFAULTS.primaryChartType)]];
             case "yaxis": {
-                const val = value as (typeof DEFAULTS)["yaxis"];
                 return [
-                    ["yaxis_primary_format", getValueOrDefault(val.format, DEFAULTS.yaxis.format)],
-                    ["yaxis_primary_max", getValueOrDefault(val.max, DEFAULTS.yaxis.max, "number")],
-                    ["yaxis_primary_min", getValueOrDefault(val.min, DEFAULTS.yaxis.min, "number")],
+                    ["yaxis_primary_format", getValueOrDefault(value.format, DEFAULTS.yaxis.format)],
+                    ["yaxis_primary_max", getValueOrDefault(value.max, DEFAULTS.yaxis.max, "number")],
+                    ["yaxis_primary_min", getValueOrDefault(value.min, DEFAULTS.yaxis.min, "number")],
                     [
                         "yaxis_primary_name_position",
-                        getValueOrDefault(val.name?.position, DEFAULTS.yaxis.name.position),
+                        getValueOrDefault(value.name?.position, DEFAULTS.yaxis.name.position),
                     ],
                     [
                         "yaxis_primary_name_visible",
-                        getValueOrDefault(val.name?.visible, DEFAULTS.yaxis.name.visible, "bool"),
+                        getValueOrDefault(value.name?.visible, DEFAULTS.yaxis.name.visible, "bool"),
                     ],
-                    ["yaxis_primary_rotation", getValueOrDefault(val.rotation, DEFAULTS.yaxis.rotation)],
-                    ["yaxis_primary_visible", getValueOrDefault(val.visible, DEFAULTS.yaxis.visible, "bool")],
+                    ["yaxis_primary_rotation", getValueOrDefault(value.rotation, DEFAULTS.yaxis.rotation)],
+                    [
+                        "yaxis_primary_visible",
+                        getValueOrDefault(value.visible, DEFAULTS.yaxis.visible, "bool"),
+                    ],
                     [
                         "yaxis_primary_labels",
-                        getValueOrDefault(val.labelsEnabled, DEFAULTS.yaxis.labelsEnabled, "bool"),
+                        getValueOrDefault(value.labelsEnabled, DEFAULTS.yaxis.labelsEnabled, "bool"),
                     ],
                 ];
             }
             case "secondaryChartType":
-                return [
-                    ["yaxis_secondary_type", getValueOrDefault(value as string, DEFAULTS.secondaryChartType)],
-                ];
+                return [["yaxis_secondary_type", getValueOrDefault(value, DEFAULTS.secondaryChartType)]];
             case "secondary_yaxis": {
-                const val = value as (typeof DEFAULTS)["yaxis"];
                 return [
                     [
                         "yaxis_secondary_format",
-                        getValueOrDefault(val.format, DEFAULTS.secondary_yaxis.format),
+                        getValueOrDefault(value.format, DEFAULTS.secondary_yaxis.format),
                     ],
                     [
                         "yaxis_secondary_max",
-                        getValueOrDefault(val.max, DEFAULTS.secondary_yaxis.max, "number"),
+                        getValueOrDefault(value.max, DEFAULTS.secondary_yaxis.max, "number"),
                     ],
                     [
                         "yaxis_secondary_min",
-                        getValueOrDefault(val.min, DEFAULTS.secondary_yaxis.min, "number"),
+                        getValueOrDefault(value.min, DEFAULTS.secondary_yaxis.min, "number"),
                     ],
                     [
                         "yaxis_secondary_name_position",
-                        getValueOrDefault(val.name?.position, DEFAULTS.secondary_yaxis.name.position),
+                        getValueOrDefault(value.name?.position, DEFAULTS.secondary_yaxis.name.position),
                     ],
                     [
                         "yaxis_secondary_name_visible",
-                        getValueOrDefault(val.name?.visible, DEFAULTS.secondary_yaxis.name.visible, "bool"),
+                        getValueOrDefault(value.name?.visible, DEFAULTS.secondary_yaxis.name.visible, "bool"),
                     ],
                     [
                         "yaxis_secondary_rotation",
-                        getValueOrDefault(val.rotation, DEFAULTS.secondary_yaxis.rotation),
+                        getValueOrDefault(value.rotation, DEFAULTS.secondary_yaxis.rotation),
                     ],
                     [
                         "yaxis_secondary_visible",
-                        getValueOrDefault(val.visible, DEFAULTS.secondary_yaxis.visible, "bool"),
+                        getValueOrDefault(value.visible, DEFAULTS.secondary_yaxis.visible, "bool"),
                     ],
                     [
                         "yaxis_secondary_labels",
-                        getValueOrDefault(val.labelsEnabled, DEFAULTS.secondary_yaxis.labelsEnabled, "bool"),
+                        getValueOrDefault(
+                            value.labelsEnabled,
+                            DEFAULTS.secondary_yaxis.labelsEnabled,
+                            "bool",
+                        ),
                     ],
                 ];
             }
             case "dualAxis": {
-                const val = value as (typeof DEFAULTS)["dualAxis"];
-                return [["yaxis_secondary_show_on_right", getValueOrDefault(val, DEFAULTS.dualAxis, "bool")]];
+                return [
+                    ["yaxis_secondary_show_on_right", getValueOrDefault(value, DEFAULTS.dualAxis, "bool")],
+                ];
             }
             case "grid": {
-                const val = value as (typeof DEFAULTS)["grid"];
-                return [["grid_enabled", getValueOrDefault(val.enabled, DEFAULTS.grid.enabled, "bool")]];
+                return [["grid_enabled", getValueOrDefault(value.enabled, DEFAULTS.grid.enabled, "bool")]];
             }
             case "disableDrillDown":
-                return [
-                    [
-                        "disable_drill_down",
-                        getValueOrDefault(value as boolean, DEFAULTS.disableDrillDown, "bool"),
-                    ],
-                ];
+                return [["disable_drill_down", getValueOrDefault(value, DEFAULTS.disableDrillDown, "bool")]];
             case "disableDrillIntoURL":
                 // Org-specific default (enableDrillToUrlByDefault); always serialise when set so it round-trips.
-                return [["disable_drill_into_url", value === undefined ? undefined : !!value]];
+                return [["disable_drill_into_url", Boolean(value)]];
             case "disableAlerts":
-                return [
-                    ["disable_alerts", getValueOrDefault(value as boolean, DEFAULTS.disableAlerts, "bool")],
-                ];
+                return [["disable_alerts", getValueOrDefault(value, DEFAULTS.disableAlerts, "bool")]];
             case "disableScheduledExports":
                 return [
                     [
                         "disable_scheduled_exports",
-                        getValueOrDefault(value as boolean, DEFAULTS.disableScheduledExports, "bool"),
+                        getValueOrDefault(value, DEFAULTS.disableScheduledExports, "bool"),
                     ],
                 ];
             case "disableKeyDriveAnalysisOn":
-                return [["disable_key_drive_analysis", loadDisableKda(value as Record<string, boolean>)]];
+                return [["disable_key_drive_analysis", loadDisableKda(value)]];
             case "customTooltip":
-                return [["custom_tooltip", loadCustomTooltip(value as (typeof DEFAULTS)["customTooltip"])]];
+                return [["custom_tooltip", loadCustomTooltip(value)]];
             case "thresholdMeasures": {
                 return [
                     [
                         "line_style_control_metrics",
-                        getValueOrDefault(value as string[], DEFAULTS.thresholdMeasures, "array"),
+                        getValueOrDefault(value, DEFAULTS.thresholdMeasures, "array"),
                     ],
                 ];
             }
@@ -383,18 +370,14 @@ export function comboChartLoad(props: VisualisationConfig<ComboChartConfigProper
                 return [
                     [
                         "line_style_excluded_metrics",
-                        getValueOrDefault(value as string[], DEFAULTS.thresholdExcludedMeasures, "array"),
+                        getValueOrDefault(value, DEFAULTS.thresholdExcludedMeasures, "array"),
                     ],
                 ];
             }
             case "lineStyleMapping":
-                return [
-                    [
-                        "line_style_mapping",
-                        loadLineStyleMapping(value as (typeof DEFAULTS)["lineStyleMapping"]),
-                    ],
-                ];
+                return [["line_style_mapping", loadLineStyleMapping(value)]];
             default:
+                key satisfies never; // Check that no key is forgotten in the cases above
                 return [];
         }
     });

@@ -34,7 +34,7 @@ test.topLevelDescribe(
     "permissions",
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
-        test.describe("Basic case", () => {
+        test.describe("Basic case", {}, () => {
             test(
                 "should render topBar with share button",
                 {
@@ -56,7 +56,7 @@ test.topLevelDescribe(
             );
         });
 
-        test.describe("Basic viewer case", () => {
+        test.describe("Basic viewer case", {}, () => {
             test(
                 "should not show sharing for user who is only viewer",
                 {
@@ -446,7 +446,7 @@ test.topLevelDescribe(
             );
         });
 
-        test.describe("Basic multiple groups/users case", () => {
+        test.describe("Basic multiple groups/users case", {}, () => {
             test(
                 "should correctly visualize assigned different permissions for groups",
                 {

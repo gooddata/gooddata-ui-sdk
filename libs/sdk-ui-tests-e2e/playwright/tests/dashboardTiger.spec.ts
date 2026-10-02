@@ -16,7 +16,7 @@ test.topLevelDescribe(
     "dashboardTiger",
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
-        test.describe("TopBar rendering advanced", () => {
+        test.describe("TopBar rendering advanced", {}, () => {
             test(
                 "Should enable Save button when resize column",
                 {
@@ -64,7 +64,7 @@ test.topLevelDescribe(
             );
         });
 
-        test.describe("TopBar rendering", () => {
+        test.describe("TopBar rendering", {}, () => {
             test(
                 "should render topBar",
                 {
@@ -127,7 +127,7 @@ test.topLevelDescribe(
             );
         });
 
-        test.describe("FilterBar rendering", () => {
+        test.describe("FilterBar rendering", {}, () => {
             test(
                 "should render filter bar",
                 {
@@ -172,7 +172,7 @@ test.topLevelDescribe(
             );
         });
 
-        test.describe("Dashboard body rendering", () => {
+        test.describe("Dashboard body rendering", {}, () => {
             test.skip(
                 "should render single insight",
                 {
@@ -185,7 +185,7 @@ test.topLevelDescribe(
             );
         });
 
-        test.describe("Dashboard has too many data points insight", () => {
+        test.describe("Dashboard has too many data points insight", {}, () => {
             test(
                 "should render insight",
                 {

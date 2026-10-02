@@ -8,7 +8,12 @@ import { VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { type ChartOrientationType, type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { DEFAULT_DECIMAL_SEPARATOR } from "../../constants/format.js";
-import { type IChartOptions, type ISeriesDataItem, type ISeriesItem } from "../../typings/unsafe.js";
+import {
+    type IChartOptions,
+    type IChartOptionsData,
+    type ISeriesDataItem,
+    type ISeriesItem,
+} from "../../typings/unsafe.js";
 
 export function parseValue(value: DataValue): number | null {
     if (typeof value === "string") {
@@ -190,6 +195,24 @@ export const isChartSupported = (type: string | undefined): boolean => {
 export const isOneOfTypes = (type: string | undefined, types: string[]): boolean =>
     types.includes(type ?? "");
 export const stringifyChartTypes = (): string => Object.values(VisualizationTypes).join(", ");
+
+// Automatically narrows categories type to `string[]`
+export function isFlatCategories(categories: IChartOptionsData["categories"]) {
+    return Array.isArray(categories) && categories.every((category) => typeof category === "string");
+}
+
+// Automatically narrows categories type to `string[][]`
+export function isPerAxisCategories(categories: IChartOptionsData["categories"]) {
+    return Array.isArray(categories) && categories.every((category) => Array.isArray(category));
+}
+
+// Automatically narrows categories type to `ICategoryGroup[]`
+export function isTreeCategories(categories: IChartOptionsData["categories"]) {
+    return (
+        Array.isArray(categories) &&
+        categories.every((category) => typeof category === "object" && "name" in category)
+    );
+}
 
 export function formatLegendLabel(
     value: number,

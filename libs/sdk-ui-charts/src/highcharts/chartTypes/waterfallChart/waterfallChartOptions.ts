@@ -169,7 +169,7 @@ export function getWaterfallChartCategories(
     chartConfig: IChartConfig,
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
     emptyHeaderTitle: string,
-): any[] {
+) {
     const isTotalSeriesEnabled = chartConfig.total?.enabled ?? true;
     const newCategories =
         categories.length === 0

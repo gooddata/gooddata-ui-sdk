@@ -3,7 +3,6 @@
 import { useState } from "react";
 
 import { useIntl } from "react-intl";
-import { invariant } from "ts-invariant";
 
 import { type IAttributeDescriptor, type ObjRef } from "@gooddata/sdk-model";
 import { useClientWorkspaceIdentifiers } from "@gooddata/sdk-ui";
@@ -16,6 +15,8 @@ import {
     selectAllCatalogDisplayFormsMap,
 } from "../../../../../model/store/catalog/catalogSelectors.js";
 import { selectSettings } from "../../../../../model/store/config/configSelectors.js";
+import { selectUnavailableObjects } from "../../../../../model/store/unavailableObjects/unavailableObjectsSelectors.js";
+import { isLabelRestricted } from "../../../../../model/store/widgetDrills/drillRestrictionUtils.js";
 import { AttributeUrlSection } from "../../../../drill/DrillConfigPanel/DrillToUrl/AttributeUrlSection.js";
 import { CustomUrlEditor } from "../../../../drill/DrillConfigPanel/DrillToUrl/CustomUrlEditor.js";
 import { CustomUrlSection } from "../../../../drill/DrillConfigPanel/DrillToUrl/CustomUrlSection.js";
@@ -33,6 +34,7 @@ function useButtonValue(urlDrillTarget: UrlDrillTarget | undefined): string {
 
     const displayForms = useDashboardSelector(selectAllCatalogDisplayFormsMap);
     const attributes = useDashboardSelector(selectAllCatalogAttributesMap);
+    const unavailableObjects = useDashboardSelector(selectUnavailableObjects);
 
     if (isDrillToCustomUrlConfig(urlDrillTarget) && urlDrillTarget.customUrl) {
         return urlDrillTarget.customUrl;
@@ -40,11 +42,14 @@ function useButtonValue(urlDrillTarget: UrlDrillTarget | undefined): string {
 
     if (isDrillToAttributeUrlConfig(urlDrillTarget) && urlDrillTarget.drillToAttributeDisplayForm) {
         const displayForm = displayForms.get(urlDrillTarget.drillToAttributeDisplayForm);
-        invariant(displayForm, "inconsistent state in drill to URL button");
-        const attribute = attributes.get(displayForm.attribute);
-        invariant(attribute, "inconsistent state in drill to URL button");
-
-        return `${attribute.attribute.title} (${displayForm.title})`;
+        const attribute = displayForm && attributes.get(displayForm.attribute);
+        if (displayForm && attribute) {
+            return `${attribute.attribute.title} (${displayForm.title})`;
+        }
+        // restricted or deleted labels are not in the catalog
+        if (isLabelRestricted(urlDrillTarget.drillToAttributeDisplayForm, unavailableObjects)) {
+            return intl.formatMessage({ id: "drill_modal_picker.restricted" });
+        }
     }
 
     return intl.formatMessage({ id: "configurationPanel.drillIntoUrl.defaultButtonValue" });

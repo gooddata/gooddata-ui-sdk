@@ -6,6 +6,7 @@ import { describe, expect, it } from "vitest";
 
 import { type IChartOptions } from "../../typings/unsafe.js";
 
+import { makeCtx } from "./configurator.test.utils.js";
 import { getContinuousLineConfiguration } from "./getContinuousLineConfiguration.js";
 
 describe("getContinuousLineConfiguration:", () => {
@@ -35,24 +36,42 @@ describe("getContinuousLineConfiguration:", () => {
     const chartConfigure: any = { continuousLine: { enable: false } };
 
     it("should return the empty object when the continuous line is disabled", () => {
-        const config = getContinuousLineConfiguration(chartOptions, hightChartOptions, chartConfigure);
+        const ctx = makeCtx({
+            chartOptions,
+            highchartsOptions: hightChartOptions,
+            chartConfig: chartConfigure,
+        });
+
+        const config = getContinuousLineConfiguration(ctx);
 
         expect(config).toEqual({});
     });
 
     it("should return the empty object for the stacking chart", () => {
-        const config = getContinuousLineConfiguration(chartOptions, hightChartOptions, {
-            continuousLine: { enabled: true },
-            stackMeasures: true,
+        const ctx = makeCtx({
+            chartOptions,
+            highchartsOptions: hightChartOptions,
+            chartConfig: {
+                continuousLine: { enabled: true },
+                stackMeasures: true,
+            },
         });
+
+        const config = getContinuousLineConfiguration(ctx);
 
         expect(config).toEqual({});
     });
 
     it("should return the correct object when the continuous line is enabled", () => {
-        const config = getContinuousLineConfiguration(chartOptions, hightChartOptions, {
-            continuousLine: { enabled: true },
-        } as any);
+        const ctx = makeCtx({
+            chartOptions,
+            highchartsOptions: hightChartOptions,
+            chartConfig: {
+                continuousLine: { enabled: true },
+            },
+        });
+
+        const config = getContinuousLineConfiguration(ctx);
 
         expect(config).toEqual({
             plotOptions: {
@@ -65,9 +84,9 @@ describe("getContinuousLineConfiguration:", () => {
     });
 
     it("should remove the stack configuration for the combo chart", () => {
-        const config = getContinuousLineConfiguration(
-            { type: "combo" },
-            {
+        const ctx = makeCtx({
+            chartOptions: { type: "combo" },
+            highchartsOptions: {
                 series: [
                     {
                         ...seriesItem,
@@ -77,10 +96,12 @@ describe("getContinuousLineConfiguration:", () => {
                     },
                 ],
             },
-            {
+            chartConfig: {
                 continuousLine: { enabled: true },
-            } as any,
-        );
+            },
+        });
+
+        const config = getContinuousLineConfiguration(ctx);
 
         expect(config).toEqual({
             plotOptions: {
@@ -100,9 +121,9 @@ describe("getContinuousLineConfiguration:", () => {
     });
 
     it("should remove the stack configuration for the area chart", () => {
-        const config = getContinuousLineConfiguration(
-            { type: "area" },
-            {
+        const ctx = makeCtx({
+            chartOptions: { type: "area" },
+            highchartsOptions: {
                 series: [
                     {
                         ...seriesItem,
@@ -111,10 +132,12 @@ describe("getContinuousLineConfiguration:", () => {
                     },
                 ],
             },
-            {
+            chartConfig: {
                 continuousLine: { enabled: true },
-            } as any,
-        );
+            },
+        });
+
+        const config = getContinuousLineConfiguration(ctx);
 
         expect(config).toEqual({
             plotOptions: {

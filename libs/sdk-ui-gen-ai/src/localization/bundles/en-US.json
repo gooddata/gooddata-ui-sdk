@@ -324,7 +324,7 @@
         "crowdinContext": "Feedback reason option: Other reason not listed"
     },
     "gd.gen-ai.disclaimer": {
-        "text": "AI assistants can make mistakes. Check before relying on these answers.",
+        "text": "AI can make mistakes. Verify results.",
         "crowdinContext": "Warning disclaimer about AI response accuracy shown to users"
     },
     "gd.gen-ai.dialog.label": {

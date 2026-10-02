@@ -36,7 +36,7 @@ test.topLevelDescribe(
     "dragDropAndMoveWidget",
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
-        test.describe("Insight on dashboard", () => {
+        test.describe("Insight on dashboard", {}, () => {
             test(
                 "can add 3 widgets into the same row to create a new section",
                 { tag: ["@pre-merge-integrated"] },
@@ -134,7 +134,7 @@ test.topLevelDescribe(
         });
 
         //Cover ticket: RAIL-4715
-        test.describe("Be able to resize widgeton dashboard", () => {
+        test.describe("Be able to resize widgeton dashboard", {}, () => {
             test(
                 "should able to resize widget when is placed next to other in one row",
                 { tag: ["@pre-merge-integrated"] },

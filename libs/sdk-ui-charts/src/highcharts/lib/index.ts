@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 // because of this issue //Should be removed after this will be resolved https://github.com/highcharts/highcharts-react/issues/521
 // We need split imports of types and Highcharts itself
@@ -39,3 +39,6 @@ export type PlotOptions = HighchartsModules.PlotOptions;
 export type DataLabelsOptions = HighchartsModules.DataLabelsOptions;
 export type WrapProceedFunction = HighchartsModules.WrapProceedFunction;
 export type AxisLabelsFormatterCallbackFunction = HighchartsModules.AxisLabelsFormatterCallbackFunction;
+export type PlotTreemapDataLabelsOptions = HighchartsModules.PlotTreemapDataLabelsOptions;
+export type PlotTreemapOptions = HighchartsModules.PlotTreemapOptions;
+export type SeriesOptionsType = HighchartsModules.SeriesOptionsType;

@@ -63,22 +63,19 @@ const renderColumns = () => {
     return { title, widget, menu };
 };
 
-const restrictedTooltip =
-    "You don't have access to some of the objects used in this automation, so it can't be opened.";
-
 describe("useAutomationColumns with a restricted automation", () => {
-    it("shows the lock instead of the type icon only when the automation is restricted", () => {
+    it("keeps the type icon for a restricted automation", () => {
         const { title } = renderColumns();
 
-        const { unmount } = render(<>{title.renderRoleIcon?.(automation)}</>, { wrapper });
-        expect(screen.queryByLabelText(restrictedTooltip)).not.toBeInTheDocument();
-        unmount();
+        const { container: regular } = render(<>{title.renderRoleIcon?.(automation)}</>, { wrapper });
+        const { container: restricted } = render(<>{title.renderRoleIcon?.(restrictedAutomation)}</>, {
+            wrapper,
+        });
 
-        render(<>{title.renderRoleIcon?.(restrictedAutomation)}</>, { wrapper });
-        expect(screen.getByLabelText(restrictedTooltip)).toBeInTheDocument();
+        expect(restricted.innerHTML).toBe(regular.innerHTML);
     });
 
-    it("shows the name locked only when the automation is restricted", () => {
+    it("locks the name only when the automation is restricted", () => {
         const { title } = renderColumns();
 
         expect(title.isLocked?.(automation)).toBe(false);

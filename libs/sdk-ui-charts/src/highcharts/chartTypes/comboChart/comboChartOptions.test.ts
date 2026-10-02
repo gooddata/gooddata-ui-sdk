@@ -47,6 +47,44 @@ describe("getComboChartSeries", () => {
             ]);
         },
     );
+
+    it("should remove line style and width from column series and keep them on line series", () => {
+        const styledSeries: ISeriesItem[] = [
+            { dashStyle: "dash", lineWidth: 4 },
+            { dashStyle: "dash", lineWidth: 1 },
+        ];
+
+        const result = getComboChartSeries(
+            {},
+            ComboMeasureGroup!.measureGroupHeader,
+            styledSeries,
+            ComboChart,
+        );
+
+        expect(result).toEqual([
+            { type: COLUMN, zIndex: CHART_ORDER[COLUMN] },
+            { type: LINE, zIndex: CHART_ORDER[LINE], dashStyle: "dash", lineWidth: 1 },
+        ]);
+    });
+
+    it("should keep line style and width on area series and remove them from column series", () => {
+        const styledSeries: ISeriesItem[] = [
+            { dashStyle: "dash", lineWidth: 4 },
+            { dashStyle: "dash", lineWidth: 1 },
+        ];
+
+        const result = getComboChartSeries(
+            { primaryChartType: AREA, secondaryChartType: COLUMN },
+            ComboMeasureGroup!.measureGroupHeader,
+            styledSeries,
+            ComboChart,
+        );
+
+        expect(result).toEqual([
+            { type: AREA, zIndex: CHART_ORDER[AREA], dashStyle: "dash", lineWidth: 4 },
+            { type: COLUMN, zIndex: CHART_ORDER[COLUMN] },
+        ]);
+    });
 });
 
 describe("getComboChartStackingConfig", () => {

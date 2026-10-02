@@ -295,6 +295,11 @@ export default defineConfig(({ mode }): UserConfig => {
             // (kB) above that size: the warning would only restate what is inherent to this template; split the
             // bundle with dynamic import() once your own application grows.
             chunkSizeWarningLimit: 10000,
+            rolldownOptions: {
+                checks: {
+                    pluginTimings: false,
+                },
+            },
         },
         server: {
             host: DEV_SERVER_HOST,

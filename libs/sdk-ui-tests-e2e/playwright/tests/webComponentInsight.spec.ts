@@ -19,7 +19,7 @@ test.beforeEach(async ({ page }) => {
     await injectAuthHeader(page, API_TOKEN);
 });
 
-test.topLevelDescribe("Web component insight", "webComponentInsightSdk", () => {
+test.topLevelDescribe("Web component insight", "webComponentInsightSdk", {}, () => {
     test(
         "renders gd-insight-embed and emits gd-ready once",
         { tag: ["@pre-merge-integrated"] },

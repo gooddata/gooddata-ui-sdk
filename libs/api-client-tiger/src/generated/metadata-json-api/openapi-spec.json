@@ -10010,7 +10010,7 @@
                                 ]
                             }
                         },
-                        "example": "notificationChannel,analyticalDashboard,createdBy,modifiedBy,exportDefinitions,recipients,visualizationObjects,metrics,attributes,labels,facts,computedAttributes,automationResults"
+                        "example": "notificationChannel,analyticalDashboard,createdBy,modifiedBy,exportDefinitions,recipients,visualizationObjects,analyticalDashboards,metrics,attributes,labels,facts,computedAttributes,automationResults"
                     },
                     {
                         "$ref": "#/components/parameters/page"
@@ -10128,7 +10128,7 @@
                                 ]
                             }
                         },
-                        "example": "notificationChannel,analyticalDashboard,createdBy,modifiedBy,exportDefinitions,recipients,visualizationObjects,metrics,attributes,labels,facts,computedAttributes,automationResults"
+                        "example": "notificationChannel,analyticalDashboard,createdBy,modifiedBy,exportDefinitions,recipients,visualizationObjects,analyticalDashboards,metrics,attributes,labels,facts,computedAttributes,automationResults"
                     },
                     {
                         "name": "metaInclude",
@@ -10340,7 +10340,7 @@
                                 ]
                             }
                         },
-                        "example": "notificationChannel,analyticalDashboard,createdBy,modifiedBy,exportDefinitions,recipients,visualizationObjects,metrics,attributes,labels,facts,computedAttributes,automationResults"
+                        "example": "notificationChannel,analyticalDashboard,createdBy,modifiedBy,exportDefinitions,recipients,visualizationObjects,analyticalDashboards,metrics,attributes,labels,facts,computedAttributes,automationResults"
                     },
                     {
                         "name": "X-GDC-VALIDATE-RELATIONS",
@@ -10465,7 +10465,7 @@
                                 ]
                             }
                         },
-                        "example": "notificationChannel,analyticalDashboard,createdBy,modifiedBy,exportDefinitions,recipients,visualizationObjects,metrics,attributes,labels,facts,computedAttributes,automationResults"
+                        "example": "notificationChannel,analyticalDashboard,createdBy,modifiedBy,exportDefinitions,recipients,visualizationObjects,analyticalDashboards,metrics,attributes,labels,facts,computedAttributes,automationResults"
                     }
                 ],
                 "requestBody": {
@@ -10612,7 +10612,7 @@
                                 ]
                             }
                         },
-                        "example": "notificationChannel,analyticalDashboard,createdBy,modifiedBy,exportDefinitions,recipients,visualizationObjects,metrics,attributes,labels,facts,computedAttributes,automationResults"
+                        "example": "notificationChannel,analyticalDashboard,createdBy,modifiedBy,exportDefinitions,recipients,visualizationObjects,analyticalDashboards,metrics,attributes,labels,facts,computedAttributes,automationResults"
                     }
                 ],
                 "requestBody": {
@@ -29970,7 +29970,6 @@
                                 ]
                             },
                             "from": {
-                                "pattern": "^((?:\\d{4})|(?:\\d{4}-[1-4])|(?:\\d{4}-(0[1-9]|1[0-2]))|(?:\\d{4}-(0[1-9]|[1-4]\\d|5[0-3]))|(?:\\d{4}-\\d{2}-\\d{2})|(?:[0-9]|[1-5]\\d)|(?:[0-9]|[1-9]\\d{1,3}|[1-7]\\d{4}|8[0-5]\\d{3}|86[0-3]\\d{2})|(?:[0-9]|[1-5]\\d)|(?:[0-9]|[1-9]\\d{1,2}|1[0-3]\\d{2}|14[0-3]\\d)|(?:[0-9]|1\\d|2[0-3])|(?:[0-6])|(?:[1-9]|[12]\\d|3[01])|(?:[1-9]|[1-8]\\d|9[0-2])|(?:[1-9]|[1-9]\\d|[12]\\d\\d|3[0-5]\\d|36[0-6])|(?:[1-9]|[1-4]\\d|5[0-3])|(?:[1-9]|1[0-2])|(?:[1-4]))$",
                                 "type": "string",
                                 "description": "Start of the range (including), in the format matching 'granularity'. If omitted, the range is unbounded at the start.",
                                 "nullable": true,
@@ -30027,7 +30026,6 @@
                                 "type": "string"
                             },
                             "to": {
-                                "pattern": "^((?:\\d{4})|(?:\\d{4}-[1-4])|(?:\\d{4}-(0[1-9]|1[0-2]))|(?:\\d{4}-(0[1-9]|[1-4]\\d|5[0-3]))|(?:\\d{4}-\\d{2}-\\d{2})|(?:[0-9]|[1-5]\\d)|(?:[0-9]|[1-9]\\d{1,3}|[1-7]\\d{4}|8[0-5]\\d{3}|86[0-3]\\d{2})|(?:[0-9]|[1-5]\\d)|(?:[0-9]|[1-9]\\d{1,2}|1[0-3]\\d{2}|14[0-3]\\d)|(?:[0-9]|1\\d|2[0-3])|(?:[0-6])|(?:[1-9]|[12]\\d|3[01])|(?:[1-9]|[1-8]\\d|9[0-2])|(?:[1-9]|[1-9]\\d|[12]\\d\\d|3[0-5]\\d|36[0-6])|(?:[1-9]|[1-4]\\d|5[0-3])|(?:[1-9]|1[0-2])|(?:[1-4]))$",
                                 "type": "string",
                                 "description": "End of the range (including), in the format matching 'granularity'. If omitted, the range is unbounded at the end.",
                                 "nullable": true,
@@ -41988,6 +41986,17 @@
                                 "properties": {
                                     "data": {
                                         "$ref": "#/components/schemas/JsonApiAnalyticalDashboardToOneLinkage"
+                                    }
+                                }
+                            },
+                            "analyticalDashboards": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiAnalyticalDashboardToManyLinkage"
                                     }
                                 }
                             },
@@ -66211,6 +66220,7 @@
                         "type": "string",
                         "description": "JSON:API type of the restricted object. Matches the `type` of its entry in the resource's `relationships`.",
                         "enum": [
+                            "analyticalDashboard",
                             "attribute",
                             "attributeHierarchy",
                             "computedAttribute",

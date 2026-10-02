@@ -42,6 +42,7 @@ export interface IColorsSectionProps {
     /** Optional controls rendered above the fill dropdown, inside the section. */
     additionalControls?: ReactNode;
     supportsLineStyles?: boolean;
+    lineStyleMeasureLocalIds?: string[];
     /** Local identifiers of derived measures; only their items offer the per-item reset. */
     derivedMeasureLocalIds?: string[];
 }
@@ -60,10 +61,14 @@ export function ColorsSection({
     chartFillIgnoredMeasures = [],
     isChartFillDisabled,
     additionalControls,
-    supportsLineStyles,
+    supportsLineStyles: isLineStylingEnabled,
+    lineStyleMeasureLocalIds,
     derivedMeasureLocalIds,
 }: IColorsSectionProps) {
     const intl = useIntl();
+    const supportsLineStyles =
+        !!isLineStylingEnabled &&
+        (lineStyleMeasureLocalIds === undefined || lineStyleMeasureLocalIds.length > 0);
     const onSelect = (selectedColorItem: IColoredItem, color: IColor) => {
         const { mappingHeader } = selectedColorItem;
         const result = getProperties(properties!, mappingHeader!, color);
@@ -209,6 +214,7 @@ export function ColorsSection({
                     chartFill={chartFill}
                     chartFillIgnoredMeasures={chartFillIgnoredMeasures}
                     supportsLineStyles={supportsLineStyles}
+                    lineStyleMeasureLocalIds={lineStyleMeasureLocalIds}
                     onLineStyleChange={supportsLineStyles ? onLineStyleChange : undefined}
                     onLineWidthChange={supportsLineStyles ? onLineWidthChange : undefined}
                 />

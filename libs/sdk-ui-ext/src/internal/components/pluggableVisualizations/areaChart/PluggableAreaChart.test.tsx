@@ -134,6 +134,18 @@ describe("PluggableAreaChart", () => {
         expect(extendedReferencePoint).toMatchSnapshot();
     });
 
+    it("should keep line styles of the measures", async () => {
+        const areaChart = createComponent();
+        const lineStyleMapping = [{ id: "m1", lineStyle: "dashed", lineWidth: 3 }];
+
+        const extendedReferencePoint = await areaChart.getExtendedReferencePoint({
+            ...multipleMetricsAndCategoriesReferencePoint,
+            properties: { controls: { lineStyleMapping } },
+        });
+
+        expect(extendedReferencePoint.properties?.controls?.["lineStyleMapping"]).toEqual(lineStyleMapping);
+    });
+
     describe("handling date items", () => {
         describe("with multiple dates", () => {
             const inputs: [string, IReferencePoint, Partial<IExtendedReferencePoint>][] = [

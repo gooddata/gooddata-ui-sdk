@@ -3326,6 +3326,7 @@ export interface IGenAIObjectReference {
     ref: ObjRef;
     title: string;
     type: GenAIObjectReferenceType;
+    visualizationUrl?: string;
 }
 
 // @internal

@@ -13,6 +13,7 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import {
+    type INeobackstopConfig,
     type INeobackstopScenarioConfig,
     type IStoryParameters,
     State,
@@ -281,4 +282,57 @@ export const Themed = () => wrapWithTheme(<UiAsyncTableExample />);
 Themed.parameters = {
     kind: "themed",
     screenshot: screenshotViewport,
+} satisfies IStoryParameters;
+
+const lockedItems: IScheduleItem[] = generateMockScheduleItems().slice(0, 3);
+const isLockedItem = (item: IScheduleItem) => item.id === lockedItems[1].id;
+
+const lockedColumns: IUiAsyncTableColumn<IScheduleItem>[] = [
+    {
+        key: "title",
+        label: "Title",
+        width: 300,
+        renderRoleIcon: () => (
+            <UiIcon
+                type="alert"
+                size={14}
+                color="complementary-6"
+                backgroundSize={27}
+                backgroundColor="complementary-2"
+            />
+        ),
+        getMultiLineTextContent: (item) => [item.title, item.state],
+        isLocked: isLockedItem,
+    },
+    { key: "workspace", label: "Workspace", width: 200, getTextContent: (item) => item.workspace },
+];
+
+export function LockedRow() {
+    return (
+        <div style={{ padding: "20px", width: "560px", height: "300px" }} className="screenshot-target">
+            <UiAsyncTable<IScheduleItem>
+                items={lockedItems}
+                totalItemsCount={lockedItems.length}
+                columns={lockedColumns}
+                onItemClick={() => {}}
+                isItemClickable={(item) => !isLockedItem(item)}
+                getItemTooltip={(item) =>
+                    isLockedItem(item) ? "You don't have access to this alert." : undefined
+                }
+                maxHeight={240}
+            />
+        </div>
+    );
+}
+LockedRow.parameters = {
+    kind: "locked row",
+    screenshots: {
+        default: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
+        tooltip: {
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
+            hoverSelector: ".screenshot-target .gd-ui-kit-tooltip__anchor",
+            // the tooltip opens after a 425ms hover delay
+            postInteractionWait: { selector: ".gd-ui-kit-tooltip", delay: 400 },
+        },
+    } satisfies INeobackstopConfig,
 } satisfies IStoryParameters;

@@ -1,15 +1,14 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { type HighchartsOptions } from "../../lib/index.js";
-import { type IChartOptions } from "../../typings/unsafe.js";
 import { isWaterfall } from "../_util/common.js";
 
-export function getWaterfallXAxisConfiguration(
-    chartOptions: IChartOptions,
-    _config: HighchartsOptions,
-    chartConfig?: IChartConfig,
-) {
+import { type IConfiguratorContext } from "./configuratorContext.js";
+
+export function getWaterfallXAxisConfiguration({
+    chartOptions,
+    chartConfig,
+}: IConfiguratorContext): HighchartsOptions {
     const { data, type } = chartOptions;
 
     if (!isWaterfall(type)) {
@@ -21,6 +20,7 @@ export function getWaterfallXAxisConfiguration(
     return {
         xAxis: [
             {
+                // @ts-expect-error This is expected as legacy code appends custom properties to Highcharts types. Such properties should ideally moved somewhere else in the future.
                 categories: hasTotalMeasure ? undefined : data?.categories,
                 type: "category",
             },

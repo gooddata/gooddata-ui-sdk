@@ -8,6 +8,11 @@ import { type IExecutionConfig, idRef } from "@gooddata/sdk-model";
 import { type IRichTextProps } from "./RichText.js";
 import { RichTextWithTooltip } from "./RichTextWithTooltip.js";
 
+// isolate: false shares the module graph, so reset it before the mocks below apply.
+vi.hoisted(() => {
+    vi.resetModules();
+});
+
 const richTextSpy = vi.hoisted(() => vi.fn());
 
 vi.mock("./RichText.js", () => ({

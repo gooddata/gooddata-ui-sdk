@@ -23,6 +23,11 @@ import { PivotTableWithRowAndColumnAttributes } from "../../tests/Insights.test.
 import { insightRoots, loadParameterDependencies } from "./loadParameterDependencies.js";
 import { requestParameterDependencies } from "./parameterDependenciesWorker.js";
 
+// isolate: false shares the module graph, so reset it before the mocks below apply.
+vi.hoisted(() => {
+    vi.resetModules();
+});
+
 // The recorded backend always resolves its references call, so controlled outcomes are injected here.
 vi.mock("./loadParameterDependencies.js", { spy: true });
 

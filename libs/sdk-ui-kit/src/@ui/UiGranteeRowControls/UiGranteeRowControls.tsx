@@ -31,7 +31,10 @@ const EFFECTIVE_PERMISSION_TOOLTIP: Record<AccessGranularPermission, MessageDesc
  * @internal
  */
 export interface IUiGranteeRowControlsProps {
-    /** Locked items are always treated as selected. */
+    /**
+     * Locked items are always treated as selected. Label access is offered unless the only
+     * labels are primary ones.
+     */
     labels: ReadonlyArray<IUiLabelsChecklistItem>;
     selectedLabelIds: ReadonlyArray<string>;
     /** The grantee's current permission level — anchors the permission menu. */
@@ -91,8 +94,6 @@ export function UiGranteeRowControls({
 }: IUiGranteeRowControlsProps) {
     const intl = useIntl();
 
-    const hasLabels = labels.length > 0;
-
     // The caller decides when inheritance drives the row (see the prop's contract) —
     // render the badge whenever it is set, without re-deriving the level ordering here.
     const inheritedTooltipMessage =
@@ -136,7 +137,7 @@ export function UiGranteeRowControls({
                 disabledLevels={disabledLevels}
                 disabledTooltip={disabledTooltip}
                 disabledLevelTooltips={disabledLevelTooltips}
-                labels={hasLabels ? labels : undefined}
+                labels={labels}
                 selectedLabelIds={selectedLabelIds}
                 onLabelsChange={onLabelsChange}
                 onRemoveAccess={onRemoveAccess}

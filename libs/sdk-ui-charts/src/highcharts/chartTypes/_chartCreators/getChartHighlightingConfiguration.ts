@@ -1,18 +1,18 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { type HighchartsOptions } from "../../lib/index.js";
-import { type IChartOptions } from "../../typings/unsafe.js";
 import {
     getSeriesHighlightingClassNameObj,
     highlightChartPoints,
 } from "../_chartHighlighting/highlightPoints.js";
 
-export function getChartHighlightingConfiguration(
-    chartOptions: IChartOptions,
-    config: HighchartsOptions,
-    chartConfig?: IChartConfig,
-): HighchartsOptions {
+import { type IConfiguratorContext } from "./configuratorContext.js";
+
+export function getChartHighlightingConfiguration({
+    chartOptions,
+    highchartsOptions: config,
+    chartConfig,
+}: IConfiguratorContext): HighchartsOptions {
     // Here we overwrite the load event of the chart to highlight the points.
     // Some charts already have this event, so we avoid overwriting it
     // and rather extend the original events in particular chart's config.

@@ -41,31 +41,31 @@ export {
 } from "./create-test/goodmock/snapshot/snapshot-and-save-recording.js";
 
 // create-test - playwright
-export type { Callback } from "./create-test/playwright/call-original-fn.js";
-export type { IDescribe, IDescribeFunction } from "./create-test/playwright/describe/factory.js";
+export { createTest } from "./create-test/playwright/factory.js";
 export type { Fixtures } from "./create-test/playwright/fixtures.js";
 export type {
-    BaseTestArgs,
-    BaseWorkerArgs,
-    DescribeConfigure,
-    DescribeFixme,
-    DescribeOnly,
-    DescribeParallel,
-    DescribeSerial,
-    DescribeSkip,
-    Test,
+    PlaywrightBaseTestArgs,
+    PlaywrightBaseWorkerArgs,
+    PlaywrightDescribeConfigure,
+    PlaywrightDescribeParallel,
+    PlaywrightDescribeSerial,
+    PlaywrightTest,
 } from "./create-test/playwright/playwright-types.js";
-export { createTest } from "./create-test/playwright/test/factory.js";
 export type {
+    CallSignatures,
+    Callback,
     ICreateTestOptions,
     ICustomCreateTestOptions,
-    ITest,
-} from "./create-test/playwright/test/types.js";
-export type { ITestDetails, WindowProperties, WorkspaceSettings } from "./create-test/playwright/types.js";
-export type {
+    IDescribe,
+    IDescribeFunction,
+    ITestDetails,
     ITopLevelDescribe,
     ITopLevelDescribeFunction,
-} from "./create-test/playwright/top-level-describe/types.js";
+    Override,
+    Test,
+    WindowProperties,
+    WorkspaceSettings,
+} from "./create-test/playwright/types.js";
 
 // helpers
 export { clickByBoundingBox, hoverByBoundingBox } from "./helpers/mouse-actions.js";

@@ -47,12 +47,21 @@ describe("AutomationsQuery", () => {
         "labels",
         "facts",
         "computedAttributes",
+        "analyticalDashboards",
     ];
 
     it("includes the checked objects when unavailable references are requested", async () => {
         expect(await requestedIncludes({ includeUnavailableReferences: true })).toEqual(
             expect.arrayContaining(restrictionIncludes),
         );
+    });
+
+    it("requests the analytical dashboard exactly once when unavailable references are requested", async () => {
+        const includes = await requestedIncludes({ includeUnavailableReferences: true });
+
+        expect(includes?.filter((include) => include === "analyticalDashboard")).toEqual([
+            "analyticalDashboard",
+        ]);
     });
 
     it("does not include the checked objects by default", async () => {

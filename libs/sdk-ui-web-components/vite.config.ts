@@ -140,7 +140,7 @@ if (typeof window !== "undefined") {
                 formats: ["es"],
                 fileName: (_format, entryName) => `${entryName}.js`,
             },
-            rollupOptions: {
+            rolldownOptions: {
                 onwarn(warning, warn) {
                     // Suppress "use client" directive warnings
                     if (warning.code === "MODULE_LEVEL_DIRECTIVE") {
@@ -152,6 +152,9 @@ if (typeof window !== "undefined") {
                     dir: assetDir,
                     entryFileNames: "[name].js",
                     chunkFileNames: "[hash].js",
+                },
+                checks: {
+                    pluginTimings: false,
                 },
             },
         },

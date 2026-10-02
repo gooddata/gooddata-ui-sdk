@@ -10,9 +10,10 @@ import {
     ROTATE_NEGATIVE_60_DEGREES,
     ROTATE_NEGATIVE_90_DEGREES,
 } from "../../constants/axisLabel.js";
-import { type XAxisOptions } from "../../lib/index.js";
-import { type IChartOptions } from "../../typings/unsafe.js";
+import { type HighchartsOptions } from "../../lib/index.js";
 import { isBarChart } from "../_util/common.js";
+
+import { type IConfiguratorContext } from "./configuratorContext.js";
 
 function getLabelOptions(index: number, aligns: Highcharts.AlignValue[]): Highcharts.XAxisOptions {
     const isOppositeAxis: boolean = index === 1;
@@ -26,9 +27,9 @@ function getLabelOptions(index: number, aligns: Highcharts.AlignValue[]): Highch
     };
 }
 
-export function getAxisLabelConfigurationForDualBarChart(chartOptions: IChartOptions): {
-    yAxis?: (XAxisOptions | undefined)[];
-} {
+export function getAxisLabelConfigurationForDualBarChart({
+    chartOptions,
+}: IConfiguratorContext): HighchartsOptions {
     const { type, yAxes = [] } = chartOptions;
     const isBar: boolean = isBarChart(type);
     const isDualAxis: boolean = yAxes.length === 2;
@@ -40,7 +41,7 @@ export function getAxisLabelConfigurationForDualBarChart(chartOptions: IChartOpt
 
     const { yAxisProps, secondary_yAxisProps } = chartOptions;
     const yAxesConfig = [yAxisProps, secondary_yAxisProps].map(
-        (axis: IAxisConfig = {}, index: number): Highcharts.XAxisOptions | undefined => {
+        (axis: IAxisConfig = {}, index: number): Highcharts.XAxisOptions => {
             const { rotation } = axis;
 
             switch (rotation) {
@@ -51,7 +52,7 @@ export function getAxisLabelConfigurationForDualBarChart(chartOptions: IChartOpt
                 case ROTATE_NEGATIVE_90_DEGREES:
                     return getLabelOptions(index, [ALIGN_LEFT, ALIGN_RIGHT]);
                 default:
-                    return undefined;
+                    return {};
             }
         },
     );

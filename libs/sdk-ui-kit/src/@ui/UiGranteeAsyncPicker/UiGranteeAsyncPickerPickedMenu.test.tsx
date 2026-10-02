@@ -96,6 +96,34 @@ describe("UiGranteeAsyncPicker picked-row menu", () => {
         expect(screen.queryByRole("menuitem", { name: /label access/i })).not.toBeInTheDocument();
     });
 
+    it("offers no label drill-in when only the locked primary label is passed", () => {
+        renderWithIntl(
+            <UiGranteeAsyncPicker
+                loadOptions={() => Promise.resolve({ groups: [], users: [] })}
+                onSelect={() => {}}
+                labels={[LABELS[0]!]}
+                onLabelsChange={() => {}}
+                selectedGrantees={[JANE]}
+            />,
+        );
+        openPickedMenu();
+        expect(screen.queryByRole("menuitem", { name: /label access/i })).not.toBeInTheDocument();
+    });
+
+    it("offers the label drill-in once a non-primary label is passed, even a locked one", () => {
+        renderWithIntl(
+            <UiGranteeAsyncPicker
+                loadOptions={() => Promise.resolve({ groups: [], users: [] })}
+                onSelect={() => {}}
+                labels={[LABELS[0]!, { ...LABELS[1]!, locked: true }]}
+                onLabelsChange={() => {}}
+                selectedGrantees={[JANE]}
+            />,
+        );
+        openPickedMenu();
+        expect(screen.getByRole("menuitem", { name: /label access/i })).toBeInTheDocument();
+    });
+
     it("scopes a picked grantee's labels before the grant, reporting the applied selection", () => {
         const onLabelsChange = vi.fn();
         renderWithIntl(

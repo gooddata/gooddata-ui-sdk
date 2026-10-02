@@ -17,6 +17,7 @@ import { isLineChartStylingEnabled } from "../../constants/featureFlags.js";
 import {
     getChartFillIgnoredMeasureIdsFromMdObject,
     getDerivedMeasureIdsFromMdObject,
+    getLineStyleMeasureIdsFromMdObject,
     getMeasuresFromMdObject,
 } from "../../utils/bucketHelper.js";
 import { CheckboxControl } from "../configurationControls/CheckboxControl.js";
@@ -52,6 +53,7 @@ export class LineChartBasedConfigurationPanel extends BaseChartConfigurationPane
         const hasMeasures = getMeasuresFromMdObject(insight).length > 0;
         const chartFillIgnoredMeasures = getChartFillIgnoredMeasureIdsFromMdObject(insight, properties);
         const derivedMeasureLocalIds = getDerivedMeasureIdsFromMdObject(insight);
+        const lineStyleMeasureLocalIds = getLineStyleMeasureIdsFromMdObject(insight, properties);
 
         return (
             <ColorsSection
@@ -67,6 +69,7 @@ export class LineChartBasedConfigurationPanel extends BaseChartConfigurationPane
                 chartFillIgnoredMeasures={chartFillIgnoredMeasures}
                 isChartFillDisabled={panelConfig?.isChartFillDisabled}
                 supportsLineStyles={isLineChartStylingEnabled(featureFlags)}
+                lineStyleMeasureLocalIds={lineStyleMeasureLocalIds}
                 derivedMeasureLocalIds={derivedMeasureLocalIds}
             />
         );

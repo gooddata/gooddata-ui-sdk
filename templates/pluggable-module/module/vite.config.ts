@@ -117,6 +117,9 @@ export default defineConfig(({ mode, command }): UserConfig => {
                     chunkFileNames: "static/js/[name].[hash].chunk.js",
                     assetFileNames: "static/[hash][extname]",
                 },
+                checks: {
+                    pluginTimings: false,
+                },
             },
         },
         plugins: [

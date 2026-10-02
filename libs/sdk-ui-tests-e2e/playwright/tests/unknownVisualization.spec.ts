@@ -16,7 +16,7 @@ test.topLevelDescribe(
     "unknownVisualization",
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
-        test.describe("Basic case", () => {
+        test.describe("Basic case", {}, () => {
             test(
                 "should render dashboard even if it contains unknown visualization class",
                 {

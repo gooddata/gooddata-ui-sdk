@@ -71,12 +71,7 @@ export const useAutomationColumns = ({
             ["title"]: {
                 label: intl.formatMessage(messages.columnName),
                 key: "title",
-                renderRoleIcon: (item) =>
-                    isAutomationRestricted(item) ? (
-                        <AutomationIcon type="restricted" />
-                    ) : (
-                        <AutomationIcon type={type} state={item.state} />
-                    ),
+                renderRoleIcon: (item) => <AutomationIcon type={type} state={item.state} />,
                 getMultiLineTextContent: (item) => [
                     formatCellValue(item.title),
                     formatCellValue(formatAutomationSubtitle(item, intl)),

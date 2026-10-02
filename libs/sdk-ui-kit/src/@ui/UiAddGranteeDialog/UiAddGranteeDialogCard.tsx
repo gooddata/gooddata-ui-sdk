@@ -51,9 +51,9 @@ export interface IUiAddGranteeDialogCardProps {
      */
     initialPermissionLevel?: PermissionMenuLevel;
     /**
-     * Labels the picked grantees can be scoped to. Non-empty adds a Label access
-     * drill-in to each row's permission menu, so the scope is picked in the same
-     * step as the grant rather than after it. Omit for objects without labels.
+     * Labels the picked grantees can be scoped to. Adds a Label access drill-in to each
+     * row's permission menu, so the scope is picked in the same step as the grant rather
+     * than after it — unless the only labels are primary ones. Omit for objects without labels.
      */
     labels?: ReadonlyArray<IUiLabelsChecklistItem>;
 

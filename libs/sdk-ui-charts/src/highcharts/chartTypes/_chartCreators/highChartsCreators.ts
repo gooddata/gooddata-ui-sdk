@@ -1,15 +1,13 @@
 // (C) 2007-2026 GoodData Corporation
 
 import { merge } from "lodash-es";
-import { type IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
 
-import { type IExecutionDefinition, type ITheme } from "@gooddata/sdk-model";
-import { type IDrillConfig, type VisType, VisualizationTypes } from "@gooddata/sdk-ui";
+import { type VisType, VisualizationTypes } from "@gooddata/sdk-ui";
 
-import { type IChartConfig, type IChartLimits } from "../../../interfaces/chartConfig.js";
+import { type IChartLimits } from "../../../interfaces/chartConfig.js";
 import { type HighchartsOptions } from "../../lib/index.js";
-import { type IChartOptions, type ISeriesItem } from "../../typings/unsafe.js";
+import { type ISeriesItem } from "../../typings/unsafe.js";
 import { stringifyChartTypes } from "../_util/common.js";
 import { getAreaConfiguration } from "../areaChart/areaConfiguration.js";
 import { getBarConfiguration } from "../barChart/barConfiguration.js";
@@ -33,6 +31,7 @@ import { getWaterfallConfiguration } from "../waterfallChart/waterfallConfigurat
 
 import { getCommonConfiguration } from "./commonConfiguration.js";
 import { getCustomizedConfiguration } from "./customConfiguration.js";
+import { type IHighchartsOptionsContext } from "./highchartsOptionsContext.js";
 
 type ChartConfigurationValueType = (
     ...args: any
@@ -68,25 +67,26 @@ const chartConfigurationMap: {
     [VisualizationTypes.MEKKO]: getMekkoConfiguration,
 };
 
-export function getHighchartsOptions(
-    chartOptions: IChartOptions,
-    drillConfig: IDrillConfig,
-    config?: IChartConfig,
-    definition?: IExecutionDefinition,
-    intl?: IntlShape,
-    theme?: ITheme,
-): HighchartsOptions {
+export function getHighchartsOptions({
+    chartOptions,
+    drillConfig,
+    chartConfig,
+    intl,
+    theme,
+}: IHighchartsOptionsContext): HighchartsOptions {
     const getConfigurationByType = chartConfigurationMap[chartOptions.type as VisType];
     invariant(
         getConfigurationByType,
         `visualisation type ${chartOptions.type} is invalid (valid types: ${stringifyChartTypes()}).`,
     );
 
+    const definition = drillConfig.dataView.definition;
+
     return merge(
         {},
-        getCommonConfiguration(chartOptions, drillConfig, theme, config, intl),
-        getConfigurationByType.call(null, config, definition, theme),
-        getCustomizedConfiguration(chartOptions, config, drillConfig, intl, theme),
+        getCommonConfiguration(chartOptions, drillConfig, theme, chartConfig, intl),
+        getConfigurationByType.call(null, chartConfig, definition, theme),
+        getCustomizedConfiguration({ chartOptions, chartConfig, drillConfig, intl, theme }),
     );
 }
 

@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-gen-ai: The AI Assistant no longer sends a failing request (404) and logs a console error for every unsaved chart when it checks whether the chart is saved.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "jan.tychtl@gooddata.com"
+}

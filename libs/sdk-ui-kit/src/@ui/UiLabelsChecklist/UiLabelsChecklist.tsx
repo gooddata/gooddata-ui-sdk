@@ -38,6 +38,17 @@ export const isLabelsChecklistItemChecked = (
 ): boolean => item.locked === true || selectedIds.includes(item.id);
 
 /**
+ * Whether a checklist holds a label beyond the primary one. The primary label is always in
+ * scope, so a checklist of primary labels only tells nothing and is not offered at all; any
+ * other label is worth showing, even locked, because its checked state is information.
+ *
+ * @internal
+ */
+export const hasNonPrimaryLabelsChecklistItem = (
+    items: ReadonlyArray<IUiLabelsChecklistItem> | undefined,
+): boolean => items?.some((item) => item.kind !== "primary") ?? false;
+
+/**
  * @internal
  */
 export interface IUiLabelsChecklistProps {

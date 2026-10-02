@@ -233,6 +233,7 @@ export type AreaChartConfigProperties = {
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
     customTooltip: CustomTooltip;
+    lineStyleMapping: Array<LineStyleMapping>;
 };
 
 // @internal (undocumented)
@@ -338,6 +339,7 @@ export function areaChartSave(_fields: Visualisation["query"]["fields"] | undefi
         [k: string]: boolean;
     } | undefined;
     customTooltip: CustomTooltip | undefined;
+    lineStyleMapping: LineStyleMapping[] | undefined;
 } | undefined;
 
 // @public (undocumented)

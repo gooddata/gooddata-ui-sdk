@@ -1,9 +1,9 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { type HighchartsOptions, type XAxisOptions } from "../../lib/index.js";
-import { type IChartOptions } from "../../typings/unsafe.js";
 import { isWaterfall } from "../_util/common.js";
+
+import { type IConfiguratorContext } from "./configuratorContext.js";
 
 function shortenXAxisLabel(xAxis: XAxisOptions[]) {
     if (!xAxis?.[0]?.categories?.some((item) => item.length >= 50)) {
@@ -24,11 +24,11 @@ function shortenXAxisLabel(xAxis: XAxisOptions[]) {
     };
 }
 
-export function getChartOrientationConfiguration(
-    chartOptions: IChartOptions,
-    config: HighchartsOptions,
-    chartConfig?: IChartConfig,
-): HighchartsOptions {
+export function getChartOrientationConfiguration({
+    chartOptions,
+    highchartsOptions: config,
+    chartConfig,
+}: IConfiguratorContext): HighchartsOptions {
     const { type } = chartOptions;
     const isInverted = chartConfig?.orientation?.position === "vertical";
 

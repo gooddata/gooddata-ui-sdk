@@ -95,6 +95,7 @@ function AsyncTableCore<T extends { id: string } | { ref: ObjRef }>(props: IUiAs
                     bulkActions={bulkActions}
                     scrollToIndex={scrollToIndex}
                     shouldLoadNextPage={shouldLoadNextPage}
+                    getItemTooltip={props.getItemTooltip}
                     renderItem={renderItem}
                     isLargeRow={isLargeRow}
                 />
@@ -120,6 +121,7 @@ const useAsyncTable = <T extends { id: string } | { ref: ObjRef }>({
     variant,
     onItemClick,
     isItemClickable,
+    getItemTooltip,
     accessibilityConfig,
 }: IUiAsyncTableProps<T>) => {
     const isSmall = variant === "small";
@@ -188,7 +190,8 @@ const useAsyncTable = <T extends { id: string } | { ref: ObjRef }>({
             itemIndex: number,
             focusedItemRef: Ref<HTMLElement>,
             isFocused: boolean,
-            focusedColumnIndex?: number,
+            focusedColumnIndex: number | undefined,
+            isTooltipOpen: boolean,
         ) => {
             return renderItemProp ? (
                 renderItemProp(item)
@@ -206,6 +209,8 @@ const useAsyncTable = <T extends { id: string } | { ref: ObjRef }>({
                     focusedColumnIndex={focusedColumnIndex}
                     focusedElementRef={focusedItemRef}
                     accessibilityConfig={accessibilityConfig}
+                    tooltip={getItemTooltip?.(item)}
+                    isTooltipOpen={isTooltipOpen}
                 />
             );
         },
@@ -216,6 +221,7 @@ const useAsyncTable = <T extends { id: string } | { ref: ObjRef }>({
             isItemSelected,
             onItemClick,
             isItemClickable,
+            getItemTooltip,
             bulkActions,
             isLargeRow,
             accessibilityConfig,

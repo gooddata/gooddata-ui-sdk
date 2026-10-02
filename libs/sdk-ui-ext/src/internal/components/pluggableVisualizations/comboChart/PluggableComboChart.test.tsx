@@ -540,6 +540,39 @@ describe("PluggableComboChart", () => {
         });
     });
 
+    describe("line styles", () => {
+        const lineStyleMapping = [
+            { id: "m1", lineStyle: "dashed" },
+            { id: "m2", lineStyle: "dotted", lineWidth: 3 },
+        ];
+
+        it("should keep line styles only for measures shown as line or area series", async () => {
+            const refPointMock = merge({}, multipleMetricBucketsAndCategoryReferencePoint, {
+                properties: { controls: { lineStyleMapping } },
+            });
+            const extRefPoint: IExtendedReferencePoint = await getExtendedReferencePoint(refPointMock);
+
+            expect(extRefPoint?.properties?.controls?.["lineStyleMapping"]).toEqual([
+                { id: "m2", lineStyle: "dotted", lineWidth: 3 },
+            ]);
+        });
+
+        it("should drop all line styles when every series is a column", async () => {
+            const refPointMock = merge({}, multipleMetricBucketsAndCategoryReferencePoint, {
+                properties: {
+                    controls: {
+                        primaryChartType: VisualizationTypes.COLUMN,
+                        secondaryChartType: VisualizationTypes.COLUMN,
+                        lineStyleMapping,
+                    },
+                },
+            });
+            const extRefPoint: IExtendedReferencePoint = await getExtendedReferencePoint(refPointMock);
+
+            expect(extRefPoint?.properties?.controls?.["lineStyleMapping"]).toBeNull();
+        });
+    });
+
     describe("Sort config", () => {
         it("should create sort config with sorting supported but disabled when there is no view by attribute", async () => {
             const chart = createComponent(defaultProps);

@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
-import { UiIcon, UiTooltip, useToastMessage } from "@gooddata/sdk-ui-kit";
+import { UiIcon, useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { bem } from "../../notificationsPanel/bem.js";
 import { AUTOMATION_ICON_CONFIGS } from "../constants.js";
@@ -67,18 +67,6 @@ export function AutomationIcon({ type, automation, state, timezone }: IAutomatio
             >
                 <UiIcon {...props} layout="block" />
             </AutomationIconTooltip>
-        );
-    }
-
-    if (type === "restricted") {
-        const label = intl.formatMessage(messages.restrictedTooltip);
-        return (
-            <UiTooltip
-                content={label}
-                triggerBy={["hover", "focus"]}
-                arrowPlacement="top"
-                anchor={<UiIcon {...props} layout="block" accessibilityConfig={{ ariaLabel: label }} />}
-            />
         );
     }
 

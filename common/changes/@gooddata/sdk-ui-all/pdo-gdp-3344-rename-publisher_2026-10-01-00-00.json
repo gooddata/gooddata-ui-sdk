@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-gen-ai: AI assistant links to a report open it in the Publisher application at the /publisher route. sdk-ui-pluggable-host: mapLegacyUrlToHost rewrites the former /workspace/<id>/reports route to /workspace/<id>/publisher.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

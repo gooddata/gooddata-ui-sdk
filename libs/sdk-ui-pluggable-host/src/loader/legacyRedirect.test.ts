@@ -12,6 +12,26 @@ function location(pathname: string, hash = "", search = "") {
 
 describe("mapLegacyUrlToHost", () => {
     it.each([
+        [
+            "/workspace/ws1/reports/report/r%2F1",
+            "?mode=export_slideshow&pageWidth=1920",
+            "/workspace/ws1/publisher/report/r%2F1?mode=export_slideshow&pageWidth=1920",
+        ],
+        ["/workspace/ws1/reports", "", "/workspace/ws1/publisher"],
+        ["/workspace/ws1/reports/templates", "", "/workspace/ws1/publisher/templates"],
+        ["/embedded/workspace/ws1/reports/layouts", "", "/embedded/workspace/ws1/publisher/layouts"],
+    ])("maps the former Publisher route %s%s to %s", (pathname, search, expected) => {
+        expect(mapLegacyUrlToHost(location(pathname, "", search))).toBe(expected);
+    });
+
+    it.each(["/workspace/ws1/reportsx", "/workspace/ws1/publisher/report/r1", "/reports"])(
+        "leaves %s alone",
+        (pathname) => {
+            expect(mapLegacyUrlToHost(location(pathname))).toBeNull();
+        },
+    );
+
+    it.each([
         ["/dashboards/", "#/workspace/ws1/dashboard/d1", "/workspace/ws1/dashboards/#/dashboard/d1"],
         ["/dashboards/", "#/project/ws1", "/workspace/ws1/dashboards/"],
         ["/dashboards/embedded/", "#/client/ws1/x", "/embedded/workspace/ws1/dashboards/#/x"],

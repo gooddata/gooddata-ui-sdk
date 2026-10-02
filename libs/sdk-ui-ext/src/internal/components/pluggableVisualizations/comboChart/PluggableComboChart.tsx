@@ -37,6 +37,7 @@ import {
     getBucketItems,
     getBucketItemsByType,
     getBucketItemsWithExcludeByType,
+    getLineStyleSeriesMeasureLocalIds,
     getMeasureItems,
     hasBucket,
     isShowOnSecondaryAxis,
@@ -45,6 +46,7 @@ import {
     setMeasuresShowOnSecondaryAxis,
 } from "../../../utils/bucketHelper.js";
 import { getMasterMeasuresCount } from "../../../utils/bucketRules.js";
+import { getPropertiesWithLineStyleMappingForMeasures } from "../../../utils/colors.js";
 import {
     getReferencePointWithSupportedProperties,
     isDualAxisOrSomeSecondaryAxisMeasure,
@@ -149,6 +151,13 @@ export class PluggableComboChart extends PluggableBaseChart {
 
         this.configureBuckets(newReferencePoint);
         newReferencePoint = setSecondaryMeasures(newReferencePoint, this.secondaryAxis);
+        newReferencePoint = {
+            ...newReferencePoint,
+            properties: getPropertiesWithLineStyleMappingForMeasures(
+                newReferencePoint.properties,
+                getLineStyleSeriesMeasureLocalIds(newReferencePoint.buckets),
+            ),
+        };
 
         this.axis = newReferencePoint?.uiConfig?.axis ?? AXIS.PRIMARY;
 

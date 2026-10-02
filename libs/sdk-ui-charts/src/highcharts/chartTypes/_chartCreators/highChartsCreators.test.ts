@@ -4,27 +4,12 @@
 
 import { describe, expect, it } from "vitest";
 
-import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
-import { type IDrillConfig, VisualizationTypes } from "@gooddata/sdk-ui";
+import { VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { supportedDualAxesChartTypes } from "../_chartOptions/chartCapabilities.js";
 
 import { getHighchartsOptions } from "./highChartsCreators.js";
-
-const dataView = dummyDataView({
-    attributes: [],
-    buckets: [],
-    dimensions: [],
-    filters: [],
-    measures: [],
-    sortBy: [],
-    workspace: "",
-});
-
-const drillConfig: IDrillConfig = {
-    dataView,
-    onDrill: (f: any) => f,
-};
+import { makeCtx } from "./highchartsOptions.test.utils.js";
 
 const chartOptions = {
     data: {
@@ -109,7 +94,9 @@ const comboChartOptions = {
 
 describe("highChartCreators", () => {
     describe("Line chart configuration", () => {
-        const config = getHighchartsOptions({ ...chartOptions, type: VisualizationTypes.LINE }, drillConfig);
+        const config = getHighchartsOptions(
+            makeCtx({ chartOptions: { ...chartOptions, type: VisualizationTypes.LINE } }),
+        );
 
         it("contains styles for drillable", () => {
             expect(config).toHaveProperty("series.0.states.hover.halo.size", 0);
@@ -126,7 +113,9 @@ describe("highChartCreators", () => {
     });
 
     describe("Area chart configuration", () => {
-        const config = getHighchartsOptions({ ...chartOptions, type: VisualizationTypes.AREA }, drillConfig);
+        const config = getHighchartsOptions(
+            makeCtx({ chartOptions: { ...chartOptions, type: VisualizationTypes.AREA } }),
+        );
 
         it("contains styles for drillable", () => {
             expect(config).toHaveProperty("series.0.states.hover.halo.size", 0);
@@ -144,8 +133,7 @@ describe("highChartCreators", () => {
 
     describe("Column chart configuration", () => {
         const config = getHighchartsOptions(
-            { ...chartOptions, type: VisualizationTypes.COLUMN },
-            drillConfig,
+            makeCtx({ chartOptions: { ...chartOptions, type: VisualizationTypes.COLUMN } }),
         );
 
         it("contains styles for drillable and non-drillable", () => {
@@ -157,8 +145,9 @@ describe("highChartCreators", () => {
 
     describe("Column chart stacked configuration", () => {
         const config = getHighchartsOptions(
-            { ...chartOptions, type: VisualizationTypes.COLUMN, stacking: "normal" },
-            drillConfig,
+            makeCtx({
+                chartOptions: { ...chartOptions, type: VisualizationTypes.COLUMN, stacking: "normal" },
+            }),
         );
 
         it("contains drilldown label styles", () => {
@@ -167,7 +156,9 @@ describe("highChartCreators", () => {
     });
 
     describe("Bar chart configuration", () => {
-        const config = getHighchartsOptions({ ...chartOptions, type: VisualizationTypes.BAR }, drillConfig);
+        const config = getHighchartsOptions(
+            makeCtx({ chartOptions: { ...chartOptions, type: VisualizationTypes.BAR } }),
+        );
 
         it("contains styles for drillable and non-drillable", () => {
             expect(config).toHaveProperty("series.0.states.hover.brightness");
@@ -177,7 +168,7 @@ describe("highChartCreators", () => {
     });
 
     describe("Pie chart configuration", () => {
-        const config = getHighchartsOptions(pieChartOrTreemapOptions, drillConfig);
+        const config = getHighchartsOptions(makeCtx({ chartOptions: pieChartOrTreemapOptions }));
 
         it("contains styles for drillable and non-drillable", () => {
             expect(config).toHaveProperty("series.0.data.0.states.hover.brightness");
@@ -187,7 +178,7 @@ describe("highChartCreators", () => {
     });
 
     describe("Treemap configuration", () => {
-        const config = getHighchartsOptions(pieChartOrTreemapOptions, drillConfig);
+        const config = getHighchartsOptions(makeCtx({ chartOptions: pieChartOrTreemapOptions }));
 
         it("contains styles for drillable and non-drillable", () => {
             expect(config).toHaveProperty("series.0.data.0.states.hover.brightness");
@@ -197,7 +188,7 @@ describe("highChartCreators", () => {
     });
 
     describe("Combo chart configuration", () => {
-        const config = getHighchartsOptions(comboChartOptions, drillConfig);
+        const config = getHighchartsOptions(makeCtx({ chartOptions: comboChartOptions }));
 
         it("contains different hover styles for column and line series", () => {
             expect(config).toHaveProperty("series.0.states.hover.brightness");
@@ -206,7 +197,8 @@ describe("highChartCreators", () => {
     });
 
     describe("Render event configuration", () => {
-        const getConfig = (type: string) => getHighchartsOptions({ ...chartOptions, type }, drillConfig);
+        const getConfig = (type: string) =>
+            getHighchartsOptions(makeCtx({ chartOptions: { ...chartOptions, type } }));
 
         it("encountered a declaration exception", () => {
             supportedDualAxesChartTypes.forEach((type: string) => {

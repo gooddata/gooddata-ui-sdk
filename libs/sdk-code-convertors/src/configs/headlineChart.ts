@@ -75,84 +75,82 @@ export function headlineChartLoad(props: VisualisationConfig<HeadlineChartConfig
     return loadConfig(props, (key, value) => {
         switch (key) {
             case "comparison": {
-                const val = value as (typeof DEFAULTS)["comparison"];
                 return [
                     [
                         "comparison_enabled",
-                        getValueOrDefault(val.enabled, DEFAULTS.comparison.enabled, "bool"),
+                        getValueOrDefault(value.enabled, DEFAULTS.comparison.enabled, "bool"),
                     ],
                     [
                         "comparison_type",
-                        getValueOrDefault(val.calculationType, DEFAULTS.comparison.calculationType),
+                        getValueOrDefault(value.calculationType, DEFAULTS.comparison.calculationType),
                     ],
-                    ["format", getValueOrDefault(val.format, DEFAULTS.comparison.format)],
-                    ["position", getValueOrDefault(val.position, DEFAULTS.comparison.position)],
+                    ["format", getValueOrDefault(value.format, DEFAULTS.comparison.format)],
+                    ["position", getValueOrDefault(value.position, DEFAULTS.comparison.position)],
                     [
                         "indicator_arrow",
-                        getValueOrDefault(val.isArrowEnabled, DEFAULTS.comparison.isArrowEnabled, "bool"),
+                        getValueOrDefault(value.isArrowEnabled, DEFAULTS.comparison.isArrowEnabled, "bool"),
                     ],
                     [
                         "indicator_colors",
-                        val.colorConfig?.disabled === undefined ? undefined : !val.colorConfig.disabled,
+                        value.colorConfig?.disabled === undefined ? undefined : !value.colorConfig.disabled,
                     ],
-                    ["indicator_color_equals", loadColor("equals", val.colorConfig?.equals, "enum")?.value],
+                    ["indicator_color_equals", loadColor("equals", value.colorConfig?.equals, "enum")?.value],
                     [
                         "indicator_color_negative",
-                        loadColor("negative", val.colorConfig?.negative, "enum")?.value,
+                        loadColor("negative", value.colorConfig?.negative, "enum")?.value,
                     ],
                     [
                         "indicator_color_positive",
-                        loadColor("positive", val.colorConfig?.positive, "enum")?.value,
+                        loadColor("positive", value.colorConfig?.positive, "enum")?.value,
                     ],
                     [
                         "label_default",
                         getValueOrDefault(
-                            val.labelConfig?.unconditionalValue,
+                            value.labelConfig?.unconditionalValue,
                             DEFAULTS.comparison.labelConfig!.unconditionalValue,
                         ),
                     ],
                     [
                         "label_conditional",
                         getValueOrDefault(
-                            val.labelConfig?.isConditional,
+                            value.labelConfig?.isConditional,
                             DEFAULTS.comparison.labelConfig!.isConditional,
                             "bool",
                         ),
                     ],
                     [
                         "label_equals",
-                        getValueOrDefault(val.labelConfig?.equals, DEFAULTS.comparison.labelConfig!.equals),
+                        getValueOrDefault(value.labelConfig?.equals, DEFAULTS.comparison.labelConfig!.equals),
                     ],
                     [
                         "label_negative",
                         getValueOrDefault(
-                            val.labelConfig?.negative,
+                            value.labelConfig?.negative,
                             DEFAULTS.comparison.labelConfig!.negative,
                         ),
                     ],
                     [
                         "label_positive",
                         getValueOrDefault(
-                            val.labelConfig?.positive,
+                            value.labelConfig?.positive,
                             DEFAULTS.comparison.labelConfig!.positive,
                         ),
                     ],
                 ];
             }
             case "disableAlerts":
-                return [
-                    ["disable_alerts", getValueOrDefault(value as boolean, DEFAULTS.disableAlerts, "bool")],
-                ];
+                return [["disable_alerts", getValueOrDefault(value, DEFAULTS.disableAlerts, "bool")]];
             case "disableScheduledExports":
                 return [
                     [
                         "disable_scheduled_exports",
-                        getValueOrDefault(value as boolean, DEFAULTS.disableScheduledExports, "bool"),
+                        getValueOrDefault(value, DEFAULTS.disableScheduledExports, "bool"),
                     ],
                 ];
             case "disableKeyDriveAnalysisOn":
-                return [["disable_key_drive_analysis", loadDisableKda(value as Record<string, boolean>)]];
+                return [["disable_key_drive_analysis", loadDisableKda(value)]];
             default:
+                key satisfies never; // Check that no key is forgotten in the cases above
                 return [];
         }
     });

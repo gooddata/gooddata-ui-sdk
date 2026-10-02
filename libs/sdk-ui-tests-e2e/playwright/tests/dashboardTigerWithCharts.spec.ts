@@ -16,7 +16,7 @@ test.topLevelDescribe(
     "dashboardTigerWithCharts",
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
-        test.describe("rendering", () => {
+        test.describe("rendering", {}, () => {
             test("should render charts", { tag: ["@pre-merge-isolated"] }, async ({ page }) => {
                 await visit(page, "dashboard/dashboard-tiger-charts");
 
@@ -37,7 +37,7 @@ test.topLevelDescribe(
             });
         });
 
-        test.describe("Dashboard with pyramid and funnel charts", () => {
+        test.describe("Dashboard with pyramid and funnel charts", {}, () => {
             test(
                 "should render default color legend of funnel and pyramid chart correctly",
                 { tag: ["@pre-merge-integrated"] },

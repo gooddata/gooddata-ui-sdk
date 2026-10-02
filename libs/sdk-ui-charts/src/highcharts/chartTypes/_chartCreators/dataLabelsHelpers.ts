@@ -260,14 +260,14 @@ export function getLabelsStyling(
     stacking: StackingType | undefined,
     theme?: ITheme,
     isBackplateStyle: boolean = false,
-): Highcharts.DataLabelsOptions {
+) {
     if (isBackplateStyle) {
         return getBackplateLabelStyling(theme);
     }
 
     return {
         style: getLabelStyle(type, stacking, theme, isBackplateStyle),
-    };
+    } satisfies DataLabelsOptions;
 }
 
 /**
@@ -321,24 +321,24 @@ export function getTotalsVisibilityConfig(type: string | undefined, chartConfig?
     );
 }
 
-export function getLabelsVisibilityConfig(visible: IDataLabelsVisible | undefined): DataLabelsOptions {
+export function getLabelsVisibilityConfig(visible: IDataLabelsVisible | undefined) {
     switch (visible) {
         case "auto":
             return {
                 enabled: true,
                 allowOverlap: false,
-            };
+            } satisfies DataLabelsOptions;
         case true:
             return {
                 enabled: true,
                 allowOverlap: true,
-            };
+            } satisfies DataLabelsOptions;
         case false:
             return {
                 enabled: false,
-            };
+            } satisfies DataLabelsOptions;
         default:
             // keep decision on each chart for `undefined`
-            return {};
+            return {} satisfies DataLabelsOptions;
     }
 }

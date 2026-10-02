@@ -105,7 +105,7 @@ import { SyntheticEvent } from 'react';
 import { VirtualElement } from '@floating-ui/react';
 import { WeekStart } from '@gooddata/sdk-model';
 
-// @internal (undocumented)
+// @internal
 export function accessibilityConfigToAttributes(accessibilityConfig?: IAccessibilityConfigBase): HTMLAttributes<HTMLElement>;
 
 // @internal (undocumented)
@@ -5986,6 +5986,7 @@ export interface IUiAsyncTableProps<T extends {
     columns: Array<IUiAsyncTableColumn<T>>;
     // (undocumented)
     filters?: Array<IUiAsyncTableFilter>;
+    getItemTooltip?: (item: T) => string | undefined;
     // (undocumented)
     hasNextPage?: boolean;
     // (undocumented)
@@ -7232,6 +7233,8 @@ export interface IUiListboxProps<InteractiveItemData, StaticItemData = ReactNode
     shouldKeyboardActionStopPropagation?: boolean;
     // (undocumented)
     StaticItemComponent?: ComponentType<IUiListboxStaticItemProps<StaticItemData>>;
+    // (undocumented)
+    supportedViews?: UiListboxView[];
     // (undocumented)
     width?: number;
 }
@@ -9728,6 +9731,9 @@ export function UiListbox<InteractiveItemData, StaticItemData>(input: IUiListbox
 export type UiListboxAriaAttributes = Omit<IDropdownBodyRenderProps["ariaAttributes"], "role"> & {
     "aria-controls"?: string;
 };
+
+// @internal (undocumented)
+export type UiListboxView = "mobile" | "desktop";
 
 // @internal
 export function UiMenu<T extends IUiMenuItemData = object, M extends object = object>(props: IUiMenuProps<T, M>): ReactNode;

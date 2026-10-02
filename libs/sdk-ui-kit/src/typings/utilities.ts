@@ -2,6 +2,8 @@
 
 import { type HTMLAttributes } from "react";
 
+import { pickBy } from "lodash-es";
+
 import { type IAccessibilityConfigBase } from "./accessibility.js";
 
 /**
@@ -14,6 +16,9 @@ export enum ENUM_KEY_CODE {
 }
 
 /**
+ * Maps an accessibility config to ARIA attributes. Unset values are omitted, so spreading
+ * the result never overrides an attribute the component sets itself (e.g. `aria-label={label}`).
+ *
  * @internal
  */
 export function accessibilityConfigToAttributes(
@@ -23,19 +28,22 @@ export function accessibilityConfigToAttributes(
         return {};
     }
 
-    return {
-        "aria-label": accessibilityConfig.ariaLabel,
-        "aria-labelledby": accessibilityConfig.ariaLabelledBy,
-        "aria-describedby": accessibilityConfig.ariaDescribedBy,
-        role: accessibilityConfig.role,
-        "aria-expanded": accessibilityConfig.ariaExpanded,
-        "aria-controls": accessibilityConfig.ariaControls,
-        "aria-haspopup": accessibilityConfig.ariaHaspopup,
-        "aria-pressed": accessibilityConfig.ariaPressed,
-        "aria-checked": accessibilityConfig.ariaChecked,
-        "aria-autocomplete": accessibilityConfig.ariaAutocomplete,
-        "aria-activedescendant": accessibilityConfig.ariaActiveDescendant,
-        "aria-current": accessibilityConfig.ariaCurrent,
-        "aria-description": accessibilityConfig.ariaDescription,
-    };
+    return pickBy(
+        {
+            "aria-label": accessibilityConfig.ariaLabel,
+            "aria-labelledby": accessibilityConfig.ariaLabelledBy,
+            "aria-describedby": accessibilityConfig.ariaDescribedBy,
+            role: accessibilityConfig.role,
+            "aria-expanded": accessibilityConfig.ariaExpanded,
+            "aria-controls": accessibilityConfig.ariaControls,
+            "aria-haspopup": accessibilityConfig.ariaHaspopup,
+            "aria-pressed": accessibilityConfig.ariaPressed,
+            "aria-checked": accessibilityConfig.ariaChecked,
+            "aria-autocomplete": accessibilityConfig.ariaAutocomplete,
+            "aria-activedescendant": accessibilityConfig.ariaActiveDescendant,
+            "aria-current": accessibilityConfig.ariaCurrent,
+            "aria-description": accessibilityConfig.ariaDescription,
+        },
+        (value) => value !== undefined,
+    );
 }

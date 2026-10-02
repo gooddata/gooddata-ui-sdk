@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 @use "../../../styles/scss/variables";
 @use "../../../styles/scss/mixins";
@@ -14,7 +14,7 @@
     min-width: 200px;
     padding: 6px 0;
 
-    @media #{variables.$small-only} {
+    &--mobile {
         // !important to override inline style from maxWidth prop
         /* stylelint-disable-next-line declaration-no-important */
         max-width: 100vw !important;

@@ -5682,6 +5682,7 @@ export {
     type JsonApiAutomationOutMetaOrigin,
     type JsonApiAutomationOutMetaOriginOriginTypeEnum,
     type JsonApiAutomationOutRelationshipsAnalyticalDashboard,
+    type JsonApiAutomationOutRelationshipsAnalyticalDashboards,
     type JsonApiAutomationOutRelationshipsCreatedBy,
     type JsonApiAutomationOutRelationshipsExportDefinitions,
     type JsonApiAutomationOutRelationshipsModifiedBy,

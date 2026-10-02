@@ -10,36 +10,39 @@ import { type IAxisConfig } from "../../../interfaces/chartConfig.js";
 import { ALIGN_LEFT, ALIGN_RIGHT, ROTATE_NEGATIVE_90_DEGREES } from "../../constants/axisLabel.js";
 import { type IChartOptions } from "../../typings/unsafe.js";
 
+import { makeCtx } from "./configurator.test.utils.js";
 import { getAxisNameConfiguration } from "./getAxisNameConfiguration.js";
 
 describe("getAxisNameConfiguration", () => {
     it("should return highchart axis config", () => {
-        const chartOptions: IChartOptions = {
-            xAxes: [{ label: "xAxes" }, { label: "xAxes2", opposite: true }],
-            xAxisProps: {
-                name: {
-                    position: "low",
-                    visible: false,
+        const ctx = makeCtx({
+            chartOptions: {
+                xAxes: [{ label: "xAxes" }, { label: "xAxes2", opposite: true }],
+                xAxisProps: {
+                    name: {
+                        position: "low",
+                        visible: false,
+                    },
+                },
+                secondary_xAxisProps: {
+                    name: {},
+                },
+                yAxes: [{ label: "yAxes" }, { label: "yAxes2", opposite: true }],
+                yAxisProps: {
+                    name: {
+                        position: "middle",
+                        visible: true,
+                    },
+                },
+                secondary_yAxisProps: {
+                    name: {
+                        position: "high",
+                    },
                 },
             },
-            secondary_xAxisProps: {
-                name: {},
-            },
-            yAxes: [{ label: "yAxes" }, { label: "yAxes2", opposite: true }],
-            yAxisProps: {
-                name: {
-                    position: "middle",
-                    visible: true,
-                },
-            },
-            secondary_yAxisProps: {
-                name: {
-                    position: "high",
-                },
-            },
-        };
+        });
 
-        const axisNameConfig = getAxisNameConfiguration(chartOptions);
+        const axisNameConfig = getAxisNameConfiguration(ctx);
         expect(axisNameConfig).toEqual({
             xAxis: [
                 {
@@ -103,7 +106,9 @@ describe("getAxisNameConfiguration", () => {
     ])(
         "should return highchart axis config for %s chart with rotated opposite Y axis label",
         (_, chartOptions: IChartOptions) => {
-            const axisNameConfig = getAxisNameConfiguration(chartOptions);
+            const ctx = makeCtx({ chartOptions });
+
+            const axisNameConfig = getAxisNameConfiguration(ctx);
             expect(axisNameConfig).toEqual({
                 xAxis: [
                     {
@@ -166,7 +171,9 @@ describe("getAxisNameConfiguration", () => {
     ])(
         "should return highchart axis config for %s chart with left low aligned rotated opposite Y axis label",
         (_, chartOptions: IChartOptions) => {
-            const axisNameConfig = getAxisNameConfiguration(chartOptions);
+            const ctx = makeCtx({ chartOptions });
+
+            const axisNameConfig = getAxisNameConfiguration(ctx);
             expect(axisNameConfig).toEqual({
                 xAxis: [
                     {
@@ -233,7 +240,9 @@ describe("getAxisNameConfiguration", () => {
     ])(
         "should return highchart axis config for %s chart with right high aligned rotated opposite Y axis label",
         (_, chartOptions: IChartOptions) => {
-            const axisNameConfig = getAxisNameConfiguration(chartOptions);
+            const ctx = makeCtx({ chartOptions });
+
+            const axisNameConfig = getAxisNameConfiguration(ctx);
             expect(axisNameConfig).toEqual({
                 xAxis: [
                     {
@@ -260,13 +269,15 @@ describe("getAxisNameConfiguration", () => {
     );
 
     it("should return highchart axis config for bar chart without rotated opposite Y axis label", () => {
-        const chartOptions: IChartOptions = {
-            type: VisualizationTypes.BAR,
-            xAxes: [{ label: "xAxes" }, { label: "xAxes", opposite: true }],
-            yAxes: [{ label: "yAxes" }, { label: "yAxes2", opposite: true }],
-        };
+        const ctx = makeCtx({
+            chartOptions: {
+                type: VisualizationTypes.BAR,
+                xAxes: [{ label: "xAxes" }, { label: "xAxes", opposite: true }],
+                yAxes: [{ label: "yAxes" }, { label: "yAxes2", opposite: true }],
+            },
+        });
 
-        const axisNameConfig = getAxisNameConfiguration(chartOptions);
+        const axisNameConfig = getAxisNameConfiguration(ctx);
         expect(axisNameConfig).toEqual({
             xAxis: [
                 {

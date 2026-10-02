@@ -71,6 +71,31 @@ describe("UiPermissionMenu", () => {
         expect(screen.queryByRole("menuitem", { name: /label access/i })).not.toBeInTheDocument();
     });
 
+    it("omits the labels row when the primary label is the only one", () => {
+        renderMenu({ labels: [LABELS[0]!], onLabelsChange: () => {} });
+        openMenu();
+        expect(screen.queryByRole("menuitem", { name: /label access/i })).not.toBeInTheDocument();
+    });
+
+    it("keeps the labels row for a locked non-primary label, read-only", () => {
+        // An inherited label is locked but still in scope: its checked state is information.
+        renderMenu({
+            labels: [LABELS[0]!, { id: "email", label: "Customer Email", locked: true }],
+            selectedLabelIds: ["id", "email"],
+            onLabelsChange: () => {},
+        });
+        openMenu();
+        fireEvent.click(screen.getByRole("menuitem", { name: /label access/i }));
+        expect(screen.getByRole("checkbox", { name: /Customer Email/ })).toBeChecked();
+        expect(screen.getByRole("checkbox", { name: /Customer Email/ })).toBeDisabled();
+    });
+
+    it("offers the labels row when a label can be changed", () => {
+        renderMenu({ labels: LABELS, onLabelsChange: () => {} });
+        openMenu();
+        expect(screen.getByRole("menuitem", { name: /label access/i })).toBeInTheDocument();
+    });
+
     it("renders levels above the caller's own as disabled with the explanatory tooltip", () => {
         const onPermissionChange = vi.fn();
         renderMenu({

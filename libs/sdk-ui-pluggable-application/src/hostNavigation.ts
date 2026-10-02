@@ -13,7 +13,7 @@ import { type IHostNavigationRequest } from "@gooddata/sdk-pluggable-application
  *
  * An application whose navigation guard can cancel this navigation (an unsaved-changes blocker)
  * is responsible for restoring the URL when the user cancels — the host push has already
- * happened by then. gdc-reports' editor does this on its Stay choice.
+ * happened by then. gdc-publisher' editor does this on its Stay choice.
  *
  * @alpha
  */

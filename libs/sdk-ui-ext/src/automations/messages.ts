@@ -149,8 +149,11 @@ export const messages = defineMessages({
     menuEditRestricted: {
         id: "automations.menu.edit.restricted",
     },
-    restrictedTooltip: {
-        id: "automations.restricted.tooltip",
+    restrictedAlertTooltip: {
+        id: "automations.restricted.tooltip.alert",
+    },
+    restrictedScheduleTooltip: {
+        id: "automations.restricted.tooltip.schedule",
     },
     iconTooltipStatus: {
         id: "automations.icon.tooltip.status",

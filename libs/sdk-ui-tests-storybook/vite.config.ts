@@ -16,4 +16,11 @@ export default defineConfig({
             },
         },
     ],
+    build: {
+        rolldownOptions: {
+            checks: {
+                pluginTimings: false,
+            },
+        },
+    },
 });

@@ -16,7 +16,7 @@ test.topLevelDescribe(
     "headerSection",
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
-        test.describe("Default language", () => {
+        test.describe("Default language", {}, () => {
             test(
                 "can update header for all sections",
                 { tag: ["@pre-merge-integrated"] },
@@ -126,7 +126,7 @@ test.topLevelDescribe(
             );
         });
 
-        test.describe("Localization", () => {
+        test.describe("Localization", {}, () => {
             test("Limitation of title", { tag: ["@pre-merge-integrated"] }, async ({ page }) => {
                 // Setup (from Cypress beforeEach for Localization block)
                 await visit(page, "dashboard/header-localization");

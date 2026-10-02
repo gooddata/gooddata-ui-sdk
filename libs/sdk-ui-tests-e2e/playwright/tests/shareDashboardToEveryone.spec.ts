@@ -29,7 +29,7 @@ test.topLevelDescribe(
     "shareDashboardToEveryone",
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
-        test.describe("Basic cases", () => {
+        test.describe("Basic cases", {}, () => {
             test.beforeEach(async ({ request }) => {
                 await assignRulePermissionToDashboard(request, getWorkspaceId(), Dashboards.ParentDashboard);
             });
@@ -227,7 +227,7 @@ test.topLevelDescribe(
             );
         });
 
-        test.describe("Check user permissions", () => {
+        test.describe("Check user permissions", {}, () => {
             const USER_PREFIX = "SDK_test_user";
             const USER_AUTH_PREFIX = "SDK_test_authId";
             const USERGROUP_PREFIX = "SDK_test_usergroup";
@@ -267,7 +267,7 @@ test.topLevelDescribe(
                 await assignRulePermissionToDashboard(request, getWorkspaceId(), dashboardId);
             });
 
-            test.describe("when sharing dashboard with view permission", () => {
+            test.describe("when sharing dashboard with view permission", {}, () => {
                 test.beforeAll(async ({ request }) => {
                     await setEarlyAccess(request, getWorkspaceId(), permissionsFeatureFlagEarlyAccess);
                     await removeUsersAndGroups(request);
@@ -384,7 +384,7 @@ test.topLevelDescribe(
                 );
             });
 
-            test.describe("when sharing dashboard with view & share permission", () => {
+            test.describe("when sharing dashboard with view & share permission", {}, () => {
                 test.beforeAll(async ({ request }) => {
                     await setEarlyAccess(request, getWorkspaceId(), permissionsFeatureFlagEarlyAccess);
                     await removeUsersAndGroups(request);
@@ -557,7 +557,7 @@ test.topLevelDescribe(
                 );
             });
 
-            test.describe("when sharing dashboard with edit & share permission", () => {
+            test.describe("when sharing dashboard with edit & share permission", {}, () => {
                 test.beforeAll(async ({ request }) => {
                     await setEarlyAccess(request, getWorkspaceId(), permissionsFeatureFlagEarlyAccess);
                     await removeUsersAndGroups(request);

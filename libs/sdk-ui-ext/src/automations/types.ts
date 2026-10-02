@@ -403,7 +403,7 @@ export interface IAutomationIconTooltipProps {
 }
 
 export interface IAutomationIconProps {
-    type: AutomationsType | IAutomationLastRunStatus | "automationDetails" | "restricted";
+    type: AutomationsType | IAutomationLastRunStatus | "automationDetails";
     automation?: IAutomationMetadataObject;
     state?: IAutomationState;
     timezone?: string;

@@ -341,6 +341,10 @@ export interface IGenAIObjectReference {
      * Object reference.
      */
     ref: ObjRef;
+    /**
+     * URL of the visualization.
+     */
+    visualizationUrl?: string;
 }
 
 /**

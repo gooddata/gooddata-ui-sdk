@@ -304,6 +304,19 @@ describe("ObjectShareDialog gating", () => {
         ]);
     });
 
+    it("passes a primary-only object just the locked primary item, rows and add step alike", () => {
+        // The kit leaves label access out for this list (see UiPermissionMenu); the dialog's
+        // part is to hand over the real items rather than a list of its own.
+        const labels = [
+            { ref: idRef("lbl.primary"), id: "lbl.primary", title: "Id", isPrimary: true, isDefault: false },
+        ];
+        renderDialog(makeController({ labels }));
+
+        const primaryOnly = [{ id: "lbl.primary", label: "Id", kind: "primary", locked: true }];
+        expect(captured.controls.at(-1)?.labels).toEqual(primaryOnly);
+        expect(captured.addGrantee.at(-1)?.labels).toEqual(primaryOnly);
+    });
+
     it("locks a label the grantee only inherits, leaving the rest editable", () => {
         // The label is in scope (checked, as the granting workspace shows it) but this
         // workspace holds no grant on it — unchecking it could only pretend to revoke.

@@ -15,7 +15,7 @@ import {
 } from "../../testing/contextMocks.test.helpers.js";
 import { type AgGridColumnDef, type AgGridHeaderParams } from "../../types/agGrid.js";
 
-import { type MeasureHeader as MeasureHeaderType } from "./MeasureHeader.js";
+import { MeasureHeader } from "./MeasureHeader.js";
 
 function renderWithIntl(ui: ReactElement) {
     return render(
@@ -24,6 +24,11 @@ function renderWithIntl(ui: ReactElement) {
         </IntlProvider>,
     );
 }
+
+// isolate: false shares the module graph, so reset it before the mocks below apply.
+vi.hoisted(() => {
+    vi.resetModules();
+});
 
 const { useColumnDefsMock } = vi.hoisted(() => ({
     useColumnDefsMock: vi.fn(),
@@ -50,12 +55,6 @@ vi.mock("../../hooks/header/useHeaderMenu.js", () => ({
     useHeaderMenu: mockUseHeaderMenu,
 }));
 
-// Several other test files (real usages and other mocks) also touch these same context/hook paths,
-// and the suite runs with isolate: false (see vitest.config.ts's own comment on this exact pattern) -
-// without resetting modules and re-importing dynamically, whichever file's resolution happens to be
-// cached first "wins" for the whole worker, so this file's own vi.mock calls above can silently not apply.
-let MeasureHeader: typeof MeasureHeaderType;
-
 const GRAND_TOTAL_COLUMN_DEFINITION = createGrandTotalColumnDefinition(["row-attribute"], "SUM");
 
 function buildParams(colDef: AgGridColumnDef, displayName: string): AgGridHeaderParams {
@@ -80,10 +79,7 @@ function getHeaderRoot(): HTMLElement {
 }
 
 describe("MeasureHeader — total label rename wiring", () => {
-    beforeEach(async () => {
-        vi.resetModules();
-        ({ MeasureHeader } = await import("./MeasureHeader.js"));
-
+    beforeEach(() => {
         usePivotTablePropsMock.mockReturnValue({
             config: {
                 menu: { totalLabelsEditable: true },

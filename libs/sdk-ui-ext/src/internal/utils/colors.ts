@@ -161,6 +161,31 @@ export function getLineStyleProperties(
     return newProperties;
 }
 
+export function getPropertiesWithLineStyleMappingForMeasures(
+    properties: IVisualizationProperties | undefined,
+    measureLocalIds: string[],
+): IVisualizationProperties | undefined {
+    const lineStyleMapping: ILineStyleMappingItem[] | undefined = properties?.controls?.["lineStyleMapping"];
+    if (!properties || !lineStyleMapping) {
+        return properties;
+    }
+
+    const reducedLineStyleMapping = lineStyleMapping.filter((mappingItem) =>
+        measureLocalIds.includes(mappingItem.id),
+    );
+    if (reducedLineStyleMapping.length === lineStyleMapping.length) {
+        return properties;
+    }
+
+    return {
+        ...properties,
+        controls: {
+            ...properties.controls,
+            lineStyleMapping: reducedLineStyleMapping.length ? reducedLineStyleMapping : null,
+        },
+    };
+}
+
 export function getValidProperties(
     properties: IVisualizationProperties,
     colorAssignments: IColorAssignment[] | undefined,

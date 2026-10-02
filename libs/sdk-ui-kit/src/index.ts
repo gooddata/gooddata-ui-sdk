@@ -956,6 +956,7 @@ export type {
     IUiListboxInteractiveItem,
     IUiListboxInteractiveItemProps,
     UiListboxAriaAttributes,
+    UiListboxView,
 } from "./@ui/UiListbox/types.js";
 export { UiLeveledTreeview, UiStaticTreeview } from "./@ui/UiTreeview/UiTreeview.js";
 export {

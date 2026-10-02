@@ -22,4 +22,20 @@ declare module "highcharts" {
          */
         id: string;
     }
+
+    /**
+     * Highcharts has missing types for some of its officially supported APIs. See this issue:
+     * https://github.com/highcharts/highcharts/issues/24856. This typing issue is resolved in Highcharts v13.0.1
+     * (https://github.com/highcharts/highcharts/blob/v13.0.1/ts/Series/Funnel/FunnelDataLabelOptions.d.ts).
+     * The Highcharts bundle exports no `FunnelDataLabelOptions` to augment, so augmenting
+     * `SeriesPieDataLabelsOptionsObject`, which `FunnelDataLabelOptions` extends.
+     */
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    interface SeriesPieDataLabelsOptionsObject {
+        /**
+         * Whether to render the data labels inside the funnel or pyramid shape.
+         * By default, the labels are rendered outside the shape.
+         */
+        inside?: boolean;
+    }
 }

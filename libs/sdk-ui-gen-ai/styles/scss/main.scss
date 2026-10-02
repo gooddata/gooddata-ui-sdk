@@ -2,8 +2,9 @@
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 @use "@gooddata/sdk-ui-kit/src/@ui/defaultTheme.scss";
 @use "react-loading-skeleton/dist/skeleton.css";
-@use "@gooddata/sdk-ui-pivot/styles/css/main.css";
+@use "@gooddata/sdk-ui-pivot/styles/css/main.css" as pivot;
 @use "@gooddata/sdk-ui-dashboard/styles/css/kdaDialog.css";
+@use "@gooddata/sdk-ui-charts/styles/css/main.css" as charts;
 
 @use "input";
 @use "variables" as variables;

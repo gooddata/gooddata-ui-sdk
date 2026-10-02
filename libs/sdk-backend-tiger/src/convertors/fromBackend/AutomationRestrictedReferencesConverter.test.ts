@@ -60,6 +60,57 @@ describe("resolveAutomationUnavailableReferences", () => {
         ).toEqual([{ ref: idRef("obj", type), type, reason: "forbidden" }]);
     });
 
+    it("reports a restricted analytical dashboard related through the to-one relationship", () => {
+        const scheduleOnDashboard = automation("schedule", {
+            analyticalDashboard: { data: { id: "dash", type: "analyticalDashboard" } },
+        });
+
+        expect(
+            resolveAutomationUnavailableReferences(scheduleOnDashboard, [
+                { id: "dash", type: "analyticalDashboard" },
+            ]),
+        ).toEqual([
+            { ref: idRef("dash", "analyticalDashboard"), type: "analyticalDashboard", reason: "forbidden" },
+        ]);
+    });
+
+    it("reports a restricted analytical dashboard related through the to-many relationship", () => {
+        const scheduleOnDashboards = automation("schedule", {
+            analyticalDashboards: { data: [{ id: "dash", type: "analyticalDashboard" }] },
+        });
+
+        expect(
+            resolveAutomationUnavailableReferences(scheduleOnDashboards, [
+                { id: "dash", type: "analyticalDashboard" },
+            ]),
+        ).toEqual([
+            { ref: idRef("dash", "analyticalDashboard"), type: "analyticalDashboard", reason: "forbidden" },
+        ]);
+    });
+
+    it("reports a dashboard related through both relationships once", () => {
+        const scheduleOnDashboard = automation("schedule", {
+            analyticalDashboard: { data: { id: "dash", type: "analyticalDashboard" } },
+            analyticalDashboards: { data: [{ id: "dash", type: "analyticalDashboard" }] },
+        });
+
+        expect(
+            resolveAutomationUnavailableReferences(scheduleOnDashboard, [
+                { id: "dash", type: "analyticalDashboard" },
+            ]),
+        ).toHaveLength(1);
+    });
+
+    it("ignores an automation without a dashboard", () => {
+        const scheduleWithoutDashboard = automation("schedule", { analyticalDashboard: { data: null } });
+
+        expect(
+            resolveAutomationUnavailableReferences(scheduleWithoutDashboard, [
+                { id: "dash", type: "analyticalDashboard" },
+            ]),
+        ).toEqual([]);
+    });
+
     it("matches the type as well as the id", () => {
         const metricWithSameId: RestrictedObject = { id: "vis-X", type: "metric" };
 

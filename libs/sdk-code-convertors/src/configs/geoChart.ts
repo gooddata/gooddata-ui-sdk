@@ -160,96 +160,91 @@ export function geoChartLoad(props: VisualisationConfig<GeoChartConfigProperties
     return loadConfig(sanitizedProps, (key, value) => {
         switch (key) {
             case "colorMapping":
-                return [["colors", loadColorMapping(value as (typeof DEFAULTS)["colorMapping"])]];
+                return [["colors", loadColorMapping(value)]];
             case "legend": {
-                const val = value as (typeof DEFAULTS)["legend"];
                 return [
-                    ["legend_enabled", getValueOrDefault(val.enabled, DEFAULTS.legend.enabled, "bool")],
-                    ["legend_position", getValueOrDefault(val.position, DEFAULTS.legend.position)],
+                    ["legend_enabled", getValueOrDefault(value.enabled, DEFAULTS.legend.enabled, "bool")],
+                    ["legend_position", getValueOrDefault(value.position, DEFAULTS.legend.position)],
                 ];
             }
             case "tooltipText": {
-                return [["tooltip_text", getValueOrDefault(value as string, DEFAULTS.tooltipText)]];
+                return [["tooltip_text", getValueOrDefault(value, DEFAULTS.tooltipText)]];
             }
             case "basemap": {
-                return [["basemap", getValueOrDefault(value as string, DEFAULTS.basemap)]];
+                return [["basemap", getValueOrDefault(value, DEFAULTS.basemap)]];
             }
             case "viewport": {
-                const val = value as (typeof DEFAULTS)["viewport"];
                 return [
-                    ["viewport", getValueOrDefault(val.area, DEFAULTS.viewport.area)],
+                    ["viewport", getValueOrDefault(value.area, DEFAULTS.viewport.area)],
                     [
                         "viewport_pan",
-                        getValueOrDefault(val.navigation?.pan, DEFAULTS.viewport.navigation.pan, "bool"),
+                        getValueOrDefault(value.navigation?.pan, DEFAULTS.viewport.navigation.pan, "bool"),
                     ],
                     [
                         "viewport_zoom",
-                        getValueOrDefault(val.navigation?.zoom, DEFAULTS.viewport.navigation.zoom, "bool"),
+                        getValueOrDefault(value.navigation?.zoom, DEFAULTS.viewport.navigation.zoom, "bool"),
                     ],
                 ];
             }
             case "center": {
-                const val = value as (typeof DEFAULTS)["center"];
                 return [
-                    ["center_lat", getValueOrDefault(val.lat, DEFAULTS.center.lat, "number")],
-                    ["center_lng", getValueOrDefault(val.lng, DEFAULTS.center.lng, "number")],
+                    ["center_lat", getValueOrDefault(value.lat, DEFAULTS.center.lat, "number")],
+                    ["center_lng", getValueOrDefault(value.lng, DEFAULTS.center.lng, "number")],
                 ];
             }
             case "zoom": {
-                return [["zoom_level", getValueOrDefault(value as number, DEFAULTS.zoom, "number")]];
+                return [["zoom_level", getValueOrDefault(value, DEFAULTS.zoom, "number")]];
             }
             case "bounds": {
-                const val = value as (typeof DEFAULTS)["bounds"];
                 return [
                     [
                         "viewport_bounds_ne_lat",
-                        getValueOrDefault(val.northEast?.lat, DEFAULTS.bounds.northEast.lat, "number"),
+                        getValueOrDefault(value.northEast?.lat, DEFAULTS.bounds.northEast.lat, "number"),
                     ],
                     [
                         "viewport_bounds_ne_lng",
-                        getValueOrDefault(val.northEast?.lng, DEFAULTS.bounds.northEast.lng, "number"),
+                        getValueOrDefault(value.northEast?.lng, DEFAULTS.bounds.northEast.lng, "number"),
                     ],
                     [
                         "viewport_bounds_sw_lat",
-                        getValueOrDefault(val.southWest?.lat, DEFAULTS.bounds.southWest.lat, "number"),
+                        getValueOrDefault(value.southWest?.lat, DEFAULTS.bounds.southWest.lat, "number"),
                     ],
                     [
                         "viewport_bounds_sw_lng",
-                        getValueOrDefault(val.southWest?.lng, DEFAULTS.bounds.southWest.lng, "number"),
+                        getValueOrDefault(value.southWest?.lng, DEFAULTS.bounds.southWest.lng, "number"),
                     ],
                 ];
             }
             case "points": {
-                const val = value as (typeof DEFAULTS)["points"];
                 return [
                     [
                         "group_nearby_points",
-                        getValueOrDefault(val.groupNearbyPoints, DEFAULTS.points.groupNearbyPoints, "bool"),
+                        getValueOrDefault(value.groupNearbyPoints, DEFAULTS.points.groupNearbyPoints, "bool"),
                     ],
-                    ["min_size", getValueOrDefault(val.minSize, DEFAULTS.points.minSize)],
-                    ["max_size", getValueOrDefault(val.maxSize, DEFAULTS.points.maxSize)],
-                    ["shape_type", getValueOrDefault(val.shapeType, DEFAULTS.points.shapeType)],
-                    ["icon", getValueOrDefault(val.icon, DEFAULTS.points.icon)],
+                    ["min_size", getValueOrDefault(value.minSize, DEFAULTS.points.minSize)],
+                    ["max_size", getValueOrDefault(value.maxSize, DEFAULTS.points.maxSize)],
+                    ["shape_type", getValueOrDefault(value.shapeType, DEFAULTS.points.shapeType)],
+                    ["icon", getValueOrDefault(value.icon, DEFAULTS.points.icon)],
                 ];
             }
             case "disableAlerts":
-                return [
-                    ["disable_alerts", getValueOrDefault(value as boolean, DEFAULTS.disableAlerts, "bool")],
-                ];
+                return [["disable_alerts", getValueOrDefault(value, DEFAULTS.disableAlerts, "bool")]];
             case "disableScheduledExports":
                 return [
                     [
                         "disable_scheduled_exports",
-                        getValueOrDefault(value as boolean, DEFAULTS.disableScheduledExports, "bool"),
+                        getValueOrDefault(value, DEFAULTS.disableScheduledExports, "bool"),
                     ],
                 ];
             case "disableKeyDriveAnalysisOn":
-                return [["disable_key_drive_analysis", loadDisableKda(value as Record<string, boolean>)]];
+                return [["disable_key_drive_analysis", loadDisableKda(value)]];
             case "customTooltip":
-                return [["custom_tooltip", loadCustomTooltip(value as (typeof DEFAULTS)["customTooltip"])]];
+                return [["custom_tooltip", loadCustomTooltip(value)]];
             case "latitude":
             case "longitude":
+                return [];
             default:
+                key satisfies never; // Check that no key is forgotten in the cases above
                 return [];
         }
     });

@@ -83,7 +83,8 @@ export interface IObjectShareDialogProps {
     initialDraftGeneralAccess?: GeneralAccessValue;
     /**
      * Labels (display forms) of the shared attribute, enabling the per-grantee
-     * label-scope picker. Omit for objects without labels (e.g. facts).
+     * label-scope picker. Label access is offered unless the only labels are primary
+     * ones. Omit for objects without labels (e.g. facts).
      */
     labels?: IObjectShareLabel[];
     /**

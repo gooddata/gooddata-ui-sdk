@@ -71,7 +71,7 @@ function localApp(
 ): ILocalPluggableApplicationRegistryItemV1 {
     return {
         apiVersion: "1.0",
-        id: "gdc-reports",
+        id: "gdc-publisher",
         title: "Reports",
         applicationScope: "workspace",
         menuOrder: 20,

@@ -97,8 +97,12 @@ const LEGACY_HOME_PATHS = [
     "/getting-started",
 ];
 
+// Publisher was served under the /reports route base. The backend report export and saved links still
+// open that route.
+const FORMER_PUBLISHER_ROUTE = /^((?:\/embedded)?\/workspace\/[^/]+)\/reports(\/.*)?$/;
+
 /**
- * Maps a legacy KD/AD/modeler/metrics/home-ui URL (embedded or standalone) to its host equivalent,
+ * Maps a legacy KD/AD/modeler/metrics/home-ui/reports URL (embedded or standalone) to its host equivalent,
  * or `null` when it is not a recognized legacy URL. Mirrors the standalone→host redirects that live
  * in the legacy apps; runs client-side because the workspace id is in the (server-invisible) hash.
  *
@@ -106,6 +110,11 @@ const LEGACY_HOME_PATHS = [
  */
 export function mapLegacyUrlToHost(location: ILegacyLocation): string | null {
     const { pathname, hash, search } = location;
+
+    const formerPublisher = FORMER_PUBLISHER_ROUTE.exec(pathname);
+    if (formerPublisher) {
+        return `${formerPublisher[1]}/publisher${formerPublisher[2] ?? ""}${search}${hash}`;
+    }
 
     // KD legacy hash: #/workspace|project|client/<ws>/<rest>. Lift <ws> to the path, keep <rest>.
     if (isUnder(pathname, "/dashboards")) {

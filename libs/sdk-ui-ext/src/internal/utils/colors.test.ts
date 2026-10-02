@@ -7,7 +7,13 @@ import { DefaultColorPalette, type IColorAssignment, type IMappingHeader } from 
 
 import { type IColorConfiguration, type IColoredItem } from "../interfaces/Colors.js";
 
-import { getColoredInputItems, getProperties, getSearchedItems, getValidProperties } from "./colors.js";
+import {
+    getColoredInputItems,
+    getProperties,
+    getPropertiesWithLineStyleMappingForMeasures,
+    getSearchedItems,
+    getValidProperties,
+} from "./colors.js";
 
 describe("color utils", () => {
     const color1: IColor = {
@@ -588,6 +594,41 @@ describe("color utils", () => {
         it("should return all input items when called with empty string", () => {
             const searchedItems = getSearchedItems(colorItems, "");
             expect(searchedItems).toEqual(colorItems);
+        });
+    });
+
+    describe("getPropertiesWithLineStyleMappingForMeasures", () => {
+        const lineStyleMapping = [
+            { id: "m1", lineStyle: "dashed" as const },
+            { id: "m2", lineWidth: 3 as const },
+        ];
+
+        it("should drop line styles of measures that are not in the list", () => {
+            const properties = { controls: { lineStyleMapping, stackMeasures: true } };
+
+            expect(getPropertiesWithLineStyleMappingForMeasures(properties, ["m2"])).toEqual({
+                controls: { lineStyleMapping: [{ id: "m2", lineWidth: 3 }], stackMeasures: true },
+            });
+        });
+
+        it("should set line styles to null when no measure is in the list", () => {
+            const properties = { controls: { lineStyleMapping } };
+
+            expect(getPropertiesWithLineStyleMappingForMeasures(properties, [])).toEqual({
+                controls: { lineStyleMapping: null },
+            });
+        });
+
+        it("should return the same properties when every line style belongs to a listed measure", () => {
+            const properties = { controls: { lineStyleMapping } };
+
+            expect(getPropertiesWithLineStyleMappingForMeasures(properties, ["m1", "m2"])).toBe(properties);
+        });
+
+        it("should return the same properties when there are no line styles", () => {
+            const properties = { controls: { stackMeasures: true } };
+
+            expect(getPropertiesWithLineStyleMappingForMeasures(properties, [])).toBe(properties);
         });
     });
 });
