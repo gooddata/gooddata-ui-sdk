@@ -6,6 +6,7 @@ import type { IAttribute } from "../execution/attribute/index.js";
 import type { IFilter } from "../execution/filter/index.js";
 import type { IMeasure } from "../execution/measure/index.js";
 import type { ObjRef } from "../objRef/index.js";
+import type { IReportDefinition } from "../reports/report.js";
 
 import type { GenAIObjectType } from "./common.js";
 import type { ISemanticSearchResult, ISemanticSearchResultItem } from "./semanticSearch.js";
@@ -145,6 +146,29 @@ export interface IGenAIUIContext {
      * Dashboard the user is currently viewing.
      */
     dashboard?: IGenAIDashboardContext;
+    /**
+     * Report the user is currently viewing or editing.
+     */
+    report?: IGenAIReportContext;
+}
+
+/**
+ * Report context for GenAI.
+ * @internal
+ */
+export interface IGenAIReportContext {
+    /**
+     * Report object reference.
+     */
+    ref: ObjRef;
+    /**
+     * Report title.
+     */
+    title?: string;
+    /**
+     * Report definition as the user sees it, including edits that are not saved yet.
+     */
+    definition?: IReportDefinition;
 }
 
 /**

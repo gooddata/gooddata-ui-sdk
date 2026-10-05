@@ -3,6 +3,7 @@
 import {
     type GenAIObjectType,
     type IGenAIUserContext,
+    type ObjRef,
     areObjRefsEqual,
     isIdentifierRef,
 } from "@gooddata/sdk-model";
@@ -62,10 +63,12 @@ export function selectContextReferences(
     };
 
     newContext = removeContextReference(newContext, context.ambientSelected?.dashboard);
+    newContext = removeContextReference(newContext, context.ambientSelected?.report);
     newContext = removeContextReference(newContext, context.ambientSelected?.visualization);
 
     if (newContext.ambientSelected?.activated) {
         newContext = addContextReference(newContext, newContext.ambientSelected?.dashboard);
+        newContext = addContextReference(newContext, newContext.ambientSelected?.report);
         newContext = addContextReference(newContext, newContext.ambientSelected?.visualization);
     }
 
@@ -84,6 +87,7 @@ export function updateAmbientContext(
     newContext.ambient = ambient;
     newContext.ambientLoading = loading;
     newContext = removeContextReference(newContext, context.ambientSelected?.dashboard);
+    newContext = removeContextReference(newContext, context.ambientSelected?.report);
     newContext = removeContextReference(newContext, context.ambientSelected?.visualization);
     newContext = updateContextReference(newContext, ambient, referenceChanged, activated);
     return newContext;
@@ -95,40 +99,38 @@ function updateContextReference(
     referenceChanged?: boolean,
     activated?: boolean,
 ) {
-    let reference: IGenAIContextObject | undefined = undefined;
-    if (ambient?.view?.dashboard) {
-        const dash = ambient.view.dashboard;
-        const ref = dash.ref;
-        const id = isIdentifierRef(ref) ? ref.identifier : ref.uri;
+    const dashboard = ambient?.view?.dashboard;
+    const report = ambient?.view?.report;
 
-        reference = {
-            id,
-            ref,
-            nesting: 0,
-            type: "dashboard",
-            where: "view.dashboard",
-            title: dash.title ?? "",
-        };
-
+    if (dashboard || report) {
         newContext.loaded = true;
-        newContext.ambientSelected = {
-            ...newContext.ambientSelected,
-            dashboard: reference,
-            ...(referenceChanged ? { visualization: undefined } : {}),
-            ...(activated ? { activated: true } : {}),
-        };
-    } else {
-        newContext.ambientSelected = {
-            ...newContext.ambientSelected,
-            dashboard: undefined,
-            visualization: undefined,
-        };
     }
 
-    if (newContext.ambientSelected?.activated) {
-        newContext = addContextReference(newContext, newContext.ambientSelected?.dashboard);
-        newContext = addContextReference(newContext, newContext.ambientSelected?.visualization);
+    const selected: SelectedContext = {
+        ...newContext.ambientSelected,
+        dashboard: dashboard ? viewReference("dashboard", dashboard.ref, dashboard.title) : undefined,
+        report: report ? viewReference("report", report.ref, report.title) : undefined,
+        ...(!dashboard || referenceChanged ? { visualization: undefined } : {}),
+        ...((dashboard || report) && activated ? { activated: true } : {}),
+    };
+    newContext.ambientSelected = selected;
+
+    if (selected.activated) {
+        newContext = addContextReference(newContext, selected.dashboard);
+        newContext = addContextReference(newContext, selected.report);
+        newContext = addContextReference(newContext, selected.visualization);
     }
 
     return newContext;
+}
+
+function viewReference(type: "dashboard" | "report", ref: ObjRef, title?: string): IGenAIContextObject {
+    return {
+        id: isIdentifierRef(ref) ? ref.identifier : ref.uri,
+        ref,
+        nesting: 0,
+        type,
+        where: `view.${type}`,
+        title: title ?? "",
+    };
 }

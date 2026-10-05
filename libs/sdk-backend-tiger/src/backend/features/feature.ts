@@ -894,13 +894,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableReportServerSideExport,
-            "enableReportServerSideExport",
-            "BOOLEAN",
-            FeatureFlagsValues.enableReportServerSideExport,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableEmbeddingWriteCommands,
             "enableEmbeddingWriteCommands",
             "BOOLEAN",

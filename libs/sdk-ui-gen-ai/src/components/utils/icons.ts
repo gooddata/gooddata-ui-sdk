@@ -13,6 +13,9 @@ const msgs = defineMessages({
     typeVisualization: {
         id: "gd.gen-ai.context.type.visualization",
     },
+    typeReport: {
+        id: "gd.gen-ai.context.type.report",
+    },
 });
 
 const VISUALIZATION_TYPE_ICONS: Record<string, IconType> = {
@@ -59,6 +62,11 @@ export function getIconByObject(object: Pick<IGenAIContextObject, "type" | "visu
                 iconBefore: getVisualizationIcon(object.visualizationUrl),
                 iconColor: "complementary-6",
             };
+        case "report":
+            return {
+                iconBefore: "file",
+                iconColor: "complementary-6",
+            };
         default:
             return {};
     }
@@ -71,6 +79,8 @@ export function getTypeLabel(type: IGenAIContextObject["type"], intl: IntlShape)
         case "visualization":
         case "widget":
             return intl.formatMessage(msgs.typeVisualization);
+        case "report":
+            return intl.formatMessage(msgs.typeReport);
         default:
             return undefined;
     }

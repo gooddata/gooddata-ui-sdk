@@ -1,11 +1,13 @@
 // (C) 2024-2026 GoodData Corporation
 
 import { type EventSourceMessage, EventSourceParserStream } from "eventsource-parser/stream";
+import { v4 as uuidv4 } from "uuid";
 
 import {
     type AiConversationItemResponse,
     type AiInteractionStepResponse,
     type AiSendMessageRequest,
+    type AiUserContextReport,
     type AiUserContextWidgetDescriptor,
     type AiUserContextWidgetDescriptorWidgetTypeEnum,
 } from "@gooddata/api-client-tiger";
@@ -36,7 +38,7 @@ import {
     type IChatConversationThreadQuery,
     type IChatConversations,
 } from "@gooddata/sdk-backend-spi";
-import { declarativeDashboardToYaml } from "@gooddata/sdk-code-convertors";
+import { declarativeDashboardToYaml, reportDefinitionToYaml } from "@gooddata/sdk-code-convertors";
 import {
     type GenAIChatEffort,
     type GenAIChatInteractionUserFeedback,
@@ -46,8 +48,11 @@ import {
     type IFilterContext,
     type IFilterContextDefinition,
     type IGenAIDashboardContext,
+    type IGenAIReportContext,
     type IGenAIUserContext,
     type IGenAIWidgetDescriptor,
+    type IReportDefinition,
+    type ITempFilterContext,
     isIdentifierRef,
     isTempFilterContext,
     objRefToString,
@@ -590,25 +595,61 @@ function convertUserContext(userContext: IGenAIUserContext | undefined): AiSendM
         return undefined;
     }
 
+    const view = {
+        ...(userContext.view?.dashboard
+            ? { dashboard: convertDashboardView(userContext.view.dashboard) }
+            : {}),
+        ...(userContext.view?.report ? { report: convertReportView(userContext.view.report) } : {}),
+    };
+
     return {
         ...convertActiveObject(userContext),
-        ...(userContext.view?.dashboard
-            ? {
-                  view: {
-                      dashboard: convertDashboardView(userContext.view.dashboard),
-                  },
-              }
-            : {}),
+        ...(Object.keys(view).length > 0 ? { view } : {}),
         ...convertReferencedObjects(userContext),
     } as AiSendMessageRequest["userContext"];
 }
 
-function convertDashboard(dashboard: IDashboardDefinition) {
+function convertReportView({ ref, title, definition }: IGenAIReportContext): AiUserContextReport {
+    return {
+        id: objRefToString(ref),
+        ...(title ? { title } : {}),
+        ...(definition ? convertReportDefinition({ ...definition, ref }) : {}),
+    };
+}
+
+function convertReportDefinition(definition: IReportDefinition): Pick<AiUserContextReport, "definition"> {
+    try {
+        return { definition: reportDefinitionToYaml(definition).json };
+    } catch (error) {
+        console.warn("Report cannot be written as code, sending the AI assistant only its id: ", error);
+        return {};
+    }
+}
+
+function convertDashboard(dash: IDashboardDefinition) {
+    // Clone the dashboard object and convert its filter context
+    const dashboard = structuredClone({
+        ...dash,
+        ...convertFilter(dash),
+        ...(dash.tabs
+            ? {
+                  tabs: dash.tabs.map((tab) => {
+                      return {
+                          ...tab,
+                          ...convertFilter(tab),
+                      };
+                  }),
+              }
+            : {}),
+    }) as IDashboardDefinition;
+
+    // Filter out temporary filter contexts and convert the remaining ones
     const filterContexts: (IFilterContext | IFilterContextDefinition)[] =
         (dashboard.tabs
             ?.map((tab) => tab.filterContext)
             .filter((t) => Boolean(t && !isTempFilterContext(t))) as IFilterContext[]) ?? [];
 
+    // Add also the dashboard's filter context if it's not temporary
     if (dashboard.filterContext && !isTempFilterContext(dashboard.filterContext)) {
         filterContexts.unshift(dashboard.filterContext);
     }
@@ -646,6 +687,25 @@ function convertDashboard(dashboard: IDashboardDefinition) {
     const { json } = declarativeDashboardToYaml([], dashboardContent, filterContextsContents);
 
     return json;
+}
+
+function convertFilter<T>(
+    item: T & { filterContext?: IFilterContext | ITempFilterContext | IFilterContextDefinition },
+) {
+    const identifier = uuidv4();
+    return item.filterContext
+        ? {
+              filterContext: {
+                  ...item.filterContext,
+                  ...(item.filterContext.ref
+                      ? {}
+                      : {
+                            identifier,
+                            ref: item.filterContext.ref ?? { identifier, type: "filterContext" },
+                        }),
+              },
+          }
+        : {};
 }
 
 function convertActiveObject(userContext: IGenAIUserContext) {

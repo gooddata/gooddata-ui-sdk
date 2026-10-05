@@ -11,9 +11,8 @@ test.beforeEach(async ({ page }) => {
 
 const WIDGET = ".s-dash-item-1_0";
 
-test.topLevelDescribe(
+test.describe(
     "Pivot Table with multi format metrics",
-    "pivotTableHasTotalAndSubtotalsOnDashboard",
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test(

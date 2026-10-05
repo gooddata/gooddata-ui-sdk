@@ -2,6 +2,8 @@
 
 // oxlint-disable typescript-eslint/no-empty-object-type
 
+import { basename } from "path";
+
 import { test } from "@playwright/test";
 
 import { registerFeatureHubMock } from "../feature-hub/mock.js";
@@ -13,24 +15,42 @@ import {
     getCallerLocation,
     getPlaywrightInternals,
 } from "./playwright-internals.js";
+import type {
+    PlaywrightBaseTestArgs,
+    PlaywrightBaseWorkerArgs,
+    PlaywrightTestType,
+} from "./playwright-types.js";
+import {
+    assertRequiredConditions,
+    assertValidConditions,
+    combineConditions,
+    shouldRunTest,
+} from "./test-conditions.js";
 import { toPlaywrightDetails } from "./to-playwright-details.js";
 import type {
     Callback,
     ICreateTestOptions,
     ITestDetails,
     Test,
+    TestConditionsValueConstraint,
     WindowProperties,
     WorkspaceSettings,
 } from "./types.js";
-import { withDescribeDetails } from "./with-describe-details.js";
+import { withDescribeDetails, withTestDetails } from "./with-describe-details.js";
 
 /**
  * @internal
  * @param options -
  */
-export function createTest<T extends {} = {}, W extends {} = {}>(options: ICreateTestOptions<T, W>): Test {
-    // Tracks whether we're inside a topLevelDescribe during synchronous registration.
-    let insideTopLevelDescribe = false;
+export function createTest<
+    TestConditionsValue extends TestConditionsValueConstraint = never,
+    T extends {} = {},
+    W extends {} = {},
+>(
+    options: ICreateTestOptions<TestConditionsValue, T, W>,
+): Test<TestConditionsValue, PlaywrightBaseTestArgs & T, PlaywrightBaseWorkerArgs & W> {
+    // Tracks whether we're inside the outermost describe of a spec file during synchronous registration.
+    let insideRootDescribe = false;
 
     // Stacks track workspace settings / additionalWindowProperties hierarchy during
     // synchronous describe registration. Each level merges on top of the parent's.
@@ -39,37 +59,82 @@ export function createTest<T extends {} = {}, W extends {} = {}>(options: ICreat
     const settingsStack: WorkspaceSettings[] = [];
     const awpStack: WindowProperties[] = [];
 
-    const testInstance = options.fixtures ? test.extend<T, W>(options.fixtures) : test;
-    const internals = getPlaywrightInternals(testInstance);
+    // Combined test conditions and titles of the enclosing describes, during synchronous registration.
+    // Describes only feed these; each test decides for itself whether it runs (a describe whose own
+    // conditions are false may still contain tests whose combined conditions are true).
+    const { testConditions } = options;
+    const conditionsStack: (TestConditionsValue | undefined)[] = [];
+    const titleStack: string[] = [];
 
-    const makeDescribe = (type: PlaywrightDescribeType, name: string) => {
-        return (title: string, details: ITestDetails, callback: Callback) => {
-            if (!insideTopLevelDescribe) {
-                throw new Error(`${name}("${title}") must be nested inside a test.topLevelDescribe() block.`);
-            }
-
-            internals.describe(type, getCallerLocation(), title, toPlaywrightDetails(details), () =>
-                withDescribeDetails(testInstance, settingsStack, awpStack, details, callback),
-            );
-        };
+    const withDescribeScope = (title: string, details: ITestDetails<TestConditionsValue>, body: Callback) => {
+        conditionsStack.push(
+            combineConditions(
+                testConditions,
+                conditionsStack[conditionsStack.length - 1],
+                details.conditions,
+            ),
+        );
+        titleStack.push(title);
+        try {
+            body();
+        } finally {
+            titleStack.pop();
+            conditionsStack.pop();
+        }
     };
 
-    // Spec files that already have a topLevelDescribe. Playwright loads each file once per process,
-    // so a second registration from the same file means a second topLevelDescribe in that file.
-    const filesWithTopLevelDescribe = new Set<string>();
+    // Same type `test.extend<T, W>()` returns. Without fixtures, T and W (inferred from `options.fixtures`)
+    // add nothing, so the base `test` already is that type.
+    const testInstance: PlaywrightTestType<PlaywrightBaseTestArgs & T, PlaywrightBaseWorkerArgs & W> =
+        options.fixtures
+            ? test.extend<T, W>(options.fixtures)
+            : (test as unknown as PlaywrightTestType<
+                  PlaywrightBaseTestArgs & T,
+                  PlaywrightBaseWorkerArgs & W
+              >);
+    const internals = getPlaywrightInternals(testInstance);
 
-    const makeTopLevelDescribe = (type: PlaywrightDescribeType) => {
-        return (suiteName: string, specName: string, details: ITestDetails, fn: Callback) => {
-            const location = getCallerLocation();
+    // specName -> spec file it was derived from. Playwright loads each file once per process, so the
+    // same file again means a second outermost describe in it, and another file means a duplicate specName.
+    const specNameFiles = new Map<string, string>();
 
-            if (filesWithTopLevelDescribe.has(location.file)) {
+    const makeDescribe = (type: PlaywrightDescribeType, name: string) => {
+        const describeFunction = (
+            title: string,
+            details: ITestDetails<TestConditionsValue>,
+            callback: Callback,
+        ) => {
+            const location = getCallerLocation(describeFunction);
+            assertValidConditions(details.conditions, `${name}("${title}")`);
+            const pwDetails = toPlaywrightDetails(details);
+
+            if (insideRootDescribe) {
+                internals.describe(type, location, title, pwDetails, () =>
+                    withDescribeScope(title, details, () =>
+                        withDescribeDetails(testInstance, settingsStack, awpStack, details, callback),
+                    ),
+                );
+                return;
+            }
+
+            // Outermost describe of the spec file: it also sets up the spec.
+            // "some-file-name.spec.ts" -> "some-file-name"
+            const specName = basename(location.file).replace(/\.(spec|test)\.[cm]?[jt]sx?$/, "");
+
+            const existingFile = specNameFiles.get(specName);
+            if (existingFile === location.file) {
                 throw new Error(
-                    `test.topLevelDescribe("${suiteName}"): only one test.topLevelDescribe() is allowed per file (${location.file}).`,
+                    `${name}("${title}"): only one outermost test.describe() is allowed per file (${location.file}).`,
                 );
             }
-            filesWithTopLevelDescribe.add(location.file);
+            if (existingFile !== undefined) {
+                throw new Error(
+                    `${name}("${title}"): duplicate specName "${specName}" in ${location.file} and ${existingFile}. Spec file names must be unique.`,
+                );
+            }
+            specNameFiles.set(specName, location.file);
 
-            const suite = () => {
+            internals.describe(type, location, title, pwDetails, () => {
                 registerFeatureHubMock(testInstance, options.featureHubResponse);
 
                 if (options.goodmock) {
@@ -77,33 +142,74 @@ export function createTest<T extends {} = {}, W extends {} = {}>(options: ICreat
                 }
 
                 // Workspace settings + additional window properties — merge with parent
-                // stack and inject beforeEach. Wraps fn() so nested describes inherit.
-                insideTopLevelDescribe = true;
-                withDescribeDetails(testInstance, settingsStack, awpStack, details, fn);
-                insideTopLevelDescribe = false;
-            };
-
-            const pwDetails = toPlaywrightDetails(details);
-
-            internals.describe(type, location, suiteName, pwDetails, suite);
+                // stack and inject beforeEach. Wraps the callback so nested describes inherit.
+                insideRootDescribe = true;
+                try {
+                    withDescribeScope(title, details, () =>
+                        withDescribeDetails(testInstance, settingsStack, awpStack, details, callback),
+                    );
+                } finally {
+                    // Reset even if the body throws, so the next spec file starts outside again.
+                    insideRootDescribe = false;
+                }
+            });
         };
+        return describeFunction;
     };
 
     const makeTest = (
         name: string,
         register: (location: IPlaywrightLocation, ...args: unknown[]) => void,
     ) => {
-        return (...args: unknown[]) => {
+        const testFunction = (...args: unknown[]) => {
+            const location = getCallerLocation(testFunction);
+            const [title, detailsOrBody, bodyArg] = args;
+
             // Only the `(title, ...)` forms register a test; the title-less forms
             // (`test.skip()`, `test.skip(condition)`, ...) are used inside tests and describes.
-            if (typeof args[0] === "string" && !insideTopLevelDescribe) {
-                throw new Error(
-                    `${name}("${args[0]}") must be nested inside a test.topLevelDescribe() block.`,
-                );
+            if (typeof title !== "string") {
+                register(location, ...args);
+                return;
             }
 
-            register(getCallerLocation(), ...args);
+            if (!insideRootDescribe) {
+                throw new Error(`${name}("${title}") must be nested inside a test.describe() block.`);
+            }
+
+            const details =
+                typeof detailsOrBody === "function"
+                    ? undefined
+                    : (detailsOrBody as ITestDetails<TestConditionsValue>);
+            const body = typeof detailsOrBody === "function" ? detailsOrBody : bodyArg;
+
+            assertValidConditions(details?.conditions, `${name}("${title}")`);
+            const conditions = combineConditions(
+                testConditions,
+                conditionsStack[conditionsStack.length - 1],
+                details?.conditions,
+            );
+            assertRequiredConditions(testConditions, conditions, `${name}("${title}")`, location.file);
+            if (!shouldRunTest(testConditions, conditions, location.file, [...titleStack, title])) {
+                // Conditions not met: register as skipped, whatever the variant (`only`, `fail`, ...).
+                internals.modifier(
+                    "skip",
+                    location,
+                    title,
+                    details ? toPlaywrightDetails(details) : {},
+                    body,
+                );
+                return;
+            }
+
+            if (!details) {
+                register(location, title, body);
+                return;
+            }
+
+            withTestDetails(testInstance, settingsStack, awpStack, location, title, details);
+            register(location, title, toPlaywrightDetails(details), body);
         };
+        return testFunction;
     };
 
     return Object.assign(
@@ -126,15 +232,17 @@ export function createTest<T extends {} = {}, W extends {} = {}>(options: ICreat
                     ),
                 },
             ),
-            /** Build the overridden `test.describe` (with its `.skip`, `.only`, `.fixme`) for a single `createTest` instance. */
-            describe: Object.assign(makeDescribe("default", "describe"), testInstance.describe, {
-                only: makeDescribe("only", "describe.only"),
-                fixme: makeDescribe("fixme", "describe.fixme"),
-                skip: makeDescribe("skip", "describe.skip"),
-            }),
-            /** Build `test.topLevelDescribe` (with its `.skip`) for a single `createTest` instance. */
-            topLevelDescribe: Object.assign(makeTopLevelDescribe("default"), {
-                skip: makeTopLevelDescribe("skip"),
+            /** Build the overridden `test.describe` (with its variants) for a single `createTest` instance. */
+            describe: Object.assign(makeDescribe("default", "test.describe"), testInstance.describe, {
+                only: makeDescribe("only", "test.describe.only"),
+                fixme: makeDescribe("fixme", "test.describe.fixme"),
+                skip: makeDescribe("skip", "test.describe.skip"),
+                serial: Object.assign(makeDescribe("serial", "test.describe.serial"), {
+                    only: makeDescribe("serial.only", "test.describe.serial.only"),
+                }),
+                parallel: Object.assign(makeDescribe("parallel", "test.describe.parallel"), {
+                    only: makeDescribe("parallel.only", "test.describe.parallel.only"),
+                }),
             }),
         },
     );

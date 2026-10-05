@@ -85,4 +85,22 @@ describe("removeContextReference", () => {
 
         expect(context.active?.view?.dashboard).toBeDefined();
     });
+
+    it("should remove report reference and keep the dashboard", () => {
+        const dashboard = { ref: idRef("dashboard-1", "analyticalDashboard"), widgets: [] };
+        const context: StoreContext = {
+            active: { view: { dashboard, report: { ref: idRef("q1", "report") } } },
+        };
+
+        const result = removeContextReference(context, {
+            id: "q1",
+            ref: idRef("q1", "report"),
+            title: "Q1",
+            nesting: 0,
+            type: "report",
+            where: "view.report",
+        });
+
+        expect(result.active).toEqual({ view: { dashboard } });
+    });
 });

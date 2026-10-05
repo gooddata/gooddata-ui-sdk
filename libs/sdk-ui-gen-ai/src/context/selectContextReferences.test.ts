@@ -2,9 +2,9 @@
 
 import { describe, expect, it } from "vitest";
 
-import { idRef, uriRef } from "@gooddata/sdk-model";
+import { type IGenAIUserContext, type IReportDefinition, idRef, uriRef } from "@gooddata/sdk-model";
 
-import type { StoreContext } from "../types.js";
+import type { IGenAIContextObject, StoreContext } from "../types.js";
 
 import { addContextReference } from "./addContextReference.js";
 import {
@@ -591,5 +591,117 @@ describe("selectContextReferences", () => {
 
         expect(result.active?.referencedObjects?.[0]?.objects).toHaveLength(1);
         expect(result.active?.referencedObjects?.[0]?.objects?.[0]?.ref).toEqual(visRef);
+    });
+});
+
+describe("updateAmbientContext with a report", () => {
+    const reportRef = idRef("q1", "report");
+    const definition = (title: string): IReportDefinition => ({
+        type: "report",
+        title,
+        periodStart: "2026-01-01",
+        periodEnd: "2026-03-31",
+        content: { version: "1", pages: [] },
+    });
+    const reportAmbient = (title: string): IGenAIUserContext => ({
+        view: { report: { ref: reportRef, title, definition: definition(title) } },
+    });
+
+    it("should select and activate the report the first time it is reported", () => {
+        const result = updateAmbientContext({}, reportAmbient("Q1"));
+
+        expect(result.loaded).toBe(true);
+        expect(result.ambientSelected).toMatchObject({
+            activated: true,
+            report: { id: "q1", ref: reportRef, type: "report", where: "view.report", title: "Q1" },
+        });
+        expect(result.active?.view?.report).toEqual(reportAmbient("Q1").view?.report);
+    });
+
+    it("should send the latest definition of the same report", () => {
+        const first = updateAmbientContext({}, reportAmbient("Q1"));
+        const result = updateAmbientContext(first, reportAmbient("Q1 draft"));
+
+        expect(result.active?.view?.report?.definition?.title).toBe("Q1 draft");
+    });
+
+    it("should keep a report the user switched off out of the context when the draft changes", () => {
+        const first = updateAmbientContext({}, reportAmbient("Q1"));
+        const switchedOff = selectContextReferences(first, { activated: false });
+        const result = updateAmbientContext(switchedOff, reportAmbient("Q1 draft"));
+
+        expect(switchedOff.active?.view?.report).toBeUndefined();
+        expect(result.ambientSelected?.activated).toBe(false);
+        expect(result.active?.view?.report).toBeUndefined();
+        expect(result.ambientSelected?.report?.title).toBe("Q1 draft");
+    });
+
+    it("should drop the report once it is no longer reported", () => {
+        const first = updateAmbientContext({}, reportAmbient("Q1"));
+        const result = updateAmbientContext(first, undefined);
+
+        expect(result.ambientSelected?.report).toBeUndefined();
+        expect(result.active).toBeUndefined();
+    });
+
+    it("should send the newly opened report in place of the previous one", () => {
+        const first = updateAmbientContext({}, reportAmbient("Q1"));
+        const nextRef = idRef("q2", "report");
+        const result = updateAmbientContext(first, {
+            view: { report: { ref: nextRef, title: "Q2", definition: definition("Q2") } },
+        });
+
+        expect(result.ambientSelected).toMatchObject({ activated: true, report: { id: "q2", title: "Q2" } });
+        expect(result.active?.view).toEqual({
+            report: { ref: nextRef, title: "Q2", definition: definition("Q2") },
+        });
+    });
+
+    it("should keep a report the user switched off out of the context when another report opens", () => {
+        const first = updateAmbientContext({}, reportAmbient("Q1"));
+        const switchedOff = selectContextReferences(first, { activated: false });
+        const result = updateAmbientContext(switchedOff, {
+            view: { report: { ref: idRef("q2", "report"), title: "Q2", definition: definition("Q2") } },
+        });
+
+        expect(result.ambientSelected).toMatchObject({ activated: false, report: { id: "q2" } });
+        expect(result.active).toBeUndefined();
+    });
+
+    it("should keep the dashboard visualization when only the report changes", () => {
+        const dashboard = { ref: idRef("dashboard-1", "analyticalDashboard"), title: "Sales", widgets: [] };
+        const visualization: IGenAIContextObject = {
+            id: "widget-1",
+            ref: idRef("widget-1", "insight"),
+            title: "Revenue",
+            nesting: 1,
+            type: "widget",
+            where: "referencedObjects",
+        };
+        const first = updateAmbientContext(
+            {},
+            { view: { dashboard, report: { ref: reportRef, title: "Q1" } } },
+        );
+        const selected = selectContextReferences(first, { visualization });
+
+        const result = updateAmbientContext(selected, {
+            view: { dashboard, report: { ref: idRef("q2", "report"), title: "Q2" } },
+        });
+
+        expect(result.ambientSelected?.visualization).toEqual(visualization);
+    });
+
+    it("should replace the report with a dashboard reported in its place", () => {
+        const dashboardRef = idRef("dashboard-1", "analyticalDashboard");
+        const first = updateAmbientContext({}, reportAmbient("Q1"));
+        const result = updateAmbientContext(first, {
+            view: { dashboard: { ref: dashboardRef, title: "Sales", widgets: [] } },
+        });
+
+        expect(result.ambientSelected?.report).toBeUndefined();
+        expect(result.ambientSelected?.dashboard?.ref).toEqual(dashboardRef);
+        expect(result.active?.view).toEqual({
+            dashboard: { ref: dashboardRef, title: "Sales", widgets: [] },
+        });
     });
 });

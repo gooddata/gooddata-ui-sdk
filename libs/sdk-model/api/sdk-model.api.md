@@ -3147,7 +3147,6 @@ export interface IFeatureFlags {
     enableRankingStrictLimit?: boolean;
     enableRankingWithMvf?: boolean;
     enableRawExports?: boolean;
-    enableReportServerSideExport?: boolean;
     // @alpha
     enableRichTextWidgetFilterConfiguration?: boolean;
     enableSecondGranularities?: boolean;
@@ -3335,6 +3334,13 @@ export interface IGenAIObjectReferenceGroup {
     objects: IGenAIObjectReference[];
 }
 
+// @internal
+export interface IGenAIReportContext {
+    definition?: IReportDefinition;
+    ref: ObjRef;
+    title?: string;
+}
+
 // @alpha
 export interface IGenAiSingleChoiceControl {
     options: Array<IGenAiClarifyingChoiceOption>;
@@ -3350,6 +3356,7 @@ export type IGenAISuggestion = {
 // @internal
 export interface IGenAIUIContext {
     dashboard?: IGenAIDashboardContext;
+    report?: IGenAIReportContext;
 }
 
 // @internal

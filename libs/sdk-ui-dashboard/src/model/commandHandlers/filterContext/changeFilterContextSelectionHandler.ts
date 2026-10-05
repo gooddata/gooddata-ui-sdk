@@ -46,6 +46,7 @@ import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/
 import { type ChangeFilterContextSelection } from "../../commands/filters.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
+import { isDashboardFilterRestricted } from "../../store/filtering/restrictedFilterUtils.js";
 import {
     selectAttributeFilterConfigsOverrides,
     selectAttributeFilterConfigsOverridesByTab,
@@ -78,6 +79,7 @@ import {
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectTabs } from "../../store/tabs/tabsSelectors.js";
+import { selectUnavailableObjects } from "../../store/unavailableObjects/unavailableObjectsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { resolveAttributeMetadata } from "../../utils/attributeResolver.js";
 import {
@@ -209,6 +211,11 @@ export function* changeFilterContextSelectionHandler(
     // Cross-filtering is always compatible with dashboard tabs now
     // (removed the check that prevented cross-filtering without tabs)
 
+    const unavailableObjects: ReturnType<typeof selectUnavailableObjects> =
+        yield select(selectUnavailableObjects);
+
+    // A restricted attribute filter keeps its stored selection: its label is never resolved, so the
+    // filter can be neither matched nor changed.
     const normalizedFilters: FilterContextItem[] = compact(
         filters.map((filter): FilterContextItem | undefined => {
             if (
@@ -223,6 +230,12 @@ export function* changeFilterContextSelectionHandler(
                 !!ctx.backend.capabilities.supportsMultipleDateFilters,
             );
         }),
+    ).filter(
+        (filter) =>
+            !(
+                isDashboardAttributeFilterItem(filter) &&
+                isDashboardFilterRestricted(filter, unavailableObjects)
+            ),
     );
 
     const disabledComputedAttributeRef: SagaReturnType<typeof findDisabledComputedAttributeRef> = yield call(
@@ -322,6 +335,7 @@ export function* changeFilterContextSelectionHandler(
                 textAttributeFilters,
                 attributeFilterConfigs,
                 resetOthers,
+                unavailableObjects,
                 ctx,
                 tabLocalIdentifier,
                 selectionTypeMap,
@@ -505,6 +519,7 @@ function* getAttributeFiltersUpdateActions(
     textAttributeFilters: DashboardAttributeFilterItem[],
     attributeFilterConfigs: IDashboardAttributeFilterConfig[],
     resetOthers: boolean,
+    unavailableObjects: ReturnType<typeof selectUnavailableObjects>,
     ctx: DashboardContext,
     tabLocalIdentifier?: string,
     selectionTypeMap?: Map<string, DashboardAttributeFilterSelectionType | undefined>,
@@ -955,7 +970,9 @@ function* getAttributeFiltersUpdateActions(
 
         // for element-based filters that have not been handled, create clear selection actions
         const unhandledFilters = currentAttributeFilters.filter(
-            (filter) => !handledLocalIds.has(dashboardAttributeFilterItemLocalIdentifier(filter)!),
+            (filter) =>
+                !handledLocalIds.has(dashboardAttributeFilterItemLocalIdentifier(filter)!) &&
+                !isDashboardFilterRestricted(filter, unavailableObjects),
         );
         if (unhandledFilters.length > 0) {
             updateActions.push(
@@ -978,7 +995,8 @@ function* getAttributeFiltersUpdateActions(
         const unhandledTextFilters = currentAllFilterItems.filter(
             (filter): filter is DashboardTextAttributeFilter =>
                 isDashboardTextAttributeFilter(filter) &&
-                !handledLocalIds.has(dashboardAttributeFilterItemLocalIdentifier(filter)!),
+                !handledLocalIds.has(dashboardAttributeFilterItemLocalIdentifier(filter)!) &&
+                !isDashboardFilterRestricted(filter, unavailableObjects),
         );
         for (const textFilter of unhandledTextFilters) {
             const localId = dashboardAttributeFilterItemLocalIdentifier(textFilter)!;

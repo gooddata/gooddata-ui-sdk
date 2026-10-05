@@ -10,6 +10,7 @@ import { clearThreadAction, startNewConversationAction } from "../messages/messa
 import {
     chatWindowSliceReducer,
     getInitialChatWindowState,
+    loadDataAction,
     selectedContextReferencesAction,
     setAmbientUserContextAction,
     setCatalogItemsActions,
@@ -238,5 +239,14 @@ describe("setUserContextAction", () => {
 
         expect(state.context.ambientSelected?.visualization?.id).toBe("v1");
         expect(state.context.active?.referencedObjects?.[0]?.objects?.[0]?.ref).toEqual(visRef);
+    });
+});
+
+describe("loadDataAction", () => {
+    it("should return the state unchanged", () => {
+        const initial = getInitialChatWindowState();
+        const state = chatWindowSliceReducer(initial, loadDataAction());
+
+        expect(state).toEqual(initial);
     });
 });

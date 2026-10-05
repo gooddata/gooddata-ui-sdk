@@ -2,7 +2,7 @@
 
 import { fileURLToPath } from "url";
 
-import type { PlaywrightTest } from "./playwright-types.js";
+import type { PlaywrightTestInstance } from "./playwright-types.js";
 
 // Playwright's public `test`, `test.describe`, `test.skip`, ... record the source location of their
 // *direct* caller. Called from our wrappers in `factory.ts`, that would be `factory.ts` itself, which
@@ -63,7 +63,7 @@ function isTestTypeImpl(value: unknown): value is ITestTypeImpl {
 /**
  * Get the private `TestTypeImpl` behind a Playwright `test` function.
  */
-export function getPlaywrightInternals(testInstance: PlaywrightTest): IPlaywrightInternals {
+export function getPlaywrightInternals(testInstance: PlaywrightTestInstance): IPlaywrightInternals {
     // Playwright stores it under a module-private `Symbol("testType")`, so look it up by description.
     const symbol = Object.getOwnPropertySymbols(testInstance).find((s) => s.description === "testType");
     const impl: unknown = symbol ? (testInstance as unknown as Record<symbol, unknown>)[symbol] : undefined;
@@ -83,33 +83,34 @@ export function getPlaywrightInternals(testInstance: PlaywrightTest): IPlaywrigh
     };
 }
 
-// This package's code: compiled (`esm/`) and, when source-mapped, original (`src/`). Frames from here are our own wrappers.
-const OWN_CODE_DIRS = ["../../../esm/", "../../../src/"].map((dir) =>
-    fileURLToPath(new URL(dir, import.meta.url)),
-);
-
 // Matches the location at the end of a stack line: "at fn (/path/file.ts:12:3)", "at /path/file.ts:12:3",
 // "at fn (file:///path/file.ts:12:3)".
 const STACK_FRAME_LOCATION = /\(?((?:file:\/\/)?[^\s()]+):(\d+):(\d+)\)?$/;
 
 /**
- * Location of the first stack frame outside this package, i.e. the spec file (or consumer helper)
- * that called our wrapper. Same frame Playwright's public API would have recorded.
+ * Location of whoever called `wrapper` (the spec file, or a consumer helper): the same frame
+ * Playwright's public API would have recorded.
+ *
+ * Frames are cut by function identity (`Error.captureStackTrace` omits `wrapper` and everything above it),
+ * not by file path, so this keeps working when consumers bundle this package into their own chunks.
  *
  * Playwright installs source-map-support while loading test files, so the stack already shows
  * the original TypeScript file and line.
+ *
+ * @param wrapper - our public function the spec called (`test`, `test.describe`, ...); must be on the stack
  */
-export function getCallerLocation(): IPlaywrightLocation {
-    const stack = new Error().stack ?? "";
+export function getCallerLocation(wrapper: (...args: never[]) => unknown): IPlaywrightLocation {
+    const target: { stack?: string } = {};
+    Error.captureStackTrace(target, wrapper);
 
-    for (const stackLine of stack.split("\n").slice(1)) {
+    for (const stackLine of (target.stack ?? "").split("\n").slice(1)) {
         const match = STACK_FRAME_LOCATION.exec(stackLine.trim());
         if (!match) {
             continue;
         }
 
         const file = match[1].startsWith("file://") ? fileURLToPath(match[1]) : match[1];
-        if (OWN_CODE_DIRS.some((dir) => file.startsWith(dir)) || file.startsWith("node:")) {
+        if (file.startsWith("node:")) {
             continue;
         }
 

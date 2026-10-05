@@ -10,11 +10,12 @@ import { Locator } from '@playwright/test';
 import { Page } from '@playwright/test';
 import type { PlaywrightTestArgs } from '@playwright/test';
 import type { PlaywrightTestOptions } from '@playwright/test';
+import type { TestType as PlaywrightTestType } from '@playwright/test';
 import type { PlaywrightWorkerArgs } from '@playwright/test';
 import type { PlaywrightWorkerOptions } from '@playwright/test';
 import { Route } from '@playwright/test';
-import type { test } from '@playwright/test';
 import type { TestDetails } from '@playwright/test';
+import type { TestInfo } from '@playwright/test';
 
 // @internal (undocumented)
 export const API_TOKEN: string;
@@ -34,15 +35,6 @@ export const BACKEND_HOST: string;
 export type Callback = () => void;
 
 // @internal
-export type CallSignatures<F> = F extends {
-    (...args: infer A1): infer R1;
-    (...args: infer A2): infer R2;
-} ? {
-    (...args: A1): R1;
-    (...args: A2): R2;
-} : never;
-
-// @internal
 export function clickByBoundingBox(page: Page, locator: Locator, options?: {
     useMouseUpDown?: boolean;
     steps?: number;
@@ -50,7 +42,7 @@ export function clickByBoundingBox(page: Page, locator: Locator, options?: {
 }): Promise<void>;
 
 // @internal (undocumented)
-export function createTest<T extends {} = {}, W extends {} = {}>(options: ICreateTestOptions<T, W>): Test;
+export function createTest<TestConditionsValue extends TestConditionsValueConstraint = never, T extends {} = {}, W extends {} = {}>(options: ICreateTestOptions<TestConditionsValue, T, W>): Test<TestConditionsValue, PlaywrightBaseTestArgs & T, PlaywrightBaseWorkerArgs & W>;
 
 // @internal (undocumented)
 export type Fixtures<T extends {} = {}, W extends {} = {}> = Fixtures_2<T, W, PlaywrightBaseTestArgs, PlaywrightBaseWorkerArgs>;
@@ -88,40 +80,49 @@ export function hoverByBoundingBox(page: Page, locator: Locator, options?: {
     steps?: number;
 }): Promise<void>;
 
-// @internal (undocumented)
-export interface ICreateTestOptions<T extends {} = {}, W extends {} = {}> extends ICustomCreateTestOptions {
-    // (undocumented)
+// @internal
+export type ICreateTestOptions<TestConditionsValue extends TestConditionsValueConstraint = never, T extends {} = {}, W extends {} = {}> = ICustomCreateTestOptions<TestConditionsValue> & {
     fixtures?: Fixtures_2<T, W>;
-}
+} & ([TestConditionsValue] extends [never] ? {} : {
+    testConditions: ITestConditions<TestConditionsValue>;
+});
 
 // @internal (undocumented)
-export interface ICustomCreateTestOptions {
+export interface ICustomCreateTestOptions<TestConditionsValue extends TestConditionsValueConstraint = never> {
     // (undocumented)
     featureHubResponse: IFeatureHubEnvironment[];
     // (undocumented)
     goodmock?: IGoodmockOptions;
+    // (undocumented)
+    testConditions?: ITestConditions<TestConditionsValue>;
 }
 
 // @internal (undocumented)
-export interface IDescribe extends IDescribeFunction {
+export interface IDescribe<TestConditionsValue extends TestConditionsValueConstraint = never> extends IDescribeFunction<TestConditionsValue> {
     // (undocumented)
     configure: PlaywrightDescribeConfigure;
     // (undocumented)
-    fixme: IDescribeFunction;
+    fixme: IDescribeFunction<TestConditionsValue>;
     // (undocumented)
-    only: IDescribeFunction;
+    only: IDescribeFunction<TestConditionsValue>;
     // (undocumented)
-    parallel: PlaywrightDescribeParallel;
+    parallel: IDescribeModeFunction<TestConditionsValue>;
     // (undocumented)
-    serial: PlaywrightDescribeSerial;
+    serial: IDescribeModeFunction<TestConditionsValue>;
     // (undocumented)
-    skip: IDescribeFunction;
+    skip: IDescribeFunction<TestConditionsValue>;
 }
 
 // @internal
-export interface IDescribeFunction {
+export interface IDescribeFunction<TestConditionsValue extends TestConditionsValueConstraint = never> {
     // (undocumented)
-    (title: string, details: ITestDetails, callback: Callback): void;
+    (title: string, details: ITestDetails<TestConditionsValue>, callback: Callback): void;
+}
+
+// @internal
+export interface IDescribeModeFunction<TestConditionsValue extends TestConditionsValueConstraint = never> extends IDescribeFunction<TestConditionsValue> {
+    // (undocumented)
+    only: IDescribeFunction<TestConditionsValue>;
 }
 
 // @internal (undocumented)
@@ -211,27 +212,54 @@ export interface ISnapshotAndSaveRecordingOptions {
     leakPatterns?: ILeakPattern[];
     sanitizeMappings?: (mappings: IGoodmockMapping[]) => IGoodmockMapping[];
     secretMappings?: ISecretMapping[];
+    templateOrganization?: string;
     workspaceIdMappings?: IWorkspaceIdMapping | IWorkspaceIdMapping[];
 }
 
+// @internal
+export interface ITestConditions<TestConditionsValue extends TestConditionsValueConstraint> {
+    merge?: (parent: TestConditionsValue | undefined, child: TestConditionsValue) => TestConditionsValue;
+    required?: boolean;
+    shouldRun: (conditions: TestConditionsValue, context: ITestConditionsContext) => boolean;
+}
+
+// @internal
+export interface ITestConditionsContext {
+    file: string;
+    titlePath: string[];
+}
+
 // @internal (undocumented)
-export interface ITestDetails extends TestDetails {
+export interface ITestDetails<TestConditionsValue extends TestConditionsValueConstraint = never> extends TestDetails {
     // (undocumented)
     additionalWindowProperties?: WindowProperties;
+    conditions?: TestConditionsValue;
     // (undocumented)
     workspaceSettings?: WorkspaceSettings;
 }
 
-// @internal (undocumented)
-export interface ITopLevelDescribe extends ITopLevelDescribeFunction {
+// @internal
+export interface ITestFailFunction<TestConditionsValue extends TestConditionsValueConstraint, TestArgs extends {}, WorkerArgs extends {}> extends ITestModifierFunction<TestConditionsValue, TestArgs, WorkerArgs> {
     // (undocumented)
-    skip: ITopLevelDescribeFunction;
+    only: ITestFunction<TestConditionsValue, TestArgs, WorkerArgs>;
 }
 
 // @internal
-export interface ITopLevelDescribeFunction {
+export interface ITestFunction<TestConditionsValue extends TestConditionsValueConstraint, TestArgs extends {}, WorkerArgs extends {}> {
     // (undocumented)
-    (suiteName: string, specName: string, details: ITestDetails, fn: Callback): void;
+    (title: string, body: PlaywrightTestBody<TestArgs & WorkerArgs>): void;
+    // (undocumented)
+    (title: string, details: ITestDetails<TestConditionsValue>, body: PlaywrightTestBody<TestArgs & WorkerArgs>): void;
+}
+
+// @internal
+export interface ITestModifierFunction<TestConditionsValue extends TestConditionsValueConstraint, TestArgs extends {}, WorkerArgs extends {}> extends ITestFunction<TestConditionsValue, TestArgs, WorkerArgs> {
+    // (undocumented)
+    (): void;
+    // (undocumented)
+    (condition: boolean, description?: string): void;
+    // (undocumented)
+    (callback: PlaywrightConditionBody<TestArgs & WorkerArgs>, description?: string): void;
 }
 
 // @internal (undocumented)
@@ -248,27 +276,25 @@ export function loadMappings(host: string, mappingFilePath: string): Promise<voi
 // @internal
 export function mockLogRequests(host: string): Promise<void>;
 
-// @internal
-export type Override<T, U> = CallSignatures<T> & Omit<T, keyof U> & U;
-
 // @internal (undocumented)
 export type PlaywrightBaseTestArgs = PlaywrightTestArgs & PlaywrightTestOptions;
 
 // @internal (undocumented)
 export type PlaywrightBaseWorkerArgs = PlaywrightWorkerArgs & PlaywrightWorkerOptions;
 
-// @internal (undocumented)
-export type PlaywrightDescribeConfigure = typeof test.describe.configure;
+// @internal
+export type PlaywrightConditionBody<TestArgs> = (args: TestArgs) => boolean;
 
 // @internal (undocumented)
-export type PlaywrightDescribeParallel = typeof test.describe.parallel;
+export type PlaywrightDescribeConfigure = PlaywrightTestInstance["describe"]["configure"];
+
+// @internal
+export type PlaywrightTestBody<TestArgs> = (args: TestArgs, testInfo: TestInfo) => Promise<unknown> | unknown;
 
 // @internal (undocumented)
-export type PlaywrightDescribeSerial = typeof test.describe.serial;
+export type PlaywrightTestInstance = PlaywrightTestType<PlaywrightTestArgs & PlaywrightTestOptions, PlaywrightWorkerArgs & PlaywrightWorkerOptions>;
 
-// @internal (undocumented)
-type PlaywrightTest_2 = typeof test;
-export { PlaywrightTest_2 as PlaywrightTest }
+export { PlaywrightTestType }
 
 // @internal
 export function resetMappings(host: string): Promise<void>;
@@ -282,11 +308,17 @@ export function snapshotAndSaveRecording(host: string, mappingFilePath: string, 
 // @internal
 export function startRecording(host: string, backendHost: string): Promise<void>;
 
-// @internal (undocumented)
-export type Test = Override<PlaywrightTest_2, {
-    topLevelDescribe: ITopLevelDescribe;
-    describe: IDescribe;
-}>;
+// @internal
+export type Test<TestConditionsValue extends TestConditionsValueConstraint, TestArgs extends {}, WorkerArgs extends {}> = ITestFunction<TestConditionsValue, TestArgs, WorkerArgs> & Omit<PlaywrightTestType<TestArgs, WorkerArgs>, "only" | "skip" | "fixme" | "fail" | "describe"> & {
+    only: ITestFunction<TestConditionsValue, TestArgs, WorkerArgs>;
+    skip: ITestModifierFunction<TestConditionsValue, TestArgs, WorkerArgs>;
+    fixme: ITestModifierFunction<TestConditionsValue, TestArgs, WorkerArgs>;
+    fail: ITestFailFunction<TestConditionsValue, TestArgs, WorkerArgs>;
+    describe: IDescribe<TestConditionsValue>;
+};
+
+// @internal
+export type TestConditionsValueConstraint = object | string | number;
 
 // @internal (undocumented)
 export type WindowProperties = Record<string, unknown>;

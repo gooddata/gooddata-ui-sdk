@@ -23,9 +23,8 @@ test.beforeEach(async ({ page }) => {
     await injectAuthHeader(page, API_TOKEN);
 });
 
-test.topLevelDescribe(
+test.describe(
     "Multitple date filters basic cases",
-    "multipleDateFilters",
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test("can add multiple date filters", { tag: ["@pre-merge-isolated"] }, async ({ page }) => {

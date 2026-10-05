@@ -182,7 +182,11 @@ export const hasPinnedContextSelector: (state: RootState) => boolean = createSel
         }
 
         const dashboardRef = active.view?.dashboard?.ref;
+        const reportRef = active.view?.report?.ref;
 
-        return Boolean(dashboardRef) && !areObjRefsEqual(dashboardRef, ambient?.view?.dashboard?.ref);
+        return (
+            (Boolean(dashboardRef) && !areObjRefsEqual(dashboardRef, ambient?.view?.dashboard?.ref)) ||
+            (Boolean(reportRef) && !areObjRefsEqual(reportRef, ambient?.view?.report?.ref))
+        );
     },
 );

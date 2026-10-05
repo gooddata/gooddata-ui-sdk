@@ -31,6 +31,11 @@ export function removeContextReference(context: StoreContext, reference?: IGenAI
         delete newContext.view.dashboard;
     }
 
+    if (reference.where === "view.report" && areObjRefsEqual(newContext.view?.report?.ref, reference.ref)) {
+        newContext.view = { ...newContext.view };
+        delete newContext.view.report;
+    }
+
     // remove reference
     if (reference.where === "referencedObjects") {
         newContext.referencedObjects = newContext.referencedObjects

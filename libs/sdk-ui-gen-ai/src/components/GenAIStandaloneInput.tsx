@@ -13,7 +13,6 @@ import { SyntaxHighlightingInput } from "@gooddata/sdk-ui-kit";
 import { useGenAIStandaloneInputData } from "../hooks/useGenAIStandaloneInputData.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
 import { type GenAIAgent } from "../model.js";
-import type { GenAIInitializeOnStart } from "../types.js";
 
 import { useCompletion } from "./completion/useCompletion.js";
 import { CustomizationProvider } from "./CustomizationProvider.js";
@@ -21,6 +20,7 @@ import type { IGenAIAssistantSlots } from "./customized/types.js";
 import { GenAiChatAgentSwitching } from "./GenAiChatAgentSwitching.js";
 import { GenAiStore, type GenAiStoreProps } from "./GenAiStore.js";
 import { useHighlight } from "./highlight/useHighlight.js";
+import { useDataLoad } from "./hooks/useDataLoad.js";
 import { useFullscreenCheck } from "./hooks/useFullscreenCheck.js";
 import { useInputAutofocus } from "./hooks/useInputAutofocus.js";
 
@@ -95,6 +95,8 @@ function StandaloneInputContent({
     const [value, setValue] = useState("");
     const [editorApi, setApi] = useState<EditorView | null>(null);
     const { selectedAgentId, agentSwitchingEnabled, agents } = useGenAIStandaloneInputData(requiredSkills);
+
+    useDataLoad();
 
     useEffect(() => {
         if (selectedAgentId) {
@@ -178,8 +180,6 @@ function StandaloneInputContent({
     );
 }
 
-const DEPENDENCIES_TO_LOAD = ["catalogItems", "agents"] as GenAIInitializeOnStart;
-
 /**
  * @internal
  */
@@ -190,12 +190,7 @@ export function GenAIStandaloneInput(props: GenAIStandaloneInputProps) {
 
     return (
         <IntlWrapper locale={locale}>
-            <GenAiStore
-                {...props}
-                backend={effectiveBackend}
-                workspace={effectiveWorkspace}
-                initializeOnStart={DEPENDENCIES_TO_LOAD}
-            >
+            <GenAiStore {...props} backend={effectiveBackend} workspace={effectiveWorkspace}>
                 <CustomizationProvider slots={slots}>
                     <StandaloneInputContent {...rest} />
                 </CustomizationProvider>

@@ -147,6 +147,10 @@
         "text": "Dashboard",
         "crowdinContext": "Accessibility label for the icon marking an AI chatbot context item as a dashboard. Read before the item title."
     },
+    "gd.gen-ai.context.type.report": {
+        "text": "Report",
+        "crowdinContext": "Accessibility label for the icon marking an AI chatbot context item as a report. Read before the item title."
+    },
     "gd.gen-ai.context.type.visualization": {
         "text": "Visualization",
         "crowdinContext": "Accessibility label for the icon marking an AI chatbot context item as a visualization. Read before the item title."

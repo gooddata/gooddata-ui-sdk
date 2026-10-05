@@ -36,6 +36,24 @@ export function collectContextReferences(
         }
     }
 
+    // report
+    const userReport = userContext?.view?.report;
+    if (userReport) {
+        const ref = userReport.ref;
+        const id = isIdentifierRef(ref) ? ref.identifier : ref.uri;
+
+        if (!areObjRefsEqual(ref, selectedContext?.report?.ref)) {
+            userReferences.push({
+                id,
+                ref,
+                nesting: 0,
+                type: "report",
+                where: "view.report",
+                title: userReport.title || placeholderTitle || id,
+            });
+        }
+    }
+
     // references
     userContext?.referencedObjects?.forEach((obj) => {
         if (obj.context && areObjRefsEqual(obj.context?.ref, selectedContext?.dashboard?.ref)) {
