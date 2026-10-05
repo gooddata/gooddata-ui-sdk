@@ -42,9 +42,8 @@ test.beforeEach(async ({ page }) => {
     await injectAuthHeader(page, API_TOKEN);
 });
 
-test.topLevelDescribe(
+test.describe(
     "Dependent filter",
-    "dependentFilters",
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test(

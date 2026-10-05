@@ -16750,6 +16750,49 @@
                 ],
                 "title": "UserContextObjectReferenceGroup"
             },
+            "UserContextReport": {
+                "description": "The report open in the report editor, so refinements can target it without an id.",
+                "properties": {
+                    "definition": {
+                        "anyOf": [
+                            {
+                                "additionalProperties": true,
+                                "type": "object"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "The report currently open in the client, as an Analytics as Code (AAC) report document: the same shape the `report` answer part carries. Send the copy the client is holding, including any unsaved edits. The assistant reads its title, period and page count for the context summary. Optional.",
+                        "title": "Definition"
+                    },
+                    "id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Id of the saved report open in the editor; null while it is a new report not saved yet.",
+                        "title": "Id"
+                    },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title"
+                    }
+                },
+                "title": "UserContextReport",
+                "type": "object"
+            },
             "UserContextRichTextWidgetDescriptor": {
                 "properties": {
                     "content": {
@@ -16863,6 +16906,17 @@
                                 "type": "null"
                             }
                         ]
+                    },
+                    "report": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/UserContextReport"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "The report currently open in the report editor, if the client is showing one. Optional."
                     }
                 },
                 "type": "object",

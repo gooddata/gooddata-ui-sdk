@@ -2,7 +2,9 @@
 
 import { describe, expect, it } from "vitest";
 
-import { idRef, uriRef } from "@gooddata/sdk-model";
+import { type IGenAIUserContext, idRef, uriRef } from "@gooddata/sdk-model";
+
+import { type SelectedContext } from "../types.js";
 
 import { collectAvailableReferences, collectContextReferences } from "./collectContextReferences.js";
 
@@ -138,6 +140,43 @@ describe("collectContextReferences", () => {
         const result = collectContextReferences(context, selected);
         expect(result[0].nesting).toBe(0);
         expect(result[1].nesting).toBe(1);
+    });
+
+    it("should collect a report other than the ambient one", () => {
+        const context: IGenAIUserContext = { view: { report: { ref: idRef("q2", "report"), title: "Q2" } } };
+        const selected: SelectedContext = {
+            activated: true,
+            report: {
+                id: "q1",
+                ref: idRef("q1", "report"),
+                title: "Q1",
+                nesting: 0,
+                type: "report",
+                where: "view.report",
+            },
+        };
+
+        expect(collectContextReferences(context, selected)).toEqual([
+            {
+                id: "q2",
+                ref: idRef("q2", "report"),
+                type: "report",
+                where: "view.report",
+                title: "Q2",
+                nesting: 0,
+            },
+        ]);
+    });
+
+    it("should skip the ambient report", () => {
+        const ref = idRef("q1", "report");
+        const context: IGenAIUserContext = { view: { report: { ref, title: "Q1" } } };
+        const selected: SelectedContext = {
+            activated: true,
+            report: { id: "q1", ref, title: "Q1", nesting: 0, type: "report", where: "view.report" },
+        };
+
+        expect(collectContextReferences(context, selected)).toEqual([]);
     });
 });
 

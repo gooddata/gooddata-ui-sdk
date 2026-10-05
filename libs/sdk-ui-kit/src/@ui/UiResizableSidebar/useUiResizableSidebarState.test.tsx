@@ -48,6 +48,21 @@ describe("useUiResizableSidebarState", () => {
         expect(localStorage.getItem(options.widthStorageKey)).toBe("230");
     });
 
+    it("follows the current minimum width while no width is stored", () => {
+        const { result, rerender } = renderHook(
+            ({ minWidth }: { minWidth: number }) => useUiResizableSidebarState({ ...options, minWidth }),
+            { initialProps: { minWidth: 230 } },
+        );
+        expect(result.current.width).toBe(230);
+
+        rerender({ minWidth: 160 });
+        expect(result.current.width).toBe(160);
+
+        act(() => result.current.setWidth(300));
+        rerender({ minWidth: 230 });
+        expect(result.current.width).toBe(300);
+    });
+
     it("restores the persisted width", () => {
         localStorage.setItem(options.widthStorageKey, "320");
 

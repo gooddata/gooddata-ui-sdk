@@ -31,9 +31,8 @@ test.beforeEach(async ({ page }) => {
     await injectAuthHeader(page, API_TOKEN);
 });
 
-test.topLevelDescribe(
+test.describe(
     "Drag Drop and Move Widget",
-    "dragDropAndMoveWidget",
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test.describe("Insight on dashboard", {}, () => {

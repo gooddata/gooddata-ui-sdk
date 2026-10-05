@@ -1,11 +1,14 @@
 // (C) 2026 GoodData Corporation
 
+// oxlint-disable no-barrel-files/no-barrel-files
+
 import type {
     PlaywrightTestArgs,
     PlaywrightTestOptions,
+    TestType as PlaywrightTestType,
     PlaywrightWorkerArgs,
     PlaywrightWorkerOptions,
-    test,
+    TestInfo,
 } from "@playwright/test";
 
 /**
@@ -21,19 +24,31 @@ export type PlaywrightBaseWorkerArgs = PlaywrightWorkerArgs & PlaywrightWorkerOp
 /**
  * @internal
  */
-export type PlaywrightTest = typeof test;
+export type { PlaywrightTestType };
 
 /**
  * @internal
  */
-export type PlaywrightDescribeConfigure = typeof test.describe.configure;
+export type PlaywrightTestInstance = PlaywrightTestType<
+    PlaywrightTestArgs & PlaywrightTestOptions,
+    PlaywrightWorkerArgs & PlaywrightWorkerOptions
+>;
 
 /**
  * @internal
  */
-export type PlaywrightDescribeSerial = typeof test.describe.serial;
+export type PlaywrightDescribeConfigure = PlaywrightTestInstance["describe"]["configure"];
 
 /**
  * @internal
+ * Body of a test: `(fixtures, testInfo) => ...`. Mirrors Playwright's internal `TestBody<TestArgs>`,
+ * which `@playwright/test` doesn't export.
  */
-export type PlaywrightDescribeParallel = typeof test.describe.parallel;
+export type PlaywrightTestBody<TestArgs> = (args: TestArgs, testInfo: TestInfo) => Promise<unknown> | unknown;
+
+/**
+ * @internal
+ * Condition callback of `test.skip(callback, description?)` and friends. Mirrors Playwright's internal
+ * `ConditionBody<TestArgs>`, which `@playwright/test` doesn't export.
+ */
+export type PlaywrightConditionBody<TestArgs> = (args: TestArgs) => boolean;

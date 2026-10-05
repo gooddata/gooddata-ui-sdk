@@ -2,14 +2,20 @@
 
 import { type ReactElement } from "react";
 
-import { render, screen, waitFor } from "@testing-library/react";
+import { type UnknownAction } from "@reduxjs/toolkit";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { type IGenAIUserContext } from "@gooddata/sdk-model";
+import { type IGenAIUserContext, idRef } from "@gooddata/sdk-model";
 
 import { en_US } from "../localization/bundles/en-US.localization-bundle.js";
+import {
+    removeContextReferenceAction,
+    selectedContextReferencesAction,
+} from "../store/chatWindow/chatWindowSlice.js";
 import { type RootState } from "../store/types.js";
+import { type IGenAIContextObject, type SelectedContext } from "../types.js";
 
 import { GenAIChatContextIndicator } from "./GenAIChatContextIndicator.js";
 
@@ -18,8 +24,9 @@ import { GenAIChatContextIndicator } from "./GenAIChatContextIndicator.js";
 // worker (useContextItems.test.tsx renders these hooks with the real react-redux), which turns the
 // `vi.mock()` below into a no-op. Dropping the module registry from `vi.hoisted()` (it runs before
 // this file's own imports, unlike any `beforeEach`) makes those imports resolve through the mocks.
-vi.hoisted(() => {
+const { dispatch } = vi.hoisted(() => {
     vi.resetModules();
+    return { dispatch: vi.fn<(action: UnknownAction) => UnknownAction>() };
 });
 
 function makeContext({ withWidget = true }: { withWidget?: boolean } = {}) {
@@ -47,14 +54,20 @@ function makeContext({ withWidget = true }: { withWidget?: boolean } = {}) {
     } as unknown as IGenAIUserContext;
 }
 
-function makeState(context: IGenAIUserContext | undefined): RootState {
+function makeState(
+    context: IGenAIUserContext | undefined,
+    ambientSelected: SelectedContext = {
+        activated: false,
+        dashboard: { ref: { identifier: "none" } },
+    } as SelectedContext,
+): RootState {
     return {
         chatWindow: {
             settings: { enableAiContextSetup: true },
             context: {
                 active: context,
                 ambient: undefined,
-                ambientSelected: { activated: false, dashboard: { ref: { identifier: "none" } } } as any,
+                ambientSelected,
             },
         },
     } as unknown as RootState;
@@ -63,7 +76,7 @@ function makeState(context: IGenAIUserContext | undefined): RootState {
 let state: RootState = makeState(makeContext());
 
 vi.mock("react-redux", () => ({
-    useDispatch: () => vi.fn(),
+    useDispatch: () => dispatch,
     useSelector: (selector: (state: RootState) => unknown) => selector(state),
 }));
 
@@ -90,6 +103,10 @@ function renderIndicator(context: IGenAIUserContext | undefined = makeContext())
 }
 
 describe("GenAIChatContextIndicator", () => {
+    beforeEach(() => {
+        dispatch.mockClear();
+    });
+
     it("names every chip delete button after the item it removes", () => {
         renderIndicator();
 
@@ -120,6 +137,95 @@ describe("GenAIChatContextIndicator", () => {
 
         await waitFor(() =>
             expect(screen.getByRole("status")).toHaveTextContent("The assistant context is now empty."),
+        );
+    });
+
+    it("shows the open report as a chip that toggles its use without a chooser", () => {
+        const report: IGenAIContextObject = {
+            id: "q1",
+            ref: idRef("q1", "report"),
+            title: "Q1 Report",
+            nesting: 0,
+            type: "report",
+            where: "view.report",
+        };
+        state = makeState(
+            { view: { report: { ref: report.ref, title: report.title } } },
+            { activated: true, report },
+        );
+
+        render(
+            <IntlProvider locale="en" messages={messages}>
+                <GenAIChatContextIndicator />
+            </IntlProvider>,
+        );
+
+        expect(screen.getByRole("img", { name: "Report" })).toBeInTheDocument();
+        expect(screen.queryByRole("button", { expanded: false })).not.toBeInTheDocument();
+
+        fireEvent.click(screen.getByText("Q1 Report"));
+
+        expect(dispatch).toHaveBeenCalledWith(selectedContextReferencesAction({ activated: false, report }));
+    });
+
+    it("names the report chip's toggle after what it does", () => {
+        const report: IGenAIContextObject = {
+            id: "q1",
+            ref: idRef("q1", "report"),
+            title: "Q1 Report",
+            nesting: 0,
+            type: "report",
+            where: "view.report",
+        };
+        state = makeState(
+            { view: { report: { ref: report.ref, title: report.title } } },
+            { activated: true, report },
+        );
+
+        render(
+            <IntlProvider locale="en" messages={messages}>
+                <GenAIChatContextIndicator />
+            </IntlProvider>,
+        );
+
+        fireEvent.click(screen.getByRole("button", { name: "Stop using this context" }));
+
+        expect(dispatch).toHaveBeenCalledWith(selectedContextReferencesAction({ activated: false, report }));
+    });
+
+    it("removes a report other than the open one through its chip", () => {
+        const openReport: IGenAIContextObject = {
+            id: "q1",
+            ref: idRef("q1", "report"),
+            title: "Q1 Report",
+            nesting: 0,
+            type: "report",
+            where: "view.report",
+        };
+        state = makeState(
+            { view: { report: { ref: idRef("q2", "report"), title: "Q2 Report" } } },
+            { activated: true, report: openReport },
+        );
+
+        render(
+            <IntlProvider locale="en" messages={messages}>
+                <GenAIChatContextIndicator />
+            </IntlProvider>,
+        );
+
+        fireEvent.click(screen.getByRole("button", { name: "Remove Q2 Report from context" }));
+
+        expect(dispatch).toHaveBeenCalledWith(
+            removeContextReferenceAction({
+                object: {
+                    id: "q2",
+                    ref: idRef("q2", "report"),
+                    title: "Q2 Report",
+                    nesting: 0,
+                    type: "report",
+                    where: "view.report",
+                },
+            }),
         );
     });
 });

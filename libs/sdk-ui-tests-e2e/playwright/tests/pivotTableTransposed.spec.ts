@@ -13,9 +13,8 @@ test.beforeEach(async ({ page }) => {
     await injectAuthHeader(page, API_TOKEN);
 });
 
-test.topLevelDescribe(
+test.describe(
     "Pivot table transposed",
-    "pivotTableTransposed",
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test.describe("Table Component", {}, () => {

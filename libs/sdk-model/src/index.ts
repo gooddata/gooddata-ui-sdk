@@ -1433,6 +1433,7 @@ export type {
     IGenAIActiveObject,
     IGenAIUIContext,
     IGenAIDashboardContext,
+    IGenAIReportContext,
     IGenAIWidgetDescriptor,
     GenAIUserContextFilter,
     IGenAIUserContextAttributeFilter,

@@ -24,6 +24,7 @@ import { CustomizationProvider } from "./CustomizationProvider.js";
 import type { IGenAIAssistantSlots } from "./customized/types.js";
 import { GenAIChatConversations } from "./GenAIChatConversations.js";
 import { GenAiStore, type GenAiStoreProps } from "./GenAiStore.js";
+import { useDataLoad } from "./hooks/useDataLoad.js";
 import { useThreadLoading } from "./hooks/useThreadLoading.js";
 
 /**
@@ -110,6 +111,8 @@ function GenAIConversationsContent(props: GenAIConversationsProps) {
     const dispatch = useDispatch();
     const settings = useSelector(settingsSelector);
     const { loading } = usePermissions();
+
+    useDataLoad();
 
     const classNames = cx("gd-gen-ai-chat__embed__conversations", className);
 

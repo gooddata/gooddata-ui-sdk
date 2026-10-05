@@ -8270,6 +8270,16 @@ export interface AiUserContextObjectReferenceGroup {
 // @public (undocumented)
 export type AiUserContextObjectReferenceTypeEnum = 'WIDGET' | 'METRIC' | 'ATTRIBUTE' | 'DASHBOARD' | 'FACT';
 
+// @public
+export interface AiUserContextReport {
+    // (undocumented)
+    'definition'?: object | null;
+    // (undocumented)
+    'id'?: string | null;
+    // (undocumented)
+    'title'?: string | null;
+}
+
 // @public (undocumented)
 export interface AiUserContextRichTextWidgetDescriptor {
     // (undocumented)
@@ -8303,6 +8313,8 @@ export interface AiUserContextSwitcherVisualization {
 export interface AiUserContextView {
     // (undocumented)
     'dashboard'?: AiUserContextDashboard | null;
+    // (undocumented)
+    'report'?: AiUserContextReport | null;
 }
 
 // @public (undocumented)

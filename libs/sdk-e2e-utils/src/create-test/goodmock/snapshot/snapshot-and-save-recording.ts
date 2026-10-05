@@ -14,6 +14,7 @@ import { assertNoLeakPatterns } from "./assert-no-leak-patterns.js";
 import { assertNoSecretLeaks } from "./assert-no-secret-leaks.js";
 import { replaceSecrets } from "./replace-secrets.js";
 import { sanitizeCredentials } from "./sanitize-credentials.js";
+import { DEFAULT_TEMPLATE_ORGANIZATION, sanitizeOrganization } from "./sanitize-organization.js";
 import { sanitizeWorkspaceIds } from "./sanitize-workspace-ids.js";
 import { snapshotParams } from "./snapshot-param.js";
 
@@ -23,6 +24,12 @@ import { snapshotParams } from "./snapshot-param.js";
 export interface ISnapshotAndSaveRecordingOptions {
     /** Source/target workspace ID rewrite(s) applied before mappings are saved. */
     workspaceIdMappings?: IWorkspaceIdMapping | IWorkspaceIdMapping[];
+    /**
+     * Template organization name. Every ephemeral organization name in the saved mappings
+     * (`ephemeral-{templateOrganization}-{hex}`) is replaced with this bare name so re-recording
+     * against a fresh ephemeral org does not churn the recordings. Defaults to "automation".
+     */
+    templateOrganization?: string;
     /**
      * Real backend URL (e.g. "https://example.gooddata.com"). When provided together with
      * baseUrl, all occurrences are replaced in the saved mappings so that recorded responses
@@ -70,8 +77,15 @@ export async function snapshotAndSaveRecording(
     mappingFilePath: string,
     options: ISnapshotAndSaveRecordingOptions = {},
 ): Promise<void> {
-    const { workspaceIdMappings, backendHost, baseUrl, secretMappings, leakPatterns, sanitizeMappings } =
-        options;
+    const {
+        workspaceIdMappings,
+        templateOrganization = DEFAULT_TEMPLATE_ORGANIZATION,
+        backendHost,
+        baseUrl,
+        secretMappings,
+        leakPatterns,
+        sanitizeMappings,
+    } = options;
     // Snapshot everything with scenarios enabled. goodmock only emits a scenario
     // chain when a given request produced *different* responses across the
     // recording; identical repeats collapse to a single mapping. This captures
@@ -106,7 +120,9 @@ export async function snapshotAndSaveRecording(
     // provider's API key echoed back on a settings entity).
     const sanitizedByCaller = sanitizeMappings ? sanitizeMappings(mappings) : mappings;
 
-    const sanitizedMappings = sanitizeWorkspaceIds(sanitizedByCaller, workspaceIdMappings);
+    const sanitizedWorkspaceIds = sanitizeWorkspaceIds(sanitizedByCaller, workspaceIdMappings);
+
+    const sanitizedMappings = sanitizeOrganization(sanitizedWorkspaceIds, templateOrganization);
 
     let output = JSON.stringify({ mappings: sanitizedMappings }, null, 4) + "\n";
     if (backendHost && baseUrl) {

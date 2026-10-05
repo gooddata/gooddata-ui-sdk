@@ -21,7 +21,7 @@ test.beforeEach(async ({ page }) => {
     await injectAuthHeader(page, API_TOKEN);
 });
 
-test.topLevelDescribe("Web component dashboard", "webComponentDashboardSdk", {}, () => {
+test.describe("Web component dashboard", {}, () => {
     test(
         "renders gd-dashboard-embed and emits gd-ready once",
         { tag: ["@pre-merge-integrated"] },

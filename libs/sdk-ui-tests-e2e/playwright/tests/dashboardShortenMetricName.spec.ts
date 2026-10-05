@@ -11,9 +11,8 @@ test.beforeEach(async ({ page }) => {
     await injectAuthHeader(page, API_TOKEN);
 });
 
-test.topLevelDescribe(
+test.describe(
     "Dashboard Shorten Metric Name",
-    "dashboardShortenMetricName",
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test(

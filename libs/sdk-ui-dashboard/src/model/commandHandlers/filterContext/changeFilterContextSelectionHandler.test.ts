@@ -15,6 +15,7 @@ import {
     idRef,
     isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
+    newRelativeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
 import { createDefaultFilterContext } from "../../../_staging/dashboard/defaultFilterContext.js";
@@ -35,7 +36,10 @@ import {
     selectFilterContextAttributeFilterItemByDisplayForm,
     selectFilterContextAttributeFilterItemByLocalId,
     selectFilterContextAttributeFilters,
+    selectFilterContextDateFilter,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
+import { unavailableObjectsActions } from "../../store/unavailableObjects/index.js";
 import { type PrivateDashboardContext } from "../../types/commonTypes.js";
 import { EmptyDashboardLayout } from "../dashboard/common/dashboardInitialize.js";
 
@@ -936,5 +940,107 @@ describe("change filter context selection handler", () => {
             );
             expect((second.attributeFilter.attributeElements as IAttributeElementsByRef).uris).toEqual([]);
         });
+    });
+
+    describe("restricted attribute filter", () => {
+        const RESTRICTED_LABEL = idRef("restricted_label", "displayForm");
+        const RESTRICTED_LOCAL_ID = "restricted_filter";
+        const RESTRICTED_TEXT_LABEL = idRef("restricted_text_label", "displayForm");
+        const RESTRICTED_TEXT_LOCAL_ID = "restricted_text_filter";
+
+        const restrictedFilter = (elements: string[]): IDashboardAttributeFilter => ({
+            attributeFilter: {
+                displayForm: RESTRICTED_LABEL,
+                attributeElements: { uris: elements },
+                negativeSelection: false,
+                localIdentifier: RESTRICTED_LOCAL_ID,
+            },
+        });
+
+        // Mirrors the state after a load with the label restricted: the filter is kept, its label is
+        // not resolved, and resolving it would fail.
+        let Tester: DashboardTester;
+        beforeEach(async () => {
+            await preloadedTesterFactory(
+                (tester) => {
+                    Tester = tester;
+                },
+                EmptyDashboardIdentifier,
+                {
+                    customizationFns: customizationFnsWithPreload,
+                },
+            );
+            Tester.dispatch(
+                unavailableObjectsActions.setUnavailableObjects([
+                    { ref: RESTRICTED_LABEL, type: "displayForm", reason: "forbidden" },
+                    { ref: RESTRICTED_TEXT_LABEL, type: "displayForm", reason: "forbidden" },
+                ]),
+            );
+            Tester.dispatch(
+                tabsActions.addAttributeFilter({
+                    displayForm: RESTRICTED_LABEL,
+                    index: 0,
+                    initialSelection: { uris: FIRST_ELEMENT },
+                    localIdentifier: RESTRICTED_LOCAL_ID,
+                }),
+            );
+            Tester.dispatch(
+                tabsActions.addTextAttributeFilter({
+                    filter: {
+                        arbitraryAttributeFilter: {
+                            displayForm: RESTRICTED_TEXT_LABEL,
+                            values: ["stored"],
+                            negativeSelection: false,
+                            localIdentifier: RESTRICTED_TEXT_LOCAL_ID,
+                        },
+                    },
+                    index: 1,
+                }),
+            );
+        });
+
+        const getRestrictedFilterElements = () =>
+            (
+                selectFilterContextAttributeFilterItemByLocalId(RESTRICTED_LOCAL_ID)(
+                    Tester.state(),
+                ) as IDashboardAttributeFilter
+            ).attributeFilter.attributeElements;
+
+        const getRestrictedTextFilterValues = () => {
+            const filter = selectFilterContextAttributeFilterItemByLocalId(RESTRICTED_TEXT_LOCAL_ID)(
+                Tester.state(),
+            );
+            return filter && isDashboardArbitraryAttributeFilter(filter)
+                ? filter.arbitraryAttributeFilter.values
+                : undefined;
+        };
+
+        it.each([
+            ["a payload entry for it", false],
+            ["resetOthers", true],
+        ])(
+            "should apply the other filters and keep the restricted selections with %s",
+            async (_, resetOthers) => {
+                await Tester.dispatchAndWaitFor(
+                    changeFilterContextSelectionByParams({
+                        filters: [
+                            ...(resetOthers ? [] : [restrictedFilter(FILTER_ELEMENTS)]),
+                            newRelativeDashboardDateFilter("GDC.time.date", -6, 0),
+                        ],
+                        resetOthers,
+                        matchByLocalIdentifier: true,
+                    }),
+                    "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+                );
+
+                expect(selectFilterContextDateFilter(Tester.state())?.dateFilter).toMatchObject({
+                    type: "relative",
+                    from: -6,
+                    to: 0,
+                });
+                expect(getRestrictedFilterElements()).toEqual({ uris: FIRST_ELEMENT });
+                expect(getRestrictedTextFilterValues()).toEqual(["stored"]);
+            },
+        );
     });
 });

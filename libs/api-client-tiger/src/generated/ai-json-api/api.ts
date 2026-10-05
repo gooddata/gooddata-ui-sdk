@@ -5198,6 +5198,15 @@ export interface AiUserContextObjectReferenceGroup {
     'objects': Array<AiUserContextObjectReference>;
 }
 
+/**
+ * The report open in the report editor, so refinements can target it without an id.
+ */
+export interface AiUserContextReport {
+    'definition'?: object | null;
+    'id'?: string | null;
+    'title'?: string | null;
+}
+
 export interface AiUserContextRichTextWidgetDescriptor {
     'content'?: string | null;
     'filters'?: Array<AiVisualizationFilter> | null;
@@ -5217,6 +5226,7 @@ export interface AiUserContextSwitcherVisualization {
 
 export interface AiUserContextView {
     'dashboard'?: AiUserContextDashboard | null;
+    'report'?: AiUserContextReport | null;
 }
 
 export interface AiUserContextVisualizationSwitcherWidgetDescriptor {

@@ -26,9 +26,8 @@ test.beforeEach(async ({ page }) => {
 const FIRST_WIDGET = widgetSelector(0, 0);
 const SECOND_WIDGET = widgetSelector(0, 1);
 
-test.topLevelDescribe(
+test.describe(
     "Cross filtering",
-    "crossFiltering",
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test(

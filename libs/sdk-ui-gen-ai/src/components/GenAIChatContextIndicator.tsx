@@ -56,9 +56,9 @@ type GenAIChatContextIndicatorOwnProps = {
 
 /**
  * Shows what ambient context the assistant is answering about — the open dashboard and its live
- * filters (e.g. "Answering about: Revenue Dashboard · Region: Europe · Q1 2026"). Renders nothing
- * when no ambient dashboard context is present. Re-renders whenever the host re-syncs the context,
- * so filter changes on the dashboard are reflected immediately.
+ * filters (e.g. "Answering about: Revenue Dashboard · Region: Europe · Q1 2026"), or the open
+ * report. Renders nothing when no ambient dashboard or report context is present. Re-renders whenever
+ * the host re-syncs the context, so filter changes on the dashboard are reflected immediately.
  *
  * @internal
  */
@@ -115,6 +115,9 @@ export function GenAIChatContextIndicator({ onUpdate }: GenAIChatContextIndicato
     }, [setSearch]);
 
     const isSelected = Boolean(selectedContext || references.length > 0);
+    const ambientToggleLabel = intl.formatMessage(
+        selectedContext?.activated ? msgs.stopUsingContext : msgs.startUsingContext,
+    );
     const announcement = useContextChangeAnnouncement(selectedContext, references);
 
     if (!isContextSetupEnabled || !isSelected) {
@@ -209,6 +212,23 @@ export function GenAIChatContextIndicator({ onUpdate }: GenAIChatContextIndicato
                                 }}
                             />
                         )}
+                    />
+                ) : selectedContext?.report ? (
+                    <UiChip
+                        isActionable
+                        isExpandable={false}
+                        {...getIconByObject(selectedContext.report)}
+                        label={selectedContext.report.title || emptyReferenceLabel}
+                        iconAction={selectedContext.activated ? "visible" : "invisible"}
+                        actionIconTooltip={ambientToggleLabel}
+                        tooltip={intl.formatMessage(msgs.context)}
+                        variant={selectedContext.activated ? "normal" : "inactive"}
+                        onClick={onAmbientToggleHandler()}
+                        onAction={onAmbientToggleHandler()}
+                        accessibilityConfig={{
+                            iconBeforeAriaLabel: getTypeLabel(selectedContext.report.type, intl),
+                            actionAriaLabel: ambientToggleLabel,
+                        }}
                     />
                 ) : null}
                 {references.length > 0

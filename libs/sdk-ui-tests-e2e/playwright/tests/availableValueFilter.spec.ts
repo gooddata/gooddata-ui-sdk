@@ -42,9 +42,8 @@ test.beforeEach(async ({ page }) => {
     await injectAuthHeader(page, API_TOKEN);
 });
 
-test.topLevelDescribe(
+test.describe(
     "Available value filter",
-    "availableValueFilter",
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test("should add metric filter by", { tag: ["@pre-merge-integrated"] }, async ({ page }) => {

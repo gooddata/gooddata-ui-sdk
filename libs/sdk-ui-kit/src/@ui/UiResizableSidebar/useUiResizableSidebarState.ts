@@ -58,7 +58,7 @@ export function useUiResizableSidebarState({
     isCollapsible,
 }: IUiResizableSidebarStateOptions): IUiResizableSidebarState {
     const viewportWidth = useWindowWidth(isResizable && minContentWidth !== undefined);
-    const [storedWidth, setPersistedWidth] = useLocalStorage<unknown>(widthStorageKey, minWidth);
+    const [storedWidth, setPersistedWidth] = useLocalStorage<unknown>(widthStorageKey, null);
     const [storedCollapsed, setPersistedCollapsed] = useLocalStorage<unknown>(collapsedStorageKey, false);
     // Anything may have written these keys, so only well-formed values are trusted.
     const persistedWidth =

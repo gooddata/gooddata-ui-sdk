@@ -25,6 +25,19 @@ export function addContextReference(context: StoreContext, reference?: IGenAICon
         };
     }
 
+    if (reference.where === "view.report") {
+        return {
+            ...context,
+            active: {
+                ...active,
+                view: {
+                    ...active?.view,
+                    report: context.ambient?.view?.report,
+                },
+            },
+        };
+    }
+
     if (reference.where === "referencedObjects") {
         const refContext = reference.context;
         const referencedObjects = (active?.referencedObjects ?? []).slice();

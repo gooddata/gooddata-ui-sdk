@@ -8,10 +8,15 @@ import {
     GenAiApi_PostMessages,
     GenAiApi_SwitchAgent,
 } from "@gooddata/api-client-tiger/endpoints/genAI";
+import { reportDefinitionToYaml } from "@gooddata/sdk-code-convertors";
 import {
     type IDashboardDefinition,
     type IFilterContext,
+    type IFilterContextDefinition,
+    type IGenAIUserContext,
+    type IReportDefinition,
     type ITempFilterContext,
+    type ReportSlot,
     idRef,
     newRelativeDashboardDateFilter,
 } from "@gooddata/sdk-model";
@@ -213,14 +218,29 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
         };
     };
 
+    const createFilterContextDefinition = (identifier = "definition"): IFilterContextDefinition => {
+        return {
+            title: "Filter context definition",
+            description: "Filter context description",
+            filters: [
+                newRelativeDashboardDateFilter(
+                    "GDC.time.month",
+                    -1,
+                    0,
+                    idRef(`${identifier}.dataset`, "dataSet"),
+                ),
+            ],
+        };
+    };
+
     const emptyLayout: IDashboardDefinition["layout"] = {
         type: "IDashboardLayout",
         sections: [{ type: "IDashboardLayoutSection", items: [] }],
     };
 
     const createDashboardDefinition = (
-        rootFilterContext: IFilterContext | undefined,
-        tabFilterContext: IFilterContext | ITempFilterContext | undefined,
+        rootFilterContext: IFilterContext | ITempFilterContext | IFilterContextDefinition | undefined,
+        tabFilterContext: IFilterContext | ITempFilterContext | IFilterContextDefinition | undefined,
         withTabs = true,
     ): IDashboardDefinition => {
         return {
@@ -244,7 +264,7 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
                       ],
                   }
                 : {}),
-        };
+        } as unknown as IDashboardDefinition;
     };
 
     it("should send richText widget content in the dashboard view context", async () => {
@@ -504,5 +524,233 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
         };
 
         expect(parsedDefinition.tabs?.[0]?.filters).toBeUndefined();
+    });
+
+    it("should include root filter context definition without ref in dashboard definition payload", async () => {
+        const rootFilterContext = createFilterContextDefinition("root-def");
+
+        const query = new ChatConversationThreadQuery(authCall, dateNormalizer, {
+            workspaceId: "workspace",
+            conversationId: "conversation",
+            userQuestion: "Summarize",
+            userContext: {
+                view: {
+                    dashboard: {
+                        ref: idRef("dashboard-1", "analyticalDashboard"),
+                        widgets: [],
+                        definition: createDashboardDefinition(rootFilterContext, undefined, false),
+                    },
+                },
+            },
+        });
+
+        query.stream([]);
+
+        const request = vi.mocked(GenAiApi_PostMessages).mock.calls[0][2];
+        const parsedDefinition = request.aiSendMessageRequest.userContext?.view?.dashboard?.definition as {
+            filters?: Record<string, unknown>;
+        };
+
+        expect(Object.keys(parsedDefinition.filters ?? {})).toHaveLength(1);
+        expect(Object.keys(parsedDefinition.filters ?? {})[0]).toContain("root-def.dataset_0_dateFilter");
+    });
+
+    it("should include tab filter context definition without ref in dashboard definition payload", async () => {
+        const rootFilterContext = createPersistedFilterContext("root-filter-context");
+        const tabFilterContext = createFilterContextDefinition("tab-def");
+
+        const query = new ChatConversationThreadQuery(authCall, dateNormalizer, {
+            workspaceId: "workspace",
+            conversationId: "conversation",
+            userQuestion: "Summarize",
+            userContext: {
+                view: {
+                    dashboard: {
+                        ref: idRef("dashboard-1", "analyticalDashboard"),
+                        widgets: [],
+                        definition: createDashboardDefinition(rootFilterContext, tabFilterContext),
+                    },
+                },
+            },
+        });
+
+        query.stream([]);
+
+        const request = vi.mocked(GenAiApi_PostMessages).mock.calls[0][2];
+        const parsedDefinition = request.aiSendMessageRequest.userContext?.view?.dashboard?.definition as {
+            tabs?: Array<{
+                filters?: Record<string, unknown>;
+            }>;
+        };
+
+        expect(Object.keys(parsedDefinition.tabs?.[0]?.filters ?? {})).toHaveLength(1);
+        expect(Object.keys(parsedDefinition.tabs?.[0]?.filters ?? {})[0]).toContain(
+            "tab-def.dataset_0_dateFilter",
+        );
+    });
+
+    it("should skip temporary root filter contexts in dashboard definition payload", async () => {
+        const rootFilterContext = createTempFilterContext("temp-root-filter-context");
+
+        const query = new ChatConversationThreadQuery(authCall, dateNormalizer, {
+            workspaceId: "workspace",
+            conversationId: "conversation",
+            userQuestion: "Summarize",
+            userContext: {
+                view: {
+                    dashboard: {
+                        ref: idRef("dashboard-1", "analyticalDashboard"),
+                        widgets: [],
+                        definition: createDashboardDefinition(rootFilterContext, undefined, false),
+                    },
+                },
+            },
+        });
+
+        query.stream([]);
+
+        const request = vi.mocked(GenAiApi_PostMessages).mock.calls[0][2];
+        const parsedDefinition = request.aiSendMessageRequest.userContext?.view?.dashboard?.definition as {
+            filters?: Record<string, unknown>;
+        };
+
+        expect(parsedDefinition.filters).toBeUndefined();
+    });
+
+    it("should not mutate original dashboard definition or its filter contexts", async () => {
+        const rootFilterContext = createFilterContextDefinition("root-def");
+        const tabFilterContext = createFilterContextDefinition("tab-def");
+        const definition = createDashboardDefinition(rootFilterContext, tabFilterContext);
+        const originalDefinitionSnapshot = JSON.parse(JSON.stringify(definition));
+
+        const query = new ChatConversationThreadQuery(authCall, dateNormalizer, {
+            workspaceId: "workspace",
+            conversationId: "conversation",
+            userQuestion: "Summarize",
+            userContext: {
+                view: {
+                    dashboard: {
+                        ref: idRef("dashboard-1", "analyticalDashboard"),
+                        widgets: [],
+                        definition,
+                    },
+                },
+            },
+        });
+
+        query.stream([]);
+
+        expect(definition).toEqual(originalDefinitionSnapshot);
+        expect((definition.filterContext as any)?.ref).toBeUndefined();
+        expect((definition.tabs?.[0].filterContext as any)?.ref).toBeUndefined();
+    });
+
+    describe("report view", () => {
+        const report: IReportDefinition = {
+            type: "report",
+            title: "Q1",
+            periodStart: "2026-01-01",
+            periodEnd: "2026-03-31",
+            content: {
+                version: "1",
+                pages: [
+                    {
+                        localIdentifier: "p1",
+                        layout: { type: "slotRef", slotId: "h" },
+                        slots: [
+                            {
+                                type: "heading",
+                                localIdentifier: "h",
+                                source: { type: "static", content: "Hi" },
+                            },
+                        ],
+                    },
+                ],
+            },
+        };
+
+        async function sentUserContext(userContext: IGenAIUserContext) {
+            const query = new ChatConversationThreadQuery(authCall, dateNormalizer, {
+                workspaceId: "workspace",
+                conversationId: "conversation",
+                userQuestion: "Summarize",
+                userContext,
+            });
+
+            query.stream([]);
+
+            return vi.mocked(GenAiApi_PostMessages).mock.calls[0][2].aiSendMessageRequest.userContext;
+        }
+
+        it("should send the report as its AaC document, identified by the report ref", async () => {
+            const userContext = await sentUserContext({
+                view: { report: { ref: idRef("q1", "report"), title: "Q1", definition: report } },
+            });
+
+            expect(userContext?.view?.report).toEqual({
+                id: "q1",
+                title: "Q1",
+                definition: reportDefinitionToYaml({ ...report, ref: idRef("q1", "report") }).json,
+            });
+            expect(userContext?.view?.report?.definition).toMatchObject({
+                id: "q1",
+                type: "report",
+                title: "Q1",
+                period: { start: "2026-01-01", end: "2026-03-31" },
+            });
+        });
+
+        it("should send the report without its definition when it cannot be written as code", async () => {
+            const unsupportedSlot = { type: "unknown", localIdentifier: "h" } as unknown as ReportSlot;
+            const [page] = report.content.pages;
+            const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+            try {
+                const userContext = await sentUserContext({
+                    view: {
+                        report: {
+                            ref: idRef("q1", "report"),
+                            definition: {
+                                ...report,
+                                content: {
+                                    ...report.content,
+                                    pages: [{ ...page, slots: [unsupportedSlot] }],
+                                },
+                            },
+                        },
+                    },
+                });
+
+                expect(userContext?.view?.report).toEqual({ id: "q1" });
+                expect(warn).toHaveBeenCalledTimes(1);
+            } finally {
+                warn.mockRestore();
+            }
+        });
+
+        it("should send only the id for a report without a definition", async () => {
+            const userContext = await sentUserContext({ view: { report: { ref: idRef("q1", "report") } } });
+
+            expect(userContext?.view).toEqual({ report: { id: "q1" } });
+        });
+
+        it("should send a dashboard and a report side by side", async () => {
+            const userContext = await sentUserContext({
+                view: {
+                    dashboard: { ref: idRef("dashboard-1", "analyticalDashboard"), widgets: [] },
+                    report: { ref: idRef("q1", "report") },
+                },
+            });
+
+            expect(userContext?.view).toEqual({
+                dashboard: { id: "dashboard-1", widgets: [] },
+                report: { id: "q1" },
+            });
+        });
+
+        it("should send no view when it holds neither a dashboard nor a report", async () => {
+            const userContext = await sentUserContext({ view: {} });
+
+            expect(userContext).not.toHaveProperty("view");
+        });
     });
 });

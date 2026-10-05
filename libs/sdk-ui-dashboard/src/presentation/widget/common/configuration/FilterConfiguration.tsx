@@ -28,9 +28,9 @@ import {
     selectAllCatalogMeasuresMap,
     selectCatalogIsLoaded,
 } from "../../../../model/store/catalog/catalogSelectors.js";
+import { selectExecutableDashboardFilters } from "../../../../model/store/filtering/dashboardFilterSelectors.js";
 import { selectInsightByRef } from "../../../../model/store/insights/insightsSelectors.js";
 import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
-import { selectFilterContextFilters } from "../../../../model/store/tabs/filterContext/filterContextSelectors.js";
 
 import { AttributeFilterConfigurationItem } from "./AttributeFilterConfigurationItem.js";
 import { DateFilterConfigurationItem } from "./DateFilterConfigurationItem.js";
@@ -43,7 +43,7 @@ interface IFilterConfigurationProps {
 }
 
 export function FilterConfiguration({ widget }: IFilterConfigurationProps) {
-    const allFilters = useDashboardSelector(selectFilterContextFilters);
+    const filters = useDashboardSelector(selectExecutableDashboardFilters);
     const getAttributeFilterDisplayFormFromMap = useAttributeFilterDisplayFormFromMap();
     const attrMap = useDashboardSelector(selectAllCatalogAttributesMap);
     const ddsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
@@ -52,13 +52,13 @@ export function FilterConfiguration({ widget }: IFilterConfigurationProps) {
     const displayAsLabelMap = useDashboardSelector(selectAttributeFilterConfigsDisplayAsLabelMap);
 
     const draggableFilters = useMemo(() => {
-        return allFilters.filter(
+        return filters.filter(
             (f) =>
                 isDashboardAttributeFilterItem(f) ||
                 isDashboardDateFilterWithDimension(f) ||
                 isDashboardMeasureValueFilter(f),
         );
-    }, [allFilters]);
+    }, [filters]);
 
     const attributeFilters = useMemo(() => {
         return draggableFilters.filter(isDashboardAttributeFilterItem);

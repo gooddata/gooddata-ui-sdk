@@ -817,4 +817,31 @@ describe("ConversationVisualisation", () => {
             columns: [columnAttribute],
         });
     });
+
+    it("shows the repeater as a table of its row attribute and measures", () => {
+        const rowAttribute = newAttribute("product");
+        const viewAttribute = newAttribute("closed_month");
+
+        renderVisualisation(
+            "local:repeater",
+            { isTable: true },
+            {
+                buckets: [
+                    newBucket("attribute", rowAttribute),
+                    newBucket(
+                        "columns",
+                        newAttribute("product", (a) => a.localId("product_cloned")),
+                        newMeasure("m1"),
+                    ),
+                    newBucket("view", viewAttribute),
+                ],
+            },
+        );
+
+        expect(lastProps.get("PivotTableNext")).toMatchObject({
+            measures: [newMeasure("m1")],
+            rows: [rowAttribute, viewAttribute],
+            columns: [],
+        });
+    });
 });

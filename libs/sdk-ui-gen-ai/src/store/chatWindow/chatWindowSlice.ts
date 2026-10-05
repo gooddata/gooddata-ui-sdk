@@ -177,6 +177,7 @@ const chatWindowSlice = createSlice({
         setOpenAction: (state, { payload: { isOpen } }: PayloadAction<{ isOpen: boolean }>) => {
             state.isOpen = isOpen;
         },
+        loadDataAction: (state) => state,
         setFullscreenAction: (
             state,
             { payload: { isFullscreen } }: PayloadAction<{ isFullscreen: boolean }>,
@@ -397,6 +398,7 @@ const chatWindowSlice = createSlice({
 
 export const chatWindowSliceReducer: Reducer<ChatWindowSliceState> = chatWindowSlice.reducer;
 export const {
+    loadDataAction,
     setOpenAction,
     setHistoryAction,
     setColorPaletteAction,

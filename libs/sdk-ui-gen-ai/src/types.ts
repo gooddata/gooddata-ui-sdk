@@ -28,6 +28,10 @@ export type SelectedContext = {
      */
     dashboard?: IGenAIContextObject;
     /**
+     * Report the user is viewing or editing.
+     */
+    report?: IGenAIContextObject;
+    /**
      * Visualization or widget selected by the user.
      */
     visualization?: IGenAIContextObject;
@@ -149,8 +153,8 @@ export interface IGenAIContextObject {
     ref: ObjRef;
     title: string;
     nesting: number;
-    type: GenAIObjectType | "widget";
-    where: "view.dashboard" | "referencedObjects";
+    type: GenAIObjectType | "widget" | "report";
+    where: "view.dashboard" | "view.report" | "referencedObjects";
     context?: IGenAIObjectReference;
     insightRef?: ObjRef;
     /**
@@ -196,8 +200,3 @@ export type ContextObjectListState = {
  * @internal
  */
 export type ContextObjectsState = Record<ContextObjectKind, ContextObjectListState>;
-
-/**
- * @internal
- */
-export type GenAIInitializeOnStart = ("catalogItems" | "agents")[];

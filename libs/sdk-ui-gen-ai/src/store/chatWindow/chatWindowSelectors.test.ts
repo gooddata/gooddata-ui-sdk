@@ -248,4 +248,29 @@ describe("hasPinnedContextSelector", () => {
 
         expect(hasPinnedContextSelector(state)).toBe(true);
     });
+
+    describe("with an open report", () => {
+        const reportContext = (identifier: string): IGenAIUserContext => ({
+            view: { report: { ref: idRef(identifier, "report"), title: identifier } },
+        });
+
+        it("should be false for the ambient report alone", () => {
+            const state = stateWith(
+                { enableAiContextSetup: true },
+                setAmbientUserContextAction({ userContext: reportContext("q1") }),
+            );
+
+            expect(hasPinnedContextSelector(state)).toBe(false);
+        });
+
+        it("should be true for a report other than the ambient one", () => {
+            const state = stateWith(
+                { enableAiContextSetup: true },
+                setAmbientUserContextAction({ userContext: reportContext("q1") }),
+                setUserContextAction({ userContext: reportContext("q2") }),
+            );
+
+            expect(hasPinnedContextSelector(state)).toBe(true);
+        });
+    });
 });

@@ -11,9 +11,8 @@ test.beforeEach(async ({ page }) => {
     await injectAuthHeader(page, API_TOKEN);
 });
 
-test.topLevelDescribe(
+test.describe(
     "Dashboard with Table Transpose",
-    "tableTranspose",
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test(

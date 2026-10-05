@@ -14,9 +14,8 @@ test.beforeEach(async ({ page }) => {
 const STAGE_NAME_FILTER_SELECTOR = ".s-attribute-filter.s-stage_name";
 const ORDER_DISPLAY_FORM_VALUE = ".gd-list-item.s-attribute-display-form-name-order";
 
-test.topLevelDescribe(
+test.describe(
     "Attribute filter",
-    "attributeFilterConfig",
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         //Cover ticket: RAIL-4671

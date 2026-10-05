@@ -260,6 +260,7 @@ export function ConversationVisualisation({
         if (isTable) {
             return renderTable(
                 intl.locale,
+                visualization,
                 bucketsData,
                 filters,
                 sorts,
@@ -465,6 +466,7 @@ export function ConversationVisualisation({
             case "local:table":
                 return renderTable(
                     intl.locale,
+                    visualization,
                     bucketsData,
                     filters,
                     sorts,
@@ -1468,6 +1470,7 @@ const renderChoroplethChart = (
 
 const renderTable = (
     locale: string,
+    visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>,
     buckets: ReturnType<typeof useBucketData>,
     filters: IFilter[],
     sortBy: ISortItem[],
@@ -1488,14 +1491,17 @@ const renderTable = (
     const { metrics, attribute, trend, view, stack, segment, columns, location, area, size, color } = buckets;
     const geoMeasures = [...size, ...color].filter(isMeasure);
     const geoAttributes = [...size, ...color].filter(isAttribute);
+    const isRepeater = visualization.insight.visualizationUrl === "local:repeater";
+    const repeaterMeasures = isRepeater ? columns.filter(isMeasure) : [];
+    const columnAttributes = isRepeater ? [] : columns.filter(isAttribute);
 
     return (
         <TableComponent
             locale={locale}
-            measures={[...metrics, ...geoMeasures]}
+            measures={[...metrics, ...repeaterMeasures, ...geoMeasures]}
             filters={filters}
             sortBy={sortBy}
-            columns={[...columns.filter(isAttribute), ...stack, ...segment].filter(Boolean)}
+            columns={[...columnAttributes, ...stack, ...segment].filter(Boolean)}
             rows={[...attribute, ...trend, ...view, ...location, ...area, ...geoAttributes].filter(Boolean)}
             config={
                 props.enableNewPivotTable
