@@ -187,6 +187,14 @@ describe("useContextItems", () => {
         ]);
     });
 
+    it("offers the workspace objects while a report that is not saved yet is open", () => {
+        const { result } = renderUserItems([dashboard("marketing", "Marketing")], {
+            ambient: { view: { report: { title: "Draft" } } },
+        });
+
+        expect(result.current.items.map((item) => item.title)).toEqual(["Marketing"]);
+    });
+
     it("does not offer the dashboard the user is viewing a second time", () => {
         const { result } = renderUserItems([
             dashboard("ambient-dashboard", "Revenue"),

@@ -290,6 +290,11 @@ export type IGenAIAssistantConversationVisualizationContentProps = {
          */
         copyLink?: boolean;
     };
+    /**
+     * Controls whether key driver analysis (explain on charts) is enabled.
+     * When undefined, defaults to whether KeyDriverAnalysis is mounted and the enableChangeAnalysis setting is active.
+     */
+    enableKeyDriverAnalysis?: boolean;
 };
 
 /**

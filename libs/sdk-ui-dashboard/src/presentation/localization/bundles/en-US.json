@@ -1411,14 +1411,6 @@
         "text": "Try applying one or more filters to your dashboard.",
         "crowdinContext": "Suggested action when visualization has too much data to render"
     },
-    "visualization.execute_protected_report.headline": {
-        "text": "You are not authorized to see this report",
-        "crowdinContext": "Error message headline when user lacks permission to view a report"
-    },
-    "visualization.execute_protected_report.text": {
-        "text": "Contact your administrator.",
-        "crowdinContext": "Suggested action when user lacks permission to view a report"
-    },
     "visualization.empty.headline": {
         "text": "No data for your filter selection",
         "crowdinContext": "Message shown when a visualization has no data to display due to the current filter settings"

@@ -7920,11 +7920,6 @@ export const metadata_v1: {
         lineStyleMapping: {
             title: string;
             type: string;
-            $semantic: {
-                type: string;
-                source: string;
-                mode: string;
-            };
             additionalProperties: {
                 type: string;
                 additionalProperties: boolean;

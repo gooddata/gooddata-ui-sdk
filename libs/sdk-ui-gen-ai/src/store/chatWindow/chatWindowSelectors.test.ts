@@ -11,8 +11,10 @@ import { type RootState } from "../types.js";
 import {
     agentSwitchingActiveSelector,
     allowInteractionIntelligenceSelector,
+    ambientContextSelector,
     hasPinnedContextSelector,
     interactionIntelligenceEnabledSelector,
+    isKeyDriverAnalysisMountedSelector,
     isPreviewSelector,
     userContextSelector,
 } from "./chatWindowSelectors.js";
@@ -47,6 +49,20 @@ describe("chatWindowSelectors", () => {
 
     it("should keep agent switching active outside of preview mode", () => {
         expect(agentSwitchingActiveSelector(makeState(false))).toBe(true);
+    });
+
+    it("should return whether KeyDriverAnalysis is mounted", () => {
+        const state = makeState();
+        expect(isKeyDriverAnalysisMountedSelector(state)).toBe(false);
+
+        const mountedState: RootState = {
+            ...state,
+            [chatWindowSliceName]: {
+                ...state[chatWindowSliceName],
+                isKeyDriverAnalysisMounted: true,
+            },
+        };
+        expect(isKeyDriverAnalysisMountedSelector(mountedState)).toBe(true);
     });
 });
 
@@ -103,6 +119,26 @@ describe("interactionIntelligenceEnabledSelector", () => {
 
         expect(allowInteractionIntelligenceSelector(state)).toBe(false);
         expect(interactionIntelligenceEnabledSelector(state)).toBe(false);
+    });
+});
+
+describe("ambientContextSelector", () => {
+    it("keeps the conversation draft the open report is shown from", () => {
+        const userContext: IGenAIUserContext = {
+            view: { report: { title: "Q1", draftRef: "report_1" } },
+        };
+        const state: RootState = {
+            messages: messagesSliceReducer(undefined, { type: "test/init" }),
+            [chatWindowSliceName]: chatWindowSliceReducer(
+                {
+                    ...getInitialChatWindowState(),
+                    settings: { enableAiContextSetup: true } as IUserWorkspaceSettings,
+                },
+                setAmbientUserContextAction({ userContext }),
+            ),
+        };
+
+        expect(ambientContextSelector(state)?.view?.report?.draftRef).toBe("report_1");
     });
 });
 
@@ -214,6 +250,27 @@ describe("hasPinnedContextSelector", () => {
         );
 
         expect(hasPinnedContextSelector(state)).toBe(false);
+    });
+
+    it("should be false for an open report that is not saved yet", () => {
+        const state = stateWith(
+            { enableAiContextSetup: true },
+            setAmbientUserContextAction({ userContext: { view: { report: { title: "Draft" } } } }),
+        );
+
+        expect(hasPinnedContextSelector(state)).toBe(false);
+    });
+
+    it("should be true for a report that is not saved yet while another report is open", () => {
+        const state = stateWith(
+            { enableAiContextSetup: false },
+            setAmbientUserContextAction({
+                userContext: { view: { report: { ref: idRef("q1", "report"), title: "Q1" } } },
+            }),
+            setUserContextAction({ userContext: { view: { report: { title: "Draft" } } } }),
+        );
+
+        expect(hasPinnedContextSelector(state)).toBe(true);
     });
 
     it("should be true for an object pinned from the ambient dashboard", () => {

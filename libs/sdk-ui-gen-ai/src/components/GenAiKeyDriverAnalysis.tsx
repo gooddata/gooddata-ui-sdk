@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,10 +17,16 @@ import {
 import {
     setKeyDriverAnalysisAction,
     setKeyDriverAnalysisMinimizedAction,
+    setKeyDriverAnalysisMountedAction,
 } from "../store/chatWindow/chatWindowSlice.js";
 import { returnFocusToKdaTrigger } from "../utils/kdaReturnFocus.js";
 
-export function KeyDriverAnalysis() {
+/**
+ * UI component that renders the Key Driver Analysis dialog when requested in the GenAI store.
+ *
+ * @public
+ */
+export function GenAiKeyDriverAnalysis() {
     const intl = useIntl();
     const parentOverlayController = useOverlayController();
 
@@ -34,6 +40,13 @@ export function KeyDriverAnalysis() {
     const excludeTags = tags?.excludeTags;
 
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(setKeyDriverAnalysisMountedAction({ isMounted: true }));
+        return () => {
+            dispatch(setKeyDriverAnalysisMountedAction({ isMounted: false }));
+        };
+    }, [dispatch]);
 
     const setKeyDriverAnalysis = useCallback(
         (...args: Parameters<typeof setKeyDriverAnalysisAction>) => {

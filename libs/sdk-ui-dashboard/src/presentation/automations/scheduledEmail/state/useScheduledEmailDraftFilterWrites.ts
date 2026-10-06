@@ -24,6 +24,8 @@ import {
     getVisibleFiltersByFiltersByTab,
 } from "../../shared/filters/index.js";
 
+import { widgetExportFilters } from "./exportDefinitions.js";
+
 /**
  * Props for {@link useScheduledEmailDraftFilterWrites}.
  * @internal
@@ -132,14 +134,14 @@ export function useScheduledEmailDraftFilterWrites({
                                     exportDefinition.requestPayload,
                                 )
                             ) {
-                                const format = exportDefinition.requestPayload.format;
-                                const shouldUseWidgetFiltersWithInsight = format === "CSV";
-                                const shouldUseWidgetFiltersWithoutInsight = format === "CSV_RAW";
-                                const appliedFilters = shouldUseWidgetFiltersWithInsight
-                                    ? appliedWidgetFiltersWithInsight
-                                    : shouldUseWidgetFiltersWithoutInsight
-                                      ? appliedWidgetFiltersWithoutInsight
-                                      : appliedDashboardFilters;
+                                const appliedFilters = widgetExportFilters(
+                                    exportDefinition.requestPayload.format,
+                                    {
+                                        dashboardFilters: appliedDashboardFilters,
+                                        widgetFilters: appliedWidgetFiltersWithoutInsight,
+                                        widgetFiltersWithInsight: appliedWidgetFiltersWithInsight,
+                                    },
+                                );
                                 return {
                                     ...exportDefinition,
                                     requestPayload: {

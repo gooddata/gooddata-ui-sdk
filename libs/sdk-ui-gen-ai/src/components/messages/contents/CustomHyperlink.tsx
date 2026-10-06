@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 
 import { settingsSelector } from "../../../store/chatWindow/chatWindowSelectors.js";
+import { getReportHref } from "../../../utils.js";
 import { type LinkHandlerEvent, useConfig } from "../../ConfigContext.js";
 import { removeMarkdown } from "../../utils/markdownUtils.js";
 
@@ -131,8 +132,7 @@ const getItemUrl = (
         case "metric":
             return `/workspace/${workspaceId}/metrics/metric/${id}`;
         case "report":
-            // Encoded like the Publisher app's own route builder, so an id with a slash stays one segment.
-            return `/workspace/${workspaceId}/publisher/report/${encodeURIComponent(id)}`;
+            return getReportHref(workspaceId, id);
         default:
             return null;
     }

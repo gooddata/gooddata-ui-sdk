@@ -15,5 +15,6 @@ export {
     type IGenAIChatDialogConnectedProps,
     type GenAIChatConnectedEvent,
 } from "./components/GenAIChatDialogConnected.js";
+export { type IReportSaved } from "./components/hooks/useReportSavedSync.js";
 export { clearThreadAction, newMessageAction, setSelectedAgentAction };
 export { GenAIStandaloneInput, type GenAIStandaloneInputProps } from "./components/GenAIStandaloneInput.js";

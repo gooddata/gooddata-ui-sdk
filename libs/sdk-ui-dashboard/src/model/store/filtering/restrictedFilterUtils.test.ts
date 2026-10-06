@@ -12,6 +12,7 @@ import { isDashboardFilterRestricted, isDashboardObjectRestricted } from "./rest
 const labelRef = idRef("label", "displayForm");
 const dataSetRef = idRef("dataset", "dataSet");
 const measureRef = idRef("measure", "measure");
+const computedAttributeRef = idRef("tier", "computedAttribute");
 
 const forbidden = (
     ref: IUnavailableDashboardReference["ref"],
@@ -20,6 +21,9 @@ const forbidden = (
 
 const asFilter = (filter: unknown) => filter as FilterContextItem;
 const attributeFilter = asFilter({ attributeFilter: { displayForm: labelRef, localIdentifier: "a" } });
+const computedAttributeFilter = asFilter({
+    attributeFilter: { displayForm: computedAttributeRef, localIdentifier: "ca" },
+});
 const dateFilter = asFilter({ dateFilter: { type: "relative", dataSet: dataSetRef, localIdentifier: "d" } });
 const measureValueFilter = asFilter({
     dashboardMeasureValueFilter: { measure: measureRef, localIdentifier: "m" },
@@ -51,6 +55,12 @@ describe("isDashboardFilterRestricted", () => {
         expect(isDashboardFilterRestricted(attributeFilter, forbidden(dataSetRef, "dataSet"))).toBe(false);
         expect(isDashboardFilterRestricted(dateFilter, forbidden(dataSetRef, "dataSet"))).toBe(true);
         expect(isDashboardFilterRestricted(measureValueFilter, forbidden(measureRef, "measure"))).toBe(true);
+        expect(
+            isDashboardFilterRestricted(
+                computedAttributeFilter,
+                forbidden(computedAttributeRef, "computedAttribute"),
+            ),
+        ).toBe(true);
     });
 
     it("treats the common date filter as unrestricted, it references no object", () => {

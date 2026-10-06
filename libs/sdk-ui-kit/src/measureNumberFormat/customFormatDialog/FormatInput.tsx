@@ -7,7 +7,7 @@ import { useIntl } from "react-intl";
 
 import { type ISeparators } from "@gooddata/sdk-ui";
 
-import { SyntaxHighlightingInput } from "../../syntaxHighlightingInput/SyntaxHighlightingInput.js";
+import { DefaultSyntaxHighlightingInput } from "../../syntaxHighlightingInput/SyntaxHighlightingInput.js";
 import { type IFormatTemplate } from "../typings.js";
 
 import { FormatTemplatesDropdown } from "./formatTemplatesDropdown/FormatTemplatesDropdown.js";
@@ -157,7 +157,7 @@ export const FormatInputWithIntl = memo(function FormatInputWithIntl(props: IFor
                     />
                 ) : null}
             </div>
-            <SyntaxHighlightingInput
+            <DefaultSyntaxHighlightingInput
                 value={format}
                 extensions={codeMirrorExtensions}
                 onChange={handleInputChange}

@@ -16,6 +16,7 @@ export {
 } from "./components/GenAIChat.js";
 export { GenAIConversations, type GenAIConversationsProps } from "./components/GenAiConversations.js";
 export { GenAiStore, type GenAiStoreProps } from "./components/GenAiStore.js";
+export { GenAiKeyDriverAnalysis } from "./components/GenAiKeyDriverAnalysis.js";
 export {
     makeUserItem,
     makeAssistantItem,

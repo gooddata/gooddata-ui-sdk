@@ -4042,7 +4042,7 @@ export interface ColorDefinition {
     [k: string]: unknown;
 }
 /**
- * Per-series line style and weight overrides. Keys are measure identifiers.
+ * Per-series line style and weight overrides. Keys are metric local identifiers, or attribute element URIs (on Tiger, the element's primary label value) when the chart is segmented or stacked by an attribute.
  */
 export interface LineStyleMapping {
     [k: string]: {

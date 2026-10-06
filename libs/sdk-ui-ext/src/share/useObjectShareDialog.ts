@@ -9,7 +9,9 @@ import type { GeneralAccessValue } from "@gooddata/sdk-ui-kit";
 
 import { objectShareMessages } from "./messages.js";
 import {
+    ALL_LEVELS,
     changesEffectiveLevel,
+    levelsAbove,
     levelsBelow,
     removalChangesEffectiveLevel,
 } from "./objectShareController.helpers.js";
@@ -102,7 +104,9 @@ export interface IObjectShareDialogViewModel {
      */
     isRowRemoveDisabled: (grantee: IObjectShareGrantee) => boolean;
     /** Tooltip explaining why Remove access is disabled on this row. */
-    rowRemoveDisabledTooltip: string;
+    rowRemoveDisabledTooltip: (grantee: IObjectShareGrantee) => string;
+    /** Whether this row's direct grant is above the caller's level, so nothing on it may change. */
+    isRowAboveCaller: (grantee: IObjectShareGrantee) => boolean;
     /** Whether this row's controls must stay disabled (see `granteeControlsLocked`). */
     isRowControlsLocked: (grantee: IObjectShareGrantee) => boolean;
 
@@ -209,10 +213,11 @@ export function useObjectShareDialog({
     }, [currentDraft, onDraftChange, onClose]);
 
     // A row belongs to the signed-in user's own sole grant when the controller has
-    // classified it as self-managed — those changes route through the confirm.
+    // classified it as self-managed — lowering it routes through the confirm, raising it
+    // (allowed when a group grants more) commits directly.
     const onRowPermissionChange = useCallback(
         (grantee: IObjectShareGrantee, level: ObjectSharePermissionLevel) => {
-            if (state.selfManagedGranteeId === grantee.id) {
+            if (state.selfManagedGranteeId === grantee.id && levelsBelow(grantee.level).includes(level)) {
                 // Stage the confirm only for a pick that would really move the level the
                 // user effectively holds. Comparing against the displayed level instead
                 // opened "Restrict your access?" for a pick under an inherited floor, which
@@ -260,8 +265,28 @@ export function useObjectShareDialog({
 
     const inheritedCoveredTooltip = intl.formatMessage(objectShareMessages.granteeLevelInheritedCovered);
 
+    // The server refuses changing or removing a grant above the caller's own level.
+    const isRowAboveCaller = useCallback(
+        (grantee: IObjectShareGrantee) =>
+            state.callerLevel !== undefined &&
+            grantee.directLevel !== undefined &&
+            levelsAbove(state.callerLevel).includes(grantee.directLevel),
+        [state.callerLevel],
+    );
+
+    const aboveCallerUserTooltip = intl.formatMessage(objectShareMessages.granteeAboveCallerUser);
+    const aboveCallerGroupTooltip = intl.formatMessage(objectShareMessages.granteeAboveCallerGroup);
+    const aboveCallerTooltip = useCallback(
+        (grantee: IObjectShareGrantee) =>
+            grantee.kind === "group" ? aboveCallerGroupTooltip : aboveCallerUserTooltip,
+        [aboveCallerUserTooltip, aboveCallerGroupTooltip],
+    );
+
     const rowDisabledLevels = useCallback(
         (grantee: IObjectShareGrantee) => {
+            if (isRowAboveCaller(grantee)) {
+                return [...ALL_LEVELS];
+            }
             const self =
                 state.selfManagedGranteeId === grantee.id ? (state.selfManagedDisabledLevels ?? []) : [];
             // Self caps levels ABOVE the row and coverage disables those BELOW, so those
@@ -275,11 +300,20 @@ export function useObjectShareDialog({
             ];
             return merged.length > 0 ? merged : undefined;
         },
-        [state.selfManagedGranteeId, state.selfManagedDisabledLevels, state.grantableDisabledLevels],
+        [
+            isRowAboveCaller,
+            state.selfManagedGranteeId,
+            state.selfManagedDisabledLevels,
+            state.grantableDisabledLevels,
+        ],
     );
 
     const rowDisabledLevelTooltips = useCallback(
         (grantee: IObjectShareGrantee) => {
+            if (isRowAboveCaller(grantee)) {
+                const tooltip = aboveCallerTooltip(grantee);
+                return Object.fromEntries(ALL_LEVELS.map((level) => [level, tooltip]));
+            }
             const covered = inheritedCoveredLevels(grantee);
             if (covered.length === 0) {
                 return undefined;
@@ -290,13 +324,22 @@ export function useObjectShareDialog({
             }
             return map;
         },
-        [inheritedCoveredTooltip],
+        [isRowAboveCaller, aboveCallerTooltip, inheritedCoveredTooltip],
     );
 
     const isRowRemoveDisabled = useCallback(
-        (grantee: IObjectShareGrantee) => grantee.directLevel === undefined,
-        [],
+        (grantee: IObjectShareGrantee) => grantee.directLevel === undefined || isRowAboveCaller(grantee),
+        [isRowAboveCaller],
     );
+
+    const removeInheritedTooltip = intl.formatMessage(objectShareMessages.granteeRemoveInherited);
+    const rowRemoveDisabledTooltip = useCallback(
+        (grantee: IObjectShareGrantee) =>
+            isRowAboveCaller(grantee) ? aboveCallerTooltip(grantee) : removeInheritedTooltip,
+        [isRowAboveCaller, aboveCallerTooltip, removeInheritedTooltip],
+    );
+
+    const grantLimitTooltip = intl.formatMessage(objectShareMessages.toastEscalationRefused);
 
     // Only USER rows can be the caller's own, so a group row stays usable while the
     // profile is unresolved.
@@ -319,12 +362,13 @@ export function useObjectShareDialog({
         isLoading,
         workspaceDisabledLevels: state.workspaceDisabledLevels,
         grantableDisabledLevels: state.grantableDisabledLevels,
-        grantLimitTooltip: intl.formatMessage(objectShareMessages.toastEscalationRefused),
+        grantLimitTooltip,
         rowDisabledLevels,
         rowDisabledLevelTooltips,
         isRowRemoveDisabled,
         isRowControlsLocked,
-        rowRemoveDisabledTooltip: intl.formatMessage(objectShareMessages.granteeRemoveInherited),
+        rowRemoveDisabledTooltip,
+        isRowAboveCaller,
         onClose: closeDialog,
         onRowPermissionChange,
         onRowRemove,

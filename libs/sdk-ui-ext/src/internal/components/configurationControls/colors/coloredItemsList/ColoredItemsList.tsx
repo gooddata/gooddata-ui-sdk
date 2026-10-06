@@ -7,7 +7,7 @@ import { type IChartFillConfig, type LineStyle } from "@gooddata/sdk-ui-charts";
 import { DropdownList, GOODSTRAP_SCROLLED_EVENT } from "@gooddata/sdk-ui-kit";
 
 import { type IColoredItem } from "../../../../interfaces/Colors.js";
-import { getSearchedItems } from "../../../../utils/colors.js";
+import { getLineStyleMappingId, getSearchedItems } from "../../../../utils/colors.js";
 
 import { ColoredItem } from "./ColoredItem.js";
 import { LineStyleColoredItem } from "./LineStyleColoredItem.js";
@@ -33,11 +33,13 @@ export interface IColoredItemsListProps {
 }
 
 function isLineStyleItem(item: IColoredItem, lineStyleMeasureLocalIds: string[] | undefined) {
-    return (
-        isMeasureDescriptor(item.mappingHeader) &&
-        (lineStyleMeasureLocalIds === undefined ||
-            lineStyleMeasureLocalIds.includes(item.mappingHeader.measureHeaderItem.localIdentifier))
-    );
+    if (isMeasureDescriptor(item.mappingHeader)) {
+        return (
+            lineStyleMeasureLocalIds === undefined ||
+            lineStyleMeasureLocalIds.includes(item.mappingHeader.measureHeaderItem.localIdentifier)
+        );
+    }
+    return getLineStyleMappingId(item.mappingHeader) !== undefined;
 }
 
 function isChartFillIgnoredMeasure(item: IColoredItem, chartFillIgnoredMeasures: string[]) {

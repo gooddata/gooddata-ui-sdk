@@ -10,6 +10,7 @@ import {
     LimitReached,
     NotAuthenticated,
     PermissionEscalationRefused,
+    ProtectedDataError,
     UnexpectedError,
     UnexpectedResponseError,
     isAnalyticalBackendError,
@@ -34,6 +35,11 @@ export function convertApiError(error: Error): AnalyticalBackendError {
     const contractExpired = createContractExpiredError(error);
     if (contractExpired) {
         return contractExpired;
+    }
+
+    const protectedData = createProtectedDataError(error);
+    if (protectedData) {
+        return protectedData;
     }
 
     const dataTooLarge = createDataTooLargeError(error);
@@ -138,6 +144,21 @@ function createContractExpiredError(error: Error): ContractExpired | undefined {
     }
 
     return new ContractExpired(axiosErrorResponse.data.tier || "unspecified", error);
+}
+
+// Tiger refuses a computation over data the caller may not read (object-level permissions) with a
+// 403 that carries no reason code, so the detail is the only way to tell it from other 403s.
+function createProtectedDataError(error: Error): ProtectedDataError | undefined {
+    const axiosErrorResponse = (error as AxiosError<any>).response;
+
+    if (
+        axiosErrorResponse?.status !== 403 ||
+        !axiosErrorResponse.data?.detail?.includes("data referenced by the request is restricted")
+    ) {
+        return;
+    }
+
+    return new ProtectedDataError("The computation references data the caller may not read.", error);
 }
 
 function createDataTooLargeError(error: Error): DataTooLargeError | undefined {

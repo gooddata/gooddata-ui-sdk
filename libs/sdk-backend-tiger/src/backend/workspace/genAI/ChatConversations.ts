@@ -18,6 +18,7 @@ import {
     GenAiApi_GetConversationResponses,
     GenAiApi_GetConversations,
     GenAiApi_PatchConversation,
+    GenAiApi_PatchReport,
     GenAiApi_PatchVisualization,
     GenAiApi_PostConversationFeedback,
     GenAiApi_PostConversations,
@@ -326,6 +327,25 @@ export class ConversationThread implements IChatConversationThread {
     }
 
     /**
+     * Records the saved report that a report drafted in the conversation became.
+     */
+    async resaveReport(reportRef: string, savedReportId: string): Promise<void> {
+        const conversationId = this.conversationId;
+        if (!conversationId) {
+            throw new Error("Conversation ID is not set");
+        }
+
+        await this.authCall((client) => {
+            return GenAiApi_PatchReport(client.axios, client.basePath, {
+                workspaceId: this.workspaceId,
+                conversationId,
+                reportRef,
+                aiReportIdUpdateRequest: { id: savedReportId },
+            });
+        });
+    }
+
+    /**
      * Queries the conversation thread.
      */
     query(userMessage: string): IChatConversationThreadQuery {
@@ -609,10 +629,11 @@ function convertUserContext(userContext: IGenAIUserContext | undefined): AiSendM
     } as AiSendMessageRequest["userContext"];
 }
 
-function convertReportView({ ref, title, definition }: IGenAIReportContext): AiUserContextReport {
+function convertReportView({ ref, title, definition, draftRef }: IGenAIReportContext): AiUserContextReport {
     return {
-        id: objRefToString(ref),
+        id: ref ? objRefToString(ref) : null,
         ...(title ? { title } : {}),
+        ...(draftRef ? { draftRef } : {}),
         ...(definition ? convertReportDefinition({ ...definition, ref }) : {}),
     };
 }

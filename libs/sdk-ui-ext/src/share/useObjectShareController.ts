@@ -78,6 +78,7 @@ export function useObjectShareController(
         hasList,
         grantees,
         isWorkspaceManager,
+        callerLevel,
         selfIdentityResolved,
         generalAccess,
         workspaceLevel,
@@ -796,16 +797,16 @@ export function useObjectShareController(
         const ownRow = grantees.find((g) => g.isSelf);
         const selfRow = isWorkspaceManager ? undefined : ownRow;
         const selfManagedGranteeId = selfRow?.id;
-        // The caller cannot grant above what they hold, and the server refuses such a
-        // write. Proven from their own row only: with no row their access may come from
-        // a group, which the list does not report, so capping would block a real holder.
-        // A manager has no limit, and an UNKNOWN manager status must not produce one
-        // either: unlike the confirm, a limit that guesses wrong blocks a legitimate
-        // grant, and a failed permission read would make that permanent.
-        // `=== false`, not `!isWorkspaceManager`: an unread permission must not produce a
-        // limit, or a failed read would block a caller the backend would allow.
+        // The caller cannot grant above what they hold, and the server refuses such a write.
+        // The backend's own answer covers groups, parent workspaces and workspace permissions.
+        // Without it, only the caller's own row proves a level, and only for a known
+        // non-manager: a limit that guesses wrong would block a grant the backend allows.
         const grantableDisabledLevels =
-            isWorkspaceManager === false && selfRow ? levelsAbove(selfRow.level) : undefined;
+            callerLevel === undefined
+                ? isWorkspaceManager === false && selfRow
+                    ? levelsAbove(selfRow.level)
+                    : undefined
+                : levelsAbove(callerLevel);
         const granteeControlsLocked =
             !selfIdentityResolved && !isWorkspaceManager && grantees.some((g) => g.kind === "user");
         // Policy in `IObjectShareControllerState.showAdminAccessNote`: role-based access is
@@ -821,12 +822,13 @@ export function useObjectShareController(
             selfManagedGranteeId,
             // Policy, not just classification: the caller's own row can't be raised
             // above itself, an inherited workspace level can't be undercut.
-            selfManagedDisabledLevels: selfRow ? levelsAbove(selfRow.level) : undefined,
+            selfManagedDisabledLevels: selfRow ? levelsAbove(callerLevel ?? selfRow.level) : undefined,
             workspaceDisabledLevels: mergeDisabledLevels(
                 workspaceInheritedLevel ? levelsBelow(workspaceInheritedLevel) : undefined,
                 grantableDisabledLevels,
             ),
             grantableDisabledLevels,
+            callerLevel,
             granteeControlsLocked,
             showAdminAccessNote,
             ...effectiveWorkspace,
@@ -848,6 +850,7 @@ export function useObjectShareController(
         summary,
         selfIdentityResolved,
         isWorkspaceManager,
+        callerLevel,
         draft,
         grantees,
         sortedGrantees,

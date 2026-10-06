@@ -5,7 +5,7 @@ import { cloneDeep, compact, isEmpty, update } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, select } from "redux-saga/effects";
 
-import { walkLayout } from "@gooddata/sdk-backend-spi";
+import { type IUnavailableDashboardReference, walkLayout } from "@gooddata/sdk-backend-spi";
 import {
     type FilterContextItem,
     type IAttributeDisplayFormMetadataObject,
@@ -94,6 +94,7 @@ function* processExistingTabFilterContext(
     originalFilterContextDefinition: IFilterContextDefinition | undefined,
     displayForms: ObjRefMap<IAttributeDisplayFormMetadataObject> | undefined,
     dashboard: IDashboard,
+    unavailableObjectsOverride?: ReadonlyArray<IUnavailableDashboardReference>,
 ): SagaIterator<[FilterContextState, ValidationResult[] | undefined]> {
     // Sanitize the tab's filter context
     const sanitizedFilterContext: IFilterContext | ITempFilterContext = yield call(
@@ -102,6 +103,7 @@ function* processExistingTabFilterContext(
         tab.filterContext,
         dataSets,
         displayForms,
+        unavailableObjectsOverride,
     );
 
     // Build a temporary dashboard object for this tab to use existing helper functions
@@ -151,8 +153,9 @@ function* processExistingTabFilterContext(
 
     // Get display as labels for display form resolution
     const displayAsLabels = getDisplayAsLabels(tab.attributeFilterConfigs);
-    const unavailableObjects: ReturnType<typeof selectUnavailableObjects> =
+    const storeUnavailableObjects: ReturnType<typeof selectUnavailableObjects> =
         yield select(selectUnavailableObjects);
+    const unavailableObjects = unavailableObjectsOverride ?? storeUnavailableObjects;
 
     // Resolve display forms for filters
     const attributeFilterDisplayForms: IAttributeDisplayFormMetadataObject[] = yield call(
@@ -474,7 +477,7 @@ const keepOnlyFiltersWithValidRef = (
     filter: FilterContextItem,
     availableDfRefs: ObjRef[],
     validDataSetIds: string[],
-    unavailableObjects: ReturnType<typeof selectUnavailableObjects>,
+    unavailableObjects: ReadonlyArray<IUnavailableDashboardReference>,
 ) => {
     if (isDashboardFilterRestricted(filter, unavailableObjects)) {
         return true;
@@ -506,6 +509,7 @@ function* sanitizeFilterContext(
     filterContext: IDashboard["filterContext"],
     dataSets: IDataSetMetadataObject[] = [],
     displayForms?: ObjRefMap<IAttributeDisplayFormMetadataObject>,
+    unavailableObjectsOverride?: ReadonlyArray<IUnavailableDashboardReference>,
 ): SagaIterator<IDashboard["filterContext"]> {
     // we don't need sanitize filter references, if backend guarantees consistent references
     if (!ctx.backend.capabilities.allowsInconsistentRelations) {
@@ -516,8 +520,9 @@ function* sanitizeFilterContext(
         return filterContext;
     }
 
-    const unavailableObjects: ReturnType<typeof selectUnavailableObjects> =
+    const storeUnavailableObjects: ReturnType<typeof selectUnavailableObjects> =
         yield select(selectUnavailableObjects);
+    const unavailableObjects = unavailableObjectsOverride ?? storeUnavailableObjects;
 
     const usedFilterDisplayForms = filterContext.filters
         .filter(isDashboardAttributeFilter)
@@ -564,7 +569,9 @@ function* sanitizeFilterContext(
     const missingDataSets = additionalDateFilters
         .filter(isIdentifierRef)
         .filter((filter) => !dataSets.find((dataSet) => dataSet.id === filter.identifier));
-    const loadedMissing = yield call(loadDataSets, ctx, missingDataSets);
+    const loadedMissing: IDataSetMetadataObject[] = missingDataSets.length
+        ? yield call(loadDataSets, ctx, missingDataSets)
+        : [];
 
     const resolvedDataSetsIds = [...dataSets, ...loadedMissing].map((dataSet) => dataSet.id);
     const updatedFilterContext = cloneDeep(filterContext);
@@ -643,6 +650,7 @@ export function* actionsToInitializeExistingDashboard(
     persistedDashboard?: IDashboard,
     activeTabLocalIdentifier?: string,
     workspaceParameters: IParameterMetadataObject[] = [],
+    unavailableObjectsOverride?: ReadonlyArray<IUnavailableDashboardReference>,
 ): SagaIterator<Array<PayloadAction<any>>> {
     const effectiveActiveTabId =
         activeTabLocalIdentifier ?? dashboard.tabs?.[0]?.localIdentifier ?? DEFAULT_TAB_ID;
@@ -717,6 +725,7 @@ export function* actionsToInitializeExistingDashboard(
                 originalFilterContextDefinition?.[tab.localIdentifier],
                 displayForms,
                 dashboard,
+                unavailableObjectsOverride,
             );
             validationResults.push(...(tabValidationResults ?? []));
 
@@ -795,6 +804,7 @@ export function* actionsToInitializeExistingDashboard(
             originalFilterContextDefinition?.[tabIdentifier],
             displayForms,
             dashboard,
+            unavailableObjectsOverride,
         );
         validationResults.push(...(tabValidationResults ?? []));
 
@@ -844,6 +854,7 @@ export function* actionsToInitializeExistingDashboard(
         tabsAction,
         metaActions.setMeta({
             dashboard: persistedDashboard ?? dashboard,
+            descriptor: dashboard,
             initialContent: false,
         }),
         insightsActions.setInsights(insights),

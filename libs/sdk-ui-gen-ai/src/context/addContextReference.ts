@@ -39,6 +39,9 @@ export function addContextReference(context: StoreContext, reference?: IGenAICon
     }
 
     if (reference.where === "referencedObjects") {
+        if (!reference.ref) {
+            return context;
+        }
         const refContext = reference.context;
         const referencedObjects = (active?.referencedObjects ?? []).slice();
 

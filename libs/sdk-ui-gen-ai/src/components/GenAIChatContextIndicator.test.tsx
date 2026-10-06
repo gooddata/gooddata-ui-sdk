@@ -168,6 +168,28 @@ describe("GenAIChatContextIndicator", () => {
         expect(dispatch).toHaveBeenCalledWith(selectedContextReferencesAction({ activated: false, report }));
     });
 
+    it("shows a report that is not saved yet as a chip", () => {
+        const report: IGenAIContextObject = {
+            id: "unsaved",
+            title: "Draft report",
+            nesting: 0,
+            type: "report",
+            where: "view.report",
+        };
+        state = makeState({ view: { report: { title: report.title } } }, { activated: true, report });
+
+        render(
+            <IntlProvider locale="en" messages={messages}>
+                <GenAIChatContextIndicator />
+            </IntlProvider>,
+        );
+
+        expect(screen.getByRole("img", { name: "Report" })).toBeInTheDocument();
+        fireEvent.click(screen.getByText("Draft report"));
+
+        expect(dispatch).toHaveBeenCalledWith(selectedContextReferencesAction({ activated: false, report }));
+    });
+
     it("names the report chip's toggle after what it does", () => {
         const report: IGenAIContextObject = {
             id: "q1",

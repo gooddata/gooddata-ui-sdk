@@ -7,7 +7,7 @@ import { type IDashboardDateFilterConfig, type IDateFilterConfig } from "@goodda
 
 import { mergeDateFilterConfigs } from "../../../../_staging/dateFilterConfig/merge.js";
 import { validateDateFilterConfig } from "../../../../_staging/dateFilterConfig/validation.js";
-import { type InitializeDashboard } from "../../../commands/dashboard.js";
+import { type IChangeDashboardDefinition, type InitializeDashboard } from "../../../commands/dashboard.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
 
 import { onDateFilterConfigValidationError } from "./onDateFilterConfigValidationError.js";
@@ -19,7 +19,7 @@ export interface IDateFilterMergeResult {
 
 export function* mergeDateFilterConfigWithOverrides(
     ctx: DashboardContext,
-    cmd: InitializeDashboard,
+    cmd: InitializeDashboard | IChangeDashboardDefinition,
     config: IDateFilterConfig,
     dashboardOverrides?: IDashboardDateFilterConfig,
 ): SagaIterator<IDateFilterMergeResult> {

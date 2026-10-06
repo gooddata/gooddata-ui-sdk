@@ -23,7 +23,7 @@ import { yamlPositionAt } from "../../syntaxHighlightingInput/yamlPosition.js";
 import { bem } from "../@utils/bem.js";
 
 import { useLanguageGrammar } from "./configEditorGrammars.js";
-import { themedHighlighting } from "./configEditorHighlighting.js";
+import { themedHighlightStyle } from "./configEditorHighlighting.js";
 import { type ConfigEditorLanguage, beautify, convertText, isProjectable } from "./configEditorLanguage.js";
 import { ConfigEditorToolbar } from "./ConfigEditorToolbar.js";
 import { type IUiConfigEditorProps } from "./types.js";
@@ -263,7 +263,6 @@ export function UiConfigEditor({
     const extensions = useMemo(
         () => [
             grammarCompartmentRef.current.of(grammar ?? []),
-            themedHighlighting,
             lineNumbers(),
             lintGutter(),
             ...(syntaxErrorMessage ? [createSyntaxErrorLinter(syntaxErrorMessage)] : []),
@@ -308,6 +307,8 @@ export function UiConfigEditor({
             <div className={e("editor")}>
                 <SyntaxHighlightingInput
                     key={editorEpoch}
+                    className={e("input")}
+                    highlightStyle={themedHighlightStyle}
                     value={draft}
                     onChange={handleDraftChange}
                     // An external replace means a new document here (an applied example, a dialog

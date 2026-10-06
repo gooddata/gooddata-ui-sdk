@@ -15,6 +15,7 @@ import {
     setAmbientUserContextAction,
     setCatalogItemsActions,
     setInputValueAction,
+    setKeyDriverAnalysisMountedAction,
     setOpenAction,
     setUserContextAction,
 } from "./chatWindowSlice.js";
@@ -248,5 +249,24 @@ describe("loadDataAction", () => {
         const state = chatWindowSliceReducer(initial, loadDataAction());
 
         expect(state).toEqual(initial);
+    });
+});
+
+describe("setKeyDriverAnalysisMountedAction", () => {
+    it("should update isKeyDriverAnalysisMounted state", () => {
+        const initial = getInitialChatWindowState();
+        expect(initial.isKeyDriverAnalysisMounted).toBe(false);
+
+        const mountedState = chatWindowSliceReducer(
+            initial,
+            setKeyDriverAnalysisMountedAction({ isMounted: true }),
+        );
+        expect(mountedState.isKeyDriverAnalysisMounted).toBe(true);
+
+        const unmountedState = chatWindowSliceReducer(
+            mountedState,
+            setKeyDriverAnalysisMountedAction({ isMounted: false }),
+        );
+        expect(unmountedState.isKeyDriverAnalysisMounted).toBe(false);
     });
 });

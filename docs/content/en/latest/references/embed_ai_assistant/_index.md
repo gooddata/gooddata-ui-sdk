@@ -26,6 +26,7 @@ If you are using GoodData.CN, some additional configuration may be required. For
 - Customization of the initial assistant experience (welcome content and suggested questions).
 - Dedicated conversations list component for split-layout integrations.
 - Shared `GenAiStore` wrapper for synchronizing `GenAIAssistant` and `GenAIConversations` in one Redux store.
+- Key Driver Analysis dialog component for explaining changes and exploring data drivers on charts.
 
 ## Basic integration example
 
@@ -404,6 +405,41 @@ Example usage:
     ]}
 />
 ```
+
+## Key Driver Analysis component
+
+`GenAiKeyDriverAnalysis` is a modal dialog component that allows users to perform Key Driver Analysis ("Explain" on charts) directly from visualizations generated in the AI Assistant.
+
+When a user interacts with an insight in the assistant chat (for example, clicking on a data point to explain the change), a request is dispatched to the store. If `GenAiKeyDriverAnalysis` is mounted under the shared `GenAiStore`, it detects this request and displays the analysis dialog.
+
+### Basic integration example
+
+To enable Key Driver Analysis, mount the `GenAiKeyDriverAnalysis` component alongside `GenAIAssistant` inside a shared `GenAiStore`:
+
+```tsx
+import { GenAiStore, GenAIAssistant, GenAiKeyDriverAnalysis } from "@gooddata/sdk-ui-gen-ai";
+
+import "@gooddata/sdk-ui-gen-ai/styles/css/main.css";
+
+const App = () => {
+    return (
+        <GenAiStore>
+            <div style={{ width: 500, height: 600, display: "flex" }}>
+                <GenAIAssistant />
+            </div>
+            {/* Mount the Key Driver Analysis dialog in the same store */}
+            <GenAiKeyDriverAnalysis />
+        </GenAiStore>
+    );
+};
+```
+
+### Enabling and disabling Key Driver Analysis
+
+Key Driver Analysis availability on charts is governed by two factors:
+
+1. **Mount status:** The `GenAiKeyDriverAnalysis` component must be mounted under the active `GenAiStore`. If not mounted, explain actions on charts are automatically disabled.
+2. **Customization slot override:** You can explicitly enable or disable Key Driver Analysis for visualizations using the `enableKeyDriverAnalysis` prop on the `slots.ConversationVisualizationContent` customization slot.
 
 ### Integration with Dashboard
 
@@ -953,14 +989,15 @@ Each content slot receives props specific to the content type:
 
 **ConversationVisualizationContent**
 
-| Prop name       | Type                                                              | Description                                              |
-| --------------- | ----------------------------------------------------------------- | -------------------------------------------------------- |
-| `message`       | `IChatConversationItem`                                           | The original message containing the visualization part.  |
-| `part`          | `IChatConversationMultipartLocalPart`                             | The multipart part with visualization metadata.          |
-| `scenario`      | `IWhatIfRenderableScenario`                                       | What-if scenario context used when rendering comparison. |
-| `visualization` | `IChatConversationVisualisationContent["visualization"]`          | The visualization payload to render.                     |
-| `className`     | `string`                                                          | Additional CSS class name for custom styling.            |
-| `menuItems`     | `{ save?: boolean; openInAnalyze?: boolean; copyLink?: boolean }` | Controls visibility of visualization menu actions.       |
+| Prop name                 | Type                                                              | Description                                                                                                                                            |
+| ------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `message`                 | `IChatConversationItem`                                           | The original message containing the visualization part.                                                                                                |
+| `part`                    | `IChatConversationMultipartLocalPart`                             | The multipart part with visualization metadata.                                                                                                        |
+| `scenario`                | `IWhatIfRenderableScenario`                                       | What-if scenario context used when rendering comparison.                                                                                               |
+| `visualization`           | `IChatConversationVisualisationContent["visualization"]`          | The visualization payload to render.                                                                                                                   |
+| `className`               | `string`                                                          | Additional CSS class name for custom styling.                                                                                                          |
+| `menuItems`               | `{ save?: boolean; openInAnalyze?: boolean; copyLink?: boolean }` | Controls visibility of visualization menu actions.                                                                                                     |
+| `enableKeyDriverAnalysis` | `boolean`                                                         | (Optional) Controls whether key driver analysis (explain on charts) is enabled. When omitted, defaults to whether `GenAiKeyDriverAnalysis` is mounted. |
 
 Use `menuItems` to disable specific menu actions:
 
@@ -1026,6 +1063,8 @@ const CustomVisualizationContent = ({
             ...defaultProps.menuItems,
             copyLink: false,
         }}
+        // Optionally override key driver analysis availability on charts:
+        enableKeyDriverAnalysis={false}
     />
 );
 

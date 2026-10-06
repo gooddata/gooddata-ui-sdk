@@ -65,13 +65,9 @@
         min-height: 0;
     }
 
-    /**
-     * The shared syntax-highlighting input renders its own wrapper between this element and
-     * `.cm-editor`, and that wrapper is a plain block. Without making it part of the flex column the
-     * `flex` on `.cm-editor` below is inert, so a long document grows the editor without bound and
-     * the surrounding dialog scrolls instead of the editor scrolling inside itself.
-     */
-    &__editor > * {
+    // The input's wrapper sits between `__editor` and `.cm-editor`. It joins the flex column, or the
+    // `flex` on `.cm-editor` is inert and a long document grows the dialog instead of scrolling.
+    &__input {
         display: flex;
         flex: 1;
         flex-direction: column;
@@ -79,11 +75,6 @@
     }
 
     /**
-     * The shared syntax-highlighting input ships a fixed `height: 100px` on `.cm-editor`, scoped
-     * under its own `.gd-input-syntax-highlighting-input` class. That stylesheet is bundled after
-     * this one, so at equal specificity it would win — hence the repeated block class, which buys a
-     * third class without changing what is matched.
-     *
      * Height comes from `rows`, while still growing to fill a taller parent, so the editor works
      * both standalone and as a field in a fixed-height dialog.
      *
@@ -91,28 +82,33 @@
      * for theme variables, each of which needs a specification in sdk-ui-theme-provider. This one
      * only carries the `rows` prop into the stylesheet and is not something a theme should set.
      */
-    &.gd-ui-kit-config-editor &__editor .cm-editor {
+    &__input .cm-editor {
         // A definite height rather than a floor, so the scroller inside always has something to
         // scroll against: with `min-height` alone a long document grows the editor without bound in
         // any parent that is not itself height-constrained, and the page scrolls instead.
         //
-        // `rows` whole lines, plus the 8px of padding CodeMirror puts around its content and the 1px
-        // border on each side (the box is border-box). Sizing to whole lines keeps a line from being
-        // clipped through the middle, which looks unfinished and makes a screenshot of it turn on how
-        // half a glyph happens to be antialiased.
+        // `rows` whole lines, plus the 8px of padding CodeMirror puts around its content. Sizing to
+        // whole lines keeps a line from being clipped through the middle, which looks unfinished and
+        // makes a screenshot of it turn on how half a glyph happens to be antialiased.
         height: calc(var(--config-editor-rows, 12) * var(--config-editor-line-height) * 1em + 8px);
         // Still grows to take the space when a parent does constrain and offer it, which is what a
         // fixed-height dialog does.
         flex: 1 1 auto;
         min-height: 0;
-        // The frame and its corners now belong to the wrapper, so the shared input's own border and
-        // radius would draw a second box inside it.
-        border: none;
-        border-radius: 0;
-        // The standard input inner shadow, falling from the toolbar onto the code area. It replaces
-        // the shared input's own (which doubles as its focus styling — here focus is shown on the
-        // whole field instead), with the design's slightly softer blur.
+        line-height: normal;
+        color: variables.$gd-medium-gray;
+        background: variables.$gd-color-white;
+        font-size: 14px;
+        // Tooltips mount inside `.cm-editor` but outside `.cm-scroller`, so they inherit this font.
+        font-family: monospace;
+        font-weight: 200;
+        // The standard input inner shadow, falling from the toolbar onto the code area. Focus is
+        // shown on the whole field instead, with the design's slightly softer blur.
         box-shadow: inset 0 1px 2px 0 color.adjust(variables.$gd-input-text-box-shadow-color, $alpha: -0.85);
+
+        &.cm-focused {
+            outline: none;
+        }
     }
 
     // Focus is shown on the whole field instead, so the toolbar is visibly part of what is focused.
@@ -121,12 +117,14 @@
     }
 
     // Pinned rather than left as `normal`, so the height above is exactly `rows` lines.
-    &__editor .cm-content {
+    // `--config-editor-font-family` lets a host swap the code font, like `--config-editor-rows`.
+    &__input .cm-content {
         line-height: var(--config-editor-line-height);
+        font-family: var(--config-editor-font-family, monospace);
     }
 
     // Scrolling past the end of a long config should not start scrolling the dialog behind it.
-    &__editor .cm-scroller {
+    &__input .cm-scroller {
         overflow: auto;
         overscroll-behavior: contain;
     }
@@ -140,27 +138,22 @@
      * The repeated block class is for specificity: CodeMirror's own rule is `.cm-editor.cm-light
      * .cm-gutters`, which would otherwise win.
      */
-    &.gd-ui-kit-config-editor &__editor .cm-gutters {
+    &.gd-ui-kit-config-editor &__input .cm-gutters {
         border-right: none;
         background: transparent;
         color: var(--gd-palette-complementary-6);
     }
 
-    &.gd-ui-kit-config-editor &__editor .cm-activeLineGutter {
+    &.gd-ui-kit-config-editor &__input .cm-activeLineGutter {
         background: transparent;
         color: var(--gd-palette-complementary-7);
     }
 
-    // Muted surface for a value that cannot be edited. Applied to the whole field, toolbar included,
-    // now that they share one frame — tinting only the code area would leave a lighter strip on top.
-    // The gutter is transparent, so it takes the same muted surface by itself.
+    // Muted surface for a value that cannot be edited. Only the toolbar takes it: the code area keeps
+    // its own surface.
     &--disabled,
     &--readOnly {
         background: var(--gd-palette-complementary-1);
-
-        .cm-editor {
-            background: transparent;
-        }
     }
 
     &--disabled {

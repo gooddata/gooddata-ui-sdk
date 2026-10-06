@@ -19,6 +19,7 @@ import {
     isComputedAttributeRef,
     isDashboardAttributeFilterItem,
     isDashboardAttributeFilterReference,
+    isDashboardMeasureValueFilterReference,
     isDrillToDashboard,
     isInsightWidget,
     isKpiWidget,
@@ -55,7 +56,9 @@ export interface IDashboardCopySourceTab {
  * @remarks
  * The backend accepts a copy that keeps a drill to a dashboard the user cannot open, an ignored
  * drill-down hierarchy, or a metric the user may not read in a measure value filter or in the
- * limit of a filter's values, so none of these count. A merely deleted object does not count either.
+ * limit of a filter's values, so none of these count. A widget ignoring that measure value filter
+ * does count, and every widget that does not use the filter's metric ignores it automatically.
+ * A merely deleted object does not count either.
  *
  * @internal
  */
@@ -78,7 +81,9 @@ export function hasCopyBlockingReference(
         isTextForbidden(widget.description) ||
         widget.ignoreDashboardFilters.some(
             (reference) =>
-                isDashboardAttributeFilterReference(reference) && isLabelForbidden(reference.displayForm),
+                (isDashboardAttributeFilterReference(reference) && isLabelForbidden(reference.displayForm)) ||
+                (isDashboardMeasureValueFilterReference(reference) &&
+                    isForbidden(reference.measure, "measure")),
         );
 
     const isInsightWidgetForbidden = (widget: IInsightWidget) => {

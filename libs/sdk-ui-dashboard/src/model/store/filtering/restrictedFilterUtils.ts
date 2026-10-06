@@ -7,6 +7,7 @@ import {
     type ObjectType,
     areObjRefsEqual,
     dashboardFilterObjRef,
+    isComputedAttributeRef,
     isDashboardAttributeFilterItem,
     isDashboardDateFilterWithDimension,
     isDashboardMeasureValueFilter,
@@ -15,7 +16,7 @@ import {
 export function isDashboardObjectRestricted(
     ref: ObjRef,
     type: ObjectType,
-    unavailableObjects: IUnavailableDashboardReference[],
+    unavailableObjects: ReadonlyArray<IUnavailableDashboardReference>,
 ): boolean {
     return unavailableObjects.some(
         (object) => object.reason === "forbidden" && object.type === type && areObjRefsEqual(object.ref, ref),
@@ -24,7 +25,7 @@ export function isDashboardObjectRestricted(
 
 function dashboardFilterObjectType(filter: FilterContextItem): ObjectType | undefined {
     if (isDashboardAttributeFilterItem(filter)) {
-        return "displayForm";
+        return isComputedAttributeRef(dashboardFilterObjRef(filter)) ? "computedAttribute" : "displayForm";
     }
     if (isDashboardDateFilterWithDimension(filter)) {
         return "dataSet";
@@ -37,7 +38,7 @@ function dashboardFilterObjectType(filter: FilterContextItem): ObjectType | unde
 
 export function isDashboardFilterRestricted(
     filter: FilterContextItem,
-    unavailableObjects: IUnavailableDashboardReference[],
+    unavailableObjects: ReadonlyArray<IUnavailableDashboardReference>,
 ): boolean {
     const ref = dashboardFilterObjRef(filter);
     const type = dashboardFilterObjectType(filter);

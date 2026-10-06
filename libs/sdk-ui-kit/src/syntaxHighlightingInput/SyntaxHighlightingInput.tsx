@@ -1,18 +1,25 @@
 // (C) 2020-2026 GoodData Corporation
 
 import { type CompletionSource } from "@codemirror/autocomplete";
+import { type HighlightStyle } from "@codemirror/language";
 import { type Extension } from "@codemirror/state";
 import { type EditorView } from "@codemirror/view";
 import cx from "classnames";
 
+import { defaultSyntaxHighlightStyle } from "./defaultHighlightStyle.js";
 import { useCodemirror } from "./hooks/useCodemirror.js";
 import { type ExternalChangeSelection } from "./hooks/useCodemirrorChange.js";
 
 /**
+ * A CodeMirror editor with no frame and no token palette of its own. The consumer styles the
+ * `.cm-editor` box through `className` and provides the `highlightStyle`.
+ * Use {@link DefaultSyntaxHighlightingInput} for the standard input look.
+ *
  * @internal
  */
 export interface ISyntaxHighlightingInputProps {
     value: string;
+    highlightStyle: HighlightStyle;
     label?: string;
     disabled?: boolean;
     className?: string;
@@ -43,6 +50,7 @@ export interface ISyntaxHighlightingInputProps {
  */
 export function SyntaxHighlightingInput({
     value,
+    highlightStyle,
     label,
     placeholder,
     autocompletion,
@@ -60,6 +68,7 @@ export function SyntaxHighlightingInput({
     externalChangeSelection,
 }: ISyntaxHighlightingInputProps) {
     const { editorRef } = useCodemirror({
+        highlightStyle,
         placeholderText: placeholder,
         autocompletion,
         label,
@@ -78,4 +87,30 @@ export function SyntaxHighlightingInput({
     });
 
     return <div className={cx(className, "gd-input-syntax-highlighting-input")} ref={editorRef} />;
+}
+
+/**
+ * @internal
+ */
+export type IDefaultSyntaxHighlightingInputProps = Omit<ISyntaxHighlightingInputProps, "highlightStyle"> &
+    Partial<Pick<ISyntaxHighlightingInputProps, "highlightStyle">>;
+
+/**
+ * {@link SyntaxHighlightingInput} with the standard input frame, a fixed height and the default
+ * light token palette.
+ *
+ * @internal
+ */
+export function DefaultSyntaxHighlightingInput({
+    className,
+    highlightStyle = defaultSyntaxHighlightStyle,
+    ...props
+}: IDefaultSyntaxHighlightingInputProps) {
+    return (
+        <SyntaxHighlightingInput
+            {...props}
+            highlightStyle={highlightStyle}
+            className={cx(className, "gd-input-syntax-highlighting-input--default-chrome")}
+        />
+    );
 }

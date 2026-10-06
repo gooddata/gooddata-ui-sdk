@@ -158,9 +158,9 @@ export interface IGenAIUIContext {
  */
 export interface IGenAIReportContext {
     /**
-     * Report object reference.
+     * Report object reference. Absent while the report is not saved yet.
      */
-    ref: ObjRef;
+    ref?: ObjRef;
     /**
      * Report title.
      */
@@ -169,6 +169,10 @@ export interface IGenAIReportContext {
      * Report definition as the user sees it, including edits that are not saved yet.
      */
     definition?: IReportDefinition;
+    /**
+     * Name of the conversation draft the editor shows, while that draft is not saved yet.
+     */
+    draftRef?: string;
 }
 
 /**

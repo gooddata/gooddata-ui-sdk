@@ -18,9 +18,14 @@ import {
     type LinkHandlerEvent,
     type ChatModeChangeEvent,
 } from "@gooddata/sdk-ui-gen-ai";
-import { GenAIChatDialogConnected, type GenAIChatConnectedEvent } from "@gooddata/sdk-ui-gen-ai/internal";
+import {
+    GenAIChatDialogConnected,
+    type GenAIChatConnectedEvent,
+    type IReportSaved,
+} from "@gooddata/sdk-ui-gen-ai/internal";
 import { HEADER_CHAT_BUTTON_ID, useToastMessage } from "@gooddata/sdk-ui-kit";
 
+import { handleChatLinkClick } from "./chatLinks.js";
 import { useGenAiRightPanel } from "./useGenAiRightPanel.js";
 
 // DOM id of the embedded dashboard's AI trigger button (defined in gdc-dashboards-runtime as
@@ -86,6 +91,8 @@ export interface IGenAIChatProps {
      * Whether the ambient user context is currently loading.
      */
     ambientUserContextLoading?: boolean;
+    /** The latest report of the conversation that the active application saved. */
+    reportSaved: IReportSaved | undefined;
     /**
      * Tag identifiers the assistant's object search/autocomplete should be restricted to,
      * reflecting the active hosted application's current view.
@@ -128,6 +135,7 @@ export function GenAIChat({
     replaceUserContext,
     ambientUserContext,
     ambientUserContextLoading,
+    reportSaved,
     includeTags,
     excludeTags,
     canManageProject,
@@ -143,28 +151,11 @@ export function GenAIChat({
     const intl = useIntl();
     const backend = useBackendStrict();
 
-    // Embedded link handling (this handler is only wired when `embedded`). Delegate to the active app —
-    // it opens visualization links as an in-place overlay — and never let a link navigate the embedded
-    // iframe away, matching the previous embedded dashboard chat which prevented default for every link
-    // type (only visualizations did anything). Non-embedded mode uses the connected wrapper's default
-    // open/navigate handler instead.
+    // The active app gets the click first (an embedded dashboard opens a visualization as an in-place
+    // overlay). An embedded chat never navigates its iframe away, whatever the link type; otherwise a
+    // click the app did not handle opens the link.
     const onLinkClick = useCallback(
-        (link: LinkHandlerEvent): string | undefined => {
-            if (!embedded && link.action === "open") {
-                const currentUrl = window.location.pathname + window.location.hash;
-                const areUrlsEqual = currentUrl === link.itemUrl;
-                if (link.newTab) {
-                    window.open(link.itemUrl, "_blank");
-                } else if (!areUrlsEqual) {
-                    window.location.assign(link.itemUrl);
-                }
-            }
-
-            onAppLinkClick?.(link);
-            link.preventDefault();
-
-            return link.itemUrl;
-        },
+        (link: LinkHandlerEvent) => handleChatLinkClick(link, { embedded, onAppLinkClick }),
         [onAppLinkClick, embedded],
     );
 
@@ -240,6 +231,7 @@ export function GenAIChat({
             agentId={agentId}
             replaceUserContext={replaceUserContext}
             ambientUserContext={ambientUserContext}
+            reportSaved={reportSaved}
             ambientUserContextLoading={ambientUserContextLoading}
             includeTags={includeTags}
             excludeTags={excludeTags}

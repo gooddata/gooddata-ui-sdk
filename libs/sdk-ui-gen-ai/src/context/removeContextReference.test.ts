@@ -86,6 +86,37 @@ describe("removeContextReference", () => {
         expect(context.active?.view?.dashboard).toBeDefined();
     });
 
+    it("should remove a report that is not saved yet and keep the dashboard", () => {
+        const dashboard = { ref: idRef("dashboard-1", "analyticalDashboard"), widgets: [] };
+        const context: StoreContext = {
+            active: { view: { dashboard, report: { title: "Draft" } } },
+        };
+
+        const result = removeContextReference(context, {
+            id: "unsaved",
+            title: "Draft",
+            nesting: 0,
+            type: "report",
+            where: "view.report",
+        });
+
+        expect(result.active).toEqual({ view: { dashboard } });
+    });
+
+    it("should keep a saved report when asked to remove one that is not saved yet", () => {
+        const context: StoreContext = { active: { view: { report: { ref: idRef("q1", "report") } } } };
+
+        const result = removeContextReference(context, {
+            id: "unsaved",
+            title: "Draft",
+            nesting: 0,
+            type: "report",
+            where: "view.report",
+        });
+
+        expect(result.active).toEqual({ view: { report: { ref: idRef("q1", "report") } } });
+    });
+
     it("should remove report reference and keep the dashboard", () => {
         const dashboard = { ref: idRef("dashboard-1", "analyticalDashboard"), widgets: [] };
         const context: StoreContext = {

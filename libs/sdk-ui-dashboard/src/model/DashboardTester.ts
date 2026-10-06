@@ -36,6 +36,8 @@ type DashboardTesterConfig = {
 };
 
 export class DashboardTester extends HeadlessDashboard {
+    public readonly ctx: DashboardContext;
+
     protected constructor(ctx: DashboardContext, config?: DashboardTesterConfig) {
         const headlessDahboardConfig: IHeadlessDashboardConfig = {
             queryServices: config?.queryServices,
@@ -47,6 +49,7 @@ export class DashboardTester extends HeadlessDashboard {
         };
 
         super(ctx, headlessDahboardConfig);
+        this.ctx = ctx;
     }
 
     /**

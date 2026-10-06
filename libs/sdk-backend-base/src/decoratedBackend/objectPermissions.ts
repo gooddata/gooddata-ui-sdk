@@ -5,6 +5,7 @@ import {
     type IWorkspaceObjectPermissionsService,
 } from "@gooddata/sdk-backend-spi";
 import {
+    type AccessGranularPermission,
     type IAvailableAccessGrantee,
     type IGranularAccessGrantee,
     type IObjectAccessList,
@@ -21,6 +22,12 @@ export abstract class DecoratedWorkspaceObjectPermissionsService implements IWor
 
     public getAccessList(target: IObjectPermissionsObject): Promise<IObjectAccessList> {
         return this.decorated.getAccessList(target);
+    }
+
+    public getPermissionsForCurrentUser(
+        target: IObjectPermissionsObject,
+    ): Promise<AccessGranularPermission[]> {
+        return this.decorated.getPermissionsForCurrentUser(target);
     }
 
     public manageObjectPermissions(

@@ -392,7 +392,7 @@ export abstract class CustomElementAdapter<C> extends HTMLElement {
      *  If you have to - write a thin wrapper around the actual visualization Component.
      *
      * @internal
-     * @returns A ReactElement to be mounted into the Shadow DOM for this component
+     * @returns A ReactElement to be mounted into the light DOM of this custom element
      */
     [GET_COMPONENT](_Component: C, _context: CustomElementContext): ReactElement {
         throw new Error("Custom element component mapping is not implemented.");

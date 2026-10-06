@@ -38,6 +38,7 @@ import { ForwardRefExoticComponent } from 'react';
 import { FunctionComponent } from 'react';
 import { FunctionComponentElement } from 'react';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
+import { HighlightStyle } from '@codemirror/language';
 import { HTMLAttributes } from 'react';
 import { HTMLProps } from 'react';
 import { IAccessControlAware } from '@gooddata/sdk-model';
@@ -397,6 +398,12 @@ export const defaultColorPaletteMetadataObject: IColorPaletteDefinition;
 
 // @internal (undocumented)
 export const defaultFocusCheckFn: (element: HTMLElement) => boolean;
+
+// @internal
+export function DefaultSyntaxHighlightingInput(input: IDefaultSyntaxHighlightingInputProps): JSX.Element;
+
+// @internal (undocumented)
+export const defaultSyntaxHighlightStyle: HighlightStyle;
 
 // @internal
 export const defaultThemeMetadataObject: IThemeDefinition;
@@ -1922,7 +1929,7 @@ export function IconTrash(input: IIconProps): JSX.Element;
 export function IconTreeMap(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export type IconType = "aiAgent" | "aiAgentDisabled" | "brain" | "brainDisabled" | "check" | "checkCircle" | "certification" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "edit" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "infoCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "clockPaused" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "geoCollection" | "geoCollectionUpload" | "minimize" | "shrink" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderSmall" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "levelUp" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minus" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "building" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "ldmKey" | "ldmLabel" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "alignLeft" | "alignCenter" | "alignRight" | "alignTop" | "alignMiddle" | "alignBottom" | "bold" | "italic" | "imageContain" | "imageCover" | "imageFill" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "history" | "history2" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "externalLink" | "click" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "aiDocument" | "recommendation" | "streamUp" | "streamDown" | "stream" | "density" | "parameter" | "pin" | "unpin" | "speechBubble" | "pieChart" | "timezone" | "sidePanelCollapse" | "sidePanel" | "sidePanelExpand";
+export type IconType = "aiAgent" | "aiAgentDisabled" | "brain" | "brainDisabled" | "check" | "checkCircle" | "certification" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "edit" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "infoCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "clockPaused" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "geoCollection" | "geoCollectionUpload" | "minimize" | "shrink" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderSmall" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "levelUp" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minus" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "building" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "ldmKey" | "ldmLabel" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "alignLeft" | "alignCenter" | "alignRight" | "alignTop" | "alignMiddle" | "alignBottom" | "bold" | "italic" | "imageContain" | "imageCover" | "imageFill" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "history" | "history2" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "externalLink" | "click" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "aiDocument" | "recommendation" | "streamUp" | "streamDown" | "stream" | "density" | "parameter" | "pin" | "unpin" | "speechBubble" | "pieChart" | "timezone" | "sidePanelCollapse" | "sidePanel" | "sidePanelExpand" | "lineStyle" | "lineStyleSolid" | "lineStyleDashed" | "lineStyleDotted" | "lineWidth1" | "lineWidth2" | "lineWidth3" | "lineWidth4";
 
 // @internal (undocumented)
 export function IconUndo(input: IIconProps): JSX.Element;
@@ -2108,6 +2115,9 @@ export interface IDateTimeConfigOptions {
     // (undocumented)
     now?: Date;
 }
+
+// @internal (undocumented)
+export type IDefaultSyntaxHighlightingInputProps = Omit<ISyntaxHighlightingInputProps, "highlightStyle"> & Partial<Pick<ISyntaxHighlightingInputProps, "highlightStyle">>;
 
 // @internal (undocumented)
 export interface IDescriptionPanelProps {
@@ -4961,6 +4971,9 @@ export const isArrowDownKey: (event: KeyboardEvent_2) => boolean;
 // @internal
 export const isArrowKey: (event: KeyboardEvent_2) => boolean;
 
+// @internal
+export function isClickInsideOwnSubtree(target: Element | null, ownFloating: Element | null): boolean;
+
 // @internal (undocumented)
 export interface IScopedIdStoreValue {
     // (undocumented)
@@ -5590,7 +5603,7 @@ export interface ISubMenuProps extends IMenuStateConfig, Partial<IMenuPositionCo
     toggler: ReactNode;
 }
 
-// @internal (undocumented)
+// @internal
 export interface ISyntaxHighlightingInputProps {
     // (undocumented)
     autocompletion?: {
@@ -5607,6 +5620,8 @@ export interface ISyntaxHighlightingInputProps {
     // (undocumented)
     extensions?: Extension[];
     externalChangeSelection?: ExternalChangeSelection;
+    // (undocumented)
+    highlightStyle: HighlightStyle;
     // (undocumented)
     label?: string;
     // (undocumented)
@@ -10131,6 +10146,9 @@ export function useOverlayZIndexWithRegister(): number;
 
 // @internal
 export function usePointerTrack(track: (event: PointerEvent_2<HTMLElement>) => void): IPointerTrackHandlers;
+
+// @internal
+export function useRegisterFloatingAnchor(setFloating: (node: HTMLElement | null) => void, anchor: Element | null | (() => Element | null)): (node: HTMLElement | null) => void;
 
 // @internal
 export const useResponsiveContext: () => IResponsiveConfig;

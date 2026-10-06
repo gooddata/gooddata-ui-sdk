@@ -219,6 +219,7 @@ export function DrillDialogInsight({
                     {effectiveError ? (
                         <CustomError
                             error={effectiveError}
+                            widget={widget}
                             // drill dialog does not measure its size but is always large enough to fit the full content
                             forceFullContent
                         />

@@ -4,7 +4,12 @@ import { describe, expect, it } from "vitest";
 
 import { type GenAIChatEffort } from "@gooddata/sdk-model";
 
-import { type IChatConversationLocal, makeConversationItem, makeUserItem } from "../../model.js";
+import {
+    type IChatConversationLocal,
+    type IChatConversationLocalItem,
+    makeConversationItem,
+    makeUserItem,
+} from "../../model.js";
 
 import {
     applyPendingAgentSwitchAction,
@@ -13,6 +18,7 @@ import {
     clearThreadAction,
     loadConversationSuccessAction,
     messagesSliceReducer,
+    reportSavedAction,
     setCurrentConversationAction,
     setSelectedAgentAction,
     setSelectedEffortAction,
@@ -425,5 +431,111 @@ describe("messagesSlice", () => {
             const state = messagesSliceReducer(afterClear, startNewConversationAction());
             expect(state.conversationsData[conversationB.localId].asyncProcess).toBe("evaluating");
         });
+    });
+});
+
+describe("reportSavedAction", () => {
+    const reportItem = (
+        id: string,
+        parts: { ref?: string | null; saved?: string | null; baseReportId?: string | null }[],
+    ): IChatConversationLocalItem =>
+        makeConversationItem({
+            id,
+            type: "item",
+            role: "assistant",
+            createdAt: 1,
+            responseId: `response-${id}`,
+            content: {
+                type: "multipart",
+                parts: parts.map((part) => ({ type: "report", report: null, ...part })),
+            },
+        });
+    const savedOf = (state: ReturnType<typeof messagesSliceReducer>, itemId: string) => {
+        const data = state.conversationsData["c1"];
+        const item = Object.values(data?.items ?? {}).find((candidate) => candidate.id === itemId);
+        return item?.content.type === "multipart"
+            ? item.content.parts.map((part) => (part.type === "report" ? part.saved : undefined))
+            : [];
+    };
+    const stateWith = (items: IChatConversationLocalItem[]) =>
+        messagesSliceReducer(
+            messagesSliceReducer(undefined, { type: "test/init" }),
+            loadConversationSuccessAction({
+                currentConversation: makeConversation("c1"),
+                conversationItems: items,
+                threadId: "c1",
+            }),
+        );
+
+    it("marks the report of the item that carries the given name as saved", () => {
+        const state = messagesSliceReducer(
+            stateWith([reportItem("i1", [{ ref: "report_1" }, { ref: "report_2" }])]),
+            reportSavedAction({
+                conversationId: "c1",
+                itemId: "i1",
+                reportRef: "report_2",
+                savedReportId: "r9",
+            }),
+        );
+
+        expect(savedOf(state, "i1")).toEqual([undefined, "r9"]);
+    });
+
+    it("marks the report of the item as saved when no name is given", () => {
+        const state = messagesSliceReducer(
+            stateWith([reportItem("i1", [{ ref: null }])]),
+            reportSavedAction({ conversationId: "c1", itemId: "i1", savedReportId: "r9" }),
+        );
+
+        expect(savedOf(state, "i1")).toEqual(["r9"]);
+    });
+
+    it("marks only the first report of the item as saved when no name is given", () => {
+        const state = messagesSliceReducer(
+            stateWith([reportItem("i1", [{ ref: null }, { ref: null }])]),
+            reportSavedAction({ conversationId: "c1", itemId: "i1", savedReportId: "r9" }),
+        );
+
+        expect(savedOf(state, "i1")).toEqual(["r9", undefined]);
+    });
+
+    it("leaves the reports of the other items alone", () => {
+        const state = messagesSliceReducer(
+            stateWith([reportItem("i1", [{ ref: "report_1" }]), reportItem("i2", [{ ref: "report_1" }])]),
+            reportSavedAction({
+                conversationId: "c1",
+                itemId: "i2",
+                reportRef: "report_1",
+                savedReportId: "r9",
+            }),
+        );
+
+        expect(savedOf(state, "i1")).toEqual([undefined]);
+        expect(savedOf(state, "i2")).toEqual(["r9"]);
+    });
+
+    it("replaces the report an earlier save recorded", () => {
+        const state = messagesSliceReducer(
+            stateWith([reportItem("i1", [{ ref: "report_1", saved: "r1" }])]),
+            reportSavedAction({
+                conversationId: "c1",
+                itemId: "i1",
+                reportRef: "report_1",
+                savedReportId: "r2",
+            }),
+        );
+
+        expect(savedOf(state, "i1")).toEqual(["r2"]);
+    });
+
+    it.each([
+        ["a conversation that is not loaded", { conversationId: "other", itemId: "i1" }],
+        ["an item the conversation does not have", { conversationId: "c1", itemId: "missing" }],
+    ])("changes nothing for %s", (_description, target) => {
+        const before = stateWith([reportItem("i1", [{ ref: "report_1" }])]);
+
+        const state = messagesSliceReducer(before, reportSavedAction({ ...target, savedReportId: "r9" }));
+
+        expect(state).toEqual(before);
     });
 });

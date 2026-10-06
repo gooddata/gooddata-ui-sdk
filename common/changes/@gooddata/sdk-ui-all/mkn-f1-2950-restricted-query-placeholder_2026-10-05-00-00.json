@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-dashboard: A visualization whose data the user may not read shows the restricted placeholder instead of the generic error. sdk-backend-tiger: such executions fail with ProtectedDataError.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

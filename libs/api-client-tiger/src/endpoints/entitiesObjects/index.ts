@@ -307,11 +307,13 @@ export {
     EntitiesApi_GetAllEntitiesAttributes,
     EntitiesApi_GetAllEntitiesLabels,
     EntitiesApi_GetEntityAttributes,
+    EntitiesApi_GetEntityLabels,
     EntitiesApi_PatchEntityAttributes,
     EntitiesApi_PatchEntityLabels,
     type EntitiesApiGetAllEntitiesAttributesRequest,
     type EntitiesApiGetAllEntitiesLabelsRequest,
     type EntitiesApiGetEntityAttributesRequest,
+    type EntitiesApiGetEntityLabelsRequest,
     type EntitiesApiPatchEntityAttributesRequest,
     type EntitiesApiPatchEntityLabelsRequest,
     // EntitiesApi - AttributeHierarchies

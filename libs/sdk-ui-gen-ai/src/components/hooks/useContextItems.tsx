@@ -51,7 +51,9 @@ export function useUserContextItems(
 
         const offered = new Set<string>();
         collectAvailableReferences(ambientContext, emptyReferenceLabel).forEach((reference) => {
-            offered.add(serializeObjRef(reference.ref));
+            if (reference.ref) {
+                offered.add(serializeObjRef(reference.ref));
+            }
             if (reference.insightRef) {
                 offered.add(serializeObjRef(reference.insightRef));
             }
@@ -60,7 +62,7 @@ export function useUserContextItems(
         const workspaceReferences = [
             ...searchable(dashboards, "dashboard", emptyReferenceLabel, matchesSearch),
             ...searchable(visualizations, "visualization", emptyReferenceLabel, matchesSearch),
-        ].filter((reference) => !offered.has(serializeObjRef(reference.ref)));
+        ].filter((reference) => !reference.ref || !offered.has(serializeObjRef(reference.ref)));
 
         return workspaceReferences.filter(
             (reference) =>

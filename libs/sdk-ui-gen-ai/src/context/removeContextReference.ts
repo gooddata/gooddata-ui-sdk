@@ -9,6 +9,7 @@ import {
 import { type IGenAIContextObject, type StoreContext } from "../types.js";
 
 import { undefinedIfEmpty } from "./build.js";
+import { isSameViewReport } from "./viewReport.js";
 
 export function removeContextReference(context: StoreContext, reference?: IGenAIContextObject): StoreContext {
     if (!context) {
@@ -31,7 +32,7 @@ export function removeContextReference(context: StoreContext, reference?: IGenAI
         delete newContext.view.dashboard;
     }
 
-    if (reference.where === "view.report" && areObjRefsEqual(newContext.view?.report?.ref, reference.ref)) {
+    if (reference.where === "view.report" && isSameViewReport(newContext.view?.report, reference)) {
         newContext.view = { ...newContext.view };
         delete newContext.view.report;
     }

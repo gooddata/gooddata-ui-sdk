@@ -954,7 +954,7 @@ export interface AiComposeAnswerDetail {
 }
 
 export type AiComposeAnswerDetailCategoryEnum = 'composeAnswer';
-export type AiComposeAnswerDetailOutputEnum = 'text' | 'visualization' | 'dashboard' | 'keyDriverAnalysis' | 'whatIf' | 'searchResults' | 'alertProposal' | 'clarifyingQuestions';
+export type AiComposeAnswerDetailOutputEnum = 'text' | 'visualization' | 'dashboard' | 'report' | 'keyDriverAnalysis' | 'whatIf' | 'searchResults' | 'alertProposal' | 'clarifyingQuestions';
 
 export interface AiCompoundMeasureValueFilter {
     'compoundMeasureValueFilter': AiCompoundMeasureValueFilterBody;
@@ -2815,7 +2815,7 @@ export type AiMultipartContentTypeEnum = 'multipart';
 /**
  * @type AiMultipartContentPartsInner
  */
-export type AiMultipartContentPartsInner = { type: 'alertProposal' } & AiAlertProposalPart | { type: 'clarifyingQuestions' } & AiClarifyingQuestionsPart | { type: 'dashboard' } & AiDashboardPart | { type: 'dashboardPatch' } & AiDashboardPatchPart | { type: 'kda' } & AiKeyDriverAnalysisPart | { type: 'searchResults' } & AiSearchResults | { type: 'text' } & AiTextPart | { type: 'visualization' } & AiVisualizationPart | { type: 'whatIf' } & AiWhatIfAnalysisPart;
+export type AiMultipartContentPartsInner = { type: 'alertProposal' } & AiAlertProposalPart | { type: 'clarifyingQuestions' } & AiClarifyingQuestionsPart | { type: 'dashboard' } & AiDashboardPart | { type: 'dashboardPatch' } & AiDashboardPatchPart | { type: 'kda' } & AiKeyDriverAnalysisPart | { type: 'report' } & AiReportPart | { type: 'searchResults' } & AiSearchResults | { type: 'text' } & AiTextPart | { type: 'visualization' } & AiVisualizationPart | { type: 'whatIf' } & AiWhatIfAnalysisPart;
 
 export interface AiMvfCondition {
     'condition': AiCondition4;
@@ -3904,6 +3904,39 @@ export const AiRenderAs = {
 
 export type AiRenderAs = typeof AiRenderAs[keyof typeof AiRenderAs];
 
+
+/**
+ * PATCH /conversations/{conversationId}/reports/{reportRef} body.
+ */
+export interface AiReportIdUpdateRequest {
+    /**
+     * Id of the report entity the client saved the draft as.
+     */
+    'id': string;
+}
+
+/**
+ * A report draft the assistant composed, resolved from conversation state.  Like a dashboard draft it is not persisted until the user saves it; ``report`` is null when the ref no longer resolves, so the client can still show that a report was promised. Every refinement is a new version under a new ``report_ref``, so an earlier card keeps its version.
+ */
+export interface AiReportPart {
+    'base_report_id'?: string | null;
+    /**
+     * Shape of `report`: the Analytics-as-Code report document, v1.
+     */
+    'format'?: AiReportPartFormatEnum;
+    'page_count'?: number | null;
+    'report'?: object | null;
+    'refines_ref'?: string | null;
+    'report_ref'?: string | null;
+    'saved_report_id'?: string | null;
+    /**
+     * Type of multipart part.
+     */
+    'type'?: AiReportPartTypeEnum;
+}
+
+export type AiReportPartFormatEnum = 'aac-v1';
+export type AiReportPartTypeEnum = 'report';
 
 
 export const AiRequestedReasoningEffort = {
@@ -5203,6 +5236,10 @@ export interface AiUserContextObjectReferenceGroup {
  */
 export interface AiUserContextReport {
     'definition'?: object | null;
+    /**
+     * `report_ref` of the conversation draft open in the editor while it is not saved yet. A change the assistant makes to it is then a new version of that draft, not a new report. Optional.
+     */
+    'draftRef'?: string | null;
     'id'?: string | null;
     'title'?: string | null;
 }
@@ -7080,6 +7117,76 @@ export async function ConversationsAiAxiosParamCreator_PatchDashboardApiV1AiWork
 
 // ConversationsAi FP - ConversationsAiAxiosParamCreator
 /**
+ * Records the report entity the user saved the conversation\'s report draft as.
+ * @summary Link a saved report
+ * @param {string} workspaceId 
+ * @param {string} conversationId 
+ * @param {string} reportRef 
+ * @param {AiReportIdUpdateRequest} aiReportIdUpdateRequest 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ConversationsAiAxiosParamCreator_PatchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatch(
+    workspaceId: string, conversationId: string, reportRef: string, aiReportIdUpdateRequest: AiReportIdUpdateRequest, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('patchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatch', 'workspaceId', workspaceId)
+    // verify required parameter 'conversationId' is not null or undefined
+    assertParamExists('patchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatch', 'conversationId', conversationId)
+    // verify required parameter 'reportRef' is not null or undefined
+    assertParamExists('patchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatch', 'reportRef', reportRef)
+    // verify required parameter 'aiReportIdUpdateRequest' is not null or undefined
+    assertParamExists('patchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatch', 'aiReportIdUpdateRequest', aiReportIdUpdateRequest)
+    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/reports/{report_ref}`
+        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"conversation_id"}}`, encodeURIComponent(String(conversationId)))
+        .replace(`{${"report_ref"}}`, encodeURIComponent(String(reportRef)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof aiReportIdUpdateRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(aiReportIdUpdateRequest !== undefined ? aiReportIdUpdateRequest : {})
+        : aiReportIdUpdateRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ConversationsAi FP - ConversationsAiAxiosParamCreator
+/**
  * Attaches positive or negative feedback, with optional free-text, to one response.
  * @summary Rate a response
  * @param {string} workspaceId 
@@ -7741,6 +7848,32 @@ export async function ConversationsAi_PatchDashboardApiV1AiWorkspacesWorkspaceId
 
 // ConversationsAi Api FP
 /**
+ * Records the report entity the user saved the conversation\'s report draft as.
+ * @summary Link a saved report
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ConversationsAiPatchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatchRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ConversationsAi_PatchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatch(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ConversationsAiPatchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatchRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await ConversationsAiAxiosParamCreator_PatchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatch(
+        requestParameters.workspaceId, requestParameters.conversationId, requestParameters.reportRef, requestParameters.aiReportIdUpdateRequest, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ConversationsAi Api FP
+/**
  * Attaches positive or negative feedback, with optional free-text, to one response.
  * @summary Rate a response
  * @param {AxiosInstance} axios Axios instance.
@@ -8006,6 +8139,16 @@ export interface ConversationsAiInterface {
      * @memberof ConversationsAiInterface
      */
     patchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(requestParameters: ConversationsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * Records the report entity the user saved the conversation\'s report draft as.
+     * @summary Link a saved report
+     * @param {ConversationsAiPatchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConversationsAiInterface
+     */
+    patchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatch(requestParameters: ConversationsAiPatchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
      * Attaches positive or negative feedback, with optional free-text, to one response.
@@ -8287,6 +8430,41 @@ export interface ConversationsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatCo
      * @memberof ConversationsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch
      */
     readonly aiDashboardIdUpdateRequest: AiDashboardIdUpdateRequest
+}
+
+/**
+ * Request parameters for patchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatch operation in ConversationsAi.
+ * @export
+ * @interface ConversationsAiPatchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatchRequest
+ */
+export interface ConversationsAiPatchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatchRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ConversationsAiPatchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatch
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ConversationsAiPatchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatch
+     */
+    readonly conversationId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ConversationsAiPatchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatch
+     */
+    readonly reportRef: string
+
+    /**
+     * 
+     * @type {AiReportIdUpdateRequest}
+     * @memberof ConversationsAiPatchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatch
+     */
+    readonly aiReportIdUpdateRequest: AiReportIdUpdateRequest
 }
 
 /**
@@ -8593,6 +8771,18 @@ export class ConversationsAi extends BaseAPI implements ConversationsAiInterface
      */
     public patchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(requestParameters: ConversationsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest, options?: AxiosRequestConfig) {
         return ConversationsAi_PatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Records the report entity the user saved the conversation\'s report draft as.
+     * @summary Link a saved report
+     * @param {ConversationsAiPatchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConversationsAi
+     */
+    public patchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatch(requestParameters: ConversationsAiPatchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatchRequest, options?: AxiosRequestConfig) {
+        return ConversationsAi_PatchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatch(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**

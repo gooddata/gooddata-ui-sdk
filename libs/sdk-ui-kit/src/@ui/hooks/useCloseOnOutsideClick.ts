@@ -45,7 +45,7 @@ export function registerFloatingAnchor(panel: Element | null, anchor: Element | 
 
 /**
  * Wraps a floating-ui `setFloating` callback so the resulting ref also
- * registers the panel↔anchor association in {@link floatingPanelAnchors}.
+ * registers the panel↔anchor association in the floating-panel-anchor registry.
  * Co-locates the registry write next to its consumer so every floating
  * primitive gets nested-popup detection without re-implementing the wiring.
  *

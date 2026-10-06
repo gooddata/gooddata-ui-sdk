@@ -2,10 +2,9 @@
 
 import { useEffect, useRef } from "react";
 
-import { HighlightStyle, bracketMatching, syntaxHighlighting } from "@codemirror/language";
-import { EditorState, type Extension } from "@codemirror/state";
+import { type HighlightStyle, bracketMatching, syntaxHighlighting } from "@codemirror/language";
+import { Compartment, EditorState, type Extension } from "@codemirror/state";
 import { EditorView, drawSelection } from "@codemirror/view";
-import { tags as t } from "@lezer/highlight";
 
 import { useAutocompletion } from "./useAutocompletion.js";
 import { useChangeHandler } from "./useChangeHandler.js";
@@ -16,19 +15,9 @@ import { useCodemirrorKeymap } from "./useCodemirrorKeymap.js";
 import { useCodemirrorOptions } from "./useCodemirrorOptions.js";
 import { type IUseEventHandlersProps, useEventHandlers } from "./useEventHandlers.js";
 
-// Custom syntax highlighting
-const customHighlightStyle = HighlightStyle.define([
-    { tag: t.punctuation, color: "#94a1ad" },
-    { tag: t.bracket, color: "#94a1ad" },
-    { tag: t.variableName, color: "#464e56" },
-    { tag: t.string, color: "#a11" },
-    { tag: t.special(t.variableName), color: "#13b1e2", fontWeight: "bold" },
-    { tag: t.standard(t.variableName), color: "#00c18e", fontWeight: "bold" },
-    { tag: t.keyword, color: "#ab55a3", fontWeight: "bold" },
-]);
-
 export interface IUseCodemirrorProps extends IUseEventHandlersProps {
     value?: string;
+    highlightStyle: HighlightStyle;
     label?: string;
     placeholderText?: string;
     disabled?: boolean;
@@ -46,6 +35,7 @@ export interface IUseCodemirrorProps extends IUseEventHandlersProps {
 
 export function useCodemirror({
     value = "",
+    highlightStyle,
     label,
     disabled,
     autocompletion,
@@ -63,6 +53,7 @@ export function useCodemirror({
 }: IUseCodemirrorProps) {
     const editorRef = useRef<HTMLDivElement>(null);
     const viewRef = useRef<EditorView | null>(null);
+    const highlightCompartmentRef = useRef(new Compartment());
 
     const { handleCompletion, handleChange, handleKeyDown, handleCursor, handleFocus, handleBlur } =
         useEventHandlers({
@@ -110,7 +101,7 @@ export function useCodemirror({
                     domEventsExtension,
                     ...(beforeExtensions ?? []),
                     keymapExtension,
-                    syntaxHighlighting(customHighlightStyle),
+                    highlightCompartmentRef.current.of(syntaxHighlighting(highlightStyle)),
                     EditorView.lineWrapping,
                     disableAutofocusExtension,
                     changeHandlerExtension,
@@ -134,6 +125,12 @@ export function useCodemirror({
             view.destroy();
         };
     }, []); // oxlint-disable-line react-hooks/exhaustive-deps
+
+    useEffect(() => {
+        viewRef.current?.dispatch({
+            effects: highlightCompartmentRef.current.reconfigure(syntaxHighlighting(highlightStyle)),
+        });
+    }, [highlightStyle]);
 
     // Handle external value changes
     useCodemirrorChange(viewRef, value, externalChangeSelection);

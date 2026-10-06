@@ -7,7 +7,7 @@ import cx from "classnames";
 import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 
-import { SyntaxHighlightingInput } from "@gooddata/sdk-ui-kit";
+import { DefaultSyntaxHighlightingInput } from "@gooddata/sdk-ui-kit";
 
 import { makeUserItem } from "../model.js";
 import {
@@ -157,7 +157,7 @@ function InputComponent({ autofocus = false, canManage, canAnalyze, targetRef }:
                     </div>
                     <div ref={targetRef} onFocus={handleOnFocus} />
                     <div className="gd-gen-ai-chat__input__text" {...ref}>
-                        <SyntaxHighlightingInput
+                        <DefaultSyntaxHighlightingInput
                             className="gd-gen-ai-chat__input__mc"
                             placeholder={intl.formatMessage(msgs.placeholder)}
                             label={intl.formatMessage(msgs.label)}

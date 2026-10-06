@@ -11,6 +11,8 @@ import {
 import { type IGenAIContextObject, type SelectedContext } from "../types.js";
 import { convertReferenceTypeToGenAiType } from "../utils.js";
 
+import { isSameViewReport, viewObjectId } from "./viewReport.js";
+
 export function collectContextReferences(
     userContext: IGenAIUserContext | undefined,
     selectedContext: SelectedContext | undefined,
@@ -40,9 +42,9 @@ export function collectContextReferences(
     const userReport = userContext?.view?.report;
     if (userReport) {
         const ref = userReport.ref;
-        const id = isIdentifierRef(ref) ? ref.identifier : ref.uri;
+        const id = viewObjectId(ref);
 
-        if (!areObjRefsEqual(ref, selectedContext?.report?.ref)) {
+        if (!isSameViewReport(userReport, selectedContext?.report)) {
             userReferences.push({
                 id,
                 ref,

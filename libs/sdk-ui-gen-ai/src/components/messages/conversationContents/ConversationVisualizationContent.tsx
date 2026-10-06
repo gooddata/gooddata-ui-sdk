@@ -47,6 +47,7 @@ import { type IChatConversationLocalItem, type IChatConversationMultipartLocalPa
 import {
     catalogItemsSelector,
     colorPaletteSelector,
+    isKeyDriverAnalysisMountedSelector,
     settingsSelector,
 } from "../../../store/chatWindow/chatWindowSelectors.js";
 import {
@@ -126,6 +127,7 @@ export type ConversationVisualizationContentProps = {
     visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>;
     className?: string;
     menuItems?: IGenAIAssistantConversationVisualizationContentProps["menuItems"];
+    enableKeyDriverAnalysis?: boolean;
 };
 
 export function ConversationVisualizationContent({
@@ -135,6 +137,7 @@ export function ConversationVisualizationContent({
     visualization,
     className,
     menuItems,
+    enableKeyDriverAnalysis,
 }: ConversationVisualizationContentProps) {
     const colorPalette = useSelector((state: RootState) => colorPaletteSelector(state));
     const separators = useSelector((state: RootState) => settingsSelector(state)?.separators);
@@ -145,9 +148,13 @@ export function ConversationVisualizationContent({
     const enableAccessibleChartTooltip = useSelector(
         (state: RootState) => settingsSelector(state)?.enableAccessibleChartTooltip,
     );
-    const enableChangeAnalysis = useSelector(
+    const isKeyDriverAnalysisMounted = useSelector(isKeyDriverAnalysisMountedSelector);
+    const enableChangeAnalysisSetting = useSelector(
         (state: RootState) => settingsSelector(state)?.enableChangeAnalysis,
     );
+
+    const enableChangeAnalysis =
+        isKeyDriverAnalysisMounted && (enableKeyDriverAnalysis ?? enableChangeAnalysisSetting ?? false);
     const enableSecondGranularities = useSelector(
         (state: RootState) => settingsSelector(state)?.enableSecondGranularities,
     );

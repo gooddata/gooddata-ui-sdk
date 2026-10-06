@@ -1,10 +1,17 @@
 // (C) 2020-2026 GoodData Corporation
 
+import { HighlightStyle, highlightingFor } from "@codemirror/language";
 import { type EditorView } from "@codemirror/view";
+import { tags } from "@lezer/highlight";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { type ISyntaxHighlightingInputProps, SyntaxHighlightingInput } from "./SyntaxHighlightingInput.js";
+import { defaultSyntaxHighlightStyle } from "./defaultHighlightStyle.js";
+import {
+    DefaultSyntaxHighlightingInput,
+    type ISyntaxHighlightingInputProps,
+    SyntaxHighlightingInput,
+} from "./SyntaxHighlightingInput.js";
 
 const multiLineValue = "01234\n01234\n01234";
 
@@ -28,6 +35,7 @@ function renderComponent(props?: Partial<ISyntaxHighlightingInputProps>) {
     const result = render(
         <SyntaxHighlightingInput
             value=""
+            highlightStyle={defaultSyntaxHighlightStyle}
             onChange={onChange}
             onApi={(view) => {
                 captured.view = view;
@@ -56,6 +64,24 @@ describe("SyntaxHighlightingInput", () => {
         ).toBeInTheDocument();
     });
 
+    it("should not apply the default chrome by itself", () => {
+        renderComponent();
+
+        expect(
+            document.querySelector(".gd-input-syntax-highlighting-input--default-chrome"),
+        ).not.toBeInTheDocument();
+    });
+
+    it("should apply the default chrome next to the consumer classname in the default input", () => {
+        render(<DefaultSyntaxHighlightingInput value="" onChange={vi.fn()} className="consumer-class" />);
+
+        expect(
+            document.querySelector(
+                "div.consumer-class.gd-input-syntax-highlighting-input.gd-input-syntax-highlighting-input--default-chrome",
+            ),
+        ).toBeInTheDocument();
+    });
+
     it("should call onChangeHandler function on value change", () => {
         const { onChange, view } = renderComponent({ value: "01234" });
 
@@ -68,12 +94,21 @@ describe("SyntaxHighlightingInput", () => {
         // The value sync is annotated `Transaction.remote` precisely so it does not come back out as
         // an edit — without that, a consumer would be handed its own value again on every render.
         const onChange = vi.fn();
-        const { rerender } = render(<SyntaxHighlightingInput value="01234" onChange={onChange} />);
+        const { rerender } = render(<DefaultSyntaxHighlightingInput value="01234" onChange={onChange} />);
 
-        rerender(<SyntaxHighlightingInput value="56789" onChange={onChange} />);
+        rerender(<DefaultSyntaxHighlightingInput value="56789" onChange={onChange} />);
 
         expect(displayedText()).toBe("56789");
         expect(onChange).not.toHaveBeenCalled();
+    });
+
+    it("should apply a changed highlightStyle to the running editor", () => {
+        const nextStyle = HighlightStyle.define([{ tag: tags.string, color: "red" }]);
+        const { view, rerender } = renderComponent();
+
+        rerender(<SyntaxHighlightingInput value="" highlightStyle={nextStyle} onChange={vi.fn()} />);
+
+        expect(highlightingFor(view.state, [tags.string])).toBe(nextStyle.style([tags.string]));
     });
 
     describe("onCursor", () => {

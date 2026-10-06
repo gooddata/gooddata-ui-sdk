@@ -3266,6 +3266,65 @@ describe("useObjectShareController row classification", () => {
         expect(result.current.state.grantableDisabledLevels).toBeUndefined();
     });
 
+    it("limits a caller whose only access is a group to the level the backend reports", async () => {
+        const svc = {
+            ...makeService([USER_GRANT]),
+            getPermissionsForCurrentUser: vi.fn(async () => ["SHARE", "VIEW"]),
+        };
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        await waitFor(() => expect(result.current.state.grantableDisabledLevels).toEqual(["EDIT"]));
+        expect(result.current.state.workspaceDisabledLevels).toEqual(["EDIT"]);
+    });
+
+    it("lifts the own-row limit when the backend reports a stronger level from elsewhere", async () => {
+        // A SHARE own row, but EDIT through a group: EDIT is theirs to give and to take.
+        const svc = {
+            ...makeService([SELF_GRANT, USER_GRANT]),
+            getPermissionsForCurrentUser: vi.fn(async () => ["EDIT", "SHARE", "VIEW"]),
+        };
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.selfManagedGranteeId).toBe("user:self"));
+        await waitFor(() => expect(svc.getPermissionsForCurrentUser).toHaveResolved());
+        await waitFor(() => expect(result.current.state.grantableDisabledLevels).toEqual([]));
+        expect(result.current.state.selfManagedDisabledLevels).toEqual([]);
+    });
+
+    it("reads the caller's level again after a write and follows the new answer", async () => {
+        const getPermissionsForCurrentUser = vi
+            .fn()
+            .mockResolvedValueOnce(["EDIT", "SHARE", "VIEW"])
+            .mockResolvedValue(["SHARE", "VIEW"]);
+        const svc = { ...makeService([USER_GRANT]), getPermissionsForCurrentUser };
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.grantableDisabledLevels).toEqual([]));
+
+        await act(async () => {
+            await result.current.actions.changePermissionLevel("user:u1", "SHARE");
+        });
+
+        await waitFor(() => expect(result.current.state.grantableDisabledLevels).toEqual(["EDIT"]));
+        expect(getPermissionsForCurrentUser).toHaveBeenCalledTimes(2);
+    });
+
+    it("falls back to the caller's own row when the read after a write fails", async () => {
+        // A stale higher answer would keep offering levels the server now refuses.
+        const getPermissionsForCurrentUser = vi
+            .fn()
+            .mockResolvedValueOnce(["EDIT", "SHARE", "VIEW"])
+            .mockRejectedValue(new Error("permissions unavailable"));
+        const svc = { ...makeService([SELF_GRANT, USER_GRANT]), getPermissionsForCurrentUser };
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.grantableDisabledLevels).toEqual([]));
+
+        await act(async () => {
+            await result.current.actions.changePermissionLevel("user:u1", "SHARE");
+        });
+
+        await waitFor(() => expect(result.current.state.callerLevel).toBeUndefined());
+        expect(result.current.state.grantableDisabledLevels).toEqual(["EDIT"]);
+    });
+
     it("sets no grant limit while the caller's manager status is unknown", async () => {
         // A limit that guesses wrong blocks a grant the server would accept, and a failed
         // permission read would make that permanent. The confirm can default to the safe

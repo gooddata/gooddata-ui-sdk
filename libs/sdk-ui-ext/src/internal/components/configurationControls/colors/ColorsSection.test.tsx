@@ -134,6 +134,48 @@ describe("ColorsSection line styles", () => {
         expect(screen.getByText("Colors")).toBeInTheDocument();
         expect(screen.queryByText("Colors and styles")).not.toBeInTheDocument();
     });
+
+    it("should offer line styles on every segment of a segmented chart", () => {
+        const { container } = createComponent({
+            supportsLineStyles: true,
+            lineStyleMeasureLocalIds: ["m1"],
+        });
+
+        expect(container.querySelectorAll(".gd-line-style-item-trigger")).toHaveLength(2);
+        expect(screen.getByText("Colors and styles")).toBeInTheDocument();
+    });
+
+    it("should offer only the color on the empty value segment", () => {
+        const { container } = createComponent({
+            ...propsWithFalsyColor(null),
+            supportsLineStyles: true,
+            lineStyleMeasureLocalIds: ["m1"],
+        });
+
+        expect(screen.getByText("(empty value)")).toBeInTheDocument();
+        expect(
+            screen.queryByRole("button", { name: "Edit color and style for (empty value)" }),
+        ).not.toBeInTheDocument();
+        expect(container.querySelectorAll(".gd-line-style-item-trigger")).toHaveLength(2);
+    });
+
+    it("should store the line style of a segment under its attribute element uri", async () => {
+        const pushData = vi.fn();
+        createComponent({
+            pushData,
+            supportsLineStyles: true,
+            lineStyleMeasureLocalIds: ["m1"],
+        });
+
+        fireEvent.click(screen.getByRole("button", { name: "Edit color and style for def" }));
+        fireEvent.click(await screen.findByRole("button", { name: "Line style" }));
+        fireEvent.click(await screen.findByText("Dashed"));
+
+        expect(pushData).toHaveBeenCalledWith({
+            messageId: COLOR_MAPPING_CHANGED,
+            properties: { controls: { lineStyleMapping: [{ id: "/ahi2", lineStyle: "dashed" }] } },
+        });
+    });
 });
 
 describe("ColorsSection", () => {

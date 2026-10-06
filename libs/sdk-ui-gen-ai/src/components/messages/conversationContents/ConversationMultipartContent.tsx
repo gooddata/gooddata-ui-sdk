@@ -14,6 +14,7 @@ import { ConversationAlertProposalContent } from "./ConversationAlertProposalCon
 import { ConversationClarifyingQuestionsContent } from "./ConversationClarifyingQuestionsContent.js";
 import { ConversationDashboardContent } from "./ConversationDashboardContent.js";
 import { ConversationKdaContent } from "./ConversationKdaContent.js";
+import { ConversationReportContent } from "./ConversationReportContent.js";
 import { ConversationSearchContent } from "./ConversationSearchContent.js";
 import { ConversationTextContent } from "./ConversationTextContent.js";
 import { ConversationWhatIfContent } from "./ConversationWhatIfContent.js";
@@ -117,6 +118,18 @@ export function ConversationMultipartContent({
                             dashboard={part.dashboard}
                             insights={part.insights}
                             saved={part.saved}
+                        />
+                    );
+                }
+                if (part.type === "report") {
+                    return (
+                        <ConversationReportContent
+                            key={index}
+                            message={message}
+                            report={part.report}
+                            saved={part.saved}
+                            baseReportId={part.baseReportId}
+                            refines={part.refines}
                         />
                     );
                 }

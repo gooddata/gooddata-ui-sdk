@@ -1057,6 +1057,36 @@ const messagesSlice = createSlice({
                 visualization.visualization.insight.identifier = payload.savedVisualizationId;
             }
         },
+        reportSavedAction: (
+            state,
+            {
+                payload,
+            }: PayloadAction<{
+                conversationId: string;
+                itemId: string;
+                reportRef?: string;
+                savedReportId: string;
+            }>,
+        ) => {
+            const conversation = [state.currentConversation, ...(state.conversations ?? [])].find(
+                (candidate) => candidate?.id === payload.conversationId,
+            );
+            const data = conversation && state.conversationsData[conversation.localId];
+            const item = Object.values(data?.items ?? {}).find(
+                (candidate) => candidate.id === payload.itemId,
+            );
+            if (item?.content.type !== "multipart") {
+                return;
+            }
+            const reports = item.content.parts.filter((part) => part.type === "report");
+            const target =
+                payload.reportRef === undefined
+                    ? reports[0]
+                    : reports.find((part) => part.ref === payload.reportRef);
+            if (target) {
+                target.saved = payload.savedReportId;
+            }
+        },
         saveVisualisationRenderStatusAction: (
             state,
             _action: PayloadAction<{
@@ -1256,6 +1286,7 @@ export const {
     savedVisualizationAction,
     saveVisualizationErrorAction,
     saveVisualizationSuccessAction,
+    reportSavedAction,
     saveVisualisationRenderStatusAction,
     saveVisualisationRenderStatusSuccessAction,
     visualizationErrorAction,

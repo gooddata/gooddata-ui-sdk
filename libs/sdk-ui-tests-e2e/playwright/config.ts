@@ -61,15 +61,17 @@ const FEATURE_HUB_RESPONSE = [
 ] satisfies IFeatureHubEnvironment[];
 
 export const test = createTest({
-    goodmock: {
-        host: GOODMOCK_HOST,
-        backendHost: BACKEND_HOST,
-        baseUrl: BASE_URL,
-        getMappingPath,
-        workspaceIdMappings: {
-            sourceWorkspaceId: WORKSPACE_ID,
-            targetWorkspaceId: DEFAULT_WORKSPACE_ID,
-        },
-    },
+    goodmock: GOODMOCK_HOST
+        ? {
+              host: GOODMOCK_HOST,
+              backendHost: BACKEND_HOST,
+              baseUrl: BASE_URL,
+              getMappingPath,
+              workspaceIdMappings: {
+                  sourceWorkspaceId: WORKSPACE_ID,
+                  targetWorkspaceId: DEFAULT_WORKSPACE_ID,
+              },
+          }
+        : undefined,
     featureHubResponse: FEATURE_HUB_RESPONSE,
 });

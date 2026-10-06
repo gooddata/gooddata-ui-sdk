@@ -28,6 +28,7 @@ services:
             - GOODMOCK_HOST=goodmock:8080
             - GOODMOCK_MODE
             - HOST
+            - PRODUCT
             - NO_COLOR
             - TIGER_API_TOKEN
             - TIGER_DATASOURCES_NAME

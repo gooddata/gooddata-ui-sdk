@@ -1030,7 +1030,8 @@ $dataset_color: #952f8e;
     }
 
     &--alertProposal,
-    &--dashboard {
+    &--dashboard,
+    &--report {
         display: grid;
 
         .gd-gen-ai-chat__conversation__item__content-alertProposal-header {
@@ -1133,7 +1134,8 @@ $dataset_color: #952f8e;
             }
         }
 
-        .gd-gen-ai-chat__conversation__item__content-dashboard-frame {
+        .gd-gen-ai-chat__conversation__item__content-dashboard-frame,
+        .gd-gen-ai-chat__conversation__item__content-report-frame {
             display: flex;
             max-height: 500px;
             padding: 10px;
@@ -1147,12 +1149,14 @@ $dataset_color: #952f8e;
             overflow-y: auto;
             overscroll-behavior: auto;
 
-            .gd-gen-ai-chat__conversation__item__content-dashboard-icon {
+            .gd-gen-ai-chat__conversation__item__content-dashboard-icon,
+            .gd-gen-ai-chat__conversation__item__content-report-icon {
                 flex-grow: 0;
                 flex-shrink: 0;
             }
 
-            .gd-gen-ai-chat__conversation__item__content-dashboard-content {
+            .gd-gen-ai-chat__conversation__item__content-dashboard-content,
+            .gd-gen-ai-chat__conversation__item__content-report-content {
                 display: flex;
                 flex-direction: column;
                 flex-grow: 1;
@@ -1166,7 +1170,8 @@ $dataset_color: #952f8e;
                     line-height: 23px;
                 }
 
-                &-date {
+                &-date,
+                &-details {
                     color: var(--gd-palette-complementary-7);
                     font-size: 12px;
                     font-style: normal;
@@ -1175,7 +1180,8 @@ $dataset_color: #952f8e;
                 }
             }
 
-            .gd-gen-ai-chat__conversation__item__content-dashboard-item-buttons {
+            .gd-gen-ai-chat__conversation__item__content-dashboard-item-buttons,
+            .gd-gen-ai-chat__conversation__item__content-report-item-buttons {
                 flex-grow: 0;
             }
         }

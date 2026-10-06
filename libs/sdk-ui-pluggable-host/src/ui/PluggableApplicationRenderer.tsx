@@ -13,6 +13,7 @@ import {
     type IPluggableAppEvent,
     type IPluggableApplicationMountHandle,
     isAiAssistantContextChangedEvent,
+    isAiAssistantReportSavedEvent,
     isCloseAiAssistantRequestedEvent,
     isDocumentTitleChangedEvent,
     isOpenAiAssistantRequestedEvent,
@@ -78,6 +79,13 @@ export interface IPluggableApplicationRendererProps {
         userContext?: IGenAIUserContext;
         userContextLoading?: boolean;
     }) => void;
+    /** Tell the host-owned chat that the active app saved a report the chat had drafted. */
+    onAiAssistantReportSaved?: (saved: {
+        conversationId: string;
+        itemId: string;
+        reportRef?: string;
+        savedReportId: string;
+    }) => void;
     /**
      * Ref the renderer populates with a handler that delegates a host-chat link click to the active
      * app's mount handle (`onAiAssistantLinkClicked`), so an embedded app can handle it in-app.
@@ -108,6 +116,7 @@ export function PluggableApplicationRenderer({
     onOpenAiAssistant,
     onCloseAiAssistant,
     onAiAssistantContext,
+    onAiAssistantReportSaved,
     aiLinkClickHandlerRef,
     aiEventReceiveRef,
     navigationRequestRef,
@@ -122,6 +131,7 @@ export function PluggableApplicationRenderer({
     const onOpenAiAssistantRef = useAutoupdateRef(onOpenAiAssistant);
     const onCloseAiAssistantRef = useAutoupdateRef(onCloseAiAssistant);
     const onAiAssistantContextRef = useAutoupdateRef(onAiAssistantContext);
+    const onAiAssistantReportSavedRef = useAutoupdateRef(onAiAssistantReportSaved);
     const containerRef = useRef<HTMLDivElement>(null);
     const mountHandleRef = useRef<IPluggableApplicationMountHandle | undefined>(undefined);
     // The app/module pair currently mounted. Held so the context-change effect can
@@ -178,6 +188,15 @@ export function PluggableApplicationRenderer({
                 });
                 return;
             }
+            if (isAiAssistantReportSavedEvent(event)) {
+                onAiAssistantReportSavedRef.current?.({
+                    conversationId: event.payload.conversationId,
+                    itemId: event.payload.itemId,
+                    reportRef: event.payload.reportRef,
+                    savedReportId: event.payload.savedReportId,
+                });
+                return;
+            }
             if (isDocumentTitleChangedEvent(event)) {
                 onDocumentTitleChangeRef.current?.(app.id, event.payload.pageTitle);
             }
@@ -188,6 +207,7 @@ export function PluggableApplicationRenderer({
             onOpenAiAssistantRef,
             onCloseAiAssistantRef,
             onAiAssistantContextRef,
+            onAiAssistantReportSavedRef,
         ],
     );
 

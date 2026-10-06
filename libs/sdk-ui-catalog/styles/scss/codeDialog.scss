@@ -71,16 +71,9 @@
     // The kit config editor carries its own frame, toolbar and gutter styling; the dialog only
     // sizes it to fill the body and keeps the as-code font for the document itself.
     .gd-ui-kit-config-editor {
+        --config-editor-font-family: "Andale Mono", monospace;
+
         height: 100%;
-    }
-
-    .gd-input-syntax-highlighting-input {
-        font-family: "Andale Mono", monospace;
-        font-size: 14px;
-
-        .cm-content {
-            font-family: "Andale Mono", monospace;
-        }
     }
 }
 

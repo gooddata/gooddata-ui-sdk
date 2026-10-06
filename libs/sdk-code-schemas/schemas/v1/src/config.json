@@ -304,7 +304,7 @@
 
         "line_style_mapping": {
             "$ref": "#/$defs/lineStyleMapping",
-            "description": "Per-series line style and weight overrides. Keys are measure identifiers."
+            "description": "Per-series line style and weight overrides. Keys are metric local identifiers, or attribute element URIs (on Tiger, the element's primary label value) when the chart is segmented or stacked by an attribute."
         },
         "conditional_formatting": {
             "type": "object",
@@ -620,11 +620,6 @@
         "lineStyleMapping": {
             "title": "Line Style Mapping",
             "type": "object",
-            "$semantic": {
-                "type": "reference",
-                "source": "current.query.metric.localId",
-                "mode": "property"
-            },
             "additionalProperties": {
                 "type": "object",
                 "additionalProperties": false,

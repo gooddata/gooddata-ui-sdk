@@ -8,7 +8,7 @@ import { defineMessages, useIntl } from "react-intl";
 
 import { type AgentCustomSkill } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { SyntaxHighlightingInput } from "@gooddata/sdk-ui-kit";
+import { DefaultSyntaxHighlightingInput } from "@gooddata/sdk-ui-kit";
 
 import { useGenAIStandaloneInputData } from "../hooks/useGenAIStandaloneInputData.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
@@ -154,7 +154,7 @@ function StandaloneInputContent({
             <div className="gd-gen-ai-chat__input__content">
                 <div className="gd-gen-ai-chat__input__container">
                     <div className="gd-gen-ai-chat__input__text" {...ref}>
-                        <SyntaxHighlightingInput
+                        <DefaultSyntaxHighlightingInput
                             className="gd-gen-ai-chat__input__mc"
                             placeholder={placeholder ?? intl.formatMessage(msgs.placeholder)}
                             value={value}

@@ -102,6 +102,7 @@ vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
                         captured.rows.push({ id: g.id, name: g.name, email: g.email });
                         return <div key={g.id}>{g.controls}</div>;
                     })}
+                    {props.workspaceControls}
                 </div>
             );
         },
@@ -193,6 +194,7 @@ function makeController(
         selfManagedDisabledLevels: undefined,
         workspaceDisabledLevels: undefined,
         grantableDisabledLevels: undefined,
+        callerLevel: undefined,
         granteeControlsLocked: false,
         showAdminAccessNote: false,
         generalAccess: "RESTRICTED",
@@ -477,9 +479,12 @@ describe("ObjectShareDialog self row", () => {
     it("caps the workspace rule at the caller's own level too", () => {
         renderDialog(
             makeController({
+                grantees: [],
                 generalAccess: "WORKSPACE",
                 workspaceLevel: "VIEW",
                 grantableDisabledLevels: ["EDIT"],
+                // What the controller derives for the rule from the same limit.
+                workspaceDisabledLevels: ["EDIT"],
             }),
         );
 
@@ -494,6 +499,85 @@ describe("ObjectShareDialog self row", () => {
         renderDialog(makeController({ grantees: [OTHER_GRANTEE], grantableDisabledLevels: undefined }));
 
         expect(captured.controls.at(-1)?.disabledLevels).toBeUndefined();
+    });
+
+    it("locks a user row whose grant is above the caller's own level", () => {
+        // The server refuses changing or removing a grant above the caller's level.
+        renderDialog(
+            makeController({
+                grantees: [{ ...OTHER_GRANTEE, level: "EDIT" as const, directLevel: "EDIT" as const }],
+                callerLevel: "SHARE",
+            }),
+        );
+
+        const row = captured.controls.at(-1)!;
+        expect(row.disabledLevels).toEqual(["EDIT", "SHARE", "VIEW"]);
+        expect(row.disabledLevelTooltips?.VIEW).toMatch(/users with higher permissions than you have/i);
+        expect(row.isRemoveDisabled).toBe(true);
+        expect(row.removeDisabledTooltip).toMatch(/users with higher permissions than you have/i);
+    });
+
+    it("words the lock for a group row as a group", () => {
+        renderDialog(
+            makeController({
+                grantees: [
+                    {
+                        id: "group:g1",
+                        kind: "group" as const,
+                        granteeRef: idRef("g1"),
+                        name: "Marketing",
+                        level: "EDIT" as const,
+                        directLevel: "EDIT" as const,
+                    },
+                ],
+                callerLevel: "SHARE",
+            }),
+        );
+
+        expect(captured.controls.at(-1)?.removeDisabledTooltip).toMatch(/groups with higher permissions/i);
+    });
+
+    it("offers no label scope on a row above the caller's own level", () => {
+        const label = {
+            ref: idRef("lbl.name"),
+            id: "lbl.name",
+            title: "Name",
+            isPrimary: false,
+            isDefault: true,
+        };
+        renderDialog(
+            makeController({
+                grantees: [
+                    { ...OTHER_GRANTEE, level: "EDIT" as const, directLevel: "EDIT" as const },
+                    {
+                        ...OTHER_GRANTEE,
+                        id: "user:u2",
+                        level: "SHARE" as const,
+                        directLevel: "SHARE" as const,
+                    },
+                ],
+                callerLevel: "SHARE",
+                labels: [label],
+            }),
+        );
+
+        const [above, atCaller] = captured.controls.slice(-2);
+        expect(above.labels).toEqual([]);
+        expect(atCaller.labels).toHaveLength(1);
+    });
+
+    it("keeps a row at the caller's own level editable and removable", () => {
+        renderDialog(
+            makeController({
+                grantees: [{ ...OTHER_GRANTEE, level: "SHARE" as const, directLevel: "SHARE" as const }],
+                callerLevel: "SHARE",
+                grantableDisabledLevels: ["EDIT"],
+            }),
+        );
+
+        const row = captured.controls.at(-1)!;
+        expect(row.disabledLevels).toEqual(["EDIT"]);
+        expect(row.isRemoveDisabled).toBe(false);
     });
 
     it("keeps lowering enabled while the direct grant sits above what is inherited", () => {
@@ -535,6 +619,24 @@ describe("ObjectShareDialog self row", () => {
         });
         expect(controller.actions.changePermissionLevel).toHaveBeenCalledWith("user:self", "VIEW");
         expect(lastSelfConfirm()?.isOpen).toBe(false);
+    });
+
+    it("raises the signed-in user's own level without the restriction confirm", () => {
+        // A group can give the caller more than their own row, so raising the row is allowed.
+        const controller = makeController({
+            grantees: [{ ...SELF_GRANTEE, level: "SHARE" as const, directLevel: "SHARE" as const }],
+            selfManagedGranteeId: SELF_GRANTEE.id,
+            selfManagedDisabledLevels: [],
+            callerLevel: "EDIT",
+        });
+        renderDialog(controller);
+
+        act(() => {
+            captured.controls.at(-1)!.onPermissionChange!("EDIT");
+        });
+
+        expect(lastSelfConfirm()?.isOpen).toBe(false);
+        expect(controller.actions.changePermissionLevel).toHaveBeenCalledWith("user:self", "EDIT");
     });
 
     it("stages no self-restrict confirm for a pick an inherited floor makes a no-op", () => {

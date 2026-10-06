@@ -150,7 +150,7 @@ export type StoreContext = {
  */
 export interface IGenAIContextObject {
     id: string;
-    ref: ObjRef;
+    ref?: ObjRef;
     title: string;
     nesting: number;
     type: GenAIObjectType | "widget" | "report";
