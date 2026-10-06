@@ -6,7 +6,7 @@ import cx from "classnames";
 import { cloneDeep, set } from "lodash-es";
 import { useIntl } from "react-intl";
 
-import { type IColor, isMeasureDescriptor } from "@gooddata/sdk-model";
+import { type IColor } from "@gooddata/sdk-model";
 import { type ChartFillType, type LineStyle } from "@gooddata/sdk-ui-charts";
 import { Button } from "@gooddata/sdk-ui-kit";
 
@@ -16,6 +16,7 @@ import { type IColorConfiguration, type IColoredItem } from "../../../interfaces
 import { type IReferences, type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import {
     getColoredInputItems,
+    getLineStyleMappingId,
     getLineStyleProperties,
     getMappingHeaderId,
     getProperties,
@@ -86,15 +87,11 @@ export function ColorsSection({
         lineStyle: LineStyle | undefined,
         lineWidth: (1 | 2 | 3 | 4) | undefined,
     ) => {
-        const { mappingHeader } = item;
-        if (!mappingHeader || !properties || !isMeasureDescriptor(mappingHeader)) {
+        const lineStyleMappingId = getLineStyleMappingId(item.mappingHeader);
+        if (!properties || lineStyleMappingId === undefined) {
             return;
         }
-        const localId = mappingHeader.measureHeaderItem.localIdentifier;
-        if (!localId) {
-            return;
-        }
-        const newProperties = getLineStyleProperties(properties, localId, lineStyle, lineWidth);
+        const newProperties = getLineStyleProperties(properties, lineStyleMappingId, lineStyle, lineWidth);
         pushData?.({ messageId: COLOR_MAPPING_CHANGED, properties: newProperties });
     };
 

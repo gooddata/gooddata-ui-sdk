@@ -190,4 +190,12 @@ export type IconType =
     | "timezone"
     | "sidePanelCollapse"
     | "sidePanel"
-    | "sidePanelExpand";
+    | "sidePanelExpand"
+    | "lineStyle"
+    | "lineStyleSolid"
+    | "lineStyleDashed"
+    | "lineStyleDotted"
+    | "lineWidth1"
+    | "lineWidth2"
+    | "lineWidth3"
+    | "lineWidth4";

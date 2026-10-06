@@ -2,6 +2,7 @@
 
 import { type ICreateAlert, type ISaveAlert } from "./alerts.js";
 import {
+    type IChangeDashboardDefinition,
     type IChangeIgnoreExecutionTimestamp,
     type IChangeSharing,
     type IDeleteDashboard,
@@ -282,6 +283,7 @@ export type DashboardCommands =
     | IApplyFilterContextWorkingSelection
     | IResetFilterContextWorkingSelection
     | IChangeIgnoreExecutionTimestamp
+    | IChangeDashboardDefinition
     | ISwitchDashboardTab
     | ICreateDashboardTab
     | IRepositionDashboardTab

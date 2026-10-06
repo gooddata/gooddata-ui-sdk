@@ -16,9 +16,11 @@ import { type IInsightWidget, type IdentifierRef } from "@gooddata/sdk-model";
 import {
     convertChatConversationErrorFromBackend,
     convertChatConversationFromBackend,
+    convertChatConversationItemDetailFromBackend,
     convertChatConversationItemFromBackend,
     convertChatSuggestionItemFromBackend,
 } from "./genAIConvertor.js";
+import { REPORT_COPILOT_SAMPLE_PART } from "./reportCopilotSample.fixture.js";
 
 describe("genAIConvertor", () => {
     const dateNormalizer = vi.fn((val) => val);
@@ -308,6 +310,41 @@ describe("genAIConvertor", () => {
                 type: "toolResult",
                 callId: "call-2",
                 result: invalidJson,
+            });
+        });
+    });
+
+    describe("report part", () => {
+        it("converts a report part next to the text around it", () => {
+            const item = {
+                conversationId: "conv-1",
+                itemIndex: 0,
+                itemId: "item-id",
+                role: "assistant",
+                createdAt: "2024-01-01T00:00:00Z",
+                content: {
+                    type: "multipart",
+                    parts: [{ type: "text", text: "Here is the report." }, REPORT_COPILOT_SAMPLE_PART],
+                },
+            } as unknown as AiConversationItemResponse;
+
+            const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+
+            const parts = (converted.content as IChatConversationMultipartContent).parts;
+            expect(parts.map((part) => part.type)).toEqual(["text", "report"]);
+            expect(parts[1]).toMatchObject({ type: "report", report: { title: "Top Customers — H2 2025" } });
+        });
+    });
+
+    describe("compose answer detail", () => {
+        it.each(["dashboard", "report"] as const)("keeps %s as the output the turn produced", (output) => {
+            expect(
+                convertChatConversationItemDetailFromBackend({ category: "composeAnswer", output }),
+            ).toEqual({
+                category: "composeAnswer",
+                modelId: undefined,
+                suggestedActions: undefined,
+                output,
             });
         });
     });

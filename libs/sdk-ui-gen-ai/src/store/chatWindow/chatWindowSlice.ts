@@ -64,6 +64,10 @@ type ChatWindowSliceState = {
      */
     keyDriverAnalysisMinimized?: boolean;
     /**
+     * Indicates whether the KeyDriverAnalysis component is mounted.
+     */
+    isKeyDriverAnalysisMounted?: boolean;
+    /**
      * Object types to use for the chat UI.
      */
     objectTypes?: GenAIObjectType[];
@@ -139,6 +143,7 @@ const initialState: ChatWindowSliceState = {
     isHistory: false,
     isFullscreen: false,
     colorPalette: undefined,
+    isKeyDriverAnalysisMounted: false,
     settings: undefined,
     objectTypes: undefined,
     includeTags: undefined,
@@ -213,6 +218,12 @@ const chatWindowSlice = createSlice({
             { payload: { minimized } }: PayloadAction<{ minimized?: boolean }>,
         ) => {
             state.keyDriverAnalysisMinimized = minimized;
+        },
+        setKeyDriverAnalysisMountedAction: (
+            state,
+            { payload: { isMounted } }: PayloadAction<{ isMounted: boolean }>,
+        ) => {
+            state.isKeyDriverAnalysisMounted = isMounted;
         },
         setObjectTypesAction: (
             state,
@@ -406,6 +417,7 @@ export const {
     copyToClipboardAction,
     setKeyDriverAnalysisAction,
     setKeyDriverAnalysisMinimizedAction,
+    setKeyDriverAnalysisMountedAction,
     setObjectTypesAction,
     setTagsAction,
     setCatalogItemsActions,

@@ -1,12 +1,16 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { type IDashboardExportPresentationOptions } from "@gooddata/sdk-backend-spi";
+import {
+    type IDashboardExportPresentationOptions,
+    type IDashboardReferences,
+} from "@gooddata/sdk-backend-spi";
 import {
     type DashboardAttributeFilterConfigMode,
     type DashboardAttributeFilterSelectionType,
     type DashboardDateFilterConfigMode,
     type FilterContextItem,
     type IDashboard,
+    type IInsight,
     type IWorkspacePermissions,
     type ObjRef,
 } from "@gooddata/sdk-model";
@@ -1076,5 +1080,69 @@ export function changeIgnoreExecutionTimestamp(
         type: "GDC.DASH/CMD.CHANGE_IGNORE_EXECUTION_TIMESTAMP",
         correlationId,
         payload: { ignoreExecutionTimestamp },
+    };
+}
+
+/**
+ * Payload of the {@link IChangeDashboardDefinition} command.
+ * @alpha
+ */
+export interface IChangeDashboardDefinitionPayload {
+    /**
+     * Dashboard definition to apply to the current dashboard.
+     */
+    readonly dashboard: IDashboard;
+
+    /**
+     * Referenced objects used in the dashboard definition.
+     */
+    readonly references?: Partial<IDashboardReferences>;
+
+    /**
+     * Insights used in the dashboard definition.
+     * @deprecated Use references.insights instead.
+     */
+    readonly insights?: ReadonlyArray<IInsight>;
+}
+
+/**
+ * Command for updating the dashboard definition in-place without re-initializing the dashboard component.
+ * @alpha
+ */
+export interface IChangeDashboardDefinition extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.CHANGE_DEFINITION";
+    readonly payload: IChangeDashboardDefinitionPayload;
+}
+
+/**
+ * Creates the {@link IChangeDashboardDefinition} command.
+ *
+ * @remarks
+ * Dispatching this command will update the dashboard definition, tabs, layout, filter context, and references
+ * in the active dashboard store without remounting or re-initializing the dashboard component.
+ *
+ * @alpha
+ * @param dashboard - new dashboard definition
+ * @param references - optional partial dashboard references or array of insights used in the dashboard
+ * @param correlationId - specify correlation id. It will be included in all events emitted during command processing.
+ * @returns change dashboard definition command
+ */
+export function changeDashboardDefinition(
+    dashboard: IDashboard,
+    references?: Partial<IDashboardReferences> | ReadonlyArray<IInsight>,
+    correlationId?: string,
+): IChangeDashboardDefinition {
+    const normalizedReferences: Partial<IDashboardReferences> | undefined = Array.isArray(references)
+        ? { insights: [...references] }
+        : (references as Partial<IDashboardReferences> | undefined);
+
+    return {
+        type: "GDC.DASH/CMD.CHANGE_DEFINITION",
+        correlationId,
+        payload: {
+            dashboard,
+            references: normalizedReferences,
+            insights: normalizedReferences?.insights,
+        },
     };
 }

@@ -168,6 +168,24 @@ describe("collectContextReferences", () => {
         ]);
     });
 
+    it("should collect a report that is not saved yet", () => {
+        const context: IGenAIUserContext = { view: { report: { title: "Draft" } } };
+
+        expect(collectContextReferences(context, undefined)).toEqual([
+            { id: "unsaved", type: "report", where: "view.report", title: "Draft", nesting: 0 },
+        ]);
+    });
+
+    it("should skip the ambient report when it is not saved yet", () => {
+        const context: IGenAIUserContext = { view: { report: { title: "Draft" } } };
+        const selected: SelectedContext = {
+            activated: true,
+            report: { id: "unsaved", title: "Draft", nesting: 0, type: "report", where: "view.report" },
+        };
+
+        expect(collectContextReferences(context, selected)).toEqual([]);
+    });
+
     it("should skip the ambient report", () => {
         const ref = idRef("q1", "report");
         const context: IGenAIUserContext = { view: { report: { ref, title: "Q1" } } };

@@ -463,16 +463,13 @@ describe("scheduled-export draft filter-write equivalence — widget schedule, n
 });
 
 // ---------------------------------------------------------------------------
-// Case 5: SE widget schedule, EMPTY selection — pins the known asymmetry verbatim (do not "fix"):
-// the mount seeds a draft that OMITS `content.filters` entirely (no filters were ever selected, so
-// the new-automation constructor only adds the key when there is something non-empty to store —
-// see `newWidgetExportDefinitionMetadataObjectDefinition`'s `(dashboardFilters ?? []).length > 0`
-// gate), while `onFiltersChange` unconditionally assigns `content.filters = appliedFilters`, which
-// for an empty selection is `[]`. Scoping doc F5.
+// Case 5: SE widget schedule, EMPTY selection — the mount and a no-op filter edit both store
+// `filters: []`. A widget schedule without `filters` would fall back to the dashboard's stored
+// filters on export, including the restricted ones the schedule left out.
 // ---------------------------------------------------------------------------
 
-describe("scheduled-export draft filter-write equivalence — widget schedule, EMPTY selection (F5 asymmetry)", () => {
-    it("mount seeds a draft with no `filters` key; a no-op filter edit introduces `filters: []`", () => {
+describe("scheduled-export draft filter-write equivalence — widget schedule, EMPTY selection", () => {
+    it("mount and a no-op filter edit both store an explicit empty filter list", () => {
         const dialogContext = makeDialogContext({
             widget: SENTINEL_WIDGET,
             insight: SENTINEL_INSIGHT,
@@ -492,19 +489,13 @@ describe("scheduled-export draft filter-write equivalence — widget schedule, E
         expect(selection).toEqual([]);
 
         const seed = widgetShape(result.current.draft.editedAutomation);
-        // Pinned pre-existing master behavior (scoping doc F5): an empty selection is not stored at
-        // all on mount ...
-        expect(seed.filters).toBeUndefined();
+        expect(seed.filters).toEqual([]);
         expect(seed.visibleFilters).toEqual([]);
 
         act(() => {
             result.current.filters.onFiltersChange(selection);
         });
 
-        const afterNoopEdit = widgetShape(result.current.draft.editedAutomation);
-        // ... but the very same no-op edit writes it as an explicit empty array. This is the
-        // asymmetry the guard pins, not fixes.
-        expect(afterNoopEdit.filters).toEqual([]);
-        expect(afterNoopEdit.visibleFilters).toEqual([]);
+        expect(widgetShape(result.current.draft.editedAutomation)).toEqual(seed);
     });
 });

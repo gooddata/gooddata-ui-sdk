@@ -9,6 +9,7 @@ import { type IColorConfiguration, type IColoredItem } from "../interfaces/Color
 
 import {
     getColoredInputItems,
+    getLineStyleMappingId,
     getProperties,
     getPropertiesWithLineStyleMappingForMeasures,
     getSearchedItems,
@@ -594,6 +595,91 @@ describe("color utils", () => {
         it("should return all input items when called with empty string", () => {
             const searchedItems = getSearchedItems(colorItems, "");
             expect(searchedItems).toEqual(colorItems);
+        });
+    });
+
+    describe("getLineStyleMappingId", () => {
+        const emptyValueHeader = {
+            attributeHeaderItem: { uri: null, name: null },
+        } as unknown as IMappingHeader;
+
+        it("should return measure local identifier for a measure", () => {
+            expect(getLineStyleMappingId(measureColorAssignments[0].headerItem)).toBe("m1");
+        });
+
+        it("should return attribute element uri for a segment", () => {
+            expect(getLineStyleMappingId(attributeColorAssignments[0].headerItem)).toBe("/a/1");
+        });
+
+        it("should return undefined for the empty value segment", () => {
+            expect(getLineStyleMappingId(emptyValueHeader)).toBeUndefined();
+        });
+
+        it("should return undefined for a waterfall color header", () => {
+            expect(getLineStyleMappingId(waterfallColorHeaderColorAssignments[0].headerItem)).toBeUndefined();
+        });
+
+        it("should return undefined for a missing header", () => {
+            expect(getLineStyleMappingId(undefined)).toBeUndefined();
+        });
+    });
+
+    describe("getColoredInputItems with lineStyleMapping", () => {
+        const colors: IColorConfiguration = {
+            colorPalette: DefaultColorPalette,
+            colorAssignments: [
+                { headerItem: { attributeHeaderItem: { uri: "/ahi1", name: "abc" } }, color: color1 },
+                { headerItem: { attributeHeaderItem: { uri: "/ahi2", name: "def" } }, color: color1 },
+            ],
+        };
+
+        it("should apply line style to the segment with the matching attribute element uri", () => {
+            const inputItems = getColoredInputItems(colors, [
+                { id: "/ahi2", lineStyle: "dotted", lineWidth: 4 },
+            ]);
+
+            expect(inputItems.map((item) => [item.lineStyle, item.lineWidth])).toEqual([
+                [undefined, undefined],
+                ["dotted", 4],
+            ]);
+        });
+    });
+
+    describe("getValidProperties with lineStyleMapping", () => {
+        it("should keep line styles of segments which are in color assignment", () => {
+            const properties = {
+                controls: { lineStyleMapping: [{ id: "/a/1", lineStyle: "dashed" as const }] },
+            };
+
+            const result = getValidProperties(properties, attributeColorAssignments);
+            expect(result.controls!["lineStyleMapping"]).toEqual([{ id: "/a/1", lineStyle: "dashed" }]);
+        });
+
+        it("should erase line styles of segments which are not in color assignment", () => {
+            const properties = {
+                controls: { lineStyleMapping: [{ id: "/a/2", lineStyle: "dashed" as const }] },
+            };
+
+            const result = getValidProperties(properties, attributeColorAssignments);
+            expect(result.controls!["lineStyleMapping"]).toBeNull();
+        });
+
+        it("should erase measure line styles when the chart is segmented", () => {
+            const properties = {
+                controls: { lineStyleMapping: [{ id: "m1", lineStyle: "dashed" as const }] },
+            };
+
+            const result = getValidProperties(properties, attributeColorAssignments);
+            expect(result.controls!["lineStyleMapping"]).toBeNull();
+        });
+
+        it("should keep measure line styles which are in color assignment", () => {
+            const properties = {
+                controls: { lineStyleMapping: [{ id: "m1", lineWidth: 1 as const }] },
+            };
+
+            const result = getValidProperties(properties, measureColorAssignments);
+            expect(result.controls!["lineStyleMapping"]).toEqual([{ id: "m1", lineWidth: 1 }]);
         });
     });
 

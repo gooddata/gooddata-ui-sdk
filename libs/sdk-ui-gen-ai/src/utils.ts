@@ -49,6 +49,70 @@ export function getDashboardHref(
         : `/dashboards/#/workspace/${wsId}/${dasId}/tab/defaultTabId`;
 }
 
+// Encoded like the Publisher app's own route builder, so an id with a slash stays one segment.
+export function getReportHref(wsId: string, reportId: string) {
+    return `/workspace/${wsId}/publisher/report/${encodeURIComponent(reportId)}`;
+}
+
+function getReportDraftParams(conversationId: string, itemId: string) {
+    // The parameter names are what the reports app reads the draft back by.
+    return new URLSearchParams({ conversation: conversationId, item: itemId }).toString();
+}
+
+export function getReportDraftHref(wsId: string, conversationId: string, itemId: string) {
+    return `/workspace/${wsId}/publisher/new?${getReportDraftParams(conversationId, itemId)}`;
+}
+
+export function getReportModifyHref({
+    workspaceId,
+    reportId,
+    conversationId,
+    itemId,
+}: {
+    workspaceId: string;
+    reportId: string;
+    conversationId: string;
+    itemId: string;
+}) {
+    return `${getReportHref(workspaceId, reportId)}?${getReportDraftParams(conversationId, itemId)}`;
+}
+
+export function getReportItemUrl({
+    workspaceId,
+    saved,
+    baseReportId,
+    conversationId,
+    itemId,
+}: {
+    workspaceId: string;
+    saved?: string | null;
+    baseReportId?: string | null;
+    conversationId?: string;
+    itemId?: string;
+}) {
+    if (!conversationId || !itemId) {
+        return saved ? getReportHref(workspaceId, saved) : undefined;
+    }
+    const reportId = saved || baseReportId;
+    return reportId
+        ? getReportModifyHref({ workspaceId, reportId, conversationId, itemId })
+        : getReportDraftHref(workspaceId, conversationId, itemId);
+}
+
+export function formatReportPeriod(
+    periodStart: string,
+    periodEnd: string,
+    intl: IntlShape,
+): string | undefined {
+    // A date-only string parses as UTC midnight, which shows as the day before west of Greenwich.
+    const start = new Date(`${periodStart}T00:00:00`);
+    const end = new Date(`${periodEnd}T00:00:00`);
+    if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+        return undefined;
+    }
+    return intl.formatDateTimeRange(start, end, { dateStyle: "medium" });
+}
+
 export function getAbsoluteVisualizationHref(wsId: string, visId: string, status: "draft" | "saved") {
     return `${window.location.origin}${getVisualizationHref(wsId, visId, status)}`;
 }

@@ -165,6 +165,7 @@ function ObjectShareDialogSession({
         isRowRemoveDisabled,
         isRowControlsLocked,
         rowRemoveDisabledTooltip,
+        isRowAboveCaller,
         onClose: closeDialog,
         onRowPermissionChange,
         onRowRemove,
@@ -223,7 +224,8 @@ function ObjectShareDialogSession({
             isPending: g.pending !== undefined,
             controls: (
                 <UiGranteeRowControls
-                    labels={rowLabelItems(g.id)}
+                    // Label writes carry the grantee's level, which the server refuses above the caller's.
+                    labels={isRowAboveCaller(g) ? [] : rowLabelItems(g.id)}
                     selectedLabelIds={state.selectedLabelIdsByGrantee[g.id] ?? state.labels.map((l) => l.id)}
                     permissionLevel={g.level}
                     effectivePermission={g.effectivePermission}
@@ -239,7 +241,7 @@ function ObjectShareDialogSession({
                         ...rowDisabledLevelTooltips(g),
                     }}
                     isRemoveDisabled={isRowRemoveDisabled(g)}
-                    removeDisabledTooltip={rowRemoveDisabledTooltip}
+                    removeDisabledTooltip={rowRemoveDisabledTooltip(g)}
                     // Disabled while the row's own write is saving, while mutations are
                     // gated (unresolved label scope would orphan real per-label grants),
                     // and while a sole row's self identity is unknown.

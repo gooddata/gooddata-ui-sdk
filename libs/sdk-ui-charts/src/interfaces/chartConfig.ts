@@ -534,8 +534,10 @@ export interface IChartConfig {
      * Per-series line style and weight configuration for line-based charts.
      *
      * @remarks
-     * Each entry maps a measure local identifier to a specific line style and/or weight.
-     * Only applicable to line and combo chart line series.
+     * Each entry maps a series to a specific line style and/or weight. A series is identified by its
+     * measure local identifier or, when the chart is segmented or stacked by an attribute, by the URI
+     * of the attribute element.
+     * Only applicable to line, area, and combo chart line and area series.
      *
      * @beta
      */
@@ -550,13 +552,14 @@ export interface IChartConfig {
 export type LineStyle = "solid" | "dashed" | "dotted";
 
 /**
- * Maps a measure to a specific line style and/or weight.
+ * Maps a series to a specific line style and/or weight.
  *
  * @beta
  */
 export interface ILineStyleMappingItem {
     /**
-     * Measure local identifier.
+     * Measure local identifier, or attribute element URI when the chart is segmented or stacked
+     * by an attribute.
      */
     id: string;
 

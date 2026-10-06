@@ -11,14 +11,16 @@ import {
     Dropdown,
     DropdownList,
     type IAlignPoint,
+    type IconType,
     Overlay,
     SingleSelectListItem,
+    UiIcon,
 } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { type IChartFillConfig, type PatternFillName } from "@gooddata/sdk-ui-vis-commons";
 
 import { messages } from "../../../../../locales.js";
-import { ColorDropdown } from "../colorDropdown/ColorDropdown.js";
+import { ColorDropdown, type ISelectableChild } from "../colorDropdown/ColorDropdown.js";
 import { getIconStyle } from "../colorDropdown/ColorPaletteItem.js";
 import { OptionalPatternFill } from "../colorDropdown/OptionalPatternFill.js";
 
@@ -35,39 +37,50 @@ const DROPDOWN_ALIGN_POINTS: IAlignPoint[] = [
 const STYLE_DROPDOWN_WIDTH = 120;
 const WEIGHT_DROPDOWN_WIDTH = 110;
 
-function StrokeStyleIcon({ style, size = 20 }: { style: LineStyle; size?: number }) {
-    const strokeDasharray = style === "dashed" ? "5,2" : style === "dotted" ? "0.5,3" : undefined;
+interface ILineStyleColorTriggerProps extends ISelectableChild {
+    colorClassName: string;
+    ariaLabel: string;
+    swatchStyle: CSSProperties;
+    chartFill?: IChartFillConfig;
+    patternFillIndex?: number | PatternFillName;
+}
+
+function LineStyleColorTrigger({
+    colorClassName,
+    ariaLabel,
+    swatchStyle,
+    chartFill,
+    patternFillIndex,
+    disabled,
+}: ILineStyleColorTriggerProps) {
     return (
-        <svg width={size} height={size} viewBox="0 0 20 20" aria-hidden="true">
-            <line
-                x1="2"
-                y1="10"
-                x2="18"
-                y2="10"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeDasharray={strokeDasharray}
-            />
-        </svg>
+        <div
+            className={cx("gd-line-style-toolbar__btn", colorClassName, { "is-disabled": disabled })}
+            aria-label={ariaLabel}
+        >
+            <div className="gd-line-style-toolbar__color-swatch" style={swatchStyle}>
+                <OptionalPatternFill
+                    chartFill={chartFill?.type ?? "solid"}
+                    patternFillIndex={patternFillIndex ?? 0}
+                />
+            </div>
+            <i className="gd-icon-navigatedown" aria-hidden="true" />
+        </div>
     );
 }
 
-function StrokeWeightIcon({ weight, size = 14 }: { weight: 1 | 2 | 3 | 4; size?: number }) {
-    return (
-        <svg width={size} height={size} viewBox="0 0 14 14" aria-hidden="true">
-            <line
-                x1="1"
-                y1="7"
-                x2="13"
-                y2="7"
-                stroke="currentColor"
-                strokeWidth={weight}
-                strokeLinecap="round"
-            />
-        </svg>
-    );
-}
+const LINE_STYLE_ICONS: Record<LineStyle, IconType> = {
+    solid: "lineStyleSolid",
+    dashed: "lineStyleDashed",
+    dotted: "lineStyleDotted",
+};
+
+const LINE_WIDTH_ICONS: Record<1 | 2 | 3 | 4, IconType> = {
+    1: "lineWidth1",
+    2: "lineWidth2",
+    3: "lineWidth3",
+    4: "lineWidth4",
+};
 
 export interface ILineStyleDialogProps {
     alignTo: HTMLElement | null;
@@ -151,20 +164,14 @@ export const LineStyleDialog = memo(function LineStyleDialog({
                     chartFill={chartFill}
                     patternFillIndex={patternFillIndex}
                 >
-                    <div
-                        className={cx("gd-line-style-toolbar__btn", `s-color-${r}-${g}-${b}`, {
-                            "is-disabled": disabled,
-                        })}
-                        aria-label={intl.formatMessage({ id: messages.colors.id })}
-                    >
-                        <div className="gd-line-style-toolbar__color-swatch" style={colorSwatchStyle}>
-                            <OptionalPatternFill
-                                chartFill={chartFill?.type ?? "solid"}
-                                patternFillIndex={patternFillIndex ?? 0}
-                            />
-                        </div>
-                        <i className="gd-icon-navigatedown" aria-hidden="true" />
-                    </div>
+                    <LineStyleColorTrigger
+                        colorClassName={`s-color-${r}-${g}-${b}`}
+                        ariaLabel={intl.formatMessage({ id: messages.colors.id })}
+                        swatchStyle={colorSwatchStyle}
+                        chartFill={chartFill}
+                        patternFillIndex={patternFillIndex}
+                        disabled={disabled}
+                    />
                 </ColorDropdown>
 
                 <div className="gd-line-style-toolbar__divider" aria-hidden="true" />
@@ -183,7 +190,7 @@ export const LineStyleDialog = memo(function LineStyleDialog({
                             aria-haspopup="listbox"
                             aria-expanded={isOpen}
                         >
-                            <StrokeStyleIcon style={lineStyle} />
+                            <UiIcon type="lineStyle" size={20} color="currentColor" />
                             <i className="gd-icon-navigatedown" aria-hidden="true" />
                         </button>
                     )}
@@ -194,7 +201,13 @@ export const LineStyleDialog = memo(function LineStyleDialog({
                             renderItem={({ item }) => (
                                 <SingleSelectListItem
                                     title={item.title}
-                                    icon={<StrokeStyleIcon style={item.id} size={14} />}
+                                    icon={
+                                        <UiIcon
+                                            type={LINE_STYLE_ICONS[item.id]}
+                                            size={14}
+                                            color="currentColor"
+                                        />
+                                    }
                                     isSelected={item.id === lineStyle}
                                     onClick={() => {
                                         onLineStyleChange(item.id);
@@ -233,7 +246,13 @@ export const LineStyleDialog = memo(function LineStyleDialog({
                             renderItem={({ item }) => (
                                 <SingleSelectListItem
                                     title={item.title}
-                                    icon={<StrokeWeightIcon weight={item.id} />}
+                                    icon={
+                                        <UiIcon
+                                            type={LINE_WIDTH_ICONS[item.id]}
+                                            size={14}
+                                            color="currentColor"
+                                        />
+                                    }
                                     isSelected={item.id === lineWidth}
                                     onClick={() => {
                                         onLineWidthChange(item.id);

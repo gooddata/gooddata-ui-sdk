@@ -147,6 +147,9 @@ export function assigneeMatchesQuery(assignee: IAvailableAccessGrantee, query: s
 /** Permission levels from strongest to weakest; the row shows the strongest it holds. */
 const LEVELS_STRONGEST_FIRST = ["EDIT", "SHARE", "VIEW"] as const satisfies ObjectSharePermissionLevel[];
 
+/** Every permission level, strongest first. */
+export const ALL_LEVELS: readonly ObjectSharePermissionLevel[] = LEVELS_STRONGEST_FIRST;
+
 const LEVEL_RANK: Record<ObjectSharePermissionLevel, number> = { VIEW: 0, SHARE: 1, EDIT: 2 };
 
 /** The strongest permission level present, or undefined when none. */

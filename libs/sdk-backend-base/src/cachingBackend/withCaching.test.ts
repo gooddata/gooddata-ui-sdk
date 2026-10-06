@@ -692,6 +692,7 @@ class CallCountingInsightsService extends DecoratedWorkspaceInsightsService {
 
 const acceptingObjectPermissions: IWorkspaceObjectPermissionsService = {
     getAccessList: async () => ({ grants: [] }),
+    getPermissionsForCurrentUser: async () => [],
     manageObjectPermissions: async () => {},
     getAvailableAssignees: async () => [],
 };

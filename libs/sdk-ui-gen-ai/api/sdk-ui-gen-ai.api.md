@@ -353,6 +353,9 @@ export type GenAIConversationsProps = Omit<GenAiStoreProps, "children"> & {
 export function GenAiInteractionIntelligence(input: IGenAiInteractionIntelligenceProps): JSX.Element | null;
 
 // @public
+export function GenAiKeyDriverAnalysis(): JSX.Element | null;
+
+// @public
 export function GenAiStore(props: GenAiStoreProps): JSX.Element | null;
 
 // @public
@@ -510,6 +513,7 @@ export type IGenAIAssistantConversationVisualizationContentProps = {
         openInAnalyze?: boolean;
         copyLink?: boolean;
     };
+    enableKeyDriverAnalysis?: boolean;
 };
 
 // @public

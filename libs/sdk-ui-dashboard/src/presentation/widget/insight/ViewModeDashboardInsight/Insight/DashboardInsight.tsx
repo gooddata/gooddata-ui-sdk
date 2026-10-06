@@ -323,7 +323,14 @@ export function DashboardInsight({
 
     const renderComponent = () => {
         if (effectiveError) {
-            return <CustomError error={effectiveError} height={clientHeight} width={clientWidth} />;
+            return (
+                <CustomError
+                    error={effectiveError}
+                    widget={widget}
+                    height={clientHeight}
+                    width={clientWidth}
+                />
+            );
         } else {
             return (
                 <>

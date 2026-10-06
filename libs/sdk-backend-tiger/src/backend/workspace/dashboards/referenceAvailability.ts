@@ -12,7 +12,14 @@ import type {
     IUnavailableDashboardReference,
     SupportedDashboardReferenceTypes,
 } from "@gooddata/sdk-backend-spi";
-import { type IDashboard, idRef, isIdentifierRef } from "@gooddata/sdk-model";
+import {
+    type IDashboard,
+    dashboardAttributeFilterItemDisplayForm,
+    idRef,
+    isComputedAttributeRef,
+    isDashboardAttributeFilterItem,
+    isIdentifierRef,
+} from "@gooddata/sdk-model";
 
 import {
     getForbiddenReferences,
@@ -33,8 +40,9 @@ import { objectTypeToTigerIdType } from "../../../types/refTypeMapping.js";
  * entity itself (a dashboard drilling to itself) is never reported: JSON:API does not repeat the
  * primary resource in `included`.
  *
- * Filter display forms are resolved from each filter context's own document. Labels referenced
- * directly by dashboard content (including saved custom URL dependencies) are inspected here.
+ * Filter display forms and computed attributes are resolved from each filter context's own document.
+ * Labels referenced directly by dashboard content (including saved custom URL dependencies) are
+ * inspected here.
  *
  * Dependencies embedded in rich text are extracted by the backend on save; custom URL dependencies
  * are materialized as structured refs by the frontend. Existing dashboards must be saved again (or
@@ -165,30 +173,34 @@ export function resolveUnavailableDashboardReferences(
     );
 }
 
+type FilterContextInspectedType = "displayForm" | "computedAttribute";
+
 /**
- * Resolves which labels (filter display forms) referenced by a filter context are unavailable.
- * The filter context must have been requested with `include: ["labels"]` so the response contains
- * both relationship linkages and document-level `meta.restricted`.
+ * Resolves which filter display forms and computed attributes referenced by a filter context are
+ * unavailable. Each inspected type must have been requested as an include (`labels`,
+ * `computedAttributes`) so the response contains both relationship linkages and document-level
+ * `meta.restricted` for it.
  */
 export function resolveUnavailableFilterContextReferences(
     context: JsonApiFilterContextOut,
-    restricted?: RestrictedObject[],
+    restricted: RestrictedObject[] | undefined,
+    inspected: FilterContextInspectedType[],
 ): IUnavailableDashboardReference[] {
-    return diffInspectedTypes({ data: context, meta: { restricted } } as IJsonApiDocumentLike, [
-        "displayForm",
-    ]);
+    return diffInspectedTypes({ data: context, meta: { restricted } } as IJsonApiDocumentLike, inspected);
 }
 
 /**
- * Filter labels relate to their filter-context entities: the dashboard GET side-loads the
- * filter contexts as bare items (no `relationships`), so the existence linkage for filter display
- * forms is reachable only through a direct filter-context GET with `include=labels`, hence this one
- * batched extra request. It inspects the contexts of the effective dashboard, so a `filterContextRef`
- * override is covered; the synthetic export-override context has no entity behind it and is skipped.
+ * Filter labels and computed attributes relate to their filter-context entities: the dashboard GET
+ * side-loads the filter contexts as bare items (no `relationships`), so the existence linkage for
+ * filter display forms is reachable only through a direct filter-context GET with `include=labels`
+ * (and `computedAttributes`), hence this one batched extra request. `computedAttributes` is included
+ * only when a filter uses one, so dashboards from workspaces without the feature never request it.
+ * It inspects the contexts of the effective dashboard, so a `filterContextRef` override is covered;
+ * the synthetic export-override context has no entity behind it and is skipped.
  * It would become redundant if the backend emitted `relationships.labels` on the filter-context items
  * inside the dashboard's `included` (not agreed with the backend team — an assumption about a possible
  * change; the diff already handles such documents).
- * This is an enrichment: a failure must not fail the dashboard load, so the affected display forms
+ * This is an enrichment: a failure must not fail the dashboard load, so the affected filter objects
  * are left unlisted (see the `unavailable` contract in sdk-backend-spi).
  */
 export async function fetchUnavailableFilterDisplayForms(
@@ -198,7 +210,11 @@ export async function fetchUnavailableFilterDisplayForms(
     types: SupportedDashboardReferenceTypes[],
 ): Promise<IUnavailableDashboardReference[]> {
     const filterContextIds = inspectableFilterContextIds(dashboard);
-    if (!types.includes("displayForm") || filterContextIds.length === 0) {
+    const inspected = (["displayForm", "computedAttribute"] as const).filter(
+        (type) =>
+            types.includes(type) && (type !== "computedAttribute" || usesComputedAttributeFilter(dashboard)),
+    );
+    if (inspected.length === 0 || filterContextIds.length === 0) {
         return [];
     }
     try {
@@ -206,20 +222,31 @@ export async function fetchUnavailableFilterDisplayForms(
             FilterContextApi_GetAllEntitiesFilterContexts(client.axios, client.basePath, {
                 workspaceId,
                 filter: filterContextIds.map((id) => `id==${id}`).join(","),
-                include: ["labels"],
+                include: inspected.map((type) => RELATIONSHIP_KEYS[type]),
                 size: filterContextIds.length,
             }).then((result) => result.data),
         );
         return list.data.flatMap((context) =>
-            resolveUnavailableFilterContextReferences(context, list.meta?.restricted),
+            resolveUnavailableFilterContextReferences(context, list.meta?.restricted, inspected),
         );
     } catch (error) {
         console.warn(
-            "Filter context label availability could not be resolved; treating labels as available.",
+            "Filter context reference availability could not be resolved; treating the references as available.",
             error,
         );
         return [];
     }
+}
+
+function usesComputedAttributeFilter(dashboard: IDashboard): boolean {
+    const contexts = [dashboard.filterContext, ...(dashboard.tabs ?? []).map((tab) => tab.filterContext)];
+    return contexts.some((context) =>
+        context?.filters.some(
+            (filter) =>
+                isDashboardAttributeFilterItem(filter) &&
+                isComputedAttributeRef(dashboardAttributeFilterItemDisplayForm(filter)),
+        ),
+    );
 }
 
 /**

@@ -19,6 +19,7 @@ import type {
     IMeasure,
     IMemoryItemDefinition,
     IMemoryItemMetadataObject,
+    IReportDefinition,
     ISemanticQualityIssuesCalculation,
     ISemanticQualityReport,
     ISemanticSearchRelationship,
@@ -964,6 +965,7 @@ export type GenAIAnswerOutput =
     | "text"
     | "visualization"
     | "dashboard"
+    | "report"
     | "keyDriverAnalysis"
     | "whatIf"
     | "searchResults"
@@ -1129,7 +1131,8 @@ export type IChatConversationMultipartPart =
     | IChatConversationClarifyingQuestionsContent
     | IChatConversationWhatIfContent
     | IChatConversationSearchContent
-    | IChatConversationDashboardContent;
+    | IChatConversationDashboardContent
+    | IChatConversationReportContent;
 
 /**
  * GenAI Chat Conversation text content
@@ -1495,6 +1498,45 @@ export function isChatConversationDashboardContent(
 }
 
 /**
+ * GenAI Chat Conversation report content
+ * @internal
+ */
+export type IChatConversationReportContent = {
+    type: "report";
+    /**
+     * Snapshot of the whole report, not a change to apply to an earlier one.
+     */
+    report: IReportDefinition | null;
+    /**
+     * Id of the report this version of the draft was saved as. Absent until it is saved.
+     */
+    saved?: string | null;
+    /**
+     * Name of the draft in the conversation, needed to record the report it is saved as.
+     */
+    ref?: string | null;
+    /**
+     * Id of the saved report the draft edits. Saving the draft updates that report. Absent when the
+     * draft is a new report.
+     */
+    baseReportId?: string | null;
+    /**
+     * Name of the draft version this one reworks. Absent for a first draft.
+     */
+    refines?: string | null;
+};
+
+/**
+ * Is chat conversation report content
+ * @internal
+ */
+export function isChatConversationReportContent(
+    content: IChatConversationMultipartPart,
+): content is IChatConversationReportContent {
+    return content.type === "report";
+}
+
+/**
  * Feedback for a chat conversation item.
  * @internal
  */
@@ -1556,6 +1598,13 @@ export interface IChatConversationThread {
      * Save user visualization for the interaction.
      */
     resaveVisualisation(oldVisualizationId: string, newVisualizationId: string): Promise<void>;
+    /**
+     * Records the saved report that a report drafted in the conversation became.
+     *
+     * @param reportRef - name of the draft in the conversation
+     * @param savedReportId - id of the report it was saved as
+     */
+    resaveReport(reportRef: string, savedReportId: string): Promise<void>;
     /**
      * Add a user message to the chat thread.
      */

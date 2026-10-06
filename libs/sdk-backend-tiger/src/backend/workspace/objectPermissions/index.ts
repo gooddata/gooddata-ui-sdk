@@ -29,12 +29,21 @@ import {
     ActionsApi_MetricPermissions,
     ActionsApi_VisualizationPermissions,
 } from "@gooddata/api-client-tiger/endpoints/actions";
+import {
+    EntitiesApi_GetEntityAttributes,
+    EntitiesApi_GetEntityComputedAttributes,
+    EntitiesApi_GetEntityFacts,
+    EntitiesApi_GetEntityLabels,
+    EntitiesApi_GetEntityMetrics,
+    EntitiesApi_GetEntityVisualizationObjects,
+} from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/endpoints/profile";
 import {
     type IObjectPermissionsObject,
     type IWorkspaceObjectPermissionsService,
 } from "@gooddata/sdk-backend-spi";
 import {
+    type AccessGranularPermission,
     type IAvailableAccessGrantee,
     type IGranularAccessGrantee,
     type IObjectAccessList,
@@ -84,6 +93,15 @@ export class TigerWorkspaceObjectPermissionsService implements IWorkspaceObjectP
                 ...permissions.userGroups.map(convertUserGroupPermission),
             ],
         };
+    }
+
+    public async getPermissionsForCurrentUser(
+        target: IObjectPermissionsObject,
+    ): Promise<AccessGranularPermission[]> {
+        const objectId = objRefToIdentifier(target.ref, this.authCall);
+        return this.authCall((client) =>
+            fetchCurrentUserPermissionsByKind(client, target.kind, this.workspace, objectId),
+        );
     }
 
     public async manageObjectPermissions(
@@ -200,6 +218,46 @@ const fetchPermissionsByKind = (
                 workspaceId,
                 computedAttributeId: objectId,
             });
+    }
+};
+
+const fetchCurrentUserPermissionsByKind = async (
+    client: ITigerClientBase,
+    kind: ObjectPermissionsObjectKind,
+    workspaceId: string,
+    objectId: string,
+): Promise<AccessGranularPermission[]> => {
+    const { axios, basePath } = client;
+    const params = { workspaceId, objectId, metaInclude: ["permissions" as const] };
+    switch (kind) {
+        case "attribute":
+            return (
+                (await EntitiesApi_GetEntityAttributes(axios, basePath, params)).data.data.meta
+                    ?.permissions ?? []
+            );
+        case "fact":
+            return (
+                (await EntitiesApi_GetEntityFacts(axios, basePath, params)).data.data.meta?.permissions ?? []
+            );
+        case "label":
+            return (
+                (await EntitiesApi_GetEntityLabels(axios, basePath, params)).data.data.meta?.permissions ?? []
+            );
+        case "measure":
+            return (
+                (await EntitiesApi_GetEntityMetrics(axios, basePath, params)).data.data.meta?.permissions ??
+                []
+            );
+        case "insight":
+            return (
+                (await EntitiesApi_GetEntityVisualizationObjects(axios, basePath, params)).data.data.meta
+                    ?.permissions ?? []
+            );
+        case "computedAttribute":
+            return (
+                (await EntitiesApi_GetEntityComputedAttributes(axios, basePath, params)).data.data.meta
+                    ?.permissions ?? []
+            );
     }
 };
 

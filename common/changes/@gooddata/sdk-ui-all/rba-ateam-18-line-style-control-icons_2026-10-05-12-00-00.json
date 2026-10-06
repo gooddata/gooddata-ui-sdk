@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-kit, sdk-ui-ext: Add line style and line weight icons to UiIcon and use them in the line style control; the line style button shows a fixed style glyph, and the Dashed and Dotted options show two dashes and four dots.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

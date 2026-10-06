@@ -16,28 +16,29 @@ type MetaReducer<A extends Action> = CaseReducer<IDashboardMetaState, A>;
 
 type SetMetaPayload = {
     dashboard?: IDashboard;
+    descriptor?: IDashboard;
     initialContent?: boolean;
 };
 const setMeta: MetaReducer<PayloadAction<SetMetaPayload>> = (state, action) => {
-    const { dashboard, initialContent } = action.payload;
+    const { dashboard, descriptor: descriptorDashboard = dashboard, initialContent } = action.payload;
 
     state.persistedDashboard = dashboard;
-    state.descriptor = dashboard
+    state.descriptor = descriptorDashboard
         ? {
-              title: dashboard.title,
-              description: dashboard.description,
-              tags: dashboard.tags,
-              shareStatus: dashboard.shareStatus,
-              evaluationFrequency: dashboard.evaluationFrequency,
-              isUnderStrictControl: dashboard.isUnderStrictControl,
-              isLocked: dashboard.isLocked,
-              disableCrossFiltering: dashboard.disableCrossFiltering,
-              disableUserFilterReset: dashboard.disableUserFilterReset,
-              disableUserFilterSave: dashboard.disableUserFilterSave,
-              disableFilterViews: dashboard.disableFilterViews,
-              disablePersistentFiltersAcrossTabs: dashboard.disablePersistentFiltersAcrossTabs,
-              sectionHeadersDateDataSet: dashboard.sectionHeadersDateDataSet,
-              timezoneConfig: dashboard.timezoneConfig,
+              title: descriptorDashboard.title,
+              description: descriptorDashboard.description,
+              tags: descriptorDashboard.tags,
+              shareStatus: descriptorDashboard.shareStatus,
+              evaluationFrequency: descriptorDashboard.evaluationFrequency,
+              isUnderStrictControl: descriptorDashboard.isUnderStrictControl,
+              isLocked: descriptorDashboard.isLocked,
+              disableCrossFiltering: descriptorDashboard.disableCrossFiltering,
+              disableUserFilterReset: descriptorDashboard.disableUserFilterReset,
+              disableUserFilterSave: descriptorDashboard.disableUserFilterSave,
+              disableFilterViews: descriptorDashboard.disableFilterViews,
+              disablePersistentFiltersAcrossTabs: descriptorDashboard.disablePersistentFiltersAcrossTabs,
+              sectionHeadersDateDataSet: descriptorDashboard.sectionHeadersDateDataSet,
+              timezoneConfig: descriptorDashboard.timezoneConfig,
           }
         : { ...EmptyDashboardDescriptor };
     state.initialContent = initialContent;

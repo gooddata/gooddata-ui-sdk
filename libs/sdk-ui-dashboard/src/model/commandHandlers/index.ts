@@ -14,6 +14,7 @@ import { changeAttributeFilterDisplayAsLabelHandler } from "./dashboard/changeAt
 import { changeAttributeFilterLimitingItemsHandler } from "./dashboard/changeAttributeFilterLimitingItemsHandler.js";
 import { changeAttributeFilterModeHandler } from "./dashboard/changeAttributeFilterModeHandler.js";
 import { changeAttributeFilterSelectionTypeHandler } from "./dashboard/changeAttributeFilterSelectionTypeHandler.js";
+import { changeDashboardDefinitionHandler } from "./dashboard/changeDashboardDefinitionHandler.js";
 import { changeDateFilterTitleHandler } from "./dashboard/changeDateFilterTitleHandler.js";
 import { changeDateFilterWithDimensionModeHandler } from "./dashboard/changeDateFilterWithDimensionModeHandler.js";
 import { changeIgnoreExecutionTimestampHandler } from "./dashboard/changeIgnoreExecutionTimestampHandler.js";
@@ -282,6 +283,7 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.CHANGE_DEFAULT_STATUS": setFilterViewAsDefaultHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.RELOAD": reloadFilterViewsHandler,
     "GDC.DASH/CMD.CHANGE_IGNORE_EXECUTION_TIMESTAMP": changeIgnoreExecutionTimestampHandler,
+    "GDC.DASH/CMD.CHANGE_DEFINITION": changeDashboardDefinitionHandler,
     "GDC.DASH/CMD.SHOW_WIDGET_AS_TABLE.SET": handleSetWidgetToShowAsTable,
     "GDC.DASH/CMD.TAB.CREATE": createDashboardTabHandler,
     "GDC.DASH/CMD.TAB.SWITCH": switchDashboardTabHandler,

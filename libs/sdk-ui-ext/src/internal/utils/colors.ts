@@ -49,6 +49,15 @@ export function getMappingHeaderId(item: IMappingHeader): string | undefined {
     return undefined;
 }
 
+export function getLineStyleMappingId(item: IMappingHeader | undefined): string | undefined {
+    if (isMeasureDescriptor(item)) {
+        return getMeasureMappingIdentifier(item);
+    } else if (isResultAttributeHeader(item)) {
+        return item.attributeHeaderItem.uri ?? undefined;
+    }
+    return undefined;
+}
+
 export function getColoredInputItems(
     colors: IColorConfiguration | undefined,
     lineStyleMapping?: ILineStyleMappingItem[],
@@ -80,9 +89,9 @@ export function getColoredInputItems(
                 };
             }
 
-            if (base && lineStyleMapping && isMeasureDescriptor(assignmentItem.headerItem)) {
-                const localId = assignmentItem.headerItem.measureHeaderItem.localIdentifier;
-                const styleEntry = lineStyleMapping.find((m) => m.id === localId);
+            const lineStyleMappingId = getLineStyleMappingId(assignmentItem.headerItem);
+            if (base && lineStyleMapping && lineStyleMappingId !== undefined) {
+                const styleEntry = lineStyleMapping.find((m) => m.id === lineStyleMappingId);
                 if (styleEntry) {
                     base = {
                         ...base,
@@ -197,10 +206,8 @@ export function getValidProperties(
         return properties;
     }
 
-    const validMeasureLocalIds = new Set(
-        colorAssignments
-            ?.filter((a) => isMeasureDescriptor(a.headerItem))
-            .map((a) => (a.headerItem as IMeasureDescriptor).measureHeaderItem.localIdentifier),
+    const validLineStyleMappingIds = new Set(
+        colorAssignments?.map((a) => getLineStyleMappingId(a.headerItem)).filter((id) => id !== undefined),
     );
 
     let updatedControls = { ...properties.controls };
@@ -244,7 +251,7 @@ export function getValidProperties(
 
     if (hasLineStyleMapping) {
         const reducedLineStyleMapping = (properties.controls?.["lineStyleMapping"] ?? []).filter(
-            (mappingItem: ILineStyleMappingItem) => validMeasureLocalIds.has(mappingItem.id),
+            (mappingItem: ILineStyleMappingItem) => validLineStyleMappingIds.has(mappingItem.id),
         );
         updatedControls = {
             ...updatedControls,

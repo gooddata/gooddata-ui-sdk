@@ -13,6 +13,7 @@ import {
 } from "@gooddata/sdk-model";
 import type { IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
 
+import { isSameViewReport } from "../../context/viewReport.js";
 import { type ContextObjectsState, type SelectedContext } from "../../types.js";
 import { type RootState } from "../types.js";
 
@@ -150,6 +151,11 @@ export const keyDriverAnalysisMinimizedSelector: (state: RootState) => boolean |
     (state) => state.keyDriverAnalysisMinimized,
 );
 
+export const isKeyDriverAnalysisMountedSelector: (state: RootState) => boolean = createSelector(
+    chatWindowSliceSelector,
+    (state) => state.isKeyDriverAnalysisMounted ?? false,
+);
+
 export const userContextSelector: (state: RootState) => IGenAIUserContext | undefined = createSelector(
     chatWindowSliceSelector,
     (state) => state.context.active,
@@ -182,11 +188,11 @@ export const hasPinnedContextSelector: (state: RootState) => boolean = createSel
         }
 
         const dashboardRef = active.view?.dashboard?.ref;
-        const reportRef = active.view?.report?.ref;
+        const report = active.view?.report;
 
         return (
             (Boolean(dashboardRef) && !areObjRefsEqual(dashboardRef, ambient?.view?.dashboard?.ref)) ||
-            (Boolean(reportRef) && !areObjRefsEqual(reportRef, ambient?.view?.report?.ref))
+            (Boolean(report) && !isSameViewReport(report, ambient?.view?.report))
         );
     },
 );

@@ -3817,7 +3817,7 @@ export interface AiComposeAnswerDetail {
 export type AiComposeAnswerDetailCategoryEnum = 'composeAnswer';
 
 // @public (undocumented)
-export type AiComposeAnswerDetailOutputEnum = 'text' | 'visualization' | 'dashboard' | 'keyDriverAnalysis' | 'whatIf' | 'searchResults' | 'alertProposal' | 'clarifyingQuestions';
+export type AiComposeAnswerDetailOutputEnum = 'text' | 'visualization' | 'dashboard' | 'report' | 'keyDriverAnalysis' | 'whatIf' | 'searchResults' | 'alertProposal' | 'clarifyingQuestions';
 
 // @public (undocumented)
 export interface AiCompoundMeasureValueFilter {
@@ -5821,6 +5821,8 @@ export type AiMultipartContentPartsInner = ({
 } & AiDashboardPatchPart) | ({
     type: 'kda';
 } & AiKeyDriverAnalysisPart) | ({
+    type: 'report';
+} & AiReportPart) | ({
     type: 'searchResults';
 } & AiSearchResults) | ({
     type: 'text';
@@ -7052,6 +7054,35 @@ export const AiRenderAs: {
 // @public (undocumented)
 export type AiRenderAs = typeof AiRenderAs[keyof typeof AiRenderAs];
 
+// @public
+export interface AiReportIdUpdateRequest {
+    'id': string;
+}
+
+// @public
+export interface AiReportPart {
+    // (undocumented)
+    'base_report_id'?: string | null;
+    'format'?: AiReportPartFormatEnum;
+    // (undocumented)
+    'page_count'?: number | null;
+    // (undocumented)
+    'refines_ref'?: string | null;
+    // (undocumented)
+    'report'?: object | null;
+    // (undocumented)
+    'report_ref'?: string | null;
+    // (undocumented)
+    'saved_report_id'?: string | null;
+    'type'?: AiReportPartTypeEnum;
+}
+
+// @public (undocumented)
+export type AiReportPartFormatEnum = 'aac-v1';
+
+// @public (undocumented)
+export type AiReportPartTypeEnum = 'report';
+
 // @public (undocumented)
 export interface AiRequestArgs {
     // (undocumented)
@@ -8274,6 +8305,7 @@ export type AiUserContextObjectReferenceTypeEnum = 'WIDGET' | 'METRIC' | 'ATTRIB
 export interface AiUserContextReport {
     // (undocumented)
     'definition'?: object | null;
+    'draftRef'?: string | null;
     // (undocumented)
     'id'?: string | null;
     // (undocumented)
@@ -14189,6 +14221,7 @@ export class ConversationsAi extends AiBaseAPI implements ConversationsAiInterfa
     getConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(requestParameters: ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationListResponse>;
     patchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch(requestParameters: ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
     patchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(requestParameters: ConversationsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    patchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatch(requestParameters: ConversationsAiPatchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     patchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(requestParameters: ConversationsAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     patchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch(requestParameters: ConversationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     postConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(requestParameters: ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
@@ -14233,6 +14266,11 @@ export { ConversationsAi_PatchConversationApiV1AiWorkspacesWorkspaceIdChatConver
 
 // @public
 export function ConversationsAi_PatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<void>;
+
+// @public
+function ConversationsAi_PatchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatch(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiPatchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatchRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<void>;
+export { ConversationsAi_PatchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatch }
+export { ConversationsAi_PatchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatch as GenAiApi_PatchReport }
 
 // @public
 function ConversationsAi_PatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<void>;
@@ -14292,6 +14330,9 @@ export function ConversationsAiAxiosParamCreator_PatchConversationApiV1AiWorkspa
 
 // @public
 export function ConversationsAiAxiosParamCreator_PatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(workspaceId: string, conversationId: string, dashboardId: string, aiDashboardIdUpdateRequest: AiDashboardIdUpdateRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
+
+// @public
+export function ConversationsAiAxiosParamCreator_PatchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatch(workspaceId: string, conversationId: string, reportRef: string, aiReportIdUpdateRequest: AiReportIdUpdateRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
 export function ConversationsAiAxiosParamCreator_PatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(workspaceId: string, conversationId: string, responseId: string, aiResponseFeedbackRequest: AiResponseFeedbackRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
@@ -14373,6 +14414,7 @@ export interface ConversationsAiInterface {
     getConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(requestParameters: ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationListResponse>;
     patchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch(requestParameters: ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
     patchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(requestParameters: ConversationsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    patchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatch(requestParameters: ConversationsAiPatchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     patchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(requestParameters: ConversationsAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     patchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch(requestParameters: ConversationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     postConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(requestParameters: ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
@@ -14398,6 +14440,16 @@ export interface ConversationsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatCo
     readonly dashboardId: string;
     readonly workspaceId: string;
 }
+
+// @public
+interface ConversationsAiPatchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatchRequest {
+    readonly aiReportIdUpdateRequest: AiReportIdUpdateRequest;
+    readonly conversationId: string;
+    readonly reportRef: string;
+    readonly workspaceId: string;
+}
+export { ConversationsAiPatchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatchRequest }
+export { ConversationsAiPatchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatchRequest as GenAiApiPatchReportRequest }
 
 // @public
 interface ConversationsAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest {

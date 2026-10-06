@@ -14,6 +14,7 @@ import {
     type DashboardSaved,
     type DashboardSharingChanged,
     type DateFilterValidationFailed,
+    type IDashboardDefinitionChanged,
     type IDashboardExportToExcelRequested,
     type IDashboardExportToExcelResolved,
     type IDashboardExportToImageRequested,
@@ -278,6 +279,7 @@ export type DashboardEvents =
     | IDashboardDrillRequested
     | IDashboardDrillableItemsChanged
     | IDashboardIgnoreExecutionTimestampChanged
+    | IDashboardDefinitionChanged
     | IDashboardTabSwitched
     | IDashboardTabCreated
     | IDashboardTabDeleted

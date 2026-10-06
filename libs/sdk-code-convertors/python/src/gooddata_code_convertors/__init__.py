@@ -32,6 +32,7 @@ __all__ = [
     "yaml_dashboard_to_declarative",
     "yaml_plugin_to_declarative",
     "yaml_attribute_hierarchy_to_declarative",
+    "yaml_report_document_to_declarative",
     # Declarative -> YAML
     "declarative_dataset_to_yaml",
     "declarative_date_instance_to_yaml",
@@ -41,6 +42,7 @@ __all__ = [
     "declarative_dashboard_to_yaml",
     "declarative_plugin_to_yaml",
     "declarative_attribute_hierarchy_to_yaml",
+    "declarative_report_to_yaml",
     # Utilities
     "build_afm_execution",
 ]
@@ -89,6 +91,11 @@ def yaml_attribute_hierarchy_to_declarative(*args) -> dict:
     return _call("yamlAttributeHierarchyToDeclarative", *args)
 
 
+def yaml_report_document_to_declarative(*args) -> dict:
+    """Convert a parsed report YAML dict to a declarative API dict."""
+    return _call("yamlReportDocumentToDeclarative", *args)
+
+
 # Declarative -> YAML
 
 
@@ -130,6 +137,11 @@ def declarative_plugin_to_yaml(*args) -> dict:
 def declarative_attribute_hierarchy_to_yaml(*args) -> dict:
     """Convert a declarative attribute hierarchy dict to YAML format."""
     return _call("declarativeAttributeHierarchyToYaml", *args)
+
+
+def declarative_report_to_yaml(*args) -> dict:
+    """Convert a declarative report dict to YAML format."""
+    return _call("declarativeReportToYaml", *args)
 
 
 # Utilities

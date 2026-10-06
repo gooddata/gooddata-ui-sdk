@@ -3337,7 +3337,8 @@ export interface IGenAIObjectReferenceGroup {
 // @internal
 export interface IGenAIReportContext {
     definition?: IReportDefinition;
-    ref: ObjRef;
+    draftRef?: string;
+    ref?: ObjRef;
     title?: string;
 }
 

@@ -718,6 +718,92 @@ describe("chartOptionsBuilder", () => {
             });
 
             describe("getSeries", () => {
+                describe("with lineStyleMapping", () => {
+                    function getLineSeries(dv: DataViewFacade, chartConfig: IChartConfig) {
+                        const { measureGroup, viewByAttribute, stackByAttribute } = getMVS(dv);
+                        const colorStrategy = new AttributeColorStrategy(
+                            DefaultColorPalette,
+                            undefined,
+                            viewByAttribute,
+                            stackByAttribute,
+                            dv,
+                        );
+                        return getSeries(
+                            dv,
+                            measureGroup,
+                            viewByAttribute,
+                            undefined,
+                            stackByAttribute,
+                            "line",
+                            colorStrategy,
+                            "empty value",
+                            undefined,
+                            undefined,
+                            chartConfig,
+                        );
+                    }
+
+                    it("should style series by measure local identifier", () => {
+                        const dv = barChartWith3MetricsAndViewByAttribute;
+                        const { measureGroup } = getMVS(dv);
+                        const series = getLineSeries(dv, {
+                            lineStyleMapping: [
+                                {
+                                    id: measureGroup.items[1].measureHeaderItem.localIdentifier,
+                                    lineStyle: "dashed",
+                                    lineWidth: 1,
+                                },
+                            ],
+                        });
+
+                        expect(series.map((item: any) => [item.dashStyle, item.lineWidth])).toEqual([
+                            [undefined, undefined],
+                            ["Dash", 1],
+                            [undefined, undefined],
+                        ]);
+                    });
+
+                    it("should style segment series by segment attribute element uri", () => {
+                        const dv = barChartWithStackByAndViewByAttributes;
+                        const { stackByAttribute } = getMVS(dv);
+                        const series = getLineSeries(dv, {
+                            lineStyleMapping: [
+                                {
+                                    id: stackByAttribute!.items[1].attributeHeaderItem.uri,
+                                    lineStyle: "dotted",
+                                    lineWidth: 4,
+                                },
+                            ],
+                        });
+
+                        expect(
+                            series.map((item: any) => [item.name, item.dashStyle, item.lineWidth]),
+                        ).toEqual([
+                            ["East Coast", undefined, undefined],
+                            ["West Coast", "Dot", 4],
+                        ]);
+                    });
+
+                    it("should not style segment series by measure local identifier", () => {
+                        const dv = barChartWithStackByAndViewByAttributes;
+                        const { measureGroup } = getMVS(dv);
+                        const series = getLineSeries(dv, {
+                            lineStyleMapping: [
+                                {
+                                    id: measureGroup.items[0].measureHeaderItem.localIdentifier,
+                                    lineStyle: "dashed",
+                                    lineWidth: 1,
+                                },
+                            ],
+                        });
+
+                        expect(series.map((item: any) => [item.dashStyle, item.lineWidth])).toEqual([
+                            [undefined, undefined],
+                            [undefined, undefined],
+                        ]);
+                    });
+                });
+
                 describe("in usecase of bar chart with 3 measures and view by attribute", () => {
                     const dv = barChartWith3MetricsAndViewByAttribute;
                     const { measureGroup, viewByAttribute, stackByAttribute } = getMVS(dv);

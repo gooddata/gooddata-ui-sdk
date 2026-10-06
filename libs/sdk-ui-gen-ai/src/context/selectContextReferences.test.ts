@@ -594,6 +594,48 @@ describe("selectContextReferences", () => {
     });
 });
 
+describe("updateAmbientContext with a report that is not saved yet", () => {
+    const definition = (title: string): IReportDefinition => ({
+        type: "report",
+        title,
+        periodStart: "2026-01-01",
+        periodEnd: "2026-03-31",
+        content: { version: "1", pages: [] },
+    });
+    const draftAmbient = (title: string): IGenAIUserContext => ({
+        view: { report: { title, definition: definition(title) } },
+    });
+
+    it("should select and activate it without a reference", () => {
+        const result = updateAmbientContext({}, draftAmbient("Draft"));
+
+        expect(result.ambientSelected).toMatchObject({
+            activated: true,
+            report: { id: "unsaved", type: "report", where: "view.report", title: "Draft" },
+        });
+        expect(result.ambientSelected?.report?.ref).toBeUndefined();
+        expect(result.active?.view?.report).toEqual(draftAmbient("Draft").view?.report);
+    });
+
+    it("should send the latest definition of the same draft", () => {
+        const first = updateAmbientContext({}, draftAmbient("Draft"));
+        const result = updateAmbientContext(first, draftAmbient("Draft edited"));
+
+        expect(result.active?.view?.report?.definition?.title).toBe("Draft edited");
+    });
+
+    it("should send the draft in place of a saved report", () => {
+        const saved = updateAmbientContext(
+            {},
+            { view: { report: { ref: idRef("q1", "report"), title: "Q1", definition: definition("Q1") } } },
+        );
+        const result = updateAmbientContext(saved, draftAmbient("Draft"));
+
+        expect(result.active?.view?.report?.ref).toBeUndefined();
+        expect(result.active?.view?.report?.title).toBe("Draft");
+    });
+});
+
 describe("updateAmbientContext with a report", () => {
     const reportRef = idRef("q1", "report");
     const definition = (title: string): IReportDefinition => ({

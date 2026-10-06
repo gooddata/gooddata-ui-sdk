@@ -1,10 +1,41 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 @use "sass:color";
 @use "mixins";
 @use "variables";
 
 .gd-input-syntax-highlighting-input {
     .cm-editor {
+        .cm-matchingBracket {
+            font-weight: bold;
+            color: variables.$gd-color-dark;
+            background-color: variables.$gd-palette-warning-dimmed;
+        }
+
+        .cm-nonmatchingBracket {
+            color: variables.$gd-palette-error-base;
+        }
+
+        .cm-content {
+            caret-color: transparent;
+        }
+
+        .cm-cursor,
+        .cm-dropCursor {
+            border-left-color: variables.$gd-medium-gray;
+        }
+
+        .cm-selectionBackground,
+        &.cm-focused .cm-selectionBackground {
+            background: variables.$gd-palette-primary-dimmed;
+        }
+
+        .cm-placeholder {
+            color: variables.$gd-color-link;
+            opacity: 0.75;
+        }
+    }
+
+    &--default-chrome .cm-editor {
         // start of gd-input-base mixin body
         box-sizing: border-box;
         height: 100px;
@@ -53,35 +84,6 @@
             @include mixins.box-shadow(
                 inset 0 1px 1px 0 color.adjust(variables.$gd-input-text-box-shadow-color, $alpha: -0.85)
             );
-        }
-
-        .cm-matchingBracket {
-            font-weight: bold;
-            color: variables.$gd-color-dark;
-            background-color: variables.$gd-palette-warning-dimmed;
-        }
-
-        .cm-nonmatchingBracket {
-            color: variables.$gd-palette-error-base;
-        }
-
-        .cm-content {
-            caret-color: transparent;
-        }
-
-        .cm-cursor,
-        .cm-dropCursor {
-            border-left-color: variables.$gd-medium-gray;
-        }
-
-        .cm-selectionBackground,
-        &.cm-focused .cm-selectionBackground {
-            background: variables.$gd-palette-primary-dimmed;
-        }
-
-        .cm-placeholder {
-            color: variables.$gd-color-link;
-            opacity: 0.75;
         }
     }
 }

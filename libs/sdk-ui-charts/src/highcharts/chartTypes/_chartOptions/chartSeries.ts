@@ -189,10 +189,12 @@ function getDefaultSeries(
                 seriesIndex,
             };
 
-            if (!stackByAttribute && chartConfig?.lineStyleMapping) {
-                const localId = measureGroup.items[seriesIndex]?.measureHeaderItem?.localIdentifier;
-                if (localId) {
-                    const styleMapping = chartConfig.lineStyleMapping.find((m) => m.id === localId);
+            if (chartConfig?.lineStyleMapping) {
+                const styleMappingId = stackByAttribute
+                    ? stackByAttribute.items[seriesIndex]?.attributeHeaderItem?.uri
+                    : measureGroup.items[seriesIndex]?.measureHeaderItem?.localIdentifier;
+                if (styleMappingId) {
+                    const styleMapping = chartConfig.lineStyleMapping.find((m) => m.id === styleMappingId);
                     if (styleMapping?.lineStyle) {
                         seriesItemConfig.dashStyle = DASH_STYLE_MAP[styleMapping.lineStyle];
                     }

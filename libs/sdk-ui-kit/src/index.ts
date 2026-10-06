@@ -125,7 +125,10 @@ export {
 export {
     type ISyntaxHighlightingInputProps,
     SyntaxHighlightingInput,
+    type IDefaultSyntaxHighlightingInputProps,
+    DefaultSyntaxHighlightingInput,
 } from "./syntaxHighlightingInput/SyntaxHighlightingInput.js";
+export { defaultSyntaxHighlightStyle } from "./syntaxHighlightingInput/defaultHighlightStyle.js";
 export { type ExternalChangeSelection } from "./syntaxHighlightingInput/hooks/useCodemirrorChange.js";
 export {
     type IYamlPosition,
@@ -1198,6 +1201,8 @@ export {
 
 export {
     useCloseOnOutsideClick,
+    useRegisterFloatingAnchor,
+    isClickInsideOwnSubtree,
     FLOATING_ELEMENT_DATA_ATTR,
     type IUseCloseOnOutsideClickOptions,
 } from "./@ui/hooks/useCloseOnOutsideClick.js";

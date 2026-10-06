@@ -5,6 +5,7 @@
 ```ts
 
 import { AccessGranteeDetail } from '@gooddata/sdk-model';
+import { AccessGranularPermission } from '@gooddata/sdk-model';
 import { CatalogItem } from '@gooddata/sdk-model';
 import { CatalogItemType } from '@gooddata/sdk-model';
 import { DashboardFiltersApplyMode } from '@gooddata/sdk-model';
@@ -304,7 +305,7 @@ export type FiltersByTab = {
 export type FilterWithResolvableElements = IAttributeFilter | IRelativeDateFilter;
 
 // @internal
-export type GenAIAnswerOutput = "text" | "visualization" | "dashboard" | "keyDriverAnalysis" | "whatIf" | "searchResults" | "clarifyingQuestions" | "alertProposal";
+export type GenAIAnswerOutput = "text" | "visualization" | "dashboard" | "report" | "keyDriverAnalysis" | "whatIf" | "searchResults" | "clarifyingQuestions" | "alertProposal";
 
 // @internal
 export type GenAIAppliedMemoryStrategy = "always" | "auto";
@@ -907,12 +908,22 @@ export type IChatConversationMultipartContent = {
 };
 
 // @internal
-export type IChatConversationMultipartPart = IChatConversationTextContent | IChatConversationVisualisationContent | IChatConversationAlertProposalContent | IChatConversationKeyDriverAnalysisContent | IChatConversationClarifyingQuestionsContent | IChatConversationWhatIfContent | IChatConversationSearchContent | IChatConversationDashboardContent;
+export type IChatConversationMultipartPart = IChatConversationTextContent | IChatConversationVisualisationContent | IChatConversationAlertProposalContent | IChatConversationKeyDriverAnalysisContent | IChatConversationClarifyingQuestionsContent | IChatConversationWhatIfContent | IChatConversationSearchContent | IChatConversationDashboardContent | IChatConversationReportContent;
 
 // @internal
 export type IChatConversationReasoningContent = {
     type: "reasoning";
     summary: string;
+};
+
+// @internal
+export type IChatConversationReportContent = {
+    type: "report";
+    report: IReportDefinition | null;
+    saved?: string | null;
+    ref?: string | null;
+    baseReportId?: string | null;
+    refines?: string | null;
 };
 
 // @internal
@@ -960,6 +971,7 @@ export interface IChatConversationThread {
         signal?: AbortSignal;
     }): Promise<IChatConversationItem[]>;
     query(userMessage: string): IChatConversationThreadQuery;
+    resaveReport(reportRef: string, savedReportId: string): Promise<void>;
     resaveVisualisation(oldVisualizationId: string, newVisualizationId: string): Promise<void>;
     reset(options?: IChatConversationCreateOptions): Promise<IChatConversation>;
     saveFeedback(responseId: string, feedback: GenAIChatInteractionUserFeedback, userTextFeedback?: string): Promise<void>;
@@ -2632,6 +2644,9 @@ export function isChatConversationMultipartContent(content: IChatConversationCon
 export function isChatConversationReasoningContent(content: IChatConversationContent): content is IChatConversationReasoningContent;
 
 // @internal
+export function isChatConversationReportContent(content: IChatConversationMultipartPart): content is IChatConversationReportContent;
+
+// @internal
 export function isChatConversationSearchContent(content: IChatConversationMultipartPart): content is IChatConversationSearchContent;
 
 // @internal
@@ -3134,6 +3149,7 @@ export interface IWorkspaceMeasuresService {
 export interface IWorkspaceObjectPermissionsService {
     getAccessList(target: IObjectPermissionsObject): Promise<IObjectAccessList>;
     getAvailableAssignees(target?: IObjectPermissionsObject): Promise<IAvailableAccessGrantee[]>;
+    getPermissionsForCurrentUser(target: IObjectPermissionsObject): Promise<AccessGranularPermission[]>;
     manageObjectPermissions(target: IObjectPermissionsObject, grantees: IGranularAccessGrantee[]): Promise<void>;
 }
 

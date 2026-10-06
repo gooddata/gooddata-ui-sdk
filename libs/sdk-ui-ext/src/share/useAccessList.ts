@@ -4,6 +4,7 @@ import { useCallback, useMemo, useState } from "react";
 
 import { type IObjectPermissionsObject, isPermissionEscalationRefused } from "@gooddata/sdk-backend-spi";
 import {
+    type AccessGranularPermission,
     type IGranularAccessGrantee,
     type IUser,
     type IWorkspacePermissions,
@@ -33,6 +34,7 @@ import {
     granteesFromAccessList,
     mergeGrantees,
     selfGranteeRef,
+    strongestLevel,
     userDisplayPair,
     userIdentityFacts,
     withDirectLevel,
@@ -71,6 +73,12 @@ export interface IAccessList {
      * the backend would allow. The Admin self row needs an explicit `true`.
      */
     isWorkspaceManager: boolean | undefined;
+    /**
+     * The strongest level the caller holds on the target, from every source the backend
+     * resolves (own grants, groups, parent workspaces, workspace permissions), or
+     * **undefined** without a target, while pending or after the read failed.
+     */
+    callerLevel: ObjectSharePermissionLevel | undefined;
     /**
      * Whether the profile resolved. Until then a sole grantee row can't be told apart
      * from the caller's own grant, so its `isSelf` is only an unresolved default.
@@ -245,6 +253,24 @@ export function useAccessList(
     );
     const isWorkspaceManager = workspacePermissions?.canManageProject;
 
+    // Re-read after every write, since a change to the caller's own row, a group or the rule
+    // can change their level. The last answer stays in place while the next one loads, and is
+    // dropped if that read fails, so the policies fall back to the caller's own row.
+    const [callerRevision, setCallerRevision] = useState(0);
+    const [callerPermissions, setCallerPermissions] = useState<AccessGranularPermission[]>();
+    useCancelablePromise<AccessGranularPermission[]>(
+        {
+            promise: target
+                ? async () =>
+                      backend.workspace(workspace).objectPermissions().getPermissionsForCurrentUser(target)
+                : undefined,
+            onSuccess: setCallerPermissions,
+            onError: () => setCallerPermissions(undefined),
+        },
+        [backend, fetchKey, callerRevision],
+    );
+    const callerLevel = callerPermissions ? strongestLevel(callerPermissions) : undefined;
+
     const selfId = currentUser ? granteeId("user", selfGranteeRef(currentUser)) : undefined;
 
     // De-collapsed like every listing fact — on tiger the user id is often the email.
@@ -335,6 +361,7 @@ export function useAccessList(
                     .workspace(workspace)
                     .objectPermissions()
                     .manageObjectPermissions(target, mutate);
+                setCallerRevision((revision) => revision + 1);
                 toast.addSuccess(successMessage);
                 return true;
             } catch (error) {
@@ -508,6 +535,7 @@ export function useAccessList(
         grantees,
         selfIdentity,
         isWorkspaceManager,
+        callerLevel,
         selfIdentityResolved,
         generalAccess,
         workspaceLevel,

@@ -1,6 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import {
+    type AccessGranularPermission,
     type IAvailableAccessGrantee,
     type IGranularAccessGrantee,
     type IObjectAccessList,
@@ -33,6 +34,14 @@ export interface IWorkspaceObjectPermissionsService {
      * @param target - the object whose access to read
      */
     getAccessList(target: IObjectPermissionsObject): Promise<IObjectAccessList>;
+
+    /**
+     * Returns what the current user may do with the given object, from every source the backend
+     * resolves: their own grants, their user groups, parent workspaces and workspace permissions.
+     *
+     * @param target - the object whose permissions to read
+     */
+    getPermissionsForCurrentUser(target: IObjectPermissionsObject): Promise<AccessGranularPermission[]>;
 
     /**
      * Applies the given grants. Grantees not included in `grantees` are left

@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: d896a1ffb7eafb6d884637d11d9117f2ed26efde25b9302ef2a3fcddb98e8885
+# schema-hash: 5716a9515c68f33b5902a012c86b31684182a158bbd167f70954cce242e65d69
 
 from __future__ import annotations
 
@@ -3953,7 +3953,7 @@ class Config(BaseModel):
     )
     line_style_mapping: LineStyleMapping | None = Field(
         None,
-        description='Per-series line style and weight overrides. Keys are measure identifiers.',
+        description="Per-series line style and weight overrides. Keys are metric local identifiers, or attribute element URIs (on Tiger, the element's primary label value) when the chart is segmented or stacked by an attribute.",
     )
     conditional_formatting: ConditionalFormatting | None = Field(
         None,

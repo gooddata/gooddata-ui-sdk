@@ -42,6 +42,7 @@ import {
 
 import { type GenAIAssistantDisplayMode, type LinkHandlerEvent } from "./ConfigContext.js";
 import { GenAIChatDialog, type GenAIChatDialogProps } from "./GenAIChatDialog.js";
+import { type IReportSaved, useReportSavedSync } from "./hooks/useReportSavedSync.js";
 
 /**
  * Discriminated union of GenAI chat events surfaced to a caller via {@link IGenAIChatDialogConnectedProps.onEvent}.
@@ -129,6 +130,11 @@ export interface IGenAIChatDialogConnectedProps {
      */
     ambientUserContextLoading?: boolean;
     /**
+     * A report of the conversation that an application saved. The report in the chat then reads as
+     * saved without the conversation being loaded again. Each save carries a new `seq`.
+     */
+    reportSaved?: IReportSaved;
+    /**
      * Agent ID to use for the seeded question. If not provided, the default agent will be used.
      */
     agentId?: string;
@@ -187,6 +193,7 @@ export function GenAIChatDialogConnected({
     userContext,
     ambientUserContext,
     ambientUserContextLoading,
+    reportSaved,
     appendToChat,
     replaceUserContext,
     includeTags,
@@ -297,6 +304,8 @@ export function GenAIChatDialogConnected({
             }),
         );
     }, [chatDispatcher, ambientUserContext, ambientUserContextLoading]);
+
+    useReportSavedSync(chatDispatcher, reportSaved);
 
     // The token of the last seed we applied. Each ask is identified by `askSeq` (bumped on every ask,
     // so even a repeated identical question re-seeds); we seed once per token. Without this guard the

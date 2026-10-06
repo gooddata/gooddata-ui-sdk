@@ -62,6 +62,7 @@ to trip over).
 - `yaml_dashboard_to_declarative`
 - `yaml_plugin_to_declarative`
 - `yaml_attribute_hierarchy_to_declarative`
+- `yaml_report_document_to_declarative`
 
 ### Declarative API -> YAML
 
@@ -72,6 +73,7 @@ to trip over).
 - `declarative_dashboard_to_yaml`
 - `declarative_plugin_to_yaml`
 - `declarative_attribute_hierarchy_to_yaml`
+- `declarative_report_to_yaml`
 
 ### Utilities
 

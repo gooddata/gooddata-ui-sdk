@@ -33,6 +33,10 @@ export const objectShareMessages = defineMessages({
      * access is inherited only — there is no grant in this workspace to revoke.
      */
     granteeRemoveInherited: { id: "objectShare.granteeRemove.inherited" },
+    /** Tooltip on a user row whose grant is above the caller's level, so they can't change or remove it. */
+    granteeAboveCallerUser: { id: "objectShare.grantee.aboveCaller.user" },
+    /** Tooltip on a group row whose grant is above the caller's level. */
+    granteeAboveCallerGroup: { id: "objectShare.grantee.aboveCaller.group" },
     /** Disabled-level tooltip for picks an inherited grant already covers. */
     granteeLevelInheritedCovered: { id: "objectShare.granteeLevel.inheritedCovered" },
     /**

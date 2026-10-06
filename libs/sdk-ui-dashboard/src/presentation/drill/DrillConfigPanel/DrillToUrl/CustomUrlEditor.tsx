@@ -33,11 +33,11 @@ import {
 } from "@gooddata/sdk-model/internal";
 import {
     ConfirmDialogBase,
+    DefaultSyntaxHighlightingInput,
     FullScreenOverlay,
     Overlay,
     OverlayController,
     OverlayControllerProvider,
-    SyntaxHighlightingInput,
     useMediaQuery,
 } from "@gooddata/sdk-ui-kit";
 
@@ -124,7 +124,7 @@ export function UrlInput({
     }, [syntaxHighlightingRules]);
 
     return syntaxHighlightingRules ? (
-        <SyntaxHighlightingInput
+        <DefaultSyntaxHighlightingInput
             onChange={onChange}
             onCursor={onCursor}
             value={currentUrlValue}

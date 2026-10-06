@@ -6,6 +6,7 @@ import {
     ContractExpired,
     UnexpectedResponseError,
     isPermissionEscalationRefused,
+    isProtectedDataError,
 } from "@gooddata/sdk-backend-spi";
 
 import { convertApiError } from "./errorHandling.js";
@@ -128,6 +129,20 @@ describe("errorHandling", () => {
 
             expect(error instanceof ContractExpired).toBeTruthy();
             expect(error.message).toBe("unspecified");
+        });
+
+        // Captured verbatim from staging (dev-latest, 5 Oct 2026): an execution of a readable label
+        // of an attribute the caller may not read. The classifier matches the `detail`; replace it
+        // with the error code once the API reports one.
+        it("converts a restricted-data 403 into ProtectedDataError", () => {
+            const apiError = forbiddenError({
+                type: "about:blank",
+                title: "Forbidden",
+                status: 403,
+                detail: "Some of the data referenced by the request is restricted. Please contact your workspace administrator.",
+            });
+
+            expect(isProtectedDataError(convertApiError(apiError))).toBe(true);
         });
 
         it("leaves an unrecognized deny reason as UnexpectedResponseError", () => {

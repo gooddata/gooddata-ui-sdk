@@ -559,6 +559,26 @@
         "text": "Open",
         "crowdinContext": "Open dashboard button label."
     },
+    "gd.gen-ai.report.open-report": {
+        "text": "Open",
+        "crowdinContext": "Open report button label on the report card in the chat."
+    },
+    "gd.gen-ai.report.apply": {
+        "text": "Apply",
+        "crowdinContext": "Button label on the report card in the chat when the assistant proposes changes to the saved report the user has open. It loads the changes into that report as unsaved edits."
+    },
+    "gd.gen-ai.report.details": {
+        "text": "{period} · {count, plural, one {# page} other {# pages}}",
+        "crowdinContext": "Second line of the report card in the chat: the period the report covers, then how many pages it has. {period} is an already formatted date range such as 'Jan 1 – Mar 31, 2026'; {count} is the number of pages."
+    },
+    "gd.gen-ai.report.page-count": {
+        "text": "{count, plural, one {# page} other {# pages}}",
+        "crowdinContext": "Second line of the report card in the chat when the report has no readable period: only how many pages it has."
+    },
+    "gd.gen-ai.report.unavailable": {
+        "text": "The report is unavailable.",
+        "crowdinContext": "Shown in place of the report card in the chat when the report the assistant created can no longer be loaded."
+    },
     "gd.gen-ai.alert-proposal.summary.trigger": {
         "text": "Trigger",
         "crowdinContext": "Trigger title for alert in alert proposal dialog."
@@ -1062,6 +1082,10 @@
     "gd.gen-ai.interactionIntelligence.detail.output.dashboard": {
         "text": "Dashboard",
         "crowdinContext": "Interaction Intelligence 'Output' row value when the turn produced a dashboard"
+    },
+    "gd.gen-ai.interactionIntelligence.detail.output.report": {
+        "text": "Report",
+        "crowdinContext": "Interaction Intelligence 'Output' row value when the turn produced a report"
     },
     "gd.gen-ai.interactionIntelligence.detail.output.keyDriverAnalysis": {
         "text": "Key driver analysis",

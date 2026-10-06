@@ -202,6 +202,19 @@ describe("hasCopyBlockingReference", () => {
             ]),
         ],
         [
+            "a widget ignoring a filter on a restricted metric",
+            tab([
+                insightWidget("readable-viz", {
+                    ignoreDashboardFilters: [
+                        {
+                            type: "measureValueFilterReference",
+                            measure: idRef("restricted-metric", "measure"),
+                        },
+                    ],
+                }),
+            ]),
+        ],
+        [
             "a filter whose Display as label is restricted",
             tab([insightWidget()], {
                 configs: [{ localIdentifier: "af", displayAsLabel: label("restricted-label") }],
@@ -253,6 +266,16 @@ describe("hasCopyBlockingReference", () => {
                     } as FilterContextItem,
                 ],
             }),
+        ],
+        [
+            "a widget ignoring a filter on a readable metric",
+            tab([
+                insightWidget("readable-viz", {
+                    ignoreDashboardFilters: [
+                        { type: "measureValueFilterReference", measure: idRef("readable-metric", "measure") },
+                    ],
+                }),
+            ]),
         ],
         [
             "rich text whose restricted references were removed",

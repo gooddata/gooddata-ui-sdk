@@ -37,6 +37,7 @@ vi.mock("@gooddata/api-client-tiger/endpoints/genAI", () => ({
     GenAiApi_GetConversations: vi.fn(),
     GenAiApi_PatchConversation: vi.fn(),
     GenAiApi_PostConversationFeedback: vi.fn(),
+    GenAiApi_PatchReport: vi.fn(),
     GenAiApi_PatchVisualization: vi.fn(),
     GenAiApi_PostConversations: vi.fn(),
     GenAiApi_PostGenerateConversationTitle: vi.fn(),
@@ -700,6 +701,23 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
             });
         });
 
+        it("should send a report that is not saved yet with no id, and still its AaC document", async () => {
+            const userContext = await sentUserContext({
+                view: { report: { title: "Q1", definition: report } },
+            });
+
+            expect(userContext?.view?.report).toEqual({
+                id: null,
+                title: "Q1",
+                definition: reportDefinitionToYaml(report).json,
+            });
+            expect(userContext?.view?.report?.definition).toMatchObject({
+                type: "report",
+                title: "Q1",
+                period: { start: "2026-01-01", end: "2026-03-31" },
+            });
+        });
+
         it("should send the report without its definition when it cannot be written as code", async () => {
             const unsupportedSlot = { type: "unknown", localIdentifier: "h" } as unknown as ReportSlot;
             const [page] = report.content.pages;
@@ -725,6 +743,14 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
             } finally {
                 warn.mockRestore();
             }
+        });
+
+        it("should send the conversation draft an unsaved report is shown from", async () => {
+            const userContext = await sentUserContext({
+                view: { report: { title: "Draft", draftRef: "report_1" } },
+            });
+
+            expect(userContext?.view?.report).toEqual({ id: null, title: "Draft", draftRef: "report_1" });
         });
 
         it("should send only the id for a report without a definition", async () => {

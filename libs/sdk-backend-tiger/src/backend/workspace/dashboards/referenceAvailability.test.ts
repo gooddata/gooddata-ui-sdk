@@ -7,7 +7,7 @@ import type {
     JsonApiFilterContextOut,
 } from "@gooddata/api-client-tiger";
 import type { RestrictedObject } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
-import { type IDashboard, type IFilterContext, idRef } from "@gooddata/sdk-model";
+import { type IDashboard, type IFilterContext, type ObjRef, idRef } from "@gooddata/sdk-model";
 
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
@@ -369,10 +369,14 @@ describe("resolveUnavailableReferences", () => {
         } as unknown as { data: JsonApiFilterContextOut };
 
         expect(
-            resolveUnavailableFilterContextReferences(doc.data, [
-                { id: "label2", type: "label" },
-                { id: "labelFromAnotherContext", type: "label" },
-            ]),
+            resolveUnavailableFilterContextReferences(
+                doc.data,
+                [
+                    { id: "label2", type: "label" },
+                    { id: "labelFromAnotherContext", type: "label" },
+                ],
+                ["displayForm"],
+            ),
         ).toEqual([
             {
                 ref: { identifier: "label2", type: "displayForm" },
@@ -666,10 +670,38 @@ describe("fetchUnavailableFilterDisplayForms", () => {
 
     const dashboardWithContexts = (...ids: string[]) =>
         ({
-            filterContext: { ref: idRef(ids[0], "filterContext") },
+            filterContext: { ref: idRef(ids[0], "filterContext"), filters: [] },
             tabs: ids.slice(1).map((id) => ({
-                filterContext: { ref: idRef(id, "filterContext") },
+                filterContext: { ref: idRef(id, "filterContext"), filters: [] },
             })),
+        }) as unknown as IDashboard;
+
+    const computedAttributeFilters = {
+        list: (displayForm: ObjRef) => ({
+            attributeFilter: {
+                displayForm,
+                negativeSelection: false,
+                attributeElements: { uris: ["small"] },
+            },
+        }),
+        arbitrary: (displayForm: ObjRef) => ({
+            arbitraryAttributeFilter: { displayForm, negativeSelection: false, values: ["small"] },
+        }),
+        match: (displayForm: ObjRef) => ({
+            matchAttributeFilter: { displayForm, operator: "contains", literal: "sm" },
+        }),
+    };
+
+    const dashboardWithComputedAttributeFilter = (
+        contextId: string,
+        computedAttributeId: string,
+        variant: keyof typeof computedAttributeFilters = "list",
+    ) =>
+        ({
+            filterContext: {
+                ref: idRef(contextId, "filterContext"),
+                filters: [computedAttributeFilters[variant](idRef(computedAttributeId, "computedAttribute"))],
+            },
         }) as unknown as IDashboard;
 
     const contextWithLabels = (id: string, labelIds: string[]) => ({
@@ -755,6 +787,76 @@ describe("fetchUnavailableFilterDisplayForms", () => {
             {
                 ref: { identifier: "label3", type: "displayForm" },
                 type: "displayForm",
+                reason: "forbidden",
+            },
+        ]);
+    });
+
+    it.each(["list", "arbitrary", "match"] as const)(
+        "asks for the computed attributes too when a filter uses one (%s)",
+        async (variant) => {
+            respondWith([]);
+
+            await fetchUnavailableFilterDisplayForms(
+                authCall,
+                "ws",
+                dashboardWithComputedAttributeFilter("fcRoot", "tier", variant),
+                ["displayForm", "computedAttribute"],
+            );
+
+            expect(requestedQuery().get("include")).toEqual("labels,computedAttributes");
+        },
+    );
+
+    it("does not ask for computed attributes when no filter uses one", async () => {
+        respondWith([]);
+
+        await fetchUnavailableFilterDisplayForms(authCall, "ws", dashboardWithContexts("fcRoot"), [
+            "displayForm",
+            "computedAttribute",
+        ]);
+
+        expect(requestedQuery().get("include")).toEqual("labels");
+    });
+
+    it("reports a computed attribute the response withholds", async () => {
+        respondWith(
+            [
+                {
+                    id: "fcRoot",
+                    type: "filterContext",
+                    attributes: {
+                        content: {
+                            filters: [
+                                {
+                                    attributeFilter: {
+                                        displayForm: {
+                                            identifier: { id: "tier", type: "computedAttribute" },
+                                        },
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                    relationships: {
+                        computedAttributes: { data: [{ id: "tier", type: "computedAttribute" }] },
+                    },
+                },
+            ],
+            [{ id: "tier", type: "computedAttribute" }],
+        );
+
+        await expect(
+            fetchUnavailableFilterDisplayForms(
+                authCall,
+                "ws",
+                dashboardWithComputedAttributeFilter("fcRoot", "tier"),
+                ["displayForm", "computedAttribute"],
+            ),
+        ).resolves.toEqual([
+            {
+                ref: { identifier: "tier", type: "computedAttribute" },
+                type: "computedAttribute",
                 reason: "forbidden",
             },
         ]);

@@ -18,8 +18,8 @@ import { ConfigProvider, type GenAIAssistantDisplayMode, type LinkHandlerEvent }
 import { CustomizationProvider } from "./CustomizationProvider.js";
 import { type IGenAIAssistantSlots } from "./customized/types.js";
 import { GenAIChatOverlay } from "./GenAIChatOverlay.js";
+import { GenAiKeyDriverAnalysis } from "./GenAiKeyDriverAnalysis.js";
 import { GenAiStore, type GenAiStoreProps } from "./GenAiStore.js";
-import { KeyDriverAnalysis } from "./KeyDriverAnalysis.js";
 
 export type GenAIChatDialogProps = Omit<GenAiStoreProps, "children"> & {
     isOpen: boolean;
@@ -117,7 +117,6 @@ export function GenAIChatDialog({
                         returnFocusTo={returnFocusTo}
                         closeOnEscape={closeOnEscape}
                         allowNativeLinks={allowNativeLinks}
-                        onLinkClick={onLinkClick}
                         catalogItems={catalogItems}
                         canManage={canManage}
                         canAnalyze={canAnalyze}
@@ -143,7 +142,6 @@ type GenAIChatDialogContentProps = {
     onClose: () => void;
     returnFocusTo?: RefObject<HTMLElement | null> | string;
     allowNativeLinks?: boolean;
-    onLinkClick?: (linkClickEvent: LinkHandlerEvent) => string | undefined;
     catalogItems?: CatalogItem[];
     canManage: boolean;
     canAnalyze: boolean;
@@ -164,7 +162,6 @@ function GenAIChatDialogContent({
     onOpen,
     onClose,
     returnFocusTo,
-    onLinkClick,
     allowNativeLinks,
     catalogItems,
     canManage,
@@ -231,7 +228,6 @@ function GenAIChatDialogContent({
                     {isOpen && !disabled ? (
                         <ConfigProvider
                             allowNativeLinks={allowNativeLinks}
-                            linkHandler={onLinkClick}
                             catalogItems={catalogItems}
                             canManage={canManage}
                             canAnalyze={canAnalyze}
@@ -250,7 +246,7 @@ function GenAIChatDialogContent({
                         </ConfigProvider>
                     ) : null}
                     <OverlayControllerProvider overlayController={kdaOverlayController}>
-                        <KeyDriverAnalysis />
+                        <GenAiKeyDriverAnalysis />
                     </OverlayControllerProvider>
                 </OverlayControllerProvider>
             </WorkspaceProvider>

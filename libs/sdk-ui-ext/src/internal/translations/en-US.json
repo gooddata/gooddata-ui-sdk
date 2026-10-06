@@ -2531,6 +2531,14 @@
         "text": "This permission is granted from a parent workspace and cannot be lowered here.",
         "crowdinContext": "Tooltip on permission options in the all-workspace-members permission menu that are disabled because a parent workspace already grants a higher workspace-wide level, so picking a lower level here could not take effect."
     },
+    "objectShare.grantee.aboveCaller.user": {
+        "text": "You cannot remove or change permissions for users with higher permissions than you have.",
+        "crowdinContext": "Tooltip on a user row in the share dialog whose access is higher than the signed-in user's own, so they can neither change nor remove it. Same wording as the dashboard share dialog."
+    },
+    "objectShare.grantee.aboveCaller.group": {
+        "text": "You cannot remove or change permissions for groups with higher permissions than you have.",
+        "crowdinContext": "Tooltip on a group row in the share dialog whose access is higher than the signed-in user's own, so they can neither change nor remove it. Same wording as the dashboard share dialog."
+    },
     "objectShare.granteeRemove.inherited": {
         "text": "This access is inherited from a group or a parent workspace and cannot be removed here.",
         "crowdinContext": "Tooltip on the disabled Remove access action in a grantee row's permission menu, shown when the grantee has no permission granted in this workspace, so there is nothing here to remove."

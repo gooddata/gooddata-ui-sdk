@@ -85,6 +85,7 @@ import type { FormattingLocale } from "./dateFormatting/defaultDateFormatter.js"
 import { type DateNormalizer } from "./dateFormatting/types.js";
 import { cloneWithSanitizedIds } from "./IdSanitization.js";
 import { visualizationObjectsItemToInsight } from "./InsightConverter.js";
+import { convertReportPart } from "./reportPartConvertor.js";
 
 export function convertChatConversationFromBackend(conversation: AiConversationResponse): IChatConversation {
     return {
@@ -319,6 +320,8 @@ function convertMultipartPart(
                 ...applyDashboardPatch(history, siblings, part.patch),
             };
         }
+        case "report":
+            return convertReportPart(part);
         case "kda":
             if (!part.kda) {
                 return undefined;

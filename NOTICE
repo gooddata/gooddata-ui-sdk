@@ -7,9 +7,9 @@
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2026-9-25
+Date generated: 2026-10-5
 
-Revision ID: 7aafbc41b1e160f8395e93ba8e2641b345382639
+Revision ID: 56682f8cf5cae43670d656db095664f10acbf10f
 
 ================================================================================
 ================================================================================
@@ -16014,7 +16014,7 @@ MIT
 
 Authors: colinmcd94@gmail.com, hillerfabian11@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/@standard-schema/utils
+Project URL: https://github.com/standard-schema/standard-schema#readme
 Package Download URL: https://registry.npmjs.org/@standard-schema/utils/-/utils-0.3.0.tgz
 Dependency Path: @reduxjs/toolkit > @standard-schema/utils
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -17419,7 +17419,7 @@ MIT
 
 Authors: ts-npm-types@microsoft.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/@types/ms
+Project URL: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ms
 Package Download URL: https://registry.npmjs.org/@types/ms/-/ms-2.1.0.tgz
 Dependency Path: react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-expression > mdast-util-from-markdown > micromark > @types/debug > @types/ms > react-markdown > hast-util-to-jsx-runtime > mdast-util-mdx-jsx > mdast-util-from-markdown > micromark > @types/debug > @types/ms > react-markdown > hast-util-to-jsx-runtime > mdast-util-mdxjs-esm > mdast-util-from-markdown > micromark > @types/debug > @types/ms > react-markdown > remark-parse > mdast-util-from-markdown > micromark > @types/debug > @types/ms > remark-gfm > mdast-util-gfm > mdast-util-from-markdown > micromark > @types/debug > @types/ms > remark-gfm > mdast-util-gfm > mdast-util-gfm-footnote > mdast-util-from-markdown > micromark > @types/debug > @types/ms > remark-gfm > mdast-util-gfm > mdast-util-gfm-strikethrough > mdast-util-from-markdown > micromark > @types/debug > @types/ms > remark-gfm > mdast-util-gfm > mdast-util-gfm-table > mdast-util-from-markdown > micromark > @types/debug > @types/ms > remark-gfm > mdast-util-gfm > mdast-util-gfm-task-list-item > mdast-util-from-markdown > micromark > @types/debug > @types/ms > remark-parse > mdast-util-from-markdown > micromark > @types/debug > @types/ms
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -22219,7 +22219,7 @@ MIT
 
 Authors: sindresorhus@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/cli-cursor
+Project URL: https://github.com/sindresorhus/cli-cursor#readme
 Package Download URL: https://registry.npmjs.org/cli-cursor/-/cli-cursor-3.1.0.tgz
 Dependency Path: inquirer > ora > cli-cursor > ora > cli-cursor
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -22664,7 +22664,7 @@ MIT
 
 Authors: npm@josh.junon.me
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/color-convert
+Project URL: https://github.com/Qix-/color-convert#readme
 Package Download URL: https://registry.npmjs.org/color-convert/-/color-convert-2.0.1.tgz
 Dependency Path: @formatjs/cli-lib > @formatjs/ts-transformer > chalk > ansi-styles > color-convert > @formatjs/cli-lib > chalk > ansi-styles > color-convert > inquirer > wrap-ansi > ansi-styles > color-convert > ora > log-symbols > chalk > ansi-styles > color-convert > stylelint > table > slice-ansi > ansi-styles > color-convert > stylelint-config-standard > stylelint > table > slice-ansi > ansi-styles > color-convert > stylelint-config-standard > stylelint-config-recommended > stylelint > table > slice-ansi > ansi-styles > color-convert > stylelint-order > stylelint > table > slice-ansi > ansi-styles > color-convert > stylelint-plugin-defensive-css > stylelint > table > slice-ansi > ansi-styles > color-convert > stylelint-scss > stylelint > table > slice-ansi > ansi-styles > color-convert
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -26527,7 +26527,7 @@ MIT
 
 Authors: sindresorhus@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/env-paths
+Project URL: https://github.com/sindresorhus/env-paths#readme
 Package Download URL: https://registry.npmjs.org/env-paths/-/env-paths-2.2.1.tgz
 Dependency Path: stylelint > cosmiconfig > env-paths > stylelint-config-standard > stylelint > cosmiconfig > env-paths > stylelint-config-standard > stylelint-config-recommended > stylelint > cosmiconfig > env-paths > stylelint-order > stylelint > cosmiconfig > env-paths > stylelint-plugin-defensive-css > stylelint > cosmiconfig > env-paths > stylelint-scss > stylelint > cosmiconfig > env-paths
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -27662,7 +27662,7 @@ Apache-2.0
 
 Authors: aboissinot@coveo.com, itaccounts@coveo.com, lbompart@coveo.com, mmitiche@coveo.com, msrioux@coveo.com, ndlabarre@coveo.com, nlegros@coveo.com, npmcoveo@coveo.com, oa-npmcoveo@oacvo.com, olamothe@coveo.com, sallain@coveo.com, sandbox_JSUI@coveo.com, ssayegh@coveo.com, talao@coveo.com, ylakhdar@coveo.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/exponential-backoff
+Project URL: https://github.com/coveooss/exponential-backoff#readme
 Package Download URL: https://registry.npmjs.org/exponential-backoff/-/exponential-backoff-3.1.3.tgz
 Dependency Path: exponential-backoff
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -27825,7 +27825,7 @@ MIT
 
 Authors: e.poberezkin@me.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/fast-deep-equal
+Project URL: https://github.com/epoberezkin/fast-deep-equal#readme
 Package Download URL: https://registry.npmjs.org/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz
 Dependency Path: @evil-internetmann/react-dnd > fast-deep-equal > html-validate > @sidvind/better-ajv-errors > ajv > fast-deep-equal > html-validate > ajv > fast-deep-equal > stylelint > table > ajv > fast-deep-equal > stylelint-config-standard > stylelint > table > ajv > fast-deep-equal > stylelint-config-standard > stylelint-config-recommended > stylelint > table > ajv > fast-deep-equal > stylelint-order > stylelint > table > ajv > fast-deep-equal > stylelint-plugin-defensive-css > stylelint > table > ajv > fast-deep-equal > stylelint-scss > stylelint > table > ajv > fast-deep-equal
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -30634,7 +30634,7 @@ MIT
 
 Authors: ljharb@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/has-tostringtag
+Project URL: https://github.com/inspect-js/has-tostringtag#readme
 Package Download URL: https://registry.npmjs.org/has-tostringtag/-/has-tostringtag-1.0.2.tgz
 Dependency Path: axios > form-data > es-set-tostringtag > has-tostringtag > axios-cache-interceptor > axios > form-data > es-set-tostringtag > has-tostringtag
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -32937,7 +32937,7 @@ MIT
 
 Authors: sindresorhus@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/import-fresh
+Project URL: https://github.com/sindresorhus/import-fresh#readme
 Package Download URL: https://registry.npmjs.org/import-fresh/-/import-fresh-3.3.1.tgz
 Dependency Path: react-select > @emotion/react > @emotion/babel-plugin > babel-plugin-macros > cosmiconfig > import-fresh > react-select-async-paginate > react-select > @emotion/react > @emotion/babel-plugin > babel-plugin-macros > cosmiconfig > import-fresh > stylelint > cosmiconfig > import-fresh > stylelint-config-standard > stylelint > cosmiconfig > import-fresh > stylelint-config-standard > stylelint-config-recommended > stylelint > cosmiconfig > import-fresh > stylelint-order > stylelint > cosmiconfig > import-fresh > stylelint-plugin-defensive-css > stylelint > cosmiconfig > import-fresh > stylelint-scss > stylelint > cosmiconfig > import-fresh
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -33883,7 +33883,7 @@ MIT
 
 Authors: sindresorhus@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/is-docker
+Project URL: https://github.com/sindresorhus/is-docker#readme
 Package Download URL: https://registry.npmjs.org/is-docker/-/is-docker-2.2.1.tgz
 Dependency Path: open > is-docker > open > is-wsl > is-docker
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -34035,7 +34035,7 @@ MIT
 
 Authors: sindresorhus@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/is-fullwidth-code-point
+Project URL: https://github.com/sindresorhus/is-fullwidth-code-point#readme
 Package Download URL: https://registry.npmjs.org/is-fullwidth-code-point/-/is-fullwidth-code-point-3.0.0.tgz
 Dependency Path: inquirer > string-width > is-fullwidth-code-point > inquirer > wrap-ansi > string-width > is-fullwidth-code-point > stylelint > string-width > is-fullwidth-code-point > stylelint > table > slice-ansi > is-fullwidth-code-point > stylelint > table > string-width > is-fullwidth-code-point > stylelint-config-standard > stylelint > table > string-width > is-fullwidth-code-point > stylelint-config-standard > stylelint-config-recommended > stylelint > table > string-width > is-fullwidth-code-point > stylelint-order > stylelint > table > string-width > is-fullwidth-code-point > stylelint-plugin-defensive-css > stylelint > table > string-width > is-fullwidth-code-point > stylelint-scss > stylelint > table > string-width > is-fullwidth-code-point
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -52894,7 +52894,7 @@ MIT
 
 Authors: vojtech@miksu.cz
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/react-portal
+Project URL: https://github.com/tajo/react-portal#readme
 Package Download URL: https://registry.npmjs.org/react-portal/-/react-portal-4.3.0.tgz
 Dependency Path: react-portal
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -55333,7 +55333,7 @@ MIT
 
 Authors: johnotander@gmail.com, remcohaszing@gmail.com, tituswormer@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/remark-gfm
+Project URL: https://github.com/remarkjs/remark-gfm#readme
 Package Download URL: https://registry.npmjs.org/remark-gfm/-/remark-gfm-4.0.1.tgz
 Dependency Path: remark-gfm
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -56255,7 +56255,7 @@ MIT
 
 Authors: hello@matteocollina.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/reusify
+Project URL: https://github.com/mcollina/reusify#readme
 Package Download URL: https://registry.npmjs.org/reusify/-/reusify-1.1.0.tgz
 Dependency Path: @formatjs/cli-lib > fast-glob > @nodelib/fs.walk > fastq > reusify > fast-glob > @nodelib/fs.walk > fastq > reusify > stylelint > fast-glob > @nodelib/fs.walk > fastq > reusify > stylelint > globby > fast-glob > @nodelib/fs.walk > fastq > reusify > stylelint-config-standard > stylelint > fast-glob > @nodelib/fs.walk > fastq > reusify > stylelint-config-standard > stylelint-config-recommended > stylelint > fast-glob > @nodelib/fs.walk > fastq > reusify > stylelint-config-standard > stylelint-config-recommended > stylelint > globby > fast-glob > @nodelib/fs.walk > fastq > reusify > stylelint-order > stylelint > fast-glob > @nodelib/fs.walk > fastq > reusify > stylelint-plugin-defensive-css > stylelint > fast-glob > @nodelib/fs.walk > fastq > reusify > stylelint-scss > stylelint > fast-glob > @nodelib/fs.walk > fastq > reusify
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -57490,7 +57490,7 @@ MIT
 
 Authors: terkel@terkel.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/sisteransi
+Project URL: https://github.com/terkelg/sisteransi#readme
 Package Download URL: https://registry.npmjs.org/sisteransi/-/sisteransi-1.0.5.tgz
 Dependency Path: html-validate > prompts > sisteransi
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -63881,8 +63881,8 @@ SOFTWARE.
 * Copyrights *
 MIT
 - Copyright (c) 2013 James Halliday
-- Copyright (c) 2015 Titus Wormer <tituswormer@gmail.com>
 - Copyright (c)  Joyent, Inc. and other Node contributors.
+- Copyright (c) 2015 Titus Wormer <tituswormer@gmail.com>
 
 * Package Info *
 
@@ -64727,7 +64727,7 @@ MIT
 
 Authors: sindresorhus@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/yoctocolors-cjs
+Project URL: https://github.com/sindresorhus/yoctocolors#readme
 Package Download URL: https://registry.npmjs.org/yoctocolors-cjs/-/yoctocolors-cjs-2.1.3.tgz
 Dependency Path: inquirer > yoctocolors-cjs
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -64914,4 +64914,4 @@ File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2026-9-25
+Report Generated by FOSSA on 2026-10-5

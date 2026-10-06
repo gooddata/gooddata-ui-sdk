@@ -66,6 +66,15 @@ describe("mergeContexts", () => {
         });
     });
 
+    it("should let the later context of a report that is not saved yet win", () => {
+        expect(
+            mergeContexts(
+                { view: { report: { title: "Draft" } } },
+                { view: { report: { title: "Draft 2" } } },
+            ),
+        ).toEqual({ view: { report: { title: "Draft 2" } } });
+    });
+
     it("should let the later context of the same report win", () => {
         const ref = idRef("q1", "report");
 

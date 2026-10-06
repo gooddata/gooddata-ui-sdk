@@ -15,6 +15,7 @@ export const PluggableAppEventType = {
     AI_ASSISTANT_OPEN_REQUESTED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.OPEN_REQUESTED",
     AI_ASSISTANT_CLOSE_REQUESTED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CLOSE_REQUESTED",
     AI_ASSISTANT_CONTEXT_CHANGED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CONTEXT_CHANGED",
+    AI_ASSISTANT_REPORT_SAVED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.REPORT_SAVED",
 } as const;
 
 /**
@@ -371,6 +372,85 @@ export function isAiAssistantContextChangedEvent(obj: unknown): obj is IAiAssist
 }
 
 /**
+ * Event telling the host assistant that a report it drafted was saved.
+ *
+ * @remarks
+ * The assistant keeps its own copy of the conversation, which only learns about a save when the
+ * thread is loaded again. The application that saved the report emits this once per save, so the
+ * report in the chat reads as saved and links to the saved report right away.
+ *
+ * @alpha
+ */
+export interface IAiAssistantReportSavedEvent extends IPluggableAppEvent {
+    readonly type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.REPORT_SAVED";
+    readonly payload: {
+        /**
+         * Conversation the report was drafted in.
+         */
+        readonly conversationId: string;
+        /**
+         * Conversation item that holds the drafted report.
+         */
+        readonly itemId: string;
+        /**
+         * Name of the report within the item. Omitted when the draft carries none; the item's only
+         * report is meant then.
+         */
+        readonly reportRef?: string;
+        /**
+         * Identifier of the report the draft was saved as.
+         */
+        readonly savedReportId: string;
+    };
+}
+
+/**
+ * Creates an {@link IAiAssistantReportSavedEvent}.
+ *
+ * @alpha
+ */
+export function aiAssistantReportSaved(
+    payload: IAiAssistantReportSavedEvent["payload"],
+): IAiAssistantReportSavedEvent {
+    return { type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.REPORT_SAVED", payload };
+}
+
+/**
+ * Type guard for {@link IAiAssistantReportSavedEvent}.
+ *
+ * @remarks
+ * Validates the payload shape too, so a malformed event is rejected rather than narrowed to a type
+ * whose later `payload.conversationId` access would be wrong.
+ *
+ * @alpha
+ */
+export function isAiAssistantReportSavedEvent(obj: unknown): obj is IAiAssistantReportSavedEvent {
+    if (
+        typeof obj !== "object" ||
+        obj === null ||
+        (obj as { type?: unknown }).type !== "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.REPORT_SAVED"
+    ) {
+        return false;
+    }
+    const payload = (obj as { payload?: unknown }).payload;
+    if (typeof payload !== "object" || payload === null || Array.isArray(payload)) {
+        return false;
+    }
+    const { conversationId, itemId, reportRef, savedReportId } = payload as {
+        conversationId?: unknown;
+        itemId?: unknown;
+        reportRef?: unknown;
+        savedReportId?: unknown;
+    };
+    return (
+        typeof conversationId === "string" &&
+        typeof itemId === "string" &&
+        (reportRef === undefined || typeof reportRef === "string") &&
+        typeof savedReportId === "string"
+    );
+}
+
+/**
  * Telemetry channel determines which analytics pipeline receives the event.
  *
  * @remarks
@@ -674,8 +754,9 @@ export interface IPluggableApplicationMountHandle {
      * On hosted routes the host owns the chat, so links clicked inside it are handled by the host by
      * default (open in a tab / navigate). An embedded application can intercept them instead — e.g. an
      * embedded dashboard opening a visualization as an in-place overlay rather than navigating away.
-     * Return `true` if the application handled it (the host suppresses its own navigation); return
-     * `false` to let the host perform default link handling.
+     * Return `true` if the application handled it (the host suppresses its own navigation in this
+     * tab; a request for a new tab is still opened by the host); return `false` to let the host
+     * perform default link handling.
      */
     onAiAssistantLinkClicked?: (link: {
         type?: string;

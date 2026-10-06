@@ -2390,6 +2390,76 @@
                     }
                 }
             }
+        },
+        "/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/reports/{report_ref}": {
+            "patch": {
+                "tags": [
+                    "Conversations"
+                ],
+                "summary": "Link a saved report",
+                "description": "Records the report entity the user saved the conversation's report draft as.",
+                "operationId": "patch_report_api_v1_ai_workspaces__workspace_id__chat_conversations__conversation_id__reports__report_ref__patch",
+                "parameters": [
+                    {
+                        "name": "workspace_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Workspace Id"
+                        }
+                    },
+                    {
+                        "name": "conversation_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Conversation Id"
+                        }
+                    },
+                    {
+                        "name": "report_ref",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Report Ref"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ReportIdUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "Successful Response"
+                    },
+                    "400": {
+                        "description": "Bad request payload."
+                    },
+                    "404": {
+                        "description": "Conversation or report draft not found, or the dashboard builder or Reports app feature is disabled."
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -4363,6 +4433,7 @@
                                     "text",
                                     "visualization",
                                     "dashboard",
+                                    "report",
                                     "keyDriverAnalysis",
                                     "whatIf",
                                     "searchResults",
@@ -10184,6 +10255,9 @@
                                     "$ref": "#/components/schemas/DashboardPatchPart"
                                 },
                                 {
+                                    "$ref": "#/components/schemas/ReportPart"
+                                },
+                                {
                                     "$ref": "#/components/schemas/KeyDriverAnalysisPart"
                                 },
                                 {
@@ -10207,6 +10281,7 @@
                                     "dashboard": "#/components/schemas/DashboardPart",
                                     "dashboardPatch": "#/components/schemas/DashboardPatchPart",
                                     "kda": "#/components/schemas/KeyDriverAnalysisPart",
+                                    "report": "#/components/schemas/ReportPart",
                                     "searchResults": "#/components/schemas/SearchResults",
                                     "text": "#/components/schemas/TextPart",
                                     "visualization": "#/components/schemas/VisualizationPart",
@@ -13765,6 +13840,116 @@
                 ],
                 "title": "RenderAs"
             },
+            "ReportIdUpdateRequest": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "title": "Id",
+                        "description": "Id of the report entity the client saved the draft as."
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id"
+                ],
+                "title": "ReportIdUpdateRequest",
+                "description": "PATCH /conversations/{conversationId}/reports/{reportRef} body."
+            },
+            "ReportPart": {
+                "properties": {
+                    "base_report_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Base Report Id",
+                        "description": "Id of the saved report this draft edits, null for a new report. Saving the draft updates that report in place instead of creating another."
+                    },
+                    "format": {
+                        "type": "string",
+                        "const": "aac-v1",
+                        "title": "Format",
+                        "description": "Shape of `report`: the Analytics-as-Code report document, v1.",
+                        "default": "aac-v1"
+                    },
+                    "page_count": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Page Count",
+                        "description": "Number of pages in the draft, for the answer card."
+                    },
+                    "report": {
+                        "anyOf": [
+                            {
+                                "type": "object"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Report",
+                        "description": "The draft as the Analytics-as-Code report document (JSON of the `report` AAC type), when it resolves. Its `id` is the report it will be saved as: `saved_report_id`, else `base_report_id`, else a proposal the client may replace."
+                    },
+                    "report_ref": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Report Ref",
+                        "description": "Conversation-scoped id of this draft version (e.g. `report_2`). Name it in `PATCH .../conversations/{conversationId}/reports/{reportRef}` after saving this version."
+                    },
+                    "saved_report_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Saved Report Id",
+                        "description": "Id of the report entity this version was saved as, recorded by the save-back PATCH; null until the user saves this version."
+                    },
+                    "type": {
+                        "type": "string",
+                        "const": "report",
+                        "title": "Type",
+                        "description": "Type of multipart part.",
+                        "default": "report"
+                    },
+                    "refines_ref": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Refines Ref",
+                        "description": "`report_ref` of the draft version this one reworks, null for a first draft. A client showing that version can apply this one in its place instead of opening it as another report."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "title": "ReportPart",
+                "description": "A report draft the assistant composed, resolved from conversation state.\n\nLike a dashboard draft it is not persisted until the user saves it; ``report`` is null when\nthe ref no longer resolves, so the client can still show that a report was promised. Every\nrefinement is a new version under a new ``report_ref``, so an earlier card keeps its version."
+            },
             "RequestedReasoningEffort": {
                 "type": "string",
                 "enum": [
@@ -16756,7 +16941,6 @@
                     "definition": {
                         "anyOf": [
                             {
-                                "additionalProperties": true,
                                 "type": "object"
                             },
                             {
@@ -16788,6 +16972,18 @@
                             }
                         ],
                         "title": "Title"
+                    },
+                    "draftRef": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Draftref",
+                        "description": "`report_ref` of the conversation draft open in the editor while it is not saved yet. A change the assistant makes to it is then a new version of that draft, not a new report. Optional."
                     }
                 },
                 "title": "UserContextReport",

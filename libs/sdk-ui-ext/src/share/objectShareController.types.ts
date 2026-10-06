@@ -120,12 +120,17 @@ export interface IObjectShareControllerState {
     workspaceDisabledLevels: ObjectSharePermissionLevel[] | undefined;
     /**
      * Levels the caller cannot grant to anyone, because they hold less themselves —
-     * the server refuses such a write. Proven from the caller's OWN grant row, so it
-     * is undefined when they have no row (their access may come from a group, which
-     * the list does not show) and whenever they may be a workspace manager, who has
-     * no limit.
+     * the server refuses such a write. Taken from the backend's answer for the caller,
+     * which covers groups, parent workspaces and workspace permissions. Without that
+     * answer, proven from the caller's OWN grant row only, and undefined when they have
+     * no row or may be a workspace manager.
      */
     grantableDisabledLevels: ObjectSharePermissionLevel[] | undefined;
+    /**
+     * The strongest level the caller holds on the object, or undefined while unknown.
+     * The server refuses changing or removing a grant above it, so consumers lock such rows.
+     */
+    callerLevel: ObjectSharePermissionLevel | undefined;
     /**
      * Whether USER-row controls must stay disabled because no row can be told apart
      * from the caller's own grant yet (profile pending or silently failed) — mutating

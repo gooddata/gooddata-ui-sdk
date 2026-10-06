@@ -13,6 +13,7 @@ import type { IGenAIContextObject, SelectedContext, StoreContext } from "../type
 import { addContextReference } from "./addContextReference.js";
 import { isReferenceChanged } from "./isReferenceChanged.js";
 import { removeContextReference } from "./removeContextReference.js";
+import { viewObjectId } from "./viewReport.js";
 
 export function pickSelectedContextFromUserContext(
     context: StoreContext,
@@ -124,9 +125,13 @@ function updateContextReference(
     return newContext;
 }
 
-function viewReference(type: "dashboard" | "report", ref: ObjRef, title?: string): IGenAIContextObject {
+function viewReference(
+    type: "dashboard" | "report",
+    ref: ObjRef | undefined,
+    title?: string,
+): IGenAIContextObject {
     return {
-        id: isIdentifierRef(ref) ? ref.identifier : ref.uri,
+        id: viewObjectId(ref),
         ref,
         nesting: 0,
         type,

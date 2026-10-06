@@ -111,6 +111,31 @@ export function newDashboardExportDefinitionMetadataObjectDefinition({
     };
 }
 
+/**
+ * The filters a widget export of the given format stores. The chosen list is stored as given, an
+ * empty one included: a widget export without filters falls back to the dashboard's stored filters,
+ * including the restricted ones the schedule left out.
+ */
+export function widgetExportFilters(
+    format: WidgetAttachmentType,
+    filters: {
+        dashboardFilters: FilterContextItem[] | undefined;
+        widgetFilters: IFilter[] | undefined;
+        widgetFiltersWithInsight: IFilter[] | undefined;
+    },
+): IFilter[] | FilterContextItem[] | undefined {
+    if (format === "CSV") {
+        // insight filters merged on the frontend
+        return filters.widgetFiltersWithInsight;
+    }
+    if (format === "CSV_RAW") {
+        // insight filters merged on the backend
+        return filters.widgetFilters;
+    }
+    // the backend merges the insight filters
+    return filters.dashboardFilters;
+}
+
 export function newWidgetExportDefinitionMetadataObjectDefinition({
     insight,
     widget,
@@ -127,9 +152,9 @@ export function newWidgetExportDefinitionMetadataObjectDefinition({
     widget: IWidget;
     dashboardId: string;
     format: WidgetAttachmentType;
-    widgetFilters?: IFilter[];
-    widgetFiltersWithInsight?: IFilter[];
-    dashboardFilters?: FilterContextItem[];
+    widgetFilters: IFilter[] | undefined;
+    widgetFiltersWithInsight: IFilter[] | undefined;
+    dashboardFilters: FilterContextItem[] | undefined;
     defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
     defaultCsvDelimiter?: string;
     /**
@@ -141,21 +166,11 @@ export function newWidgetExportDefinitionMetadataObjectDefinition({
 }): IExportDefinitionMetadataObjectDefinition {
     const widgetTitle = widget.title;
 
-    // Determine which filters to use based on format:
-    // - CSV: Use widgetFiltersWithInsight (insight filters merged on frontend)
-    // - CSV_RAW: Use widgetFilters (insight filters merged on backend)
-    // - Other formats: Use dashboardFilters (backend handles insight filter merging)
-    const shouldUseCsvFilters = format === "CSV";
-    const shouldUseCsvRawFilters = format === "CSV_RAW";
-
-    let filtersObj: { filters?: IFilter[] | FilterContextItem[] } = {};
-    if (shouldUseCsvFilters && (widgetFiltersWithInsight ?? []).length > 0) {
-        filtersObj = { filters: widgetFiltersWithInsight };
-    } else if (shouldUseCsvRawFilters && (widgetFilters ?? []).length > 0) {
-        filtersObj = { filters: widgetFilters };
-    } else if (!shouldUseCsvFilters && !shouldUseCsvRawFilters && (dashboardFilters ?? []).length > 0) {
-        filtersObj = { filters: dashboardFilters };
-    }
+    const filters = widgetExportFilters(format, {
+        dashboardFilters,
+        widgetFilters,
+        widgetFiltersWithInsight,
+    });
 
     const grandTotalsPosition = insightProperties(insight)?.["controls"]?.["grandTotalsPosition"];
 
@@ -198,7 +213,7 @@ export function newWidgetExportDefinitionMetadataObjectDefinition({
                 visualizationObject: insight.insight.identifier,
                 widget: widget.identifier,
                 dashboard: dashboardId,
-                ...filtersObj,
+                ...(filters ? { filters } : {}),
             },
             ...settingsObj,
             ...(timezoneId ? { timezoneId } : {}),

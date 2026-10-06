@@ -856,6 +856,8 @@ export abstract class DecoratedWorkspaceObjectPermissionsService implements IWor
     // (undocumented)
     getAvailableAssignees(target?: IObjectPermissionsObject): Promise<IAvailableAccessGrantee[]>;
     // (undocumented)
+    getPermissionsForCurrentUser(target: IObjectPermissionsObject): Promise<AccessGranularPermission[]>;
+    // (undocumented)
     manageObjectPermissions(target: IObjectPermissionsObject, grantees: IGranularAccessGrantee[]): Promise<void>;
 }
 

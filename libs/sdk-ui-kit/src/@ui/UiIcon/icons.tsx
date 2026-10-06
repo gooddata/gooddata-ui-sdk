@@ -1132,4 +1132,39 @@ export const iconPaths: Record<IconType, ReactNode> = {
             <path d="M10.3787 9.20711C10.1834 9.01184 10.1834 8.69526 10.3787 8.5C10.5739 8.30474 10.8905 8.30474 11.0858 8.5L12.5 9.91421C12.6953 10.1095 12.6953 10.4261 12.5 10.6213C12.3047 10.8166 11.9882 10.8166 11.7929 10.6213L10.3787 9.20711Z" />
         </>
     ),
+    lineStyle: (
+        <>
+            <rect x="2" y="2" width="16" height="1" rx="0.5" />
+            <rect x="2" y="7" width="7" height="1" rx="0.5" />
+            <rect x="11" y="7" width="7" height="1" rx="0.5" />
+            <rect x="2" y="12" width="4" height="1" rx="0.5" />
+            <rect x="8" y="12" width="4" height="1" rx="0.5" />
+            <rect x="14" y="12" width="4" height="1" rx="0.5" />
+            <circle cx="2.5" cy="17.5" r="0.5" />
+            <circle cx="5.5" cy="17.5" r="0.5" />
+            <circle cx="8.5" cy="17.5" r="0.5" />
+            <circle cx="11.5" cy="17.5" r="0.5" />
+            <circle cx="14.5" cy="17.5" r="0.5" />
+            <circle cx="17.5" cy="17.5" r="0.5" />
+        </>
+    ),
+    lineStyleSolid: <rect x="0" y="8.5714" width="20" height="2.8571" />,
+    lineStyleDashed: (
+        <>
+            <rect x="0" y="8.5714" width="8" height="2.8571" />
+            <rect x="12" y="8.5714" width="8" height="2.8571" />
+        </>
+    ),
+    lineStyleDotted: (
+        <>
+            <circle cx="1.5" cy="10" r="1.5" />
+            <circle cx="7" cy="10" r="1.5" />
+            <circle cx="12.5" cy="10" r="1.5" />
+            <circle cx="18" cy="10" r="1.5" />
+        </>
+    ),
+    lineWidth1: <rect x="0" y="9.2857" width="20" height="1.4286" />,
+    lineWidth2: <rect x="0" y="8.5714" width="20" height="2.8571" />,
+    lineWidth3: <rect x="0" y="7.8571" width="20" height="4.2857" />,
+    lineWidth4: <rect x="0" y="7.1429" width="20" height="5.7143" />,
 };

@@ -16,6 +16,7 @@ export type DashboardCommandType =
     | "GDC.DASH/CMD.SAVE"
     | "GDC.DASH/CMD.SAVEAS"
     | "GDC.DASH/CMD.RESET"
+    | "GDC.DASH/CMD.CHANGE_DEFINITION"
     | "GDC.DASH/CMD.RENAME"
     | "GDC.DASH/CMD.DELETE"
     | "GDC.DASH/CMD.CHANGE_RENDER_MODE"

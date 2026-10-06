@@ -1,6 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { type IExportResult } from "@gooddata/sdk-backend-spi";
+import { type IDashboardReferences, type IExportResult } from "@gooddata/sdk-backend-spi";
 import { type IDashboard, type IInsight, type IWorkspacePermissions, type ObjRef } from "@gooddata/sdk-model";
 
 import { type DateFilterValidationResult, type ISharingProperties } from "../../types.js";
@@ -991,3 +991,65 @@ export function dashboardIgnoreExecutionTimestampChanged(
  */
 export const isDashboardIgnoreExecutionTimestampChanged =
     eventGuard<IDashboardIgnoreExecutionTimestampChanged>("GDC.DASH/EVT.IGNORE_EXECUTION_TIMESTAMP_CHANGED");
+
+/**
+ * Payload of the {@link IDashboardDefinitionChanged} event.
+ * @alpha
+ */
+export interface IDashboardDefinitionChangedPayload {
+    /**
+     * Dashboard definition that was applied.
+     */
+    readonly dashboard: IDashboard;
+
+    /**
+     * Referenced objects used in the dashboard definition.
+     */
+    readonly references?: Partial<IDashboardReferences>;
+
+    /**
+     * Insights used in the dashboard definition.
+     */
+    readonly insights: ReadonlyArray<IInsight>;
+}
+
+/**
+ * This event is emitted at the end of successful 'change dashboard definition' command processing.
+ * @alpha
+ */
+export interface IDashboardDefinitionChanged extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.DEFINITION_CHANGED";
+    readonly payload: IDashboardDefinitionChangedPayload;
+}
+
+export function dashboardDefinitionChanged(
+    ctx: DashboardContext,
+    dashboard: IDashboard,
+    references: Partial<IDashboardReferences> | ReadonlyArray<IInsight>,
+    correlationId?: string,
+): IDashboardDefinitionChanged {
+    const normalizedReferences: Partial<IDashboardReferences> = Array.isArray(references)
+        ? { insights: [...references] }
+        : (references as Partial<IDashboardReferences>);
+
+    return {
+        type: "GDC.DASH/EVT.DEFINITION_CHANGED",
+        ctx,
+        correlationId,
+        payload: {
+            dashboard,
+            references: normalizedReferences,
+            insights: normalizedReferences.insights ?? [],
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link IDashboardDefinitionChanged}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardDefinitionChanged = eventGuard<IDashboardDefinitionChanged>(
+    "GDC.DASH/EVT.DEFINITION_CHANGED",
+);
