@@ -11,6 +11,15 @@ export const workspacePermissions: WorkspacePermissions = ["MANAGE", "ANALYZE", 
 const exportSubPermissions: WorkspacePermissions = ["EXPORT_PDF", "EXPORT_TABULAR"];
 export const exportPermissions: WorkspacePermissions = ["EXPORT", ...exportSubPermissions];
 
+// Shown checked and locked under the including permission, never stored.
+const includedPermissions: Partial<Record<WorkspacePermission, WorkspacePermissions>> = {
+    EXPORT: exportSubPermissions,
+    MANAGE_VISUALIZATIONS: ["CREATE_VISUALIZATION"],
+};
+
+const includedBy = (permissions: WorkspacePermissions): WorkspacePermissions =>
+    permissions.flatMap((p) => includedPermissions[p] ?? []);
+
 /**
  * Main workspace permissions imply some of the granular permissions that
  * we want to explicitly show on UI but not necessarily store on backend.
@@ -33,6 +42,7 @@ export const getImplicitGranularPermissions = (
                 "CREATE_AUTOMATION",
                 "CREATE_METRIC",
                 "CREATE_VISUALIZATION",
+                "MANAGE_VISUALIZATIONS",
                 "CREATE_COMPUTED_ATTRIBUTE",
                 "CREATE_FILTER_VIEW",
             ];
@@ -61,12 +71,13 @@ export const getGranularPermissions = (permissions: WorkspacePermissions): Works
     const workspacePermission = getWorkspacePermission(permissions);
     const implicitGranularPermissions = getImplicitGranularPermissions(workspacePermission);
     const onlyGranularPermissions = permissions.filter((p) => !workspacePermissions.includes(p));
-    const exportSubPermissions = onlyGranularPermissions.includes("EXPORT")
-        ? (["EXPORT_PDF", "EXPORT_TABULAR"] as WorkspacePermissions)
-        : [];
 
     return [
-        ...new Set([...implicitGranularPermissions, ...onlyGranularPermissions, ...exportSubPermissions]),
+        ...new Set([
+            ...implicitGranularPermissions,
+            ...onlyGranularPermissions,
+            ...includedBy(onlyGranularPermissions),
+        ]),
     ];
 };
 
@@ -140,10 +151,9 @@ export const isPermissionDisabled = (
     const isAnalyzeWithImpliedPermission =
         selectedWorkspacePermission === "ANALYZE" &&
         (permission === "CREATE_FILTER_VIEW" || permission === "CREATE_VISUALIZATION");
-    const isExportSubPermission =
-        selectedGranularPermissions.includes("EXPORT") && exportSubPermissions.includes(permission);
+    const isIncluded = includedBy(selectedGranularPermissions).includes(permission);
 
-    return isManageWithNoAi || isAnalyzeWithImpliedPermission || isExportSubPermission;
+    return isManageWithNoAi || isAnalyzeWithImpliedPermission || isIncluded;
 };
 
 /**
@@ -169,20 +179,16 @@ export const removeRedundantPermissions = (permissions: WorkspacePermissions): W
         sanitizedPermissions = sanitizedPermissions.filter((p) => p !== "CREATE_VISUALIZATION");
     }
 
-    if (permissions.includes("EXPORT")) {
-        sanitizedPermissions = sanitizedPermissions.filter((p) => p !== "EXPORT_PDF");
-        sanitizedPermissions = sanitizedPermissions.filter((p) => p !== "EXPORT_TABULAR");
-    }
-
-    return sanitizedPermissions;
+    const included = includedBy(permissions);
+    return sanitizedPermissions.filter((p) => !included.includes(p));
 };
 
 /**
- * Returns whether two workspaces have the same permissions.
+ * Returns whether two workspaces differ in hierarchy or permissions.
  *
- * Remark: possible implicit permissions are not removed here.
+ * Remark: compares what a save would store, so implicit permissions do not count.
  */
-export const areWorkspacePermissionsEqual = (
+export const haveWorkspacePermissionsChanged = (
     workspace1: IGrantedWorkspace,
     workspace2: IGrantedWorkspace,
 ) => {
@@ -192,7 +198,10 @@ export const areWorkspacePermissionsEqual = (
 
     return (
         workspace1.isHierarchical !== workspace2.isHierarchical ||
-        !isEqual([...workspace1.permissions].sort(), [...workspace2.permissions].sort())
+        !isEqual(
+            removeRedundantPermissions(workspace1.permissions).sort(),
+            removeRedundantPermissions(workspace2.permissions).sort(),
+        )
     );
 };
 
@@ -208,6 +217,7 @@ const reorderPermissions = (permissions: WorkspacePermissions): WorkspacePermiss
         "CREATE_AUTOMATION",
         "CREATE_METRIC",
         "CREATE_VISUALIZATION",
+        "MANAGE_VISUALIZATIONS",
         "CREATE_COMPUTED_ATTRIBUTE",
         "EXPORT",
         "EXPORT_PDF",

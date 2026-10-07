@@ -196,7 +196,8 @@ function makeController(
         grantableDisabledLevels: undefined,
         callerLevel: undefined,
         granteeControlsLocked: false,
-        showAdminAccessNote: false,
+        roleAccess: undefined,
+        roleLockedGranteeId: undefined,
         generalAccess: "RESTRICTED",
         workspaceLevel: "VIEW",
         workspaceInheritedLevel: undefined,
@@ -763,7 +764,7 @@ describe("ObjectShareDialog administrator note", () => {
     // WHEN the note applies is the controller's concern (see the classification tests on
     // useObjectShareController) — these only cover rendering the classification.
     it("renders the administrator note instead of a synthesized grantee row", () => {
-        renderDialog(makeController({ grantees: [], showAdminAccessNote: true }));
+        renderDialog(makeController({ grantees: [], roleAccess: "workspaceManager" }));
 
         expect(captured.rows).toEqual([]);
         expect(captured.notes.at(-1)).toContain(
@@ -772,7 +773,7 @@ describe("ObjectShareDialog administrator note", () => {
     });
 
     it("renders no note when the controller does not classify the caller as administrator", () => {
-        renderDialog(makeController({ grantees: [], showAdminAccessNote: false }));
+        renderDialog(makeController({ grantees: [], roleAccess: undefined }));
 
         expect(captured.rows).toEqual([]);
         expect(captured.notes.at(-1)).toBeUndefined();
@@ -780,7 +781,7 @@ describe("ObjectShareDialog administrator note", () => {
 
     it("keeps the note above added grantees rather than replacing it", () => {
         // The note reflects the caller's role, not the empty state of the list.
-        renderDialog(makeController({ grantees: [OTHER_GRANTEE], showAdminAccessNote: true }));
+        renderDialog(makeController({ grantees: [OTHER_GRANTEE], roleAccess: "workspaceManager" }));
 
         expect(captured.rows.map((r) => r.id)).toEqual(["user:u1"]);
         expect(captured.notes.at(-1)).toContain("full access to all objects.");
@@ -944,5 +945,47 @@ describe("ObjectShareDialog draft guards", () => {
         expect(() =>
             renderDialog(makeController({}), undefined, { draft: true, onDraftChange: () => {} }),
         ).toThrow(/cannot be combined with a `target`/);
+    });
+});
+
+describe("ObjectShareDialog visualization manager access", () => {
+    const COVERED_TOOLTIP = MESSAGES["objectShare.grantee.coveredByWorkspacePermission"];
+
+    it("explains the access with a note", () => {
+        renderDialog(makeController({ roleAccess: "visualizationManager" }));
+
+        expect(captured.notes.at(-1)).toBe(
+            "Note: You can edit and share any visualization in this workspace.",
+        );
+    });
+
+    it("keeps the caller's own row at Can edit & share, with lower levels and removal locked", () => {
+        renderDialog(
+            makeController({
+                roleAccess: "visualizationManager",
+                roleLockedGranteeId: SELF_GRANTEE.id,
+                grantees: [{ ...SELF_GRANTEE, level: "EDIT" as const, directLevel: "VIEW" as const }],
+            }),
+        );
+
+        const row = captured.controls.at(-1);
+        expect(row?.disabledLevels).toEqual(["SHARE", "VIEW"]);
+        expect(row?.disabledLevelTooltips?.SHARE).toBe(COVERED_TOOLTIP);
+        expect(row?.disabledLevelTooltips?.VIEW).toBe(COVERED_TOOLTIP);
+        expect(row?.isRemoveDisabled).toBe(true);
+        expect(row?.removeDisabledTooltip).toBe(COVERED_TOOLTIP);
+    });
+
+    it("leaves other rows as they are", () => {
+        renderDialog(
+            makeController({
+                roleAccess: "visualizationManager",
+                grantees: [{ ...OTHER_GRANTEE, directLevel: "VIEW" as const }],
+            }),
+        );
+
+        const row = captured.controls.at(-1);
+        expect(row?.disabledLevels).toBeUndefined();
+        expect(row?.isRemoveDisabled).toBe(false);
     });
 });

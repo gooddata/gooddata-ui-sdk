@@ -14,7 +14,7 @@ import { useAddWorkspace } from "./useAddWorkspace.js";
 import { GranularPermissions } from "./WorkspaceItem/GranularPermissions.js";
 import {
     areRedundantPermissionsPresent,
-    areWorkspacePermissionsEqual,
+    haveWorkspacePermissionsChanged,
 } from "./WorkspaceItem/granularPermissionUtils.js";
 
 export interface IAddWorkspaceProps {
@@ -29,6 +29,7 @@ export interface IAddWorkspaceProps {
     areMetricPermissionsEnabled?: boolean;
     isCreateVisualizationWorkspacePermissionEnabled?: boolean;
     areComputedAttributesEnabled?: boolean;
+    areVisualizationPermissionsEnabled?: boolean;
 }
 
 export function AddWorkspace({
@@ -43,6 +44,7 @@ export function AddWorkspace({
     areMetricPermissionsEnabled,
     isCreateVisualizationWorkspacePermissionEnabled,
     areComputedAttributesEnabled,
+    areVisualizationPermissionsEnabled,
 }: IAddWorkspaceProps) {
     const intl = useIntl();
     const { addedWorkspaces, isProcessing, onAdd, onChange, onOverwriteSelect } = useAddWorkspace(
@@ -54,7 +56,7 @@ export function AddWorkspace({
     );
 
     const isGranularPermissionsChanged = useMemo(() => {
-        return editWorkspace ? areWorkspacePermissionsEqual(addedWorkspaces[0], editWorkspace) : true;
+        return editWorkspace ? haveWorkspacePermissionsChanged(addedWorkspaces[0], editWorkspace) : true;
     }, [addedWorkspaces, editWorkspace]);
 
     const showRedundancyWarningMessage = useMemo(() => {
@@ -112,6 +114,7 @@ export function AddWorkspace({
                     isCreateVisualizationWorkspacePermissionEnabled
                 }
                 areComputedAttributesEnabled={areComputedAttributesEnabled}
+                areVisualizationPermissionsEnabled={areVisualizationPermissionsEnabled}
             />
         </ConfirmDialogBase>
     );

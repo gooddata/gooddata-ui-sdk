@@ -5,7 +5,10 @@ import {
     type KeyDriversDimension,
     MetadataUtilities,
 } from "@gooddata/api-client-tiger";
-import { ActionsApi_SetCertification } from "@gooddata/api-client-tiger/endpoints/actions";
+import {
+    ActionsApi_CheckEntityOverrides,
+    ActionsApi_SetCertification,
+} from "@gooddata/api-client-tiger/endpoints/actions";
 import {
     EntitiesApi_CreateEntityMetrics,
     EntitiesApi_DeleteEntityMetrics,
@@ -25,6 +28,7 @@ import type {
     IGetMeasureOptions,
     IMeasureExpressionToken,
     IMeasureKeyDrivers,
+    IMeasureOverride,
     IMeasureReferencing,
     ISaveMeasureOptions,
     IUpdateMetadataObjectMetaPayload,
@@ -106,6 +110,23 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
             effects,
             labels,
         };
+    }
+
+    public async checkEntityOverrides(identifiers: string[]): Promise<IMeasureOverride[]> {
+        if (identifiers.length === 0) {
+            return [];
+        }
+
+        const response = await this.authCall((client) =>
+            ActionsApi_CheckEntityOverrides(client.axios, client.basePath, {
+                workspaceId: this.workspace,
+                hierarchyObjectIdentification: identifiers.map((id) => ({ id, type: "metric" })),
+            }),
+        );
+
+        return response.data
+            .filter(({ type }) => type === "metric")
+            .map(({ id, origins }) => ({ identifier: id, origins }));
     }
 
     public async getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]> {

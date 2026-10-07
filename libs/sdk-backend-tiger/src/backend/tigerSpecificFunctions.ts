@@ -625,6 +625,7 @@ export type TigerSpecificFunctions = {
      * Check if entities are not overrides by entities from parents workspaces
      * @param entities - All i and types for check
      * @returns IdentifierDuplications[]
+     * @deprecated Use {@link @gooddata/sdk-backend-spi#IWorkspaceMeasuresService.checkEntityOverrides} instead.
      */
     checkEntityOverrides?: (
         workspaceId: string,

@@ -74,7 +74,6 @@ function renderCard({
     allowNativeLinks,
     openReportId,
     openDraftRef,
-    refines,
     linkHandler = vi.fn(),
 }: {
     saved?: string | null;
@@ -88,7 +87,6 @@ function renderCard({
     allowNativeLinks?: boolean;
     openReportId?: string;
     openDraftRef?: string;
-    refines?: string | null;
     linkHandler?: (event: LinkHandlerEvent) => string | undefined;
 } = {}) {
     const store = configureStore({
@@ -133,7 +131,6 @@ function renderCard({
                             report={report}
                             saved={saved}
                             baseReportId={baseReportId}
-                            refines={refines}
                         />
                     </ConfigProvider>
                 </WorkspaceProvider>
@@ -144,7 +141,6 @@ function renderCard({
 }
 
 const openButton = () => screen.getByRole("button", { name: "Open" });
-const applyButton = () => screen.getByRole("button", { name: "Apply" });
 
 const originalLocation = Object.getOwnPropertyDescriptor(window, "location");
 
@@ -156,6 +152,13 @@ afterEach(() => {
 });
 
 describe("ConversationReportContent", () => {
+    it("only ever offers to open, even a change to the report that is open", () => {
+        renderCard({ baseReportId: "base-1", openReportId: "base-1" });
+
+        expect(openButton()).toBeTruthy();
+        expect(screen.queryByRole("button", { name: "Apply" })).toBeNull();
+    });
+
     it("names the report, the period it covers and how many pages it has", () => {
         renderCard();
 
@@ -243,11 +246,10 @@ describe("ConversationReportContent", () => {
         );
     });
 
-    it("offers to apply the changes when they modify the report that is open", () => {
+    it("opens the changes when they modify the report that is open", () => {
         const { linkHandler } = renderCard({ baseReportId: "base-1", openReportId: "base-1" });
 
-        expect(screen.queryByRole("button", { name: "Open" })).toBeNull();
-        fireEvent.click(applyButton());
+        fireEvent.click(openButton());
 
         expect(linkHandler).toHaveBeenCalledWith(
             expect.objectContaining({
@@ -268,15 +270,14 @@ describe("ConversationReportContent", () => {
         expect(openButton()).toBeTruthy();
     });
 
-    it("offers to apply the chat's version of a report that was saved, while that report is open", () => {
+    it("opens the chat's version of a report that was saved, while that report is open", () => {
         const { linkHandler } = renderCard({
             baseReportId: "base-1",
             saved: "base-1",
             openReportId: "base-1",
         });
 
-        expect(screen.queryByRole("button", { name: "Open" })).toBeNull();
-        fireEvent.click(applyButton());
+        fireEvent.click(openButton());
 
         expect(linkHandler).toHaveBeenCalledWith(
             expect.objectContaining({
@@ -291,11 +292,22 @@ describe("ConversationReportContent", () => {
         expect(openButton()).toBeTruthy();
     });
 
-    it("offers to apply a new version of the unsaved draft that is open", () => {
-        const { linkHandler } = renderCard({ refines: "report_1", openDraftRef: "report_1" });
+    it("opens a rework of the unsaved report open in the editor", () => {
+        renderCard({ openDraftRef: "report_9" });
 
-        expect(screen.queryByRole("button", { name: "Open" })).toBeNull();
-        fireEvent.click(applyButton());
+        expect(openButton()).toBeTruthy();
+    });
+
+    it("offers to open a rework when no report is open", () => {
+        renderCard();
+
+        expect(openButton()).toBeTruthy();
+    });
+
+    it("opens a new version of the unsaved draft that is open", () => {
+        const { linkHandler } = renderCard({ openDraftRef: "report_1" });
+
+        fireEvent.click(openButton());
 
         expect(linkHandler).toHaveBeenCalledWith(
             expect.objectContaining({
@@ -305,7 +317,7 @@ describe("ConversationReportContent", () => {
     });
 
     it("offers to open a new version of a draft other than the one open", () => {
-        renderCard({ refines: "report_1", openDraftRef: "report_3" });
+        renderCard({ openDraftRef: "report_3" });
 
         expect(openButton()).toBeTruthy();
     });
@@ -317,32 +329,32 @@ describe("ConversationReportContent", () => {
     });
 
     it("offers to open a new version of a draft while a saved report is open", () => {
-        renderCard({ refines: "report_1", openReportId: "r9" });
+        renderCard({ openReportId: "r9" });
 
         expect(openButton()).toBeTruthy();
     });
 
     it("offers to open a new version of the open draft once that version was saved as a report", () => {
-        renderCard({ refines: "report_1", saved: "r9", openDraftRef: "report_1" });
+        renderCard({ saved: "r9", openDraftRef: "report_1" });
 
         expect(openButton()).toBeTruthy();
     });
 
     it("offers to open a new version of the open draft when it edits a saved report", () => {
-        renderCard({ refines: "report_1", baseReportId: "r5", openDraftRef: "report_1" });
+        renderCard({ baseReportId: "r5", openDraftRef: "report_1" });
 
         expect(openButton()).toBeTruthy();
     });
 
-    it("cannot apply changes before the conversation is saved", () => {
+    it("cannot open changes before the conversation is saved", () => {
         const { linkHandler } = renderCard({
             baseReportId: "base-1",
             openReportId: "base-1",
             conversationId: "",
         });
 
-        expect((applyButton() as HTMLButtonElement).disabled).toBe(true);
-        fireEvent.click(applyButton());
+        expect((openButton() as HTMLButtonElement).disabled).toBe(true);
+        fireEvent.click(openButton());
 
         expect(linkHandler).not.toHaveBeenCalled();
     });
@@ -383,7 +395,6 @@ describe("ConversationReportContent", () => {
         renderCard({ report: null });
 
         expect(screen.getByText("The report is unavailable.")).toBeTruthy();
-        expect(screen.queryByRole("button", { name: "Open" })).toBeNull();
     });
 
     it("shows nothing when the reports app is off, since there is nowhere to open the report", () => {

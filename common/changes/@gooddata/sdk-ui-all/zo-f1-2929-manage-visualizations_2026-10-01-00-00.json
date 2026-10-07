@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-model: Add the MANAGE_VISUALIZATIONS workspace permission and the canManageVisualizations workspace permission flag.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

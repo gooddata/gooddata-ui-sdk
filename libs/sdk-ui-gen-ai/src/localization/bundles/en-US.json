@@ -563,10 +563,6 @@
         "text": "Open",
         "crowdinContext": "Open report button label on the report card in the chat."
     },
-    "gd.gen-ai.report.apply": {
-        "text": "Apply",
-        "crowdinContext": "Button label on the report card in the chat when the assistant proposes changes to the saved report the user has open. It loads the changes into that report as unsaved edits."
-    },
     "gd.gen-ai.report.details": {
         "text": "{period} · {count, plural, one {# page} other {# pages}}",
         "crowdinContext": "Second line of the report card in the chat: the period the report covers, then how many pages it has. {period} is an already formatted date range such as 'Jan 1 – Mar 31, 2026'; {count} is the number of pages."

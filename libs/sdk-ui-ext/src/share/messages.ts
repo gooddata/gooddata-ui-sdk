@@ -45,8 +45,8 @@ export const objectShareMessages = defineMessages({
      */
     toastEscalationRefused: { id: "objectShare.toast.escalationRefused" },
     granteeYou: { id: "objectShare.grantee.you" },
-    adminNotePrefix: { id: "objectShare.adminNote.prefix" },
-    adminNote: { id: "objectShare.adminNote" },
+    roleNotePrefix: { id: "objectShare.adminNote.prefix" },
+    granteeCoveredByWorkspacePermission: { id: "objectShare.grantee.coveredByWorkspacePermission" },
     emptyGrantees: { id: "objectShare.emptyGrantees" },
     emptyGranteesHint: { id: "objectShare.emptyGrantees.hint" },
     toastGranteeAdded: { id: "objectShare.toast.granteeAdded" },
@@ -55,6 +55,14 @@ export const objectShareMessages = defineMessages({
     toastError: { id: "objectShare.toast.error" },
     toastLabelScopePartial: { id: "objectShare.toast.labelScopePartial" },
     loadError: { id: "objectShare.loadError" },
+});
+
+/**
+ * @internal
+ */
+export const objectShareRoleNoteMessages = defineMessages({
+    workspaceManager: { id: "objectShare.adminNote" },
+    visualizationManager: { id: "objectShare.visualizationManagerNote" },
 });
 
 /**

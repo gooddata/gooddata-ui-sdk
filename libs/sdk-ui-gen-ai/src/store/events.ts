@@ -4,7 +4,12 @@ import {
     type IChatConversation,
     type IChatConversationVisualisationContent,
 } from "@gooddata/sdk-backend-spi";
-import { type IDashboard, type IGenAIUserContext, type IInsight } from "@gooddata/sdk-model";
+import {
+    type IDashboard,
+    type IGenAIUserContext,
+    type IInsight,
+    type IReportDefinition,
+} from "@gooddata/sdk-model";
 import { type SdkErrorType } from "@gooddata/sdk-ui";
 
 import { type GenAIAssistantMode } from "../components/ConfigContext.js";
@@ -387,13 +392,33 @@ export const isChatConversationChangedEvent = (event: ChatEvent): event is ChatC
  */
 export type ChatDefinitionReceivedEvent = BaseEvent & {
     type: "onDefinitionReceived";
-    definitionType: "dashboard" | "visualization";
+    definitionType: "dashboard" | "visualization" | "report";
     itemId: string;
     conversationId: string;
     interactionId?: string;
     dashboard?: IDashboard;
     insights?: IInsight[];
     visualization?: NonNullable<IChatConversationVisualisationContent["visualization"]>;
+    /**
+     * The whole report version.
+     */
+    report?: IReportDefinition;
+    /**
+     * Name of the report version in the conversation, the one its save is recorded under.
+     */
+    reportRef?: string;
+    /**
+     * Name of the report version this one reworks.
+     */
+    refines?: string;
+    /**
+     * Whether the version was written from the report open in the editor.
+     */
+    reworksOpenReport?: boolean;
+    /**
+     * Id of the saved report this version edits.
+     */
+    baseReportId?: string;
 };
 
 /**

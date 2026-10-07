@@ -313,6 +313,7 @@ export type {
     ISaveMeasureOptions,
     IMeasureReferencing,
     IMeasureKeyDrivers,
+    IMeasureOverride,
     IMeasuresQueryResult,
     IMeasuresQuery,
 } from "./workspace/measures/index.js";

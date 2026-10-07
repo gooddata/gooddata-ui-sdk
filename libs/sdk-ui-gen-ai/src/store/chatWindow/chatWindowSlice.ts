@@ -11,6 +11,7 @@ import {
     type IDashboard,
     type IGenAIUserContext,
     type IInsight,
+    type IReportDefinition,
     serializeObjRef,
 } from "@gooddata/sdk-model";
 import type { IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
@@ -378,13 +379,18 @@ const chatWindowSlice = createSlice({
         onDefinitionReceivedAction: (
             state,
             _action: PayloadAction<{
-                definitionType: "dashboard" | "visualization";
+                definitionType: "dashboard" | "visualization" | "report";
                 conversationId: string;
                 itemId: string;
                 interactionId?: string;
                 dashboard?: IDashboard;
                 insights?: IInsight[];
                 visualization?: IInsight;
+                report?: IReportDefinition;
+                reportRef?: string;
+                refines?: string;
+                reworksOpenReport?: boolean;
+                baseReportId?: string;
             }>,
         ) => state,
         copyToClipboardAction: (state, _action: PayloadAction<{ content: string }>) => state,

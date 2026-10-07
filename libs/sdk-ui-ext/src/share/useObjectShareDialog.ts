@@ -274,18 +274,39 @@ export function useObjectShareDialog({
         [state.callerLevel],
     );
 
+    const coveredByWorkspacePermissionTooltip = intl.formatMessage(
+        objectShareMessages.granteeCoveredByWorkspacePermission,
+    );
     const aboveCallerUserTooltip = intl.formatMessage(objectShareMessages.granteeAboveCallerUser);
     const aboveCallerGroupTooltip = intl.formatMessage(objectShareMessages.granteeAboveCallerGroup);
-    const aboveCallerTooltip = useCallback(
-        (grantee: IObjectShareGrantee) =>
-            grantee.kind === "group" ? aboveCallerGroupTooltip : aboveCallerUserTooltip,
-        [aboveCallerUserTooltip, aboveCallerGroupTooltip],
+
+    const rowLock = useCallback(
+        (
+            grantee: IObjectShareGrantee,
+        ): { levels: ObjectSharePermissionLevel[]; tooltip: string } | undefined => {
+            if (isRowAboveCaller(grantee)) {
+                const tooltip = grantee.kind === "group" ? aboveCallerGroupTooltip : aboveCallerUserTooltip;
+                return { levels: [...ALL_LEVELS], tooltip };
+            }
+            if (state.roleLockedGranteeId === grantee.id) {
+                return { levels: levelsBelow("EDIT"), tooltip: coveredByWorkspacePermissionTooltip };
+            }
+            return undefined;
+        },
+        [
+            isRowAboveCaller,
+            state.roleLockedGranteeId,
+            aboveCallerUserTooltip,
+            aboveCallerGroupTooltip,
+            coveredByWorkspacePermissionTooltip,
+        ],
     );
 
     const rowDisabledLevels = useCallback(
         (grantee: IObjectShareGrantee) => {
-            if (isRowAboveCaller(grantee)) {
-                return [...ALL_LEVELS];
+            const lock = rowLock(grantee);
+            if (lock) {
+                return lock.levels;
             }
             const self =
                 state.selfManagedGranteeId === grantee.id ? (state.selfManagedDisabledLevels ?? []) : [];
@@ -300,19 +321,14 @@ export function useObjectShareDialog({
             ];
             return merged.length > 0 ? merged : undefined;
         },
-        [
-            isRowAboveCaller,
-            state.selfManagedGranteeId,
-            state.selfManagedDisabledLevels,
-            state.grantableDisabledLevels,
-        ],
+        [rowLock, state.selfManagedGranteeId, state.selfManagedDisabledLevels, state.grantableDisabledLevels],
     );
 
     const rowDisabledLevelTooltips = useCallback(
         (grantee: IObjectShareGrantee) => {
-            if (isRowAboveCaller(grantee)) {
-                const tooltip = aboveCallerTooltip(grantee);
-                return Object.fromEntries(ALL_LEVELS.map((level) => [level, tooltip]));
+            const lock = rowLock(grantee);
+            if (lock) {
+                return Object.fromEntries(lock.levels.map((level) => [level, lock.tooltip]));
             }
             const covered = inheritedCoveredLevels(grantee);
             if (covered.length === 0) {
@@ -324,19 +340,18 @@ export function useObjectShareDialog({
             }
             return map;
         },
-        [isRowAboveCaller, aboveCallerTooltip, inheritedCoveredTooltip],
+        [rowLock, inheritedCoveredTooltip],
     );
 
     const isRowRemoveDisabled = useCallback(
-        (grantee: IObjectShareGrantee) => grantee.directLevel === undefined || isRowAboveCaller(grantee),
-        [isRowAboveCaller],
+        (grantee: IObjectShareGrantee) => grantee.directLevel === undefined || rowLock(grantee) !== undefined,
+        [rowLock],
     );
 
     const removeInheritedTooltip = intl.formatMessage(objectShareMessages.granteeRemoveInherited);
     const rowRemoveDisabledTooltip = useCallback(
-        (grantee: IObjectShareGrantee) =>
-            isRowAboveCaller(grantee) ? aboveCallerTooltip(grantee) : removeInheritedTooltip,
-        [isRowAboveCaller, aboveCallerTooltip, removeInheritedTooltip],
+        (grantee: IObjectShareGrantee) => rowLock(grantee)?.tooltip ?? removeInheritedTooltip,
+        [rowLock, removeInheritedTooltip],
     );
 
     const grantLimitTooltip = intl.formatMessage(objectShareMessages.toastEscalationRefused);

@@ -924,6 +924,7 @@ export type IChatConversationReportContent = {
     ref?: string | null;
     baseReportId?: string | null;
     refines?: string | null;
+    reworksOpenReport?: boolean;
 };
 
 // @internal
@@ -1330,7 +1331,7 @@ export interface IDatasetsQuery {
 
 // @beta
 export interface IDatasetsQueryFilterOptions extends IFilterBaseOptions {
-    dataSetType?: "DATE" | "NORMAL";
+    dataSetType?: "DATE" | "NORMAL" | "AUXILIARY";
 }
 
 // @beta
@@ -1998,6 +1999,12 @@ export type IMeasureExpressionToken = IObjectExpressionToken | IAttributeElement
 export interface IMeasureKeyDrivers {
     effects: number[];
     labels: string[];
+}
+
+// @alpha
+export interface IMeasureOverride {
+    identifier: string;
+    origins: string[];
 }
 
 // @public
@@ -3129,6 +3136,8 @@ export interface IWorkspaceLogicalModelService {
 
 // @public
 export interface IWorkspaceMeasuresService {
+    // @alpha
+    checkEntityOverrides(identifiers: string[]): Promise<IMeasureOverride[]>;
     // @alpha
     computeKeyDrivers: (measure: IMeasure, options?: {
         sortDirection: "ASC" | "DESC";

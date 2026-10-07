@@ -74,6 +74,11 @@ export interface IAccessList {
      */
     isWorkspaceManager: boolean | undefined;
     /**
+     * Whether the caller may edit and share every visualization of this workspace through the
+     * MANAGE_VISUALIZATIONS or MANAGE workspace permission, or **undefined** while pending or after it failed.
+     */
+    canManageVisualizations: boolean | undefined;
+    /**
      * The strongest level the caller holds on the target, from every source the backend
      * resolves (own grants, groups, parent workspaces, workspace permissions), or
      * **undefined** without a target, while pending or after the read failed.
@@ -252,6 +257,7 @@ export function useAccessList(
         [backend, workspace],
     );
     const isWorkspaceManager = workspacePermissions?.canManageProject;
+    const canManageVisualizations = workspacePermissions?.canManageVisualizations;
 
     // Re-read after every write, since a change to the caller's own row, a group or the rule
     // can change their level. The last answer stays in place while the next one loads, and is
@@ -535,6 +541,7 @@ export function useAccessList(
         grantees,
         selfIdentity,
         isWorkspaceManager,
+        canManageVisualizations,
         callerLevel,
         selfIdentityResolved,
         generalAccess,

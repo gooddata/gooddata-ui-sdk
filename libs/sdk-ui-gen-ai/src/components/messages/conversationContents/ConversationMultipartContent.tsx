@@ -129,7 +129,6 @@ export function ConversationMultipartContent({
                             report={part.report}
                             saved={part.saved}
                             baseReportId={part.baseReportId}
-                            refines={part.refines}
                         />
                     );
                 }

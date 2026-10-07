@@ -80,7 +80,7 @@
     "gd.gen-ai.feedback.reason.factually-incorrect": "Salah secara faktual",
     "gd.gen-ai.feedback.reason.answer-too-long": "Jawaban terlalu lama",
     "gd.gen-ai.feedback.reason.other": "Lainnya",
-    "gd.gen-ai.disclaimer": "Asisten AI dapat membuat kesalahan. Periksa sebelum mengandalkan jawaban ini.",
+    "gd.gen-ai.disclaimer": "AI dapat membuat kesalahan. Verifikasi hasilnya.",
     "gd.gen-ai.dialog.label": "Percakapan asisten AI",
     "gd.gen-ai.header.reset-tooltip": "Reset",
     "gd.gen-ai.header.conversations-tooltip": "Percakapan terbaru",

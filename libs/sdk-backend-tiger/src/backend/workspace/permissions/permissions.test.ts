@@ -3,99 +3,13 @@
 import { describe, expect, it, vi } from "vitest";
 
 import type { JsonApiWorkspaceOutMetaPermissionsEnum } from "@gooddata/api-client-tiger";
-import { EntitiesApi_GetEntityWorkspaces } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
-import type { IWorkspacePermissions } from "@gooddata/sdk-model";
+import type { EntitiesApi_GetEntityWorkspaces } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
-import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "../constants.js";
 
 import { TigerWorkspacePermissionsFactory } from "./index.js";
 
 type TigerPermissionType = JsonApiWorkspaceOutMetaPermissionsEnum;
-
-function hasPermission(permissions: Array<TigerPermissionType>, need: TigerPermissionType): boolean {
-    return permissions.indexOf(need) >= 0;
-}
-
-function getPermission(permissions: Array<TigerPermissionType>) {
-    const canViewWorkspace = hasPermission(permissions, "VIEW");
-    const canAnalyzeWorkspace = hasPermission(permissions, "ANALYZE");
-    const canManageWorkspace = hasPermission(permissions, "MANAGE");
-    const canExportReport = hasPermission(permissions, "EXPORT");
-    const canExportTabular = hasPermission(permissions, "EXPORT_TABULAR");
-    const canExportPdf = hasPermission(permissions, "EXPORT_PDF");
-    const canCreateFilterView = hasPermission(permissions, "CREATE_FILTER_VIEW");
-    const canCreateAutomation = hasPermission(permissions, "CREATE_AUTOMATION");
-    const canUseAiAssistant = hasPermission(permissions, "USE_AI_ASSISTANT");
-    const canCreateMetric = hasPermission(permissions, "CREATE_METRIC");
-    const canCreateComputedAttribute = hasPermission(permissions, "CREATE_COMPUTED_ATTRIBUTE");
-
-    return {
-        canViewWorkspace,
-        canAnalyzeWorkspace,
-        canManageWorkspace,
-        canExportReport,
-        canExportTabular,
-        canExportPdf,
-        canCreateFilterView,
-        canCreateAutomation,
-        canUseAiAssistant,
-        canCreateMetric,
-        canCreateComputedAttribute,
-    };
-}
-
-function processPermissions(permissions: Array<TigerPermissionType>): IWorkspacePermissions {
-    const {
-        canViewWorkspace,
-        canAnalyzeWorkspace,
-        canManageWorkspace,
-        canExportReport,
-        canExportTabular,
-        canExportPdf,
-        canCreateFilterView,
-        canCreateAutomation,
-        canUseAiAssistant,
-        canCreateMetric,
-        canCreateComputedAttribute,
-    } = getPermission(permissions);
-
-    return {
-        //disabled for tiger for now
-        canCreateReport: false,
-        canUploadNonProductionCSV: false,
-        canManageACL: false,
-        canManageDomain: false,
-        canInviteUserToProject: false,
-        canCreateScheduledMail: false,
-        canManageScheduledMail: false,
-        canListUsersInProject: false,
-        //based on group: VIEW
-        canAccessWorkbench: canViewWorkspace,
-        canExecuteRaw: canViewWorkspace,
-        //based on group: ANALYZE
-        canAnalyzeWorkspace,
-        canCreateVisualization: canAnalyzeWorkspace,
-        canManageAnalyticalDashboard: canAnalyzeWorkspace,
-        canCreateAnalyticalDashboard: canAnalyzeWorkspace,
-        canManageMetric: canAnalyzeWorkspace,
-        canManageReport: canAnalyzeWorkspace,
-        canRefreshData: canAnalyzeWorkspace,
-        canUseAiAssistant: canUseAiAssistant,
-        //based on group: MANAGE
-        canManageProject: canManageWorkspace,
-        //NOTE: Data source MANAGE in future
-        canInitData: canManageWorkspace,
-        //export
-        canExportReport,
-        canExportTabular: canExportTabular || canExportReport,
-        canExportPdf: canExportPdf || canExportReport,
-        canCreateFilterView,
-        canCreateAutomation,
-        canCreateMetric,
-        canCreateComputedAttribute,
-    };
-}
 
 describe("TigerWorkspacePermissionsFactory", () => {
     const workspaceId = "workspaceId";
@@ -119,18 +33,15 @@ describe("TigerWorkspacePermissionsFactory", () => {
         return [authCall, axiosRequest] as const;
     }
 
+    const factoryFor = (authCall: ReturnType<typeof getWithDefinedPermissions>[0]) =>
+        new TigerWorkspacePermissionsFactory(authCall as unknown as TigerAuthenticatedCallGuard, workspaceId);
+    const createFactory = (permissions: Array<TigerPermissionType>) =>
+        factoryFor(getWithDefinedPermissions(permissions)[0]);
+
     it("test VIEW permissions", async () => {
         const [authCall, axiosRequest] = getWithDefinedPermissions(["VIEW"]);
 
-        const response = await authCall((client: { axios: any; basePath: string }) =>
-            EntitiesApi_GetEntityWorkspaces(client.axios, client.basePath, {
-                id: workspaceId,
-                ...GET_OPTIMIZED_WORKSPACE_PARAMS,
-            }),
-        );
-
-        const permissions = response.data.data.meta!.permissions ?? ([] as Array<TigerPermissionType>);
-        const workspacePermissions = processPermissions(permissions);
+        const workspacePermissions = await factoryFor(authCall).getPermissionsForCurrentUser();
 
         expect(axiosRequest).toHaveBeenCalledWith(
             expect.objectContaining({
@@ -146,6 +57,7 @@ describe("TigerWorkspacePermissionsFactory", () => {
             canAnalyzeWorkspace: false,
             canCreateVisualization: false,
             canCreateComputedAttribute: false,
+            canManageVisualizations: false,
             canExecuteRaw: true,
             canExportReport: false,
             canExportTabular: false,
@@ -171,15 +83,7 @@ describe("TigerWorkspacePermissionsFactory", () => {
     it("test ANALYZE permissions", async () => {
         const [authCall, axiosRequest] = getWithDefinedPermissions(["ANALYZE", "VIEW"]);
 
-        const response = await authCall((client: { axios: any; basePath: string }) =>
-            EntitiesApi_GetEntityWorkspaces(client.axios, client.basePath, {
-                id: workspaceId,
-                ...GET_OPTIMIZED_WORKSPACE_PARAMS,
-            }),
-        );
-
-        const permissions = response.data.data.meta!.permissions ?? ([] as Array<TigerPermissionType>);
-        const workspacePermissions = processPermissions(permissions);
+        const workspacePermissions = await factoryFor(authCall).getPermissionsForCurrentUser();
 
         expect(axiosRequest).toHaveBeenCalledWith(
             expect.objectContaining({
@@ -195,6 +99,7 @@ describe("TigerWorkspacePermissionsFactory", () => {
             canAnalyzeWorkspace: true,
             canCreateVisualization: true,
             canCreateComputedAttribute: false,
+            canManageVisualizations: false,
             canExecuteRaw: true,
             canExportReport: false,
             canExportTabular: false,
@@ -220,15 +125,7 @@ describe("TigerWorkspacePermissionsFactory", () => {
     it("test MANAGE permissions", async () => {
         const [authCall, axiosRequest] = getWithDefinedPermissions(["MANAGE", "ANALYZE", "VIEW"]);
 
-        const response = await authCall((client: { axios: any; basePath: string }) =>
-            EntitiesApi_GetEntityWorkspaces(client.axios, client.basePath, {
-                id: workspaceId,
-                ...GET_OPTIMIZED_WORKSPACE_PARAMS,
-            }),
-        );
-
-        const permissions = response.data.data.meta!.permissions ?? ([] as Array<TigerPermissionType>);
-        const workspacePermissions = processPermissions(permissions);
+        const workspacePermissions = await factoryFor(authCall).getPermissionsForCurrentUser();
 
         expect(axiosRequest).toHaveBeenCalledWith(
             expect.objectContaining({
@@ -244,6 +141,7 @@ describe("TigerWorkspacePermissionsFactory", () => {
             canAnalyzeWorkspace: true,
             canCreateVisualization: true,
             canCreateComputedAttribute: false,
+            canManageVisualizations: true,
             canExecuteRaw: true,
             canExportReport: false,
             canExportTabular: false,
@@ -267,12 +165,6 @@ describe("TigerWorkspacePermissionsFactory", () => {
     });
 
     it("maps the granular CREATE_METRIC permission", async () => {
-        const createFactory = (permissions: Array<TigerPermissionType>) =>
-            new TigerWorkspacePermissionsFactory(
-                getWithDefinedPermissions(permissions)[0] as unknown as TigerAuthenticatedCallGuard,
-                workspaceId,
-            );
-
         const granted = await createFactory([
             "ANALYZE",
             "VIEW",
@@ -285,11 +177,6 @@ describe("TigerWorkspacePermissionsFactory", () => {
     });
 
     it("lets CREATE_VISUALIZATION on top of VIEW create visualizations without the ANALYZE role", async () => {
-        const createFactory = (permissions: Array<TigerPermissionType>) =>
-            new TigerWorkspacePermissionsFactory(
-                getWithDefinedPermissions(permissions)[0] as unknown as TigerAuthenticatedCallGuard,
-                workspaceId,
-            );
         const granted = await createFactory(["VIEW", "CREATE_VISUALIZATION"]).getPermissionsForCurrentUser();
         const viewer = await createFactory(["VIEW"]).getPermissionsForCurrentUser();
         const analyst = await createFactory(["ANALYZE", "VIEW"]).getPermissionsForCurrentUser();
@@ -299,13 +186,18 @@ describe("TigerWorkspacePermissionsFactory", () => {
         expect(analyst.canCreateVisualization).toBe(true);
     });
 
-    it("maps the granular CREATE_COMPUTED_ATTRIBUTE permission", async () => {
-        const createFactory = (permissions: Array<TigerPermissionType>) =>
-            new TigerWorkspacePermissionsFactory(
-                getWithDefinedPermissions(permissions)[0] as unknown as TigerAuthenticatedCallGuard,
-                workspaceId,
-            );
+    it("lets MANAGE_VISUALIZATIONS on top of VIEW manage and create visualizations", async () => {
+        const holder = await createFactory(["VIEW", "MANAGE_VISUALIZATIONS"]).getPermissionsForCurrentUser();
+        const manager = await createFactory(["MANAGE", "ANALYZE", "VIEW"]).getPermissionsForCurrentUser();
+        const analyst = await createFactory(["ANALYZE", "VIEW"]).getPermissionsForCurrentUser();
+        expect(holder.canManageVisualizations).toBe(true);
+        expect(holder.canCreateVisualization).toBe(true);
+        expect(holder.canAnalyzeWorkspace).toBe(false);
+        expect(manager.canManageVisualizations).toBe(true);
+        expect(analyst.canManageVisualizations).toBe(false);
+    });
 
+    it("maps the granular CREATE_COMPUTED_ATTRIBUTE permission", async () => {
         const granted = await createFactory([
             "VIEW",
             "CREATE_COMPUTED_ATTRIBUTE",

@@ -80,7 +80,7 @@
     "gd.gen-ai.feedback.reason.factually-incorrect": "事實錯誤",
     "gd.gen-ai.feedback.reason.answer-too-long": "回答耗時過長",
     "gd.gen-ai.feedback.reason.other": "其他",
-    "gd.gen-ai.disclaimer": "人工智慧助手可能會犯錯。在依賴這些答案之前請先核對。",
+    "gd.gen-ai.disclaimer": "AI 可能會出錯。請驗證結果。",
     "gd.gen-ai.dialog.label": "AI助理對話",
     "gd.gen-ai.header.reset-tooltip": "重置",
     "gd.gen-ai.header.conversations-tooltip": "最近的對話",

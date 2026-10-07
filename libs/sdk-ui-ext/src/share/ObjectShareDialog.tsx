@@ -13,7 +13,7 @@ import {
     UiObjectShareDialog,
 } from "@gooddata/sdk-ui-kit";
 
-import { objectShareMessages, objectShareTitleMessages } from "./messages.js";
+import { objectShareMessages, objectShareRoleNoteMessages, objectShareTitleMessages } from "./messages.js";
 import { granteeDisplayPair } from "./objectShareController.helpers.js";
 import type {
     IObjectShareDraft,
@@ -263,14 +263,13 @@ function ObjectShareDialogSession({
     // stay generic, so they carry no kind of their own.
     const kind = target?.kind ?? "other";
     const dialogTitle = intl.formatMessage(objectShareTitleMessages[kind]);
-    // A workspace manager's role-based access is explained by a note above the list
-    // rather than by a synthesized grantee row, which read as an explicit grant.
-    const note = state.showAdminAccessNote ? (
+    // A note, not a synthesized grantee row, which read as an explicit grant.
+    const note = state.roleAccess ? (
         <>
             <span className="gd-ui-kit-object-share-dialog__note-prefix">
-                {intl.formatMessage(objectShareMessages.adminNotePrefix)}
+                {intl.formatMessage(objectShareMessages.roleNotePrefix)}
             </span>{" "}
-            {intl.formatMessage(objectShareMessages.adminNote)}
+            {intl.formatMessage(objectShareRoleNoteMessages[state.roleAccess])}
         </>
     ) : undefined;
     const emptyMessage = (

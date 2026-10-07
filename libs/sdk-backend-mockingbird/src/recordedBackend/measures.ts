@@ -3,6 +3,7 @@
 import {
     type IMeasureExpressionToken,
     type IMeasureKeyDrivers,
+    type IMeasureOverride,
     type IMeasureReferencing,
     type IMeasuresQuery,
     type IWorkspaceMeasuresService,
@@ -25,6 +26,10 @@ export class RecordedMeasures implements IWorkspaceMeasuresService {
     }
 
     computeKeyDrivers(): Promise<IMeasureKeyDrivers> {
+        throw new NotSupported("not supported");
+    }
+
+    checkEntityOverrides(_identifiers: string[]): Promise<IMeasureOverride[]> {
         throw new NotSupported("not supported");
     }
 

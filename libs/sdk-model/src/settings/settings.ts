@@ -532,6 +532,7 @@ export interface IFeatureFlags {
 
     /**
      * Enables object-level permissions for visualizations. Shared with the backend, which enforces them.
+     * Also offers the MANAGE_VISUALIZATIONS workspace permission in user management.
      */
     enableVisualizationPermissions?: boolean;
 

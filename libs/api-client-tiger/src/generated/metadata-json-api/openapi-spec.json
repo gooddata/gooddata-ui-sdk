@@ -36613,6 +36613,7 @@
                             "READ_KNOWLEDGE_DOCUMENTS",
                             "CREATE_FILTER_VIEW",
                             "CREATE_METRIC",
+                            "MANAGE_VISUALIZATIONS",
                             "CREATE_VISUALIZATION",
                             "CREATE_COMPUTED_ATTRIBUTE",
                             "VIEW"
@@ -37518,6 +37519,7 @@
                             "READ_KNOWLEDGE_DOCUMENTS",
                             "CREATE_FILTER_VIEW",
                             "CREATE_METRIC",
+                            "MANAGE_VISUALIZATIONS",
                             "CREATE_VISUALIZATION",
                             "CREATE_COMPUTED_ATTRIBUTE",
                             "VIEW"
@@ -63255,6 +63257,7 @@
                                         "READ_KNOWLEDGE_DOCUMENTS",
                                         "CREATE_FILTER_VIEW",
                                         "CREATE_METRIC",
+                                        "MANAGE_VISUALIZATIONS",
                                         "CREATE_VISUALIZATION",
                                         "CREATE_COMPUTED_ATTRIBUTE",
                                         "VIEW"
@@ -67394,6 +67397,7 @@
                                 "READ_KNOWLEDGE_DOCUMENTS",
                                 "CREATE_FILTER_VIEW",
                                 "CREATE_METRIC",
+                                "MANAGE_VISUALIZATIONS",
                                 "CREATE_VISUALIZATION",
                                 "CREATE_COMPUTED_ATTRIBUTE",
                                 "VIEW"
@@ -67423,6 +67427,7 @@
                                 "READ_KNOWLEDGE_DOCUMENTS",
                                 "CREATE_FILTER_VIEW",
                                 "CREATE_METRIC",
+                                "MANAGE_VISUALIZATIONS",
                                 "CREATE_VISUALIZATION",
                                 "CREATE_COMPUTED_ATTRIBUTE",
                                 "VIEW"
@@ -67860,6 +67865,7 @@
                                 "READ_KNOWLEDGE_DOCUMENTS",
                                 "CREATE_FILTER_VIEW",
                                 "CREATE_METRIC",
+                                "MANAGE_VISUALIZATIONS",
                                 "CREATE_VISUALIZATION",
                                 "CREATE_COMPUTED_ATTRIBUTE",
                                 "VIEW"
@@ -67882,6 +67888,7 @@
                                 "READ_KNOWLEDGE_DOCUMENTS",
                                 "CREATE_FILTER_VIEW",
                                 "CREATE_METRIC",
+                                "MANAGE_VISUALIZATIONS",
                                 "CREATE_VISUALIZATION",
                                 "CREATE_COMPUTED_ATTRIBUTE",
                                 "VIEW"

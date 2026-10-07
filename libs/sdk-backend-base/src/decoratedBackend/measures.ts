@@ -5,6 +5,7 @@ import {
     type IGetMeasureOptions,
     type IMeasureExpressionToken,
     type IMeasureKeyDrivers,
+    type IMeasureOverride,
     type IMeasureReferencing,
     type IMeasuresQuery,
     type ISaveMeasureOptions,
@@ -36,6 +37,10 @@ export abstract class DecoratedWorkspaceMeasuresService implements IWorkspaceMea
 
     getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]> {
         return this.decorated.getMeasureExpressionTokens(ref);
+    }
+
+    checkEntityOverrides(identifiers: string[]): Promise<IMeasureOverride[]> {
+        return this.decorated.checkEntityOverrides(identifiers);
     }
 
     createMeasure(

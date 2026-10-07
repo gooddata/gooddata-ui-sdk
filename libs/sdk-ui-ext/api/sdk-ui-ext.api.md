@@ -406,6 +406,8 @@ export interface IAddWorkspaceToSubjectsProps extends IWithTelemetryProps {
     // (undocumented)
     areMetricPermissionsEnabled?: boolean;
     // (undocumented)
+    areVisualizationPermissionsEnabled?: boolean;
+    // (undocumented)
     ids: string[];
     // (undocumented)
     isCreateVisualizationWorkspacePermissionEnabled?: boolean;
@@ -1265,6 +1267,8 @@ export interface IUserEditDialogProps extends IWithTelemetryProps {
     // (undocumented)
     areMetricPermissionsEnabled?: boolean;
     // (undocumented)
+    areVisualizationPermissionsEnabled?: boolean;
+    // (undocumented)
     changeUserMembership?: boolean;
     // (undocumented)
     initialView?: UserEditDialogMode;
@@ -1294,6 +1298,8 @@ export interface IUserGroupEditDialogProps extends IWithTelemetryProps {
     areComputedAttributesEnabled?: boolean;
     // (undocumented)
     areMetricPermissionsEnabled?: boolean;
+    // (undocumented)
+    areVisualizationPermissionsEnabled?: boolean;
     // (undocumented)
     initialView?: UserGroupEditDialogMode;
     // (undocumented)

@@ -13943,6 +13943,12 @@
                         ],
                         "title": "Refines Ref",
                         "description": "`report_ref` of the draft version this one reworks, null for a first draft. A client showing that version can apply this one in its place instead of opening it as another report."
+                    },
+                    "reworks_open_report": {
+                        "type": "boolean",
+                        "title": "Reworks Open Report",
+                        "description": "True when this version was written from the report open in the editor (`view.report`). A client still showing that report, unchanged since the message was sent, can apply it there.",
+                        "default": false
                     }
                 },
                 "additionalProperties": false,

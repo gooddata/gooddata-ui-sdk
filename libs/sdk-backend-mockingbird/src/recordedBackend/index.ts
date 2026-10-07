@@ -1021,6 +1021,7 @@ function recordedPermissionsFactory(): IWorkspacePermissionsService {
                 canAnalyzeWorkspace: true,
                 canCreateVisualization: true,
                 canCreateComputedAttribute: true,
+                canManageVisualizations: true,
                 canExecuteRaw: true,
                 canExportReport: true,
                 canExportTabular: true,

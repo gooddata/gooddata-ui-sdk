@@ -28,6 +28,7 @@ import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IGenAIUserContext } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IListedDashboard } from '@gooddata/sdk-model';
+import { IReportDefinition } from '@gooddata/sdk-model';
 import { ISlotProps } from '@gooddata/sdk-ui-kit';
 import { IUiButtonProps } from '@gooddata/sdk-ui-kit';
 import { IUiMenuGroupItemProps } from '@gooddata/sdk-ui-kit';
@@ -142,13 +143,18 @@ export type ChatCopyToClipboardEvent = BaseEvent & {
 // @public
 export type ChatDefinitionReceivedEvent = BaseEvent & {
     type: "onDefinitionReceived";
-    definitionType: "dashboard" | "visualization";
+    definitionType: "dashboard" | "visualization" | "report";
     itemId: string;
     conversationId: string;
     interactionId?: string;
     dashboard?: IDashboard;
     insights?: IInsight[];
     visualization?: NonNullable<IChatConversationVisualisationContent["visualization"]>;
+    report?: IReportDefinition;
+    reportRef?: string;
+    refines?: string;
+    reworksOpenReport?: boolean;
+    baseReportId?: string;
 };
 
 // @public

@@ -58,6 +58,7 @@ export interface IUserEditDialogProps extends IWithTelemetryProps {
     areMetricPermissionsEnabled?: boolean;
     isCreateVisualizationWorkspacePermissionEnabled?: boolean;
     areComputedAttributesEnabled?: boolean;
+    areVisualizationPermissionsEnabled?: boolean;
     selectedTab?: UserTabId;
 }
 
@@ -74,6 +75,7 @@ function UserEditDialogComponent({
     areMetricPermissionsEnabled = false,
     isCreateVisualizationWorkspacePermissionEnabled = false,
     areComputedAttributesEnabled = false,
+    areVisualizationPermissionsEnabled = false,
     selectedTab = undefined,
 }: IUserEditDialogProps) {
     const intl = useIntl();
@@ -296,6 +298,7 @@ function UserEditDialogComponent({
                                         isCreateVisualizationWorkspacePermissionEnabled
                                     }
                                     areComputedAttributesEnabled={areComputedAttributesEnabled}
+                                    areVisualizationPermissionsEnabled={areVisualizationPermissionsEnabled}
                                 />
                             )}
                             {dialogMode === "USER_GROUPS" && (

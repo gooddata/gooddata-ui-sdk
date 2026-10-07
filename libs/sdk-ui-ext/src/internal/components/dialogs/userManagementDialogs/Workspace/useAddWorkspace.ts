@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { useState } from "react";
 
@@ -11,6 +11,8 @@ import { useOrganizationId } from "../OrganizationIdContext.js";
 import { useTelemetry } from "../TelemetryContext.js";
 import { type IGrantedWorkspace, type WorkspacePermissionSubject } from "../types.js";
 import { grantedWorkspaceAsPermissionAssignment, sortByName } from "../utils.js";
+
+import { removeRedundantPermissions } from "./WorkspaceItem/granularPermissionUtils.js";
 
 export const useAddWorkspace = (
     ids: string[],
@@ -39,13 +41,19 @@ export const useAddWorkspace = (
 
     const onAdd = () => {
         setIsProcessing(true);
+        // The draft keeps redundant entries; clean them here, not in the shared conversion, which
+        // revokes also use and which must name the stored redundant levels.
+        const savedWorkspaces = addedWorkspaces.map((w) => ({
+            ...w,
+            permissions: removeRedundantPermissions(w.permissions),
+        }));
 
         backend
             .organization(organizationId)
             .permissions()
             .assignPermissions({
                 assignees: ids.map((id) => ({ id, type: subjectType })),
-                workspaces: addedWorkspaces.map((w) => grantedWorkspaceAsPermissionAssignment(w)),
+                workspaces: savedWorkspaces.map((w) => grantedWorkspaceAsPermissionAssignment(w)),
             })
             .then(() => {
                 if (ids.length === 1) {
@@ -68,7 +76,7 @@ export const useAddWorkspace = (
                     );
                 }
 
-                onSubmit(addedWorkspaces);
+                onSubmit(savedWorkspaces);
                 onCancel();
             })
             .catch((error) => {
