@@ -116,6 +116,7 @@ export const AssignedWorkspacePermissionValue: {
     readonly CREATE_AUTOMATION: "CREATE_AUTOMATION";
     readonly CREATE_METRIC: "CREATE_METRIC";
     readonly CREATE_VISUALIZATION: "CREATE_VISUALIZATION";
+    readonly MANAGE_VISUALIZATIONS: "MANAGE_VISUALIZATIONS";
     readonly CREATE_COMPUTED_ATTRIBUTE: "CREATE_COMPUTED_ATTRIBUTE";
     readonly USE_AI_ASSISTANT: "USE_AI_ASSISTANT";
 };
@@ -8233,6 +8234,11 @@ export type WorkspacePermission =
 * Whether the current user has permissions to create a computed attribute object via API.
 */
 | "canCreateComputedAttribute"
+/**
+* Whether the current user may edit and share every visualization created in the workspace without
+* a grant on it. Visualizations inherited from a parent workspace stay view-only.
+*/
+| "canManageVisualizations"
 /**
 * Whether the current user has permissions to use AI Assistant.
 */

@@ -69,15 +69,17 @@ export function UiRadioRow({
             .join(" ") || undefined;
     const row = (
         <div className={b({ disabled: disabled ?? false })} data-testid={dataTestId}>
-            <UiRadio
-                id={inputId}
-                checked={checked}
-                onChange={onChange ? () => onChange() : undefined}
-                name={name}
-                value={value}
-                disabled={disabled}
-                accessibilityConfig={describedBy ? { ariaDescribedBy: describedBy } : undefined}
-            />
+            <span className={e("control")}>
+                <UiRadio
+                    id={inputId}
+                    checked={checked}
+                    onChange={onChange ? () => onChange() : undefined}
+                    name={name}
+                    value={value}
+                    disabled={disabled}
+                    accessibilityConfig={describedBy ? { ariaDescribedBy: describedBy } : undefined}
+                />
+            </span>
             <span className={e("text")}>
                 <label className={e("title")} htmlFor={inputId}>
                     {title}

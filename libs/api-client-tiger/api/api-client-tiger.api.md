@@ -7072,6 +7072,7 @@ export interface AiReportPart {
     'report'?: object | null;
     // (undocumented)
     'report_ref'?: string | null;
+    'reworks_open_report'?: boolean;
     // (undocumented)
     'saved_report_id'?: string | null;
     'type'?: AiReportPartTypeEnum;
@@ -17647,7 +17648,7 @@ export interface DeclarativeSingleWorkspacePermission {
 }
 
 // @public (undocumented)
-export type DeclarativeSingleWorkspacePermissionNameEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'CREATE_VISUALIZATION' | 'CREATE_COMPUTED_ATTRIBUTE' | 'VIEW';
+export type DeclarativeSingleWorkspacePermissionNameEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'MANAGE_VISUALIZATIONS' | 'CREATE_VISUALIZATION' | 'CREATE_COMPUTED_ATTRIBUTE' | 'VIEW';
 
 // @public
 export interface DeclarativeSourceReference {
@@ -17924,7 +17925,7 @@ export interface DeclarativeWorkspaceHierarchyPermission {
 }
 
 // @public (undocumented)
-export type DeclarativeWorkspaceHierarchyPermissionNameEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'CREATE_VISUALIZATION' | 'CREATE_COMPUTED_ATTRIBUTE' | 'VIEW';
+export type DeclarativeWorkspaceHierarchyPermissionNameEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'MANAGE_VISUALIZATIONS' | 'CREATE_VISUALIZATION' | 'CREATE_COMPUTED_ATTRIBUTE' | 'VIEW';
 
 // @public
 export interface DeclarativeWorkspaceModel {
@@ -38768,7 +38769,7 @@ export interface JsonApiWorkspaceOutMetaHierarchy {
 }
 
 // @public (undocumented)
-export type JsonApiWorkspaceOutMetaPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'CREATE_VISUALIZATION' | 'CREATE_COMPUTED_ATTRIBUTE' | 'VIEW';
+export type JsonApiWorkspaceOutMetaPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'MANAGE_VISUALIZATIONS' | 'CREATE_VISUALIZATION' | 'CREATE_COMPUTED_ATTRIBUTE' | 'VIEW';
 
 // @public (undocumented)
 export interface JsonApiWorkspaceOutRelationships {
@@ -46246,10 +46247,10 @@ export interface UserManagementWorkspacePermissionAssignment {
 export type UserManagementWorkspacePermissionAssignmentAccessSourceEnum = 'DIRECT' | 'GROUP' | 'HIERARCHY';
 
 // @public (undocumented)
-export type UserManagementWorkspacePermissionAssignmentHierarchyPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'CREATE_VISUALIZATION' | 'CREATE_COMPUTED_ATTRIBUTE' | 'VIEW';
+export type UserManagementWorkspacePermissionAssignmentHierarchyPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'MANAGE_VISUALIZATIONS' | 'CREATE_VISUALIZATION' | 'CREATE_COMPUTED_ATTRIBUTE' | 'VIEW';
 
 // @public (undocumented)
-export type UserManagementWorkspacePermissionAssignmentPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'CREATE_VISUALIZATION' | 'CREATE_COMPUTED_ATTRIBUTE' | 'VIEW';
+export type UserManagementWorkspacePermissionAssignmentPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'MANAGE_VISUALIZATIONS' | 'CREATE_VISUALIZATION' | 'CREATE_COMPUTED_ATTRIBUTE' | 'VIEW';
 
 // @public
 export interface UserPermission {
@@ -47622,10 +47623,10 @@ export interface WorkspacePermissionAssignment {
 }
 
 // @public (undocumented)
-export type WorkspacePermissionAssignmentHierarchyPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'CREATE_VISUALIZATION' | 'CREATE_COMPUTED_ATTRIBUTE' | 'VIEW';
+export type WorkspacePermissionAssignmentHierarchyPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'MANAGE_VISUALIZATIONS' | 'CREATE_VISUALIZATION' | 'CREATE_COMPUTED_ATTRIBUTE' | 'VIEW';
 
 // @public (undocumented)
-export type WorkspacePermissionAssignmentPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'CREATE_VISUALIZATION' | 'CREATE_COMPUTED_ATTRIBUTE' | 'VIEW';
+export type WorkspacePermissionAssignmentPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'MANAGE_VISUALIZATIONS' | 'CREATE_VISUALIZATION' | 'CREATE_COMPUTED_ATTRIBUTE' | 'VIEW';
 
 // @public
 export class WorkspacesDeclarativeAPIsApi extends MetadataBaseApi implements WorkspacesDeclarativeAPIsApiInterface {

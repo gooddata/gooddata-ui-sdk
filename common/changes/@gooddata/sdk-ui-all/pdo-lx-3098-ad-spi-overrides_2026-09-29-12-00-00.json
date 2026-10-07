@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-backend-spi: Add IWorkspaceMeasuresService.checkEntityOverrides (alpha), implemented in sdk-backend-tiger, to check which measure identifiers are already used in the workspace hierarchy. TigerSpecificFunctions.checkEntityOverrides is deprecated. IDatasetsQueryFilterOptions.dataSetType (beta) also accepts \"AUXILIARY\".",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

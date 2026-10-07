@@ -173,7 +173,23 @@ export async function focusWidget(page: Page, section: number, index: number): P
  */
 export async function openInteractions(page: Page): Promise<void> {
     const configBubble = page.locator(".s-gd-configuration-bubble");
-    await configBubble.getByText("Interactions").click();
+    const interactionsItem = configBubble.getByText("Interactions");
+    await expect(interactionsItem).toBeVisible();
+    // Wait until the bubble stops moving. Clicking it too early makes Playwright retry and scroll
+    // the page, and then the bubble can open under the sidebar.
+    let previousBox = "";
+    await expect
+        .poll(
+            async () => {
+                const box = JSON.stringify(await interactionsItem.boundingBox());
+                const isStable = box !== "null" && box === previousBox;
+                previousBox = box;
+                return isStable;
+            },
+            { intervals: [200] },
+        )
+        .toBe(true);
+    await interactionsItem.click();
     await expect(configBubble.locator(".s-drill-config-panel")).toBeVisible();
 }
 

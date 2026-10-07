@@ -56,7 +56,7 @@ export interface IObjectShareGrantee extends IGranteeIdentityFacts {
     /**
      * EFFECTIVE permission level shown on the row — the stronger of {@link IObjectShareGrantee.directLevel}
      * and {@link IObjectShareGrantee.inheritedLevel}, so a grantee who only inherits a level is not
-     * understated as VIEW.
+     * understated as VIEW. EDIT on the row named by `roleLockedGranteeId`.
      */
     level: ObjectSharePermissionLevel;
     /**
@@ -91,6 +91,11 @@ export interface IObjectShareGrantee extends IGranteeIdentityFacts {
 /**
  * @internal
  */
+export type ObjectShareRoleAccess = "workspaceManager" | "visualizationManager";
+
+/**
+ * @internal
+ */
 export interface IObjectShareControllerState {
     subview: "main" | "addGrantee";
     status: "idle" | "loading" | "success" | "error" | "saving";
@@ -101,8 +106,8 @@ export interface IObjectShareControllerState {
      * Id of the grantee row whose permission menu manages the signed-in user's OWN
      * access (the "restrict own access" design), whatever else is listed. Consumers
      * gate lowering behind a confirm and disable the levels above the row's own.
-     * Undefined for a workspace manager (their access is not this grant) and while
-     * their identity is unresolved, which `granteeControlsLocked` covers.
+     * Undefined for a workspace manager or with `roleLockedGranteeId` (their access is not this
+     * grant) and while their identity is unresolved, which `granteeControlsLocked` covers.
      */
     selfManagedGranteeId: string | undefined;
     /**
@@ -140,13 +145,17 @@ export interface IObjectShareControllerState {
      */
     granteeControlsLocked: boolean;
     /**
-     * Whether to tell the caller that they, as a workspace manager, have full access to
-     * the object regardless of the grants listed. True only on a successfully FETCHED list
-     * for a caller whose MANAGE permission is known to be granted: an unread permission must
-     * not read as "is a manager". Never true while drafting — the caller will own what they
-     * create, which needs no explaining.
+     * The workspace role that gives the caller access regardless of the grants listed, explained
+     * by a note: "workspaceManager" for MANAGE, "visualizationManager" for MANAGE_VISUALIZATIONS
+     * on a visualization the backend reports EDIT for. Set only on a successfully FETCHED list
+     * and a permission known to be granted, never while drafting.
      */
-    showAdminAccessNote: boolean;
+    roleAccess: ObjectShareRoleAccess | undefined;
+    /**
+     * Id of the caller's own row while a visualization manager role gives them EDIT: shown at
+     * EDIT, and nothing on it may change.
+     */
+    roleLockedGranteeId: string | undefined;
     generalAccess: GeneralAccessValue;
     /**
      * Permission level of the all-workspace-members rule when general access is

@@ -7,6 +7,7 @@ import { type WorkspacePermissions } from "../../types.js";
 import {
     getGranularPermissions,
     getImplicitGranularPermissions,
+    haveWorkspacePermissionsChanged,
     isPermissionDisabled,
     removeRedundantPermissions,
 } from "./granularPermissionUtils.js";
@@ -114,10 +115,58 @@ describe("granularPermissionUtils", () => {
         });
     });
 
+    describe("MANAGE_VISUALIZATIONS", () => {
+        it("is implied by MANAGE but not by ANALYZE", () => {
+            expect(getImplicitGranularPermissions("MANAGE")).toContain("MANAGE_VISUALIZATIONS");
+            expect(isPermissionDisabled("MANAGE_VISUALIZATIONS", "ANALYZE", [])).toBe(false);
+            expect(isPermissionDisabled("MANAGE_VISUALIZATIONS", "MANAGE", [])).toBe(true);
+        });
+
+        it("shows CREATE_VISUALIZATION as included and locks it", () => {
+            const granular = getGranularPermissions(["VIEW", "MANAGE_VISUALIZATIONS"]);
+
+            expect(granular).toContain("CREATE_VISUALIZATION");
+            expect(isPermissionDisabled("CREATE_VISUALIZATION", "VIEW", granular)).toBe(true);
+        });
+
+        it("drops the included CREATE_VISUALIZATION and survives sanitization under ANALYZE", () => {
+            expect(
+                removeRedundantPermissions(["VIEW", "MANAGE_VISUALIZATIONS", "CREATE_VISUALIZATION"]),
+            ).toEqual(["VIEW", "MANAGE_VISUALIZATIONS"]);
+            expect(removeRedundantPermissions(["ANALYZE", "MANAGE_VISUALIZATIONS"])).toEqual([
+                "ANALYZE",
+                "MANAGE_VISUALIZATIONS",
+            ]);
+        });
+
+        it("is collapsed into MANAGE", () => {
+            expect(removeRedundantPermissions(["MANAGE", "MANAGE_VISUALIZATIONS"])).toEqual(["MANAGE"]);
+        });
+    });
+
+    describe("haveWorkspacePermissionsChanged", () => {
+        it("ignores implicit permissions, as a save would", () => {
+            const stored = { id: "ws", title: "ws", isHierarchical: false };
+
+            expect(
+                haveWorkspacePermissionsChanged(
+                    { ...stored, permissions: ["VIEW", "EXPORT", "EXPORT_PDF", "EXPORT_TABULAR"] },
+                    { ...stored, permissions: ["VIEW", "EXPORT"] },
+                ),
+            ).toBe(false);
+        });
+    });
+
     describe("getGranularPermissionTitle", () => {
         it("resolves the CREATE_VISUALIZATION label", () => {
             expect(getGranularPermissionTitle("CREATE_VISUALIZATION").id).toBe(
                 "userManagement.workspace.permission.createVisualization",
+            );
+        });
+
+        it("resolves the MANAGE_VISUALIZATIONS label", () => {
+            expect(getGranularPermissionTitle("MANAGE_VISUALIZATIONS").id).toBe(
+                "userManagement.workspace.permission.manageVisualizations",
             );
         });
 

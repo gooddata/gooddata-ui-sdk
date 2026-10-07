@@ -6,16 +6,12 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 import { useSelector } from "react-redux";
 
-import { type IReportDefinition, type ObjRef, isIdentifierRef } from "@gooddata/sdk-model";
+import { type IReportDefinition } from "@gooddata/sdk-model";
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { UiButton, UiIcon } from "@gooddata/sdk-ui-kit";
 
 import type { IChatConversationLocalItem } from "../../../model.js";
-import {
-    ambientContextSelector,
-    isPreviewSelector,
-    settingsSelector,
-} from "../../../store/chatWindow/chatWindowSelectors.js";
+import { isPreviewSelector, settingsSelector } from "../../../store/chatWindow/chatWindowSelectors.js";
 import { conversationSelector } from "../../../store/messages/messagesSelectors.js";
 import { formatReportPeriod, getReportItemUrl } from "../../../utils.js";
 import { useConfig } from "../../ConfigContext.js";
@@ -25,20 +21,14 @@ export type ConversationReportContentProps = {
     report: IReportDefinition | null;
     saved?: string | null;
     baseReportId?: string | null;
-    refines?: string | null;
     className?: string;
 };
-
-function isOpenReport(openRef: ObjRef | undefined, reportId: string | null | undefined) {
-    return isIdentifierRef(openRef) && openRef.identifier === reportId;
-}
 
 export function ConversationReportContent({
     message,
     report,
     saved,
     baseReportId,
-    refines,
     className,
 }: ConversationReportContentProps) {
     const intl = useIntl();
@@ -47,7 +37,6 @@ export function ConversationReportContent({
     const conversationId = useSelector(conversationSelector)?.id;
     const isReportsAppEnabled = Boolean(useSelector(settingsSelector)?.enableBusinessBriefingReportsApp);
     const isPreview = useSelector(isPreviewSelector);
-    const openReport = useSelector(ambientContextSelector)?.view?.report;
 
     if (!isReportsAppEnabled || isPreview) {
         return null;
@@ -68,13 +57,8 @@ export function ConversationReportContent({
         conversationId,
         itemId: message.id,
     });
-    const targetReportId = saved || baseReportId;
-    const isForOpenReport = Boolean(targetReportId) && isOpenReport(openReport?.ref, targetReportId);
-    const isForOpenDraft = !targetReportId && Boolean(refines) && openReport?.draftRef === refines;
-    const isChangeToOpenReport = isForOpenReport || isForOpenDraft;
-    const buttonLabel = isChangeToOpenReport
-        ? intl.formatMessage({ id: "gd.gen-ai.report.apply" })
-        : intl.formatMessage({ id: "gd.gen-ai.report.open-report" });
+    // The card only opens the version: a change to the report in the editor is applied there by the editor.
+    const buttonLabel = intl.formatMessage({ id: "gd.gen-ai.report.open-report" });
 
     const handleOpen = itemUrl
         ? (e: MouseEvent | KeyboardEvent) => {

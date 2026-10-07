@@ -2553,7 +2553,7 @@
     },
     "objectShare.adminNote.prefix": {
         "text": "Note:",
-        "crowdinContext": "Bold lead-in of the informational note shown at the top of the share dialog to workspace administrators. Followed by the note text."
+        "crowdinContext": "Bold lead-in of the informational note shown at the top of the share dialog to workspace administrators and to users who can manage all visualizations. Followed by the note text."
     },
     "objectShare.title.attribute": {
         "text": "Share attribute",
@@ -2586,6 +2586,14 @@
     "objectShare.adminNote": {
         "text": "You and other administrators have full access to all objects.",
         "crowdinContext": "Informational note at the top of the share dialog, shown to workspace administrators. Preceded by a bold Note: lead-in."
+    },
+    "objectShare.visualizationManagerNote": {
+        "text": "You can edit and share any visualization in this workspace.",
+        "crowdinContext": "Informational note at the top of the visualization share dialog, shown to users whose workspace permission lets them edit and share all visualizations. Preceded by a bold Note: lead-in."
+    },
+    "objectShare.grantee.coveredByWorkspacePermission": {
+        "text": "Your workspace permissions let you edit and share all visualizations, so this can't be lowered or removed here.",
+        "crowdinContext": "Tooltip on the disabled lower access levels and the disabled Remove access item of the user's own row in the visualization share dialog, when their workspace permission already lets them edit and share all visualizations."
     },
     "objectShare.emptyGrantees": {
         "text": "Object has not been shared with anyone.",

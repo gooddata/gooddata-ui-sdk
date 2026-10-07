@@ -100,7 +100,7 @@ const ASSIGNEES: IAvailableAccessGrantee[] = [
 ];
 
 /** How the mocked backend answers the caller's workspace permissions. */
-type ManagePermission = false | "reject" | { canManageProject: boolean };
+type ManagePermission = false | "reject" | { canManageProject: boolean; canManageVisualizations?: boolean };
 
 interface IMockService {
     getAccessList: Mock;
@@ -127,10 +127,10 @@ const getUserDetailsMock = vi.fn(async (): Promise<Pick<IUser, "ref" | "login" |
     login: "self",
 }));
 
-// Only `canManageProject` is read; the interface has ~20 required members, so this is
-// a genuine partial mock.
-const workspacePermissionsFor = (canManageProject: boolean) =>
-    ({ canManageProject }) as IWorkspacePermissions;
+// Only `canManageProject` and `canManageVisualizations` are read; the interface has ~30
+// required members, so this is a genuine partial mock.
+const workspacePermissionsFor = (canManageProject: boolean, canManageVisualizations = false) =>
+    ({ canManageProject, canManageVisualizations }) as IWorkspacePermissions;
 
 function makeBackend(svc: IMockService, manage: ManagePermission = false): IAnalyticalBackend {
     const base = dummyBackendEmptyData();
@@ -148,7 +148,9 @@ function makeBackend(svc: IMockService, manage: ManagePermission = false): IAnal
                     if (manage === "reject") {
                         throw new Error("workspace permissions unavailable");
                     }
-                    return workspacePermissionsFor(manage === false ? false : manage.canManageProject);
+                    return manage === false
+                        ? workspacePermissionsFor(false)
+                        : workspacePermissionsFor(manage.canManageProject, manage.canManageVisualizations);
                 },
             }),
         }),
@@ -3422,7 +3424,7 @@ describe("useObjectShareController row classification", () => {
         await waitFor(() => expect(result.current.state.status).toBe("success"));
         // The default profile mock knows only the login — the display pair falls
         // back to the user id, mirroring grantee rows.
-        await waitFor(() => expect(result.current.state.showAdminAccessNote).toBe(true));
+        await waitFor(() => expect(result.current.state.roleAccess).toBe("workspaceManager"));
     });
 
     it("shows the administrator note regardless of the detailed profile read", async () => {
@@ -3436,7 +3438,7 @@ describe("useObjectShareController row classification", () => {
             email: "self@example.com",
         });
         const { result } = renderController(makeService([]), TARGET, undefined, { canManageProject: true });
-        await waitFor(() => expect(result.current.state.showAdminAccessNote).toBe(true));
+        await waitFor(() => expect(result.current.state.roleAccess).toBe("workspaceManager"));
     });
 
     it("keeps the identity when the detailed read fails", async () => {
@@ -3446,7 +3448,7 @@ describe("useObjectShareController row classification", () => {
         const { result } = renderController(makeService([USER_GRANT]), TARGET, undefined, {
             canManageProject: true,
         });
-        await waitFor(() => expect(result.current.state.showAdminAccessNote).toBe(true));
+        await waitFor(() => expect(result.current.state.roleAccess).toBe("workspaceManager"));
         expect(result.current.state.granteeControlsLocked).toBe(false);
     });
 
@@ -3457,7 +3459,7 @@ describe("useObjectShareController row classification", () => {
             canManageProject: true,
         });
         await waitFor(() => expect(result.current.state.status).toBe("success"));
-        await waitFor(() => expect(result.current.state.showAdminAccessNote).toBe(true));
+        await waitFor(() => expect(result.current.state.roleAccess).toBe("workspaceManager"));
 
         act(() => result.current.actions.openAddGrantee());
         act(() =>
@@ -3475,14 +3477,14 @@ describe("useObjectShareController row classification", () => {
             await result.current.actions.confirmAddGrantees();
         });
         expect(result.current.state.grantees.some((g) => g.id === "group:g1")).toBe(true);
-        expect(result.current.state.showAdminAccessNote).toBe(true);
+        expect(result.current.state.roleAccess).toBe("workspaceManager");
 
         await act(async () => {
             await result.current.actions.removeGrantee("group:g1");
             await result.current.actions.removeGrantee("user:u1");
         });
         expect(result.current.state.grantees).toEqual([]);
-        expect(result.current.state.showAdminAccessNote).toBe(true);
+        expect(result.current.state.roleAccess).toBe("workspaceManager");
     });
 
     it("keeps the administrator note alongside the manager's own grant row", async () => {
@@ -3493,13 +3495,13 @@ describe("useObjectShareController row classification", () => {
         });
         await waitFor(() => expect(result.current.state.status).toBe("success"));
         await waitFor(() => expect(result.current.state.grantees.some((g) => g.isSelf)).toBe(true));
-        expect(result.current.state.showAdminAccessNote).toBe(true);
+        expect(result.current.state.roleAccess).toBe("workspaceManager");
 
         await act(async () => {
             await result.current.actions.removeGrantee("user:self");
         });
         expect(result.current.state.grantees).toEqual([]);
-        expect(result.current.state.showAdminAccessNote).toBe(true);
+        expect(result.current.state.roleAccess).toBe("workspaceManager");
     });
 
     it("keeps the administrator note when a row of the caller's own appears mid-session", async () => {
@@ -3507,7 +3509,7 @@ describe("useObjectShareController row classification", () => {
         // manager's own row: a grant another manager makes for them, a backend that lists
         // the caller. Modelled through the add flow; the note is independent of the row.
         const { result } = renderController(makeService([]), TARGET, undefined, { canManageProject: true });
-        await waitFor(() => expect(result.current.state.showAdminAccessNote).toBe(true));
+        await waitFor(() => expect(result.current.state.roleAccess).toBe("workspaceManager"));
 
         act(() => result.current.actions.openAddGrantee());
         act(() =>
@@ -3525,7 +3527,7 @@ describe("useObjectShareController row classification", () => {
             await result.current.actions.confirmAddGrantees();
         });
         expect(result.current.state.grantees.some((g) => g.isSelf)).toBe(true);
-        expect(result.current.state.showAdminAccessNote).toBe(true);
+        expect(result.current.state.roleAccess).toBe("workspaceManager");
     });
 
     it("keeps the administrator note alongside a manager's inherited-only own row", async () => {
@@ -3543,7 +3545,7 @@ describe("useObjectShareController row classification", () => {
         await waitFor(() => expect(result.current.state.status).toBe("success"));
         await waitFor(() => expect(result.current.state.grantees.some((g) => g.isSelf)).toBe(true));
         expect(result.current.state.grantees[0]!.directLevel).toBeUndefined();
-        expect(result.current.state.showAdminAccessNote).toBe(true);
+        expect(result.current.state.roleAccess).toBe("workspaceManager");
     });
 
     it("shows the administrator note whatever the workspace rule grants", async () => {
@@ -3558,7 +3560,7 @@ describe("useObjectShareController row classification", () => {
             canManageProject: true,
         });
         await waitFor(() => expect(result.current.state.status).toBe("success"));
-        await waitFor(() => expect(result.current.state.showAdminAccessNote).toBe(true));
+        await waitFor(() => expect(result.current.state.roleAccess).toBe("workspaceManager"));
     });
 
     const NON_MANAGER_SEEDS: [string, AccessGranteeDetail[]][] = [
@@ -3580,7 +3582,7 @@ describe("useObjectShareController row classification", () => {
             await waitFor(() => expect(result.current.state.status).toBe("success"));
             await waitFor(() => expect(getUserMock).toHaveResolved());
             await act(async () => {});
-            expect(result.current.state.showAdminAccessNote).toBe(false);
+            expect(result.current.state.roleAccess).toBeUndefined();
         },
     );
 
@@ -3592,7 +3594,7 @@ describe("useObjectShareController row classification", () => {
             await result.current.actions.removeGrantee("user:self");
         });
         expect(result.current.state.grantees).toEqual([]);
-        expect(result.current.state.showAdminAccessNote).toBe(false);
+        expect(result.current.state.roleAccess).toBeUndefined();
     });
 
     it("shows no administrator note while the manager permission is unknown", async () => {
@@ -3602,7 +3604,7 @@ describe("useObjectShareController row classification", () => {
         await waitFor(() => expect(result.current.state.status).toBe("success"));
         await waitFor(() => expect(getUserMock).toHaveResolved());
         await act(async () => {});
-        expect(result.current.state.showAdminAccessNote).toBe(false);
+        expect(result.current.state.roleAccess).toBeUndefined();
     });
 });
 
@@ -3895,7 +3897,7 @@ describe("useObjectShareController draft mode", () => {
         // The drafting caller will own what they create, which needs no explaining.
         const { result } = await renderDraft();
 
-        expect(result.current.state.showAdminAccessNote).toBe(false);
+        expect(result.current.state.roleAccess).toBeUndefined();
 
         act(() => result.current.actions.setPendingGrantees([PICKED]));
         await act(async () => {
@@ -3903,12 +3905,92 @@ describe("useObjectShareController draft mode", () => {
         });
 
         expect(result.current.state.grantees.map((g) => g.id)).toContain("user:u9");
-        expect(result.current.state.showAdminAccessNote).toBe(false);
+        expect(result.current.state.roleAccess).toBeUndefined();
     });
 
     it("shows no administrator note for a workspace manager while drafting either", async () => {
         const { result } = await renderDraft(makeService(), {}, { canManageProject: true });
 
-        expect(result.current.state.showAdminAccessNote).toBe(false);
+        expect(result.current.state.roleAccess).toBeUndefined();
+    });
+});
+
+describe("useObjectShareController visualization manager access", () => {
+    const VISUALIZATION: IObjectPermissionsObject = { kind: "insight", ref: idRef("viz") };
+    const HOLDER: ManagePermission = { canManageProject: false, canManageVisualizations: true };
+    const OWN_VIEW_GRANT = {
+        type: "granularUser",
+        user: { ref: idRef("self"), uri: "/self", login: "self", email: "self", fullName: "self" },
+        permissions: ["VIEW"],
+        inheritedPermissions: [],
+    } as AccessGranteeDetail;
+    const serviceReporting = (grants: AccessGranteeDetail[], callerPermissions: string[]) => ({
+        ...makeService(grants),
+        getPermissionsForCurrentUser: vi.fn(async () => callerPermissions),
+    });
+
+    it("is reported when the backend gives a holder EDIT on the visualization", async () => {
+        const svc = serviceReporting([USER_GRANT], ["EDIT", "SHARE", "VIEW"]);
+        const { result } = renderController(svc, VISUALIZATION, undefined, HOLDER);
+
+        await waitFor(() => expect(result.current.state.roleAccess).toBe("visualizationManager"));
+    });
+
+    it("is not reported where the backend gives the holder less, as on an inherited visualization", async () => {
+        const svc = serviceReporting([USER_GRANT], ["SHARE", "VIEW"]);
+        const { result } = renderController(svc, VISUALIZATION, undefined, HOLDER);
+        await waitFor(() => expect(result.current.state.callerLevel).toBe("SHARE"));
+
+        expect(result.current.state.roleAccess).toBeUndefined();
+    });
+
+    it("is not reported for other object kinds", async () => {
+        const svc = serviceReporting([USER_GRANT], ["EDIT", "SHARE", "VIEW"]);
+        const { result } = renderController(svc, TARGET, undefined, HOLDER);
+        await waitFor(() => expect(result.current.state.callerLevel).toBe("EDIT"));
+
+        expect(result.current.state.roleAccess).toBeUndefined();
+    });
+
+    it("gives way to the administrator note for a workspace manager", async () => {
+        const svc = serviceReporting([USER_GRANT], ["EDIT", "SHARE", "VIEW"]);
+        const { result } = renderController(svc, VISUALIZATION, undefined, {
+            canManageProject: true,
+            canManageVisualizations: true,
+        });
+
+        await waitFor(() => expect(result.current.state.roleAccess).toBe("workspaceManager"));
+    });
+
+    it("shows the holder's own row at EDIT without an inherited badge, outside self-management", async () => {
+        const ownGrant = {
+            ...OWN_VIEW_GRANT,
+            inheritedPermissions: ["SHARE", "VIEW"],
+        } as AccessGranteeDetail;
+        const svc = serviceReporting([ownGrant, USER_GRANT], ["EDIT", "SHARE", "VIEW"]);
+        const { result } = renderController(svc, VISUALIZATION, undefined, HOLDER);
+        await waitFor(() => expect(result.current.state.roleAccess).toBe("visualizationManager"));
+        await waitFor(() => expect(result.current.state.grantees.find((g) => g.isSelf)).toBeDefined());
+
+        const ownRow = result.current.state.grantees.find((g) => g.isSelf);
+        expect(ownRow?.level).toBe("EDIT");
+        expect(ownRow?.effectivePermission).toBeUndefined();
+        expect(result.current.state.selfManagedGranteeId).toBeUndefined();
+        expect(result.current.state.roleLockedGranteeId).toBe(ownRow?.id);
+    });
+
+    it("writes nothing for the holder's own row", async () => {
+        const svc = serviceReporting([OWN_VIEW_GRANT, USER_GRANT], ["EDIT", "SHARE", "VIEW"]);
+        const { result } = renderController(svc, VISUALIZATION, undefined, HOLDER);
+        await waitFor(() => expect(result.current.state.roleAccess).toBe("visualizationManager"));
+        await waitFor(() => expect(result.current.state.grantees.find((g) => g.isSelf)).toBeDefined());
+        const ownRowId = result.current.state.grantees.find((g) => g.isSelf)?.id ?? "";
+
+        await act(async () => {
+            await result.current.actions.changePermissionLevel(ownRowId, "EDIT");
+            await result.current.actions.removeGrantee(ownRowId);
+        });
+
+        expect(svc.manageObjectPermissions).not.toHaveBeenCalled();
     });
 });

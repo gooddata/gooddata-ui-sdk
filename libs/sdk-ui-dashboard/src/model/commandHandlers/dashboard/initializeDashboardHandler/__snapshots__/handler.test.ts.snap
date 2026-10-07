@@ -526,6 +526,7 @@ exports[`initialize dashboard handler > for any dashboard > should resolve permi
   "canManageProject": true,
   "canManageReport": true,
   "canManageScheduledMail": true,
+  "canManageVisualizations": true,
   "canRefreshData": true,
   "canUploadNonProductionCSV": true,
   "canUseAiAssistant": true,

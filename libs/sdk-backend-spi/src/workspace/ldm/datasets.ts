@@ -163,5 +163,5 @@ export interface IDatasetsQueryFilterOptions extends IFilterBaseOptions {
      *
      * @beta
      */
-    dataSetType?: "DATE" | "NORMAL";
+    dataSetType?: "DATE" | "NORMAL" | "AUXILIARY";
 }

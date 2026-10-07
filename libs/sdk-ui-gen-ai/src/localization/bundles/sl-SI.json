@@ -80,7 +80,7 @@
     "gd.gen-ai.feedback.reason.factually-incorrect": "Dejstveno napačno",
     "gd.gen-ai.feedback.reason.answer-too-long": "Odgovor je trajal predolgo",
     "gd.gen-ai.feedback.reason.other": "Drugo",
-    "gd.gen-ai.disclaimer": "AI pomočniki lahko naredijo napake. Preverite, preden se zanesete na te odgovore.",
+    "gd.gen-ai.disclaimer": "AI lahko dela napake. Preverite rezultate.",
     "gd.gen-ai.dialog.label": "Pogovor s AI pomočnikom",
     "gd.gen-ai.header.reset-tooltip": "Ponastavi",
     "gd.gen-ai.header.conversations-tooltip": "Nedavni pogovori",

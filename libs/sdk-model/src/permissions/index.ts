@@ -112,6 +112,11 @@ export type WorkspacePermission =
      */
     | "canCreateComputedAttribute"
     /**
+     * Whether the current user may edit and share every visualization created in the workspace without
+     * a grant on it. Visualizations inherited from a parent workspace stay view-only.
+     */
+    | "canManageVisualizations"
+    /**
      * Whether the current user has permissions to use AI Assistant.
      */
     | "canUseAiAssistant";

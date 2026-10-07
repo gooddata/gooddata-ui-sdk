@@ -80,7 +80,7 @@
     "gd.gen-ai.feedback.reason.factually-incorrect": "Factually incorrect",
     "gd.gen-ai.feedback.reason.answer-too-long": "Answer took too long",
     "gd.gen-ai.feedback.reason.other": "Other",
-    "gd.gen-ai.disclaimer": "AI assistants can make mistakes. Check before relying on these answers.",
+    "gd.gen-ai.disclaimer": "AI can make mistakes. Verify results.",
     "gd.gen-ai.dialog.label": "AI assistant dialogue",
     "gd.gen-ai.header.reset-tooltip": "Reset",
     "gd.gen-ai.header.conversations-tooltip": "Recent conversations",

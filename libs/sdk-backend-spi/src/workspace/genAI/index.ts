@@ -1524,6 +1524,10 @@ export type IChatConversationReportContent = {
      * Name of the draft version this one reworks. Absent for a first draft.
      */
     refines?: string | null;
+    /**
+     * Whether this version was written from the report open in the editor, so the editor can apply it.
+     */
+    reworksOpenReport?: boolean;
 };
 
 /**

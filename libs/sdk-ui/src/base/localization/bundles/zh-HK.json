@@ -1180,7 +1180,7 @@
     "table.header.ariaLabel": "頭波",
     "table.header.checkbox.ariaLabel": "選動",
     "table.header.menu.ariaLabel": "所作所為",
-    "table.bulkActions.chooseAction": "選擇作...",
+    "table.bulkActions.chooseAction": "選擇動作...",
     "table.bulkActions.selectedCount": "{selectedCount} 已選擇數量{totalCount} ",
     "table.bulkActions.selectedCountShort": "{selectedCount} 選擇",
     "table.bulkActions.selectAll": "全選",

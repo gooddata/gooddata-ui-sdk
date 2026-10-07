@@ -80,7 +80,7 @@
     "gd.gen-ai.feedback.reason.factually-incorrect": "Informations factuellement incorrectes",
     "gd.gen-ai.feedback.reason.answer-too-long": "La réponse a pris trop de temps",
     "gd.gen-ai.feedback.reason.other": "Autre",
-    "gd.gen-ai.disclaimer": "Les assistants d’IA peuvent faire des erreurs. Vérifiez avant de vous fier à ces réponses.",
+    "gd.gen-ai.disclaimer": "L’IA peut commettre des erreurs. Vérifiez les résultats.",
     "gd.gen-ai.dialog.label": "Conversation avec l’assistant IA",
     "gd.gen-ai.header.reset-tooltip": "Réinitialiser",
     "gd.gen-ai.header.conversations-tooltip": "Conversations récentes",

@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { type ReactNode, useCallback } from "react";
+import { type ReactNode } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -16,11 +16,9 @@ import {
 import { AdditionalAccessPermissionItem, WorkspaceAccessPermissionItem } from "./GranularPermissionsItems.js";
 import {
     getGranularPermissions,
-    getImplicitGranularPermissions,
     getWorkspacePermission,
     isExportPermissionIndefinite,
     isPermissionDisabled,
-    removeRedundantPermissions,
     sanitizeExportPermissions,
     workspacePermissions,
 } from "./granularPermissionUtils.js";
@@ -36,6 +34,7 @@ const granularPermissions: IPermissionsItem[] = [
     { id: "EXPORT_TABULAR", enabled: true, group: true },
     { id: "CREATE_METRIC", enabled: true },
     { id: "CREATE_VISUALIZATION", enabled: true },
+    { id: "MANAGE_VISUALIZATIONS", enabled: true },
     { id: "CREATE_FILTER_VIEW", enabled: true },
 ];
 
@@ -46,6 +45,7 @@ interface IGranularPermissionsProps {
     areMetricPermissionsEnabled?: boolean;
     isCreateVisualizationWorkspacePermissionEnabled?: boolean;
     areComputedAttributesEnabled?: boolean;
+    areVisualizationPermissionsEnabled?: boolean;
 }
 
 export function GranularPermissions({
@@ -55,58 +55,9 @@ export function GranularPermissions({
     areMetricPermissionsEnabled = false,
     isCreateVisualizationWorkspacePermissionEnabled = false,
     areComputedAttributesEnabled = false,
+    areVisualizationPermissionsEnabled = false,
 }: IGranularPermissionsProps) {
     const intl = useIntl();
-    const { permissions: selectedPermissions = [], isHierarchical = false } = workspace ?? {};
-    const selectedWorkspacePermission = getWorkspacePermission(selectedPermissions);
-    const selectedGranularPermissions = getGranularPermissions(selectedPermissions);
-
-    const granularItems = granularPermissions.filter(
-        ({ id }) =>
-            (id !== "CREATE_METRIC" || areMetricPermissionsEnabled) &&
-            (id !== "CREATE_VISUALIZATION" || isCreateVisualizationWorkspacePermissionEnabled) &&
-            (id !== "CREATE_COMPUTED_ATTRIBUTE" || areComputedAttributesEnabled),
-    );
-
-    const handleChange = useCallback(
-        (permissions: WorkspacePermissions, isHierarchical: boolean) => {
-            const sanitizedPermissions = removeRedundantPermissions(permissions);
-            onChange({ ...workspace!, permissions: sanitizedPermissions, isHierarchical });
-        },
-        [onChange, workspace],
-    );
-
-    const handleHierarchicalChange = useCallback(
-        (isHierarchical: boolean) => {
-            handleChange([selectedWorkspacePermission, ...selectedGranularPermissions], isHierarchical);
-        },
-        [handleChange, selectedGranularPermissions, selectedWorkspacePermission],
-    );
-
-    const handleWorkspacePermissionChange = useCallback(
-        (workspacePermission: WorkspacePermission) => {
-            const updatedGranularPermissions = getImplicitGranularPermissions(workspacePermission);
-            handleChange([workspacePermission, ...updatedGranularPermissions], isHierarchical);
-        },
-        [handleChange, isHierarchical],
-    );
-
-    const handleGranularPermissionChange = useCallback(
-        (granularPermission: WorkspacePermission) => {
-            const isPermissionSelected = selectedGranularPermissions.includes(granularPermission);
-            const updatedGranularPermissions = isPermissionSelected
-                ? selectedGranularPermissions.filter((p) => p !== granularPermission)
-                : [...selectedGranularPermissions, granularPermission];
-            const sanitizedGranularPermissions = sanitizeExportPermissions(
-                granularPermission,
-                updatedGranularPermissions,
-                !isPermissionSelected,
-            );
-
-            handleChange([selectedWorkspacePermission, ...sanitizedGranularPermissions], isHierarchical);
-        },
-        [handleChange, isHierarchical, selectedGranularPermissions, selectedWorkspacePermission],
-    );
 
     if (!workspace) {
         return (
@@ -115,6 +66,46 @@ export function GranularPermissions({
             </div>
         );
     }
+
+    const { permissions: selectedPermissions, isHierarchical } = workspace;
+    const selectedWorkspacePermission = getWorkspacePermission(selectedPermissions);
+    const selectedGranularPermissions = getGranularPermissions(selectedPermissions);
+    const chosenGranularPermissions = selectedPermissions.filter((p) => !workspacePermissions.includes(p));
+
+    const granularItems = granularPermissions.filter(
+        ({ id }) =>
+            (id !== "CREATE_METRIC" || areMetricPermissionsEnabled) &&
+            (id !== "CREATE_VISUALIZATION" || isCreateVisualizationWorkspacePermissionEnabled) &&
+            (id !== "CREATE_COMPUTED_ATTRIBUTE" || areComputedAttributesEnabled) &&
+            (id !== "MANAGE_VISUALIZATIONS" || areVisualizationPermissionsEnabled),
+    );
+
+    // Unsanitized until save, so unchecking or leaving Manage brings earlier choices back.
+    const handleChange = (permissions: WorkspacePermissions, isHierarchical: boolean) => {
+        onChange({ ...workspace, permissions, isHierarchical });
+    };
+
+    const handleHierarchicalChange = (isHierarchical: boolean) => {
+        handleChange([selectedWorkspacePermission, ...chosenGranularPermissions], isHierarchical);
+    };
+
+    const handleWorkspacePermissionChange = (workspacePermission: WorkspacePermission) => {
+        handleChange([workspacePermission, ...chosenGranularPermissions], isHierarchical);
+    };
+
+    const handleGranularPermissionChange = (granularPermission: WorkspacePermission) => {
+        const isPermissionSelected = selectedGranularPermissions.includes(granularPermission);
+        const updatedGranularPermissions = isPermissionSelected
+            ? chosenGranularPermissions.filter((p) => p !== granularPermission)
+            : [...chosenGranularPermissions, granularPermission];
+        const sanitizedGranularPermissions = sanitizeExportPermissions(
+            granularPermission,
+            updatedGranularPermissions,
+            !isPermissionSelected,
+        );
+
+        handleChange([selectedWorkspacePermission, ...sanitizedGranularPermissions], isHierarchical);
+    };
 
     return (
         <div className="gd-granular-permissions">

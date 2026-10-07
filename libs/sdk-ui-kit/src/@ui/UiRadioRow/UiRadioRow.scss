@@ -1,20 +1,29 @@
 // (C) 2026 GoodData Corporation
 
 .gd-ui-kit-radio-row {
+    --local-line-height: 20px;
+
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: var(--gd-spacing-10px);
     width: 100%;
     min-height: 50px;
     padding: var(--gd-spacing-5px) 0;
     box-sizing: border-box;
 
+    // one title line tall, so the radio lines up with the title rather than the whole option
+    &__control {
+        display: flex;
+        align-items: center;
+        height: var(--local-line-height);
+    }
+
     &__text {
         flex: 1 1 auto;
         min-width: 0;
         display: flex;
         flex-direction: column;
-        line-height: 20px;
+        line-height: var(--local-line-height);
     }
 
     &__title {
@@ -37,6 +46,7 @@
     }
 
     &__trailing {
+        align-self: center;
         flex-shrink: 0;
         display: inline-flex;
         align-items: center;

@@ -83,5 +83,6 @@ export function convertReportPart(part: AiReportPart): IChatConversationReportCo
         ref: part.report_ref,
         baseReportId: part.base_report_id,
         refines: part.refines_ref,
+        ...(part.reworks_open_report ? { reworksOpenReport: true } : {}),
     };
 }

@@ -3927,6 +3927,10 @@ export interface AiReportPart {
     'page_count'?: number | null;
     'report'?: object | null;
     'refines_ref'?: string | null;
+    /**
+     * True when this version was written from the report open in the editor (`view.report`). A client still showing that report, unchanged since the message was sent, can apply it there.
+     */
+    'reworks_open_report'?: boolean;
     'report_ref'?: string | null;
     'saved_report_id'?: string | null;
     /**

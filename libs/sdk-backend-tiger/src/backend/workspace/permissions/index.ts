@@ -39,6 +39,7 @@ export class TigerWorkspacePermissionsFactory implements IWorkspacePermissionsSe
             canCreateMetric,
             canCreateVisualization,
             canCreateComputedAttribute,
+            canManageVisualizations,
         } = getPermission(permissions);
 
         return {
@@ -75,6 +76,7 @@ export class TigerWorkspacePermissionsFactory implements IWorkspacePermissionsSe
             canCreateAutomation,
             canCreateMetric,
             canCreateComputedAttribute,
+            canManageVisualizations,
         };
     }
 }
@@ -90,7 +92,9 @@ function getPermission(permissions: Array<TigerPermissionType>) {
     const canCreateAutomation = hasPermission(permissions, "CREATE_AUTOMATION");
     const canUseAiAssistant = hasPermission(permissions, "USE_AI_ASSISTANT");
     const canCreateMetric = hasPermission(permissions, "CREATE_METRIC");
-    const canCreateVisualization = canAnalyzeWorkspace || hasPermission(permissions, "CREATE_VISUALIZATION");
+    const canManageVisualizations = canManageWorkspace || hasPermission(permissions, "MANAGE_VISUALIZATIONS");
+    const canCreateVisualization =
+        canAnalyzeWorkspace || canManageVisualizations || hasPermission(permissions, "CREATE_VISUALIZATION");
     const canCreateComputedAttribute = hasPermission(permissions, "CREATE_COMPUTED_ATTRIBUTE");
 
     return {
@@ -106,6 +110,7 @@ function getPermission(permissions: Array<TigerPermissionType>) {
         canCreateMetric,
         canCreateVisualization,
         canCreateComputedAttribute,
+        canManageVisualizations,
     };
 }
 

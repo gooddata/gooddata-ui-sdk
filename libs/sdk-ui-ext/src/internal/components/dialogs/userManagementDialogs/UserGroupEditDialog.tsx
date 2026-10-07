@@ -51,6 +51,7 @@ export interface IUserGroupEditDialogProps extends IWithTelemetryProps {
     areMetricPermissionsEnabled?: boolean;
     isCreateVisualizationWorkspacePermissionEnabled?: boolean;
     areComputedAttributesEnabled?: boolean;
+    areVisualizationPermissionsEnabled?: boolean;
 }
 
 function UserGroupEditDialogComponent({
@@ -64,6 +65,7 @@ function UserGroupEditDialogComponent({
     areMetricPermissionsEnabled = false,
     isCreateVisualizationWorkspacePermissionEnabled = false,
     areComputedAttributesEnabled = false,
+    areVisualizationPermissionsEnabled = false,
 }: IUserGroupEditDialogProps) {
     const intl = useIntl();
     const { dialogMode, setDialogMode } = useUserGroupDialogMode(initialView);
@@ -287,6 +289,7 @@ function UserGroupEditDialogComponent({
                                         isCreateVisualizationWorkspacePermissionEnabled
                                     }
                                     areComputedAttributesEnabled={areComputedAttributesEnabled}
+                                    areVisualizationPermissionsEnabled={areVisualizationPermissionsEnabled}
                                 />
                             )}
                             {dialogMode === "USERS" && (

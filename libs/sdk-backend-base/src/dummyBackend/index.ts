@@ -71,6 +71,7 @@ import {
     type ILlmProvidersQueryResult,
     type IMeasureExpressionToken,
     type IMeasureKeyDrivers,
+    type IMeasureOverride,
     type IMeasureReferencing,
     type IMeasuresQuery,
     type IMeasuresQueryResult,
@@ -1724,6 +1725,10 @@ class DummyWorkspaceMeasuresService implements IWorkspaceMeasuresService {
     }
 
     getMeasureExpressionTokens(_ref: ObjRef): Promise<IMeasureExpressionToken[]> {
+        return Promise.resolve([]);
+    }
+
+    checkEntityOverrides(_identifiers: string[]): Promise<IMeasureOverride[]> {
         return Promise.resolve([]);
     }
 

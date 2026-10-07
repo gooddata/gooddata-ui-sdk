@@ -27,9 +27,36 @@ import {
     type IObjectShareGrantee,
     type IUseObjectShareOptions,
     type ObjectSharePermissionLevel,
+    type ObjectShareRoleAccess,
 } from "./objectShareController.types.js";
 import { useAccessList } from "./useAccessList.js";
 import { useLabelScope } from "./useLabelScope.js";
+
+function resolveRoleAccess({
+    loaded,
+    isWorkspaceManager,
+    canManageVisualizations,
+    kind,
+    callerLevel,
+}: {
+    loaded: boolean;
+    isWorkspaceManager: boolean | undefined;
+    canManageVisualizations: boolean | undefined;
+    kind: IObjectPermissionsObject["kind"] | undefined;
+    callerLevel: ObjectSharePermissionLevel | undefined;
+}): ObjectShareRoleAccess | undefined {
+    if (!loaded) {
+        return undefined;
+    }
+    if (isWorkspaceManager) {
+        return "workspaceManager";
+    }
+    // The backend's EDIT is required too: inherited visualizations stay view-only for a holder.
+    if (canManageVisualizations && kind === "insight" && callerLevel === "EDIT") {
+        return "visualizationManager";
+    }
+    return undefined;
+}
 
 /**
  * Manages the share-dialog state and backend I/O for ONE dialog session: the hook
@@ -78,6 +105,7 @@ export function useObjectShareController(
         hasList,
         grantees,
         isWorkspaceManager,
+        canManageVisualizations,
         callerLevel,
         selfIdentityResolved,
         generalAccess,
@@ -100,6 +128,16 @@ export function useObjectShareController(
         failRuleEdit,
         draft: draftValue,
     } = useAccessList(target, { draft, initialDraft, initialDraftGeneralAccess });
+
+    const roleAccess = resolveRoleAccess({
+        loaded: !draft && status === "success",
+        isWorkspaceManager,
+        canManageVisualizations,
+        kind: target?.kind,
+        callerLevel,
+    });
+    const roleLockedGranteeId =
+        roleAccess === "visualizationManager" ? grantees.find((g) => g.isSelf)?.id : undefined;
 
     // Grantee ids the label-scope probe resolves against — a removing row is excluded
     // so its scope is dropped, not re-seeded.
@@ -349,7 +387,13 @@ export function useObjectShareController(
             // Also refused before the label scope resolves: the re-grade below would run
             // over the assumed-all fallback and mint grants the grantee never held. The
             // UI gates on the same fact (isMutable); the controller stays authoritative.
-            if (!grantee || grantee.pending || !labelsResolved || !changesEffectiveLevel(grantee, level)) {
+            if (
+                !grantee ||
+                grantee.pending ||
+                !labelsResolved ||
+                granteeId === roleLockedGranteeId ||
+                !changesEffectiveLevel(grantee, level)
+            ) {
                 return;
             }
             applyGranteeLevel(granteeId, level);
@@ -415,6 +459,7 @@ export function useObjectShareController(
             applyGranteeLevel,
             settleGranteeEdit,
             failGranteeEdit,
+            roleLockedGranteeId,
         ],
     );
 
@@ -428,7 +473,13 @@ export function useObjectShareController(
             // this keeps the controller — not the UI — authoritative. Same for an
             // unresolved label scope: the revoke below would run over the assumed-all
             // fallback and revoke (then compensate with) grants that never existed.
-            if (!grantee || grantee.pending || !labelsResolved || grantee.directLevel === undefined) {
+            if (
+                !grantee ||
+                grantee.pending ||
+                !labelsResolved ||
+                grantee.directLevel === undefined ||
+                granteeId === roleLockedGranteeId
+            ) {
                 return;
             }
             // Mark the row removed but keep it visible (muted) until the write lands.
@@ -517,6 +568,7 @@ export function useObjectShareController(
             settleGranteeEdit,
             failGranteeEdit,
             setSelectedLabelIdsByGrantee,
+            roleLockedGranteeId,
         ],
     );
 
@@ -786,7 +838,13 @@ export function useObjectShareController(
     // Sorted for display only; the overlay stays in write-through order, so
     // add/rollback logic is unaffected. Memoized apart from the state assembly so
     // the array identity changes only when the rows do, not on every state change.
-    const sortedGrantees = useMemo(() => sortGrantees(grantees), [grantees]);
+    const sortedGrantees = useMemo(
+        () =>
+            sortGrantees(grantees).map((g): IObjectShareGrantee =>
+                g.id === roleLockedGranteeId ? { ...g, level: "EDIT", effectivePermission: undefined } : g,
+            ),
+        [grantees, roleLockedGranteeId],
+    );
 
     const state = useMemo<IObjectShareControllerState>(() => {
         // Row policy is classified here, not in the dialog, so a consumer
@@ -795,7 +853,7 @@ export function useObjectShareController(
         // it special is that the access is THEIRS. A manager is exempt, their access
         // comes from the role, so there is no ceiling to cap and no lockout to warn of.
         const ownRow = grantees.find((g) => g.isSelf);
-        const selfRow = isWorkspaceManager ? undefined : ownRow;
+        const selfRow = isWorkspaceManager || roleLockedGranteeId ? undefined : ownRow;
         const selfManagedGranteeId = selfRow?.id;
         // The caller cannot grant above what they hold, and the server refuses such a write.
         // The backend's own answer covers groups, parent workspaces and workspace permissions.
@@ -809,10 +867,6 @@ export function useObjectShareController(
                 : levelsAbove(callerLevel);
         const granteeControlsLocked =
             !selfIdentityResolved && !isWorkspaceManager && grantees.some((g) => g.kind === "user");
-        // Policy in `IObjectShareControllerState.showAdminAccessNote`: role-based access is
-        // explained by a note, not a grantee row, so it does not depend on the caller having
-        // (or lacking) a row of their own.
-        const showAdminAccessNote = !draft && status === "success" && isWorkspaceManager === true;
         return {
             subview,
             status,
@@ -830,7 +884,8 @@ export function useObjectShareController(
             grantableDisabledLevels,
             callerLevel,
             granteeControlsLocked,
-            showAdminAccessNote,
+            roleAccess,
+            roleLockedGranteeId,
             ...effectiveWorkspace,
             workspaceInheritedLevel: workspaceInheritedLevel,
             workspaceLevelLocked: generalAccess !== "WORKSPACE" || workspaceInheritedLevel === "EDIT",
@@ -850,8 +905,9 @@ export function useObjectShareController(
         summary,
         selfIdentityResolved,
         isWorkspaceManager,
+        roleAccess,
+        roleLockedGranteeId,
         callerLevel,
-        draft,
         grantees,
         sortedGrantees,
         effectiveWorkspace,

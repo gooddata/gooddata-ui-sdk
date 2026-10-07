@@ -85,6 +85,23 @@ export interface IMeasureKeyDrivers {
 }
 
 /**
+ * Measure identifier that is already used in the workspace hierarchy.
+ *
+ * @alpha
+ */
+export interface IMeasureOverride {
+    /**
+     * Identifier of the measure.
+     */
+    identifier: string;
+
+    /**
+     * Identifiers of the workspaces in the hierarchy that already contain a measure with this identifier.
+     */
+    origins: string[];
+}
+
+/**
  * Service for create, update or delete measures and querying additional measures data.
  * If you want to query measures themselves, use catalog {@link IWorkspaceCatalogFactory}
  *
@@ -112,6 +129,19 @@ export interface IWorkspaceMeasuresService {
      * @returns promise of measure expression tokens
      */
     getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;
+
+    /**
+     * Check which measure identifiers are already used in the workspace hierarchy.
+     *
+     * @remarks
+     * A measure saved with a used identifier overrides the measure of the other workspace.
+     * Identifiers that are not used are not in the result.
+     *
+     * @param identifiers - measure identifiers to check
+     * @returns promise of the used identifiers, each with the workspaces that contain it
+     * @alpha
+     */
+    checkEntityOverrides(identifiers: string[]): Promise<IMeasureOverride[]>;
 
     /**
      * Create and save measure for the provided measure definition

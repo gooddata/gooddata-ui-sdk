@@ -84,6 +84,7 @@ import { selectDrillTargetsByWidgetRef } from "../drillTargets/drillTargetsSelec
 import { selectInsightByWidgetRef, selectInsightsMap } from "../insights/insightsSelectors.js";
 import { getKeyDriverAnalysisSupportedGranularities } from "../keyDriverAnalysis/const.js";
 import { selectDisableDashboardCrossFiltering, selectDisableDashboardKda } from "../meta/metaSelectors.js";
+import { selectCanUseAiAssistant } from "../permissions/permissionsSelectors.js";
 import {
     selectIgnoredDrillDownHierarchiesByWidgetRef,
     selectIgnoredDrillToUrlAttributesByWidgetRef,
@@ -631,6 +632,7 @@ const selectCrossFilteringByWidgetRef: (
 const selectKdaByWidgetRef: (ref: ObjRef) => DashboardSelector<IImplicitDrillWithPredicates | undefined> =
     createMemoizedSelector((ref: ObjRef) =>
         createSelector(
+            selectCanUseAiAssistant,
             selectEnableKda,
             selectEnableSecondGranularities,
             selectDrillTargetsByWidgetRef(ref),
@@ -640,6 +642,7 @@ const selectKdaByWidgetRef: (ref: ObjRef) => DashboardSelector<IImplicitDrillWit
             selectCatalogDateAttributes,
             selectInsightByWidgetRef(ref),
             (
+                canUseAiAssistant,
                 isKdaEnabled,
                 enableSecondGranularities,
                 availableDrillTargets,
@@ -651,6 +654,7 @@ const selectKdaByWidgetRef: (ref: ObjRef) => DashboardSelector<IImplicitDrillWit
             ) => {
                 if (
                     !isKdaEnabled ||
+                    !canUseAiAssistant ||
                     disableKda ||
                     disableKdaByConfig ||
                     // When some drillable items are present, we need to disable
@@ -858,6 +862,7 @@ export const selectConfiguredDrillsByWidgetRef: (
         selectIsEmbedded,
         selectDisableDashboardCrossFiltering,
         selectIsDisabledCrossFiltering,
+        selectCanUseAiAssistant,
         selectEnableKda,
         selectDisableDashboardKda,
         selectIsDisabledKda,
@@ -867,6 +872,7 @@ export const selectConfiguredDrillsByWidgetRef: (
             isEmbedded,
             disableCrossFiltering,
             disableCrossFilteringByConfig,
+            canUseAiAssistant,
             enableKda,
             disableKda,
             disableKdaByConfig,
@@ -889,7 +895,7 @@ export const selectConfiguredDrillsByWidgetRef: (
                 } else if (drillType === "crossFiltering") {
                     return !disableCrossFiltering && !disableCrossFilteringByConfig;
                 } else if (drillType === "keyDriveAnalysis") {
-                    return enableKda && !disableKda && !disableKdaByConfig;
+                    return enableKda && canUseAiAssistant && !disableKda && !disableKdaByConfig;
                 } else {
                     const unhandledType: never = drillType;
                     throw new UnexpectedError(`Unhandled widget drill type: ${unhandledType}`);

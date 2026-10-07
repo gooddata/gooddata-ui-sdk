@@ -80,7 +80,7 @@
     "gd.gen-ai.feedback.reason.factually-incorrect": "Tosiasiallisesti virheellinen",
     "gd.gen-ai.feedback.reason.answer-too-long": "Vastaus kesti liian kauan",
     "gd.gen-ai.feedback.reason.other": "Muut",
-    "gd.gen-ai.disclaimer": "Tekoälyassistentit voivat tehdä virheitä. Tarkista ennen näihin vastauksiin luottamista.",
+    "gd.gen-ai.disclaimer": "Tekoäly voi tehdä virheitä. Tarkista tulokset.",
     "gd.gen-ai.dialog.label": "Tekoälyavustajan keskustelu",
     "gd.gen-ai.header.reset-tooltip": "Nollaa",
     "gd.gen-ai.header.conversations-tooltip": "Viimeisimmät keskustelut",
