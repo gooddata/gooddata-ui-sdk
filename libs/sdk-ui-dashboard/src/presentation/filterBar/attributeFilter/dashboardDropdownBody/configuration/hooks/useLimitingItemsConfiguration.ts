@@ -2,7 +2,7 @@
 
 import { useCallback, useMemo, useState } from "react";
 
-import { isEqual } from "lodash-es";
+import { isEqual, partition } from "lodash-es";
 
 import { type IDashboardAttributeFilter, type ObjRef } from "@gooddata/sdk-model";
 
@@ -10,6 +10,7 @@ import { setAttributeFilterLimitingItems } from "../../../../../../model/command
 import { useDashboardSelector } from "../../../../../../model/react/DashboardStoreProvider.js";
 import { useDashboardCommandProcessing } from "../../../../../../model/react/useDashboardCommandProcessing.js";
 import { selectAttributeFilterConfigsOverrides } from "../../../../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { selectRestrictedLimitingItemsMap } from "../../../../../../model/store/unavailableObjects/unavailableObjectsSelectors.js";
 
 export const useLimitingItemsConfiguration = (currentFilter: IDashboardAttributeFilter) => {
     const { run: changeAttributeFilterLimitingItems } = useDashboardCommandProcessing({
@@ -24,9 +25,14 @@ export const useLimitingItemsConfiguration = (currentFilter: IDashboardAttribute
     const currentFilterLocalId =
         currentFilterConfig?.localIdentifier || currentFilter?.attributeFilter.localIdentifier;
 
-    const originalLimitingItems = useMemo(
-        () => currentFilter.attributeFilter.validateElementsBy ?? [],
-        [currentFilter],
+    // like the parent filters it lists, the panel shows only the items the user may read
+    const restrictedLimitingItemsMap = useDashboardSelector(selectRestrictedLimitingItemsMap);
+    const [restrictedLimitingItems, originalLimitingItems] = useMemo(
+        () =>
+            partition(currentFilter.attributeFilter.validateElementsBy ?? [], (item) =>
+                restrictedLimitingItemsMap.has(item),
+            ),
+        [currentFilter, restrictedLimitingItemsMap],
     );
     const [limitingItems, setLimitingItems] = useState(originalLimitingItems ?? []);
     const limitingItemsChanged = !isEqual(originalLimitingItems, limitingItems);
@@ -37,9 +43,19 @@ export const useLimitingItemsConfiguration = (currentFilter: IDashboardAttribute
 
     const onLimitingItemsChange = useCallback(() => {
         if (!isEqual(originalLimitingItems, limitingItems)) {
-            changeAttributeFilterLimitingItems(currentFilterLocalId!, limitingItems);
+            // the command replaces the whole list, so carry over the items the panel cannot show
+            changeAttributeFilterLimitingItems(currentFilterLocalId!, [
+                ...restrictedLimitingItems,
+                ...limitingItems,
+            ]);
         }
-    }, [currentFilterLocalId, originalLimitingItems, changeAttributeFilterLimitingItems, limitingItems]);
+    }, [
+        currentFilterLocalId,
+        originalLimitingItems,
+        restrictedLimitingItems,
+        changeAttributeFilterLimitingItems,
+        limitingItems,
+    ]);
 
     const onConfigurationClose = useCallback(() => {
         setLimitingItems(originalLimitingItems);

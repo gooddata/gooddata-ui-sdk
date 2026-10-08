@@ -136,6 +136,43 @@ describe("TigerWorkspaceStyling active theme resolution", () => {
         expect(EntitiesApi_GetAllEntitiesThemes).not.toHaveBeenCalled();
     });
 
+    it("falls through to the workspace-level theme when the user-level reference is missing here", async () => {
+        // A user setting has no workspace: the user picked a workspace theme that this workspace does not hold.
+        vi.mocked(getSettingsForCurrentUser).mockResolvedValue({
+            activeTheme: { id: "brand", type: "workspaceTheme" },
+        } as any);
+        vi.mocked(EntitiesApi_GetAllEntitiesWorkspaceThemes).mockResolvedValue(listResponse([]));
+        settingsServiceMock.getSettings.mockResolvedValue({ activeTheme: { id: "t-org", type: "theme" } });
+        vi.mocked(EntitiesApi_GetAllEntitiesThemes).mockResolvedValue(
+            listResponse([{ attributes: { content: themeContent } }]),
+        );
+
+        const styling = new TigerWorkspaceStyling(authCall, WORKSPACE);
+        const theme = await styling.getTheme();
+
+        expect(theme).toEqual(themeContent);
+        expect(vi.mocked(EntitiesApi_GetAllEntitiesThemes).mock.calls[0][2]).toEqual({
+            filter: `id=="t-org"`,
+        });
+    });
+
+    it("returns the default theme when the workspace-level reference is the same missing one", async () => {
+        vi.mocked(getSettingsForCurrentUser).mockResolvedValue({
+            activeTheme: { id: "missing", type: "workspaceTheme" },
+        } as any);
+        vi.mocked(EntitiesApi_GetAllEntitiesWorkspaceThemes).mockResolvedValue(listResponse([]));
+        settingsServiceMock.getSettings.mockResolvedValue({
+            activeTheme: { id: "missing", type: "workspaceTheme" },
+        });
+
+        const styling = new TigerWorkspaceStyling(authCall, WORKSPACE);
+        const theme = await styling.getTheme();
+
+        expect(theme).toEqual(DefaultTheme);
+        expect(EntitiesApi_GetAllEntitiesWorkspaceThemes).toHaveBeenCalledTimes(1);
+        expect(EntitiesApi_GetAllEntitiesThemes).not.toHaveBeenCalled();
+    });
+
     it("returns the default theme when no active theme is configured", async () => {
         vi.mocked(getSettingsForCurrentUser).mockResolvedValue({} as any);
 
@@ -201,6 +238,27 @@ describe("TigerWorkspaceStyling active color palette resolution", () => {
 
         expect(palette).toEqual(DefaultColorPalette);
         expect(EntitiesApi_GetAllEntitiesColorPalettes).not.toHaveBeenCalled();
+    });
+
+    it("falls through to the workspace-level palette when the user-level reference is missing here", async () => {
+        vi.mocked(getSettingsForCurrentUser).mockResolvedValue({
+            activeColorPalette: { id: "brand", type: "workspaceColorPalette" },
+        } as any);
+        vi.mocked(EntitiesApi_GetAllEntitiesWorkspaceColorPalettes).mockResolvedValue(listResponse([]));
+        settingsServiceMock.getSettings.mockResolvedValue({
+            activeColorPalette: { id: "cp-org", type: "colorPalette" },
+        });
+        vi.mocked(EntitiesApi_GetAllEntitiesColorPalettes).mockResolvedValue(
+            listResponse([{ attributes: { content: paletteContent } }]),
+        );
+
+        const styling = new TigerWorkspaceStyling(authCall, WORKSPACE);
+        const palette = await styling.getColorPalette();
+
+        expect(palette).toEqual(paletteContent.colorPalette);
+        expect(vi.mocked(EntitiesApi_GetAllEntitiesColorPalettes).mock.calls[0][2]).toEqual({
+            filter: `id=="cp-org"`,
+        });
     });
 
     it("returns the default palette when the resolved content is not a valid palette", async () => {

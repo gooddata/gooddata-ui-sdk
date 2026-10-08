@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "comment": "sdk-ui-catalog: Count only direct references in the parameter delete dialog",
+      "type": "none",
+      "packageName": "@gooddata/sdk-ui-all"
+    }
+  ],
+  "packageName": "@gooddata/sdk-ui-all"
+}

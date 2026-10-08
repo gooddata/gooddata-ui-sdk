@@ -14,6 +14,7 @@ import { selectAllCatalogDisplayFormsMap } from "../../store/catalog/catalogSele
 import { selectDateFilterConfig, selectSettings } from "../../store/config/configSelectors.js";
 import { executionResultsActions } from "../../store/executionResults/index.js";
 import { selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
+import { restrictedDataActions } from "../../store/restrictedData/index.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 
 import { actionsToInitializeNewDashboard } from "./common/stateInitializers.js";
@@ -47,7 +48,11 @@ function* resetToNewDashboard(ctx: DashboardContext): SagaIterator<void> {
 
     yield put(
         batchActions(
-            [...initActions, executionResultsActions.clearAllExecutionResults()],
+            [
+                ...initActions,
+                executionResultsActions.clearAllExecutionResults(),
+                restrictedDataActions.clearRestrictedData(),
+            ],
             "@@GDC.DASH/BATCH.CLEAR",
         ),
     );

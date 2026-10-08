@@ -27,15 +27,10 @@ import {
     setUserContextAction,
 } from "./chatWindowSlice.js";
 
-const agentSwitchingSettings = {
-    enableGenAiAgentSwitching: true,
-} as IUserWorkspaceSettings;
-
 const makeState = (isPreview?: boolean): RootState => ({
     messages: messagesSliceReducer(undefined, { type: "test/init" }),
     [chatWindowSliceName]: {
         ...getInitialChatWindowState({ isPreview }),
-        settings: agentSwitchingSettings,
     },
 });
 

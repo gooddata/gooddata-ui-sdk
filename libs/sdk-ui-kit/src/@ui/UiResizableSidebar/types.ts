@@ -60,4 +60,23 @@ export interface IUiResizableSidebarStateOptions {
     minContentWidth?: number;
     isResizable: boolean;
     isCollapsible: boolean;
+    /**
+     * When defined, takes precedence over the persisted collapsed flag, e.g. for an embedder-driven
+     * sidebar. The setters keep writing only the persisted state, so release the override from
+     * `onUserChange`, or it keeps winning over the user's change.
+     */
+    collapsedOverride?: boolean;
+    /**
+     * When defined, takes precedence over the persisted expanded width; clamped to the current
+     * bounds like any width. Released the same way as `collapsedOverride`.
+     */
+    widthOverride?: number;
+    /**
+     * Called with the changed property right before a live setter persists a user change; never
+     * called by a setter that cannot change anything (resize while collapsed or not resizable,
+     * collapse while not collapsible). The place to release an override of the property. Keep the
+     * reference stable (useCallback): the setters keep their identity only while it is, and
+     * consumers hold them in effect dependencies.
+     */
+    onUserChange?: (property: "collapsed" | "width") => void;
 }

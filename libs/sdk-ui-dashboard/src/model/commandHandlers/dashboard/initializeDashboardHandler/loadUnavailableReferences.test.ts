@@ -70,6 +70,7 @@ describe("loadUnavailableReferences", () => {
             "displayForm",
             "analyticalDashboard",
             "measure",
+            "fact",
             "computedAttribute",
         ]);
     });
@@ -127,6 +128,7 @@ describe("dashboardLoadReferenceTypes", () => {
             "displayForm",
             "analyticalDashboard",
             "measure",
+            "fact",
             "computedAttribute",
         ]);
     });
@@ -141,6 +143,7 @@ describe("getDashboardLoadReferenceTypes", () => {
             "displayForm",
             "analyticalDashboard",
             "measure",
+            "fact",
             "computedAttribute",
         ]);
     });

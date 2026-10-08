@@ -27,6 +27,7 @@ export interface ICatalogDetailActionsProps {
     onCatalogItemCreate?: (item: ICatalogItem) => void;
     onCatalogItemUpdate?: (item: ICatalogItem) => void;
     onCatalogItemDelete?: (ref: ICatalogItemRef) => void;
+    onCatalogItemNavigation?: (event: MouseEvent, ref: ICatalogItemRef) => void;
 }
 
 /**
@@ -42,6 +43,7 @@ export function CatalogDetailActions({
     onCatalogItemCreate,
     onCatalogItemUpdate,
     onCatalogItemDelete,
+    onCatalogItemNavigation,
 }: ICatalogDetailActionsProps) {
     const intl = useIntl();
     const workspaceId = useWorkspaceStrict();
@@ -67,6 +69,7 @@ export function CatalogDetailActions({
                 onCatalogItemCreate={onCatalogItemCreate}
                 onCatalogItemUpdate={onCatalogItemUpdate}
                 onCatalogItemDelete={onCatalogItemDelete}
+                onCatalogItemNavigation={onCatalogItemNavigation}
             />
         );
     }

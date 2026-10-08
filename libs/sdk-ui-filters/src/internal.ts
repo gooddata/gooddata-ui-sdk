@@ -3,6 +3,9 @@
 // oxlint-disable no-barrel-files/no-barrel-files
 
 export { DEFAULT_LOCALE } from "./DateFilter/utils/FormattingUtils.js";
+// Before every export that imports it, or Storybook's bundle does not initialize it for a story that
+// imports only this list.
+export { WeekRangeList } from "./DateFilter/WeekRangeList/WeekRangeList.js";
 export { AbsoluteDateFilterForm } from "./DateFilter/AbsoluteDateFilterForm/AbsoluteDateFilterForm.js";
 export { RelativeDateFilterForm } from "./DateFilter/RelativeDateFilterForm/RelativeDateFilterForm.js";
 export { ExcludeCurrentPeriodToggle } from "./DateFilter/ExcludeCurrentPeriodToggle/ExcludeCurrentPeriodToggle.js";

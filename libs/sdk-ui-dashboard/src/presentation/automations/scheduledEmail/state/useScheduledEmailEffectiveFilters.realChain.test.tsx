@@ -57,6 +57,7 @@ function tab(tabId: string): IAutomationFiltersTab {
         defaultSelectedFilters: [COMMON_DATE_FILTER],
         lockedFilters: [],
         hiddenFilters: [],
+        allFilters: [COMMON_DATE_FILTER],
     };
 }
 

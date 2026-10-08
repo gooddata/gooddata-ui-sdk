@@ -239,6 +239,7 @@ export function CatalogDetailContent({
                                         onCatalogItemCreate={onCatalogItemCreate}
                                         onCatalogItemUpdate={applyItemUpdate}
                                         onCatalogItemDelete={applyItemDelete}
+                                        onCatalogItemNavigation={onCatalogItemNavigation}
                                     />
                                 }
                             />

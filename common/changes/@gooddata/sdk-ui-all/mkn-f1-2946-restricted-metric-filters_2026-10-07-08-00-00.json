@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-backend-tiger, sdk-ui-dashboard: A dashboard filter on a metric the user cannot access is now shown as a restricted filter instead of a missing metric, and an attribute filter whose values are limited by a restricted metric or fact loads its values without that limit instead of failing. Save as new is no longer offered when the copy would keep such a metric or fact, which the backend refuses.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

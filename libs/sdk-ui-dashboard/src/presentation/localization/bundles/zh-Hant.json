@@ -352,8 +352,6 @@
     "messages.settingsDialogError.general": "無法載入儀表板設定。稍後再試。",
     "visualization.dataTooLarge.headline": "數據點太多無法顯示",
     "visualization.dataTooLarge.text": "嘗試將一個或多個過濾器套用到您的儀表板。",
-    "visualization.execute_protected_report.headline": "您無權查看此報告",
-    "visualization.execute_protected_report.text": "請聯絡您的管理員。",
     "visualization.empty.headline": "沒有適合您選擇過濾器的數據",
     "visualization.error.headline": "抱歉，我們無法顯示此視覺化",
     "visualization.error.text": "請聯絡您的管理員。",

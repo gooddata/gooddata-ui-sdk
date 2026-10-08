@@ -2,6 +2,7 @@
 
 import { isEmpty } from "lodash-es";
 
+import { type IDashboardAttributeFilterConfig } from "../dashboard/dashboard.js";
 import { type FilterContextItem } from "../dashboard/filterContext.js";
 
 import { type IReportPageBody } from "./pageLayout.js";
@@ -27,6 +28,17 @@ export interface IReportContentPage extends IReportPageBody {
 }
 
 /**
+ * Configuration of a report's content-level attribute filter: the part of a dashboard attribute
+ * filter's configuration that reports support.
+ *
+ * @alpha
+ */
+export type IReportAttributeFilterConfig = Pick<
+    IDashboardAttributeFilterConfig,
+    "localIdentifier" | "displayAsLabel"
+>;
+
+/**
  * Versioned content shared verbatim by report templates and reports.
  *
  * @alpha
@@ -50,10 +62,25 @@ export interface IReportContent {
     filters?: FilterContextItem[];
 
     /**
+     * Configuration of the content-level attribute filters, keyed by the filter's local identifier.
+     *
+     * @remarks
+     * A filter with a `displayAsLabel` must be stored on the attribute's primary label: its selection
+     * is read as primary-label values and shown by `displayAsLabel`.
+     */
+    attributeFilterConfigs?: IReportAttributeFilterConfig[];
+
+    /**
      * Custom variable declarations. Values live on the report
      * ({@link IReportBase.variableValues}).
      */
     variables?: IReportVariableDefinition[];
+
+    /**
+     * Instructions every AI-written text without instructions of its own is generated with.
+     * Supports `{variables}`.
+     */
+    takeawaysInstruction?: string;
 }
 
 /**

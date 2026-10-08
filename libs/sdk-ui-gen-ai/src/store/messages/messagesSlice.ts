@@ -16,7 +16,6 @@ import {
     type IChatConversationLocalItem,
     type IChatConversationMultipartLocalPart,
     makeAgentChangeItem,
-    makeErrorContent,
 } from "../../model.js";
 import {
     type IChatConversationResponseTrace,
@@ -403,7 +402,7 @@ const messagesSlice = createSlice({
             {
                 payload,
             }: PayloadAction<{
-                error: string;
+                error: IChatConversationErrorContent;
                 assistantMessageId: string;
                 conversationId?: string;
             }>,
@@ -426,7 +425,7 @@ const messagesSlice = createSlice({
 
             assistantMessage.complete = true;
             assistantMessage.streaming = false;
-            assistantMessage.content = makeErrorContent(payload.error);
+            assistantMessage.content = payload.error;
         },
         evaluateMessageStreamingAction: (
             state,

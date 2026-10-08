@@ -32,15 +32,36 @@ export function readJsonSync(file) {
 
 const GdScriptsRemove = ["dep-cruiser", "validate"];
 
-const UnnecessaryDevDependencies = ["@gooddata/eslint-config", "dependency-cruiser", "eslint-plugin-sonarjs"];
-
-const ExplicitTypeScriptDependencies = [
+/*
+ * The plugin project lints with oxlint only. These packages serve the eslint config of the template
+ * project in the monorepo. @typescript-eslint/* also has a peer range that does not accept the
+ * TypeScript version of the template, so npm install fails without --legacy-peer-deps.
+ *
+ * The eslint-plugin-* packages that the oxlint config loads as JS plugins (headers, import-esm,
+ * no-barrel-files, sonarjs) must stay, together with eslint that is their peer dependency.
+ */
+const UnnecessaryDevDependencies = [
+    "@gooddata/eslint-config",
     "@typescript-eslint/eslint-plugin",
     "@typescript-eslint/parser",
-    "ts-loader",
-    "typescript",
-    "tslib",
+    "dependency-cruiser",
+    "eslint-plugin-jsdoc",
+    "eslint-plugin-react",
 ];
+
+/*
+ * TypeScript 7 has no classic compiler API, and the lint stack (eslint-plugin-sonarjs, ts-api-utils)
+ * fails without it. npm hoists one typescript for all of them, so the plugin project uses TypeScript 6.
+ * This is the same as the lintTypescriptVersion pin in common/config/subspaces/sdk/.pnpmfile.cjs.
+ */
+const PluginTypescriptVersion = "6.0.3";
+
+const OxlintOnlyScripts = {
+    lint: "oxlint . --quiet",
+    "lint-fix": "oxlint . --quiet --fix",
+};
+
+const ExplicitTypeScriptDependencies = ["ts-loader", "typescript", "tslib"];
 
 function resolveCurrentPackageVersion() {
     //we need current version of app-toolkit
@@ -71,9 +92,13 @@ function removeGdStuff(packageJson) {
         delete scripts[script];
     });
 
+    Object.assign(scripts, OxlintOnlyScripts);
+
     UnnecessaryDevDependencies.forEach((dep) => {
         delete devDependencies[dep];
     });
+
+    devDependencies.typescript = PluginTypescriptVersion;
 
     const packageVersion = resolveCurrentPackageVersion();
 

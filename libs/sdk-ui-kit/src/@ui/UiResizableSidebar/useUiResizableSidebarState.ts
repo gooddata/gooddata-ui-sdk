@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { clamp } from "lodash-es";
 
@@ -56,14 +56,29 @@ export function useUiResizableSidebarState({
     minContentWidth,
     isResizable,
     isCollapsible,
+    collapsedOverride,
+    widthOverride,
+    onUserChange,
 }: IUiResizableSidebarStateOptions): IUiResizableSidebarState {
     const viewportWidth = useWindowWidth(isResizable && minContentWidth !== undefined);
     const [storedWidth, setPersistedWidth] = useLocalStorage<unknown>(widthStorageKey, null);
     const [storedCollapsed, setPersistedCollapsed] = useLocalStorage<unknown>(collapsedStorageKey, false);
-    // Anything may have written these keys, so only well-formed values are trusted.
+    // Anything may have written these keys, so only well-formed values are trusted; the overrides
+    // win over them but go through the same clamping.
     const persistedWidth =
         typeof storedWidth === "number" && Number.isFinite(storedWidth) ? storedWidth : minWidth;
-    const persistedCollapsed = storedCollapsed === true;
+    const preferredWidth =
+        typeof widthOverride === "number" && Number.isFinite(widthOverride) ? widthOverride : persistedWidth;
+    const preferredCollapsed = collapsedOverride ?? storedCollapsed === true;
+
+    // Consumers keep setCollapsed in effect deps (AI-mode auto-collapse), so its identity must survive recomputes.
+    const announceAndSetCollapsed = useCallback(
+        (collapsed: boolean) => {
+            onUserChange?.("collapsed");
+            setPersistedCollapsed(collapsed);
+        },
+        [onUserChange, setPersistedCollapsed],
+    );
 
     return useMemo(() => {
         const collapsedWidth = hasRail ? UI_RESIZABLE_SIDEBAR_RAIL_WIDTH : 0;
@@ -71,10 +86,11 @@ export function useUiResizableSidebarState({
             minContentWidth === undefined
                 ? maxWidth
                 : clamp(viewportWidth - minContentWidth, minWidth, maxWidth);
-        const expandedWidth = isResizable ? clamp(persistedWidth, minWidth, max) : minWidth;
-        const setCollapsed = isCollapsible ? setPersistedCollapsed : noop;
+        const expandedWidth = isResizable ? clamp(preferredWidth, minWidth, max) : minWidth;
+        // Live setters announce the user change first so the caller can release an override of the property.
+        const setCollapsed = isCollapsible ? announceAndSetCollapsed : noop;
 
-        if (isCollapsible && persistedCollapsed) {
+        if (isCollapsible && preferredCollapsed) {
             return {
                 width: collapsedWidth,
                 expandedWidth,
@@ -104,28 +120,36 @@ export function useUiResizableSidebarState({
             };
         }
 
+        const canResize = max > minWidth;
+
         return {
             width: expandedWidth,
             expandedWidth,
             min: minWidth,
             max,
-            canResize: max > minWidth,
-            setWidth: (next: number) => setPersistedWidth(clamp(next, minWidth, max)),
+            canResize,
+            setWidth: canResize
+                ? (next: number) => {
+                      onUserChange?.("width");
+                      setPersistedWidth(clamp(next, minWidth, max));
+                  }
+                : noop,
             canCollapse: isCollapsible,
             hasRail,
             isCollapsed: false,
             setCollapsed,
         };
     }, [
+        announceAndSetCollapsed,
         hasRail,
         isCollapsible,
         isResizable,
         maxWidth,
         minContentWidth,
         minWidth,
-        persistedCollapsed,
-        persistedWidth,
-        setPersistedCollapsed,
+        onUserChange,
+        preferredCollapsed,
+        preferredWidth,
         setPersistedWidth,
         viewportWidth,
     ]);

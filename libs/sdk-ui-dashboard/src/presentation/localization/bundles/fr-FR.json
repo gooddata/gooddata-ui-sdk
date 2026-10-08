@@ -352,8 +352,6 @@
     "messages.settingsDialogError.general": "Échec du chargement des paramètres du tableau de bord. Essayez à nouveau plus tard.",
     "visualization.dataTooLarge.headline": "Trop de points de données à afficher",
     "visualization.dataTooLarge.text": "Essayez d'appliquer un ou plusieurs filtres à votre tableau de bord.",
-    "visualization.execute_protected_report.headline": "Vous n'êtes pas autorisé à consulter ce rapport",
-    "visualization.execute_protected_report.text": "Contactez votre administrateur.",
     "visualization.empty.headline": "Aucune donnée pour votre sélection de filtre",
     "visualization.error.headline": "Désolé, nous ne pouvons pas afficher cette visualisation.",
     "visualization.error.text": "Contactez votre administrateur.",

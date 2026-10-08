@@ -352,8 +352,6 @@
     "messages.settingsDialogError.general": "Non è stato possibile caricare le impostazioni del dashboard. Riprovare più tardi.",
     "visualization.dataTooLarge.headline": "Numero eccessivo di punti dati da visualizzare",
     "visualization.dataTooLarge.text": "Prova ad applicare uno o più filtri al cruscotto.",
-    "visualization.execute_protected_report.headline": "Nessuna autorizzazione a vedere questo rapporto",
-    "visualization.execute_protected_report.text": "Contattare l'amministratore.",
     "visualization.empty.headline": "Nessun dato per la selezione del filtro",
     "visualization.error.headline": "Siamo spiacenti, non possiamo mostrare questa visualizzazione.",
     "visualization.error.text": "Contattare l'amministratore.",

@@ -3,7 +3,7 @@
 import type { MessageDescriptor } from "react-intl";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import type { ISettings } from "@gooddata/sdk-model";
+import type { ISettings, IdentifierRef } from "@gooddata/sdk-model";
 import type { YamlCompletionSource } from "@gooddata/sdk-ui-kit";
 
 import type { ICatalogItem, ICatalogItemRef } from "../catalogItem/types.js";
@@ -114,17 +114,22 @@ export function loadErrorOf(descriptor: IAsCodeDescriptor): MessageDescriptor | 
 }
 
 /** @internal */
-export type AsCodeReferenceCount<TItem extends ICatalogItem> = {
-    /** Titles of the objects referencing the item; the count in the warning is their number. */
-    load(backend: IAnalyticalBackend, workspace: string, item: TItem): Promise<string[]>;
-    usageWarning: MessageDescriptor;
-    /** Discloses the referencing titles behind a Show more/Show less toggle. */
-    listReferences?: boolean;
+export interface IAsCodeReference extends IdentifierRef {
+    title: string;
+}
+
+/** @internal */
+export type AsCodeUsageCheck<TItem extends ICatalogItem> = (
+    | { mode: "warn" }
     /**
-     * Refuses the deletion while any reference exists — for a type the backend rejects rather than
-     * cascades — and replaces the delete body with this text.
+     * Refuses the deletion while any reference exists or the lookup fails, replaces the delete body with
+     * `blockedMessage`, and lists the referencing titles behind a Show more/Show less toggle.
      */
-    blockedBody?: MessageDescriptor;
+    | { mode: "block"; blockedMessage: MessageDescriptor }
+) & {
+    load(backend: IAnalyticalBackend, workspace: string, item: TItem): Promise<IAsCodeReference[]>;
+    /** Gets `{count}`, the number of objects that `load` returns. */
+    warningMessage: MessageDescriptor;
 };
 
 /**
@@ -167,7 +172,7 @@ export interface IAsCodeDescriptor<TDef = unknown, TItem extends ICatalogItem = 
 
     emptyDefinition(defaultTitle: string): TDef;
     seed: AsCodeSeed<TDef, TItem>;
-    referenceCounted?: AsCodeReferenceCount<TItem>;
+    usageCheck?: AsCodeUsageCheck<TItem>;
     identity?: AsCodeIdentity<TDef>;
     toCopy(source: TDef): TDef;
     /** Presence signals the type has a standalone editor; its label opens it. */

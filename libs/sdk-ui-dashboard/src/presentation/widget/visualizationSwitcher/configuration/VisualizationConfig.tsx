@@ -3,6 +3,7 @@
 import { type IInsight, type IInsightWidget } from "@gooddata/sdk-model";
 
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { useIsInsightWidgetRestricted } from "../../../../model/react/useIsWidgetRestricted.js";
 import { selectInsightsMap } from "../../../../model/store/insights/insightsSelectors.js";
 import { selectRenderMode } from "../../../../model/store/renderMode/renderModeSelectors.js";
 import { DashboardInsightMenuBody } from "../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/index.js";
@@ -16,9 +17,10 @@ interface IVisualizationConfigProps {
 
 export function VisualizationConfig({ widget, onVisualizationDeleted }: IVisualizationConfigProps) {
     const insights = useDashboardSelector(selectInsightsMap);
+    const isInsightWidgetRestricted = useIsInsightWidgetRestricted();
     const insight = insights.get(widget.insight);
 
-    if (!insight) {
+    if (!insight || isInsightWidgetRestricted(widget)) {
         return null;
     }
 

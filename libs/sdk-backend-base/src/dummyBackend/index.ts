@@ -584,6 +584,9 @@ function dummyWorkspace(
                 summarizeDashboard() {
                     throw new NotSupported("not supported");
                 },
+                summarizeVisualizations() {
+                    throw new NotSupported("not supported");
+                },
             };
         },
         references(): IReferencesService {

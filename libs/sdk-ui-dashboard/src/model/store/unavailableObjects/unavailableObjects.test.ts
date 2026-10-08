@@ -14,6 +14,7 @@ import {
 } from "./index.js";
 import {
     selectRestrictedInsightsMap,
+    selectRestrictedLimitingItemsMap,
     selectRestrictedRichTextReferences,
     selectUnavailableObjects,
     selectUnavailableObjectsMapByType,
@@ -134,6 +135,37 @@ describe("unavailableObjects store", () => {
             const state = stateWith(forbiddenDashboardByUri);
 
             expect(selectRestrictedInsightsMap(state).get(uriRef("/gdc/md/dash-1"))).toBeUndefined();
+        });
+    });
+
+    describe("selectRestrictedLimitingItemsMap", () => {
+        const forbidden = (id: string, type: "measure" | "fact"): IUnavailableDashboardReference => ({
+            ref: idRef(id, type),
+            type,
+            reason: "forbidden",
+        });
+
+        it("resolves forbidden metrics and facts, telling apart ones that share an identifier", () => {
+            const map = selectRestrictedLimitingItemsMap(
+                stateWith(forbidden("revenue", "measure"), forbidden("amount", "fact")),
+            );
+
+            expect(map.has(idRef("revenue", "measure"))).toBe(true);
+            expect(map.has(idRef("amount", "fact"))).toBe(true);
+            expect(map.has(idRef("revenue", "fact"))).toBe(false);
+            expect(map.has(idRef("amount", "measure"))).toBe(false);
+        });
+
+        it("omits metrics and facts that are merely not found, and other types", () => {
+            const map = selectRestrictedLimitingItemsMap(
+                stateWith(
+                    { ref: idRef("gone", "measure"), type: "measure", reason: "notFound" },
+                    forbiddenInsight,
+                ),
+            );
+
+            expect(map.has(idRef("gone", "measure"))).toBe(false);
+            expect(map.has(idRef("x", "insight"))).toBe(false);
         });
     });
 

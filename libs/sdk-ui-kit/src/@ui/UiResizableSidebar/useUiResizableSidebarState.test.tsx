@@ -1,7 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import { act, renderHook } from "@testing-library/react";
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type IUiResizableSidebarStateOptions } from "./types.js";
 import { useUiResizableSidebarState } from "./useUiResizableSidebarState.js";
@@ -157,5 +157,101 @@ describe("useUiResizableSidebarState", () => {
 
         expect(result.current).toMatchObject({ canCollapse: false, isCollapsed: false, width: 230 });
         expect(localStorage.getItem(options.collapsedStorageKey)).toBeNull();
+    });
+
+    it("prefers the collapsed override over the persisted flag, in both directions", () => {
+        localStorage.setItem(options.collapsedStorageKey, "true");
+
+        const { result, rerender } = renderHook(
+            ({ collapsedOverride }: { collapsedOverride?: boolean }) =>
+                useUiResizableSidebarState({ ...options, collapsedOverride }),
+            { initialProps: { collapsedOverride: false as boolean | undefined } },
+        );
+        expect(result.current.isCollapsed).toBe(false);
+
+        rerender({ collapsedOverride: true });
+        expect(result.current.isCollapsed).toBe(true);
+
+        // without the override the persisted flag decides again
+        rerender({ collapsedOverride: undefined });
+        expect(result.current.isCollapsed).toBe(true);
+    });
+
+    it("prefers the width override over the persisted width and clamps it to the bounds", () => {
+        localStorage.setItem(options.widthStorageKey, "320");
+
+        const { result, rerender } = renderHook(
+            ({ widthOverride }: { widthOverride?: number }) =>
+                useUiResizableSidebarState({ ...options, widthOverride }),
+            { initialProps: { widthOverride: 400 as number | undefined } },
+        );
+        expect(result.current.width).toBe(400);
+
+        rerender({ widthOverride: 900 });
+        expect(result.current.width).toBe(500);
+
+        rerender({ widthOverride: undefined });
+        expect(result.current.width).toBe(320);
+    });
+
+    it("keeps the setCollapsed identity across collapse and expand", () => {
+        // consumers hold setCollapsed in effect deps (AI-mode auto-collapse); a fresh identity re-runs them
+        const onUserChange = vi.fn();
+        const { result } = renderHook(() => useUiResizableSidebarState({ ...options, onUserChange }));
+
+        const setCollapsed = result.current.setCollapsed;
+        act(() => setCollapsed(true));
+        expect(result.current.setCollapsed).toBe(setCollapsed);
+
+        act(() => result.current.setCollapsed(false));
+        expect(result.current.setCollapsed).toBe(setCollapsed);
+    });
+
+    it("announces only user changes that a live setter can apply", () => {
+        const onUserChange = vi.fn();
+        const { result } = renderHook(() => useUiResizableSidebarState({ ...options, onUserChange }));
+
+        act(() => result.current.setWidth(300));
+        act(() => result.current.setCollapsed(true));
+        expect(onUserChange.mock.calls).toEqual([["width"], ["collapsed"]]);
+
+        // while collapsed the width setter is a noop and must stay silent
+        onUserChange.mockClear();
+        act(() => result.current.setWidth(400));
+        expect(onUserChange).not.toHaveBeenCalled();
+    });
+
+    it("does not announce setters of a sidebar that can neither collapse nor resize", () => {
+        setViewportWidth(1000);
+        const onUserChange = vi.fn();
+        const { result } = renderHook(() =>
+            useUiResizableSidebarState({
+                ...options,
+                minContentWidth: 960,
+                isCollapsible: false,
+                onUserChange,
+            }),
+        );
+
+        act(() => result.current.setWidth(300));
+        act(() => result.current.setCollapsed(true));
+
+        expect(onUserChange).not.toHaveBeenCalled();
+        expect(localStorage.getItem(options.widthStorageKey)).toBeNull();
+        expect(localStorage.getItem(options.collapsedStorageKey)).toBeNull();
+    });
+
+    it("keeps persisting user changes while an override is in place without applying them", () => {
+        const { result } = renderHook(() =>
+            useUiResizableSidebarState({ ...options, widthOverride: 400, collapsedOverride: false }),
+        );
+
+        act(() => result.current.setWidth(300));
+        act(() => result.current.setCollapsed(true));
+
+        // the overrides still win; it is the caller's job to clear them on a user change
+        expect(result.current).toMatchObject({ width: 400, isCollapsed: false });
+        expect(localStorage.getItem(options.widthStorageKey)).toBe("300");
+        expect(localStorage.getItem(options.collapsedStorageKey)).toBe("true");
     });
 });

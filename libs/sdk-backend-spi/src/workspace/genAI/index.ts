@@ -94,6 +94,37 @@ export interface IGenAIService {
         request: IDashboardSummaryRequest,
         options?: { signal?: AbortSignal },
     ): Promise<IDashboardSummary>;
+
+    /**
+     * Generate an AI summary of an explicit set of visualizations that need not belong to any one
+     * dashboard. The result has the shape of a dashboard summary, without a tab.
+     * @beta
+     */
+    summarizeVisualizations(
+        request: IVisualizationsSummaryRequest,
+        options?: { signal?: AbortSignal },
+    ): Promise<IDashboardSummary>;
+}
+
+/**
+ * Request payload for AI summarization of an explicit set of visualizations.
+ * @beta
+ */
+export interface IVisualizationsSummaryRequest {
+    /**
+     * Identifiers of the visualizations to summarize. At least one.
+     */
+    visualizations: string[];
+    /**
+     * Filters merged over each visualization's own. With no dashboard there is no saved filter
+     * context to fall back on, so an empty list means no filters are added.
+     */
+    filters: IFilter[];
+    /**
+     * Hint describing the desired output format of the generated summary.
+     * Use it as an additional prompt.
+     */
+    formatHint?: string;
 }
 
 /**
@@ -1484,6 +1515,7 @@ export type IChatConversationDashboardContent = {
     saved?: string | null;
     //patch related
     base?: object | null;
+    references?: object | null;
     patchError?: Error | null;
 };
 

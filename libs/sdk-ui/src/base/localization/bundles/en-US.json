@@ -1535,6 +1535,26 @@
         "text": "Week {week}/{year}",
         "crowdinContext": "Label for a single week on the date filter button, e.g. 'Week 15/2026'. The {week} placeholder is the week number within {year}, not zero-padded (e.g. 'Week 7/2026'); a range of weeks renders this twice, as 'Week 15/2026 – Week 17/2026'."
     },
+    "filters.staticPeriod.weekList.searchPlaceholder": {
+        "text": "Jump to date, e.g. {example}",
+        "crowdinContext": "Placeholder of the search field above the list of weeks in the static period filter. Typing a date scrolls the list to its week. The {example} placeholder is a sample date in the user's date format, e.g. '12/29/2026'."
+    },
+    "filters.staticPeriod.weekList.searchLabel": {
+        "text": "Jump to date",
+        "crowdinContext": "Hidden but read by a screen reader as the label of the search field above the list of weeks in the static period filter. Typing a date scrolls the list to its week."
+    },
+    "filters.staticPeriod.weekList.listLabel": {
+        "text": "Weeks",
+        "crowdinContext": "Hidden but read by a screen reader as the label of the list of weeks, grouped by month, from which the user picks the first and the last week of a static period."
+    },
+    "filters.staticPeriod.weekList.errors.invalidDate": {
+        "text": "Error: Invalid date — use {format} format.",
+        "crowdinContext": "Shown below the list of weeks when the date typed into its search field is not a valid date. Placeholder '{format}' shows the expected date format, e.g. 'MM/dd/YYYY'."
+    },
+    "filters.staticPeriod.weekList.errors.dateOutOfRange": {
+        "text": "Error: Invalid date — use a date from {firstYear} to {lastYear}.",
+        "crowdinContext": "Shown below the list of weeks when the date typed into its search field lies outside the years the list offers. Placeholders '{firstYear}' and '{lastYear}' are the first and the last of those years, '1900' and '2100'."
+    },
     "filters.staticPeriod.timeFormatHint": {
         "text": "Use time format HH:MM; max value is 23:59.",
         "crowdinContext": "Displayed as a hint below input in which user enters a time."

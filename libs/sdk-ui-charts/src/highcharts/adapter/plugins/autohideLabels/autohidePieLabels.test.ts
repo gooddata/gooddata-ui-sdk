@@ -6,7 +6,7 @@ import { describe, expect, it } from "vitest";
 
 import { autohidePieLabels } from "./autohidePieLabels.js";
 
-function setupMockData(indexOfFirst: number, indexOfSecond: number): any {
+function setupMockData(indexOfFirst: number, indexOfSecond: number, withConnectors = false): any {
     const positions = [
         {
             x: 718.5218164655049,
@@ -46,6 +46,19 @@ function setupMockData(indexOfFirst: number, indexOfSecond: number): any {
             hide() {
                 this.visible = false;
             },
+            ...(withConnectors
+                ? {
+                      connector: {
+                          visible: true,
+                          show() {
+                              this.visible = true;
+                          },
+                          hide() {
+                              this.visible = false;
+                          },
+                      },
+                  }
+                : {}),
         },
     });
     const points = [];
@@ -121,5 +134,44 @@ describe("autohidePieLabels", () => {
             false,
             true,
         ]);
+    });
+
+    it("should hide the connector of a hidden label and keep the connectors of visible labels", () => {
+        const mockedData = setupMockData(2, 3, true);
+
+        autohidePieLabels(mockedData);
+
+        expect(mockedData.series[0].points.map((point: any) => point.dataLabel.connector.visible)).toEqual([
+            true,
+            true,
+            true,
+            false,
+            true,
+            true,
+        ]);
+    });
+
+    it("should show the connector again when its label is shown again", () => {
+        const mockedData = setupMockData(2, 3, true);
+        autohidePieLabels(mockedData);
+        mockedData.series[0].points[3].dataLabel.width = 20;
+
+        autohidePieLabels(mockedData);
+
+        expect(mockedData.series[0].points.map((point: any) => point.dataLabel.connector.visible)).toEqual([
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+        ]);
+    });
+
+    it("should handle labels without connectors", () => {
+        const mockedData = setupMockData(2, 3);
+
+        expect(() => autohidePieLabels(mockedData)).not.toThrow();
+        expect(mockedData.series[0].points[3].dataLabel.visible).toBe(false);
     });
 });

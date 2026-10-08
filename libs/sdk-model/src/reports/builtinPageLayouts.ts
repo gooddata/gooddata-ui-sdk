@@ -37,6 +37,16 @@ const paragraphSlot = (spec: TextSlotSpec & { type: ReportParagraphType }): IRep
     ...textSource(spec),
 });
 
+// The prompt is what makes the text AI-written, so a takeaway nobody has instructed yet carries an
+// empty one rather than none.
+const takeawaySlot = (localIdentifier: string): IReportParagraphSlot => ({
+    type: "paragraph",
+    localIdentifier,
+    style: { type: "normalText" },
+    source: { type: "ai", prompt: "" },
+    placeholder: { hint: "Generate or write takeaway ..." },
+});
+
 const vizSlot = (localIdentifier: string): IReportVisualizationSlot => ({
     type: "visualization",
     localIdentifier,
@@ -92,7 +102,11 @@ const footerRow = () => row([slot("footerLogo", 1), slot("footerPageNumber", 8)]
 
 interface IWidescreenPageSpec {
     vizRows: string[][];
-    summary?: boolean;
+    /**
+     * Adds a column on the right: text written by hand, or a takeaway generated from the
+     * visualizations beside it.
+     */
+    summary?: "text" | "takeaway";
     gridWeights?: number[];
 }
 
@@ -109,7 +123,7 @@ const vizGrid = ({ vizRows, gridWeights }: IWidescreenPageSpec, weight: number):
 
 const widescreenContentPage = (spec: IWidescreenPageSpec): IReportPageBody => {
     const { vizRows, summary } = spec;
-    const body = summary ? row([vizGrid(spec, 2), slot("summary", 1)], 9) : vizGrid(spec, 9);
+    const body = summary === undefined ? vizGrid(spec, 9) : row([vizGrid(spec, 2), slot("summary", 1)], 9);
 
     return {
         kind: "content",
@@ -118,9 +132,10 @@ const widescreenContentPage = (spec: IWidescreenPageSpec): IReportPageBody => {
         slots: [
             headingSlot({ localIdentifier: "pageTitle", type: "h1", hint: "Page title" }),
             ...vizRows.flat().map(vizSlot),
-            ...(summary
+            ...(summary === "text"
                 ? [paragraphSlot({ localIdentifier: "summary", type: "normalText", hint: "Add a summary" })]
                 : []),
+            ...(summary === "takeaway" ? [takeawaySlot("summary")] : []),
             ...footerSlots(),
         ],
     };
@@ -220,7 +235,7 @@ const widescreenContentPages: [id: string, title: string, description: string, s
             "viz1SummaryRight",
             "1 visualization + summary",
             "Single visualization with a summary column on the right",
-            { vizRows: vizIds(1, 1), summary: true },
+            { vizRows: vizIds(1, 1), summary: "text" },
         ],
         ["viz2", "2 visualizations", "Two visualizations side by side", { vizRows: vizIds(2, 2) }],
         [
@@ -239,28 +254,34 @@ const widescreenContentPages: [id: string, title: string, description: string, s
             "viz2SummaryRight",
             "2 visualizations + summary",
             "Two visualizations with a summary column on the right",
-            { vizRows: vizIds(2, 2), summary: true },
+            { vizRows: vizIds(2, 2), summary: "text" },
+        ],
+        [
+            "viz2TakeawayRight",
+            "2 visualizations + takeaway",
+            "Two visualizations with an AI takeaway column on the right",
+            { vizRows: vizIds(2, 2), summary: "takeaway" },
         ],
         ["viz3", "3 visualizations", "Three visualizations side by side", { vizRows: vizIds(3, 3) }],
         [
             "viz3SummaryRight",
             "3 visualizations + summary",
             "Three visualizations with a summary column on the right",
-            { vizRows: vizIds(3, 3), summary: true },
+            { vizRows: vizIds(3, 3), summary: "text" },
         ],
         ["viz4", "4 visualizations", "Four visualizations in a 2x2 grid", { vizRows: vizIds(4, 2) }],
         [
             "viz4SummaryRight",
             "4 visualizations + summary",
             "2x2 visualization grid with a summary column on the right",
-            { vizRows: vizIds(4, 2), summary: true },
+            { vizRows: vizIds(4, 2), summary: "text" },
         ],
         ["viz6", "6 visualizations", "Six visualizations in a 2x3 grid", { vizRows: vizIds(6, 2) }],
         [
             "viz6SummaryRight",
             "6 visualizations + summary",
             "3x2 visualization grid with a summary column on the right",
-            { vizRows: vizIds(6, 2), summary: true },
+            { vizRows: vizIds(6, 2), summary: "text" },
         ],
     ];
 

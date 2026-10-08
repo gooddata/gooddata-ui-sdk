@@ -60,6 +60,36 @@ export const selectRestrictedInsightsMap: DashboardSelector<ObjRefMap<IUnavailab
     );
 
 /**
+ * Maps the metrics and facts the current user is not allowed to read: the items limiting an attribute
+ * filter's values ("Filter values by") that drop out of its values request and of its configuration
+ * panel. Merely deleted ones are not included. Lookups match the type too, as a metric and a fact may
+ * share an identifier.
+ *
+ * @internal
+ */
+export function newRestrictedLimitingItemsMap(
+    objects: ReadonlyArray<IUnavailableDashboardReference>,
+): ObjRefMap<IUnavailableDashboardReference> {
+    return newMapForObjectWithRef(
+        objects.filter(
+            (object) =>
+                object.reason === "forbidden" && (object.type === "measure" || object.type === "fact"),
+        ),
+        undefined,
+        true,
+    );
+}
+
+/**
+ * Selects the metrics and facts limiting attribute filter values that the current user is not allowed to
+ * read, see {@link newRestrictedLimitingItemsMap}.
+ *
+ * @internal
+ */
+export const selectRestrictedLimitingItemsMap: DashboardSelector<ObjRefMap<IUnavailableDashboardReference>> =
+    createSelector(selectUnavailableObjects, newRestrictedLimitingItemsMap);
+
+/**
  * Object types a rich text widget can reference: `{metric/id}`, `{label/id}` and
  * `{computed_attribute/id}`.
  */

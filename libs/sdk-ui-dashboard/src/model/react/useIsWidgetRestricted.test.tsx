@@ -9,8 +9,11 @@ import {
     type IRichTextWidget,
     type IVisualizationSwitcherWidget,
     idRef,
+    serializeObjRef,
 } from "@gooddata/sdk-model";
 
+import { restrictedDataSliceReducer } from "../store/restrictedData/index.js";
+import { selectWidgetsWithRestrictedData } from "../store/restrictedData/restrictedDataSelectors.js";
 import { type DashboardState } from "../store/types.js";
 import {
     unavailableObjectsActions,
@@ -89,6 +92,7 @@ function renderWith(
             undefined,
             unavailableObjectsActions.setUnavailableObjects(unavailableObjects),
         ),
+        restrictedData: restrictedDataSliceReducer(undefined, { type: "init" }),
     } as unknown as DashboardState;
 
     mockUseDashboardSelector.mockImplementation((selector: (state: DashboardState) => unknown) =>
@@ -98,9 +102,45 @@ function renderWith(
     return renderHook(() => useIsWidgetRestricted(widget)).result.current;
 }
 
+function renderWithRefusedWidget(widget: ExtendedDashboardWidget, refusedWidget: IInsightWidget) {
+    const state = {
+        unavailableObjects: unavailableObjectsSliceReducer(
+            undefined,
+            unavailableObjectsActions.setUnavailableObjects([]),
+        ),
+        restrictedData: restrictedDataSliceReducer(undefined, { type: "init" }),
+    } as unknown as DashboardState;
+
+    // which executions count as refused is derived elsewhere (restrictedDataSelectors); here only
+    // how the hook combines it with the metadata restrictions matters
+    mockUseDashboardSelector.mockImplementation((selector: (state: DashboardState) => unknown) =>
+        selector === selectWidgetsWithRestrictedData
+            ? new Set([serializeObjRef(refusedWidget.ref)])
+            : selector(state),
+    );
+
+    return renderHook(() => useIsWidgetRestricted(widget)).result.current;
+}
+
 describe("useIsWidgetRestricted", () => {
     beforeEach(() => {
         mockUseDashboardSelector.mockReset();
+    });
+
+    it("reports an insight widget whose execution was refused because its data is restricted", () => {
+        expect(renderWithRefusedWidget(insightWidget, insightWidget)).toBe(true);
+    });
+
+    it("does not report an insight widget when another widget's execution was refused", () => {
+        expect(renderWithRefusedWidget(insightWidget, { ...insightWidget, ref: idRef("widget-other") })).toBe(
+            false,
+        );
+    });
+
+    it("reports a switcher whose entry's execution was refused because its data is restricted", () => {
+        const switcher = switcherWith(insightRef);
+
+        expect(renderWithRefusedWidget(switcher, switcher.visualizations[0])).toBe(true);
     });
 
     it("reports an insight widget whose insight the user may not see", () => {
@@ -192,6 +232,7 @@ describe("useIsAnyWidgetRestricted", () => {
                 undefined,
                 unavailableObjectsActions.setUnavailableObjects(unavailableObjects),
             ),
+            restrictedData: restrictedDataSliceReducer(undefined, { type: "init" }),
         } as unknown as DashboardState;
 
         mockUseDashboardSelector.mockImplementation((selector: (state: DashboardState) => unknown) =>

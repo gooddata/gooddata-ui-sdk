@@ -1,16 +1,19 @@
 // (C) 2026 GoodData Corporation
 
-import { type IUnavailableDashboardReference } from "@gooddata/sdk-backend-spi";
+import { useCallback } from "react";
+
 import {
+    type IInsightWidget,
     type ObjRef,
     areObjRefsEqual,
     isInsightWidget,
     isRichTextWidget,
     isVisualizationSwitcherWidget,
+    serializeObjRef,
 } from "@gooddata/sdk-model";
 import { collectReferences } from "@gooddata/sdk-ui-kit";
 
-import { type ObjRefMap } from "../../_staging/metadata/objRefMap.js";
+import { selectWidgetsWithRestrictedData } from "../store/restrictedData/restrictedDataSelectors.js";
 import {
     selectRestrictedInsightsMap,
     selectRestrictedRichTextReferences,
@@ -27,14 +30,14 @@ import { useDashboardSelector } from "./DashboardStoreProvider.js";
  */
 function isWidgetRestricted(
     widget: ExtendedDashboardWidget,
-    restrictedInsights: ObjRefMap<IUnavailableDashboardReference>,
+    isInsightWidgetRestricted: (widget: IInsightWidget) => boolean,
     restrictedReferences: ObjRef[],
 ): boolean {
     if (isInsightWidget(widget)) {
-        return restrictedInsights.has(widget.insight);
+        return isInsightWidgetRestricted(widget);
     }
     if (isVisualizationSwitcherWidget(widget)) {
-        return widget.visualizations.some((visualization) => restrictedInsights.has(visualization.insight));
+        return widget.visualizations.some(isInsightWidgetRestricted);
     }
     if (isRichTextWidget(widget)) {
         return Object.values(collectReferences(widget.content)).some((reference) =>
@@ -47,11 +50,32 @@ function isWidgetRestricted(
         return widget.sections.some((section) =>
             section.items.some(
                 (item) =>
-                    item.widget && isWidgetRestricted(item.widget, restrictedInsights, restrictedReferences),
+                    item.widget &&
+                    isWidgetRestricted(item.widget, isInsightWidgetRestricted, restrictedReferences),
             ),
         );
     }
     return false;
+}
+
+/**
+ * Returns the check whether an insight widget renders as restricted: its insight is one the current
+ * user is not allowed to read, or its execution was refused because the user may not read some of
+ * the data. The design makes no difference between the two; the second is known only once the
+ * widget has executed.
+ *
+ * @internal
+ */
+export function useIsInsightWidgetRestricted(): (widget: IInsightWidget) => boolean {
+    const restrictedInsights = useDashboardSelector(selectRestrictedInsightsMap);
+    const widgetsWithRestrictedData = useDashboardSelector(selectWidgetsWithRestrictedData);
+
+    return useCallback(
+        (widget: IInsightWidget) =>
+            restrictedInsights.has(widget.insight) ||
+            widgetsWithRestrictedData.has(serializeObjRef(widget.ref)),
+        [restrictedInsights, widgetsWithRestrictedData],
+    );
 }
 
 /**
@@ -61,10 +85,10 @@ function isWidgetRestricted(
  * @alpha
  */
 export function useIsWidgetRestricted(widget: ExtendedDashboardWidget): boolean {
-    const restrictedInsights = useDashboardSelector(selectRestrictedInsightsMap);
+    const isInsightWidgetRestricted = useIsInsightWidgetRestricted();
     const restrictedReferences = useDashboardSelector(selectRestrictedRichTextReferences);
 
-    return isWidgetRestricted(widget, restrictedInsights, restrictedReferences);
+    return isWidgetRestricted(widget, isInsightWidgetRestricted, restrictedReferences);
 }
 
 /**
@@ -74,8 +98,10 @@ export function useIsWidgetRestricted(widget: ExtendedDashboardWidget): boolean 
  * @internal
  */
 export function useIsAnyWidgetRestricted(widgets: ExtendedDashboardWidget[]): boolean {
-    const restrictedInsights = useDashboardSelector(selectRestrictedInsightsMap);
+    const isInsightWidgetRestricted = useIsInsightWidgetRestricted();
     const restrictedReferences = useDashboardSelector(selectRestrictedRichTextReferences);
 
-    return widgets.some((widget) => isWidgetRestricted(widget, restrictedInsights, restrictedReferences));
+    return widgets.some((widget) =>
+        isWidgetRestricted(widget, isInsightWidgetRestricted, restrictedReferences),
+    );
 }

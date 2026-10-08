@@ -539,6 +539,7 @@ export const selectAutomationFiltersByTab: DashboardSelector<IAutomationFiltersT
                 defaultSelectedFilters,
                 lockedFilters,
                 hiddenFilters,
+                allFilters: filtersWithCommonDate,
             };
         });
     },

@@ -5,6 +5,7 @@ import { type MockInstance, afterEach, beforeEach, describe, expect, it, vi } fr
 import { idRef } from "@gooddata/sdk-model";
 
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
+import { TigerUserSettingsService } from "../user/settings.js";
 import { TigerWorkspaceSettings } from "../workspace/settings/index.js";
 
 describe("TigerWorkspaceSettings active styling scope", () => {
@@ -95,5 +96,81 @@ describe("TigerWorkspaceSettings active styling scope", () => {
             /reference type "insight"/,
         );
         expect(setSettingSpy).not.toHaveBeenCalled();
+    });
+});
+
+describe("TigerUserSettingsService active styling scope", () => {
+    const authCall = vi.fn() as unknown as TigerAuthenticatedCallGuard;
+    let setSettingSpy: MockInstance;
+    let deleteSettingByTypeSpy: MockInstance;
+
+    beforeEach(() => {
+        setSettingSpy = vi
+            .spyOn(TigerUserSettingsService.prototype as any, "setSetting")
+            .mockResolvedValue(undefined);
+        deleteSettingByTypeSpy = vi
+            .spyOn(TigerUserSettingsService.prototype as any, "deleteSettingByType")
+            .mockResolvedValue(undefined);
+    });
+
+    afterEach(() => {
+        setSettingSpy.mockRestore();
+        deleteSettingByTypeSpy.mockRestore();
+    });
+
+    it("writes the theme discriminator for an organization-typed theme reference", async () => {
+        const settings = new TigerUserSettingsService(authCall);
+        await settings.setTheme(idRef("t-1", "theme"));
+
+        expect(setSettingSpy).toHaveBeenCalledWith("ACTIVE_THEME", { id: "t-1", type: "theme" });
+    });
+
+    it("rejects a workspace-typed theme reference, because a user setting has no workspace", async () => {
+        const settings = new TigerUserSettingsService(authCall);
+
+        await expect(settings.setTheme(idRef("t-1", "workspaceTheme"))).rejects.toThrow(/workspaceTheme/);
+        expect(setSettingSpy).not.toHaveBeenCalled();
+    });
+
+    it("treats a bare theme id as organization-scoped", async () => {
+        const settings = new TigerUserSettingsService(authCall);
+        await settings.setTheme("t-1");
+
+        expect(setSettingSpy).toHaveBeenCalledWith("ACTIVE_THEME", { id: "t-1", type: "theme" });
+    });
+
+    it("writes the colorPalette discriminator for an organization-typed palette reference", async () => {
+        const settings = new TigerUserSettingsService(authCall);
+        await settings.setColorPalette(idRef("cp-1", "colorPalette"));
+
+        expect(setSettingSpy).toHaveBeenCalledWith("ACTIVE_COLOR_PALETTE", {
+            id: "cp-1",
+            type: "colorPalette",
+        });
+    });
+
+    it("rejects a workspace-typed palette reference, because a user setting has no workspace", async () => {
+        const settings = new TigerUserSettingsService(authCall);
+
+        await expect(settings.setColorPalette(idRef("cp-1", "workspaceColorPalette"))).rejects.toThrow(
+            /workspaceColorPalette/,
+        );
+        expect(setSettingSpy).not.toHaveBeenCalled();
+    });
+
+    it("rejects a theme reference typed as an unrelated object", async () => {
+        const settings = new TigerUserSettingsService(authCall);
+
+        await expect(settings.setTheme(idRef("t-1", "insight"))).rejects.toThrow(/reference type "insight"/);
+        expect(setSettingSpy).not.toHaveBeenCalled();
+    });
+
+    it("deletes the user theme and color palette settings by type", async () => {
+        const settings = new TigerUserSettingsService(authCall);
+        await settings.deleteTheme();
+        await settings.deleteColorPalette();
+
+        expect(deleteSettingByTypeSpy).toHaveBeenCalledWith("ACTIVE_THEME");
+        expect(deleteSettingByTypeSpy).toHaveBeenCalledWith("ACTIVE_COLOR_PALETTE");
     });
 });

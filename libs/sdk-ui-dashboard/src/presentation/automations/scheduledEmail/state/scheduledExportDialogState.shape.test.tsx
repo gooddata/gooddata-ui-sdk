@@ -187,6 +187,7 @@ function fakeFiltersTab(tabId: string): IAutomationFiltersTab {
         defaultSelectedFilters: [],
         lockedFilters: [],
         hiddenFilters: [],
+        allFilters: [],
     };
 }
 

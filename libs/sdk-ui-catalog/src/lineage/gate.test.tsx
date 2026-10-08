@@ -28,14 +28,10 @@ describe("useIsLineageEnabled", () => {
         "fact",
         "dataSet",
         "computedAttribute",
+        "parameter",
     ] as const)("allows %s when the feature flag is on", (objectType) => {
         const { result } = renderHook(() => useIsLineageEnabled(objectType), { wrapper: Wrapper });
         expect(result.current).toBe(true);
-    });
-
-    it("withholds a type outside the supported set even when the feature flag is on", () => {
-        const { result } = renderHook(() => useIsLineageEnabled("parameter"), { wrapper: Wrapper });
-        expect(result.current).toBe(false);
     });
 
     it("withholds every type when the feature flag is off", () => {

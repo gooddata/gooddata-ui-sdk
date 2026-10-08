@@ -58,7 +58,7 @@ import {
 
 import { convertToLocalContent } from "./converters/toLocalContent.js";
 import { notifyDefinitionReceived } from "./onDefinitionReceivedTrigger.js";
-import { extractError } from "./utils.js";
+import { extractErrorContent } from "./utils.js";
 
 /**
  * Load thread history and put it to the store.
@@ -107,6 +107,15 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
         // Create assistant message
         initialAssistantMessage = makeAssistantItem();
 
+        // Block input immediately so the user cannot send another message while
+        // the deferred switchAgent call (or the streaming response) is in flight.
+        yield put(
+            evaluateMessageAction({
+                message: initialAssistantMessage,
+                conversationId: conversationState.localId,
+            }),
+        );
+
         // If we are in the transient new-conversation state, create the conversation first
         if (conversationState.id) {
             conversation = conversationState;
@@ -142,15 +151,6 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
         if (!conversation) {
             throw new Error("Conversation is not available.");
         }
-
-        // Block input immediately so the user cannot send another message while
-        // the deferred switchAgent call (or the streaming response) is in flight.
-        yield put(
-            evaluateMessageAction({
-                message: initialAssistantMessage,
-                conversationId: conversation.localId,
-            }),
-        );
 
         // Flush any pending agent switch before sending the message so that the
         // "Switched to X" item and the switchAgent API call happen together with
@@ -198,7 +198,7 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
                 yield put(
                     evaluateMessageErrorAction({
                         assistantMessageId: initialAssistantMessage.localId,
-                        error: extractError(e),
+                        error: extractErrorContent(e),
                         conversationId: conversation.localId,
                     }),
                 );
@@ -234,8 +234,8 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
             yield put(
                 evaluateMessageErrorAction({
                     assistantMessageId: messageToError.localId,
-                    error: extractError(e),
-                    conversationId: conversation?.localId,
+                    error: extractErrorContent(e),
+                    conversationId: conversation?.localId ?? conversationState?.localId,
                 }),
             );
         }
@@ -257,7 +257,7 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
                 yield put(
                     evaluateMessageCompleteAction({
                         assistantMessageId: messageToComplete.localId,
-                        conversationId: conversation?.localId,
+                        conversationId: conversation?.localId ?? conversationState?.localId,
                         cancelled: wasCanceled,
                     }),
                 );

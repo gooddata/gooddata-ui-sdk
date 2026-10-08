@@ -127,11 +127,11 @@ export const computedAttributeDescriptor = defineAsCodeDescriptor<
     // Refuses the deletion while a visualization, metric, dashboard, computed
     // attribute, or data filter still references it, and names those objects. The backend
     // currently allows the delete (it would break the dependents silently), so the catalog is the guard.
-    referenceCounted: {
+    usageCheck: {
+        mode: "block",
         load: listComputedAttributeReferences,
-        usageWarning: capabilityMessages.deleteUsageWarning,
-        listReferences: true,
-        blockedBody: capabilityMessages.deleteBlocked,
+        warningMessage: capabilityMessages.deleteUsageWarning,
+        blockedMessage: capabilityMessages.deleteBlocked,
     },
     // A copied computed attribute derives a human-readable id that can collide on create; identity lets the dialog retry without it.
     identity: {

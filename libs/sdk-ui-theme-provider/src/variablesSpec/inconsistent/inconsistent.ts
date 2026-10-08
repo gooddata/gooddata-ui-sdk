@@ -186,6 +186,7 @@ export const inconsistentVariables: ThemeInconsistentCssVariable[] = [
             "#acaeae",
             "#808080",
             "#6d7680",
+            "#94a1ad",
         ],
     },
     {

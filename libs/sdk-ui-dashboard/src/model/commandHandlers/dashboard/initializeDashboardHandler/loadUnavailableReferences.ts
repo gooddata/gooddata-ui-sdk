@@ -15,12 +15,14 @@ const ALL_TYPES: SupportedDashboardReferenceTypes[] = [
     "displayForm",
     "analyticalDashboard",
     "measure",
+    "fact",
     "computedAttribute",
 ];
 const ENRICHED_TYPES: SupportedDashboardReferenceTypes[] = [
     "displayForm",
     "analyticalDashboard",
     "measure",
+    "fact",
     "computedAttribute",
 ];
 

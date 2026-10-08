@@ -547,6 +547,9 @@ function recordedWorkspace(
                 summarizeDashboard() {
                     throw new NotSupported("not supported");
                 },
+                summarizeVisualizations() {
+                    throw new NotSupported("not supported");
+                },
             };
         },
         references(): IReferencesService {
@@ -1005,6 +1008,10 @@ function recordedUserService(implConfig: RecordedBackendConfig): IUserService {
                 setMetadataLocale: () => Promise.resolve(),
                 setFormatLocale: () => Promise.resolve(),
                 setSeparators: () => Promise.resolve(),
+                setTheme: () => Promise.resolve(),
+                deleteTheme: () => Promise.resolve(),
+                setColorPalette: () => Promise.resolve(),
+                deleteColorPalette: () => Promise.resolve(),
             };
         },
     };

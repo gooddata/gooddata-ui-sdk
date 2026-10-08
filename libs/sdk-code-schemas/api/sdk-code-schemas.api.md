@@ -4346,6 +4346,10 @@ export const metadata_v1: {
                             $ref: string;
                         };
                     };
+                    takeaways_instruction: {
+                        type: string;
+                        description: string;
+                    };
                     variable_values: {
                         type: string;
                         description: string;
@@ -4411,6 +4415,10 @@ export const metadata_v1: {
                         items: {
                             $ref: string;
                         };
+                    };
+                    takeaways_instruction: {
+                        type: string;
+                        description: string;
                     };
                 };
                 $semantic: {
@@ -10590,6 +10598,10 @@ export const metadata_v1: {
                         $ref: string;
                     };
                 };
+                takeaways_instruction: {
+                    type: string;
+                    description: string;
+                };
                 variable_values: {
                     type: string;
                     description: string;
@@ -10898,6 +10910,10 @@ export const metadata_v1: {
                     items: {
                         $ref: string;
                     };
+                };
+                takeaways_instruction: {
+                    type: string;
+                    description: string;
                 };
             };
             $semantic: {
@@ -11893,6 +11909,7 @@ interface Report_2 {
     period: ReportPeriod;
     // (undocumented)
     tags?: Tags37;
+    takeaways_instruction?: string;
     title: string;
     // (undocumented)
     type: "report";
@@ -12250,6 +12267,7 @@ interface ReportTemplate {
     pages: ReportPageBody[];
     // (undocumented)
     tags?: Tags38;
+    takeaways_instruction?: string;
     title: string;
     // (undocumented)
     type: "report_template";

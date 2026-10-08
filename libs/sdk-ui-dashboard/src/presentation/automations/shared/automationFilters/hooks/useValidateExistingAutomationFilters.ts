@@ -431,6 +431,7 @@ export function validateExistingAutomationFilters({
     lockedFilters,
     ignoredFilters,
     dashboardFilters,
+    existingFilters = dashboardFilters,
     widget,
     insight,
     selectionTypeMap,
@@ -441,6 +442,11 @@ export function validateExistingAutomationFilters({
     lockedFilters: FilterContextItem[];
     ignoredFilters: FilterContextItem[];
     dashboardFilters: FilterContextItem[];
+    /**
+     * Filters the dashboard still has, hidden ones included; a stored filter missing here was removed.
+     * Defaults to `dashboardFilters`, which already include the hidden ones without tabs.
+     */
+    existingFilters?: FilterContextItem[];
     widget?: ExtendedDashboardWidget;
     insight?: IInsight;
     selectionTypeMap?: Map<string, DashboardAttributeFilterSelectionType | undefined>;
@@ -461,7 +467,7 @@ export function validateExistingAutomationFilters({
 
     const { removedFilterIsAppliedInSavedFilters } = validateRemovedFilters(
         savedAutomationFilters,
-        dashboardFilters,
+        existingFilters,
         insightFilters,
         widget,
     );
@@ -515,6 +521,7 @@ export interface IAutomationFiltersPerTabData {
     availableFilters: FilterContextItem[];
     hiddenFilters: FilterContextItem[];
     lockedFilters: FilterContextItem[];
+    allFilters: FilterContextItem[];
 }
 
 /**
@@ -559,6 +566,8 @@ export function validateExistingAutomationFiltersPerTab({
             lockedFilters: tabData.lockedFilters,
             ignoredFilters: [],
             dashboardFilters: tabData.availableFilters,
+            // The tab's available filters leave the hidden ones out, but an automation stores them.
+            existingFilters: tabData.allFilters,
             widget: undefined,
             insight: undefined,
             selectionTypeMap: selectionTypeMapByTab?.[tabId],

@@ -37,4 +37,9 @@ export interface IAutomationFiltersTab {
      * Hidden filters for the tab.
      */
     hiddenFilters: FilterContextItem[];
+    /**
+     * Every filter of the tab except cross-filtering ones, hidden and restricted ones included.
+     * A filter stored in an automation but missing here was removed from the dashboard.
+     */
+    allFilters: FilterContextItem[];
 }

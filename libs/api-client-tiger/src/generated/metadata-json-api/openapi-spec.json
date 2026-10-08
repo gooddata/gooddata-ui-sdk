@@ -13406,11 +13406,13 @@
                                     "datasets",
                                     "labels",
                                     "computedAttributes",
+                                    "metrics",
+                                    "facts",
                                     "ALL"
                                 ]
                             }
                         },
-                        "example": "attributes,datasets,labels,computedAttributes"
+                        "example": "attributes,datasets,labels,computedAttributes,metrics,facts"
                     },
                     {
                         "$ref": "#/components/parameters/page"
@@ -13511,11 +13513,13 @@
                                     "datasets",
                                     "labels",
                                     "computedAttributes",
+                                    "metrics",
+                                    "facts",
                                     "ALL"
                                 ]
                             }
                         },
-                        "example": "attributes,datasets,labels,computedAttributes"
+                        "example": "attributes,datasets,labels,computedAttributes,metrics,facts"
                     },
                     {
                         "name": "metaInclude",
@@ -13710,11 +13714,13 @@
                                     "datasets",
                                     "labels",
                                     "computedAttributes",
+                                    "metrics",
+                                    "facts",
                                     "ALL"
                                 ]
                             }
                         },
-                        "example": "attributes,datasets,labels,computedAttributes"
+                        "example": "attributes,datasets,labels,computedAttributes,metrics,facts"
                     },
                     {
                         "name": "X-GDC-VALIDATE-RELATIONS",
@@ -13822,11 +13828,13 @@
                                     "datasets",
                                     "labels",
                                     "computedAttributes",
+                                    "metrics",
+                                    "facts",
                                     "ALL"
                                 ]
                             }
                         },
-                        "example": "attributes,datasets,labels,computedAttributes"
+                        "example": "attributes,datasets,labels,computedAttributes,metrics,facts"
                     }
                 ],
                 "requestBody": {
@@ -13956,11 +13964,13 @@
                                     "datasets",
                                     "labels",
                                     "computedAttributes",
+                                    "metrics",
+                                    "facts",
                                     "ALL"
                                 ]
                             }
                         },
-                        "example": "attributes,datasets,labels,computedAttributes"
+                        "example": "attributes,datasets,labels,computedAttributes,metrics,facts"
                     }
                 ],
                 "requestBody": {
@@ -33262,7 +33272,8 @@
                                 "what_if_analysis",
                                 "knowledge",
                                 "dashboard_builder",
-                                "dashboard_editor"
+                                "dashboard_editor",
+                                "report_builder"
                             ]
                         }
                     },
@@ -36582,7 +36593,8 @@
                             "RESTRICT_BASE_UI",
                             "CERTIFY_PARENT_OBJECTS",
                             "HLL_TYPE",
-                            "ENABLE_TIMEZONE_CHANGE"
+                            "ENABLE_TIMEZONE_CHANGE",
+                            "AUTHORIZATION_SERVER_REDIRECT_POLICY"
                         ]
                     }
                 },
@@ -38862,7 +38874,8 @@
                                         "what_if_analysis",
                                         "knowledge",
                                         "dashboard_builder",
-                                        "dashboard_editor"
+                                        "dashboard_editor",
+                                        "report_builder"
                                     ]
                                 }
                             },
@@ -39018,7 +39031,8 @@
                                         "what_if_analysis",
                                         "knowledge",
                                         "dashboard_builder",
-                                        "dashboard_editor"
+                                        "dashboard_editor",
+                                        "report_builder"
                                     ]
                                 }
                             },
@@ -39283,7 +39297,8 @@
                                         "what_if_analysis",
                                         "knowledge",
                                         "dashboard_builder",
-                                        "dashboard_editor"
+                                        "dashboard_editor",
+                                        "report_builder"
                                     ]
                                 }
                             },
@@ -48212,6 +48227,17 @@
                                     }
                                 }
                             },
+                            "facts": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiFactToManyLinkage"
+                                    }
+                                }
+                            },
                             "labels": {
                                 "required": [
                                     "data"
@@ -48220,6 +48246,17 @@
                                 "properties": {
                                     "data": {
                                         "$ref": "#/components/schemas/JsonApiLabelToManyLinkage"
+                                    }
+                                }
+                            },
+                            "metrics": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiMetricToManyLinkage"
                                     }
                                 }
                             }
@@ -48283,7 +48320,13 @@
                         "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
                     },
                     {
+                        "$ref": "#/components/schemas/JsonApiFactOutWithLinks"
+                    },
+                    {
                         "$ref": "#/components/schemas/JsonApiLabelOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiMetricOutWithLinks"
                     }
                 ]
             },
@@ -54100,7 +54143,8 @@
                                     "RESTRICT_BASE_UI",
                                     "CERTIFY_PARENT_OBJECTS",
                                     "HLL_TYPE",
-                                    "ENABLE_TIMEZONE_CHANGE"
+                                    "ENABLE_TIMEZONE_CHANGE",
+                                    "AUTHORIZATION_SERVER_REDIRECT_POLICY"
                                 ]
                             }
                         }
@@ -54206,7 +54250,8 @@
                                     "RESTRICT_BASE_UI",
                                     "CERTIFY_PARENT_OBJECTS",
                                     "HLL_TYPE",
-                                    "ENABLE_TIMEZONE_CHANGE"
+                                    "ENABLE_TIMEZONE_CHANGE",
+                                    "AUTHORIZATION_SERVER_REDIRECT_POLICY"
                                 ]
                             }
                         }
@@ -54352,7 +54397,8 @@
                                     "RESTRICT_BASE_UI",
                                     "CERTIFY_PARENT_OBJECTS",
                                     "HLL_TYPE",
-                                    "ENABLE_TIMEZONE_CHANGE"
+                                    "ENABLE_TIMEZONE_CHANGE",
+                                    "AUTHORIZATION_SERVER_REDIRECT_POLICY"
                                 ]
                             }
                         }
@@ -66202,7 +66248,8 @@
                             "RESTRICT_BASE_UI",
                             "CERTIFY_PARENT_OBJECTS",
                             "HLL_TYPE",
-                            "ENABLE_TIMEZONE_CHANGE"
+                            "ENABLE_TIMEZONE_CHANGE",
+                            "AUTHORIZATION_SERVER_REDIRECT_POLICY"
                         ]
                     }
                 },

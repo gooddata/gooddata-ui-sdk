@@ -1,9 +1,9 @@
 // (C) 2026 GoodData Corporation
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { type IParameterMetadataObjectDefinition, idRef } from "@gooddata/sdk-model";
+import { type IParameterMetadataObjectDefinition, idRef, serializeObjRef } from "@gooddata/sdk-model";
 
-import type { IAsCodeMutationPort } from "../asCode/descriptor.js";
+import type { IAsCodeMutationPort, IAsCodeReference } from "../asCode/descriptor.js";
 import { convertParameterToCatalogItem } from "../catalogItem/converter.js";
 import {
     createParameterCatalogItem,
@@ -22,17 +22,26 @@ export type IParameterMutationPort = IAsCodeMutationPort<
     ICatalogItemParameter
 >;
 
-/** Titles of objects that depend on a parameter (metrics, computed attributes, insights, dashboards). @internal */
+/** Objects that reference a parameter directly. @internal */
 export async function listParameterReferences(
     backend: IAnalyticalBackend,
     workspace: string,
     item: ICatalogItemParameter,
-): Promise<string[]> {
-    const { nodes } = await backend
+): Promise<IAsCodeReference[]> {
+    const root = idRef(item.identifier, "parameter");
+    const { nodes, edges } = await backend
         .workspace(workspace)
         .references()
-        .getReferences(idRef(item.identifier, "parameter"), { direction: "up" });
-    return nodes.filter((node) => !node.isRoot).map((node) => node.title);
+        .getReferences(root, { direction: "up" });
+    const rootKey = serializeObjRef(root);
+    const directKeys = new Set(
+        edges
+            .filter((edge) => serializeObjRef(edge.from) === rootKey)
+            .map((edge) => serializeObjRef(edge.to)),
+    );
+    return nodes
+        .filter((node) => directKeys.has(serializeObjRef(node)))
+        .map(({ identifier, type, title }) => ({ identifier, type, title }));
 }
 
 /**

@@ -48,6 +48,7 @@ import { loadingActions } from "../../../store/loading/index.js";
 import { notificationChannelsActions } from "../../../store/notificationChannels/index.js";
 import { permissionsActions } from "../../../store/permissions/index.js";
 import { renderModeActions } from "../../../store/renderMode/index.js";
+import { restrictedDataActions } from "../../../store/restrictedData/index.js";
 import { tabsActions } from "../../../store/tabs/index.js";
 import { DEFAULT_TAB_ID } from "../../../store/tabs/tabsState.js";
 import { uiActions } from "../../../store/ui/index.js";
@@ -527,6 +528,7 @@ function* initializeNewDashboard(
             listedDashboardsActions.setListedDashboards(listedDashboards),
             accessibleDashboardsActions.setAccessibleDashboards(listedDashboards),
             executionResultsActions.clearAllExecutionResults(),
+            restrictedDataActions.clearRestrictedData(),
             ...initActions,
             tabsActions.setDateFilterConfig({
                 dateFilterConfig: undefined,

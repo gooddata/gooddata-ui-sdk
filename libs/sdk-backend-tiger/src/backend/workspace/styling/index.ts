@@ -94,94 +94,113 @@ export class TigerWorkspaceStyling implements IWorkspaceStylingService {
     }
 
     /**
-     * Checks if Theming needs to be loaded.
-     * activeTheme needs to be defined
-     *
-     * @returns boolean
+     * Fetch the active styling object's content from a filtered single-object list and unwrap the first hit.
+     * A missing object (or a failed fetch) yields `undefined` rather than throwing, so styling problems never
+     * break the application. The caller selects the scope-specific endpoint, so there is no cross-scope
+     * fallback here.
      */
-    private isStylizable(activeStyleId: string): boolean {
-        return activeStyleId !== "";
-    }
+    private fetchActiveStyleContent = <T>(
+        fetchList: (
+            client: ITigerClientBase,
+        ) => AxiosPromise<{ data: Array<{ attributes: { content: object } }> }>,
+        unwrapContent: (content: object) => T,
+    ): Promise<T | undefined> =>
+        this.authCall((client) =>
+            fetchList(client)
+                .then((response) =>
+                    response.data.data.length === 0
+                        ? undefined
+                        : unwrapContent(response.data.data[0].attributes.content),
+                )
+                // Failed styling loading should not break the application
+                .catch(() => undefined),
+        );
 
-    /**
-     * Resolve the active styling object's content by fetching a filtered single-object list and unwrapping
-     * the first hit. A missing object (or a failed fetch) yields the provided fallback rather than throwing,
-     * so styling problems never break the application. The caller selects the scope-specific endpoint, so
-     * there is no cross-scope fallback here.
-     */
-    private resolveActiveStyleContent = <T>(
+    private resolveActiveStyleContent = async <T>(
         fetchList: (
             client: ITigerClientBase,
         ) => AxiosPromise<{ data: Array<{ attributes: { content: object } }> }>,
         unwrapContent: (content: object) => T,
         fallback: T,
-    ): Promise<T> =>
-        this.authCall((client) =>
-            fetchList(client)
-                .then((response) =>
-                    response.data.data.length === 0
-                        ? fallback
-                        : unwrapContent(response.data.data[0].attributes.content),
-                )
-                // Failed styling loading should not break the application
-                .catch(() => fallback),
-        );
+    ): Promise<T> => (await this.fetchActiveStyleContent(fetchList, unwrapContent)) ?? fallback;
 
-    public getColorPalette = async (): Promise<IColorPaletteItem[]> => {
+    /**
+     * Resolve the active theme or color palette for the current user in this workspace. The resolved setting
+     * may come from the user layer, which has no workspace: a reference this workspace cannot resolve falls
+     * through to the setting resolved without the user layer, so it never masks the workspace's or the
+     * organization's own one.
+     */
+    private async resolveActiveStyle<T>(
+        key: "activeTheme" | "activeColorPalette",
+        fetchListFor: (active: IActiveStyleSetting) => (client: ITigerClientBase) => AxiosPromise<any>,
+        unwrapContent: (content: object) => T,
+        fallback: T,
+    ): Promise<T> {
         const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
-        const activeColorPalette = userSettings["activeColorPalette"] as IActiveStyleSetting | undefined;
-        const activeColorPaletteId = activeColorPalette?.id ?? "";
-
-        if (!this.isStylizable(activeColorPaletteId)) {
-            return DefaultColorPalette;
+        const active = userSettings[key] as IActiveStyleSetting | undefined;
+        if (!active?.id) {
+            return fallback;
         }
+        const resolved = await this.fetchActiveStyleContent(fetchListFor(active), unwrapContent);
+        if (resolved !== undefined) {
+            return resolved;
+        }
+        const workspaceSettings = await this.settingsService.getSettings();
+        const workspaceActive = workspaceSettings?.[key] as IActiveStyleSetting | undefined;
+        if (
+            !workspaceActive?.id ||
+            (workspaceActive.id === active.id && workspaceActive.type === active.type)
+        ) {
+            return fallback;
+        }
+        return (await this.fetchActiveStyleContent(fetchListFor(workspaceActive), unwrapContent)) ?? fallback;
+    }
 
-        const filter = `id=="${activeColorPaletteId}"`;
-        // Resolve the id against the scope declared by the setting; no cross-scope fallback.
-        const fetchList: (client: ITigerClientBase) => AxiosPromise<any> =
-            activeColorPalette?.type === "workspaceColorPalette"
-                ? (client) =>
-                      EntitiesApi_GetAllEntitiesWorkspaceColorPalettes(client.axios, client.basePath, {
-                          workspaceId: this.workspace,
-                          filter,
-                      })
-                : (client) =>
-                      EntitiesApi_GetAllEntitiesColorPalettes(client.axios, client.basePath, { filter });
+    // Resolve the id against the scope declared by the setting; no cross-scope fallback.
+    private colorPaletteFetcher =
+        (active: IActiveStyleSetting) =>
+        (client: ITigerClientBase): AxiosPromise<any> => {
+            const filter = `id=="${active.id}"`;
+            return active.type === "workspaceColorPalette"
+                ? EntitiesApi_GetAllEntitiesWorkspaceColorPalettes(client.axios, client.basePath, {
+                      workspaceId: this.workspace,
+                      filter,
+                  })
+                : EntitiesApi_GetAllEntitiesColorPalettes(client.axios, client.basePath, { filter });
+        };
 
+    private themeFetcher =
+        (active: IActiveStyleSetting) =>
+        (client: ITigerClientBase): AxiosPromise<any> => {
+            const filter = `id=="${active.id}"`;
+            return active.type === "workspaceTheme"
+                ? EntitiesApi_GetAllEntitiesWorkspaceThemes(client.axios, client.basePath, {
+                      workspaceId: this.workspace,
+                      filter,
+                  })
+                : EntitiesApi_GetAllEntitiesThemes(client.axios, client.basePath, { filter });
+        };
+
+    public getColorPalette = (): Promise<IColorPaletteItem[]> =>
         // Validate the resolved content the same way the listing path does, so malformed backend content
         // falls back to the default rather than flowing through unchecked.
-        return this.resolveActiveStyleContent(
-            fetchList,
+        this.resolveActiveStyle(
+            "activeColorPalette",
+            this.colorPaletteFetcher,
             (content) => {
                 const colorPalette = unwrapColorPaletteContent(content);
                 return isValidColorPalette(colorPalette) ? colorPalette : DefaultColorPalette;
             },
             DefaultColorPalette,
         );
-    };
 
-    public getTheme = async (): Promise<ITheme> => {
-        const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
-        const activeTheme = userSettings["activeTheme"] as IActiveStyleSetting | undefined;
-        const activeThemeId = activeTheme?.id ?? "";
-
-        if (!this.isStylizable(activeThemeId)) {
-            return DefaultTheme;
-        }
-
-        const filter = `id=="${activeThemeId}"`;
-        // Resolve the id against the scope declared by the setting; no cross-scope fallback.
-        const fetchList: (client: ITigerClientBase) => AxiosPromise<any> =
-            activeTheme?.type === "workspaceTheme"
-                ? (client) =>
-                      EntitiesApi_GetAllEntitiesWorkspaceThemes(client.axios, client.basePath, {
-                          workspaceId: this.workspace,
-                          filter,
-                      })
-                : (client) => EntitiesApi_GetAllEntitiesThemes(client.axios, client.basePath, { filter });
-
-        return this.resolveActiveStyleContent(fetchList, (content) => content as ITheme, DefaultTheme);
-    };
+    public getTheme = (): Promise<ITheme> =>
+        this.resolveActiveStyle(
+            "activeTheme",
+            this.themeFetcher,
+            (content) => content as ITheme,
+            DefaultTheme,
+        );
 
     private async getActiveSetting(setting: string): Promise<ObjRef | undefined> {
         const settings = await this.settingsService.getSettings();

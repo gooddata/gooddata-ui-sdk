@@ -352,8 +352,6 @@
     "messages.settingsDialogError.general": "Het is niet gelukt om de dashboardinstellingen te laden. Probeer het later nog eens.",
     "visualization.dataTooLarge.headline": "Te veel datapunten om weer te geven",
     "visualization.dataTooLarge.text": "Probeer om een of meerdere filters op uw dashboard toe te passen.",
-    "visualization.execute_protected_report.headline": "U bent niet gemachtigd om dit rapport te bekijken",
-    "visualization.execute_protected_report.text": "Neem contact op met uw beheerder.",
     "visualization.empty.headline": "Geen data voor uw filterselectie",
     "visualization.error.headline": "Sorry, we kunnen deze visualisatie niet tonen",
     "visualization.error.text": "Neem contact op met uw beheerder.",

@@ -1609,7 +1609,12 @@ export {
     validateReportPageBody,
 } from "./reports/pageLayout.js";
 
-export { type IReportContentPage, type IReportContent, isReportContentV1 } from "./reports/content.js";
+export {
+    type IReportContentPage,
+    type IReportContent,
+    type IReportAttributeFilterConfig,
+    isReportContentV1,
+} from "./reports/content.js";
 
 export {
     type IReportTemplateDefinition,

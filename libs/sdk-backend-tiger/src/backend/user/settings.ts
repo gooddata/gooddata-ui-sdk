@@ -9,11 +9,12 @@ import {
 } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/endpoints/profile";
 import { type IUserSettings, type IUserSettingsService } from "@gooddata/sdk-backend-spi";
-import { type ISettings } from "@gooddata/sdk-model";
+import { type ISettings, type ObjRef } from "@gooddata/sdk-model";
 
 import { unwrapSettingContent } from "../../convertors/fromBackend/SettingsConverter.js";
 import { type TigerAuthenticatedCallGuard, type TigerSettingsType } from "../../types/index.js";
 import { TigerFeaturesService, pickContext } from "../features/index.js";
+import { activeStylingContent } from "../settings/activeStyling.js";
 import { mapTypeToKey } from "../settings/mapping.js";
 import { invalidateSettingsResponses, trackSettingsResponse } from "../settings/responseCacheCoherence.js";
 import { TigerSettingsService } from "../settings/settings.js";
@@ -58,6 +59,28 @@ export class TigerUserSettingsService
                 userId: profile.userId,
             };
         });
+    }
+
+    public async setTheme(theme: string | ObjRef): Promise<void> {
+        return this.setSetting(
+            "ACTIVE_THEME",
+            activeStylingContent(theme, "theme", undefined, this.authCall),
+        );
+    }
+
+    public async deleteTheme(): Promise<void> {
+        return this.deleteSettingByType("ACTIVE_THEME");
+    }
+
+    public async setColorPalette(colorPalette: string | ObjRef): Promise<void> {
+        return this.setSetting(
+            "ACTIVE_COLOR_PALETTE",
+            activeStylingContent(colorPalette, "colorPalette", undefined, this.authCall),
+        );
+    }
+
+    public async deleteColorPalette(): Promise<void> {
+        return this.deleteSettingByType("ACTIVE_COLOR_PALETTE");
     }
 
     protected override async getSettingByType(type: TigerSettingsType) {

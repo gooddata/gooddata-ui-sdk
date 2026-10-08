@@ -18,7 +18,7 @@ export type AccessGranteeDetail = IUserAccess | IUserGroupAccess | IGranularUser
 export type AccessGranularPermission = "VIEW" | "EDIT" | "SHARE";
 
 // @alpha
-export type AgentCustomSkill = "alert" | "anomaly_detection" | "clustering" | "dashboard_builder" | "dashboard_editor" | "dashboard_summary" | "forecasting" | "key_driver_analysis" | "metric" | "schedule_export" | "visualization" | "visualization_summary" | "what_if_analysis" | "knowledge";
+export type AgentCustomSkill = "alert" | "anomaly_detection" | "clustering" | "dashboard_builder" | "dashboard_editor" | "dashboard_summary" | "forecasting" | "key_driver_analysis" | "metric" | "schedule_export" | "visualization" | "visualization_summary" | "what_if_analysis" | "knowledge" | "report_builder";
 
 // @alpha
 export type AgentInstructionStrategy = "ALWAYS" | "AUTO";
@@ -3094,7 +3094,6 @@ export interface IFeatureFlags {
     enableExportToDocumentStorage?: boolean;
     enableFiscalCalendars?: boolean;
     enableGenAiAgenticDataShareOptOut?: boolean;
-    enableGenAiAgentSwitching?: boolean;
     enableGenAICatalogQualityChecker?: boolean;
     enableGenAiDashboardBuilderSkill?: boolean;
     enableGenAiInteractionIntelligence?: boolean;
@@ -3148,6 +3147,7 @@ export interface IFeatureFlags {
     enableRankingStrictLimit?: boolean;
     enableRankingWithMvf?: boolean;
     enableRawExports?: boolean;
+    enableReportsSubsections?: boolean;
     // @alpha
     enableRichTextWidgetFilterConfiguration?: boolean;
     enableSecondGranularities?: boolean;
@@ -4946,6 +4946,9 @@ export interface IReportAiTextSource {
 }
 
 // @alpha
+export type IReportAttributeFilterConfig = Pick<IDashboardAttributeFilterConfig, "localIdentifier" | "displayAsLabel">;
+
+// @alpha
 export interface IReportBase {
     content: IReportContent;
     // (undocumented)
@@ -4976,8 +4979,10 @@ export interface IReportColorBackground {
 
 // @alpha
 export interface IReportContent {
+    attributeFilterConfigs?: IReportAttributeFilterConfig[];
     filters?: FilterContextItem[];
     pages: IReportContentPage[];
+    takeawaysInstruction?: string;
     variables?: IReportVariableDefinition[];
     version: "1";
 }

@@ -13195,6 +13195,10 @@ export interface Report {
      */
     variables?: ReportVariable[];
     /**
+     * Instructions every AI takeaway without instructions of its own is generated with. Supports \{variables\}.
+     */
+    takeaways_instruction?: string;
+    /**
      * Values for the declared variables, keyed by variable name. A variable with no value here falls back to its default.
      */
     variable_values?: {
@@ -13587,6 +13591,10 @@ export interface ReportTemplate {
      * Custom variables the template's text can interpolate as \{name\}. A report created from it gives them values.
      */
     variables?: ReportVariable[];
+    /**
+     * Instructions every AI takeaway without instructions of its own is generated with. Supports \{variables\}.
+     */
+    takeaways_instruction?: string;
 }
 /**
  * Template filters; pages and visualizations may extend or override them.

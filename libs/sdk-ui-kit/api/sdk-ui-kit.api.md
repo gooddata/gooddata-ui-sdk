@@ -402,7 +402,7 @@ export const defaultFocusCheckFn: (element: HTMLElement) => boolean;
 // @internal
 export function DefaultSyntaxHighlightingInput(input: IDefaultSyntaxHighlightingInputProps): JSX.Element;
 
-// @internal (undocumented)
+// @internal
 export const defaultSyntaxHighlightStyle: HighlightStyle;
 
 // @internal
@@ -7875,6 +7875,7 @@ export interface IUiResizableSidebarState {
 
 // @internal (undocumented)
 export interface IUiResizableSidebarStateOptions {
+    collapsedOverride?: boolean;
     collapsedStorageKey: string;
     hasRail?: boolean;
     // (undocumented)
@@ -7884,6 +7885,8 @@ export interface IUiResizableSidebarStateOptions {
     maxWidth: number;
     minContentWidth?: number;
     minWidth: number;
+    onUserChange?: (property: "collapsed" | "width") => void;
+    widthOverride?: number;
     widthStorageKey: string;
 }
 

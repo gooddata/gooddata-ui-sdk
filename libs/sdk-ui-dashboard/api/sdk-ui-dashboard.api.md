@@ -1495,6 +1495,7 @@ export type DashboardState = {
     renderMode: IRenderModeState;
     ui: IUiState;
     executionResults: EntityState<IExecutionResultEnvelope, EntityId>;
+    restrictedData: IRestrictedDataState;
     _queryCache: {
         [queryName: string]: any;
     };
@@ -2970,6 +2971,7 @@ export interface IAutomationDialogRecipientsProps {
 
 // @beta
 export interface IAutomationFiltersTab {
+    allFilters: FilterContextItem[];
     availableFilters: FilterContextItem[];
     defaultSelectedFilters: FilterContextItem[];
     hiddenFilters: FilterContextItem[];
@@ -7906,6 +7908,12 @@ export interface IRefreshKpiWidgetPayload {
     readonly ref: ObjRef;
 }
 
+// @internal
+export interface IRefusedExecution {
+    inputsKey: string;
+    ref: ObjRef;
+}
+
 // @alpha
 export interface IReloadFilterViews extends IDashboardCommand {
     // (undocumented)
@@ -8250,6 +8258,11 @@ export interface IResolvedFilterValues {
     };
     // (undocumented)
     dateFilters: ResolvedDateFilterValues;
+}
+
+// @internal
+export interface IRestrictedDataState {
+    refusedExecutions: Record<string, IRefusedExecution>;
 }
 
 // @alpha

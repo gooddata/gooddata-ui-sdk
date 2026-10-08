@@ -287,7 +287,7 @@ $dataset_color: #952f8e;
         overflow-y: visible;
     }
 
-    &--agent-switching &__agent-change {
+    &__agent-change {
         display: flex;
         align-items: center;
         gap: 15px;

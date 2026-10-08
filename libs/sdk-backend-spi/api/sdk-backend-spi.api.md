@@ -796,6 +796,7 @@ export type IChatConversationDashboardContent = {
     dashboard?: IDashboard | null;
     saved?: string | null;
     base?: object | null;
+    references?: object | null;
     patchError?: Error | null;
 };
 
@@ -1730,6 +1731,9 @@ export interface IGenAIService {
     getSemanticQuality(): ISemanticQualityService;
     getSemanticSearchQuery(): ISemanticSearchQuery;
     summarizeDashboard(request: IDashboardSummaryRequest, options?: {
+        signal?: AbortSignal;
+    }): Promise<IDashboardSummary>;
+    summarizeVisualizations(request: IVisualizationsSummaryRequest, options?: {
         signal?: AbortSignal;
     }): Promise<IDashboardSummary>;
 }
@@ -2802,14 +2806,25 @@ export { IUserSettings }
 
 // @public
 export interface IUserSettingsService {
+    deleteColorPalette(): Promise<void>;
+    deleteTheme(): Promise<void>;
     getSettings(): Promise<IUserSettings>;
+    setColorPalette(colorPalette: string | ObjRef): Promise<void>;
     setFormatLocale(locale: string): Promise<void>;
     setLocale(locale: string): Promise<void>;
     setMetadataLocale(locale: string): Promise<void>;
     setSeparators(separators: ISeparators): Promise<void>;
+    setTheme(theme: string | ObjRef): Promise<void>;
 }
 
 export { IUserWorkspaceSettings }
+
+// @beta
+export interface IVisualizationsSummaryRequest {
+    filters: IFilter[];
+    formatHint?: string;
+    visualizations: string[];
+}
 
 // @alpha
 export interface IWidgetAlertCount {
@@ -3411,7 +3426,7 @@ export class ProtectedDataError extends AnalyticalBackendError {
 export type QueryMethod = "GET" | "POST";
 
 // @alpha
-export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin" | "dataSet" | "displayForm" | "measure" | "computedAttribute" | "analyticalDashboard";
+export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin" | "dataSet" | "displayForm" | "measure" | "fact" | "computedAttribute" | "analyticalDashboard";
 
 // @public
 export type SupportedInsightReferenceTypes = Exclude<InsightReferenceTypes, "displayForm" | "variable">;

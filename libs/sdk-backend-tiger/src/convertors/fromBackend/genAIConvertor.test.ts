@@ -2,7 +2,7 @@
 
 import { describe, expect, it, vi } from "vitest";
 
-import { type AiConversationItemResponse } from "@gooddata/api-client-tiger";
+import { type AiConversationItemResponse, type AiDashboardOutput } from "@gooddata/api-client-tiger";
 import {
     type IChatConversationDashboardContent,
     type IChatConversationItem,
@@ -16,8 +16,10 @@ import { type IInsightWidget, type IdentifierRef } from "@gooddata/sdk-model";
 import {
     convertChatConversationErrorFromBackend,
     convertChatConversationFromBackend,
+    convertChatConversationInteractionStepFromBackend,
     convertChatConversationItemDetailFromBackend,
     convertChatConversationItemFromBackend,
+    convertChatConversationItemsFromBackend,
     convertChatSuggestionItemFromBackend,
 } from "./genAIConvertor.js";
 import { REPORT_COPILOT_SAMPLE_PART } from "./reportCopilotSample.fixture.js";
@@ -457,6 +459,16 @@ describe("genAIConvertor", () => {
                                 },
                             },
                             base: baseDocument(widgets),
+                            references: {
+                                visualizations: insights.map(({ identifier, title }) => ({
+                                    id: identifier,
+                                    type: "bar_chart",
+                                    title,
+                                    query: {
+                                        fields: {},
+                                    },
+                                })),
+                            },
                             insights: insights.map(({ identifier, title }) => ({
                                 insight: {
                                     identifier,
@@ -620,6 +632,1150 @@ describe("genAIConvertor", () => {
 
             expect(parts).toHaveLength(1);
             expect(parts[0]!.dashboard).toBeNull();
+        });
+    });
+
+    describe("dashboard with tabs and filter contexts", () => {
+        it("preserves individual filter context for each tab when multiple tabs have distinct filters", () => {
+            const multiTabDashboard: AiDashboardOutput = {
+                type: "dashboard",
+                id: "multi_tab_dashboard",
+                title: "Multi Tab Dashboard",
+                version: "2",
+                tabs: [
+                    {
+                        id: "tab_1",
+                        title: "Tab 1",
+                        sections: [],
+                        filters: {
+                            date_1: {
+                                type: "date_filter",
+                                granularity: "YEAR",
+                                from: -1,
+                                to: 0,
+                            },
+                        },
+                    },
+                    {
+                        id: "tab_2",
+                        title: "Tab 2",
+                        sections: [],
+                        filters: {
+                            date_2: {
+                                type: "date_filter",
+                                granularity: "MONTH",
+                                from: -3,
+                                to: -1,
+                            },
+                        },
+                    },
+                ],
+            };
+
+            const item: AiConversationItemResponse = {
+                conversationId: "conv-1",
+                itemIndex: 0,
+                itemId: "item-0",
+                role: "assistant",
+                createdAt: "2024-01-01T00:00:00Z",
+                content: {
+                    type: "multipart",
+                    parts: [
+                        {
+                            type: "dashboard",
+                            dashboard: multiTabDashboard,
+                            saved_dashboard_id: "multi_tab_dashboard",
+                            references: undefined,
+                        },
+                    ],
+                },
+            };
+
+            const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            const [part] = (converted.content as IChatConversationMultipartContent)
+                .parts as IChatConversationDashboardContent[];
+
+            expect(part.dashboard?.tabs).toHaveLength(2);
+            expect(part.dashboard?.tabs?.[0]?.filterContext?.filters).toEqual([
+                expect.objectContaining({
+                    dateFilter: expect.objectContaining({
+                        granularity: "GDC.time.year",
+                        from: -1,
+                        to: 0,
+                    }),
+                }),
+            ]);
+            expect(part.dashboard?.tabs?.[1]?.filterContext?.filters).toEqual([
+                expect.objectContaining({
+                    dateFilter: expect.objectContaining({
+                        granularity: "GDC.time.month",
+                        from: -3,
+                        to: -1,
+                    }),
+                }),
+            ]);
+        });
+
+        it("preserves individual filter context for each tab in dashboardPatch", () => {
+            const multiTabDashboard: AiDashboardOutput = {
+                type: "dashboard",
+                id: "multi_tab_dashboard",
+                title: "Multi Tab Dashboard",
+                version: "2",
+                tabs: [
+                    {
+                        id: "tab_1",
+                        title: "Tab 1",
+                        sections: [],
+                        filters: {
+                            date_1: {
+                                type: "date_filter",
+                                granularity: "YEAR",
+                                from: -1,
+                                to: 0,
+                            },
+                        },
+                    },
+                    {
+                        id: "tab_2",
+                        title: "Tab 2",
+                        sections: [],
+                        filters: {
+                            date_2: {
+                                type: "date_filter",
+                                granularity: "MONTH",
+                                from: -3,
+                                to: -1,
+                            },
+                        },
+                    },
+                ],
+            };
+
+            const item: AiConversationItemResponse = {
+                conversationId: "conv-1",
+                itemIndex: 0,
+                itemId: "item-0",
+                role: "assistant",
+                createdAt: "2024-01-01T00:00:00Z",
+                content: {
+                    type: "multipart",
+                    parts: [
+                        {
+                            type: "dashboard",
+                            dashboard: multiTabDashboard,
+                            saved_dashboard_id: "multi_tab_dashboard",
+                            references: undefined,
+                        },
+                        {
+                            type: "dashboardPatch",
+                            patch: {
+                                dashboard_id: "multi_tab_dashboard",
+                                operations: [
+                                    {
+                                        op: "add",
+                                        path: "/tabs/0/title",
+                                        value: "Updated Tab 1",
+                                    },
+                                ],
+                                references: undefined,
+                            },
+                        },
+                    ],
+                },
+            };
+
+            const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            const [part] = (converted.content as IChatConversationMultipartContent)
+                .parts as IChatConversationDashboardContent[];
+
+            expect(part.dashboard?.tabs).toHaveLength(2);
+            expect(part.dashboard?.tabs?.[0]?.title).toBe("Updated Tab 1");
+            expect(part.dashboard?.tabs?.[0]?.filterContext?.filters).toEqual([
+                expect.objectContaining({
+                    dateFilter: expect.objectContaining({
+                        granularity: "GDC.time.year",
+                        from: -1,
+                        to: 0,
+                    }),
+                }),
+            ]);
+            expect(part.dashboard?.tabs?.[1]?.filterContext?.filters).toEqual([
+                expect.objectContaining({
+                    dateFilter: expect.objectContaining({
+                        granularity: "GDC.time.month",
+                        from: -3,
+                        to: -1,
+                    }),
+                }),
+            ]);
+        });
+
+        it("correctly converts single-tab dashboard without tab filter context override issues", () => {
+            const singleTabDashboard: AiDashboardOutput = {
+                type: "dashboard",
+                id: "single_tab_dashboard",
+                title: "Single Tab Dashboard",
+                version: "2",
+                filters: {
+                    date_1: {
+                        type: "date_filter",
+                        granularity: "YEAR",
+                        from: -1,
+                        to: 0,
+                    },
+                },
+                sections: [],
+            };
+
+            const item: AiConversationItemResponse = {
+                conversationId: "conv-1",
+                itemIndex: 0,
+                itemId: "item-0",
+                role: "assistant",
+                createdAt: "2024-01-01T00:00:00Z",
+                content: {
+                    type: "multipart",
+                    parts: [
+                        {
+                            type: "dashboard",
+                            dashboard: singleTabDashboard,
+                            saved_dashboard_id: "single_tab_dashboard",
+                            references: undefined,
+                        },
+                    ],
+                },
+            };
+
+            const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            const [part] = (converted.content as IChatConversationMultipartContent)
+                .parts as IChatConversationDashboardContent[];
+
+            expect(part.dashboard?.filterContext?.filters).toEqual([
+                expect.objectContaining({
+                    dateFilter: expect.objectContaining({
+                        granularity: "GDC.time.year",
+                        from: -1,
+                        to: 0,
+                    }),
+                }),
+            ]);
+        });
+    });
+
+    describe("dashboard with references and interactions", () => {
+        it("preserves widget interactions and inherits titles from references in dashboard part", () => {
+            const dashboardWithInteractions = {
+                type: "dashboard",
+                id: "dash_with_interactions",
+                title: "Dashboard with Interactions",
+                version: "2",
+                sections: [
+                    {
+                        widgets: [
+                            {
+                                visualization: "chart_revenue",
+                                interactions: [
+                                    {
+                                        click_on: "m1",
+                                        open_visualization: "chart_detail",
+                                    },
+                                    {
+                                        click_on: "a1",
+                                        open_dashboard: "dash_target",
+                                        open_dashboard_tab: "tab_2",
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                ],
+            } as unknown as AiDashboardOutput;
+
+            const item: AiConversationItemResponse = {
+                conversationId: "conv-1",
+                itemIndex: 0,
+                itemId: "item-0",
+                role: "assistant",
+                createdAt: "2024-01-01T00:00:00Z",
+                content: {
+                    type: "multipart",
+                    parts: [
+                        {
+                            type: "dashboard",
+                            dashboard: dashboardWithInteractions,
+                            saved_dashboard_id: "dash_with_interactions",
+                            references: {
+                                visualizations: [
+                                    {
+                                        type: "bar_chart",
+                                        id: "chart_revenue",
+                                        title: "Revenue by Region",
+                                        query: {
+                                            fields: {
+                                                m1: { using: "metric/revenue" },
+                                                a1: { using: "attribute/region" },
+                                            },
+                                        },
+                                    },
+                                    {
+                                        type: "line_chart",
+                                        id: "chart_detail",
+                                        title: "Detail Chart",
+                                        query: {
+                                            fields: {
+                                                m1: { using: "metric/revenue" },
+                                            },
+                                        },
+                                    },
+                                ],
+                            },
+                        },
+                    ],
+                },
+            };
+
+            const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            const [part] = (converted.content as IChatConversationMultipartContent)
+                .parts as IChatConversationDashboardContent[];
+
+            const widget = part.dashboard?.layout?.sections[0]?.items[0]?.widget as IInsightWidget;
+            expect(widget).toBeDefined();
+            expect(widget.title).toBe("Revenue by Region");
+            expect(widget.drills).toEqual([
+                expect.objectContaining({
+                    type: "drillToInsight",
+                    transition: "pop-up",
+                    target: { identifier: "chart_detail", type: "insight" },
+                    origin: { type: "drillFromMeasure", measure: { localIdentifier: "m1" } },
+                }),
+                expect.objectContaining({
+                    type: "drillToDashboard",
+                    transition: "in-place",
+                    target: { identifier: "dash_target", type: "analyticalDashboard" },
+                    targetTabLocalIdentifier: "tab_2",
+                    origin: { type: "drillFromAttribute", attribute: { localIdentifier: "a1" } },
+                }),
+            ]);
+            expect(part.insights).toHaveLength(2);
+            expect(part.insights?.map((i) => i.insight.title)).toEqual(["Revenue by Region", "Detail Chart"]);
+        });
+
+        it("preserves widget interactions and inherits titles from new_visualizations in dashboard part", () => {
+            const dashboardWithInteractions = {
+                type: "dashboard",
+                id: "dash_with_new_vis",
+                title: "Dashboard with New Vis",
+                version: "2",
+                sections: [
+                    {
+                        widgets: [
+                            {
+                                visualization: "new_chart_1",
+                                interactions: [
+                                    {
+                                        click_on: "m1",
+                                        open_visualization: "new_chart_2",
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                ],
+            } as unknown as AiDashboardOutput;
+
+            const item: AiConversationItemResponse = {
+                conversationId: "conv-1",
+                itemIndex: 0,
+                itemId: "item-0",
+                role: "assistant",
+                createdAt: "2024-01-01T00:00:00Z",
+                content: {
+                    type: "multipart",
+                    parts: [
+                        {
+                            type: "dashboard",
+                            dashboard: dashboardWithInteractions,
+                            saved_dashboard_id: null,
+                            references: {
+                                new_visualizations: [
+                                    {
+                                        type: "bar_chart",
+                                        id: "new_chart_1",
+                                        title: "New Draft Chart 1",
+                                        query: {
+                                            fields: {
+                                                m1: { using: "metric/revenue" },
+                                            },
+                                        },
+                                    },
+                                    {
+                                        type: "column_chart",
+                                        id: "new_chart_2",
+                                        title: "New Draft Chart 2",
+                                        query: {
+                                            fields: {
+                                                m1: { using: "metric/revenue" },
+                                            },
+                                        },
+                                    },
+                                ],
+                                visualizations: [],
+                            },
+                        },
+                    ],
+                },
+            };
+
+            const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            const [part] = (converted.content as IChatConversationMultipartContent)
+                .parts as IChatConversationDashboardContent[];
+
+            const widget = part.dashboard?.layout?.sections[0]?.items[0]?.widget as IInsightWidget;
+            expect(widget).toBeDefined();
+            expect(widget.title).toBe("New Draft Chart 1");
+            expect(widget.drills).toEqual([
+                expect.objectContaining({
+                    type: "drillToInsight",
+                    transition: "pop-up",
+                    target: { identifier: "new_chart_2", type: "insight" },
+                    origin: { type: "drillFromMeasure", measure: { localIdentifier: "m1" } },
+                }),
+            ]);
+            expect(part.insights).toHaveLength(2);
+            expect(part.insights?.every((i) => i.insight.isDraft)).toBe(true);
+        });
+
+        it("preserves widget interactions when applying a dashboardPatch with references", () => {
+            const baseDashboard: AiDashboardOutput = {
+                type: "dashboard",
+                id: "dash_patch_interactions",
+                title: "Base Dashboard",
+                version: "2",
+                sections: [],
+            };
+
+            const item: AiConversationItemResponse = {
+                conversationId: "conv-1",
+                itemIndex: 0,
+                itemId: "item-0",
+                role: "assistant",
+                createdAt: "2024-01-01T00:00:00Z",
+                content: {
+                    type: "multipart",
+                    parts: [
+                        {
+                            type: "dashboard",
+                            dashboard: baseDashboard,
+                            saved_dashboard_id: "dash_patch_interactions",
+                            references: undefined,
+                        },
+                        {
+                            type: "dashboardPatch",
+                            patch: {
+                                dashboard_id: "dash_patch_interactions",
+                                operations: [
+                                    {
+                                        op: "add",
+                                        path: "/sections/0",
+                                        value: {
+                                            widgets: [
+                                                {
+                                                    visualization: "chart_patched",
+                                                    interactions: [
+                                                        {
+                                                            click_on: "m1",
+                                                            open_visualization: "chart_target",
+                                                        },
+                                                    ],
+                                                },
+                                            ],
+                                        },
+                                    },
+                                ],
+                                references: {
+                                    visualizations: [
+                                        {
+                                            type: "bar_chart",
+                                            id: "chart_patched",
+                                            title: "Patched Chart",
+                                            query: {
+                                                fields: {
+                                                    m1: { using: "metric/revenue" },
+                                                },
+                                            },
+                                        },
+                                        {
+                                            type: "bar_chart",
+                                            id: "chart_target",
+                                            title: "Target Chart",
+                                            query: {
+                                                fields: {
+                                                    m1: { using: "metric/revenue" },
+                                                },
+                                            },
+                                        },
+                                    ],
+                                },
+                            },
+                        },
+                    ],
+                },
+            };
+
+            const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            const [part] = (converted.content as IChatConversationMultipartContent)
+                .parts as IChatConversationDashboardContent[];
+
+            const widget = part.dashboard?.layout?.sections[0]?.items[0]?.widget as IInsightWidget;
+            expect(widget).toBeDefined();
+            expect(widget.title).toBe("Patched Chart");
+            expect(widget.drills).toEqual([
+                expect.objectContaining({
+                    type: "drillToInsight",
+                    transition: "pop-up",
+                    target: { identifier: "chart_target", type: "insight" },
+                    origin: { type: "drillFromMeasure", measure: { localIdentifier: "m1" } },
+                }),
+            ]);
+        });
+    });
+
+    describe("convertChatConversationItemDetailFromBackend", () => {
+        it("converts applyMemory detail", () => {
+            const result = convertChatConversationItemDetailFromBackend({
+                category: "applyMemory",
+                durationMs: 120,
+                items: [
+                    { title: "Pref 1", strategy: "ALWAYS", score: 0.95 },
+                    { title: "Pref 2", strategy: "AUTO" as any, score: 0.8 },
+                ],
+            });
+
+            expect(result).toEqual({
+                category: "applyMemory",
+                durationMs: 120,
+                items: [
+                    { title: "Pref 1", strategy: "always", score: 0.95 },
+                    { title: "Pref 2", strategy: "auto", score: 0.8 },
+                ],
+            });
+        });
+
+        it("converts catalogSearch detail", () => {
+            const result = convertChatConversationItemDetailFromBackend({
+                category: "catalogSearch",
+                query: ["revenue", "region"],
+                requestedTypes: ["metric", "attribute"],
+                found: [{ objectType: "metric", titles: ["Revenue", "Profit"] }],
+                used: [{ objectType: "metric", title: "Revenue", score: 0.95 }],
+            });
+
+            expect(result).toEqual({
+                category: "catalogSearch",
+                query: ["revenue", "region"],
+                requestedTypes: ["metric", "attribute"],
+                found: [{ objectType: "metric", titles: ["Revenue", "Profit"] }],
+                used: [{ objectType: "metric", title: "Revenue", score: 0.95 }],
+            });
+        });
+
+        it("converts composeAnswer detail", () => {
+            const result = convertChatConversationItemDetailFromBackend({
+                category: "composeAnswer",
+                modelId: "gpt-4o",
+                suggestedActions: 2,
+                output: "text",
+            });
+
+            expect(result).toEqual({
+                category: "composeAnswer",
+                modelId: "gpt-4o",
+                suggestedActions: 2,
+                output: "text",
+            });
+        });
+
+        it("converts knowledgeSearch detail", () => {
+            const result = convertChatConversationItemDetailFromBackend({
+                category: "knowledgeSearch",
+                query: "how to calculate MRR",
+                documents: [{ title: "MRR Doc", score: 0.99 }],
+                bestMatch: "MRR Doc",
+            });
+
+            expect(result).toEqual({
+                category: "knowledgeSearch",
+                query: "how to calculate MRR",
+                documents: [{ title: "MRR Doc", score: 0.99 }],
+                bestMatch: "MRR Doc",
+            });
+        });
+
+        it("converts metricQuery detail", () => {
+            const result = convertChatConversationItemDetailFromBackend({
+                category: "metricQuery",
+                ref: "metric/revenue",
+                metrics: ["revenue"],
+                groupedBy: ["region"],
+                filteredBy: ["year=2024"],
+                visualization: "bar_chart",
+                resultRows: 10,
+                resultColumns: 2,
+            });
+
+            expect(result).toEqual({
+                category: "metricQuery",
+                ref: "metric/revenue",
+                metrics: ["revenue"],
+                groupedBy: ["region"],
+                filteredBy: ["year=2024"],
+                visualization: "bar_chart",
+                resultRows: 10,
+                resultColumns: 2,
+            });
+        });
+
+        it("converts skillRouting detail", () => {
+            const result = convertChatConversationItemDetailFromBackend({
+                category: "skillRouting",
+                available: ["dashboard", "kda"],
+                activated: ["dashboard"],
+            });
+
+            expect(result).toEqual({
+                category: "skillRouting",
+                available: ["dashboard", "kda"],
+                activated: ["dashboard"],
+            });
+        });
+
+        it("returns undefined for unknown or empty category", () => {
+            expect(convertChatConversationItemDetailFromBackend(null)).toBeUndefined();
+            expect(convertChatConversationItemDetailFromBackend(undefined)).toBeUndefined();
+            expect(
+                convertChatConversationItemDetailFromBackend({ category: "unknownCategory" as any }),
+            ).toBeUndefined();
+        });
+    });
+
+    describe("convertChatConversationInteractionStepFromBackend", () => {
+        it("converts interaction step with tokens and traceId", () => {
+            const step = convertChatConversationInteractionStepFromBackend(
+                {
+                    stepId: "step-1",
+                    conversationId: "conv-1",
+                    responseId: "resp-1",
+                    stepIndex: 1,
+                    durationMs: 340,
+                    tokens: {
+                        input: 100,
+                        output: 50,
+                        total: 150,
+                    },
+                    createdAt: "2024-01-01T12:00:00Z",
+                },
+                "trace-step-123",
+            );
+
+            expect(step).toEqual({
+                type: "interaction_step",
+                stepId: "step-1",
+                conversationId: "conv-1",
+                responseId: "resp-1",
+                stepIndex: 1,
+                durationMs: 340,
+                tokens: {
+                    input: 100,
+                    output: 50,
+                    total: 150,
+                },
+                createdAt: new Date("2024-01-01T12:00:00Z").getTime(),
+                traceId: "trace-step-123",
+            });
+        });
+    });
+
+    describe("convertChatConversationItemFromBackend content types and metadata", () => {
+        it("converts reasoning content", () => {
+            const item: AiConversationItemResponse = {
+                conversationId: "conv-1",
+                itemIndex: 0,
+                itemId: "item-1",
+                role: "assistant",
+                createdAt: "2024-01-01T00:00:00Z",
+                content: {
+                    type: "reasoning",
+                    summary: "Reasoning summary text",
+                },
+            };
+
+            const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            expect(converted.content).toEqual({
+                type: "reasoning",
+                summary: "Reasoning summary text",
+            });
+        });
+
+        it("converts toolCall content", () => {
+            const item: AiConversationItemResponse = {
+                conversationId: "conv-1",
+                itemIndex: 0,
+                itemId: "item-1",
+                role: "assistant",
+                createdAt: "2024-01-01T00:00:00Z",
+                content: {
+                    type: "toolCall",
+                    id: "tool-id-1",
+                    callId: "call-id-1",
+                    name: "executeMaql",
+                    arguments: { maql: "SELECT 1" },
+                },
+            };
+
+            const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            expect(converted.content).toEqual({
+                type: "toolCall",
+                id: "tool-id-1",
+                callId: "call-id-1",
+                name: "executeMaql",
+                arguments: { maql: "SELECT 1" },
+            });
+        });
+
+        it("converts clarifyingQuestions multipart part", () => {
+            const item: AiConversationItemResponse = {
+                conversationId: "conv-1",
+                itemIndex: 0,
+                itemId: "item-1",
+                role: "assistant",
+                createdAt: "2024-01-01T00:00:00Z",
+                content: {
+                    type: "multipart",
+                    parts: [
+                        {
+                            type: "clarifyingQuestions",
+                            questions: [
+                                {
+                                    text: "Which metric do you mean?",
+                                    control: { options: [{ text: "Net Sales" }, { text: "Gross Profit" }] },
+                                },
+                            ],
+                        },
+                    ],
+                },
+            };
+
+            const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            expect((converted.content as IChatConversationMultipartContent).parts).toEqual([
+                {
+                    type: "clarifyingQuestions",
+                    questions: [
+                        {
+                            text: "Which metric do you mean?",
+                            control: { options: [{ text: "Net Sales" }, { text: "Gross Profit" }] },
+                        },
+                    ],
+                },
+            ]);
+        });
+
+        it("converts alertProposal multipart part", () => {
+            const item: AiConversationItemResponse = {
+                conversationId: "conv-1",
+                itemIndex: 0,
+                itemId: "item-1",
+                role: "assistant",
+                createdAt: "2024-01-01T00:00:00Z",
+                content: {
+                    type: "multipart",
+                    parts: [
+                        {
+                            type: "alertProposal",
+                            alertProposal: {
+                                title: "High Revenue Alert",
+                                description: "Triggered when revenue exceeds threshold",
+                                alert: {
+                                    execution: {
+                                        execution: {
+                                            offset: [0, 0],
+                                            size: [100, 100],
+                                            result: "res-1",
+                                        },
+                                    },
+                                    threshold: 100000,
+                                    comparison: {
+                                        operator: "GREATER_THAN",
+                                        values: [100000],
+                                    },
+                                } as any,
+                                schedule: {
+                                    cron: "0 9 * * 1",
+                                    timezone: "UTC",
+                                },
+                                notificationChannel: {
+                                    id: "channel-1",
+                                    name: "Slack Alerts",
+                                },
+                                automationId: "auto-1",
+                                dashboard: {
+                                    id: "dash-1",
+                                    title: "Sales Dashboard",
+                                },
+                                recipients: [
+                                    {
+                                        id: "user-1",
+                                        label: "Alice",
+                                        email: "alice@example.com",
+                                    },
+                                ],
+                                cta: "View Dashboard",
+                                forLabel: "Sales",
+                                forMode: "live",
+                            },
+                        },
+                    ],
+                },
+            };
+
+            const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            const [part] = (converted.content as IChatConversationMultipartContent).parts;
+            expect(part.type).toBe("alertProposal");
+            if (part.type === "alertProposal") {
+                expect(part.alertProposal?.title).toBe("High Revenue Alert");
+                expect(part.alertProposal?.schedule).toEqual({ cron: "0 9 * * 1", timezone: "UTC" });
+                expect(part.alertProposal?.notificationChannel).toBe("channel-1");
+                expect(part.alertProposal?.notificationChannelTitle).toBe("Slack Alerts");
+                expect(part.alertProposal?.id).toBe("auto-1");
+                expect(part.alertProposal?.dashboard).toEqual({ id: "dash-1", title: "Sales Dashboard" });
+                expect(part.alertProposal?.recipients).toEqual([
+                    { type: "user", id: "user-1", name: "Alice", email: "alice@example.com" },
+                ]);
+                expect(part.alertProposal?.cta).toBe("View Dashboard");
+                expect(part.alertProposal?.forLabel).toBe("Sales");
+                expect(part.alertProposal?.forMode).toBe("live");
+            }
+        });
+
+        it("converts kda multipart part", () => {
+            const item: AiConversationItemResponse = {
+                conversationId: "conv-1",
+                itemIndex: 0,
+                itemId: "item-1",
+                role: "assistant",
+                createdAt: "2024-01-01T00:00:00Z",
+                content: {
+                    type: "multipart",
+                    parts: [
+                        {
+                            type: "kda",
+                            kda: {
+                                dateAttributeId: "dt.year",
+                                measure: {
+                                    id: "m_revenue",
+                                    type: "metric",
+                                    aggregation: "SUM",
+                                },
+                                analyzedPeriod: { from: "2024-01-01", to: "2024-12-31" } as any,
+                                referencePeriod: { from: "2023-01-01", to: "2023-12-31" } as any,
+                                filters: [],
+                            },
+                        },
+                    ],
+                },
+            };
+
+            const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            const [part] = (converted.content as IChatConversationMultipartContent).parts;
+            expect(part.type).toBe("kda");
+            if (part.type === "kda") {
+                expect(part.kda).toBeDefined();
+                expect(part.kda?.measure).toBeDefined();
+                expect(part.kda?.dateAttribute).toBeDefined();
+            }
+        });
+
+        it("converts item metadata: agentId, oldAgentId, reasoningEffort, stepId, replyTo, and matches feedback", () => {
+            const item: AiConversationItemResponse = {
+                conversationId: "conv-1",
+                itemIndex: 0,
+                itemId: "item-1",
+                role: "assistant",
+                responseId: "resp-123",
+                replyTo: "item-0",
+                stepId: "step-1",
+                newAgentId: "agent-new",
+                oldAgentId: "agent-old",
+                reasoningEffort: "HIGH",
+                createdAt: "2024-01-01T00:00:00Z",
+                content: {
+                    type: "text",
+                    text: "Hello",
+                },
+            };
+
+            const responses = [
+                {
+                    responseId: "resp-123",
+                    createdAt: "2024-01-01T00:01:00Z",
+                    updatedAt: "2024-01-01T00:02:00Z",
+                    feedback: {
+                        type: "POSITIVE" as const,
+                        text: "Great answer!",
+                    },
+                },
+            ];
+
+            const converted = convertChatConversationItemFromBackend(item, responses, [], dateNormalizer)!;
+            expect(converted.agentId).toBe("agent-new");
+            expect(converted.oldAgentId).toBe("agent-old");
+            expect(converted.reasoningEffort).toBe("HIGH");
+            expect(converted.stepId).toBe("step-1");
+            expect(converted.replyTo).toBe("item-0");
+            expect(converted.feedback).toEqual({
+                type: "feedback",
+                feedback: "POSITIVE",
+                text: "Great answer!",
+                createdAt: new Date("2024-01-01T00:01:00Z").getTime(),
+                updatedAt: new Date("2024-01-01T00:02:00Z").getTime(),
+            });
+        });
+
+        it("converts searchRelationships", () => {
+            const item: AiConversationItemResponse = {
+                conversationId: "conv-1",
+                itemIndex: 0,
+                itemId: "item-1",
+                role: "assistant",
+                createdAt: "2024-01-01T00:00:00Z",
+                content: {
+                    type: "multipart",
+                    parts: [
+                        {
+                            type: "searchResults",
+                            keywords: ["sales"],
+                            objects: [],
+                            relationships: [
+                                {
+                                    sourceWorkspaceId: "ws-1",
+                                    sourceId: "src-1",
+                                    sourceType: "dashboard",
+                                    sourceTitle: "Source Dash",
+                                    targetWorkspaceId: "ws-2",
+                                    targetId: "tgt-1",
+                                    targetType: "visualization",
+                                    targetTitle: "Target Vis",
+                                },
+                            ],
+                        },
+                    ],
+                },
+            };
+
+            const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            const [part] = (converted.content as IChatConversationMultipartContent).parts;
+            if (isChatConversationSearchContent(part)) {
+                expect(part.relationships).toEqual([
+                    {
+                        sourceWorkspaceId: "ws-1",
+                        sourceObjectId: "src-1",
+                        sourceObjectType: "dashboard",
+                        sourceObjectTitle: "Source Dash",
+                        targetWorkspaceId: "ws-2",
+                        targetObjectId: "tgt-1",
+                        targetObjectType: "visualization",
+                        targetObjectTitle: "Target Vis",
+                    },
+                ]);
+            }
+        });
+
+        it("convertChatConversationItemsFromBackend converts and accumulates items in history", () => {
+            const items: AiConversationItemResponse[] = [
+                {
+                    conversationId: "conv-1",
+                    itemIndex: 0,
+                    itemId: "item-0",
+                    role: "user",
+                    createdAt: "2024-01-01T00:00:00Z",
+                    content: { type: "text", text: "User prompt" },
+                },
+                {
+                    conversationId: "conv-1",
+                    itemIndex: 1,
+                    itemId: "item-1",
+                    role: "assistant",
+                    createdAt: "2024-01-01T00:01:00Z",
+                    content: { type: "text", text: "Assistant reply" },
+                },
+            ];
+
+            const converted = convertChatConversationItemsFromBackend(items, [], dateNormalizer);
+            expect(converted).toHaveLength(2);
+            expect(converted[0].id).toBe("item-0");
+            expect(converted[1].id).toBe("item-1");
+        });
+    });
+
+    describe("dashboardPatch error handling and multi-turn reference collation", () => {
+        it("captures patch error when JSON patch operation is invalid", () => {
+            const baseDashboard: AiDashboardOutput = {
+                type: "dashboard",
+                id: "dash_error_test",
+                title: "Base Dashboard",
+                version: "2",
+                sections: [],
+            };
+
+            const item: AiConversationItemResponse = {
+                conversationId: "conv-1",
+                itemIndex: 0,
+                itemId: "item-0",
+                role: "assistant",
+                createdAt: "2024-01-01T00:00:00Z",
+                content: {
+                    type: "multipart",
+                    parts: [
+                        {
+                            type: "dashboard",
+                            dashboard: baseDashboard,
+                            saved_dashboard_id: "dash_error_test",
+                            references: undefined,
+                        },
+                        {
+                            type: "dashboardPatch",
+                            patch: {
+                                dashboard_id: "dash_error_test",
+                                operations: [
+                                    {
+                                        op: "test",
+                                        path: "/non_existing_path",
+                                        value: "invalid",
+                                    },
+                                ],
+                                references: undefined,
+                            },
+                        },
+                    ],
+                },
+            };
+
+            const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+            const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            consoleErrorSpy.mockRestore();
+
+            const [part] = (converted.content as IChatConversationMultipartContent)
+                .parts as IChatConversationDashboardContent[];
+
+            expect(part.dashboard).toBeNull();
+            expect(part.insights).toBeNull();
+            expect(part.patchError).toBeDefined();
+        });
+
+        it("collates references across multiple sequential patches in a multi-turn conversation", () => {
+            const baseDashboard = {
+                type: "dashboard",
+                id: "dash_multi_turn",
+                title: "Base Dashboard",
+                version: "2",
+                sections: [
+                    {
+                        widgets: [{ visualization: "chart_0", title: "Chart 0" }],
+                    },
+                ],
+            } as unknown as AiDashboardOutput;
+
+            const history: IChatConversationItem[] = [];
+
+            // Turn 1: base + patch 1 adding chart 1
+            const item1: AiConversationItemResponse = {
+                conversationId: "conv-1",
+                itemIndex: 0,
+                itemId: "item-0",
+                role: "assistant",
+                createdAt: "2024-01-01T00:00:00Z",
+                content: {
+                    type: "multipart",
+                    parts: [
+                        {
+                            type: "dashboard",
+                            dashboard: baseDashboard,
+                            saved_dashboard_id: "dash_multi_turn",
+                            references: undefined,
+                        },
+                        {
+                            type: "dashboardPatch",
+                            patch: {
+                                dashboard_id: "dash_multi_turn",
+                                operations: [
+                                    {
+                                        op: "add",
+                                        path: "/sections/0/widgets/1",
+                                        value: { visualization: "chart_1", title: "Chart 1" },
+                                    },
+                                ],
+                                references: {
+                                    visualizations: [
+                                        {
+                                            type: "bar_chart",
+                                            id: "chart_1",
+                                            title: "Chart 1",
+                                            query: { fields: {} },
+                                        },
+                                    ],
+                                },
+                            },
+                        },
+                    ],
+                },
+            };
+
+            const converted1 = convertChatConversationItemFromBackend(item1, [], history, dateNormalizer)!;
+            history.push(converted1);
+
+            // Turn 2: patch 2 adding chart 2, relying on history
+            const item2: AiConversationItemResponse = {
+                conversationId: "conv-1",
+                itemIndex: 1,
+                itemId: "item-1",
+                role: "assistant",
+                createdAt: "2024-01-01T00:01:00Z",
+                content: {
+                    type: "multipart",
+                    parts: [
+                        {
+                            type: "dashboardPatch",
+                            patch: {
+                                dashboard_id: "dash_multi_turn",
+                                operations: [
+                                    {
+                                        op: "add",
+                                        path: "/sections/0/widgets/1",
+                                        value: { visualization: "chart_2", title: "Chart 2" },
+                                    },
+                                ],
+                                references: {
+                                    visualizations: [
+                                        {
+                                            type: "bar_chart",
+                                            id: "chart_2",
+                                            title: "Chart 2",
+                                            query: { fields: {} },
+                                        },
+                                    ],
+                                },
+                            },
+                        },
+                    ],
+                },
+            };
+
+            const converted2 = convertChatConversationItemFromBackend(item2, [], history, dateNormalizer)!;
+            const [part2] = (converted2.content as IChatConversationMultipartContent)
+                .parts as IChatConversationDashboardContent[];
+
+            expect(part2.insights).toHaveLength(2);
+            expect(part2.insights?.map((i) => i.insight.identifier)).toEqual(["chart_1", "chart_2"]);
         });
     });
 });

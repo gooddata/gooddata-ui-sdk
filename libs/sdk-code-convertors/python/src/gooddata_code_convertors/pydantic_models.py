@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 5716a9515c68f33b5902a012c86b31684182a158bbd167f70954cce242e65d69
+# schema-hash: d150d2e8fe89769c83460518d7d1109a41a27ac7b75f2bdb44720a1f85baa829
 
 from __future__ import annotations
 
@@ -6173,6 +6173,10 @@ class Report1(BaseModel):
         None,
         description="Custom variables the report's text can interpolate as {name}. Built-in variable names win a collision.",
     )
+    takeaways_instruction: str | None = Field(
+        None,
+        description='Instructions every AI takeaway without instructions of its own is generated with. Supports {variables}.',
+    )
     variable_values: dict[str, str] | None = Field(
         None,
         description='Values for the declared variables, keyed by variable name. A variable with no value here falls back to its default.',
@@ -6266,6 +6270,10 @@ class ReportTemplate1(BaseModel):
     variables: list[ReportVariable] | None = Field(
         None,
         description="Custom variables the template's text can interpolate as {name}. A report created from it gives them values.",
+    )
+    takeaways_instruction: str | None = Field(
+        None,
+        description='Instructions every AI takeaway without instructions of its own is generated with. Supports {variables}.',
     )
 
 
@@ -6362,6 +6370,10 @@ class Report(BaseModel):
         None,
         description="Custom variables the report's text can interpolate as {name}. Built-in variable names win a collision.",
     )
+    takeaways_instruction: str | None = Field(
+        None,
+        description='Instructions every AI takeaway without instructions of its own is generated with. Supports {variables}.',
+    )
     variable_values: dict[str, str] | None = Field(
         None,
         description='Values for the declared variables, keyed by variable name. A variable with no value here falls back to its default.',
@@ -6447,6 +6459,10 @@ class ReportTemplate(BaseModel):
     variables: list[ReportVariable] | None = Field(
         None,
         description="Custom variables the template's text can interpolate as {name}. A report created from it gives them values.",
+    )
+    takeaways_instruction: str | None = Field(
+        None,
+        description='Instructions every AI takeaway without instructions of its own is generated with. Supports {variables}.',
     )
 
 

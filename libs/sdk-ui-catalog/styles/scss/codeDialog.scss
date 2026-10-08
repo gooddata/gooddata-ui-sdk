@@ -115,11 +115,42 @@
     margin-right: 10px;
 }
 
+.gd-dialog.gd-confirm.gd-analytics-catalog__as-code-dialog {
+    width: 420px;
+    max-width: calc(100vw - 40px);
+}
+
+.gd-analytics-catalog__as-code-dialog__checking {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
 .gd-analytics-catalog__as-code-dialog__usage {
     margin-top: 20px;
 
+    .gd-message {
+        display: block;
+
+        // The message styles only its `<a>` links; the link-styled buttons must match.
+        .gd-ui-kit-button--variant-link {
+            color: var(--local_linkButtonColor);
+        }
+    }
+
+    &-groups {
+        margin: 4px -8px 0 -10px;
+        padding: 4px 8px 0 10px;
+        border-top: 1px solid color-mix(in srgb, currentcolor 25%, transparent);
+    }
+
+    &-group + &-group {
+        margin-top: 10px;
+    }
+
     &-list {
-        margin: 10px 0 0;
+        margin: 4px 0 0;
         padding-left: 20px;
+        overflow-wrap: anywhere;
     }
 }

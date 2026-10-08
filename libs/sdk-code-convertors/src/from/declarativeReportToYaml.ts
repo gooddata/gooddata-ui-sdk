@@ -70,6 +70,7 @@ function bodyEntries(content: IReportContent): Array<[string, unknown]> {
         ["pages", pagesToYaml(content)],
         ["filters", filtersToYaml(content.filters)],
         ["variables", variablesToYaml(content.variables)],
+        ["takeaways_instruction", content.takeawaysInstruction || undefined],
     ];
 }
 

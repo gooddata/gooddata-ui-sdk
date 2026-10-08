@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-dashboard: Editing a schedule on a dashboard with tabs no longer asks to apply current filters because of a hidden filter, so the restricted filter entry stays. IAutomationFiltersTab gains allFilters.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

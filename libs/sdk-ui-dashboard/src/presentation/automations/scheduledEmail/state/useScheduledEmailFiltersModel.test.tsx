@@ -118,6 +118,7 @@ function fakeFiltersTab(tabId: string, hiddenFilters: FilterContextItem[] = []):
         defaultSelectedFilters: [],
         lockedFilters: [],
         hiddenFilters,
+        allFilters: hiddenFilters,
     };
 }
 

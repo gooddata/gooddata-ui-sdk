@@ -352,8 +352,6 @@
     "messages.settingsDialogError.general": "Gösterge paneli ayarları yüklenemedi. Daha sonra tekrar deneyin.",
     "visualization.dataTooLarge.headline": "Görüntülenecek çok fazla veri noktası var",
     "visualization.dataTooLarge.text": "Gösterge tablonuza bir veya daha fazla filtre uygulamayı deneyin.",
-    "visualization.execute_protected_report.headline": "Bu raporu görüntüleme yetkiniz yok",
-    "visualization.execute_protected_report.text": "Yöneticinizle iletişime geçin.",
     "visualization.empty.headline": "Filtre seçiminiz için veri yok",
     "visualization.error.headline": "Üzgünüz, bu görselleştirmeyi görüntüleyemiyoruz",
     "visualization.error.text": "Yöneticinizle iletişime geçin.",

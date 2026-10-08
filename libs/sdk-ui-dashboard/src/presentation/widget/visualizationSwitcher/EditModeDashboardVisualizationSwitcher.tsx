@@ -9,8 +9,8 @@ import { IconVisualizationSwitcher, Typography, UiIcon } from "@gooddata/sdk-ui-
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { useIsInsightWidgetRestricted } from "../../../model/react/useIsWidgetRestricted.js";
 import { selectInsightsMap } from "../../../model/store/insights/insightsSelectors.js";
-import { selectRestrictedInsightsMap } from "../../../model/store/unavailableObjects/unavailableObjectsSelectors.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 import { DashboardItem } from "../../presentationComponents/DashboardItems/DashboardItem.js";
 import { DashboardItemHeadline } from "../../presentationComponents/DashboardItems/DashboardItemHeadline.js";
@@ -43,14 +43,14 @@ export function EditModeDashboardVisualizationSwitcher({
 
     const insights = useDashboardSelector(selectInsightsMap);
     const insight = activeVisualization ? insights.get(activeVisualization.insight) : undefined;
-    const restrictedInsights = useDashboardSelector(selectRestrictedInsightsMap);
+    const isInsightWidgetRestricted = useIsInsightWidgetRestricted();
     const { RestrictedPlaceholderComponentProvider } = useDashboardComponentsContext();
 
     const { showOthers } = useExecutionProgress();
 
     // a restricted insight is withheld from the map, so this has to be decided before the branch
     // below, which would otherwise offer to add visualizations to a switcher that already has some
-    if (activeVisualization && restrictedInsights.has(activeVisualization.insight)) {
+    if (activeVisualization && isInsightWidgetRestricted(activeVisualization)) {
         const Content = RestrictedPlaceholderComponentProvider(activeVisualization);
 
         return (

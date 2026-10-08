@@ -51,6 +51,7 @@ interface IParameterServiceStub {
     createParameter: Mock;
     updateParameter: Mock;
     deleteParameter: Mock;
+    getReferences: Mock;
 }
 
 /**
@@ -61,17 +62,19 @@ interface IParameterServiceStub {
  * mock cannot be applied to a module graph they already evaluated.
  */
 function createParameterService(overrides: Partial<Omit<IParameterServiceStub, "backend">> = {}) {
-    const service: Omit<IParameterServiceStub, "backend"> = {
+    const { getReferences, ...parameters } = {
         createParameter: vi.fn().mockResolvedValue(savedParameter("param.id", "My Param")),
         updateParameter: vi.fn().mockResolvedValue(savedParameter("param.id", "My Param")),
         deleteParameter: vi.fn().mockResolvedValue(undefined),
+        getReferences: vi.fn().mockResolvedValue({ nodes: [], edges: [] }),
         ...overrides,
     };
 
     return {
-        ...service,
+        ...parameters,
+        getReferences,
         backend: {
-            workspace: () => ({ parameters: () => service }),
+            workspace: () => ({ parameters: () => parameters, references: () => ({ getReferences }) }),
         } as unknown as IAnalyticalBackend,
     };
 }

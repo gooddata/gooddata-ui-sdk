@@ -8,6 +8,7 @@ import { type IUnavailableDashboardReference } from "@gooddata/sdk-backend-spi";
 import { type IInsightWidget, type IVisualizationSwitcherWidget, idRef } from "@gooddata/sdk-model";
 
 import { insightsActions, insightsSliceReducer } from "../../../model/store/insights/index.js";
+import { restrictedDataSliceReducer } from "../../../model/store/restrictedData/index.js";
 import { type DashboardState } from "../../../model/store/types.js";
 import {
     unavailableObjectsActions,
@@ -88,6 +89,7 @@ function renderSwitcher() {
         ),
         insights: insightsSliceReducer(undefined, insightsActions.setInsights([])),
         backendCapabilities: { backendCapabilities: { hasTypeScopedIdentifiers: true } },
+        restrictedData: restrictedDataSliceReducer(undefined, { type: "init" }),
     } as unknown as DashboardState;
 
     mockUseDashboardSelector.mockImplementation((selector: (state: DashboardState) => unknown) =>

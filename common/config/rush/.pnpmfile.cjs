@@ -76,13 +76,13 @@ function readPackage(packageJson, context) {
 
     /*
         remove it when @openapitools/openapi-generator-cli update its dependency concurrently
-        @openapitools/openapi-generator-cli 2.34.0
-        └─┬ concurrently 9.2.1
-          └── shell-quote 1.8.3
+        @openapitools/openapi-generator-cli
+        └─┬ concurrently
+          └── shell-quote
     */
     if (packageJson.dependencies && packageJson.dependencies["shell-quote"]) {
         //context.log("Fixed up dependencies for shell-quote");
-        packageJson.dependencies["shell-quote"] = "1.8.4";
+        packageJson.dependencies["shell-quote"] = "1.11.0";
     }
 
     if (packageJson.name === "@gooddata/fixtures") {

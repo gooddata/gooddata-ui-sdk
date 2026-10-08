@@ -352,8 +352,6 @@
     "messages.settingsDialogError.general": "ダッシュボード設定の読み込みに失敗しました。後で再試行してください。",
     "visualization.dataTooLarge.headline": "表示するデータポイントが多すぎます",
     "visualization.dataTooLarge.text": "ダッシュボードに1つまたは複数のフィルターを適用してみてください。",
-    "visualization.execute_protected_report.headline": "このレポートを見る権限がありません",
-    "visualization.execute_protected_report.text": "管理者に連絡してください.",
     "visualization.empty.headline": "フィルターの選択肢にデータがありません",
     "visualization.error.headline": "申し訳ありませんが、このビジュアライゼーションは表示できません",
     "visualization.error.text": "管理者に連絡してください.",

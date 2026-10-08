@@ -82,12 +82,14 @@ describe("validateExistingAutomationFiltersPerTab", () => {
                 {
                     tabId: "tab1",
                     availableFilters: [allTimeCommonDateFilterContextItem],
+                    allFilters: [allTimeCommonDateFilterContextItem],
                     hiddenFilters: [],
                     lockedFilters: [],
                 },
                 {
                     tabId: "tab2",
                     availableFilters: [attributeFilterContextItem],
+                    allFilters: [attributeFilterContextItem],
                     hiddenFilters: [],
                     lockedFilters: [],
                 },
@@ -113,6 +115,7 @@ describe("validateExistingAutomationFiltersPerTab", () => {
                 {
                     tabId: "tab1",
                     availableFilters: [arbitraryFilterContextItem, matchFilterContextItem],
+                    allFilters: [arbitraryFilterContextItem, matchFilterContextItem],
                     hiddenFilters: [],
                     lockedFilters: [],
                 },
@@ -143,12 +146,14 @@ describe("validateExistingAutomationFiltersPerTab", () => {
                 {
                     tabId: "tab1",
                     availableFilters: [allTimeCommonDateFilterContextItem],
+                    allFilters: [allTimeCommonDateFilterContextItem],
                     hiddenFilters: [],
                     lockedFilters: [],
                 },
                 {
                     tabId: "tab2",
                     availableFilters: [allTimeCommonDateFilterContextItem, attributeFilterContextItem],
+                    allFilters: [allTimeCommonDateFilterContextItem, attributeFilterContextItem],
                     hiddenFilters: [attributeFilterContextItem],
                     lockedFilters: [],
                 },
@@ -184,12 +189,14 @@ describe("validateExistingAutomationFiltersPerTab", () => {
                 {
                     tabId: "tab1",
                     availableFilters: [nonAllTimeCommonDateFilterContextItem],
+                    allFilters: [nonAllTimeCommonDateFilterContextItem],
                     hiddenFilters: [],
                     lockedFilters: [nonAllTimeCommonDateFilterContextItem],
                 },
                 {
                     tabId: "tab2",
                     availableFilters: [nonAllTimeCommonDateFilterContextItem],
+                    allFilters: [nonAllTimeCommonDateFilterContextItem],
                     hiddenFilters: [],
                     lockedFilters: [],
                 },
@@ -219,6 +226,7 @@ describe("validateExistingAutomationFiltersPerTab", () => {
                 {
                     tabId: "tab1",
                     availableFilters: [allTimeCommonDateFilterContextItem],
+                    allFilters: [allTimeCommonDateFilterContextItem],
                     hiddenFilters: [],
                     lockedFilters: [],
                 },
@@ -247,12 +255,14 @@ describe("validateExistingAutomationFiltersPerTab", () => {
                 {
                     tabId: "tab1",
                     availableFilters: [allTimeCommonDateFilterContextItem],
+                    allFilters: [allTimeCommonDateFilterContextItem],
                     hiddenFilters: [],
                     lockedFilters: [],
                 },
                 {
                     tabId: "tab2",
                     availableFilters: [attributeFilterContextItem],
+                    allFilters: [attributeFilterContextItem],
                     hiddenFilters: [],
                     lockedFilters: [],
                 },
@@ -275,6 +285,7 @@ describe("validateExistingAutomationFiltersPerTab", () => {
                 {
                     tabId: "tab1",
                     availableFilters: [attributeFilterContextItem],
+                    allFilters: [attributeFilterContextItem],
                     hiddenFilters: [],
                     lockedFilters: [],
                 },

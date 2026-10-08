@@ -352,8 +352,6 @@
     "messages.settingsDialogError.general": "โหลดการตั้งค่าแดชบอร์ดไม่สำเร็จ โปรดลองอีกครั้งภายหลัง",
     "visualization.dataTooLarge.headline": "มีจุดข้อมูลมากเกินไปที่จะแสดงผล",
     "visualization.dataTooLarge.text": "ลองนำตัวกรองอย่างน้อยหนึ่งรายการไปใช้กับแดชบอร์ดของคุณ",
-    "visualization.execute_protected_report.headline": "คุณไม่ได้รับอนุญาตให้ดูรายงานนี้",
-    "visualization.execute_protected_report.text": "ติดต่อผู้ดูแลระบบของคุณ",
     "visualization.empty.headline": "ไม่มีข้อมูลสำหรับการเลือกตัวกรองของคุณ",
     "visualization.error.headline": "ขออภัย เราไม่สามารถแสดงการแสดงภาพข้อมูลนี้ได้",
     "visualization.error.text": "ติดต่อผู้ดูแลระบบของคุณ",

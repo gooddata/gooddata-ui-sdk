@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 5716a9515c68f33b5902a012c86b31684182a158bbd167f70954cce242e65d69
+# schema-hash: d150d2e8fe89769c83460518d7d1109a41a27ac7b75f2bdb44720a1f85baa829
 
 from __future__ import annotations
 
@@ -2212,6 +2212,7 @@ class Report(TypedDict):
     pages: list[ReportPageBody]
     filters: NotRequired[DashboardFilters]
     variables: NotRequired[list[ReportVariable]]
+    takeaways_instruction: NotRequired[str]
     variable_values: NotRequired[dict[str, str]]
 
 
@@ -2249,6 +2250,7 @@ class ReportTemplate(TypedDict):
     pages: list[ReportPageBody]
     filters: NotRequired[DashboardFilters]
     variables: NotRequired[list[ReportVariable]]
+    takeaways_instruction: NotRequired[str]
 
 
 class Dashboard(TypedDict):

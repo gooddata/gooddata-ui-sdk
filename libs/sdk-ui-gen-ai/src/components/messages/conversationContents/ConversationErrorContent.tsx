@@ -67,6 +67,11 @@ export function ConversationErrorContent({
                                 id="gd.gen-ai.global-model-not-compatible"
                                 values={components}
                             />
+                        ) : code === 503 || reason === "SERVICE_UNAVAILABLE" ? (
+                            <FormattedMessage
+                                id="gd.gen-ai.global-error.service-unavailable"
+                                values={components}
+                            />
                         ) : (
                             <div className={cx("gd-gen-ai-chat__error-raw")}>
                                 <MarkdownComponent allowMarkdown={useMarkdown}>{message}</MarkdownComponent>
@@ -144,7 +149,7 @@ function ErrorDetail({ traceId, code, message }: IErrorDetailProps) {
                     <strong>{formatMessage({ id: "gd.gen-ai.global-error.traceId" })}:</strong> {traceId}
                 </p>
             ) : null}
-            <p>
+            <div>
                 <pre>
                     {JSON.stringify(
                         {
@@ -155,7 +160,7 @@ function ErrorDetail({ traceId, code, message }: IErrorDetailProps) {
                         2,
                     )}
                 </pre>
-            </p>
+            </div>
         </>
     );
 }

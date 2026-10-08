@@ -1017,6 +1017,8 @@
     "userManagement.workspace.permission.createMetric.tooltip": "Lisää CREATE_METRIC-oikeuden uusien mittarien luomiseen ja hallintaan. Muiden mittarien hallintaan käyttäjä tarvitsee niihin käyttöoikeuden.",
     "userManagement.workspace.permission.createVisualization": "Visualisoinnit",
     "userManagement.workspace.permission.createVisualization.tooltip": "Lisää CREATE_VISUALIZATION-oikeuden uusien visualisointien tallentamiseen. Katseluoikeudella tämä toimii vain editorissa, joka on upotettu koontinäyttöön, jota käyttäjä voi muokata.",
+    "userManagement.workspace.permission.manageVisualizations": "Hallinnoi kaikkia visualisointeja",
+    "userManagement.workspace.permission.manageVisualizations.tooltip": "Lisää MANAGE_VISUALIZATIONS-oikeuden uusien visualisointien luomiseen ja kaikkien olemassa olevien visualisointien muokkaamiseen ilman erikseen myönnettyä käyttöoikeutta.",
     "userManagement.workspace.permission.useAiAssistant": "Tekoälyavustaja",
     "userManagement.workspace.permission.useAiAssistant.tooltip": "Lisää USE_AI_ASSISTANT oikeuden käyttää tekoälyä käyttävää chatbottia ja olla vuorovaikutuksessa sen kanssa analytiikkakysymyksissä.",
     "userManagement.workspace.granularPermission.noWorkspace": "Työtilaa ei ole valittu",

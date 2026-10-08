@@ -1017,6 +1017,8 @@
     "userManagement.workspace.permission.createMetric.tooltip": "새 메트릭을 생성하고 관리할 수 있도록 CREATE_METRIC 권한을 추가합니다. 다른 메트릭을 관리하려면 사용자가 해당 메트릭에 대한 액세스 권한이 있어야 합니다.",
     "userManagement.workspace.permission.createVisualization": "시각화",
     "userManagement.workspace.permission.createVisualization.tooltip": "새 시각화를 저장할 수 있도록 CREATE_VISUALIZATION 권한을 추가합니다. 보기 액세스 권한이 있는 경우 사용자가 편집할 수 있는 대시보드에 삽입된 편집기에서만 작동합니다.",
+    "userManagement.workspace.permission.manageVisualizations": "모든 시각화 관리",
+    "userManagement.workspace.permission.manageVisualizations.tooltip": "새 시각화를 생성하고 명시적인 접근 권한 없이 기존의 모든 시각화를 편집할 수 있는 MANAGE_VISUALIZATIONS 권한을 추가합니다.",
     "userManagement.workspace.permission.useAiAssistant": "AI 어시스턴트",
     "userManagement.workspace.permission.useAiAssistant.tooltip": "USE_AI_ASSISTANT 권한을 추가하여 분석 질문을 위한 AI 챗봇에 접근하고 상호작용합니다.",
     "userManagement.workspace.granularPermission.noWorkspace": "작업 공간이 선택되지 않음",

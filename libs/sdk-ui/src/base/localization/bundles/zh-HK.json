@@ -1017,6 +1017,8 @@
     "userManagement.workspace.permission.createMetric.tooltip": "新增 CREATE_METRIC 權限，以建立及管理新指標。若要管理任何其他指標，使用者需要擁有其存取權。",
     "userManagement.workspace.permission.createVisualization": "可視化",
     "userManagement.workspace.permission.createVisualization.tooltip": "新增 CREATE_VISUALIZATION 權限以儲存新的可視化。使用「檢視」存取權限時，此功能僅可在嵌入使用者可編輯之儀表板中的編輯器內使用。",
+    "userManagement.workspace.permission.manageVisualizations": "管理所有可視化",
+    "userManagement.workspace.permission.manageVisualizations.tooltip": "新增 MANAGE_VISUALIZATIONS 權限，以建立新的可視化，並在沒有明確存取權的情況下編輯所有現有可視化。",
     "userManagement.workspace.permission.useAiAssistant": "AI助手",
     "userManagement.workspace.permission.useAiAssistant.tooltip": "添加USE_AI_ASSISTANT權限，以訪問AI聊天機械人並與之交互以處理分析問題。",
     "userManagement.workspace.granularPermission.noWorkspace": "未選擇工作區",

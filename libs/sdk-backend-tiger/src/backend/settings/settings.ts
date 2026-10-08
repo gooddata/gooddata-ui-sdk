@@ -31,16 +31,8 @@ export class TigerSettingsService<T> {
         return this.setSetting("SEPARATORS", separators);
     }
 
-    public async setTheme(themeId: string): Promise<void> {
-        return this.setSetting("ACTIVE_THEME", { value: themeId });
-    }
-
     public async setAlertDefault(value: IAlertDefault): Promise<void> {
         return this.setSetting("ALERT", { value });
-    }
-
-    public async setColorPalette(colorPaletteId: string): Promise<void> {
-        return this.setSetting("ACTIVE_COLOR_PALETTE", { value: colorPaletteId });
     }
 
     public async setMetricFormatOverride(override: IMetricFormatOverrideSetting): Promise<void> {

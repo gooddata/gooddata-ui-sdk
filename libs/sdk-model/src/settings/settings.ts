@@ -1111,11 +1111,6 @@ export interface IFeatureFlags {
     enableAiAgenticMultiConversations?: boolean;
 
     /**
-     * Enable agent switching in AI Assistant.
-     */
-    enableGenAiAgentSwitching?: boolean;
-
-    /**
      * Enable the reasoning-effort selector in the AI Assistant chat input.
      */
     enableGenAiReasoningEffort?: boolean;
@@ -1176,6 +1171,11 @@ export interface IFeatureFlags {
      * Enable the Business Briefing reports application.
      */
     enableBusinessBriefingReportsApp?: boolean;
+
+    /**
+     * Enable the templates and page layouts screens of the Business Briefing reports application.
+     */
+    enableReportsSubsections?: boolean;
 
     /**
      * Enable the write and export postMessage commands for embedded dashboards and Analytical Designer.

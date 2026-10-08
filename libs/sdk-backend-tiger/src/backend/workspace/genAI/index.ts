@@ -3,7 +3,10 @@
 import { SmartFunctionsAi_ResolveLlmProviders } from "@gooddata/api-client-tiger";
 import {
     type GenAiApiSummarizeRequest,
+    type GenAiApiSummarizeResponse,
+    type GenAiApiSummarizeVisualizationsRequest,
     GenAiApi_SummarizeDashboard,
+    GenAiApi_SummarizeVisualizations,
 } from "@gooddata/api-client-tiger/endpoints/genAI";
 import type {
     IAnalyticsCatalogService,
@@ -15,9 +18,11 @@ import type {
     IMemoryItemsService,
     ISemanticQualityService,
     ISemanticSearchQuery,
+    IVisualizationsSummaryRequest,
 } from "@gooddata/sdk-backend-spi";
 
 import { type DateNormalizer } from "../../../convertors/fromBackend/dateFormatting/types.js";
+import { convertFilter } from "../../../convertors/toBackend/afm/FilterConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 import { AnalyticsCatalogService } from "./AnalyticsCatalogService.js";
@@ -103,20 +108,54 @@ export class GenAIService implements IGenAIService {
             ),
         );
 
-        return {
-            summary: response.data.summary,
-            filterContext: response.data.filterContext as unknown as IDashboardSummary["filterContext"],
-            visualizationsIncluded: response.data.visualizationsIncluded.map((v) => ({
-                visualizationId: v.visualizationId,
-                title: v.title,
-            })),
-            visualizationsExcluded: response.data.visualizationsExcluded.map((v) => ({
-                visualizationId: v.visualizationId,
-                reason: v.reason,
-                title: v.title,
-            })),
-            generatedAt: response.data.generatedAt,
-            tabId: response.data.tabId ?? undefined,
-        };
+        return convertSummaryResponse(response.data);
     }
+
+    async summarizeVisualizations(
+        request: IVisualizationsSummaryRequest,
+        options?: { signal?: AbortSignal },
+    ): Promise<IDashboardSummary> {
+        const aiSummarizeVisualizationsRequest: GenAiApiSummarizeVisualizationsRequest = {
+            visualizations: request.visualizations,
+            // Cast bridges the AFM filter definitions to the generated union type of the AI API.
+            filterContext: request.filters
+                .map((filter) => convertFilter(filter))
+                .filter(Boolean) as GenAiApiSummarizeVisualizationsRequest["filterContext"],
+        };
+        if (request.formatHint !== undefined) {
+            aiSummarizeVisualizationsRequest.formatHint = request.formatHint;
+        }
+
+        const response = await this.authCall((client) =>
+            GenAiApi_SummarizeVisualizations(
+                client.axios,
+                client.basePath,
+                {
+                    workspaceId: this.workspaceId,
+                    aiSummarizeVisualizationsRequest,
+                },
+                { signal: options?.signal },
+            ),
+        );
+
+        return convertSummaryResponse(response.data);
+    }
+}
+
+function convertSummaryResponse(data: GenAiApiSummarizeResponse): IDashboardSummary {
+    return {
+        summary: data.summary,
+        filterContext: data.filterContext as unknown as IDashboardSummary["filterContext"],
+        visualizationsIncluded: data.visualizationsIncluded.map((v) => ({
+            visualizationId: v.visualizationId,
+            title: v.title,
+        })),
+        visualizationsExcluded: data.visualizationsExcluded.map((v) => ({
+            visualizationId: v.visualizationId,
+            reason: v.reason,
+            title: v.title,
+        })),
+        generatedAt: data.generatedAt,
+        tabId: data.tabId ?? undefined,
+    };
 }

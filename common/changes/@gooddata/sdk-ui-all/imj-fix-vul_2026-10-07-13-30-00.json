@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "stylelint-config: disable at-rule-prelude-no-invalid; the updated css-syntax-patches-for-csstree data made it reject every SCSS @mixin and @function prelude.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

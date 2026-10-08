@@ -15,9 +15,8 @@ import {
     UiListbox,
 } from "@gooddata/sdk-ui-kit";
 
-import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { useDashboardUserInteraction } from "../../../../model/react/useDashboardUserInteraction.js";
-import { selectRestrictedInsightsMap } from "../../../../model/store/unavailableObjects/unavailableObjectsSelectors.js";
+import { useIsInsightWidgetRestricted } from "../../../../model/react/useIsWidgetRestricted.js";
 import { type CommonExportDataAttributes } from "../../../export/types.js";
 import { DashboardItemHeadline } from "../../../presentationComponents/DashboardItems/DashboardItemHeadline.js";
 
@@ -54,13 +53,13 @@ export function VisualizationSwitcherNavigationHeader({
     const userInteraction = useDashboardUserInteraction();
 
     const intl = useIntl();
-    const restrictedInsights = useDashboardSelector(selectRestrictedInsightsMap);
+    const isInsightWidgetRestricted = useIsInsightWidgetRestricted();
     const restrictedEntryTitle = intl.formatMessage({ id: "visualizationSwitcher.restrictedEntry" });
 
     const items = useMemo<IUiListboxItem<IInsightWidget>[]>(() => {
         return widget.visualizations.map((visualization) => {
             // a stored entry title names the visualization, so a restricted entry must never show it
-            const isRestricted = restrictedInsights.has(visualization.insight);
+            const isRestricted = isInsightWidgetRestricted(visualization);
             return {
                 type: "interactive",
                 id: visualization.identifier,
@@ -69,7 +68,7 @@ export function VisualizationSwitcherNavigationHeader({
                 data: visualization,
             };
         });
-    }, [widget.visualizations, restrictedInsights, restrictedEntryTitle]);
+    }, [widget.visualizations, isInsightWidgetRestricted, restrictedEntryTitle]);
 
     const handleSelectVisualization = useCallback(
         (item: IUiListboxInteractiveItem<IInsightWidget>) => {
@@ -98,9 +97,9 @@ export function VisualizationSwitcherNavigationHeader({
             )}
             renderButton={({ toggleDropdown, isOpen, ariaAttributes, buttonRef }) => (
                 <VisualizationSwitcherNavigationHeaderButton
-                    isRestricted={restrictedInsights.has(activeVisualization.insight)}
+                    isRestricted={isInsightWidgetRestricted(activeVisualization)}
                     title={
-                        restrictedInsights.has(activeVisualization.insight)
+                        isInsightWidgetRestricted(activeVisualization)
                             ? restrictedEntryTitle
                             : activeVisualization.title
                     }

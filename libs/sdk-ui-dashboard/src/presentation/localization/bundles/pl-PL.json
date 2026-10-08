@@ -352,8 +352,6 @@
     "messages.settingsDialogError.general": "Nie udało się załadować ustawień pulpitu nawigacyjnego. Spróbuj ponownie później.",
     "visualization.dataTooLarge.headline": "Zbyt wiele punktów danych do wyświetlenia",
     "visualization.dataTooLarge.text": "Spróbuj zastosować jeden lub więcej filtrów do swojego pulpitu nawigacyjnego.",
-    "visualization.execute_protected_report.headline": "Nie masz uprawnień do przeglądania tego raportu",
-    "visualization.execute_protected_report.text": "Skontaktuj się z administratorem.",
     "visualization.empty.headline": "Brak danych dla wybranego filtra",
     "visualization.error.headline": "Przepraszamy, nie możemy wyświetlić tej wizualizacji",
     "visualization.error.text": "Skontaktuj się z administratorem.",

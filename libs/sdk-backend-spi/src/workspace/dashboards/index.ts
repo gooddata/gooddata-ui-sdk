@@ -229,7 +229,8 @@ export interface IGetScheduledMailOptions {
  * `insight`, `dashboardPlugin`, `dataSet` and `analyticalDashboard` (drill targets) are loaded together
  * with the dashboard and returned in {@link IDashboardReferences}. `displayForm` loads nothing: it only
  * asks for the availability of the display forms used by the dashboard's filter contexts, reported via
- * {@link IDashboardReferences.unavailable}.
+ * {@link IDashboardReferences.unavailable}. `fact` does the same for the facts that limit the values of
+ * the dashboard's attribute filters.
  *
  * @alpha
  */
@@ -239,6 +240,7 @@ export type SupportedDashboardReferenceTypes =
     | "dataSet"
     | "displayForm"
     | "measure"
+    | "fact"
     | "computedAttribute"
     | "analyticalDashboard";
 

@@ -1,9 +1,10 @@
 // (C) 2019-2026 GoodData Corporation
 
 import {
-    type DeclarativeSettingTypeEnum,
     type ITigerClientBase,
+    type JsonApiOrganizationSettingInAttributesTypeEnum,
     type JsonApiOrganizationSettingOutWithLinksTypeEnum,
+    type JsonApiWorkspaceSettingInAttributesTypeEnum,
 } from "@gooddata/api-client-tiger";
 import { type AuthenticatedCallGuard } from "@gooddata/sdk-backend-base";
 import { type FilterContextItem, type IDashboardExportParameter } from "@gooddata/sdk-model";
@@ -74,5 +75,13 @@ export interface IExportMetadata {
     timezoneId?: string;
 }
 
-export type TigerSettingsType = DeclarativeSettingTypeEnum;
+/**
+ * Setting types the workspace and user settings endpoints accept.
+ */
+export type TigerSettingsType = JsonApiWorkspaceSettingInAttributesTypeEnum;
+/**
+ * Setting types the organization settings endpoint accepts: the workspace and user types plus
+ * organization-only ones.
+ */
+export type TigerOrganizationSettingsType = JsonApiOrganizationSettingInAttributesTypeEnum;
 export type TigerOrgSettingsType = JsonApiOrganizationSettingOutWithLinksTypeEnum;

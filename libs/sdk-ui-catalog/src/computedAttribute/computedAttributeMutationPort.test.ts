@@ -170,23 +170,24 @@ describe("computedAttributeMutationPort adapter", () => {
 });
 
 describe("computed attribute references", () => {
-    it("titles the referencing insights, metrics, dashboards, computed attributes, and data filters", async () => {
+    it("returns the referencing insights, metrics, dashboards, computed attributes, and data filters", async () => {
         const { backend, getComputedAttributeReferencingObjects } = createFakeBackend();
         getComputedAttributeReferencingObjects.mockResolvedValueOnce({
-            insights: [{ insight: { title: "Rep performance" } }, { insight: { title: "Won by band" } }],
-            measures: [{ title: "Metric ABC" }],
-            analyticalDashboards: [{ title: "Sales overview" }],
-            computedAttributes: [{ title: "Band tier" }],
-            userDataFilters: [{ title: "Region filter" }],
+            insights: [{ insight: { identifier: "viz.rep", title: "Rep performance" } }],
+            measures: [{ id: "metric.abc", type: "measure", title: "Metric ABC" }],
+            analyticalDashboards: [
+                { id: "dash.sales", type: "analyticalDashboard", title: "Sales overview" },
+            ],
+            computedAttributes: [{ id: "ca.band", type: "computedAttribute", title: "Band tier" }],
+            userDataFilters: [{ id: "udf.region", type: "userDataFilter", title: "Region filter" }],
         });
 
         expect(await listComputedAttributeReferences(backend, "ws-1", computedAttributeItem)).toEqual([
-            "Rep performance",
-            "Won by band",
-            "Metric ABC",
-            "Sales overview",
-            "Band tier",
-            "Region filter",
+            { identifier: "viz.rep", type: "insight", title: "Rep performance" },
+            { identifier: "metric.abc", type: "measure", title: "Metric ABC" },
+            { identifier: "dash.sales", type: "analyticalDashboard", title: "Sales overview" },
+            { identifier: "ca.band", type: "computedAttribute", title: "Band tier" },
+            { identifier: "udf.region", type: "userDataFilter", title: "Region filter" },
         ]);
     });
 

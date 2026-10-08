@@ -198,32 +198,39 @@ describe("parameterMutationPort adapter", () => {
 
 describe("parameter references", () => {
     const parameterItem = { identifier: "param.id", type: "parameter" } as ICatalogItemParameter;
+    const root = { identifier: "param.id", type: "parameter" };
+    const metric = { identifier: "revenue.param", type: "measure" };
+    const directInsight = { identifier: "viz.direct", type: "insight" };
+    const transitiveInsight = { identifier: "viz.transitive", type: "insight" };
 
-    it("listParameterReferences titles every dependent node and skips the root", async () => {
+    it("listParameterReferences returns only the objects that reference the parameter directly", async () => {
         const { backend, getReferences } = createFakeBackend();
         getReferences.mockResolvedValueOnce({
             nodes: [
-                { identifier: "param.id", type: "parameter", title: "My Param", isRoot: true },
-                { identifier: "ca.rep", type: "computedAttribute", title: "Rep performance" },
-                { identifier: "revenue.param", type: "measure", title: "Revenue with param" },
+                { ...root, title: "My Param", isRoot: true },
+                { ...metric, title: "Revenue with param", isRoot: false },
+                { ...directInsight, title: "Direct", isRoot: false },
+                { ...transitiveInsight, title: "Transitive", isRoot: false },
             ],
-            edges: [],
+            edges: [
+                { from: root, to: metric },
+                { from: root, to: directInsight },
+                { from: metric, to: transitiveInsight },
+                { from: metric, to: directInsight },
+            ],
         });
 
         expect(await listParameterReferences(backend, "ws-1", parameterItem)).toEqual([
-            "Rep performance",
-            "Revenue with param",
+            { ...metric, title: "Revenue with param" },
+            { ...directInsight, title: "Direct" },
         ]);
-        expect(getReferences).toHaveBeenCalledWith(
-            { identifier: "param.id", type: "parameter" },
-            { direction: "up" },
-        );
+        expect(getReferences).toHaveBeenCalledWith(root, { direction: "up" });
     });
 
     it("listParameterReferences reports nothing when only the root is present", async () => {
         const { backend, getReferences } = createFakeBackend();
         getReferences.mockResolvedValueOnce({
-            nodes: [{ identifier: "param.id", type: "parameter", title: "My Param", isRoot: true }],
+            nodes: [{ ...root, title: "My Param", isRoot: true }],
             edges: [],
         });
 

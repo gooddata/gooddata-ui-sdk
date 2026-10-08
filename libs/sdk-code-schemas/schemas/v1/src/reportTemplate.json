@@ -79,6 +79,10 @@
                     "items": {
                         "$ref": "/gaac/reportVariable"
                     }
+                },
+                "takeaways_instruction": {
+                    "type": "string",
+                    "description": "Instructions every AI takeaway without instructions of its own is generated with. Supports {variables}."
                 }
             },
             "$semantic": {

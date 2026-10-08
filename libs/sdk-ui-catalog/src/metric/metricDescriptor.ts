@@ -106,9 +106,10 @@ export const metricDescriptor = defineAsCodeDescriptor<IMeasureMetadataObjectDef
             metricYamlToDefinition({ type: "metric", title: defaultTitle, maql: "SELECT 1" }),
         seed: { load: loadMetric, loadError: capabilityMessages.loadError },
         // Warns when other objects still depend on it (insights, metrics, computed attributes, dashboards).
-        referenceCounted: {
+        usageCheck: {
+            mode: "warn",
             load: listMetricReferences,
-            usageWarning: capabilityMessages.deleteUsageWarning,
+            warningMessage: capabilityMessages.deleteUsageWarning,
         },
         // A copied metric derives a human-readable id that can collide on create; identity lets the dialog retry without it.
         identity: {

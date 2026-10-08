@@ -7,6 +7,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { type IUnavailableDashboardReference } from "@gooddata/sdk-backend-spi";
 import { type IInsightWidget, type IVisualizationSwitcherWidget, idRef } from "@gooddata/sdk-model";
 
+import { restrictedDataSliceReducer } from "../../../../model/store/restrictedData/index.js";
 import { type DashboardState } from "../../../../model/store/types.js";
 import {
     unavailableObjectsActions,
@@ -70,6 +71,7 @@ function renderHeader(activeVisualization: IInsightWidget) {
             undefined,
             unavailableObjectsActions.setUnavailableObjects([restrictedRef]),
         ),
+        restrictedData: restrictedDataSliceReducer(undefined, { type: "init" }),
     } as unknown as DashboardState;
 
     mockUseDashboardSelector.mockImplementation((selector: (state: DashboardState) => unknown) =>
