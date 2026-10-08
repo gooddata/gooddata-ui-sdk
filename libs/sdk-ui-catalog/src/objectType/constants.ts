@@ -1,5 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
+import type { ObjectType as ModelObjectType } from "@gooddata/sdk-model";
+
 import type { ObjectType } from "./types.js";
 
 /**
@@ -15,6 +17,12 @@ export const ObjectTypes = {
     FACT: "fact",
     DATASET: "dataSet",
 } as const satisfies Record<string, ObjectType>;
+
+const catalogObjectTypes: ReadonlySet<ModelObjectType> = new Set(Object.values(ObjectTypes));
+
+export function isCatalogObjectType(type: ModelObjectType | undefined): type is ObjectType {
+    return type !== undefined && catalogObjectTypes.has(type);
+}
 
 /**
  * Analytics Catalog object type filter groups in display order.

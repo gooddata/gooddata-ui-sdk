@@ -215,8 +215,15 @@ export const makeAgentChangeItem = ({
 /**
  * Make a new error message item.
  */
-export const makeErrorContent = (message: string, code?: number): IChatConversationErrorContent => ({
+export const makeErrorContent = (
+    message: string,
+    code?: number,
+    traceId?: string,
+    reason?: IChatConversationError["reason"],
+): IChatConversationErrorContent => ({
     type: "error",
     message,
-    code,
+    ...(code === undefined ? {} : { code }),
+    ...(traceId === undefined ? {} : { traceId }),
+    ...(reason === undefined ? {} : { reason }),
 });

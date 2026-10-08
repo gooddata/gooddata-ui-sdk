@@ -45,6 +45,7 @@ const messages = defineMessages({
 
 const capabilityMessages = defineMessages({
     deleteUsageWarning: { id: "analyticsCatalog.parameter.dialog.delete.usageWarning" },
+    deleteBlocked: { id: "analyticsCatalog.parameter.dialog.delete.blocked" },
 });
 
 const errorMessages = defineMessages({
@@ -132,10 +133,12 @@ export const parameterDescriptor = defineAsCodeDescriptor<
             definition: item.definition,
         }),
     },
-    // Warns when other objects still depend on it (metrics, computed attributes, insights, dashboards).
-    referenceCounted: {
+    // Refuses the deletion while a metric, computed attribute, visualization, or dashboard still references it.
+    usageCheck: {
+        mode: "block",
         load: listParameterReferences,
-        usageWarning: capabilityMessages.deleteUsageWarning,
+        warningMessage: capabilityMessages.deleteUsageWarning,
+        blockedMessage: capabilityMessages.deleteBlocked,
     },
     // A copied parameter derives a human-readable id that can collide on create; identity lets the dialog retry without it.
     identity: {

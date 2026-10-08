@@ -316,7 +316,7 @@ textarea {
     flex: 0 0 auto;
     @include form-mixins.gd-input-base;
 
-    color: var(--gd-palette-complementary-6-from-theme, variables.$default-gd-color-disabled);
+    color: var(--gd-palette-complementary-6-from-theme, variables.$default-gd-color-state-blank);
     min-width: 30px;
     text-align: center;
     background-color: var(--gd-palette-complementary-1-from-theme, variables.$default-gd-color-light);

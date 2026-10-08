@@ -11,7 +11,6 @@ import { UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 import { type GenAIAgent } from "../model.js";
 import {
     agentSwitchingActiveSelector,
-    agentSwitchingEnabledSelector,
     reasoningEffortEnabledSelector,
 } from "../store/chatWindow/chatWindowSelectors.js";
 import {
@@ -49,6 +48,7 @@ type GenAiChatAgentSwitchingOwnProps = {
     setNoAgents?: (noAgents: boolean) => void;
     leftContent?: ReactNode;
     agentsOverride?: GenAIAgent[];
+    handleOnFocus?: () => void;
 };
 
 type GenAiChatAgentSwitchingStateProps = {
@@ -56,7 +56,6 @@ type GenAiChatAgentSwitchingStateProps = {
     conversations: ReturnType<typeof conversationsSelector>;
     conversationsLoaded: ReturnType<typeof conversationsLoadedSelector>;
     agents: ReturnType<typeof agentsSelector>;
-    agentSwitchingEnabled: ReturnType<typeof agentSwitchingEnabledSelector>;
     agentSwitchingActive: ReturnType<typeof agentSwitchingActiveSelector>;
     selectedAgentId: ReturnType<typeof selectedAgentIdSelector>;
     selectedEffort: ReturnType<typeof selectedEffortSelector>;
@@ -69,7 +68,6 @@ type IGenAiChatAgentSwitchingDispatchProps = {
 };
 
 function GenAiChatAgentSwitchingCore({
-    agentSwitchingEnabled,
     isAssistantLoading,
     isConversationsLoading,
     handleSubmit,
@@ -152,14 +150,7 @@ function GenAiChatAgentSwitchingCore({
     }, [setNoAgents, hasNoAgents]);
 
     return (
-        <div
-            className={cx({
-                "gd-gen-ai-chat__input__actions": agentSwitchingEnabled,
-                "gd-gen-ai-chat__input__send_button": !agentSwitchingEnabled,
-                "gd-gen-ai-chat__input__send_button--disabled": !agentSwitchingEnabled && buttonDisabled,
-            })}
-            onMouseDown={agentSwitchingEnabled ? onMouseDown : undefined}
-        >
+        <div className={cx("gd-gen-ai-chat__input__actions")} onMouseDown={onMouseDown}>
             {leftContent}
             {agentSwitchingActive && hasNoAgents ? (
                 <span
@@ -171,7 +162,7 @@ function GenAiChatAgentSwitchingCore({
                 >
                     {noAgentAvailableLabel}
                 </span>
-            ) : agentSwitchingEnabled ? (
+            ) : (
                 <>
                     {/* In preview mode (agentSwitchingActive is false) the assistant is pinned to the
                         agent being built, so the agent dropdown — and its in-menu Reasoning row — is
@@ -215,36 +206,17 @@ function GenAiChatAgentSwitchingCore({
                         content={sendLabel}
                     />
                 </>
-            ) : (
-                <UiTooltip
-                    triggerBy={["focus", "hover"]}
-                    arrowPlacement="bottom"
-                    anchor={
-                        <UiIconButton
-                            icon="send"
-                            variant="tertiary"
-                            size="medium"
-                            dataTestId="send_message"
-                            isDisabled={buttonDisabled}
-                            onClick={buttonDisabled ? undefined : handleSubmitHandler}
-                            accessibilityConfig={{
-                                ariaLabel: sendLabel,
-                            }}
-                        />
-                    }
-                    content={sendLabel}
-                />
             )}
         </div>
     );
 }
 
 export function GenAiChatAgentSwitching(ownProps: GenAiChatAgentSwitchingOwnProps) {
+    const { handleOnFocus } = ownProps;
     const conversation = useSelector((state: RootState) => conversationSelector(state));
     const conversations = useSelector((state: RootState) => conversationsSelector(state));
     const conversationsLoaded = useSelector((state: RootState) => conversationsLoadedSelector(state));
     const agents = useSelector((state: RootState) => agentsSelector(state));
-    const agentSwitchingEnabled = useSelector((state: RootState) => agentSwitchingEnabledSelector(state));
     const agentSwitchingActive = useSelector((state: RootState) => agentSwitchingActiveSelector(state));
     const selectedAgentId = useSelector((state: RootState) => selectedAgentIdSelector(state));
     const selectedEffort = useSelector((state: RootState) => selectedEffortSelector(state));
@@ -254,14 +226,16 @@ export function GenAiChatAgentSwitching(ownProps: GenAiChatAgentSwitchingOwnProp
     const setSelectedAgent = useCallback(
         (...args: Parameters<typeof setSelectedAgentAction>) => {
             dispatch(setSelectedAgentAction(...args));
+            handleOnFocus?.();
         },
-        [dispatch],
+        [dispatch, handleOnFocus],
     );
     const setSelectedEffort = useCallback(
         (...args: Parameters<typeof setSelectedEffortAction>) => {
             dispatch(setSelectedEffortAction(...args));
+            handleOnFocus?.();
         },
-        [dispatch],
+        [dispatch, handleOnFocus],
     );
 
     return (
@@ -271,7 +245,6 @@ export function GenAiChatAgentSwitching(ownProps: GenAiChatAgentSwitchingOwnProp
             conversations={conversations}
             conversationsLoaded={conversationsLoaded}
             agents={agents}
-            agentSwitchingEnabled={agentSwitchingEnabled}
             agentSwitchingActive={agentSwitchingActive}
             selectedAgentId={selectedAgentId}
             selectedEffort={selectedEffort}

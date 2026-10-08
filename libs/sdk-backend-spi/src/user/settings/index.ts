@@ -1,6 +1,6 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
-import { type ISeparators } from "@gooddata/sdk-model";
+import { type ISeparators, type ObjRef } from "@gooddata/sdk-model";
 
 import { type IUserSettings } from "../../common/settings.js";
 
@@ -52,4 +52,42 @@ export interface IUserSettingsService {
      * @returns promise
      */
     setSeparators(separators: ISeparators): Promise<void>;
+
+    /**
+     * Set the active theme for the current user. It takes precedence over the active theme of the workspace
+     * and of the organization.
+     *
+     * @param theme - organization theme id, or a reference to an organization theme (untyped or typed
+     *  "theme"). A user setting has no workspace, so a reference typed "workspaceTheme" is rejected.
+     *
+     * @returns promise
+     */
+    setTheme(theme: string | ObjRef): Promise<void>;
+
+    /**
+     * Delete the active theme of the current user, returning to the workspace or organization theme.
+     *
+     * @returns promise
+     */
+    deleteTheme(): Promise<void>;
+
+    /**
+     * Set the active color palette for the current user. It takes precedence over the active color palette
+     * of the workspace and of the organization.
+     *
+     * @param colorPalette - organization color palette id, or a reference to an organization color palette
+     *  (untyped or typed "colorPalette"). A user setting has no workspace, so a reference typed
+     *  "workspaceColorPalette" is rejected.
+     *
+     * @returns promise
+     */
+    setColorPalette(colorPalette: string | ObjRef): Promise<void>;
+
+    /**
+     * Delete the active color palette of the current user, returning to the workspace or organization color
+     * palette.
+     *
+     * @returns promise
+     */
+    deleteColorPalette(): Promise<void>;
 }

@@ -1017,6 +1017,8 @@
     "userManagement.workspace.permission.createMetric.tooltip": "เพิ่มสิทธิ์ CREATE_METRIC เพื่อสร้างและจัดการเมตริกใหม่ หากต้องการจัดการเมตริกอื่น ผู้ใช้ต้องมีสิทธิ์เข้าถึงเมตริกนั้น",
     "userManagement.workspace.permission.createVisualization": "การแสดงภาพข้อมูล",
     "userManagement.workspace.permission.createVisualization.tooltip": "เพิ่มสิทธิ์ CREATE_VISUALIZATION เพื่อบันทึกการแสดงภาพข้อมูลใหม่ เมื่อมีสิทธิ์ดู จะใช้สิทธิ์นี้ได้เฉพาะในเครื่องมือแก้ไขที่ฝังอยู่ในแดชบอร์ดที่ผู้ใช้แก้ไขได้เท่านั้น",
+    "userManagement.workspace.permission.manageVisualizations": "จัดการการแสดงภาพข้อมูลทั้งหมด",
+    "userManagement.workspace.permission.manageVisualizations.tooltip": "เพิ่มสิทธิ์ MANAGE_VISUALIZATIONS เพื่อสร้างการแสดงภาพข้อมูลใหม่และแก้ไขการแสดงภาพข้อมูลที่มีอยู่ทั้งหมดโดยไม่ต้องมีสิทธิ์เข้าถึงโดยตรง",
     "userManagement.workspace.permission.useAiAssistant": "AI Assistant",
     "userManagement.workspace.permission.useAiAssistant.tooltip": "เพิ่มสิทธิ์ USE_AI_ASSISTANT เพื่อเข้าถึงและโต้ตอบกับแชตบอต AI สำหรับคำถามด้านการวิเคราะห์",
     "userManagement.workspace.granularPermission.noWorkspace": "ไม่ได้เลือกพื้นที่ทำงาน",

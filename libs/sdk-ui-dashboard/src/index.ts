@@ -1890,6 +1890,10 @@ export type {
     DashboardSummaryWorkflowState,
     DashboardSummaryWorkflowInfo,
 } from "./model/store/dashboardSummaryWorkflow/dashboardSummaryWorkflowState.js";
+export type {
+    IRefusedExecution,
+    IRestrictedDataState,
+} from "./model/store/restrictedData/restrictedDataState.js";
 export {
     selectNotificationChannels,
     selectNotificationChannelsCount,

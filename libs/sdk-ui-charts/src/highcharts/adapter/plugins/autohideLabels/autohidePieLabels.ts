@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import type Highcharts from "highcharts/esm/highcharts.js";
 
@@ -12,6 +12,13 @@ import {
 // delete this plugin once we upgrade to newer highcharts,
 // set allowOverlap: false to get this behaviour
 
+interface IPieDataLabel extends IRectBySize {
+    connector?: {
+        show?: () => void;
+        hide?: () => void;
+    };
+}
+
 export const autohidePieLabels = (chart: Highcharts.Chart): void => {
     const visibleSeries = getVisibleSeries(chart);
     const visiblePoints = getDataPoints(visibleSeries);
@@ -23,7 +30,7 @@ export const autohidePieLabels = (chart: Highcharts.Chart): void => {
 
     for (let i = 0; i < visiblePoints.length; i++) {
         // TODO the as any cast is sketchy, but this is what was in the original lodash/get call
-        const actualLabel: IRectBySize = (visiblePoints?.[i] as any)?.dataLabel;
+        const actualLabel: IPieDataLabel = (visiblePoints?.[i] as any)?.dataLabel;
 
         // do nothing if label not found or already hidden
         if (!actualLabel || !visibilityMap[i]) {
@@ -32,7 +39,7 @@ export const autohidePieLabels = (chart: Highcharts.Chart): void => {
 
         for (let neighborIdx = i + 1; neighborIdx < visiblePoints.length; neighborIdx++) {
             // TODO the as any cast is sketchy, but this is what was in the original lodash/get call
-            const neighborLabel: IRectBySize = (visiblePoints?.[neighborIdx] as any)?.dataLabel;
+            const neighborLabel: IPieDataLabel = (visiblePoints?.[neighborIdx] as any)?.dataLabel;
             // do nothing if label not found or already hidden
             if (!neighborLabel || !visibilityMap[neighborIdx]) {
                 continue;
@@ -41,8 +48,10 @@ export const autohidePieLabels = (chart: Highcharts.Chart): void => {
             if (intersects) {
                 visibilityMap[neighborIdx] = false;
                 neighborLabel.hide?.();
+                neighborLabel.connector?.hide?.();
             } else {
                 neighborLabel.show?.();
+                neighborLabel.connector?.show?.();
             }
         }
     }

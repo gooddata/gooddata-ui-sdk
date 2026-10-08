@@ -161,6 +161,14 @@ describe("resolveUnavailableReferences", () => {
         expect(resolveUnavailableReferences(doc, ["insight"])).toEqual([]);
     });
 
+    it("leaves facts to the filter contexts: the dashboard GET does not link them", () => {
+        const doc = dashboardDocument({
+            content: { filters: [{ validateElementsBy: [{ identifier: { id: "amount", type: "fact" } }] }] },
+        });
+
+        expect(resolveUnavailableReferences(doc, ["fact"])).toEqual([]);
+    });
+
     it("classifies a content ref absent from relationships as notFound", () => {
         const doc = dashboardDocument({
             relationships: {
@@ -857,6 +865,158 @@ describe("fetchUnavailableFilterDisplayForms", () => {
             {
                 ref: { identifier: "tier", type: "computedAttribute" },
                 type: "computedAttribute",
+                reason: "forbidden",
+            },
+        ]);
+    });
+
+    const dashboardWithMetricFilter = (contextId: string, metricId: string) =>
+        ({
+            filterContext: {
+                ref: idRef(contextId, "filterContext"),
+                filters: [
+                    {
+                        dashboardMeasureValueFilter: {
+                            measure: idRef(metricId, "measure"),
+                            localIdentifier: "mvf1",
+                            conditions: [],
+                        },
+                    },
+                ],
+            },
+        }) as unknown as IDashboard;
+
+    const contextWithMetricFilter = (id: string, metricId: string) => ({
+        id,
+        type: "filterContext",
+        attributes: {
+            content: {
+                filters: [
+                    {
+                        dashboardMeasureValueFilter: {
+                            measure: { identifier: { id: metricId, type: "metric" } },
+                            localIdentifier: "mvf1",
+                            conditions: [],
+                        },
+                    },
+                ],
+            },
+        },
+        relationships: { metrics: { data: [{ id: metricId, type: "metric" }] } },
+    });
+
+    it("asks for the metrics too when a filter uses one", async () => {
+        respondWith([]);
+
+        await fetchUnavailableFilterDisplayForms(
+            authCall,
+            "ws",
+            dashboardWithMetricFilter("fcRoot", "revenue"),
+            ["displayForm", "measure"],
+        );
+
+        expect(requestedQuery().get("include")).toEqual("labels,metrics");
+    });
+
+    it("does not ask for metrics when no filter uses one", async () => {
+        respondWith([]);
+
+        await fetchUnavailableFilterDisplayForms(authCall, "ws", dashboardWithContexts("fcRoot"), [
+            "displayForm",
+            "measure",
+        ]);
+
+        expect(requestedQuery().get("include")).toEqual("labels");
+    });
+
+    it("reports a metric the response withholds", async () => {
+        respondWith([contextWithMetricFilter("fcRoot", "revenue")], [{ id: "revenue", type: "metric" }]);
+
+        await expect(
+            fetchUnavailableFilterDisplayForms(
+                authCall,
+                "ws",
+                dashboardWithMetricFilter("fcRoot", "revenue"),
+                ["displayForm", "measure"],
+            ),
+        ).resolves.toEqual([
+            {
+                ref: { identifier: "revenue", type: "measure" },
+                type: "measure",
+                reason: "forbidden",
+            },
+        ]);
+    });
+
+    const dashboardWithLimitedFilter = (contextId: string, limitingItems: ObjRef[]) =>
+        ({
+            filterContext: {
+                ref: idRef(contextId, "filterContext"),
+                filters: [
+                    {
+                        attributeFilter: {
+                            displayForm: idRef("label1", "displayForm"),
+                            negativeSelection: true,
+                            attributeElements: { uris: [] },
+                            localIdentifier: "af1",
+                            validateElementsBy: limitingItems,
+                        },
+                    },
+                ],
+            },
+        }) as unknown as IDashboard;
+
+    it("asks for the metrics and facts that limit a filter's values", async () => {
+        respondWith([]);
+
+        await fetchUnavailableFilterDisplayForms(
+            authCall,
+            "ws",
+            dashboardWithLimitedFilter("fcRoot", [idRef("revenue", "measure"), idRef("amount", "fact")]),
+            ["displayForm", "measure", "fact"],
+        );
+
+        expect(requestedQuery().get("include")).toEqual("labels,metrics,facts");
+    });
+
+    it("reports a fact limiting a filter's values that the response withholds", async () => {
+        respondWith(
+            [
+                {
+                    id: "fcRoot",
+                    type: "filterContext",
+                    attributes: {
+                        content: {
+                            filters: [
+                                {
+                                    attributeFilter: {
+                                        displayForm: { identifier: { id: "label1", type: "label" } },
+                                        validateElementsBy: [{ identifier: { id: "amount", type: "fact" } }],
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                    relationships: {
+                        labels: { data: [{ id: "label1", type: "label" }] },
+                        facts: { data: [{ id: "amount", type: "fact" }] },
+                    },
+                },
+            ],
+            [{ id: "amount", type: "fact" }],
+        );
+
+        await expect(
+            fetchUnavailableFilterDisplayForms(
+                authCall,
+                "ws",
+                dashboardWithLimitedFilter("fcRoot", [idRef("amount", "fact")]),
+                ["displayForm", "fact"],
+            ),
+        ).resolves.toEqual([
+            {
+                ref: { identifier: "amount", type: "fact" },
+                type: "fact",
                 reason: "forbidden",
             },
         ]);

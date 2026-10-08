@@ -1,6 +1,8 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { isUnexpectedResponseError } from "@gooddata/sdk-backend-spi";
+import { type IChatConversationError, isUnexpectedResponseError } from "@gooddata/sdk-backend-spi";
+
+import { type IChatConversationErrorContent, makeErrorContent } from "../../model.js";
 
 export function extractError(e: unknown) {
     if (e instanceof Error) {
@@ -10,6 +12,30 @@ export function extractError(e: unknown) {
     }
 
     return String(e);
+}
+
+export function extractErrorContent(e: unknown): IChatConversationErrorContent {
+    if (isUnexpectedResponseError(e)) {
+        const body = e.responseBody;
+        const detail = extractErrorDetail(e) ?? e.message;
+        const reason =
+            body && typeof body === "object" && "reason" in body && typeof body.reason === "string"
+                ? (body.reason as IChatConversationError["reason"])
+                : undefined;
+        const traceId =
+            e.traceId ??
+            (body && typeof body === "object" && "traceId" in body && typeof body.traceId === "string"
+                ? body.traceId
+                : undefined);
+
+        return makeErrorContent(`${e.name}: ${detail}`, e.httpStatus, traceId, reason);
+    }
+
+    if (e instanceof Error) {
+        return makeErrorContent(`${e.name}: ${e.message}`);
+    }
+
+    return makeErrorContent(String(e));
 }
 
 function extractErrorDetail(e: Error): string | undefined {

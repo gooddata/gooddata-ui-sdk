@@ -11,6 +11,7 @@ const SUPPORTED_LINEAGE_TYPES: ObjectType[] = [
     "fact",
     "dataSet",
     "computedAttribute",
+    "parameter",
 ];
 
 /**

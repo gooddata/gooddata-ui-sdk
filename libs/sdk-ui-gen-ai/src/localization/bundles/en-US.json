@@ -19,6 +19,10 @@
         "text": "Syncing failed. Please try again later.",
         "crowdinContext": "Message shown when semantic search failed to sync."
     },
+    "gd.gen-ai.global-error.service-unavailable": {
+        "text": "The AI service is temporarily unavailable. Please try again later.",
+        "crowdinContext": "Message shown when the AI service or inference gateway is temporarily unavailable."
+    },
     "gd.gen-ai.global-error.traceId": {
         "text": "Error trace ID",
         "crowdinContext": "Button label to show more detailed error information"

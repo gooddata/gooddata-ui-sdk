@@ -25,6 +25,7 @@ import { type IDashboardMetaState } from "./meta/metaState.js";
 import { type INotificationChannelsState } from "./notificationChannels/notificationChannelsState.js";
 import { type PermissionsState } from "./permissions/permissionsState.js";
 import { type IRenderModeState } from "./renderMode/renderModeState.js";
+import { type IRestrictedDataState } from "./restrictedData/restrictedDataState.js";
 import { type SavingState } from "./saving/savingState.js";
 import { type IShowWidgetAsTableState } from "./showWidgetAsTable/showWidgetAsTableState.js";
 import { type ITabsState } from "./tabs/tabsState.js";
@@ -115,6 +116,13 @@ export type DashboardState = {
      * @beta
      */
     executionResults: EntityState<IExecutionResultEnvelope, EntityId>;
+
+    /**
+     * Widgets whose execution was refused because the current user may not read some of the data.
+     *
+     * @internal
+     */
+    restrictedData: IRestrictedDataState;
 
     /**
      * Part of state where the different dashboard component queries may cache their results.

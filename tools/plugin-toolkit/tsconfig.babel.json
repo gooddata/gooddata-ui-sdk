@@ -3,6 +3,7 @@
         "target": "esnext",
         "module": "esnext",
         "moduleResolution": "bundler",
+        "moduleDetection": "force",
         "jsx": "preserve",
         "isolatedModules": true,
         "verbatimModuleSyntax": false,

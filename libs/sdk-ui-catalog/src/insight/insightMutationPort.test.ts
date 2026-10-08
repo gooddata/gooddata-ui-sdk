@@ -151,15 +151,18 @@ describe("loadInsight", () => {
 });
 
 describe("insight references", () => {
-    it("listInsightReferences titles the referencing dashboards", async () => {
+    it("listInsightReferences returns the referencing dashboards", async () => {
         const { backend, getInsightReferencingObjects } = createFakeBackend();
         getInsightReferencingObjects.mockResolvedValueOnce({
-            analyticalDashboards: [{ title: "Sales overview" }, { title: "Exec summary" }],
+            analyticalDashboards: [
+                { id: "dash.sales", type: "analyticalDashboard", title: "Sales overview" },
+                { id: "dash.exec", type: "analyticalDashboard", title: "Exec summary" },
+            ],
         });
 
         expect(await listInsightReferences(backend, "ws-1", insightItem)).toEqual([
-            "Sales overview",
-            "Exec summary",
+            { identifier: "dash.sales", type: "analyticalDashboard", title: "Sales overview" },
+            { identifier: "dash.exec", type: "analyticalDashboard", title: "Exec summary" },
         ]);
     });
 

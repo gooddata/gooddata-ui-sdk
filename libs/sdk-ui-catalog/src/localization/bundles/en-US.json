@@ -800,8 +800,12 @@
         "crowdinContext": "Label for the Delete button in the parameter delete confirmation dialog."
     },
     "analyticsCatalog.parameter.dialog.delete.usageWarning": {
-        "text": "This parameter is used by {count, plural, one {# object} other {# objects}}. Deleting it may break them.",
-        "crowdinContext": "Warning shown in the parameter delete dialog when the parameter is referenced by other objects."
+        "text": "This parameter is used in <b>{count, plural, one {# object} other {# objects}}</b>.",
+        "crowdinContext": "Warning banner in the parameter delete dialog when other objects still reference it. {count} is the number of referencing metrics, attributes, visualizations and dashboards, wrapped in <b>. Followed by a Show more toggle that lists their titles."
+    },
+    "analyticsCatalog.parameter.dialog.delete.blocked": {
+        "text": "The parameter <b>{name}</b> cannot be deleted because it is used in some metrics, attributes, visualizations, or dashboards. To delete this parameter, remove it from all of them first.",
+        "crowdinContext": "Body of the parameter delete dialog when metrics, attributes, visualizations, or dashboards still reference it, so deletion is refused. {name} is the parameter title or fallback ID. <b>...</b> wraps the name in bold."
     },
     "analyticsCatalog.parameter.delete.success": {
         "text": "Parameter deleted.",
@@ -912,7 +916,7 @@
         "crowdinContext": "Body text of the computed attribute delete confirmation dialog. {name} is the computed attribute title or fallback ID. <b>...</b> wraps the name in bold."
     },
     "analyticsCatalog.computedAttribute.dialog.delete.usageWarning": {
-        "text": "This attribute is used in <b>{count, plural, one {# object} other {# objects}}</b>",
+        "text": "This attribute is used in <b>{count, plural, one {# object} other {# objects}}</b>.",
         "crowdinContext": "Warning banner in the computed attribute delete dialog when other objects still reference it. {count} is the number of referencing visualizations, metrics, dashboards and data filters, wrapped in <b>. Followed by a Show more toggle that lists their titles."
     },
     "analyticsCatalog.computedAttribute.dialog.delete.blocked": {
@@ -1018,6 +1022,38 @@
     "analyticsCatalog.asCode.dialog.delete.showLess": {
         "text": "Show less",
         "crowdinContext": "Toggle in the as-code delete dialog that hides the list of objects referencing the one being deleted."
+    },
+    "analyticsCatalog.asCode.dialog.delete.usageGroup.visualizations": {
+        "text": "Visualizations ({count})",
+        "crowdinContext": "Heading of a group in the list of objects that use the object being deleted. {count} is the number of visualizations in the group."
+    },
+    "analyticsCatalog.asCode.dialog.delete.usageGroup.dashboards": {
+        "text": "Dashboards ({count})",
+        "crowdinContext": "Heading of a group in the list of objects that use the object being deleted. {count} is the number of dashboards in the group."
+    },
+    "analyticsCatalog.asCode.dialog.delete.usageGroup.metrics": {
+        "text": "Metrics ({count})",
+        "crowdinContext": "Heading of a group in the list of objects that use the object being deleted. {count} is the number of metrics in the group."
+    },
+    "analyticsCatalog.asCode.dialog.delete.usageGroup.attributes": {
+        "text": "Attributes ({count})",
+        "crowdinContext": "Heading of a group in the list of objects that use the object being deleted. {count} is the number of attributes in the group."
+    },
+    "analyticsCatalog.asCode.dialog.delete.usageGroup.otherObjects": {
+        "text": "Other objects ({count})",
+        "crowdinContext": "Heading of a group in the list of objects that use the object being deleted. It holds objects of all other types. {count} is the number of objects in the group."
+    },
+    "analyticsCatalog.asCode.dialog.delete.checkingUsage": {
+        "text": "Checking where it is used…",
+        "crowdinContext": "Dialog body text in the as-code delete dialog while it looks up which objects use the one being deleted."
+    },
+    "analyticsCatalog.asCode.dialog.delete.usageUnknown": {
+        "text": "Could not check where this object is used.",
+        "crowdinContext": "Error notice in the as-code delete dialog when the lookup of objects that use the one being deleted fails."
+    },
+    "analyticsCatalog.asCode.dialog.delete.tryAgain": {
+        "text": "Try again",
+        "crowdinContext": "Link after the error notice in the as-code delete dialog that repeats the failed lookup of objects that use the one being deleted."
     },
     "analyticsCatalog.asCode.dialog.autoFormat": {
         "text": "Auto-format",

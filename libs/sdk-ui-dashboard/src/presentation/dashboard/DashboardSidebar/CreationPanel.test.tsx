@@ -10,6 +10,15 @@ import { type IUiResizableSidebarState } from "@gooddata/sdk-ui-kit";
 import { type DraggableContentItemType } from "../../dragAndDrop/types.js";
 import { createInternalIntl } from "../../localization/createInternalIntl.js";
 
+// `isolate: false` shares one module graph per worker, so the modules mocked below may already have
+// been evaluated against their real dependencies by a test file that ran earlier in the same worker,
+// which would turn the `vi.mock()` calls into no-ops. Dropping the module registry from `vi.hoisted()`
+// (it runs before this file's own imports, unlike any `beforeEach`) makes the import below resolve
+// through the mocks.
+vi.hoisted(() => {
+    vi.resetModules();
+});
+
 vi.mock("../../../model/react/DashboardStoreProvider.js", () => ({
     useDashboardSelector: () => false,
 }));

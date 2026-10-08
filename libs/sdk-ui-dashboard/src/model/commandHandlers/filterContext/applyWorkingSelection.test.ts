@@ -4,15 +4,24 @@
 
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { type IDashboardFilterView, type IDashboardParameter, idRef } from "@gooddata/sdk-model";
+import {
+    type IDashboardFilterView,
+    type IDashboardParameter,
+    idRef,
+    serializeObjRef,
+} from "@gooddata/sdk-model";
 
-import { SimpleDashboardIdentifier } from "../../../tests/SimpleDashboard.test.helpers.js";
+import {
+    SimpleDashboardIdentifier,
+    SimpleSortedTableWidgetRef,
+} from "../../../tests/SimpleDashboard.test.helpers.js";
 import { initializeDashboard } from "../../commands/dashboard.js";
 import {
     applyFilterContextWorkingSelection,
     applyFilterView,
     changeWorkingAttributeFilterSelection,
     resetFilterContextWorkingSelection,
+    setAttributeFilterTitle,
 } from "../../commands/filters.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { isDashboardParametersChanged } from "../../events/parameters.js";
@@ -22,6 +31,11 @@ import { selectIsCrossFiltering } from "../../store/drill/drillSelectors.js";
 import { drillActions } from "../../store/drill/index.js";
 import { filterViewsActions } from "../../store/filterViews/index.js";
 import { selectDashboardRef } from "../../store/meta/metaSelectors.js";
+import { restrictedDataActions } from "../../store/restrictedData/index.js";
+import {
+    selectWidgetExecutionInputsKey,
+    selectWidgetsWithRestrictedData,
+} from "../../store/restrictedData/restrictedDataSelectors.js";
 import {
     selectFilterContextAttributeFilters,
     selectFilterContextDefinition,
@@ -75,6 +89,21 @@ describe("apply/reset of the working selection", () => {
         return selectFilterContextAttributeFilters(Tester.state())[0].attributeFilter.localIdentifier!;
     }
 
+    function refuseWithCurrentInputs(): void {
+        Tester.dispatch(
+            restrictedDataActions.executionRefused({
+                ref: SimpleSortedTableWidgetRef,
+                inputsKey: selectWidgetExecutionInputsKey(SimpleSortedTableWidgetRef)(Tester.state()),
+            }),
+        );
+    }
+
+    function isRestricted(): boolean {
+        return selectWidgetsWithRestrictedData(Tester.state()).has(
+            serializeObjRef(SimpleSortedTableWidgetRef),
+        );
+    }
+
     async function stageFilterAndParameter(): Promise<void> {
         await Tester.dispatchAndWaitFor(
             changeWorkingAttributeFilterSelection(
@@ -91,6 +120,38 @@ describe("apply/reset of the working selection", () => {
         expect(selectIsWorkingSelectionChanged(Tester.state())).toBe(true);
         expect(selectParameterRuntimeOverrideByRef(topNRef)(Tester.state())).toBe(5);
     }
+
+    it("keeps a widget refused for restricted data restricted while filters are only staged or nothing is applied", async () => {
+        refuseWithCurrentInputs();
+        expect(isRestricted()).toBe(true);
+
+        await Tester.dispatchAndWaitFor(
+            applyFilterContextWorkingSelection(),
+            "GDC.DASH/EVT.FILTER_CONTEXT.WORKING_SELECTION.APPLIED",
+        );
+        expect(isRestricted()).toBe(true);
+
+        await stageFilterAndParameter();
+        expect(isRestricted()).toBe(true);
+
+        await Tester.dispatchAndWaitFor(
+            applyFilterContextWorkingSelection(),
+            "GDC.DASH/EVT.FILTER_CONTEXT.WORKING_SELECTION.APPLIED",
+        );
+        expect(isRestricted()).toBe(false);
+    });
+
+    it("keeps a widget refused for restricted data restricted when a filter is only renamed", async () => {
+        refuseWithCurrentInputs();
+        expect(isRestricted()).toBe(true);
+
+        await Tester.dispatchAndWaitFor(
+            setAttributeFilterTitle(firstAttributeFilterLocalId(), "Renamed"),
+            "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.TITLE_CHANGED",
+        );
+
+        expect(isRestricted()).toBe(true);
+    });
 
     it("commits the staged filters and the staged parameters together", async () => {
         await stageFilterAndParameter();

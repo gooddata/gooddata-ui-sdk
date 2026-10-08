@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { type AgentCustomSkill } from "@gooddata/sdk-model";
 
-import { agentSwitchingEnabledSelector } from "../store/chatWindow/chatWindowSelectors.js";
 import {
     agentsSelector,
     conversationsLoadedSelector,
@@ -22,7 +21,6 @@ export function useGenAIStandaloneInputData(requiredSkills?: AgentCustomSkill[])
     const agentsList = useSelector(agentsSelector);
     const currentAgentId = useSelector(selectedAgentIdSelector);
     const conversationsLoaded = useSelector(conversationsLoadedSelector);
-    const agentSwitchingEnabled = useSelector(agentSwitchingEnabledSelector);
 
     const setSelectedAgent = useCallback(
         (agentId: string | undefined) => {
@@ -50,7 +48,6 @@ export function useGenAIStandaloneInputData(requiredSkills?: AgentCustomSkill[])
         agents,
         selectedAgentId,
         conversationsLoaded,
-        agentSwitchingEnabled,
         setSelectedAgent,
     };
 }

@@ -22,7 +22,8 @@ export type AgentCustomSkill =
     | "visualization"
     | "visualization_summary"
     | "what_if_analysis"
-    | "knowledge";
+    | "knowledge"
+    | "report_builder";
 
 /**
  * Skills mode for an AI agent.

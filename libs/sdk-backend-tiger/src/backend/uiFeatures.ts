@@ -87,7 +87,6 @@ export enum TigerFeaturesNames {
     EnableGenAIMemory = "enableGenAIMemory",
     EnableOrgLevelAIMemory = "enableOrgLevelAIMemory",
     EnableAiAgenticSuggestions = "enableAiAgenticSuggestions",
-    EnableGenAiAgentSwitching = "enableGenAiAgentSwitching",
     EnableGenAiReasoningEffort = "enableGenAiReasoningEffort",
     EnableGenAiObservability = "enableGenAiObservability",
     EnableGenAiInteractionIntelligence = "enableGenAiInteractionIntelligence",
@@ -133,6 +132,7 @@ export enum TigerFeaturesNames {
     EnableAbsoluteDateFilterGranularity = "enableAbsoluteDateFilterGranularity",
     EnableComputedAttributes = "enableComputedAttributes",
     EnableBusinessBriefingReportsApp = "enableBusinessBriefingReportsApp",
+    EnableReportsSubsections = "enableReportsSubsections",
     EnableEmbeddingWriteCommands = "enableEmbeddingWriteCommands",
 }
 
@@ -222,7 +222,6 @@ export type ITigerFeatureFlags = {
     enableAiAgenticSuggestions: (typeof FeatureFlagsValues)["enableAiAgenticSuggestions"][number];
     enableAiAssistantEmbedding: (typeof FeatureFlagsValues)["enableAiAssistantEmbedding"][number];
     enableAiAgenticMultiConversations: (typeof FeatureFlagsValues)["enableAiAgenticMultiConversations"][number];
-    enableGenAiAgentSwitching: (typeof FeatureFlagsValues)["enableGenAiAgentSwitching"][number];
     enableGenAiReasoningEffort: (typeof FeatureFlagsValues)["enableGenAiReasoningEffort"][number];
     enableGenAiObservability: (typeof FeatureFlagsValues)["enableGenAiObservability"][number];
     enableGenAiInteractionIntelligence: (typeof FeatureFlagsValues)["enableGenAiInteractionIntelligence"][number];
@@ -262,6 +261,7 @@ export type ITigerFeatureFlags = {
     enableAbsoluteDateFilterGranularity: (typeof FeatureFlagsValues)["enableAbsoluteDateFilterGranularity"][number];
     enableComputedAttributes: (typeof FeatureFlagsValues)["enableComputedAttributes"][number];
     enableBusinessBriefingReportsApp: (typeof FeatureFlagsValues)["enableBusinessBriefingReportsApp"][number];
+    enableReportsSubsections: (typeof FeatureFlagsValues)["enableReportsSubsections"][number];
     enableEmbeddingWriteCommands: (typeof FeatureFlagsValues)["enableEmbeddingWriteCommands"][number];
 };
 
@@ -351,7 +351,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAiAgenticSuggestions: false,
     enableAiAssistantEmbedding: false,
     enableAiAgenticMultiConversations: false,
-    enableGenAiAgentSwitching: false,
     enableGenAiReasoningEffort: false,
     enableGenAiObservability: false,
     enableGenAiInteractionIntelligence: false,
@@ -391,6 +390,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAbsoluteDateFilterGranularity: false,
     enableComputedAttributes: false,
     enableBusinessBriefingReportsApp: false,
+    enableReportsSubsections: false,
     enableEmbeddingWriteCommands: false,
 };
 
@@ -480,7 +480,6 @@ export const FeatureFlagsValues = {
     enableAiAgenticSuggestions: [true, false] as const,
     enableAiAssistantEmbedding: [true, false] as const,
     enableAiAgenticMultiConversations: [true, false] as const,
-    enableGenAiAgentSwitching: [true, false] as const,
     enableGenAiReasoningEffort: [true, false] as const,
     enableGenAiObservability: [true, false] as const,
     enableGenAiInteractionIntelligence: [true, false] as const,
@@ -520,5 +519,6 @@ export const FeatureFlagsValues = {
     enableAbsoluteDateFilterGranularity: [true, false] as const,
     enableComputedAttributes: [true, false] as const,
     enableBusinessBriefingReportsApp: [false, true] as const,
+    enableReportsSubsections: [false, true] as const,
     enableEmbeddingWriteCommands: [true, false] as const,
 };

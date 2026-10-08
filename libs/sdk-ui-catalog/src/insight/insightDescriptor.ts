@@ -86,9 +86,10 @@ export const visualizationDescriptor = defineAsCodeDescriptor<IInsightDefinition
         },
     }),
     seed: { load: loadInsight, loadError: capabilityMessages.loadError },
-    referenceCounted: {
+    usageCheck: {
+        mode: "warn",
         load: listInsightReferences,
-        usageWarning: capabilityMessages.deleteUsageWarning,
+        warningMessage: capabilityMessages.deleteUsageWarning,
     },
     // No identity: an insight definition has no id field, and creates never carry one (backend-assigned).
     toCopy: createCopiedInsight,

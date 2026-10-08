@@ -94,7 +94,7 @@ function StandaloneInputContent({
     const intl = useIntl();
     const [value, setValue] = useState("");
     const [editorApi, setApi] = useState<EditorView | null>(null);
-    const { selectedAgentId, agentSwitchingEnabled, agents } = useGenAIStandaloneInputData(requiredSkills);
+    const { selectedAgentId, agents } = useGenAIStandaloneInputData(requiredSkills);
 
     useDataLoad();
 
@@ -148,7 +148,6 @@ function StandaloneInputContent({
                 "gd-gen-ai-chat__input--fullscreen": isFullscreen,
                 "gd-gen-ai-chat__input--big-screen": isBigScreen,
                 "gd-gen-ai-chat__input--small-screen": isSmallScreen,
-                "gd-gen-ai-chat__input--agent-switching": agentSwitchingEnabled,
             })}
         >
             <div className="gd-gen-ai-chat__input__content">

@@ -352,8 +352,6 @@
     "messages.settingsDialogError.general": "Не вдалося завантажити параметри dashboard. Спробуйте пізніше.",
     "visualization.dataTooLarge.headline": "Забагато точок даних для відображення",
     "visualization.dataTooLarge.text": "Спробуйте застосувати один або кілька фільтрів до dashboard.",
-    "visualization.execute_protected_report.headline": "У вас немає прав для перегляду цього звіту",
-    "visualization.execute_protected_report.text": "Зверніться до адміністратора.",
     "visualization.empty.headline": "Немає даних для вибраних фільтрів",
     "visualization.error.headline": "На жаль, ми не можемо відобразити цю візуалізацію",
     "visualization.error.text": "Зверніться до адміністратора.",

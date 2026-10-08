@@ -352,8 +352,6 @@
     "messages.settingsDialogError.general": "Не удалось загрузить настройки дашборда. Попробуйте позже.",
     "visualization.dataTooLarge.headline": "Слишком много точек данных для отображения",
     "visualization.dataTooLarge.text": "Попробуйте применить один или несколько фильтров к своему дашборду.",
-    "visualization.execute_protected_report.headline": "У вас нет прав для просмотра этого отчета",
-    "visualization.execute_protected_report.text": "Свяжитесь со своим администратором.",
     "visualization.empty.headline": "Нет данных при вашем выборе фильтров",
     "visualization.error.headline": "Не удалось отобразить эту визуализацию",
     "visualization.error.text": "Свяжитесь со своим администратором.",

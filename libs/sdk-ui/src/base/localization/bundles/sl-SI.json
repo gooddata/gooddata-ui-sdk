@@ -1017,6 +1017,8 @@
     "userManagement.workspace.permission.createMetric.tooltip": "Doda dovoljenje CREATE_METRIC za ustvarjanje in upravljanje novih metrik. Za upravljanje katere koli druge metrike uporabnik potrebuje dostop do nje.",
     "userManagement.workspace.permission.createVisualization": "Vizualizacije",
     "userManagement.workspace.permission.createVisualization.tooltip": "Doda dovoljenje CREATE_VISUALIZATION za shranjevanje novih vizualizacij. Z dostopom za ogled to deluje samo v urejevalniku, vdelanem v nadzorno ploščo, ki jo uporabnik lahko ureja.",
+    "userManagement.workspace.permission.manageVisualizations": "Upravljanje vseh vizualizacij",
+    "userManagement.workspace.permission.manageVisualizations.tooltip": "Doda dovoljenje MANAGE_VISUALIZATIONS za ustvarjanje novih vizualizacij in urejanje vseh obstoječih brez izrecnega dostopa.",
     "userManagement.workspace.permission.useAiAssistant": "AI pomočnik",
     "userManagement.workspace.permission.useAiAssistant.tooltip": "Doda dovoljenje USE_AI_ASSISTANT za dostop in interakcijo z AI klepetalnikom za analitična vprašanja.",
     "userManagement.workspace.granularPermission.noWorkspace": "Noben delovni prostor ni izbran",

@@ -635,13 +635,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableGenAiAgentSwitching,
-            "enableGenAiAgentSwitching",
-            "BOOLEAN",
-            FeatureFlagsValues.enableGenAiAgentSwitching,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableGenAiReasoningEffort,
             "enableGenAiReasoningEffort",
             "BOOLEAN",
@@ -891,6 +884,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableBusinessBriefingReportsApp",
             "BOOLEAN",
             FeatureFlagsValues.enableBusinessBriefingReportsApp,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableReportsSubsections,
+            "enableReportsSubsections",
+            "BOOLEAN",
+            FeatureFlagsValues.enableReportsSubsections,
         ),
         ...loadFeature(
             features,

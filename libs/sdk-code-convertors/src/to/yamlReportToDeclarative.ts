@@ -1,13 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import { type DeclarativeReport, type DeclarativeReportPageLayout } from "@gooddata/api-client-tiger";
-import type {
-    Report,
-    ReportPageBody,
-    ReportPageLayout,
-    ReportTemplate,
-    ReportVariable,
-} from "@gooddata/sdk-code-schemas/v1";
+import type { Report, ReportPageLayout, ReportTemplate, ReportVariable } from "@gooddata/sdk-code-schemas/v1";
 import {
     type IReportContent,
     type IReportDefinition,
@@ -38,22 +32,23 @@ function variablesToDeclarative(
     }));
 }
 
-function contentToDeclarative(
-    pages: ReportPageBody[] | undefined,
-    filters: Report["filters"],
-    variables: ReportVariable[] | undefined,
-    errorContext?: IErrorContext,
-): IReportContent {
+// A report and a template state the same content; only what surrounds it differs.
+type ReportContentDocument = Pick<Report, "pages" | "filters" | "variables" | "takeaways_instruction">;
+
+function contentToDeclarative(document: ReportContentDocument, errorContext?: IErrorContext): IReportContent {
     // The stored content states its own version; a document states the schema's instead, so the
     // convertor is what knows which shape it just wrote.
-    const declared = filtersToDeclarative(filters);
-    const declaredVariables = variablesToDeclarative(variables);
+    const declared = filtersToDeclarative(document.filters);
+    const declaredVariables = variablesToDeclarative(document.variables);
 
     return {
         version: "1",
-        pages: pages?.map((body) => yamlReportPageToDeclarative(body, errorContext)) ?? [],
+        pages: document.pages?.map((body) => yamlReportPageToDeclarative(body, errorContext)) ?? [],
         ...(declared === undefined ? {} : { filters: declared }),
         ...(declaredVariables === undefined ? {} : { variables: declaredVariables }),
+        ...(document.takeaways_instruction === undefined
+            ? {}
+            : { takeawaysInstruction: document.takeaways_instruction }),
     };
 }
 
@@ -75,7 +70,7 @@ export function yamlReportDocumentToDeclarative(
         periodStart: input.period.start,
         periodEnd: input.period.end,
         ...(input.variable_values === undefined ? {} : { variableValues: input.variable_values }),
-        content: contentToDeclarative(input.pages, input.filters, input.variables, errorContext),
+        content: contentToDeclarative(input, errorContext),
     };
 }
 
@@ -95,7 +90,7 @@ export function yamlReportToDefinition(input: Report, errorContext?: IErrorConte
         periodStart: input.period.start as ReportDateString,
         periodEnd: input.period.end as ReportDateString,
         ...(input.variable_values === undefined ? {} : { variableValues: input.variable_values }),
-        content: contentToDeclarative(input.pages, input.filters, input.variables, errorContext),
+        content: contentToDeclarative(input, errorContext),
     };
 }
 
@@ -110,7 +105,7 @@ export function yamlReportTemplateToDefinition(
         title: input.title ?? convertIdToTitle(input.id ?? ""),
         ...(input.description === undefined ? {} : { description: input.description }),
         ...(input.tags === undefined ? {} : { tags: input.tags }),
-        content: contentToDeclarative(input.pages, input.filters, input.variables, errorContext),
+        content: contentToDeclarative(input, errorContext),
     };
 }
 

@@ -9,7 +9,7 @@ import {
     isMeasureMetadataObject,
 } from "@gooddata/sdk-model";
 
-import type { IAsCodeMutationPort } from "../asCode/descriptor.js";
+import type { IAsCodeMutationPort, IAsCodeReference } from "../asCode/descriptor.js";
 import type { ServerIdentity } from "../asCode/serverIdentity.js";
 import { convertMeasureToCatalogItem } from "../catalogItem/converter.js";
 import {
@@ -43,17 +43,17 @@ export function loadMetric(
     return getMeasureCatalogItem(backend, workspace, idRef(item.identifier, "measure"));
 }
 
-/** Titles of objects that depend on a measure (insights, metrics, computed attributes, dashboards). @internal */
+/** Objects that depend on a measure (insights, metrics, computed attributes, dashboards). @internal */
 export async function listMetricReferences(
     backend: IAnalyticalBackend,
     workspace: string,
     item: ICatalogItemMeasure,
-): Promise<string[]> {
+): Promise<IAsCodeReference[]> {
     const { nodes } = await backend
         .workspace(workspace)
         .references()
         .getReferences(idRef(item.identifier, "measure"), { direction: "up" });
-    return nodes.filter((node) => !node.isRoot).map((node) => node.title);
+    return nodes.filter((node) => !node.isRoot).map(({ isRoot: _isRoot, ...reference }) => reference);
 }
 
 /**

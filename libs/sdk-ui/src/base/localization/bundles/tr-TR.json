@@ -1017,6 +1017,8 @@
     "userManagement.workspace.permission.createMetric.tooltip": "Yeni metrikler oluşturmak ve yönetmek için CREATE_METRIC iznini ekler. Diğer herhangi bir metriği yönetmek için kullanıcının ona erişimi olması gerekir.",
     "userManagement.workspace.permission.createVisualization": "Görselleştirmeler",
     "userManagement.workspace.permission.createVisualization.tooltip": "Yeni görselleştirmeleri kaydetmek için CREATE_VISUALIZATION iznini ekler. Görüntüleme erişimiyle bu, yalnızca kullanıcının düzenleyebildiği bir gösterge tablosuna gömülmüş düzenleyicide çalışır.",
+    "userManagement.workspace.permission.manageVisualizations": "Tüm görselleştirmeleri yönet",
+    "userManagement.workspace.permission.manageVisualizations.tooltip": "Yeni görselleştirmeler oluşturmak ve açık erişim olmadan mevcut olanların tümünü düzenlemek için MANAGE_VISUALIZATIONS iznini ekler.",
     "userManagement.workspace.permission.useAiAssistant": "AI Asistanı",
     "userManagement.workspace.permission.useAiAssistant.tooltip": "AI sohbet botuyla analitik sorular için etkileşimde bulunmak ve erişim sağlamak amacıyla USE_AI_ASSISTANT izni ekler.",
     "userManagement.workspace.granularPermission.noWorkspace": "Çalışma alanı seçilmedi",

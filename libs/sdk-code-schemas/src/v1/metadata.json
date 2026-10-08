@@ -2671,6 +2671,10 @@
                         "description": "Custom variables the report's text can interpolate as {name}. Built-in variable names win a collision.",
                         "items": { "$ref": "#/$global/gaac/reportVariable" }
                     },
+                    "takeaways_instruction": {
+                        "type": "string",
+                        "description": "Instructions every AI takeaway without instructions of its own is generated with. Supports {variables}."
+                    },
                     "variable_values": {
                         "type": "object",
                         "description": "Values for the declared variables, keyed by variable name. A variable with no value here falls back to its default.",
@@ -2723,6 +2727,10 @@
                         "type": "array",
                         "description": "Custom variables the template's text can interpolate as {name}. A report created from it gives them values.",
                         "items": { "$ref": "#/$global/gaac/reportVariable" }
+                    },
+                    "takeaways_instruction": {
+                        "type": "string",
+                        "description": "Instructions every AI takeaway without instructions of its own is generated with. Supports {variables}."
                     }
                 },
                 "$semantic": { "type": "snippet", "snippets": ["report_template"] },
@@ -7867,6 +7875,10 @@
                     "description": "Custom variables the report's text can interpolate as {name}. Built-in variable names win a collision.",
                     "items": { "$ref": "#/$global/gaac/reportVariable" }
                 },
+                "takeaways_instruction": {
+                    "type": "string",
+                    "description": "Instructions every AI takeaway without instructions of its own is generated with. Supports {variables}."
+                },
                 "variable_values": {
                     "type": "object",
                     "description": "Values for the declared variables, keyed by variable name. A variable with no value here falls back to its default.",
@@ -8107,6 +8119,10 @@
                     "type": "array",
                     "description": "Custom variables the template's text can interpolate as {name}. A report created from it gives them values.",
                     "items": { "$ref": "#/$global/gaac/reportVariable" }
+                },
+                "takeaways_instruction": {
+                    "type": "string",
+                    "description": "Instructions every AI takeaway without instructions of its own is generated with. Supports {variables}."
                 }
             },
             "$semantic": { "type": "snippet", "snippets": ["report_template"] },

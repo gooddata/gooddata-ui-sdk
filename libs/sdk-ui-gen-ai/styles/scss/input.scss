@@ -52,7 +52,7 @@
         display: flex;
     }
 
-    &--agent-switching &__container {
+    &__container {
         position: relative;
         z-index: 1;
         width: 100%;
@@ -72,16 +72,16 @@
         }
     }
 
-    &--agent-switching:focus-within &__container {
+    &:focus-within &__container {
         border-color: kit-variables.$gd-palette-primary-base;
     }
 
-    &--agent-switching#{$root}--no-agents &__container,
-    &--agent-switching#{$root}--no-agents:focus-within &__container {
+    #{$root}--no-agents &__container,
+    #{$root}--no-agents:focus-within &__container {
         border-color: kit-variables.$gd-input-text-border-error;
     }
 
-    &--agent-switching &__text {
+    &__text {
         position: relative;
         z-index: 1;
     }
@@ -92,31 +92,22 @@
 
         .cm-editor {
             height: auto;
-            padding: 3px 30px 3px 5px;
             border: 0;
             border-radius: 0;
             box-shadow: none;
-        }
-
-        .cm-scroller {
-            // stylelint-disable-next-line declaration-no-important
-            font-family: kit-variables.$gd-font-primary !important;
-        }
-    }
-
-    &--agent-switching &__mc {
-        .cm-editor {
             padding: 3px 5px 0;
-            border: 0;
-            border-radius: 0;
             background: transparent;
-            box-shadow: none;
 
             &:hover,
             &.cm-focused {
                 border: 0;
                 box-shadow: none;
             }
+        }
+
+        .cm-scroller {
+            // stylelint-disable-next-line declaration-no-important
+            font-family: kit-variables.$gd-font-primary !important;
         }
     }
 
@@ -195,10 +186,11 @@
     &__info {
         z-index: 0;
         position: absolute;
-        width: calc(100% + #{variables.$x-spacing * 2});
-        margin-left: -#{variables.$x-spacing};
-        margin-right: -#{variables.$x-spacing};
-        padding: variables.$y-spacing variables.$x-spacing;
+        box-sizing: border-box;
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        padding: variables.$y-spacing 0;
         background: kit-variables.$gd-color-light;
         pointer-events: none;
 
@@ -249,14 +241,6 @@
             font-style: normal;
             line-height: normal;
         }
-    }
-
-    &--agent-switching &__info {
-        box-sizing: border-box;
-        width: 100%;
-        margin-left: 0;
-        margin-right: 0;
-        padding: variables.$y-spacing 0;
     }
 
     //CodeMirror autocomplete restyle

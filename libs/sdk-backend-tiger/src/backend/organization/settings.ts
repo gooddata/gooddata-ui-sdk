@@ -22,7 +22,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { unwrapSettingContent } from "../../convertors/fromBackend/SettingsConverter.js";
-import { type TigerAuthenticatedCallGuard, type TigerSettingsType } from "../../types/index.js";
+import { type TigerAuthenticatedCallGuard, type TigerOrganizationSettingsType } from "../../types/index.js";
 import { mapTypeToKey } from "../settings/mapping.js";
 import { invalidateSettingsResponses, trackSettingsResponse } from "../settings/responseCacheCoherence.js";
 import { TigerSettingsService } from "../settings/settings.js";
@@ -111,7 +111,7 @@ export class OrganizationSettingsService
         return this.setSetting("ACTIVE_CALENDARS", calendars);
     }
 
-    public override async setTheme(activeThemeId: string) {
+    public async setTheme(activeThemeId: string) {
         return this.setSetting("ACTIVE_THEME", { id: activeThemeId, type: "theme" });
     }
 
@@ -123,7 +123,7 @@ export class OrganizationSettingsService
         return this.deleteSettingByType("ACTIVE_THEME");
     }
 
-    public override async setColorPalette(activeColorPaletteId: string) {
+    public async setColorPalette(activeColorPaletteId: string) {
         return this.setSetting("ACTIVE_COLOR_PALETTE", { id: activeColorPaletteId, type: "colorPalette" });
     }
 
@@ -213,7 +213,7 @@ export class OrganizationSettingsService
         }, {});
     }
 
-    protected override async getSettingByType(type: TigerSettingsType) {
+    protected override async getSettingByType(type: TigerOrganizationSettingsType) {
         return this.authCall((client) =>
             EntitiesApi_GetAllEntitiesOrganizationSettings(client.axios, client.basePath, {
                 filter: `type==${type}`,
@@ -221,7 +221,11 @@ export class OrganizationSettingsService
         );
     }
 
-    protected override async updateSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
+    protected override async updateSetting(
+        type: TigerOrganizationSettingsType,
+        id: string,
+        content: any,
+    ): Promise<any> {
         const result = await this.authCall((client) =>
             EntitiesApi_UpdateEntityOrganizationSettings(client.axios, client.basePath, {
                 id,
@@ -241,7 +245,11 @@ export class OrganizationSettingsService
         return result;
     }
 
-    protected override async createSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
+    protected override async createSetting(
+        type: TigerOrganizationSettingsType,
+        id: string,
+        content: any,
+    ): Promise<any> {
         const result = await this.authCall((client) =>
             EntitiesApi_CreateEntityOrganizationSettings(client.axios, client.basePath, {
                 jsonApiOrganizationSettingInDocument: {
@@ -260,7 +268,7 @@ export class OrganizationSettingsService
         return result;
     }
 
-    protected override async deleteSettingByType(type: TigerSettingsType): Promise<void> {
+    protected override async deleteSettingByType(type: TigerOrganizationSettingsType): Promise<void> {
         const settings = await this.getSettingByType(type);
         let deleted = false;
         try {

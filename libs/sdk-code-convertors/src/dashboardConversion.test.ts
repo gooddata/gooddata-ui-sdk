@@ -8,6 +8,7 @@ import { declarativeDashboardToYaml } from "./from/declarativeDashboardToYaml.js
 import {
     yamlDashboardToDeclarative,
     yamlFilterContextToDeclarative,
+    yamlInsightWidgetToDeclarative,
     yamlWidgetToDeclarative,
 } from "./to/yamlDashboardToDeclarative.js";
 import type { ExportEntities, FromEntities } from "./types.js";
@@ -113,6 +114,155 @@ describe("dashboard conversion", () => {
                     displayAsLabel: { identifier: { id: "region_name2", type: "label" } },
                 }),
             ]);
+        });
+    });
+
+    describe("yamlInsightWidgetToDeclarative", () => {
+        it("should convert a visualisation widget with custom title", () => {
+            const widget: VisualisationWidget = {
+                visualization: "vis/revenue_chart",
+                title: "Revenue Chart",
+            };
+
+            const result = yamlInsightWidgetToDeclarative(emptyEntities, widget);
+            expect(result).toBeDefined();
+            expect(result.insight).toEqual({
+                identifier: { id: "revenue_chart", type: "visualizationObject" },
+            });
+            expect(result.title).toBe("Revenue Chart");
+            expect(result.configuration?.hideTitle).toBe(false);
+        });
+
+        it("should fallback to visualization title from entities when widget title is omitted", () => {
+            const entities: ExportEntities = [
+                {
+                    id: "vis/revenue_chart",
+                    type: "bar_chart",
+                    path: "analytics/revenue_chart.yaml",
+                    data: {
+                        id: "vis/revenue_chart",
+                        type: "bar_chart",
+                        title: "Revenue by Region",
+                        query: { fields: {} },
+                    },
+                } as unknown as ExportEntities[number],
+            ];
+
+            const widget: VisualisationWidget = {
+                visualization: "vis/revenue_chart",
+            };
+
+            const result = yamlInsightWidgetToDeclarative(entities, widget);
+            expect(result.title).toBe("Revenue by Region");
+        });
+
+        it("should default to empty title when neither widget nor visualization in entities has title", () => {
+            const widget: VisualisationWidget = {
+                visualization: "vis/revenue_chart",
+            };
+
+            const result = yamlInsightWidgetToDeclarative(emptyEntities, widget);
+            expect(result.title).toBe("");
+        });
+
+        it("should set hideTitle to true when title is false", () => {
+            const widget: VisualisationWidget = {
+                visualization: "vis/revenue_chart",
+                title: false,
+            };
+
+            const result = yamlInsightWidgetToDeclarative(emptyEntities, widget);
+            expect(result.title).toBe("");
+            expect(result.configuration?.hideTitle).toBe(true);
+        });
+
+        it("should convert widget interactions to drills when referenced visualization is in entities", () => {
+            const entities: ExportEntities = [
+                {
+                    id: "vis/revenue_chart",
+                    type: "bar_chart",
+                    path: "analytics/revenue_chart.yaml",
+                    data: {
+                        id: "vis/revenue_chart",
+                        type: "bar_chart",
+                        title: "Revenue by Region",
+                        query: {
+                            fields: {
+                                m1: { using: "metric/revenue" },
+                                a1: { using: "attribute/region" },
+                            },
+                        },
+                    },
+                } as unknown as ExportEntities[number],
+            ];
+
+            const widget: VisualisationWidget = {
+                visualization: "vis/revenue_chart",
+                interactions: [
+                    {
+                        click_on: "m1",
+                        open_visualization: "vis/target_insight",
+                    },
+                    {
+                        click_on: "a1",
+                        open_dashboard: "dash/target_dashboard",
+                        open_dashboard_tab: "tab_2",
+                    },
+                    {
+                        click_on: "m1",
+                        open_url: "https://example.com/details?id={attribute/region}",
+                    },
+                ],
+            };
+
+            const result = yamlInsightWidgetToDeclarative(entities, widget);
+            expect(result.drills).toEqual([
+                {
+                    type: "drillToInsight",
+                    transition: "pop-up",
+                    target: { identifier: { id: "target_insight", type: "visualizationObject" } },
+                    origin: { type: "drillFromMeasure", measure: { localIdentifier: "m1" } },
+                },
+                {
+                    type: "drillToDashboard",
+                    transition: "in-place",
+                    target: { identifier: { id: "target_dashboard", type: "analyticalDashboard" } },
+                    targetTabLocalIdentifier: "tab_2",
+                    origin: { type: "drillFromAttribute", attribute: { localIdentifier: "a1" } },
+                },
+                {
+                    type: "drillToCustomUrl",
+                    transition: "new-window",
+                    target: {
+                        url: [
+                            "https://example.com/details?id=",
+                            {
+                                identifier: {
+                                    id: "region",
+                                    type: "attribute",
+                                },
+                            },
+                            "",
+                        ],
+                    },
+                    origin: { type: "drillFromMeasure", measure: { localIdentifier: "m1" } },
+                },
+            ]);
+        });
+
+        it("should drop interactions when visualization is not found in entities", () => {
+            const widget: VisualisationWidget = {
+                visualization: "vis/revenue_chart",
+                interactions: [
+                    {
+                        click_on: "m1",
+                        open_visualization: "vis/target_insight",
+                    },
+                ],
+            };
+
+            const result = yamlInsightWidgetToDeclarative(emptyEntities, widget);
+            expect(result.drills).toEqual([]);
         });
     });
 

@@ -1017,6 +1017,8 @@
     "userManagement.workspace.permission.createMetric.tooltip": "添加 CREATE_METRIC 权限以创建和管理新指标。要管理任何其他指标，用户需要拥有其访问权限。",
     "userManagement.workspace.permission.createVisualization": "可视化",
     "userManagement.workspace.permission.createVisualization.tooltip": "添加 CREATE_VISUALIZATION 权限，以便保存新的可视化。对于拥有查看访问权限的用户，此权限仅在嵌入到用户可编辑的仪表板中的编辑器内有效。",
+    "userManagement.workspace.permission.manageVisualizations": "管理所有可视化",
+    "userManagement.workspace.permission.manageVisualizations.tooltip": "添加 MANAGE_VISUALIZATIONS 权限后，即可创建新的可视化并编辑所有现有可视化，无需显式访问权限。",
     "userManagement.workspace.permission.useAiAssistant": "人工智能助手",
     "userManagement.workspace.permission.useAiAssistant.tooltip": "添加 USE_AI_ASSISTANT 权限以访问和与 AI 聊天机器人交互以进行分析问题。",
     "userManagement.workspace.granularPermission.noWorkspace": "未选择工作区",

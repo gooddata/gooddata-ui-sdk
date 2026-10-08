@@ -36,6 +36,7 @@ export interface IAsCodeDetailActionsProps {
     onCatalogItemCreate?: (item: ICatalogItem) => void;
     onCatalogItemUpdate?: (item: ICatalogItem) => void;
     onCatalogItemDelete?: (ref: ICatalogItemRef) => void;
+    onCatalogItemNavigation?: (event: MouseEvent, ref: ICatalogItemRef) => void;
 }
 
 /** @internal */
@@ -47,6 +48,7 @@ export function AsCodeDetailActions({
     onCatalogItemCreate,
     onCatalogItemUpdate,
     onCatalogItemDelete,
+    onCatalogItemNavigation,
 }: IAsCodeDetailActionsProps) {
     const intl = useIntl();
     const workspaceId = useWorkspaceStrict();
@@ -140,6 +142,7 @@ export function AsCodeDetailActions({
                     item={dialog.item}
                     onClose={closeDialog}
                     onDeleted={() => onCatalogItemDelete?.(dialog.item)}
+                    onCatalogItemNavigation={onCatalogItemNavigation}
                 />
             ) : null}
         </>

@@ -60,6 +60,7 @@ const supportedChartConfigProperties = new Set<keyof IChartConfig>([
     "hyperLinks",
     "thresholdMeasures",
     "customTooltip",
+    "lineStyleMapping",
 ]);
 
 export function chartConfigFromInsight(

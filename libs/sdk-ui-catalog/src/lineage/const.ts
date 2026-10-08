@@ -18,7 +18,6 @@ export const HIDDEN_ITEMS: ObjectType[] = [
     "exportDefinition",
     "memoryItem",
     "notificationChannel",
-    "parameter",
     "theme",
     "userGroup",
     "variable",
@@ -26,3 +25,5 @@ export const HIDDEN_ITEMS: ObjectType[] = [
 ];
 
 export const LEAF_TYPES: ObjectType[] = ["dataSet"];
+
+export const UPSTREAM_DEFAULT_TYPES: ObjectType[] = ["parameter"];

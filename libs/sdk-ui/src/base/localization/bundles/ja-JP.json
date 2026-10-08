@@ -1017,6 +1017,8 @@
     "userManagement.workspace.permission.createMetric.tooltip": "CREATE_METRIC 権限を追加して、新しいメトリックを作成および管理できるようにします。他のメトリックを管理するには、ユーザーにそのメトリックへのアクセス権が必要です。",
     "userManagement.workspace.permission.createVisualization": "ビジュアライゼーション",
     "userManagement.workspace.permission.createVisualization.tooltip": "新しいビジュアライゼーションを保存するためのCREATE_VISUALIZATION権限を追加します。閲覧アクセス権では、ユーザーが編集可能なダッシュボードに埋め込まれたエディターでのみ機能します。",
+    "userManagement.workspace.permission.manageVisualizations": "すべてのビジュアライゼーションを管理",
+    "userManagement.workspace.permission.manageVisualizations.tooltip": "MANAGE_VISUALIZATIONS 権限を追加すると、明示的なアクセス権がなくても、新しいビジュアライゼーションを作成し、既存のすべてのビジュアライゼーションを編集できます。",
     "userManagement.workspace.permission.useAiAssistant": "AIアシスタント",
     "userManagement.workspace.permission.useAiAssistant.tooltip": "分析に関する質問のためにAIチャットボットにアクセスし、対話するためのUSE_AI_ASSISTANT権限を追加します。",
     "userManagement.workspace.granularPermission.noWorkspace": "ワークスペースが選択されていません",

@@ -2,6 +2,7 @@
 
 import {
     type EntitiesApiGetEntityAnalyticalDashboardsRequest,
+    type FilterContextApiGetAllEntitiesFilterContextsRequest,
     FilterContextApi_GetAllEntitiesFilterContexts,
     type JsonApiAnalyticalDashboardOutDocument,
     type JsonApiFilterContextOut,
@@ -15,9 +16,11 @@ import type {
 import {
     type IDashboard,
     dashboardAttributeFilterItemDisplayForm,
+    dashboardAttributeFilterItemValidateElementsBy,
     idRef,
     isComputedAttributeRef,
     isDashboardAttributeFilterItem,
+    isDashboardMeasureValueFilter,
     isIdentifierRef,
 } from "@gooddata/sdk-model";
 
@@ -40,7 +43,8 @@ import { objectTypeToTigerIdType } from "../../../types/refTypeMapping.js";
  * entity itself (a dashboard drilling to itself) is never reported: JSON:API does not repeat the
  * primary resource in `included`.
  *
- * Filter display forms and computed attributes are resolved from each filter context's own document.
+ * Filter display forms, computed attributes and metrics are resolved from each filter context's own
+ * document.
  * Labels referenced directly by dashboard content (including saved custom URL dependencies) are
  * inspected here.
  *
@@ -56,12 +60,15 @@ import { objectTypeToTigerIdType } from "../../../types/refTypeMapping.js";
 
 type InspectedType = SupportedDashboardReferenceTypes | "filterContext";
 type DashboardInclude = NonNullable<EntitiesApiGetEntityAnalyticalDashboardsRequest["include"]>[number];
+type FilterContextInclude = NonNullable<
+    FilterContextApiGetAllEntitiesFilterContextsRequest["include"]
+>[number];
 
 /**
- * The `include` value under which the dashboard GET links each inspected type; the same key names
+ * The `include` value under which the dashboard GET links each type it can link; the same key names
  * the relationship in the response, which keeps "inspected iff requested" structural.
  */
-const RELATIONSHIP_KEYS = {
+const DASHBOARD_RELATIONSHIP_KEYS = {
     insight: "visualizationObjects",
     dataSet: "datasets",
     dashboardPlugin: "dashboardPlugins",
@@ -70,9 +77,22 @@ const RELATIONSHIP_KEYS = {
     measure: "metrics",
     computedAttribute: "computedAttributes",
     analyticalDashboard: "analyticalDashboards",
-} as const satisfies Record<InspectedType, DashboardInclude>;
+} as const satisfies Partial<Record<InspectedType, DashboardInclude>>;
 
-type RelationshipKey = (typeof RELATIONSHIP_KEYS)[InspectedType];
+type DashboardInspectedType = keyof typeof DASHBOARD_RELATIONSHIP_KEYS;
+
+/** The same for the filter-context GET, which links the objects the filters use. */
+const FILTER_CONTEXT_RELATIONSHIP_KEYS = {
+    displayForm: "labels",
+    computedAttribute: "computedAttributes",
+    measure: "metrics",
+    fact: "facts",
+} as const satisfies Partial<Record<InspectedType, FilterContextInclude>>;
+
+type FilterContextInspectedType = keyof typeof FILTER_CONTEXT_RELATIONSHIP_KEYS;
+
+type RelationshipKeys = Partial<Record<InspectedType, DashboardInclude | FilterContextInclude>>;
+type RelationshipKey = DashboardInclude | FilterContextInclude;
 
 /** Structural view shared by dashboard and filter-context JSON:API documents. */
 interface IJsonApiDocumentLike {
@@ -111,9 +131,10 @@ function collectContentRefIds(
     return result;
 }
 
-function diffInspectedTypes(
+function diffInspectedTypes<T extends InspectedType>(
     document: IJsonApiDocumentLike,
-    inspected: InspectedType[],
+    relationshipKeys: Record<T, RelationshipKey> & RelationshipKeys,
+    inspected: T[],
 ): IUnavailableDashboardReference[] {
     const contentRefIds = collectContentRefIds(document.data.attributes?.content);
     const unavailable: IUnavailableDashboardReference[] = [];
@@ -121,7 +142,7 @@ function diffInspectedTypes(
     for (const type of inspected) {
         const tigerType = objectTypeToTigerIdType[type];
         const selfId = document.data.type === tigerType ? document.data.id : undefined;
-        const related = getRelationshipIds(document.data.relationships, RELATIONSHIP_KEYS[type]);
+        const related = getRelationshipIds(document.data.relationships, relationshipKeys[type]);
 
         unavailable.push(...getForbiddenReferences(type, related, document.meta?.restricted ?? [], selfId));
         for (const id of contentRefIds.get(tigerType) ?? []) {
@@ -145,8 +166,10 @@ export function resolveUnavailableReferences(
     document: JsonApiAnalyticalDashboardOutDocument,
     types: SupportedDashboardReferenceTypes[],
 ): IUnavailableDashboardReference[] {
-    const inspected: InspectedType[] = ["filterContext", ...types];
-    return diffInspectedTypes(document as IJsonApiDocumentLike, inspected);
+    const inspected = ["filterContext", ...types].filter(
+        (type): type is DashboardInspectedType => type in DASHBOARD_RELATIONSHIP_KEYS,
+    );
+    return diffInspectedTypes(document as IJsonApiDocumentLike, DASHBOARD_RELATIONSHIP_KEYS, inspected);
 }
 
 /**
@@ -173,28 +196,31 @@ export function resolveUnavailableDashboardReferences(
     );
 }
 
-type FilterContextInspectedType = "displayForm" | "computedAttribute";
-
 /**
- * Resolves which filter display forms and computed attributes referenced by a filter context are
- * unavailable. Each inspected type must have been requested as an include (`labels`,
- * `computedAttributes`) so the response contains both relationship linkages and document-level
- * `meta.restricted` for it.
+ * Resolves which filter display forms, computed attributes, metrics and facts referenced by a filter
+ * context are unavailable. Each inspected type must have been requested as an include (`labels`,
+ * `computedAttributes`, `metrics`, `facts`) so the response contains both relationship linkages and
+ * document-level `meta.restricted` for it.
  */
 export function resolveUnavailableFilterContextReferences(
     context: JsonApiFilterContextOut,
     restricted: RestrictedObject[] | undefined,
     inspected: FilterContextInspectedType[],
 ): IUnavailableDashboardReference[] {
-    return diffInspectedTypes({ data: context, meta: { restricted } } as IJsonApiDocumentLike, inspected);
+    return diffInspectedTypes(
+        { data: context, meta: { restricted } } as IJsonApiDocumentLike,
+        FILTER_CONTEXT_RELATIONSHIP_KEYS,
+        inspected,
+    );
 }
 
 /**
- * Filter labels and computed attributes relate to their filter-context entities: the dashboard GET
- * side-loads the filter contexts as bare items (no `relationships`), so the existence linkage for
- * filter display forms is reachable only through a direct filter-context GET with `include=labels`
- * (and `computedAttributes`), hence this one batched extra request. `computedAttributes` is included
- * only when a filter uses one, so dashboards from workspaces without the feature never request it.
+ * Filter labels, computed attributes, metrics and facts relate to their filter-context entities: the
+ * dashboard GET side-loads the filter contexts as bare items (no `relationships`), so the existence
+ * linkage for filter objects is reachable only through a direct filter-context GET with `include=labels`
+ * (and `computedAttributes`, `metrics`, `facts`), hence this one batched extra request. Types other than
+ * labels are included only when a filter uses them (metric value filters, filters on computed
+ * attributes, metrics and facts limiting a filter's values), so other dashboards never request them.
  * It inspects the contexts of the effective dashboard, so a `filterContextRef` override is covered;
  * the synthetic export-override context has no entity behind it and is skipped.
  * It would become redundant if the backend emitted `relationships.labels` on the filter-context items
@@ -210,9 +236,9 @@ export async function fetchUnavailableFilterDisplayForms(
     types: SupportedDashboardReferenceTypes[],
 ): Promise<IUnavailableDashboardReference[]> {
     const filterContextIds = inspectableFilterContextIds(dashboard);
-    const inspected = (["displayForm", "computedAttribute"] as const).filter(
-        (type) =>
-            types.includes(type) && (type !== "computedAttribute" || usesComputedAttributeFilter(dashboard)),
+    const used = filterObjectTypes(dashboard);
+    const inspected = (Object.keys(FILTER_CONTEXT_RELATIONSHIP_KEYS) as FilterContextInspectedType[]).filter(
+        (type) => types.includes(type) && used.has(type),
     );
     if (inspected.length === 0 || filterContextIds.length === 0) {
         return [];
@@ -222,7 +248,7 @@ export async function fetchUnavailableFilterDisplayForms(
             FilterContextApi_GetAllEntitiesFilterContexts(client.axios, client.basePath, {
                 workspaceId,
                 filter: filterContextIds.map((id) => `id==${id}`).join(","),
-                include: inspected.map((type) => RELATIONSHIP_KEYS[type]),
+                include: inspected.map((type) => FILTER_CONTEXT_RELATIONSHIP_KEYS[type]),
                 size: filterContextIds.length,
             }).then((result) => result.data),
         );
@@ -238,15 +264,31 @@ export async function fetchUnavailableFilterDisplayForms(
     }
 }
 
-function usesComputedAttributeFilter(dashboard: IDashboard): boolean {
+/**
+ * The filter-context object types the dashboard's filters use: labels always; computed attributes of
+ * attribute filters built on them; metrics of metric value filters; metrics and facts that limit an
+ * attribute filter's values.
+ */
+function filterObjectTypes(dashboard: IDashboard): Set<FilterContextInspectedType> {
+    const used = new Set<FilterContextInspectedType>(["displayForm"]);
     const contexts = [dashboard.filterContext, ...(dashboard.tabs ?? []).map((tab) => tab.filterContext)];
-    return contexts.some((context) =>
-        context?.filters.some(
-            (filter) =>
-                isDashboardAttributeFilterItem(filter) &&
-                isComputedAttributeRef(dashboardAttributeFilterItemDisplayForm(filter)),
-        ),
-    );
+    for (const filter of contexts.flatMap((context) => context?.filters ?? [])) {
+        if (isDashboardMeasureValueFilter(filter)) {
+            used.add("measure");
+        }
+        if (!isDashboardAttributeFilterItem(filter)) {
+            continue;
+        }
+        if (isComputedAttributeRef(dashboardAttributeFilterItemDisplayForm(filter))) {
+            used.add("computedAttribute");
+        }
+        for (const ref of dashboardAttributeFilterItemValidateElementsBy(filter) ?? []) {
+            if (isIdentifierRef(ref) && (ref.type === "measure" || ref.type === "fact")) {
+                used.add(ref.type);
+            }
+        }
+    }
+    return used;
 }
 
 /**

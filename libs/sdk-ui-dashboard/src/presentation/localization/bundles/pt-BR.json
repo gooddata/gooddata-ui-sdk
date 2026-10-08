@@ -352,8 +352,6 @@
     "messages.settingsDialogError.general": "Falha ao carregar as configurações do painel. Tente novamente mais tarde.",
     "visualization.dataTooLarge.headline": "Muitos pontos de dados a serem exibidos",
     "visualization.dataTooLarge.text": "Tente aplicar um ou mais filtros ao seu painel.",
-    "visualization.execute_protected_report.headline": "Você não tem autorização para ver este relatório",
-    "visualization.execute_protected_report.text": "Entre em contato com seu administrador.",
     "visualization.empty.headline": "Sem dados para seleção de filtro",
     "visualization.error.headline": "Desculpe, não podemos exibir essa visualização",
     "visualization.error.text": "Entre em contato com seu administrador.",

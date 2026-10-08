@@ -1,21 +1,26 @@
 // (C) 2026 GoodData Corporation
 
-import { useCallback, useState } from "react";
+import { type MouseEvent, type ReactNode, useCallback, useState } from "react";
 
-import { FormattedMessage, defineMessages, useIntl } from "react-intl";
+import { FormattedMessage, type MessageDescriptor, defineMessages, useIntl } from "react-intl";
 
-import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { ConfirmDialog, Message, UiLink, useToastMessage } from "@gooddata/sdk-ui-kit";
+import {
+    type UseCancelablePromiseState,
+    useBackendStrict,
+    useCancelablePromise,
+    useWorkspaceStrict,
+} from "@gooddata/sdk-ui";
+import { ConfirmDialog, LoadingSpinner, useToastMessage } from "@gooddata/sdk-ui-kit";
 
-import type { ICatalogItem } from "../catalogItem/types.js";
+import type { ICatalogItem, ICatalogItemRef } from "../catalogItem/types.js";
 
-import type { IAsCodeDescriptor } from "./descriptor.js";
+import type { AsCodeUsageCheck, IAsCodeDescriptor, IAsCodeReference } from "./descriptor.js";
+import { UsageError, UsageWarning } from "./UsageNotice.js";
 import { useMutationPort } from "./useMutationPort.js";
 
 const messages = defineMessages({
     cancel: { id: "analyticsCatalog.asCode.dialog.cancel" },
-    showMore: { id: "analyticsCatalog.asCode.dialog.delete.showMore" },
-    showLess: { id: "analyticsCatalog.asCode.dialog.delete.showLess" },
+    checkingUsage: { id: "analyticsCatalog.asCode.dialog.delete.checkingUsage" },
 });
 
 type Props = {
@@ -23,30 +28,31 @@ type Props = {
     item: ICatalogItem;
     onClose: () => void;
     onDeleted: () => void;
+    onCatalogItemNavigation?: (event: MouseEvent, ref: ICatalogItemRef) => void;
 };
 
 /** @internal */
-export function AsCodeDeleteDialog({ descriptor, item, onClose, onDeleted }: Props) {
+export function AsCodeDeleteDialog({ descriptor, item, onClose, onDeleted, onCatalogItemNavigation }: Props) {
     const intl = useIntl();
     const { addSuccess, addError } = useToastMessage();
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
     const port = useMutationPort(descriptor);
-    const { messages: msg, referenceCounted } = descriptor;
+    const { messages: msg, usageCheck } = descriptor;
     const [isDeleting, setIsDeleting] = useState(false);
+    const [lookupAttempt, setLookupAttempt] = useState(0);
 
-    const [areReferencesShown, setAreReferencesShown] = useState(false);
-
-    // Block deletion until the usage lookup resolves, so the dependent-object warning surfaces first.
-    const { result, status } = useCancelablePromise(
-        { promise: referenceCounted ? () => referenceCounted.load(backend, workspace, item) : undefined },
-        [item, backend, workspace],
+    const lookup = useCancelablePromise(
+        { promise: usageCheck ? () => usageCheck.load(backend, workspace, item) : undefined },
+        [item, backend, workspace, lookupAttempt],
     );
-    const references = !referenceCounted || status === "error" ? [] : result;
-    const referencingCount = references?.length;
-    // A failed lookup leaves the count at zero, so a blocking type stays deletable rather than
-    // becoming permanently undeletable on a transient error; the backend refuses it either way.
-    const isBlocked = Boolean(referenceCounted?.blockedBody) && Boolean(referencingCount);
+    const usage = getUsageView(
+        usageCheck,
+        lookup,
+        msg.deleteBody,
+        () => setLookupAttempt((attempt) => attempt + 1),
+        onCatalogItemNavigation,
+    );
 
     const displayName = item.title || item.identifier;
 
@@ -71,11 +77,12 @@ export function AsCodeDeleteDialog({ descriptor, item, onClose, onDeleted }: Pro
 
     return (
         <ConfirmDialog
+            className="gd-analytics-catalog__as-code-dialog"
             headline={intl.formatMessage(msg.deleteTitle)}
             cancelButtonText={intl.formatMessage(messages.cancel)}
             submitButtonText={intl.formatMessage(msg.deleteSubmit)}
             isPositive={false}
-            isSubmitDisabled={isDeleting || referencingCount === undefined || isBlocked}
+            isSubmitDisabled={isDeleting || usage.isChecking || usage.isBlocked}
             isCancelDisabled={isDeleting}
             showProgressIndicator={isDeleting}
             onCancel={handleClose}
@@ -83,52 +90,72 @@ export function AsCodeDeleteDialog({ descriptor, item, onClose, onDeleted }: Pro
             onSubmit={handleDelete}
             displayCloseButton={!isDeleting}
         >
-            <FormattedMessage
-                {...(isBlocked && referenceCounted?.blockedBody
-                    ? referenceCounted.blockedBody
-                    : msg.deleteBody)}
-                values={{
-                    name: displayName,
-                    b: (chunks) => <b>{chunks}</b>,
-                }}
-            />
-            {referencingCount && referenceCounted ? (
-                <div className="gd-analytics-catalog__as-code-dialog__usage">
-                    <Message type="warning">
-                        <FormattedMessage
-                            {...referenceCounted.usageWarning}
-                            values={{
-                                count: referencingCount,
-                                b: (chunks) => <b>{chunks}</b>,
-                            }}
-                        />
-                        {referenceCounted.listReferences ? (
-                            <>
-                                {" "}
-                                <UiLink
-                                    variant="secondary"
-                                    role="button"
-                                    tabIndex={0}
-                                    onClick={() => setAreReferencesShown(!areReferencesShown)}
-                                    aria-expanded={areReferencesShown}
-                                >
-                                    {intl.formatMessage(
-                                        areReferencesShown ? messages.showLess : messages.showMore,
-                                    )}
-                                </UiLink>
-                            </>
-                        ) : null}
-
-                        {referenceCounted.listReferences && areReferencesShown ? (
-                            <ul className="gd-analytics-catalog__as-code-dialog__usage-list">
-                                {references?.map((title) => (
-                                    <li key={title}>{title}</li>
-                                ))}
-                            </ul>
-                        ) : null}
-                    </Message>
+            {usage.isChecking ? (
+                <div className="gd-analytics-catalog__as-code-dialog__checking">
+                    <LoadingSpinner className="small" />
+                    {intl.formatMessage(messages.checkingUsage)}
                 </div>
-            ) : null}
+            ) : (
+                <>
+                    <FormattedMessage
+                        {...usage.body}
+                        values={{
+                            name: displayName,
+                            b: (chunks) => <b>{chunks}</b>,
+                        }}
+                    />
+                    {usage.notice ? (
+                        <div className="gd-analytics-catalog__as-code-dialog__usage">{usage.notice}</div>
+                    ) : null}
+                </>
+            )}
         </ConfirmDialog>
     );
+}
+
+interface IUsageView {
+    isChecking: boolean;
+    isBlocked: boolean;
+    body: MessageDescriptor;
+    notice?: ReactNode;
+}
+
+function getUsageView(
+    usageCheck: AsCodeUsageCheck<ICatalogItem> | undefined,
+    lookup: UseCancelablePromiseState<IAsCodeReference[], unknown>,
+    deleteBody: MessageDescriptor,
+    onRetry: () => void,
+    onCatalogItemNavigation?: (event: MouseEvent, ref: ICatalogItemRef) => void,
+): IUsageView {
+    const unused: IUsageView = { isChecking: false, isBlocked: false, body: deleteBody };
+    if (!usageCheck) {
+        return unused;
+    }
+    switch (lookup.status) {
+        case "pending":
+        case "loading":
+            return { ...unused, isChecking: true };
+        case "error":
+            return {
+                ...unused,
+                isBlocked: usageCheck.mode === "block",
+                notice: <UsageError onRetry={onRetry} />,
+            };
+        case "success":
+            if (lookup.result.length === 0) {
+                return unused;
+            }
+            return {
+                ...unused,
+                isBlocked: usageCheck.mode === "block",
+                body: usageCheck.mode === "block" ? usageCheck.blockedMessage : deleteBody,
+                notice: (
+                    <UsageWarning
+                        usageCheck={usageCheck}
+                        references={lookup.result}
+                        onCatalogItemNavigation={onCatalogItemNavigation}
+                    />
+                ),
+            };
+    }
 }

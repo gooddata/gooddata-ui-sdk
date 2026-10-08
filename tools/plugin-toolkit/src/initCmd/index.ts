@@ -39,7 +39,6 @@ const unnecessaryDevPkg = [
     "eslint-plugin-import",
     "eslint-plugin-no-only-tests",
     "eslint-plugin-regexp",
-    "eslint-plugin-sonarjs",
     "eslint-plugin-tsdoc",
 ];
 
@@ -204,7 +203,6 @@ async function prepareProject(target: string, config: InitCmdActionConfig): Prom
 
 function runInstall(target: string, config: InitCmdActionConfig): void {
     const { skipInstall, packageManager } = config;
-    const isNpm = packageManager === "npm";
 
     if (skipInstall) {
         logWarn(
@@ -215,13 +213,7 @@ function runInstall(target: string, config: InitCmdActionConfig): void {
     }
 
     try {
-        const args = ["install"];
-        if (isNpm) {
-            args.push("--legacy-peer-deps");
-            logInfo("Command will run with '--legacy-peer-deps' flag.");
-        }
-
-        const result = spawnSync(packageManager, args, {
+        const result = spawnSync(packageManager, ["install"], {
             cwd: target,
             stdio: ["ignore", "inherit", "inherit"],
         });

@@ -2,10 +2,10 @@
 
 import { type ISettings } from "@gooddata/sdk-model";
 
-import { type TigerOrgSettingsType, type TigerSettingsType } from "../../types/index.js";
+import { type TigerOrgSettingsType, type TigerOrganizationSettingsType } from "../../types/index.js";
 
 // All possible setting types
-type AllSettingsType = TigerSettingsType | TigerOrgSettingsType;
+type AllSettingsType = TigerOrganizationSettingsType | TigerOrgSettingsType;
 
 // These types are intentionally not mapped to maintain an exhaustive check.
 type UnmappedTypes =
@@ -26,7 +26,8 @@ type UnmappedTypes =
     | "HLL_TYPE"
     | "REPORTS_BRAND_KIT"
     | "CONVERSATION_RETENTION_DAYS"
-    | "ENABLE_AI_DATA_OBFUSCATION";
+    | "ENABLE_AI_DATA_OBFUSCATION"
+    | "AUTHORIZATION_SERVER_REDIRECT_POLICY";
 
 // Only mandatory types
 type MandatoryTypes = Exclude<AllSettingsType, UnmappedTypes>;
@@ -76,7 +77,7 @@ const TYPE_TO_KEY_MAP = {
 } as const satisfies Record<MandatoryTypes, keyof ISettings>;
 
 export function mapTypeToKey(
-    type: TigerSettingsType | TigerOrgSettingsType | undefined,
+    type: TigerOrganizationSettingsType | TigerOrgSettingsType | undefined,
     fallback = "",
 ): keyof ISettings {
     // For undefined or unmapped type - return fallback

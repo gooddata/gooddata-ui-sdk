@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-filters: Add an internal list of weeks grouped by month, with a two-click range selection and a field that jumps to a typed date, for the Week tab of the static period picker. Nothing renders it yet.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

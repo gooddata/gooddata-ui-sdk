@@ -352,8 +352,6 @@
     "messages.settingsDialogError.general": "Ohjauspaneelin asetusten lataaminen epäonnistui. Yritä myöhemmin uudelleen.",
     "visualization.dataTooLarge.headline": "Liian monta datapistettä näytettäväksi",
     "visualization.dataTooLarge.text": "Yritä soveltaa yhtä tai useampaa suodatinta kojelautaasi.",
-    "visualization.execute_protected_report.headline": "Sinulla ei ole oikeuksia nähdä tätä raporttia",
-    "visualization.execute_protected_report.text": "Ota yhteyttä ylläpitäjääsi.",
     "visualization.empty.headline": "Ei dataa suodatinvalinnallesi",
     "visualization.error.headline": "Valitettavasti emme voi näyttää tätä visualisointia",
     "visualization.error.text": "Ota yhteyttä ylläpitäjääsi.",

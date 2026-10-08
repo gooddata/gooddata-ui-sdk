@@ -1017,6 +1017,8 @@
     "userManagement.workspace.permission.createMetric.tooltip": "Добавляет разрешение CREATE_METRIC для создания новых метрик и управления ими. Чтобы управлять любой другой метрикой, пользователю необходим доступ к ней.",
     "userManagement.workspace.permission.createVisualization": "Анализы",
     "userManagement.workspace.permission.createVisualization.tooltip": "Добавляет разрешение CREATE_VISUALIZATION для сохранения новых визуализаций. При доступе на просмотр это работает только в редакторе, встроенном в информационную панель, которую пользователь может редактировать.",
+    "userManagement.workspace.permission.manageVisualizations": "Управление всеми визуализациями",
+    "userManagement.workspace.permission.manageVisualizations.tooltip": "Добавляет разрешение MANAGE_VISUALIZATIONS, позволяющее создавать новые визуализации и редактировать все существующие без явно предоставленного доступа.",
     "userManagement.workspace.permission.useAiAssistant": "AI Assistant",
     "userManagement.workspace.permission.useAiAssistant.tooltip": "Добавляет разрешение USE_AI_ASSISTANT для доступа к AI‑чатботу и взаимодействия с ним по аналитическим вопросам.",
     "userManagement.workspace.granularPermission.noWorkspace": "Workspace не выбран",

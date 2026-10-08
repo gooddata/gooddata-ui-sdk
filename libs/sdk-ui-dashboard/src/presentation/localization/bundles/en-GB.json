@@ -352,8 +352,6 @@
     "messages.settingsDialogError.general": "Failed to load the dashboard settings. Please try again later.",
     "visualization.dataTooLarge.headline": "Too many data points to display",
     "visualization.dataTooLarge.text": "Try applying one or more filters to your dashboard.",
-    "visualization.execute_protected_report.headline": "You are not authorised to see this report.",
-    "visualization.execute_protected_report.text": "Contact your administrator.",
     "visualization.empty.headline": "No data for your filter selection",
     "visualization.error.headline": "Sorry, we are unable to display this visualisation.",
     "visualization.error.text": "Contact your administrator.",

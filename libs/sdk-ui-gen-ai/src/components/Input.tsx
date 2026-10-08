@@ -10,10 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { DefaultSyntaxHighlightingInput } from "@gooddata/sdk-ui-kit";
 
 import { makeUserItem } from "../model.js";
-import {
-    agentSwitchingEnabledSelector,
-    inputValueSelector,
-} from "../store/chatWindow/chatWindowSelectors.js";
+import { inputValueSelector } from "../store/chatWindow/chatWindowSelectors.js";
 import { setInputValueAction } from "../store/chatWindow/chatWindowSlice.js";
 import {
     asyncProcessSelector,
@@ -63,7 +60,6 @@ function InputComponent({ autofocus = false, canManage, canAnalyze, targetRef }:
     const conversationsLoaded = useSelector((state: RootState) => conversationsLoadedSelector(state));
     const items = useSelector((state: RootState) => conversationMessagesSelector(state));
     const loading = useSelector((state: RootState) => asyncProcessSelector(state));
-    const agentSwitchingEnabled = useSelector((state: RootState) => agentSwitchingEnabledSelector(state));
     const refocusKey = useSelector((state: RootState) => refocusSelector(state));
 
     const isBusy = !!loading;
@@ -145,7 +141,6 @@ function InputComponent({ autofocus = false, canManage, canAnalyze, targetRef }:
                 "gd-gen-ai-chat__input--big-screen": isBigScreen,
                 "gd-gen-ai-chat__input--small-screen": isSmallScreen,
                 "gd-gen-ai-chat__input--empty": isEmpty,
-                "gd-gen-ai-chat__input--agent-switching": agentSwitchingEnabled,
                 "gd-gen-ai-chat__input--no-agents": hasNoAgents,
             })}
         >
@@ -189,6 +184,7 @@ function InputComponent({ autofocus = false, canManage, canAnalyze, targetRef }:
                         isAssistantLoading={isAssistantLoading}
                         agentDropdownDisabled={agentDropdownDisabled}
                         handleSubmit={handleSubmit}
+                        handleOnFocus={handleOnFocus}
                         onMouseDown={handleActionsMouseDown}
                         setBusy={setAreAgentsBusy}
                         setNoAgents={setHasNoAgents}

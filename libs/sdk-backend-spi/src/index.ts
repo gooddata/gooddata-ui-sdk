@@ -142,6 +142,7 @@ export {
     type IAnalyticsCatalogGenerateDescriptionResponse,
     type IGenAIService,
     type IDashboardSummaryRequest,
+    type IVisualizationsSummaryRequest,
     type IDashboardSummary,
     type IDashboardSummaryIncludedVisualization,
     type IDashboardSummaryExcludedVisualization,

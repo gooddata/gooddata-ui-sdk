@@ -16,6 +16,7 @@ import {
     cancelAsyncAction,
     clearConversationLoadingAction,
     clearThreadAction,
+    evaluateMessageErrorAction,
     loadConversationSuccessAction,
     messagesSliceReducer,
     reportSavedAction,
@@ -537,5 +538,56 @@ describe("reportSavedAction", () => {
         const state = messagesSliceReducer(before, reportSavedAction({ ...target, savedReportId: "r9" }));
 
         expect(state).toEqual(before);
+    });
+});
+
+describe("evaluateMessageErrorAction", () => {
+    it("sets error content from object payload", () => {
+        const conversation = makeConversation("c1");
+        const assistantMessage: IChatConversationLocalItem = {
+            id: "msg-1",
+            localId: "msg-1",
+            type: "item",
+            role: "assistant",
+            createdAt: 1,
+            responseId: "resp-1",
+            content: { type: "text", text: "" },
+        };
+
+        const stateWithMsg = messagesSliceReducer(
+            {
+                ...messagesSliceReducer(undefined, { type: "test/init" }),
+                currentConversation: conversation,
+                conversations: [conversation],
+                conversationsData: {
+                    c1: {
+                        order: ["msg-1"],
+                        items: { "msg-1": assistantMessage },
+                        asyncProcess: "evaluating",
+                    },
+                },
+            },
+            evaluateMessageErrorAction({
+                conversationId: "c1",
+                assistantMessageId: "msg-1",
+                error: {
+                    type: "error",
+                    message: "UnexpectedResponseError: Gateway down",
+                    code: 503,
+                    traceId: "trace-xyz",
+                },
+            }),
+        );
+
+        const updated = stateWithMsg.conversationsData["c1"]?.items["msg-1"];
+        expect(updated?.complete).toBe(true);
+        expect(updated?.streaming).toBe(false);
+        expect(updated?.content).toEqual({
+            type: "error",
+            message: "UnexpectedResponseError: Gateway down",
+            code: 503,
+            traceId: "trace-xyz",
+        });
+        expect(stateWithMsg.conversationsData["c1"]?.asyncProcess).toBeUndefined();
     });
 });

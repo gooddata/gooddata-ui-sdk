@@ -352,8 +352,6 @@
     "messages.settingsDialogError.general": "Ni uspelo naložiti nastavitev nadzorne plošče. Poskusite znova pozneje.",
     "visualization.dataTooLarge.headline": "Preveč podatkovnih točk za prikaz",
     "visualization.dataTooLarge.text": "Poskusite uporabiti enega ali več filtrov na vaši nadzorni plošči.",
-    "visualization.execute_protected_report.headline": "Niste pooblaščeni za ogled tega poročila",
-    "visualization.execute_protected_report.text": "Za več informacij se obrnite na svojega administratorja.",
     "visualization.empty.headline": "Ni podatkov za vašo izbiro filtrov",
     "visualization.error.headline": "Oprostite, ne moremo prikazati te vizualizacije",
     "visualization.error.text": "Za več informacij se obrnite na svojega administratorja.",

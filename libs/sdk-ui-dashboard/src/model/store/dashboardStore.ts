@@ -49,6 +49,7 @@ import { metaSliceReducer } from "./meta/index.js";
 import { notificationChannelsSliceReducer } from "./notificationChannels/index.js";
 import { permissionsSliceReducer } from "./permissions/index.js";
 import { renderModeSliceReducer } from "./renderMode/index.js";
+import { restrictedDataSliceReducer } from "./restrictedData/index.js";
 import { savingSliceReducer } from "./saving/index.js";
 import { showWidgetAsTableSliceReducer } from "./showWidgetAsTable/index.js";
 import { tabsSliceReducer } from "./tabs/index.js";
@@ -320,6 +321,7 @@ export function createDashboardRootReducer({
         inaccessibleDashboards: inaccessibleDashboardsSliceReducer,
         unavailableObjects: unavailableObjectsSliceReducer,
         executionResults: executionResultsSliceReducer,
+        restrictedData: restrictedDataSliceReducer,
         renderMode: renderModeSliceReducer,
         ui: uiSliceReducer,
         dashboardPermissions: dashboardPermissionsSliceReducer,

@@ -352,8 +352,6 @@
     "messages.settingsDialogError.general": "Không thể tải cài đặt bảng điều khiển. Hãy thử lại sau.",
     "visualization.dataTooLarge.headline": "Quá nhiều điểm dữ liệu để hiển thị",
     "visualization.dataTooLarge.text": "Hãy thử áp dụng một hoặc nhiều bộ lọc cho bảng điều khiển của bạn.",
-    "visualization.execute_protected_report.headline": "Bạn không được ủy quyền để xem báo cáo này",
-    "visualization.execute_protected_report.text": "Liên hệ quản trị viên của bạn.",
     "visualization.empty.headline": "Không có dữ liệu cho lựa chọn bộ lọc của bạn",
     "visualization.error.headline": "Xin lỗi, chúng tôi không thể hiển thị trực quan hóa này",
     "visualization.error.text": "Liên hệ quản trị viên của bạn.",

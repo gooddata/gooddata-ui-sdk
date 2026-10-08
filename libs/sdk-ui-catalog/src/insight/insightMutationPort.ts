@@ -3,7 +3,7 @@
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { type IInsight, type IInsightDefinition, idRef, isInsight } from "@gooddata/sdk-model";
 
-import type { IAsCodeMutationPort } from "../asCode/descriptor.js";
+import type { IAsCodeMutationPort, IAsCodeReference } from "../asCode/descriptor.js";
 import type { ServerIdentity } from "../asCode/serverIdentity.js";
 import { convertInsightToCatalogItem } from "../catalogItem/converter.js";
 import type { ICatalogItemInsight } from "../catalogItem/types.js";
@@ -25,17 +25,20 @@ export function loadInsight(
         .getInsight(idRef(item.identifier, "insight"), { loadUserData: true });
 }
 
-/** Titles of the dashboards referencing an insight. @internal */
+/** Dashboards referencing an insight. @internal */
 export async function listInsightReferences(
     backend: IAnalyticalBackend,
     workspace: string,
     item: ICatalogItemInsight,
-): Promise<string[]> {
+): Promise<IAsCodeReference[]> {
     const referencing = await backend
         .workspace(workspace)
         .insights()
         .getInsightReferencingObjects(idRef(item.identifier, "insight"));
-    return (referencing.analyticalDashboards ?? []).map((dashboard) => dashboard.title);
+    return (referencing.analyticalDashboards ?? []).map(({ id, type, title }) => ({
+        ...idRef(id, type),
+        title,
+    }));
 }
 
 function pickInsightIdentity(

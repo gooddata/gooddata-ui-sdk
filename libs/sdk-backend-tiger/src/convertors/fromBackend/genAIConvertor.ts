@@ -13,6 +13,7 @@ import {
     type AiConversationTurnResponse,
     type AiDashboardPart,
     type AiDashboardPatchPart,
+    type AiDashboardReferences,
     type AiInteractionStepResponse,
     type AiKeyDriverAnalysis,
     type AiMultipartContentPartsInner,
@@ -26,6 +27,7 @@ import {
     type JsonApiAnalyticalDashboardOutDocument,
     type JsonApiFilterContextInAttributes,
     type JsonApiFilterContextOutDocument,
+    type JsonApiVisualizationObjectOut,
 } from "@gooddata/api-client-tiger";
 import {
     type IAlertProposal,
@@ -53,6 +55,7 @@ import {
     yamlDatasetToDeclarative,
     yamlDateDatesetToDeclarative,
     yamlFiltersToDeclarative,
+    yamlVisualisationToDeclarative,
     yamlVisualisationToMetadataObject,
 } from "@gooddata/sdk-code-convertors";
 import {
@@ -61,7 +64,6 @@ import {
     type IDashboard,
     type IFilterContext,
     type IFilterContextDefinition,
-    type IInsight,
     type ISemanticSearchRelationship,
     type ISemanticSearchResultItem,
     type ITempFilterContext,
@@ -735,17 +737,9 @@ function applyDashboardPatch(
     const all = related.filter((part) => !!part.base);
     // The most recent card for this dashboard need not carry a base - a patch that failed to
     // apply resolves to one without. Rebase on the last card that actually has one.
-    const base = all[all.length - 1]?.base;
-    // Collate insights from all cards that are related to this dashboard in history
-    const previousInsights = Object.values(
-        all.reduce<Record<string, IInsight>>((b, p) => {
-            p.insights?.forEach((i) => {
-                b[i.insight.identifier] = i;
-            });
-            return b;
-        }, {}),
-    );
+    const base = all[all.length - 1]?.base as AacDashboard;
 
+    // Not base
     if (!base) {
         return {
             dashboard: null,
@@ -753,10 +747,32 @@ function applyDashboardPatch(
         };
     }
 
+    // Collate insights from all cards that are related to this dashboard in history
+    const references = [
+        ...all.map((part) => part.references as AiDashboardReferences),
+        patch.references,
+    ].reduce((acc, curr) => {
+        return {
+            datasets: unique(acc?.datasets as AacDataset[], curr?.datasets as AacDataset[]),
+            datedatasets: unique(
+                acc?.datedatasets as AacDateDataset[],
+                curr?.datedatasets as AacDateDataset[],
+            ),
+            new_visualizations: unique(
+                acc?.new_visualizations as AacVisualisation[],
+                curr?.new_visualizations as AacVisualisation[],
+            ),
+            visualizations: unique(
+                acc?.visualizations as AacVisualisation[],
+                curr?.visualizations as AacVisualisation[],
+            ),
+        };
+    }, {} as AiDashboardReferences);
+
     let newDocument: AacDashboard | null = null;
     try {
         const patchResult = fastJsonPatch.applyPatch<AacDashboard>(
-            base as AacDashboard,
+            base,
             patch.operations as readonly fastJsonPatch.Operation[],
             undefined,
             false,
@@ -771,11 +787,7 @@ function applyDashboardPatch(
         };
     }
 
-    const { dashboard, insights } = buildDashboardReferences(
-        newDocument,
-        patch.references,
-        patch.dashboard_id,
-    );
+    const { dashboard, insights } = buildDashboardReferences(newDocument, references, patch.dashboard_id);
     // `base` is carried over unchanged: the operations are defined against the relayed document,
     // not against the result of a previous proposal, so a follow-up patch - which arrives without
     // a base of its own as long as the relayed document has not changed - rebases on the same one.
@@ -784,8 +796,9 @@ function applyDashboardPatch(
     // change the user has not accepted yet, so it has to offer the draft and not the saved copy.
     return {
         base,
+        references,
+        insights,
         dashboard: convertToTemporaryFilterContexts(dashboard),
-        insights: [...previousInsights, ...insights],
     };
 }
 
@@ -823,6 +836,7 @@ function applyDashboardDefinition(part: AiDashboardPart) {
     return {
         insights,
         base: part.dashboard,
+        references: part.references,
         saved: part.saved_dashboard_id,
         dashboard: convertToTemporaryFilterContexts(dashboard),
     };
@@ -833,6 +847,8 @@ function buildDashboardReferences(
     references: AiDashboardPart["references"],
     savedDashboardId?: string | null,
 ) {
+    const entities: ExportEntities = [];
+
     const dateDatasets: ExportEntities =
         references?.datedatasets?.map((ds) => {
             const data = ds as AacDateDataset;
@@ -844,6 +860,8 @@ function buildDashboardReferences(
                 declarative: yamlDateDatesetToDeclarative(data),
             };
         }) ?? [];
+    entities.push(...dateDatasets);
+
     const datasets: ExportEntities =
         references?.datasets?.map((ds) => {
             const data = ds as AacDataset;
@@ -855,33 +873,63 @@ function buildDashboardReferences(
                 declarative: yamlDatasetToDeclarative(dateDatasets, data),
             };
         }) ?? [];
-    const entities = [...dateDatasets, ...datasets];
+    entities.push(...datasets);
 
-    const data = aacDashboard ? yamlDashboardToDeclarative(entities, aacDashboard as AacDashboard) : null;
-
-    const filters = data?.filterContext
-        ? convertFilterContextFromBackend(buildFilterContextWrapper(data.filterContext))
-        : undefined;
-
-    const existingInsights =
+    const existingVisualizations: ExportEntities =
         (references?.visualizations ?? []).map((vis) => {
-            return visualizationObjectsItemToInsight(
-                yamlVisualisationToMetadataObject(entities, vis as AacVisualisation),
-            );
+            const data = vis as AacVisualisation;
+            return {
+                data,
+                path: "",
+                type: data.type,
+                id: data.id,
+                declarative: yamlVisualisationToDeclarative(entities, data),
+            };
+        }) ?? [];
+    entities.push(...existingVisualizations);
+
+    const newVisualizations: ExportEntities =
+        (references?.new_visualizations ?? []).map((vis) => {
+            const data = vis as AacVisualisation;
+            return {
+                data,
+                path: "",
+                type: data.type,
+                id: data.id,
+                declarative: yamlVisualisationToDeclarative(entities, data),
+            };
+        }) ?? [];
+    entities.push(...newVisualizations);
+
+    // Convert to declarative to insights
+    const existingInsights =
+        existingVisualizations.map((data) => {
+            return visualizationObjectsItemToInsight({
+                type: "visualizationObject",
+                id: data.id,
+                attributes: data.declarative as JsonApiVisualizationObjectOut["attributes"],
+            });
         }) ?? [];
     const newInsights =
-        (references?.new_visualizations ?? []).map((vis) => {
-            const insight = visualizationObjectsItemToInsight(
-                yamlVisualisationToMetadataObject(entities, vis as AacVisualisation),
-            );
+        newVisualizations.map((data) => {
+            const insight = visualizationObjectsItemToInsight({
+                type: "visualizationObject",
+                id: data.id,
+                attributes: data.declarative as JsonApiVisualizationObjectOut["attributes"],
+            });
             insight.insight.isDraft = true;
             return insight;
         }) ?? [];
 
+    // Convert AacDashboard to declarative dashboard
+    const data = aacDashboard ? yamlDashboardToDeclarative(entities, aacDashboard as AacDashboard) : null;
+    const filters = data?.filterContext
+        ? convertFilterContextFromBackend(buildFilterContextWrapper(data.filterContext))
+        : undefined;
     const dashboard = data
         ? convertDashboard(
               buildDashboardWrapper(data.dashboard, data.tabFilterContexts, savedDashboardId),
-              filters,
+              data.tabFilterContexts?.length ? undefined : filters,
           )
         : null;
 
@@ -889,4 +937,8 @@ function buildDashboardReferences(
         dashboard,
         insights: [...existingInsights, ...newInsights],
     };
+}
+
+function unique<T extends { id: string }>(acc?: T[], curr?: T[]): T[] {
+    return [...new Map(([...(acc ?? []), ...(curr ?? [])] as T[]).map((item) => [item.id, item])).values()];
 }

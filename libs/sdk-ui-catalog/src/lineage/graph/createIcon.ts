@@ -14,6 +14,7 @@ export function getIconData(type: string) {
         attribute: "ldmAttribute",
         computedAttribute: "ldmAttribute",
         displayForm: "ldmAttribute",
+        parameter: "parameter",
     };
 
     const iconType = iconMap[type] || "box";

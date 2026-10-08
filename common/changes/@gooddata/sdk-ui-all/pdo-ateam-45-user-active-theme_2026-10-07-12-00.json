@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-backend-spi, sdk-backend-tiger: Add setTheme, deleteTheme, setColorPalette and deleteColorPalette to IUserSettingsService so the current user can pick their own theme and color palette.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

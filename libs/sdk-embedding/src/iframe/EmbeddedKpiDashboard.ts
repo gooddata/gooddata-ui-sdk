@@ -124,6 +124,16 @@ export enum GdcKdCommandType {
      * The command to set the dashboard timezone
      */
     SetTimezone = "setTimezone",
+
+    /**
+     * The command to get the current state of the navigation sidebar
+     */
+    GetSidebarState = "getSidebarState",
+
+    /**
+     * The command to set the state of the navigation sidebar
+     */
+    SetSidebarState = "setSidebarState",
 }
 
 /**
@@ -300,6 +310,12 @@ export enum GdcKdEventType {
      * Type represent that the setTimezone command is finished.
      */
     SetTimezoneFinished = "setTimezoneFinished",
+
+    /**
+     * Type notifies embedding application that the state of the navigation sidebar has changed.
+     * Also posted as the response to the getSidebarState command.
+     */
+    SidebarStateChanged = "sidebarStateChanged",
 }
 
 /**
@@ -1607,4 +1623,141 @@ export interface IKdSetTimezoneFinishedBody extends IKdAvailableCommands {
 export type KdSetTimezoneFinishedData = IGdcKdMessageEnvelope<
     GdcKdEventType.SetTimezoneFinished,
     IKdSetTimezoneFinishedBody
+>;
+
+/**
+ * Set sidebar state command body sent by outer application
+ *
+ * @public
+ */
+export interface IKdSetSidebarStateBody {
+    /**
+     * Whether the navigation sidebar should be collapsed (fully hidden) or expanded.
+     */
+    collapsed?: boolean;
+
+    /**
+     * Width in pixels of the expanded navigation sidebar. A value outside the supported bounds is
+     * clamped to the nearest valid value. While collapsed, the width describes the expanded form
+     * restored on expand.
+     */
+    width?: number;
+}
+
+/**
+ * Sets the state of the navigation sidebar: the collapsed flag, the width of its expanded form,
+ * or both.
+ *
+ * Contract:
+ *
+ * -  the command overrides the state the sidebar is in, whether it came from the embedding URL
+ *    parameters (`sidebarCollapsed`, `sidebarWidth`) or from the state persisted in the embedded
+ *    browser; a later change made by the user through the UI takes over again and is persisted
+ *    as usual
+ * -  a width outside the supported bounds is clamped to the nearest valid value
+ * -  a command carrying only a width while the expanded sidebar cannot be resized results in
+ *    CommandFailed; the width of a collapsed sidebar stays settable, as the width restored on expand
+ * -  every effective change is announced by the SidebarStateChanged event; a command that changes
+ *    nothing produces no event
+ * -  CommandFailed is posted when the navigation sidebar is not shown (for example the embedding
+ *    URL does not opt into it via `showNavigation=true` or the viewport is too small) or can be
+ *    neither collapsed nor resized, and when the body carries no field or a field of a wrong type
+ *
+ * @public
+ */
+export type KdSetSidebarStateCommand = IGdcKdMessageEvent<
+    GdcKdCommandType.SetSidebarState,
+    IKdSetSidebarStateBody
+>;
+
+/**
+ * Data type of set sidebar state command
+ *
+ * Note: The main event data was wrapped to application and product data structure
+ * @remarks See {@link IKdSetSidebarStateBody}
+ *
+ * @public
+ */
+export type KdSetSidebarStateCommandData = IGdcKdMessageEnvelope<
+    GdcKdCommandType.SetSidebarState,
+    IKdSetSidebarStateBody
+>;
+
+/**
+ * Type-guard checking whether an object is an instance of {@link KdSetSidebarStateCommandData}.
+ *
+ * @param obj - object to test
+ *
+ * @public
+ */
+export function isKdSetSidebarStateCommandData(obj: unknown): obj is KdSetSidebarStateCommandData {
+    return (
+        obj !== null &&
+        typeof obj === "object" &&
+        getEventType(obj) === (GdcKdCommandType.SetSidebarState as string)
+    );
+}
+
+/**
+ * Requests the current state of the navigation sidebar.
+ *
+ * Contract:
+ *
+ * -  KD posts the SidebarStateChanged event carrying the current state
+ * -  CommandFailed is posted when the navigation sidebar is not shown or can be neither collapsed
+ *    nor resized
+ *
+ * @public
+ */
+export type KdGetSidebarStateCommand = IGdcKdMessageEvent<GdcKdCommandType.GetSidebarState, null>;
+
+/**
+ * Data type of get sidebar state command
+ *
+ * @public
+ */
+export type KdGetSidebarStateCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.GetSidebarState, null>;
+
+/**
+ * Type-guard checking whether an object is an instance of {@link KdGetSidebarStateCommandData}.
+ *
+ * @param obj - object to test
+ *
+ * @public
+ */
+export function isKdGetSidebarStateCommandData(obj: unknown): obj is KdGetSidebarStateCommandData {
+    return (
+        obj !== null &&
+        typeof obj === "object" &&
+        getEventType(obj) === (GdcKdCommandType.GetSidebarState as string)
+    );
+}
+
+/**
+ * Body of the event that is emitted when the state of the navigation sidebar changes, and in
+ * response to the getSidebarState command.
+ *
+ * @public
+ */
+export interface IKdSidebarStateChangedBody extends IKdAvailableCommands {
+    /**
+     * Whether the navigation sidebar is collapsed (fully hidden).
+     */
+    collapsed: boolean;
+
+    /**
+     * Width in pixels of the expanded navigation sidebar; while collapsed, the width restored
+     * on expand.
+     */
+    width: number;
+}
+
+/**
+ * Type that represents the sidebar state changed event data.
+ *
+ * @public
+ */
+export type KdSidebarStateChangedData = IGdcKdMessageEnvelope<
+    GdcKdEventType.SidebarStateChanged,
+    IKdSidebarStateChangedBody
 >;

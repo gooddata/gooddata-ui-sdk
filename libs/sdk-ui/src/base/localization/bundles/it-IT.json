@@ -1017,6 +1017,8 @@
     "userManagement.workspace.permission.createMetric.tooltip": "Aggiunge l'autorizzazione CREATE_METRIC per creare e gestire nuove metriche. Per gestire qualsiasi altra metrica, l'utente deve avervi accesso.",
     "userManagement.workspace.permission.createVisualization": "Visualizzazioni",
     "userManagement.workspace.permission.createVisualization.tooltip": "Aggiunge l'autorizzazione CREATE_VISUALIZATION per salvare nuove visualizzazioni. Con l'accesso in visualizzazione, funziona solo nell'editor incorporato in un cruscotto che l'utente può modificare.",
+    "userManagement.workspace.permission.manageVisualizations": "Gestisci tutte le visualizzazioni",
+    "userManagement.workspace.permission.manageVisualizations.tooltip": "Aggiunge l'autorizzazione MANAGE_VISUALIZATIONS per creare nuove visualizzazioni e modificare tutte quelle esistenti senza accesso esplicito.",
     "userManagement.workspace.permission.useAiAssistant": "Assistente AI",
     "userManagement.workspace.permission.useAiAssistant.tooltip": "Aggiunge l'autorizzazione USE_AI_ASSISTANT per accedere e interagire con il chatbot AI per le domande di analisi.",
     "userManagement.workspace.granularPermission.noWorkspace": "Non è stato selezionato alcuno spazio di lavoro",

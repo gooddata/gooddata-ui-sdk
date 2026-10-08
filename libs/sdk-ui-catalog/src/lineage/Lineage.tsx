@@ -4,7 +4,7 @@ import { type MouseEvent, useMemo, useState } from "react";
 
 import { defineMessages, useIntl } from "react-intl";
 
-import { type IReferencesResult } from "@gooddata/sdk-backend-spi";
+import { type IReferencesOption, type IReferencesResult } from "@gooddata/sdk-backend-spi";
 import {
     ErrorComponent,
     LoadingComponent,
@@ -16,7 +16,7 @@ import { UiIconButton, UiTooltip, useElementSize } from "@gooddata/sdk-ui-kit";
 
 import { type ICatalogItem, type ICatalogItemRef } from "../catalogItem/types.js";
 
-import { HIDDEN_ITEMS, LEAF_TYPES } from "./const.js";
+import { HIDDEN_ITEMS, LEAF_TYPES, UPSTREAM_DEFAULT_TYPES } from "./const.js";
 import { useLineageGraph } from "./useLineageGraph.js";
 
 const messages = defineMessages({
@@ -34,7 +34,9 @@ export function Lineage({ item, onItemClick }: Props) {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
     const intl = useIntl();
-    const [direction, setDirection] = useState<"up" | "down" | "both">("down");
+    const [direction, setDirection] = useState<IReferencesOption["direction"]>(
+        UPSTREAM_DEFAULT_TYPES.includes(item.type) ? "up" : "down",
+    );
 
     const objRef = useMemo(() => ({ identifier: item.identifier, type: item.type }), [item]);
 

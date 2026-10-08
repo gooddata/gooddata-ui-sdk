@@ -352,8 +352,6 @@
     "messages.settingsDialogError.general": "No se ha podido cargar la configuración del panel de control. Inténtelo más tarde.",
     "visualization.dataTooLarge.headline": "Demasiados puntos de datos para ser mostrados",
     "visualization.dataTooLarge.text": "Intente aplicar uno o más filtros a su panel.",
-    "visualization.execute_protected_report.headline": "No tiene permiso para ver este informe.",
-    "visualization.execute_protected_report.text": "Póngase en contacto con su administrador.",
     "visualization.empty.headline": "No existen datos para su selección de filtro",
     "visualization.error.headline": "Lo sentimos, no podemos mostrar esta visualización",
     "visualization.error.text": "Póngase en contacto con su administrador.",

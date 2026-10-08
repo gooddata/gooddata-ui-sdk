@@ -1,10 +1,21 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
 
 import { type IDataView, type IExecutionResult, isNoDataError } from "@gooddata/sdk-backend-spi";
-import { type IExecutionResultLimitBreak, type IResultWarning, type ObjRef } from "@gooddata/sdk-model";
-import { type IPushData, type OnError, type OnLoadingChanged, isNoDataSdkError } from "@gooddata/sdk-ui";
+import {
+    type IExecutionResultLimitBreak,
+    type IResultWarning,
+    type ObjRef,
+    serializeObjRef,
+} from "@gooddata/sdk-model";
+import {
+    type IPushData,
+    type OnError,
+    type OnLoadingChanged,
+    isNoDataSdkError,
+    isProtectedReport,
+} from "@gooddata/sdk-ui";
 
 import {
     setExecutionResultData,
@@ -12,7 +23,10 @@ import {
     setExecutionResultErrorWithResult,
     setExecutionResultLoading,
 } from "../commands/executionResults.js";
+import { restrictedDataActions } from "../store/restrictedData/index.js";
+import { selectWidgetExecutionInputsKey } from "../store/restrictedData/restrictedDataSelectors.js";
 
+import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider.js";
 import { useDispatchDashboardCommand } from "./useDispatchDashboardCommand.js";
 
 function getLimitBreaks(dataView: IDataView): IExecutionResultLimitBreak[] | undefined {
@@ -25,13 +39,35 @@ function getLimitBreaks(dataView: IDataView): IExecutionResultLimitBreak[] | und
  * @internal
  */
 export function useWidgetExecutionsHandler(widgetRef: ObjRef) {
+    const dispatch = useDashboardDispatch();
+    const inputsKey = useDashboardSelector(selectWidgetExecutionInputsKey(widgetRef));
+    // the inputs of the running execution; the loader drops the outcome of an execution it replaced, so
+    // an outcome reported here always belongs to them
+    const executionInputsKey = useRef<string | undefined>(undefined);
     const startLoading = useDispatchDashboardCommand(setExecutionResultLoading);
     const setData = useDispatchDashboardCommand(setExecutionResultData);
     const setError = useDispatchDashboardCommand(setExecutionResultError);
     const setErrorWithResult = useDispatchDashboardCommand(setExecutionResultErrorWithResult);
 
+    // Restrictions are recorded right away rather than through the command queue, so they keep the order
+    // in which executions start and finish even when the queue is busy.
+    const recordOutcome = useCallback(
+        (isRefused: boolean) => {
+            dispatch(
+                isRefused
+                    ? restrictedDataActions.executionRefused({
+                          ref: widgetRef,
+                          inputsKey: executionInputsKey.current ?? inputsKey,
+                      })
+                    : restrictedDataActions.clearRefusal(serializeObjRef(widgetRef)),
+            );
+        },
+        [dispatch, inputsKey, widgetRef],
+    );
+
     const onError = useCallback<OnError>(
         (error) => {
+            recordOutcome(isProtectedReport(error));
             // A no-data error may carry the computed (empty) result, which has a valid resultId
             // (a result computed to emptiness, as opposed to e.g. an unsatisfiable filter that
             // never executes). When present, record both so consumers can reference the result
@@ -46,7 +82,7 @@ export function useWidgetExecutionsHandler(widgetRef: ObjRef) {
                 setError(widgetRef, error);
             }
         },
-        [setError, setErrorWithResult, widgetRef],
+        [recordOutcome, setError, setErrorWithResult, widgetRef],
     );
 
     const onSuccess = useCallback(
@@ -55,9 +91,10 @@ export function useWidgetExecutionsHandler(widgetRef: ObjRef) {
             warnings: IResultWarning[] | undefined,
             limitBreaks?: IExecutionResultLimitBreak[],
         ) => {
+            recordOutcome(false);
             setData(widgetRef, executionResult, warnings, limitBreaks);
         },
-        [setData, widgetRef],
+        [recordOutcome, setData, widgetRef],
     );
 
     const onPushData = useCallback(
@@ -73,10 +110,11 @@ export function useWidgetExecutionsHandler(widgetRef: ObjRef) {
     const onLoadingChanged = useCallback<OnLoadingChanged>(
         ({ isLoading }) => {
             if (isLoading) {
+                executionInputsKey.current = inputsKey;
                 startLoading(widgetRef);
             }
         },
-        [startLoading, widgetRef],
+        [inputsKey, startLoading, widgetRef],
     );
 
     return {

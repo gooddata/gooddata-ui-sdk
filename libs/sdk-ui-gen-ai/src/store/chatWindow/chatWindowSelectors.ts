@@ -51,11 +51,6 @@ export const isPreviewSelector: (state: RootState) => boolean = createSelector(
     (state) => state.isPreview === true,
 );
 
-export const agentSwitchingEnabledSelector: (state: RootState) => boolean = createSelector(
-    settingsSelector,
-    (settings) => settings?.["enableGenAiAgentSwitching"] === true,
-);
-
 export const contextSetupEnabledSelector: (state: RootState) => boolean = createSelector(
     settingsSelector,
     (settings) => settings?.enableAiContextSetup === true,
@@ -70,9 +65,8 @@ export const reasoningEffortEnabledSelector: (state: RootState) => boolean = cre
 // mode: the assistant is pinned to the single preview agent being built, so the switcher stays
 // hidden and the legacy input is used.
 export const agentSwitchingActiveSelector: (state: RootState) => boolean = createSelector(
-    agentSwitchingEnabledSelector,
     isPreviewSelector,
-    (agentSwitchingEnabled, isPreview) => agentSwitchingEnabled && !isPreview,
+    (isPreview) => !isPreview,
 );
 
 export const allowInteractionIntelligenceSelector: (state: RootState) => boolean = createSelector(

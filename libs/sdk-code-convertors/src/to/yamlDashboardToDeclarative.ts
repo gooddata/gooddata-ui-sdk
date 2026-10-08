@@ -484,15 +484,20 @@ function yamlSizeToDeclarative(input: Widget) {
     };
 }
 
-function yamlInsightWidgetToDeclarative(
+/** @internal */
+export function yamlInsightWidgetToDeclarative(
     entities: ExportEntities,
     input: VisualisationWidget,
 ): IInsightWidgetDefinition {
+    const target = entities
+        .filter((e) => VisualisationsTypes.includes(e.type))
+        .find((e) => e.id === input.visualization)?.data as Visualisation;
+
     return {
         ...(input.id ? { localIdentifier: input.id } : {}),
         type: "insight",
         insight: createIdentifier<any>(input.visualization, { forceType: "visualizationObject" }),
-        title: input.title || "",
+        title: input.title || target?.title || "",
         description: useInherit(input.description),
         configuration: {
             hideTitle: input.title === false,

@@ -3,13 +3,14 @@
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
-import { objRefToString } from "@gooddata/sdk-model";
+import { objRefToString, serializeObjRef } from "@gooddata/sdk-model";
 
 import { type IRefreshInsightWidget } from "../../commands/insight.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { type IDashboardInsightWidgetRefreshed, insightWidgetRefreshed } from "../../events/insight.js";
 import { insightsActions } from "../../store/insights/index.js";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
+import { restrictedDataActions } from "../../store/restrictedData/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 
@@ -36,6 +37,8 @@ export function* refreshInsightWidgetHandler(
     const newInsight = yield call(loadInsight, ctx, insightRef);
 
     yield put(insightsActions.upsertInsight(newInsight));
+    // an explicit refresh executes the widget again even when it was refused for restricted data
+    yield put(restrictedDataActions.clearRefusal(serializeObjRef(insightWidget.ref)));
 
     return insightWidgetRefreshed(ctx, newInsight, cmd.correlationId);
 }

@@ -104,6 +104,7 @@
         "media-query-no-invalid": null,
         "color-function-alias-notation": null,
         "declaration-property-value-keyword-no-deprecated": null,
-        "at-rule-descriptor-value-no-unknown": null
+        "at-rule-descriptor-value-no-unknown": null,
+        "at-rule-prelude-no-invalid": null
     }
 }

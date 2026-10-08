@@ -339,6 +339,7 @@ export enum GdcKdCommandType {
     Delete = "deleteDashboard",
     DrillableItems = "drillableItems",
     ExportToPdf = "exportToPdf",
+    GetSidebarState = "getSidebarState",
     OpenDeleteDashboardDialog = "openDeleteDashboardDialog",
     RemoveFilterContext = "removeFilterContext",
     Save = "saveDashboard",
@@ -346,6 +347,7 @@ export enum GdcKdCommandType {
     SetApiToken = "setApiToken",
     SetFilterContext = "setFilterContext",
     SetFilterParents = "setFilterParents",
+    SetSidebarState = "setSidebarState",
     SetSize = "setSize",
     SetTimezone = "setTimezone",
     SwitchToEdit = "switchToEdit",
@@ -382,6 +384,7 @@ export enum GdcKdEventType {
     SetFilterParentsFailed = "setFilterParentsFailed",
     SetFilterParentsFinished = "setFilterParentsFinished",
     SetTimezoneFinished = "setTimezoneFinished",
+    SidebarStateChanged = "sidebarStateChanged",
     SwitchedToEdit = "switchedToEdit",
     SwitchedToView = "switchedToView",
     WidgetAdded = "widgetAdded"
@@ -789,6 +792,12 @@ export interface IKdSetFilterParentsItemParent {
     parent: KdSetFilterParentsItemFilter;
 }
 
+// @public
+export interface IKdSetSidebarStateBody {
+    collapsed?: boolean;
+    width?: number;
+}
+
 // @public (undocumented)
 export interface IKdSetSizeCommandBody {
     height: number;
@@ -803,6 +812,12 @@ export interface IKdSetTimezoneBody {
 export interface IKdSetTimezoneFinishedBody extends IKdAvailableCommands {
     effectiveTimezone?: string;
     target: "configuration" | "override";
+}
+
+// @public
+export interface IKdSidebarStateChangedBody extends IKdAvailableCommands {
+    collapsed: boolean;
+    width: number;
 }
 
 // @public (undocumented)
@@ -1200,6 +1215,9 @@ export function isKdDrillableItemsCommandData(obj: unknown): obj is KdDrillableI
 export function isKdExportToPdfCommandData(obj: unknown): obj is KdExportToPdfCommandData;
 
 // @public
+export function isKdGetSidebarStateCommandData(obj: unknown): obj is KdGetSidebarStateCommandData;
+
+// @public
 export function isKdIdentifierInsight(obj: unknown): obj is IKdIdentifierInsightRef;
 
 // @public
@@ -1222,6 +1240,9 @@ export function isKdSetFilterContextCommandData(obj: unknown): obj is KdSetFilte
 
 // @public
 export function isKdSetFilterParentsCommandData(obj: unknown): obj is KdSetFilterParentsCommandData;
+
+// @public
+export function isKdSetSidebarStateCommandData(obj: unknown): obj is KdSetSidebarStateCommandData;
 
 // @public
 export function isKdSetSizeCommandData(obj: unknown): obj is KdSetSizeCommandData;
@@ -1526,6 +1547,12 @@ export type KdFilterContextChangedBody = IKdAvailableCommands & IFilterContextCo
 export type KdFilterContextChangedData = IGdcKdMessageEnvelope<GdcKdEventType.FilterContextChanged, KdFilterContextChangedBody>;
 
 // @public
+export type KdGetSidebarStateCommand = IGdcKdMessageEvent<GdcKdCommandType.GetSidebarState, null>;
+
+// @public
+export type KdGetSidebarStateCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.GetSidebarState, null>;
+
+// @public
 export type KdInsightSavedData = IGdcKdMessageEnvelope<GdcKdEventType.InsightSaved, IKdInsightSavedBody>;
 
 // @public
@@ -1613,6 +1640,12 @@ export type KdSetFilterParentsFinishedData = IGdcKdMessageEnvelope<GdcKdEventTyp
 // @public
 export type KdSetFilterParentsItemFilter = IKdSetFilterParentsAttributeFilter;
 
+// @public
+export type KdSetSidebarStateCommand = IGdcKdMessageEvent<GdcKdCommandType.SetSidebarState, IKdSetSidebarStateBody>;
+
+// @public
+export type KdSetSidebarStateCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.SetSidebarState, IKdSetSidebarStateBody>;
+
 // @public (undocumented)
 export type KdSetSizeCommand = IGdcKdMessageEvent<GdcKdCommandType.SetSize, IKdSetSizeCommandBody>;
 
@@ -1627,6 +1660,9 @@ export type KdSetTimezoneCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.Se
 
 // @public
 export type KdSetTimezoneFinishedData = IGdcKdMessageEnvelope<GdcKdEventType.SetTimezoneFinished, IKdSetTimezoneFinishedBody>;
+
+// @public
+export type KdSidebarStateChangedData = IGdcKdMessageEnvelope<GdcKdEventType.SidebarStateChanged, IKdSidebarStateChangedBody>;
 
 // @public
 export type KdSwitchedToEditData = IGdcKdMessageEnvelope<GdcKdEventType.SwitchedToEdit, KdDashboardBody>;

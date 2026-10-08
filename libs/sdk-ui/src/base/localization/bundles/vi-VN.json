@@ -1017,6 +1017,8 @@
     "userManagement.workspace.permission.createMetric.tooltip": "Thêm quyền CREATE_METRIC để tạo và quản lý các thước đo mới. Để quản lý bất kỳ thước đo nào khác, người dùng cần có quyền truy cập vào thước đo đó.",
     "userManagement.workspace.permission.createVisualization": "Trực quan hóa",
     "userManagement.workspace.permission.createVisualization.tooltip": "Thêm quyền CREATE_VISUALIZATION để lưu các trực quan hóa mới. Với quyền truy cập Xem, quyền này chỉ hoạt động trong trình chỉnh sửa được nhúng vào bảng điều khiển mà người dùng có thể chỉnh sửa.",
+    "userManagement.workspace.permission.manageVisualizations": "Quản lý tất cả các trực quan hóa",
+    "userManagement.workspace.permission.manageVisualizations.tooltip": "Thêm quyền MANAGE_VISUALIZATIONS để tạo các trực quan hóa mới và chỉnh sửa tất cả các trực quan hóa hiện có mà không cần được cấp quyền truy cập rõ ràng.",
     "userManagement.workspace.permission.useAiAssistant": "Trợ lý AI",
     "userManagement.workspace.permission.useAiAssistant.tooltip": "Thêm quyền USE_AI_ASSISTANT để truy cập và tương tác với chatbot AI cho các câu hỏi phân tích.",
     "userManagement.workspace.granularPermission.noWorkspace": "Không có không gian làm việc nào được chọn",

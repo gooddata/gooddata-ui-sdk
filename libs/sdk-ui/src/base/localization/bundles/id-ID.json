@@ -1017,6 +1017,8 @@
     "userManagement.workspace.permission.createMetric.tooltip": "Menambahkan izin CREATE_METRIC untuk membuat dan mengelola metrik baru. Untuk mengelola metrik lainnya, pengguna memerlukan akses ke metrik tersebut.",
     "userManagement.workspace.permission.createVisualization": "Visualisasi",
     "userManagement.workspace.permission.createVisualization.tooltip": "Menambahkan izin CREATE_VISUALIZATION untuk menyimpan visualisasi baru. Dengan akses Lihat, izin ini hanya berfungsi di editor yang disematkan dalam dasbor yang dapat diedit pengguna.",
+    "userManagement.workspace.permission.manageVisualizations": "Kelola semua visualisasi",
+    "userManagement.workspace.permission.manageVisualizations.tooltip": "Menambahkan izin MANAGE_VISUALIZATIONS untuk membuat visualisasi baru dan mengedit semua visualisasi yang ada tanpa akses eksplisit.",
     "userManagement.workspace.permission.useAiAssistant": "Asisten AI",
     "userManagement.workspace.permission.useAiAssistant.tooltip": "Menambahkan izin USE_AI_ASSISTANT untuk mengakses dan berinteraksi dengan chatbot AI untuk pertanyaan analitik.",
     "userManagement.workspace.granularPermission.noWorkspace": "Tidak ada ruang kerja yang dipilih",

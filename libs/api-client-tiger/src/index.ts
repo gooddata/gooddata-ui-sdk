@@ -6276,6 +6276,8 @@ export {
     type GrantedPermissionSourceEnum,
     type JsonApiAnalyticalDashboardOutRelationshipsComputedAttributes,
     type JsonApiFilterContextOutRelationshipsComputedAttributes,
+    type JsonApiFilterContextOutRelationshipsFacts,
+    type JsonApiFilterContextOutRelationshipsMetrics,
 } from "./generated/metadata-json-api/api.js";
 
 export type {

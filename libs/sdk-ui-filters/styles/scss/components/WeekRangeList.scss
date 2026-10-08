@@ -1,0 +1,95 @@
+// (C) 2026 GoodData Corporation
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+$week-range-list-heading-height: 28px;
+$week-range-list-week-height: 28px;
+$week-range-list-week-gap: 2px;
+$week-range-list-radius: 3px;
+
+.gd-week-range-list {
+    font-family: kit-variables.$gd-font-primary;
+    font-size: 13px;
+    color: kit-variables.$gd-color-text;
+
+    &__search {
+        margin-bottom: 8px;
+
+        // The field has no clear button, so it does not need the room a search field keeps for one.
+        &.gd-input-search .gd-input-field {
+            padding-right: 7px;
+        }
+    }
+
+    &__rows {
+        // The list is the offset parent of its rows, which the centring measures from.
+        position: relative;
+        box-sizing: border-box;
+        height: 8 * ($week-range-list-week-height + $week-range-list-week-gap);
+        padding: 0 4px $week-range-list-week-gap;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        border: 1px solid kit-variables.$gd-border-color;
+        border-radius: $week-range-list-radius;
+        // Rows added above the visible ones are compensated by script; the browser's own scroll anchoring
+        // would shift the list a second time.
+        overflow-anchor: none;
+
+        // The kit's list items take their parent's height, so this rule has to outrank theirs.
+        .gd-week-range-list__heading {
+            box-sizing: border-box;
+            height: $week-range-list-heading-height;
+        }
+    }
+
+    &__week {
+        box-sizing: border-box;
+        height: $week-range-list-week-height;
+        margin-top: $week-range-list-week-gap;
+        padding: 0 10px;
+        border-radius: $week-range-list-radius;
+        line-height: $week-range-list-week-height;
+        white-space: nowrap;
+        cursor: pointer;
+        transition: background 0.2s;
+
+        &--active {
+            background: kit-variables.$is-focused-background;
+        }
+
+        &--in-range {
+            background: kit-variables.$gd-palette-primary-dimmed;
+        }
+
+        &--edge {
+            background: kit-variables.$gd-palette-primary-base;
+            color: kit-variables.$gd-color-text-light;
+        }
+
+        // The active row has to stay visible on top of the range fill.
+        &--in-range.gd-week-range-list__week--active {
+            box-shadow: inset 0 0 0 1px kit-variables.$gd-palette-primary-base;
+        }
+
+        &--edge.gd-week-range-list__week--active {
+            box-shadow: inset 0 0 0 1px kit-variables.$gd-color-text-light;
+        }
+    }
+
+    &__hint {
+        padding-top: 10px;
+        color: kit-variables.$gd-medium-gray;
+        font-size: 12px;
+    }
+
+    &__preview {
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid kit-variables.$gd-border-color;
+        color: kit-variables.$gd-medium-gray;
+        font-size: 12px;
+    }
+
+    &--mobile .gd-input-field {
+        font-size: 16px; // Prevent iPhone zoom on focus
+    }
+}

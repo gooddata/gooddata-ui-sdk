@@ -84,6 +84,10 @@
                         "$ref": "/gaac/reportVariable"
                     }
                 },
+                "takeaways_instruction": {
+                    "type": "string",
+                    "description": "Instructions every AI takeaway without instructions of its own is generated with. Supports {variables}."
+                },
                 "variable_values": {
                     "type": "object",
                     "description": "Values for the declared variables, keyed by variable name. A variable with no value here falls back to its default.",

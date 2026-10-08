@@ -20,9 +20,9 @@ import { useDashboardSelector } from "../../../model/react/DashboardStoreProvide
 import { useDashboardScheduledEmails } from "../../../model/react/useDasboardScheduledEmails/useDashboardScheduledEmails.js";
 import { useDashboardAlerts } from "../../../model/react/useDashboardAlerting/useDashboardAlerts.js";
 import { useDashboardCommand } from "../../../model/react/useDashboardCommand.js";
+import { useIsInsightWidgetRestricted } from "../../../model/react/useIsWidgetRestricted.js";
 import { selectInsightsMap } from "../../../model/store/insights/insightsSelectors.js";
 import { selectVisualizationSwitcherActiveVisualizationByWidgetRef } from "../../../model/store/ui/uiSelectors.js";
-import { selectRestrictedInsightsMap } from "../../../model/store/unavailableObjects/unavailableObjectsSelectors.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 import { DashboardItem } from "../../presentationComponents/DashboardItems/DashboardItem.js";
 import { DashboardItemVisualization } from "../../presentationComponents/DashboardItems/DashboardItemVisualization.js";
@@ -73,12 +73,12 @@ export function ViewModeDashboardVisualizationSwitcher({
         widget.visualizations[0];
 
     const insights = useDashboardSelector(selectInsightsMap);
-    const restrictedInsights = useDashboardSelector(selectRestrictedInsightsMap);
+    const isInsightWidgetRestricted = useIsInsightWidgetRestricted();
     const insight = activeVisualization ? insights.get(activeVisualization.insight) : undefined;
 
     // a restricted insight is withheld from the insights map, so this must be decided before the
     // missing-insight branch below, which would otherwise render the empty switcher
-    if (activeVisualization && restrictedInsights.has(activeVisualization.insight)) {
+    if (activeVisualization && isInsightWidgetRestricted(activeVisualization)) {
         return (
             <ViewModeDashboardVisualizationSwitcherRestricted
                 widget={widget}

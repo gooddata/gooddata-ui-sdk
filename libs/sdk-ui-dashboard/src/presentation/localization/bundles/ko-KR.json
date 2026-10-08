@@ -352,8 +352,6 @@
     "messages.settingsDialogError.general": "대시보드 설정을 불러오지 못했습니다. 나중에 다시 시도하세요.",
     "visualization.dataTooLarge.headline": "표시할 데이터 포인트가 너무 많습니다",
     "visualization.dataTooLarge.text": "대시보드에 하나 이상의 필터를 적용해 보세요.",
-    "visualization.execute_protected_report.headline": "이 보고서를 볼 수 있는 권한이 없습니다",
-    "visualization.execute_protected_report.text": "관리자에게 문의하세요.",
     "visualization.empty.headline": "필터 선택에 대한 데이터가 없습니다",
     "visualization.error.headline": "죄송합니다, 이 시각화를 표시할 수 없습니다",
     "visualization.error.text": "관리자에게 문의하세요.",

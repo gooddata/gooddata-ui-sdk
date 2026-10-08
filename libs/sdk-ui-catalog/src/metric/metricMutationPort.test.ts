@@ -183,22 +183,20 @@ describe("metricMutationPort adapter", () => {
 });
 
 describe("metric references", () => {
-    it("listMetricReferences titles every dependent node and skips the root", async () => {
+    it("listMetricReferences returns every dependent node except the root", async () => {
         const { backend, getReferences } = createFakeBackend();
         getReferences.mockResolvedValueOnce({
             nodes: [
                 { identifier: "revenue.total", type: "measure", title: "Total Revenue", isRoot: true },
-                { identifier: "viz.trend", type: "insight", title: "Revenue trend" },
-                { identifier: "revenue.per.account", type: "measure", title: "Revenue per account" },
-                { identifier: "ca.rep", type: "computedAttribute", title: "Rep performance" },
+                { identifier: "viz.trend", type: "insight", title: "Revenue trend", isRoot: false },
+                { identifier: "ca.rep", type: "computedAttribute", title: "Rep performance", isRoot: false },
             ],
             edges: [],
         });
 
         expect(await listMetricReferences(backend, "ws-1", measureItem)).toEqual([
-            "Revenue trend",
-            "Revenue per account",
-            "Rep performance",
+            { identifier: "viz.trend", type: "insight", title: "Revenue trend" },
+            { identifier: "ca.rep", type: "computedAttribute", title: "Rep performance" },
         ]);
         expect(getReferences).toHaveBeenCalledWith(
             { identifier: "revenue.total", type: "measure" },

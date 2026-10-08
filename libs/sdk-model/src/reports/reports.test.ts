@@ -229,8 +229,8 @@ describe("validateReportPageBody", () => {
 });
 
 describe("BuiltInReportPageLayouts", () => {
-    it("contains 24 pages, all flagged and locked", () => {
-        expect(BuiltInReportPageLayouts).toHaveLength(24);
+    it("contains 25 pages, all flagged and locked", () => {
+        expect(BuiltInReportPageLayouts).toHaveLength(25);
         for (const page of BuiltInReportPageLayouts) {
             expect(page.isBuiltIn).toBe(true);
             expect(page.isLocked).toBe(true);
@@ -302,7 +302,7 @@ describe("BuiltInReportPageLayouts", () => {
         const withSummary = BuiltInReportPageLayouts.filter((page) =>
             page.content.slots.some((slot) => slot.localIdentifier === "summary"),
         );
-        expect(withSummary).toHaveLength(7);
+        expect(withSummary).toHaveLength(8);
         for (const page of withSummary) {
             const slotIds: string[] = [];
             const visit = (node: ReportPageLayoutNode): void => {

@@ -352,8 +352,6 @@
     "messages.settingsDialogError.general": "Gagal memuat pengaturan dasbor. Coba lagi nanti.",
     "visualization.dataTooLarge.headline": "Terlalu banyak titik data untuk ditampilkan",
     "visualization.dataTooLarge.text": "Coba terapkan satu atau beberapa filter ke dasbor Anda.",
-    "visualization.execute_protected_report.headline": "Anda tidak berwenang untuk melihat laporan ini",
-    "visualization.execute_protected_report.text": "Hubungi administrator Anda.",
     "visualization.empty.headline": "Tidak ada data untuk pilihan filter Anda",
     "visualization.error.headline": "Maaf, kami tidak dapat menampilkan visualisasi ini",
     "visualization.error.text": "Hubungi administrator Anda.",

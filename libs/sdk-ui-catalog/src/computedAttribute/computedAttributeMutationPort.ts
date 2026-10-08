@@ -5,11 +5,12 @@ import {
     type IComputedAttributeMetadataObject,
     type IComputedAttributeMetadataObjectDefinition,
     idRef,
+    insightId,
     insightTitle,
     isComputedAttributeMetadataObject,
 } from "@gooddata/sdk-model";
 
-import type { IAsCodeMutationPort } from "../asCode/descriptor.js";
+import type { IAsCodeMutationPort, IAsCodeReference } from "../asCode/descriptor.js";
 import type { ServerIdentity } from "../asCode/serverIdentity.js";
 import { convertComputedAttributeToCatalogItem } from "../catalogItem/converter.js";
 import type { ICatalogItemComputedAttribute } from "../catalogItem/types.js";
@@ -44,22 +45,27 @@ export function loadComputedAttribute(
         .getComputedAttribute(idRef(item.identifier, "computedAttribute"));
 }
 
-/** Titles of the insights, metrics, dashboards, computed attributes, and data filters referencing a computed attribute. @internal */
+/** Insights, metrics, dashboards, computed attributes, and data filters referencing a computed attribute. @internal */
 export async function listComputedAttributeReferences(
     backend: IAnalyticalBackend,
     workspace: string,
     item: ICatalogItemComputedAttribute,
-): Promise<string[]> {
+): Promise<IAsCodeReference[]> {
     const referencing = await backend
         .workspace(workspace)
         .computedAttributes()
         .getComputedAttributeReferencingObjects(idRef(item.identifier, "computedAttribute"));
     return [
-        ...(referencing.insights ?? []).map((insight) => insightTitle(insight)),
-        ...(referencing.measures ?? []).map((measure) => measure.title),
-        ...(referencing.analyticalDashboards ?? []).map((dashboard) => dashboard.title),
-        ...(referencing.computedAttributes ?? []).map((computedAttribute) => computedAttribute.title),
-        ...(referencing.userDataFilters ?? []).map((filter) => filter.title),
+        ...(referencing.insights ?? []).map((insight) => ({
+            ...idRef(insightId(insight), "insight"),
+            title: insightTitle(insight),
+        })),
+        ...[
+            ...(referencing.measures ?? []),
+            ...(referencing.analyticalDashboards ?? []),
+            ...(referencing.computedAttributes ?? []),
+            ...(referencing.userDataFilters ?? []),
+        ].map(({ id, type, title }) => ({ ...idRef(id, type), title })),
     ];
 }
 

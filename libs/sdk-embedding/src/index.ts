@@ -276,6 +276,13 @@ export {
     type KdSetTimezoneCommandData,
     type IKdSetTimezoneFinishedBody,
     type KdSetTimezoneFinishedData,
+    type IKdSetSidebarStateBody,
+    type KdSetSidebarStateCommand,
+    type KdSetSidebarStateCommandData,
+    type KdGetSidebarStateCommand,
+    type KdGetSidebarStateCommandData,
+    type IKdSidebarStateChangedBody,
+    type KdSidebarStateChangedData,
     GdcKdCommandType,
     GdcKdEventType,
     KdSetFilterParentsErrorCode,
@@ -297,6 +304,8 @@ export {
     isKdToggleAIAssistantCommandData,
     isKdSetApiTokenCommandData,
     isKdSetTimezoneCommandData,
+    isKdSetSidebarStateCommandData,
+    isKdGetSidebarStateCommandData,
 } from "./iframe/EmbeddedKpiDashboard.js";
 
 // legacyTypes
