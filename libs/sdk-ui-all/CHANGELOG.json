@@ -2,6 +2,204 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.61.0",
+            "tag": "@gooddata/sdk-ui-all_v11.61.0",
+            "date": "Thu, 08 Oct 2026 06:26:11 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-ui-catalog: Count only direct references in the parameter delete dialog"
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Block deleting a referenced parameter"
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Link objects that use a deleted object in the delete dialog"
+                    },
+                    {
+                        "comment": "sdk-ui-kit, sdk-ui-filters: Fix `UiControlButton` chip height in quirks-mode host pages"
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Enable Lineage tab for parameters and open it upstream"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Color the default syntax highlighting of SyntaxHighlightingInput with theme palette variables, so tokens stay legible on a dark theme."
+                    },
+                    {
+                        "comment": "sdk-model: add attributeFilterConfigs to report content, so a report attribute filter keeps the label it is displayed by"
+                    },
+                    {
+                        "comment": "sdk-code-convertors: Ensured proper type inference of `loadConfig()` parameters."
+                    },
+                    {
+                        "comment": "sdk-ui-charts: Consolidated the typing & structure of all highcharts configurator functions."
+                    },
+                    {
+                        "comment": "sdk-model: AI chatbot now supports the current report in context."
+                    },
+                    {
+                        "comment": "sdk-ui-all: AI assistant can create and edit reports; drafts open and refine in the report editor."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Input prefix and suffix text uses complementary-6 instead of the disabled grey in the default theme"
+                    },
+                    {
+                        "comment": "sdk-ui-filters: Add an internal list of weeks grouped by month, with a two-click range selection and a field that jumps to a typed date, for the Week tab of the static period picker. Nothing renders it yet."
+                    },
+                    {
+                        "comment": "stylelint-config: disable at-rule-prelude-no-invalid; the updated css-syntax-patches-for-csstree data made it reject every SCSS @mixin and @function prelude."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Exposed the internal floating-anchor helpers (`useRegisterFloatingAnchor`, `isClickInsideOwnSubtree`) so popups portalled outside an overlay can register with its outside-click detection."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Automations whose dashboard the current user may not read list it in automation.unavailable, so the automations list locks them."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: UiAsyncTable shows a lock icon before the text of locked items instead of dimming it, and rows can show a tooltip."
+                    },
+                    {
+                        "comment": "sdk-ui-ext: A locked automation shows a lock icon before its name instead of a dimmed name, and a tooltip on its row explains the missing access."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: The AI Assistant no longer sends a failing request (404) and logs a console error for every unsaved chart when it checks whether the chart is saved."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: label access is no longer offered when the primary label is the only one."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: UiRadioRow aligns the radio with the option title instead of the title and description together, as the design has it."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: \"Save as new\" is hidden while the dashboard references objects the user may not read that the copy would carry."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: slides export no longer times out on a widget whose visualization was deleted."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Editing a schedule on a dashboard with tabs no longer asks to apply current filters because of a hidden filter, so the restricted filter entry stays. IAutomationFiltersTab gains allFilters."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: UiFocusTrap no longer takes over Tab pressed in a modal dialog opened from the trapped content."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: a widget's Interactions open when its drill to URL uses a hyperlink label the user may not read, and show that drill as restricted."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: widget \"Filter by\" configuration leaves out the dashboard filters the user may not read."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger, sdk-ui-dashboard: A dashboard filter on a metric the user cannot access is now shown as a restricted filter instead of a missing metric, and an attribute filter whose values are limited by a restricted metric or fact loads its values without that limit instead of failing. Save as new is no longer offered when the copy would keep such a metric or fact, which the backend refuses."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Show a filter on a computed attribute the user may not read as restricted instead of dropping it."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Changing the filter context selection, e.g. Reset, keeps the stored selection of restricted attribute filters instead of failing on their label."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: A visualization whose data the user may not read shows the restricted placeholder instead of the generic error. sdk-backend-tiger: such executions fail with ProtectedDataError."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Hide the title and widget menu of a widget whose data the user may not read, as for a widget whose visualization they may not read."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: \"Save as new\" is also hidden while a widget ignores a filter on a metric the user may not read."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: A widget schedule whose filters are all at their defaults stores an empty filter list, so its exports no longer fall back to the dashboard's stored filters."
+                    },
+                    {
+                        "comment": "sdk-embedding: add getSidebarState and setSidebarState commands and the sidebarStateChanged event to the embedded dashboards API"
+                    },
+                    {
+                        "comment": "plugin-toolkit: `dashboard-plugin init` no longer installs with `--legacy-peer-deps`, so `npm start` works in a new plugin project. The project lints with oxlint only, and a TypeScript project uses TypeScript 6 for the lint tools."
+                    },
+                    {
+                        "comment": "sdk-backend-spi, sdk-backend-tiger: Add setTheme, deleteTheme, setColorPalette and deleteColorPalette to IUserSettingsService so the current user can pick their own theme and color palette."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: AI assistant links to a report open it in the Publisher application at the /publisher route. sdk-ui-pluggable-host: mapLegacyUrlToHost rewrites the former /workspace/<id>/reports route to /workspace/<id>/publisher."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: SyntaxHighlightingInput is style-neutral; DefaultSyntaxHighlightingInput keeps the standard input look."
+                    },
+                    {
+                        "comment": "sdk-backend-spi: Add IWorkspaceMeasuresService.checkEntityOverrides (alpha), implemented in sdk-backend-tiger, to check which measure identifiers are already used in the workspace hierarchy. TigerSpecificFunctions.checkEntityOverrides is deprecated. IDatasetsQueryFilterOptions.dataSetType (beta) also accepts \"AUXILIARY\"."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Add IGenAIService.summarizeVisualizations (beta) to summarize visualizations outside a dashboard, and a built-in report page layout with an AI takeaway."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Add report-level instructions for AI takeaways to the report content model and to reports as code."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: The reasoning effort label in the AI Assistant agent dropdown sits 10px."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Fix delete drop zone in collapsed sidebar"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: UiListbox supportedViews prop lets consumers opt out of the full-width mobile layout"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Show the repeater row attribute as a column and fix the repeater table view."
+                    },
+                    {
+                        "comment": "sdk-ui-ext, sdk-ui-charts: Allow line style and width to be set per segment on line charts with Segment by and on area charts with Stack by; the empty value segment offers color only."
+                    },
+                    {
+                        "comment": "sdk-ui-charts: Hide the connector line of a pie or donut data label when the label is auto-hidden for lack of space."
+                    },
+                    {
+                        "comment": "sdk-ui-ext: Fix line style and width having no effect on area and combo charts; in combo charts, offer them only for line and area series and never apply them to column series."
+                    },
+                    {
+                        "comment": "sdk-ui-ext: Include the insight's line style and width (lineStyleMapping) in the programmatic React embedding code."
+                    },
+                    {
+                        "comment": "sdk-ui-kit, sdk-ui-ext: Add line style and line weight icons to UiIcon and use them in the line style control; the line style button shows a fixed style glyph, and the Dashed and Dotted options show two dashes and four dots."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Show chart tooltips above the drill dialog; the tooltip z-index override now applies only while a drill dialog is open and no longer depends on stylesheet load order."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: The AI Assistant refactor data loading logic."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Add support for modifying dashboard definitions in-place."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Remove old feature flags related to agent switching."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Enhance visualization handling and dashboard conversion logic."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: a live report answer is raised as a definition-received event, and its card reads as applied while the report editor shows it."
+                    },
+                    {
+                        "comment": "sdk-ui-ext: The share dialog no longer offers access levels above your own when your access comes from a group."
+                    },
+                    {
+                        "comment": "sdk-model: Add the MANAGE_VISUALIZATIONS workspace permission and the canManageVisualizations workspace permission flag."
+                    },
+                    {
+                        "comment": "sdk-ui-ext: Add the Manage all visualizations workspace permission to user management dialogs when visualization permissions are enabled."
+                    },
+                    {
+                        "comment": "sdk-ui-ext: The visualization share dialog explains access from the Manage all visualizations workspace permission and keeps that user's own row at Can edit & share."
+                    },
+                    {
+                        "comment": "sdk-ui-ext: Additional workspace permissions keep their checked state when the access level changes in the workspace permission dialog."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Fix icon buttons losing their accessible name when they also set other ARIA attributes."
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.60.0",
             "tag": "@gooddata/sdk-ui-all_v11.60.0",
             "date": "Thu, 01 Oct 2026 06:36:59 GMT",
