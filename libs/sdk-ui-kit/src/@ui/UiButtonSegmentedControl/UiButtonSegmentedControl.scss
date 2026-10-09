@@ -40,8 +40,20 @@
         z-index: 1;
     }
 
-    > *:focus-within {
+    /**
+     * This fixes the situation where if button is active (pressed), then the neighboring button to the right overlaps
+     * active button's right border with wrong color (should be the active border color) if the active button is
+     * no longer focused. The following fixes that.
+     */
+    > *.gd-ui-kit-button--isSelected,
+    > *.gd-ui-kit-icon-button--active,
+    > *:has(.gd-ui-kit-button--isSelected),
+    > *:has(.gd-ui-kit-icon-button--active) {
         z-index: 2;
+    }
+
+    > *:focus-within {
+        z-index: 3;
     }
 
     /**

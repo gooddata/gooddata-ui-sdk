@@ -2893,6 +2893,157 @@ export function MyComponent() {
 "
 `;
 
+exports[`getEmbeddingCode functionality > should generate code for AreaChart - line shape - default 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { AreaChart, IChartConfig } from "@gooddata/sdk-ui-charts";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const viewBy: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const config: IChartConfig = {
+    dataLabels: {visible: true},
+    separators: {decimal: ".", thousand: ","},
+    enableChartSorting: true,
+    enableSeparateTotalLabels: true,
+    enableJoinedAttributeAxisName: true,
+    legend: {position: "auto"},
+    dataPoints: {visible: "auto"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <AreaChart
+                measures={measures}
+                viewBy={viewBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for AreaChart - line shape - linear 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { AreaChart, IChartConfig } from "@gooddata/sdk-ui-charts";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const viewBy: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const config: IChartConfig = {
+    dataLabels: {visible: true},
+    lineShape: "linear",
+    separators: {decimal: ".", thousand: ","},
+    enableChartSorting: true,
+    enableSeparateTotalLabels: true,
+    enableJoinedAttributeAxisName: true,
+    legend: {position: "auto"},
+    dataPoints: {visible: "auto"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <AreaChart
+                measures={measures}
+                viewBy={viewBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for AreaChart - line shape - spline 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { AreaChart, IChartConfig } from "@gooddata/sdk-ui-charts";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const viewBy: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const config: IChartConfig = {
+    dataLabels: {visible: true},
+    lineShape: "spline",
+    separators: {decimal: ".", thousand: ","},
+    enableChartSorting: true,
+    enableSeparateTotalLabels: true,
+    enableJoinedAttributeAxisName: true,
+    legend: {position: "auto"},
+    dataPoints: {visible: "auto"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <AreaChart
+                measures={measures}
+                viewBy={viewBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for AreaChart - line shape - stepped 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { AreaChart, IChartConfig } from "@gooddata/sdk-ui-charts";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const viewBy: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const config: IChartConfig = {
+    dataLabels: {visible: true},
+    lineShape: "stepped",
+    separators: {decimal: ".", thousand: ","},
+    enableChartSorting: true,
+    enableSeparateTotalLabels: true,
+    enableJoinedAttributeAxisName: true,
+    legend: {position: "auto"},
+    dataPoints: {visible: "auto"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <AreaChart
+                measures={measures}
+                viewBy={viewBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
 exports[`getEmbeddingCode functionality > should generate code for AreaChart - single measure 1`] = `
 "import React from "react";
 import { IAttributeOrMeasure, idRef, newMeasure } from "@gooddata/sdk-model";
@@ -26160,6 +26311,291 @@ export function MyComponent() {
 "
 `;
 
+exports[`getEmbeddingCode functionality > should generate code for ComboChart - line shape - default 1`] = `
+"import React from "react";
+import { IAttribute, idRef, IMeasure, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { ComboChart, IChartConfig } from "@gooddata/sdk-ui-charts";
+
+const primaryMeasures: IMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"))
+];
+const secondaryMeasures: IMeasure[] = [
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const viewBy: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const config: IChartConfig = {
+    separators: {decimal: ".", thousand: ","},
+    enableChartSorting: true,
+    enableSeparateTotalLabels: true,
+    enableJoinedAttributeAxisName: true,
+    legend: {position: "auto"},
+    dataPoints: {visible: "auto"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <ComboChart
+                primaryMeasures={primaryMeasures}
+                secondaryMeasures={secondaryMeasures}
+                viewBy={viewBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for ComboChart - line shape - linear 1`] = `
+"import React from "react";
+import { IAttribute, idRef, IMeasure, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { ComboChart, IChartConfig } from "@gooddata/sdk-ui-charts";
+
+const primaryMeasures: IMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"))
+];
+const secondaryMeasures: IMeasure[] = [
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const viewBy: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const config: IChartConfig = {
+    lineShape: "linear",
+    separators: {decimal: ".", thousand: ","},
+    enableChartSorting: true,
+    enableSeparateTotalLabels: true,
+    enableJoinedAttributeAxisName: true,
+    legend: {position: "auto"},
+    dataPoints: {visible: "auto"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <ComboChart
+                primaryMeasures={primaryMeasures}
+                secondaryMeasures={secondaryMeasures}
+                viewBy={viewBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for ComboChart - line shape - spline 1`] = `
+"import React from "react";
+import { IAttribute, idRef, IMeasure, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { ComboChart, IChartConfig } from "@gooddata/sdk-ui-charts";
+
+const primaryMeasures: IMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"))
+];
+const secondaryMeasures: IMeasure[] = [
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const viewBy: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const config: IChartConfig = {
+    lineShape: "spline",
+    separators: {decimal: ".", thousand: ","},
+    enableChartSorting: true,
+    enableSeparateTotalLabels: true,
+    enableJoinedAttributeAxisName: true,
+    legend: {position: "auto"},
+    dataPoints: {visible: "auto"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <ComboChart
+                primaryMeasures={primaryMeasures}
+                secondaryMeasures={secondaryMeasures}
+                viewBy={viewBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for ComboChart - line shape - stepped 1`] = `
+"import React from "react";
+import { IAttribute, idRef, IMeasure, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { ComboChart, IChartConfig } from "@gooddata/sdk-ui-charts";
+
+const primaryMeasures: IMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"))
+];
+const secondaryMeasures: IMeasure[] = [
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const viewBy: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const config: IChartConfig = {
+    lineShape: "stepped",
+    separators: {decimal: ".", thousand: ","},
+    enableChartSorting: true,
+    enableSeparateTotalLabels: true,
+    enableJoinedAttributeAxisName: true,
+    legend: {position: "auto"},
+    dataPoints: {visible: "auto"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <ComboChart
+                primaryMeasures={primaryMeasures}
+                secondaryMeasures={secondaryMeasures}
+                viewBy={viewBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for ComboChart - line shape with area - linear 1`] = `
+"import React from "react";
+import { IAttribute, idRef, IMeasure, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { ComboChart, IChartConfig } from "@gooddata/sdk-ui-charts";
+
+const primaryMeasures: IMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"))
+];
+const secondaryMeasures: IMeasure[] = [
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const viewBy: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const config: IChartConfig = {
+    lineShape: "linear",
+    primaryChartType: "column",
+    secondaryChartType: "area",
+    separators: {decimal: ".", thousand: ","},
+    enableChartSorting: true,
+    enableSeparateTotalLabels: true,
+    enableJoinedAttributeAxisName: true,
+    legend: {position: "auto"},
+    dataPoints: {visible: "auto"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <ComboChart
+                primaryMeasures={primaryMeasures}
+                secondaryMeasures={secondaryMeasures}
+                viewBy={viewBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for ComboChart - line shape with area - spline 1`] = `
+"import React from "react";
+import { IAttribute, idRef, IMeasure, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { ComboChart, IChartConfig } from "@gooddata/sdk-ui-charts";
+
+const primaryMeasures: IMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"))
+];
+const secondaryMeasures: IMeasure[] = [
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const viewBy: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const config: IChartConfig = {
+    lineShape: "spline",
+    primaryChartType: "column",
+    secondaryChartType: "area",
+    separators: {decimal: ".", thousand: ","},
+    enableChartSorting: true,
+    enableSeparateTotalLabels: true,
+    enableJoinedAttributeAxisName: true,
+    legend: {position: "auto"},
+    dataPoints: {visible: "auto"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <ComboChart
+                primaryMeasures={primaryMeasures}
+                secondaryMeasures={secondaryMeasures}
+                viewBy={viewBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for ComboChart - line shape with area - stepped 1`] = `
+"import React from "react";
+import { IAttribute, idRef, IMeasure, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { ComboChart, IChartConfig } from "@gooddata/sdk-ui-charts";
+
+const primaryMeasures: IMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"))
+];
+const secondaryMeasures: IMeasure[] = [
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const viewBy: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const config: IChartConfig = {
+    lineShape: "stepped",
+    primaryChartType: "column",
+    secondaryChartType: "area",
+    separators: {decimal: ".", thousand: ","},
+    enableChartSorting: true,
+    enableSeparateTotalLabels: true,
+    enableJoinedAttributeAxisName: true,
+    legend: {position: "auto"},
+    dataPoints: {visible: "auto"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <ComboChart
+                primaryMeasures={primaryMeasures}
+                secondaryMeasures={secondaryMeasures}
+                viewBy={viewBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
 exports[`getEmbeddingCode functionality > should generate code for ComboChart - multiple measures and no viewBy 1`] = `
 "import React from "react";
 import { idRef, IMeasure, newArithmeticMeasure, newMeasure } from "@gooddata/sdk-model";
@@ -42900,6 +43336,149 @@ const config: IChartConfig = {
     enableChartSorting: true,
     enableSeparateTotalLabels: true,
     enableJoinedAttributeAxisName: true,
+    dataPoints: {visible: "auto"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <LineChart
+                measures={measures}
+                trendBy={trendBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for LineChart - line shape - default 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IChartConfig, LineChart } from "@gooddata/sdk-ui-charts";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const trendBy: IAttribute = newAttribute(idRef("dt_closedate_timestamp.year", "displayForm"), a => a.localId("a_dt_closedate_timestamp.year"));
+const config: IChartConfig = {
+    dataLabels: {visible: true},
+    separators: {decimal: ".", thousand: ","},
+    enableChartSorting: true,
+    enableSeparateTotalLabels: true,
+    enableJoinedAttributeAxisName: true,
+    legend: {position: "auto"},
+    dataPoints: {visible: "auto"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <LineChart
+                measures={measures}
+                trendBy={trendBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for LineChart - line shape - linear 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IChartConfig, LineChart } from "@gooddata/sdk-ui-charts";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const trendBy: IAttribute = newAttribute(idRef("dt_closedate_timestamp.year", "displayForm"), a => a.localId("a_dt_closedate_timestamp.year"));
+const config: IChartConfig = {
+    dataLabels: {visible: true},
+    lineShape: "linear",
+    separators: {decimal: ".", thousand: ","},
+    enableChartSorting: true,
+    enableSeparateTotalLabels: true,
+    enableJoinedAttributeAxisName: true,
+    legend: {position: "auto"},
+    dataPoints: {visible: "auto"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <LineChart
+                measures={measures}
+                trendBy={trendBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for LineChart - line shape - spline 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IChartConfig, LineChart } from "@gooddata/sdk-ui-charts";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const trendBy: IAttribute = newAttribute(idRef("dt_closedate_timestamp.year", "displayForm"), a => a.localId("a_dt_closedate_timestamp.year"));
+const config: IChartConfig = {
+    dataLabels: {visible: true},
+    lineShape: "spline",
+    separators: {decimal: ".", thousand: ","},
+    enableChartSorting: true,
+    enableSeparateTotalLabels: true,
+    enableJoinedAttributeAxisName: true,
+    legend: {position: "auto"},
+    dataPoints: {visible: "auto"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <LineChart
+                measures={measures}
+                trendBy={trendBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for LineChart - line shape - stepped 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IChartConfig, LineChart } from "@gooddata/sdk-ui-charts";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const trendBy: IAttribute = newAttribute(idRef("dt_closedate_timestamp.year", "displayForm"), a => a.localId("a_dt_closedate_timestamp.year"));
+const config: IChartConfig = {
+    dataLabels: {visible: true},
+    lineShape: "stepped",
+    separators: {decimal: ".", thousand: ","},
+    enableChartSorting: true,
+    enableSeparateTotalLabels: true,
+    enableJoinedAttributeAxisName: true,
+    legend: {position: "auto"},
     dataPoints: {visible: "auto"}
 };
 const style = {height: 400};

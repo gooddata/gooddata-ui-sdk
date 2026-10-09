@@ -36,7 +36,7 @@ vi.mock("./ConversationVisualisation.js", () => ({
 }));
 
 vi.mock("./useSaveCheck.js", () => ({
-    useSaveCheck: () => ({
+    useInsightSaveCheck: () => ({
         visualisationCheckLoading: false,
         visualisationSaved: false,
     }),

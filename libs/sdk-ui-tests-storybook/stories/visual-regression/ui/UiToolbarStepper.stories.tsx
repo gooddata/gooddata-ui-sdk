@@ -13,20 +13,12 @@ import { wrapWithTheme } from "../themeWrapper.js";
 import { FocusOnMount, ToolbarStoryFrame, ZoomStepper } from "./_helpers/toolbarStories.js";
 
 const ZOOM_A11Y = { ariaLabel: "Zoom", incrementLabel: "Zoom in", decrementLabel: "Zoom out" };
-const PAGE_A11Y = { ariaLabel: "Page", incrementLabel: "Next page", decrementLabel: "Previous page" };
 
 const zoom = propCombinationsFor({
-    variant: "value",
     value: "100%",
     onStep: () => {},
     onCommit: () => {},
     accessibilityConfig: ZOOM_A11Y,
-} as IUiToolbarStepperProps);
-const pagination = propCombinationsFor({
-    variant: "pagination",
-    value: "1 / 2",
-    onStep: () => {},
-    accessibilityConfig: PAGE_A11Y,
 } as IUiToolbarStepperProps);
 
 function UiToolbarStepperTest({ showCode }: { showCode?: boolean }) {
@@ -38,17 +30,6 @@ function UiToolbarStepperTest({ showCode }: { showCode?: boolean }) {
                     zoom("canStepDown", [true, false]),
                     zoom("canStepUp", [false]),
                     zoom("isDisabled", [true]),
-                ]}
-                Component={UiToolbarStepper}
-                codeSnippet={showCode ? "UiToolbarStepper" : undefined}
-                align="center"
-                cellWidth={200}
-            />
-            <ComponentTable
-                rowsBy={[
-                    pagination("canStepDown", [true, false]),
-                    pagination("canStepUp", [false]),
-                    pagination("isDisabled", [true]),
                 ]}
                 Component={UiToolbarStepper}
                 codeSnippet={showCode ? "UiToolbarStepper" : undefined}
@@ -75,7 +56,6 @@ export function Interactions() {
     return (
         <ToolbarStoryFrame style={{ gridTemplateColumns: "repeat(2, max-content)", paddingTop: 60 }}>
             <UiToolbarStepper
-                variant="value"
                 value="100%"
                 onStep={() => {}}
                 onCommit={() => {}}
@@ -84,7 +64,6 @@ export function Interactions() {
             />
             <FocusOnMount selector='[data-testid="s-focus"] input'>
                 <UiToolbarStepper
-                    variant="value"
                     value="100%"
                     onStep={() => {}}
                     onCommit={() => {}}

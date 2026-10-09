@@ -32,6 +32,7 @@ function Harness({
         <IntlWrapper>
             <GranularPermissions
                 workspace={workspace}
+                savedPermissions={permissions}
                 onChange={setWorkspace}
                 showRedundancyWarningMessage={false}
                 isCreateVisualizationWorkspacePermissionEnabled
@@ -64,6 +65,22 @@ describe("GranularPermissions with MANAGE_VISUALIZATIONS", () => {
         expect(screen.queryByLabelText("Manage all visualizations")).toBeNull();
         fireEvent.click(screen.getByLabelText("AI Assistant"));
         expect(saved()).toEqual(["VIEW", "MANAGE_VISUALIZATIONS", "USE_AI_ASSISTANT"]);
+    });
+
+    it("drops a hidden stored permission when the access level changes, and restores it at the stored level", () => {
+        render(
+            <Harness
+                permissions={["ANALYZE", "MANAGE_VISUALIZATIONS"]}
+                areVisualizationPermissionsEnabled={false}
+            />,
+        );
+
+        fireEvent.click(level("View"));
+        expect(saved()).toEqual(["VIEW"]);
+
+        fireEvent.click(level("Manage"));
+        fireEvent.click(level("Analyze"));
+        expect(saved()).toEqual(["ANALYZE", "MANAGE_VISUALIZATIONS"]);
     });
 
     it("keeps an explicitly stored Create visualizations when the permission is unchecked", () => {
@@ -184,6 +201,16 @@ describe("GranularPermissions existing behavior", () => {
         fireEvent.click(level("View"));
         expect(saved()).toEqual(["VIEW", "EXPORT", "USE_AI_ASSISTANT"]);
         expect(checkbox("Exports").checked).toBe(true);
+    });
+
+    it("drops hidden permissions when the access level changes", () => {
+        render(<Harness permissions={["VIEW", "CREATE_METRIC", "EXPORT"]} />);
+
+        fireEvent.click(level("Analyze"));
+        expect(saved()).toEqual(["ANALYZE", "EXPORT"]);
+
+        fireEvent.click(level("View"));
+        expect(saved()).toEqual(["VIEW", "EXPORT", "CREATE_METRIC"]);
     });
 
     it("saves only what Manage does not include, and restores the choices when leaving it", () => {

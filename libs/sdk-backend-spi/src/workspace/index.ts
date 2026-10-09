@@ -25,8 +25,8 @@ import { type IWorkspaceMeasuresService } from "./measures/index.js";
 import { type IWorkspaceObjectPermissionsService } from "./objectPermissions/index.js";
 import { type IWorkspaceParametersService } from "./parameters/index.js";
 import { type IWorkspacePermissionsService } from "./permissions/index.js";
+import { type IWorkspacePublisherService } from "./publisher/index.js";
 import { type IReferencesService } from "./references/index.js";
-import { type IWorkspaceReportsService } from "./reports/index.js";
 import { type IWorkspaceSettingsService } from "./settings/index.js";
 import { type IWorkspaceStylingService } from "./styling/index.js";
 import { type IWorkspaceUserGroupsQuery } from "./userGroups/index.js";
@@ -220,11 +220,11 @@ export interface IAnalyticalWorkspace {
     exportTemplates(): IWorkspaceExportTemplatesService;
 
     /**
-     * Returns service that can be used to manage report page layouts, report templates and reports.
+     * Returns service that can be used to manage page layouts, document templates and documents.
      *
      * @alpha
      */
-    reports(): IWorkspaceReportsService;
+    publisher(): IWorkspacePublisherService;
 }
 
 /**

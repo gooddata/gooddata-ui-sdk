@@ -31,6 +31,7 @@ import { paletteBaseThemeVariables } from "./theme/palette-base.js";
 import { paletteComplementaryThemeVariables } from "./theme/palette-complementary.js";
 import { tableThemeVariables } from "./theme/table.js";
 import { toastMessageThemeVariables } from "./theme/toast-message.js";
+import { toolbarThemeVariables } from "./theme/toolbar.js";
 import { tooltipThemeVariables } from "./theme/tooltip.js";
 import { typographyThemeVariables } from "./theme/typography.js";
 // Internal
@@ -56,6 +57,7 @@ export const themeDefinedCssVariables: ThemeDefinedCssVariable[] = [
     ...messageThemeVariables,
     ...toastMessageThemeVariables,
     ...modalThemeVariables,
+    ...toolbarThemeVariables,
     // Charts
     ...chartThemeVariables,
     ...chartThemeDeprecatedVariables,

@@ -14,7 +14,7 @@ import { ConversationAlertProposalContent } from "./ConversationAlertProposalCon
 import { ConversationClarifyingQuestionsContent } from "./ConversationClarifyingQuestionsContent.js";
 import { ConversationDashboardContent } from "./ConversationDashboardContent.js";
 import { ConversationKdaContent } from "./ConversationKdaContent.js";
-import { ConversationReportContent } from "./ConversationReportContent.js";
+import { ConversationPublisherDocumentContent } from "./ConversationPublisherDocumentContent.js";
 import { ConversationSearchContent } from "./ConversationSearchContent.js";
 import { ConversationTextContent } from "./ConversationTextContent.js";
 import { ConversationWhatIfContent } from "./ConversationWhatIfContent.js";
@@ -121,14 +121,14 @@ export function ConversationMultipartContent({
                         />
                     );
                 }
-                if (part.type === "report") {
+                if (part.type === "publisherDocument") {
                     return (
-                        <ConversationReportContent
+                        <ConversationPublisherDocumentContent
                             key={index}
                             message={message}
-                            report={part.report}
+                            publisherDocument={part.publisherDocument}
                             saved={part.saved}
-                            baseReportId={part.baseReportId}
+                            baseDocumentId={part.baseDocumentId}
                         />
                     );
                 }

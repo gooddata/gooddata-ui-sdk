@@ -9,7 +9,6 @@ import {
     type ICatalogMeasure,
     type ISeparators,
     type ObjRef,
-    type WeekStart,
     areObjRefsEqual,
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardAttributeFilterItemTitle,
@@ -42,12 +41,7 @@ import {
     selectAllCatalogAttributesMap,
     selectCatalogMeasures,
 } from "../../model/store/catalog/catalogSelectors.js";
-import {
-    selectLocale,
-    selectSeparators,
-    selectSettings,
-    selectWeekStart,
-} from "../../model/store/config/configSelectors.js";
+import { selectLocale, selectSeparators, selectSettings } from "../../model/store/config/configSelectors.js";
 import { convertDateFilterConfigToDateFilterOptions } from "../dateFilterConfig/dateFilterConfigConverters.js";
 import { matchDateFilterToDateFilterOptionWithPreference } from "../dateFilterConfig/dateFilterOptionMapping.js";
 import { defaultDateFilterConfig } from "../dateFilterConfig/defaultConfig.js";
@@ -71,7 +65,6 @@ type FilterNamingDependencies = {
     intl: ReturnType<typeof useIntl>;
     locale: ILocale;
     dateFormat: string | undefined;
-    weekStart: WeekStart;
     getAttributeFilterDisplayFormFromMap: ReturnType<typeof useAttributeFilterDisplayFormFromMap>;
     attrMap: ReturnType<typeof selectAllCatalogAttributesMap>;
     measures: ICatalogMeasure[];
@@ -104,7 +97,6 @@ function useFilterNamingDependencies(filtersForTitles: FilterContextItem[]): Fil
     const attrMap = useDashboardSelector(selectAllCatalogAttributesMap);
     const measures = useDashboardSelector(selectCatalogMeasures);
     const separators = useDashboardSelector(selectSeparators);
-    const weekStart = useDashboardSelector(selectWeekStart);
     const dateFiltersForTitles = filtersForTitles.filter(isDashboardDateFilterWithDimension);
     const commonDateFilterTitle = useCommonDateFilterTitle(intl);
     const allDateFiltersTitlesObj = useDateFiltersTitles(dateFiltersForTitles, intl);
@@ -113,7 +105,6 @@ function useFilterNamingDependencies(filtersForTitles: FilterContextItem[]): Fil
         intl,
         locale,
         dateFormat,
-        weekStart,
         getAttributeFilterDisplayFormFromMap,
         attrMap,
         measures,
@@ -134,7 +125,6 @@ function transformFiltersToNamings(
     const {
         intl,
         dateFormat,
-        weekStart,
         getAttributeFilterDisplayFormFromMap,
         attrMap,
         measures,
@@ -196,7 +186,6 @@ function transformFiltersToNamings(
                 intl,
                 "full",
                 dateFormat,
-                weekStart,
             );
 
             const a = filter;

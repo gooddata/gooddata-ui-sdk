@@ -79,20 +79,18 @@ export function UsageWarning({ usageCheck, references, onCatalogItemNavigation }
                         b: (chunks) => <b>{chunks}</b>,
                     }}
                 />
-                {usageCheck.mode === "block" ? (
-                    <>
-                        {" "}
-                        <UiButton
-                            variant="link"
-                            label={intl.formatMessage(
-                                areReferencesShown ? messages.showLess : messages.showMore,
-                            )}
-                            onClick={() => setAreReferencesShown(!areReferencesShown)}
-                            accessibilityConfig={{ ariaExpanded: areReferencesShown }}
-                        />
-                    </>
-                ) : null}
             </span>
+            {usageCheck.mode === "block" ? (
+                <>
+                    {" "}
+                    <UiButton
+                        variant="link"
+                        label={intl.formatMessage(areReferencesShown ? messages.showLess : messages.showMore)}
+                        onClick={() => setAreReferencesShown(!areReferencesShown)}
+                        accessibilityConfig={{ ariaExpanded: areReferencesShown }}
+                    />
+                </>
+            ) : null}
             {usageCheck.mode === "block" && areReferencesShown ? (
                 <UsageGroups references={references} onCatalogItemNavigation={onCatalogItemNavigation} />
             ) : null}

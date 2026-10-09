@@ -313,6 +313,10 @@ export class PluggableComboChart extends PluggableBaseChart {
     }
 
     private isDataPointsControlDisabled(insight: IInsightDefinition): boolean {
+        return this.hasNoLineOrAreaMeasures(insight);
+    }
+
+    private hasNoLineOrAreaMeasures(insight: IInsightDefinition): boolean {
         const measureBucketsOfNonColumnCharts = [
             [this.primaryChartType, BucketNames.MEASURES],
             [this.secondaryChartType, BucketNames.SECONDARY_MEASURES],
@@ -320,10 +324,7 @@ export class PluggableComboChart extends PluggableBaseChart {
             .filter(([chartType]) => chartType !== VisualizationTypes.COLUMN)
             .map(([, bucketId]) => insightBuckets(insight, bucketId));
 
-        return (
-            measureBucketsOfNonColumnCharts.length === 0 ||
-            measureBucketsOfNonColumnCharts.every((bucket) => bucketsIsEmpty(bucket))
-        );
+        return measureBucketsOfNonColumnCharts.every((bucket) => bucketsIsEmpty(bucket));
     }
 
     private hasStackingAreaChart(insight: IInsightDefinition): boolean {
@@ -451,6 +452,7 @@ export class PluggableComboChart extends PluggableBaseChart {
                 isDataPointsControlDisabled: this.isDataPointsControlDisabled(insight),
                 isContinuousLineControlDisabled: this.isContinuousLineControlDisabled(insight),
                 isDistinctPointShapesDisabled: this.isDistinctPointShapesDisabled(),
+                hasNoLineOrAreaMeasures: this.hasNoLineOrAreaMeasures(insight),
                 supportsAttributeHierarchies: this.backendCapabilities.supportsAttributeHierarchies,
                 supportsChartFill: options.supportsChartFill,
             };

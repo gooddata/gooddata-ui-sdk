@@ -1,7 +1,7 @@
 // (C) 2020-2026 GoodData Corporation
 
 import { type IColorPalette } from "@gooddata/sdk-model";
-import { type IColorAssignment } from "@gooddata/sdk-ui";
+import { type ChartType, type IColorAssignment } from "@gooddata/sdk-ui";
 import { type IChartFillConfig, type IResolvedReferenceValues } from "@gooddata/sdk-ui-vis-commons";
 
 import { type ChartAlignTypes, type IAxisConfig, type IGridConfig } from "../../interfaces/chartConfig.js";
@@ -172,7 +172,7 @@ export type ITooltipFactory = (
 export type IPointDescriptionFn = (point: UnsafeInternals) => string;
 
 export interface IChartOptions {
-    type?: string;
+    type?: ChartType;
     stacking?: StackingType;
     hasStackByAttribute?: boolean;
     hasViewByAttribute?: boolean;

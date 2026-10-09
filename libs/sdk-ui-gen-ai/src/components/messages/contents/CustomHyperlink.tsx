@@ -6,8 +6,10 @@ import { useSelector } from "react-redux";
 
 import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 
+import { type IChatConversationLocal } from "../../../model.js";
 import { settingsSelector } from "../../../store/chatWindow/chatWindowSelectors.js";
-import { getReportHref } from "../../../utils.js";
+import { conversationSelector } from "../../../store/messages/messagesSelectors.js";
+import { getPublisherDocumentHref } from "../../../utils.js";
 import { type LinkHandlerEvent, useConfig } from "../../ConfigContext.js";
 import { removeMarkdown } from "../../utils/markdownUtils.js";
 
@@ -18,13 +20,14 @@ export type CustomHyperlinkOwnProps = {
 
 type CustomHyperlinkProps = CustomHyperlinkOwnProps & {
     settings?: IUserWorkspaceSettings;
+    conversation?: IChatConversationLocal;
 };
 
 /**
  * Similar to SDK Hyperlink, but can handle customer schemas
  * used for links management
  */
-export function CustomHyperlinkComponent({ href, text, settings }: CustomHyperlinkProps) {
+export function CustomHyperlinkComponent({ href, text, settings, conversation }: CustomHyperlinkProps) {
     const { linkHandler, allowNativeLinks, canManage, canAnalyze } = useConfig();
     const enableShellApplication_dashboards = Boolean(settings?.enableShellApplication_dashboards);
     const canManageMetrics = canManage || canAnalyze;
@@ -87,6 +90,7 @@ export function CustomHyperlinkComponent({ href, text, settings }: CustomHyperli
             newTab: e.metaKey,
             preventDefault: e.preventDefault.bind(e),
             action: "open",
+            conversationId: conversation?.localId,
         });
     };
 
@@ -132,7 +136,7 @@ const getItemUrl = (
         case "metric":
             return `/workspace/${workspaceId}/metrics/metric/${id}`;
         case "report":
-            return getReportHref(workspaceId, id);
+            return getPublisherDocumentHref(workspaceId, id);
         default:
             return null;
     }
@@ -140,6 +144,9 @@ const getItemUrl = (
 
 export function CustomHyperlink({ href, text }: CustomHyperlinkOwnProps) {
     const settings = useSelector(settingsSelector);
+    const conversation = useSelector(conversationSelector);
 
-    return <CustomHyperlinkComponent href={href} text={text} settings={settings} />;
+    return (
+        <CustomHyperlinkComponent href={href} text={text} settings={settings} conversation={conversation} />
+    );
 }

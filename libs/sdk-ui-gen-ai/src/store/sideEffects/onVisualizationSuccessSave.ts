@@ -42,6 +42,7 @@ export function* onVisualizationSuccessSave({
                 itemUrl: getVisualizationHref(workspace, payload.savedVisualizationId, visualizationStatus),
                 visualizationStatus,
                 action: "open",
+                conversationId: conversation.localId,
             });
         }
     }

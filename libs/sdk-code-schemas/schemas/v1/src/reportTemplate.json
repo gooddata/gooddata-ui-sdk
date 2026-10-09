@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "ReportTemplateType",
-    "description": "JSON schema for Gooddata Analytics Report Template",
+    "description": "JSON schema for Gooddata Analytics Document Template",
     "allOf": [
         {
             "if": {
@@ -33,7 +33,7 @@
             "properties": {
                 "id": {
                     "$ref": "/gaac/identifier",
-                    "description": "A unique identifier of the report template.",
+                    "description": "A unique identifier of the document template.",
                     "$semantic": [
                         {
                             "type": "uniqueness",
@@ -52,19 +52,19 @@
                 },
                 "title": {
                     "$ref": "/gaac/title",
-                    "description": "A human readable title for the report template."
+                    "description": "A human readable title for the document template."
                 },
                 "description": {
                     "$ref": "/gaac/description",
-                    "description": "An optional description of the report template."
+                    "description": "An optional description of the document template."
                 },
                 "tags": {
                     "$ref": "/gaac/tags",
-                    "description": "A list of strings - metadata tags of this report template."
+                    "description": "A list of strings - metadata tags of this document template."
                 },
                 "pages": {
                     "type": "array",
-                    "description": "Ordered pages of the template. A report created from the template deep-copies them and keeps no reference back, so the report stays frozen while the template evolves.",
+                    "description": "Ordered pages of the template. A document created from the template deep-copies them and keeps no reference back, so the document stays frozen while the template evolves.",
                     "items": {
                         "$ref": "/gaac/reportPageBody"
                     }
@@ -75,7 +75,7 @@
                 },
                 "variables": {
                     "type": "array",
-                    "description": "Custom variables the template's text can interpolate as {name}. A report created from it gives them values.",
+                    "description": "Custom variables the template's text can interpolate as {name}. A document created from it gives them values.",
                     "items": {
                         "$ref": "/gaac/reportVariable"
                     }

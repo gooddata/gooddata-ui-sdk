@@ -10,6 +10,7 @@ import {
 } from "../../model/queries/attributes.js";
 import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
 import { useDashboardQueryProcessing } from "../../model/react/useDashboardQueryProcessing.js";
+import { selectIsAiMode } from "../../model/store/config/configSelectors.js";
 import { selectIsNewDashboard } from "../../model/store/meta/metaSelectors.js";
 import { selectPreloadedAttributesWithReferences } from "../../model/store/tabs/filterContext/filterContextSelectors.js";
 
@@ -33,13 +34,14 @@ export function useAttributes(displayForms: ObjRef[]) {
     // First wait for preloaded filter attributes, otherwise we might be spawning lot of unnecessary requests
     const attributesWithReferences = useDashboardSelector(selectPreloadedAttributesWithReferences);
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
+    const isAiMode = useDashboardSelector(selectIsAiMode);
 
     useEffect(() => {
-        const shouldLoad = isNewDashboard || attributesWithReferences;
+        const shouldLoad = isNewDashboard || isAiMode || attributesWithReferences;
         if (shouldLoad) {
             getAttributes(displayForms);
         }
-    }, [displayForms, getAttributes, isNewDashboard, attributesWithReferences]);
+    }, [displayForms, getAttributes, isNewDashboard, isAiMode, attributesWithReferences]);
 
     const attributesLoading = useMemo(() => {
         return attributesLoadingStatus === "pending" || attributesLoadingStatus === "running";

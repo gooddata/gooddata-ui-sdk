@@ -20,6 +20,7 @@ import {
     type AiSearchObject,
     type AiSearchRelationship,
     type AiSuggestions,
+    type AiVisualizationReferences,
     type AiWhatIfScenario,
     type DeclarativeAnalyticalDashboard,
     type DeclarativeFilterContext,
@@ -87,7 +88,7 @@ import type { FormattingLocale } from "./dateFormatting/defaultDateFormatter.js"
 import { type DateNormalizer } from "./dateFormatting/types.js";
 import { cloneWithSanitizedIds } from "./IdSanitization.js";
 import { visualizationObjectsItemToInsight } from "./InsightConverter.js";
-import { convertReportPart } from "./reportPartConvertor.js";
+import { convertPublisherDocumentPart } from "./publisherDocumentPartConvertor.js";
 
 export function convertChatConversationFromBackend(conversation: AiConversationResponse): IChatConversation {
     return {
@@ -302,7 +303,10 @@ function convertMultipartPart(
                 type: "visualization",
                 visualization: part.visualization
                     ? visualizationObjectsItemToInsight(
-                          yamlVisualisationToMetadataObject([], part.visualization as AacVisualisation),
+                          yamlVisualisationToMetadataObject(
+                              buildDatasetEntities(part.references),
+                              part.visualization as AacVisualisation,
+                          ),
                       )
                     : null,
             };
@@ -323,7 +327,7 @@ function convertMultipartPart(
             };
         }
         case "report":
-            return convertReportPart(part);
+            return convertPublisherDocumentPart(part);
         case "kda":
             if (!part.kda) {
                 return undefined;
@@ -842,13 +846,9 @@ function applyDashboardDefinition(part: AiDashboardPart) {
     };
 }
 
-function buildDashboardReferences(
-    aacDashboard: AacDashboard,
-    references: AiDashboardPart["references"],
-    savedDashboardId?: string | null,
-) {
-    const entities: ExportEntities = [];
-
+function buildDatasetEntities(
+    references: AiDashboardReferences | AiVisualizationReferences | null | undefined,
+): ExportEntities {
     const dateDatasets: ExportEntities =
         references?.datedatasets?.map((ds) => {
             const data = ds as AacDateDataset;
@@ -860,7 +860,6 @@ function buildDashboardReferences(
                 declarative: yamlDateDatesetToDeclarative(data),
             };
         }) ?? [];
-    entities.push(...dateDatasets);
 
     const datasets: ExportEntities =
         references?.datasets?.map((ds) => {
@@ -873,7 +872,16 @@ function buildDashboardReferences(
                 declarative: yamlDatasetToDeclarative(dateDatasets, data),
             };
         }) ?? [];
-    entities.push(...datasets);
+
+    return [...dateDatasets, ...datasets];
+}
+
+function buildDashboardReferences(
+    aacDashboard: AacDashboard,
+    references: AiDashboardPart["references"],
+    savedDashboardId?: string | null,
+) {
+    const entities = buildDatasetEntities(references);
 
     const existingVisualizations: ExportEntities =
         (references?.visualizations ?? []).map((vis) => {

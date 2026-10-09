@@ -142,17 +142,19 @@ describe("collectContextReferences", () => {
         expect(result[1].nesting).toBe(1);
     });
 
-    it("should collect a report other than the ambient one", () => {
-        const context: IGenAIUserContext = { view: { report: { ref: idRef("q2", "report"), title: "Q2" } } };
+    it("should collect a document other than the ambient one", () => {
+        const context: IGenAIUserContext = {
+            view: { publisherDocument: { ref: idRef("q2", "report"), title: "Q2" } },
+        };
         const selected: SelectedContext = {
             activated: true,
-            report: {
+            publisherDocument: {
                 id: "q1",
                 ref: idRef("q1", "report"),
                 title: "Q1",
                 nesting: 0,
-                type: "report",
-                where: "view.report",
+                type: "publisherDocument",
+                where: "view.publisherDocument",
             },
         };
 
@@ -160,38 +162,57 @@ describe("collectContextReferences", () => {
             {
                 id: "q2",
                 ref: idRef("q2", "report"),
-                type: "report",
-                where: "view.report",
+                type: "publisherDocument",
+                where: "view.publisherDocument",
                 title: "Q2",
                 nesting: 0,
             },
         ]);
     });
 
-    it("should collect a report that is not saved yet", () => {
-        const context: IGenAIUserContext = { view: { report: { title: "Draft" } } };
+    it("should collect a document that is not saved yet", () => {
+        const context: IGenAIUserContext = { view: { publisherDocument: { title: "Draft" } } };
 
         expect(collectContextReferences(context, undefined)).toEqual([
-            { id: "unsaved", type: "report", where: "view.report", title: "Draft", nesting: 0 },
+            {
+                id: "unsaved",
+                type: "publisherDocument",
+                where: "view.publisherDocument",
+                title: "Draft",
+                nesting: 0,
+            },
         ]);
     });
 
-    it("should skip the ambient report when it is not saved yet", () => {
-        const context: IGenAIUserContext = { view: { report: { title: "Draft" } } };
+    it("should skip the ambient document when it is not saved yet", () => {
+        const context: IGenAIUserContext = { view: { publisherDocument: { title: "Draft" } } };
         const selected: SelectedContext = {
             activated: true,
-            report: { id: "unsaved", title: "Draft", nesting: 0, type: "report", where: "view.report" },
+            publisherDocument: {
+                id: "unsaved",
+                title: "Draft",
+                nesting: 0,
+                type: "publisherDocument",
+                where: "view.publisherDocument",
+            },
         };
 
         expect(collectContextReferences(context, selected)).toEqual([]);
     });
 
-    it("should skip the ambient report", () => {
+    it("should skip the ambient document", () => {
         const ref = idRef("q1", "report");
-        const context: IGenAIUserContext = { view: { report: { ref, title: "Q1" } } };
+        const context: IGenAIUserContext = { view: { publisherDocument: { ref, title: "Q1" } } };
         const selected: SelectedContext = {
             activated: true,
-            report: { id: "q1", ref, title: "Q1", nesting: 0, type: "report", where: "view.report" },
+            publisherDocument: {
+                id: "q1",
+                ref,
+                title: "Q1",
+                nesting: 0,
+                type: "publisherDocument",
+                where: "view.publisherDocument",
+            },
         };
 
         expect(collectContextReferences(context, selected)).toEqual([]);

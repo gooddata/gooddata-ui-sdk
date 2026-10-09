@@ -66,20 +66,20 @@ export const PLUGIN_COMMENT = [
     " https://www.gooddata.com/docs/gooddata-ui/latest/references/dashboard_component/dashboard_plugins/",
 ].join("\n");
 
-export const REPORT_COMMENT = [
-    " A report presents a finished period as pages of visualizations and text.",
+export const PUBLISHER_DOCUMENT_COMMENT = [
+    " A document presents a finished period as pages of visualizations and text.",
     " Its period becomes a date filter on every visualization that does not opt out,",
     " and a page places what it draws in a tree of rows and columns.",
 ].join("\n");
 
-export const REPORT_TEMPLATE_COMMENT = [
-    " A report template is the pages a report starts from.",
-    " A report made from it copies them and keeps no reference back,",
-    " so the report stays as it was made while the template moves on.",
+export const PUBLISHER_DOCUMENT_TEMPLATE_COMMENT = [
+    " A document template is the pages a document starts from.",
+    " A document made from it copies them and keeps no reference back,",
+    " so the document stays as it was made while the template moves on.",
 ].join("\n");
 
-export const REPORT_PAGE_LAYOUT_COMMENT = [
-    " A report page is a page a template or a report can be built from.",
+export const PUBLISHER_PAGE_LAYOUT_COMMENT = [
+    " A page layout is a page a template or a document can be built from.",
     " It places what it draws in a tree of rows and columns, and a slot left",
     " empty here is one whatever uses the page is expected to fill.",
 ].join("\n");

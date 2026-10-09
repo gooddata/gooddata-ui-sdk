@@ -4,6 +4,7 @@
     "gd.gen-ai.global-error.button-details": "Za podrobnosti si oglejte surov odziv napake",
     "gd.gen-ai.global-error.sync-in-progress": "Nastavitev še poteka — poskusite znova čez trenutek.",
     "gd.gen-ai.global-error.sync-failed": "Sinhronizacija ni uspela. Poskusite znova pozneje.",
+    "gd.gen-ai.global-error.service-unavailable": "Storitev AI začasno ni na voljo. Poskusite znova pozneje.",
     "gd.gen-ai.global-error.traceId": "ID sledenja napaki",
     "gd.gen-ai.global-error.show-more": "Prikaži več",
     "gd.gen-ai.global-error.show-less": "Prikaži manj",

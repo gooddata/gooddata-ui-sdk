@@ -62,7 +62,6 @@ export function HeightCheck() {
                 <UiToolbarIconSelect label="Fill colour" />
                 <ScopeControl />
                 <UiToolbarStepper
-                    variant="value"
                     value="100%"
                     onStep={() => {}}
                     onCommit={() => {}}

@@ -54,4 +54,9 @@ export const ScenarioGroupNames = {
      * Group for reversed stacking scenarios
      */
     StackingReverse: "stacking reversed",
+
+    /**
+     * Group for line shape scenarios
+     */
+    LineShape: ["customization", "line shape"],
 };

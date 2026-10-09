@@ -4,6 +4,7 @@
     "gd.gen-ai.global-error.button-details": "Xem phản hồi lỗi thô để biết chi tiết",
     "gd.gen-ai.global-error.sync-in-progress": "Vẫn đang thiết lập — vui lòng thử lại sau ít phút.",
     "gd.gen-ai.global-error.sync-failed": "Đồng bộ hóa thất bại. Vui lòng thử lại sau.",
+    "gd.gen-ai.global-error.service-unavailable": "Dịch vụ AI tạm thời không khả dụng. Vui lòng thử lại sau.",
     "gd.gen-ai.global-error.traceId": "ID theo dõi lỗi",
     "gd.gen-ai.global-error.show-more": "Hiện thêm",
     "gd.gen-ai.global-error.show-less": "Hiện ít",

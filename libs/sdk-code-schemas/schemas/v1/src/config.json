@@ -74,6 +74,11 @@
         "data_points": {
             "oneOf": [{ "type": "boolean" }, { "type": "string", "const": "auto" }]
         },
+        "line_shape": {
+            "description": "Line shape with regards to data points (i.e. line interpolation).",
+            "type": "string",
+            "enum": ["linear", "spline", "stepped"]
+        },
         "data_totals": {
             "oneOf": [{ "type": "boolean" }, { "type": "string", "const": "auto" }]
         },

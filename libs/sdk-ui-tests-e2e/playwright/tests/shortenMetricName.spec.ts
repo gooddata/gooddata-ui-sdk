@@ -15,11 +15,11 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe(
-    "Shorten Metric Name",
+    "Shorten metric name",
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test(
-            `check shorten in legend and tooltip in chart`,
+            "should truncate the metric name in the chart legend and tooltip",
             {
                 tag: ["@pre-merge-integrated"],
             },
@@ -44,7 +44,7 @@ test.describe(
         );
 
         test(
-            `check shorten metric name in table`,
+            "should fit the metric name in the table header",
             {
                 tag: ["@pre-merge-integrated"],
             },

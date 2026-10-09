@@ -11,7 +11,7 @@ import {
 import { type IGenAIContextObject, type SelectedContext } from "../types.js";
 import { convertReferenceTypeToGenAiType } from "../utils.js";
 
-import { isSameViewReport, viewObjectId } from "./viewReport.js";
+import { isSameViewedPublisherDocument, viewObjectId } from "./viewedPublisherDocument.js";
 
 export function collectContextReferences(
     userContext: IGenAIUserContext | undefined,
@@ -38,20 +38,20 @@ export function collectContextReferences(
         }
     }
 
-    // report
-    const userReport = userContext?.view?.report;
-    if (userReport) {
-        const ref = userReport.ref;
+    // document
+    const userDocument = userContext?.view?.publisherDocument;
+    if (userDocument) {
+        const ref = userDocument.ref;
         const id = viewObjectId(ref);
 
-        if (!isSameViewReport(userReport, selectedContext?.report)) {
+        if (!isSameViewedPublisherDocument(userDocument, selectedContext?.publisherDocument)) {
             userReferences.push({
                 id,
                 ref,
                 nesting: 0,
-                type: "report",
-                where: "view.report",
-                title: userReport.title || placeholderTitle || id,
+                type: "publisherDocument",
+                where: "view.publisherDocument",
+                title: userDocument.title || placeholderTitle || id,
             });
         }
     }

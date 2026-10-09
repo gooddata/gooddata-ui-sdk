@@ -16,7 +16,6 @@ function renderStepper(props: Partial<IUiToolbarStepperProps> = {}) {
     const onCommit = vi.fn();
     const result = render(
         <UiToolbarStepper
-            variant="value"
             value="100%"
             onStep={onStep}
             onCommit={onCommit}
@@ -46,7 +45,7 @@ describe("UiToolbarStepper", () => {
         const onStep = vi.fn();
         const { user } = render(
             <div onKeyDown={wrapperKeyDown}>
-                <UiToolbarStepper variant="value" value="100%" onStep={onStep} accessibilityConfig={A11Y} />
+                <UiToolbarStepper value="100%" onStep={onStep} accessibilityConfig={A11Y} />
             </div>,
         );
 
@@ -63,7 +62,6 @@ describe("UiToolbarStepper", () => {
         const { user } = render(
             <div onKeyDown={wrapperKeyDown}>
                 <UiToolbarStepper
-                    variant="value"
                     value="100%"
                     onStep={() => {}}
                     onCommit={onCommit}
@@ -124,13 +122,7 @@ describe("UiToolbarStepper", () => {
         expect(input).toHaveValue("100%");
 
         rerender(
-            <UiToolbarStepper
-                variant="value"
-                value="75%"
-                onStep={() => {}}
-                onCommit={() => {}}
-                accessibilityConfig={A11Y}
-            />,
+            <UiToolbarStepper value="75%" onStep={() => {}} onCommit={() => {}} accessibilityConfig={A11Y} />,
         );
         expect(screen.getByRole("textbox", { name: "Zoom" })).toHaveValue("75%");
     });
@@ -141,7 +133,6 @@ describe("UiToolbarStepper", () => {
             const [value, setValue] = useState("100%");
             return (
                 <UiToolbarStepper
-                    variant="value"
                     value={value}
                     onStep={() => {}}
                     onCommit={() => {}}
@@ -168,7 +159,6 @@ describe("UiToolbarStepper", () => {
             const [value, setValue] = useState("100%");
             return (
                 <UiToolbarStepper
-                    variant="value"
                     value={value}
                     onStep={(direction) => setValue(direction === 1 ? "125%" : "75%")}
                     onCommit={() => {}}
@@ -205,7 +195,6 @@ describe("UiToolbarStepper", () => {
             return (
                 <>
                     <UiToolbarStepper
-                        variant="value"
                         value={value}
                         onStep={() => {}}
                         onCommit={() => {}}
@@ -234,7 +223,6 @@ describe("UiToolbarStepper", () => {
             const [value, setValue] = useState("100%");
             return (
                 <UiToolbarStepper
-                    variant="value"
                     value={value}
                     onStep={(direction) => setValue(direction > 0 ? "125%" : "75%")}
                     onCommit={setValue}
@@ -295,26 +283,6 @@ describe("UiToolbarStepper", () => {
         await user.keyboard("{Control>}{ArrowUp}{/Control}{Meta>}{ArrowDown}{/Meta}");
 
         expect(onStep).not.toHaveBeenCalled();
-    });
-
-    it("renders a readout for pagination and announces the value", () => {
-        render(
-            <UiToolbarStepper
-                variant="pagination"
-                value="1 / 2"
-                onStep={() => {}}
-                accessibilityConfig={{
-                    ariaLabel: "Page",
-                    incrementLabel: "Next page",
-                    decrementLabel: "Previous page",
-                }}
-            />,
-        );
-
-        expect(screen.queryByRole("textbox")).not.toBeInTheDocument();
-        expect(screen.getByRole("status", { name: "Page" })).toHaveTextContent("1 / 2");
-        screen.getByRole("button", { name: "Next page" });
-        screen.getByRole("button", { name: "Previous page" });
     });
 
     it("spreads combobox attributes on the input", () => {

@@ -79,7 +79,6 @@ export function ZoomStepper({ openOnInit = false }: { openOnInit?: boolean }) {
             width="auto"
             renderButton={({ ref, isOpen, ariaAttributes, openDropdown, closeDropdown }) => (
                 <UiToolbarStepper
-                    variant="value"
                     value={zoom}
                     onStep={(direction) => setZoom((current) => stepZoom(current, direction))}
                     onCommit={(next) => {

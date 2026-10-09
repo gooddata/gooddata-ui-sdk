@@ -135,13 +135,13 @@ import { IOrganizationUser } from '@gooddata/sdk-model';
 import { IOrganizationUserGroup } from '@gooddata/sdk-model';
 import { IParameterMetadataObject } from '@gooddata/sdk-model';
 import { IParameterMetadataObjectDefinition } from '@gooddata/sdk-model';
+import { IPublisherDocument } from '@gooddata/sdk-model';
+import { IPublisherDocumentDefinition } from '@gooddata/sdk-model';
+import { IPublisherDocumentTemplate } from '@gooddata/sdk-model';
+import { IPublisherDocumentTemplateDefinition } from '@gooddata/sdk-model';
+import { IPublisherPageLayout } from '@gooddata/sdk-model';
+import { IPublisherPageLayoutDefinition } from '@gooddata/sdk-model';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
-import { IReport } from '@gooddata/sdk-model';
-import { IReportDefinition } from '@gooddata/sdk-model';
-import { IReportPageLayout } from '@gooddata/sdk-model';
-import { IReportPageLayoutDefinition } from '@gooddata/sdk-model';
-import { IReportTemplate } from '@gooddata/sdk-model';
-import { IReportTemplateDefinition } from '@gooddata/sdk-model';
 import { IResultHeader } from '@gooddata/sdk-model';
 import { IResultWarning } from '@gooddata/sdk-model';
 import type { IScheduledMail } from '@gooddata/sdk-model';
@@ -421,9 +421,9 @@ export interface IAnalyticalWorkspace {
     objectPermissions(): IWorkspaceObjectPermissionsService;
     parameters(): IWorkspaceParametersService;
     permissions(): IWorkspacePermissionsService;
-    references(): IReferencesService;
     // @alpha
-    reports(): IWorkspaceReportsService;
+    publisher(): IWorkspacePublisherService;
+    references(): IReferencesService;
     settings(): IWorkspaceSettingsService;
     styling(): IWorkspaceStylingService;
     updateDescriptor(descriptor: IWorkspaceDescriptorUpdate): Promise<IWorkspaceDescriptor>;
@@ -909,23 +909,23 @@ export type IChatConversationMultipartContent = {
 };
 
 // @internal
-export type IChatConversationMultipartPart = IChatConversationTextContent | IChatConversationVisualisationContent | IChatConversationAlertProposalContent | IChatConversationKeyDriverAnalysisContent | IChatConversationClarifyingQuestionsContent | IChatConversationWhatIfContent | IChatConversationSearchContent | IChatConversationDashboardContent | IChatConversationReportContent;
+export type IChatConversationMultipartPart = IChatConversationTextContent | IChatConversationVisualisationContent | IChatConversationAlertProposalContent | IChatConversationKeyDriverAnalysisContent | IChatConversationClarifyingQuestionsContent | IChatConversationWhatIfContent | IChatConversationSearchContent | IChatConversationDashboardContent | IChatConversationPublisherDocumentContent;
+
+// @internal
+export type IChatConversationPublisherDocumentContent = {
+    type: "publisherDocument";
+    publisherDocument: IPublisherDocumentDefinition | null;
+    saved?: string | null;
+    ref?: string | null;
+    baseDocumentId?: string | null;
+    refines?: string | null;
+    reworksOpenDocument?: boolean;
+};
 
 // @internal
 export type IChatConversationReasoningContent = {
     type: "reasoning";
     summary: string;
-};
-
-// @internal
-export type IChatConversationReportContent = {
-    type: "report";
-    report: IReportDefinition | null;
-    saved?: string | null;
-    ref?: string | null;
-    baseReportId?: string | null;
-    refines?: string | null;
-    reworksOpenReport?: boolean;
 };
 
 // @internal
@@ -973,7 +973,8 @@ export interface IChatConversationThread {
         signal?: AbortSignal;
     }): Promise<IChatConversationItem[]>;
     query(userMessage: string): IChatConversationThreadQuery;
-    resaveReport(reportRef: string, savedReportId: string): Promise<void>;
+    resaveDashboard(dashboardId: string, newDashboardId: string): Promise<void>;
+    resavePublisherDocument(documentRef: string, savedDocumentId: string): Promise<void>;
     resaveVisualisation(oldVisualizationId: string, newVisualizationId: string): Promise<void>;
     reset(options?: IChatConversationCreateOptions): Promise<IChatConversation>;
     saveFeedback(responseId: string, feedback: GenAIChatInteractionUserFeedback, userTextFeedback?: string): Promise<void>;
@@ -2566,6 +2567,12 @@ export interface IPreparedExecutionOptions {
 }
 
 // @alpha
+export interface IPublisherDocumentExportPdfOptions {
+    filename?: string;
+    timeout?: number;
+}
+
+// @alpha
 export interface IRawExportCustomOverride {
     title: string;
 }
@@ -2600,12 +2607,6 @@ export interface IReferencesResult {
 export interface IReferencesService {
     // (undocumented)
     getReferences(root: IdentifierRef | IdentifierRef[], opts?: IReferencesOption): Promise<IReferencesResult>;
-}
-
-// @alpha
-export interface IReportExportPdfOptions {
-    filename?: string;
-    timeout?: number;
 }
 
 // @public
@@ -2652,10 +2653,10 @@ export function isChatConversationKeyDriverAnalysisContent(content: IChatConvers
 export function isChatConversationMultipartContent(content: IChatConversationContent): content is IChatConversationMultipartContent;
 
 // @internal
-export function isChatConversationReasoningContent(content: IChatConversationContent): content is IChatConversationReasoningContent;
+export function isChatConversationPublisherDocumentContent(content: IChatConversationMultipartPart): content is IChatConversationPublisherDocumentContent;
 
 // @internal
-export function isChatConversationReportContent(content: IChatConversationMultipartPart): content is IChatConversationReportContent;
+export function isChatConversationReasoningContent(content: IChatConversationContent): content is IChatConversationReasoningContent;
 
 // @internal
 export function isChatConversationSearchContent(content: IChatConversationMultipartPart): content is IChatConversationSearchContent;
@@ -3192,23 +3193,23 @@ export interface IWorkspacePermissionsService {
 }
 
 // @alpha
-export interface IWorkspaceReportsService {
-    createReport(report: IReportDefinition): Promise<IReport>;
-    createReportPageLayout(page: IReportPageLayoutDefinition): Promise<IReportPageLayout>;
-    createReportTemplate(template: IReportTemplateDefinition): Promise<IReportTemplate>;
-    deleteReport(ref: ObjRef): Promise<void>;
-    deleteReportPageLayout(ref: ObjRef): Promise<void>;
-    deleteReportTemplate(ref: ObjRef): Promise<void>;
-    exportReportToPdf(ref: ObjRef, options?: IReportExportPdfOptions): Promise<IExportResult>;
-    getReport(ref: ObjRef): Promise<IReport>;
-    getReportPageLayout(ref: ObjRef): Promise<IReportPageLayout>;
-    getReportPageLayouts(): Promise<IReportPageLayout[]>;
-    getReports(): Promise<IReport[]>;
-    getReportTemplate(ref: ObjRef): Promise<IReportTemplate>;
-    getReportTemplates(): Promise<IReportTemplate[]>;
-    updateReport(report: IReport): Promise<IReport>;
-    updateReportPageLayout(page: IReportPageLayout): Promise<IReportPageLayout>;
-    updateReportTemplate(template: IReportTemplate): Promise<IReportTemplate>;
+export interface IWorkspacePublisherService {
+    createDocument(publisherDocument: IPublisherDocumentDefinition): Promise<IPublisherDocument>;
+    createDocumentTemplate(template: IPublisherDocumentTemplateDefinition): Promise<IPublisherDocumentTemplate>;
+    createPageLayout(page: IPublisherPageLayoutDefinition): Promise<IPublisherPageLayout>;
+    deleteDocument(ref: ObjRef): Promise<void>;
+    deleteDocumentTemplate(ref: ObjRef): Promise<void>;
+    deletePageLayout(ref: ObjRef): Promise<void>;
+    exportDocumentToPdf(ref: ObjRef, options?: IPublisherDocumentExportPdfOptions): Promise<IExportResult>;
+    getDocument(ref: ObjRef): Promise<IPublisherDocument>;
+    getDocuments(): Promise<IPublisherDocument[]>;
+    getDocumentTemplate(ref: ObjRef): Promise<IPublisherDocumentTemplate>;
+    getDocumentTemplates(): Promise<IPublisherDocumentTemplate[]>;
+    getPageLayout(ref: ObjRef): Promise<IPublisherPageLayout>;
+    getPageLayouts(): Promise<IPublisherPageLayout[]>;
+    updateDocument(publisherDocument: IPublisherDocument): Promise<IPublisherDocument>;
+    updateDocumentTemplate(template: IPublisherDocumentTemplate): Promise<IPublisherDocumentTemplate>;
+    updatePageLayout(page: IPublisherPageLayout): Promise<IPublisherPageLayout>;
 }
 
 export { IWorkspaceSettings }

@@ -268,6 +268,7 @@ describe("AsCodeDeleteDialog with a blocking referencing lookup (computed attrib
 
         const showMore = await screen.findByRole("button", { name: "Show more" });
         expect(showMore).toHaveAttribute("aria-expanded", "false");
+        expect(screen.getByText("3 objects").closest("[role=status]")).not.toContainElement(showMore);
         fireEvent.click(showMore);
 
         expect(screen.getByText("Rep performance")).toBeInTheDocument();

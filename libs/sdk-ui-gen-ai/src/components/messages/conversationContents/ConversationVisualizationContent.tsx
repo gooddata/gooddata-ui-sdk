@@ -54,6 +54,7 @@ import {
     copyToClipboardAction,
     setKeyDriverAnalysisAction,
 } from "../../../store/chatWindow/chatWindowSlice.js";
+import { conversationSelector } from "../../../store/messages/messagesSelectors.js";
 import { type RootState } from "../../../store/types.js";
 import { getAbsoluteVisualizationHref, getVisualizationHref } from "../../../utils.js";
 import { type IWhatIfRenderableScenario } from "../../../whatIf/whatIfMapping.js";
@@ -69,7 +70,7 @@ import {
 } from "./ConversationVisualisation.js";
 import { SaveVisualizationDialog } from "./SaveVisualizationDialog.js";
 import { createKdaDefinitionFromDrill, getDashboardAttributeFilter } from "./useKdaDefinition.js";
-import { useSaveCheck } from "./useSaveCheck.js";
+import { useInsightSaveCheck } from "./useSaveCheck.js";
 
 const MORE_MENU_BUTTON_ID = "gd-gen-ai-chat__conversation__visualization__save__more-menu-button";
 const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];
@@ -177,7 +178,7 @@ export function ConversationVisualizationContent({
         part,
         visualization,
     });
-    const { visualisationCheckLoading, visualisationSaved } = useSaveCheck(
+    const { visualisationCheckLoading, visualisationSaved } = useInsightSaveCheck(
         part,
         visualization,
         !scenario || scenario.isBaseline,
@@ -224,7 +225,7 @@ export function ConversationVisualizationContent({
                     <VisualisationMenu
                         visualization={visualization}
                         scenario={scenario}
-                        isVisualisationSaved={visualisationSaved}
+                        isVisualisationSaved={visualisationSaved || !!part.saved}
                         isVisualisationCheckLoading={visualisationCheckLoading}
                         isTable={isTable}
                         onTable={setIsTable}
@@ -751,6 +752,7 @@ function useHandlers({ visualization, setSaveDialogOpen }: IUseHandlersProps) {
     const config = useConfig();
     const dispatch = useDispatch();
     const workspaceId = useWorkspaceStrict();
+    const conversation = useSelector(conversationSelector);
 
     const onSave = useCallback(() => {
         setSaveDialogOpen("save");
@@ -785,6 +787,7 @@ function useHandlers({ visualization, setSaveDialogOpen }: IUseHandlersProps) {
                         visualization,
                         visualizationStatus,
                         action: "open",
+                        conversationId: conversation?.localId,
                     });
                     e.stopPropagation();
                 }
@@ -792,7 +795,7 @@ function useHandlers({ visualization, setSaveDialogOpen }: IUseHandlersProps) {
                 setSaveDialogOpen("explore");
             }
         },
-        [config, setSaveDialogOpen, visualization, workspaceId],
+        [config, setSaveDialogOpen, visualization, workspaceId, conversation],
     );
 
     const onCopy = useCallback(
@@ -824,6 +827,7 @@ function useHandlers({ visualization, setSaveDialogOpen }: IUseHandlersProps) {
                     visualization,
                     visualizationStatus,
                     action: "copy",
+                    conversationId: conversation?.localId,
                 });
             }
             if (link) {
@@ -831,7 +835,7 @@ function useHandlers({ visualization, setSaveDialogOpen }: IUseHandlersProps) {
                 dispatch(copyToClipboardAction({ content: link }));
             }
         },
-        [visualization, config, workspaceId, dispatch],
+        [visualization, config, workspaceId, dispatch, conversation],
     );
 
     return {

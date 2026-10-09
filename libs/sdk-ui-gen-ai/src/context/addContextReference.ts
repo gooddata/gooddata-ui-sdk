@@ -25,14 +25,14 @@ export function addContextReference(context: StoreContext, reference?: IGenAICon
         };
     }
 
-    if (reference.where === "view.report") {
+    if (reference.where === "view.publisherDocument") {
         return {
             ...context,
             active: {
                 ...active,
                 view: {
                     ...active?.view,
-                    report: context.ambient?.view?.report,
+                    publisherDocument: context.ambient?.view?.publisherDocument,
                 },
             },
         };

@@ -50,6 +50,7 @@ import { DraggableAttributeFilter } from "../../dragAndDrop/draggableAttributeFi
 import { DraggableDateFilter } from "../../dragAndDrop/draggableDateFilter/DraggableDateFilter.js";
 import { DraggableMeasureValueFilter } from "../../dragAndDrop/draggableMeasureValueFilter/DraggableMeasureValueFilter.js";
 import { type IDashboardDateFilterConfig } from "../dateFilter/types.js";
+import { useDateFilterConfigNarrowedToDimension } from "../dateFilter/useDateFilterConfigNarrowedToDimension.js";
 import { type DashboardFilterSelectionType } from "../filterSelectionTypes.js";
 
 import { DefaultDashboardFilterGroup } from "./DefaultDashboardFilterGroup.js";
@@ -57,6 +58,7 @@ import { type IFilterBarProps } from "./types.js";
 import {
     type FilterBarItem,
     isFilterBarAttributeFilter,
+    isFilterBarDateFilterWithDimension,
     isFilterBarFilterGroupItem,
     isFilterBarFilterPlaceholder,
     isFilterBarMeasureValueFilter,
@@ -123,6 +125,11 @@ export function DefaultFilterBarItem(props: IFilterBarItemProps): ReactNode {
         availableGranularities,
         dateFilterOptions,
     };
+    const dateFilterConfigNarrowedToDimension = useDateFilterConfigNarrowedToDimension(
+        commonDateFilterComponentConfig,
+        allDateDatasets,
+        isFilterBarDateFilterWithDimension(item) ? item.filter.dateFilter.dataSet : undefined,
+    );
 
     if (isFilterBarFilterPlaceholder(item)) {
         const CreatingPlaceholderComponent =
@@ -275,7 +282,7 @@ export function DefaultFilterBarItem(props: IFilterBarItemProps): ReactNode {
                 workingFilter={isApplyAllAtOnceEnabledAndSet ? workingFilter : undefined}
                 filterIndex={filterIndex}
                 config={{
-                    ...commonDateFilterComponentConfig,
+                    ...dateFilterConfigNarrowedToDimension,
                     customFilterName: defaultDateFilterName,
                 }}
                 readonly={dateFilterMode === DashboardDateFilterConfigModeValues.READONLY}

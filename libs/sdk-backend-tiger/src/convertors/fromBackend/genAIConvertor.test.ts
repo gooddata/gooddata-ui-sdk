@@ -22,7 +22,7 @@ import {
     convertChatConversationItemsFromBackend,
     convertChatSuggestionItemFromBackend,
 } from "./genAIConvertor.js";
-import { REPORT_COPILOT_SAMPLE_PART } from "./reportCopilotSample.fixture.js";
+import { PUBLISHER_DOCUMENT_COPILOT_SAMPLE_PART } from "./publisherDocumentCopilotSample.fixture.js";
 
 describe("genAIConvertor", () => {
     const dateNormalizer = vi.fn((val) => val);
@@ -326,15 +326,21 @@ describe("genAIConvertor", () => {
                 createdAt: "2024-01-01T00:00:00Z",
                 content: {
                     type: "multipart",
-                    parts: [{ type: "text", text: "Here is the report." }, REPORT_COPILOT_SAMPLE_PART],
+                    parts: [
+                        { type: "text", text: "Here is the report." },
+                        PUBLISHER_DOCUMENT_COPILOT_SAMPLE_PART,
+                    ],
                 },
             } as unknown as AiConversationItemResponse;
 
             const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
 
             const parts = (converted.content as IChatConversationMultipartContent).parts;
-            expect(parts.map((part) => part.type)).toEqual(["text", "report"]);
-            expect(parts[1]).toMatchObject({ type: "report", report: { title: "Top Customers — H2 2025" } });
+            expect(parts.map((part) => part.type)).toEqual(["text", "publisherDocument"]);
+            expect(parts[1]).toMatchObject({
+                type: "publisherDocument",
+                publisherDocument: { title: "Top Customers — H2 2025" },
+            });
         });
     });
 
@@ -1378,6 +1384,73 @@ describe("genAIConvertor", () => {
                     ],
                 },
             ]);
+        });
+
+        it("resolves pushpin latitude and longitude from the visualization part references", () => {
+            const item: AiConversationItemResponse = {
+                conversationId: "conv-1",
+                itemIndex: 0,
+                itemId: "item-1",
+                role: "assistant",
+                createdAt: "2024-01-01T00:00:00Z",
+                content: {
+                    type: "multipart",
+                    parts: [
+                        {
+                            type: "visualization",
+                            visualization: {
+                                type: "geo_chart",
+                                id: "map",
+                                title: "Population",
+                                query: {
+                                    fields: {
+                                        city: { using: "attribute/city" },
+                                        population: { using: "metric/population" },
+                                    },
+                                },
+                                metrics: [{ field: "population" }],
+                                view_by: ["city"],
+                            } as any,
+                            references: {
+                                datasets: [
+                                    {
+                                        type: "dataset",
+                                        id: "cities",
+                                        table_path: "cities",
+                                        primary_key: "city",
+                                        fields: {
+                                            city: {
+                                                type: "attribute",
+                                                source_column: "city",
+                                                data_type: "STRING",
+                                                labels: {
+                                                    city_latitude: {
+                                                        source_column: "lat",
+                                                        data_type: "STRING",
+                                                        value_type: "GEO_LATITUDE",
+                                                    },
+                                                    city_longitude: {
+                                                        source_column: "lng",
+                                                        data_type: "STRING",
+                                                        value_type: "GEO_LONGITUDE",
+                                                    },
+                                                },
+                                            },
+                                        },
+                                    },
+                                ],
+                            },
+                        },
+                    ],
+                },
+            };
+
+            const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            const [part] = (converted.content as IChatConversationMultipartContent).parts;
+
+            expect(part.type === "visualization" && part.visualization?.insight.properties).toMatchObject({
+                controls: { latitude: "city_latitude", longitude: "city_longitude" },
+            });
         });
 
         it("converts alertProposal multipart part", () => {

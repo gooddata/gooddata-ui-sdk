@@ -26,7 +26,7 @@ test.describe(
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test(
-            "should disable save button if having no change",
+            "should disable the save button when nothing changed",
             { tag: ["@pre-merge-isolated"] },
             async ({ page }) => {
                 await visit(page, "dashboard/insight");
@@ -37,23 +37,27 @@ test.describe(
             },
         );
 
-        test("has insight placeholder title", { tag: ["@pre-merge-isolated"] }, async ({ page }) => {
-            await visit(page, "dashboard/insight");
-            await enterEditMode(page);
+        test(
+            "should use the insight title as the placeholder",
+            { tag: ["@pre-merge-isolated"] },
+            async ({ page }) => {
+                await visit(page, "dashboard/insight");
+                await enterEditMode(page);
 
-            const widgetEl = page.locator(".s-dash-item-0_0");
-            await waitChartLoaded(page, ".s-dash-item-0_0");
+                const widgetEl = page.locator(".s-dash-item-0_0");
+                await waitChartLoaded(page, ".s-dash-item-0_0");
 
-            const headline = widgetEl.locator(".s-headline");
-            const titleText = await headline.textContent();
+                const headline = widgetEl.locator(".s-headline");
+                const titleText = await headline.textContent();
 
-            await headline.click();
-            const textarea = headline.locator("textarea");
-            await expect(textarea).toHaveAttribute("placeholder", titleText!);
-        });
+                await headline.click();
+                const textarea = headline.locator("textarea");
+                await expect(textarea).toHaveAttribute("placeholder", titleText!);
+            },
+        );
 
         test(
-            "shows a message if there is no data match",
+            "should show a message when no visualization matches the search",
             { tag: ["@pre-merge-isolated"] },
             async ({ page }) => {
                 await visit(page, "dashboard/insight");
@@ -74,7 +78,7 @@ test.describe(
         );
 
         test(
-            "Should show no data message if insight has no data",
+            "should show the no data message when the filter yields no data",
             { tag: ["@pre-merge-isolated"] },
             async ({ page }) => {
                 await visit(page, "dashboard/insight");
@@ -101,7 +105,7 @@ test.describe(
         );
 
         test(
-            "(SEPARATE) can rename an existing insight",
+            "(SEPARATE) should rename an existing insight",
             { tag: ["@pre-merge-isolated"] },
             async ({ page }) => {
                 await visit(page, "dashboard/insight");
@@ -127,14 +131,14 @@ test.describe(
             },
         );
 
-        test.describe("Date filtering on insight", {}, () => {
+        test.describe("date filtering on insight", {}, () => {
             test.beforeEach(async ({ page }) => {
                 await visit(page, "dashboard/dashboard-date-filtering-on-insight-scenario");
                 await enterEditMode(page);
             });
 
             test(
-                "remember last setting after selecting another insight",
+                "should remember the date dataset after selecting another insight",
                 { tag: ["@pre-merge-integrated"] },
                 async ({ page }) => {
                     const DATASET_CREATED = "Created";
@@ -197,40 +201,44 @@ test.describe(
                 },
             );
 
-            test("change filter on added insight", { tag: ["@pre-merge-integrated"] }, async ({ page }) => {
-                const DATASET_CREATED = "Created";
-                const widget0 = widgetSelector(0, 0);
-                const configBubble = page.locator(".s-gd-configuration-bubble");
+            test(
+                "should apply the selected date dataset to the insight",
+                { tag: ["@pre-merge-integrated"] },
+                async ({ page }) => {
+                    const DATASET_CREATED = "Created";
+                    const widget0 = widgetSelector(0, 0);
+                    const configBubble = page.locator(".s-gd-configuration-bubble");
 
-                // Wait for chart loaded on first widget
-                await waitChartLoaded(page, widget0);
+                    // Wait for chart loaded on first widget
+                    await waitChartLoaded(page, widget0);
 
-                // Open widget 0 config bubble
-                await page.locator(widget0).click();
-                await expect(configBubble).toBeVisible();
+                    // Open widget 0 config bubble
+                    await page.locator(widget0).click();
+                    await expect(configBubble).toBeVisible();
 
-                // Open Configuration tab
-                await configBubble.getByText("Configuration").click();
-                await expect(configBubble.locator(".s-viz-filters-headline")).toBeVisible();
+                    // Open Configuration tab
+                    await configBubble.getByText("Configuration").click();
+                    await expect(configBubble.locator(".s-viz-filters-headline")).toBeVisible();
 
-                // Select "Created" date dataset
-                const dateDatasetBtn = configBubble.locator(".s-date-dataset-button");
-                await expect(dateDatasetBtn).not.toContainText("Loading");
-                await dateDatasetBtn.scrollIntoViewIfNeeded();
-                await dateDatasetBtn.click();
-                await page
-                    .locator(".configuration-dropdown.dataSets-list .gd-list-item")
-                    .filter({ hasText: DATASET_CREATED })
-                    .click();
+                    // Select "Created" date dataset
+                    const dateDatasetBtn = configBubble.locator(".s-date-dataset-button");
+                    await expect(dateDatasetBtn).not.toContainText("Loading");
+                    await dateDatasetBtn.scrollIntoViewIfNeeded();
+                    await dateDatasetBtn.click();
+                    await page
+                        .locator(".configuration-dropdown.dataSets-list .gd-list-item")
+                        .filter({ hasText: DATASET_CREATED })
+                        .click();
 
-                // Wait for chart to reload and verify data labels
-                await waitChartLoaded(page, widget0);
-                await expectChartDataLabels(page, widget0, [
-                    "$4,108,360.80",
-                    "$2,267,528.48",
-                    "$3,461,373.87",
-                ]);
-            });
+                    // Wait for chart to reload and verify data labels
+                    await waitChartLoaded(page, widget0);
+                    await expectChartDataLabels(page, widget0, [
+                        "$4,108,360.80",
+                        "$2,267,528.48",
+                        "$3,461,373.87",
+                    ]);
+                },
+            );
         });
     },
 );

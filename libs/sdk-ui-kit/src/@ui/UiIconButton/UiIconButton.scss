@@ -112,7 +112,14 @@
             border-color: var(--gd-palette-complementary-4);
             background-color: var(--gd-palette-complementary-0);
 
-            &:not(&:disabled) {
+            /**
+             * `:not(&#{$root}--active)` prevents lighter hover/focus-visible background on the pressed button.
+             *
+             * At the time of this writing only this variant has this problem. Other variants either
+             * have the same styles applied on hover and `--active` or they don't have pressed styles
+             * different from the normal one at all.
+             */
+            &:not(&:disabled):not(&#{$root}--active) {
                 &:focus-visible,
                 &:hover {
                     --gd-icon-fill-color: var(--gd-palette-primary-base);

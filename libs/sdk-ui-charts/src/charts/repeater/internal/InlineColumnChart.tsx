@@ -22,6 +22,7 @@ interface IInlineColumnChartOptions {
     metricTitle: string;
     sliceTitle?: string;
     color?: string;
+    tooltipZIndex: number;
 }
 
 function createOptions({
@@ -31,6 +32,7 @@ function createOptions({
     metricTitle,
     sliceTitle,
     color,
+    tooltipZIndex,
 }: IInlineColumnChartOptions): HighchartsOptions {
     return {
         credits: {
@@ -64,6 +66,7 @@ function createOptions({
             shared: true,
             outside: true,
             useHTML: true,
+            style: { zIndex: tooltipZIndex },
             formatter: function () {
                 const sliceValue = headerItems[this.x]?.name;
                 const metricValue = data[this.x]?.formattedValue;

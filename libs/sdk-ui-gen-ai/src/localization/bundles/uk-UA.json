@@ -4,6 +4,7 @@
     "gd.gen-ai.global-error.button-details": "Переглянути необроблену відповідь з помилкою для деталей",
     "gd.gen-ai.global-error.sync-in-progress": "Налаштування ще триває — спробуйте знову трохи пізніше.",
     "gd.gen-ai.global-error.sync-failed": "Не вдалося синхронізувати. Спробуйте ще раз пізніше.",
+    "gd.gen-ai.global-error.service-unavailable": "Служба ШІ тимчасово недоступна. Повторіть спробу пізніше.",
     "gd.gen-ai.global-error.traceId": "Ідентифікатор трасування помилки",
     "gd.gen-ai.global-error.show-more": "Показати більше",
     "gd.gen-ai.global-error.show-less": "Показати менше",

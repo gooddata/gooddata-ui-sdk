@@ -13,6 +13,25 @@ export const OverlayContext = createContext<OverlayController | undefined>(undef
 OverlayContext.displayName = "OverlayContext";
 
 /**
+ * Context with the z-index of the closest ui-kit overlay that renders its subtree.
+ *
+ * @internal
+ */
+export const OverlayZIndexContext = createContext<number | undefined>(undefined);
+OverlayZIndexContext.displayName = "OverlayZIndexContext";
+
+/**
+ * Hook to get the z-index of the closest ui-kit overlay that renders the calling component.
+ *
+ * @returns the overlay's z-index, or undefined when the component is not rendered inside an overlay
+ *
+ * @internal
+ */
+export const useContainingOverlayZIndex = (): number | undefined => {
+    return useContext(OverlayZIndexContext);
+};
+
+/**
  * Properties for {@link OverlayControllerProvider} component.
  *
  * @internal
@@ -49,7 +68,7 @@ export const useOverlayController = (): OverlayController | undefined => {
     return useContext(OverlayContext);
 };
 
-const FALLBACK_OVERLAY_Z_INDEX = 5001; // Same as in OverlayController
+export const FALLBACK_OVERLAY_Z_INDEX = 5001; // Same as in OverlayController
 
 /**
  * Hook to get the css `z-index` property for given overlay.

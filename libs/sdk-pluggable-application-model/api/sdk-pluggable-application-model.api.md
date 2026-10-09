@@ -30,7 +30,7 @@ export function aiAssistantContextChanged(payload?: {
 }): IAiAssistantContextChangedEvent;
 
 // @alpha
-export function aiAssistantReportSaved(payload: IAiAssistantReportSavedEvent["payload"]): IAiAssistantReportSavedEvent;
+export function aiAssistantPublisherDocumentSaved(payload: IAiAssistantPublisherDocumentSavedEvent["payload"]): IAiAssistantPublisherDocumentSavedEvent;
 
 // @alpha
 export function closeAiAssistantRequested(): ICloseAiAssistantRequestedEvent;
@@ -71,16 +71,16 @@ export interface IAiAssistantContextChangedEvent extends IPluggableAppEvent {
 }
 
 // @alpha
-export interface IAiAssistantReportSavedEvent extends IPluggableAppEvent {
+export interface IAiAssistantPublisherDocumentSavedEvent extends IPluggableAppEvent {
     // (undocumented)
     readonly payload: {
         readonly conversationId: string;
         readonly itemId: string;
-        readonly reportRef?: string;
-        readonly savedReportId: string;
+        readonly documentRef?: string;
+        readonly savedDocumentId: string;
     };
     // (undocumented)
-    readonly type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.REPORT_SAVED";
+    readonly type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.PUBLISHER_DOCUMENT_SAVED";
 }
 
 // @alpha
@@ -367,7 +367,7 @@ export interface IReloadPlatformContextRequestedEvent extends IPluggableAppEvent
 export function isAiAssistantContextChangedEvent(obj: unknown): obj is IAiAssistantContextChangedEvent;
 
 // @alpha
-export function isAiAssistantReportSavedEvent(obj: unknown): obj is IAiAssistantReportSavedEvent;
+export function isAiAssistantPublisherDocumentSavedEvent(obj: unknown): obj is IAiAssistantPublisherDocumentSavedEvent;
 
 // @alpha
 export function isCloseAiAssistantRequestedEvent(obj: unknown): obj is ICloseAiAssistantRequestedEvent;
@@ -444,7 +444,7 @@ export const PluggableAppEventType: {
     readonly AI_ASSISTANT_OPEN_REQUESTED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.OPEN_REQUESTED";
     readonly AI_ASSISTANT_CLOSE_REQUESTED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CLOSE_REQUESTED";
     readonly AI_ASSISTANT_CONTEXT_CHANGED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CONTEXT_CHANGED";
-    readonly AI_ASSISTANT_REPORT_SAVED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.REPORT_SAVED";
+    readonly AI_ASSISTANT_PUBLISHER_DOCUMENT_SAVED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.PUBLISHER_DOCUMENT_SAVED";
 };
 
 // @alpha

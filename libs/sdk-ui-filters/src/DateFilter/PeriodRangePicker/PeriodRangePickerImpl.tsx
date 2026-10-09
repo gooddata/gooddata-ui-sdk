@@ -68,6 +68,7 @@ import {
     type IPeriodRangePickerProps,
     type PeriodRangePickerGranularity,
 } from "./types.js";
+import { YearPageAnchorContext, YearRangePanel, useYearPageAnchor } from "./YearRangePanel.js";
 
 type PickerLocale = NonNullable<ComponentProps<typeof DateFnsRangePicker>["locale"]>;
 
@@ -297,6 +298,22 @@ export function resolveSelectedBoundary(
 }
 
 /**
+ * Whether the start period comes after the end period. Compares the periods' first days, because a date
+ * picked from the grid can fall anywhere in its period, while a typed one is the period's first day.
+ */
+function isPeriodOrderReversed(
+    granularity: PeriodRangePickerGranularity,
+    start: Date,
+    end: Date,
+    weekStart: NonNullable<IPeriodRangePickerProps["weekStart"]>,
+): boolean {
+    return (
+        resolveSelectedBoundary(granularity, start, "start", weekStart) >
+        resolveSelectedBoundary(granularity, end, "start", weekStart)
+    );
+}
+
+/**
  * A grid picker for selecting a Week/Month/Quarter/Year period range. Renders the rc-picker panel matching
  * {@link IPeriodRangePickerProps.granularity} and reports the resolved day-level range via `onRangeChange`.
  *
@@ -340,6 +357,16 @@ export function PeriodRangePickerImpl({
     });
     const enterCommitRef = useRef(false);
 
+    const {
+        pickerValue: yearPickerValue,
+        anchorYear: yearPageAnchorYear,
+        onFocus: handleYearPageFocus,
+        onOpen: openYearPage,
+        onCalendarChange: followYearPageEdit,
+        onPickerValueChange: handleYearPickerValueChange,
+    } = useYearPageAnchor(liveValueRef);
+    const isYear = granularity === "GDC.time.year";
+
     // `value` only carries what the parent has actually committed, which lags a field being typed into:
     // rc-picker reports intermediate dates through onCalendarChange long before the round that would
     // commit them. liveValue mirrors those intermediate dates so the date-order check and the Enter
@@ -365,8 +392,9 @@ export function PeriodRangePickerImpl({
             if (info.range) {
                 setLastEditedSide(info.range);
             }
+            followYearPageEdit(dates, info);
         },
-        [],
+        [followYearPageEdit],
     );
 
     // Opening the calendar is fully controlled by us, not rc-picker: rc-picker also asks to open on every
@@ -379,7 +407,12 @@ export function PeriodRangePickerImpl({
             setOpen(false);
         }
     }, []);
-    const openCalendar = useCallback(() => setOpen(true), []);
+    const openCalendar = useCallback(() => {
+        if (!open) {
+            openYearPage();
+        }
+        setOpen(true);
+    }, [open, openYearPage]);
 
     // An empty field is only flagged invalid once the user has actually left it. An untouched empty field
     // on first render shouldn't read as an error.
@@ -458,7 +491,9 @@ export function PeriodRangePickerImpl({
     );
 
     const isDateOrderError = Boolean(
-        liveValue[0] && liveValue[1] && liveValue[0].getTime() > liveValue[1].getTime(),
+        liveValue[0] &&
+        liveValue[1] &&
+        isPeriodOrderReversed(granularity, liveValue[0], liveValue[1], weekStart),
     );
 
     // Plain render-time derivations, not state - the empty-field error message is gated on `touched` and
@@ -597,14 +632,14 @@ export function PeriodRangePickerImpl({
 
         const [start, end] = liveValueRef.current;
         const orderKind: PeriodRangeFieldErrorKind =
-            start && end && start.getTime() > end.getTime() ? "order" : undefined;
+            start && end && isPeriodOrderReversed(granularity, start, end, weekStart) ? "order" : undefined;
         if (isBlockingFieldError(orderKind)) {
             return;
         }
 
         onRangeChange({ from, to });
         debouncedSubmitForm();
-    }, [resolveSideValue, onRangeChange, debouncedSubmitForm]);
+    }, [resolveSideValue, granularity, weekStart, onRangeChange, debouncedSubmitForm]);
 
     const accessibility = useMemo<IPeriodRangeAccessibility>(
         () => ({
@@ -710,30 +745,35 @@ export function PeriodRangePickerImpl({
             ref={wrapperRef}
         >
             <PeriodRangeAccessibilityContext.Provider value={accessibility}>
-                <DateFnsRangePicker
-                    picker={pickerMode}
-                    id={inputIds}
-                    value={value}
-                    onChange={handleChange}
-                    onCalendarChange={handleCalendarChange}
-                    onBlur={handleFieldBlur}
-                    open={open}
-                    onOpenChange={handleOpenChange}
-                    onClick={openCalendar}
-                    getPopupContainer={getPopupContainer}
-                    locale={locale}
-                    format={fieldFormats}
-                    placeholder={[placeholder, placeholder]}
-                    allowClear={false}
-                    order={false}
-                    allowEmpty={[true, true]}
-                    // Without this the picker overwrites a field's text with the
-                    // formatted committed value the moment the field goes inactive - so text that
-                    // failed to parse vanishes on blur and its "invalid format" error is replaced by
-                    // "empty".
-                    preserveInvalidOnBlur
-                    components={{ input: AccessibleFieldInput }}
-                />
+                <YearPageAnchorContext.Provider value={isYear ? yearPageAnchorYear : undefined}>
+                    <DateFnsRangePicker
+                        picker={pickerMode}
+                        id={inputIds}
+                        value={value}
+                        onChange={handleChange}
+                        onCalendarChange={handleCalendarChange}
+                        onFocus={handleYearPageFocus}
+                        onBlur={handleFieldBlur}
+                        open={open}
+                        onOpenChange={handleOpenChange}
+                        onClick={openCalendar}
+                        pickerValue={isYear ? yearPickerValue : undefined}
+                        onPickerValueChange={isYear ? handleYearPickerValueChange : undefined}
+                        getPopupContainer={getPopupContainer}
+                        locale={locale}
+                        format={fieldFormats}
+                        placeholder={[placeholder, placeholder]}
+                        allowClear={false}
+                        order={false}
+                        allowEmpty={[true, true]}
+                        // Without this the picker overwrites a field's text with the
+                        // formatted committed value the moment the field goes inactive - so text that
+                        // failed to parse vanishes on blur and its "invalid format" error is replaced by
+                        // "empty".
+                        preserveInvalidOnBlur
+                        components={{ input: AccessibleFieldInput, year: YearRangePanel }}
+                    />
+                </YearPageAnchorContext.Provider>
             </PeriodRangeAccessibilityContext.Provider>
             <div id={hintId} className="gd-period-range-picker__hint">
                 {hintExample === undefined

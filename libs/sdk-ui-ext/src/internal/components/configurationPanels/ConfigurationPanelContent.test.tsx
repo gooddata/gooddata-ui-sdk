@@ -29,6 +29,7 @@ describe("ConfigurationPanelContent", () => {
     function createComponent(
         props: IConfigurationPanelContentProps = {
             locale: DefaultLocale,
+            pushData: () => {},
         },
     ) {
         return render(<DummyConfigurationPanel {...props} />);

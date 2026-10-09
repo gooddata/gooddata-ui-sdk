@@ -11,10 +11,14 @@ import {
 } from "@gooddata/sdk-ui-filters";
 
 import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
+import { FixedNow } from "../../../_infra/FixedNow.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 import "@gooddata/sdk-ui-filters/styles/css/dateFilter.css";
 
 const wrapperStyle = { width: 400, padding: "1em 1em" };
+
+// The year grid's pages depend on the current year, so the year stories pin it.
+const YEAR_STORY_NOW = new Date(2026, 2, 25);
 
 const initialRangeByGranularity: Record<PeriodRangePickerGranularity, IPeriodRange> = {
     "GDC.time.date": { from: "2026-03-02", to: "2026-03-10" },
@@ -143,7 +147,11 @@ export function Quarter() {
 Quarter.parameters = { kind: "quarter", screenshots: openedScreenshot } satisfies IStoryParameters;
 
 export function Year() {
-    return <PeriodRangePickerExample granularity="GDC.time.year" />;
+    return (
+        <FixedNow now={YEAR_STORY_NOW}>
+            <PeriodRangePickerExample granularity="GDC.time.year" />
+        </FixedNow>
+    );
 }
 Year.parameters = { kind: "year", screenshots: openedScreenshot } satisfies IStoryParameters;
 
@@ -172,7 +180,12 @@ QuarterThemed.parameters = {
     screenshots: openedScreenshot,
 } satisfies IStoryParameters;
 
-export const YearThemed = () => wrapWithTheme(<PeriodRangePickerExample granularity="GDC.time.year" />);
+export const YearThemed = () =>
+    wrapWithTheme(
+        <FixedNow now={YEAR_STORY_NOW}>
+            <PeriodRangePickerExample granularity="GDC.time.year" />
+        </FixedNow>,
+    );
 YearThemed.parameters = { kind: "year themed", screenshots: openedScreenshot } satisfies IStoryParameters;
 
 export function DayWithCustomFormat() {

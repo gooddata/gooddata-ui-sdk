@@ -198,4 +198,7 @@ export type IconType =
     | "lineWidth1"
     | "lineWidth2"
     | "lineWidth3"
-    | "lineWidth4";
+    | "lineWidth4"
+    | "linear"
+    | "spline"
+    | "stepped";

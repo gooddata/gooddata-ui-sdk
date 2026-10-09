@@ -54,7 +54,7 @@ export interface IConfigurationPanelContentProps<PanelConfig = any> {
     featureFlags?: ISettings;
     permissions?: IWorkspacePermissions;
     axis?: string;
-    pushData?(data: any): void;
+    pushData(data: unknown): void;
     panelConfig?: PanelConfig;
     configurationPanelRenderers?: IConfigurationPanelRenderers;
     /**

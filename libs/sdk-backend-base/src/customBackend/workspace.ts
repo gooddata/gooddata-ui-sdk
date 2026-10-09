@@ -27,7 +27,7 @@ import {
     type IWorkspaceObjectPermissionsService,
     type IWorkspaceParametersService,
     type IWorkspacePermissionsService,
-    type IWorkspaceReportsService,
+    type IWorkspacePublisherService,
     type IWorkspaceSettingsService,
     type IWorkspaceStylingService,
     type IWorkspaceUserGroupsQuery,
@@ -182,7 +182,7 @@ export class CustomWorkspace implements IAnalyticalWorkspace {
         throw new NotSupported("export templates are not supported");
     }
 
-    public reports(): IWorkspaceReportsService {
+    public publisher(): IWorkspacePublisherService {
         throw new NotSupported("reports are not supported");
     }
 }

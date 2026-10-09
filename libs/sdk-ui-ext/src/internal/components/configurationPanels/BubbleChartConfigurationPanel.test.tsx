@@ -11,6 +11,18 @@ import { insightWithSingleAttribute, insightWithSingleMeasure } from "../../test
 import { BubbleChartConfigurationPanel } from "./BubbleChartConfigurationPanel.js";
 import { type IConfigurationPanelContentProps } from "./ConfigurationPanelContent.js";
 
+const defaultProps: IConfigurationPanelContentProps = {
+    isError: false,
+    isLoading: false,
+    locale: DefaultLocale,
+    pushData: () => {},
+};
+
+const defaultPropsWithType: IConfigurationPanelContentProps = {
+    ...defaultProps,
+    type: VisualizationTypes.BUBBLE,
+};
+
 describe("BubbleChartConfigurationPanel", () => {
     // The section headers only react to a plain onClick, so fireEvent.click is enough here;
     // userEvent's full pointer sequence (plus its inter-event delay and pointer-events
@@ -39,12 +51,11 @@ describe("BubbleChartConfigurationPanel", () => {
             },
         };
     }
+
     it("should render configuration panel with enabled controls", () => {
         const props: IConfigurationPanelContentProps = {
+            ...defaultProps,
             insight: insightWithSingleMeasure,
-            isError: false,
-            isLoading: false,
-            locale: DefaultLocale,
         };
 
         createComponent(props);
@@ -55,10 +66,8 @@ describe("BubbleChartConfigurationPanel", () => {
 
     it("should render configuration panel with disabled controls when it has no measures", () => {
         const props: IConfigurationPanelContentProps = {
+            ...defaultProps,
             insight: insightWithSingleAttribute,
-            isError: false,
-            isLoading: false,
-            locale: DefaultLocale,
         };
 
         createComponent(props);
@@ -69,10 +78,9 @@ describe("BubbleChartConfigurationPanel", () => {
 
     it("should render configuration panel with disabled controls when it is in error state", () => {
         const props: IConfigurationPanelContentProps = {
+            ...defaultProps,
             insight: insightWithSingleMeasure,
             isError: true,
-            isLoading: false,
-            locale: DefaultLocale,
         };
 
         createComponent(props);
@@ -83,10 +91,9 @@ describe("BubbleChartConfigurationPanel", () => {
 
     it("should render configuration panel with disabled controls when it is loading", () => {
         const props: IConfigurationPanelContentProps = {
+            ...defaultProps,
             insight: insightWithSingleMeasure,
-            isError: false,
             isLoading: true,
-            locale: DefaultLocale,
         };
 
         createComponent(props);
@@ -96,13 +103,6 @@ describe("BubbleChartConfigurationPanel", () => {
     });
 
     describe("axis name configuration", () => {
-        const defaultProps: IConfigurationPanelContentProps = {
-            isError: false,
-            isLoading: false,
-            locale: DefaultLocale,
-            type: VisualizationTypes.BUBBLE,
-        };
-
         it("should render configuration panel with enabled name sections", () => {
             const insight: IInsightDefinition = {
                 insight: {
@@ -151,7 +151,7 @@ describe("BubbleChartConfigurationPanel", () => {
             };
 
             createComponent({
-                ...defaultProps,
+                ...defaultPropsWithType,
                 insight,
             });
 
@@ -175,7 +175,7 @@ describe("BubbleChartConfigurationPanel", () => {
             };
 
             createComponent({
-                ...defaultProps,
+                ...defaultPropsWithType,
                 insight,
             });
 
@@ -217,7 +217,7 @@ describe("BubbleChartConfigurationPanel", () => {
             };
 
             createComponent({
-                ...defaultProps,
+                ...defaultPropsWithType,
                 insight,
             });
 
@@ -239,7 +239,7 @@ describe("BubbleChartConfigurationPanel", () => {
                 measureIdentifier: string,
             ) => {
                 createComponent({
-                    ...defaultProps,
+                    ...defaultPropsWithType,
                     insight: newInsight(measureIdentifier),
                 });
 
@@ -257,7 +257,7 @@ describe("BubbleChartConfigurationPanel", () => {
 
         it("should not render name sections in configuration panel", () => {
             createComponent({
-                ...defaultProps,
+                ...defaultPropsWithType,
                 insight: insightWithSingleAttribute,
             });
 

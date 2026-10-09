@@ -13,7 +13,7 @@ import type { IGenAIContextObject, SelectedContext, StoreContext } from "../type
 import { addContextReference } from "./addContextReference.js";
 import { isReferenceChanged } from "./isReferenceChanged.js";
 import { removeContextReference } from "./removeContextReference.js";
-import { viewObjectId } from "./viewReport.js";
+import { viewObjectId } from "./viewedPublisherDocument.js";
 
 export function pickSelectedContextFromUserContext(
     context: StoreContext,
@@ -64,12 +64,12 @@ export function selectContextReferences(
     };
 
     newContext = removeContextReference(newContext, context.ambientSelected?.dashboard);
-    newContext = removeContextReference(newContext, context.ambientSelected?.report);
+    newContext = removeContextReference(newContext, context.ambientSelected?.publisherDocument);
     newContext = removeContextReference(newContext, context.ambientSelected?.visualization);
 
     if (newContext.ambientSelected?.activated) {
         newContext = addContextReference(newContext, newContext.ambientSelected?.dashboard);
-        newContext = addContextReference(newContext, newContext.ambientSelected?.report);
+        newContext = addContextReference(newContext, newContext.ambientSelected?.publisherDocument);
         newContext = addContextReference(newContext, newContext.ambientSelected?.visualization);
     }
 
@@ -88,7 +88,7 @@ export function updateAmbientContext(
     newContext.ambient = ambient;
     newContext.ambientLoading = loading;
     newContext = removeContextReference(newContext, context.ambientSelected?.dashboard);
-    newContext = removeContextReference(newContext, context.ambientSelected?.report);
+    newContext = removeContextReference(newContext, context.ambientSelected?.publisherDocument);
     newContext = removeContextReference(newContext, context.ambientSelected?.visualization);
     newContext = updateContextReference(newContext, ambient, referenceChanged, activated);
     return newContext;
@@ -101,24 +101,26 @@ function updateContextReference(
     activated?: boolean,
 ) {
     const dashboard = ambient?.view?.dashboard;
-    const report = ambient?.view?.report;
+    const publisherDocument = ambient?.view?.publisherDocument;
 
-    if (dashboard || report) {
+    if (dashboard || publisherDocument) {
         newContext.loaded = true;
     }
 
     const selected: SelectedContext = {
         ...newContext.ambientSelected,
         dashboard: dashboard ? viewReference("dashboard", dashboard.ref, dashboard.title) : undefined,
-        report: report ? viewReference("report", report.ref, report.title) : undefined,
+        publisherDocument: publisherDocument
+            ? viewReference("publisherDocument", publisherDocument.ref, publisherDocument.title)
+            : undefined,
         ...(!dashboard || referenceChanged ? { visualization: undefined } : {}),
-        ...((dashboard || report) && activated ? { activated: true } : {}),
+        ...((dashboard || publisherDocument) && activated ? { activated: true } : {}),
     };
     newContext.ambientSelected = selected;
 
     if (selected.activated) {
         newContext = addContextReference(newContext, selected.dashboard);
-        newContext = addContextReference(newContext, selected.report);
+        newContext = addContextReference(newContext, selected.publisherDocument);
         newContext = addContextReference(newContext, selected.visualization);
     }
 
@@ -126,7 +128,7 @@ function updateContextReference(
 }
 
 function viewReference(
-    type: "dashboard" | "report",
+    type: "dashboard" | "publisherDocument",
     ref: ObjRef | undefined,
     title?: string,
 ): IGenAIContextObject {

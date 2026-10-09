@@ -100,7 +100,10 @@ export type {
 } from "./workspace/exportDefinitions/index.js";
 
 export type { IWorkspaceExportTemplatesService } from "./workspace/exportTemplates/index.js";
-export type { IReportExportPdfOptions, IWorkspaceReportsService } from "./workspace/reports/index.js";
+export type {
+    IPublisherDocumentExportPdfOptions,
+    IWorkspacePublisherService,
+} from "./workspace/publisher/index.js";
 
 export {
     type IElementsQueryFactory,
@@ -197,7 +200,7 @@ export {
     type IChatConversationAlertProposalContent,
     type IChatConversationSearchContent,
     type IChatConversationDashboardContent,
-    type IChatConversationReportContent,
+    type IChatConversationPublisherDocumentContent,
     type IChatKdaDefinition,
     type IChatWhatIfDefinition,
     type IChatWhatIfAdjustment,
@@ -220,7 +223,7 @@ export {
     isChatConversationSearchContent,
     isChatConversationAlertProposalContent,
     isChatConversationDashboardContent,
-    isChatConversationReportContent,
+    isChatConversationPublisherDocumentContent,
     isChatConversationClarifyingQuestionsContent,
 } from "./workspace/genAI/index.js";
 

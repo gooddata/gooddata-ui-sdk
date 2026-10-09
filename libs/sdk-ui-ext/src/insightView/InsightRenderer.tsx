@@ -43,6 +43,7 @@ import {
     useResolveMessages,
     withContexts,
 } from "@gooddata/sdk-ui";
+import { OverlayZIndexContext, useContainingOverlayZIndex } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import {
@@ -130,6 +131,8 @@ const resolveProps = (props: InsightRendererCoreProps): ResolvedInsightRendererC
 const InsightRendererCore = memo(function InsightRendererCore(props: InsightRendererCoreProps) {
     const theme = useTheme();
     const currentProps = { ...resolveProps(props), theme };
+    const containingOverlayZIndexRef = useRef<number | undefined>(undefined);
+    containingOverlayZIndexRef.current = useContainingOverlayZIndex();
 
     const [elementId] = useState(getElementId);
     const visualizationRef = useRef<IVisualization | undefined>(undefined);
@@ -268,7 +271,13 @@ const InsightRendererCore = memo(function InsightRendererCore(props: InsightRend
         if (!reactRootsMapRef.current.get(htmlElement)) {
             reactRootsMapRef.current.set(htmlElement, createRoot(htmlElement));
         }
-        reactRootsMapRef.current.get(htmlElement)!.render(children);
+        reactRootsMapRef.current
+            .get(htmlElement)!
+            .render(
+                <OverlayZIndexContext.Provider value={containingOverlayZIndexRef.current}>
+                    {children}
+                </OverlayZIndexContext.Provider>,
+            );
     }, []);
 
     const reactUnmountFunction = useCallback<IVisConstruct["unmountFun"]>(() => {

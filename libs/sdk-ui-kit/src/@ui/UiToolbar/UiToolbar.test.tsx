@@ -174,7 +174,6 @@ describe("UiToolbar", () => {
             <UiToolbar accessibilityConfig={{ ariaLabel: "Formatting" }}>
                 <UiToolbarButton label="One" />
                 <UiToolbarStepper
-                    variant="value"
                     value="100%"
                     onStep={() => {}}
                     onCommit={() => {}}

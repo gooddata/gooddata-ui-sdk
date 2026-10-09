@@ -14,7 +14,7 @@ export default {
 
 export const YAxisConfiguration = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(0, 4).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(0, 5).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(([name]) => name === "Y axis configuration");
         if (scenarioAndDescriptions.length === 0)
             throw new Error("Failed to find scenario 'Y axis configuration'");

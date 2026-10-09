@@ -5126,6 +5126,11 @@ export const metadata_v1: {
                             const: string;
                         })[];
                     };
+                    line_shape: {
+                        description: string;
+                        type: string;
+                        enum: string[];
+                    };
                     data_totals: {
                         oneOf: ({
                             const?: undefined;
@@ -13745,6 +13750,7 @@ interface VisualisationConfig {
     legend_enabled?: boolean;
     // (undocumented)
     legend_position?: string;
+    line_shape?: "linear" | "spline" | "stepped";
     // (undocumented)
     line_style_control_metrics?: string[];
     // (undocumented)
@@ -14052,6 +14058,7 @@ interface VisualisationConfig1 {
     legend_enabled?: boolean;
     // (undocumented)
     legend_position?: string;
+    line_shape?: "linear" | "spline" | "stepped";
     // (undocumented)
     line_style_control_metrics?: string[];
     // (undocumented)
@@ -14359,6 +14366,7 @@ interface VisualisationConfig10 {
     legend_enabled?: boolean;
     // (undocumented)
     legend_position?: string;
+    line_shape?: "linear" | "spline" | "stepped";
     // (undocumented)
     line_style_control_metrics?: string[];
     // (undocumented)
@@ -14666,6 +14674,7 @@ interface VisualisationConfig11 {
     legend_enabled?: boolean;
     // (undocumented)
     legend_position?: string;
+    line_shape?: "linear" | "spline" | "stepped";
     // (undocumented)
     line_style_control_metrics?: string[];
     // (undocumented)
@@ -14973,6 +14982,7 @@ interface VisualisationConfig12 {
     legend_enabled?: boolean;
     // (undocumented)
     legend_position?: string;
+    line_shape?: "linear" | "spline" | "stepped";
     // (undocumented)
     line_style_control_metrics?: string[];
     // (undocumented)
@@ -15280,6 +15290,7 @@ interface VisualisationConfig13 {
     legend_enabled?: boolean;
     // (undocumented)
     legend_position?: string;
+    line_shape?: "linear" | "spline" | "stepped";
     // (undocumented)
     line_style_control_metrics?: string[];
     // (undocumented)
@@ -15587,6 +15598,7 @@ interface VisualisationConfig14 {
     legend_enabled?: boolean;
     // (undocumented)
     legend_position?: string;
+    line_shape?: "linear" | "spline" | "stepped";
     // (undocumented)
     line_style_control_metrics?: string[];
     // (undocumented)
@@ -15894,6 +15906,7 @@ interface VisualisationConfig15 {
     legend_enabled?: boolean;
     // (undocumented)
     legend_position?: string;
+    line_shape?: "linear" | "spline" | "stepped";
     // (undocumented)
     line_style_control_metrics?: string[];
     // (undocumented)
@@ -16201,6 +16214,7 @@ interface VisualisationConfig16 {
     legend_enabled?: boolean;
     // (undocumented)
     legend_position?: string;
+    line_shape?: "linear" | "spline" | "stepped";
     // (undocumented)
     line_style_control_metrics?: string[];
     // (undocumented)
@@ -16508,6 +16522,7 @@ interface VisualisationConfig17 {
     legend_enabled?: boolean;
     // (undocumented)
     legend_position?: string;
+    line_shape?: "linear" | "spline" | "stepped";
     // (undocumented)
     line_style_control_metrics?: string[];
     // (undocumented)
@@ -16815,6 +16830,7 @@ interface VisualisationConfig18 {
     legend_enabled?: boolean;
     // (undocumented)
     legend_position?: string;
+    line_shape?: "linear" | "spline" | "stepped";
     // (undocumented)
     line_style_control_metrics?: string[];
     // (undocumented)
@@ -17122,6 +17138,7 @@ interface VisualisationConfig19 {
     legend_enabled?: boolean;
     // (undocumented)
     legend_position?: string;
+    line_shape?: "linear" | "spline" | "stepped";
     // (undocumented)
     line_style_control_metrics?: string[];
     // (undocumented)
@@ -17429,6 +17446,7 @@ interface VisualisationConfig2 {
     legend_enabled?: boolean;
     // (undocumented)
     legend_position?: string;
+    line_shape?: "linear" | "spline" | "stepped";
     // (undocumented)
     line_style_control_metrics?: string[];
     // (undocumented)
@@ -17736,6 +17754,7 @@ interface VisualisationConfig20 {
     legend_enabled?: boolean;
     // (undocumented)
     legend_position?: string;
+    line_shape?: "linear" | "spline" | "stepped";
     // (undocumented)
     line_style_control_metrics?: string[];
     // (undocumented)
@@ -18043,6 +18062,7 @@ interface VisualisationConfig21 {
     legend_enabled?: boolean;
     // (undocumented)
     legend_position?: string;
+    line_shape?: "linear" | "spline" | "stepped";
     // (undocumented)
     line_style_control_metrics?: string[];
     // (undocumented)
@@ -18350,6 +18370,7 @@ interface VisualisationConfig22 {
     legend_enabled?: boolean;
     // (undocumented)
     legend_position?: string;
+    line_shape?: "linear" | "spline" | "stepped";
     // (undocumented)
     line_style_control_metrics?: string[];
     // (undocumented)
@@ -18657,6 +18678,7 @@ interface VisualisationConfig23 {
     legend_enabled?: boolean;
     // (undocumented)
     legend_position?: string;
+    line_shape?: "linear" | "spline" | "stepped";
     // (undocumented)
     line_style_control_metrics?: string[];
     // (undocumented)
@@ -18964,6 +18986,7 @@ interface VisualisationConfig3 {
     legend_enabled?: boolean;
     // (undocumented)
     legend_position?: string;
+    line_shape?: "linear" | "spline" | "stepped";
     // (undocumented)
     line_style_control_metrics?: string[];
     // (undocumented)
@@ -19271,6 +19294,7 @@ interface VisualisationConfig4 {
     legend_enabled?: boolean;
     // (undocumented)
     legend_position?: string;
+    line_shape?: "linear" | "spline" | "stepped";
     // (undocumented)
     line_style_control_metrics?: string[];
     // (undocumented)
@@ -19578,6 +19602,7 @@ interface VisualisationConfig5 {
     legend_enabled?: boolean;
     // (undocumented)
     legend_position?: string;
+    line_shape?: "linear" | "spline" | "stepped";
     // (undocumented)
     line_style_control_metrics?: string[];
     // (undocumented)
@@ -19885,6 +19910,7 @@ interface VisualisationConfig6 {
     legend_enabled?: boolean;
     // (undocumented)
     legend_position?: string;
+    line_shape?: "linear" | "spline" | "stepped";
     // (undocumented)
     line_style_control_metrics?: string[];
     // (undocumented)
@@ -20192,6 +20218,7 @@ interface VisualisationConfig7 {
     legend_enabled?: boolean;
     // (undocumented)
     legend_position?: string;
+    line_shape?: "linear" | "spline" | "stepped";
     // (undocumented)
     line_style_control_metrics?: string[];
     // (undocumented)
@@ -20499,6 +20526,7 @@ interface VisualisationConfig8 {
     legend_enabled?: boolean;
     // (undocumented)
     legend_position?: string;
+    line_shape?: "linear" | "spline" | "stepped";
     // (undocumented)
     line_style_control_metrics?: string[];
     // (undocumented)
@@ -20806,6 +20834,7 @@ interface VisualisationConfig9 {
     legend_enabled?: boolean;
     // (undocumented)
     legend_position?: string;
+    line_shape?: "linear" | "spline" | "stepped";
     // (undocumented)
     line_style_control_metrics?: string[];
     // (undocumented)

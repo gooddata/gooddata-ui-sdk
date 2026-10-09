@@ -52,6 +52,7 @@ describe("BaseChartConfigurationPanel", () => {
             isLoading: false,
             locale: DefaultLocale,
             type: VisualizationTypes.COLUMN,
+            pushData: () => {},
         };
 
         it("should render configuration panel with enabled name sections in single axis chart", async () => {

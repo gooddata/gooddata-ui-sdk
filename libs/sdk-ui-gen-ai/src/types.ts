@@ -28,9 +28,9 @@ export type SelectedContext = {
      */
     dashboard?: IGenAIContextObject;
     /**
-     * Report the user is viewing or editing.
+     * Document the user is viewing or editing.
      */
-    report?: IGenAIContextObject;
+    publisherDocument?: IGenAIContextObject;
     /**
      * Visualization or widget selected by the user.
      */
@@ -153,8 +153,8 @@ export interface IGenAIContextObject {
     ref?: ObjRef;
     title: string;
     nesting: number;
-    type: GenAIObjectType | "widget" | "report";
-    where: "view.dashboard" | "view.report" | "referencedObjects";
+    type: GenAIObjectType | "widget" | "publisherDocument";
+    where: "view.dashboard" | "view.publisherDocument" | "referencedObjects";
     context?: IGenAIObjectReference;
     insightRef?: ObjRef;
     /**

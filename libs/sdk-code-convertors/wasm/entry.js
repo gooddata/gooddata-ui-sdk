@@ -22,7 +22,7 @@ import {
     declarativeDateInstanceToYaml,
     declarativeMetricToYaml,
     declarativePluginToYaml,
-    declarativeReportToYaml,
+    declarativePublisherDocumentToYaml,
     declarativeVisualisationToYaml,
     yamlAttributeHierarchyToDeclarative,
     yamlComputedAttributeToDeclarative,
@@ -31,7 +31,7 @@ import {
     yamlDateDatesetToDeclarative,
     yamlMetricToDeclarative,
     yamlPluginToDeclarative,
-    yamlReportDocumentToDeclarative,
+    yamlPublisherDocumentToDeclarative,
     yamlVisualisationToDeclarative,
 } from "../esm/index.js";
 
@@ -44,7 +44,7 @@ const converters = {
     yamlDashboardToDeclarative,
     yamlPluginToDeclarative,
     yamlAttributeHierarchyToDeclarative,
-    yamlReportDocumentToDeclarative,
+    yamlPublisherDocumentToDeclarative,
     declarativeDatasetToYaml,
     declarativeDateInstanceToYaml,
     declarativeMetricToYaml,
@@ -53,7 +53,7 @@ const converters = {
     declarativeDashboardToYaml,
     declarativePluginToYaml,
     declarativeAttributeHierarchyToYaml,
-    declarativeReportToYaml,
+    declarativePublisherDocumentToYaml,
     buildAfmExecution,
 };
 

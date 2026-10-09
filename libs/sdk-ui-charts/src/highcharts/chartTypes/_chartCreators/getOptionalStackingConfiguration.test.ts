@@ -88,9 +88,9 @@ describe("getOptionalStackingConfiguration", () => {
                     ],
                 },
             ],
-        ])(
+        ] as const)(
             "should return parent attribute configuration for %s chart",
-            (type: string, expectedConfig: any) => {
+            (type, expectedConfig: any) => {
                 const chartOptions = { type };
                 const config = { xAxis: [{}] };
                 const result = getParentAttributeConfiguration(chartOptions, config);

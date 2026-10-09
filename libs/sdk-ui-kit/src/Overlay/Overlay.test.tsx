@@ -10,6 +10,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { registerFloatingAnchor } from "../@ui/hooks/useCloseOnOutsideClick.js";
 
 import { Overlay } from "./Overlay.js";
+import { OverlayControllerProvider, useContainingOverlayZIndex } from "./OverlayContext.js";
+import { OverlayController } from "./OverlayController.js";
 
 /**
  * @internal
@@ -62,6 +64,10 @@ function createEvent(options = {}) {
         preventDefault: vi.fn(),
         ...options,
     };
+}
+
+function ContainingOverlayZIndexProbe({ testId }: { testId: string }) {
+    return <span data-testid={testId}>{String(useContainingOverlayZIndex())}</span>;
 }
 
 describe("Overlay", () => {
@@ -118,6 +124,56 @@ describe("Overlay", () => {
     it("should render overlay with custom zIndex", () => {
         renderOverlayComponent({ zIndex: 5001 });
         expect(screen.getByText("Overlay")).toHaveStyle({ zIndex: 5001 });
+    });
+
+    describe("containing overlay z-index", () => {
+        it("should provide no z-index to components rendered outside any overlay", () => {
+            render(<ContainingOverlayZIndexProbe testId="outside" />);
+
+            expect(screen.getByTestId("outside")).toHaveTextContent("undefined");
+        });
+
+        it("should provide its own z-index to its children", () => {
+            render(
+                <Overlay zIndex={5001}>
+                    <ContainingOverlayZIndexProbe testId="inside" />
+                </Overlay>,
+            );
+
+            expect(screen.getByTestId("inside")).toHaveTextContent("5001");
+        });
+
+        it("should provide the default overlay z-index without a controller or a z-index prop", () => {
+            render(
+                <Overlay>
+                    <ContainingOverlayZIndexProbe testId="default" />
+                </Overlay>,
+            );
+
+            expect(screen.getByTestId("default")).toHaveTextContent("5001");
+        });
+
+        it("should provide the z-index assigned by the overlay controller to its children", () => {
+            const controller = OverlayController.getInstance(7000);
+            render(
+                <OverlayControllerProvider overlayController={controller}>
+                    <Overlay>
+                        <ContainingOverlayZIndexProbe testId="outer" />
+                        <Overlay>
+                            <ContainingOverlayZIndexProbe testId="nested" />
+                        </Overlay>
+                    </Overlay>
+                </OverlayControllerProvider>,
+            );
+
+            const outer = Number(screen.getByTestId("outer").textContent);
+            const nested = Number(screen.getByTestId("nested").textContent);
+            const outerWrapper = screen.getByTestId("outer").parentElement;
+
+            expect(outer).toBeGreaterThan(7000);
+            expect(outerWrapper).toHaveStyle({ zIndex: outer });
+            expect(nested).toBeGreaterThan(outer);
+        });
     });
 
     describe("Align to fixed node", () => {

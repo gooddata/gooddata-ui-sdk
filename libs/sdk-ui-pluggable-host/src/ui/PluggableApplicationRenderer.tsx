@@ -13,7 +13,7 @@ import {
     type IPluggableAppEvent,
     type IPluggableApplicationMountHandle,
     isAiAssistantContextChangedEvent,
-    isAiAssistantReportSavedEvent,
+    isAiAssistantPublisherDocumentSavedEvent,
     isCloseAiAssistantRequestedEvent,
     isDocumentTitleChangedEvent,
     isOpenAiAssistantRequestedEvent,
@@ -79,12 +79,12 @@ export interface IPluggableApplicationRendererProps {
         userContext?: IGenAIUserContext;
         userContextLoading?: boolean;
     }) => void;
-    /** Tell the host-owned chat that the active app saved a report the chat had drafted. */
-    onAiAssistantReportSaved?: (saved: {
+    /** Tell the host-owned chat that the active app saved a document the chat had drafted. */
+    onAiAssistantPublisherDocumentSaved?: (saved: {
         conversationId: string;
         itemId: string;
-        reportRef?: string;
-        savedReportId: string;
+        documentRef?: string;
+        savedDocumentId: string;
     }) => void;
     /**
      * Ref the renderer populates with a handler that delegates a host-chat link click to the active
@@ -116,7 +116,7 @@ export function PluggableApplicationRenderer({
     onOpenAiAssistant,
     onCloseAiAssistant,
     onAiAssistantContext,
-    onAiAssistantReportSaved,
+    onAiAssistantPublisherDocumentSaved,
     aiLinkClickHandlerRef,
     aiEventReceiveRef,
     navigationRequestRef,
@@ -131,7 +131,7 @@ export function PluggableApplicationRenderer({
     const onOpenAiAssistantRef = useAutoupdateRef(onOpenAiAssistant);
     const onCloseAiAssistantRef = useAutoupdateRef(onCloseAiAssistant);
     const onAiAssistantContextRef = useAutoupdateRef(onAiAssistantContext);
-    const onAiAssistantReportSavedRef = useAutoupdateRef(onAiAssistantReportSaved);
+    const onAiAssistantPublisherDocumentSavedRef = useAutoupdateRef(onAiAssistantPublisherDocumentSaved);
     const containerRef = useRef<HTMLDivElement>(null);
     const mountHandleRef = useRef<IPluggableApplicationMountHandle | undefined>(undefined);
     // The app/module pair currently mounted. Held so the context-change effect can
@@ -188,12 +188,12 @@ export function PluggableApplicationRenderer({
                 });
                 return;
             }
-            if (isAiAssistantReportSavedEvent(event)) {
-                onAiAssistantReportSavedRef.current?.({
+            if (isAiAssistantPublisherDocumentSavedEvent(event)) {
+                onAiAssistantPublisherDocumentSavedRef.current?.({
                     conversationId: event.payload.conversationId,
                     itemId: event.payload.itemId,
-                    reportRef: event.payload.reportRef,
-                    savedReportId: event.payload.savedReportId,
+                    documentRef: event.payload.documentRef,
+                    savedDocumentId: event.payload.savedDocumentId,
                 });
                 return;
             }
@@ -207,7 +207,7 @@ export function PluggableApplicationRenderer({
             onOpenAiAssistantRef,
             onCloseAiAssistantRef,
             onAiAssistantContextRef,
-            onAiAssistantReportSavedRef,
+            onAiAssistantPublisherDocumentSavedRef,
         ],
     );
 

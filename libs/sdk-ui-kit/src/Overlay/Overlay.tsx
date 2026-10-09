@@ -23,7 +23,7 @@ import { GOODSTRAP_DRAG_EVENT } from "../utils/drag.js";
 import { DEFAULT_ALIGN_POINTS, getOptimalAlignment, getOverlayStyles } from "../utils/overlay.js";
 import { GOODSTRAP_SCROLLED_EVENT } from "../utils/scroll.js";
 
-import { OverlayContext } from "./OverlayContext.js";
+import { FALLBACK_OVERLAY_Z_INDEX, OverlayContext, OverlayZIndexContext } from "./OverlayContext.js";
 import { type IOverlayProps, type IOverlayState } from "./typings.js";
 
 const events = [
@@ -240,7 +240,11 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
                             style={this.getOverlayStyles()}
                             className={this.getOverlayClasses()}
                         >
-                            {this.props.children}
+                            <OverlayZIndexContext.Provider
+                                value={this.getZIndex() ?? FALLBACK_OVERLAY_Z_INDEX}
+                            >
+                                {this.props.children}
+                            </OverlayZIndexContext.Provider>
                         </div>
                     </div>
                 </Portal>

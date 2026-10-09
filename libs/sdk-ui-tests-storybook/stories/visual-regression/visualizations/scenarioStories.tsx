@@ -82,7 +82,7 @@ export function withCustomSetting(backend: IAnalyticalBackend, customSettings: I
         commonSettingsWrapper: (settings: ISettings) => {
             return {
                 ...settings,
-                ...(customSettings || {}),
+                ...customSettings,
             };
         },
     });

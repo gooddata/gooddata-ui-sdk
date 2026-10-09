@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "ReportPageLayoutType",
-    "description": "JSON schema for Gooddata Analytics Report Page Layout",
+    "description": "JSON schema for Gooddata Analytics Document Page Layout",
     "allOf": [
         {
             "if": {
@@ -33,7 +33,7 @@
             "properties": {
                 "id": {
                     "$ref": "/gaac/identifier",
-                    "description": "A unique identifier of the report page layout.",
+                    "description": "A unique identifier of the document page layout.",
                     "$semantic": [
                         {
                             "type": "uniqueness",
@@ -52,15 +52,15 @@
                 },
                 "title": {
                     "$ref": "/gaac/title",
-                    "description": "A human readable title for the report page layout."
+                    "description": "A human readable title for the document page layout."
                 },
                 "description": {
                     "$ref": "/gaac/description",
-                    "description": "An optional description of the report page layout."
+                    "description": "An optional description of the document page layout."
                 },
                 "tags": {
                     "$ref": "/gaac/tags",
-                    "description": "A list of strings - metadata tags of this report page layout."
+                    "description": "A list of strings - metadata tags of this document page layout."
                 },
                 "kind": {
                     "$ref": "/gaac/reportPageKind"
@@ -78,7 +78,7 @@
                 },
                 "filters": {
                     "$ref": "/gaac/dashboardFilters",
-                    "description": "Page filters, carried into the template and report content this page is copied into."
+                    "description": "Page filters, carried into the template and document content this page is copied into."
                 }
             },
             "$semantic": {
@@ -86,7 +86,7 @@
                 "snippets": ["report_page_layout"]
             },
             "required": ["id", "type", "title", "layout"],
-            "description": "A reusable page. Its content fields are the same page body a report and a report template carry inline, so a field added to /gaac/reportPageBody belongs here too: JSON Schema cannot compose the two, because the page body closes itself to the entity's own id, title and tags."
+            "description": "A reusable page. Its content fields are the same page body a document and a document template carry inline, so a field added to /gaac/reportPageBody belongs here too: JSON Schema cannot compose the two, because the page body closes itself to the entity's own id, title and tags."
         }
     }
 }

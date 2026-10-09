@@ -21,6 +21,7 @@ import {
     type XAxisOptions,
     type YAxisOptions,
 } from "../../lib/index.js";
+import { DEFAULT_TOOLTIP_Z_INDEX } from "../../tooltipZIndex.js";
 import {
     type IAxis,
     type IChartOptions,
@@ -73,6 +74,7 @@ import { getAxisNameConfiguration } from "./getAxisNameConfiguration.js";
 import { getChartHighlightingConfiguration } from "./getChartHighlightingConfiguration.js";
 import { getChartOrientationConfiguration } from "./getChartOrientationConfiguration.js";
 import { getContinuousLineConfiguration } from "./getContinuousLineConfiguration.js";
+import { getLineShapeConfiguration } from "./getLineShapeConfiguration.js";
 import { getOptionalStackingConfiguration } from "./getOptionalStackingConfiguration.js";
 import { getWaterfallXAxisConfiguration } from "./getWaterfallXAxisConfiguration.js";
 import { getZeroAlignConfiguration } from "./getZeroAlignConfiguration.js";
@@ -717,6 +719,7 @@ function getTooltipConfiguration({
                   ),
                   enabled: chartConfig?.tooltip?.enabled ?? true,
                   className: chartConfig?.tooltip?.className,
+                  style: { zIndex: chartConfig?.tooltip?.zIndex ?? DEFAULT_TOOLTIP_Z_INDEX },
                   stickOnContact: chartConfig?.enableAccessibleTooltip ?? false,
                   ...followPointer,
               },
@@ -949,7 +952,16 @@ function getDataLabelsConfiguration({
             line: {
                 dataLabels: DEFAULT_LABELS_CONFIG,
             },
+            spline: {
+                dataLabels: DEFAULT_LABELS_CONFIG,
+            },
             area: {
+                dataLabels: {
+                    ...DEFAULT_LABELS_CONFIG,
+                    formatter: partial(dataLabelFormatter, chartConfig),
+                },
+            },
+            areaspline: {
                 dataLabels: {
                     ...DEFAULT_LABELS_CONFIG,
                     formatter: partial(dataLabelFormatter, chartConfig),
@@ -1024,7 +1036,9 @@ function getDataPointsConfiguration({ chartConfig }: IConfiguratorContext): High
     return {
         plotOptions: {
             line: dataPointsConfig,
+            spline: dataPointsConfig,
             area: dataPointsConfig,
+            areaspline: dataPointsConfig,
         },
     };
 }
@@ -1833,6 +1847,12 @@ export function getCustomizedConfiguration({
         getWaterfallXAxisConfiguration,
         getChartOrientationConfiguration,
         getChartHighlightingConfiguration,
+        /**
+         * This should be put after any configurator that checks upon "line", "area" or "combo" `chart.type` or series type as
+         * this configurator rewrites `chart.type` or series type from "line" to "spline" and from "area" to "areaspline" if
+         * line shape is set to the "spline" value.
+         */
+        getLineShapeConfiguration,
     ];
     const commonData = configurators.reduce(
         (highchartsOptions: HighchartsOptions, configurator: Configurator) => {

@@ -369,6 +369,10 @@ export const messages = defineMessages({
     chartConfigOverrideEditorButton: { id: "properties.advanced.chartConfigOverride.editorButton" },
     chartConfigOverrideTitle: { id: "properties.advanced.chartConfigOverride.title" },
     snippetsHeader: { id: "properties.advanced.chartConfigOverride.snippets.header" },
+    lineShape: { id: "properties.lineShape" },
+    lineShapeLinear: { id: "properties.lineShape.linear" },
+    lineShapeSpline: { id: "properties.lineShape.spline" },
+    lineShapeStepped: { id: "properties.lineShape.stepped" },
 });
 
 export const comparisonMessages = defineMessages({

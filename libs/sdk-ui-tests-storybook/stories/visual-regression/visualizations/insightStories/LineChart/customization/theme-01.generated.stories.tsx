@@ -83,7 +83,7 @@ export const Themed = () =>
                 visualizationUrl: "local:line",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(15, 26, 0),
+        getScenariosGroupByIndexes(15, 27, 0),
     )();
 Themed.parameters = {
     kind: "themed",
@@ -171,7 +171,7 @@ export const Font = () =>
                 visualizationUrl: "local:line",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(15, 26, 1),
+        getScenariosGroupByIndexes(15, 27, 1),
     )();
 Font.parameters = {
     kind: "font",

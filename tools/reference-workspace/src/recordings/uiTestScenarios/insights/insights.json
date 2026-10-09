@@ -87,6 +87,12 @@
     "AreaChart.48a1821beab9eb4e440b5a5ae5815340": {
         "comment": "Auto-generated insight for test scenario AreaChart - legend position - legend on top."
     },
+    "AreaChart.4c9aec9d88d6bb08b46abac57cbb09d3": {
+        "comment": "Auto-generated insight for test scenario AreaChart - line shape - spline."
+    },
+    "AreaChart.50a211896c9c36f6b3f59de1e122bc15": {
+        "comment": "Auto-generated insight for test scenario AreaChart - line shape - linear."
+    },
     "AreaChart.50a2a52ac1284faf25cf924faa1bb07a": {
         "comment": "Auto-generated insight for test scenario AreaChart - with one measure and view by date and stack by date.",
         "scenarioName": "with one measure and view by date and stack by date",
@@ -161,6 +167,9 @@
     "AreaChart.87224432e5424b598cf3ac66e435b4c6": {
         "comment": "Auto-generated insight for test scenario AreaChart - legend position - auto legend."
     },
+    "AreaChart.8af01fc4934e3370e8d5a78ca82eafe7": {
+        "comment": "Auto-generated insight for test scenario AreaChart - line shape - default."
+    },
     "AreaChart.8dbe31697789a4e464134ace891be7a1": {
         "comment": "Auto-generated insight for test scenario AreaChart - data points - sparse chart - forced visible."
     },
@@ -175,6 +184,9 @@
     },
     "AreaChart.9d2908f6b71d80aca6157eb1c8d6d413": {
         "comment": "Auto-generated insight for test scenario AreaChart - single measure with viewBy and stackBy and disabled stacking."
+    },
+    "AreaChart.9d29bbada83a7e06bf9631466d6335ee": {
+        "comment": "Auto-generated insight for test scenario AreaChart - line shape - stepped."
     },
     "AreaChart.9d78d560b2c516ad90ee68faabfc2b5d": {
         "comment": "Auto-generated insight for test scenario AreaChart - data points - sparse chart - auto visibility."
@@ -1550,6 +1562,9 @@
     "ComboChart.0b3abccd234cd1f793b878ee32a46fde": {
         "comment": "Auto-generated insight for test scenario ComboChart - data labels - forced visible."
     },
+    "ComboChart.0c400c20f9513ed0858744c746e17a86": {
+        "comment": "Auto-generated insight for test scenario ComboChart - line shape with area - linear."
+    },
     "ComboChart.0db9c24560306cc6c74bd8452e6a335d": {
         "comment": "Auto-generated insight for test scenario ComboChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend on right."
     },
@@ -1712,6 +1727,9 @@
     "ComboChart.5fd7420a1c3a0966d4c7cfcdc98ca524": {
         "comment": "Auto-generated insight for test scenario ComboChart - dual axis multiple measures with slicingarea-column."
     },
+    "ComboChart.6033a523d1b04a7471174f37b71209c3": {
+        "comment": "Auto-generated insight for test scenario ComboChart - line shape with area - stepped."
+    },
     "ComboChart.60d338b994572cbfc0290b34775eb265": {
         "comment": "Auto-generated insight for test scenario ComboChart - dual axis multiple measures with slicingline-area."
     },
@@ -1736,6 +1754,9 @@
     },
     "ComboChart.6641bb6c43ebcb9c5aa871f61ea2efbe": {
         "comment": "Auto-generated insight for test scenario ComboChart - axis name configuration - invisible."
+    },
+    "ComboChart.67db28ce39403a551e7387cbd1ff24b4": {
+        "comment": "Auto-generated insight for test scenario ComboChart - line shape - stepped."
     },
     "ComboChart.681f8ac7ed155147970adeedec317add": {
         "comment": "Auto-generated insight for test scenario ComboChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend on left."
@@ -1765,6 +1786,9 @@
     },
     "ComboChart.7b9f8804a0583d9541325829dab5dd2b": {
         "comment": "Auto-generated insight for test scenario ComboChart - dual axis two measures without slicingarea-column."
+    },
+    "ComboChart.7d02f418a5c9fab4c8e53c1568da1825": {
+        "comment": "Auto-generated insight for test scenario ComboChart - line shape - spline."
     },
     "ComboChart.80b0c83be70ea2b4d79f15b0c6e0308b": {
         "comment": "Auto-generated insight for test scenario ComboChart - legend position - legend on top."
@@ -1842,6 +1866,9 @@
     "ComboChart.b5eef2a766c7c089941db284fed158bb": {
         "comment": "Auto-generated insight for test scenario ComboChart - stack primary measures when both column chart - normal stacking."
     },
+    "ComboChart.b746714efd0cc01fc74b3206d43ed77a": {
+        "comment": "Auto-generated insight for test scenario ComboChart - line shape - default."
+    },
     "ComboChart.ba43c3b32f4465587a6059692e1e0327": {
         "comment": "Auto-generated insight for test scenario ComboChart - dual axis multiple measures with slicingline-column."
     },
@@ -1884,6 +1911,9 @@
     },
     "ComboChart.cf7603e9899ad0f3ba5cc21857e62332": {
         "comment": "Auto-generated insight for test scenario ComboChart - dual axis multiple measures with slicingarea-area."
+    },
+    "ComboChart.cf8fa06da9f1876feaffcd4a5dab33c2": {
+        "comment": "Auto-generated insight for test scenario ComboChart - line shape with area - spline."
     },
     "ComboChart.d30b35a3f394feeaea3c496bcba471bc": {
         "comment": "Auto-generated insight for test scenario ComboChart - dual axis two measures without slicingline-area."
@@ -1947,6 +1977,9 @@
     },
     "ComboChart.f9d178e2fbf1be89bbb261edca97a5ea": {
         "comment": "Auto-generated insight for test scenario ComboChart - axis name configuration - middle."
+    },
+    "ComboChart.fa1486b7cf08a78ab5fb7a60b8835d77": {
+        "comment": "Auto-generated insight for test scenario ComboChart - line shape - linear."
     },
     "ComboChart.fb0df56d0d338aec744f0a973e5ea52b": {
         "comment": "Auto-generated insight for test scenario ComboChart - data labels - auto visibility."
@@ -3311,6 +3344,9 @@
     "LineChart.893934b2e499072547caa299d8d8df06": {
         "comment": "Auto-generated insight for test scenario LineChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on left."
     },
+    "LineChart.89adca34748b96eb6ff0ac57d3043681": {
+        "comment": "Auto-generated insight for test scenario LineChart - line shape - stepped."
+    },
     "LineChart.8b6aa8716535cffcbc957ebb58a47127": {
         "comment": "Auto-generated insight for test scenario LineChart - data points - dense chart - default."
     },
@@ -3395,10 +3431,16 @@
     "LineChart.d1d5671fbe4843b307d8d1cfcdd3eb7e": {
         "comment": "Auto-generated insight for test scenario LineChart - data points - sparse chart - auto visibility."
     },
+    "LineChart.d77a71045611522a5b49d3e8049efdf8": {
+        "comment": "Auto-generated insight for test scenario LineChart - line shape - default."
+    },
     "LineChart.d9455444afa1b3b22a3da9ff4bf2fd1a": {
         "comment": "Auto-generated insight for test scenario LineChart - threshold zones.",
         "scenarioName": "threshold zones",
         "visName": "LineChart"
+    },
+    "LineChart.dd0d65df9080d65b45d87874ae9dc9a1": {
+        "comment": "Auto-generated insight for test scenario LineChart - line shape - spline."
     },
     "LineChart.dd2fbeaac58234eadce0f1bed9542acf": {
         "comment": "Auto-generated insight for test scenario LineChart - Y axis min/max configuration."
@@ -3408,6 +3450,9 @@
     },
     "LineChart.e0b1b0c97bdb74bf90a51004c74e49c7": {
         "comment": "Auto-generated insight for test scenario LineChart - data labels - default."
+    },
+    "LineChart.e1292fc8eb8f9bd0f920be6bbcced0c1": {
+        "comment": "Auto-generated insight for test scenario LineChart - line shape - linear."
     },
     "LineChart.e42047517322f7adc149f3b16bfbede5": {
         "comment": "Auto-generated insight for test scenario LineChart - data points - sparse chart - default."

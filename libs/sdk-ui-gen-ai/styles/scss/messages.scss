@@ -1031,7 +1031,7 @@ $dataset_color: #952f8e;
 
     &--alertProposal,
     &--dashboard,
-    &--report {
+    &--publisherDocument {
         display: grid;
 
         .gd-gen-ai-chat__conversation__item__content-alertProposal-header {
@@ -1135,7 +1135,7 @@ $dataset_color: #952f8e;
         }
 
         .gd-gen-ai-chat__conversation__item__content-dashboard-frame,
-        .gd-gen-ai-chat__conversation__item__content-report-frame {
+        .gd-gen-ai-chat__conversation__item__content-publisherDocument-frame {
             display: flex;
             max-height: 500px;
             padding: 10px;
@@ -1150,13 +1150,13 @@ $dataset_color: #952f8e;
             overscroll-behavior: auto;
 
             .gd-gen-ai-chat__conversation__item__content-dashboard-icon,
-            .gd-gen-ai-chat__conversation__item__content-report-icon {
+            .gd-gen-ai-chat__conversation__item__content-publisherDocument-icon {
                 flex-grow: 0;
                 flex-shrink: 0;
             }
 
             .gd-gen-ai-chat__conversation__item__content-dashboard-content,
-            .gd-gen-ai-chat__conversation__item__content-report-content {
+            .gd-gen-ai-chat__conversation__item__content-publisherDocument-content {
                 display: flex;
                 flex-direction: column;
                 flex-grow: 1;
@@ -1181,7 +1181,7 @@ $dataset_color: #952f8e;
             }
 
             .gd-gen-ai-chat__conversation__item__content-dashboard-item-buttons,
-            .gd-gen-ai-chat__conversation__item__content-report-item-buttons {
+            .gd-gen-ai-chat__conversation__item__content-publisherDocument-item-buttons {
                 flex-grow: 0;
             }
         }

@@ -489,6 +489,18 @@ export interface IThemeButton {
 }
 
 /**
+ * Toolbar customizable UI properties
+ *
+ * @alpha
+ */
+export interface IThemeToolbar {
+    /**
+     * Radius of the toolbar container border in px. Controls inside the toolbar keep their own radius.
+     */
+    borderRadius?: string;
+}
+
+/**
  * Tooltip customizable UI properties
  *
  * @beta
@@ -1062,10 +1074,10 @@ export interface IThemeHeader {
 }
 
 /**
- * Externally hosted image the theme offers to reports.
+ * Externally hosted image the theme offers to documents.
  *
  * @remarks
- * The `id` is also the report variable the asset resolves: report content references it as `{id}`.
+ * The `id` is also the document variable the asset resolves: document content references it as `{id}`.
  * It must match `^[a-zA-Z][a-zA-Z0-9_]*$`.
  *
  * @alpha
@@ -1112,13 +1124,13 @@ export interface IThemeAssets {
 }
 
 /**
- * One hosted font file registered as a font face for rendered reports.
+ * One hosted font file registered as a font face for rendered documents.
  *
  * @alpha
  */
-export interface IThemeReportsFontFace {
+export interface IThemePublisherFontFace {
     /**
-     * Font family name the face registers; referenced from {@link IThemeReportsTypography.fontFamily}.
+     * Font family name the face registers; referenced from {@link IThemePublisherTypography.fontFamily}.
      */
     family: string;
 
@@ -1139,24 +1151,24 @@ export interface IThemeReportsFontFace {
 }
 
 /**
- * Typography of rendered reports.
+ * Typography of rendered documents.
  *
  * @alpha
  */
-export interface IThemeReportsTypography {
+export interface IThemePublisherTypography {
     /**
-     * CSS font-family stack applied to rendered reports.
+     * CSS font-family stack applied to rendered documents.
      */
     fontFamily?: string;
 
-    fonts?: IThemeReportsFontFace[];
+    fonts?: IThemePublisherFontFace[];
 }
 
 /**
- * Length used in rendered reports.
+ * Length used in rendered documents.
  *
  * @remarks
- * A report page scales with its width, so lengths are stated in `cqw` (1cqw = 1% of the page
+ * A document page scales with its width, so lengths are stated in `cqw` (1cqw = 1% of the page
  * width). A bare number means cqw: `3.5` and `"3.5cqw"` are the same length. `cqi`, `em` and `%`
  * are accepted as well. Anything that does not follow the page width is ignored: `px` and `rem`
  * hold their size, and `cqh` and `cqb` resolve against the viewport, because a page contains its
@@ -1167,17 +1179,17 @@ export interface IThemeReportsTypography {
  *
  * @alpha
  */
-export type ThemeReportsLength = string | number;
+export type ThemePublisherLength = string | number;
 
 /**
  * Typography of one text level.
  *
  * @alpha
  */
-export interface IThemeReportsTextLevel {
-    fontSize?: ThemeReportsLength;
+export interface IThemePublisherTextLevel {
+    fontSize?: ThemePublisherLength;
 
-    lineHeight?: ThemeReportsLength;
+    lineHeight?: ThemePublisherLength;
 
     /**
      * Overrides the color of the level's group.
@@ -1187,62 +1199,62 @@ export interface IThemeReportsTextLevel {
 
 /**
  * Heading levels. Each level takes what it does not state from here, then from
- * {@link IThemeReportsTextStyle}.
+ * {@link IThemePublisherTextStyle}.
  *
  * @alpha
  */
-export interface IThemeReportsHeading {
+export interface IThemePublisherHeading {
     color?: ThemeColor;
 
-    lineHeight?: ThemeReportsLength;
+    lineHeight?: ThemePublisherLength;
 
-    h1?: IThemeReportsTextLevel;
-    h2?: IThemeReportsTextLevel;
-    h3?: IThemeReportsTextLevel;
-    h4?: IThemeReportsTextLevel;
-    h5?: IThemeReportsTextLevel;
-    h6?: IThemeReportsTextLevel;
+    h1?: IThemePublisherTextLevel;
+    h2?: IThemePublisherTextLevel;
+    h3?: IThemePublisherTextLevel;
+    h4?: IThemePublisherTextLevel;
+    h5?: IThemePublisherTextLevel;
+    h6?: IThemePublisherTextLevel;
 }
 
 /**
  * Paragraph levels. Each level takes what it does not state from here, then from
- * {@link IThemeReportsTextStyle}.
+ * {@link IThemePublisherTextStyle}.
  *
  * @alpha
  */
-export interface IThemeReportsParagraph {
+export interface IThemePublisherParagraph {
     color?: ThemeColor;
 
-    lineHeight?: ThemeReportsLength;
+    lineHeight?: ThemePublisherLength;
 
-    largeText?: IThemeReportsTextLevel;
-    normalText?: IThemeReportsTextLevel;
-    smallText?: IThemeReportsTextLevel;
+    largeText?: IThemePublisherTextLevel;
+    normalText?: IThemePublisherTextLevel;
+    smallText?: IThemePublisherTextLevel;
 }
 
 /**
- * Text of rendered reports.
+ * Text of rendered documents.
  *
  * @alpha
  */
-export interface IThemeReportsTextStyle {
+export interface IThemePublisherTextStyle {
     color?: ThemeColor;
 
-    lineHeight?: ThemeReportsLength;
+    lineHeight?: ThemePublisherLength;
 
-    typography?: IThemeReportsTypography;
+    typography?: IThemePublisherTypography;
 
-    heading?: IThemeReportsHeading;
+    heading?: IThemePublisherHeading;
 
-    paragraph?: IThemeReportsParagraph;
+    paragraph?: IThemePublisherParagraph;
 }
 
 /**
- * Colors offered to report authors as swatches. Each list is exposed as indexed CSS variables.
+ * Colors offered to document authors as swatches. Each list is exposed as indexed CSS variables.
  *
  * @alpha
  */
-export interface IThemeReportsColors {
+export interface IThemePublisherColors {
     /**
      * Offered for element backgrounds.
      */
@@ -1255,11 +1267,11 @@ export interface IThemeReportsColors {
 }
 
 /**
- * Report page properties.
+ * Document page properties.
  *
  * @alpha
  */
-export interface IThemeReportsPage {
+export interface IThemePublisherPage {
     backgroundColor?: ThemeColor;
 }
 
@@ -1281,26 +1293,26 @@ export interface IThemeColorPaletteRef {
 }
 
 /**
- * Report specific theme properties.
+ * Publisher-specific theme properties.
  *
  * @remarks
- * Consumed by the reports application only; the properties are not part of the shared theming
+ * Consumed by the publisher application only; the properties are not part of the shared theming
  * CSS variable specification.
  *
  * @alpha
  */
-export interface IThemeReports {
+export interface IThemePublisher {
     /**
-     * Colors of visualizations in reports: stated inline, or a reference to a color palette
-     * object. When absent, reports use the workspace's active color palette.
+     * Colors of visualizations in documents: stated inline, or a reference to a color palette
+     * object. When absent, documents use the workspace's active color palette.
      */
     visualizationPalette?: ThemeColor[] | IThemeColorPaletteRef;
 
-    page?: IThemeReportsPage;
+    page?: IThemePublisherPage;
 
-    colors?: IThemeReportsColors;
+    colors?: IThemePublisherColors;
 
-    textStyle?: IThemeReportsTextStyle;
+    textStyle?: IThemePublisherTextStyle;
 }
 
 /**
@@ -1406,6 +1418,13 @@ export interface ITheme {
     toastMessage?: IThemeToastMessage;
 
     /**
+     * Toolbar customizable UI properties
+     *
+     * @alpha
+     */
+    toolbar?: IThemeToolbar;
+
+    /**
      * Application header (top bar) specific properties
      *
      * @alpha
@@ -1413,14 +1432,14 @@ export interface ITheme {
     header?: IThemeHeader;
 
     /**
-     * Report specific properties
+     * Publisher-specific properties
      *
      * @alpha
      */
-    reports?: IThemeReports;
+    reports?: IThemePublisher;
 
     /**
-     * Image assets offered to reports
+     * Image assets offered to documents
      *
      * @alpha
      */

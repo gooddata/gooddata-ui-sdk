@@ -47,7 +47,7 @@ test.describe(
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test(
-            "should test parent - child interaction in view mode",
+            "should apply parent-child filtering in view mode",
             { tag: ["@pre-merge-integrated"] },
             async ({ page }) => {
                 await visit(page, "dashboard/dashboard-dependent-filters");
@@ -177,7 +177,7 @@ test.describe(
         );
 
         test(
-            "should test parent - child interaction in edit mode",
+            "should apply parent-child filtering in edit mode",
             { tag: ["@pre-merge-integrated"] },
             async ({ page }) => {
                 await visit(page, "dashboard/dashboard-dependent-filters");
@@ -346,7 +346,7 @@ test.describe(
         );
 
         test(
-            "child filter can reduce to zero element by parent filter",
+            "should let a parent filter leave the child filter with no values",
             { tag: ["@pre-merge-integrated"] },
             async ({ page }) => {
                 await visit(page, "dashboard/dashboard-dependent-filters");
@@ -377,7 +377,7 @@ test.describe(
         );
 
         test(
-            "can reload elements after selecting delete parent filter",
+            "should reload child values after the parent dependency is deleted",
             { tag: ["@pre-merge-integrated"] },
             async ({ page }) => {
                 await visit(page, "dashboard/dashboard-dependent-filters");
@@ -406,7 +406,7 @@ test.describe(
         );
 
         test(
-            "can reload elements after removing parent filter",
+            "should reload child values after the parent filter is removed",
             { tag: ["@pre-merge-integrated"] },
             async ({ page }) => {
                 await visit(page, "dashboard/dashboard-dependent-filters");
@@ -444,7 +444,7 @@ test.describe(
         );
 
         test(
-            "should test a circle parent - child filter in edit mode",
+            "should handle a circular parent-child dependency in edit mode",
             { tag: ["@pre-merge-integrated"] },
             async ({ page }) => {
                 await visit(page, "dashboard/dashboard-dependent-filters");
@@ -495,7 +495,7 @@ test.describe(
         );
 
         test(
-            "should not appear blank page after resetting dependent filter",
+            "should not blank the page after resetting a dependent filter",
             { tag: ["@pre-merge-integrated"] },
             async ({ page }) => {
                 await visit(page, "dashboard/dashboard-dependent-filters");

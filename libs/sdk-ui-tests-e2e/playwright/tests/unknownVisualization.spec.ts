@@ -15,9 +15,9 @@ test.describe(
     "Dashboard with unknown visualization class",
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
-        test.describe("Basic case", {}, () => {
+        test.describe("rendering", {}, () => {
             test(
-                "should render dashboard even if it contains unknown visualization class",
+                "should render the dashboard despite an unknown visualization class",
                 {
                     tag: ["@pre-merge-isolated"],
                 },

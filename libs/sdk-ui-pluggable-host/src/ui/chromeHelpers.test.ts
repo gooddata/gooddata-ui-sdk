@@ -72,55 +72,55 @@ function localApp(
     return {
         apiVersion: "1.0",
         id: "gdc-publisher",
-        title: "Reports",
+        title: "Publisher",
         applicationScope: "workspace",
         menuOrder: 20,
-        local: { routeBase: "/reports" },
+        local: { routeBase: "/publisher" },
         ...overrides,
     };
 }
 
 describe("getWorkspaceSwitchPath", () => {
-    const reports = localApp();
+    const publisher = localApp();
     const aiHub = localApp({
         id: "gdc-ai-hub",
         title: "AI Hub",
         applicationScope: "organization",
         local: { routeBase: "/ai-hub" },
     });
-    const apps: PluggableApplicationRegistryItem[] = [reports, aiHub];
+    const apps: PluggableApplicationRegistryItem[] = [publisher, aiHub];
 
     it("drops the object id of the workspace the object belongs to", () => {
         const path = getWorkspaceSwitchPath(
-            "/workspace/old-workspace/reports/report/report-id",
+            "/workspace/old-workspace/publisher/report/document-id",
             "new-workspace",
             apps,
             context(),
         );
 
-        expect(path).toBe("/workspace/new-workspace/reports");
+        expect(path).toBe("/workspace/new-workspace/publisher");
     });
 
     it("drops an application screen the host cannot tell from an object id", () => {
         const path = getWorkspaceSwitchPath(
-            "/workspace/old-workspace/reports/templates",
+            "/workspace/old-workspace/publisher/templates",
             "new-workspace",
             apps,
             context(),
         );
 
-        expect(path).toBe("/workspace/new-workspace/reports");
+        expect(path).toBe("/workspace/new-workspace/publisher");
     });
 
     it("lands on the application the user is in", () => {
         const path = getWorkspaceSwitchPath(
-            "/workspace/old-workspace/reports",
+            "/workspace/old-workspace/publisher",
             "new-workspace",
             apps,
             context(),
         );
 
-        expect(path).toBe("/workspace/new-workspace/reports");
+        expect(path).toBe("/workspace/new-workspace/publisher");
     });
 
     it("swaps the workspace when no workspace application claims the path", () => {

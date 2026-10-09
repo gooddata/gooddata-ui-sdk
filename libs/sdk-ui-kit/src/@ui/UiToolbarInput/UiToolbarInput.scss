@@ -1,0 +1,82 @@
+// (C) 2026 GoodData Corporation
+
+@use "../UiToolbar/toolbarItem";
+
+.gd-ui-kit-toolbar-input {
+    $root: &;
+
+    display: inline-flex;
+    align-items: center;
+    gap: toolbarItem.$toolbar-item-gap;
+    box-sizing: border-box;
+    height: toolbarItem.$toolbar-item-size;
+    padding: 0 toolbarItem.$toolbar-field-padding;
+    overflow: hidden;
+    border-radius: var(--gd-toolbar-control-borderRadius);
+    color: var(--gd-palette-complementary-7);
+    font-family: var(--gd-font-family);
+    font-size: 14px;
+    white-space: nowrap;
+    cursor: text;
+    transition: var(--gd-transition-all);
+
+    @include toolbarItem.toolbar-field-border(var(--gd-palette-complementary-4));
+
+    &:not(#{$root}--isDisabled) {
+        &:hover {
+            @include toolbarItem.toolbar-field-border(var(--gd-palette-complementary-5));
+        }
+
+        &#{$root}--isInvalid {
+            @include toolbarItem.toolbar-field-border(var(--gd-palette-error-base));
+        }
+    }
+
+    // After the states above, so the ring replaces whichever border they drew. A disabled field is
+    // read-only but still focusable, so it shows the ring too.
+    &:focus-within {
+        box-shadow: inset 0 0 0 2px var(--gd-palette-primary-base);
+    }
+
+    &__prefix,
+    &__unit {
+        flex: 0 0 auto;
+        display: inline-flex;
+        align-items: center;
+        color: var(--gd-palette-complementary-6);
+    }
+
+    &__value {
+        flex: 1 1 auto;
+        width: 0;
+        min-width: 0;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        outline: none;
+        background-color: transparent;
+        color: inherit;
+        font: inherit;
+        text-align: right;
+        cursor: inherit;
+
+        &::placeholder {
+            color: var(--gd-palette-complementary-6);
+        }
+    }
+
+    &--isInvalid &__value {
+        color: var(--gd-palette-error-base);
+    }
+
+    &--isDisabled {
+        color: var(--gd-palette-complementary-5);
+        cursor: default;
+
+        #{$root}__prefix,
+        #{$root}__unit {
+            color: var(--gd-palette-complementary-4);
+        }
+    }
+}

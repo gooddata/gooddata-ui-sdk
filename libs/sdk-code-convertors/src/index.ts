@@ -15,9 +15,9 @@ export type {
     AacParameter,
     AacPlugin,
     AacQuery,
-    AacReport,
-    AacReportPageLayout,
-    AacReportTemplate,
+    AacPublisherDocument,
+    AacPublisherPageLayout,
+    AacPublisherDocumentTemplate,
     AacSection,
     AacVisualisation,
     AacFilter,
@@ -35,20 +35,20 @@ export {
     BucketsType,
 } from "./types.js";
 export {
-    yamlReportDocumentToDeclarative,
-    yamlReportPageLayoutToDeclarative,
-    yamlReportPageLayoutToDefinition,
-    yamlReportToDefinition,
-    yamlReportTemplateToDefinition,
-} from "./to/yamlReportToDeclarative.js";
+    yamlPublisherDocumentToDeclarative,
+    yamlPublisherPageLayoutToDeclarative,
+    yamlPublisherPageLayoutToDefinition,
+    yamlPublisherDocumentToDefinition,
+    yamlPublisherDocumentTemplateToDefinition,
+} from "./to/yamlPublisherDocumentToDeclarative.js";
 export {
-    declarativeReportPageLayoutToYaml,
-    declarativeReportToYaml,
-    reportDefinitionToYaml,
-    reportPageLayoutDefinitionToYaml,
-    reportPageToAacPage,
-    reportTemplateDefinitionToYaml,
-} from "./from/declarativeReportToYaml.js";
+    declarativePublisherPageLayoutToYaml,
+    declarativePublisherDocumentToYaml,
+    publisherDocumentDefinitionToYaml,
+    publisherPageLayoutDefinitionToYaml,
+    publisherDocumentPageToAacPage,
+    publisherDocumentTemplateDefinitionToYaml,
+} from "./from/declarativePublisherDocumentToYaml.js";
 // Entity converters: YAML → Declarative API
 export {
     yamlDatasetToDeclarative,

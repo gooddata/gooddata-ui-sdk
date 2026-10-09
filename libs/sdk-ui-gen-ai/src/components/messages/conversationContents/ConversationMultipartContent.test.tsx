@@ -64,12 +64,12 @@ function renderParts(parts: IChatConversationMultipartLocalPart[]) {
 afterEach(cleanup);
 
 describe("ConversationMultipartContent", () => {
-    it("shows a report part as a report card next to the text around it", () => {
+    it("shows a document part as a document card next to the text around it", () => {
         renderParts([
-            { type: "text", text: "Here is the report." },
+            { type: "text", text: "Here is the document." },
             {
-                type: "report",
-                report: {
+                type: "publisherDocument",
+                publisherDocument: {
                     type: "report",
                     title: "Quarterly review",
                     periodStart: "2026-01-01",
@@ -79,16 +79,16 @@ describe("ConversationMultipartContent", () => {
             },
         ]);
 
-        expect(screen.getByText("Here is the report.")).toBeTruthy();
+        expect(screen.getByText("Here is the document.")).toBeTruthy();
         expect(screen.getByText("Quarterly review")).toBeTruthy();
     });
 
-    it("offers to open a report part that changes a saved report", () => {
+    it("offers to open a document part that changes a saved document", () => {
         renderParts([
             {
-                type: "report",
-                baseReportId: "base-1",
-                report: {
+                type: "publisherDocument",
+                baseDocumentId: "base-1",
+                publisherDocument: {
                     type: "report",
                     title: "Quarterly review",
                     periodStart: "2026-01-01",
@@ -101,9 +101,9 @@ describe("ConversationMultipartContent", () => {
         expect(screen.getByRole("button", { name: "Open" })).toBeTruthy();
     });
 
-    it("says a report part that no longer resolves is unavailable", () => {
-        renderParts([{ type: "report", report: null }]);
+    it("says a document part that no longer resolves is unavailable", () => {
+        renderParts([{ type: "publisherDocument", publisherDocument: null }]);
 
-        expect(screen.getByText("The report is unavailable.")).toBeTruthy();
+        expect(screen.getByText("The document is unavailable.")).toBeTruthy();
     });
 });

@@ -16,7 +16,7 @@ test.describe(
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test(
-            "check default sort of pyramid chart",
+            "should sort slices by value descending by default",
             {
                 tag: ["@pre-merge-integrated"],
             },

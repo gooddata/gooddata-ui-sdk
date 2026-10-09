@@ -45,6 +45,7 @@ export type {
     IChartClusteringConfig,
     LineStyle,
     ILineStyleMappingItem,
+    LineShape,
 } from "./interfaces/chartConfig.js";
 export type {
     IBucketChartProps,
@@ -207,6 +208,11 @@ export {
 export { updateConfigWithSettings } from "./highcharts/chartTypes/_chartOptions/chartOptionsForSettings.js";
 export { updateForecastWithSettings } from "./highcharts/chartTypes/_chartOptions/chartForecast.js";
 export { updateOutliersWithSettings } from "./highcharts/chartTypes/_chartOptions/chartOutliers.js";
+export {
+    DEFAULT_TOOLTIP_Z_INDEX,
+    type ITooltipZIndexSources,
+    resolveTooltipZIndex,
+} from "./highcharts/tooltipZIndex.js";
 
 // export the getColorMappingPredicate so that users can import it directly without having to explicitly install vis-commons
 export {

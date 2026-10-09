@@ -81,14 +81,20 @@ export class WaterfallChartConfigurationPanel extends BaseChartConfigurationPane
                             defaultValue={dataLabelDefaultValue}
                         />
 
-                        <CheckboxControl
-                            valuePath="grid.enabled"
-                            labelText={messages["canvasGridLine"].id}
-                            properties={properties}
-                            checked={gridEnabled}
-                            disabled={controlsDisabled}
-                            pushData={pushData}
-                        />
+                        {/**
+                         * The checkbox controls have their own weird padding that does not play nice with the grid gap property (meaning they create visually uneven spaces).
+                         * Therefore a wrapper was created to allow the parent to use `gap` property. These checkboxes then have their own, slightly smaller `gap` set.
+                         */}
+                        <div className="gd-canvas-section__checkbox-wrapper">
+                            <CheckboxControl
+                                valuePath="grid.enabled"
+                                labelText={messages["canvasGridLine"].id}
+                                properties={properties}
+                                checked={gridEnabled}
+                                disabled={controlsDisabled}
+                                pushData={pushData}
+                            />
+                        </div>
                     </ConfigSection>
                     {this.renderCustomTooltipSection()}
                     {this.renderAdvancedSection()}

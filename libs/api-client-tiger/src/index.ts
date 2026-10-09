@@ -177,6 +177,7 @@ export type {
     ITigerTotal,
     ITigerAbsoluteDateFilter,
     ITigerRelativeDateFilter,
+    TigerStoredEmptyValueHandling,
     ITigerPositiveAttributeFilter,
     ITigerNegativeAttributeFilter,
     ITigerRankingFilter,

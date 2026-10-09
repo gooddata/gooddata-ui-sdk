@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-charts: Add public `config.tooltip.zIndex` to set the z-index of chart tooltips. Charts inside a GoodData.UI overlay now place tooltips above that overlay automatically, and dashboard tooltips stay above the sticky filter bar. The `.highcharts-tooltip-container` z-index CSS rules were removed; if you relied on them, set `config.tooltip.zIndex` instead. stylelint-config: Disallow z-index on `.highcharts-tooltip-container` rules.",
+            "type": "minor"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

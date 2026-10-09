@@ -13,7 +13,7 @@ import {
 } from "@gooddata/sdk-model";
 import type { IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
 
-import { isSameViewReport } from "../../context/viewReport.js";
+import { isSameViewedPublisherDocument } from "../../context/viewedPublisherDocument.js";
 import { type ContextObjectsState, type SelectedContext } from "../../types.js";
 import { type RootState } from "../types.js";
 
@@ -182,11 +182,12 @@ export const hasPinnedContextSelector: (state: RootState) => boolean = createSel
         }
 
         const dashboardRef = active.view?.dashboard?.ref;
-        const report = active.view?.report;
+        const publisherDocument = active.view?.publisherDocument;
 
         return (
             (Boolean(dashboardRef) && !areObjRefsEqual(dashboardRef, ambient?.view?.dashboard?.ref)) ||
-            (Boolean(report) && !isSameViewReport(report, ambient?.view?.report))
+            (Boolean(publisherDocument) &&
+                !isSameViewedPublisherDocument(publisherDocument, ambient?.view?.publisherDocument))
         );
     },
 );

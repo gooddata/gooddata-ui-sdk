@@ -3,12 +3,14 @@
 import { type CSSProperties, type ReactElement, type ReactNode, useMemo, useState } from "react";
 
 import {
+    type IUiResizableSidebarNavigationItem,
     type IUiResizableSidebarState,
     UI_RESIZABLE_SIDEBAR_RAIL_WIDTH,
     UiResizableSidebar,
     UiResizableSidebarCollapseToggle,
     UiResizableSidebarExpandTrigger,
     UiResizableSidebarHandle,
+    UiResizableSidebarNavigation,
     UiResizableSidebarProvider,
 } from "@gooddata/sdk-ui-kit";
 
@@ -19,6 +21,7 @@ const MIN_WIDTH = 230;
 const MAX_WIDTH = 500;
 
 const layoutStyle: CSSProperties = { display: "flex", width: 800, height: 400 };
+const navigationLayoutStyle: CSSProperties = { ...layoutStyle, height: 480 };
 const contentStyle: CSSProperties = { flex: "1 1 auto", padding: 10 };
 const panelStyle: CSSProperties = {
     position: "relative",
@@ -28,6 +31,8 @@ const panelStyle: CSSProperties = {
     borderRight: "1px solid var(--gd-palette-complementary-3, #dde4eb)",
     background: "var(--gd-palette-complementary-1, #f5f8fa)",
 };
+// No side padding: the rail is only 48px wide and the navigation rows center themselves in it.
+const navigationPanelStyle: CSSProperties = { ...panelStyle, padding: "10px 0" };
 
 // In-memory state keeps the screenshots independent of what an earlier story or run persisted.
 // With a rail the sidebar collapses to the fixed rail width, otherwise it hides completely.
@@ -168,6 +173,86 @@ function UiResizableSidebarHiddenTest(): ReactElement {
     );
 }
 
+const SETTINGS_PAGES = [
+    { id: "appearance", label: "Appearance & behavior", href: "#appearance" },
+    { id: "localization", label: "Localization & Formats", href: "#localization" },
+    { id: "developer", label: "Developer", href: "#developer" },
+    {
+        id: "alerts",
+        label: "Alerts & exports",
+        href: "#alerts",
+        badge: { kind: "dot" as const, label: "Needs attention" },
+    },
+    { id: "sql", label: "SQL generation", href: "#sql" },
+    { id: "earlyAccess", label: "Early access", href: "#early-access" },
+];
+
+function makeNavigationItems(selectedId: string): IUiResizableSidebarNavigationItem[] {
+    const items: IUiResizableSidebarNavigationItem[] = [
+        { id: "home", label: "Getting started", icon: "home", href: "#home" },
+        { id: "workspaces", label: "Workspaces", icon: "folder", href: "#workspaces" },
+        { id: "users", label: "Users & groups", icon: "users", href: "#users" },
+        { id: "settings", label: "Settings", icon: "settings", href: "#settings", children: SETTINGS_PAGES },
+    ];
+
+    return items.map((item) => ({
+        ...item,
+        isSelected: item.id === selectedId,
+        children: item.children?.map((child) => ({ ...child, isSelected: child.id === selectedId })),
+    }));
+}
+
+// The selection lives in the story so the links route here instead of following their hash.
+function NavigationPanel({ initialSelectedId }: { initialSelectedId: string }): ReactElement {
+    const [selectedId, setSelectedId] = useState(initialSelectedId);
+    const items = useMemo(() => makeNavigationItems(selectedId), [selectedId]);
+
+    return (
+        <UiResizableSidebarNavigation
+            items={items}
+            accessibilityConfig={{ ariaLabel: "Main" }}
+            onSelect={(item, event) => {
+                event.preventDefault();
+                setSelectedId(item.id);
+            }}
+        />
+    );
+}
+
+function UiResizableSidebarNavigationTest({
+    hasRail = false,
+    initiallyCollapsed = false,
+    selectedId = "workspaces",
+}: {
+    hasRail?: boolean;
+    initiallyCollapsed?: boolean;
+    selectedId?: string;
+}): ReactElement {
+    const sidebar = useStorySidebarState(hasRail, initiallyCollapsed);
+
+    return (
+        <UiResizableSidebarProvider value={sidebar}>
+            <div className="screenshot-target" style={navigationLayoutStyle}>
+                <UiResizableSidebar>
+                    <div style={navigationPanelStyle}>
+                        <UiResizableSidebarCollapseToggle
+                            isCollapsed={sidebar.isCollapsed}
+                            onToggle={() => sidebar.setCollapsed(!sidebar.isCollapsed)}
+                            collapseLabel="Collapse sidebar"
+                            expandLabel="Expand sidebar"
+                        />
+                        <NavigationPanel initialSelectedId={selectedId} />
+                    </div>
+                    {handle}
+                </UiResizableSidebar>
+                <main style={contentStyle}>
+                    <p>Arrow keys move between the items; Right and Left expand and collapse a group.</p>
+                </main>
+            </div>
+        </UiResizableSidebarProvider>
+    );
+}
+
 export default {
     title: "15 Ui/UiResizableSidebar",
 };
@@ -199,5 +284,36 @@ Rail.parameters = {
 export const Themed = () => wrapWithTheme(<UiResizableSidebarTest />);
 Themed.parameters = {
     kind: "themed",
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
+} satisfies IStoryParameters;
+
+export function Navigation() {
+    return <UiResizableSidebarNavigationTest />;
+}
+Navigation.parameters = {
+    kind: "navigation",
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
+} satisfies IStoryParameters;
+
+export function NavigationSubpageSelected() {
+    return <UiResizableSidebarNavigationTest selectedId="localization" />;
+}
+NavigationSubpageSelected.parameters = {
+    kind: "navigation subpage selected",
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
+} satisfies IStoryParameters;
+
+export function NavigationRail() {
+    return <UiResizableSidebarNavigationTest hasRail initiallyCollapsed selectedId="localization" />;
+}
+NavigationRail.parameters = {
+    kind: "navigation rail",
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
+} satisfies IStoryParameters;
+
+export const NavigationThemed = () =>
+    wrapWithTheme(<UiResizableSidebarNavigationTest selectedId="localization" />);
+NavigationThemed.parameters = {
+    kind: "navigation themed",
     screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;

@@ -11,7 +11,7 @@ export default {
 };
 
 export const StackPrimaryMeasuresWithDifferentChartType = () =>
-    groupedStory(getScenariosGroupByIndexes(5, 24), {
+    groupedStory(getScenariosGroupByIndexes(5, 25), {
         width: 800,
         height: 400,
     })();
@@ -24,7 +24,7 @@ StackPrimaryMeasuresWithDifferentChartType.parameters = {
 } satisfies IStoryParameters;
 
 export const StackPrimaryMeasuresTo100WithDifferentChartType = () =>
-    groupedStory(getScenariosGroupByIndexes(5, 25), {
+    groupedStory(getScenariosGroupByIndexes(5, 26), {
         width: 800,
         height: 400,
     })();
@@ -37,7 +37,7 @@ StackPrimaryMeasuresTo100WithDifferentChartType.parameters = {
 } satisfies IStoryParameters;
 
 export const StackPrimaryMeasuresWhenBothColumnChart = () =>
-    groupedStory(getScenariosGroupByIndexes(5, 26), {
+    groupedStory(getScenariosGroupByIndexes(5, 27), {
         width: 800,
         height: 400,
     })();
@@ -50,7 +50,7 @@ StackPrimaryMeasuresWhenBothColumnChart.parameters = {
 } satisfies IStoryParameters;
 
 export const DiscardStackingWhenPrimaryMeasuresAreOnLineChart = () =>
-    groupedStory(getScenariosGroupByIndexes(5, 27), {
+    groupedStory(getScenariosGroupByIndexes(5, 28), {
         width: 800,
         height: 400,
     })();
@@ -63,7 +63,7 @@ DiscardStackingWhenPrimaryMeasuresAreOnLineChart.parameters = {
 } satisfies IStoryParameters;
 
 export const DiscardStackingWhenPrimaryMeasuresAreNotSpecified = () =>
-    groupedStory(getScenariosGroupByIndexes(5, 28), {
+    groupedStory(getScenariosGroupByIndexes(5, 29), {
         width: 800,
         height: 400,
     })();
@@ -76,7 +76,7 @@ DiscardStackingWhenPrimaryMeasuresAreNotSpecified.parameters = {
 } satisfies IStoryParameters;
 
 export const StackingWithoutDualAxis = () =>
-    groupedStory(getScenariosGroupByIndexes(5, 29), {
+    groupedStory(getScenariosGroupByIndexes(5, 30), {
         width: 800,
         height: 400,
     })();

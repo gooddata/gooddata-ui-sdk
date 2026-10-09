@@ -15,9 +15,9 @@ test.describe(
     "Header section",
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
-        test.describe("Default language", {}, () => {
+        test.describe("default language", {}, () => {
             test(
-                "can update header for all sections",
+                "should update the header of every section",
                 { tag: ["@pre-merge-integrated"] },
                 async ({ page }) => {
                     // Navigate and verify not in edit mode
@@ -101,7 +101,7 @@ test.describe(
             );
 
             test(
-                "Header is removed after latest insight is deleted from a section",
+                "should remove the header when the last insight in a section is deleted",
                 { tag: ["@pre-merge-isolated"] },
                 async ({ page }) => {
                     // Navigate to dashboard and verify not in edit mode
@@ -125,75 +125,79 @@ test.describe(
             );
         });
 
-        test.describe("Localization", {}, () => {
-            test("Limitation of title", { tag: ["@pre-merge-integrated"] }, async ({ page }) => {
-                // Setup (from Cypress beforeEach for Localization block)
-                await visit(page, "dashboard/header-localization");
-                await enterEditMode(page);
-                await waitForCatalogReload(page);
+        test.describe("localization", {}, () => {
+            test(
+                "should show the translated character limit and keep long texts",
+                { tag: ["@pre-merge-integrated"] },
+                async ({ page }) => {
+                    // Setup (from Cypress beforeEach for Localization block)
+                    await visit(page, "dashboard/header-localization");
+                    await enterEditMode(page);
+                    await waitForCatalogReload(page);
 
-                // Test data (mirrors headerDataTest.json fixture LimitTexts)
-                const title =
-                    "This is too longggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg123";
-                const desc =
-                    "This is too longggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg123";
+                    // Test data (mirrors headerDataTest.json fixture LimitTexts)
+                    const title =
+                        "This is too longggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg123";
+                    const desc =
+                        "This is too longggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg123";
 
-                const section0 = page.locator(".gd-grid-layout__section:nth-child(1)");
-                const section1 = page.locator(".gd-grid-layout__section:nth-child(2)");
+                    const section0 = page.locator(".gd-grid-layout__section:nth-child(1)");
+                    const section1 = page.locator(".gd-grid-layout__section:nth-child(2)");
 
-                // Set title on section 0: click wrapper, fill textarea, press Enter
-                const titleWrapper0 = section0.locator(".s-fluid-layout-row-title-input");
-                await titleWrapper0.click();
-                const titleTextarea0 = titleWrapper0.locator("textarea");
-                await titleTextarea0.fill(title);
-                await titleTextarea0.press("Enter");
+                    // Set title on section 0: click wrapper, fill textarea, press Enter
+                    const titleWrapper0 = section0.locator(".s-fluid-layout-row-title-input");
+                    await titleWrapper0.click();
+                    const titleTextarea0 = titleWrapper0.locator("textarea");
+                    await titleTextarea0.fill(title);
+                    await titleTextarea0.press("Enter");
 
-                // Click the title input again to trigger the limit message bubble
-                await titleWrapper0.click();
+                    // Click the title input again to trigger the limit message bubble
+                    await titleWrapper0.click();
 
-                // Assert limit message is visible with correct French text
-                const limitBubble = page.locator(
-                    ".bubble:not(.s-gd-configuration-bubble) .bubble-content .content",
-                );
-                await expect(limitBubble).toHaveText("128/256 caractères restant");
+                    // Assert limit message is visible with correct French text
+                    const limitBubble = page.locator(
+                        ".bubble:not(.s-gd-configuration-bubble) .bubble-content .content",
+                    );
+                    await expect(limitBubble).toHaveText("128/256 caractères restant");
 
-                // Click outside to dismiss limit message
-                await titleWrapper0.click({ position: { x: 0, y: 0 } });
-                await page.keyboard.press("Escape");
+                    // Click outside to dismiss limit message
+                    await titleWrapper0.click({ position: { x: 0, y: 0 } });
+                    await page.keyboard.press("Escape");
 
-                // Assert limit message is gone
-                await expect(limitBubble).toBeHidden();
+                    // Assert limit message is gone
+                    await expect(limitBubble).toBeHidden();
 
-                // Scroll section 1 into view and set description
-                await section1.scrollIntoViewIfNeeded();
-                const descWrapper1 = section1.locator(".s-fluid-layout-row-description-input");
-                await descWrapper1.locator(".gd-editable-label-richtext-empty").click();
-                const descTextarea1 = descWrapper1.locator("textarea");
-                const isVisible = await descTextarea1.isVisible({ timeout: 500 }).catch(() => false);
-                if (!isVisible) {
+                    // Scroll section 1 into view and set description
+                    await section1.scrollIntoViewIfNeeded();
+                    const descWrapper1 = section1.locator(".s-fluid-layout-row-description-input");
                     await descWrapper1.locator(".gd-editable-label-richtext-empty").click();
-                    await expect(descTextarea1).toBeVisible({ timeout: 500 });
-                }
-                await descTextarea1.fill(desc);
+                    const descTextarea1 = descWrapper1.locator("textarea");
+                    const isVisible = await descTextarea1.isVisible({ timeout: 500 }).catch(() => false);
+                    if (!isVisible) {
+                        await descWrapper1.locator(".gd-editable-label-richtext-empty").click();
+                        await expect(descTextarea1).toBeVisible({ timeout: 500 });
+                    }
+                    await descTextarea1.fill(desc);
 
-                // Click description input then click outside to commit
-                await descWrapper1.click();
-                const titleWrapper1 = section1.locator(".s-fluid-layout-row-title-input");
-                await titleWrapper1.click({ position: { x: 0, y: 0 } });
-                await page.keyboard.press("Escape");
+                    // Click description input then click outside to commit
+                    await descWrapper1.click();
+                    const titleWrapper1 = section1.locator(".s-fluid-layout-row-title-input");
+                    await titleWrapper1.click({ position: { x: 0, y: 0 } });
+                    await page.keyboard.press("Escape");
 
-                // Save the dashboard
-                await saveDashboard(page);
+                    // Save the dashboard
+                    await saveDashboard(page);
 
-                // Verify title on section 0 persisted
-                await expect(section0.locator(".s-fluid-layout-row-title")).toHaveText(title);
+                    // Verify title on section 0 persisted
+                    await expect(section0.locator(".s-fluid-layout-row-title")).toHaveText(title);
 
-                // Verify description on section 1 persisted
-                await expect(section1.locator(".s-fluid-layout-row-description")).toHaveText(desc);
-            });
+                    // Verify description on section 1 persisted
+                    await expect(section1.locator(".s-fluid-layout-row-description")).toHaveText(desc);
+                },
+            );
 
             test(
-                "Header placeholder should be translated",
+                "should translate the header placeholders",
                 { tag: ["@pre-merge-isolated"] },
                 async ({ page }) => {
                     // Setup (from Cypress beforeEach for Localization block)

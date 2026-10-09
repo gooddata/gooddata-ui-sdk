@@ -25,10 +25,10 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe(
-    "Share Dashboard To Everyone",
+    "Share dashboard with everyone",
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
-        test.describe("Basic cases", {}, () => {
+        test.describe("share dialog", {}, () => {
             test.beforeEach(async ({ request }) => {
                 await assignRulePermissionToDashboard(request, getWorkspaceId(), Dashboards.ParentDashboard);
             });
@@ -57,7 +57,7 @@ test.describe(
             );
 
             test(
-                "should able to share the dashboard to All users",
+                "should share the dashboard with All users",
                 {
                     tag: ["@pre-merge-integrated"],
                 },
@@ -113,7 +113,7 @@ test.describe(
             );
 
             test(
-                "should able to update permission for All users item",
+                "should update the All users permission",
                 {
                     tag: ["@pre-merge-integrated"],
                 },
@@ -170,7 +170,7 @@ test.describe(
             );
 
             test(
-                "should able to remove All user item in the share dialog",
+                "should remove All users from the share dialog",
                 {
                     tag: ["@pre-merge-integrated"],
                 },
@@ -226,7 +226,7 @@ test.describe(
             );
         });
 
-        test.describe("Check user permissions", {}, () => {
+        test.describe("resulting user permissions", {}, () => {
             const USER_PREFIX = "SDK_test_user";
             const USER_AUTH_PREFIX = "SDK_test_authId";
             const USERGROUP_PREFIX = "SDK_test_usergroup";
@@ -275,7 +275,7 @@ test.describe(
                 });
 
                 test(
-                    "should view user can access with view permission only the dashboard after sharing to everyone",
+                    "view user can access the dashboard with view permission only",
                     {
                         tag: ["@pre-merge-integrated"],
                     },
@@ -334,7 +334,7 @@ test.describe(
                 );
 
                 test(
-                    "should share user can access the dashboard with view permission only after sharing to everyone",
+                    "share user can access the dashboard with view permission only",
                     {
                         tag: ["@pre-merge-integrated"],
                     },
@@ -353,7 +353,7 @@ test.describe(
                 );
 
                 test(
-                    "should edit user can access the dashboard after sharing to everyone",
+                    "edit user can access the dashboard and see the All users permission",
                     {
                         tag: ["@pre-merge-integrated"],
                     },
@@ -392,7 +392,7 @@ test.describe(
                 });
 
                 test(
-                    "should view user can access the dashboard with view & share permissions after sharing to everyone",
+                    "view user can access the dashboard with view and share permissions",
                     {
                         tag: ["@pre-merge-integrated"],
                     },
@@ -474,7 +474,7 @@ test.describe(
                 );
 
                 test(
-                    "should share user can access the dashboard with view & share permissions after sharing to everyone",
+                    "share user can access the dashboard with view and share permissions",
                     {
                         tag: ["@pre-merge-integrated"],
                     },
@@ -521,7 +521,7 @@ test.describe(
                 );
 
                 test(
-                    "should edit user can access the dashboard with full permissions after sharing to everyone",
+                    "edit user can access the dashboard with full permissions",
                     {
                         tag: ["@pre-merge-integrated"],
                     },
@@ -565,7 +565,7 @@ test.describe(
                 });
 
                 test(
-                    "should view user can access the dashboard with full permission after sharing to everyone",
+                    "view user can access the dashboard with full permissions",
                     {
                         tag: ["@pre-merge-integrated"],
                     },
@@ -645,7 +645,7 @@ test.describe(
                 );
 
                 test(
-                    "should share user can access the dashboard after sharing to everyone",
+                    "share user can access the dashboard",
                     {
                         tag: ["@pre-merge-integrated"],
                     },
@@ -685,7 +685,7 @@ test.describe(
                 );
 
                 test(
-                    "should edit user can access the dashboard with correct permissions after sharing to everyone",
+                    "edit user can access the dashboard with the right permissions",
                     {
                         tag: ["@pre-merge-integrated"],
                     },

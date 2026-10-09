@@ -25,7 +25,7 @@ const ANSWER_OUTPUT_LABEL_MESSAGES = defineMessages({
     text: { id: "gd.gen-ai.interactionIntelligence.detail.output.text" },
     visualization: { id: "gd.gen-ai.interactionIntelligence.detail.output.visualization" },
     dashboard: { id: "gd.gen-ai.interactionIntelligence.detail.output.dashboard" },
-    report: { id: "gd.gen-ai.interactionIntelligence.detail.output.report" },
+    report: { id: "gd.gen-ai.interactionIntelligence.detail.output.publisherDocument" },
     keyDriverAnalysis: { id: "gd.gen-ai.interactionIntelligence.detail.output.keyDriverAnalysis" },
     whatIf: { id: "gd.gen-ai.interactionIntelligence.detail.output.whatIf" },
     searchResults: { id: "gd.gen-ai.interactionIntelligence.detail.output.searchResults" },

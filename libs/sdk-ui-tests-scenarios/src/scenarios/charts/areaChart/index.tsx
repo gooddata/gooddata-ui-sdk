@@ -4,7 +4,8 @@ import { axisCustomization } from "./axisCustomization.js";
 import { base } from "./base.js";
 import { coloring } from "./coloring.js";
 import { customization } from "./customization.js";
+import { lineShape } from "./lineShape.js";
 import { stacking } from "./stacking.js";
 import { theming } from "./theming.js";
 
-export const areaChart = [base, axisCustomization, coloring, ...customization, stacking, theming];
+export const areaChart = [base, axisCustomization, coloring, ...customization, stacking, theming, lineShape];

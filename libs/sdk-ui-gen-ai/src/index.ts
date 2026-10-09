@@ -92,6 +92,8 @@ export {
     renameConversationAction,
     deleteConversationAction,
     pinConversationAction,
+    publisherDocumentSavedAction,
+    dashboardSavedAction,
 } from "./store/messages/messagesSlice.js";
 export {
     setFullscreenAction,

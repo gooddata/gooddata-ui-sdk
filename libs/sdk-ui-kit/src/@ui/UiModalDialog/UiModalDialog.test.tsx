@@ -4,6 +4,8 @@ import { FloatingPortal } from "@floating-ui/react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
+import { useContainingOverlayZIndex } from "../../Overlay/OverlayContext.js";
+
 import { UiModalDialog } from "./UiModalDialog.js";
 
 describe("UiModalDialog", () => {
@@ -23,6 +25,21 @@ describe("UiModalDialog", () => {
             </UiModalDialog>,
         );
         expect(screen.getByText("content")).toBeInTheDocument();
+    });
+
+    it("provides its z-index to its content as the containing overlay z-index", () => {
+        function Probe() {
+            return <span data-testid="probe">{String(useContainingOverlayZIndex())}</span>;
+        }
+        render(
+            <UiModalDialog isOpen onClose={vi.fn()}>
+                <Probe />
+            </UiModalDialog>,
+        );
+
+        const zIndex = Number(screen.getByTestId("probe").textContent);
+        expect(zIndex).toBeGreaterThan(0);
+        expect(screen.getByTestId("probe").closest("[style*='z-index']")).toHaveStyle({ zIndex });
     });
 
     it("portals the content out of the caller's DOM subtree", () => {

@@ -21,6 +21,7 @@ import {
 } from "../../../../model/react/DashboardStoreProvider.js";
 import { useDashboardUserInteraction } from "../../../../model/react/useDashboardUserInteraction.js";
 import {
+    selectIsAiMode,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectIsReadOnly,
 } from "../../../../model/store/config/configSelectors.js";
@@ -119,6 +120,7 @@ export function FilterViews() {
     const filterViews = useDashboardSelector(selectFilterViews);
     const isFilterViewsEnabledForDashboard = !useDashboardSelector(selectDisableFilterViews);
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
+    const isAiMode = useDashboardSelector(selectIsAiMode);
     const canCreateFilterView = useDashboardSelector(selectCanCreateFilterView);
     const isMobile = useMediaQuery("mobileDevice");
     const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
@@ -141,7 +143,11 @@ export function FilterViews() {
     // Also, the menu is not available for new dashboard as new filter view can be saved only for an existing
     // dashboard with ref id.
     const showDropdownButton =
-        isFilterViewsEnabledForDashboard && isUserPermittedToSeeDropdown && !isNewDashboard && !isMobile;
+        isFilterViewsEnabledForDashboard &&
+        isUserPermittedToSeeDropdown &&
+        !isNewDashboard &&
+        !isAiMode &&
+        !isMobile;
 
     // generate unique anchor class name to open dropdown next to the correct button if app uses multiple
     // dashboard components

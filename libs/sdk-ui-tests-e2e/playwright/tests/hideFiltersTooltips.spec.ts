@@ -12,11 +12,11 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe(
-    "Hide Filters Tooltips",
+    "Hidden and locked filter tooltips",
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test(
-            "Tooltip hide filter displays on date configuration when hover on hidden option",
+            "should show the hidden tooltip on the date filter configuration option",
             {
                 tag: ["@pre-merge-isolated"],
             },
@@ -43,7 +43,7 @@ test.describe(
         );
 
         test(
-            "Tooltip hide filter displays on attribute configuration when hover on hidden option",
+            "should show the hidden tooltip on the attribute filter configuration option",
             {
                 tag: ["@pre-merge-isolated"],
             },
@@ -71,7 +71,7 @@ test.describe(
         );
 
         test(
-            "Tooltip hide filter displays on edit mode when hover on date filter hidden icon",
+            "should show the hidden tooltip on the date filter icon in edit mode",
             {
                 tag: ["@pre-merge-isolated"],
             },
@@ -111,7 +111,7 @@ test.describe(
         );
 
         test(
-            "Tooltip hide filter displays on edit mode when hover on attribute filter hidden icon",
+            "should show the hidden tooltip on the attribute filter icon in edit mode",
             {
                 tag: ["@pre-merge-isolated"],
             },
@@ -149,7 +149,7 @@ test.describe(
         );
 
         test(
-            "Tooltip locked filter displays on date configuration when hover on locked option",
+            "should show the locked tooltip on the date filter configuration option",
             {
                 tag: ["@pre-merge-isolated"],
             },
@@ -176,7 +176,7 @@ test.describe(
         );
 
         test(
-            "Tooltip locked filter displays on attribute configuration when hover on locked option",
+            "should show the locked tooltip on the attribute filter configuration option",
             {
                 tag: ["@pre-merge-isolated"],
             },
@@ -204,7 +204,7 @@ test.describe(
         );
 
         test(
-            "Tooltip locked filter displays on edit mode when hover on date filter locked icon",
+            "should show the locked tooltip on the date filter icon in edit mode",
             {
                 tag: ["@pre-merge-isolated"],
             },
@@ -244,7 +244,7 @@ test.describe(
         );
 
         test(
-            "Tooltip locked filter displays on view mode when hover on date filter locked icon",
+            "should show the locked tooltip on the date filter icon in view mode",
             {
                 tag: ["@pre-merge-isolated"],
             },

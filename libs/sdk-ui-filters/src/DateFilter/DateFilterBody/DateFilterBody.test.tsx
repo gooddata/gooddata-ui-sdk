@@ -5,7 +5,7 @@ import { useState } from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { type IAllTimeDateFilterOption, type WeekStart } from "@gooddata/sdk-model";
+import { type IAllTimeDateFilterOption } from "@gooddata/sdk-model";
 import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import { DEFAULT_DATE_FORMAT } from "../constants/Platform.js";
@@ -80,7 +80,7 @@ describe("ExtendedDateFilterBody", () => {
             selectedFilterOption: IDateFilterBodyProps["selectedFilterOption"];
         },
     ) => {
-        function StatefulDateFilterBody() {
+        function StatefulDateFilterBody(overrides: Partial<IDateFilterBodyProps>) {
             const [selectedFilterOption, setSelectedFilterOption] = useState(props.selectedFilterOption);
             const mockProps: IDateFilterBodyProps = {
                 filterOptions: {},
@@ -102,10 +102,22 @@ describe("ExtendedDateFilterBody", () => {
                 onCancelClick: vi.fn(),
                 closeDropdown: vi.fn(),
             } as unknown as IDateFilterBodyProps;
-            return <DateFilterBody {...mockProps} {...props} selectedFilterOption={selectedFilterOption} />;
+            return (
+                <DateFilterBody
+                    {...mockProps}
+                    {...props}
+                    {...overrides}
+                    selectedFilterOption={selectedFilterOption}
+                />
+            );
         }
         const Wrapped = withIntlForTest(StatefulDateFilterBody);
-        return render(<Wrapped />);
+        const result = render(<Wrapped />);
+        return {
+            ...result,
+            rerenderWith: (overrides: Partial<IDateFilterBodyProps>) =>
+                result.rerender(<Wrapped {...overrides} />),
+        };
     };
 
     it("should render the Exclude checkbox when enabled", () => {
@@ -383,6 +395,89 @@ describe("ExtendedDateFilterBody", () => {
             });
         });
 
+        describe("week list", () => {
+            const weekForm: IUiAbsoluteDateFilterForm = { ...absoluteForm, granularity: "GDC.time.week_us" };
+            const storedWeekForm: IUiAbsoluteDateFilterForm = {
+                ...weekForm,
+                from: "2026-04-06",
+                to: "2026-04-19",
+            };
+
+            const openWeekList = (
+                props: Partial<IDateFilterBodyProps> & { selectedFilterOption: IUiAbsoluteDateFilterForm },
+            ) => {
+                const result = renderStatefulDateFilterBody({
+                    filterOptions: { absoluteForm: props.selectedFilterOption },
+                    isAbsoluteDateFilterGranularityEnabled: true,
+                    ...props,
+                });
+                fireEvent.click(screen.getByRole("button", { name: /Static period/i }));
+                return result;
+            };
+
+            const getSelectedWeeks = () =>
+                screen.queryAllByRole("option", { selected: true }).map((option) => option.textContent);
+
+            it("renders the weeks by the week start instead of the period picker, with the stored weeks selected", () => {
+                openWeekList({ selectedFilterOption: storedWeekForm, weekStart: "Monday" });
+
+                expect(document.querySelector(".s-period-range-picker")).toBeNull();
+                expect(
+                    screen.getAllByRole("option", { selected: true }).map((option) => option.textContent),
+                ).toEqual(["Apr 6 – Apr 12", "Apr 13 – Apr 19"]);
+            });
+
+            it("lists the weeks by a changed week start and selects only whole weeks of it", () => {
+                const { rerenderWith } = openWeekList({
+                    selectedFilterOption: { ...weekForm, from: "2026-04-05", to: "2026-04-18" },
+                    weekStart: "Sunday",
+                });
+                expect(getSelectedWeeks()).toEqual(["Apr 5 – Apr 11", "Apr 12 – Apr 18"]);
+
+                rerenderWith({ weekStart: "Monday" });
+
+                expect(screen.getAllByRole("option").map((option) => option.textContent)).toContain(
+                    "Apr 6 – Apr 12",
+                );
+                expect(getSelectedWeeks()).toEqual([]);
+            });
+
+            it("keeps Apply disabled until a week is selected", () => {
+                openWeekList({ selectedFilterOption: weekForm });
+
+                const applyButton = document.querySelector(".s-date-filter-apply")!;
+                expect(applyButton).toHaveAttribute("aria-disabled", "true");
+
+                fireEvent.click(screen.getAllByRole("option")[0]);
+
+                expect(applyButton).toHaveAttribute("aria-disabled", "false");
+            });
+
+            it("selects the typed week on Enter without applying the filter", () => {
+                const onApplyClick = vi.fn();
+                openWeekList({ selectedFilterOption: weekForm, onApplyClick });
+
+                const search = screen.getByRole("combobox");
+                fireEvent.change(search, { target: { value: "04/15/2026" } });
+                fireEvent.keyDown(search, { key: "Enter", code: "Enter" });
+
+                expect(screen.getByRole("option", { selected: true })).toHaveTextContent("Apr 12 – Apr 18");
+                expect(onApplyClick).not.toHaveBeenCalled();
+            });
+
+            it("does not navigate back to the option list when ArrowLeft is pressed in the jump field", () => {
+                openWeekList({ selectedFilterOption: weekForm });
+
+                const notPrevented = fireEvent.keyDown(screen.getByRole("combobox"), {
+                    key: "ArrowLeft",
+                    code: "ArrowLeft",
+                });
+
+                expect(notPrevented).toBe(true);
+                expect(document.querySelector(".s-week-range-list")).toBeInTheDocument();
+            });
+        });
+
         it("moves focus between granularity tabs with ArrowLeft/ArrowRight without navigating back to the option list", () => {
             renderDateFilterBody({
                 filterOptions: { absoluteForm },
@@ -519,45 +614,6 @@ describe("ExtendedDateFilterBody", () => {
             fireEvent.keyDown(quarterTab!, { key: "Home", code: "Home" });
             expect(document.activeElement).toHaveClass("s-granularity-day");
             expect(document.querySelector(".s-relative-filter-form-granularity-tabs")).toBeInTheDocument();
-        });
-    });
-
-    // A layer dropping the week start would turn the label back into a day range with the suite still green.
-    describe("date filter button title for a week-granularity absolute filter", () => {
-        const weekFilter: IUiAbsoluteDateFilterForm = {
-            type: "absoluteForm",
-            localIdentifier: "ABSOLUTE_FORM",
-            granularity: "GDC.time.week_us",
-            from: "2026-04-05",
-            to: "2026-04-11",
-            name: "",
-            visible: true,
-        };
-
-        function DateFilterButtonUnderTest(props: Partial<IDateFilterButtonLocalizedProps>) {
-            return createDateFilterButton({ dateFilterOption: weekFilter, ...props });
-        }
-
-        const renderButton = (weekStart?: WeekStart) => {
-            const Wrapped = withIntlForTest(DateFilterButtonUnderTest);
-            return render(<Wrapped weekStart={weekStart} />);
-        };
-
-        // These dates are one whole week under a Sunday start and two under a Monday one.
-        it("should label the week according to a Sunday week start", () => {
-            renderButton("Sunday");
-            expect(screen.getByText("Week 15/2026")).toBeInTheDocument();
-        });
-
-        it("should label the same dates differently under a Monday week start", () => {
-            renderButton("Monday");
-            expect(screen.getByText("Week 14/2026 \u2013 Week 15/2026")).toBeInTheDocument();
-        });
-
-        it("should fall back to the day range when no week start reaches the button", () => {
-            renderButton();
-            expect(screen.getByText("04/05/2026 \u2013 04/11/2026")).toBeInTheDocument();
-            expect(screen.queryByText(/^Week /)).not.toBeInTheDocument();
         });
     });
 

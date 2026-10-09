@@ -81,6 +81,9 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
      */
     isAbsoluteDateFilterGranularityEnabled?: boolean;
     showDropDownHeaderMessage?: boolean;
+    /**
+     * The day weeks start on in the calendars and in the list of weeks. Defaults to Sunday.
+     */
     weekStart?: WeekStart;
     /**
      * Represents a custom icon with associated tooltip information.

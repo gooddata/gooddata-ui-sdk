@@ -31,32 +31,28 @@ test.beforeEach(async ({ page }) => {
     await injectAuthHeader(page, API_TOKEN);
 });
 
-test.describe("Interaction", { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } }, () => {
+test.describe("Interactions", { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } }, () => {
     //Cover ticket: RAIL-4559
-    test(
-        "Should able to remove existing interactions",
-        { tag: ["@pre-merge-integrated"] },
-        async ({ page }) => {
-            await visitCopyOf(page, "dashboard/drill-to-insight");
-            await enterEditMode(page);
-            await waitChartLoaded(page, widgetSelector(0, 0));
-            await focusWidget(page, 0, 0);
-            await openInteractions(page);
-            await removeDrillConfigItem(page, "Created - Year");
-            await removeDrillConfigItem(page, "Sum of Velocity");
-            await closeWidgetConfiguration(page);
-            await saveDashboard(page);
-            await enterEditMode(page);
-            await waitChartLoaded(page, widgetSelector(0, 0));
-            await focusWidget(page, 0, 0);
-            await openInteractions(page);
-            await assertHasInteractionItems(page, false);
-        },
-    );
+    test("should remove existing interactions", { tag: ["@pre-merge-integrated"] }, async ({ page }) => {
+        await visitCopyOf(page, "dashboard/drill-to-insight");
+        await enterEditMode(page);
+        await waitChartLoaded(page, widgetSelector(0, 0));
+        await focusWidget(page, 0, 0);
+        await openInteractions(page);
+        await removeDrillConfigItem(page, "Created - Year");
+        await removeDrillConfigItem(page, "Sum of Velocity");
+        await closeWidgetConfiguration(page);
+        await saveDashboard(page);
+        await enterEditMode(page);
+        await waitChartLoaded(page, widgetSelector(0, 0));
+        await focusWidget(page, 0, 0);
+        await openInteractions(page);
+        await assertHasInteractionItems(page, false);
+    });
 
     //Cover ticket: RAIL-4717
     test(
-        "Should correctly display attribute list in custom URL dialog",
+        "should list attributes in the custom URL dialog",
         { tag: ["@pre-merge-integrated"] },
         async ({ page }) => {
             await visit(page, "dashboard/drill-to-insight");
@@ -90,7 +86,7 @@ test.describe("Interaction", { additionalWindowProperties: { useSafeLocalIdentif
 
     //Cover ticket: RAIL-4716
     test(
-        "should display correct insight name on invalid interaction warning",
+        "should name the insight in the invalid interaction warning",
         { tag: ["@pre-merge-integrated"] },
         async ({ page }) => {
             const widget1 = widgetSelector(1, 0);

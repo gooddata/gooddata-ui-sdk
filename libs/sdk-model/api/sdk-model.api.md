@@ -327,28 +327,28 @@ export function bucketsTotals(buckets: IBucket[]): ITotal[];
 export function bucketTotals(bucket: IBucket): ITotal[];
 
 // @alpha
-export const BuiltInReportPageLayoutCover: IReportPageLayout;
+export const BuiltInPublisherPageLayoutCover: IPublisherPageLayout;
 
 // @alpha
-export const BuiltInReportPageLayoutPortraitCover: IReportPageLayout;
+export const BuiltInPublisherPageLayoutPortraitCover: IPublisherPageLayout;
 
 // @alpha
-export const BuiltInReportPageLayoutPortraitSection: IReportPageLayout;
+export const BuiltInPublisherPageLayoutPortraitSection: IPublisherPageLayout;
 
 // @alpha
-export const BuiltInReportPageLayoutPortraitSummary: IReportPageLayout;
+export const BuiltInPublisherPageLayoutPortraitSummary: IPublisherPageLayout;
 
 // @alpha
-export const BuiltInReportPageLayouts: readonly IReportPageLayout[];
+export const BuiltInPublisherPageLayouts: readonly IPublisherPageLayout[];
 
 // @alpha
-export const BuiltInReportPageLayoutSection: IReportPageLayout;
+export const BuiltInPublisherPageLayoutSection: IPublisherPageLayout;
 
 // @alpha
-export const BuiltInReportPageLayoutViz6TextLeft: IReportPageLayout;
+export const BuiltInPublisherPageLayoutViz6TextLeft: IPublisherPageLayout;
 
 // @alpha
-export const BuiltInReportSlotTypes: string[];
+export const BuiltInPublisherSlotTypes: string[];
 
 // @alpha
 export const BuiltInWidgetTypes: string[];
@@ -670,13 +670,13 @@ export function defaultDimensionsGenerator(definition: IExecutionDefinition): ID
 export const DefaultLocale: ILocale;
 
 // @alpha
-export const DefaultReportHeadingType: ReportHeadingType;
+export const DefaultPublisherHeadingType: PublisherHeadingType;
 
 // @alpha
-export const DefaultReportPageFormat: ReportPageFormat;
+export const DefaultPublisherPageFormat: PublisherPageFormat;
 
 // @alpha
-export const DefaultReportParagraphType: ReportParagraphType;
+export const DefaultPublisherParagraphType: PublisherParagraphType;
 
 // @public
 export function defFingerprint(def: IExecutionDefinition): string;
@@ -1050,7 +1050,7 @@ export function getPluggableApplicationHref(app: PluggableApplicationRegistryIte
 export function getPluggableApplicationLocalizedTitle(app: PluggableApplicationRegistryItem, locale: ILocale | undefined): string;
 
 // @alpha
-export function getReportTextPlaceholders(text: string): string[];
+export function getPublisherTextPlaceholders(text: string): string[];
 
 // @alpha
 export function getSelectedElementsCount(filter: IDashboardAttributeFilter): number;
@@ -3116,6 +3116,7 @@ export interface IFeatureFlags {
     enableImprovedMetricDateFilter?: boolean;
     enableImprovedRankingFilter?: boolean;
     enableLineChartStyling?: boolean;
+    enableLocalizationOverview?: boolean;
     enableLogicalModelExtensionsFromParentsCall?: boolean;
     // (undocumented)
     enableMariaDbDataSource?: boolean;
@@ -3336,8 +3337,8 @@ export interface IGenAIObjectReferenceGroup {
 }
 
 // @internal
-export interface IGenAIReportContext {
-    definition?: IReportDefinition;
+export interface IGenAIPublisherDocumentContext {
+    definition?: IPublisherDocumentDefinition;
     draftRef?: string;
     ref?: ObjRef;
     title?: string;
@@ -3358,7 +3359,7 @@ export type IGenAISuggestion = {
 // @internal
 export interface IGenAIUIContext {
     dashboard?: IGenAIDashboardContext;
-    report?: IGenAIReportContext;
+    publisherDocument?: IGenAIPublisherDocumentContext;
 }
 
 // @internal
@@ -4787,6 +4788,277 @@ export interface IProductionFeaturesConfig {
     features?: IProductionFeatureConfig[];
 }
 
+// @alpha
+export interface IPublisherAiTextSource {
+    content?: string;
+    generatedAt?: string;
+    prompt: string;
+    // (undocumented)
+    type: "ai";
+}
+
+// @alpha
+export type IPublisherAttributeFilterConfig = Pick<IDashboardAttributeFilterConfig, "localIdentifier" | "displayAsLabel">;
+
+// @alpha
+export interface IPublisherBoxStyle {
+    // (undocumented)
+    background?: PublisherBackground;
+    borderRadius?: number;
+    padding?: number;
+}
+
+// @alpha
+export interface IPublisherColorBackground {
+    color: string;
+    // (undocumented)
+    type: "color";
+}
+
+// @alpha
+export interface IPublisherDocument extends IPublisherDocumentDefinition, IAuditableDates, IAuditableUsers {
+    isLocked?: boolean;
+    // (undocumented)
+    ref: ObjRef;
+}
+
+// @alpha
+export interface IPublisherDocumentBase {
+    content: IPublisherDocumentContent;
+    // (undocumented)
+    description?: string;
+    periodEnd: PublisherDateString;
+    periodStart: PublisherDateString;
+    // (undocumented)
+    tags?: string[];
+    // (undocumented)
+    title: string;
+    variableValues?: Record<string, string>;
+}
+
+// @alpha
+export interface IPublisherDocumentContent {
+    attributeFilterConfigs?: IPublisherAttributeFilterConfig[];
+    filters?: FilterContextItem[];
+    pages: IPublisherDocumentPage[];
+    takeawaysInstruction?: string;
+    variables?: IPublisherVariableDefinition[];
+    version: "1";
+}
+
+// @alpha
+export interface IPublisherDocumentDefinition extends IPublisherDocumentBase {
+    ref?: ObjRef;
+    // (undocumented)
+    type: "report";
+}
+
+// @alpha
+export interface IPublisherDocumentPage extends IPublisherPageBody {
+    localIdentifier: string;
+}
+
+// @alpha
+export interface IPublisherDocumentTemplate extends IPublisherDocumentTemplateDefinition, IAuditableDates, IAuditableUsers {
+    isLocked?: boolean;
+    // (undocumented)
+    ref: ObjRef;
+}
+
+// @alpha
+export interface IPublisherDocumentTemplateDefinition {
+    // (undocumented)
+    content: IPublisherDocumentContent;
+    // (undocumented)
+    description?: string;
+    ref?: ObjRef;
+    // (undocumented)
+    tags?: string[];
+    // (undocumented)
+    title: string;
+    // (undocumented)
+    type: "reportTemplate";
+}
+
+// @alpha
+export interface IPublisherHeadingSlot extends IPublisherSlotBase {
+    source?: PublisherTextSource;
+    // (undocumented)
+    style?: IPublisherHeadingStyle;
+    // (undocumented)
+    type: "heading";
+}
+
+// @alpha
+export interface IPublisherHeadingStyle extends IPublisherTextStyle {
+    type?: PublisherHeadingType;
+}
+
+// @alpha
+export interface IPublisherImageBackground {
+    slotId: string;
+    // (undocumented)
+    type: "image";
+}
+
+// @alpha
+export interface IPublisherImageSlot extends IPublisherSlotBase {
+    // (undocumented)
+    altText?: string;
+    fit?: PublisherImageFit;
+    source?: PublisherImageSource;
+    style?: IPublisherImageStyle;
+    // (undocumented)
+    type: "image";
+}
+
+// @alpha
+export interface IPublisherImageStyle {
+    // (undocumented)
+    horizontalAlign?: PublisherContentAlignment;
+    // (undocumented)
+    verticalAlign?: PublisherContentAlignment;
+}
+
+// @alpha
+export interface IPublisherLayoutNodeBase {
+    weight?: number;
+}
+
+// @alpha
+export interface IPublisherLayoutSection extends IPublisherLayoutNodeBase {
+    // (undocumented)
+    children: PublisherPageLayoutNode[];
+    direction: "row" | "column";
+    style?: IPublisherBoxStyle;
+    // (undocumented)
+    type: "section";
+}
+
+// @alpha
+export interface IPublisherLayoutSlotRef extends IPublisherLayoutNodeBase {
+    slotId: string;
+    // (undocumented)
+    type: "slotRef";
+}
+
+// @alpha
+export interface IPublisherPageBody {
+    filters?: FilterContextItem[];
+    format?: PublisherPageFormat;
+    kind?: "cover" | "section" | "content";
+    layout: PublisherPageLayoutNode;
+    slots: PublisherSlot[];
+    style?: IPublisherBoxStyle;
+}
+
+// @alpha
+export interface IPublisherPageBodyValidationIssue {
+    // (undocumented)
+    message: string;
+    // (undocumented)
+    severity: "error" | "warning";
+}
+
+// @alpha
+export interface IPublisherPageLayout extends IPublisherPageLayoutDefinition, IAuditableDates, IAuditableUsers {
+    isBuiltIn?: boolean;
+    isLocked?: boolean;
+    // (undocumented)
+    ref: ObjRef;
+}
+
+// @alpha
+export interface IPublisherPageLayoutContent extends IPublisherPageBody {
+    version: "1";
+}
+
+// @alpha
+export interface IPublisherPageLayoutDefinition {
+    // (undocumented)
+    content: IPublisherPageLayoutContent;
+    // (undocumented)
+    description?: string;
+    ref?: ObjRef;
+    // (undocumented)
+    tags?: string[];
+    // (undocumented)
+    title: string;
+    // (undocumented)
+    type: "reportPageLayout";
+}
+
+// @alpha
+export interface IPublisherParagraphSlot extends IPublisherSlotBase {
+    source?: PublisherTextSource;
+    // (undocumented)
+    style?: IPublisherParagraphStyle;
+    // (undocumented)
+    type: "paragraph";
+}
+
+// @alpha
+export interface IPublisherParagraphStyle extends IPublisherTextStyle {
+    type?: PublisherParagraphType;
+}
+
+// @alpha
+export interface IPublisherSlotBase {
+    localIdentifier: string;
+    placeholder?: IPublisherSlotPlaceholder;
+    // (undocumented)
+    type: string;
+}
+
+// @alpha
+export interface IPublisherSlotPlaceholder {
+    hint?: string;
+    required?: boolean;
+}
+
+// @alpha
+export interface IPublisherStaticTextSource {
+    content: string;
+    // (undocumented)
+    type: "static";
+}
+
+// @alpha
+export type IPublisherTextSlot = IPublisherHeadingSlot | IPublisherParagraphSlot;
+
+// @alpha
+export interface IPublisherTextStyle extends IPublisherBoxStyle {
+    color?: string;
+    // (undocumented)
+    horizontalAlign?: PublisherContentAlignment;
+    // (undocumented)
+    verticalAlign?: PublisherContentAlignment;
+}
+
+// @alpha
+export interface IPublisherVariableDefinition {
+    defaultValue?: string;
+    // (undocumented)
+    description?: string;
+    name: string;
+    title?: string;
+}
+
+// @alpha
+export interface IPublisherVisualizationSlot extends IPublisherSlotBase {
+    dateDataSet?: ObjRef;
+    filters?: FilterContextItem[];
+    ignoredFilters?: IDashboardFilterReference[];
+    ignoreReportPeriod?: boolean;
+    insight?: ObjRef;
+    properties?: VisualizationProperties;
+    // (undocumented)
+    showTitle?: boolean;
+    title?: string;
+    // (undocumented)
+    type: "visualization";
+}
+
 // @public (undocumented)
 export interface IRangeCondition {
     // (undocumented)
@@ -4927,277 +5199,6 @@ export interface IRemotePluggableApplicationsRegistryV1 {
         [applicationId: string]: Partial<PluggableApplicationRegistryItem>;
     };
     uiModule?: IRemotePluggableApplicationModule;
-}
-
-// @alpha
-export interface IReport extends IReportDefinition, IAuditableDates, IAuditableUsers {
-    isLocked?: boolean;
-    // (undocumented)
-    ref: ObjRef;
-}
-
-// @alpha
-export interface IReportAiTextSource {
-    content?: string;
-    generatedAt?: string;
-    prompt: string;
-    // (undocumented)
-    type: "ai";
-}
-
-// @alpha
-export type IReportAttributeFilterConfig = Pick<IDashboardAttributeFilterConfig, "localIdentifier" | "displayAsLabel">;
-
-// @alpha
-export interface IReportBase {
-    content: IReportContent;
-    // (undocumented)
-    description?: string;
-    periodEnd: ReportDateString;
-    periodStart: ReportDateString;
-    // (undocumented)
-    tags?: string[];
-    // (undocumented)
-    title: string;
-    variableValues?: Record<string, string>;
-}
-
-// @alpha
-export interface IReportBoxStyle {
-    // (undocumented)
-    background?: ReportBackground;
-    borderRadius?: number;
-    padding?: number;
-}
-
-// @alpha
-export interface IReportColorBackground {
-    color: string;
-    // (undocumented)
-    type: "color";
-}
-
-// @alpha
-export interface IReportContent {
-    attributeFilterConfigs?: IReportAttributeFilterConfig[];
-    filters?: FilterContextItem[];
-    pages: IReportContentPage[];
-    takeawaysInstruction?: string;
-    variables?: IReportVariableDefinition[];
-    version: "1";
-}
-
-// @alpha
-export interface IReportContentPage extends IReportPageBody {
-    localIdentifier: string;
-}
-
-// @alpha
-export interface IReportDefinition extends IReportBase {
-    ref?: ObjRef;
-    // (undocumented)
-    type: "report";
-}
-
-// @alpha
-export interface IReportHeadingSlot extends IReportSlotBase {
-    source?: ReportTextSource;
-    // (undocumented)
-    style?: IReportHeadingStyle;
-    // (undocumented)
-    type: "heading";
-}
-
-// @alpha
-export interface IReportHeadingStyle extends IReportTextStyle {
-    type?: ReportHeadingType;
-}
-
-// @alpha
-export interface IReportImageBackground {
-    slotId: string;
-    // (undocumented)
-    type: "image";
-}
-
-// @alpha
-export interface IReportImageSlot extends IReportSlotBase {
-    // (undocumented)
-    altText?: string;
-    fit?: ReportImageFit;
-    source?: ReportImageSource;
-    style?: IReportImageStyle;
-    // (undocumented)
-    type: "image";
-}
-
-// @alpha
-export interface IReportImageStyle {
-    // (undocumented)
-    horizontalAlign?: ReportContentAlignment;
-    // (undocumented)
-    verticalAlign?: ReportContentAlignment;
-}
-
-// @alpha
-export interface IReportLayoutNodeBase {
-    weight?: number;
-}
-
-// @alpha
-export interface IReportLayoutSection extends IReportLayoutNodeBase {
-    // (undocumented)
-    children: ReportPageLayoutNode[];
-    direction: "row" | "column";
-    style?: IReportBoxStyle;
-    // (undocumented)
-    type: "section";
-}
-
-// @alpha
-export interface IReportLayoutSlotRef extends IReportLayoutNodeBase {
-    slotId: string;
-    // (undocumented)
-    type: "slotRef";
-}
-
-// @alpha
-export interface IReportPageBody {
-    filters?: FilterContextItem[];
-    format?: ReportPageFormat;
-    kind?: "cover" | "section" | "content";
-    layout: ReportPageLayoutNode;
-    slots: ReportSlot[];
-    style?: IReportBoxStyle;
-}
-
-// @alpha
-export interface IReportPageBodyValidationIssue {
-    // (undocumented)
-    message: string;
-    // (undocumented)
-    severity: "error" | "warning";
-}
-
-// @alpha
-export interface IReportPageLayout extends IReportPageLayoutDefinition, IAuditableDates, IAuditableUsers {
-    isBuiltIn?: boolean;
-    isLocked?: boolean;
-    // (undocumented)
-    ref: ObjRef;
-}
-
-// @alpha
-export interface IReportPageLayoutContent extends IReportPageBody {
-    version: "1";
-}
-
-// @alpha
-export interface IReportPageLayoutDefinition {
-    // (undocumented)
-    content: IReportPageLayoutContent;
-    // (undocumented)
-    description?: string;
-    ref?: ObjRef;
-    // (undocumented)
-    tags?: string[];
-    // (undocumented)
-    title: string;
-    // (undocumented)
-    type: "reportPageLayout";
-}
-
-// @alpha
-export interface IReportParagraphSlot extends IReportSlotBase {
-    source?: ReportTextSource;
-    // (undocumented)
-    style?: IReportParagraphStyle;
-    // (undocumented)
-    type: "paragraph";
-}
-
-// @alpha
-export interface IReportParagraphStyle extends IReportTextStyle {
-    type?: ReportParagraphType;
-}
-
-// @alpha
-export interface IReportSlotBase {
-    localIdentifier: string;
-    placeholder?: IReportSlotPlaceholder;
-    // (undocumented)
-    type: string;
-}
-
-// @alpha
-export interface IReportSlotPlaceholder {
-    hint?: string;
-    required?: boolean;
-}
-
-// @alpha
-export interface IReportStaticTextSource {
-    content: string;
-    // (undocumented)
-    type: "static";
-}
-
-// @alpha
-export interface IReportTemplate extends IReportTemplateDefinition, IAuditableDates, IAuditableUsers {
-    isLocked?: boolean;
-    // (undocumented)
-    ref: ObjRef;
-}
-
-// @alpha
-export interface IReportTemplateDefinition {
-    // (undocumented)
-    content: IReportContent;
-    // (undocumented)
-    description?: string;
-    ref?: ObjRef;
-    // (undocumented)
-    tags?: string[];
-    // (undocumented)
-    title: string;
-    // (undocumented)
-    type: "reportTemplate";
-}
-
-// @alpha
-export type IReportTextSlot = IReportHeadingSlot | IReportParagraphSlot;
-
-// @alpha
-export interface IReportTextStyle extends IReportBoxStyle {
-    color?: string;
-    // (undocumented)
-    horizontalAlign?: ReportContentAlignment;
-    // (undocumented)
-    verticalAlign?: ReportContentAlignment;
-}
-
-// @alpha
-export interface IReportVariableDefinition {
-    defaultValue?: string;
-    // (undocumented)
-    description?: string;
-    name: string;
-    title?: string;
-}
-
-// @alpha
-export interface IReportVisualizationSlot extends IReportSlotBase {
-    dateDataSet?: ObjRef;
-    filters?: FilterContextItem[];
-    ignoredFilters?: IDashboardFilterReference[];
-    ignoreReportPeriod?: boolean;
-    insight?: ObjRef;
-    properties?: VisualizationProperties;
-    // (undocumented)
-    showTitle?: boolean;
-    title?: string;
-    // (undocumented)
-    type: "visualization";
 }
 
 // @public
@@ -6027,6 +6028,69 @@ export function isPreviousPeriodMeasure(obj: unknown): obj is IMeasure<IPrevious
 // @public
 export function isPreviousPeriodMeasureDefinition(obj: unknown): obj is IPreviousPeriodMeasureDefinition;
 
+// @alpha
+export function isPublisherColorBackground(obj: unknown): obj is IPublisherColorBackground;
+
+// @alpha
+export function isPublisherDocument(obj: unknown): obj is IPublisherDocument;
+
+// @alpha
+export function isPublisherDocumentContentV1(obj: unknown): obj is IPublisherDocumentContent;
+
+// @alpha
+export function isPublisherDocumentDefinition(obj: unknown): obj is IPublisherDocumentDefinition;
+
+// @alpha
+export function isPublisherDocumentTemplate(obj: unknown): obj is IPublisherDocumentTemplate;
+
+// @alpha
+export function isPublisherDocumentTemplateDefinition(obj: unknown): obj is IPublisherDocumentTemplateDefinition;
+
+// @alpha
+export function isPublisherHeadingSlot(obj: unknown): obj is IPublisherHeadingSlot;
+
+// @alpha
+export function isPublisherHeadingType(value: unknown): value is PublisherHeadingType;
+
+// @alpha
+export function isPublisherImageBackground(obj: unknown): obj is IPublisherImageBackground;
+
+// @alpha
+export function isPublisherImageSlot(obj: unknown): obj is IPublisherImageSlot;
+
+// @alpha
+export function isPublisherLayoutSection(obj: unknown): obj is IPublisherLayoutSection;
+
+// @alpha
+export function isPublisherLayoutSlotRef(obj: unknown): obj is IPublisherLayoutSlotRef;
+
+// @alpha
+export function isPublisherPageFormat(value: unknown): value is PublisherPageFormat;
+
+// @alpha
+export function isPublisherPageLayout(obj: unknown): obj is IPublisherPageLayout;
+
+// @alpha
+export function isPublisherPageLayoutContentV1(obj: unknown): obj is IPublisherPageLayoutContent;
+
+// @alpha
+export function isPublisherPageLayoutDefinition(obj: unknown): obj is IPublisherPageLayoutDefinition;
+
+// @alpha
+export function isPublisherParagraphSlot(obj: unknown): obj is IPublisherParagraphSlot;
+
+// @alpha
+export function isPublisherParagraphType(value: unknown): value is PublisherParagraphType;
+
+// @alpha
+export function isPublisherSlot(obj: unknown): obj is PublisherSlot;
+
+// @alpha
+export function isPublisherTextSlot(obj: unknown): obj is IPublisherTextSlot;
+
+// @alpha
+export function isPublisherVisualizationSlot(obj: unknown): obj is IPublisherVisualizationSlot;
+
 // @public
 export function isRangeCondition(obj: unknown): obj is IRangeCondition;
 
@@ -6082,69 +6146,6 @@ export function isRelativeUpperBoundedDateFilterBody(obj: unknown): obj is IRela
 
 // @alpha
 export function isRemotePluggableApplicationRegistryItem(app: PluggableApplicationRegistryItem): app is RemotePluggableApplicationRegistryItem;
-
-// @alpha
-export function isReport(obj: unknown): obj is IReport;
-
-// @alpha
-export function isReportColorBackground(obj: unknown): obj is IReportColorBackground;
-
-// @alpha
-export function isReportContentV1(obj: unknown): obj is IReportContent;
-
-// @alpha
-export function isReportDefinition(obj: unknown): obj is IReportDefinition;
-
-// @alpha
-export function isReportHeadingSlot(obj: unknown): obj is IReportHeadingSlot;
-
-// @alpha
-export function isReportHeadingType(value: unknown): value is ReportHeadingType;
-
-// @alpha
-export function isReportImageBackground(obj: unknown): obj is IReportImageBackground;
-
-// @alpha
-export function isReportImageSlot(obj: unknown): obj is IReportImageSlot;
-
-// @alpha
-export function isReportLayoutSection(obj: unknown): obj is IReportLayoutSection;
-
-// @alpha
-export function isReportLayoutSlotRef(obj: unknown): obj is IReportLayoutSlotRef;
-
-// @alpha
-export function isReportPageFormat(value: unknown): value is ReportPageFormat;
-
-// @alpha
-export function isReportPageLayout(obj: unknown): obj is IReportPageLayout;
-
-// @alpha
-export function isReportPageLayoutContentV1(obj: unknown): obj is IReportPageLayoutContent;
-
-// @alpha
-export function isReportPageLayoutDefinition(obj: unknown): obj is IReportPageLayoutDefinition;
-
-// @alpha
-export function isReportParagraphSlot(obj: unknown): obj is IReportParagraphSlot;
-
-// @alpha
-export function isReportParagraphType(value: unknown): value is ReportParagraphType;
-
-// @alpha
-export function isReportSlot(obj: unknown): obj is ReportSlot;
-
-// @alpha
-export function isReportTemplate(obj: unknown): obj is IReportTemplate;
-
-// @alpha
-export function isReportTemplateDefinition(obj: unknown): obj is IReportTemplateDefinition;
-
-// @alpha
-export function isReportTextSlot(obj: unknown): obj is IReportTextSlot;
-
-// @alpha
-export function isReportVisualizationSlot(obj: unknown): obj is IReportVisualizationSlot;
 
 // @public
 export function isResultAttributeHeader(obj: unknown): obj is IResultAttributeHeader;
@@ -6365,9 +6366,11 @@ export interface ITheme {
     modal?: IThemeModal;
     palette?: IThemePalette;
     // @alpha
-    reports?: IThemeReports;
+    reports?: IThemePublisher;
     table?: IThemeTable;
     toastMessage?: IThemeToastMessage;
+    // @alpha
+    toolbar?: IThemeToolbar;
     tooltip?: IThemeTooltip;
     typography?: IThemeTypography;
     version?: "2";
@@ -6700,24 +6703,24 @@ export interface IThemePalette {
 }
 
 // @alpha
-export interface IThemeReports {
+export interface IThemePublisher {
     // (undocumented)
-    colors?: IThemeReportsColors;
+    colors?: IThemePublisherColors;
     // (undocumented)
-    page?: IThemeReportsPage;
+    page?: IThemePublisherPage;
     // (undocumented)
-    textStyle?: IThemeReportsTextStyle;
+    textStyle?: IThemePublisherTextStyle;
     visualizationPalette?: ThemeColor[] | IThemeColorPaletteRef;
 }
 
 // @alpha
-export interface IThemeReportsColors {
+export interface IThemePublisherColors {
     backgrounds?: ThemeColor[];
     text?: ThemeColor[];
 }
 
 // @alpha
-export interface IThemeReportsFontFace {
+export interface IThemePublisherFontFace {
     family: string;
     style?: "normal" | "italic";
     url: string;
@@ -6725,73 +6728,73 @@ export interface IThemeReportsFontFace {
 }
 
 // @alpha
-export interface IThemeReportsHeading {
+export interface IThemePublisherHeading {
     // (undocumented)
     color?: ThemeColor;
     // (undocumented)
-    h1?: IThemeReportsTextLevel;
+    h1?: IThemePublisherTextLevel;
     // (undocumented)
-    h2?: IThemeReportsTextLevel;
+    h2?: IThemePublisherTextLevel;
     // (undocumented)
-    h3?: IThemeReportsTextLevel;
+    h3?: IThemePublisherTextLevel;
     // (undocumented)
-    h4?: IThemeReportsTextLevel;
+    h4?: IThemePublisherTextLevel;
     // (undocumented)
-    h5?: IThemeReportsTextLevel;
+    h5?: IThemePublisherTextLevel;
     // (undocumented)
-    h6?: IThemeReportsTextLevel;
+    h6?: IThemePublisherTextLevel;
     // (undocumented)
-    lineHeight?: ThemeReportsLength;
+    lineHeight?: ThemePublisherLength;
 }
 
 // @alpha
-export interface IThemeReportsPage {
+export interface IThemePublisherPage {
     // (undocumented)
     backgroundColor?: ThemeColor;
 }
 
 // @alpha
-export interface IThemeReportsParagraph {
+export interface IThemePublisherParagraph {
     // (undocumented)
     color?: ThemeColor;
     // (undocumented)
-    largeText?: IThemeReportsTextLevel;
+    largeText?: IThemePublisherTextLevel;
     // (undocumented)
-    lineHeight?: ThemeReportsLength;
+    lineHeight?: ThemePublisherLength;
     // (undocumented)
-    normalText?: IThemeReportsTextLevel;
+    normalText?: IThemePublisherTextLevel;
     // (undocumented)
-    smallText?: IThemeReportsTextLevel;
+    smallText?: IThemePublisherTextLevel;
 }
 
 // @alpha
-export interface IThemeReportsTextLevel {
+export interface IThemePublisherTextLevel {
     color?: ThemeColor;
     // (undocumented)
-    fontSize?: ThemeReportsLength;
+    fontSize?: ThemePublisherLength;
     // (undocumented)
-    lineHeight?: ThemeReportsLength;
+    lineHeight?: ThemePublisherLength;
 }
 
 // @alpha
-export interface IThemeReportsTextStyle {
+export interface IThemePublisherTextStyle {
     // (undocumented)
     color?: ThemeColor;
     // (undocumented)
-    heading?: IThemeReportsHeading;
+    heading?: IThemePublisherHeading;
     // (undocumented)
-    lineHeight?: ThemeReportsLength;
+    lineHeight?: ThemePublisherLength;
     // (undocumented)
-    paragraph?: IThemeReportsParagraph;
+    paragraph?: IThemePublisherParagraph;
     // (undocumented)
-    typography?: IThemeReportsTypography;
+    typography?: IThemePublisherTypography;
 }
 
 // @alpha
-export interface IThemeReportsTypography {
+export interface IThemePublisherTypography {
     fontFamily?: string;
     // (undocumented)
-    fonts?: IThemeReportsFontFace[];
+    fonts?: IThemePublisherFontFace[];
 }
 
 // @beta
@@ -6820,6 +6823,11 @@ export interface IThemeToastMessage {
 // @beta
 export interface IThemeToastMessageVariant extends IThemeMessageVariant {
     separatorLineColor?: ThemeColor;
+}
+
+// @alpha
+export interface IThemeToolbar {
+    borderRadius?: string;
 }
 
 // @beta
@@ -7510,12 +7518,12 @@ export function newAbsoluteDashboardDateFilter(from: DateString, to: DateString,
 export function newAbsoluteDateFilter(dateDataSet: ObjRef | Identifier, from: string, to: string, localIdentifier?: string, emptyValueHandling?: EmptyValues): IAbsoluteDateFilter;
 
 // @alpha
-export function newAdHocReportDefinition(options: {
+export function newAdHocPublisherDocumentDefinition(options: {
     title: string;
-    periodStart: ReportDateString;
-    periodEnd: ReportDateString;
-    pages?: IReportContentPage[];
-}, modifications?: Partial<Omit<IReportDefinition, "type" | "title" | "periodStart" | "periodEnd" | "content">>): IReportDefinition;
+    periodStart: PublisherDateString;
+    periodEnd: PublisherDateString;
+    pages?: IPublisherDocumentPage[];
+}, modifications?: Partial<Omit<IPublisherDocumentDefinition, "type" | "title" | "periodStart" | "periodEnd" | "content">>): IPublisherDocumentDefinition;
 
 // @alpha
 export function newAllTimeDashboardDateFilter(dataSet?: ObjRef, localIdentifier?: string, emptyValueHandling?: EmptyValues): IDashboardDateFilter;
@@ -7601,6 +7609,25 @@ export function newPositiveAttributeFilter(attributeOrRef: IAttribute | ObjRef |
 // @public
 export function newPreviousPeriodMeasure(measureIdOrLocalId: MeasureOrLocalId, dateDataSets: IPreviousPeriodDateDataSetSimple[], modifications?: MeasureModifications<PreviousPeriodMeasureBuilder>): IMeasure<IPreviousPeriodMeasureDefinition>;
 
+// @alpha
+export function newPublisherDocumentContent(pages: IPublisherDocumentPage[], modifications?: Partial<Omit<IPublisherDocumentContent, "version" | "pages">>): IPublisherDocumentContent;
+
+// @alpha
+export function newPublisherDocumentDefinitionFromTemplate(template: IPublisherDocumentTemplate | IPublisherDocumentTemplateDefinition, options: {
+    title: string;
+    periodStart: PublisherDateString;
+    periodEnd: PublisherDateString;
+}, modifications?: Partial<Omit<IPublisherDocumentDefinition, "type" | "title" | "periodStart" | "periodEnd" | "content">>): IPublisherDocumentDefinition;
+
+// @alpha
+export function newPublisherDocumentPageFromLayout(page: IPublisherPageLayout | IPublisherPageLayoutDefinition, localIdentifier?: string): IPublisherDocumentPage;
+
+// @alpha
+export function newPublisherDocumentTemplateDefinition(title: string, content: IPublisherDocumentContent, modifications?: Partial<Omit<IPublisherDocumentTemplateDefinition, "type" | "title" | "content">>): IPublisherDocumentTemplateDefinition;
+
+// @alpha
+export function newPublisherPageLayoutDefinition(title: string, body: IPublisherPageBody, modifications?: Partial<Omit<IPublisherPageLayoutDefinition, "type" | "title" | "content">>): IPublisherPageLayoutDefinition;
+
 // @public
 export function newRankingFilter(measureOrRef: IMeasure | ObjRefInScope | string, attributesOrRefs: Array<IAttribute | ObjRefInScope | string>, operator: RankingFilterOperator, value: number): IRankingFilter;
 
@@ -7612,25 +7639,6 @@ export function newRelativeDashboardDateFilter(granularity: DateFilterGranularit
 
 // @public
 export function newRelativeDateFilter(dateDataSet: ObjRef | Identifier, granularity: DateAttributeGranularity, from: number, to: number, localIdentifier?: string, boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter, emptyValueHandling?: EmptyValues): IRelativeDateFilter;
-
-// @alpha
-export function newReportContent(pages: IReportContentPage[], modifications?: Partial<Omit<IReportContent, "version" | "pages">>): IReportContent;
-
-// @alpha
-export function newReportContentPageFromLayout(page: IReportPageLayout | IReportPageLayoutDefinition, localIdentifier?: string): IReportContentPage;
-
-// @alpha
-export function newReportDefinitionFromTemplate(template: IReportTemplate | IReportTemplateDefinition, options: {
-    title: string;
-    periodStart: ReportDateString;
-    periodEnd: ReportDateString;
-}, modifications?: Partial<Omit<IReportDefinition, "type" | "title" | "periodStart" | "periodEnd" | "content">>): IReportDefinition;
-
-// @alpha
-export function newReportPageLayoutDefinition(title: string, body: IReportPageBody, modifications?: Partial<Omit<IReportPageLayoutDefinition, "type" | "title" | "content">>): IReportPageLayoutDefinition;
-
-// @alpha
-export function newReportTemplateDefinition(title: string, content: IReportContent, modifications?: Partial<Omit<IReportTemplateDefinition, "type" | "title" | "content">>): IReportTemplateDefinition;
 
 // @public
 export function newTotal(type: TotalType, measureOrId: IMeasure | Identifier, attributeOrId: IAttribute | Identifier, alias?: string): ITotal;
@@ -7810,6 +7818,81 @@ export type PreviousPeriodMeasureBuilderInput = {
     dateDataSets: IPreviousPeriodDateDataSetSimple[];
 } | IMeasure<IPreviousPeriodMeasureDefinition>;
 
+// @alpha
+export type PublisherBackground = IPublisherColorBackground | IPublisherImageBackground;
+
+// @alpha
+export type PublisherBuiltInVariable = "reportName" | "reportDescription" | "periodStart" | "periodEnd" | "reportDateRange" | "reportAttributeFilters" | "exportedAt" | "exportedBy" | "lastModifiedAt" | "lastModifiedBy" | "workspaceName" | "workspaceId" | "totalPages" | "currentPageNumber" | "logo";
+
+// @alpha
+export const PublisherBuiltInVariables: PublisherBuiltInVariable[];
+
+// @alpha
+export type PublisherContentAlignment = "start" | "center" | "end";
+
+// @alpha
+export type PublisherDateString = string;
+
+// @alpha
+export function publisherDocumentPage(documentOrTemplate: IPublisherDocument | IPublisherDocumentDefinition | IPublisherDocumentTemplate | IPublisherDocumentTemplateDefinition, pageLocalIdentifier: string): IPublisherDocumentPage | undefined;
+
+// @alpha
+export type PublisherHeadingType = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+
+// @alpha
+export const PublisherHeadingTypes: PublisherHeadingType[];
+
+// @alpha
+export type PublisherImageFit = "contain" | "cover" | "fill";
+
+// @alpha
+export type PublisherImageSource = {
+    type: "url";
+    url: string;
+} | {
+    type: "asset";
+    ref: ObjRef;
+};
+
+// @alpha
+export type PublisherPageFormat = "widescreen" | "a4Portrait" | "letterPortrait";
+
+// @alpha
+export const PublisherPageFormatAspectRatios: Record<PublisherPageFormat, number>;
+
+// @alpha
+export const PublisherPageFormats: PublisherPageFormat[];
+
+// @alpha
+export type PublisherPageLayoutNode = IPublisherLayoutSection | IPublisherLayoutSlotRef;
+
+// @alpha
+export type PublisherParagraphType = "largeText" | "normalText" | "smallText";
+
+// @alpha
+export const PublisherParagraphTypes: PublisherParagraphType[];
+
+// @alpha
+export type PublisherSlot = IPublisherVisualizationSlot | IPublisherTextSlot | IPublisherImageSlot;
+
+// @alpha
+export function publisherTextPlaceholder(name: string): string;
+
+// @alpha
+export function publisherTextSlotType(slot: IPublisherTextSlot): PublisherTextType;
+
+// @alpha
+export function publisherTextSlotTypes(slot: IPublisherTextSlot): PublisherTextType[];
+
+// @alpha
+export type PublisherTextSource = IPublisherStaticTextSource | IPublisherAiTextSource;
+
+// @alpha
+export type PublisherTextType = PublisherHeadingType | PublisherParagraphType;
+
+// @alpha
+export const PublisherTextTypes: PublisherTextType[];
+
 // @public (undocumented)
 export type RangeConditionOperator = "BETWEEN" | "NOT_BETWEEN";
 
@@ -7829,81 +7912,6 @@ export type RemotePluggableApplicationRegistryItem = IRemotePluggableApplication
 export type RemotePluggableApplicationsRegistry = IRemotePluggableApplicationsRegistryV1;
 
 // @alpha
-export type ReportBackground = IReportColorBackground | IReportImageBackground;
-
-// @alpha
-export type ReportBuiltInVariable = "reportName" | "reportDescription" | "periodStart" | "periodEnd" | "reportDateRange" | "reportAttributeFilters" | "exportedAt" | "exportedBy" | "lastModifiedAt" | "lastModifiedBy" | "workspaceName" | "workspaceId" | "totalPages" | "currentPageNumber" | "logo";
-
-// @alpha
-export const ReportBuiltInVariables: ReportBuiltInVariable[];
-
-// @alpha
-export type ReportContentAlignment = "start" | "center" | "end";
-
-// @alpha
-export function reportContentPage(reportOrTemplate: IReport | IReportDefinition | IReportTemplate | IReportTemplateDefinition, pageLocalIdentifier: string): IReportContentPage | undefined;
-
-// @alpha
-export type ReportDateString = string;
-
-// @alpha
-export type ReportHeadingType = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-
-// @alpha
-export const ReportHeadingTypes: ReportHeadingType[];
-
-// @alpha
-export type ReportImageFit = "contain" | "cover" | "fill";
-
-// @alpha
-export type ReportImageSource = {
-    type: "url";
-    url: string;
-} | {
-    type: "asset";
-    ref: ObjRef;
-};
-
-// @alpha
-export type ReportPageFormat = "widescreen" | "a4Portrait" | "letterPortrait";
-
-// @alpha
-export const ReportPageFormatAspectRatios: Record<ReportPageFormat, number>;
-
-// @alpha
-export const ReportPageFormats: ReportPageFormat[];
-
-// @alpha
-export type ReportPageLayoutNode = IReportLayoutSection | IReportLayoutSlotRef;
-
-// @alpha
-export type ReportParagraphType = "largeText" | "normalText" | "smallText";
-
-// @alpha
-export const ReportParagraphTypes: ReportParagraphType[];
-
-// @alpha
-export type ReportSlot = IReportVisualizationSlot | IReportTextSlot | IReportImageSlot;
-
-// @alpha
-export function reportTextPlaceholder(name: string): string;
-
-// @alpha
-export function reportTextSlotType(slot: IReportTextSlot): ReportTextType;
-
-// @alpha
-export function reportTextSlotTypes(slot: IReportTextSlot): ReportTextType[];
-
-// @alpha
-export type ReportTextSource = IReportStaticTextSource | IReportAiTextSource;
-
-// @alpha
-export type ReportTextType = ReportHeadingType | ReportParagraphType;
-
-// @alpha
-export const ReportTextTypes: ReportTextType[];
-
-// @alpha
 export type RequiredEntitlements = Condition<Partial<{
     [entitlement in IEntitlementsName]: string | boolean;
 }>>;
@@ -7918,7 +7926,7 @@ export type RequiredSettings = Condition<Partial<IPermanentSettings | IFeatureFl
 export type RequiredWorkspacePermissions = Condition<Partial<IPluggableApplicationWorkspacePermissions>>;
 
 // @alpha
-export function resolveReportTextPlaceholders(text: string, values: Record<string, string>): string;
+export function resolvePublisherTextPlaceholders(text: string, values: Record<string, string>): string;
 
 // @alpha
 export function resolveTimezoneId(timezoneId: DashboardTimezoneId | undefined): string | undefined;
@@ -8019,7 +8027,7 @@ export type ThemeDashboardDensity = "comfortable" | "compact";
 export type ThemeFontUri = string;
 
 // @alpha
-export type ThemeReportsLength = string | number;
+export type ThemePublisherLength = string | number;
 
 // @internal
 export const throwUnexpected: (value: never) => never;
@@ -8066,7 +8074,7 @@ export type UserDataFilterDefinition = IUserDataFilterDefinition | IUserGroupDat
 export function userFullName(user: IUser): string | undefined;
 
 // @alpha
-export function validateReportPageBody(body: IReportPageBody): IReportPageBodyValidationIssue[];
+export function validatePublisherPageBody(body: IPublisherPageBody): IPublisherPageBodyValidationIssue[];
 
 // @internal
 export class VirtualArithmeticMeasureBuilder extends ArithmeticMeasureBuilder {

@@ -118,9 +118,9 @@ describe("interactionIntelligenceEnabledSelector", () => {
 });
 
 describe("ambientContextSelector", () => {
-    it("keeps the conversation draft the open report is shown from", () => {
+    it("keeps the conversation draft the open document is shown from", () => {
         const userContext: IGenAIUserContext = {
-            view: { report: { title: "Q1", draftRef: "report_1" } },
+            view: { publisherDocument: { title: "Q1", draftRef: "report_1" } },
         };
         const state: RootState = {
             messages: messagesSliceReducer(undefined, { type: "test/init" }),
@@ -133,7 +133,7 @@ describe("ambientContextSelector", () => {
             ),
         };
 
-        expect(ambientContextSelector(state)?.view?.report?.draftRef).toBe("report_1");
+        expect(ambientContextSelector(state)?.view?.publisherDocument?.draftRef).toBe("report_1");
     });
 });
 
@@ -247,22 +247,22 @@ describe("hasPinnedContextSelector", () => {
         expect(hasPinnedContextSelector(state)).toBe(false);
     });
 
-    it("should be false for an open report that is not saved yet", () => {
+    it("should be false for an open document that is not saved yet", () => {
         const state = stateWith(
             { enableAiContextSetup: true },
-            setAmbientUserContextAction({ userContext: { view: { report: { title: "Draft" } } } }),
+            setAmbientUserContextAction({ userContext: { view: { publisherDocument: { title: "Draft" } } } }),
         );
 
         expect(hasPinnedContextSelector(state)).toBe(false);
     });
 
-    it("should be true for a report that is not saved yet while another report is open", () => {
+    it("should be true for a document that is not saved yet while another document is open", () => {
         const state = stateWith(
             { enableAiContextSetup: false },
             setAmbientUserContextAction({
-                userContext: { view: { report: { ref: idRef("q1", "report"), title: "Q1" } } },
+                userContext: { view: { publisherDocument: { ref: idRef("q1", "report"), title: "Q1" } } },
             }),
-            setUserContextAction({ userContext: { view: { report: { title: "Draft" } } } }),
+            setUserContextAction({ userContext: { view: { publisherDocument: { title: "Draft" } } } }),
         );
 
         expect(hasPinnedContextSelector(state)).toBe(true);
@@ -301,25 +301,25 @@ describe("hasPinnedContextSelector", () => {
         expect(hasPinnedContextSelector(state)).toBe(true);
     });
 
-    describe("with an open report", () => {
-        const reportContext = (identifier: string): IGenAIUserContext => ({
-            view: { report: { ref: idRef(identifier, "report"), title: identifier } },
+    describe("with an open document", () => {
+        const documentContext = (identifier: string): IGenAIUserContext => ({
+            view: { publisherDocument: { ref: idRef(identifier, "report"), title: identifier } },
         });
 
-        it("should be false for the ambient report alone", () => {
+        it("should be false for the ambient document alone", () => {
             const state = stateWith(
                 { enableAiContextSetup: true },
-                setAmbientUserContextAction({ userContext: reportContext("q1") }),
+                setAmbientUserContextAction({ userContext: documentContext("q1") }),
             );
 
             expect(hasPinnedContextSelector(state)).toBe(false);
         });
 
-        it("should be true for a report other than the ambient one", () => {
+        it("should be true for a document other than the ambient one", () => {
             const state = stateWith(
                 { enableAiContextSetup: true },
-                setAmbientUserContextAction({ userContext: reportContext("q1") }),
-                setUserContextAction({ userContext: reportContext("q2") }),
+                setAmbientUserContextAction({ userContext: documentContext("q1") }),
+                setUserContextAction({ userContext: documentContext("q2") }),
             );
 
             expect(hasPinnedContextSelector(state)).toBe(true);

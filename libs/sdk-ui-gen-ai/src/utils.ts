@@ -50,56 +50,56 @@ export function getDashboardHref(
 }
 
 // Encoded like the Publisher app's own route builder, so an id with a slash stays one segment.
-export function getReportHref(wsId: string, reportId: string) {
-    return `/workspace/${wsId}/publisher/report/${encodeURIComponent(reportId)}`;
+export function getPublisherDocumentHref(wsId: string, documentId: string) {
+    return `/workspace/${wsId}/publisher/report/${encodeURIComponent(documentId)}`;
 }
 
-function getReportDraftParams(conversationId: string, itemId: string) {
-    // The parameter names are what the reports app reads the draft back by.
+function getPublisherDocumentDraftParams(conversationId: string, itemId: string) {
+    // The parameter names are what the publisher app reads the draft back by.
     return new URLSearchParams({ conversation: conversationId, item: itemId }).toString();
 }
 
-export function getReportDraftHref(wsId: string, conversationId: string, itemId: string) {
-    return `/workspace/${wsId}/publisher/new?${getReportDraftParams(conversationId, itemId)}`;
+export function getPublisherDocumentDraftHref(wsId: string, conversationId: string, itemId: string) {
+    return `/workspace/${wsId}/publisher/new?${getPublisherDocumentDraftParams(conversationId, itemId)}`;
 }
 
-export function getReportModifyHref({
+export function getPublisherDocumentModifyHref({
     workspaceId,
-    reportId,
+    documentId,
     conversationId,
     itemId,
 }: {
     workspaceId: string;
-    reportId: string;
+    documentId: string;
     conversationId: string;
     itemId: string;
 }) {
-    return `${getReportHref(workspaceId, reportId)}?${getReportDraftParams(conversationId, itemId)}`;
+    return `${getPublisherDocumentHref(workspaceId, documentId)}?${getPublisherDocumentDraftParams(conversationId, itemId)}`;
 }
 
-export function getReportItemUrl({
+export function getPublisherDocumentItemUrl({
     workspaceId,
     saved,
-    baseReportId,
+    baseDocumentId,
     conversationId,
     itemId,
 }: {
     workspaceId: string;
     saved?: string | null;
-    baseReportId?: string | null;
+    baseDocumentId?: string | null;
     conversationId?: string;
     itemId?: string;
 }) {
     if (!conversationId || !itemId) {
-        return saved ? getReportHref(workspaceId, saved) : undefined;
+        return saved ? getPublisherDocumentHref(workspaceId, saved) : undefined;
     }
-    const reportId = saved || baseReportId;
-    return reportId
-        ? getReportModifyHref({ workspaceId, reportId, conversationId, itemId })
-        : getReportDraftHref(workspaceId, conversationId, itemId);
+    const documentId = saved || baseDocumentId;
+    return documentId
+        ? getPublisherDocumentModifyHref({ workspaceId, documentId, conversationId, itemId })
+        : getPublisherDocumentDraftHref(workspaceId, conversationId, itemId);
 }
 
-export function formatReportPeriod(
+export function formatPublisherDocumentPeriod(
     periodStart: string,
     periodEnd: string,
     intl: IntlShape,

@@ -140,18 +140,18 @@ describe("GenAIChatContextIndicator", () => {
         );
     });
 
-    it("shows the open report as a chip that toggles its use without a chooser", () => {
-        const report: IGenAIContextObject = {
+    it("shows the open document as a chip that toggles its use without a chooser", () => {
+        const publisherDocument: IGenAIContextObject = {
             id: "q1",
             ref: idRef("q1", "report"),
             title: "Q1 Report",
             nesting: 0,
-            type: "report",
-            where: "view.report",
+            type: "publisherDocument",
+            where: "view.publisherDocument",
         };
         state = makeState(
-            { view: { report: { ref: report.ref, title: report.title } } },
-            { activated: true, report },
+            { view: { publisherDocument: { ref: publisherDocument.ref, title: publisherDocument.title } } },
+            { activated: true, publisherDocument },
         );
 
         render(
@@ -160,23 +160,28 @@ describe("GenAIChatContextIndicator", () => {
             </IntlProvider>,
         );
 
-        expect(screen.getByRole("img", { name: "Report" })).toBeInTheDocument();
+        expect(screen.getByRole("img", { name: "Document" })).toBeInTheDocument();
         expect(screen.queryByRole("button", { expanded: false })).not.toBeInTheDocument();
 
         fireEvent.click(screen.getByText("Q1 Report"));
 
-        expect(dispatch).toHaveBeenCalledWith(selectedContextReferencesAction({ activated: false, report }));
+        expect(dispatch).toHaveBeenCalledWith(
+            selectedContextReferencesAction({ activated: false, publisherDocument }),
+        );
     });
 
-    it("shows a report that is not saved yet as a chip", () => {
-        const report: IGenAIContextObject = {
+    it("shows a document that is not saved yet as a chip", () => {
+        const publisherDocument: IGenAIContextObject = {
             id: "unsaved",
             title: "Draft report",
             nesting: 0,
-            type: "report",
-            where: "view.report",
+            type: "publisherDocument",
+            where: "view.publisherDocument",
         };
-        state = makeState({ view: { report: { title: report.title } } }, { activated: true, report });
+        state = makeState(
+            { view: { publisherDocument: { title: publisherDocument.title } } },
+            { activated: true, publisherDocument },
+        );
 
         render(
             <IntlProvider locale="en" messages={messages}>
@@ -184,24 +189,26 @@ describe("GenAIChatContextIndicator", () => {
             </IntlProvider>,
         );
 
-        expect(screen.getByRole("img", { name: "Report" })).toBeInTheDocument();
+        expect(screen.getByRole("img", { name: "Document" })).toBeInTheDocument();
         fireEvent.click(screen.getByText("Draft report"));
 
-        expect(dispatch).toHaveBeenCalledWith(selectedContextReferencesAction({ activated: false, report }));
+        expect(dispatch).toHaveBeenCalledWith(
+            selectedContextReferencesAction({ activated: false, publisherDocument }),
+        );
     });
 
-    it("names the report chip's toggle after what it does", () => {
-        const report: IGenAIContextObject = {
+    it("names the document chip's toggle after what it does", () => {
+        const publisherDocument: IGenAIContextObject = {
             id: "q1",
             ref: idRef("q1", "report"),
             title: "Q1 Report",
             nesting: 0,
-            type: "report",
-            where: "view.report",
+            type: "publisherDocument",
+            where: "view.publisherDocument",
         };
         state = makeState(
-            { view: { report: { ref: report.ref, title: report.title } } },
-            { activated: true, report },
+            { view: { publisherDocument: { ref: publisherDocument.ref, title: publisherDocument.title } } },
+            { activated: true, publisherDocument },
         );
 
         render(
@@ -212,21 +219,23 @@ describe("GenAIChatContextIndicator", () => {
 
         fireEvent.click(screen.getByRole("button", { name: "Stop using this context" }));
 
-        expect(dispatch).toHaveBeenCalledWith(selectedContextReferencesAction({ activated: false, report }));
+        expect(dispatch).toHaveBeenCalledWith(
+            selectedContextReferencesAction({ activated: false, publisherDocument }),
+        );
     });
 
-    it("removes a report other than the open one through its chip", () => {
-        const openReport: IGenAIContextObject = {
+    it("removes a document other than the open one through its chip", () => {
+        const openDocument: IGenAIContextObject = {
             id: "q1",
             ref: idRef("q1", "report"),
             title: "Q1 Report",
             nesting: 0,
-            type: "report",
-            where: "view.report",
+            type: "publisherDocument",
+            where: "view.publisherDocument",
         };
         state = makeState(
-            { view: { report: { ref: idRef("q2", "report"), title: "Q2 Report" } } },
-            { activated: true, report: openReport },
+            { view: { publisherDocument: { ref: idRef("q2", "report"), title: "Q2 Report" } } },
+            { activated: true, publisherDocument: openDocument },
         );
 
         render(
@@ -244,8 +253,8 @@ describe("GenAIChatContextIndicator", () => {
                     ref: idRef("q2", "report"),
                     title: "Q2 Report",
                     nesting: 0,
-                    type: "report",
-                    where: "view.report",
+                    type: "publisherDocument",
+                    where: "view.publisherDocument",
                 },
             }),
         );

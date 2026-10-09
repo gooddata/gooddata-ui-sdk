@@ -2,6 +2,7 @@
 
 import { action } from "storybook/actions";
 
+import { type WeekStart } from "@gooddata/sdk-model";
 import {
     DateFilter,
     type IDateFilterProps,
@@ -39,6 +40,19 @@ const fixedAbsoluteDateFormWithGranularity: IUiAbsoluteDateFilterForm = {
     ],
     name: "",
     visible: true,
+};
+
+const sundayWeekForm: IUiAbsoluteDateFilterForm = {
+    ...fixedAbsoluteDateFormWithGranularity,
+    from: "2026-12-27",
+    to: "2027-01-23",
+    granularity: "GDC.time.week_us",
+};
+
+const mondayWeekForm: IUiAbsoluteDateFilterForm = {
+    ...sundayWeekForm,
+    from: "2026-12-28",
+    to: "2027-01-24",
 };
 
 const requiredProps = {
@@ -335,6 +349,59 @@ GranularitySwitching.parameters = {
                 { selector: ".s-period-range-picker input" },
                 { selector: '.s-period-range-picker input[date-range="end"]' },
             ],
+            delay: {
+                postOperation: 200,
+            },
+        },
+    },
+} satisfies IStoryParameters;
+
+function WeekListDateFilter({
+    weekForm,
+    weekStart,
+}: {
+    weekForm: IUiAbsoluteDateFilterForm;
+    weekStart?: WeekStart;
+}) {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <DateFilter
+                {...requiredProps}
+                filterOptions={{ ...defaultDateFilterOptions, absoluteForm: weekForm }}
+                selectedFilterOption={weekForm}
+                weekStart={weekStart}
+                isAbsoluteDateFilterGranularityEnabled
+            />
+        </div>
+    );
+}
+
+export function WeekList() {
+    return <WeekListDateFilter weekForm={sundayWeekForm} />;
+}
+WeekList.parameters = {
+    kind: "week list",
+    screenshots: {
+        closed: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
+        "absolute-form-week": {
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
+            clickSelectors: [{ selector: ".s-date-filter-button" }, { selector: ".s-absolute-form-button" }],
+            delay: {
+                postOperation: 200,
+            },
+        },
+    },
+} satisfies IStoryParameters;
+
+export function WeekListWithMondayWeekStart() {
+    return <WeekListDateFilter weekForm={mondayWeekForm} weekStart="Monday" />;
+}
+WeekListWithMondayWeekStart.parameters = {
+    kind: "week list with Monday week start",
+    screenshots: {
+        "absolute-form-week": {
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
+            clickSelectors: [{ selector: ".s-date-filter-button" }, { selector: ".s-absolute-form-button" }],
             delay: {
                 postOperation: 200,
             },

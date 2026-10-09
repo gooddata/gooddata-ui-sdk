@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: d150d2e8fe89769c83460518d7d1109a41a27ac7b75f2bdb44720a1f85baa829
+# schema-hash: ec5aab995abb310888541381dce7782837bdc6d938ea41a20c8f2acfc8c644e3
 
 from __future__ import annotations
 
@@ -163,6 +163,7 @@ __all__ = [
     "LayoutColumn",
     "LayoutDirection",
     "LayoutRow",
+    "LineShape",
     "LineStyleMapping",
     "LineStyleMapping1",
     "Locale",
@@ -2189,6 +2190,12 @@ class ChartFill(BaseModel):
     pattern_name_mapping: dict[str, PatternNameMapping] | None = None
 
 
+class LineShape(Enum):
+    linear = 'linear'
+    spline = 'spline'
+    stepped = 'stepped'
+
+
 class RenderAs(Enum):
     filled = 'filled'
     outline = 'outline'
@@ -2626,10 +2633,12 @@ class ReportPeriod(BaseModel):
         extra='forbid',
     )
     start: constr(pattern=r'^\d{4}-\d{2}-\d{2}$') = Field(
-        ..., description='Reported period start, ISO 8601 date (YYYY-MM-DD), inclusive.'
+        ...,
+        description='Start of the period the document covers, ISO 8601 date (YYYY-MM-DD), inclusive.',
     )
     end: constr(pattern=r'^\d{4}-\d{2}-\d{2}$') = Field(
-        ..., description='Reported period end, ISO 8601 date (YYYY-MM-DD), inclusive.'
+        ...,
+        description='End of the period the document covers, ISO 8601 date (YYYY-MM-DD), inclusive.',
     )
 
 
@@ -2642,7 +2651,7 @@ class ReportPlaceholder1(BaseModel):
     )
     required: bool | None = Field(
         None,
-        description='When true, a report is not considered complete until this slot is filled.',
+        description='When true, a document is not considered complete until this slot is filled.',
     )
 
 
@@ -2657,7 +2666,7 @@ class ReportPlaceholder(RootModel[bool | str | ReportPlaceholder1]):
 class ReportSlotId(RootModel[Identifier]):
     root: Identifier = Field(
         ...,
-        description='An id for this area, unique within the page. It is what a report fills when it takes this page from a template, so an id written down here survives edits to the layout around it.',
+        description='An id for this area, unique within the page. It is what a document fills when it takes this page from a template, so an id written down here survives edits to the layout around it.',
     )
 
 
@@ -2667,7 +2676,7 @@ class ReportText1(BaseModel):
     )
     text: str | None = Field(
         None,
-        description='Markdown with {variable} placeholders. Alongside a prompt this is the materialized generation, stored so the report renders without re-invoking AI.',
+        description='Markdown with {variable} placeholders. Alongside a prompt this is the materialized generation, stored so the document renders without re-invoking AI.',
     )
     prompt: str | None = Field(
         None,
@@ -3833,6 +3842,10 @@ class Config(BaseModel):
     data_labels_style: DataLabelsStyle | None = None
     chart_fill: ChartFill | None = None
     data_points: bool | Literal['auto'] | None = None
+    line_shape: LineShape | None = Field(
+        None,
+        description='Line shape with regards to data points (i.e. line interpolation).',
+    )
     data_totals: bool | Literal['auto'] | None = None
     orientation: str | None = None
     legend_enabled: bool | None = None
@@ -4075,7 +4088,7 @@ class ReportVariable(BaseModel):
     title: Title | None = None
     description: Description | None = None
     default: str | None = Field(
-        None, description='Value used when the report gives the variable none.'
+        None, description='Value used when the document gives the variable none.'
     )
 
 
@@ -4644,18 +4657,18 @@ class VisualizationSlot(BaseModel):
     )
     date: Identifier | None = Field(
         None,
-        description="An id of the date dataset the report's period is applied to as an absolute date filter. Omitted leaves the backend date dataset resolution to decide.",
+        description="An id of the date dataset the document's period is applied to as an absolute date filter. Omitted leaves the backend date dataset resolution to decide.",
     )
     ignore_report_period: bool | None = Field(
         None,
-        description="When true, the implicit date filter derived from the report's period is not applied here.",
+        description="When true, the implicit date filter derived from the document's period is not applied here.",
     )
     filters: DashboardFilters | None = Field(
         None,
-        description='Filters applied on top of the effective page and report filters. A filter targeting the same object replaces the inherited one.',
+        description='Filters applied on top of the effective page and document filters. A filter targeting the same object replaces the inherited one.',
     )
     ignored_filters: list[str] | None = Field(
-        None, description='A list of report and page filters ignored here.'
+        None, description='A list of document and page filters ignored here.'
     )
     placeholder: ReportPlaceholder | None = None
 
@@ -6148,30 +6161,30 @@ class Report1(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    id: Identifier = Field(..., description='A unique identifier of the report.')
+    id: Identifier = Field(..., description='A unique identifier of the document.')
     type: Type50
-    title: Title = Field(..., description='A human readable title for the report.')
+    title: Title = Field(..., description='A human readable title for the document.')
     description: Description | None = Field(
-        None, description='An optional description of the report.'
+        None, description='An optional description of the document.'
     )
     tags: Tags | None = Field(
-        None, description='A list of strings - metadata tags of this report.'
+        None, description='A list of strings - metadata tags of this document.'
     )
     period: ReportPeriod = Field(
         ...,
-        description="The finished period the report covers. It is not a filter: at execution time it materializes as an absolute date filter on each visualization's date dataset, at the lowest precedence, which a visualization opts out of with ignore_report_period.",
+        description="The finished period the document covers. It is not a filter: at execution time it materializes as an absolute date filter on each visualization's date dataset, at the lowest precedence, which a visualization opts out of with ignore_report_period.",
     )
     pages: list[ReportPageBody] = Field(
         ...,
-        description='Ordered pages of the report. A page is a deep copy taken when it was added, and never changes with the page layout or template it came from.',
+        description='Ordered pages of the document. A page is a deep copy taken when it was added, and never changes with the page layout or template it came from.',
     )
     filters: DashboardFilters | None = Field(
         None,
-        description='Report filters; pages and visualizations may extend or override them.',
+        description='Document filters; pages and visualizations may extend or override them.',
     )
     variables: list[ReportVariable] | None = Field(
         None,
-        description="Custom variables the report's text can interpolate as {name}. Built-in variable names win a collision.",
+        description="Custom variables the document's text can interpolate as {name}. Built-in variable names win a collision.",
     )
     takeaways_instruction: str | None = Field(
         None,
@@ -6216,18 +6229,18 @@ class ReportPageLayout1(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(
-        ..., description='A unique identifier of the report page layout.'
+        ..., description='A unique identifier of the document page layout.'
     )
     type: Type51
     title: Title = Field(
-        ..., description='A human readable title for the report page layout.'
+        ..., description='A human readable title for the document page layout.'
     )
     description: Description | None = Field(
-        None, description='An optional description of the report page layout.'
+        None, description='An optional description of the document page layout.'
     )
     tags: Tags | None = Field(
         None,
-        description='A list of strings - metadata tags of this report page layout.',
+        description='A list of strings - metadata tags of this document page layout.',
     )
     kind: ReportPageKind | None = None
     format: ReportPageFormat | None = None
@@ -6238,7 +6251,7 @@ class ReportPageLayout1(BaseModel):
     layout: ReportLayoutNode = Field(..., description='Root of the page layout tree.')
     filters: DashboardFilters | None = Field(
         None,
-        description='Page filters, carried into the template and report content this page is copied into.',
+        description='Page filters, carried into the template and document content this page is copied into.',
     )
 
 
@@ -6247,21 +6260,21 @@ class ReportTemplate1(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(
-        ..., description='A unique identifier of the report template.'
+        ..., description='A unique identifier of the document template.'
     )
     type: Type52
     title: Title = Field(
-        ..., description='A human readable title for the report template.'
+        ..., description='A human readable title for the document template.'
     )
     description: Description | None = Field(
-        None, description='An optional description of the report template.'
+        None, description='An optional description of the document template.'
     )
     tags: Tags | None = Field(
-        None, description='A list of strings - metadata tags of this report template.'
+        None, description='A list of strings - metadata tags of this document template.'
     )
     pages: list[ReportPageBody] = Field(
         ...,
-        description='Ordered pages of the template. A report created from the template deep-copies them and keeps no reference back, so the report stays frozen while the template evolves.',
+        description='Ordered pages of the template. A document created from the template deep-copies them and keeps no reference back, so the document stays frozen while the template evolves.',
     )
     filters: DashboardFilters | None = Field(
         None,
@@ -6269,7 +6282,7 @@ class ReportTemplate1(BaseModel):
     )
     variables: list[ReportVariable] | None = Field(
         None,
-        description="Custom variables the template's text can interpolate as {name}. A report created from it gives them values.",
+        description="Custom variables the template's text can interpolate as {name}. A document created from it gives them values.",
     )
     takeaways_instruction: str | None = Field(
         None,
@@ -6345,30 +6358,30 @@ class Report(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    id: Identifier = Field(..., description='A unique identifier of the report.')
+    id: Identifier = Field(..., description='A unique identifier of the document.')
     type: Type66
-    title: Title = Field(..., description='A human readable title for the report.')
+    title: Title = Field(..., description='A human readable title for the document.')
     description: Description | None = Field(
-        None, description='An optional description of the report.'
+        None, description='An optional description of the document.'
     )
     tags: Tags | None = Field(
-        None, description='A list of strings - metadata tags of this report.'
+        None, description='A list of strings - metadata tags of this document.'
     )
     period: ReportPeriod = Field(
         ...,
-        description="The finished period the report covers. It is not a filter: at execution time it materializes as an absolute date filter on each visualization's date dataset, at the lowest precedence, which a visualization opts out of with ignore_report_period.",
+        description="The finished period the document covers. It is not a filter: at execution time it materializes as an absolute date filter on each visualization's date dataset, at the lowest precedence, which a visualization opts out of with ignore_report_period.",
     )
     pages: list[ReportPageBody] = Field(
         ...,
-        description='Ordered pages of the report. A page is a deep copy taken when it was added, and never changes with the page layout or template it came from.',
+        description='Ordered pages of the document. A page is a deep copy taken when it was added, and never changes with the page layout or template it came from.',
     )
     filters: DashboardFilters | None = Field(
         None,
-        description='Report filters; pages and visualizations may extend or override them.',
+        description='Document filters; pages and visualizations may extend or override them.',
     )
     variables: list[ReportVariable] | None = Field(
         None,
-        description="Custom variables the report's text can interpolate as {name}. Built-in variable names win a collision.",
+        description="Custom variables the document's text can interpolate as {name}. Built-in variable names win a collision.",
     )
     takeaways_instruction: str | None = Field(
         None,
@@ -6396,7 +6409,7 @@ class ReportPageBody(BaseModel):
     layout: ReportLayoutNode = Field(..., description='Root of the page layout.')
     filters: DashboardFilters | None = Field(
         None,
-        description="Page filters, merged over the report's own. A filter targeting the same object replaces the inherited one; a visualization's own filters apply on top.",
+        description="Page filters, merged over the document's own. A filter targeting the same object replaces the inherited one; a visualization's own filters apply on top.",
     )
 
 
@@ -6405,18 +6418,18 @@ class ReportPageLayout(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(
-        ..., description='A unique identifier of the report page layout.'
+        ..., description='A unique identifier of the document page layout.'
     )
     type: Type67
     title: Title = Field(
-        ..., description='A human readable title for the report page layout.'
+        ..., description='A human readable title for the document page layout.'
     )
     description: Description | None = Field(
-        None, description='An optional description of the report page layout.'
+        None, description='An optional description of the document page layout.'
     )
     tags: Tags | None = Field(
         None,
-        description='A list of strings - metadata tags of this report page layout.',
+        description='A list of strings - metadata tags of this document page layout.',
     )
     kind: ReportPageKind | None = None
     format: ReportPageFormat | None = None
@@ -6427,7 +6440,7 @@ class ReportPageLayout(BaseModel):
     layout: ReportLayoutNode = Field(..., description='Root of the page layout tree.')
     filters: DashboardFilters | None = Field(
         None,
-        description='Page filters, carried into the template and report content this page is copied into.',
+        description='Page filters, carried into the template and document content this page is copied into.',
     )
 
 
@@ -6436,21 +6449,21 @@ class ReportTemplate(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(
-        ..., description='A unique identifier of the report template.'
+        ..., description='A unique identifier of the document template.'
     )
     type: Type68
     title: Title = Field(
-        ..., description='A human readable title for the report template.'
+        ..., description='A human readable title for the document template.'
     )
     description: Description | None = Field(
-        None, description='An optional description of the report template.'
+        None, description='An optional description of the document template.'
     )
     tags: Tags | None = Field(
-        None, description='A list of strings - metadata tags of this report template.'
+        None, description='A list of strings - metadata tags of this document template.'
     )
     pages: list[ReportPageBody] = Field(
         ...,
-        description='Ordered pages of the template. A report created from the template deep-copies them and keeps no reference back, so the report stays frozen while the template evolves.',
+        description='Ordered pages of the template. A document created from the template deep-copies them and keeps no reference back, so the document stays frozen while the template evolves.',
     )
     filters: DashboardFilters | None = Field(
         None,
@@ -6458,7 +6471,7 @@ class ReportTemplate(BaseModel):
     )
     variables: list[ReportVariable] | None = Field(
         None,
-        description="Custom variables the template's text can interpolate as {name}. A report created from it gives them values.",
+        description="Custom variables the template's text can interpolate as {name}. A document created from it gives them values.",
     )
     takeaways_instruction: str | None = Field(
         None,

@@ -148,6 +148,17 @@ export const conversationByIdSelector: (
         state.conversations?.find((conversation) => conversation.localId === conversationId),
 );
 
+export const conversationByIdOrLocalIdSelector: (
+    state: RootState,
+    conversationId: string,
+) => IChatConversationLocal | undefined = createSelector(
+    [messagesSliceSelector, (_state: RootState, conversationId: string) => conversationId],
+    (state, conversationId) =>
+        [state.currentConversation, ...(state.conversations ?? [])].find(
+            (conversation) => conversation?.id === conversationId || conversation?.localId === conversationId,
+        ),
+);
+
 export const conversationsSelector: (state: RootState) => IChatConversationLocal[] | undefined =
     createSelector(messagesSliceSelector, (state) => state.conversations);
 

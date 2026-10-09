@@ -83,7 +83,7 @@ export const ColoringCustomPalette = () =>
                 visualizationUrl: "local:area",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(0, 5, 1),
+        getScenariosGroupByIndexes(0, 6, 1),
     )();
 ColoringCustomPalette.parameters = {
     kind: "coloring - custom palette",

@@ -4,7 +4,6 @@ import { type ComponentType, type MutableRefObject } from "react";
 
 import { useIntl } from "react-intl";
 
-import { type WeekStart } from "@gooddata/sdk-model";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
 
 import { type IFilterButtonCustomIcon } from "../../shared/interfaces/index.js";
@@ -35,7 +34,6 @@ export interface IDateFilterButtonLocalizedProps {
     dropdownId?: string;
     onClick?: () => void;
     ButtonComponent?: ComponentType<IDateFilterButtonProps>;
-    weekStart?: WeekStart;
 }
 
 export function DateFilterButtonLocalized({
@@ -50,7 +48,6 @@ export function DateFilterButtonLocalized({
     dropdownId,
     onClick,
     ButtonComponent,
-    weekStart,
 }: IDateFilterButtonLocalizedProps) {
     const intl = useIntl();
     const defaultTitle = intl.formatMessage({ id: "dateFilterDropdown.title" });
@@ -60,12 +57,7 @@ export function DateFilterButtonLocalized({
     ) : (
         <>{textTitle}</>
     );
-    const textSubtitle = useDateFilterText({
-        filter: dateFilterOption,
-        dateFormat,
-        labelMode: "full",
-        weekStart,
-    });
+    const textSubtitle = useDateFilterText({ filter: dateFilterOption, dateFormat, labelMode: "full" });
 
     const Component = ButtonComponent ?? DateFilterButton;
 
@@ -90,7 +82,6 @@ export function DateFilterButtonLocalized({
                     labelMode="full"
                     shortened
                     tooltipAlignPoints={TOOLTIP_ALIGN_POINT}
-                    weekStart={weekStart}
                 />
             </span>
         </Component>

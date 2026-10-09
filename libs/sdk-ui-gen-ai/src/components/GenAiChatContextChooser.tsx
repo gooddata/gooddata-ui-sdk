@@ -9,6 +9,7 @@ import { Dropdown, UiIconButton, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import {
     ambientContextSelector,
+    contextSetupEnabledSelector,
     selectedContextSelector,
     userContextSelector,
 } from "../store/chatWindow/chatWindowSelectors.js";
@@ -33,6 +34,7 @@ export function GenAiChatContextChooser({ onAddContext }: GenAiChatContextChoose
     const intl = useIntl();
     const dispatch = useDispatch();
     const titleId = useIdPrefixed("context-chooser-title");
+    const isContextSetupEnabled = useSelector(contextSetupEnabledSelector);
     const ambient = useSelector((state: RootState) => ambientContextSelector(state));
     const selected = useSelector((state: RootState) => selectedContextSelector(state));
     const active = useSelector((state: RootState) => userContextSelector(state));
@@ -56,6 +58,10 @@ export function GenAiChatContextChooser({ onAddContext }: GenAiChatContextChoose
         },
         [dispatch, setSearch],
     );
+
+    if (!isContextSetupEnabled) {
+        return null;
+    }
 
     return (
         <div className="gd-gen-ai-chat__input__context">

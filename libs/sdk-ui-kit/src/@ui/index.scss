@@ -61,10 +61,13 @@
 @use "./UiToolbarIconSelect/UiToolbarIconSelect.scss";
 @use "./UiToolbarSelect/UiToolbarSelect.scss";
 @use "./UiToolbarStepper/UiToolbarStepper.scss";
+@use "./UiToolbarInput/UiToolbarInput.scss";
+@use "./UiToolbarPagination/UiToolbarPagination.scss";
 @use "./UiToolbarSegmentedControl/UiToolbarSegmentedControl.scss";
 @use "./UiToolbarDivider/UiToolbarDivider.scss";
 @use "./UiToolbarColorSwatch/UiToolbarColorSwatch.scss";
 @use "./UiResizableSidebar/UiResizableSidebar.scss";
+@use "./UiResizableSidebar/UiResizableSidebarNavigation.scss";
 
 // `--gd-font-family` is a `:root` variable only; there is no global `body` font
 // declaration. Apply it once to every kit root so standalone components don't

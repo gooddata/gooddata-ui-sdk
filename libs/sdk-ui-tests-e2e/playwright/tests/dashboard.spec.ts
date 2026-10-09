@@ -28,7 +28,7 @@ test.describe("Dashboard", { additionalWindowProperties: { useSafeLocalIdentifie
 
     test.describe("Dashboard actions", {}, () => {
         test(
-            "should able to delete dashboard after save as new",
+            "should delete a dashboard after save as new",
             {
                 tag: ["@pre-merge-integrated"],
             },
@@ -50,7 +50,7 @@ test.describe("Dashboard", { additionalWindowProperties: { useSafeLocalIdentifie
         );
 
         test(
-            "should able to scroll vertical/ horizontal on widget",
+            "should scroll a widget vertically and horizontally",
             {
                 tag: ["@pre-merge-integrated"],
             },
@@ -79,7 +79,7 @@ test.describe("Dashboard", { additionalWindowProperties: { useSafeLocalIdentifie
         );
 
         test(
-            "should direct to view mode after save as new",
+            "should switch to view mode after save as new",
             {
                 tag: ["@pre-merge-integrated"],
             },

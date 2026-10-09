@@ -11,7 +11,7 @@ export default {
 };
 
 export const $40x70WithoutXAxisWithoutYAxisVerySmallContainer = () =>
-    groupedStory(getScenariosGroupByIndexes(11, 20), {
+    groupedStory(getScenariosGroupByIndexes(11, 21), {
         width: 40,
         height: 70,
     })();
@@ -23,7 +23,7 @@ $40x70WithoutXAxisWithoutYAxisVerySmallContainer.parameters = {
 } satisfies IStoryParameters;
 
 export const $650x90WithoutXAxisLabels = () =>
-    groupedStory(getScenariosGroupByIndexes(11, 21), {
+    groupedStory(getScenariosGroupByIndexes(11, 22), {
         width: 650,
         height: 90,
     })();
@@ -35,7 +35,7 @@ $650x90WithoutXAxisLabels.parameters = {
 } satisfies IStoryParameters;
 
 export const $650x140WithoutXAxisTitle = () =>
-    groupedStory(getScenariosGroupByIndexes(11, 22), {
+    groupedStory(getScenariosGroupByIndexes(11, 23), {
         width: 650,
         height: 140,
     })();
@@ -47,7 +47,7 @@ $650x140WithoutXAxisTitle.parameters = {
 } satisfies IStoryParameters;
 
 export const $60x354WithoutYAxisLabels = () =>
-    groupedStory(getScenariosGroupByIndexes(11, 23), {
+    groupedStory(getScenariosGroupByIndexes(11, 24), {
         width: 60,
         height: 354,
     })();
@@ -59,7 +59,7 @@ $60x354WithoutYAxisLabels.parameters = {
 } satisfies IStoryParameters;
 
 export const $140x354WithoutYAxisTitle = () =>
-    groupedStory(getScenariosGroupByIndexes(11, 24), {
+    groupedStory(getScenariosGroupByIndexes(11, 25), {
         width: 140,
         height: 354,
     })();
@@ -71,7 +71,7 @@ $140x354WithoutYAxisTitle.parameters = {
 } satisfies IStoryParameters;
 
 export const $60x354WithoutYAxisLabelsWithYAxisTitle = () =>
-    groupedStory(getScenariosGroupByIndexes(11, 25), {
+    groupedStory(getScenariosGroupByIndexes(11, 26), {
         width: 60,
         height: 354,
     })();

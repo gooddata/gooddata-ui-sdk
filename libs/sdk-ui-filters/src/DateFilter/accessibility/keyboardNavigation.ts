@@ -70,7 +70,7 @@ const findNextFocusableElement = (
     return items[nextIndex];
 };
 
-// Iterates through dropdown list, exclude period input, cancel and apply button.
+// Cycles Tab focus through the visible focusable elements of the dropdown, wrapping at both ends.
 const handleTabNavigation = (
     event: KeyboardEvent,
     dateFilterContainerRef: MutableRefObject<HTMLDivElement | null>,
@@ -82,15 +82,7 @@ const handleTabNavigation = (
     event.stopPropagation();
     event.preventDefault();
 
-    const focusableElementsSelector = [
-        '[tabindex]:not([tabindex="-1"]):not(:disabled)',
-        "input:not(:disabled)",
-        'button:not([tabindex="-1"]):not(:disabled)',
-    ].join(",");
-
-    const focusableElements = Array.from(
-        dateFilterContainerRef.current?.querySelectorAll<HTMLElement>(focusableElementsSelector) ?? [],
-    ).filter((element) => !element.closest("[hidden]"));
+    const { focusableElements } = getFocusableElements(dateFilterContainerRef.current);
 
     const active = document.activeElement as HTMLElement;
     const currentIndex = focusableElements.indexOf(active);

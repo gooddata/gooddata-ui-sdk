@@ -18,6 +18,7 @@ import { GranularityTabs } from "../GranularityTabs.js";
 import { type DateFilterOption, type IUiAbsoluteDateFilterForm } from "../interfaces/index.js";
 import { PeriodRangePicker } from "../PeriodRangePicker/PeriodRangePicker.js";
 import { type IPeriodRange, type PeriodRangePickerGranularity } from "../PeriodRangePicker/types.js";
+import { WeekRangeList } from "../WeekRangeList/WeekRangeList.js";
 
 import {
     dateFilterValueToDateRange,
@@ -52,8 +53,8 @@ export interface IAbsoluteDateFilterFormProps {
     submitForm: () => void;
     customRangeHint?: ReactNode;
     /**
-     * Reports whether the `PeriodRangePicker` branch's fields currently form a submittable range - see
-     * `IPeriodRangePickerProps.onValidityChange`. Not called for the classic `DateRangePicker` branch.
+     * Reports whether the `PeriodRangePicker` or `WeekRangeList` branch currently forms a submittable range -
+     * see `IPeriodRangePickerProps.onValidityChange`. Not called for the classic `DateRangePicker` branch.
      */
     onPeriodRangeValidityChange?: (isValid: boolean) => void;
     /**
@@ -151,8 +152,21 @@ export function AbsoluteDateFilterForm({
     // TODO MC-5322: time granularity is not supported in the new picker yet - the hour/minute/second can't be
     // modified, so the selected range always spans the whole day (00:00-23:59[:59] once time is enabled).
     // This will be added as part of MC-5322.
+    const isPeriodPicker = showGranularityTabs && isPeriodPickerGranularity(selectedGranularity);
     const picker =
-        showGranularityTabs && isPeriodPickerGranularity(selectedGranularity) ? (
+        isPeriodPicker && selectedGranularity === "GDC.time.week_us" ? (
+            <WeekRangeList
+                range={dateFilterValueToPeriodRange(selectedFilterOption)}
+                onRangeChange={handlePeriodRangeChange}
+                weekStart={weekStart}
+                dateFormat={dateFormat}
+                isMobile={isMobile}
+                customRangeHint={customRangeHint}
+                onValidityChange={onPeriodRangeValidityChange}
+                withoutApply={withoutApply}
+                submitForm={submitForm}
+            />
+        ) : isPeriodPicker ? (
             <PeriodRangePicker
                 key={selectedGranularity}
                 granularity={selectedGranularity}

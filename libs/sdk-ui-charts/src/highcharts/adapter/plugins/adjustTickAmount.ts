@@ -17,8 +17,10 @@
 
 import Highcharts from "highcharts/esm/highcharts.js";
 
-import { isLineChart } from "../../chartTypes/_util/common.js";
-import { type Axis, type Series, type WrapProceedFunction } from "../../lib/index.js";
+import { VisualizationTypes } from "@gooddata/sdk-ui";
+
+import { convertToChartType, isLineChart } from "../../chartTypes/_util/common.js";
+import { type Axis, type WrapProceedFunction } from "../../lib/index.js";
 import { type UnsafeInternals } from "../../typings/unsafe.js";
 
 interface IBaseAndAlignedAxes {
@@ -324,10 +326,7 @@ function isAxisWithLineChartType(axis: Axis): boolean {
         return true;
     }
 
-    const { series } = axis;
-    return series.reduce((result: boolean, item: Series) => {
-        return isLineChart(item.type) ? true : result;
-    }, false);
+    return axis.series.some(({ type }) => convertToChartType(type) === VisualizationTypes.LINE);
 }
 
 function isSingleAxisChart(axis: Axis): boolean {

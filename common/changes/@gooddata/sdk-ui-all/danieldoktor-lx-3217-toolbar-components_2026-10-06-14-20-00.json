@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-kit: Add UiToolbarInput and UiToolbarPagination, give UiToolbarStepper a bordered value field and drop its pagination variant, and split the toolbar radius into --gd-toolbar-borderRadius (container, 4px, themable via the new toolbar.borderRadius theme property) and --gd-toolbar-control-borderRadius (controls, 2px)",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "daniel.doktor@gooddata.com"
+}

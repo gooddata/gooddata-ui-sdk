@@ -22,7 +22,6 @@ import { type IKdaDialogProps } from "../types.js";
 import { useChangeAnalysis } from "./hooks/useChangeAnalysis.js";
 import { useCloseOnEscape } from "./hooks/useCloseOnEscape.js";
 import { useKdaDialogAccessibility } from "./hooks/useKdaDialogAccessibility.js";
-import { useKdaDialogTooltipsOverride } from "./hooks/useKdaDialogTooltipsOverride.js";
 import { useValidAttributes } from "./hooks/useValidAttributes.js";
 import { KdaDialogControls } from "./KdaDialogControls.js";
 import { KdaDialogFloatingStatusBar, getFloatingStatus } from "./KdaDialogFloatingStatusBar.js";
@@ -75,7 +74,6 @@ export function KdaDialog({
 
     useChangeAnalysis();
     useValidAttributes();
-    useKdaDialogTooltipsOverride();
 
     const closeOnEscape = useCloseOnEscape();
 

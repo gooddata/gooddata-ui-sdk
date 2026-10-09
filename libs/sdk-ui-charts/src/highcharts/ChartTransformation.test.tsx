@@ -7,6 +7,7 @@ import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace"
 import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { DataViewFacade, IntlWrapper, VisualizationTypes, withIntlForTest } from "@gooddata/sdk-ui";
+import { OverlayZIndexContext } from "@gooddata/sdk-ui-kit";
 
 import { type IChartConfig } from "../interfaces/chartConfig.js";
 import { PieChartWithMetricsOnlyFundata } from "../testUtils/fixturesData/PieChartWithMetricsOnlyFundata.fixture.js";
@@ -134,6 +135,30 @@ describe("ChartTransformation", () => {
             expect(colors).toMatchSnapshot();
         },
     );
+
+    describe("tooltip z-index", () => {
+        function renderTooltipZIndex(config: IChartConfig, containingOverlayZIndex?: number) {
+            const renderer = vi.fn().mockReturnValue(<div />);
+            render(
+                <OverlayZIndexContext.Provider value={containingOverlayZIndex}>
+                    {createComponent({ renderer, config: { ...defaultProps.config, ...config } })}
+                </OverlayZIndexContext.Provider>,
+            );
+            return renderer.mock.calls[0][0].hcOptions.tooltip.style.zIndex;
+        }
+
+        it("should use the charts default outside of any overlay", () => {
+            expect(renderTooltipZIndex({})).toBe(3005);
+        });
+
+        it("should place the tooltip one above the containing overlay", () => {
+            expect(renderTooltipZIndex({}, 5001)).toBe(5002);
+        });
+
+        it("should prefer the z-index from the chart config over the containing overlay", () => {
+            expect(renderTooltipZIndex({ tooltip: { zIndex: 42 } }, 5001)).toBe(42);
+        });
+    });
 
     describe("Legend config", () => {
         const defaultConfig = {

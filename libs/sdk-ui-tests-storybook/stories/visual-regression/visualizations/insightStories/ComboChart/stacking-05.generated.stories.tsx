@@ -87,7 +87,7 @@ export const DiscardStackingWhenPrimaryMeasuresAreNotSpecifiedSecondaryIsColumn 
                 visualizationUrl: "local:combo2",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(5, 28, 0),
+        getScenariosGroupByIndexes(5, 29, 0),
     )();
 DiscardStackingWhenPrimaryMeasuresAreNotSpecifiedSecondaryIsColumn.parameters = {
     kind: "discard stacking when primary measures are not specified - secondary is column",
@@ -179,7 +179,7 @@ export const DiscardStackingWhenPrimaryMeasuresAreNotSpecifiedSecondaryIsArea = 
                 visualizationUrl: "local:combo2",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(5, 28, 1),
+        getScenariosGroupByIndexes(5, 29, 1),
     )();
 DiscardStackingWhenPrimaryMeasuresAreNotSpecifiedSecondaryIsArea.parameters = {
     kind: "discard stacking when primary measures are not specified - secondary is area",

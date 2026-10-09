@@ -15,7 +15,7 @@ const DATA_LABELS_SELECTOR = ".highcharts-data-labels .highcharts-label text";
 
 test.describe("Funnel Chart", { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } }, () => {
     test(
-        "check default sort of funnel chart",
+        "should sort slices by value descending by default",
         {
             tag: ["@pre-merge-integrated"],
         },

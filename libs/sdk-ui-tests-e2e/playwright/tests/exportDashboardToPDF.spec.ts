@@ -27,7 +27,7 @@ test.describe(
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test(
-            "should be able to export dashboard with temporary filter to PDF",
+            "should export a dashboard with a temporary filter to PDF",
             {
                 tag: ["@pre-merge-integrated"],
             },

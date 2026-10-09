@@ -41,7 +41,7 @@ export type {
     GeoDecoratorFactory,
     OrganizationExportTemplatesDecoratorFactory,
     WorkspaceExportTemplatesDecoratorFactory,
-    WorkspaceReportsDecoratorFactory,
+    WorkspacePublisherDecoratorFactory,
     ObjectPermissionsDecoratorFactory,
 } from "./decoratedBackend/types.js";
 
@@ -70,9 +70,9 @@ export { DecoratedOrganizationExportTemplatesService } from "./decoratedBackend/
 
 export { DecoratedWorkspaceExportTemplatesService } from "./decoratedBackend/workspaceExportTemplates.js";
 
-export { DecoratedWorkspaceReportsService } from "./decoratedBackend/workspaceReports.js";
+export { DecoratedWorkspacePublisherService } from "./decoratedBackend/workspacePublisher.js";
 
-export { InMemoryWorkspaceReportsService } from "./dummyBackend/InMemoryWorkspaceReportsService.js";
+export { InMemoryWorkspacePublisherService } from "./dummyBackend/InMemoryWorkspacePublisherService.js";
 
 export { DecoratedWorkspaceSettingsService } from "./decoratedBackend/workspaceSettings.js";
 

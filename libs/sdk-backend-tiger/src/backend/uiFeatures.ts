@@ -92,7 +92,6 @@ export enum TigerFeaturesNames {
     EnableGenAiInteractionIntelligence = "enableGenAiInteractionIntelligence",
     EnableGenAiInteractionIntelligenceTimeline = "enableGenAiInteractionIntelligence_timeline",
     EnableGenAiAgenticDataShareOptOut = "enableGenAiAgenticDataShareOptOut",
-    EnableGenAiDashboardSummarySkill = "enableGenAiDashboardSummarySkill",
     AIChatSearchLimit = "aiChatSearchLimit",
     EnableRichTextWidgetFilterConfiguration = "enableRichTextWidgetFilterConfiguration",
     EnableDashboardSectionHeadersDateDataSet = "enableDashboardSectionHeadersDateDataSet",
@@ -134,6 +133,7 @@ export enum TigerFeaturesNames {
     EnableBusinessBriefingReportsApp = "enableBusinessBriefingReportsApp",
     EnableReportsSubsections = "enableReportsSubsections",
     EnableEmbeddingWriteCommands = "enableEmbeddingWriteCommands",
+    EnableLocalizationOverview = "enableLocalizationOverview",
 }
 
 export type ITigerFeatureFlags = {
@@ -249,7 +249,6 @@ export type ITigerFeatureFlags = {
     enableGenAiDashboardBuilderSkill: (typeof FeatureFlagsValues)["enableGenAiDashboardBuilderSkill"][number];
     enableGenAiRightPanel: (typeof FeatureFlagsValues)["enableGenAiRightPanel"][number];
     enableGenAiAgenticDataShareOptOut: (typeof FeatureFlagsValues)["enableGenAiAgenticDataShareOptOut"][number];
-    enableGenAiDashboardSummarySkill: (typeof FeatureFlagsValues)["enableGenAiDashboardSummarySkill"][number];
     enableAutomationTrigger: (typeof FeatureFlagsValues)["enableAutomationTrigger"][number];
     enableUserDataFiltersUi: (typeof FeatureFlagsValues)["enableUserDataFiltersUi"][number];
     enableEnhancedInsightPicker: (typeof FeatureFlagsValues)["enableEnhancedInsightPicker"][number];
@@ -263,6 +262,7 @@ export type ITigerFeatureFlags = {
     enableBusinessBriefingReportsApp: (typeof FeatureFlagsValues)["enableBusinessBriefingReportsApp"][number];
     enableReportsSubsections: (typeof FeatureFlagsValues)["enableReportsSubsections"][number];
     enableEmbeddingWriteCommands: (typeof FeatureFlagsValues)["enableEmbeddingWriteCommands"][number];
+    enableLocalizationOverview: (typeof FeatureFlagsValues)["enableLocalizationOverview"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -378,7 +378,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableGenAiDashboardBuilderSkill: false,
     enableGenAiRightPanel: false,
     enableGenAiAgenticDataShareOptOut: false,
-    enableGenAiDashboardSummarySkill: false,
     enableAutomationTrigger: false,
     enableUserDataFiltersUi: false,
     enableEnhancedInsightPicker: false,
@@ -392,6 +391,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableBusinessBriefingReportsApp: false,
     enableReportsSubsections: false,
     enableEmbeddingWriteCommands: false,
+    enableLocalizationOverview: false,
 };
 
 export const FeatureFlagsValues = {
@@ -507,7 +507,6 @@ export const FeatureFlagsValues = {
     enableGenAiDashboardBuilderSkill: [true, false] as const,
     enableGenAiRightPanel: [true, false] as const,
     enableGenAiAgenticDataShareOptOut: [true, false] as const,
-    enableGenAiDashboardSummarySkill: [false, true] as const,
     enableAutomationTrigger: [true, false] as const,
     enableUserDataFiltersUi: [true, false] as const,
     enableEnhancedInsightPicker: [true, false] as const,
@@ -521,4 +520,5 @@ export const FeatureFlagsValues = {
     enableBusinessBriefingReportsApp: [false, true] as const,
     enableReportsSubsections: [false, true] as const,
     enableEmbeddingWriteCommands: [true, false] as const,
+    enableLocalizationOverview: [false, true] as const,
 };

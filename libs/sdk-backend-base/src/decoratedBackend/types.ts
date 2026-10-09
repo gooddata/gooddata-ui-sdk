@@ -16,7 +16,7 @@ import {
     type IWorkspaceInsightsService,
     type IWorkspaceMeasuresService,
     type IWorkspaceObjectPermissionsService,
-    type IWorkspaceReportsService,
+    type IWorkspacePublisherService,
     type IWorkspaceSettingsService,
 } from "@gooddata/sdk-backend-spi";
 
@@ -133,10 +133,10 @@ export type WorkspaceExportTemplatesDecoratorFactory = (
 /**
  * @alpha
  */
-export type WorkspaceReportsDecoratorFactory = (
-    reports: IWorkspaceReportsService,
+export type WorkspacePublisherDecoratorFactory = (
+    publisher: IWorkspacePublisherService,
     workspace: string,
-) => IWorkspaceReportsService;
+) => IWorkspacePublisherService;
 
 /**
  * @alpha
@@ -169,6 +169,6 @@ export type DecoratorFactories = {
     geo?: GeoDecoratorFactory;
     organizationExportTemplates?: OrganizationExportTemplatesDecoratorFactory;
     workspaceExportTemplates?: WorkspaceExportTemplatesDecoratorFactory;
-    workspaceReports?: WorkspaceReportsDecoratorFactory;
+    workspacePublisher?: WorkspacePublisherDecoratorFactory;
     objectPermissions?: ObjectPermissionsDecoratorFactory;
 };

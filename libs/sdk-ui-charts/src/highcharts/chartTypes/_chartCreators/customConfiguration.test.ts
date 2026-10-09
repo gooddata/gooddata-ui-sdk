@@ -907,10 +907,10 @@ describe("getCustomizedConfiguration", () => {
             ["column", { visible: "auto" }, { visible: "auto", totalsVisible: "auto" }, false, true],
             ["column", { visible: true }, { visible: true, totalsVisible: true }, true, true],
             ["column", { visible: false }, { visible: false, totalsVisible: false }, false, false],
-        ])(
+        ] as const)(
             "should return datalabel configuration for %s with DataLabels %s",
             (
-                chartType: string,
+                chartType,
                 dataLabels: IDataLabelsConfig,
                 expectedGdcOption: any,
                 allowedOverlap: boolean,
@@ -937,15 +937,35 @@ describe("getCustomizedConfiguration", () => {
         );
     });
 
+    describe("tooltip z-index", () => {
+        const tooltipChartOptions = {
+            ...chartOptions,
+            actions: { tooltip: () => "" },
+            data: getData([{ y: 1 }]),
+        };
+
+        it("should render the tooltip outside of the chart with the default z-index", () => {
+            const result = getCustomizedConfiguration(makeCtx({ chartOptions: tooltipChartOptions }));
+
+            expect(result.tooltip).toMatchObject({ outside: true, style: { zIndex: 3005 } });
+        });
+
+        it("should use the z-index from the chart config", () => {
+            const result = getCustomizedConfiguration(
+                makeCtx({ chartOptions: tooltipChartOptions, chartConfig: { tooltip: { zIndex: 6002 } } }),
+            );
+
+            expect(result.tooltip).toMatchObject({ outside: true, style: { zIndex: 6002 } });
+        });
+    });
+
     describe("tooltip followPointer", () => {
         // convert [bar, column, combo] to [ [bar] , [column] , [combo] ]
-        const CHART_TYPES = supportedTooltipFollowPointerChartTypes.map((chartType: string): string[] => [
-            chartType,
-        ]);
+        const CHART_TYPES = supportedTooltipFollowPointerChartTypes.map((chartType) => [chartType]);
 
         it.each(CHART_TYPES)(
             "should follow pointer for %s chart when data max is above axis max",
-            (chartType: string) => {
+            (chartType) => {
                 const result = getCustomizedConfiguration(
                     makeCtx({
                         chartOptions: {
@@ -966,7 +986,7 @@ describe("getCustomizedConfiguration", () => {
 
         it.each(CHART_TYPES)(
             "should not follow pointer for %s chart when data max is below axis max",
-            (chartType: string) => {
+            (chartType) => {
                 const result = getCustomizedConfiguration(
                     makeCtx({
                         chartOptions: {
@@ -1314,9 +1334,9 @@ describe("getCustomizedConfiguration", () => {
     });
 
     describe("get X axis with drill config", () => {
-        const chartTypes = supportedStackingAttributesChartTypes.map((chartType: string) => [chartType]);
+        const chartTypes = supportedStackingAttributesChartTypes.map((chartType) => [chartType]);
 
-        it.each(chartTypes)('should set "drillConfig" to xAxis to %s chart', (chartType: string) => {
+        it.each(chartTypes)('should set "drillConfig" to xAxis to %s chart', (chartType) => {
             const drillConfig = makeDrillConfig({ onDrill: () => false });
             const result = getCustomizedConfiguration(
                 makeCtx({
@@ -1406,7 +1426,7 @@ describe("charts without a category axis", () => {
     // category whose name is an object and the chart fails to render
     it.each([[VisualizationTypes.SANKEY], [VisualizationTypes.DEPENDENCY_WHEEL]])(
         "should not set x axis categories for %s",
-        (type: string) => {
+        (type) => {
             const result = getCustomizedConfiguration(
                 makeCtx({
                     chartOptions: {
@@ -1512,7 +1532,7 @@ describe("highlighting configuration", () => {
         expect(result.chart!.events).toEqual({ load: expect.any(Function) });
     });
 
-    it.each([["pie"], ["donut"]])("should not return load event", (type: string) => {
+    it.each([["pie"], ["donut"]] as const)("should not return load event", (type) => {
         const result = getChartHighlightingConfiguration(
             makeConfiguratorCtx({ chartOptions: { ...chartOptions, type } }),
         );

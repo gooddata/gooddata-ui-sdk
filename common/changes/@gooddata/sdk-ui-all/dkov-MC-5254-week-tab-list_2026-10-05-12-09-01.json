@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-filters: The Week tab of the static period picker lists weeks grouped by month, and the filter button names a weekly range by its days. `getDateFilterRepresentation` and `getDateFilterTitleUsingTranslator` no longer take a week start.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

@@ -31,6 +31,18 @@ function testInsight(buckets: IBucket[]): IInsightDefinition {
     };
 }
 
+const defaultProps: IConfigurationPanelContentProps = {
+    isError: false,
+    isLoading: false,
+    locale: DefaultLocale,
+    pushData: () => {},
+};
+
+const defaultPropsWithType: IConfigurationPanelContentProps = {
+    ...defaultProps,
+    type: VisualizationTypes.BULLET,
+};
+
 describe("BulletChartConfigurationPanel", () => {
     function createComponent(props: IConfigurationPanelContentProps) {
         return render(<BulletChartConfigurationPanel {...props} />);
@@ -64,10 +76,8 @@ describe("BulletChartConfigurationPanel", () => {
         ]);
 
         const props: IConfigurationPanelContentProps = {
+            ...defaultProps,
             insight,
-            isError: false,
-            isLoading: false,
-            locale: DefaultLocale,
         };
 
         createComponent(props);
@@ -91,10 +101,8 @@ describe("BulletChartConfigurationPanel", () => {
         ]);
 
         const props: IConfigurationPanelContentProps = {
+            ...defaultProps,
             insight,
-            isError: false,
-            isLoading: false,
-            locale: DefaultLocale,
         };
 
         createComponent(props);
@@ -118,10 +126,9 @@ describe("BulletChartConfigurationPanel", () => {
         ]);
 
         const props: IConfigurationPanelContentProps = {
+            ...defaultProps,
             insight,
             isError: true,
-            isLoading: false,
-            locale: DefaultLocale,
         };
 
         createComponent(props);
@@ -145,10 +152,9 @@ describe("BulletChartConfigurationPanel", () => {
         ]);
 
         const props: IConfigurationPanelContentProps = {
+            ...defaultProps,
             insight,
-            isError: false,
             isLoading: true,
-            locale: DefaultLocale,
         };
 
         createComponent(props);
@@ -158,13 +164,6 @@ describe("BulletChartConfigurationPanel", () => {
     });
 
     describe("axis name configuration", () => {
-        const defaultProps: IConfigurationPanelContentProps = {
-            isError: false,
-            isLoading: false,
-            locale: DefaultLocale,
-            type: VisualizationTypes.BULLET,
-        };
-
         it("should render configuration panel with enabled name sections", () => {
             const insight = testInsight([
                 {
@@ -178,7 +177,7 @@ describe("BulletChartConfigurationPanel", () => {
             ]);
 
             createComponent({
-                ...defaultProps,
+                ...defaultPropsWithType,
                 insight,
             });
 
@@ -192,7 +191,7 @@ describe("BulletChartConfigurationPanel", () => {
         it("should render configuration panel with disabled name sections", () => {
             const insight = emptyInsight;
             createComponent({
-                ...defaultProps,
+                ...defaultPropsWithType,
                 insight,
             });
 
@@ -212,7 +211,7 @@ describe("BulletChartConfigurationPanel", () => {
             ]);
 
             createComponent({
-                ...defaultProps,
+                ...defaultPropsWithType,
                 insight,
             });
 
@@ -225,13 +224,6 @@ describe("BulletChartConfigurationPanel", () => {
     });
 
     describe("Y axis labels configuration", () => {
-        const defaultProps: IConfigurationPanelContentProps = {
-            isError: false,
-            isLoading: false,
-            locale: DefaultLocale,
-            type: VisualizationTypes.BULLET,
-        };
-
         it("should render labels configuration panel disabled if there is no attribute", () => {
             const insight = testInsight([
                 {
@@ -244,7 +236,7 @@ describe("BulletChartConfigurationPanel", () => {
                 },
             ]);
             createComponent({
-                ...defaultProps,
+                ...defaultPropsWithType,
                 insight,
             });
 
@@ -265,7 +257,7 @@ describe("BulletChartConfigurationPanel", () => {
             ]);
 
             createComponent({
-                ...defaultProps,
+                ...defaultPropsWithType,
                 insight,
             });
 
@@ -275,13 +267,6 @@ describe("BulletChartConfigurationPanel", () => {
     });
 
     describe("Y axis name configuration", () => {
-        const defaultProps: IConfigurationPanelContentProps = {
-            isError: false,
-            isLoading: false,
-            locale: DefaultLocale,
-            type: VisualizationTypes.BULLET,
-        };
-
         it("should render name configuration panel enabled if there is an attribute", () => {
             const insight = testInsight([
                 {
@@ -295,7 +280,7 @@ describe("BulletChartConfigurationPanel", () => {
             ]);
 
             createComponent({
-                ...defaultProps,
+                ...defaultPropsWithType,
                 insight,
             });
 
@@ -316,7 +301,7 @@ describe("BulletChartConfigurationPanel", () => {
             ]);
 
             createComponent({
-                ...defaultProps,
+                ...defaultPropsWithType,
                 insight,
             });
 

@@ -187,9 +187,9 @@ describe("useContextItems", () => {
         ]);
     });
 
-    it("offers the workspace objects while a report that is not saved yet is open", () => {
+    it("offers the workspace objects while a document that is not saved yet is open", () => {
         const { result } = renderUserItems([dashboard("marketing", "Marketing")], {
-            ambient: { view: { report: { title: "Draft" } } },
+            ambient: { view: { publisherDocument: { title: "Draft" } } },
         });
 
         expect(result.current.items.map((item) => item.title)).toEqual(["Marketing"]);

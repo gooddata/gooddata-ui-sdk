@@ -76,14 +76,14 @@ import type { Interaction } from '@gooddata/sdk-code-schemas/v1';
 import { IPoPMeasureDefinition } from '@gooddata/sdk-model';
 import { IPositiveAttributeFilterBody } from '@gooddata/sdk-model';
 import { IPreviousPeriodMeasureDefinition } from '@gooddata/sdk-model';
+import { IPublisherDocumentDefinition } from '@gooddata/sdk-model';
+import { IPublisherDocumentPage } from '@gooddata/sdk-model';
+import { IPublisherDocumentTemplate } from '@gooddata/sdk-model';
+import { IPublisherDocumentTemplateDefinition } from '@gooddata/sdk-model';
+import { IPublisherPageLayout } from '@gooddata/sdk-model';
+import { IPublisherPageLayoutDefinition } from '@gooddata/sdk-model';
 import { IRankingFilterBody } from '@gooddata/sdk-model';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
-import { IReportContentPage } from '@gooddata/sdk-model';
-import { IReportDefinition } from '@gooddata/sdk-model';
-import { IReportPageLayout } from '@gooddata/sdk-model';
-import { IReportPageLayoutDefinition } from '@gooddata/sdk-model';
-import { IReportTemplate } from '@gooddata/sdk-model';
-import { IReportTemplateDefinition } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
 import { ITotal } from '@gooddata/sdk-model';
 import { JsonApiVisualizationObjectOut } from '@gooddata/api-client-tiger';
@@ -152,17 +152,17 @@ export type AacParameter = Parameter;
 // @public (undocumented)
 export type AacPlugin = Plugin_2;
 
+// @alpha (undocumented)
+export type AacPublisherDocument = Report_2;
+
+// @alpha (undocumented)
+export type AacPublisherDocumentTemplate = ReportTemplate;
+
+// @alpha (undocumented)
+export type AacPublisherPageLayout = ReportPageLayout;
+
 // @public (undocumented)
 export type AacQuery = Query;
-
-// @alpha (undocumented)
-export type AacReport = Report_2;
-
-// @alpha (undocumented)
-export type AacReportPageLayout = ReportPageLayout;
-
-// @alpha (undocumented)
-export type AacReportTemplate = ReportTemplate;
 
 // @public (undocumented)
 export type AacSection = Section;
@@ -234,6 +234,7 @@ export type AreaChartConfigProperties = {
     disableKeyDriveAnalysisOn: Record<string, boolean>;
     customTooltip: CustomTooltip;
     lineStyleMapping: Array<LineStyleMapping>;
+    lineShape: "linear" | "spline" | "stepped";
 };
 
 // @internal (undocumented)
@@ -340,6 +341,7 @@ export function areaChartSave(_fields: Visualisation["query"]["fields"] | undefi
     } | undefined;
     customTooltip: CustomTooltip | undefined;
     lineStyleMapping: LineStyleMapping[] | undefined;
+    lineShape: "linear" | "spline" | "stepped" | undefined;
 } | undefined;
 
 // @public (undocumented)
@@ -1116,6 +1118,7 @@ export type ComboChartConfigProperties = {
     thresholdMeasures: string[];
     thresholdExcludedMeasures: string[];
     lineStyleMapping: Array<LineStyleMapping>;
+    lineShape: "linear" | "spline" | "stepped";
 };
 
 // @internal (undocumented)
@@ -1243,6 +1246,7 @@ export function comboChartSave(_fields: Visualisation["query"]["fields"] | undef
     thresholdMeasures: string[] | undefined;
     thresholdExcludedMeasures: string[] | undefined;
     lineStyleMapping: LineStyleMapping[] | undefined;
+    lineShape: "linear" | "spline" | "stepped" | undefined;
 } | undefined;
 
 // @internal (undocumented)
@@ -1485,6 +1489,18 @@ export function declarativePositiveAttributeFilterToYaml(entities: FromEntities,
 // @internal (undocumented)
 export function declarativePreviousPeriodMetricToYaml(def: IMeasureBody, previousDefinition: IPreviousPeriodMeasureDefinition, errorContext?: IErrorContext): YAMLMap;
 
+// @alpha (undocumented)
+export function declarativePublisherDocumentToYaml(publisherDocument: DeclarativeReport): {
+    content: string;
+    json: Report_2;
+};
+
+// @alpha (undocumented)
+export function declarativePublisherPageLayoutToYaml(layout: DeclarativeReportPageLayout): {
+    content: string;
+    json: ReportPageLayout;
+};
+
 // @internal (undocumented)
 export function declarativeRankingFilterToYaml(rankingFilter: IRankingFilterBody, errorContext?: IErrorContext): YAMLMap;
 
@@ -1492,18 +1508,6 @@ export function declarativeRankingFilterToYaml(rankingFilter: IRankingFilterBody
 export function declarativeRelativeDateFilterToYaml(relativeDateFilter: IRelativeDateFilter["relativeDateFilter"], input: DateFilterEmitOptions): {
     yaml: YAMLMap;
     carried: WrittenFilter[];
-};
-
-// @alpha (undocumented)
-export function declarativeReportPageLayoutToYaml(layout: DeclarativeReportPageLayout): {
-    content: string;
-    json: ReportPageLayout;
-};
-
-// @alpha (undocumented)
-export function declarativeReportToYaml(report: DeclarativeReport): {
-    content: string;
-    json: Report_2;
 };
 
 // @internal (undocumented)
@@ -2846,6 +2850,7 @@ export type LineChartConfigProperties = {
     thresholdMeasures: string[];
     thresholdExcludedMeasures: string[];
     lineStyleMapping: Array<LineStyleMapping>;
+    lineShape: "linear" | "spline" | "stepped";
 };
 
 // @internal (undocumented)
@@ -2963,6 +2968,7 @@ export function lineChartSave(_fields: Visualisation["query"]["fields"] | undefi
     thresholdMeasures: string[] | undefined;
     thresholdExcludedMeasures: string[] | undefined;
     lineStyleMapping: LineStyleMapping[] | undefined;
+    lineShape: "linear" | "spline" | "stepped" | undefined;
 } | undefined;
 
 // @public (undocumented)
@@ -3120,6 +3126,27 @@ export type Profile = {
     token: string;
     workspace_id: string;
     data_source?: string;
+};
+
+// @alpha
+export function publisherDocumentDefinitionToYaml(publisherDocument: IPublisherDocumentDefinition): {
+    content: string;
+    json: Report_2;
+};
+
+// @internal
+export function publisherDocumentPageToAacPage(page: IPublisherDocumentPage): ReportPageBody;
+
+// @alpha (undocumented)
+export function publisherDocumentTemplateDefinitionToYaml(template: IPublisherDocumentTemplate | IPublisherDocumentTemplateDefinition): {
+    content: string;
+    json: ReportTemplate;
+};
+
+// @alpha
+export function publisherPageLayoutDefinitionToYaml(layout: IPublisherPageLayout | IPublisherPageLayoutDefinition): {
+    content: string;
+    json: ReportPageLayout;
 };
 
 // @internal (undocumented)
@@ -3486,27 +3513,6 @@ export function repeaterChartSave(fields: Visualisation["query"]["fields"] | und
         [k: string]: boolean;
     } | undefined;
 } | undefined;
-
-// @alpha
-export function reportDefinitionToYaml(report: IReportDefinition): {
-    content: string;
-    json: Report_2;
-};
-
-// @alpha
-export function reportPageLayoutDefinitionToYaml(layout: IReportPageLayout | IReportPageLayoutDefinition): {
-    content: string;
-    json: ReportPageLayout;
-};
-
-// @internal
-export function reportPageToAacPage(page: IReportContentPage): ReportPageBody;
-
-// @alpha (undocumented)
-export function reportTemplateDefinitionToYaml(template: IReportTemplate | IReportTemplateDefinition): {
-    content: string;
-    json: ReportTemplate;
-};
 
 // @public (undocumented)
 export function resolveIdFromFileName(fileName: FilePath): string;
@@ -4378,17 +4384,20 @@ export type YamlPostProcessors = {
     }>;
 };
 
+// @alpha (undocumented)
+export function yamlPublisherDocumentTemplateToDefinition(input: ReportTemplate, errorContext?: IErrorContext): IPublisherDocumentTemplateDefinition;
+
 // @alpha
-export function yamlReportDocumentToDeclarative(input: Report_2, errorContext?: IErrorContext): DeclarativeReport;
+export function yamlPublisherDocumentToDeclarative(input: Report_2, errorContext?: IErrorContext): DeclarativeReport;
+
+// @alpha
+export function yamlPublisherDocumentToDefinition(input: Report_2, errorContext?: IErrorContext): IPublisherDocumentDefinition;
 
 // @alpha (undocumented)
-export function yamlReportPageLayoutToDeclarative(input: ReportPageLayout, errorContext?: IErrorContext): DeclarativeReportPageLayout;
+export function yamlPublisherPageLayoutToDeclarative(input: ReportPageLayout, errorContext?: IErrorContext): DeclarativeReportPageLayout;
 
 // @alpha (undocumented)
-export function yamlReportPageLayoutToDefinition(input: ReportPageLayout, errorContext?: IErrorContext): IReportPageLayoutDefinition;
-
-// @alpha (undocumented)
-export function yamlReportTemplateToDefinition(input: ReportTemplate, errorContext?: IErrorContext): IReportTemplateDefinition;
+export function yamlPublisherPageLayoutToDefinition(input: ReportPageLayout, errorContext?: IErrorContext): IPublisherPageLayoutDefinition;
 
 // @internal (undocumented)
 export function yamlReportToDeclarative(entities: ExportEntities, input: Visualisation): {
@@ -4401,9 +4410,6 @@ export function yamlReportToDeclarative(entities: ExportEntities, input: Visuali
     }>;
     attributeFilterConfigs?: IAttributeFilterConfigs;
 };
-
-// @alpha
-export function yamlReportToDefinition(input: Report_2, errorContext?: IErrorContext): IReportDefinition;
 
 // @internal (undocumented)
 export function yamlReportTotalToDeclarative(totals: Total[] | undefined, attributeIdentifier: string): ITotal[];

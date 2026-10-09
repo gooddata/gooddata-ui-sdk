@@ -61,6 +61,7 @@ const supportedChartConfigProperties = new Set<keyof IChartConfig>([
     "thresholdMeasures",
     "customTooltip",
     "lineStyleMapping",
+    "lineShape",
 ]);
 
 export function chartConfigFromInsight(
@@ -73,10 +74,8 @@ export function chartConfigFromInsight(
     const { inlineVisualizations, hyperLinks } = properties;
 
     const withValuesFromContext = {
-        ...{
-            inlineVisualizations,
-            hyperLinks,
-        },
+        inlineVisualizations,
+        hyperLinks,
         ...controls,
         ...(ctx?.colorPalette && includeColorPalette ? { colorPalette: ctx.colorPalette } : {}),
         ...(ctx?.settings?.separators ? { separators: ctx.settings.separators } : {}),

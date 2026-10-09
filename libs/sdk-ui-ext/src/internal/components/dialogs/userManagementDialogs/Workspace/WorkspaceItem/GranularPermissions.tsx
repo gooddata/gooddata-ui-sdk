@@ -40,6 +40,7 @@ const granularPermissions: IPermissionsItem[] = [
 
 interface IGranularPermissionsProps {
     workspace: IGrantedWorkspace | undefined;
+    savedPermissions?: WorkspacePermissions;
     onChange: (workspace: IGrantedWorkspace) => void;
     showRedundancyWarningMessage: boolean;
     areMetricPermissionsEnabled?: boolean;
@@ -50,6 +51,7 @@ interface IGranularPermissionsProps {
 
 export function GranularPermissions({
     workspace,
+    savedPermissions = [],
     onChange,
     showRedundancyWarningMessage,
     areMetricPermissionsEnabled = false,
@@ -79,6 +81,7 @@ export function GranularPermissions({
             (id !== "CREATE_COMPUTED_ATTRIBUTE" || areComputedAttributesEnabled) &&
             (id !== "MANAGE_VISUALIZATIONS" || areVisualizationPermissionsEnabled),
     );
+    const isShown = (permission: WorkspacePermission) => granularItems.some(({ id }) => id === permission);
 
     // Unsanitized until save, so unchecking or leaving Manage brings earlier choices back.
     const handleChange = (permissions: WorkspacePermissions, isHierarchical: boolean) => {
@@ -90,7 +93,15 @@ export function GranularPermissions({
     };
 
     const handleWorkspacePermissionChange = (workspacePermission: WorkspacePermission) => {
-        handleChange([workspacePermission, ...chosenGranularPermissions], isHierarchical);
+        // The admin can't see hidden permissions, so only the stored access level keeps them.
+        const hiddenPermissions =
+            workspacePermission === getWorkspacePermission(savedPermissions)
+                ? savedPermissions.filter((p) => !workspacePermissions.includes(p) && !isShown(p))
+                : [];
+        handleChange(
+            [workspacePermission, ...chosenGranularPermissions.filter(isShown), ...hiddenPermissions],
+            isHierarchical,
+        );
     };
 
     const handleGranularPermissionChange = (granularPermission: WorkspacePermission) => {

@@ -56,7 +56,7 @@ import {
     type IWorkspaceObjectPermissionsService,
     type IWorkspaceParametersService,
     type IWorkspacePermissionsService,
-    type IWorkspaceReportsService,
+    type IWorkspacePublisherService,
     type IWorkspaceSettings,
     type IWorkspaceSettingsService,
     type IWorkspaceStylingService,
@@ -68,7 +68,7 @@ import {
     type ValidationContext,
 } from "@gooddata/sdk-backend-spi";
 import {
-    BuiltInReportPageLayouts,
+    BuiltInPublisherPageLayouts,
     type IColorPalette,
     type IColorPaletteDefinition,
     type IColorPaletteMetadataObject,
@@ -263,7 +263,7 @@ function recordedWorkspace(
                 async getSettings(): Promise<IWorkspaceSettings> {
                     return Promise.resolve({
                         workspace,
-                        ...(implConfig.globalSettings ?? {}),
+                        ...implConfig.globalSettings,
                     });
                 },
                 async getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings> {
@@ -272,7 +272,7 @@ function recordedWorkspace(
                         workspace,
                         locale,
                         separators,
-                        ...(implConfig.globalSettings ?? {}),
+                        ...implConfig.globalSettings,
                     });
                 },
                 async setAlertDefault(): Promise<void> {
@@ -572,11 +572,11 @@ function recordedWorkspace(
                 deleteExportTemplate: () => Promise.resolve(),
             };
         },
-        reports(): IWorkspaceReportsService {
+        publisher(): IWorkspacePublisherService {
             return {
-                getReportPageLayouts: () => Promise.resolve([...BuiltInReportPageLayouts]),
-                getReportPageLayout: (ref) => {
-                    const page = BuiltInReportPageLayouts.find((candidate) =>
+                getPageLayouts: () => Promise.resolve([...BuiltInPublisherPageLayouts]),
+                getPageLayout: (ref) => {
+                    const page = BuiltInPublisherPageLayouts.find((candidate) =>
                         areObjRefsEqual(candidate.ref, ref),
                     );
                     if (!page) {
@@ -584,38 +584,42 @@ function recordedWorkspace(
                     }
                     return Promise.resolve(page);
                 },
-                createReportPageLayout: (page) =>
-                    Promise.resolve({ ...page, ref: idRef("recordedReportPage") }),
-                updateReportPageLayout: (page) => {
+                createPageLayout: (page) => Promise.resolve({ ...page, ref: idRef("recordedReportPage") }),
+                updatePageLayout: (page) => {
                     if (
-                        BuiltInReportPageLayouts.some((candidate) => areObjRefsEqual(candidate.ref, page.ref))
+                        BuiltInPublisherPageLayouts.some((candidate) =>
+                            areObjRefsEqual(candidate.ref, page.ref),
+                        )
                     ) {
                         throw new NotSupported("Built-in report page layouts cannot be updated.");
                     }
                     return Promise.resolve(page);
                 },
-                deleteReportPageLayout: (ref) => {
-                    if (BuiltInReportPageLayouts.some((candidate) => areObjRefsEqual(candidate.ref, ref))) {
+                deletePageLayout: (ref) => {
+                    if (
+                        BuiltInPublisherPageLayouts.some((candidate) => areObjRefsEqual(candidate.ref, ref))
+                    ) {
                         throw new NotSupported("Built-in report page layouts cannot be deleted.");
                     }
                     return Promise.resolve();
                 },
-                getReportTemplates: () => Promise.resolve([]),
-                getReportTemplate: () => {
+                getDocumentTemplates: () => Promise.resolve([]),
+                getDocumentTemplate: () => {
                     throw new UnexpectedResponseError("Report template not found", 404, {});
                 },
-                createReportTemplate: (template) =>
+                createDocumentTemplate: (template) =>
                     Promise.resolve({ ...template, ref: idRef("recordedReportTemplate") }),
-                updateReportTemplate: (template) => Promise.resolve(template),
-                deleteReportTemplate: () => Promise.resolve(),
-                getReports: () => Promise.resolve([]),
-                getReport: () => {
+                updateDocumentTemplate: (template) => Promise.resolve(template),
+                deleteDocumentTemplate: () => Promise.resolve(),
+                getDocuments: () => Promise.resolve([]),
+                getDocument: () => {
                     throw new UnexpectedResponseError("Report not found", 404, {});
                 },
-                createReport: (report) => Promise.resolve({ ...report, ref: idRef("recordedReport") }),
-                updateReport: (report) => Promise.resolve(report),
-                deleteReport: () => Promise.resolve(),
-                exportReportToPdf: () =>
+                createDocument: (publisherDocument) =>
+                    Promise.resolve({ ...publisherDocument, ref: idRef("recordedReport") }),
+                updateDocument: (publisherDocument) => Promise.resolve(publisherDocument),
+                deleteDocument: () => Promise.resolve(),
+                exportDocumentToPdf: () =>
                     Promise.resolve({
                         uri: "/example/export.pdf",
                         objectUrl: "blob:/01345454545454",
@@ -1002,7 +1006,7 @@ function recordedUserService(implConfig: RecordedBackendConfig): IUserService {
                         userId: USER_ID,
                         locale,
                         separators,
-                        ...(implConfig.globalSettings ?? {}),
+                        ...implConfig.globalSettings,
                     }),
                 setLocale: () => Promise.resolve(),
                 setMetadataLocale: () => Promise.resolve(),

@@ -1929,7 +1929,7 @@ export function IconTrash(input: IIconProps): JSX.Element;
 export function IconTreeMap(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export type IconType = "aiAgent" | "aiAgentDisabled" | "brain" | "brainDisabled" | "check" | "checkCircle" | "certification" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "edit" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "infoCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "clockPaused" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "geoCollection" | "geoCollectionUpload" | "minimize" | "shrink" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderSmall" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "levelUp" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minus" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "building" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "ldmKey" | "ldmLabel" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "alignLeft" | "alignCenter" | "alignRight" | "alignTop" | "alignMiddle" | "alignBottom" | "bold" | "italic" | "imageContain" | "imageCover" | "imageFill" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "history" | "history2" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "externalLink" | "click" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "aiDocument" | "recommendation" | "streamUp" | "streamDown" | "stream" | "density" | "parameter" | "pin" | "unpin" | "speechBubble" | "pieChart" | "timezone" | "sidePanelCollapse" | "sidePanel" | "sidePanelExpand" | "lineStyle" | "lineStyleSolid" | "lineStyleDashed" | "lineStyleDotted" | "lineWidth1" | "lineWidth2" | "lineWidth3" | "lineWidth4";
+export type IconType = "aiAgent" | "aiAgentDisabled" | "brain" | "brainDisabled" | "check" | "checkCircle" | "certification" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "edit" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "infoCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "clockPaused" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "geoCollection" | "geoCollectionUpload" | "minimize" | "shrink" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderSmall" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "levelUp" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minus" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "building" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "ldmKey" | "ldmLabel" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "alignLeft" | "alignCenter" | "alignRight" | "alignTop" | "alignMiddle" | "alignBottom" | "bold" | "italic" | "imageContain" | "imageCover" | "imageFill" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "history" | "history2" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "externalLink" | "click" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "aiDocument" | "recommendation" | "streamUp" | "streamDown" | "stream" | "density" | "parameter" | "pin" | "unpin" | "speechBubble" | "pieChart" | "timezone" | "sidePanelCollapse" | "sidePanel" | "sidePanelExpand" | "lineStyle" | "lineStyleSolid" | "lineStyleDashed" | "lineStyleDotted" | "lineWidth1" | "lineWidth2" | "lineWidth3" | "lineWidth4" | "linear" | "spline" | "stepped";
 
 // @internal (undocumented)
 export function IconUndo(input: IIconProps): JSX.Element;
@@ -7836,6 +7836,46 @@ export interface IUiResizableSidebarHandleProps {
 }
 
 // @internal (undocumented)
+export interface IUiResizableSidebarNavigationBadge {
+    // (undocumented)
+    kind: "dot";
+    // (undocumented)
+    label: string;
+}
+
+// @internal
+export interface IUiResizableSidebarNavigationItem extends IUiResizableSidebarNavigationSubItem {
+    // (undocumented)
+    children?: IUiResizableSidebarNavigationSubItem[];
+    icon?: IconType | ReactNode;
+}
+
+// @internal (undocumented)
+export interface IUiResizableSidebarNavigationProps {
+    // (undocumented)
+    accessibilityConfig: UiResizableSidebarNavigationNamingConfig;
+    // (undocumented)
+    dataTestId?: string;
+    isRail?: boolean;
+    // (undocumented)
+    items: IUiResizableSidebarNavigationItem[];
+    onSelect?: (item: UiResizableSidebarNavigationItem, event: MouseEvent_2 | KeyboardEvent_2) => void;
+}
+
+// @internal
+export interface IUiResizableSidebarNavigationSubItem {
+    badge?: IUiResizableSidebarNavigationBadge;
+    // (undocumented)
+    dataTestId?: string;
+    href?: string;
+    // (undocumented)
+    id: string;
+    isSelected?: boolean;
+    // (undocumented)
+    label: string;
+}
+
+// @internal (undocumented)
 export interface IUiResizableSidebarProps {
     children: ReactNode;
     // (undocumented)
@@ -8288,6 +8328,34 @@ export interface IUiToolbarIconSelectProps {
     popupType?: "listbox" | "menu" | "dialog";
 }
 
+// @internal (undocumented)
+export interface IUiToolbarInputAccessibilityConfig {
+    ariaLabel: string;
+    unitLabel?: string;
+}
+
+// @internal (undocumented)
+export interface IUiToolbarInputProps {
+    // (undocumented)
+    accessibilityConfig: IUiToolbarInputAccessibilityConfig;
+    // (undocumented)
+    dataTestId?: string;
+    // (undocumented)
+    inputRef?: Ref<HTMLInputElement>;
+    // (undocumented)
+    isDisabled?: boolean;
+    isInvalid?: boolean;
+    onCommit: (value: string) => void;
+    onStep?: (direction: 1 | -1, isLargeStep: boolean) => void;
+    // (undocumented)
+    placeholder?: string;
+    prefix?: string;
+    prefixIcon?: IconType;
+    unit?: string;
+    value: string;
+    width?: number;
+}
+
 // @internal
 export interface IUiToolbarItemBaseProps {
     // (undocumented)
@@ -8333,6 +8401,30 @@ export interface IUiToolbarMoreButtonProps {
     onClick?: (event: MouseEvent_2<HTMLButtonElement>) => void;
     // (undocumented)
     onKeyDown?: (event: KeyboardEvent_2<HTMLButtonElement>) => void;
+}
+
+// @internal (undocumented)
+export interface IUiToolbarPaginationAccessibilityConfig {
+    ariaLabel: string;
+    nextLabel: string;
+    previousLabel: string;
+    totalLabel?: string;
+    valueText?: string;
+}
+
+// @internal (undocumented)
+export interface IUiToolbarPaginationProps {
+    // (undocumented)
+    accessibilityConfig: IUiToolbarPaginationAccessibilityConfig;
+    currentPage: number;
+    // (undocumented)
+    dataTestId?: string;
+    // (undocumented)
+    isDisabled?: boolean;
+    isValueEditable?: boolean;
+    onPageChange: (page: number) => void;
+    // (undocumented)
+    totalPages: number;
 }
 
 // @internal (undocumented)
@@ -8422,7 +8514,6 @@ export interface IUiToolbarStepperProps {
     onStep: (direction: 1 | -1) => void;
     placeholder?: string;
     value: string;
-    variant: "value" | "pagination";
 }
 
 // @internal (undocumented)
@@ -9126,6 +9217,9 @@ export function OverlayControllerProvider(input: IOverlayControllerProviderProps
 // @internal (undocumented)
 export type OverlayPositionType = "absolute" | "fixed" | SameAsTargetPosition;
 
+// @internal
+export const OverlayZIndexContext: Context<number | undefined>;
+
 // @internal (undocumented)
 export type PageOrientation = "PORTRAIT" | "LANDSCAPE";
 
@@ -9808,6 +9902,21 @@ export function UiResizableSidebarExpandTrigger(input: IUiResizableSidebarExpand
 export function UiResizableSidebarHandle(input: IUiResizableSidebarHandleProps): ReactElement;
 
 // @internal
+export function UiResizableSidebarNavigation(input: IUiResizableSidebarNavigationProps): ReactElement;
+
+// @internal (undocumented)
+export type UiResizableSidebarNavigationItem = IUiResizableSidebarNavigationItem | IUiResizableSidebarNavigationSubItem;
+
+// @internal
+export type UiResizableSidebarNavigationNamingConfig = {
+    ariaLabel: NonNullable<IAccessibilityConfigBase["ariaLabel"]>;
+    ariaLabelledBy?: IAccessibilityConfigBase["ariaLabelledBy"];
+} | {
+    ariaLabel?: IAccessibilityConfigBase["ariaLabel"];
+    ariaLabelledBy: NonNullable<IAccessibilityConfigBase["ariaLabelledBy"]>;
+};
+
+// @internal
 export function UiResizableSidebarProvider(input: IUiResizableSidebarProviderProps): JSX.Element;
 
 // @internal
@@ -9923,6 +10032,9 @@ export const UiToolbarIconButton: ForwardRefExoticComponent<IUiToolbarIconButton
 export const UiToolbarIconSelect: ForwardRefExoticComponent<IUiToolbarIconSelectProps & RefAttributes<HTMLButtonElement>>;
 
 // @internal
+export const UiToolbarInput: ForwardRefExoticComponent<IUiToolbarInputProps & RefAttributes<HTMLLabelElement>>;
+
+// @internal
 export const UiToolbarMoreButton: ForwardRefExoticComponent<IUiToolbarMoreButtonProps & RefAttributes<HTMLButtonElement>>;
 
 // @internal
@@ -9933,6 +10045,9 @@ export type UiToolbarNamingConfig = {
     ariaLabel?: IAccessibilityConfigBase["ariaLabel"];
     ariaLabelledBy: NonNullable<IAccessibilityConfigBase["ariaLabelledBy"]>;
 };
+
+// @internal
+export const UiToolbarPagination: ForwardRefExoticComponent<IUiToolbarPaginationProps & RefAttributes<HTMLDivElement>>;
 
 // @internal
 export const UiToolbarSegmentedControl: ForwardRefExoticComponent<IUiToolbarSegmentedControlProps & RefAttributes<HTMLDivElement>>;
@@ -10036,6 +10151,9 @@ export function useCloseOnParentScroll(isOpen: boolean, onClose: () => void, anc
 
 // @internal (undocumented)
 export function useComboboxState(): IUiComboboxState;
+
+// @internal
+export const useContainingOverlayZIndex: () => number | undefined;
 
 // @internal
 export function useCurrencyFormatDefaults(input: UseCurrencyFormatDefaultsConfig): void;

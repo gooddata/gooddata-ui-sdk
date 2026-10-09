@@ -2,13 +2,13 @@
 
 import { describe, expect, it } from "vitest";
 
-import { type IReportDefinition } from "@gooddata/sdk-model";
+import { type IPublisherDocumentDefinition } from "@gooddata/sdk-model";
 
 import { type IChatConversationLocalItem } from "../../model.js";
 
 import { notifyDefinitionReceived } from "./onDefinitionReceivedTrigger.js";
 
-const report: IReportDefinition = {
+const publisherDocument: IPublisherDocumentDefinition = {
     type: "report",
     title: "Q2",
     periodStart: "2026-04-01",
@@ -23,7 +23,16 @@ const item = {
     role: "assistant",
     content: {
         type: "multipart",
-        parts: [{ type: "report", report, ref: "report_2", refines: "report_1", baseReportId: "q2" }],
+        parts: [
+            {
+                type: "publisherDocument",
+                publisherDocument,
+                ref: "report_2",
+                refines: "report_1",
+                reworksOpenDocument: true,
+                baseDocumentId: "q2",
+            },
+        ],
     },
 } as unknown as IChatConversationLocalItem;
 
@@ -41,16 +50,17 @@ function putActions() {
 }
 
 describe("notifyDefinitionReceived", () => {
-    it("raises a report with what an app needs to apply it", () => {
+    it("raises a document with what an app needs to apply it", () => {
         const [action] = putActions();
 
         expect(action.payload).toMatchObject({
-            definitionType: "report",
+            definitionType: "publisherDocument",
             conversationId: "conv-1",
-            report,
-            reportRef: "report_2",
+            publisherDocument,
+            documentRef: "report_2",
             refines: "report_1",
-            baseReportId: "q2",
+            reworksOpenDocument: true,
+            baseDocumentId: "q2",
         });
     });
 });

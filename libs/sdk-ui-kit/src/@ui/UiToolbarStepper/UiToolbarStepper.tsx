@@ -14,15 +14,15 @@ import { UiToolbarIconButton } from "../UiToolbarIconButton/UiToolbarIconButton.
  */
 export interface IUiToolbarStepperAccessibilityConfig {
     /**
-     * Name of the value, for example "Zoom" or "Page".
+     * Name of the value, for example "Zoom".
      */
     ariaLabel: string;
     /**
-     * Name of the increase control, for example "Zoom in" or "Next page".
+     * Name of the increase control, for example "Zoom in".
      */
     incrementLabel: string;
     /**
-     * Name of the decrease control, for example "Zoom out" or "Previous page".
+     * Name of the decrease control, for example "Zoom out".
      */
     decrementLabel: string;
 }
@@ -32,12 +32,7 @@ export interface IUiToolbarStepperAccessibilityConfig {
  */
 export interface IUiToolbarStepperProps {
     /**
-     * "value" adjusts a quantity with minus and plus. "pagination" moves through a sequence with
-     * left and right arrows and shows the value as a readout.
-     */
-    variant: "value" | "pagination";
-    /**
-     * The committed value as text, for example "100%" or "1 / 2".
+     * The committed value as text, for example "100%".
      */
     value: string;
     onStep: (direction: 1 | -1) => void;
@@ -54,7 +49,7 @@ export interface IUiToolbarStepperProps {
     decreaseIcon?: IconType;
     increaseIcon?: IconType;
     /**
-     * Makes the value of the "value" variant editable. Enter commits the typed text. Escape and blur
+     * Makes the value editable. Enter commits the typed text. Escape and blur
      * revert the typed text to the committed value.
      */
     onCommit?: (value: string) => void;
@@ -108,19 +103,14 @@ function keepPopupKeys(event: KeyboardEvent<HTMLButtonElement>) {
     }
 }
 
-const DEFAULT_ICONS: Record<IUiToolbarStepperProps["variant"], { decrease: IconType; increase: IconType }> = {
-    value: { decrease: "minus", increase: "plus" },
-    pagination: { decrease: "navigateLeft", increase: "navigateRight" },
-};
-
 /**
- * Two side controls around a value. Each part is its own toolbar stop.
+ * Two side controls around a value that is adjusted by steps, for example zoom. Each part is its
+ * own toolbar stop. To move through pages, use {@link UiToolbarPagination}.
  *
  * @internal
  */
 export const UiToolbarStepper = forwardRef<HTMLDivElement, IUiToolbarStepperProps>(function UiToolbarStepper(
     {
-        variant,
         value,
         onStep,
         canStepUp = true,
@@ -142,7 +132,7 @@ export const UiToolbarStepper = forwardRef<HTMLDivElement, IUiToolbarStepperProp
     },
     ref,
 ) {
-    const isEditable = variant === "value" && onCommit !== undefined;
+    const isEditable = onCommit !== undefined;
 
     const [draft, setDraft] = useState(value);
     const [committed, setCommitted] = useState(value);
@@ -207,13 +197,11 @@ export const UiToolbarStepper = forwardRef<HTMLDivElement, IUiToolbarStepperProp
         }
     };
 
-    const icons = DEFAULT_ICONS[variant];
-
     return (
-        <div ref={ref} className={b({ variant })} data-testid={dataTestId}>
+        <div ref={ref} className={b()} data-testid={dataTestId}>
             <UiToolbarIconButton
                 size="small"
-                icon={decreaseIcon ?? icons.decrease}
+                icon={decreaseIcon ?? "minus"}
                 label={accessibilityConfig.decrementLabel}
                 isDisabled={isDisabled || !canStepDown}
                 onClick={() => onStep(-1)}
@@ -260,7 +248,7 @@ export const UiToolbarStepper = forwardRef<HTMLDivElement, IUiToolbarStepperProp
             ) : null}
             <UiToolbarIconButton
                 size="small"
-                icon={increaseIcon ?? icons.increase}
+                icon={increaseIcon ?? "plus"}
                 label={accessibilityConfig.incrementLabel}
                 isDisabled={isDisabled || !canStepUp}
                 onClick={() => onStep(1)}

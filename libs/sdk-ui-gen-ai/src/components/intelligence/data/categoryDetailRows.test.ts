@@ -14,7 +14,7 @@ const detail = (output: GenAIAnswerOutput): IChatConversationComposeAnswerDetail
 describe("excerptForDetail for a composed answer", () => {
     it.each([
         ["dashboard", "gd.gen-ai.interactionIntelligence.detail.output.dashboard"],
-        ["report", "gd.gen-ai.interactionIntelligence.detail.output.report"],
+        ["report", "gd.gen-ai.interactionIntelligence.detail.output.publisherDocument"],
     ] as const)("names a turn that produced a %s", (output, id) => {
         expect(excerptForDetail(detail(output))).toEqual([{ id }]);
     });

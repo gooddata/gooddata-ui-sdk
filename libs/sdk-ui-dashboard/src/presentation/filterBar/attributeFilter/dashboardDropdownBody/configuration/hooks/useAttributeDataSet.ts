@@ -10,6 +10,7 @@ import {
 } from "../../../../../../model/queries/attributeDataSet.js";
 import { useDashboardSelector } from "../../../../../../model/react/DashboardStoreProvider.js";
 import { useDashboardQueryProcessing } from "../../../../../../model/react/useDashboardQueryProcessing.js";
+import { selectIsAiMode } from "../../../../../../model/store/config/configSelectors.js";
 import { selectIsNewDashboard } from "../../../../../../model/store/meta/metaSelectors.js";
 import { selectPreloadedAttributesWithReferences } from "../../../../../../model/store/tabs/filterContext/filterContextSelectors.js";
 
@@ -33,13 +34,14 @@ export function useAttributeDataSet(displayForm: ObjRef, loadQuery = true) {
     // First wait for preloaded filter attributes, otherwise we might be spawning lot of unnecessary requests
     const attributesWithReferences = useDashboardSelector(selectPreloadedAttributesWithReferences);
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
+    const isAiMode = useDashboardSelector(selectIsAiMode);
 
     useEffect(() => {
-        const shouldLoad = isNewDashboard || attributesWithReferences;
+        const shouldLoad = isNewDashboard || isAiMode || attributesWithReferences;
         if (loadQuery && shouldLoad) {
             getAttributeDataSet(displayForm);
         }
-    }, [displayForm, isNewDashboard, loadQuery, getAttributeDataSet, attributesWithReferences]);
+    }, [displayForm, isNewDashboard, isAiMode, loadQuery, getAttributeDataSet, attributesWithReferences]);
 
     const attributesDataSetLoading = useMemo(() => {
         return attributesDataSetLoadingStatus === "pending" || attributesDataSetLoadingStatus === "running";

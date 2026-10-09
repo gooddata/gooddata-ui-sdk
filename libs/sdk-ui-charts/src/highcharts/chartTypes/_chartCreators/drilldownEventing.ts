@@ -19,7 +19,7 @@ import {
 } from "@gooddata/sdk-ui";
 
 import { type DrilldownEventObject } from "../../lib/index.js";
-import { MEKKO_SERIES_TYPE, isBulletChart, isComboChart, isHeatmap, isTreemap } from "../_util/common.js";
+import { convertToChartType, isBulletChart, isComboChart, isHeatmap, isTreemap } from "../_util/common.js";
 
 import { type IHighchartsPointObject, isGroupHighchartsDrillEvent } from "./isGroupHighchartsDrillEvent.js";
 
@@ -64,13 +64,7 @@ function fireEvent(onDrill: OnFiredDrillEvent, data: any, target: EventTarget) {
 }
 
 const getElementChartType = (chartType: ChartType, point: IHighchartsPointObject): ChartType => {
-    const seriesType = point?.series?.type as ChartType;
-    // Mekko renders as a `variwide` series; map that series type back to the logical Mekko type so
-    // VisualizationType-based consumers (e.g. getClickableElementNameByChartType) recognize it.
-    if ((seriesType as string) === MEKKO_SERIES_TYPE) {
-        return VisualizationTypes.MEKKO as ChartType;
-    }
-    return seriesType ?? chartType;
+    return convertToChartType(point?.series?.type) ?? chartType;
 };
 
 const getDrillPointCustomProps = (
@@ -78,7 +72,7 @@ const getDrillPointCustomProps = (
     chartType: ChartType,
 ): Partial<IDrillPoint> => {
     if (isComboChart(chartType)) {
-        return { type: point?.series?.type as ChartType };
+        return { type: getElementChartType(chartType, point) };
     }
 
     if (isBulletChart(chartType)) {

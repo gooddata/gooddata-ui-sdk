@@ -48,6 +48,7 @@ import { type RepeaterInlineVisualizationDataPoint } from "./dataViewToRepeaterD
 import { InlineColumnChart } from "./InlineColumnChart.js";
 import { InlineLineChart } from "./InlineLineChart.js";
 import { AgGridDatasource } from "./repeaterAgGridDataSource.js";
+import { useInlineChartTooltipZIndex } from "./useInlineChartTooltipZIndex.js";
 
 // Register all Community features
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -163,6 +164,7 @@ export function RepeaterChart(props: IRepeaterChartProps) {
         config?.inlineVisualizations,
         config?.colorMapping,
         config?.colorPalette,
+        config?.tooltip?.zIndex,
     ]);
 
     const {
@@ -303,6 +305,7 @@ function MeasureCellRenderer({
     const visualizationType = getInlineVisualizationType(measureLocalId, config);
     const theme = useTheme();
     const color = theme?.table?.loadingIconColor ?? theme?.palette?.complementary?.c6 ?? undefined;
+    const tooltipZIndex = useInlineChartTooltipZIndex(config);
 
     if (isLoading) {
         return <LoadingComponent color={color} width={36} imageHeight={8} height={rowHeight} speed={2} />;
@@ -317,6 +320,7 @@ function MeasureCellRenderer({
                 color={measureColumnData.measureColor}
                 headerItems={viewByAttributeHeaderItems!}
                 height={rowHeight}
+                tooltipZIndex={tooltipZIndex}
             />
         );
     } else if (visualizationType === "column") {
@@ -328,6 +332,7 @@ function MeasureCellRenderer({
                 color={measureColumnData.measureColor}
                 headerItems={viewByAttributeHeaderItems!}
                 height={rowHeight}
+                tooltipZIndex={tooltipZIndex}
             />
         );
     }

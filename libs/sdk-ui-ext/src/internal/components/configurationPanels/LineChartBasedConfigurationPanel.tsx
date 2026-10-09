@@ -27,6 +27,7 @@ import { ContinuousLineControl } from "../configurationControls/ContinuousLineCo
 import { DataLabelsControl } from "../configurationControls/DataLabelsControl.js";
 import { DataPointsControl } from "../configurationControls/DataPointsControl.js";
 import { DistinctPointShapesControl } from "../configurationControls/DistintcPointShapesControl.js";
+import { LineShapeControl } from "../configurationControls/LineShapeControl.js";
 
 import { BaseChartConfigurationPanel } from "./BaseChartConfigurationPanel.js";
 import { type IConfigurationPanelContentProps } from "./ConfigurationPanelContent.js";
@@ -89,6 +90,7 @@ export class LineChartBasedConfigurationPanel extends BaseChartConfigurationPane
             isDataPointsControlDisabled,
             isContinuousLineControlDisabled,
             isDistinctPointShapesDisabled,
+            hasNoLineOrAreaMeasures,
         } = panelConfig;
 
         const controlsDisabled = this.isControlDisabled();
@@ -128,28 +130,42 @@ export class LineChartBasedConfigurationPanel extends BaseChartConfigurationPane
                             showDisabledMessage={isDataPointsControlDisabled}
                         />
 
-                        <DistinctPointShapesControl
+                        <LineShapeControl
+                            disabled={controlsDisabled || hasNoLineOrAreaMeasures}
                             pushData={pushData}
-                            checked={shouldDistinctPointShapesDisabled ? false : distinctPointShapesEnabled}
                             properties={properties}
-                            disabled={shouldDistinctPointShapesDisabled}
                         />
 
-                        <CheckboxControl
-                            valuePath="grid.enabled"
-                            labelText={messages["canvasGridLine"].id}
-                            properties={properties}
-                            checked={gridEnabled}
-                            disabled={controlsDisabled}
-                            pushData={pushData}
-                        />
+                        {/**
+                         * The checkbox controls have their own weird padding that does not play nice with the grid gap property (meaning they create visually uneven spaces).
+                         * Therefore a wrapper was created to allow the parent to use `gap` property. These checkboxes then have their own, slightly smaller `gap` set.
+                         */}
+                        <div className="gd-canvas-section__checkbox-wrapper">
+                            <DistinctPointShapesControl
+                                pushData={pushData}
+                                checked={
+                                    shouldDistinctPointShapesDisabled ? false : distinctPointShapesEnabled
+                                }
+                                properties={properties}
+                                disabled={shouldDistinctPointShapesDisabled}
+                            />
 
-                        <ContinuousLineControl
-                            properties={properties}
-                            checked={shouldContinuousLineControlDisabled ? false : continuousLineEnabled}
-                            disabled={controlsDisabled || isDataPointsControlDisabled}
-                            pushData={pushData}
-                        />
+                            <CheckboxControl
+                                valuePath="grid.enabled"
+                                labelText={messages["canvasGridLine"].id}
+                                properties={properties}
+                                checked={gridEnabled}
+                                disabled={controlsDisabled}
+                                pushData={pushData}
+                            />
+
+                            <ContinuousLineControl
+                                properties={properties}
+                                checked={shouldContinuousLineControlDisabled ? false : continuousLineEnabled}
+                                disabled={controlsDisabled || isDataPointsControlDisabled}
+                                pushData={pushData}
+                            />
+                        </div>
                     </ConfigSection>
                     {this.renderForecastSection()}
                     {this.renderAnomaliesSection()}
