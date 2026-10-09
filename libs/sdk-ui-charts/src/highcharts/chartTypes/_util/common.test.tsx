@@ -4,7 +4,13 @@
 
 import { describe, expect, it } from "vitest";
 
+import { type ChartType } from "@gooddata/sdk-ui";
+
+import { type SeriesType } from "../../lib/index.js";
+import { type IChartOptions } from "../../typings/unsafe.js";
+
 import {
+    convertToChartType,
     decodeHtmlEntities,
     formatLegendLabel,
     getAxesCounts,
@@ -135,7 +141,7 @@ describe("Common utils", () => {
 
     describe("getPrimaryChartType", () => {
         it("should return the chart type on left y axis", () => {
-            const chartOptions = {
+            const chartOptions: IChartOptions = {
                 type: "line",
                 data: {
                     series: [
@@ -150,7 +156,7 @@ describe("Common utils", () => {
         });
 
         it("should return default chart type", () => {
-            const chartOptions = {
+            const chartOptions: IChartOptions = {
                 type: "column",
                 data: {
                     series: [{ yAxis: 1 }, { yAxis: 0 }, { yAxis: 1 }],
@@ -201,6 +207,53 @@ describe("Common utils", () => {
                     },
                 }),
             ).toEqual([1, 2]);
+        });
+    });
+
+    describe("convertToChartType", () => {
+        it("should map the `spline` series type to the line chart", () => {
+            const seriesType: SeriesType = "spline";
+            const expected: ChartType = "line";
+
+            const actual = convertToChartType(seriesType);
+
+            expect(actual).toEqual(expected);
+        });
+
+        it("should map the `areaspline` series type to the area chart", () => {
+            const seriesType: SeriesType = "areaspline";
+            const expected: ChartType = "area";
+
+            const actual = convertToChartType(seriesType);
+
+            expect(actual).toEqual(expected);
+        });
+
+        it("should map the `variwide` series type to the mekko chart", () => {
+            const seriesType: SeriesType = "variwide";
+            const expected: ChartType = "mekko";
+
+            const actual = convertToChartType(seriesType);
+
+            expect(actual).toEqual(expected);
+        });
+
+        it("should keep a series type that already is a chart type", () => {
+            const seriesType: SeriesType = "column";
+            const expected: ChartType = "column";
+
+            const actual = convertToChartType(seriesType);
+
+            expect(actual).toEqual(expected);
+        });
+
+        it("should return null for a series type that doesn't match any chart type", () => {
+            const seriesType: Exclude<SeriesType, ChartType> = "heikinashi";
+            const expected = null;
+
+            const actual = convertToChartType(seriesType);
+
+            expect(actual).toEqual(expected);
         });
     });
 });

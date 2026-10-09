@@ -41,7 +41,7 @@ export function useContextChangeAnnouncement(
         const previous = previousReferences.current;
         const all = [
             ...(selected?.activated && selected.dashboard ? [selected.dashboard] : []),
-            ...(selected?.activated && selected.report ? [selected.report] : []),
+            ...(selected?.activated && selected.publisherDocument ? [selected.publisherDocument] : []),
             ...(selected?.activated && selected.visualization ? [selected.visualization] : []),
             ...references,
         ];

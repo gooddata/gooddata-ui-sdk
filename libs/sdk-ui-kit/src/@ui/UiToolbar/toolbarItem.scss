@@ -9,6 +9,14 @@ $toolbar-gap: 8px;
 $toolbar-icon-size-medium: 20px;
 $toolbar-icon-size-small: 14px;
 $toolbar-hit-area: 24px;
+// Side padding of a typable value field (UiToolbarInput, the editable value of UiToolbarStepper).
+$toolbar-field-padding: 8px;
+
+// The 1px border of a typable value field. It is an inset shadow so the 2px focus ring can replace
+// it without moving the content.
+@mixin toolbar-field-border($color) {
+    box-shadow: inset 0 0 0 1px $color;
+}
 
 @mixin toolbar-item-base {
     display: inline-flex;
@@ -20,7 +28,7 @@ $toolbar-hit-area: 24px;
     margin: 0;
     padding: 0 $toolbar-item-padding;
     border: 0;
-    border-radius: var(--gd-toolbar-borderRadius);
+    border-radius: var(--gd-toolbar-control-borderRadius);
     background-color: transparent;
     font-family: var(--gd-font-family);
     font-size: 14px;

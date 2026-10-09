@@ -88,7 +88,7 @@ export const YAxisConfiguration = () =>
                 visualizationUrl: "local:area",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(0, 4, 0),
+        getScenariosGroupByIndexes(0, 5, 0),
     )();
 YAxisConfiguration.parameters = {
     kind: "Y axis configuration",

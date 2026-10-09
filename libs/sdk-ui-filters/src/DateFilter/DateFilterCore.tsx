@@ -291,7 +291,6 @@ export function DateFilterCore({
                                     isTimeForAbsoluteRangeEnabled,
                                     isSecondsForAbsoluteRangeEnabled,
                                 )}
-                                weekStart={weekStart}
                                 customFilterName={customFilterName}
                                 customIcon={customIcon}
                                 onClick={toggleDropdown}

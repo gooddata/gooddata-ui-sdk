@@ -163,6 +163,9 @@ export { CustomTooltipPlacement }
 // @internal (undocumented)
 export const DEFAULT_COMPARISON_PALETTE: IColorPalette;
 
+// @internal (undocumented)
+export const DEFAULT_TOOLTIP_Z_INDEX = 3005;
+
 // @public
 export function DependencyWheelChart(props: IDependencyWheelChartProps): JSX.Element;
 
@@ -386,6 +389,8 @@ export interface IChartConfig {
     // @internal (undocumented)
     limits?: IChartLimits;
     // @beta
+    lineShape?: LineShape;
+    // @beta
     lineStyleMapping?: ILineStyleMappingItem[];
     // @internal
     orientation?: IOrientationConfig;
@@ -411,7 +416,6 @@ export interface IChartConfig {
     supportsChartFill?: boolean;
     thresholdExcludedMeasures?: string[];
     thresholdMeasures?: string[];
-    // @internal (undocumented)
     tooltip?: ITooltipConfig;
     total?: ITotalConfig;
     // @internal (undocumented)
@@ -1003,6 +1007,17 @@ export const isWaterfall: (type: string | undefined) => boolean;
 export interface ITooltipConfig {
     className?: string;
     enabled?: boolean;
+    zIndex?: number;
+}
+
+// @internal (undocumented)
+export interface ITooltipZIndexSources {
+    // (undocumented)
+    configZIndex?: number;
+    // (undocumented)
+    containingOverlayZIndex?: number;
+    // (undocumented)
+    hostDefaultZIndex?: number;
 }
 
 // @public (undocumented)
@@ -1054,6 +1069,9 @@ export interface IXirrProps extends IBucketChartProps, IXirrBucketProps {
 export function LineChart(props: ILineChartProps): JSX.Element;
 
 // @beta
+export type LineShape = "linear" | "spline" | "stepped";
+
+// @beta
 export type LineStyle = "solid" | "dashed" | "dotted";
 
 // @beta
@@ -1099,6 +1117,9 @@ export type RepeaterColumnWidthItem = IRepeaterAttributeColumnWidthItem | IRepea
 
 // @public (undocumented)
 export type RepeaterDefaultColumnWidth = "unset" | "autoresizeAll" | "viewport";
+
+// @internal
+export function resolveTooltipZIndex(input: ITooltipZIndexSources): number;
 
 // @public
 export function SankeyChart(props: ISankeyChartProps): JSX.Element;

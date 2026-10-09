@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 // Z index of all overlays in Dashboard component
 export const DASHBOARD_OVERLAYS_Z_INDEX = 5000;

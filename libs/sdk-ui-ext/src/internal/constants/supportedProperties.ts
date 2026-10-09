@@ -93,6 +93,7 @@ export const AREA_CHART_SUPPORTED_PROPERTIES = [
     "distinctPointShapes",
     "chartFill",
     "lineStyleMapping",
+    "lineShape",
 ];
 
 export const COLUMN_CHART_SUPPORTED_PROPERTIES = {
@@ -121,6 +122,7 @@ export const LINE_CHART_SUPPORTED_PROPERTIES = {
         "thresholdMeasures",
         "thresholdExcludedMeasures",
         "lineStyleMapping",
+        "lineShape",
     ],
     [AXIS.SECONDARY]: [
         ...BASE_PROPERTIES,
@@ -134,6 +136,7 @@ export const LINE_CHART_SUPPORTED_PROPERTIES = {
         "thresholdMeasures",
         "thresholdExcludedMeasures",
         "lineStyleMapping",
+        "lineShape",
     ],
     [AXIS.DUAL]: [
         ...BASE_CHART_SUPPORTED_PROPERTIES,
@@ -144,6 +147,7 @@ export const LINE_CHART_SUPPORTED_PROPERTIES = {
         "thresholdMeasures",
         "thresholdExcludedMeasures",
         "lineStyleMapping",
+        "lineShape",
     ],
 };
 
@@ -202,6 +206,7 @@ export const COMBO_CHART_SUPPORTED_PROPERTIES = {
         "thresholdExcludedMeasures",
         "chartFill",
         "lineStyleMapping",
+        "lineShape",
     ],
     [AXIS.SECONDARY]: [
         ...BASE_PROPERTIES,
@@ -216,6 +221,7 @@ export const COMBO_CHART_SUPPORTED_PROPERTIES = {
         "thresholdExcludedMeasures",
         "chartFill",
         "lineStyleMapping",
+        "lineShape",
     ],
     [AXIS.DUAL]: [
         ...BASE_CHART_SUPPORTED_PROPERTIES,
@@ -229,6 +235,7 @@ export const COMBO_CHART_SUPPORTED_PROPERTIES = {
         "thresholdExcludedMeasures",
         "chartFill",
         "lineStyleMapping",
+        "lineShape",
     ],
 };
 

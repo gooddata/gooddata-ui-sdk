@@ -31,6 +31,7 @@ import {
     type OnLoadingChanged,
     type VisualizationEnvironment,
 } from "@gooddata/sdk-ui";
+import { OverlayZIndexContext, useContainingOverlayZIndex } from "@gooddata/sdk-ui-kit";
 
 import { type ISortConfig } from "../interfaces/SortConfig.js";
 import {
@@ -143,6 +144,9 @@ export const BaseVisualization = forwardRef<IBaseVisualizationApi, IBaseVisualiz
             featureFlags = {},
         } = props;
 
+        const containingOverlayZIndexRef = useRef<number | undefined>(undefined);
+        containingOverlayZIndexRef.current = useContainingOverlayZIndex();
+
         /**
          * Props with the defaults applied; the lifecycle handling below compares and passes them around
          * the very same way the class component did with props defaulted by React.
@@ -196,7 +200,13 @@ export const BaseVisualization = forwardRef<IBaseVisualizationApi, IBaseVisualiz
                 if (!reactRootsMap.current.get(element)) {
                     reactRootsMap.current.set(element, createRoot(element));
                 }
-                reactRootsMap.current.get(element)!.render(children);
+                reactRootsMap.current
+                    .get(element)!
+                    .render(
+                        <OverlayZIndexContext.Provider value={containingOverlayZIndexRef.current}>
+                            {children}
+                        </OverlayZIndexContext.Provider>,
+                    );
             };
         };
 

@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-pluggable-host: window.customWorkspaceSettings, set by e2e tests, wins over the workspace settings of the host backend, so the host UI and ctx.settings see the same values as the pluggable applications.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

@@ -76,18 +76,27 @@ export class RadarChartConfigurationPanel extends LineChartBasedConfigurationPan
                             isDisabled={controlsDisabled || isDataPointsControlDisabled}
                             showDisabledMessage={isDataPointsControlDisabled}
                         />
-                        <DistinctPointShapesControl
-                            pushData={pushData}
-                            checked={shouldDistinctPointShapesDisabled ? false : distinctPointShapesEnabled}
-                            properties={properties}
-                            disabled={shouldDistinctPointShapesDisabled}
-                        />
-                        <ContinuousLineControl
-                            properties={properties}
-                            checked={shouldContinuousLineControlDisabled ? false : continuousLineEnabled}
-                            disabled={controlsDisabled || isDataPointsControlDisabled}
-                            pushData={pushData}
-                        />
+
+                        {/**
+                         * The checkbox controls have their own weird padding that does not play nice with the grid gap property (meaning they create visually uneven spaces).
+                         * Therefore a wrapper was created to allow the parent to use `gap` property. These checkboxes then have their own, slightly smaller `gap` set.
+                         */}
+                        <div className="gd-canvas-section__checkbox-wrapper">
+                            <DistinctPointShapesControl
+                                pushData={pushData}
+                                checked={
+                                    shouldDistinctPointShapesDisabled ? false : distinctPointShapesEnabled
+                                }
+                                properties={properties}
+                                disabled={shouldDistinctPointShapesDisabled}
+                            />
+                            <ContinuousLineControl
+                                properties={properties}
+                                checked={shouldContinuousLineControlDisabled ? false : continuousLineEnabled}
+                                disabled={controlsDisabled || isDataPointsControlDisabled}
+                                pushData={pushData}
+                            />
+                        </div>
                     </ConfigSection>
                     {this.renderAnomaliesSection()}
                     {this.renderAdvancedSection()}

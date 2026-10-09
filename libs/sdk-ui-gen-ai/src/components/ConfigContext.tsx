@@ -23,6 +23,7 @@ export type LinkHandlerEvent = {
     newTab: boolean;
     itemUrl: string;
     preventDefault: () => void;
+    conversationId?: string;
     section?: "ai";
     dashboard?: IDashboard;
     insights?: IInsight[];

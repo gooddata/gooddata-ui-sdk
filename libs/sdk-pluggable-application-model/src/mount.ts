@@ -15,7 +15,7 @@ export const PluggableAppEventType = {
     AI_ASSISTANT_OPEN_REQUESTED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.OPEN_REQUESTED",
     AI_ASSISTANT_CLOSE_REQUESTED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CLOSE_REQUESTED",
     AI_ASSISTANT_CONTEXT_CHANGED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CONTEXT_CHANGED",
-    AI_ASSISTANT_REPORT_SAVED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.REPORT_SAVED",
+    AI_ASSISTANT_PUBLISHER_DOCUMENT_SAVED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.PUBLISHER_DOCUMENT_SAVED",
 } as const;
 
 /**
@@ -68,7 +68,7 @@ export interface IReloadPlatformContextRequestedEvent extends IPluggableAppEvent
  * @alpha
  */
 export function reloadPlatformContextRequested(): IReloadPlatformContextRequestedEvent {
-    return { type: "GDC.PLUGGABLE_APP/EVT.RELOAD_PLATFORM_CONTEXT.REQUESTED" };
+    return { type: PluggableAppEventType.RELOAD_PLATFORM_CONTEXT_REQUESTED };
 }
 
 /**
@@ -83,7 +83,7 @@ export function isReloadPlatformContextRequestedEvent(
         typeof obj === "object" &&
         obj !== null &&
         "type" in obj &&
-        (obj as { type?: unknown }).type === "GDC.PLUGGABLE_APP/EVT.RELOAD_PLATFORM_CONTEXT.REQUESTED"
+        (obj as { type?: unknown }).type === PluggableAppEventType.RELOAD_PLATFORM_CONTEXT_REQUESTED
     );
 }
 
@@ -109,7 +109,7 @@ export interface IDocumentTitleChangedEvent extends IPluggableAppEvent {
  * @alpha
  */
 export function documentTitleChanged(pageTitle: string | undefined): IDocumentTitleChangedEvent {
-    return { type: "GDC.PLUGGABLE_APP/EVT.DOCUMENT_TITLE.CHANGED", payload: { pageTitle } };
+    return { type: PluggableAppEventType.DOCUMENT_TITLE_CHANGED, payload: { pageTitle } };
 }
 
 /**
@@ -126,7 +126,7 @@ export function isDocumentTitleChangedEvent(obj: unknown): obj is IDocumentTitle
     if (
         typeof obj !== "object" ||
         obj === null ||
-        (obj as { type?: unknown }).type !== "GDC.PLUGGABLE_APP/EVT.DOCUMENT_TITLE.CHANGED"
+        (obj as { type?: unknown }).type !== PluggableAppEventType.DOCUMENT_TITLE_CHANGED
     ) {
         return false;
     }
@@ -190,7 +190,7 @@ export function openAiAssistantRequested(payload?: {
     appendToChat?: boolean;
     replaceUserContext?: boolean;
 }): IOpenAiAssistantRequestedEvent {
-    return { type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.OPEN_REQUESTED", payload: payload ?? {} };
+    return { type: PluggableAppEventType.AI_ASSISTANT_OPEN_REQUESTED, payload: payload ?? {} };
 }
 
 /**
@@ -207,7 +207,7 @@ export function isOpenAiAssistantRequestedEvent(obj: unknown): obj is IOpenAiAss
     if (
         typeof obj !== "object" ||
         obj === null ||
-        (obj as { type?: unknown }).type !== "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.OPEN_REQUESTED"
+        (obj as { type?: unknown }).type !== PluggableAppEventType.AI_ASSISTANT_OPEN_REQUESTED
     ) {
         return false;
     }
@@ -244,7 +244,7 @@ export interface ICloseAiAssistantRequestedEvent extends IPluggableAppEvent {
  * @alpha
  */
 export function closeAiAssistantRequested(): ICloseAiAssistantRequestedEvent {
-    return { type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CLOSE_REQUESTED" };
+    return { type: PluggableAppEventType.AI_ASSISTANT_CLOSE_REQUESTED };
 }
 
 /**
@@ -255,7 +255,7 @@ export function closeAiAssistantRequested(): ICloseAiAssistantRequestedEvent {
 export function isCloseAiAssistantRequestedEvent(obj: unknown): obj is ICloseAiAssistantRequestedEvent {
     return (
         typeof obj === "object" &&
-        (obj as { type?: unknown })?.type === "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CLOSE_REQUESTED"
+        (obj as { type?: unknown })?.type === PluggableAppEventType.AI_ASSISTANT_CLOSE_REQUESTED
     );
 }
 
@@ -328,7 +328,7 @@ export function aiAssistantContextChanged(payload?: {
     userContext?: IGenAIUserContext;
     userContextLoading?: boolean;
 }): IAiAssistantContextChangedEvent {
-    return { type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CONTEXT_CHANGED", payload: payload ?? {} };
+    return { type: PluggableAppEventType.AI_ASSISTANT_CONTEXT_CHANGED, payload: payload ?? {} };
 }
 
 /**
@@ -340,7 +340,7 @@ export function isAiAssistantContextChangedEvent(obj: unknown): obj is IAiAssist
     if (
         typeof obj !== "object" ||
         obj === null ||
-        (obj as { type?: unknown }).type !== "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CONTEXT_CHANGED"
+        (obj as { type?: unknown }).type !== PluggableAppEventType.AI_ASSISTANT_CONTEXT_CHANGED
     ) {
         return false;
     }
@@ -372,51 +372,51 @@ export function isAiAssistantContextChangedEvent(obj: unknown): obj is IAiAssist
 }
 
 /**
- * Event telling the host assistant that a report it drafted was saved.
+ * Event telling the host assistant that a document it drafted was saved.
  *
  * @remarks
  * The assistant keeps its own copy of the conversation, which only learns about a save when the
- * thread is loaded again. The application that saved the report emits this once per save, so the
- * report in the chat reads as saved and links to the saved report right away.
+ * thread is loaded again. The application that saved the document emits this once per save, so the
+ * document in the chat reads as saved and links to the saved document right away.
  *
  * @alpha
  */
-export interface IAiAssistantReportSavedEvent extends IPluggableAppEvent {
-    readonly type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.REPORT_SAVED";
+export interface IAiAssistantPublisherDocumentSavedEvent extends IPluggableAppEvent {
+    readonly type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.PUBLISHER_DOCUMENT_SAVED";
     readonly payload: {
         /**
-         * Conversation the report was drafted in.
+         * Conversation the document was drafted in.
          */
         readonly conversationId: string;
         /**
-         * Conversation item that holds the drafted report.
+         * Conversation item that holds the drafted document.
          */
         readonly itemId: string;
         /**
-         * Name of the report within the item. Omitted when the draft carries none; the item's only
-         * report is meant then.
+         * Name of the document within the item. Omitted when the draft carries none; the item's only
+         * document is meant then.
          */
-        readonly reportRef?: string;
+        readonly documentRef?: string;
         /**
-         * Identifier of the report the draft was saved as.
+         * Identifier of the document the draft was saved as.
          */
-        readonly savedReportId: string;
+        readonly savedDocumentId: string;
     };
 }
 
 /**
- * Creates an {@link IAiAssistantReportSavedEvent}.
+ * Creates an {@link IAiAssistantPublisherDocumentSavedEvent}.
  *
  * @alpha
  */
-export function aiAssistantReportSaved(
-    payload: IAiAssistantReportSavedEvent["payload"],
-): IAiAssistantReportSavedEvent {
-    return { type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.REPORT_SAVED", payload };
+export function aiAssistantPublisherDocumentSaved(
+    payload: IAiAssistantPublisherDocumentSavedEvent["payload"],
+): IAiAssistantPublisherDocumentSavedEvent {
+    return { type: PluggableAppEventType.AI_ASSISTANT_PUBLISHER_DOCUMENT_SAVED, payload };
 }
 
 /**
- * Type guard for {@link IAiAssistantReportSavedEvent}.
+ * Type guard for {@link IAiAssistantPublisherDocumentSavedEvent}.
  *
  * @remarks
  * Validates the payload shape too, so a malformed event is rejected rather than narrowed to a type
@@ -424,11 +424,13 @@ export function aiAssistantReportSaved(
  *
  * @alpha
  */
-export function isAiAssistantReportSavedEvent(obj: unknown): obj is IAiAssistantReportSavedEvent {
+export function isAiAssistantPublisherDocumentSavedEvent(
+    obj: unknown,
+): obj is IAiAssistantPublisherDocumentSavedEvent {
     if (
         typeof obj !== "object" ||
         obj === null ||
-        (obj as { type?: unknown }).type !== "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.REPORT_SAVED"
+        (obj as { type?: unknown }).type !== PluggableAppEventType.AI_ASSISTANT_PUBLISHER_DOCUMENT_SAVED
     ) {
         return false;
     }
@@ -436,17 +438,17 @@ export function isAiAssistantReportSavedEvent(obj: unknown): obj is IAiAssistant
     if (typeof payload !== "object" || payload === null || Array.isArray(payload)) {
         return false;
     }
-    const { conversationId, itemId, reportRef, savedReportId } = payload as {
+    const { conversationId, itemId, documentRef, savedDocumentId } = payload as {
         conversationId?: unknown;
         itemId?: unknown;
-        reportRef?: unknown;
-        savedReportId?: unknown;
+        documentRef?: unknown;
+        savedDocumentId?: unknown;
     };
     return (
         typeof conversationId === "string" &&
         typeof itemId === "string" &&
-        (reportRef === undefined || typeof reportRef === "string") &&
-        typeof savedReportId === "string"
+        (documentRef === undefined || typeof documentRef === "string") &&
+        typeof savedDocumentId === "string"
     );
 }
 
@@ -504,7 +506,7 @@ export interface IPluggableAppLogRecord {
  * @remarks
  * Pluggable applications describe an event with these neutral groups and must NOT assume any particular
  * analytics backend (Matomo, …) — the host shell decides how to record them. `identifiers` are
- * sensitive entity ids (workspace, dashboard, report, …) the shell may hash and aggregate; `stats` are
+ * sensitive entity ids (workspace, dashboard, document, …) the shell may hash and aggregate; `stats` are
  * contextual metrics (counts, types, …). Any other key is a free-form event property. Passed as the `data`
  * argument of {@link IPluggableAppTelemetryCallbacks.trackEvent}.
  *

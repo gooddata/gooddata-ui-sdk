@@ -1,5 +1,10 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactNode } from "react";
+
+import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
+import { type IconType } from "../@types/icon.js";
+
 /**
  * Width state of a resizable, collapsible sidebar, shared between the sidebar and controls rendered
  * elsewhere (for example a restore control in a header).
@@ -80,3 +85,67 @@ export interface IUiResizableSidebarStateOptions {
      */
     onUserChange?: (property: "collapsed" | "width") => void;
 }
+
+/**
+ * @internal
+ */
+export interface IUiResizableSidebarNavigationBadge {
+    kind: "dot";
+    label: string;
+}
+
+/**
+ * A page listed in a {@link UiResizableSidebarNavigation}: a sub-item of a group, or the base of a
+ * top-level item.
+ *
+ * @internal
+ */
+export interface IUiResizableSidebarNavigationSubItem {
+    id: string;
+    label: string;
+    /**
+     * Renders the item as a link. An item without `href` renders as a button.
+     */
+    href?: string;
+    /**
+     * Marks the page the user is on; rendered as `aria-current="page"`.
+     */
+    isSelected?: boolean;
+    /**
+     * A dot next to the label that marks the item as needing attention. The label is its accessible
+     * text, e.g. "Needs attention". A collapsed group, and a group in the rail, shows the badge of its
+     * first badged sub-page.
+     */
+    badge?: IUiResizableSidebarNavigationBadge;
+    dataTestId?: string;
+}
+
+/**
+ * A top-level item of a {@link UiResizableSidebarNavigation}. With `children` it is an expandable group
+ * whose sub-items are listed while the group is expanded.
+ *
+ * @internal
+ */
+export interface IUiResizableSidebarNavigationItem extends IUiResizableSidebarNavigationSubItem {
+    /**
+     * Icon shown before the label, and alone in rail mode: a kit icon name, or a custom node that
+     * paints itself in `currentColor`.
+     */
+    icon?: IconType | ReactNode;
+    children?: IUiResizableSidebarNavigationSubItem[];
+}
+
+/**
+ * The navigation needs an accessible name.
+ *
+ * @internal
+ */
+export type UiResizableSidebarNavigationNamingConfig =
+    | {
+          ariaLabel: NonNullable<IAccessibilityConfigBase["ariaLabel"]>;
+          ariaLabelledBy?: IAccessibilityConfigBase["ariaLabelledBy"];
+      }
+    | {
+          ariaLabel?: IAccessibilityConfigBase["ariaLabel"];
+          ariaLabelledBy: NonNullable<IAccessibilityConfigBase["ariaLabelledBy"]>;
+      };

@@ -6,7 +6,7 @@ import type { IAttribute } from "../execution/attribute/index.js";
 import type { IFilter } from "../execution/filter/index.js";
 import type { IMeasure } from "../execution/measure/index.js";
 import type { ObjRef } from "../objRef/index.js";
-import type { IReportDefinition } from "../reports/report.js";
+import type { IPublisherDocumentDefinition } from "../publisher/document.js";
 
 import type { GenAIObjectType } from "./common.js";
 import type { ISemanticSearchResult, ISemanticSearchResultItem } from "./semanticSearch.js";
@@ -147,28 +147,28 @@ export interface IGenAIUIContext {
      */
     dashboard?: IGenAIDashboardContext;
     /**
-     * Report the user is currently viewing or editing.
+     * Document the user is currently viewing or editing.
      */
-    report?: IGenAIReportContext;
+    publisherDocument?: IGenAIPublisherDocumentContext;
 }
 
 /**
- * Report context for GenAI.
+ * Publisher document context for GenAI.
  * @internal
  */
-export interface IGenAIReportContext {
+export interface IGenAIPublisherDocumentContext {
     /**
-     * Report object reference. Absent while the report is not saved yet.
+     * Document object reference. Absent while the document is not saved yet.
      */
     ref?: ObjRef;
     /**
-     * Report title.
+     * Document title.
      */
     title?: string;
     /**
-     * Report definition as the user sees it, including edits that are not saved yet.
+     * Document definition as the user sees it, including edits that are not saved yet.
      */
-    definition?: IReportDefinition;
+    definition?: IPublisherDocumentDefinition;
     /**
      * Name of the conversation draft the editor shows, while that draft is not saved yet.
      */

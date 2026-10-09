@@ -9,7 +9,7 @@
     box-sizing: border-box;
     padding: toolbarItem.$toolbar-padding;
     border: 1px solid var(--gd-palette-complementary-3);
-    border-radius: var(--gd-button-borderRadius);
+    border-radius: var(--gd-toolbar-borderRadius);
     background-color: var(--gd-palette-complementary-0);
     box-shadow: 0 2px 10px var(--gd-shadow-color);
 }

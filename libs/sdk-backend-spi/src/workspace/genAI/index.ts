@@ -19,7 +19,7 @@ import type {
     IMeasure,
     IMemoryItemDefinition,
     IMemoryItemMetadataObject,
-    IReportDefinition,
+    IPublisherDocumentDefinition,
     ISemanticQualityIssuesCalculation,
     ISemanticQualityReport,
     ISemanticSearchRelationship,
@@ -1163,7 +1163,7 @@ export type IChatConversationMultipartPart =
     | IChatConversationWhatIfContent
     | IChatConversationSearchContent
     | IChatConversationDashboardContent
-    | IChatConversationReportContent;
+    | IChatConversationPublisherDocumentContent;
 
 /**
  * GenAI Chat Conversation text content
@@ -1530,46 +1530,46 @@ export function isChatConversationDashboardContent(
 }
 
 /**
- * GenAI Chat Conversation report content
+ * GenAI Chat Conversation publisher document content
  * @internal
  */
-export type IChatConversationReportContent = {
-    type: "report";
+export type IChatConversationPublisherDocumentContent = {
+    type: "publisherDocument";
     /**
-     * Snapshot of the whole report, not a change to apply to an earlier one.
+     * Snapshot of the whole document, not a change to apply to an earlier one.
      */
-    report: IReportDefinition | null;
+    publisherDocument: IPublisherDocumentDefinition | null;
     /**
-     * Id of the report this version of the draft was saved as. Absent until it is saved.
+     * Id of the document this version of the draft was saved as. Absent until it is saved.
      */
     saved?: string | null;
     /**
-     * Name of the draft in the conversation, needed to record the report it is saved as.
+     * Name of the draft in the conversation, needed to record the document it is saved as.
      */
     ref?: string | null;
     /**
-     * Id of the saved report the draft edits. Saving the draft updates that report. Absent when the
-     * draft is a new report.
+     * Id of the saved document the draft edits. Saving the draft updates that document. Absent when the
+     * draft is a new document.
      */
-    baseReportId?: string | null;
+    baseDocumentId?: string | null;
     /**
      * Name of the draft version this one reworks. Absent for a first draft.
      */
     refines?: string | null;
     /**
-     * Whether this version was written from the report open in the editor, so the editor can apply it.
+     * Whether this version was written from the document open in the editor, so the editor can apply it.
      */
-    reworksOpenReport?: boolean;
+    reworksOpenDocument?: boolean;
 };
 
 /**
- * Is chat conversation report content
+ * Is chat conversation publisher document content
  * @internal
  */
-export function isChatConversationReportContent(
+export function isChatConversationPublisherDocumentContent(
     content: IChatConversationMultipartPart,
-): content is IChatConversationReportContent {
-    return content.type === "report";
+): content is IChatConversationPublisherDocumentContent {
+    return content.type === "publisherDocument";
 }
 
 /**
@@ -1635,12 +1635,16 @@ export interface IChatConversationThread {
      */
     resaveVisualisation(oldVisualizationId: string, newVisualizationId: string): Promise<void>;
     /**
-     * Records the saved report that a report drafted in the conversation became.
-     *
-     * @param reportRef - name of the draft in the conversation
-     * @param savedReportId - id of the report it was saved as
+     * Save the user dashboard for the interaction.
      */
-    resaveReport(reportRef: string, savedReportId: string): Promise<void>;
+    resaveDashboard(dashboardId: string, newDashboardId: string): Promise<void>;
+    /**
+     * Records the saved document that a document drafted in the conversation became.
+     *
+     * @param documentRef - name of the draft in the conversation
+     * @param savedDocumentId - id of the document it was saved as
+     */
+    resavePublisherDocument(documentRef: string, savedDocumentId: string): Promise<void>;
     /**
      * Add a user message to the chat thread.
      */

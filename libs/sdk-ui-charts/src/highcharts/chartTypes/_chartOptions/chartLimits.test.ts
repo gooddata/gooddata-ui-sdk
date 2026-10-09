@@ -4,7 +4,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { VisualizationTypes } from "@gooddata/sdk-ui";
+import { type ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { type IChartOptions } from "../../typings/unsafe.js";
 
@@ -16,7 +16,7 @@ function makeChartOptions({
     stacking,
     dataPointsPerSeries = 1,
 }: {
-    type: string;
+    type: ChartType;
     seriesCount: number;
     stacking: "normal" | "percent" | null;
     dataPointsPerSeries?: number;

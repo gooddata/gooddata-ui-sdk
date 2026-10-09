@@ -4,6 +4,7 @@ import { type ReactElement } from "react";
 
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 
+import { DashboardCanvasOverlayZIndex } from "./DashboardCanvasOverlayZIndex.js";
 import { type IDashboardLayoutProps } from "./types.js";
 
 /**
@@ -12,5 +13,9 @@ import { type IDashboardLayoutProps } from "./types.js";
 export function DashboardLayout(props: IDashboardLayoutProps): ReactElement {
     const { LayoutComponent } = useDashboardComponentsContext();
 
-    return <LayoutComponent {...props} />;
+    return (
+        <DashboardCanvasOverlayZIndex>
+            <LayoutComponent {...props} />
+        </DashboardCanvasOverlayZIndex>
+    );
 }

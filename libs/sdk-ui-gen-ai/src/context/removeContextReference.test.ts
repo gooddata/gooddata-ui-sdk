@@ -86,41 +86,43 @@ describe("removeContextReference", () => {
         expect(context.active?.view?.dashboard).toBeDefined();
     });
 
-    it("should remove a report that is not saved yet and keep the dashboard", () => {
+    it("should remove a document that is not saved yet and keep the dashboard", () => {
         const dashboard = { ref: idRef("dashboard-1", "analyticalDashboard"), widgets: [] };
         const context: StoreContext = {
-            active: { view: { dashboard, report: { title: "Draft" } } },
+            active: { view: { dashboard, publisherDocument: { title: "Draft" } } },
         };
 
         const result = removeContextReference(context, {
             id: "unsaved",
             title: "Draft",
             nesting: 0,
-            type: "report",
-            where: "view.report",
+            type: "publisherDocument",
+            where: "view.publisherDocument",
         });
 
         expect(result.active).toEqual({ view: { dashboard } });
     });
 
-    it("should keep a saved report when asked to remove one that is not saved yet", () => {
-        const context: StoreContext = { active: { view: { report: { ref: idRef("q1", "report") } } } };
+    it("should keep a saved document when asked to remove one that is not saved yet", () => {
+        const context: StoreContext = {
+            active: { view: { publisherDocument: { ref: idRef("q1", "report") } } },
+        };
 
         const result = removeContextReference(context, {
             id: "unsaved",
             title: "Draft",
             nesting: 0,
-            type: "report",
-            where: "view.report",
+            type: "publisherDocument",
+            where: "view.publisherDocument",
         });
 
-        expect(result.active).toEqual({ view: { report: { ref: idRef("q1", "report") } } });
+        expect(result.active).toEqual({ view: { publisherDocument: { ref: idRef("q1", "report") } } });
     });
 
-    it("should remove report reference and keep the dashboard", () => {
+    it("should remove document reference and keep the dashboard", () => {
         const dashboard = { ref: idRef("dashboard-1", "analyticalDashboard"), widgets: [] };
         const context: StoreContext = {
-            active: { view: { dashboard, report: { ref: idRef("q1", "report") } } },
+            active: { view: { dashboard, publisherDocument: { ref: idRef("q1", "report") } } },
         };
 
         const result = removeContextReference(context, {
@@ -128,8 +130,8 @@ describe("removeContextReference", () => {
             ref: idRef("q1", "report"),
             title: "Q1",
             nesting: 0,
-            type: "report",
-            where: "view.report",
+            type: "publisherDocument",
+            where: "view.publisherDocument",
         });
 
         expect(result.active).toEqual({ view: { dashboard } });

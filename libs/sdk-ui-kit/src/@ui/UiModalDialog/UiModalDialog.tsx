@@ -24,7 +24,7 @@ import {
 
 import { ConditionalScopedThemeProvider } from "@gooddata/sdk-ui-theme-provider";
 
-import { useOverlayZIndexWithRegister } from "../../Overlay/OverlayContext.js";
+import { OverlayZIndexContext, useOverlayZIndexWithRegister } from "../../Overlay/OverlayContext.js";
 import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { bem } from "../@utils/bem.js";
 import { markModalOwnedEvent } from "../UiFocusManager/modalOwnedEvents.js";
@@ -303,7 +303,9 @@ function OpenModalDialog({
                             onKeyDown={onCardKeyDown}
                         >
                             <UiDialogContext.Provider value={dialogContextValue}>
-                                {children}
+                                <OverlayZIndexContext.Provider value={zIndex}>
+                                    {children}
+                                </OverlayZIndexContext.Provider>
                             </UiDialogContext.Provider>
                         </div>
                     </FloatingFocusManager>

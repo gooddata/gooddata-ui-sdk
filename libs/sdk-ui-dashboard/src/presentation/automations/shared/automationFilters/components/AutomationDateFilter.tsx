@@ -15,6 +15,7 @@ import { type OverlayPositionType, UiChip, UiTooltip, useIdPrefixed } from "@goo
 
 import { DefaultDashboardDateFilter } from "../../../../filterBar/dateFilter/DefaultDashboardDateFilter.js";
 import type { IDashboardDateFilterConfig } from "../../../../filterBar/dateFilter/types.js";
+import { useDateFilterConfigNarrowedToDimension } from "../../../../filterBar/dateFilter/useDateFilterConfigNarrowedToDimension.js";
 import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
 
 import {
@@ -159,6 +160,12 @@ export function AutomationDateFilter({
         dateFilterOptions,
     };
 
+    const dateFilterConfigNarrowedToDimension = useDateFilterConfigNarrowedToDimension(
+        commonDateFilterComponentConfig,
+        allDateDatasets,
+        isCommonDateFilter ? undefined : filter.dateFilter.dataSet,
+    );
+
     const defaultDateFilterName = allDateDatasets.find((ds: ICatalogDateDataset) =>
         areObjRefsEqual(ds.dataSet.ref, filter.dateFilter.dataSet),
     )?.dataSet?.title;
@@ -166,7 +173,7 @@ export function AutomationDateFilter({
     const filterConfig = isCommonDateFilter
         ? commonDateFilterComponentConfig
         : {
-              ...commonDateFilterComponentConfig,
+              ...dateFilterConfigNarrowedToDimension,
               customFilterName: defaultDateFilterName,
           };
 

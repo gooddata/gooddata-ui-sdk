@@ -7,7 +7,7 @@ import {
     type IChatConversationMultipartPart,
     isChatConversationDashboardContent,
     isChatConversationMultipartContent,
-    isChatConversationReportContent,
+    isChatConversationPublisherDocumentContent,
     isChatConversationVisualisationContent,
 } from "@gooddata/sdk-backend-spi";
 
@@ -47,18 +47,21 @@ export function* notifyDefinitionReceived(
                     insights: multipartContent.insights ?? [],
                 }),
             );
-        } else if (isChatConversationReportContent(multipartContent) && multipartContent.report) {
+        } else if (
+            isChatConversationPublisherDocumentContent(multipartContent) &&
+            multipartContent.publisherDocument
+        ) {
             yield put(
                 onDefinitionReceivedAction({
                     conversationId,
                     interactionId,
                     itemId: item.id,
-                    definitionType: "report",
-                    report: multipartContent.report,
-                    reportRef: multipartContent.ref ?? undefined,
+                    definitionType: "publisherDocument",
+                    publisherDocument: multipartContent.publisherDocument,
+                    documentRef: multipartContent.ref ?? undefined,
                     refines: multipartContent.refines ?? undefined,
-                    reworksOpenReport: multipartContent.reworksOpenReport === true,
-                    baseReportId: multipartContent.baseReportId ?? undefined,
+                    reworksOpenDocument: multipartContent.reworksOpenDocument === true,
+                    baseDocumentId: multipartContent.baseDocumentId ?? undefined,
                 }),
             );
         } else if (

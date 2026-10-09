@@ -403,10 +403,10 @@ export function getAvailableSelectionTypeFromFilter(filter: IAttributeFilter | u
 export function getAvailableTextSelectionTypes(selectionTypes: AttributeFilterAvailableSelectionType[] | undefined): AttributeFilterTextSelectionType[];
 
 // @beta (undocumented)
-export const getDateFilterRepresentation: (filter: DateFilterOption, locale: ILocale, messages: ITranslations, labelMode: DateFilterLabelMode, dateFormat?: string, weekStart?: WeekStart) => string;
+export const getDateFilterRepresentation: (filter: DateFilterOption, locale: ILocale, messages: ITranslations, labelMode: DateFilterLabelMode, dateFormat?: string) => string;
 
 // @beta
-export const getDateFilterTitleUsingTranslator: (filter: DateFilterOption, translator: IDateAndMessageTranslator, labelMode: DateFilterLabelMode, dateFormat?: string, weekStart?: WeekStart) => string;
+export const getDateFilterTitleUsingTranslator: (filter: DateFilterOption, translator: IDateAndMessageTranslator, labelMode: DateFilterLabelMode, dateFormat?: string) => string;
 
 // @alpha
 export function getDefaultCalendarTab(activeCalendars?: IActiveCalendars, currentPreset?: DateFilterOption): CalendarTabType;
@@ -1055,7 +1055,6 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     overlayPositionType?: OverlayPositionType;
     // (undocumented)
     showDropDownHeaderMessage?: boolean;
-    // (undocumented)
     weekStart?: WeekStart;
     // @alpha
     withoutApply?: boolean;

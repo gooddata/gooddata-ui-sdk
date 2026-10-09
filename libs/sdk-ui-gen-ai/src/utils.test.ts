@@ -6,12 +6,12 @@ import { describe, expect, it } from "vitest";
 import {
     convertGenAiTypeToReferenceType,
     convertReferenceTypeToGenAiType,
-    formatReportPeriod,
+    formatPublisherDocumentPeriod,
     generateTitleFromQuestion,
-    getReportDraftHref,
-    getReportHref,
-    getReportItemUrl,
-    getReportModifyHref,
+    getPublisherDocumentDraftHref,
+    getPublisherDocumentHref,
+    getPublisherDocumentItemUrl,
+    getPublisherDocumentModifyHref,
     getVisualizationHref,
 } from "./utils.js";
 
@@ -105,36 +105,36 @@ describe("getVisualizationHref", () => {
     });
 });
 
-describe("getReportHref", () => {
-    it("links a saved report inside the reports app", () => {
-        expect(getReportHref("ws1", "r1")).toBe("/workspace/ws1/publisher/report/r1");
+describe("getPublisherDocumentHref", () => {
+    it("links a saved document inside the publisher", () => {
+        expect(getPublisherDocumentHref("ws1", "r1")).toBe("/workspace/ws1/publisher/report/r1");
     });
 
     it("keeps an id with a slash in one path segment", () => {
-        expect(getReportHref("ws1", "r/1")).toBe("/workspace/ws1/publisher/report/r%2F1");
+        expect(getPublisherDocumentHref("ws1", "r/1")).toBe("/workspace/ws1/publisher/report/r%2F1");
     });
 });
 
-describe("getReportDraftHref", () => {
+describe("getPublisherDocumentDraftHref", () => {
     it("names the conversation and the message the draft is read from", () => {
-        expect(getReportDraftHref("ws1", "conv-1", "item-1")).toBe(
+        expect(getPublisherDocumentDraftHref("ws1", "conv-1", "item-1")).toBe(
             "/workspace/ws1/publisher/new?conversation=conv-1&item=item-1",
         );
     });
 
     it("encodes ids that are not query-safe", () => {
-        expect(getReportDraftHref("ws1", "a&b", "c d")).toBe(
+        expect(getPublisherDocumentDraftHref("ws1", "a&b", "c d")).toBe(
             "/workspace/ws1/publisher/new?conversation=a%26b&item=c+d",
         );
     });
 });
 
-describe("getReportModifyHref", () => {
-    it("opens the saved report with the draft named in its query", () => {
+describe("getPublisherDocumentModifyHref", () => {
+    it("opens the saved document with the draft named in its query", () => {
         expect(
-            getReportModifyHref({
+            getPublisherDocumentModifyHref({
                 workspaceId: "ws1",
-                reportId: "r/1",
+                documentId: "r/1",
                 conversationId: "conv-1",
                 itemId: "item-1",
             }),
@@ -142,38 +142,38 @@ describe("getReportModifyHref", () => {
     });
 });
 
-describe("getReportItemUrl", () => {
+describe("getPublisherDocumentItemUrl", () => {
     const draftUrl = "/workspace/ws1/publisher/new?conversation=conv-1&item=item-1";
     const modifyUrl = "/workspace/ws1/publisher/report/base-1?conversation=conv-1&item=item-1";
 
-    it("links the draft's changes to the saved report it edits", () => {
+    it("links the draft's changes to the saved document it edits", () => {
         expect(
-            getReportItemUrl({
+            getPublisherDocumentItemUrl({
                 workspaceId: "ws1",
-                baseReportId: "base-1",
+                baseDocumentId: "base-1",
                 conversationId: "conv-1",
                 itemId: "item-1",
             }),
         ).toBe(modifyUrl);
     });
 
-    it("links the report this version was saved as, with the draft", () => {
+    it("links the document this version was saved as, with the draft", () => {
         expect(
-            getReportItemUrl({
+            getPublisherDocumentItemUrl({
                 workspaceId: "ws1",
                 saved: "r1",
-                baseReportId: "base-1",
+                baseDocumentId: "base-1",
                 conversationId: "conv-1",
                 itemId: "item-1",
             }),
         ).toBe("/workspace/ws1/publisher/report/r1?conversation=conv-1&item=item-1");
     });
 
-    it.each([null, ""])("links a new draft when the report it edits is %j", (baseReportId) => {
+    it.each([null, ""])("links a new draft when the document it edits is %j", (baseDocumentId) => {
         expect(
-            getReportItemUrl({
+            getPublisherDocumentItemUrl({
                 workspaceId: "ws1",
-                baseReportId,
+                baseDocumentId,
                 conversationId: "conv-1",
                 itemId: "item-1",
             }),
@@ -183,13 +183,15 @@ describe("getReportItemUrl", () => {
     it.each([
         ["an empty conversation id", { conversationId: "", itemId: "item-1" }],
         ["an empty message id", { conversationId: "conv-1", itemId: "" }],
-    ])("links no changes to a saved report with %s", (_description, ids) => {
-        expect(getReportItemUrl({ workspaceId: "ws1", baseReportId: "base-1", ...ids })).toBeUndefined();
+    ])("links no changes to a saved document with %s", (_description, ids) => {
+        expect(
+            getPublisherDocumentItemUrl({ workspaceId: "ws1", baseDocumentId: "base-1", ...ids }),
+        ).toBeUndefined();
     });
 
-    it("links a saved new report with the draft when the conversation and message are known", () => {
+    it("links a saved new document with the draft when the conversation and message are known", () => {
         expect(
-            getReportItemUrl({
+            getPublisherDocumentItemUrl({
                 workspaceId: "ws1",
                 saved: "r1",
                 conversationId: "conv-1",
@@ -202,21 +204,26 @@ describe("getReportItemUrl", () => {
         ["an empty conversation id", { conversationId: "", itemId: "item-1" }],
         ["an empty message id", { conversationId: "conv-1", itemId: "" }],
         ["no ids", {}],
-    ])("links a saved report without the draft with %s", (_description, ids) => {
-        expect(getReportItemUrl({ workspaceId: "ws1", saved: "r1", ...ids })).toBe(
+    ])("links a saved document without the draft with %s", (_description, ids) => {
+        expect(getPublisherDocumentItemUrl({ workspaceId: "ws1", saved: "r1", ...ids })).toBe(
             "/workspace/ws1/publisher/report/r1",
         );
     });
 
     it("links a draft that names its conversation and message", () => {
-        expect(getReportItemUrl({ workspaceId: "ws1", conversationId: "conv-1", itemId: "item-1" })).toBe(
-            draftUrl,
-        );
+        expect(
+            getPublisherDocumentItemUrl({ workspaceId: "ws1", conversationId: "conv-1", itemId: "item-1" }),
+        ).toBe(draftUrl);
     });
 
-    it("links a draft when the saved report is null", () => {
+    it("links a draft when the saved document is null", () => {
         expect(
-            getReportItemUrl({ workspaceId: "ws1", saved: null, conversationId: "conv-1", itemId: "item-1" }),
+            getPublisherDocumentItemUrl({
+                workspaceId: "ws1",
+                saved: null,
+                conversationId: "conv-1",
+                itemId: "item-1",
+            }),
         ).toBe(draftUrl);
     });
 
@@ -227,25 +234,27 @@ describe("getReportItemUrl", () => {
         ["no message id", { conversationId: "conv-1" }],
         ["neither id", {}],
     ])("links nothing for a draft with %s", (_description, ids) => {
-        expect(getReportItemUrl({ workspaceId: "ws1", ...ids })).toBeUndefined();
+        expect(getPublisherDocumentItemUrl({ workspaceId: "ws1", ...ids })).toBeUndefined();
     });
 });
 
-describe("formatReportPeriod", () => {
+describe("formatPublisherDocumentPeriod", () => {
     const intl = createIntl({ locale: "en-US" });
 
     it("writes the period as a range of days", () => {
-        expect(formatReportPeriod("2025-07-01", "2025-12-31", intl)).toMatch(/^Jul 1\s*–\s*Dec 31, 2025$/);
+        expect(formatPublisherDocumentPeriod("2025-07-01", "2025-12-31", intl)).toMatch(
+            /^Jul 1\s*–\s*Dec 31, 2025$/,
+        );
     });
 
     it("keeps the day it was given, whatever the time zone", () => {
-        expect(formatReportPeriod("2026-01-01", "2026-01-01", intl)).toContain("Jan 1, 2026");
+        expect(formatPublisherDocumentPeriod("2026-01-01", "2026-01-01", intl)).toContain("Jan 1, 2026");
     });
 
     it.each([
         ["start", "soon", "2026-03-31"],
         ["end", "2026-01-01", "later"],
     ])("gives nothing when the %s is not a date", (_which, start, end) => {
-        expect(formatReportPeriod(start, end, intl)).toBeUndefined();
+        expect(formatPublisherDocumentPeriod(start, end, intl)).toBeUndefined();
     });
 });

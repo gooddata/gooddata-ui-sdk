@@ -151,9 +151,9 @@
         "text": "Dashboard",
         "crowdinContext": "Accessibility label for the icon marking an AI chatbot context item as a dashboard. Read before the item title."
     },
-    "gd.gen-ai.context.type.report": {
-        "text": "Report",
-        "crowdinContext": "Accessibility label for the icon marking an AI chatbot context item as a report. Read before the item title."
+    "gd.gen-ai.context.type.publisherDocument": {
+        "text": "Document",
+        "crowdinContext": "Accessibility label for the icon marking an AI chatbot context item as a document. Read before the item title."
     },
     "gd.gen-ai.context.type.visualization": {
         "text": "Visualization",
@@ -563,21 +563,25 @@
         "text": "Open",
         "crowdinContext": "Open dashboard button label."
     },
-    "gd.gen-ai.report.open-report": {
+    "gd.gen-ai.dashboard.edit-dashboard": {
+        "text": "Edit",
+        "crowdinContext": "Edit dashboard button label."
+    },
+    "gd.gen-ai.publisherDocument.open": {
         "text": "Open",
-        "crowdinContext": "Open report button label on the report card in the chat."
+        "crowdinContext": "Open document button label on the document card in the chat."
     },
-    "gd.gen-ai.report.details": {
+    "gd.gen-ai.publisherDocument.details": {
         "text": "{period} · {count, plural, one {# page} other {# pages}}",
-        "crowdinContext": "Second line of the report card in the chat: the period the report covers, then how many pages it has. {period} is an already formatted date range such as 'Jan 1 – Mar 31, 2026'; {count} is the number of pages."
+        "crowdinContext": "Second line of the document card in the chat: the period the document covers, then how many pages it has. {period} is an already formatted date range such as 'Jan 1 – Mar 31, 2026'; {count} is the number of pages."
     },
-    "gd.gen-ai.report.page-count": {
+    "gd.gen-ai.publisherDocument.page-count": {
         "text": "{count, plural, one {# page} other {# pages}}",
-        "crowdinContext": "Second line of the report card in the chat when the report has no readable period: only how many pages it has."
+        "crowdinContext": "Second line of the document card in the chat when the document has no readable period: only how many pages it has."
     },
-    "gd.gen-ai.report.unavailable": {
-        "text": "The report is unavailable.",
-        "crowdinContext": "Shown in place of the report card in the chat when the report the assistant created can no longer be loaded."
+    "gd.gen-ai.publisherDocument.unavailable": {
+        "text": "The document is unavailable.",
+        "crowdinContext": "Shown in place of the document card in the chat when the document the assistant created can no longer be loaded."
     },
     "gd.gen-ai.alert-proposal.summary.trigger": {
         "text": "Trigger",
@@ -1083,9 +1087,9 @@
         "text": "Dashboard",
         "crowdinContext": "Interaction Intelligence 'Output' row value when the turn produced a dashboard"
     },
-    "gd.gen-ai.interactionIntelligence.detail.output.report": {
-        "text": "Report",
-        "crowdinContext": "Interaction Intelligence 'Output' row value when the turn produced a report"
+    "gd.gen-ai.interactionIntelligence.detail.output.publisherDocument": {
+        "text": "Document",
+        "crowdinContext": "Interaction Intelligence 'Output' row value when the turn produced a document"
     },
     "gd.gen-ai.interactionIntelligence.detail.output.keyDriverAnalysis": {
         "text": "Key driver analysis",

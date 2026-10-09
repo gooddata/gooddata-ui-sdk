@@ -137,14 +137,14 @@ import { IPagedResource } from '@gooddata/sdk-backend-spi';
 import { IPostProcessing } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { IPreparedExecutionOptions } from '@gooddata/sdk-backend-spi';
+import { IPublisherDocument } from '@gooddata/sdk-model';
+import { IPublisherDocumentDefinition } from '@gooddata/sdk-model';
+import { IPublisherDocumentExportPdfOptions } from '@gooddata/sdk-backend-spi';
+import { IPublisherDocumentTemplate } from '@gooddata/sdk-model';
+import { IPublisherDocumentTemplateDefinition } from '@gooddata/sdk-model';
+import { IPublisherPageLayout } from '@gooddata/sdk-model';
+import { IPublisherPageLayoutDefinition } from '@gooddata/sdk-model';
 import { IRawExportCustomOverrides } from '@gooddata/sdk-backend-spi';
-import { IReport } from '@gooddata/sdk-model';
-import { IReportDefinition } from '@gooddata/sdk-model';
-import { IReportExportPdfOptions } from '@gooddata/sdk-backend-spi';
-import { IReportPageLayout } from '@gooddata/sdk-model';
-import { IReportPageLayoutDefinition } from '@gooddata/sdk-model';
-import { IReportTemplate } from '@gooddata/sdk-model';
-import { IReportTemplateDefinition } from '@gooddata/sdk-model';
 import { IRequestCorrelationMetadata } from '@gooddata/sdk-backend-spi';
 import { IResultHeader } from '@gooddata/sdk-model';
 import { IScheduledMail } from '@gooddata/sdk-model';
@@ -179,7 +179,7 @@ import { IWorkspaceFactsService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceInsightsService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceMeasuresService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceObjectPermissionsService } from '@gooddata/sdk-backend-spi';
-import { IWorkspaceReportsService } from '@gooddata/sdk-backend-spi';
+import { IWorkspacePublisherService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceSettingsService } from '@gooddata/sdk-backend-spi';
 import { KpiDrillDefinition } from '@gooddata/sdk-model';
@@ -862,42 +862,42 @@ export abstract class DecoratedWorkspaceObjectPermissionsService implements IWor
 }
 
 // @alpha
-export abstract class DecoratedWorkspaceReportsService implements IWorkspaceReportsService {
-    protected constructor(decorated: IWorkspaceReportsService);
+export abstract class DecoratedWorkspacePublisherService implements IWorkspacePublisherService {
+    protected constructor(decorated: IWorkspacePublisherService);
     // (undocumented)
-    createReport(report: IReportDefinition): Promise<IReport>;
+    createDocument(publisherDocument: IPublisherDocumentDefinition): Promise<IPublisherDocument>;
     // (undocumented)
-    createReportPageLayout(page: IReportPageLayoutDefinition): Promise<IReportPageLayout>;
+    createDocumentTemplate(template: IPublisherDocumentTemplateDefinition): Promise<IPublisherDocumentTemplate>;
     // (undocumented)
-    createReportTemplate(template: IReportTemplateDefinition): Promise<IReportTemplate>;
+    createPageLayout(page: IPublisherPageLayoutDefinition): Promise<IPublisherPageLayout>;
     // (undocumented)
-    protected readonly decorated: IWorkspaceReportsService;
+    protected readonly decorated: IWorkspacePublisherService;
     // (undocumented)
-    deleteReport(ref: ObjRef): Promise<void>;
+    deleteDocument(ref: ObjRef): Promise<void>;
     // (undocumented)
-    deleteReportPageLayout(ref: ObjRef): Promise<void>;
+    deleteDocumentTemplate(ref: ObjRef): Promise<void>;
     // (undocumented)
-    deleteReportTemplate(ref: ObjRef): Promise<void>;
+    deletePageLayout(ref: ObjRef): Promise<void>;
     // (undocumented)
-    exportReportToPdf(ref: ObjRef, options?: IReportExportPdfOptions): Promise<IExportResult>;
+    exportDocumentToPdf(ref: ObjRef, options?: IPublisherDocumentExportPdfOptions): Promise<IExportResult>;
     // (undocumented)
-    getReport(ref: ObjRef): Promise<IReport>;
+    getDocument(ref: ObjRef): Promise<IPublisherDocument>;
     // (undocumented)
-    getReportPageLayout(ref: ObjRef): Promise<IReportPageLayout>;
+    getDocuments(): Promise<IPublisherDocument[]>;
     // (undocumented)
-    getReportPageLayouts(): Promise<IReportPageLayout[]>;
+    getDocumentTemplate(ref: ObjRef): Promise<IPublisherDocumentTemplate>;
     // (undocumented)
-    getReports(): Promise<IReport[]>;
+    getDocumentTemplates(): Promise<IPublisherDocumentTemplate[]>;
     // (undocumented)
-    getReportTemplate(ref: ObjRef): Promise<IReportTemplate>;
+    getPageLayout(ref: ObjRef): Promise<IPublisherPageLayout>;
     // (undocumented)
-    getReportTemplates(): Promise<IReportTemplate[]>;
+    getPageLayouts(): Promise<IPublisherPageLayout[]>;
     // (undocumented)
-    updateReport(report: IReport): Promise<IReport>;
+    updateDocument(publisherDocument: IPublisherDocument): Promise<IPublisherDocument>;
     // (undocumented)
-    updateReportPageLayout(page: IReportPageLayout): Promise<IReportPageLayout>;
+    updateDocumentTemplate(template: IPublisherDocumentTemplate): Promise<IPublisherDocumentTemplate>;
     // (undocumented)
-    updateReportTemplate(template: IReportTemplate): Promise<IReportTemplate>;
+    updatePageLayout(page: IPublisherPageLayout): Promise<IPublisherPageLayout>;
 }
 
 // @alpha (undocumented)
@@ -1000,7 +1000,7 @@ export type DecoratorFactories = {
     geo?: GeoDecoratorFactory;
     organizationExportTemplates?: OrganizationExportTemplatesDecoratorFactory;
     workspaceExportTemplates?: WorkspaceExportTemplatesDecoratorFactory;
-    workspaceReports?: WorkspaceReportsDecoratorFactory;
+    workspacePublisher?: WorkspacePublisherDecoratorFactory;
     objectPermissions?: ObjectPermissionsDecoratorFactory;
 };
 
@@ -1223,39 +1223,39 @@ export class InMemoryPaging<T> implements IPagedResource<T> {
 }
 
 // @alpha
-export class InMemoryWorkspaceReportsService implements IWorkspaceReportsService {
+export class InMemoryWorkspacePublisherService implements IWorkspacePublisherService {
     // (undocumented)
-    createReport(report: IReportDefinition): Promise<IReport>;
+    createDocument(publisherDocument: IPublisherDocumentDefinition): Promise<IPublisherDocument>;
     // (undocumented)
-    createReportPageLayout(layout: IReportPageLayoutDefinition): Promise<IReportPageLayout>;
+    createDocumentTemplate(template: IPublisherDocumentTemplateDefinition): Promise<IPublisherDocumentTemplate>;
     // (undocumented)
-    createReportTemplate(template: IReportTemplateDefinition): Promise<IReportTemplate>;
+    createPageLayout(layout: IPublisherPageLayoutDefinition): Promise<IPublisherPageLayout>;
     // (undocumented)
-    deleteReport(ref: ObjRef): Promise<void>;
+    deleteDocument(ref: ObjRef): Promise<void>;
     // (undocumented)
-    deleteReportPageLayout(ref: ObjRef): Promise<void>;
+    deleteDocumentTemplate(ref: ObjRef): Promise<void>;
     // (undocumented)
-    deleteReportTemplate(ref: ObjRef): Promise<void>;
+    deletePageLayout(ref: ObjRef): Promise<void>;
     // (undocumented)
-    exportReportToPdf(_ref: ObjRef, _options?: IReportExportPdfOptions): Promise<IExportResult>;
+    exportDocumentToPdf(_ref: ObjRef, _options?: IPublisherDocumentExportPdfOptions): Promise<IExportResult>;
     // (undocumented)
-    getReport(ref: ObjRef): Promise<IReport>;
+    getDocument(ref: ObjRef): Promise<IPublisherDocument>;
     // (undocumented)
-    getReportPageLayout(ref: ObjRef): Promise<IReportPageLayout>;
+    getDocuments(): Promise<IPublisherDocument[]>;
     // (undocumented)
-    getReportPageLayouts(): Promise<IReportPageLayout[]>;
+    getDocumentTemplate(ref: ObjRef): Promise<IPublisherDocumentTemplate>;
     // (undocumented)
-    getReports(): Promise<IReport[]>;
+    getDocumentTemplates(): Promise<IPublisherDocumentTemplate[]>;
     // (undocumented)
-    getReportTemplate(ref: ObjRef): Promise<IReportTemplate>;
+    getPageLayout(ref: ObjRef): Promise<IPublisherPageLayout>;
     // (undocumented)
-    getReportTemplates(): Promise<IReportTemplate[]>;
+    getPageLayouts(): Promise<IPublisherPageLayout[]>;
     // (undocumented)
-    updateReport(report: IReport): Promise<IReport>;
+    updateDocument(publisherDocument: IPublisherDocument): Promise<IPublisherDocument>;
     // (undocumented)
-    updateReportPageLayout(layout: IReportPageLayout): Promise<IReportPageLayout>;
+    updateDocumentTemplate(template: IPublisherDocumentTemplate): Promise<IPublisherDocumentTemplate>;
     // (undocumented)
-    updateReportTemplate(template: IReportTemplate): Promise<IReportTemplate>;
+    updatePageLayout(layout: IPublisherPageLayout): Promise<IPublisherPageLayout>;
 }
 
 // @internal (undocumented)
@@ -1634,7 +1634,7 @@ export type WorkspaceCatalogWrapper = (catalog: IWorkspaceCatalog) => IWorkspace
 export type WorkspaceExportTemplatesDecoratorFactory = (exportTemplates: IWorkspaceExportTemplatesService, workspace: string) => IWorkspaceExportTemplatesService;
 
 // @alpha (undocumented)
-export type WorkspaceReportsDecoratorFactory = (reports: IWorkspaceReportsService, workspace: string) => IWorkspaceReportsService;
+export type WorkspacePublisherDecoratorFactory = (publisher: IWorkspacePublisherService, workspace: string) => IWorkspacePublisherService;
 
 // @alpha (undocumented)
 export type WorkspaceSettingsDecoratorFactory = (settings: IWorkspaceSettingsService, workspace: string) => IWorkspaceSettingsService;

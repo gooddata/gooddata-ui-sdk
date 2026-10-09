@@ -28,7 +28,7 @@ import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IGenAIUserContext } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IListedDashboard } from '@gooddata/sdk-model';
-import { IReportDefinition } from '@gooddata/sdk-model';
+import { IPublisherDocumentDefinition } from '@gooddata/sdk-model';
 import { ISlotProps } from '@gooddata/sdk-ui-kit';
 import { IUiButtonProps } from '@gooddata/sdk-ui-kit';
 import { IUiMenuGroupItemProps } from '@gooddata/sdk-ui-kit';
@@ -143,18 +143,18 @@ export type ChatCopyToClipboardEvent = BaseEvent & {
 // @public
 export type ChatDefinitionReceivedEvent = BaseEvent & {
     type: "onDefinitionReceived";
-    definitionType: "dashboard" | "visualization" | "report";
+    definitionType: "dashboard" | "visualization" | "publisherDocument";
     itemId: string;
     conversationId: string;
     interactionId?: string;
     dashboard?: IDashboard;
     insights?: IInsight[];
     visualization?: NonNullable<IChatConversationVisualisationContent["visualization"]>;
-    report?: IReportDefinition;
-    reportRef?: string;
+    publisherDocument?: IPublisherDocumentDefinition;
+    documentRef?: string;
     refines?: string;
-    reworksOpenReport?: boolean;
-    baseReportId?: string;
+    reworksOpenDocument?: boolean;
+    baseDocumentId?: string;
 };
 
 // @public
@@ -226,6 +226,17 @@ export type ChatVisualizationErrorEvent = BaseEvent & {
 
 // @public (undocumented)
 export const clearThreadAction: ActionCreatorWithoutPayload<"messages/clearThreadAction">;
+
+// @alpha (undocumented)
+export const dashboardSavedAction: ActionCreatorWithPayload<    {
+conversationId: string;
+originalDashboardId: string;
+savedDashboardId: string;
+savedInsights: ReadonlyArray<{
+originalInsightId: string;
+savedInsightId: string;
+}>;
+}, "messages/dashboardSavedAction">;
 
 // @alpha
 export function DefaultAgentChooser(props: IGenAIAssistantAgentChooserProps): JSX.Element;
@@ -433,6 +444,7 @@ export type IChatConversationMultipartLocalPart = IChatConversationMultipartPart
     };
     objects?: TextContentObject[];
     suggestions?: IChatSuggestions;
+    saved?: boolean | string | null;
 };
 
 // @public
@@ -762,6 +774,7 @@ export type LinkHandlerEvent = {
     newTab: boolean;
     itemUrl: string;
     preventDefault: () => void;
+    conversationId?: string;
     section?: "ai";
     dashboard?: IDashboard;
     insights?: IInsight[];
@@ -785,6 +798,14 @@ export const pinConversationAction: ActionCreatorWithPayload<    {
 conversation: IChatConversationLocal;
 pinned: boolean;
 }, "messages/pinConversationAction">;
+
+// @alpha (undocumented)
+export const publisherDocumentSavedAction: ActionCreatorWithPayload<    {
+conversationId: string;
+itemId: string;
+documentRef?: string;
+savedDocumentId: string;
+}, "messages/publisherDocumentSavedAction">;
 
 // @public (undocumented)
 export const renameConversationAction: ActionCreatorWithPayload<    {

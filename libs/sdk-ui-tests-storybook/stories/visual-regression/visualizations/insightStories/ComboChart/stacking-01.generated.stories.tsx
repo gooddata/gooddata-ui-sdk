@@ -117,7 +117,7 @@ export const StackPrimaryMeasuresWithDifferentChartTypeColumn = () =>
                 visualizationUrl: "local:combo2",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(5, 24, 0),
+        getScenariosGroupByIndexes(5, 25, 0),
     )();
 StackPrimaryMeasuresWithDifferentChartTypeColumn.parameters = {
     kind: "stack primary measures with different chart type - column",
@@ -239,7 +239,7 @@ export const StackPrimaryMeasuresWithDifferentChartTypeArea = () =>
                 visualizationUrl: "local:combo2",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(5, 24, 1),
+        getScenariosGroupByIndexes(5, 25, 1),
     )();
 StackPrimaryMeasuresWithDifferentChartTypeArea.parameters = {
     kind: "stack primary measures with different chart type - area",

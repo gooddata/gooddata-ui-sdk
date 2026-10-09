@@ -118,7 +118,7 @@ export const StackPrimaryMeasuresWhenBothColumnChartNormalStacking = () =>
                 visualizationUrl: "local:combo2",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(5, 26, 0),
+        getScenariosGroupByIndexes(5, 27, 0),
     )();
 StackPrimaryMeasuresWhenBothColumnChartNormalStacking.parameters = {
     kind: "stack primary measures when both column chart - normal stacking",
@@ -242,7 +242,7 @@ export const StackPrimaryMeasuresWhenBothColumnChartStackTo100 = () =>
                 visualizationUrl: "local:combo2",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(5, 26, 1),
+        getScenariosGroupByIndexes(5, 27, 1),
     )();
 StackPrimaryMeasuresWhenBothColumnChartStackTo100.parameters = {
     kind: "stack primary measures when both column chart - stack to 100%",

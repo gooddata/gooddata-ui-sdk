@@ -32,12 +32,12 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe(
-    "Drag Drop and Move Widget",
+    "Drag, drop and move widgets",
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
-        test.describe("Insight on dashboard", {}, () => {
+        test.describe("insights", {}, () => {
             test(
-                "can add 3 widgets into the same row to create a new section",
+                "should add three widgets to one row as a new section",
                 { tag: ["@pre-merge-integrated"] },
                 async ({ page }) => {
                     await visit(page, "dashboard/drag-drop-widgets");
@@ -80,62 +80,70 @@ test.describe(
                 },
             );
 
-            test("shows placeholder text during drag", { tag: ["@pre-merge-isolated"] }, async ({ page }) => {
-                await visit(page, "dashboard/drag-drop-widgets");
-                await assertInEditMode(page);
-                await waitForCatalogReload(page);
+            test(
+                "should show placeholder text during drag",
+                { tag: ["@pre-merge-isolated"] },
+                async ({ page }) => {
+                    await visit(page, "dashboard/drag-drop-widgets");
+                    await assertInEditMode(page);
+                    await waitForCatalogReload(page);
 
-                // Drag ComboChart above row 1 — should show placeholder text
-                await dragInsightAboveRow(page, "ComboChart", 1);
-                await expect(page.locator(".drag-info-placeholder-inner.can-drop")).toContainText(
-                    "Drop to create a new section",
-                );
-                await cancelDrag(page);
+                    // Drag ComboChart above row 1 — should show placeholder text
+                    await dragInsightAboveRow(page, "ComboChart", 1);
+                    await expect(page.locator(".drag-info-placeholder-inner.can-drop")).toContainText(
+                        "Drop to create a new section",
+                    );
+                    await cancelDrag(page);
 
-                // Drag TableWithHyperlinkAttribute before widget 0 — should show drop target border
-                await dragInsightAtWidget(page, "TableWithHyperlinkAttribute", 0, "prev");
-                await expect(
-                    page.locator(".gd-grid-layout-dropzone__drop-target-border").first(),
-                ).toBeAttached();
-                await cancelDrag(page);
+                    // Drag TableWithHyperlinkAttribute before widget 0 — should show drop target border
+                    await dragInsightAtWidget(page, "TableWithHyperlinkAttribute", 0, "prev");
+                    await expect(
+                        page.locator(".gd-grid-layout-dropzone__drop-target-border").first(),
+                    ).toBeAttached();
+                    await cancelDrag(page);
 
-                // Drag ComboChart after widget 2 — should show drop target border
-                await dragInsightAtWidget(page, "ComboChart", 2, "next");
-                await expect(
-                    page.locator(".gd-grid-layout-dropzone__drop-target-border").first(),
-                ).toBeAttached();
-                await cancelDrag(page);
+                    // Drag ComboChart after widget 2 — should show drop target border
+                    await dragInsightAtWidget(page, "ComboChart", 2, "next");
+                    await expect(
+                        page.locator(".gd-grid-layout-dropzone__drop-target-border").first(),
+                    ).toBeAttached();
+                    await cancelDrag(page);
 
-                // Drag Headline after widget 0 — should show drop target border
-                await dragInsightAtWidget(page, "Headline", 0, "next");
-                await expect(
-                    page.locator(".gd-grid-layout-dropzone__drop-target-border").first(),
-                ).toBeAttached();
-            });
+                    // Drag Headline after widget 0 — should show drop target border
+                    await dragInsightAtWidget(page, "Headline", 0, "next");
+                    await expect(
+                        page.locator(".gd-grid-layout-dropzone__drop-target-border").first(),
+                    ).toBeAttached();
+                },
+            );
 
-            test("can remove widgets after drap&drop", { tag: ["@pre-merge-isolated"] }, async ({ page }) => {
-                await visit(page, "dashboard/drag-drop-widgets");
-                await assertInEditMode(page);
-                await waitForCatalogReload(page);
+            test(
+                "should remove widgets after drag and drop",
+                { tag: ["@pre-merge-isolated"] },
+                async ({ page }) => {
+                    await visit(page, "dashboard/drag-drop-widgets");
+                    await assertInEditMode(page);
+                    await waitForCatalogReload(page);
 
-                // Scroll row 2 into view and add ComboChart at the last drop position
-                await page.locator(".gd-grid-layout__section:nth-child(3)").scrollIntoViewIfNeeded();
-                await addInsightLast(page, "ComboChart");
-                await expect(page.locator(".gd-grid-layout__section")).toHaveCount(4);
+                    // Scroll row 2 into view and add ComboChart at the last drop position
+                    await page.locator(".gd-grid-layout__section:nth-child(3)").scrollIntoViewIfNeeded();
+                    await addInsightLast(page, "ComboChart");
+                    await expect(page.locator(".gd-grid-layout__section")).toHaveCount(4);
 
-                // Remove the newly added widget (section 3, index 0)
-                const widget = page.locator(widgetSelector(3, 0));
-                await widget.scrollIntoViewIfNeeded();
-                await widget.click();
-                await page.locator(".s-delete-insight-item").click();
-                await expect(page.locator(".gd-grid-layout__section")).toHaveCount(3);
-            });
+                    // Remove the newly added widget (section 3, index 0)
+                    const widget = page.locator(widgetSelector(3, 0));
+                    await widget.scrollIntoViewIfNeeded();
+                    await widget.click();
+                    await page.locator(".s-delete-insight-item").click();
+                    await expect(page.locator(".gd-grid-layout__section")).toHaveCount(3);
+                },
+            );
         });
 
         //Cover ticket: RAIL-4715
-        test.describe("Be able to resize widgeton dashboard", {}, () => {
+        test.describe("resizing", {}, () => {
             test(
-                "should able to resize widget when is placed next to other in one row",
+                "should resize a widget placed next to another in one row",
                 { tag: ["@pre-merge-integrated"] },
                 async ({ page }) => {
                     await visit(page, "dashboard/insight");

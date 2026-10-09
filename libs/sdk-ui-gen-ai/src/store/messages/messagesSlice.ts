@@ -1056,19 +1056,20 @@ const messagesSlice = createSlice({
                 visualization.visualization.insight.identifier = payload.savedVisualizationId;
             }
         },
-        reportSavedAction: (
+        publisherDocumentSavedAction: (
             state,
             {
                 payload,
             }: PayloadAction<{
                 conversationId: string;
                 itemId: string;
-                reportRef?: string;
-                savedReportId: string;
+                documentRef?: string;
+                savedDocumentId: string;
             }>,
         ) => {
             const conversation = [state.currentConversation, ...(state.conversations ?? [])].find(
-                (candidate) => candidate?.id === payload.conversationId,
+                (candidate) =>
+                    candidate?.id === payload.conversationId || candidate?.localId === payload.conversationId,
             );
             const data = conversation && state.conversationsData[conversation.localId];
             const item = Object.values(data?.items ?? {}).find(
@@ -1077,14 +1078,61 @@ const messagesSlice = createSlice({
             if (item?.content.type !== "multipart") {
                 return;
             }
-            const reports = item.content.parts.filter((part) => part.type === "report");
+            const documents = item.content.parts.filter((part) => part.type === "publisherDocument");
             const target =
-                payload.reportRef === undefined
-                    ? reports[0]
-                    : reports.find((part) => part.ref === payload.reportRef);
+                payload.documentRef === undefined
+                    ? documents[0]
+                    : documents.find((part) => part.ref === payload.documentRef);
             if (target) {
-                target.saved = payload.savedReportId;
+                target.saved = payload.savedDocumentId;
             }
+        },
+        dashboardSavedAction: (
+            state,
+            {
+                payload,
+            }: PayloadAction<{
+                conversationId: string;
+                originalDashboardId: string;
+                savedDashboardId: string;
+                savedInsights: ReadonlyArray<{
+                    originalInsightId: string;
+                    savedInsightId: string;
+                }>;
+            }>,
+        ) => {
+            const conversation = [state.currentConversation, ...(state.conversations ?? [])].find(
+                (candidate) =>
+                    candidate?.id === payload.conversationId || candidate?.localId === payload.conversationId,
+            );
+            const data = conversation && state.conversationsData[conversation.localId];
+            const insightIds = new Map(
+                payload.savedInsights.map(({ originalInsightId, savedInsightId }) => [
+                    originalInsightId,
+                    savedInsightId,
+                ]),
+            );
+
+            Object.values(data?.items ?? {}).forEach((item) => {
+                if (item.content.type !== "multipart") {
+                    return;
+                }
+                item.content.parts.forEach((part) => {
+                    if (part.type === "visualization" && part.visualization) {
+                        const localPart: IChatConversationMultipartLocalPart = part;
+                        const savedInsightId = insightIds.get(part.visualization.insight.identifier);
+                        if (savedInsightId) {
+                            localPart.saved = savedInsightId;
+                        }
+                    }
+                    if (
+                        part.type === "dashboard" &&
+                        part.dashboard?.identifier === payload.originalDashboardId
+                    ) {
+                        part.saved = payload.savedDashboardId;
+                    }
+                });
+            });
         },
         saveVisualisationRenderStatusAction: (
             state,
@@ -1285,7 +1333,6 @@ export const {
     savedVisualizationAction,
     saveVisualizationErrorAction,
     saveVisualizationSuccessAction,
-    reportSavedAction,
     saveVisualisationRenderStatusAction,
     saveVisualisationRenderStatusSuccessAction,
     visualizationErrorAction,
@@ -1306,6 +1353,14 @@ export const {
     filledFormAction,
     refocusInput,
 
+    /**
+     * @alpha
+     */
+    publisherDocumentSavedAction,
+    /**
+     * @alpha
+     */
+    dashboardSavedAction,
     /**
      * @public
      */

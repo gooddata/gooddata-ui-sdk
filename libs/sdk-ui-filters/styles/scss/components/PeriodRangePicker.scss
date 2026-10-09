@@ -195,6 +195,12 @@ $period-picker-shadow: 0 2px 5px 0 var(--gd-shadow-color-from-theme, rgba(31, 53
         padding: 8px;
     }
 
+    // A range picker always renders a second panel next to the first. The year picker shows a single
+    // 15-year grid, so the second one is hidden.
+    .rc-picker-year-panel-container .rc-picker-panel + .rc-picker-panel {
+        display: none;
+    }
+
     // ---------------------------------------------------------------------------------------------
     // Panel header
     // ---------------------------------------------------------------------------------------------
@@ -351,8 +357,7 @@ $period-picker-shadow: 0 2px 5px 0 var(--gd-shadow-color-from-theme, rgba(31, 53
 
     .rc-picker-month-panel,
     .rc-picker-quarter-panel,
-    .rc-picker-year-panel,
-    .rc-picker-decade-panel {
+    .rc-picker-year-panel {
         .rc-picker-content {
             width: 3 * 74px;
         }
@@ -365,6 +370,10 @@ $period-picker-shadow: 0 2px 5px 0 var(--gd-shadow-color-from-theme, rgba(31, 53
 
     .rc-picker-quarter-panel .rc-picker-content {
         width: 4 * 62px;
+    }
+
+    .rc-picker-year-panel .rc-picker-content {
+        width: 5 * 74px;
     }
 
     // ---------------------------------------------------------------------------------------------

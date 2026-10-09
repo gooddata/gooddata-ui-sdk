@@ -11,12 +11,14 @@ import {
 } from "../chatWindow/chatWindowSlice.js";
 import {
     clearThreadAction,
+    dashboardSavedAction,
     deleteConversationAction,
     evaluateMessageCompleteAction,
     evaluateMessageUpdateAction,
     loadThreadAction,
     newMessageAction,
     pinConversationAction,
+    publisherDocumentSavedAction,
     renameConversationAction,
     saveVisualisationRenderStatusAction,
     saveVisualizationAction,
@@ -40,7 +42,9 @@ import { onChatOpenSync } from "./onChatOpenSync.js";
 import { onConversationDelete } from "./onConversationDelete.js";
 import { onConversationPin } from "./onConversationPin.js";
 import { onConversationRename } from "./onConversationRename.js";
+import { onDashboardSaved } from "./onDashboardSaved.js";
 import { onEvent } from "./onEvent.js";
+import { onPublisherDocumentSaved } from "./onPublisherDocumentSaved.js";
 import { onThreadClear } from "./onThreadClear.js";
 import { onThreadLoad } from "./onThreadLoad.js";
 import { onUserFeedback } from "./onUserFeedback.js";
@@ -66,6 +70,8 @@ export function* rootSaga() {
     yield takeEvery(setUserFeedback.type, onUserFeedback);
     yield takeEvery(saveVisualizationAction.type, onVisualizationSave);
     yield takeEvery(saveVisualizationSuccessAction.type, onVisualizationSuccessSave);
+    yield takeEvery(dashboardSavedAction.type, onDashboardSaved);
+    yield takeEvery(publisherDocumentSavedAction.type, onPublisherDocumentSaved);
     yield takeEvery(saveVisualisationRenderStatusAction.type, onVisualisationRender);
     //conversations API
     yield takeEvery(pinConversationAction.type, onConversationPin);

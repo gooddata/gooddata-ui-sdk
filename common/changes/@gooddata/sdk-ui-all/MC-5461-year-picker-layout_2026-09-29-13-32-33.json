@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-filters: The year range picker shows one grid of 15 years with ‹ / › arrows that page by 15 years, and opens on the page of the field being edited. The day, week, month and quarter pickers show the same grid when switched to years.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

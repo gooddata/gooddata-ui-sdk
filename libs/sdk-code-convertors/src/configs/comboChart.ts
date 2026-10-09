@@ -108,6 +108,7 @@ export type ComboChartConfigProperties = {
     thresholdMeasures: string[];
     thresholdExcludedMeasures: string[];
     lineStyleMapping: Array<LineStyleMapping>;
+    lineShape: "linear" | "spline" | "stepped";
 };
 
 /** @internal */
@@ -184,6 +185,7 @@ const DEFAULTS: ConfigDefaults<ComboChartConfigProperties> = {
     thresholdMeasures: [],
     thresholdExcludedMeasures: [],
     lineStyleMapping: [],
+    lineShape: "linear",
 };
 
 /** @internal */
@@ -376,6 +378,8 @@ export function comboChartLoad(props: VisualisationConfig<ComboChartConfigProper
             }
             case "lineStyleMapping":
                 return [["line_style_mapping", loadLineStyleMapping(value)]];
+            case "lineShape":
+                return [["line_shape", getValueOrDefault(value, DEFAULTS.lineShape)]];
             default:
                 key satisfies never; // Check that no key is forgotten in the cases above
                 return [];
@@ -533,6 +537,7 @@ export function comboChartSave(
         lineStyleMapping: saveLineStyleMapping(
             config["line_style_mapping"] as Record<string, { style?: string; width?: number }> | undefined,
         ),
+        lineShape: getValueOrDefault(config["line_shape"], DEFAULTS.lineShape),
     });
 }
 

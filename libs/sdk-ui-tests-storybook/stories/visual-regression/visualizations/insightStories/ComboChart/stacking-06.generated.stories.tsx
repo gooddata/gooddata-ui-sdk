@@ -118,7 +118,7 @@ export const StackMeasuresOffAndStackTo100On = () =>
                 visualizationUrl: "local:combo2",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(5, 29, 0),
+        getScenariosGroupByIndexes(5, 30, 0),
     )();
 StackMeasuresOffAndStackTo100On.parameters = {
     kind: "'Stack Measures' off and 'Stack to 100%' on",
@@ -241,7 +241,7 @@ export const StackMeasuresOnAndStackTo100On = () =>
                 visualizationUrl: "local:combo2",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(5, 29, 1),
+        getScenariosGroupByIndexes(5, 30, 1),
     )();
 StackMeasuresOnAndStackTo100On.parameters = {
     kind: "'Stack Measures' on and 'Stack to 100%' on",

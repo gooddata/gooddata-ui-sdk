@@ -2878,5 +2878,21 @@
     "properties.conditionalFormatting.operator.isNotEmpty": {
         "text": "Is not empty",
         "crowdinContext": "Conditional-formatting operator matching non-empty cells."
+    },
+    "properties.lineShape": {
+        "text": "Line shape",
+        "crowdinContext": "Label for the line shape control in the canvas configuration section."
+    },
+    "properties.lineShape.linear": {
+        "text": "Linear (default)",
+        "crowdinContext": "Line shape control option."
+    },
+    "properties.lineShape.spline": {
+        "text": "Spline",
+        "crowdinContext": "Line shape control option."
+    },
+    "properties.lineShape.stepped": {
+        "text": "Stepped",
+        "crowdinContext": "Line shape control option."
     }
 }

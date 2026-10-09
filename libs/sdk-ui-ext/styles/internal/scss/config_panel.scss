@@ -164,16 +164,32 @@ $color-picker-spacing: 5px;
     color: kit-variables.$gd-color-text-dimmed;
 }
 
+.gd-canvas-section__checkbox-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
 .gd-canvas-section.adi-bucket-configuration {
     padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 
     .adi-properties-dropdown-container {
         margin: -8px auto;
     }
 
-    .input-checkbox-label {
+    fieldset {
+        margin-top: 0;
+    }
+
+    .configuration-subsection {
         margin-top: 5px;
-        margin-bottom: -2px;
+    }
+
+    > :first-child .configuration-subsection {
+        margin-top: 15px;
     }
 }
 
@@ -298,6 +314,15 @@ $color-picker-spacing: 5px;
     .gd-slicedForecast-message {
         margin-top: 15px;
     }
+}
+
+.adi-properties-control-container {
+    display: flex;
+    align-items: center;
+}
+
+.adi-bucket-control {
+    margin-left: auto;
 }
 
 .gd-custom-tooltip-section.adi-bucket-configuration {

@@ -1,6 +1,10 @@
 // (C) 2026 GoodData Corporation
 
-import { RecommendedCachingConfiguration, withCaching } from "@gooddata/sdk-backend-base";
+import {
+    RecommendedCachingConfiguration,
+    withCaching,
+    withCustomWorkspaceSettings,
+} from "@gooddata/sdk-backend-base";
 import { type IAnalyticalBackend, type NotAuthenticatedHandler } from "@gooddata/sdk-backend-spi";
 import {
     ContextDeferredAuthProvider,
@@ -10,6 +14,7 @@ import {
     TigerTokenAuthProvider,
     tigerFactory,
 } from "@gooddata/sdk-backend-tiger";
+import { type ISettings } from "@gooddata/sdk-model";
 import { type IAuthCredentials } from "@gooddata/sdk-pluggable-application-model";
 
 import { notifyContractExpired } from "./contractExpired.js";
@@ -39,8 +44,32 @@ export interface IBackendFactory {
     setJwt: (jwt: string, secondsBeforeTokenExpirationToCallReminder?: number) => void;
 }
 
+/**
+ * E2E tests set `window.customWorkspaceSettings` before the page loads. They win over the
+ * workspace settings from the backend, so `ctx.settings`, `ctx.workspaceSettings` and the host
+ * UI (for example the AI chat) see the same values as the pluggable applications.
+ */
+const getCustomWorkspaceSettings = (): ISettings | undefined => {
+    if (typeof window === "undefined") {
+        return undefined;
+    }
+    return (window as { customWorkspaceSettings?: ISettings }).customWorkspaceSettings;
+};
+
+export const wrapWithCustomWorkspaceSettings = (backend: IAnalyticalBackend): IAnalyticalBackend => {
+    if (!getCustomWorkspaceSettings()) {
+        return backend;
+    }
+    return withCustomWorkspaceSettings(backend, {
+        commonSettingsWrapper: (originalSettings) => ({
+            ...originalSettings,
+            ...getCustomWorkspaceSettings(),
+        }),
+    });
+};
+
 const decorateBackend = (backend: IAnalyticalBackend): IAnalyticalBackend => {
-    return withCaching(backend, RecommendedCachingConfiguration);
+    return withCaching(wrapWithCustomWorkspaceSettings(backend), RecommendedCachingConfiguration);
 };
 
 const EMBEDDED_PATH_PREFIX = "/embedded/";

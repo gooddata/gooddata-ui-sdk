@@ -2,13 +2,14 @@
 
 import { createRef } from "react";
 
-import { render, screen, waitFor } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import { type Mock, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { type IExecutionFactory, type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { type IInsight, type IInsightDefinition } from "@gooddata/sdk-model";
 import { type IDrillableItem } from "@gooddata/sdk-ui";
+import { OverlayZIndexContext, useContainingOverlayZIndex } from "@gooddata/sdk-ui-kit";
 import { suppressConsole } from "@gooddata/util";
 
 import {
@@ -210,6 +211,44 @@ describe("BaseVisualization", () => {
             onExportReady,
         };
     }
+
+    describe("containing overlay z-index", () => {
+        function ContainingOverlayZIndexProbe() {
+            return <span>{String(useContainingOverlayZIndex())}</span>;
+        }
+
+        async function renderProbeThroughVisualizationRoot(containingOverlayZIndex?: number) {
+            let visConstruct: IVisConstruct | undefined;
+            class CapturingDescriptor extends DummyClassDescriptor {
+                public override getFactory(): PluggableVisualizationFactory {
+                    return (params) => {
+                        visConstruct = params;
+                        return new DummyClass(params);
+                    };
+                }
+            }
+            const visualizationCatalog = new CatalogViaTypeToClassMap({
+                table: CapturingDescriptor,
+                tablenext: CapturingDescriptor,
+            });
+            render(
+                <OverlayZIndexContext.Provider value={containingOverlayZIndex}>
+                    <BaseVisualization {...defaultProps} visualizationCatalog={visualizationCatalog} />
+                </OverlayZIndexContext.Provider>,
+            );
+            const element = document.createElement("div");
+            await act(async () => visConstruct!.renderFun(<ContainingOverlayZIndexProbe />, element));
+            return element.textContent;
+        }
+
+        it("should provide the containing overlay z-index to the visualization root", async () => {
+            expect(await renderProbeThroughVisualizationRoot(5001)).toBe("5001");
+        });
+
+        it("should provide no z-index to the visualization root outside of any overlay", async () => {
+            expect(await renderProbeThroughVisualizationRoot()).toBe("undefined");
+        });
+    });
 
     it("should render div for all visualizations", () => {
         createComponent(defaultProps);

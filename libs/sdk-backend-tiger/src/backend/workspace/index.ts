@@ -33,7 +33,7 @@ import {
     type IWorkspaceObjectPermissionsService,
     type IWorkspaceParametersService,
     type IWorkspacePermissionsService,
-    type IWorkspaceReportsService,
+    type IWorkspacePublisherService,
     type IWorkspaceSettingsService,
     type IWorkspaceStylingService,
     type IWorkspaceUserGroupsQuery,
@@ -74,8 +74,8 @@ import { TigerWorkspaceMeasures } from "./measures/index.js";
 import { TigerWorkspaceObjectPermissionsService } from "./objectPermissions/index.js";
 import { TigerWorkspaceParameters } from "./parameters/index.js";
 import { TigerWorkspacePermissionsFactory } from "./permissions/index.js";
+import { TigerWorkspacePublisherService } from "./publisher.js";
 import { TigerReferencesService } from "./references/index.js";
-import { TigerWorkspaceReportsService } from "./reports.js";
 import { TigerWorkspaceSettings } from "./settings/index.js";
 import { TigerWorkspaceStyling } from "./styling/index.js";
 import { TigerWorkspaceUsersQuery } from "./users/index.js";
@@ -254,7 +254,7 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
         return new WorkspaceExportTemplatesService(this.authCall, this.workspace);
     }
 
-    public reports(): IWorkspaceReportsService {
-        return new TigerWorkspaceReportsService(this.authCall, this.workspace);
+    public publisher(): IWorkspacePublisherService {
+        return new TigerWorkspacePublisherService(this.authCall, this.workspace);
     }
 }

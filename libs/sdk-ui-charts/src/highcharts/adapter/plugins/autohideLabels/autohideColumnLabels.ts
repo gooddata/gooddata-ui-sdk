@@ -30,7 +30,7 @@ import {
     isStacked,
     toNeighbors,
 } from "../../../chartTypes/_chartCreators/helpers.js";
-import { isWaterfall } from "../../../chartTypes/_util/common.js";
+import { convertToChartType, isWaterfall } from "../../../chartTypes/_util/common.js";
 import { type Axis, type Point } from "../../../lib/index.js";
 import { type IStackItem, type IUnsafeDataLabels, type UnsafeInternals } from "../../../typings/unsafe.js";
 
@@ -196,15 +196,15 @@ export function areLabelsOverlappingColumns(
             height,
         };
 
-        return visiblePoints.some((point: UnsafeInternals) => {
-            const seriesType: string = point?.series?.options?.type;
+        return visiblePoints.some((point) => {
+            const convertedSeriesType = convertToChartType(point?.series?.options?.type);
             if (
                 isEmpty(point) ||
                 isEmpty(point.graphic) ||
                 // supportedDualAxesChartTypes is including AREA and LINE
                 // won't hide the stacked label if it overlaps with points of AREA and LINE
-                seriesType === VisualizationTypes.AREA ||
-                seriesType === VisualizationTypes.LINE ||
+                convertedSeriesType === VisualizationTypes.AREA ||
+                convertedSeriesType === VisualizationTypes.LINE ||
                 (chartType === VisualizationTypes.BAR && labelAttr.width === 0)
             ) {
                 return false;

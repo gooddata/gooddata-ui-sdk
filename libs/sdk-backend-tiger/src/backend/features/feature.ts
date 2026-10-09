@@ -670,13 +670,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableGenAiDashboardSummarySkill,
-            "enableGenAiDashboardSummarySkill",
-            "BOOLEAN",
-            FeatureFlagsValues.enableGenAiDashboardSummarySkill,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableGenAiAgenticDataShareOptOut,
             "enableGenAiAgenticDataShareOptOut",
             "BOOLEAN",
@@ -898,6 +891,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableEmbeddingWriteCommands",
             "BOOLEAN",
             FeatureFlagsValues.enableEmbeddingWriteCommands,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableLocalizationOverview,
+            "enableLocalizationOverview",
+            "BOOLEAN",
+            FeatureFlagsValues.enableLocalizationOverview,
         ),
     };
 }

@@ -2630,7 +2630,7 @@
                 "properties": {
                     "id": {
                         "$ref": "#/$global/gaac/identifier",
-                        "description": "A unique identifier of the report.",
+                        "description": "A unique identifier of the document.",
                         "$semantic": [
                             {
                                 "type": "uniqueness",
@@ -2643,32 +2643,32 @@
                     "type": { "type": "string", "enum": ["report"] },
                     "title": {
                         "$ref": "#/$global/gaac/title",
-                        "description": "A human readable title for the report."
+                        "description": "A human readable title for the document."
                     },
                     "description": {
                         "$ref": "#/$global/gaac/description",
-                        "description": "An optional description of the report."
+                        "description": "An optional description of the document."
                     },
                     "tags": {
                         "$ref": "#/$global/gaac/tags",
-                        "description": "A list of strings - metadata tags of this report."
+                        "description": "A list of strings - metadata tags of this document."
                     },
                     "period": {
                         "$ref": "#/$global/gaac/reportPeriod",
-                        "description": "The finished period the report covers. It is not a filter: at execution time it materializes as an absolute date filter on each visualization's date dataset, at the lowest precedence, which a visualization opts out of with ignore_report_period."
+                        "description": "The finished period the document covers. It is not a filter: at execution time it materializes as an absolute date filter on each visualization's date dataset, at the lowest precedence, which a visualization opts out of with ignore_report_period."
                     },
                     "pages": {
                         "type": "array",
-                        "description": "Ordered pages of the report. A page is a deep copy taken when it was added, and never changes with the page layout or template it came from.",
+                        "description": "Ordered pages of the document. A page is a deep copy taken when it was added, and never changes with the page layout or template it came from.",
                         "items": { "$ref": "#/$global/gaac/reportPageBody" }
                     },
                     "filters": {
                         "$ref": "#/$global/gaac/dashboardFilters",
-                        "description": "Report filters; pages and visualizations may extend or override them."
+                        "description": "Document filters; pages and visualizations may extend or override them."
                     },
                     "variables": {
                         "type": "array",
-                        "description": "Custom variables the report's text can interpolate as {name}. Built-in variable names win a collision.",
+                        "description": "Custom variables the document's text can interpolate as {name}. Built-in variable names win a collision.",
                         "items": { "$ref": "#/$global/gaac/reportVariable" }
                     },
                     "takeaways_instruction": {
@@ -2691,7 +2691,7 @@
                 "properties": {
                     "id": {
                         "$ref": "#/$global/gaac/identifier",
-                        "description": "A unique identifier of the report template.",
+                        "description": "A unique identifier of the document template.",
                         "$semantic": [
                             {
                                 "type": "uniqueness",
@@ -2704,19 +2704,19 @@
                     "type": { "type": "string", "enum": ["report_template"] },
                     "title": {
                         "$ref": "#/$global/gaac/title",
-                        "description": "A human readable title for the report template."
+                        "description": "A human readable title for the document template."
                     },
                     "description": {
                         "$ref": "#/$global/gaac/description",
-                        "description": "An optional description of the report template."
+                        "description": "An optional description of the document template."
                     },
                     "tags": {
                         "$ref": "#/$global/gaac/tags",
-                        "description": "A list of strings - metadata tags of this report template."
+                        "description": "A list of strings - metadata tags of this document template."
                     },
                     "pages": {
                         "type": "array",
-                        "description": "Ordered pages of the template. A report created from the template deep-copies them and keeps no reference back, so the report stays frozen while the template evolves.",
+                        "description": "Ordered pages of the template. A document created from the template deep-copies them and keeps no reference back, so the document stays frozen while the template evolves.",
                         "items": { "$ref": "#/$global/gaac/reportPageBody" }
                     },
                     "filters": {
@@ -2725,7 +2725,7 @@
                     },
                     "variables": {
                         "type": "array",
-                        "description": "Custom variables the template's text can interpolate as {name}. A report created from it gives them values.",
+                        "description": "Custom variables the template's text can interpolate as {name}. A document created from it gives them values.",
                         "items": { "$ref": "#/$global/gaac/reportVariable" }
                     },
                     "takeaways_instruction": {
@@ -2743,7 +2743,7 @@
                 "properties": {
                     "id": {
                         "$ref": "#/$global/gaac/identifier",
-                        "description": "A unique identifier of the report page layout.",
+                        "description": "A unique identifier of the document page layout.",
                         "$semantic": [
                             {
                                 "type": "uniqueness",
@@ -2756,15 +2756,15 @@
                     "type": { "type": "string", "enum": ["report_page_layout"] },
                     "title": {
                         "$ref": "#/$global/gaac/title",
-                        "description": "A human readable title for the report page layout."
+                        "description": "A human readable title for the document page layout."
                     },
                     "description": {
                         "$ref": "#/$global/gaac/description",
-                        "description": "An optional description of the report page layout."
+                        "description": "An optional description of the document page layout."
                     },
                     "tags": {
                         "$ref": "#/$global/gaac/tags",
-                        "description": "A list of strings - metadata tags of this report page layout."
+                        "description": "A list of strings - metadata tags of this document page layout."
                     },
                     "kind": { "$ref": "#/$global/gaac/reportPageKind" },
                     "format": { "$ref": "#/$global/gaac/reportPageFormat" },
@@ -2778,12 +2778,12 @@
                     },
                     "filters": {
                         "$ref": "#/$global/gaac/dashboardFilters",
-                        "description": "Page filters, carried into the template and report content this page is copied into."
+                        "description": "Page filters, carried into the template and document content this page is copied into."
                     }
                 },
                 "$semantic": { "type": "snippet", "snippets": ["report_page_layout"] },
                 "required": ["id", "type", "title", "layout"],
-                "description": "A reusable page. Its content fields are the same page body a report and a report template carry inline, so a field added to /gaac/reportPageBody belongs here too: JSON Schema cannot compose the two, because the page body closes itself to the entity's own id, title and tags."
+                "description": "A reusable page. Its content fields are the same page body a document and a document template carry inline, so a field added to /gaac/reportPageBody belongs here too: JSON Schema cannot compose the two, because the page body closes itself to the entity's own id, title and tags."
             },
             "identifier": { "title": "Id", "type": "string", "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$" },
             "title": { "type": "string", "maxLength": 255 },
@@ -2917,12 +2917,12 @@
                 "properties": {
                     "start": {
                         "type": "string",
-                        "description": "Reported period start, ISO 8601 date (YYYY-MM-DD), inclusive.",
+                        "description": "Start of the period the document covers, ISO 8601 date (YYYY-MM-DD), inclusive.",
                         "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
                     },
                     "end": {
                         "type": "string",
-                        "description": "Reported period end, ISO 8601 date (YYYY-MM-DD), inclusive.",
+                        "description": "End of the period the document covers, ISO 8601 date (YYYY-MM-DD), inclusive.",
                         "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
                     }
                 },
@@ -2949,7 +2949,7 @@
                     },
                     "filters": {
                         "$ref": "#/$global/gaac/dashboardFilters",
-                        "description": "Page filters, merged over the report's own. A filter targeting the same object replaces the inherited one; a visualization's own filters apply on top."
+                        "description": "Page filters, merged over the document's own. A filter targeting the same object replaces the inherited one; a visualization's own filters apply on top."
                     }
                 },
                 "required": ["id", "layout"]
@@ -2967,7 +2967,7 @@
                     "description": { "$ref": "#/$global/gaac/description" },
                     "default": {
                         "type": "string",
-                        "description": "Value used when the report gives the variable none."
+                        "description": "Value used when the document gives the variable none."
                     }
                 },
                 "required": ["name"]
@@ -3059,7 +3059,7 @@
                 "oneOf": [
                     {
                         "type": "boolean",
-                        "description": "True marks the slot required: the report is not complete until it is filled."
+                        "description": "True marks the slot required: the document is not complete until it is filled."
                     },
                     { "type": "string", "description": "Authoring hint shown in the empty slot." },
                     {
@@ -3072,7 +3072,7 @@
                             },
                             "required": {
                                 "type": "boolean",
-                                "description": "When true, a report is not considered complete until this slot is filled."
+                                "description": "When true, a document is not considered complete until this slot is filled."
                             }
                         }
                     }
@@ -3130,7 +3130,7 @@
             },
             "reportSlotId": {
                 "$ref": "#/$global/gaac/identifier",
-                "description": "An id for this area, unique within the page. It is what a report fills when it takes this page from a template, so an id written down here survives edits to the layout around it."
+                "description": "An id for this area, unique within the page. It is what a document fills when it takes this page from a template, so an id written down here survives edits to the layout around it."
             },
             "reportText": {
                 "title": "Report Text",
@@ -3146,7 +3146,7 @@
                         "properties": {
                             "text": {
                                 "type": "string",
-                                "description": "Markdown with {variable} placeholders. Alongside a prompt this is the materialized generation, stored so the report renders without re-invoking AI."
+                                "description": "Markdown with {variable} placeholders. Alongside a prompt this is the materialized generation, stored so the document renders without re-invoking AI."
                             },
                             "prompt": {
                                 "type": "string",
@@ -3311,6 +3311,11 @@
                     },
                     "data_points": {
                         "oneOf": [{ "type": "boolean" }, { "type": "string", "const": "auto" }]
+                    },
+                    "line_shape": {
+                        "description": "Line shape with regards to data points (i.e. line interpolation).",
+                        "type": "string",
+                        "enum": ["linear", "spline", "stepped"]
                     },
                     "data_totals": {
                         "oneOf": [{ "type": "boolean" }, { "type": "string", "const": "auto" }]
@@ -7838,7 +7843,7 @@
             "properties": {
                 "id": {
                     "$ref": "#/$global/gaac/identifier",
-                    "description": "A unique identifier of the report.",
+                    "description": "A unique identifier of the document.",
                     "$semantic": [
                         { "type": "uniqueness", "source": "report.id", "code": "core.uniqueness.reports.id" },
                         { "type": "definition", "source": "report.id" }
@@ -7847,32 +7852,32 @@
                 "type": { "type": "string", "enum": ["report"] },
                 "title": {
                     "$ref": "#/$global/gaac/title",
-                    "description": "A human readable title for the report."
+                    "description": "A human readable title for the document."
                 },
                 "description": {
                     "$ref": "#/$global/gaac/description",
-                    "description": "An optional description of the report."
+                    "description": "An optional description of the document."
                 },
                 "tags": {
                     "$ref": "#/$global/gaac/tags",
-                    "description": "A list of strings - metadata tags of this report."
+                    "description": "A list of strings - metadata tags of this document."
                 },
                 "period": {
                     "$ref": "#/$global/gaac/reportPeriod",
-                    "description": "The finished period the report covers. It is not a filter: at execution time it materializes as an absolute date filter on each visualization's date dataset, at the lowest precedence, which a visualization opts out of with ignore_report_period."
+                    "description": "The finished period the document covers. It is not a filter: at execution time it materializes as an absolute date filter on each visualization's date dataset, at the lowest precedence, which a visualization opts out of with ignore_report_period."
                 },
                 "pages": {
                     "type": "array",
-                    "description": "Ordered pages of the report. A page is a deep copy taken when it was added, and never changes with the page layout or template it came from.",
+                    "description": "Ordered pages of the document. A page is a deep copy taken when it was added, and never changes with the page layout or template it came from.",
                     "items": { "$ref": "#/$global/gaac/reportPageBody" }
                 },
                 "filters": {
                     "$ref": "#/$global/gaac/dashboardFilters",
-                    "description": "Report filters; pages and visualizations may extend or override them."
+                    "description": "Document filters; pages and visualizations may extend or override them."
                 },
                 "variables": {
                     "type": "array",
-                    "description": "Custom variables the report's text can interpolate as {name}. Built-in variable names win a collision.",
+                    "description": "Custom variables the document's text can interpolate as {name}. Built-in variable names win a collision.",
                     "items": { "$ref": "#/$global/gaac/reportVariable" }
                 },
                 "takeaways_instruction": {
@@ -7950,20 +7955,20 @@
                 },
                 "date": {
                     "$ref": "#/$global/gaac/identifier",
-                    "description": "An id of the date dataset the report's period is applied to as an absolute date filter. Omitted leaves the backend date dataset resolution to decide.",
+                    "description": "An id of the date dataset the document's period is applied to as an absolute date filter. Omitted leaves the backend date dataset resolution to decide.",
                     "$semantic": { "type": "reference", "source": "dateDataset.id" }
                 },
                 "ignore_report_period": {
                     "type": "boolean",
-                    "description": "When true, the implicit date filter derived from the report's period is not applied here."
+                    "description": "When true, the implicit date filter derived from the document's period is not applied here."
                 },
                 "filters": {
                     "$ref": "#/$global/gaac/dashboardFilters",
-                    "description": "Filters applied on top of the effective page and report filters. A filter targeting the same object replaces the inherited one."
+                    "description": "Filters applied on top of the effective page and document filters. A filter targeting the same object replaces the inherited one."
                 },
                 "ignored_filters": {
                     "type": "array",
-                    "description": "A list of report and page filters ignored here.",
+                    "description": "A list of document and page filters ignored here.",
                     "items": {
                         "type": "string",
                         "description": "An id of the label, attribute, computed attribute, metric or date to be ignored",
@@ -8034,7 +8039,7 @@
             "properties": {
                 "id": {
                     "$ref": "#/$global/gaac/identifier",
-                    "description": "A unique identifier of the report page layout.",
+                    "description": "A unique identifier of the document page layout.",
                     "$semantic": [
                         {
                             "type": "uniqueness",
@@ -8047,15 +8052,15 @@
                 "type": { "type": "string", "enum": ["report_page_layout"] },
                 "title": {
                     "$ref": "#/$global/gaac/title",
-                    "description": "A human readable title for the report page layout."
+                    "description": "A human readable title for the document page layout."
                 },
                 "description": {
                     "$ref": "#/$global/gaac/description",
-                    "description": "An optional description of the report page layout."
+                    "description": "An optional description of the document page layout."
                 },
                 "tags": {
                     "$ref": "#/$global/gaac/tags",
-                    "description": "A list of strings - metadata tags of this report page layout."
+                    "description": "A list of strings - metadata tags of this document page layout."
                 },
                 "kind": { "$ref": "#/$global/gaac/reportPageKind" },
                 "format": { "$ref": "#/$global/gaac/reportPageFormat" },
@@ -8069,12 +8074,12 @@
                 },
                 "filters": {
                     "$ref": "#/$global/gaac/dashboardFilters",
-                    "description": "Page filters, carried into the template and report content this page is copied into."
+                    "description": "Page filters, carried into the template and document content this page is copied into."
                 }
             },
             "$semantic": { "type": "snippet", "snippets": ["report_page_layout"] },
             "required": ["id", "type", "title", "layout"],
-            "description": "A reusable page. Its content fields are the same page body a report and a report template carry inline, so a field added to /gaac/reportPageBody belongs here too: JSON Schema cannot compose the two, because the page body closes itself to the entity's own id, title and tags."
+            "description": "A reusable page. Its content fields are the same page body a document and a document template carry inline, so a field added to /gaac/reportPageBody belongs here too: JSON Schema cannot compose the two, because the page body closes itself to the entity's own id, title and tags."
         },
         "report_template": {
             "title": "ReportTemplate",
@@ -8083,7 +8088,7 @@
             "properties": {
                 "id": {
                     "$ref": "#/$global/gaac/identifier",
-                    "description": "A unique identifier of the report template.",
+                    "description": "A unique identifier of the document template.",
                     "$semantic": [
                         {
                             "type": "uniqueness",
@@ -8096,19 +8101,19 @@
                 "type": { "type": "string", "enum": ["report_template"] },
                 "title": {
                     "$ref": "#/$global/gaac/title",
-                    "description": "A human readable title for the report template."
+                    "description": "A human readable title for the document template."
                 },
                 "description": {
                     "$ref": "#/$global/gaac/description",
-                    "description": "An optional description of the report template."
+                    "description": "An optional description of the document template."
                 },
                 "tags": {
                     "$ref": "#/$global/gaac/tags",
-                    "description": "A list of strings - metadata tags of this report template."
+                    "description": "A list of strings - metadata tags of this document template."
                 },
                 "pages": {
                     "type": "array",
-                    "description": "Ordered pages of the template. A report created from the template deep-copies them and keeps no reference back, so the report stays frozen while the template evolves.",
+                    "description": "Ordered pages of the template. A document created from the template deep-copies them and keeps no reference back, so the document stays frozen while the template evolves.",
                     "items": { "$ref": "#/$global/gaac/reportPageBody" }
                 },
                 "filters": {
@@ -8117,7 +8122,7 @@
                 },
                 "variables": {
                     "type": "array",
-                    "description": "Custom variables the template's text can interpolate as {name}. A report created from it gives them values.",
+                    "description": "Custom variables the template's text can interpolate as {name}. A document created from it gives them values.",
                     "items": { "$ref": "#/$global/gaac/reportVariable" }
                 },
                 "takeaways_instruction": {

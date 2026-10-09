@@ -25,38 +25,53 @@
         &--isEditable {
             // A constant width so the toolbar does not move while the value is typed or stepped.
             // Fits four characters: percentages up to "100%" and whole numbers up to four digits.
-            width: calc(4.5ch + 2 * #{toolbarItem.$toolbar-item-padding});
+            width: calc(4.5ch + 2 * #{toolbarItem.$toolbar-field-padding});
+            padding: 0 toolbarItem.$toolbar-field-padding;
             text-align: center;
             cursor: text;
+
+            @include toolbarItem.toolbar-field-border(var(--gd-palette-complementary-4));
 
             &::placeholder {
                 color: var(--gd-palette-complementary-6);
             }
 
-            @include toolbarItem.toolbar-focus-ring;
-
             &:not([aria-disabled="true"]) {
                 &:hover {
-                    color: var(--gd-palette-complementary-8);
-                    background-color: var(--gd-palette-complementary-2);
+                    @include toolbarItem.toolbar-field-border(var(--gd-palette-complementary-5));
                 }
 
-                &:active,
+                // The preset list is on screen.
                 &#{$root}__value--isActive {
-                    color: var(--gd-palette-complementary-8);
-                    background-color: var(--gd-palette-complementary-4);
+                    background-color: var(--gd-palette-complementary-2);
+
+                    @include toolbarItem.toolbar-field-border(var(--gd-palette-complementary-4));
+                }
+
+                &:active {
+                    background-color: var(--gd-palette-complementary-3);
+
+                    @include toolbarItem.toolbar-field-border(var(--gd-palette-complementary-5));
                 }
 
                 // After the hover rule so an invalid value stays red under the pointer.
                 &#{$root}__value--isInvalid {
                     color: var(--gd-palette-error-base);
-                    box-shadow: inset 0 0 0 1px var(--gd-palette-error-base);
+
+                    @include toolbarItem.toolbar-field-border(var(--gd-palette-error-base));
+                }
+
+                // Last, so the ring replaces whichever border the state above drew.
+                &:focus-visible {
+                    box-shadow: inset 0 0 0 2px var(--gd-palette-primary-base);
                 }
             }
 
             &[aria-disabled="true"] {
-                color: var(--gd-palette-complementary-4);
+                color: var(--gd-palette-complementary-5);
                 cursor: default;
+
+                @include toolbarItem.toolbar-focus-ring;
             }
         }
     }

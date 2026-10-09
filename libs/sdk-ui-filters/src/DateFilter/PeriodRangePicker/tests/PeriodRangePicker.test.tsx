@@ -18,6 +18,7 @@ import {
 } from "../PeriodRangePickerImpl.js";
 import { ANNOUNCEMENT_LIFETIME } from "../PreviewAnnouncer.js";
 import { type IPeriodRange, type PeriodRangePickerGranularity } from "../types.js";
+import { getYearPageStart } from "../YearRangePanel.js";
 
 const granularities: PeriodRangePickerGranularity[] = [
     "GDC.time.date",
@@ -528,6 +529,10 @@ describe("PeriodRangePicker", () => {
         // going unnoticed.
         const FIXED_RANGE: IPeriodRange = { from: "2026-03-01", to: "2026-05-31" };
 
+        afterEach(() => {
+            vi.useRealTimers();
+        });
+
         function fieldTexts(): [string, string] {
             const [startInput, endInput] = getFields();
             return [startInput.value, endInput.value];
@@ -571,10 +576,11 @@ describe("PeriodRangePicker", () => {
         });
 
         it("renders the Year field and header in date-fns notation", () => {
+            vi.setSystemTime(new Date(2026, 2, 25));
             renderPicker("GDC.time.year", FIXED_RANGE);
             expect(fieldTexts()).toEqual(["2026", "2026"]);
             openPicker();
-            expect(panelHeaderText()).toBe("2020-2029");
+            expect(panelHeaderText()).toBe("2019 – 2033");
         });
 
         it("pins every locale format field rc-picker's own fillLocale would otherwise default", () => {
@@ -699,6 +705,182 @@ describe("PeriodRangePicker", () => {
             clickCell("2026-03-02");
             clickCell("2026-03-10");
             expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-03-02", to: "2026-03-10" });
+        });
+    });
+
+    describe("year grid", () => {
+        const YEAR_RANGE: IPeriodRange = { from: "2025-01-01", to: "2026-12-31" };
+
+        beforeEach(() => {
+            vi.setSystemTime(new Date(2026, 2, 25));
+        });
+
+        afterEach(() => {
+            vi.useRealTimers();
+        });
+
+        function yearPanel(): Element {
+            const panel = document.querySelector(".rc-picker-year-panel");
+            expect(panel).toBeInTheDocument();
+            return panel!;
+        }
+
+        function headerText(): string | null | undefined {
+            return yearPanel().querySelector(".rc-picker-header-view")?.textContent;
+        }
+
+        function clickHeaderButton(selector: string): void {
+            const button = yearPanel().querySelector(selector);
+            expect(button).toBeInTheDocument();
+            fireEvent.click(button!);
+        }
+
+        it.each([
+            [2019, 2019],
+            [2033, 2019],
+            [2026, 2019],
+            [2018, 2004],
+            [1989, 1989],
+            [2034, 2034],
+        ])("puts %i on the page starting in %i when the current year is 2026", (year, pageStart) => {
+            expect(getYearPageStart(year, 2026)).toBe(pageStart);
+        });
+
+        it("shows the 15 years of the current year's page in 3 rows of 5", () => {
+            renderPicker("GDC.time.year", YEAR_RANGE);
+            openPicker();
+            expect(headerText()).toBe("2019 – 2033");
+            const rows = Array.from(yearPanel().querySelectorAll("tbody tr")).map((row) =>
+                Array.from(row.querySelectorAll(".rc-picker-cell")).map((cell) => cell.textContent),
+            );
+            expect(rows).toEqual([
+                ["2019", "2020", "2021", "2022", "2023"],
+                ["2024", "2025", "2026", "2027", "2028"],
+                ["2029", "2030", "2031", "2032", "2033"],
+            ]);
+            const outOfViewCells = yearPanel().querySelectorAll(
+                ".rc-picker-cell:not(.rc-picker-cell-in-view)",
+            );
+            expect(outOfViewCells).toHaveLength(0);
+        });
+
+        it("renders each year cell once, with no hidden second grid", () => {
+            // A start early in its page puts the range picker's second panel, ten years on, on the same page.
+            renderPicker("GDC.time.year", { from: "2020-01-01", to: "2021-12-31" });
+            openPicker();
+            expect(document.querySelectorAll(".rc-picker-year-panel")).toHaveLength(1);
+            expect(document.querySelectorAll('.rc-picker-cell-in-view[title="2025"]')).toHaveLength(1);
+        });
+
+        it("shows the 15-year grid in the Day picker's year view", () => {
+            renderPicker("GDC.time.date");
+            openPicker();
+            const yearButton = document.querySelector(".rc-picker-year-btn");
+            expect(yearButton).toBeInTheDocument();
+            fireEvent.click(yearButton!);
+            expect(headerText()).toBe("2019 – 2033");
+            expect(yearPanel().querySelectorAll(".rc-picker-cell")).toHaveLength(15);
+        });
+
+        it("labels the header buttons for screen readers", () => {
+            renderPicker("GDC.time.year", YEAR_RANGE);
+            openPicker();
+            const label = (selector: string) =>
+                yearPanel().querySelector(selector)?.getAttribute("aria-label");
+            expect(label(".rc-picker-header-prev-btn")).toBe("Previous 15 years");
+            expect(label(".rc-picker-header-next-btn")).toBe("Next 15 years");
+        });
+
+        it("pages by 15 years with the arrows", () => {
+            renderPicker("GDC.time.year", YEAR_RANGE);
+            openPicker();
+            clickHeaderButton(".rc-picker-header-prev-btn");
+            expect(headerText()).toBe("2004 – 2018");
+            clickHeaderButton(".rc-picker-header-next-btn");
+            clickHeaderButton(".rc-picker-header-next-btn");
+            expect(headerText()).toBe("2034 – 2048");
+        });
+
+        it("selects a range whose ends are on different pages", () => {
+            const { onRangeChange } = renderPicker("GDC.time.year", YEAR_RANGE);
+            openPicker();
+            clickCell("2020");
+            clickHeaderButton(".rc-picker-header-next-btn");
+            expect(headerText()).toBe("2034 – 2048");
+            clickCell("2040");
+            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2020-01-01", to: "2040-12-31" });
+        });
+
+        it("keeps the title as plain text, since decades do not line up with the 15-year pages", () => {
+            renderPicker("GDC.time.year", YEAR_RANGE);
+            openPicker();
+            expect(yearPanel().querySelector(".rc-picker-header-view button")).toBeNull();
+        });
+
+        describe("page on open", () => {
+            const WIDE_RANGE: IPeriodRange = { from: "2000-01-01", to: "2050-12-31" };
+
+            // A real focus, so that the click opening the calendar leaves focus in this field.
+            function openFromField(input: HTMLInputElement): void {
+                act(() => input.focus());
+                fireEvent.click(input);
+            }
+
+            it("shows the end year when opened from the end field", () => {
+                renderPicker("GDC.time.year", WIDE_RANGE);
+                openFromField(getFields()[1]);
+                expect(headerText()).toBe("2049 – 2063");
+            });
+
+            it("shows the start year when opened from the start field", () => {
+                renderPicker("GDC.time.year", WIDE_RANGE);
+                openFromField(getFields()[0]);
+                expect(headerText()).toBe("1989 – 2003");
+            });
+
+            it("shows the other field's year when the field it was opened from is empty", () => {
+                renderPicker("GDC.time.year", { from: WIDE_RANGE.from, to: undefined });
+                openFromField(getFields()[1]);
+                expect(headerText()).toBe("1989 – 2003");
+            });
+
+            it("shows the current year's page when both fields are empty", () => {
+                renderPicker("GDC.time.year", { from: undefined, to: undefined });
+                openFromField(getFields()[1]);
+                expect(headerText()).toBe("2019 – 2033");
+            });
+
+            it("keeps the page when picking the start moves focus to the end field", () => {
+                renderPicker("GDC.time.year", WIDE_RANGE);
+                openFromField(getFields()[0]);
+                clickCell("2001");
+                expect(getFields()[1].closest(".rc-picker-input")).toHaveClass("rc-picker-input-active");
+                expect(headerText()).toBe("1989 – 2003");
+            });
+
+            it("moves to the page of a year typed into the end field", () => {
+                renderPicker("GDC.time.year", YEAR_RANGE);
+                const [, endInput] = getFields();
+                openFromField(endInput);
+                typeIntoField(endInput, "2050");
+                expect(headerText()).toBe("2049 – 2063");
+            });
+
+            it("pages with the arrows from the page it opened on", () => {
+                renderPicker("GDC.time.year", WIDE_RANGE);
+                openFromField(getFields()[1]);
+                clickHeaderButton(".rc-picker-header-prev-btn");
+                expect(headerText()).toBe("2034 – 2048");
+            });
+
+            it("leaves the month picker's pages to rc-picker", () => {
+                renderPicker("GDC.time.month", { from: "2020-01-01", to: "2030-12-31" });
+                openFromField(getFields()[1]);
+                const headers = Array.from(
+                    document.querySelectorAll(".rc-picker-month-panel .rc-picker-header-view"),
+                ).map((header) => header.textContent);
+                expect(headers).toEqual(["2029", "2030"]);
+            });
         });
     });
 
@@ -1675,6 +1857,40 @@ describe("PeriodRangePicker", () => {
             expect(submitForm).not.toHaveBeenCalled();
             tabToNextField(startInput, endInput);
             expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-03-02", to: "2026-05-31" });
+        });
+
+        describe("start picked from the grid, end typed as the same period", () => {
+            afterEach(() => {
+                vi.useRealTimers();
+            });
+
+            it.each([
+                ["GDC.time.year", "2026", "2026-01-01", "2026-12-31", "01/01/2026 – 12/31/2026"],
+                ["GDC.time.month", "5/2026", "2026-05-01", "2026-05-31", "05/01/2026 – 05/31/2026"],
+                ["GDC.time.quarter", "Q2/2026", "2026-04-01", "2026-06-30", "04/01/2026 – 06/30/2026"],
+            ] as const)(
+                "accepts the %s range and applies it on Enter",
+                (granularity, period, from, to, preview) => {
+                    // A picked date takes its day from the shown page, a typed one is its period's first day.
+                    vi.setSystemTime(new Date(2026, 2, 25));
+                    const { onRangeChange } = renderControlledPicker(granularity, {
+                        from: undefined,
+                        to: undefined,
+                    });
+                    const [startInput, endInput] = getFields();
+                    act(() => startInput.focus());
+                    fireEvent.click(startInput);
+                    clickCell(period);
+                    typeIntoField(endInput, period);
+
+                    expect(document.body).not.toHaveTextContent("The end period can't be before");
+                    expect(document.querySelector(".s-period-range-picker-preview")).toHaveTextContent(
+                        `Preview: ${preview}`,
+                    );
+                    fireEvent.keyDown(endInput, { key: "Enter", code: "Enter" });
+                    expect(onRangeChange).toHaveBeenLastCalledWith({ from, to });
+                },
+            );
         });
     });
 });

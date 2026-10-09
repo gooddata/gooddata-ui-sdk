@@ -2,11 +2,12 @@
 
 import { describe, expect, it } from "vitest";
 
-import { type GenAIChatEffort } from "@gooddata/sdk-model";
+import { type GenAIChatEffort, type IDashboard, type IInsight } from "@gooddata/sdk-model";
 
 import {
     type IChatConversationLocal,
     type IChatConversationLocalItem,
+    type IChatConversationMultipartLocalPart,
     makeConversationItem,
     makeUserItem,
 } from "../../model.js";
@@ -16,10 +17,11 @@ import {
     cancelAsyncAction,
     clearConversationLoadingAction,
     clearThreadAction,
+    dashboardSavedAction,
     evaluateMessageErrorAction,
     loadConversationSuccessAction,
     messagesSliceReducer,
-    reportSavedAction,
+    publisherDocumentSavedAction,
     setCurrentConversationAction,
     setSelectedAgentAction,
     setSelectedEffortAction,
@@ -435,10 +437,10 @@ describe("messagesSlice", () => {
     });
 });
 
-describe("reportSavedAction", () => {
-    const reportItem = (
+describe("publisherDocumentSavedAction", () => {
+    const documentItem = (
         id: string,
-        parts: { ref?: string | null; saved?: string | null; baseReportId?: string | null }[],
+        parts: { ref?: string | null; saved?: string | null; baseDocumentId?: string | null }[],
     ): IChatConversationLocalItem =>
         makeConversationItem({
             id,
@@ -448,14 +450,14 @@ describe("reportSavedAction", () => {
             responseId: `response-${id}`,
             content: {
                 type: "multipart",
-                parts: parts.map((part) => ({ type: "report", report: null, ...part })),
+                parts: parts.map((part) => ({ type: "publisherDocument", publisherDocument: null, ...part })),
             },
         });
     const savedOf = (state: ReturnType<typeof messagesSliceReducer>, itemId: string) => {
         const data = state.conversationsData["c1"];
         const item = Object.values(data?.items ?? {}).find((candidate) => candidate.id === itemId);
         return item?.content.type === "multipart"
-            ? item.content.parts.map((part) => (part.type === "report" ? part.saved : undefined))
+            ? item.content.parts.map((part) => (part.type === "publisherDocument" ? part.saved : undefined))
             : [];
     };
     const stateWith = (items: IChatConversationLocalItem[]) =>
@@ -468,46 +470,46 @@ describe("reportSavedAction", () => {
             }),
         );
 
-    it("marks the report of the item that carries the given name as saved", () => {
+    it("marks the document of the item that carries the given name as saved", () => {
         const state = messagesSliceReducer(
-            stateWith([reportItem("i1", [{ ref: "report_1" }, { ref: "report_2" }])]),
-            reportSavedAction({
+            stateWith([documentItem("i1", [{ ref: "report_1" }, { ref: "report_2" }])]),
+            publisherDocumentSavedAction({
                 conversationId: "c1",
                 itemId: "i1",
-                reportRef: "report_2",
-                savedReportId: "r9",
+                documentRef: "report_2",
+                savedDocumentId: "r9",
             }),
         );
 
         expect(savedOf(state, "i1")).toEqual([undefined, "r9"]);
     });
 
-    it("marks the report of the item as saved when no name is given", () => {
+    it("marks the document of the item as saved when no name is given", () => {
         const state = messagesSliceReducer(
-            stateWith([reportItem("i1", [{ ref: null }])]),
-            reportSavedAction({ conversationId: "c1", itemId: "i1", savedReportId: "r9" }),
+            stateWith([documentItem("i1", [{ ref: null }])]),
+            publisherDocumentSavedAction({ conversationId: "c1", itemId: "i1", savedDocumentId: "r9" }),
         );
 
         expect(savedOf(state, "i1")).toEqual(["r9"]);
     });
 
-    it("marks only the first report of the item as saved when no name is given", () => {
+    it("marks only the first document of the item as saved when no name is given", () => {
         const state = messagesSliceReducer(
-            stateWith([reportItem("i1", [{ ref: null }, { ref: null }])]),
-            reportSavedAction({ conversationId: "c1", itemId: "i1", savedReportId: "r9" }),
+            stateWith([documentItem("i1", [{ ref: null }, { ref: null }])]),
+            publisherDocumentSavedAction({ conversationId: "c1", itemId: "i1", savedDocumentId: "r9" }),
         );
 
         expect(savedOf(state, "i1")).toEqual(["r9", undefined]);
     });
 
-    it("leaves the reports of the other items alone", () => {
+    it("leaves the documents of the other items alone", () => {
         const state = messagesSliceReducer(
-            stateWith([reportItem("i1", [{ ref: "report_1" }]), reportItem("i2", [{ ref: "report_1" }])]),
-            reportSavedAction({
+            stateWith([documentItem("i1", [{ ref: "report_1" }]), documentItem("i2", [{ ref: "report_1" }])]),
+            publisherDocumentSavedAction({
                 conversationId: "c1",
                 itemId: "i2",
-                reportRef: "report_1",
-                savedReportId: "r9",
+                documentRef: "report_1",
+                savedDocumentId: "r9",
             }),
         );
 
@@ -515,14 +517,14 @@ describe("reportSavedAction", () => {
         expect(savedOf(state, "i2")).toEqual(["r9"]);
     });
 
-    it("replaces the report an earlier save recorded", () => {
+    it("replaces the document an earlier save recorded", () => {
         const state = messagesSliceReducer(
-            stateWith([reportItem("i1", [{ ref: "report_1", saved: "r1" }])]),
-            reportSavedAction({
+            stateWith([documentItem("i1", [{ ref: "report_1", saved: "r1" }])]),
+            publisherDocumentSavedAction({
                 conversationId: "c1",
                 itemId: "i1",
-                reportRef: "report_1",
-                savedReportId: "r2",
+                documentRef: "report_1",
+                savedDocumentId: "r2",
             }),
         );
 
@@ -533,9 +535,141 @@ describe("reportSavedAction", () => {
         ["a conversation that is not loaded", { conversationId: "other", itemId: "i1" }],
         ["an item the conversation does not have", { conversationId: "c1", itemId: "missing" }],
     ])("changes nothing for %s", (_description, target) => {
-        const before = stateWith([reportItem("i1", [{ ref: "report_1" }])]);
+        const before = stateWith([documentItem("i1", [{ ref: "report_1" }])]);
 
-        const state = messagesSliceReducer(before, reportSavedAction({ ...target, savedReportId: "r9" }));
+        const state = messagesSliceReducer(
+            before,
+            publisherDocumentSavedAction({ ...target, savedDocumentId: "r9" }),
+        );
+
+        expect(state).toEqual(before);
+    });
+});
+
+describe("dashboardSavedAction", () => {
+    const dashboardItem = (
+        id: string,
+        dashboardId: string,
+        insightIds: string[],
+    ): IChatConversationLocalItem =>
+        makeConversationItem({
+            id,
+            type: "item",
+            role: "assistant",
+            createdAt: 1,
+            responseId: `response-${id}`,
+            content: {
+                type: "multipart",
+                parts: [
+                    ...insightIds.map((identifier) => ({
+                        type: "visualization" as const,
+                        visualization: { insight: { identifier } } as IInsight,
+                    })),
+                    {
+                        type: "dashboard",
+                        insights: null,
+                        dashboard: { identifier: dashboardId } as IDashboard,
+                    },
+                ],
+            },
+        });
+    const stateWith = (items: IChatConversationLocalItem[]) =>
+        messagesSliceReducer(
+            messagesSliceReducer(undefined, { type: "test/init" }),
+            loadConversationSuccessAction({
+                currentConversation: makeConversation("c1"),
+                conversationItems: items,
+                threadId: "c1",
+            }),
+        );
+    const savedParts = (state: ReturnType<typeof messagesSliceReducer>, conversationId = "c1") =>
+        Object.values(state.conversationsData[conversationId]?.items ?? {}).flatMap((item) =>
+            item.content.type === "multipart"
+                ? item.content.parts.map((part) => {
+                      if (part.type === "visualization") {
+                          return {
+                              type: part.type,
+                              id: part.visualization?.insight.identifier,
+                              saved: (part as IChatConversationMultipartLocalPart).saved,
+                          };
+                      }
+                      if (part.type === "dashboard") {
+                          return { type: part.type, id: part.dashboard?.identifier, saved: part.saved };
+                      }
+                      return { type: part.type };
+                  })
+                : [],
+        );
+
+    it("marks the dashboard and its saved insights across conversation items as saved", () => {
+        const state = messagesSliceReducer(
+            stateWith([
+                dashboardItem("i1", "draft-dashboard", ["draft-insight-1", "unrelated-insight"]),
+                dashboardItem("i2", "unrelated-dashboard", ["draft-insight-2"]),
+            ]),
+            dashboardSavedAction({
+                conversationId: "c1",
+                originalDashboardId: "draft-dashboard",
+                savedDashboardId: "saved-dashboard",
+                savedInsights: [
+                    { originalInsightId: "draft-insight-1", savedInsightId: "saved-insight-1" },
+                    { originalInsightId: "draft-insight-2", savedInsightId: "saved-insight-2" },
+                ],
+            }),
+        );
+
+        expect(savedParts(state)).toEqual([
+            { type: "visualization", id: "draft-insight-1", saved: "saved-insight-1" },
+            { type: "visualization", id: "unrelated-insight", saved: undefined },
+            { type: "dashboard", id: "draft-dashboard", saved: "saved-dashboard" },
+            { type: "visualization", id: "draft-insight-2", saved: "saved-insight-2" },
+            { type: "dashboard", id: "unrelated-dashboard", saved: undefined },
+        ]);
+    });
+
+    it("updates a loaded conversation that is not current", () => {
+        const current = makeConversation("current");
+        const background = makeConversation("background");
+        const item = dashboardItem("i1", "draft-dashboard", ["draft-insight"]);
+        const before = {
+            ...stateWith([]),
+            currentConversation: current,
+            conversations: [current, background],
+            conversationsData: {
+                current: { order: [], items: {} },
+                background: { order: [item.localId], items: { [item.localId]: item } },
+            },
+        };
+
+        const state = messagesSliceReducer(
+            before,
+            dashboardSavedAction({
+                conversationId: "background",
+                originalDashboardId: "draft-dashboard",
+                savedDashboardId: "saved-dashboard",
+                savedInsights: [{ originalInsightId: "draft-insight", savedInsightId: "saved-insight" }],
+            }),
+        );
+
+        expect(savedParts(state, "background")).toEqual([
+            { type: "visualization", id: "draft-insight", saved: "saved-insight" },
+            { type: "dashboard", id: "draft-dashboard", saved: "saved-dashboard" },
+        ]);
+        expect(state.conversationsData["current"]).toEqual(before.conversationsData["current"]);
+    });
+
+    it("changes nothing when the conversation is not loaded", () => {
+        const before = stateWith([dashboardItem("i1", "draft-dashboard", ["draft-insight"])]);
+
+        const state = messagesSliceReducer(
+            before,
+            dashboardSavedAction({
+                conversationId: "missing",
+                originalDashboardId: "draft-dashboard",
+                savedDashboardId: "saved-dashboard",
+                savedInsights: [{ originalInsightId: "draft-insight", savedInsightId: "saved-insight" }],
+            }),
+        );
 
         expect(state).toEqual(before);
     });

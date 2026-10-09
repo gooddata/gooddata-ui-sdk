@@ -509,6 +509,8 @@ export { OverlayController } from "./Overlay/OverlayController.js";
 export {
     OverlayContext,
     OverlayControllerProvider,
+    OverlayZIndexContext,
+    useContainingOverlayZIndex,
     useOverlayController,
     useOverlayZIndex,
     useOverlayZIndexWithRegister,
@@ -1083,6 +1085,16 @@ export {
     type IUiToolbarStepperAccessibilityConfig,
 } from "./@ui/UiToolbarStepper/UiToolbarStepper.js";
 export {
+    UiToolbarInput,
+    type IUiToolbarInputProps,
+    type IUiToolbarInputAccessibilityConfig,
+} from "./@ui/UiToolbarInput/UiToolbarInput.js";
+export {
+    UiToolbarPagination,
+    type IUiToolbarPaginationProps,
+    type IUiToolbarPaginationAccessibilityConfig,
+} from "./@ui/UiToolbarPagination/UiToolbarPagination.js";
+export {
     UiToolbarSegmentedControl,
     type IUiToolbarSegmentedControlProps,
 } from "./@ui/UiToolbarSegmentedControl/UiToolbarSegmentedControl.js";
@@ -1425,7 +1437,16 @@ export {
 export {
     type IUiResizableSidebarState,
     type IUiResizableSidebarStateOptions,
+    type IUiResizableSidebarNavigationBadge,
+    type IUiResizableSidebarNavigationItem,
+    type IUiResizableSidebarNavigationSubItem,
+    type UiResizableSidebarNavigationNamingConfig,
 } from "./@ui/UiResizableSidebar/types.js";
+export {
+    UiResizableSidebarNavigation,
+    type IUiResizableSidebarNavigationProps,
+    type UiResizableSidebarNavigationItem,
+} from "./@ui/UiResizableSidebar/UiResizableSidebarNavigation.js";
 export {
     UiResizableSidebarCollapseToggle,
     type IUiResizableSidebarCollapseToggleProps,

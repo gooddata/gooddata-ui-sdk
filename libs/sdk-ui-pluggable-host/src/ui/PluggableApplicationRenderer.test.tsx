@@ -15,7 +15,7 @@ import {
     type IPluggableApp,
     type IPluggableAppEvent,
     type IPluggableApplicationMountHandle,
-    aiAssistantReportSaved,
+    aiAssistantPublisherDocumentSaved,
 } from "@gooddata/sdk-pluggable-application-model";
 
 import { type AppSecurityFailure } from "../loader/appSecurityValidation.js";
@@ -110,8 +110,8 @@ vi.resetModules();
 const { HostIntlProvider } = await import("./HostIntlProvider.js");
 const { PluggableApplicationRenderer } = await import("./PluggableApplicationRenderer.js");
 
-type ReportSaved = Parameters<
-    NonNullable<ComponentProps<typeof PluggableApplicationRenderer>["onAiAssistantReportSaved"]>
+type PublisherDocumentSaved = Parameters<
+    NonNullable<ComponentProps<typeof PluggableApplicationRenderer>["onAiAssistantPublisherDocumentSaved"]>
 >[0];
 
 function renderer(options: {
@@ -119,9 +119,9 @@ function renderer(options: {
     ctx: IPlatformContext;
     navigationRequestRef: NavigationGuardRef;
     app?: PluggableApplicationRegistryItem;
-    onAiAssistantReportSaved?: ComponentProps<
+    onAiAssistantPublisherDocumentSaved?: ComponentProps<
         typeof PluggableApplicationRenderer
-    >["onAiAssistantReportSaved"];
+    >["onAiAssistantPublisherDocumentSaved"];
 }): ReactElement {
     return (
         <HostIntlProvider locale="en-US">
@@ -130,7 +130,7 @@ function renderer(options: {
                 ctx={options.ctx}
                 pathname={options.pathname}
                 navigationRequestRef={options.navigationRequestRef}
-                onAiAssistantReportSaved={options.onAiAssistantReportSaved}
+                onAiAssistantPublisherDocumentSaved={options.onAiAssistantPublisherDocumentSaved}
             />
         </HostIntlProvider>
     );
@@ -182,8 +182,13 @@ describe("PluggableApplicationRenderer", () => {
         expect(onHostNavigationRequested).toHaveBeenCalledWith(request);
     });
 
-    describe("a report the application saved", () => {
-        const payload = { conversationId: "c1", itemId: "i1", reportRef: "report_1", savedReportId: "r1" };
+    describe("a document the application saved", () => {
+        const payload = {
+            conversationId: "c1",
+            itemId: "i1",
+            documentRef: "report_1",
+            savedDocumentId: "r1",
+        };
         const mountEmitting = () => {
             const emitted: { onEvent?: (event: IPluggableAppEvent) => void } = {};
             mocks.loadPluggableApplication.mockResolvedValue({
@@ -197,41 +202,46 @@ describe("PluggableApplicationRenderer", () => {
 
         it("is handed to the host chat", async () => {
             const emitted = mountEmitting();
-            const onAiAssistantReportSaved = vi.fn<(saved: ReportSaved) => void>();
+            const onAiAssistantPublisherDocumentSaved = vi.fn<(saved: PublisherDocumentSaved) => void>();
             render(
                 renderer({
                     pathname: WS1_PATHNAME,
                     ctx: context(),
                     navigationRequestRef,
-                    onAiAssistantReportSaved,
+                    onAiAssistantPublisherDocumentSaved,
                 }),
             );
             await flushMount();
 
-            emitted.onEvent?.(aiAssistantReportSaved(payload));
+            emitted.onEvent?.(aiAssistantPublisherDocumentSaved(payload));
 
-            expect(onAiAssistantReportSaved).toHaveBeenCalledExactlyOnceWith(payload);
+            expect(onAiAssistantPublisherDocumentSaved).toHaveBeenCalledExactlyOnceWith({
+                conversationId: "c1",
+                itemId: "i1",
+                documentRef: "report_1",
+                savedDocumentId: "r1",
+            });
         });
 
         it("is ignored when it is malformed", async () => {
             const emitted = mountEmitting();
-            const onAiAssistantReportSaved = vi.fn<(saved: ReportSaved) => void>();
+            const onAiAssistantPublisherDocumentSaved = vi.fn<(saved: PublisherDocumentSaved) => void>();
             render(
                 renderer({
                     pathname: WS1_PATHNAME,
                     ctx: context(),
                     navigationRequestRef,
-                    onAiAssistantReportSaved,
+                    onAiAssistantPublisherDocumentSaved,
                 }),
             );
             await flushMount();
 
             emitted.onEvent?.({
-                type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.REPORT_SAVED",
+                type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.PUBLISHER_DOCUMENT_SAVED",
                 payload: { conversationId: 1 },
             } as unknown as IPluggableAppEvent);
 
-            expect(onAiAssistantReportSaved).not.toHaveBeenCalled();
+            expect(onAiAssistantPublisherDocumentSaved).not.toHaveBeenCalled();
         });
     });
 

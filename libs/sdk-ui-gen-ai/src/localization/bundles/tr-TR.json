@@ -4,6 +4,7 @@
     "gd.gen-ai.global-error.button-details": "Ayrıntılar için ham hata yanıtını inceleyin",
     "gd.gen-ai.global-error.sync-in-progress": "Hâlâ ayarlanıyor — kısa süre sonra tekrar deneyin.",
     "gd.gen-ai.global-error.sync-failed": "Senkronizasyon başarısız oldu. Lütfen daha sonra tekrar deneyin.",
+    "gd.gen-ai.global-error.service-unavailable": "Yapay zeka hizmeti geçici olarak kullanılamıyor. Lütfen daha sonra tekrar deneyin.",
     "gd.gen-ai.global-error.traceId": "Hata izleme kimliği",
     "gd.gen-ai.global-error.show-more": "Daha fazla göster",
     "gd.gen-ai.global-error.show-less": "Daha az göster",

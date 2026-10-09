@@ -85,7 +85,7 @@ export const TwoMeasuresWithViewbyAndDisabledStacking = () =>
                 visualizationUrl: "local:area",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(0, 15, 0),
+        getScenariosGroupByIndexes(0, 16, 0),
     )();
 TwoMeasuresWithViewbyAndDisabledStacking.parameters = {
     kind: "two measures with viewBy and disabled stacking",
@@ -175,7 +175,7 @@ export const TwoMeasuresWithViewbyAndEnabledStacking = () =>
                 visualizationUrl: "local:area",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(0, 15, 1),
+        getScenariosGroupByIndexes(0, 16, 1),
     )();
 TwoMeasuresWithViewbyAndEnabledStacking.parameters = {
     kind: "two measures with viewBy and enabled stacking",
@@ -265,7 +265,7 @@ export const TwoMeasuresWithViewbyAndDisabledStackMeasures = () =>
                 visualizationUrl: "local:area",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(0, 15, 2),
+        getScenariosGroupByIndexes(0, 16, 2),
     )();
 TwoMeasuresWithViewbyAndDisabledStackMeasures.parameters = {
     kind: "two measures with viewBy and disabled stack measures",
@@ -355,7 +355,7 @@ export const TwoMeasuresWithViewbyAndEnabledStackMeasures = () =>
                 visualizationUrl: "local:area",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(0, 15, 3),
+        getScenariosGroupByIndexes(0, 16, 3),
     )();
 TwoMeasuresWithViewbyAndEnabledStackMeasures.parameters = {
     kind: "two measures with viewBy and enabled stack measures",
@@ -445,7 +445,7 @@ export const TwoMeasuresWithViewbyAndStackMeasuresToPercent = () =>
                 visualizationUrl: "local:area",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(0, 15, 4),
+        getScenariosGroupByIndexes(0, 16, 4),
     )();
 TwoMeasuresWithViewbyAndStackMeasuresToPercent.parameters = {
     kind: "two measures with viewBy and stack measures to percent",
@@ -532,7 +532,7 @@ export const SingleMeasureWithViewbyAndStackbyAndStackToPercent = () =>
                 visualizationUrl: "local:area",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(0, 15, 5),
+        getScenariosGroupByIndexes(0, 16, 5),
     )();
 SingleMeasureWithViewbyAndStackbyAndStackToPercent.parameters = {
     kind: "single measure with viewBy and stackBy and stack to percent",
@@ -622,7 +622,7 @@ export const SingleMeasureWithViewbyAndStackbyAndStackToPercentWithLabels = () =
                 visualizationUrl: "local:area",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(0, 15, 6),
+        getScenariosGroupByIndexes(0, 16, 6),
     )();
 SingleMeasureWithViewbyAndStackbyAndStackToPercentWithLabels.parameters = {
     kind: "single measure with viewBy and stackBy and stack to percent with labels",
@@ -709,7 +709,7 @@ export const SingleMeasureWithViewbyAndStackbyAndDisabledStacking = () =>
                 visualizationUrl: "local:area",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(0, 15, 7),
+        getScenariosGroupByIndexes(0, 16, 7),
     )();
 SingleMeasureWithViewbyAndStackbyAndDisabledStacking.parameters = {
     kind: "single measure with viewBy and stackBy and disabled stacking",
@@ -786,7 +786,7 @@ export const SingleMeasureWithViewbyAndStackToPercent = () =>
                 visualizationUrl: "local:area",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(0, 15, 8),
+        getScenariosGroupByIndexes(0, 16, 8),
     )();
 SingleMeasureWithViewbyAndStackToPercent.parameters = {
     kind: "single measure with viewBy and stack to percent",
@@ -876,7 +876,7 @@ export const UndefinedValuesAndDisabledStacking = () =>
                 visualizationUrl: "local:area",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(0, 15, 9),
+        getScenariosGroupByIndexes(0, 16, 9),
     )();
 UndefinedValuesAndDisabledStacking.parameters = {
     kind: "undefined values and disabled stacking",
@@ -969,7 +969,7 @@ export const UndefinedValuesDisabledStackingAndTheContinuousLineEnabled = () =>
                 visualizationUrl: "local:area",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(0, 15, 10),
+        getScenariosGroupByIndexes(0, 16, 10),
     )();
 UndefinedValuesDisabledStackingAndTheContinuousLineEnabled.parameters = {
     kind: "undefined values, disabled stacking and the continuous line enabled",

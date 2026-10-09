@@ -8,7 +8,7 @@ import {
     type IDashboard,
     type IGenAIUserContext,
     type IInsight,
-    type IReportDefinition,
+    type IPublisherDocumentDefinition,
 } from "@gooddata/sdk-model";
 import { type SdkErrorType } from "@gooddata/sdk-ui";
 
@@ -392,7 +392,7 @@ export const isChatConversationChangedEvent = (event: ChatEvent): event is ChatC
  */
 export type ChatDefinitionReceivedEvent = BaseEvent & {
     type: "onDefinitionReceived";
-    definitionType: "dashboard" | "visualization" | "report";
+    definitionType: "dashboard" | "visualization" | "publisherDocument";
     itemId: string;
     conversationId: string;
     interactionId?: string;
@@ -400,25 +400,25 @@ export type ChatDefinitionReceivedEvent = BaseEvent & {
     insights?: IInsight[];
     visualization?: NonNullable<IChatConversationVisualisationContent["visualization"]>;
     /**
-     * The whole report version.
+     * The whole document version.
      */
-    report?: IReportDefinition;
+    publisherDocument?: IPublisherDocumentDefinition;
     /**
-     * Name of the report version in the conversation, the one its save is recorded under.
+     * Name of the document version in the conversation, the one its save is recorded under.
      */
-    reportRef?: string;
+    documentRef?: string;
     /**
-     * Name of the report version this one reworks.
+     * Name of the document version this one reworks.
      */
     refines?: string;
     /**
-     * Whether the version was written from the report open in the editor.
+     * Whether the version was written from the document open in the editor.
      */
-    reworksOpenReport?: boolean;
+    reworksOpenDocument?: boolean;
     /**
-     * Id of the saved report this version edits.
+     * Id of the saved document this version edits.
      */
-    baseReportId?: string;
+    baseDocumentId?: string;
 };
 
 /**

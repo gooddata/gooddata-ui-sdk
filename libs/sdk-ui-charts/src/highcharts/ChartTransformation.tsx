@@ -20,6 +20,7 @@ import {
     emptyHeaderTitleFromIntl,
     totalColumnTitleFromIntl,
 } from "@gooddata/sdk-ui";
+import { useContainingOverlayZIndex } from "@gooddata/sdk-ui-kit";
 import { useReferenceTheme, useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { type ILegendOptions, type ITooltipExecution, useTooltipLookup } from "@gooddata/sdk-ui-vis-commons";
 
@@ -46,6 +47,7 @@ import {
 import { getChartOptions } from "./chartTypes/_chartOptions/chartOptionsBuilder.js";
 import { isChartSupported, stringifyChartTypes } from "./chartTypes/_util/common.js";
 import { getMekkoEffectiveConfig } from "./chartTypes/mekko/mekkoChartOptions.js";
+import { resolveTooltipZIndex } from "./tooltipZIndex.js";
 import { type IChartOptions, type ICustomTooltipRuntime } from "./typings/unsafe.js";
 
 export function renderHighCharts(props: IHighChartsRendererProps): ReactElement {
@@ -115,11 +117,22 @@ export const ChartTransformation = memo(
         const referenceThemeFromContext = useReferenceTheme();
         const referenceTheme = referenceThemeProp ?? referenceThemeFromContext;
 
+        const containingOverlayZIndex = useContainingOverlayZIndex();
+
         // mekko stacking is bucket-driven — sanitize stackMeasures* once for every config consumer below
-        const config = useMemo(
-            () => getMekkoEffectiveConfig(configProp, DataViewFacade.for(dataView)),
-            [configProp, dataView],
-        );
+        const config = useMemo(() => {
+            const effectiveConfig = getMekkoEffectiveConfig(configProp, DataViewFacade.for(dataView));
+            return {
+                ...effectiveConfig,
+                tooltip: {
+                    ...effectiveConfig.tooltip,
+                    zIndex: resolveTooltipZIndex({
+                        configZIndex: effectiveConfig.tooltip?.zIndex,
+                        containingOverlayZIndex,
+                    }),
+                },
+            };
+        }, [configProp, dataView, containingOverlayZIndex]);
 
         const visType = config.type;
         const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);

@@ -23,18 +23,18 @@ describe("addContextReference", () => {
         },
     };
 
-    it("should add the open report that is not saved yet to the active context", () => {
-        const context: StoreContext = { ambient: { view: { report: { title: "Draft" } } } };
+    it("should add the open document that is not saved yet to the active context", () => {
+        const context: StoreContext = { ambient: { view: { publisherDocument: { title: "Draft" } } } };
 
         const result = addContextReference(context, {
             id: "unsaved",
             title: "Draft",
             nesting: 0,
-            type: "report",
-            where: "view.report",
+            type: "publisherDocument",
+            where: "view.publisherDocument",
         });
 
-        expect(result.active?.view?.report).toEqual({ title: "Draft" });
+        expect(result.active?.view?.publisherDocument).toEqual({ title: "Draft" });
     });
 
     it("should leave the context alone for a referenced object without a reference", () => {

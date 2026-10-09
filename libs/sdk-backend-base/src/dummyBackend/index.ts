@@ -131,7 +131,7 @@ import {
     type IWorkspaceObjectPermissionsService,
     type IWorkspaceParametersService,
     type IWorkspacePermissionsService,
-    type IWorkspaceReportsService,
+    type IWorkspacePublisherService,
     type IWorkspaceSettings,
     type IWorkspaceSettingsService,
     type IWorkspaceStylingService,
@@ -238,7 +238,7 @@ import { DummyAnalyticsCatalogService } from "./DummyAnalyticsCatalogService.js"
 import { DummyChatConversations } from "./DummyGenAIChatThread.js";
 import { DummySemanticQualityService } from "./DummySemanticQualityService.js";
 import { DummySemanticSearchQueryBuilder } from "./DummySemanticSearch.js";
-import { InMemoryWorkspaceReportsService } from "./InMemoryWorkspaceReportsService.js";
+import { InMemoryWorkspacePublisherService } from "./InMemoryWorkspacePublisherService.js";
 
 /**
  * @internal
@@ -279,7 +279,7 @@ export const defaultDummyBackendConfig: DummyBackendConfig = {
  * @internal
  */
 export function dummyBackend(config: DummyBackendConfig = defaultDummyBackendConfig): IAnalyticalBackend {
-    const reportsServices = new Map<string, InMemoryWorkspaceReportsService>();
+    const publisherServices = new Map<string, InMemoryWorkspacePublisherService>();
     const noopBackend: IAnalyticalBackend = {
         capabilities: {
             canCalculateTotals: true,
@@ -314,12 +314,12 @@ export function dummyBackend(config: DummyBackendConfig = defaultDummyBackendCon
             throw new NotSupported("not supported");
         },
         workspace(id: string): IAnalyticalWorkspace {
-            let reportsService = reportsServices.get(id);
-            if (!reportsService) {
-                reportsService = new InMemoryWorkspaceReportsService();
-                reportsServices.set(id, reportsService);
+            let publisherService = publisherServices.get(id);
+            if (!publisherService) {
+                publisherService = new InMemoryWorkspacePublisherService();
+                publisherServices.set(id, publisherService);
             }
-            return dummyWorkspace(id, config, reportsService);
+            return dummyWorkspace(id, config, publisherService);
         },
         entitlements(): IEntitlements {
             throw new NotSupported("not supported");
@@ -470,7 +470,7 @@ export function dummyDataView(
 function dummyWorkspace(
     workspace: string,
     config: DummyBackendConfig,
-    reportsService: InMemoryWorkspaceReportsService,
+    publisherService: InMemoryWorkspacePublisherService,
 ): IAnalyticalWorkspace {
     return {
         workspace,
@@ -609,8 +609,8 @@ function dummyWorkspace(
                 deleteExportTemplate: () => Promise.resolve(),
             };
         },
-        reports(): IWorkspaceReportsService {
-            return reportsService;
+        publisher(): IWorkspacePublisherService {
+            return publisherService;
         },
     };
 }

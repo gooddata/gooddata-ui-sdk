@@ -24,10 +24,10 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe(
-    "Multitple date filters basic cases",
+    "Multiple date filters",
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
-        test("can add multiple date filters", { tag: ["@pre-merge-isolated"] }, async ({ page }) => {
+        test("should add multiple date filters", { tag: ["@pre-merge-isolated"] }, async ({ page }) => {
             await visit(page, "dashboard/multiple-date-filters");
             await waitChartLoaded(page, widgetSelector(0, 0));
 
@@ -40,7 +40,7 @@ test.describe(
         });
 
         test(
-            "can select new filters via config panel without specifying date dataset",
+            "should list date filters in the config panel without a date dataset dropdown",
             { tag: ["@pre-merge-isolated"] },
             async ({ page }) => {
                 await visit(page, "dashboard/multiple-date-filters");
@@ -84,7 +84,7 @@ test.describe(
         );
 
         test(
-            "can select default selection of filter in edit mode",
+            "should apply a default selection to a new date filter in edit mode",
             { tag: ["@pre-merge-isolated"] },
             async ({ page }) => {
                 await visit(page, "dashboard/multiple-date-filters");
@@ -108,29 +108,25 @@ test.describe(
             },
         );
 
-        test(
-            "can remove date filter for specified date dataset",
-            { tag: ["@pre-merge-isolated"] },
-            async ({ page }) => {
-                await visit(page, "dashboard/multiple-date-filters");
-                await waitChartLoaded(page, widgetSelector(0, 0));
+        test("should remove date filters one by one", { tag: ["@pre-merge-isolated"] }, async ({ page }) => {
+            await visit(page, "dashboard/multiple-date-filters");
+            await waitChartLoaded(page, widgetSelector(0, 0));
 
-                await enterEditMode(page);
+            await enterEditMode(page);
 
-                await assertDateFilters(page, ["Date range", "Activity", "Created"]);
+            await assertDateFilters(page, ["Date range", "Activity", "Created"]);
 
-                await removeDateFilter(page, 2);
+            await removeDateFilter(page, 2);
 
-                await assertDateFilters(page, ["Date range", "Activity"]);
+            await assertDateFilters(page, ["Date range", "Activity"]);
 
-                await removeDateFilter(page, 1);
+            await removeDateFilter(page, 1);
 
-                await assertDateFilters(page, ["Date range"]);
-            },
-        );
+            await assertDateFilters(page, ["Date range"]);
+        });
 
         test(
-            "(SEPARATE) can perform common action when specific date filter is set",
+            "(SEPARATE) should keep the date filter after save as new",
             { tag: ["@pre-merge-isolated"] },
             async ({ page }) => {
                 await visit(page, "dashboard/multiple-date-filters");

@@ -1217,11 +1217,11 @@ export type Tags36 = string[];
 export type Metadata30 = Metadata31 & Metadata32;
 export type Metadata32 = Report;
 /**
- * A unique identifier of the report.
+ * A unique identifier of the document.
  */
 export type Id45 = string;
 /**
- * A list of strings - metadata tags of this report.
+ * A list of strings - metadata tags of this document.
  */
 export type Tags37 = string[];
 /**
@@ -1253,7 +1253,7 @@ export type ReportBackgroundImage = ReportBackgroundImage1 | ReportBackgroundIma
  */
 export type Id47 = string;
 /**
- * An id for this area, unique within the page. It is what a report fills when it takes this page from a template, so an id written down here survives edits to the layout around it.
+ * An id for this area, unique within the page. It is what a document fills when it takes this page from a template, so an id written down here survives edits to the layout around it.
  */
 export type Id48 = string;
 /**
@@ -1266,7 +1266,7 @@ export type ReportContentAlignment = "start" | "center" | "end";
  */
 export type ReportSlotPlaceholder = ReportSlotPlaceholder1 | ReportSlotPlaceholder2 | ReportSlotPlaceholder3;
 /**
- * True marks the slot required: the report is not complete until it is filled.
+ * True marks the slot required: the document is not complete until it is filled.
  */
 export type ReportSlotPlaceholder1 = boolean;
 /**
@@ -1310,7 +1310,7 @@ export type ReportLayoutNode3 = ReportLayoutRow;
  */
 export type ReportLayoutNode4 = ReportVisualizationSlot;
 /**
- * An id of the date dataset the report's period is applied to as an absolute date filter. Omitted leaves the backend date dataset resolution to decide.
+ * An id of the date dataset the document's period is applied to as an absolute date filter. Omitted leaves the backend date dataset resolution to decide.
  */
 export type Id50 = string;
 /**
@@ -1389,11 +1389,11 @@ export type Id51 = string;
 export type Metadata33 = Metadata34 & Metadata35;
 export type Metadata35 = ReportTemplate;
 /**
- * A unique identifier of the report template.
+ * A unique identifier of the document template.
  */
 export type Id52 = string;
 /**
- * A list of strings - metadata tags of this report template.
+ * A list of strings - metadata tags of this document template.
  */
 export type Tags38 = string[];
 /**
@@ -1402,11 +1402,11 @@ export type Tags38 = string[];
 export type Metadata36 = Metadata37 & Metadata38;
 export type Metadata38 = ReportPageLayout;
 /**
- * A unique identifier of the report page layout.
+ * A unique identifier of the document page layout.
  */
 export type Id53 = string;
 /**
- * A list of strings - metadata tags of this report page layout.
+ * A list of strings - metadata tags of this document page layout.
  */
 export type Tags39 = string[];
 /**
@@ -3711,6 +3711,10 @@ export interface VisualisationConfig {
         [k: string]: unknown;
     };
     data_points?: boolean | "auto";
+    /**
+     * Line shape with regards to data points (i.e. line interpolation).
+     */
+    line_shape?: "linear" | "spline" | "stepped";
     data_totals?: boolean | "auto";
     orientation?: string;
     legend_enabled?: boolean;
@@ -4186,6 +4190,10 @@ export interface VisualisationConfig1 {
         [k: string]: unknown;
     };
     data_points?: boolean | "auto";
+    /**
+     * Line shape with regards to data points (i.e. line interpolation).
+     */
+    line_shape?: "linear" | "spline" | "stepped";
     data_totals?: boolean | "auto";
     orientation?: string;
     legend_enabled?: boolean;
@@ -4582,6 +4590,10 @@ export interface VisualisationConfig2 {
         [k: string]: unknown;
     };
     data_points?: boolean | "auto";
+    /**
+     * Line shape with regards to data points (i.e. line interpolation).
+     */
+    line_shape?: "linear" | "spline" | "stepped";
     data_totals?: boolean | "auto";
     orientation?: string;
     legend_enabled?: boolean;
@@ -4978,6 +4990,10 @@ export interface VisualisationConfig3 {
         [k: string]: unknown;
     };
     data_points?: boolean | "auto";
+    /**
+     * Line shape with regards to data points (i.e. line interpolation).
+     */
+    line_shape?: "linear" | "spline" | "stepped";
     data_totals?: boolean | "auto";
     orientation?: string;
     legend_enabled?: boolean;
@@ -5374,6 +5390,10 @@ export interface VisualisationConfig4 {
         [k: string]: unknown;
     };
     data_points?: boolean | "auto";
+    /**
+     * Line shape with regards to data points (i.e. line interpolation).
+     */
+    line_shape?: "linear" | "spline" | "stepped";
     data_totals?: boolean | "auto";
     orientation?: string;
     legend_enabled?: boolean;
@@ -5770,6 +5790,10 @@ export interface VisualisationConfig5 {
         [k: string]: unknown;
     };
     data_points?: boolean | "auto";
+    /**
+     * Line shape with regards to data points (i.e. line interpolation).
+     */
+    line_shape?: "linear" | "spline" | "stepped";
     data_totals?: boolean | "auto";
     orientation?: string;
     legend_enabled?: boolean;
@@ -6166,6 +6190,10 @@ export interface VisualisationConfig6 {
         [k: string]: unknown;
     };
     data_points?: boolean | "auto";
+    /**
+     * Line shape with regards to data points (i.e. line interpolation).
+     */
+    line_shape?: "linear" | "spline" | "stepped";
     data_totals?: boolean | "auto";
     orientation?: string;
     legend_enabled?: boolean;
@@ -6558,6 +6586,10 @@ export interface VisualisationConfig7 {
         [k: string]: unknown;
     };
     data_points?: boolean | "auto";
+    /**
+     * Line shape with regards to data points (i.e. line interpolation).
+     */
+    line_shape?: "linear" | "spline" | "stepped";
     data_totals?: boolean | "auto";
     orientation?: string;
     legend_enabled?: boolean;
@@ -6950,6 +6982,10 @@ export interface VisualisationConfig8 {
         [k: string]: unknown;
     };
     data_points?: boolean | "auto";
+    /**
+     * Line shape with regards to data points (i.e. line interpolation).
+     */
+    line_shape?: "linear" | "spline" | "stepped";
     data_totals?: boolean | "auto";
     orientation?: string;
     legend_enabled?: boolean;
@@ -7342,6 +7378,10 @@ export interface VisualisationConfig9 {
         [k: string]: unknown;
     };
     data_points?: boolean | "auto";
+    /**
+     * Line shape with regards to data points (i.e. line interpolation).
+     */
+    line_shape?: "linear" | "spline" | "stepped";
     data_totals?: boolean | "auto";
     orientation?: string;
     legend_enabled?: boolean;
@@ -7734,6 +7774,10 @@ export interface VisualisationConfig10 {
         [k: string]: unknown;
     };
     data_points?: boolean | "auto";
+    /**
+     * Line shape with regards to data points (i.e. line interpolation).
+     */
+    line_shape?: "linear" | "spline" | "stepped";
     data_totals?: boolean | "auto";
     orientation?: string;
     legend_enabled?: boolean;
@@ -8126,6 +8170,10 @@ export interface VisualisationConfig11 {
         [k: string]: unknown;
     };
     data_points?: boolean | "auto";
+    /**
+     * Line shape with regards to data points (i.e. line interpolation).
+     */
+    line_shape?: "linear" | "spline" | "stepped";
     data_totals?: boolean | "auto";
     orientation?: string;
     legend_enabled?: boolean;
@@ -8526,6 +8574,10 @@ export interface VisualisationConfig12 {
         [k: string]: unknown;
     };
     data_points?: boolean | "auto";
+    /**
+     * Line shape with regards to data points (i.e. line interpolation).
+     */
+    line_shape?: "linear" | "spline" | "stepped";
     data_totals?: boolean | "auto";
     orientation?: string;
     legend_enabled?: boolean;
@@ -8918,6 +8970,10 @@ export interface VisualisationConfig13 {
         [k: string]: unknown;
     };
     data_points?: boolean | "auto";
+    /**
+     * Line shape with regards to data points (i.e. line interpolation).
+     */
+    line_shape?: "linear" | "spline" | "stepped";
     data_totals?: boolean | "auto";
     orientation?: string;
     legend_enabled?: boolean;
@@ -9310,6 +9366,10 @@ export interface VisualisationConfig14 {
         [k: string]: unknown;
     };
     data_points?: boolean | "auto";
+    /**
+     * Line shape with regards to data points (i.e. line interpolation).
+     */
+    line_shape?: "linear" | "spline" | "stepped";
     data_totals?: boolean | "auto";
     orientation?: string;
     legend_enabled?: boolean;
@@ -9704,6 +9764,10 @@ export interface VisualisationConfig15 {
         [k: string]: unknown;
     };
     data_points?: boolean | "auto";
+    /**
+     * Line shape with regards to data points (i.e. line interpolation).
+     */
+    line_shape?: "linear" | "spline" | "stepped";
     data_totals?: boolean | "auto";
     orientation?: string;
     legend_enabled?: boolean;
@@ -10098,6 +10162,10 @@ export interface VisualisationConfig16 {
         [k: string]: unknown;
     };
     data_points?: boolean | "auto";
+    /**
+     * Line shape with regards to data points (i.e. line interpolation).
+     */
+    line_shape?: "linear" | "spline" | "stepped";
     data_totals?: boolean | "auto";
     orientation?: string;
     legend_enabled?: boolean;
@@ -10490,6 +10558,10 @@ export interface VisualisationConfig17 {
         [k: string]: unknown;
     };
     data_points?: boolean | "auto";
+    /**
+     * Line shape with regards to data points (i.e. line interpolation).
+     */
+    line_shape?: "linear" | "spline" | "stepped";
     data_totals?: boolean | "auto";
     orientation?: string;
     legend_enabled?: boolean;
@@ -10882,6 +10954,10 @@ export interface VisualisationConfig18 {
         [k: string]: unknown;
     };
     data_points?: boolean | "auto";
+    /**
+     * Line shape with regards to data points (i.e. line interpolation).
+     */
+    line_shape?: "linear" | "spline" | "stepped";
     data_totals?: boolean | "auto";
     orientation?: string;
     legend_enabled?: boolean;
@@ -11278,6 +11354,10 @@ export interface VisualisationConfig19 {
         [k: string]: unknown;
     };
     data_points?: boolean | "auto";
+    /**
+     * Line shape with regards to data points (i.e. line interpolation).
+     */
+    line_shape?: "linear" | "spline" | "stepped";
     data_totals?: boolean | "auto";
     orientation?: string;
     legend_enabled?: boolean;
@@ -11647,6 +11727,10 @@ export interface VisualisationConfig20 {
         [k: string]: unknown;
     };
     data_points?: boolean | "auto";
+    /**
+     * Line shape with regards to data points (i.e. line interpolation).
+     */
+    line_shape?: "linear" | "spline" | "stepped";
     data_totals?: boolean | "auto";
     orientation?: string;
     legend_enabled?: boolean;
@@ -12043,6 +12127,10 @@ export interface VisualisationConfig21 {
         [k: string]: unknown;
     };
     data_points?: boolean | "auto";
+    /**
+     * Line shape with regards to data points (i.e. line interpolation).
+     */
+    line_shape?: "linear" | "spline" | "stepped";
     data_totals?: boolean | "auto";
     orientation?: string;
     legend_enabled?: boolean;
@@ -12443,6 +12531,10 @@ export interface VisualisationConfig22 {
         [k: string]: unknown;
     };
     data_points?: boolean | "auto";
+    /**
+     * Line shape with regards to data points (i.e. line interpolation).
+     */
+    line_shape?: "linear" | "spline" | "stepped";
     data_totals?: boolean | "auto";
     orientation?: string;
     legend_enabled?: boolean;
@@ -12835,6 +12927,10 @@ export interface VisualisationConfig23 {
         [k: string]: unknown;
     };
     data_points?: boolean | "auto";
+    /**
+     * Line shape with regards to data points (i.e. line interpolation).
+     */
+    line_shape?: "linear" | "spline" | "stepped";
     data_totals?: boolean | "auto";
     orientation?: string;
     legend_enabled?: boolean;
@@ -13176,22 +13272,22 @@ export interface Report {
     id: Id45;
     type: "report";
     /**
-     * A human readable title for the report.
+     * A human readable title for the document.
      */
     title: string;
     /**
-     * An optional description of the report.
+     * An optional description of the document.
      */
     description?: string;
     tags?: Tags37;
     period: ReportPeriod;
     /**
-     * Ordered pages of the report. A page is a deep copy taken when it was added, and never changes with the page layout or template it came from.
+     * Ordered pages of the document. A page is a deep copy taken when it was added, and never changes with the page layout or template it came from.
      */
     pages: ReportPageBody[];
     filters?: DashboardFilters4;
     /**
-     * Custom variables the report's text can interpolate as \{name\}. Built-in variable names win a collision.
+     * Custom variables the document's text can interpolate as \{name\}. Built-in variable names win a collision.
      */
     variables?: ReportVariable[];
     /**
@@ -13206,15 +13302,15 @@ export interface Report {
     };
 }
 /**
- * The finished period the report covers. It is not a filter: at execution time it materializes as an absolute date filter on each visualization's date dataset, at the lowest precedence, which a visualization opts out of with ignore_report_period.
+ * The finished period the document covers. It is not a filter: at execution time it materializes as an absolute date filter on each visualization's date dataset, at the lowest precedence, which a visualization opts out of with ignore_report_period.
  */
 export interface ReportPeriod {
     /**
-     * Reported period start, ISO 8601 date (YYYY-MM-DD), inclusive.
+     * Start of the period the document covers, ISO 8601 date (YYYY-MM-DD), inclusive.
      */
     start: string;
     /**
-     * Reported period end, ISO 8601 date (YYYY-MM-DD), inclusive.
+     * End of the period the document covers, ISO 8601 date (YYYY-MM-DD), inclusive.
      */
     end: string;
 }
@@ -13286,7 +13382,7 @@ export interface ReportSlotPlaceholder3 {
      */
     hint?: string;
     /**
-     * When true, a report is not considered complete until this slot is filled.
+     * When true, a document is not considered complete until this slot is filled.
      */
     required?: boolean;
 }
@@ -13343,18 +13439,18 @@ export interface ReportVisualizationSlot {
     };
     date?: Id50;
     /**
-     * When true, the implicit date filter derived from the report's period is not applied here.
+     * When true, the implicit date filter derived from the document's period is not applied here.
      */
     ignore_report_period?: boolean;
     filters?: DashboardFilters2;
     /**
-     * A list of report and page filters ignored here.
+     * A list of document and page filters ignored here.
      */
     ignored_filters?: string[];
     placeholder?: ReportSlotPlaceholder;
 }
 /**
- * Filters applied on top of the effective page and report filters. A filter targeting the same object replaces the inherited one.
+ * Filters applied on top of the effective page and document filters. A filter targeting the same object replaces the inherited one.
  */
 export interface DashboardFilters2 {
     /**
@@ -13393,7 +13489,7 @@ export interface ReportHeadingSlot {
  */
 export interface ReportText2 {
     /**
-     * Markdown with \{variable\} placeholders. Alongside a prompt this is the materialized generation, stored so the report renders without re-invoking AI.
+     * Markdown with \{variable\} placeholders. Alongside a prompt this is the materialized generation, stored so the document renders without re-invoking AI.
      */
     text?: string;
     /**
@@ -13465,7 +13561,7 @@ export interface ReportBoxStyle2 {
     padding?: number;
 }
 /**
- * Page filters, merged over the report's own. A filter targeting the same object replaces the inherited one; a visualization's own filters apply on top.
+ * Page filters, merged over the document's own. A filter targeting the same object replaces the inherited one; a visualization's own filters apply on top.
  */
 export interface DashboardFilters3 {
     /**
@@ -13493,7 +13589,7 @@ export interface DashboardFilters3 {
         | DashboardFilterGroup;
 }
 /**
- * Report filters; pages and visualizations may extend or override them.
+ * Document filters; pages and visualizations may extend or override them.
  */
 export interface DashboardFilters4 {
     /**
@@ -13528,7 +13624,7 @@ export interface ReportVariable {
     title?: string;
     description?: string;
     /**
-     * Value used when the report gives the variable none.
+     * Value used when the document gives the variable none.
      */
     default?: string;
 }
@@ -13574,21 +13670,21 @@ export interface ReportTemplate {
     id: Id52;
     type: "report_template";
     /**
-     * A human readable title for the report template.
+     * A human readable title for the document template.
      */
     title: string;
     /**
-     * An optional description of the report template.
+     * An optional description of the document template.
      */
     description?: string;
     tags?: Tags38;
     /**
-     * Ordered pages of the template. A report created from the template deep-copies them and keeps no reference back, so the report stays frozen while the template evolves.
+     * Ordered pages of the template. A document created from the template deep-copies them and keeps no reference back, so the document stays frozen while the template evolves.
      */
     pages: ReportPageBody[];
     filters?: DashboardFilters5;
     /**
-     * Custom variables the template's text can interpolate as \{name\}. A report created from it gives them values.
+     * Custom variables the template's text can interpolate as \{name\}. A document created from it gives them values.
      */
     variables?: ReportVariable[];
     /**
@@ -13663,17 +13759,17 @@ export interface Metadata37 {
     [k: string]: unknown;
 }
 /**
- * A reusable page. Its content fields are the same page body a report and a report template carry inline, so a field added to /gaac/reportPageBody belongs here too: JSON Schema cannot compose the two, because the page body closes itself to the entity's own id, title and tags.
+ * A reusable page. Its content fields are the same page body a document and a document template carry inline, so a field added to /gaac/reportPageBody belongs here too: JSON Schema cannot compose the two, because the page body closes itself to the entity's own id, title and tags.
  */
 export interface ReportPageLayout {
     id: Id53;
     type: "report_page_layout";
     /**
-     * A human readable title for the report page layout.
+     * A human readable title for the document page layout.
      */
     title: string;
     /**
-     * An optional description of the report page layout.
+     * An optional description of the document page layout.
      */
     description?: string;
     tags?: Tags39;
@@ -13698,7 +13794,7 @@ export interface ReportBoxStyle3 {
     padding?: number;
 }
 /**
- * Page filters, carried into the template and report content this page is copied into.
+ * Page filters, carried into the template and document content this page is copied into.
  */
 export interface DashboardFilters6 {
     /**

@@ -16,7 +16,7 @@ test.describe(
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test(
-            "verify date filter default state",
+            "should default to This month on a new dashboard",
             {
                 tag: ["@pre-merge-integrated"],
             },
@@ -27,7 +27,7 @@ test.describe(
         );
 
         test(
-            "should update date filter value correctly",
+            "should update the date filter value",
             {
                 tag: ["@pre-merge-integrated"],
             },
@@ -112,7 +112,7 @@ test.describe(
         );
 
         test(
-            "should display the selected date interval correctly",
+            "should display the selected date interval",
             {
                 tag: ["@pre-merge-integrated"],
             },

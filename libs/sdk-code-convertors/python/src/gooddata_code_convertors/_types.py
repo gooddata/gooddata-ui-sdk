@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: d150d2e8fe89769c83460518d7d1109a41a27ac7b75f2bdb44720a1f85baa829
+# schema-hash: ec5aab995abb310888541381dce7782837bdc6d938ea41a20c8f2acfc8c644e3
 
 from __future__ import annotations
 
@@ -1230,6 +1230,7 @@ class Config(TypedDict):
     data_labels_style: NotRequired[Literal['auto', 'backplate']]
     chart_fill: NotRequired[ChartFill]
     data_points: NotRequired[bool | Literal['auto']]
+    line_shape: NotRequired[Literal['linear', 'spline', 'stepped']]
     data_totals: NotRequired[bool | Literal['auto']]
     orientation: NotRequired[str]
     legend_enabled: NotRequired[bool]

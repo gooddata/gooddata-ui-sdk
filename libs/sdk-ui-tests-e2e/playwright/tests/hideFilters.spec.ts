@@ -23,20 +23,28 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe("Hide Filters", { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } }, () => {
-    test("Hide hidden date filter on view mode", { tag: ["@pre-merge-isolated"] }, async ({ page }) => {
-        await visit(page, "dashboard/dashboard-tiger-hide-filters");
-        await expect(page.locator(".s-edit_button")).toBeVisible();
-        await expect(page.locator(".s-date-filter-button")).toHaveCount(0);
-    });
-
-    test("Hide hidden attribute filter on view mode", { tag: ["@pre-merge-isolated"] }, async ({ page }) => {
-        await visit(page, "dashboard/dashboard-tiger-hide-filters");
-        await expect(page.locator(".s-edit_button")).toBeVisible();
-        await expect(page.locator(".dash-filters-attribute .s-city")).toHaveCount(0);
-    });
+    test(
+        "should hide a hidden date filter in view mode",
+        { tag: ["@pre-merge-isolated"] },
+        async ({ page }) => {
+            await visit(page, "dashboard/dashboard-tiger-hide-filters");
+            await expect(page.locator(".s-edit_button")).toBeVisible();
+            await expect(page.locator(".s-date-filter-button")).toHaveCount(0);
+        },
+    );
 
     test(
-        "User can select hide date filter option on configuration in edit mode",
+        "should hide a hidden attribute filter in view mode",
+        { tag: ["@pre-merge-isolated"] },
+        async ({ page }) => {
+            await visit(page, "dashboard/dashboard-tiger-hide-filters");
+            await expect(page.locator(".s-edit_button")).toBeVisible();
+            await expect(page.locator(".dash-filters-attribute .s-city")).toHaveCount(0);
+        },
+    );
+
+    test(
+        "should set a date filter to hidden in edit mode",
         { tag: ["@pre-merge-isolated"] },
         async ({ page }) => {
             await visit(page, "dashboard/dashboard-tiger");
@@ -67,7 +75,7 @@ test.describe("Hide Filters", { additionalWindowProperties: { useSafeLocalIdenti
     );
 
     test(
-        "User can select hide attribute filter option on configuration in edit mode",
+        "should set an attribute filter to hidden in edit mode",
         { tag: ["@pre-merge-isolated"] },
         async ({ page }) => {
             await visit(page, "dashboard/dashboard-tiger-hide-filters");
@@ -98,7 +106,7 @@ test.describe("Hide Filters", { additionalWindowProperties: { useSafeLocalIdenti
     );
 
     test(
-        "User can not select and edit readonly date filter in view mode",
+        "should not open a readonly date filter in view mode",
         { tag: ["@pre-merge-isolated"] },
         async ({ page }) => {
             await visit(page, "dashboard/dashboard-tiger-readonly-date-filter");
@@ -113,7 +121,7 @@ test.describe("Hide Filters", { additionalWindowProperties: { useSafeLocalIdenti
     );
 
     test(
-        "User can not select and edit readonly attribute filter in view mode",
+        "should not open a readonly attribute filter in view mode",
         { tag: ["@pre-merge-isolated"] },
         async ({ page }) => {
             await visit(page, "dashboard/dashboard-tiger-hide-filters");
@@ -129,7 +137,7 @@ test.describe("Hide Filters", { additionalWindowProperties: { useSafeLocalIdenti
     );
 
     test(
-        "User can select and edit readonly date filter in edit mode",
+        "should open and edit a readonly date filter in edit mode",
         { tag: ["@pre-merge-isolated"] },
         async ({ page }) => {
             await visit(page, "dashboard/dashboard-tiger-readonly-date-filter");
@@ -160,7 +168,7 @@ test.describe("Hide Filters", { additionalWindowProperties: { useSafeLocalIdenti
     );
 
     test(
-        "User can select and edit readonly attribute filter in edit mode",
+        "should open and edit a readonly attribute filter in edit mode",
         { tag: ["@pre-merge-isolated"] },
         async ({ page }) => {
             await visit(page, "dashboard/dashboard-tiger-hide-filters");
@@ -191,7 +199,7 @@ test.describe("Hide Filters", { additionalWindowProperties: { useSafeLocalIdenti
     );
 
     test(
-        "Should not reuse the config mode when re-added attribute filter",
+        "should not keep the mode of a removed and re-added attribute filter",
         { tag: ["@pre-merge-isolated"] },
         async ({ page }) => {
             await visit(page, "dashboard/dashboard-tiger-hide-filters");
@@ -222,7 +230,7 @@ test.describe("Hide Filters", { additionalWindowProperties: { useSafeLocalIdenti
     );
 
     test(
-        "Should render correct mode in configuration overlay",
+        "should preselect the saved mode in the configuration overlay",
         { tag: ["@pre-merge-isolated"] },
         async ({ page }) => {
             await visit(page, "dashboard/dashboard-tiger-hide-filters");
@@ -267,7 +275,7 @@ test.describe("Hide Filters", { additionalWindowProperties: { useSafeLocalIdenti
     );
 
     test(
-        "Should render correct date filter readonly mode in configuration overlay",
+        "should preselect readonly mode for a readonly date filter",
         { tag: ["@pre-merge-isolated"] },
         async ({ page }) => {
             await visit(page, "dashboard/dashboard-tiger-readonly-date-filter");
@@ -289,7 +297,7 @@ test.describe("Hide Filters", { additionalWindowProperties: { useSafeLocalIdenti
     );
 
     test(
-        "Use interactive mode as default for date filter mode in configuration overlay",
+        "should default the date filter mode to interactive",
         { tag: ["@pre-merge-isolated"] },
         async ({ page }) => {
             await visit(page, "dashboard/dashboard-tiger");

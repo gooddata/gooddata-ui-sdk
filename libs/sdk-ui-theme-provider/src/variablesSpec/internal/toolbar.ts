@@ -4,9 +4,9 @@ import { type ThemeInternalCssVariable } from "../types.js";
 
 export const internalToolbarThemeVariables: ThemeInternalCssVariable[] = [
     {
-        // Toolbar items are squarer than buttons, so they do not follow --gd-button-borderRadius.
+        // Controls inside the toolbar are squarer than the container and than buttons.
         type: "internal",
-        variableName: "--gd-toolbar-borderRadius",
+        variableName: "--gd-toolbar-control-borderRadius",
         defaultValue: "2px",
     },
 ];

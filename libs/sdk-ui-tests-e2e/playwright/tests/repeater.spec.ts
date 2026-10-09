@@ -15,7 +15,7 @@ test.beforeEach(async ({ page }) => {
 
 test.describe("Repeater", { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } }, () => {
     test(
-        "Should render apply full customize configurations",
+        "should render all custom configurations",
         {
             tag: ["@pre-merge-integrated"],
         },
@@ -69,7 +69,7 @@ test.describe("Repeater", { additionalWindowProperties: { useSafeLocalIdentifier
     );
 
     test(
-        "Should render insightView Repeater",
+        "should render in an insight view",
         {
             tag: ["@pre-merge-integrated"],
         },
@@ -131,7 +131,7 @@ test.describe("Repeater", { additionalWindowProperties: { useSafeLocalIdentifier
     );
 
     test(
-        "Should render Dashboard Repeater",
+        "should render on a dashboard",
         {
             tag: ["@pre-merge-integrated"],
         },
@@ -196,7 +196,7 @@ test.describe("Repeater", { additionalWindowProperties: { useSafeLocalIdentifier
     );
 
     test(
-        "Should render Repeater doesn't have any metric",
+        "should render without metrics",
         {
             tag: ["@pre-merge-integrated"],
         },
@@ -214,7 +214,7 @@ test.describe("Repeater", { additionalWindowProperties: { useSafeLocalIdentifier
     );
 
     test(
-        "Should show error when Repeater has no Column",
+        "should show an error without columns",
         {
             tag: ["@pre-merge-integrated"],
         },

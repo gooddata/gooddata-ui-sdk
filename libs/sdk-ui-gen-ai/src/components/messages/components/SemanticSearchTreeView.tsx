@@ -21,6 +21,7 @@ import {
 } from "@gooddata/sdk-ui-semantic-search/internal";
 
 import { settingsSelector } from "../../../store/chatWindow/chatWindowSelectors.js";
+import { conversationSelector } from "../../../store/messages/messagesSelectors.js";
 import { useConfig } from "../../ConfigContext.js";
 
 type SemanticSearchTreeViewProps = {
@@ -50,6 +51,7 @@ export function SemanticSearchTreeViewImpl({
     const backend = useBackendStrict();
     const { canFullControl, canManage, canAnalyze, linkHandler } = useConfig();
     const settings = useSelector(settingsSelector);
+    const conversation = useSelector(conversationSelector);
 
     const canEdit = canFullControl || canManage || canAnalyze;
     const useHostDashboards = Boolean(settings?.enableShellApplication_dashboards);
@@ -87,6 +89,7 @@ export function SemanticSearchTreeViewImpl({
                         newTab,
                         preventDefault,
                         action: "open",
+                        conversationId: conversation?.localId,
                     });
                 }
                 if (isSemanticSearchRelationship(data)) {
@@ -98,11 +101,12 @@ export function SemanticSearchTreeViewImpl({
                         newTab,
                         preventDefault,
                         action: "open",
+                        conversationId: conversation?.localId,
                     });
                 }
             }
         },
-        [linkHandler, workspace],
+        [linkHandler, workspace, conversation],
     );
 
     if (items.length === 0) {

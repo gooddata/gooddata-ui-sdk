@@ -11,7 +11,7 @@ export default {
 };
 
 export const Coloring = () =>
-    groupedStory(getScenariosGroupByIndexes(0, 5), {
+    groupedStory(getScenariosGroupByIndexes(0, 6), {
         width: 800,
         height: 400,
     })();

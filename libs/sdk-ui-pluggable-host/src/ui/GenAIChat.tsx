@@ -21,7 +21,7 @@ import {
 import {
     GenAIChatDialogConnected,
     type GenAIChatConnectedEvent,
-    type IReportSaved,
+    type IPublisherDocumentSaved,
 } from "@gooddata/sdk-ui-gen-ai/internal";
 import { HEADER_CHAT_BUTTON_ID, useToastMessage } from "@gooddata/sdk-ui-kit";
 
@@ -91,8 +91,8 @@ export interface IGenAIChatProps {
      * Whether the ambient user context is currently loading.
      */
     ambientUserContextLoading?: boolean;
-    /** The latest report of the conversation that the active application saved. */
-    reportSaved: IReportSaved | undefined;
+    /** The latest document of the conversation that the active application saved. */
+    publisherDocumentSaved: IPublisherDocumentSaved | undefined;
     /**
      * Tag identifiers the assistant's object search/autocomplete should be restricted to,
      * reflecting the active hosted application's current view.
@@ -135,7 +135,7 @@ export function GenAIChat({
     replaceUserContext,
     ambientUserContext,
     ambientUserContextLoading,
-    reportSaved,
+    publisherDocumentSaved,
     includeTags,
     excludeTags,
     canManageProject,
@@ -231,7 +231,7 @@ export function GenAIChat({
             agentId={agentId}
             replaceUserContext={replaceUserContext}
             ambientUserContext={ambientUserContext}
-            reportSaved={reportSaved}
+            publisherDocumentSaved={publisherDocumentSaved}
             ambientUserContextLoading={ambientUserContextLoading}
             includeTags={includeTags}
             excludeTags={excludeTags}

@@ -238,6 +238,13 @@ export interface ITigerNegativeAttributeFilter {
 }
 
 /**
+ * How a stored date filter treats empty date values. Stored insights use the lowercase values
+ * the frontend writes; the AFM counterpart is uppercase.
+ * @public
+ */
+export type TigerStoredEmptyValueHandling = "include" | "exclude" | "only";
+
+/**
  * Tiger-specific absolute date filter
  * @public
  */
@@ -247,6 +254,7 @@ export interface ITigerAbsoluteDateFilter {
         from: string;
         to: string;
         localIdentifier?: string;
+        emptyValueHandling?: TigerStoredEmptyValueHandling;
     };
 }
 
@@ -261,6 +269,7 @@ export interface ITigerRelativeDateFilter {
         from: number;
         to: number;
         localIdentifier?: string;
+        emptyValueHandling?: TigerStoredEmptyValueHandling;
     };
 }
 

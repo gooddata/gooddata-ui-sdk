@@ -83,7 +83,7 @@ export const Themed = () =>
                 visualizationUrl: "local:area",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(0, 14, 0),
+        getScenariosGroupByIndexes(0, 15, 0),
     )();
 Themed.parameters = {
     kind: "themed",
@@ -172,7 +172,7 @@ export const Font = () =>
                 visualizationUrl: "local:area",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(0, 14, 1),
+        getScenariosGroupByIndexes(0, 15, 1),
     )();
 Font.parameters = {
     kind: "font",

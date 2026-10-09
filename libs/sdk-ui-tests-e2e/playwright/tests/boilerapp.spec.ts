@@ -10,8 +10,8 @@ test.beforeEach(async ({ page }) => {
     await injectAuthHeader(page, API_TOKEN);
 });
 
-test.describe("Boiler app Chart", {}, () => {
-    test(`check boiler app tiger`, { tag: ["@checklist_boiler_tiger"] }, async ({ page }) => {
+test.describe("Boiler app", {}, () => {
+    test("should render the headline value", { tag: ["@checklist_boiler_tiger"] }, async ({ page }) => {
         await page.goto("/");
 
         const container = page.locator(".insight-view-visualization .headline");

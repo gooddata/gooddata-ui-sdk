@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "ReportPageCommon",
-    "description": "Shared definitions of a report page body, used by report, report template and report page layout",
+    "description": "Shared definitions of a document page body, used by document, document template and document page layout",
     "$defs": {
         "alignment": {
             "$id": "/gaac/reportAlignment",
@@ -132,7 +132,7 @@
             "oneOf": [
                 {
                     "type": "boolean",
-                    "description": "True marks the slot required: the report is not complete until it is filled."
+                    "description": "True marks the slot required: the document is not complete until it is filled."
                 },
                 {
                     "type": "string",
@@ -148,7 +148,7 @@
                         },
                         "required": {
                             "type": "boolean",
-                            "description": "When true, a report is not considered complete until this slot is filled."
+                            "description": "When true, a document is not considered complete until this slot is filled."
                         }
                     }
                 }
@@ -169,7 +169,7 @@
                     "properties": {
                         "text": {
                             "type": "string",
-                            "description": "Markdown with {variable} placeholders. Alongside a prompt this is the materialized generation, stored so the report renders without re-invoking AI."
+                            "description": "Markdown with {variable} placeholders. Alongside a prompt this is the materialized generation, stored so the document renders without re-invoking AI."
                         },
                         "prompt": {
                             "type": "string",
@@ -344,7 +344,7 @@
         "slotId": {
             "$id": "/gaac/reportSlotId",
             "$ref": "/gaac/identifier",
-            "description": "An id for this area, unique within the page. It is what a report fills when it takes this page from a template, so an id written down here survives edits to the layout around it."
+            "description": "An id for this area, unique within the page. It is what a document fills when it takes this page from a template, so an id written down here survives edits to the layout around it."
         },
         "visualizationSlot": {
             "title": "Report Visualization Slot",
@@ -387,7 +387,7 @@
                 },
                 "date": {
                     "$ref": "/gaac/identifier",
-                    "description": "An id of the date dataset the report's period is applied to as an absolute date filter. Omitted leaves the backend date dataset resolution to decide.",
+                    "description": "An id of the date dataset the document's period is applied to as an absolute date filter. Omitted leaves the backend date dataset resolution to decide.",
                     "$semantic": {
                         "type": "reference",
                         "source": "dateDataset.id"
@@ -395,15 +395,15 @@
                 },
                 "ignore_report_period": {
                     "type": "boolean",
-                    "description": "When true, the implicit date filter derived from the report's period is not applied here."
+                    "description": "When true, the implicit date filter derived from the document's period is not applied here."
                 },
                 "filters": {
                     "$ref": "/gaac/dashboardFilters",
-                    "description": "Filters applied on top of the effective page and report filters. A filter targeting the same object replaces the inherited one."
+                    "description": "Filters applied on top of the effective page and document filters. A filter targeting the same object replaces the inherited one."
                 },
                 "ignored_filters": {
                     "type": "array",
-                    "description": "A list of report and page filters ignored here.",
+                    "description": "A list of document and page filters ignored here.",
                     "items": {
                         "type": "string",
                         "description": "An id of the label, attribute, computed attribute, metric or date to be ignored",
@@ -519,7 +519,7 @@
                 },
                 "filters": {
                     "$ref": "/gaac/dashboardFilters",
-                    "description": "Page filters, merged over the report's own. A filter targeting the same object replaces the inherited one; a visualization's own filters apply on top."
+                    "description": "Page filters, merged over the document's own. A filter targeting the same object replaces the inherited one; a visualization's own filters apply on top."
                 }
             },
             "required": ["id", "layout"]

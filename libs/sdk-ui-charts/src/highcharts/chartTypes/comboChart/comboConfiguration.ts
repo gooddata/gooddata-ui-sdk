@@ -68,6 +68,50 @@ export function getComboConfiguration(
                   borderColor: "#00000000",
               },
           };
+
+    const lineOptions = {
+        marker: {
+            symbol: "circle",
+            radius: 4.5,
+            lineColor:
+                theme?.chart?.backgroundColor ??
+                theme?.palette?.complementary?.c0 ??
+                styleVariables.gdColorBackground,
+        },
+        lineWidth: LINE_WIDTH,
+        fillOpacity: 0.3,
+        stickyTracking: false,
+        states: {
+            hover: {
+                lineWidth: LINE_WIDTH + 1,
+            },
+        },
+        dataLabels: {
+            style: {
+                fontWeight: "normal",
+            },
+        },
+    };
+
+    const areaOptions = {
+        marker: {
+            symbol: "circle",
+            radius: 4.5,
+            lineColor:
+                theme?.chart?.backgroundColor ??
+                theme?.palette?.complementary?.c0 ??
+                styleVariables.gdColorBackground,
+        },
+        lineWidth: LINE_WIDTH,
+        fillOpacity: 0.6,
+        stickyTracking: false,
+        states: {
+            hover: {
+                lineWidth: LINE_WIDTH + 1,
+            },
+        },
+    };
+
     return {
         chart: {
             type: getDefaultChartType(config),
@@ -85,45 +129,16 @@ export function getComboConfiguration(
                 borderColor: "#00000000",
             },
             line: {
-                marker: {
-                    symbol: "circle",
-                    radius: 4.5,
-                    lineColor:
-                        theme?.chart?.backgroundColor ??
-                        theme?.palette?.complementary?.c0 ??
-                        styleVariables.gdColorBackground,
-                },
-                lineWidth: LINE_WIDTH,
-                fillOpacity: 0.3,
-                stickyTracking: false,
-                states: {
-                    hover: {
-                        lineWidth: LINE_WIDTH + 1,
-                    },
-                },
-                dataLabels: {
-                    style: {
-                        fontWeight: "normal",
-                    },
-                },
+                ...lineOptions,
+            },
+            spline: {
+                ...lineOptions,
             },
             area: {
-                marker: {
-                    symbol: "circle",
-                    radius: 4.5,
-                    lineColor:
-                        theme?.chart?.backgroundColor ??
-                        theme?.palette?.complementary?.c0 ??
-                        styleVariables.gdColorBackground,
-                },
-                lineWidth: LINE_WIDTH,
-                fillOpacity: 0.6,
-                stickyTracking: false,
-                states: {
-                    hover: {
-                        lineWidth: LINE_WIDTH + 1,
-                    },
-                },
+                ...areaOptions,
+            },
+            areaspline: {
+                ...areaOptions,
             },
             ...series,
         },

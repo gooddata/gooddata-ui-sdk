@@ -14268,7 +14268,9 @@ export { ConversationsAi_PatchConversationApiV1AiWorkspacesWorkspaceIdChatConver
 export { ConversationsAi_PatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch as GenAiApi_PatchConversation }
 
 // @public
-export function ConversationsAi_PatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<void>;
+function ConversationsAi_PatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<void>;
+export { ConversationsAi_PatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch }
+export { ConversationsAi_PatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch as GenAiApi_PatchDashboard }
 
 // @public
 function ConversationsAi_PatchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatch(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiPatchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatchRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<void>;
@@ -14437,12 +14439,14 @@ export { ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConvers
 export { ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatchRequest as GenAiApiPatchConversationRequest }
 
 // @public
-export interface ConversationsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest {
+interface ConversationsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest {
     readonly aiDashboardIdUpdateRequest: AiDashboardIdUpdateRequest;
     readonly conversationId: string;
     readonly dashboardId: string;
     readonly workspaceId: string;
 }
+export { ConversationsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest }
+export { ConversationsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest as GenAiApiPatchDashboardRequest }
 
 // @public
 interface ConversationsAiPatchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatchRequest {
@@ -27158,6 +27162,7 @@ export interface ITigerAbsoluteDateFilter {
         from: string;
         to: string;
         localIdentifier?: string;
+        emptyValueHandling?: TigerStoredEmptyValueHandling;
     };
 }
 
@@ -27801,6 +27806,7 @@ export interface ITigerRelativeDateFilter {
         from: number;
         to: number;
         localIdentifier?: string;
+        emptyValueHandling?: TigerStoredEmptyValueHandling;
     };
 }
 
@@ -45133,6 +45139,9 @@ export const tigerScanModelClientFactory: (axios: AxiosInstance) => ScanModelAct
 
 // @beta
 export const tigerSmartFunctionsClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "forecast" | "forecastResult" | "keyDriverAnalysis" | "keyDriverAnalysisResult" | "anomalyDetection" | "anomalyDetectionResult" | "clustering" | "clusteringResult">;
+
+// @public
+export type TigerStoredEmptyValueHandling = "include" | "exclude" | "only";
 
 // @public (undocumented)
 export const tigerUserManagementClientFactory: (axios: AxiosInstance) => UserManagementApiInterface;

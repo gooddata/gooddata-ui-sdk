@@ -148,7 +148,7 @@ export const DiscardStackingWhenPrimaryMeasuresAreOnLineChartSecondaryIsColumn =
                 visualizationUrl: "local:combo2",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(5, 27, 0),
+        getScenariosGroupByIndexes(5, 28, 0),
     )();
 DiscardStackingWhenPrimaryMeasuresAreOnLineChartSecondaryIsColumn.parameters = {
     kind: "discard stacking when primary measures are on line chart - secondary is column",
@@ -301,7 +301,7 @@ export const DiscardStackingWhenPrimaryMeasuresAreOnLineChartSecondaryIsArea = (
                 visualizationUrl: "local:combo2",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(5, 27, 1),
+        getScenariosGroupByIndexes(5, 28, 1),
     )();
 DiscardStackingWhenPrimaryMeasuresAreOnLineChartSecondaryIsArea.parameters = {
     kind: "discard stacking when primary measures are on line chart - secondary is area",

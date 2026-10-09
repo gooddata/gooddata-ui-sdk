@@ -14,7 +14,7 @@ export default {
 
 export const TwoMeasuresWithViewbyAndDisabledStacking = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(0, 15).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(0, 16).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "two measures with viewBy and disabled stacking",
         );
@@ -41,7 +41,7 @@ TwoMeasuresWithViewbyAndDisabledStacking.parameters = {
 
 export const TwoMeasuresWithViewbyAndEnabledStacking = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(0, 15).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(0, 16).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "two measures with viewBy and enabled stacking",
         );
@@ -68,7 +68,7 @@ TwoMeasuresWithViewbyAndEnabledStacking.parameters = {
 
 export const TwoMeasuresWithViewbyAndDisabledStackMeasures = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(0, 15).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(0, 16).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "two measures with viewBy and disabled stack measures",
         );
@@ -97,7 +97,7 @@ TwoMeasuresWithViewbyAndDisabledStackMeasures.parameters = {
 
 export const TwoMeasuresWithViewbyAndEnabledStackMeasures = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(0, 15).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(0, 16).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "two measures with viewBy and enabled stack measures",
         );
@@ -124,7 +124,7 @@ TwoMeasuresWithViewbyAndEnabledStackMeasures.parameters = {
 
 export const TwoMeasuresWithViewbyAndStackMeasuresToPercent = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(0, 15).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(0, 16).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "two measures with viewBy and stack measures to percent",
         );
@@ -155,7 +155,7 @@ TwoMeasuresWithViewbyAndStackMeasuresToPercent.parameters = {
 
 export const SingleMeasureWithViewbyAndStackbyAndStackToPercent = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(0, 15).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(0, 16).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "single measure with viewBy and stackBy and stack to percent",
         );
@@ -186,7 +186,7 @@ SingleMeasureWithViewbyAndStackbyAndStackToPercent.parameters = {
 
 export const SingleMeasureWithViewbyAndStackbyAndStackToPercentWithLabels = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(0, 15).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(0, 16).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "single measure with viewBy and stackBy and stack to percent with labels",
         );
@@ -217,7 +217,7 @@ SingleMeasureWithViewbyAndStackbyAndStackToPercentWithLabels.parameters = {
 
 export const SingleMeasureWithViewbyAndStackbyAndDisabledStacking = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(0, 15).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(0, 16).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "single measure with viewBy and stackBy and disabled stacking",
         );
@@ -248,7 +248,7 @@ SingleMeasureWithViewbyAndStackbyAndDisabledStacking.parameters = {
 
 export const SingleMeasureWithViewbyAndStackToPercent = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(0, 15).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(0, 16).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "single measure with viewBy and stack to percent",
         );
@@ -275,7 +275,7 @@ SingleMeasureWithViewbyAndStackToPercent.parameters = {
 
 export const UndefinedValuesAndDisabledStacking = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(0, 15).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(0, 16).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "undefined values and disabled stacking",
         );
@@ -302,7 +302,7 @@ UndefinedValuesAndDisabledStacking.parameters = {
 
 export const UndefinedValuesDisabledStackingAndTheContinuousLineEnabled = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(0, 15).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(0, 16).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "undefined values, disabled stacking and the continuous line enabled",
         );

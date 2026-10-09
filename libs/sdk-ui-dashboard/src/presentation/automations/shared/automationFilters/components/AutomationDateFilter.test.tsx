@@ -3,7 +3,12 @@
 import { render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { type DateFilterGranularity, newRelativeDashboardDateFilter } from "@gooddata/sdk-model";
+import {
+    type DateFilterGranularity,
+    type ICatalogDateDataset,
+    idRef,
+    newRelativeDashboardDateFilter,
+} from "@gooddata/sdk-model";
 import type { IDateFilterOptionsByType } from "@gooddata/sdk-ui-filters";
 
 import {
@@ -209,6 +214,46 @@ describe("AutomationDateFilter", () => {
         expect(captured.lastConfig).toMatchObject({
             availableGranularities: tabGranularities,
             dateFilterOptions: activeOptions,
+        });
+    });
+
+    it("narrows granularities of a filter bound to a date dimension to the dimension's granularities", () => {
+        captured.lastConfig = undefined;
+
+        const dataSetRef = idRef("activity", "dataSet");
+        const value = createAutomationsContextValue({
+            catalogDateDatasets: [
+                {
+                    dataSet: { ref: dataSetRef, title: "Activity" },
+                    dateAttributes: [{ granularity: "GDC.time.date" }, { granularity: "GDC.time.month" }],
+                } as unknown as ICatalogDateDataset,
+            ],
+            dateFilterConfig: {
+                availableGranularities: [
+                    "GDC.time.minute",
+                    "GDC.time.hour",
+                    "GDC.time.date",
+                    "GDC.time.month",
+                ],
+                dateFilterOptions: activeOptions,
+                getGranularitiesForTab: () => [],
+                getOptionsForTab: () => undefined,
+            },
+        });
+
+        render(
+            <AutomationsContextProvider value={value}>
+                <AutomationDateFilter
+                    filter={newRelativeDashboardDateFilter("GDC.time.date", -6, 0, dataSetRef)}
+                    onChange={vi.fn()}
+                    onDelete={vi.fn()}
+                />
+            </AutomationsContextProvider>,
+        );
+
+        expect(captured.lastConfig).toMatchObject({
+            availableGranularities: ["GDC.time.date", "GDC.time.month"],
+            customFilterName: "Activity",
         });
     });
 });

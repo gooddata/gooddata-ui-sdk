@@ -42,3 +42,4 @@ export type AxisLabelsFormatterCallbackFunction = HighchartsModules.AxisLabelsFo
 export type PlotTreemapDataLabelsOptions = HighchartsModules.PlotTreemapDataLabelsOptions;
 export type PlotTreemapOptions = HighchartsModules.PlotTreemapOptions;
 export type SeriesOptionsType = HighchartsModules.SeriesOptionsType;
+export type SeriesType = SeriesOptionsType["type"];

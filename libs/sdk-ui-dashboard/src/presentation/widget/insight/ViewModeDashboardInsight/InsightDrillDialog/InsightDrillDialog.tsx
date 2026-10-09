@@ -50,7 +50,6 @@ import { InsightWidgetWarningPartialResult } from "../../../widget/warningPartia
 import { DrillDialog } from "./DrillDialog.js";
 import { DrillDialogInsight } from "./DrillDialogInsight.js";
 import { getTitleWithBreadcrumbs } from "./getTitleWithBreadcrumbs.js";
-import { useDrillDialogTooltipsOverride } from "./useDrillDialogTooltipsOverride.js";
 
 // Header z-index start at  6000 so we need force all overlays z-indexes start at 6000 to be above header
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
@@ -121,8 +120,6 @@ export function InsightDrillDialog(props: IInsightDrillDialogProps): ReactElemen
     } = props;
 
     const isMobileDevice = useMediaQuery("mobileDevice");
-
-    useDrillDialogTooltipsOverride();
 
     const [isLoading, setIsLoading] = useState(false);
 

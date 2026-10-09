@@ -12,11 +12,11 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe(
-    "Scatter Plot - Segmentation",
+    "Scatter plot segmentation on dashboard",
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test(
-            "should grouped points by segmentation",
+            "should group points by segment",
             {
                 tag: ["@pre-merge-isolated"],
             },

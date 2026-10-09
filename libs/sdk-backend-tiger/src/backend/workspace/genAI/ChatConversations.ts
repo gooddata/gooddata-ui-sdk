@@ -18,6 +18,7 @@ import {
     GenAiApi_GetConversationResponses,
     GenAiApi_GetConversations,
     GenAiApi_PatchConversation,
+    GenAiApi_PatchDashboard,
     GenAiApi_PatchReport,
     GenAiApi_PatchVisualization,
     GenAiApi_PostConversationFeedback,
@@ -39,7 +40,7 @@ import {
     type IChatConversationThreadQuery,
     type IChatConversations,
 } from "@gooddata/sdk-backend-spi";
-import { declarativeDashboardToYaml, reportDefinitionToYaml } from "@gooddata/sdk-code-convertors";
+import { declarativeDashboardToYaml, publisherDocumentDefinitionToYaml } from "@gooddata/sdk-code-convertors";
 import {
     type GenAIChatEffort,
     type GenAIChatInteractionUserFeedback,
@@ -49,10 +50,10 @@ import {
     type IFilterContext,
     type IFilterContextDefinition,
     type IGenAIDashboardContext,
-    type IGenAIReportContext,
+    type IGenAIPublisherDocumentContext,
     type IGenAIUserContext,
     type IGenAIWidgetDescriptor,
-    type IReportDefinition,
+    type IPublisherDocumentDefinition,
     type ITempFilterContext,
     isIdentifierRef,
     isTempFilterContext,
@@ -177,7 +178,7 @@ export class ConversationItemsQuery implements IChatConversationItemsQuery {
     constructor(
         private readonly authCall: TigerAuthenticatedCallGuard,
         private readonly workspaceId: string,
-        private readonly isPreview: boolean | undefined = undefined,
+        private readonly isPreview?: boolean | undefined,
     ) {}
 
     withSize(size: number): IChatConversationItemsQuery {
@@ -327,9 +328,28 @@ export class ConversationThread implements IChatConversationThread {
     }
 
     /**
-     * Records the saved report that a report drafted in the conversation became.
+     * Records the saved dashboard that a dashboard drafted in the conversation became.
      */
-    async resaveReport(reportRef: string, savedReportId: string): Promise<void> {
+    async resaveDashboard(dashboardId: string, newDashboardId: string): Promise<void> {
+        const conversationId = this.conversationId;
+        if (!conversationId) {
+            throw new Error("Conversation ID is not set");
+        }
+
+        await this.authCall((client) => {
+            return GenAiApi_PatchDashboard(client.axios, client.basePath, {
+                workspaceId: this.workspaceId,
+                conversationId,
+                dashboardId,
+                aiDashboardIdUpdateRequest: { id: newDashboardId },
+            });
+        });
+    }
+
+    /**
+     * Records the saved document that a document drafted in the conversation became.
+     */
+    async resavePublisherDocument(documentRef: string, savedDocumentId: string): Promise<void> {
         const conversationId = this.conversationId;
         if (!conversationId) {
             throw new Error("Conversation ID is not set");
@@ -339,8 +359,8 @@ export class ConversationThread implements IChatConversationThread {
             return GenAiApi_PatchReport(client.axios, client.basePath, {
                 workspaceId: this.workspaceId,
                 conversationId,
-                reportRef,
-                aiReportIdUpdateRequest: { id: savedReportId },
+                reportRef: documentRef,
+                aiReportIdUpdateRequest: { id: savedDocumentId },
             });
         });
     }
@@ -619,7 +639,9 @@ function convertUserContext(userContext: IGenAIUserContext | undefined): AiSendM
         ...(userContext.view?.dashboard
             ? { dashboard: convertDashboardView(userContext.view.dashboard) }
             : {}),
-        ...(userContext.view?.report ? { report: convertReportView(userContext.view.report) } : {}),
+        ...(userContext.view?.publisherDocument
+            ? { report: convertPublisherDocumentView(userContext.view.publisherDocument) }
+            : {}),
     };
 
     return {
@@ -629,18 +651,25 @@ function convertUserContext(userContext: IGenAIUserContext | undefined): AiSendM
     } as AiSendMessageRequest["userContext"];
 }
 
-function convertReportView({ ref, title, definition, draftRef }: IGenAIReportContext): AiUserContextReport {
+function convertPublisherDocumentView({
+    ref,
+    title,
+    definition,
+    draftRef,
+}: IGenAIPublisherDocumentContext): AiUserContextReport {
     return {
         id: ref ? objRefToString(ref) : null,
         ...(title ? { title } : {}),
         ...(draftRef ? { draftRef } : {}),
-        ...(definition ? convertReportDefinition({ ...definition, ref }) : {}),
+        ...(definition ? convertPublisherDocumentDefinition({ ...definition, ref }) : {}),
     };
 }
 
-function convertReportDefinition(definition: IReportDefinition): Pick<AiUserContextReport, "definition"> {
+function convertPublisherDocumentDefinition(
+    definition: IPublisherDocumentDefinition,
+): Pick<AiUserContextReport, "definition"> {
     try {
-        return { definition: reportDefinitionToYaml(definition).json };
+        return { definition: publisherDocumentDefinitionToYaml(definition).json };
     } catch (error) {
         console.warn("Report cannot be written as code, sending the AI assistant only its id: ", error);
         return {};

@@ -16,6 +16,7 @@ describe("ScatterPlotConfigurationPanel", () => {
     function createComponent(
         props: IConfigurationPanelContentProps = {
             locale: DefaultLocale,
+            pushData: () => {},
         },
     ) {
         return render(<ScatterPlotConfigurationPanel {...props} />);
@@ -53,6 +54,7 @@ describe("ScatterPlotConfigurationPanel", () => {
             isLoading: false,
             locale: DefaultLocale,
             type: VisualizationTypes.SCATTER,
+            pushData: () => {},
         };
 
         it("should render configuration panel with enabled name sections", async () => {

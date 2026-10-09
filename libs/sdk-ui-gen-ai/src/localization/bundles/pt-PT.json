@@ -4,6 +4,7 @@
     "gd.gen-ai.global-error.button-details": "Consulte a resposta de erro bruta para obter detalhes",
     "gd.gen-ai.global-error.sync-in-progress": "Ainda a configurar — tente novamente em breve.",
     "gd.gen-ai.global-error.sync-failed": "A sincronização falhou. Tente novamente mais tarde.",
+    "gd.gen-ai.global-error.service-unavailable": "O serviço de IA está temporariamente indisponível. Tente novamente mais tarde.",
     "gd.gen-ai.global-error.traceId": "ID de rastreio do erro",
     "gd.gen-ai.global-error.show-more": "Mostrar mais",
     "gd.gen-ai.global-error.show-less": "Mostrar menos",

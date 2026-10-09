@@ -8,15 +8,15 @@ import {
     GenAiApi_PostMessages,
     GenAiApi_SwitchAgent,
 } from "@gooddata/api-client-tiger/endpoints/genAI";
-import { reportDefinitionToYaml } from "@gooddata/sdk-code-convertors";
+import { publisherDocumentDefinitionToYaml } from "@gooddata/sdk-code-convertors";
 import {
     type IDashboardDefinition,
     type IFilterContext,
     type IFilterContextDefinition,
     type IGenAIUserContext,
-    type IReportDefinition,
+    type IPublisherDocumentDefinition,
     type ITempFilterContext,
-    type ReportSlot,
+    type PublisherSlot,
     idRef,
     newRelativeDashboardDateFilter,
 } from "@gooddata/sdk-model";
@@ -646,8 +646,8 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
         expect((definition.tabs?.[0].filterContext as any)?.ref).toBeUndefined();
     });
 
-    describe("report view", () => {
-        const report: IReportDefinition = {
+    describe("document view", () => {
+        const publisherDocument: IPublisherDocumentDefinition = {
             type: "report",
             title: "Q1",
             periodStart: "2026-01-01",
@@ -683,15 +683,24 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
             return vi.mocked(GenAiApi_PostMessages).mock.calls[0][2].aiSendMessageRequest.userContext;
         }
 
-        it("should send the report as its AaC document, identified by the report ref", async () => {
+        it("should send the document as AaC, identified by its ref", async () => {
             const userContext = await sentUserContext({
-                view: { report: { ref: idRef("q1", "report"), title: "Q1", definition: report } },
+                view: {
+                    publisherDocument: {
+                        ref: idRef("q1", "report"),
+                        title: "Q1",
+                        definition: publisherDocument,
+                    },
+                },
             });
 
             expect(userContext?.view?.report).toEqual({
                 id: "q1",
                 title: "Q1",
-                definition: reportDefinitionToYaml({ ...report, ref: idRef("q1", "report") }).json,
+                definition: publisherDocumentDefinitionToYaml({
+                    ...publisherDocument,
+                    ref: idRef("q1", "report"),
+                }).json,
             });
             expect(userContext?.view?.report?.definition).toMatchObject({
                 id: "q1",
@@ -701,15 +710,15 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
             });
         });
 
-        it("should send a report that is not saved yet with no id, and still its AaC document", async () => {
+        it("should send a document that is not saved yet with no id, and still its AaC document", async () => {
             const userContext = await sentUserContext({
-                view: { report: { title: "Q1", definition: report } },
+                view: { publisherDocument: { title: "Q1", definition: publisherDocument } },
             });
 
             expect(userContext?.view?.report).toEqual({
                 id: null,
                 title: "Q1",
-                definition: reportDefinitionToYaml(report).json,
+                definition: publisherDocumentDefinitionToYaml(publisherDocument).json,
             });
             expect(userContext?.view?.report?.definition).toMatchObject({
                 type: "report",
@@ -718,19 +727,19 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
             });
         });
 
-        it("should send the report without its definition when it cannot be written as code", async () => {
-            const unsupportedSlot = { type: "unknown", localIdentifier: "h" } as unknown as ReportSlot;
-            const [page] = report.content.pages;
+        it("should send the document without its definition when it cannot be written as code", async () => {
+            const unsupportedSlot = { type: "unknown", localIdentifier: "h" } as unknown as PublisherSlot;
+            const [page] = publisherDocument.content.pages;
             const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
             try {
                 const userContext = await sentUserContext({
                     view: {
-                        report: {
+                        publisherDocument: {
                             ref: idRef("q1", "report"),
                             definition: {
-                                ...report,
+                                ...publisherDocument,
                                 content: {
-                                    ...report.content,
+                                    ...publisherDocument.content,
                                     pages: [{ ...page, slots: [unsupportedSlot] }],
                                 },
                             },
@@ -745,25 +754,27 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
             }
         });
 
-        it("should send the conversation draft an unsaved report is shown from", async () => {
+        it("should send the conversation draft an unsaved document is shown from", async () => {
             const userContext = await sentUserContext({
-                view: { report: { title: "Draft", draftRef: "report_1" } },
+                view: { publisherDocument: { title: "Draft", draftRef: "report_1" } },
             });
 
             expect(userContext?.view?.report).toEqual({ id: null, title: "Draft", draftRef: "report_1" });
         });
 
-        it("should send only the id for a report without a definition", async () => {
-            const userContext = await sentUserContext({ view: { report: { ref: idRef("q1", "report") } } });
+        it("should send only the id for a document without a definition", async () => {
+            const userContext = await sentUserContext({
+                view: { publisherDocument: { ref: idRef("q1", "report") } },
+            });
 
             expect(userContext?.view).toEqual({ report: { id: "q1" } });
         });
 
-        it("should send a dashboard and a report side by side", async () => {
+        it("should send a dashboard and a document side by side", async () => {
             const userContext = await sentUserContext({
                 view: {
                     dashboard: { ref: idRef("dashboard-1", "analyticalDashboard"), widgets: [] },
-                    report: { ref: idRef("q1", "report") },
+                    publisherDocument: { ref: idRef("q1", "report") },
                 },
             });
 
@@ -773,7 +784,7 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
             });
         });
 
-        it("should send no view when it holds neither a dashboard nor a report", async () => {
+        it("should send no view when it holds neither a dashboard nor a document", async () => {
             const userContext = await sentUserContext({ view: {} });
 
             expect(userContext).not.toHaveProperty("view");

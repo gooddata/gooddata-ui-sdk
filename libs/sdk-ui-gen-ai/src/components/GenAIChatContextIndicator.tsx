@@ -57,7 +57,7 @@ type GenAIChatContextIndicatorOwnProps = {
 /**
  * Shows what ambient context the assistant is answering about — the open dashboard and its live
  * filters (e.g. "Answering about: Revenue Dashboard · Region: Europe · Q1 2026"), or the open
- * report. Renders nothing when no ambient dashboard or report context is present. Re-renders whenever
+ * document. Renders nothing when no ambient dashboard or document context is present. Re-renders whenever
  * the host re-syncs the context, so filter changes on the dashboard are reflected immediately.
  *
  * @internal
@@ -213,12 +213,12 @@ export function GenAIChatContextIndicator({ onUpdate }: GenAIChatContextIndicato
                             />
                         )}
                     />
-                ) : selectedContext?.report ? (
+                ) : selectedContext?.publisherDocument ? (
                     <UiChip
                         isActionable
                         isExpandable={false}
-                        {...getIconByObject(selectedContext.report)}
-                        label={selectedContext.report.title || emptyReferenceLabel}
+                        {...getIconByObject(selectedContext.publisherDocument)}
+                        label={selectedContext.publisherDocument.title || emptyReferenceLabel}
                         iconAction={selectedContext.activated ? "visible" : "invisible"}
                         actionIconTooltip={ambientToggleLabel}
                         tooltip={intl.formatMessage(msgs.context)}
@@ -226,7 +226,7 @@ export function GenAIChatContextIndicator({ onUpdate }: GenAIChatContextIndicato
                         onClick={onAmbientToggleHandler()}
                         onAction={onAmbientToggleHandler()}
                         accessibilityConfig={{
-                            iconBeforeAriaLabel: getTypeLabel(selectedContext.report.type, intl),
+                            iconBeforeAriaLabel: getTypeLabel(selectedContext.publisherDocument.type, intl),
                             actionAriaLabel: ambientToggleLabel,
                         }}
                     />

@@ -110,6 +110,9 @@
     --gd-modal-title-color: var(--gd-palette-complementary-9, #000);
     --gd-modal-title-lineColor: var(--gd-palette-complementary-3, #dde4eb);
 
+    // Toolbar
+    --gd-toolbar-borderRadius: 4px;
+
     // Chart
     --gd-chart-axis-color: var(--gd-palette-complementary-4-from-theme, #ccd6eb);
     --gd-chart-axis-labelColor: var(--gd-palette-complementary-7, #6d7680);
@@ -344,6 +347,6 @@
     --gd-table-multi-line-line-height-large: 23px;
     --gd-table-dropdown-item-height: 28px;
     --gd-table-title-font-size: 24px;
-    --gd-toolbar-borderRadius: 2px;
+    --gd-toolbar-control-borderRadius: 2px;
     --gd-tooltip-maxWidth: 300px;
 }

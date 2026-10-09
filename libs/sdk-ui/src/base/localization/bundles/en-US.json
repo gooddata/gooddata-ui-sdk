@@ -1531,9 +1531,13 @@
         "text": "Preview: {range}",
         "crowdinContext": "Shown below the period range picker. The {range} placeholder is the selected period range resolved to exact days, e.g. '3/1/2026 – 5/31/2026'."
     },
-    "filters.staticPeriod.weekLabel": {
-        "text": "Week {week}/{year}",
-        "crowdinContext": "Label for a single week on the date filter button, e.g. 'Week 15/2026'. The {week} placeholder is the week number within {year}, not zero-padded (e.g. 'Week 7/2026'); a range of weeks renders this twice, as 'Week 15/2026 – Week 17/2026'."
+    "filters.staticPeriod.previousYears": {
+        "text": "Previous {count} years",
+        "crowdinContext": "Hidden but read by a screen reader as the label of the arrow button that shows the previous page of years in the period range picker's year grid. {count} is the number of years on one page, currently 15. Do not translate the {count} placeholder."
+    },
+    "filters.staticPeriod.nextYears": {
+        "text": "Next {count} years",
+        "crowdinContext": "Hidden but read by a screen reader as the label of the arrow button that shows the next page of years in the period range picker's year grid. {count} is the number of years on one page, currently 15. Do not translate the {count} placeholder."
     },
     "filters.staticPeriod.weekList.searchPlaceholder": {
         "text": "Jump to date, e.g. {example}",

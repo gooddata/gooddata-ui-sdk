@@ -12,8 +12,11 @@ import { UiButton, UiIcon } from "@gooddata/sdk-ui-kit";
 
 import type { IChatConversationLocalItem, IChatConversationMultipartLocalPart } from "../../../model.js";
 import { settingsSelector } from "../../../store/chatWindow/chatWindowSelectors.js";
+import { conversationSelector } from "../../../store/messages/messagesSelectors.js";
 import { getDashboardHref } from "../../../utils.js";
 import { useConfig } from "../../ConfigContext.js";
+
+import { useDashboardSaveCheck } from "./useSaveCheck.js";
 
 export type ConversationDashboardContentProps = {
     message: IChatConversationLocalItem;
@@ -25,12 +28,15 @@ export type ConversationDashboardContentProps = {
 };
 
 export function ConversationDashboardContent(props: ConversationDashboardContentProps) {
-    const { className, dashboard, insights, saved, message } = props;
+    const { className, dashboard, insights, message, part } = props;
     const intl = useIntl();
     const config = useConfig();
 
     const workspaceId = useWorkspaceStrict();
     const useHostedDashboards = Boolean(useSelector(settingsSelector)?.enableShellApplication_dashboards);
+    const conversation = useSelector(conversationSelector);
+    const { dashboardCheckLoading, dashboardSaved } = useDashboardSaveCheck(part, dashboard, true);
+    const isDashboardSaved = dashboardSaved || part.saved;
 
     const handleOpenDashboard = useMemo(() => {
         if (!dashboard) {
@@ -38,7 +44,8 @@ export function ConversationDashboardContent(props: ConversationDashboardContent
         }
 
         return (e: MouseEvent | KeyboardEvent) => {
-            const dashboardStatus = saved ? "saved" : "draft";
+            //NOTE: Dashboard click here is always in draft mode
+            const dashboardStatus = "draft";
             if (config.allowNativeLinks) {
                 window.location.href = getDashboardHref(
                     workspaceId,
@@ -63,10 +70,11 @@ export function ConversationDashboardContent(props: ConversationDashboardContent
                     insights: insights ?? [],
                     dashboardStatus,
                     action: "open",
+                    conversationId: conversation?.localId,
                 });
             }
         };
-    }, [dashboard, insights, config, workspaceId, useHostedDashboards, saved]);
+    }, [dashboard, insights, config, workspaceId, useHostedDashboards, conversation]);
 
     const classNames = cx(
         "gd-gen-ai-chat__conversation__item__content",
@@ -103,9 +111,15 @@ export function ConversationDashboardContent(props: ConversationDashboardContent
                 </div>
                 <div className="gd-gen-ai-chat__conversation__item__content-dashboard-item-buttons">
                     <UiButton
-                        label={intl.formatMessage({ id: "gd.gen-ai.dashboard.open-dashboard" })}
+                        label={
+                            isDashboardSaved
+                                ? intl.formatMessage({ id: "gd.gen-ai.dashboard.edit-dashboard" })
+                                : intl.formatMessage({ id: "gd.gen-ai.dashboard.open-dashboard" })
+                        }
                         variant="secondary"
                         onClick={handleOpenDashboard}
+                        isLoading={dashboardCheckLoading}
+                        isDisabled={dashboardCheckLoading}
                     />
                 </div>
             </div>

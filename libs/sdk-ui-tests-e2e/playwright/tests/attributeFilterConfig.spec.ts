@@ -19,9 +19,9 @@ test.describe(
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         //Cover ticket: RAIL-4671
-        test.describe("Config attribute filter", {}, () => {
+        test.describe("configuration", {}, () => {
             test(
-                "Should reset display form value dropdown after cancel attribute panel",
+                "should reset the display form dropdown after cancelling the panel",
                 { tag: ["@pre-merge-integrated"] },
                 async ({ page }) => {
                     await visit(page, "dashboard/stage-name");

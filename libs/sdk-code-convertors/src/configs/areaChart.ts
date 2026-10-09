@@ -86,6 +86,7 @@ export type AreaChartConfigProperties = {
     disableKeyDriveAnalysisOn: Record<string, boolean>;
     customTooltip: ICustomTooltip;
     lineStyleMapping: Array<LineStyleMapping>;
+    lineShape: "linear" | "spline" | "stepped";
 };
 
 /** @internal */
@@ -141,6 +142,7 @@ const DEFAULTS: ConfigDefaults<AreaChartConfigProperties> = {
     disableKeyDriveAnalysisOn: {},
     customTooltip: DEFAULT_CUSTOM_TOOLTIP,
     lineStyleMapping: [],
+    lineShape: "linear",
 };
 
 /** @internal */
@@ -257,6 +259,8 @@ export function areaChartLoad(props: VisualisationConfig<AreaChartConfigProperti
                 return [["custom_tooltip", loadCustomTooltip(value)]];
             case "lineStyleMapping":
                 return [["line_style_mapping", loadLineStyleMapping(value)]];
+            case "lineShape":
+                return [["line_shape", getValueOrDefault(value, DEFAULTS.lineShape)]];
             default:
                 key satisfies never; // Check that no key is forgotten in the cases above
                 return [];
@@ -341,6 +345,7 @@ export function areaChartSave(
         lineStyleMapping: saveLineStyleMapping(
             config["line_style_mapping"] as Record<string, { style?: string; width?: number }> | undefined,
         ),
+        lineShape: getValueOrDefault(config["line_shape"], DEFAULTS.lineShape),
     });
 }
 

@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 export interface IChartConfigurationSnippetBase {
     type: "header" | "item";
@@ -159,32 +159,6 @@ export const SNIPPETS: IChartConfigurationSnippet[] = [
                         lineWidth: 2,
                         symbol: "square",
                     },
-                },
-            },
-        },
-        type: "item",
-    },
-    {
-        name: "Smooth line",
-        id: "smoothLine",
-        description:
-            "A smooth line is a type of line that curves between data points, rather than using sharp, angular segments",
-        value: {
-            chart: {
-                type: "spline",
-            },
-        },
-        type: "item",
-    },
-    {
-        name: "Stepped line",
-        id: "steppedLine",
-        description:
-            "A stepped line connects data points using horizontal and vertical segments, rather than a direct diagonal line. It is useful for showing changes that occur in discrete steps.",
-        value: {
-            plotOptions: {
-                line: {
-                    step: "left",
                 },
             },
         },

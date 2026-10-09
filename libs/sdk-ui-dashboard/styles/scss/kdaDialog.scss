@@ -1038,9 +1038,3 @@
         }
     }
 }
-
-//kda dialog is over drill modal
-/* stylelint-disable declaration-no-important */
-body.gd-kda-dialog-opened .highcharts-tooltip-container {
-    z-index: 6111 !important;
-}

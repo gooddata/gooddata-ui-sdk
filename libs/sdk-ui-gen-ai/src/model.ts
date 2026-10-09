@@ -133,6 +133,7 @@ export type IChatConversationMultipartLocalPart = IChatConversationMultipartPart
     };
     objects?: TextContentObject[];
     suggestions?: IChatSuggestions;
+    saved?: boolean | string | null;
 };
 
 /**

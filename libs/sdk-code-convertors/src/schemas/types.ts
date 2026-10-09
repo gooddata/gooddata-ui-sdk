@@ -49,11 +49,11 @@ export type AacPlugin = Plugin;
 /** @public */
 export type AacQuery = Query;
 /** @alpha */
-export type AacReport = Report;
+export type AacPublisherDocument = Report;
 /** @alpha */
-export type AacReportPageLayout = ReportPageLayout;
+export type AacPublisherPageLayout = ReportPageLayout;
 /** @alpha */
-export type AacReportTemplate = ReportTemplate;
+export type AacPublisherDocumentTemplate = ReportTemplate;
 /** @public */
 export type AacSection = Section;
 /** @public */

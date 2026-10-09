@@ -16,7 +16,7 @@ test.describe(
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test(
-            "can discard change an existing dashboard",
+            "should discard changes to an existing dashboard",
             { tag: ["@pre-merge-isolated"] },
             async ({ page }) => {
                 // Navigate and enter edit mode (mirrors beforeEach)
@@ -46,7 +46,7 @@ test.describe(
         );
 
         test(
-            "cancel dashboard by clicking on close button",
+            "should stay in edit mode when the discard dialog is closed",
             { tag: ["@pre-merge-isolated"] },
             async ({ page }) => {
                 // Navigate and enter edit mode (mirrors beforeEach)

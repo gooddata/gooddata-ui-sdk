@@ -12,11 +12,11 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe(
-    "Dashboard Shorten Metric Name",
+    "Shorten metric name on dashboard",
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test(
-            "Table should shorten metric name",
+            "should shorten the metric name in a table",
             {
                 tag: ["@pre-merge-integrated"],
             },
@@ -36,7 +36,7 @@ test.describe(
         );
 
         test(
-            "Column chart should shorten metric name in legend",
+            "should shorten the metric name in a column chart legend",
             {
                 tag: ["@pre-merge-integrated"],
             },

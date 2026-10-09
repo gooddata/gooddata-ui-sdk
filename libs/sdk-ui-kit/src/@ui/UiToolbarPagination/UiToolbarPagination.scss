@@ -1,0 +1,63 @@
+// (C) 2026 GoodData Corporation
+
+@use "../UiToolbar/toolbarItem";
+
+.gd-ui-kit-toolbar-pagination {
+    // Fits page numbers up to three digits.
+    $field-width: 32px;
+
+    display: inline-flex;
+    align-items: center;
+    gap: toolbarItem.$toolbar-item-gap;
+    box-sizing: border-box;
+    height: toolbarItem.$toolbar-item-size;
+    padding: 0 toolbarItem.$toolbar-item-padding;
+    color: var(--gd-palette-complementary-7);
+    font-family: var(--gd-font-family);
+    font-size: 14px;
+    white-space: nowrap;
+
+    &--isDisabled {
+        color: var(--gd-palette-complementary-5);
+    }
+
+    &__readout,
+    &__total {
+        line-height: normal;
+    }
+
+    &__field {
+        box-sizing: border-box;
+        width: $field-width;
+        height: toolbarItem.$toolbar-item-size;
+        margin: 0;
+        padding: 0 toolbarItem.$toolbar-item-padding;
+        border: 0;
+        border-radius: var(--gd-toolbar-control-borderRadius);
+        outline: none;
+        background-color: transparent;
+        color: inherit;
+        font: inherit;
+        text-align: center;
+        cursor: text;
+        transition: var(--gd-transition-all);
+
+        @include toolbarItem.toolbar-field-border(var(--gd-palette-complementary-4));
+
+        &:not([aria-disabled="true"]) {
+            &:hover {
+                @include toolbarItem.toolbar-field-border(var(--gd-palette-complementary-5));
+            }
+
+            &:focus-visible {
+                box-shadow: inset 0 0 0 2px var(--gd-palette-primary-base);
+            }
+        }
+
+        &[aria-disabled="true"] {
+            cursor: default;
+
+            @include toolbarItem.toolbar-focus-ring;
+        }
+    }
+}

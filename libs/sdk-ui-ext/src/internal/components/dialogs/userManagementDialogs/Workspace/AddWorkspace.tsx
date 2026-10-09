@@ -107,6 +107,7 @@ export function AddWorkspace({
             />
             <GranularPermissions
                 workspace={addedWorkspaces[0]}
+                savedPermissions={editWorkspace?.permissions}
                 onChange={onChange}
                 showRedundancyWarningMessage={showRedundancyWarningMessage}
                 areMetricPermissionsEnabled={areMetricPermissionsEnabled}

@@ -12,7 +12,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe("RichText", { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } }, () => {
-    test.describe("Isolated", {}, () => {
+    test.describe("isolated", {}, () => {
         test.beforeEach(async ({ page }) => {
             await visit(page, "dashboard/rich-text");
         });

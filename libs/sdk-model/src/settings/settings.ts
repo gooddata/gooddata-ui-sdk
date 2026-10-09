@@ -1189,4 +1189,13 @@ export interface IFeatureFlags {
      * Disabled by default.
      */
     enableEmbeddingWriteCommands?: boolean;
+
+    /**
+     * Enable the localization overview in organization settings: settings split into subpages under an
+     * expandable Settings group in the navigation, and the per-language usage overview.
+     *
+     * @remarks
+     * Disabled by default.
+     */
+    enableLocalizationOverview?: boolean;
 }

@@ -11,7 +11,7 @@ export default {
 };
 
 export const $180x154ForcePositionTopMax1RowGradientLegendMinimized = () =>
-    groupedStory(getScenariosGroupByIndexes(0, 6), {
+    groupedStory(getScenariosGroupByIndexes(0, 7), {
         width: 180,
         height: 154,
     })();
@@ -23,7 +23,7 @@ $180x154ForcePositionTopMax1RowGradientLegendMinimized.parameters = {
 } satisfies IStoryParameters;
 
 export const $260x154ForcePositionTopMax1RowGradientLegendMinimized = () =>
-    groupedStory(getScenariosGroupByIndexes(0, 7), {
+    groupedStory(getScenariosGroupByIndexes(0, 8), {
         width: 260,
         height: 154,
     })();
@@ -35,7 +35,7 @@ $260x154ForcePositionTopMax1RowGradientLegendMinimized.parameters = {
 } satisfies IStoryParameters;
 
 export const $180x300ForcePositionTopMax2RowsGradientLegendMinimized = () =>
-    groupedStory(getScenariosGroupByIndexes(0, 8), {
+    groupedStory(getScenariosGroupByIndexes(0, 9), {
         width: 180,
         height: 300,
     })();
@@ -47,7 +47,7 @@ $180x300ForcePositionTopMax2RowsGradientLegendMinimized.parameters = {
 } satisfies IStoryParameters;
 
 export const $440x154ForcePositionTopMax1RowGradientLegendNormal = () =>
-    groupedStory(getScenariosGroupByIndexes(0, 9), {
+    groupedStory(getScenariosGroupByIndexes(0, 10), {
         width: 440,
         height: 154,
     })();
@@ -59,7 +59,7 @@ $440x154ForcePositionTopMax1RowGradientLegendNormal.parameters = {
 } satisfies IStoryParameters;
 
 export const $610x154ForcePositionRight = () =>
-    groupedStory(getScenariosGroupByIndexes(0, 10), {
+    groupedStory(getScenariosGroupByIndexes(0, 11), {
         width: 610,
         height: 154,
     })();
@@ -71,7 +71,7 @@ $610x154ForcePositionRight.parameters = {
 } satisfies IStoryParameters;
 
 export const $610x194PositionRespectsConfigurationMax1RowForTopBottom = () =>
-    groupedStory(getScenariosGroupByIndexes(0, 11), {
+    groupedStory(getScenariosGroupByIndexes(0, 12), {
         width: 610,
         height: 194,
     })();
@@ -83,7 +83,7 @@ $610x194PositionRespectsConfigurationMax1RowForTopBottom.parameters = {
 } satisfies IStoryParameters;
 
 export const $610x274PositionRespectsConfigurationMax2RowForTopBottom = () =>
-    groupedStory(getScenariosGroupByIndexes(0, 12), {
+    groupedStory(getScenariosGroupByIndexes(0, 13), {
         width: 610,
         height: 274,
     })();
@@ -95,7 +95,7 @@ $610x274PositionRespectsConfigurationMax2RowForTopBottom.parameters = {
 } satisfies IStoryParameters;
 
 export const $650x354PositionRespectsConfigurationMapLegendFitsInto1RowForTopBottom = () =>
-    groupedStory(getScenariosGroupByIndexes(0, 13), {
+    groupedStory(getScenariosGroupByIndexes(0, 14), {
         width: 650,
         height: 354,
     })();

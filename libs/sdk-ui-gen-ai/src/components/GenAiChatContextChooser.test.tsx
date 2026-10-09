@@ -2,29 +2,32 @@
 
 import { render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type IGenAIUserContext } from "@gooddata/sdk-model";
 
 import { type RootState } from "../store/types.js";
 
-const state = {
-    chatWindow: {
-        settings: { enableAiContextSetup: true },
-        context: {
-            active: undefined,
-            ambient: {
-                view: {
-                    dashboard: {
-                        ref: { identifier: "dashboard-1", type: "analyticalDashboard" },
-                        title: "Revenue Dashboard",
-                        widgets: [],
+const buildState = (enableAiContextSetup: boolean) =>
+    ({
+        chatWindow: {
+            settings: { enableAiContextSetup },
+            context: {
+                active: undefined,
+                ambient: {
+                    view: {
+                        dashboard: {
+                            ref: { identifier: "dashboard-1", type: "analyticalDashboard" },
+                            title: "Revenue Dashboard",
+                            widgets: [],
+                        },
                     },
-                },
-            } as unknown as IGenAIUserContext,
+                } as unknown as IGenAIUserContext,
+            },
         },
-    },
-} as unknown as RootState;
+    }) as unknown as RootState;
+
+let state = buildState(true);
 
 // `isolate: false` shares one module graph per worker, so the modules mocked below may already have
 // been evaluated — against their real dependencies — by a test file that ran earlier in the same
@@ -65,6 +68,10 @@ import { GenAiChatContextChooser } from "./GenAiChatContextChooser.js";
 const messages = Object.fromEntries(Object.entries(en_US).map(([id, message]) => [id, message.text]));
 
 describe("GenAiChatContextChooser", () => {
+    beforeEach(() => {
+        state = buildState(true);
+    });
+
     it("advertises the popup as a dialog on the trigger button", () => {
         render(
             <IntlProvider locale="en" messages={messages}>
@@ -76,5 +83,17 @@ describe("GenAiChatContextChooser", () => {
             "aria-haspopup",
             "dialog",
         );
+    });
+
+    it("renders nothing when AI context setup is disabled", () => {
+        state = buildState(false);
+
+        render(
+            <IntlProvider locale="en" messages={messages}>
+                <GenAiChatContextChooser />
+            </IntlProvider>,
+        );
+
+        expect(screen.queryByRole("button", { name: "Add context" })).not.toBeInTheDocument();
     });
 });

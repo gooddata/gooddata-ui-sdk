@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { type IExecutionDefinition, type ITheme } from "@gooddata/sdk-model";
 
 import { type HighchartsOptions, type SeriesAreaOptions } from "../../lib/index.js";
@@ -35,9 +36,6 @@ export function getAreaConfiguration(
             type: "area",
         },
         plotOptions: {
-            area: {
-                lineWidth: LINE_WIDTH,
-            },
             series,
             column: {
                 dataLabels: {},

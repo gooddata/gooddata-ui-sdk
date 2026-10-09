@@ -4,7 +4,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { VisualizationTypes } from "@gooddata/sdk-ui";
+import { type ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { supportedDualAxesChartTypes } from "../_chartOptions/chartCapabilities.js";
 
@@ -197,11 +197,11 @@ describe("highChartCreators", () => {
     });
 
     describe("Render event configuration", () => {
-        const getConfig = (type: string) =>
+        const getConfig = (type: ChartType) =>
             getHighchartsOptions(makeCtx({ chartOptions: { ...chartOptions, type } }));
 
         it("encountered a declaration exception", () => {
-            supportedDualAxesChartTypes.forEach((type: string) => {
+            supportedDualAxesChartTypes.forEach((type) => {
                 const config = getConfig(type);
                 expect(config.chart!.events!.render).toBeTruthy();
             });

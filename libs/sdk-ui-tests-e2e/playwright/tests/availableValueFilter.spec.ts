@@ -46,84 +46,89 @@ test.describe(
     "Available value filter",
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
-        test("should add metric filter by", { tag: ["@pre-merge-integrated"] }, async ({ page }) => {
-            const headlineSelector = ".s-dash-item.viz-type-headline";
+        test(
+            "should limit values by parent filter and metric dependencies",
+            { tag: ["@pre-merge-integrated"] },
+            async ({ page }) => {
+                const headlineSelector = ".s-dash-item.viz-type-headline";
 
-            await visit(page, "dashboard/dashboard-tiger-hide-filters");
-            await waitDashboardLoaded(page);
+                await visit(page, "dashboard/dashboard-tiger-hide-filters");
+                await waitDashboardLoaded(page);
 
-            // Enter edit mode (also waits for catalog to load)
-            await enterEditMode(page);
+                // Enter edit mode (also waits for catalog to load)
+                await enterEditMode(page);
 
-            // Select "All time" date filter and apply
-            await page.locator(".s-date-filter-button").click();
-            await page.locator(".s-all-time").click();
-            const executionPromise = page.waitForResponse(
-                (resp) => resp.url().includes("/afm/execute/result/") && resp.request().method() === "GET",
-                { timeout: 15_000 },
-            );
-            await page.locator(".s-date-filter-apply").click();
-            await executionPromise;
+                // Select "All time" date filter and apply
+                await page.locator(".s-date-filter-button").click();
+                await page.locator(".s-all-time").click();
+                const executionPromise = page.waitForResponse(
+                    (resp) =>
+                        resp.url().includes("/afm/execute/result/") && resp.request().method() === "GET",
+                    { timeout: 15_000 },
+                );
+                await page.locator(".s-date-filter-apply").click();
+                await executionPromise;
 
-            // Select "101 Financial" in Account filter
-            await openAttributeFilter(page, "Account");
-            await waitFilterElementsLoaded(page);
-            await selectAttributeValues(page, ["101 Financial"]);
-            await applyAttributeFilter(page);
+                // Select "101 Financial" in Account filter
+                await openAttributeFilter(page, "Account");
+                await waitFilterElementsLoaded(page);
+                await selectAttributeValues(page, ["101 Financial"]);
+                await applyAttributeFilter(page);
 
-            // Verify headline shows "7,200"
-            await waitHeadlineLoaded(page, headlineSelector);
-            await assertHeadlineValue(page, headlineSelector, "7,200");
+                // Verify headline shows "7,200"
+                await waitHeadlineLoaded(page, headlineSelector);
+                await assertHeadlineValue(page, headlineSelector, "7,200");
 
-            // Open City filter, configure parent dependency on Account
-            await openAttributeFilter(page, "City");
-            await waitFilterElementsLoaded(page);
-            await configureLimitingParentFilterDependency(page, "Account");
-            await waitFilterElementsLoaded(page);
-            await hasFilterListSize(page, 2);
+                // Open City filter, configure parent dependency on Account
+                await openAttributeFilter(page, "City");
+                await waitFilterElementsLoaded(page);
+                await configureLimitingParentFilterDependency(page, "Account");
+                await waitFilterElementsLoaded(page);
+                await hasFilterListSize(page, 2);
 
-            // Configure metric dependency "# of Lost Opps."
-            await configureLimitingMetricDependency(page, "# of Lost Opps.");
-            await waitFilterElementsLoaded(page);
-            await hasFilterListSize(page, 1);
+                // Configure metric dependency "# of Lost Opps."
+                await configureLimitingMetricDependency(page, "# of Lost Opps.");
+                await waitFilterElementsLoaded(page);
+                await hasFilterListSize(page, 1);
 
-            // Search for invalid metric, verify no data
-            await selectFilterConfiguration(page);
-            await searchMetricDependency(page, "Invalid");
-            await assertNoDataMetricDependency(page);
+                // Search for invalid metric, verify no data
+                await selectFilterConfiguration(page);
+                await searchMetricDependency(page, "Invalid");
+                await assertNoDataMetricDependency(page);
 
-            // Search and select "Account" metric dependency
-            await searchMetricDependency(page, "Account");
-            await selectMetricDependency(page, "Account");
-            await waitFilterElementsLoaded(page);
-            await hasFilterListSize(page, 2);
+                // Search and select "Account" metric dependency
+                await searchMetricDependency(page, "Account");
+                await selectMetricDependency(page, "Account");
+                await waitFilterElementsLoaded(page);
+                await hasFilterListSize(page, 2);
 
-            // Show all values and select "Anaheim"
-            await showAllElementValues(page);
-            await selectAttributeValues(page, ["Anaheim"]);
-            await applyAttributeFilter(page);
+                // Show all values and select "Anaheim"
+                await showAllElementValues(page);
+                await selectAttributeValues(page, ["Anaheim"]);
+                await applyAttributeFilter(page);
 
-            // Verify headline is empty
-            await waitHeadlineLoaded(page, headlineSelector);
-            await assertHeadlineEmpty(page);
+                // Verify headline is empty
+                await waitHeadlineLoaded(page, headlineSelector);
+                await assertHeadlineEmpty(page);
 
-            // Open City filter, clear irrelevant values, select "Seattle"
-            await openAttributeFilter(page, "City");
-            await assertIrrelevantElementValuesVisible(page, true);
-            await clearIrrelevantElementValues(page);
-            await selectAttributeValues(page, ["Seattle"]);
-            await applyAttributeFilter(page);
+                // Open City filter, clear irrelevant values, select "Seattle"
+                await openAttributeFilter(page, "City");
+                await assertIrrelevantElementValuesVisible(page, true);
+                await clearIrrelevantElementValues(page);
+                await selectAttributeValues(page, ["Seattle"]);
+                await applyAttributeFilter(page);
 
-            // Verify headline is still empty
-            await waitHeadlineLoaded(page, headlineSelector);
-            await assertHeadlineEmpty(page);
+                // Verify headline is still empty
+                await waitHeadlineLoaded(page, headlineSelector);
+                await assertHeadlineEmpty(page);
 
-            // Delete aggregated "Count of Account" filter dependency
-            await openAttributeFilter(page, "City");
-            await deleteFilterValuesBy(page, "Count of Account", "aggregated");
-            await waitFilterElementsLoaded(page);
-            await hasFilterListSize(page, 1);
-        });
+                // Delete aggregated "Count of Account" filter dependency
+                await openAttributeFilter(page, "City");
+                await deleteFilterValuesBy(page, "Count of Account", "aggregated");
+                await waitFilterElementsLoaded(page);
+                await hasFilterListSize(page, 1);
+            },
+        );
 
         test(
             "should extend attribute filter by date filter",

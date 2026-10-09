@@ -4,6 +4,7 @@
     "gd.gen-ai.global-error.button-details": "ดูการตอบกลับข้อผิดพลาดดิบสำหรับรายละเอียด",
     "gd.gen-ai.global-error.sync-in-progress": "ยังอยู่ระหว่างการตั้งค่า — โปรดลองอีกครั้งในอีกสักครู่",
     "gd.gen-ai.global-error.sync-failed": "การซิงค์ล้มเหลว โปรดลองอีกครั้งในภายหลัง",
+    "gd.gen-ai.global-error.service-unavailable": "บริการ AI ไม่พร้อมใช้งานชั่วคราว โปรดลองอีกครั้งในภายหลัง",
     "gd.gen-ai.global-error.traceId": "รหัสการติดตามข้อผิดพลาด",
     "gd.gen-ai.global-error.show-more": "แสดงเพิ่มเติม",
     "gd.gen-ai.global-error.show-less": "แสดงน้อยลง",

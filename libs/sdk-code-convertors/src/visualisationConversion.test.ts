@@ -35,6 +35,11 @@ type YamlConditionalFormatting = NonNullable<
 >;
 type StoredConditionalFormatting = TableConfigProperties["conditionalFormatting"];
 
+// Visualization util similar to the one above, but without type casting
+function makeVisualization(overrides: Pick<Visualisation, "type"> & Partial<Visualisation>): Visualisation {
+    return { id: "visualization-id", query: { fields: {} }, ...overrides };
+}
+
 // The generated client types insight `content` as free-form `object | null`; this helper is the one
 // typed view of the stored conditional-formatting controls shared by the round-trip assertions.
 function storedConditionalFormatting(declarative: {
@@ -1547,6 +1552,29 @@ describe("visualisation conversion", () => {
             const { json } = declarativeVisualisationToYaml(emptyFromEntities, declarative);
             expect(json!.config!["custom_tooltip"]).toEqual(customTooltip);
         });
+    });
+
+    describe("line shape round-trip", () => {
+        it.each(["line_chart", "area_chart", "combo_chart"] satisfies Visualisation["type"][])(
+            "should support applying line shape from code and exporting it back for `%s`",
+            (chartType) => {
+                const visualization = makeVisualization({
+                    type: chartType,
+                    config: { line_shape: "spline" },
+                });
+
+                const declarativeVisualization = yamlVisualisationToDeclarative([], visualization);
+                const { json } = declarativeVisualisationToYaml([], declarativeVisualization);
+
+                expect(declarativeVisualization).toMatchObject({
+                    content: { properties: { controls: { lineShape: "spline" } } },
+                });
+                expect(json).toMatchObject({
+                    type: chartType,
+                    config: { line_shape: "spline" },
+                });
+            },
+        );
     });
 
     describe("declarativeVisualisationToYaml", () => {

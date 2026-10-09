@@ -200,14 +200,6 @@ $description-width-mobile: 320px;
     }
 }
 
-// drill charts are rendered in overlay with modal=true which has 5001+(10 for each open overlay), have tooltips above
-// !important is necessary because z-index have been added to the element by Highcharts in
-// https://github.com/highcharts/highcharts/commit/48a82ce80ba946839e3a1280e63ca02ab1f88ec0
-/* stylelint-disable declaration-no-important */
-body.gd-drill-dialog-opened .highcharts-tooltip-container {
-    z-index: zIndexes.$drill-dialog-charts !important;
-}
-
 .drill-dialog-insight-container {
     display: flex;
     flex-direction: row;

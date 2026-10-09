@@ -4,16 +4,23 @@ import { clone, escape, setWith, unescape } from "lodash-es";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { type DataValue } from "@gooddata/sdk-model";
-import { VisualizationTypes } from "@gooddata/sdk-ui";
+import { type ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { type ChartOrientationType, type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { DEFAULT_DECIMAL_SEPARATOR } from "../../constants/format.js";
+import { type SeriesType } from "../../lib/index.js";
 import {
     type IChartOptions,
     type IChartOptionsData,
     type ISeriesDataItem,
     type ISeriesItem,
 } from "../../typings/unsafe.js";
+
+const NON_CHART_VISUALIZATION_TYPES: string[] = [
+    VisualizationTypes.TABLE,
+    VisualizationTypes.HEADLINE,
+    VisualizationTypes.XIRR,
+];
 
 export function parseValue(value: DataValue): number | null {
     if (typeof value === "string") {
@@ -186,15 +193,29 @@ export const isInvertedChartType = (
     orientationPosition?: ChartOrientationType,
 ): boolean =>
     isBarChart(type) || isBulletChart(type) || (isWaterfall(type) && orientationPosition === "vertical");
-export const isChartSupported = (type: string | undefined): boolean => {
-    if (!type) {
+export const isChartSupported = (type: string | undefined): type is ChartType => {
+    if (!type || NON_CHART_VISUALIZATION_TYPES.includes(type)) {
         return false;
     }
     return Object.values<string>(VisualizationTypes).includes(type);
 };
 export const isOneOfTypes = (type: string | undefined, types: string[]): boolean =>
     types.includes(type ?? "");
-export const stringifyChartTypes = (): string => Object.values(VisualizationTypes).join(", ");
+
+export function convertToChartType(seriesType: string): ChartType | null {
+    const map: Record<string, ChartType> = {
+        spline: VisualizationTypes.LINE,
+        areaspline: VisualizationTypes.AREA,
+        variwide: VisualizationTypes.MEKKO,
+    } satisfies Partial<Record<SeriesType, ChartType>>;
+
+    return map[seriesType] ?? (isChartSupported(seriesType) ? seriesType : null);
+}
+
+export const stringifyChartTypes = (): string =>
+    Object.values(VisualizationTypes)
+        .filter((visType) => !NON_CHART_VISUALIZATION_TYPES.includes(visType))
+        .join(", ");
 
 // Automatically narrows categories type to `string[]`
 export function isFlatCategories(categories: IChartOptionsData["categories"]) {

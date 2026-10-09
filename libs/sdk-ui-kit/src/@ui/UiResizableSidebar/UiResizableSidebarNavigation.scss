@@ -1,0 +1,178 @@
+// (C) 2026 GoodData Corporation
+
+@use "../../../styles/scss/variables";
+@use "../../../styles/scss/mixins";
+
+$item-height: 40px;
+$rail-item-size: 36px;
+// Rail width minus the inset on both sides leaves exactly one rail item.
+$list-inset: 6px;
+$icon-size: 18px;
+$item-gap: 10px;
+$badge-size: 8px;
+
+.gd-ui-kit-resizable-sidebar-navigation {
+    $root: &;
+
+    display: block;
+
+    &__list,
+    &__children {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    &__list {
+        padding: 0 $list-inset;
+    }
+
+    &__children {
+        margin-top: 2px;
+    }
+
+    // The rail centers each row's content, whether it is the item or its tooltip anchor wrapper.
+    &__row--rail {
+        display: flex;
+        justify-content: center;
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        gap: $item-gap;
+        box-sizing: border-box;
+        width: 100%;
+        min-height: $item-height;
+        padding: 0 12px;
+        border: 0;
+        border-radius: variables.$gd-rounded-small;
+        background: transparent;
+        color: variables.$gd-color-text;
+        font-family: inherit;
+        font-size: 14px;
+        line-height: 20px;
+        text-align: left;
+        text-decoration: none;
+        cursor: pointer;
+        transition: var(--gd-transition-all);
+
+        &:hover {
+            background-color: variables.$is-focused-background;
+            color: variables.$gd-color-text;
+            text-decoration: none;
+        }
+
+        &:focus {
+            outline: none;
+        }
+
+        &:focus-visible {
+            @include mixins.focus-ring;
+        }
+
+        &--active {
+            font-weight: 700;
+        }
+
+        &--selected {
+            background-color: variables.$is-focused-background;
+            color: variables.$gd-palette-primary-base;
+
+            &:hover {
+                color: variables.$gd-palette-primary-base;
+            }
+        }
+
+        // Sub-items align their label with the label of the group above.
+        &--child {
+            padding-left: 12px + $icon-size + $item-gap;
+        }
+
+        &--rail {
+            position: relative;
+            justify-content: center;
+            width: $rail-item-size;
+            min-height: $rail-item-size;
+            padding: 0;
+
+            // Without a label, the icon alone has to show that the group holds the current page.
+            &#{$root}__item--active {
+                background-color: variables.$is-focused-background;
+                color: variables.$gd-palette-primary-base;
+            }
+        }
+    }
+
+    &__icon {
+        position: relative;
+        display: flex;
+        flex: 0 0 auto;
+        align-items: center;
+        justify-content: center;
+        width: $icon-size;
+        height: $icon-size;
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 1;
+        text-transform: uppercase;
+    }
+
+    &__label {
+        flex: 1 1 auto;
+        min-width: 0;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    // Text for assistive technology only: the rail label and the badge label.
+    &__sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    &__badge {
+        position: relative;
+        flex: 0 0 auto;
+        width: $badge-size;
+        height: $badge-size;
+        border-radius: 50%;
+        background-color: variables.$gd-palette-warning-base;
+
+        // In the rail the badge sits on the corner of the icon.
+        #{$root}__item--rail & {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+        }
+    }
+
+    &__chevron {
+        display: flex;
+        flex: 0 0 auto;
+        align-items: center;
+        transition: var(--gd-transition-all);
+
+        &--expanded {
+            transform: rotate(90deg);
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gd-ui-kit-resizable-sidebar-navigation__chevron,
+    .gd-ui-kit-resizable-sidebar-navigation__item {
+        transition: none;
+    }
+}

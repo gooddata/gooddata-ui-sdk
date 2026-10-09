@@ -17,7 +17,7 @@ test.describe(
     "Pivot table transposed",
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
-        test.describe("Table Component", {}, () => {
+        test.describe("table component", {}, () => {
             test(
                 "should display Metric in row, Column header on top",
                 {
@@ -142,7 +142,7 @@ test.describe(
 
         const INSIGHT_PARENT = ".s-insight-view-transpose";
 
-        test.describe("Insight View", {}, () => {
+        test.describe("insight view", {}, () => {
             // TODO: skip this because of bug https://gooddata.atlassian.net/browse/F1-2003
             test.skip(
                 "should display Metric in row, Column header on left",

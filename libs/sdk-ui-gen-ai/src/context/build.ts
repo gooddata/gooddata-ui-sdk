@@ -3,7 +3,7 @@
 import {
     type IGenAIActiveObject,
     type IGenAIDashboardContext,
-    type IGenAIReportContext,
+    type IGenAIPublisherDocumentContext,
     type IGenAIUserContext,
     areObjRefsEqual,
 } from "@gooddata/sdk-model";
@@ -31,10 +31,13 @@ export function mergeContexts(...contexts: (IGenAIUserContext | undefined)[]): I
         }
 
         const dashboard = mergeDashboard(context.view?.dashboard, acc.view?.dashboard);
-        const report = mergeReport(context.view?.report, acc.view?.report);
+        const publisherDocument = mergePublisherDocument(
+            context.view?.publisherDocument,
+            acc.view?.publisherDocument,
+        );
         const view = {
             ...(dashboard ? { dashboard } : {}),
-            ...(report ? { report } : {}),
+            ...(publisherDocument ? { publisherDocument } : {}),
         };
 
         const activeObject = mergeActiveObject(context.activeObject, acc.activeObject);
@@ -65,14 +68,18 @@ function mergeDashboard(
     return dashboard ?? existingDashboard;
 }
 
-function mergeReport(
-    report?: IGenAIReportContext,
-    existingReport?: IGenAIReportContext,
-): IGenAIReportContext | undefined {
-    if (report && existingReport && areObjRefsEqual(report.ref, existingReport.ref)) {
-        return { ...existingReport, ...report };
+function mergePublisherDocument(
+    publisherDocument?: IGenAIPublisherDocumentContext,
+    existingDocument?: IGenAIPublisherDocumentContext,
+): IGenAIPublisherDocumentContext | undefined {
+    if (
+        publisherDocument &&
+        existingDocument &&
+        areObjRefsEqual(publisherDocument.ref, existingDocument.ref)
+    ) {
+        return { ...existingDocument, ...publisherDocument };
     }
-    return report ?? existingReport;
+    return publisherDocument ?? existingDocument;
 }
 
 function mergeActiveObject(

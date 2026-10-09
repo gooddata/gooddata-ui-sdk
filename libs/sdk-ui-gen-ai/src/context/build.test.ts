@@ -57,32 +57,34 @@ describe("mergeContexts", () => {
         expect(result).toEqual(undefined);
     });
 
-    it("should keep a report next to a dashboard", () => {
+    it("should keep a document next to a dashboard", () => {
         const dashboard = { ref: idRef("dashboard-1", "analyticalDashboard"), widgets: [] };
-        const report = { ref: idRef("q1", "report"), title: "Q1" };
+        const publisherDocument = { ref: idRef("q1", "report"), title: "Q1" };
 
-        expect(mergeContexts({ view: { dashboard } }, { view: { report } })).toEqual({
-            view: { dashboard, report },
+        expect(
+            mergeContexts({ view: { dashboard } }, { view: { publisherDocument: publisherDocument } }),
+        ).toEqual({
+            view: { dashboard, publisherDocument: publisherDocument },
         });
     });
 
-    it("should let the later context of a report that is not saved yet win", () => {
+    it("should let the later context of a document that is not saved yet win", () => {
         expect(
             mergeContexts(
-                { view: { report: { title: "Draft" } } },
-                { view: { report: { title: "Draft 2" } } },
+                { view: { publisherDocument: { title: "Draft" } } },
+                { view: { publisherDocument: { title: "Draft 2" } } },
             ),
-        ).toEqual({ view: { report: { title: "Draft 2" } } });
+        ).toEqual({ view: { publisherDocument: { title: "Draft 2" } } });
     });
 
-    it("should let the later context of the same report win", () => {
+    it("should let the later context of the same document win", () => {
         const ref = idRef("q1", "report");
 
         expect(
             mergeContexts(
-                { view: { report: { ref, title: "Q1" } } },
-                { view: { report: { ref, title: "Q1 draft" } } },
+                { view: { publisherDocument: { ref, title: "Q1" } } },
+                { view: { publisherDocument: { ref, title: "Q1 draft" } } },
             ),
-        ).toEqual({ view: { report: { ref, title: "Q1 draft" } } });
+        ).toEqual({ view: { publisherDocument: { ref, title: "Q1 draft" } } });
     });
 });

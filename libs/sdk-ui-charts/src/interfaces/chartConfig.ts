@@ -328,7 +328,7 @@ export interface IChartConfig {
     type?: VisType;
 
     /**
-     * @internal
+     * Customize the chart tooltip.
      */
     tooltip?: ITooltipConfig;
 
@@ -542,6 +542,16 @@ export interface IChartConfig {
      * @beta
      */
     lineStyleMapping?: ILineStyleMappingItem[];
+
+    /**
+     * Controls what shape a line should have with regards to data points (i.e. line interpolation).
+     *
+     * @remarks
+     * Only applicable to line, combo and area charts.
+     *
+     * @beta
+     */
+    lineShape?: LineShape;
 }
 
 /**
@@ -885,6 +895,12 @@ export interface IDataPointsConfig {
 }
 
 /**
+ * Line shape with regards to data points (i.e. line interpolation).
+ * @beta
+ */
+export type LineShape = "linear" | "spline" | "stepped";
+
+/**
  * @public
  */
 export interface ILegendConfig {
@@ -1027,4 +1043,14 @@ export interface ITooltipConfig {
      * Additional class name to be added to the tooltip container
      */
     className?: string;
+    /**
+     * z-index of the tooltip container that Highcharts appends to document.body.
+     *
+     * @remarks
+     * Set it above the containing overlay when the chart renders inside one. Charts rendered inside
+     * a GoodData UI overlay place the tooltip above that overlay automatically.
+     *
+     * @defaultValue 3005
+     */
+    zIndex?: number;
 }

@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 import { describe, expect, it, vi } from "vitest";
 
@@ -75,7 +75,6 @@ vi.mock("./DrillDialog.js", () => ({
 }));
 
 import { InsightDrillDialog } from "./InsightDrillDialog.js";
-import { DRILL_DIALOG_OPENED_CLASSNAME } from "./useDrillDialogTooltipsOverride.js";
 
 const insight = {
     insight: {
@@ -145,16 +144,6 @@ describe("InsightDrillDialog", () => {
 
         expect(onClose).toHaveBeenCalledTimes(1);
         outsideButton.remove();
-    });
-
-    it("marks the body while open so chart tooltips render above the drill dialog", async () => {
-        await renderDrillDialog();
-
-        expect(document.body).toHaveClass(DRILL_DIALOG_OPENED_CLASSNAME);
-
-        cleanup();
-
-        expect(document.body).not.toHaveClass(DRILL_DIALOG_OPENED_CLASSNAME);
     });
 });
 
