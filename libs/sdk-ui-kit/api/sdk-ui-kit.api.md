@@ -677,7 +677,7 @@ export function generateHeaderCommonHelpMenuItems(): IHeaderMenuItem[];
 export function generateHeaderHelpMenuItems(documentationUrl?: string, supportForumUrl?: string, userEmail?: string, workspaceId?: string, sessionId?: string, supportEmail?: string, isBranded?: boolean, featureFlags?: ISettings): IHeaderMenuItem[];
 
 // @internal (undocumented)
-export function generateHeaderMenuItemsGroups(featureFlags: ISettings, workspacePermissions: IWorkspacePermissions, hasAnalyticalDashboards?: boolean, workspaceId?: string, hasNoDataSet?: boolean, backendSupportsDataItem?: boolean, backendSupportsCsvUploader?: boolean, hasMeasures?: boolean, hasManage?: boolean, baseUrl?: string): IHeaderMenuItem[][];
+export function generateHeaderMenuItemsGroups(featureFlags: ISettings, workspacePermissions: IWorkspacePermissions, hasAnalyticalDashboards?: boolean, workspaceId?: string, hasNoDataSet?: boolean, backendSupportsDataItem?: boolean, hasMeasures?: boolean, hasManage?: boolean, baseUrl?: string): IHeaderMenuItem[][];
 
 // @internal (undocumented)
 export function generateHeaderStaticHelpMenuItems(documentationUrl?: string, communityUrl?: string, universityUrl?: string, slackUrl?: string): IHeaderMenuItem[];
@@ -851,9 +851,6 @@ export const HEADER_ITEM_ID_KPIS: string;
 
 // @internal (undocumented)
 export const HEADER_ITEM_ID_KPIS_NEW: string;
-
-// @internal (undocumented)
-export const HEADER_ITEM_ID_LOAD: string;
 
 // @internal (undocumented)
 export const HEADER_ITEM_ID_MANAGE: string;
@@ -5901,6 +5898,7 @@ export interface IUiAsyncTableColumn<T> {
     getTextHref?: (item: T) => string | undefined;
     // (undocumented)
     getTextTitle?: (item: T) => string;
+    headerTooltip?: string;
     isLocked?: (item: T) => boolean;
     // (undocumented)
     key?: keyof T;
@@ -7835,11 +7833,8 @@ export interface IUiResizableSidebarHandleProps {
     dataTestId?: string;
 }
 
-// @internal (undocumented)
-export interface IUiResizableSidebarNavigationBadge {
-    // (undocumented)
-    kind: "dot";
-    // (undocumented)
+// @internal
+export interface IUiResizableSidebarNavigationActionRequired {
     label: string;
 }
 
@@ -7856,6 +7851,7 @@ export interface IUiResizableSidebarNavigationProps {
     accessibilityConfig: UiResizableSidebarNavigationNamingConfig;
     // (undocumented)
     dataTestId?: string;
+    flyoverClassName?: string;
     isRail?: boolean;
     // (undocumented)
     items: IUiResizableSidebarNavigationItem[];
@@ -7864,7 +7860,7 @@ export interface IUiResizableSidebarNavigationProps {
 
 // @internal
 export interface IUiResizableSidebarNavigationSubItem {
-    badge?: IUiResizableSidebarNavigationBadge;
+    actionRequired?: IUiResizableSidebarNavigationActionRequired;
     // (undocumented)
     dataTestId?: string;
     href?: string;
@@ -7915,6 +7911,7 @@ export interface IUiResizableSidebarState {
 
 // @internal (undocumented)
 export interface IUiResizableSidebarStateOptions {
+    availableWidth?: number;
     collapsedOverride?: boolean;
     collapsedStorageKey: string;
     hasRail?: boolean;

@@ -1,6 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
 import { type IPagedResource } from "../common/paging.js";
+import { type IWorkspaceLocalizationService } from "../localization/index.js";
 
 import { type IWorkspaceAccessControlService } from "./accessControl/index.js";
 import { type IWorkspaceAgentsService } from "./agents/index.js";
@@ -225,6 +226,13 @@ export interface IAnalyticalWorkspace {
      * @alpha
      */
     publisher(): IWorkspacePublisherService;
+
+    /**
+     * Returns service that reports how languages and translations are used in the workspace.
+     *
+     * @alpha
+     */
+    localization(): IWorkspaceLocalizationService;
 }
 
 /**

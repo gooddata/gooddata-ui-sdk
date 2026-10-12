@@ -21,14 +21,16 @@ export function ChipActionButton({
     tooltip,
 }: IChipActionButtonProps) {
     const tooltipId = useId();
+    const isTooltipDescription = Boolean(tooltip) && tooltip !== actionAriaLabel;
 
     const button = useMemo(() => {
         return (
             <button
                 data-testid={dataTestId ? `${dataTestId}-action-button` : undefined}
                 aria-describedby={
-                    [actionAriaDescribedBy, tooltip ? tooltipId : undefined].filter(Boolean).join(" ") ||
-                    undefined
+                    [actionAriaDescribedBy, isTooltipDescription ? tooltipId : undefined]
+                        .filter(Boolean)
+                        .join(" ") || undefined
                 }
                 aria-label={actionAriaLabel}
                 className={e("action")}
@@ -47,7 +49,7 @@ export function ChipActionButton({
         actionAriaLabel,
         onAction,
         dataTestId,
-        tooltip,
+        isTooltipDescription,
         tooltipId,
     ]);
 

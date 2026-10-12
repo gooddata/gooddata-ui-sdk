@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { fireEvent, screen, within } from "@testing-library/react";
+import { act, fireEvent, screen, waitFor, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import { render } from "../../../test/render.js";
@@ -18,7 +18,7 @@ const settingsChildren = [
         id: "developer",
         label: "Developer",
         href: "/settings/developer",
-        badge: { kind: "dot" as const, label: "Needs attention" },
+        actionRequired: { label: "Action required" },
     },
 ];
 
@@ -92,6 +92,30 @@ function RailSwitch() {
             </button>
         </UiResizableSidebarProvider>
     );
+}
+
+interface IRailControl {
+    setRail?: (isRail: boolean) => void;
+    setItems?: (items: IUiResizableSidebarNavigationItem[]) => void;
+}
+
+// Switches the rail through state, so the tree stays mounted and focus can stay inside the flyover.
+function StateRail({ control }: { control: IRailControl }) {
+    const [isRail, setRail] = useState(true);
+    const [items, setItems] = useState(() => makeItems("localization"));
+    control.setRail = setRail;
+    control.setItems = setItems;
+
+    return (
+        <UiResizableSidebarProvider value={railState(isRail)}>
+            <UiResizableSidebarNavigation items={items} accessibilityConfig={naming} />
+        </UiResizableSidebarProvider>
+    );
+}
+
+// Longer than the hover open delay of the flyover.
+function waitForHover() {
+    return new Promise((resolve) => setTimeout(resolve, 200));
 }
 
 describe("UiResizableSidebarNavigation", () => {
@@ -196,19 +220,19 @@ describe("UiResizableSidebarNavigation", () => {
         expect(icons).toEqual(["🇨🇿", "e\u0301", ""]);
     });
 
-    it("renders the dot badge of an item with its accessible label", () => {
+    it("marks an item that requires an action with an accessible label", () => {
         render(
             <UiResizableSidebarNavigation items={makeItems("localization")} accessibilityConfig={naming} />,
         );
 
-        const developer = screen.getByRole("link", { name: "Developer Needs attention" });
+        const developer = screen.getByRole("link", { name: "Developer Action required" });
         expect(
-            developer.querySelector(".gd-ui-kit-resizable-sidebar-navigation__badge--kind-dot"),
+            developer.querySelector(".gd-ui-kit-resizable-sidebar-navigation__action-required"),
         ).not.toBeNull();
         expect(
             screen
                 .getByRole("link", { name: "Appearance" })
-                .querySelector(".gd-ui-kit-resizable-sidebar-navigation__badge"),
+                .querySelector(".gd-ui-kit-resizable-sidebar-navigation__action-required"),
         ).toBeNull();
     });
 
@@ -295,7 +319,7 @@ describe("UiResizableSidebarNavigation", () => {
         expect(screen.getByRole("link", { name: "Localization" })).toHaveFocus();
 
         await user.keyboard("{ArrowDown}");
-        expect(screen.getByRole("link", { name: "Developer Needs attention" })).toHaveFocus();
+        expect(screen.getByRole("link", { name: "Developer Action required" })).toHaveFocus();
 
         await user.keyboard("{ArrowDown}");
         expect(screen.getByRole("button", { name: "Help" })).toHaveFocus();
@@ -458,7 +482,7 @@ describe("UiResizableSidebarNavigation", () => {
         expect(screen.getByRole("link", { name: /^Settings/ })).toHaveAttribute("aria-expanded", "true");
     });
 
-    it("lists only the top-level items with tooltips in rail mode", () => {
+    it("lists only the top-level items in rail mode, with tooltips and flyovers", () => {
         render(
             <UiResizableSidebarProvider value={railState(true)}>
                 <UiResizableSidebarNavigation
@@ -471,29 +495,32 @@ describe("UiResizableSidebarNavigation", () => {
         const settings = screen.getByRole("link", { name: /^Settings/ });
         expect(settings).toHaveClass("gd-ui-kit-resizable-sidebar-navigation__item--rail");
         expect(settings).toHaveClass("gd-ui-kit-resizable-sidebar-navigation__item--active");
-        expect(settings).not.toHaveAttribute("aria-expanded");
+        expect(settings).toHaveAttribute("aria-expanded", "false");
         expect(settings).toHaveAttribute("aria-current", "true");
-        expect(settings.closest(".gd-ui-kit-tooltip__anchor")).not.toBeNull();
+        expect(settings.closest(".gd-ui-kit-resizable-sidebar-navigation__flyover-anchor")).not.toBeNull();
+        expect(
+            screen.getByRole("link", { name: "Home" }).closest(".gd-ui-kit-tooltip__anchor"),
+        ).not.toBeNull();
         expect(settings.querySelector(".gd-ui-kit-resizable-sidebar-navigation__sr-only")).not.toBeNull();
         expect(screen.queryByRole("link", { name: "Localization" })).toBeNull();
         expect(screen.getByRole("button", { name: "Help" }).querySelector("svg")).toBeNull();
     });
 
-    it("keeps the badge label in the accessible name in rail mode", () => {
+    it("keeps the action-required label in the accessible name in rail mode", () => {
         const items: IUiResizableSidebarNavigationItem[] = [
             {
                 id: "alerts",
                 label: "Alerts",
                 icon: "alert",
                 href: "/alerts",
-                badge: { kind: "dot", label: "Needs attention" },
+                actionRequired: { label: "Action required" },
             },
         ];
         render(<UiResizableSidebarNavigation items={items} accessibilityConfig={naming} isRail />);
 
-        const alerts = screen.getByRole("link", { name: "Alerts Needs attention" });
+        const alerts = screen.getByRole("link", { name: "Alerts Action required" });
         expect(
-            alerts.querySelector("[aria-hidden] .gd-ui-kit-resizable-sidebar-navigation__badge"),
+            alerts.querySelector("[aria-hidden] .gd-ui-kit-resizable-sidebar-navigation__action-required"),
         ).toBeNull();
     });
 
@@ -554,7 +581,7 @@ describe("UiResizableSidebarNavigation", () => {
         expect(screen.getByRole("link", { name: /^Settings/ })).toHaveAttribute("aria-expanded", "false");
 
         await user.click(screen.getByRole("button", { name: "toggle rail" }));
-        expect(screen.getByRole("link", { name: /^Settings/ })).not.toHaveAttribute("aria-expanded");
+        expect(screen.queryByRole("link", { name: "Localization" })).toBeNull();
 
         await user.click(screen.getByRole("button", { name: "toggle rail" }));
         expect(screen.getByRole("link", { name: /^Settings/ })).toHaveAttribute("aria-expanded", "false");
@@ -593,7 +620,7 @@ describe("UiResizableSidebarNavigation", () => {
         }
     });
 
-    it("shows a sub-page badge on its collapsed group and in the rail", async () => {
+    it("marks a collapsed group and a rail group whose sub-page requires an action", async () => {
         const stayOnPage = (_item: unknown, event: { preventDefault: () => void }) => event.preventDefault();
         const { user, rerender } = render(
             <UiResizableSidebarNavigation
@@ -603,16 +630,447 @@ describe("UiResizableSidebarNavigation", () => {
             />,
         );
 
-        const settings = screen.getByRole("link", { name: "Settings Needs attention" });
-        expect(settings.querySelector(".gd-ui-kit-resizable-sidebar-navigation__badge")).not.toBeNull();
+        const settings = screen.getByRole("link", { name: "Settings Action required" });
+        expect(
+            settings.querySelector(".gd-ui-kit-resizable-sidebar-navigation__action-required"),
+        ).not.toBeNull();
 
         await user.click(settings);
         expect(screen.getByRole("link", { name: /^Settings/ })).toHaveAttribute("aria-expanded", "true");
-        expect(screen.getByRole("link", { name: "Developer Needs attention" })).toBeInTheDocument();
+        expect(screen.getByRole("link", { name: "Developer Action required" })).toBeInTheDocument();
 
         rerender(
             <UiResizableSidebarNavigation items={makeItems("home")} accessibilityConfig={naming} isRail />,
         );
-        expect(screen.getByRole("link", { name: "Settings Needs attention" })).toBeInTheDocument();
+        expect(screen.getByRole("link", { name: "Settings Action required" })).toBeInTheDocument();
+    });
+
+    describe("rail flyover", () => {
+        function renderRail(onSelect = vi.fn()) {
+            return {
+                onSelect,
+                ...render(
+                    <UiResizableSidebarProvider value={railState(true)}>
+                        <UiResizableSidebarNavigation
+                            items={makeItems("localization")}
+                            accessibilityConfig={naming}
+                            onSelect={onSelect}
+                        />
+                    </UiResizableSidebarProvider>,
+                ),
+            };
+        }
+
+        it("opens on hover and lists the sub-pages of the group", async () => {
+            const { user } = renderRail();
+
+            const settings = screen.getByRole("link", { name: /^Settings/ });
+            await user.hover(settings);
+
+            const flyover = await screen.findByRole("group", { name: "Settings" });
+            expect(settings).toHaveAttribute("aria-expanded", "true");
+            expect(settings).toHaveAttribute("aria-controls", flyover.id);
+            expect(settings).not.toHaveAttribute("aria-current");
+            expect(within(flyover).getByRole("link", { name: "Localization" })).toHaveAttribute(
+                "aria-current",
+                "page",
+            );
+            expect(
+                within(flyover).getByRole("link", { name: "Developer Action required" }),
+            ).toBeInTheDocument();
+            expect(flyover).not.toContainElement(document.activeElement as HTMLElement);
+        });
+
+        it("opens with the Right arrow key and focuses the current page", async () => {
+            const { user } = renderRail();
+
+            await user.tab();
+            expect(screen.getByRole("link", { name: /^Settings/ })).toHaveFocus();
+
+            await user.keyboard("{ArrowRight}");
+            const flyover = await screen.findByRole("group", { name: "Settings" });
+            expect(within(flyover).getByRole("link", { name: "Localization" })).toHaveFocus();
+
+            await user.keyboard("{ArrowDown}");
+            expect(within(flyover).getByRole("link", { name: /^Developer/ })).toHaveFocus();
+            await user.keyboard("{ArrowDown}");
+            expect(within(flyover).getByRole("link", { name: /^Developer/ })).toHaveFocus();
+            await user.keyboard("{Home}");
+            expect(within(flyover).getByRole("link", { name: "Appearance" })).toHaveFocus();
+            await user.keyboard("{End}");
+            expect(within(flyover).getByRole("link", { name: /^Developer/ })).toHaveFocus();
+        });
+
+        it.each(["{ArrowLeft}", "{Escape}"])("closes with %s and returns focus to the group", async (key) => {
+            const { user } = renderRail();
+
+            await user.tab();
+            await user.keyboard("{ArrowRight}");
+            await screen.findByRole("group", { name: "Settings" });
+
+            await user.keyboard(key);
+            expect(screen.queryByRole("group", { name: "Settings" })).toBeNull();
+            expect(screen.getByRole("link", { name: /^Settings/ })).toHaveFocus();
+            expect(screen.getByRole("link", { name: /^Settings/ })).toHaveAttribute("aria-expanded", "false");
+        });
+
+        it("returns focus to the group after a sub-page is chosen with the keyboard", async () => {
+            const onSelect = vi.fn((_item, event: { preventDefault: () => void }) => event.preventDefault());
+            const { user } = renderRail(onSelect);
+
+            await user.tab();
+            await user.keyboard("{ArrowRight}");
+            await screen.findByRole("group", { name: "Settings" });
+
+            await user.keyboard("{ArrowUp}{Enter}");
+            expect(onSelect).toHaveBeenCalledWith(
+                expect.objectContaining({ id: "appearance" }),
+                expect.anything(),
+            );
+            expect(screen.queryByRole("group", { name: "Settings" })).toBeNull();
+            expect(screen.getByRole("link", { name: /^Settings/ })).toHaveFocus();
+        });
+
+        it("stays open when the pointer leaves while focus is inside", async () => {
+            const { user } = renderRail();
+
+            const settings = screen.getByRole("link", { name: /^Settings/ });
+            await user.hover(settings);
+            await screen.findByRole("group", { name: "Settings" });
+            await user.tab();
+            await user.keyboard("{ArrowRight}");
+            const flyover = screen.getByRole("group", { name: "Settings" });
+            expect(within(flyover).getByRole("link", { name: "Localization" })).toHaveFocus();
+
+            await user.unhover(settings);
+            await user.hover(screen.getByRole("link", { name: "Home" }));
+            expect(screen.getByRole("group", { name: "Settings" })).toBeInTheDocument();
+            expect(within(flyover).getByRole("link", { name: "Localization" })).toHaveFocus();
+        });
+
+        it("keeps a keyboard-focused flyover when the pointer hovers another group", async () => {
+            const { user } = renderRail();
+
+            await user.tab();
+            await user.keyboard("{ArrowRight}");
+            const flyover = await screen.findByRole("group", { name: "Settings" });
+
+            await user.hover(screen.getByRole("button", { name: "Help" }));
+            await waitForHover();
+            expect(screen.queryByRole("group", { name: "Help" })).toBeNull();
+            expect(within(flyover).getByRole("link", { name: "Localization" })).toHaveFocus();
+        });
+
+        it("opens another group on hover after the focused flyover item is removed", async () => {
+            const control: IRailControl = {};
+            const { user } = render(<StateRail control={control} />);
+
+            await user.tab();
+            await user.keyboard("{ArrowRight}");
+            await screen.findByRole("group", { name: "Settings" });
+
+            act(() => control.setItems?.(makeItems("localization").filter((item) => item.id !== "settings")));
+
+            await user.hover(screen.getByRole("button", { name: "Help" }));
+            expect(await screen.findByRole("group", { name: "Help" })).toBeInTheDocument();
+        });
+
+        it("keeps focus in the flyover when the focused item is removed from its group", async () => {
+            const control: IRailControl = {};
+            const { user } = render(<StateRail control={control} />);
+
+            await user.tab();
+            await user.keyboard("{ArrowRight}");
+            const flyover = await screen.findByRole("group", { name: "Settings" });
+
+            act(() =>
+                control.setItems?.(
+                    makeItems("localization").map((item) => ({
+                        ...item,
+                        children: item.children?.filter((child) => child.id !== "localization"),
+                    })),
+                ),
+            );
+
+            expect(within(flyover).getByRole("link", { name: "Appearance" })).toHaveFocus();
+            await user.keyboard("{Escape}");
+            expect(screen.queryByRole("group", { name: "Settings" })).toBeNull();
+            expect(screen.getByRole("link", { name: /^Settings/ })).toHaveFocus();
+        });
+
+        it("moves focus to the list when the open group is removed", async () => {
+            const control: IRailControl = {};
+            const { user } = render(<StateRail control={control} />);
+
+            await user.tab();
+            await user.keyboard("{ArrowRight}");
+            await screen.findByRole("group", { name: "Settings" });
+
+            act(() => control.setItems?.(makeItems("home").filter((item) => item.id !== "settings")));
+
+            expect(screen.queryByRole("group", { name: "Settings" })).toBeNull();
+            expect(screen.getByRole("link", { name: "Home" })).toHaveFocus();
+        });
+
+        it("closes on pointer leave after a pointer-focused item is removed", async () => {
+            const control: IRailControl = {};
+            const { user } = render(<StateRail control={control} />);
+
+            const settings = screen.getByRole("link", { name: /^Settings/ });
+            await user.hover(settings);
+            const flyover = await screen.findByRole("group", { name: "Settings" });
+            await user.pointer({
+                keys: "[MouseRight]",
+                target: within(flyover).getByRole("link", { name: "Localization" }),
+            });
+            // The pointer rests on an item that stays, so leaving the flyover dispatches events.
+            await user.hover(within(flyover).getByRole("link", { name: "Appearance" }));
+
+            act(() =>
+                control.setItems?.(
+                    makeItems("localization").map((item) => ({
+                        ...item,
+                        children: item.children?.filter((child) => child.id !== "localization"),
+                    })),
+                ),
+            );
+
+            await user.unhover(flyover);
+            await user.hover(screen.getByRole("link", { name: "Home" }));
+            await waitForHover();
+            expect(screen.queryByRole("group", { name: "Settings" })).toBeNull();
+        });
+
+        it.each(["{Tab}", "{Shift>}{Tab}{/Shift}"])("closes when %s moves focus out of it", async (key) => {
+            const { user } = render(
+                <>
+                    <button type="button">before</button>
+                    <UiResizableSidebarProvider value={railState(true)}>
+                        <UiResizableSidebarNavigation
+                            items={makeItems("localization")}
+                            accessibilityConfig={naming}
+                        />
+                    </UiResizableSidebarProvider>
+                    <button type="button">after</button>
+                </>,
+            );
+
+            screen.getByRole("link", { name: /^Settings/ }).focus();
+            await user.keyboard("{ArrowRight}");
+            await screen.findByRole("group", { name: "Settings" });
+
+            await user.keyboard(key);
+            await waitFor(() => expect(screen.queryByRole("group", { name: "Settings" })).toBeNull());
+            expect(screen.getByRole("link", { name: /^Settings/ })).toHaveAttribute("aria-expanded", "false");
+        });
+
+        it("leaves focus alone when the pointer moves from a pointer-focused flyover to another group", async () => {
+            const { user } = renderRail();
+
+            await user.hover(screen.getByRole("link", { name: /^Settings/ }));
+            const flyover = await screen.findByRole("group", { name: "Settings" });
+            await user.pointer({
+                keys: "[MouseRight]",
+                target: within(flyover).getByRole("link", { name: "Localization" }),
+            });
+            await user.unhover(flyover);
+            await user.hover(screen.getByRole("button", { name: "Help" }));
+
+            expect(await screen.findByRole("group", { name: "Help" })).toBeInTheDocument();
+            expect(screen.queryByRole("group", { name: "Settings" })).toBeNull();
+            expect(screen.getByRole("link", { name: /^Settings/ })).not.toHaveFocus();
+        });
+
+        it("lets keys it does not handle reach document listeners", async () => {
+            const keys: string[] = [];
+            const recordKey = (event: KeyboardEvent) => keys.push(event.key);
+            document.addEventListener("keydown", recordKey);
+
+            try {
+                const { user } = renderRail();
+
+                await user.tab();
+                await user.keyboard("{ArrowRight}");
+                const flyover = await screen.findByRole("group", { name: "Settings" });
+                keys.length = 0;
+
+                await user.keyboard("{Control>}k{/Control}");
+                expect(keys).toContain("k");
+
+                await user.keyboard("{ArrowDown}");
+                expect(within(flyover).getByRole("link", { name: /^Developer/ })).toHaveFocus();
+                expect(keys).not.toContain("ArrowDown");
+            } finally {
+                document.removeEventListener("keydown", recordKey);
+            }
+        });
+
+        it("does not reopen when its removed group comes back", async () => {
+            const control: IRailControl = {};
+            const { user } = render(<StateRail control={control} />);
+
+            await user.tab();
+            await user.keyboard("{ArrowRight}");
+            await screen.findByRole("group", { name: "Settings" });
+
+            act(() => control.setItems?.(makeItems("localization").filter((item) => item.id !== "settings")));
+            act(() => control.setItems?.(makeItems("localization")));
+
+            expect(screen.queryByRole("group", { name: "Settings" })).toBeNull();
+        });
+
+        it("stays open after a modified click on a sub-page", async () => {
+            const onSelect = vi.fn();
+            const { user } = renderRail(onSelect);
+            // Prevents happy-dom from following the link after the component lets the click through.
+            const preventNavigation = (event: Event) => event.preventDefault();
+            document.addEventListener("click", preventNavigation);
+
+            try {
+                await user.tab();
+                await user.keyboard("{ArrowRight}");
+                const flyover = await screen.findByRole("group", { name: "Settings" });
+
+                await user.keyboard("{Control>}");
+                await user.click(within(flyover).getByRole("link", { name: "Appearance" }));
+                await user.keyboard("{/Control}");
+
+                expect(onSelect).not.toHaveBeenCalled();
+                expect(screen.getByRole("group", { name: "Settings" })).toBeInTheDocument();
+            } finally {
+                document.removeEventListener("click", preventNavigation);
+            }
+        });
+
+        it("does not reopen after a round trip out of the rail", async () => {
+            const control: IRailControl = {};
+            const { user } = render(<StateRail control={control} />);
+
+            await user.tab();
+            await user.keyboard("{ArrowRight}");
+            await screen.findByRole("group", { name: "Settings" });
+
+            act(() => control.setRail?.(false));
+            act(() => control.setRail?.(true));
+
+            expect(screen.queryByRole("group", { name: "Settings" })).toBeNull();
+        });
+
+        it("returns focus to the group when the list leaves the rail", async () => {
+            const control: IRailControl = {};
+            const { user } = render(<StateRail control={control} />);
+
+            await user.tab();
+            await user.keyboard("{ArrowRight}");
+            await screen.findByRole("group", { name: "Settings" });
+
+            act(() => control.setRail?.(false));
+
+            expect(screen.getByRole("link", { name: /^Settings/ })).toHaveFocus();
+        });
+
+        it("closes a flyover focused by the pointer when the pointer leaves", async () => {
+            const { user } = renderRail();
+
+            await user.hover(screen.getByRole("link", { name: /^Settings/ }));
+            const flyover = await screen.findByRole("group", { name: "Settings" });
+            await user.pointer({
+                keys: "[MouseRight]",
+                target: within(flyover).getByRole("link", { name: "Localization" }),
+            });
+            await user.unhover(flyover);
+            await user.hover(screen.getByRole("link", { name: "Home" }));
+            await waitForHover();
+            expect(screen.queryByRole("group", { name: "Settings" })).toBeNull();
+
+            await user.hover(screen.getByRole("button", { name: "Help" }));
+            expect(await screen.findByRole("group", { name: "Help" })).toBeInTheDocument();
+        });
+
+        it("scrolls the focused current page into a height-limited flyover", async () => {
+            const rect = (top: number, bottom: number) => new DOMRect(0, top, 200, bottom - top);
+            const getRect = vi
+                .spyOn(HTMLElement.prototype, "getBoundingClientRect")
+                .mockImplementation(function (this: HTMLElement) {
+                    if (this.getAttribute("role") === "group") {
+                        return rect(0, 100);
+                    }
+                    const scrolled = this.closest<HTMLElement>('[role="group"]')?.scrollTop ?? 0;
+                    return this.getAttribute("aria-current") === "page"
+                        ? rect(140 - scrolled, 180 - scrolled)
+                        : rect(0, 40);
+                });
+
+            try {
+                const { user } = renderRail();
+
+                await user.tab();
+                await user.keyboard("{ArrowRight}");
+
+                const flyover = await screen.findByRole("group", { name: "Settings" });
+                expect(within(flyover).getByRole("link", { name: "Localization" })).toHaveFocus();
+                expect(flyover.scrollTop).toBe(80);
+            } finally {
+                getRect.mockRestore();
+            }
+        });
+
+        it("opens with Enter on a link group instead of selecting it", async () => {
+            const { user, onSelect } = renderRail();
+
+            await user.tab();
+            await user.keyboard("{Enter}");
+
+            const flyover = await screen.findByRole("group", { name: "Settings" });
+            expect(within(flyover).getByRole("link", { name: "Localization" })).toHaveFocus();
+            expect(onSelect).not.toHaveBeenCalled();
+        });
+
+        it("opens with Space on a button group", async () => {
+            const { user, onSelect } = renderRail();
+
+            screen.getByRole("button", { name: "Help" }).focus();
+            await user.keyboard(" ");
+
+            const flyover = await screen.findByRole("group", { name: "Help" });
+            expect(within(flyover).getByRole("link", { name: "Documentation" })).toHaveFocus();
+            expect(onSelect).not.toHaveBeenCalled();
+        });
+
+        it("opens on click on the group instead of selecting it", async () => {
+            const { user, onSelect } = renderRail();
+
+            await user.click(screen.getByRole("link", { name: /^Settings/ }));
+
+            expect(await screen.findByRole("group", { name: "Settings" })).toBeInTheDocument();
+            expect(onSelect).not.toHaveBeenCalled();
+        });
+
+        it("shows the group label on keyboard focus while the flyover is closed", async () => {
+            const { user } = renderRail();
+
+            await user.tab();
+            expect(await screen.findByRole("tooltip", { hidden: true })).toHaveTextContent("Settings");
+
+            await user.keyboard("{ArrowRight}");
+            await screen.findByRole("group", { name: "Settings" });
+            expect(screen.queryByRole("tooltip", { hidden: true })).toBeNull();
+        });
+
+        it("selects a sub-page and closes", async () => {
+            const onSelect = vi.fn((_item, event: { preventDefault: () => void }) => event.preventDefault());
+            const { user } = renderRail(onSelect);
+
+            await user.tab();
+            await user.keyboard("{ArrowRight}");
+            const flyover = await screen.findByRole("group", { name: "Settings" });
+
+            await user.click(within(flyover).getByRole("link", { name: "Appearance" }));
+            expect(onSelect).toHaveBeenCalledWith(
+                expect.objectContaining({ id: "appearance" }),
+                expect.anything(),
+            );
+            expect(screen.queryByRole("group", { name: "Settings" })).toBeNull();
+        });
     });
 });

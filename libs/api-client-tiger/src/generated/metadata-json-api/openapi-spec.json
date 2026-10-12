@@ -36594,7 +36594,9 @@
                             "CERTIFY_PARENT_OBJECTS",
                             "HLL_TYPE",
                             "ENABLE_TIMEZONE_CHANGE",
-                            "AUTHORIZATION_SERVER_REDIRECT_POLICY"
+                            "AUTHORIZATION_SERVER_REDIRECT_POLICY",
+                            "DEFAULT_VISUALIZATION_VISIBILITY",
+                            "DEFAULT_METRIC_VISIBILITY"
                         ]
                     }
                 },
@@ -54144,7 +54146,9 @@
                                     "CERTIFY_PARENT_OBJECTS",
                                     "HLL_TYPE",
                                     "ENABLE_TIMEZONE_CHANGE",
-                                    "AUTHORIZATION_SERVER_REDIRECT_POLICY"
+                                    "AUTHORIZATION_SERVER_REDIRECT_POLICY",
+                                    "DEFAULT_VISUALIZATION_VISIBILITY",
+                                    "DEFAULT_METRIC_VISIBILITY"
                                 ]
                             }
                         }
@@ -54251,7 +54255,9 @@
                                     "CERTIFY_PARENT_OBJECTS",
                                     "HLL_TYPE",
                                     "ENABLE_TIMEZONE_CHANGE",
-                                    "AUTHORIZATION_SERVER_REDIRECT_POLICY"
+                                    "AUTHORIZATION_SERVER_REDIRECT_POLICY",
+                                    "DEFAULT_VISUALIZATION_VISIBILITY",
+                                    "DEFAULT_METRIC_VISIBILITY"
                                 ]
                             }
                         }
@@ -54398,7 +54404,9 @@
                                     "CERTIFY_PARENT_OBJECTS",
                                     "HLL_TYPE",
                                     "ENABLE_TIMEZONE_CHANGE",
-                                    "AUTHORIZATION_SERVER_REDIRECT_POLICY"
+                                    "AUTHORIZATION_SERVER_REDIRECT_POLICY",
+                                    "DEFAULT_VISUALIZATION_VISIBILITY",
+                                    "DEFAULT_METRIC_VISIBILITY"
                                 ]
                             }
                         }
@@ -60273,7 +60281,9 @@
                                     "RESTRICT_BASE_UI",
                                     "CERTIFY_PARENT_OBJECTS",
                                     "HLL_TYPE",
-                                    "ENABLE_TIMEZONE_CHANGE"
+                                    "ENABLE_TIMEZONE_CHANGE",
+                                    "DEFAULT_VISUALIZATION_VISIBILITY",
+                                    "DEFAULT_METRIC_VISIBILITY"
                                 ]
                             }
                         }
@@ -60379,7 +60389,9 @@
                                     "RESTRICT_BASE_UI",
                                     "CERTIFY_PARENT_OBJECTS",
                                     "HLL_TYPE",
-                                    "ENABLE_TIMEZONE_CHANGE"
+                                    "ENABLE_TIMEZONE_CHANGE",
+                                    "DEFAULT_VISUALIZATION_VISIBILITY",
+                                    "DEFAULT_METRIC_VISIBILITY"
                                 ]
                             }
                         }
@@ -63616,7 +63628,9 @@
                                     "RESTRICT_BASE_UI",
                                     "CERTIFY_PARENT_OBJECTS",
                                     "HLL_TYPE",
-                                    "ENABLE_TIMEZONE_CHANGE"
+                                    "ENABLE_TIMEZONE_CHANGE",
+                                    "DEFAULT_VISUALIZATION_VISIBILITY",
+                                    "DEFAULT_METRIC_VISIBILITY"
                                 ]
                             }
                         }
@@ -63722,7 +63736,9 @@
                                     "RESTRICT_BASE_UI",
                                     "CERTIFY_PARENT_OBJECTS",
                                     "HLL_TYPE",
-                                    "ENABLE_TIMEZONE_CHANGE"
+                                    "ENABLE_TIMEZONE_CHANGE",
+                                    "DEFAULT_VISUALIZATION_VISIBILITY",
+                                    "DEFAULT_METRIC_VISIBILITY"
                                 ]
                             }
                         }
@@ -63894,7 +63910,9 @@
                                     "RESTRICT_BASE_UI",
                                     "CERTIFY_PARENT_OBJECTS",
                                     "HLL_TYPE",
-                                    "ENABLE_TIMEZONE_CHANGE"
+                                    "ENABLE_TIMEZONE_CHANGE",
+                                    "DEFAULT_VISUALIZATION_VISIBILITY",
+                                    "DEFAULT_METRIC_VISIBILITY"
                                 ]
                             }
                         }
@@ -63999,7 +64017,9 @@
                                     "RESTRICT_BASE_UI",
                                     "CERTIFY_PARENT_OBJECTS",
                                     "HLL_TYPE",
-                                    "ENABLE_TIMEZONE_CHANGE"
+                                    "ENABLE_TIMEZONE_CHANGE",
+                                    "DEFAULT_VISUALIZATION_VISIBILITY",
+                                    "DEFAULT_METRIC_VISIBILITY"
                                 ]
                             }
                         }
@@ -66249,7 +66269,9 @@
                             "CERTIFY_PARENT_OBJECTS",
                             "HLL_TYPE",
                             "ENABLE_TIMEZONE_CHANGE",
-                            "AUTHORIZATION_SERVER_REDIRECT_POLICY"
+                            "AUTHORIZATION_SERVER_REDIRECT_POLICY",
+                            "DEFAULT_VISUALIZATION_VISIBILITY",
+                            "DEFAULT_METRIC_VISIBILITY"
                         ]
                     }
                 },

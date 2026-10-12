@@ -21,6 +21,7 @@ import {
     type ITempFilterContext,
     areObjRefsEqual,
     insightRef,
+    isIdentifierRef,
     isTempFilterContext,
 } from "@gooddata/sdk-model";
 
@@ -114,11 +115,14 @@ type DashboardSaveResult = {
     created: boolean;
 };
 
+type SavedInsight = NonNullable<DashboardSaved["payload"]["savedInsights"]>[number];
+
 function* persistDraftInsights(
     ctx: DashboardContext,
     cmd: ISaveDashboard,
     insights: IInsight[],
-): SagaIterator<void> {
+): SagaIterator<SavedInsight[]> {
+    const savedInsights: SavedInsight[] = [];
     for (const draftInsight of insights) {
         const persistedInsight = yield call(async () => {
             return ctx.backend.workspace(ctx.workspace).insights().createInsight(draftInsight, false);
@@ -161,7 +165,20 @@ function* persistDraftInsights(
         }
 
         yield put(insightsActions.setInsights(updatedInsights));
+
+        const originalInsightRef = insightRef(draftInsight);
+        const savedInsightRef = insightRef(persistedInsight);
+        const originalInsightId = isIdentifierRef(originalInsightRef)
+            ? originalInsightRef.identifier
+            : draftInsight.insight.identifier;
+        const savedInsightId = isIdentifierRef(savedInsightRef)
+            ? savedInsightRef.identifier
+            : persistedInsight.insight.identifier;
+        if (originalInsightId && savedInsightId) {
+            savedInsights.push({ originalInsightId, savedInsightId });
+        }
     }
+    return savedInsights;
 }
 
 async function draftInsightExistsOnBackend(ctx: DashboardContext, draftInsight: IInsight): Promise<boolean> {
@@ -727,9 +744,10 @@ export function* saveDashboardHandler(
             yield put(uiActions.closeInsightNotSavedDialog());
         }
 
-        if (shouldPersistDraftInsights && draftInsightsToPersist.length > 0) {
-            yield call(persistDraftInsights, ctx, cmd, draftInsightsToPersist);
-        }
+        const savedInsights: SavedInsight[] =
+            shouldPersistDraftInsights && draftInsightsToPersist.length > 0
+                ? yield call(persistDraftInsights, ctx, cmd, draftInsightsToPersist)
+                : [];
 
         const persistedDashboard: ReturnType<typeof selectPersistedDashboard> =
             yield select(selectPersistedDashboard);
@@ -779,7 +797,10 @@ export function* saveDashboardHandler(
         }
 
         yield put(savingActions.setSavingSuccess());
-        return dashboardSaved(ctx, dashboard, created, cmd.correlationId);
+        return dashboardSaved(ctx, dashboard, created, cmd.correlationId, {
+            ...(isAiBuilder ? { originalDashboardId: saveCtx.dashboardFromState.identifier } : {}),
+            ...(savedInsights.length > 0 ? { savedInsights } : {}),
+        });
     } catch (e: any) {
         yield put(savingActions.setSavingError(e));
         throw e;

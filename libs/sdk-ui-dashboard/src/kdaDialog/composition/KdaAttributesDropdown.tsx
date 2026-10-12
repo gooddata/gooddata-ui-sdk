@@ -12,7 +12,6 @@ import {
     InvertableSelectVirtualised,
     SeparatorLine,
     UiButton,
-    useIdPrefixed,
 } from "@gooddata/sdk-ui-kit";
 
 import { type IKdaItemGroup } from "../internalTypes.js";
@@ -28,6 +27,7 @@ const ITEM_HEIGHT = 28;
 const ALIGN_POINTS = [{ align: "tl bl" }];
 
 export interface IKdaAttributesDropdownProps {
+    buttonId: string;
     buttonLabel: string;
     attributesCount: number;
     validAttributes: ICatalogAttribute[];
@@ -40,6 +40,7 @@ export interface IKdaAttributesDropdownProps {
 }
 
 export function KdaAttributesDropdown({
+    buttonId,
     buttonLabel,
     attributesCount,
     validAttributes,
@@ -52,7 +53,6 @@ export function KdaAttributesDropdown({
 }: IKdaAttributesDropdownProps) {
     const intl = useIntl();
     const labelKeyDriversId = useId();
-    const dropdownButtonId = useIdPrefixed("kda-attributes-dropdown-button");
 
     const {
         searchString,
@@ -77,7 +77,7 @@ export function KdaAttributesDropdown({
             autofocusOnOpen
             overlayPositionType="sameAsTarget"
             alignPoints={ALIGN_POINTS}
-            returnFocusTo={dropdownButtonId}
+            returnFocusTo={buttonId}
             onOpenStateChanged={(isOpen) => {
                 if (isOpen) {
                     resetSelection();
@@ -88,7 +88,7 @@ export function KdaAttributesDropdown({
             }}
             renderButton={({ toggleDropdown, isOpen, buttonRef, dropdownId }: IDropdownButtonRenderProps) => (
                 <UiButton
-                    id={dropdownButtonId}
+                    id={buttonId}
                     dataTestId={`${attributesCount}_attributes`}
                     ref={buttonRef as RefObject<HTMLButtonElement>}
                     variant="tertiary"

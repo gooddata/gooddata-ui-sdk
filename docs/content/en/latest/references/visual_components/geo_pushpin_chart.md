@@ -220,5 +220,6 @@ The following example shows the supported config structure with sample values:
 ## Notes
 
 - `GeoPushpinChart` is a convenience wrapper over [GeoChart](./geo_chart/) for the single-pushpin-layer scenario.
+- Geo charts start a MapLibre web worker. No bundler setup is needed; see [Map worker, bundlers and CSP](./geo_chart/#map-worker-bundlers-and-csp) for Content Security Policy requirements and self-hosting.
 - The `location` prop is deprecated. Use separate `latitude` and `longitude` attributes instead.
 - `mapboxToken` is deprecated and ignored by the MapLibre-based implementation. `MapboxTokenProvider` is relevant only for `LegacyGeoPushpinChart`.

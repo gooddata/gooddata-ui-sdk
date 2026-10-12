@@ -512,7 +512,8 @@ export function convertBucketToTitle(
 function findObjectProps(entities: ExportEntities, item: AfmObjectIdentifier): { title: string } {
     const items = resolveEntitiesLdmObjects(entities);
 
-    switch (item.identifier.type) {
+    // Widened: yaml `metric/` refs arrive typed "measure", which the AFM identifier type does not list.
+    switch (item.identifier.type as string) {
         case "attribute": {
             const found = items.attributes.find((attribute) => attribute.attribute.id === item.identifier.id);
             return {
@@ -538,8 +539,16 @@ function findObjectProps(entities: ExportEntities, item: AfmObjectIdentifier): {
                 title: title ?? firstLetterUpperCase(convertIdToTitle(item.identifier.id).toLowerCase()),
             };
         }
-        case "label":
+        case "measure":
         case "metric": {
+            const found = items.metrics.find((metric) => metric.measure.id === item.identifier.id);
+            return {
+                title:
+                    found?.measure.title ??
+                    firstLetterUpperCase(convertIdToTitle(item.identifier.id).toLowerCase()),
+            };
+        }
+        case "label": {
             const found = items.labels.find((label) => label.id === item.identifier.id);
             return {
                 title:

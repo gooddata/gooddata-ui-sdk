@@ -80,11 +80,6 @@ const specs = [
         // modelNamePrefix: "Scan" // we should consider prefixing in next major, due to lot of name clashes
     },
     {
-        path: "/api/v1/schemas/auth",
-        name: "auth-json-api",
-        // modelNamePrefix: "Auth" // we should consider prefixing in next major, due to lot of name clashes
-    },
-    {
         path: "/api/v1/schemas/export",
         name: "export-json-api",
         modelNamePrefix: "Export",
@@ -106,8 +101,73 @@ const specs = [
         name: "ai-json-api",
         modelNamePrefix: "Ai",
         apiNameSuffix: "Ai",
+        // Works around two openapi-generator 7.15.0 bugs, see applyGenAiGeneratorWorkarounds.
+        // Remove once openapi-generator is upgraded past them.
+        schemaOverrides: applyGenAiGeneratorWorkarounds,
     },
 ];
+
+/**
+ * openapi-generator 7.15.0 mishandles two patterns in the gen-ai spec:
+ *
+ * 1. `additionalProperties: true` inside an `anyOf`/`oneOf` branch (e.g.
+ *    `report: { anyOf: [{ type: object, additionalProperties: true }, { type: null }] }`) degrades the
+ *    whole parent schema — sibling `anyOf: [string, null]` properties turn into empty junk models
+ *    (`AiBaseReportId {}`), `const` enums drop and a spurious `[key: string]: any` index signature
+ *    appears — and flips unrelated `Array<object>` to `Array<object | null>`. `additionalProperties: true`
+ *    is the JSON Schema default, so dropping it everywhere is a semantic no-op.
+ *
+ * 2. `anyOf: [{ type: string }, { $ref }]` as array `items` silently drops the `string` alternative and
+ *    generates only the object shape. Rewriting it to `oneOf` yields the intended `Ref | string`. This is
+ *    applied only to `SummarizeVisualizationsRequest.visualizations`: the same rewrite spec-wide flips ten
+ *    pre-existing exported types from interfaces to union aliases and degrades the
+ *    `QueryMetricValueFilter*.dimensionality` items to plain `string`.
+ *
+ * @param schema the downloaded gen-ai OpenAPI spec
+ * @returns the same spec, mutated
+ */
+function applyGenAiGeneratorWorkarounds(schema) {
+    stripAdditionalPropertiesTrueFromUnionBranches(schema);
+
+    const visualizationsItems =
+        schema.components?.schemas?.SummarizeVisualizationsRequest?.properties?.visualizations?.items;
+    if (Array.isArray(visualizationsItems?.anyOf)) {
+        visualizationsItems.oneOf = visualizationsItems.anyOf;
+        delete visualizationsItems.anyOf;
+    }
+
+    return schema;
+}
+
+/**
+ * Deletes `additionalProperties: true` from every `anyOf`/`oneOf` branch anywhere in the spec.
+ * See applyGenAiGeneratorWorkarounds for why.
+ *
+ * @param node any node of the OpenAPI spec
+ * @returns the same node, mutated
+ */
+function stripAdditionalPropertiesTrueFromUnionBranches(node) {
+    if (Array.isArray(node)) {
+        node.forEach(stripAdditionalPropertiesTrueFromUnionBranches);
+        return node;
+    }
+    if (node === null || typeof node !== "object") {
+        return node;
+    }
+    for (const key of ["anyOf", "oneOf"]) {
+        if (Array.isArray(node[key])) {
+            for (const branch of node[key]) {
+                if (branch && typeof branch === "object" && branch.additionalProperties === true) {
+                    delete branch.additionalProperties;
+                }
+            }
+        }
+    }
+    for (const value of Object.values(node)) {
+        stripAdditionalPropertiesTrueFromUnionBranches(value);
+    }
+    return node;
+}
 
 const sortKeys = (obj) =>
     Object.fromEntries(

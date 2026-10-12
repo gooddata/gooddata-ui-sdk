@@ -164,6 +164,21 @@ export class OrganizationSettingsService
         return unwrapSettingContent(content) as IAiRateLimit | undefined;
     }
 
+    public async getMetadataLocale(): Promise<string | undefined> {
+        return this.getOwnedLocale("METADATA_LOCALE");
+    }
+
+    public async getDataLocale(): Promise<string | undefined> {
+        return this.getOwnedLocale("DATA_LOCALE");
+    }
+
+    private async getOwnedLocale(type: "METADATA_LOCALE" | "DATA_LOCALE"): Promise<string | undefined> {
+        const settings = await this.getSettingByType(type);
+        const content = settings.data.data[0]?.attributes?.content;
+        const locale = unwrapSettingContent(content);
+        return typeof locale === "string" && locale.length > 0 ? locale : undefined;
+    }
+
     public async setEnableDrillToUrlByDefault(enabled: boolean): Promise<void> {
         return this.setSetting("ENABLE_DRILL_TO_URL_BY_DEFAULT", { value: enabled });
     }

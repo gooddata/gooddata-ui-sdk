@@ -28,6 +28,7 @@ import {
     type IWorkspaceFactsService,
     type IWorkspaceInsightsService,
     type IWorkspaceKeyDriverAnalysisService,
+    type IWorkspaceLocalizationService,
     type IWorkspaceLogicalModelService,
     type IWorkspaceMeasuresService,
     type IWorkspaceObjectPermissionsService,
@@ -49,6 +50,7 @@ import {
 import { workspaceConverter } from "../../convertors/fromBackend/WorkspaceConverter.js";
 import { convertWorkspaceUpdate } from "../../convertors/toBackend/WorkspaceConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
+import { TigerWorkspaceLocalizationService } from "../localization/index.js";
 
 import { TigerWorkspaceAccessControlService } from "./accessControl/index.js";
 import { TigerWorkspaceAgentsService } from "./agents.js";
@@ -256,5 +258,9 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
 
     public publisher(): IWorkspacePublisherService {
         return new TigerWorkspacePublisherService(this.authCall, this.workspace);
+    }
+
+    public localization(): IWorkspaceLocalizationService {
+        return new TigerWorkspaceLocalizationService(this.authCall, this.workspace);
     }
 }

@@ -2300,6 +2300,9 @@
                     },
                     "502": {
                         "description": "The upstream LLM provider failed. The body carries a `code` field naming the error class."
+                    },
+                    "504": {
+                        "description": "The summary did not finish in time. The body carries a `detail` message."
                     }
                 }
             }
@@ -2457,6 +2460,37 @@
                                 }
                             }
                         }
+                    }
+                }
+            }
+        },
+        "/api/v1/ai/organization/projections/rebuild": {
+            "post": {
+                "tags": [
+                    "AI Search Data"
+                ],
+                "summary": "Rebuild AI search data",
+                "description": "Rebuilds the organization's AI search data from its stored metadata, memory items and knowledge document files, for example after the vector store was lost. The rebuild runs in the background; the response reports what was queued. Rebuilding knowledge documents counts toward AI usage. If this deployment cannot rebuild knowledge documents, the rebuild skips them. It still rebuilds all other AI search data.",
+                "operationId": "rebuildOrgAiSearchData",
+                "responses": {
+                    "202": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProjectionRebuildResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "AI search data recovery is not enabled for the organization."
+                    },
+                    "409": {
+                        "description": "The previous rebuild is still restoring knowledge documents."
+                    },
+                    "429": {
+                        "description": "A rebuild was accepted recently. The Retry-After header says when to retry."
                     }
                 }
             }
@@ -4025,7 +4059,7 @@
                     "type": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Type54"
+                                "$ref": "#/components/schemas/Type57"
                             },
                             {
                                 "type": "null"
@@ -5434,7 +5468,7 @@
                                 "type": "null"
                             }
                         ],
-                        "description": "Per-series line style and weight overrides. Keys are measure identifiers."
+                        "description": "Per-series line style and weight overrides. Keys are metric local identifiers, or attribute element URIs (on Tiger, the element's primary label value) when the chart is segmented or stacked by an attribute."
                     },
                     "max_size": {
                         "anyOf": [
@@ -6166,7 +6200,7 @@
                             }
                         ],
                         "title": "Agentid",
-                        "description": "Agent that processed this item. Populated on every persisted item once LX-2483 ships."
+                        "description": "Agent that processed this item."
                     },
                     "content": {
                         "oneOf": [
@@ -6881,7 +6915,7 @@
                         "description": "An optional human readable title for the dashboard. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type55"
+                        "$ref": "#/components/schemas/Type58"
                     },
                     "user_filters_reset": {
                         "anyOf": [
@@ -7098,7 +7132,7 @@
                         "description": "An optional human readable title for the dashboard. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type55"
+                        "$ref": "#/components/schemas/Type58"
                     },
                     "user_filters_reset": {
                         "anyOf": [
@@ -9614,7 +9648,7 @@
                     "type": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Type51"
+                                "$ref": "#/components/schemas/Type54"
                             },
                             {
                                 "type": "null"
@@ -10505,7 +10539,8 @@
                     "visualization",
                     "dashboard",
                     "filter_context",
-                    "parameter"
+                    "parameter",
+                    "document"
                 ],
                 "title": "ObjectType"
             },
@@ -10966,7 +11001,6 @@
                     "parameters": {
                         "anyOf": [
                             {
-                                "additionalProperties": true,
                                 "type": "object"
                             },
                             {
@@ -11077,6 +11111,39 @@
                     "in"
                 ],
                 "title": "PositiveAttributeFilterBody"
+            },
+            "ProjectionRebuildResponse": {
+                "properties": {
+                    "knowledgeDocuments": {
+                        "type": "integer",
+                        "title": "Knowledgedocuments",
+                        "description": "Knowledge documents queued for rebuilding from their stored files."
+                    },
+                    "memoryItems": {
+                        "type": "integer",
+                        "title": "Memoryitems",
+                        "description": "Memory items queued for re-indexing."
+                    },
+                    "nodes": {
+                        "type": "integer",
+                        "title": "Nodes",
+                        "description": "Analytical objects queued for re-indexing."
+                    },
+                    "skippedKnowledgeDocuments": {
+                        "type": "integer",
+                        "title": "Skippedknowledgedocuments",
+                        "description": "Knowledge documents the rebuild skipped. A document is skipped when it has no stored file or its file is in storage the rebuild cannot read. All documents are skipped when this deployment cannot rebuild them."
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "nodes",
+                    "memoryItems",
+                    "knowledgeDocuments",
+                    "skippedKnowledgeDocuments"
+                ],
+                "title": "ProjectionRebuildResponse",
+                "description": "What an accepted rebuild enqueued; the workers restore it in the background."
             },
             "Query": {
                 "properties": {
@@ -13889,6 +13956,18 @@
                         "title": "Page Count",
                         "description": "Number of pages in the draft, for the answer card."
                     },
+                    "refines_ref": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Refines Ref",
+                        "description": "`report_ref` of the draft version this one reworks, null for a first draft. A client showing that version can apply this one in its place instead of opening it as another report."
+                    },
                     "report": {
                         "anyOf": [
                             {
@@ -13913,6 +13992,12 @@
                         "title": "Report Ref",
                         "description": "Conversation-scoped id of this draft version (e.g. `report_2`). Name it in `PATCH .../conversations/{conversationId}/reports/{reportRef}` after saving this version."
                     },
+                    "reworks_open_report": {
+                        "type": "boolean",
+                        "title": "Reworks Open Report",
+                        "description": "True when this version was written from the report open in the editor (`view.report`). A client still showing that report, unchanged since the message was sent, can apply it there. Applies to the answer to a message just sent; a part replayed from history must not be applied again.",
+                        "default": false
+                    },
                     "saved_report_id": {
                         "anyOf": [
                             {
@@ -13931,24 +14016,6 @@
                         "title": "Type",
                         "description": "Type of multipart part.",
                         "default": "report"
-                    },
-                    "refines_ref": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Refines Ref",
-                        "description": "`report_ref` of the draft version this one reworks, null for a first draft. A client showing that version can apply this one in its place instead of opening it as another report."
-                    },
-                    "reworks_open_report": {
-                        "type": "boolean",
-                        "title": "Reworks Open Report",
-                        "description": "True when this version was written from the report open in the editor (`view.report`). A client still showing that report, unchanged since the message was sent, can apply it there.",
-                        "default": false
                     }
                 },
                 "additionalProperties": false,
@@ -15427,7 +15494,8 @@
                     "what_if_analysis",
                     "knowledge",
                     "dashboard_builder",
-                    "dashboard_editor"
+                    "dashboard_editor",
+                    "report_builder"
                 ],
                 "title": "SkillName",
                 "description": "Name of a skill an agent can be configured with."
@@ -15888,7 +15956,7 @@
                         },
                         "type": "array",
                         "title": "Filtercontext",
-                        "description": "AFM filters in the same shape consumed by the AFM execute endpoint, merged on top of each visualization's stored filters using the type-aware merge rules. Send `[]` to apply no request filters."
+                        "description": "AFM filters in the same shape consumed by the AFM execute endpoint, applied to every visualization on top of its stored filters. Send `[]` to apply no request filters. Each layer is merged on top of the one below it: attribute, ranking and inline filters are added and all apply together; a date filter replaces the lower layer's date filter on the same date dataset; a measure value filter replaces the lower layer's measure value filter on the same measure."
                     },
                     "formatHint": {
                         "anyOf": [
@@ -15903,12 +15971,19 @@
                     },
                     "visualizations": {
                         "items": {
-                            "type": "string"
+                            "oneOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/VisualizationPlacementRequest"
+                                }
+                            ]
                         },
                         "type": "array",
                         "minItems": 1,
                         "title": "Visualizations",
-                        "description": "Visualizations to summarize. They need not belong to any one dashboard."
+                        "description": "Visualizations to summarize. They need not belong to any one dashboard. Each item is one placement, and each placement is executed and summarized separately. An item is a visualization ID or an object with `visualizationId` and its own `filters`. A visualization ID gets its stored filters and `filterContext` only. The same visualization can occur more than once."
                     }
                 },
                 "additionalProperties": false,
@@ -16254,7 +16329,7 @@
                         "description": "A total title."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type50"
+                        "$ref": "#/components/schemas/Type53"
                     },
                     "using": {
                         "type": "string",
@@ -16464,7 +16539,7 @@
                 ],
                 "title": "Type5"
             },
-            "Type50": {
+            "Type53": {
                 "type": "string",
                 "enum": [
                     "SUM",
@@ -16474,78 +16549,36 @@
                     "MED",
                     "NAT"
                 ],
-                "title": "Type50"
+                "title": "Type53"
             },
-            "Type51": {
+            "Type54": {
                 "type": "string",
                 "enum": [
                     "pushpin",
                     "area"
                 ],
-                "title": "Type51"
+                "title": "Type54"
             },
-            "Type54": {
+            "Type57": {
                 "type": "string",
                 "enum": [
                     "solid",
                     "pattern",
                     "outline"
                 ],
-                "title": "Type54"
+                "title": "Type57"
             },
-            "Type55": {
+            "Type58": {
                 "type": "string",
                 "enum": [
                     "dashboard"
                 ],
-                "title": "Type55"
-            },
-            "Type63": {
-                "type": "string",
-                "enum": [
-                    "table"
-                ],
-                "title": "Type63"
-            },
-            "Type64": {
-                "type": "string",
-                "enum": [
-                    "bar_chart"
-                ],
-                "title": "Type64"
-            },
-            "Type65": {
-                "type": "string",
-                "enum": [
-                    "column_chart"
-                ],
-                "title": "Type65"
-            },
-            "Type66": {
-                "type": "string",
-                "enum": [
-                    "line_chart"
-                ],
-                "title": "Type66"
-            },
-            "Type67": {
-                "type": "string",
-                "enum": [
-                    "area_chart"
-                ],
-                "title": "Type67"
-            },
-            "Type68": {
-                "type": "string",
-                "enum": [
-                    "scatter_chart"
-                ],
-                "title": "Type68"
+                "title": "Type58"
             },
             "Type69": {
                 "type": "string",
                 "enum": [
-                    "bubble_chart"
+                    "table"
                 ],
                 "title": "Type69"
             },
@@ -16559,70 +16592,70 @@
             "Type70": {
                 "type": "string",
                 "enum": [
-                    "pie_chart"
+                    "bar_chart"
                 ],
                 "title": "Type70"
             },
             "Type71": {
                 "type": "string",
                 "enum": [
-                    "donut_chart"
+                    "column_chart"
                 ],
                 "title": "Type71"
             },
             "Type72": {
                 "type": "string",
                 "enum": [
-                    "treemap_chart"
+                    "line_chart"
                 ],
                 "title": "Type72"
             },
             "Type73": {
                 "type": "string",
                 "enum": [
-                    "pyramid_chart"
+                    "area_chart"
                 ],
                 "title": "Type73"
             },
             "Type74": {
                 "type": "string",
                 "enum": [
-                    "funnel_chart"
+                    "scatter_chart"
                 ],
                 "title": "Type74"
             },
             "Type75": {
                 "type": "string",
                 "enum": [
-                    "heatmap_chart"
+                    "bubble_chart"
                 ],
                 "title": "Type75"
             },
             "Type76": {
                 "type": "string",
                 "enum": [
-                    "bullet_chart"
+                    "pie_chart"
                 ],
                 "title": "Type76"
             },
             "Type77": {
                 "type": "string",
                 "enum": [
-                    "waterfall_chart"
+                    "donut_chart"
                 ],
                 "title": "Type77"
             },
             "Type78": {
                 "type": "string",
                 "enum": [
-                    "dependency_wheel_chart"
+                    "treemap_chart"
                 ],
                 "title": "Type78"
             },
             "Type79": {
                 "type": "string",
                 "enum": [
-                    "sankey_chart"
+                    "pyramid_chart"
                 ],
                 "title": "Type79"
             },
@@ -16636,44 +16669,72 @@
             "Type80": {
                 "type": "string",
                 "enum": [
-                    "headline_chart"
+                    "funnel_chart"
                 ],
                 "title": "Type80"
             },
             "Type81": {
                 "type": "string",
                 "enum": [
-                    "combo_chart"
+                    "heatmap_chart"
                 ],
                 "title": "Type81"
             },
             "Type82": {
                 "type": "string",
                 "enum": [
-                    "geo_chart"
+                    "bullet_chart"
                 ],
                 "title": "Type82"
             },
             "Type83": {
                 "type": "string",
                 "enum": [
-                    "geo_area_chart"
+                    "waterfall_chart"
                 ],
                 "title": "Type83"
             },
             "Type84": {
                 "type": "string",
                 "enum": [
-                    "repeater_chart"
+                    "dependency_wheel_chart"
                 ],
                 "title": "Type84"
             },
             "Type85": {
                 "type": "string",
                 "enum": [
-                    "radar_chart"
+                    "sankey_chart"
                 ],
                 "title": "Type85"
+            },
+            "Type86": {
+                "type": "string",
+                "enum": [
+                    "headline_chart"
+                ],
+                "title": "Type86"
+            },
+            "Type87": {
+                "type": "string",
+                "enum": [
+                    "combo_chart"
+                ],
+                "title": "Type87"
+            },
+            "Type88": {
+                "type": "string",
+                "enum": [
+                    "geo_chart"
+                ],
+                "title": "Type88"
+            },
+            "Type89": {
+                "type": "string",
+                "enum": [
+                    "geo_area_chart"
+                ],
+                "title": "Type89"
             },
             "Type9": {
                 "type": "string",
@@ -16681,6 +16742,20 @@
                     "date_filter"
                 ],
                 "title": "Type9"
+            },
+            "Type90": {
+                "type": "string",
+                "enum": [
+                    "repeater_chart"
+                ],
+                "title": "Type90"
+            },
+            "Type91": {
+                "type": "string",
+                "enum": [
+                    "radar_chart"
+                ],
+                "title": "Type91"
             },
             "UploadDocumentResponse": {
                 "properties": {
@@ -16942,7 +17017,6 @@
                 "title": "UserContextObjectReferenceGroup"
             },
             "UserContextReport": {
-                "description": "The report open in the report editor, so refinements can target it without an id.",
                 "properties": {
                     "definition": {
                         "anyOf": [
@@ -16953,10 +17027,10 @@
                                 "type": "null"
                             }
                         ],
-                        "description": "The report currently open in the client, as an Analytics as Code (AAC) report document: the same shape the `report` answer part carries. Send the copy the client is holding, including any unsaved edits. The assistant reads its title, period and page count for the context summary. Optional.",
-                        "title": "Definition"
+                        "title": "Definition",
+                        "description": "The report currently open in the client, as an Analytics as Code (AAC) report document: the same shape the `report` answer part carries. Send the copy the client is holding, including any unsaved edits. The assistant reads its title, period and page count for the context summary. Optional."
                     },
-                    "id": {
+                    "draftConversationId": {
                         "anyOf": [
                             {
                                 "type": "string"
@@ -16965,19 +17039,9 @@
                                 "type": "null"
                             }
                         ],
-                        "description": "Id of the saved report open in the editor; null while it is a new report not saved yet.",
-                        "title": "Id"
-                    },
-                    "title": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Title"
+                        "title": "Draftconversationid",
+                        "description": "Deprecated and ignored, like `draftRef`.",
+                        "deprecated": true
                     },
                     "draftRef": {
                         "anyOf": [
@@ -16989,11 +17053,36 @@
                             }
                         ],
                         "title": "Draftref",
-                        "description": "`report_ref` of the conversation draft open in the editor while it is not saved yet. A change the assistant makes to it is then a new version of that draft, not a new report. Optional."
+                        "description": "Deprecated and ignored: a change to the open report is marked `reworks_open_report` instead.",
+                        "deprecated": true
+                    },
+                    "id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Id",
+                        "description": "Id of the saved report open in the editor; null while it is a new report not saved yet."
+                    },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title"
                     }
                 },
+                "type": "object",
                 "title": "UserContextReport",
-                "type": "object"
+                "description": "The report open in the report editor, so refinements can target it without an id."
             },
             "UserContextRichTextWidgetDescriptor": {
                 "properties": {
@@ -17647,7 +17736,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type63",
+                        "$ref": "#/components/schemas/Type69",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -17785,7 +17874,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type72",
+                        "$ref": "#/components/schemas/Type78",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -17921,7 +18010,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type73",
+                        "$ref": "#/components/schemas/Type79",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -18057,7 +18146,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type74",
+                        "$ref": "#/components/schemas/Type80",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -18225,7 +18314,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type75",
+                        "$ref": "#/components/schemas/Type81",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -18368,7 +18457,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type76",
+                        "$ref": "#/components/schemas/Type82",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -18504,7 +18593,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type77",
+                        "$ref": "#/components/schemas/Type83",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -18662,7 +18751,7 @@
                         "description": "A to attribute in this visualisation."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type78",
+                        "$ref": "#/components/schemas/Type84",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -18827,7 +18916,7 @@
                         "description": "A to attribute in this visualisation."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type79",
+                        "$ref": "#/components/schemas/Type85",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -18970,7 +19059,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type80",
+                        "$ref": "#/components/schemas/Type86",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -19104,7 +19193,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type81",
+                        "$ref": "#/components/schemas/Type87",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -19257,7 +19346,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type64",
+                        "$ref": "#/components/schemas/Type70",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -19417,7 +19506,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type82",
+                        "$ref": "#/components/schemas/Type88",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -19570,7 +19659,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type83",
+                        "$ref": "#/components/schemas/Type89",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -19738,7 +19827,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type84",
+                        "$ref": "#/components/schemas/Type90",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -19876,7 +19965,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type85",
+                        "$ref": "#/components/schemas/Type91",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -20029,7 +20118,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type65",
+                        "$ref": "#/components/schemas/Type71",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -20182,7 +20271,7 @@
                         "description": "A list of trend by attributes in this visualisation."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type66",
+                        "$ref": "#/components/schemas/Type72",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -20335,7 +20424,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type67",
+                        "$ref": "#/components/schemas/Type73",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -20495,7 +20584,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type68",
+                        "$ref": "#/components/schemas/Type74",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -20655,7 +20744,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type69",
+                        "$ref": "#/components/schemas/Type75",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -20791,7 +20880,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type70",
+                        "$ref": "#/components/schemas/Type76",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -20927,7 +21016,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type71",
+                        "$ref": "#/components/schemas/Type77",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -21380,6 +21469,65 @@
                 "additionalProperties": false,
                 "type": "object",
                 "title": "VisualizationPart"
+            },
+            "VisualizationPlacementRequest": {
+                "properties": {
+                    "filters": {
+                        "items": {
+                            "oneOf": [
+                                {
+                                    "$ref": "#/components/schemas/PositiveAttributeFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/NegativeAttributeFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/MatchAttributeFilter-Input"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/AbsoluteDateFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/RelativeDateFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/AllTimeDateFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/RankingFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/ComparisonMeasureValueFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/RangeMeasureValueFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/CompoundMeasureValueFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/InlineFilterDefinition"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Filters",
+                        "description": "AFM filters for this placement only. Layers, lowest first: the visualization's stored filters, `filterContext`, then these filters. Send `[]` to apply no own filters. Each layer is merged on top of the one below it: attribute, ranking and inline filters are added and all apply together; a date filter replaces the lower layer's date filter on the same date dataset; a measure value filter replaces the lower layer's measure value filter on the same measure."
+                    },
+                    "visualizationId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "title": "VisualizationId"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "visualizationId",
+                    "filters"
+                ],
+                "title": "VisualizationPlacementRequest",
+                "description": "One placement of a visualization, summarized under its own filters."
             },
             "VisualizationReferences": {
                 "properties": {

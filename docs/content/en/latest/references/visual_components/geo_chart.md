@@ -196,6 +196,17 @@ For additional examples of colors, separators, or legend behavior, see [Chart Co
 | position   | false     | GeoLegendPosition \| LegacyGeoLegendPosition | `"auto"` (default), `"top-left"`, `"top-right"`, `"bottom-left"`, or `"bottom-right"`. Legacy edge values are deprecated.                                                 |
 | responsive | false     | boolean &#124; `"autoPositionWithPopup"`     | `true` enables responsive legend layout. Legacy `"autoPositionWithPopup"` preserves older automatic legend placement behavior in smaller containers. Defaults to `false`. |
 
+## Map worker, bundlers and CSP
+
+Geo charts render with [MapLibre GL JS](https://maplibre.org/), which parses map data in a web worker. The `@gooddata/sdk-ui-geo` package ships that worker and needs no bundler setup:
+
+- When your bundler turns the package's `new URL("...", import.meta.url)` reference into an emitted asset (webpack, Vite, Rspack), the chart starts the worker from that same-origin file.
+- Otherwise (Angular CLI with either builder, esbuild, Rollup without plugins, Vite library mode), the chart starts the worker from an inline Blob built from the worker code, which it loads on demand together with MapLibre.
+
+If your page sets a Content Security Policy, allow both forms: `worker-src 'self' blob:`.
+
+If the policy must not allow `blob:` workers, host `node_modules/@gooddata/sdk-ui-geo/worker/maplibre-gl-worker.js` from your application and pass its URL to the `setWorkerUrl` function of maplibre-gl before the first geo chart renders; the SDK keeps a worker URL that is already set. Your application must resolve the same copy of `maplibre-gl` as the SDK, so declare it as a dependency with the version the SDK pins.
+
 ## Notes
 
 - Use [GeoPushpinChart](./geo_pushpin_chart/) or [GeoAreaChart](./geo_area_chart/) if you only need a single layer.

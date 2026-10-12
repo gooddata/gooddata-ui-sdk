@@ -48,8 +48,8 @@ interface IMapInitializationOptions extends IMapOptions {
  * @remarks
  * This function handles the creation of a MapLibre GL map instance with all necessary
  * configuration. It dynamically imports maplibre-gl to avoid bundling issues, points MapLibre
- * at the worker script this package ships, sets up the map with safe default options, and
- * ensures glyphs are properly configured for text rendering.
+ * at the worker this package ships (see `mapWorker.ts`), sets up the map with safe default
+ * options, and ensures glyphs are properly configured for text rendering.
  *
  * @param options - Map initialization options including container, center, zoom, bounds, etc.
  * @param locale - Optional MapLibre locale configuration for cooperative gestures
@@ -81,9 +81,10 @@ export async function initializeMapLibreMap(
     backend?: IAnalyticalBackend,
 ): Promise<IMapInitResult> {
     const maplibregl = await import("maplibre-gl");
-    ensureMapLibreWorkerUrl(maplibregl);
-    const styleSpecification =
-        style ?? (backend ? await fetchMapStyle(backend, basemap, language) : undefined);
+    const [styleSpecification] = await Promise.all([
+        style ?? (backend ? fetchMapStyle(backend, basemap, language) : undefined),
+        ensureMapLibreWorkerUrl(maplibregl),
+    ]);
 
     if (!styleSpecification) {
         throw new Error("Map style is required. Provide either a style option or a backend instance.");

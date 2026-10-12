@@ -8,7 +8,6 @@ The `api-endpoints` directory is organized into 18 separate endpoint modules, ea
 
 - **aac** - Analytics as Code format APIs (alternatives to layout APIs)
 - **actions** - Workspace and organization management actions
-- **authActions** - Authentication and authorization actions
 - **automation** - Automation and workflow management
 - **entitiesObjects** - Metadata entities (dashboards, visualizations, filters, etc.)
 - **execution** - AFM execution and analysis APIs

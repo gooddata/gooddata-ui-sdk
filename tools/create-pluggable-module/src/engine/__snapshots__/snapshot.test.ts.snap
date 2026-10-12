@@ -580,7 +580,8 @@ The \`asyncComponentTranslations\` map is typed as \`Record<ILocale, ...>\`. If 
         },
         {
             "operationName": "_phase:test",
-            "outputFolderNames": []
+            "outputFolderNames": [],
+            "weight": 4
         },
         {
             "operationName": "_phase:pack-build",

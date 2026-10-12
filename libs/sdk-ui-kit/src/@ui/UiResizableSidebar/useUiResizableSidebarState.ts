@@ -54,13 +54,17 @@ export function useUiResizableSidebarState({
     maxWidth,
     hasRail = false,
     minContentWidth,
+    availableWidth,
     isResizable,
     isCollapsible,
     collapsedOverride,
     widthOverride,
     onUserChange,
 }: IUiResizableSidebarStateOptions): IUiResizableSidebarState {
-    const viewportWidth = useWindowWidth(isResizable && minContentWidth !== undefined);
+    const viewportWidth = useWindowWidth(
+        isResizable && minContentWidth !== undefined && availableWidth === undefined,
+    );
+    const sharedWidth = availableWidth ?? viewportWidth;
     const [storedWidth, setPersistedWidth] = useLocalStorage<unknown>(widthStorageKey, null);
     const [storedCollapsed, setPersistedCollapsed] = useLocalStorage<unknown>(collapsedStorageKey, false);
     // Anything may have written these keys, so only well-formed values are trusted; the overrides
@@ -85,7 +89,7 @@ export function useUiResizableSidebarState({
         const max =
             minContentWidth === undefined
                 ? maxWidth
-                : clamp(viewportWidth - minContentWidth, minWidth, maxWidth);
+                : clamp(sharedWidth - minContentWidth, minWidth, maxWidth);
         const expandedWidth = isResizable ? clamp(preferredWidth, minWidth, max) : minWidth;
         // Live setters announce the user change first so the caller can release an override of the property.
         const setCollapsed = isCollapsible ? announceAndSetCollapsed : noop;
@@ -151,6 +155,6 @@ export function useUiResizableSidebarState({
         preferredCollapsed,
         preferredWidth,
         setPersistedWidth,
-        viewportWidth,
+        sharedWidth,
     ]);
 }

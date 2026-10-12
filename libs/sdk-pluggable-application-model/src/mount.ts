@@ -16,6 +16,7 @@ export const PluggableAppEventType = {
     AI_ASSISTANT_CLOSE_REQUESTED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CLOSE_REQUESTED",
     AI_ASSISTANT_CONTEXT_CHANGED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CONTEXT_CHANGED",
     AI_ASSISTANT_PUBLISHER_DOCUMENT_SAVED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.PUBLISHER_DOCUMENT_SAVED",
+    AI_ASSISTANT_DASHBOARD_SAVED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.DASHBOARD_SAVED",
 } as const;
 
 /**
@@ -449,6 +450,73 @@ export function isAiAssistantPublisherDocumentSavedEvent(
         typeof itemId === "string" &&
         (documentRef === undefined || typeof documentRef === "string") &&
         typeof savedDocumentId === "string"
+    );
+}
+
+/**
+ * Event telling the host assistant that a dashboard and its draft insights were saved.
+ *
+ * @alpha
+ */
+export interface IAiAssistantDashboardSavedEvent extends IPluggableAppEvent {
+    readonly type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.DASHBOARD_SAVED";
+    readonly payload: {
+        readonly conversationId: string;
+        readonly originalDashboardId: string;
+        readonly savedDashboardId: string;
+        readonly savedInsights: ReadonlyArray<{
+            readonly originalInsightId: string;
+            readonly savedInsightId: string;
+        }>;
+    };
+}
+
+/**
+ * Creates an {@link IAiAssistantDashboardSavedEvent}.
+ *
+ * @alpha
+ */
+export function aiAssistantDashboardSaved(
+    payload: IAiAssistantDashboardSavedEvent["payload"],
+): IAiAssistantDashboardSavedEvent {
+    return { type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.DASHBOARD_SAVED", payload };
+}
+
+/**
+ * Type guard for {@link IAiAssistantDashboardSavedEvent}.
+ *
+ * @alpha
+ */
+export function isAiAssistantDashboardSavedEvent(obj: unknown): obj is IAiAssistantDashboardSavedEvent {
+    if (
+        typeof obj !== "object" ||
+        obj === null ||
+        (obj as { type?: unknown }).type !== "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.DASHBOARD_SAVED"
+    ) {
+        return false;
+    }
+    const payload = (obj as { payload?: unknown }).payload;
+    if (typeof payload !== "object" || payload === null || Array.isArray(payload)) {
+        return false;
+    }
+    const { conversationId, originalDashboardId, savedDashboardId, savedInsights } = payload as {
+        conversationId?: unknown;
+        originalDashboardId?: unknown;
+        savedDashboardId?: unknown;
+        savedInsights?: unknown;
+    };
+    return (
+        typeof conversationId === "string" &&
+        typeof originalDashboardId === "string" &&
+        typeof savedDashboardId === "string" &&
+        Array.isArray(savedInsights) &&
+        savedInsights.every(
+            (insight) =>
+                typeof insight === "object" &&
+                insight !== null &&
+                typeof (insight as { originalInsightId?: unknown }).originalInsightId === "string" &&
+                typeof (insight as { savedInsightId?: unknown }).savedInsightId === "string",
+        )
     );
 }
 

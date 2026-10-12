@@ -12,7 +12,8 @@
         },
         {
             "operationName": "_phase:test",
-            "outputFolderNames": []
+            "outputFolderNames": [],
+            "weight": 4
         }
     ]
 }

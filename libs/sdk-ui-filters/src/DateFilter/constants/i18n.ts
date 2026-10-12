@@ -29,7 +29,7 @@ export type GranularityIntlKey =
  * Full-form intl keys for granularities (includes fiscal variants).
  * @beta
  */
-export type GranularityIntlKeyFull = GranularityIntlKey | "fiscalmonth" | "fiscalquarter" | "fiscalyear";
+export type GranularityIntlKeyFull = GranularityIntlKey | "fiscalquarter" | "fiscalyear";
 
 /**
  * Maps granularity to short-form intl key. Fiscal granularities map to their non-fiscal equivalents
@@ -66,7 +66,7 @@ export const granularityIntlCodesFull: {
     "GDC.time.date": "day",
     "GDC.time.week_us": "week",
     "GDC.time.month": "month",
-    "GDC.time.fiscal_month": "fiscalmonth",
+    "GDC.time.fiscal_month": "period",
     "GDC.time.quarter": "quarter",
     "GDC.time.fiscal_quarter": "fiscalquarter",
     "GDC.time.year": "year",

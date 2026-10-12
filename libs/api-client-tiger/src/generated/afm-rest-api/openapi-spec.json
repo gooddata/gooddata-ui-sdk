@@ -3272,6 +3272,398 @@
                     }
                 }
             }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/execution/flow/cancel": {
+            "post": {
+                "tags": [
+                    "actions",
+                    "Flow"
+                ],
+                "summary": "(EXPERIMENTAL) Apply the given cancel tokens to flows",
+                "description": "Note: This API is experimental and is going to change. Please, use it accordingly. Each result has one cancel token, which the submit of its flow returns. Applying the token cancels the flow that computes the result.",
+                "operationId": "cancelFlows",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AfmCancelTokens"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AfmCancelTokens"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "VIEW"
+                    ],
+                    "description": "Permissions required to cancel a flow."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/execution/flow": {
+            "post": {
+                "tags": [
+                    "actions",
+                    "Flow"
+                ],
+                "summary": "(EXPERIMENTAL) Execute a flow",
+                "description": "Note: This API is experimental and is going to change. Please, use it accordingly. Runs the transformations of a flow over its inputs and stores the result. The response links to the result.",
+                "operationId": "executeFlow",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FlowRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "The flow was accepted.",
+                        "headers": {
+                            "X-GDC-CANCEL-TOKEN": {
+                                "description": "Token that cancels the flow when it is given to the cancel endpoint.",
+                                "style": "simple",
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FlowExecutionResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "VIEW"
+                    ],
+                    "description": "Permissions required to run a flow."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/execution/flow/result/{resultId}/table": {
+            "get": {
+                "tags": [
+                    "actions",
+                    "Flow"
+                ],
+                "summary": "(EXPERIMENTAL) Get a page of a flow result",
+                "description": "Note: This API is experimental and is going to change. Please, use it accordingly. Gets a window of rows and columns of a flow result.",
+                "operationId": "retrieveFlowResultTable",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "resultId",
+                        "in": "path",
+                        "description": "Result ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "a9b28f9dc55f37ea9f4a5fb0c76895923591e781"
+                    },
+                    {
+                        "name": "rowOffset",
+                        "in": "query",
+                        "description": "Index of the first row to return. The default is 0.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "rowLimit",
+                        "in": "query",
+                        "description": "Maximum number of rows to return. The default is all remaining rows.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "columnOffset",
+                        "in": "query",
+                        "description": "Index of the first column to return. The default is 0.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "columnLimit",
+                        "in": "query",
+                        "description": "Maximum number of columns to return. The default is all remaining columns.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FlowTableResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "VIEW"
+                    ],
+                    "description": "Permissions required to read a flow result."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/execution/flow/result/{resultId}/metadata": {
+            "get": {
+                "tags": [
+                    "actions",
+                    "Flow"
+                ],
+                "summary": "(EXPERIMENTAL) Get the metadata of a flow result",
+                "description": "Note: This API is experimental and is going to change. Please, use it accordingly. Gets the columns and the number of rows of a flow result.",
+                "operationId": "retrieveFlowResultMetadata",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "resultId",
+                        "in": "path",
+                        "description": "Result ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "a9b28f9dc55f37ea9f4a5fb0c76895923591e781"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FlowResultMetadata"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "VIEW"
+                    ],
+                    "description": "Permissions required to read a flow result."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/execution/flow/result/{resultId}/binary": {
+            "get": {
+                "tags": [
+                    "actions",
+                    "Flow"
+                ],
+                "summary": "(EXPERIMENTAL) Get a flow result in Apache Arrow File or Stream format",
+                "description": "Note: This API is experimental and is going to change. Please, use it accordingly. Gets a window of rows and columns of a flow result as an Apache Arrow IPC File or Stream.",
+                "operationId": "retrieveFlowResultBinary",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "resultId",
+                        "in": "path",
+                        "description": "Result ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "a9b28f9dc55f37ea9f4a5fb0c76895923591e781"
+                    },
+                    {
+                        "name": "rowOffset",
+                        "in": "query",
+                        "description": "Index of the first row to return. The default is 0.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "rowLimit",
+                        "in": "query",
+                        "description": "Maximum number of rows to return. The default is all remaining rows.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "columnOffset",
+                        "in": "query",
+                        "description": "Index of the first column to return. The default is 0.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "columnLimit",
+                        "in": "query",
+                        "description": "Maximum number of columns to return. The default is all remaining columns.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The result.",
+                        "content": {
+                            "application/vnd.apache.arrow.file": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            },
+                            "application/vnd.apache.arrow.stream": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "VIEW"
+                    ],
+                    "description": "Permissions required to read a flow result."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/execution/flow/operations": {
+            "get": {
+                "tags": [
+                    "actions",
+                    "Flow"
+                ],
+                "summary": "(EXPERIMENTAL) List the operations of flows",
+                "description": "Note: This API is experimental and is going to change. Please, use it accordingly. Lists the operations that the transformations of a flow can run, with their inputs and the JSON Schema of their parameters.",
+                "operationId": "listFlowOperations",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FlowOperations"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "VIEW"
+                    ],
+                    "description": "Permissions required to list the operations of flows."
+                }
+            }
         }
     },
     "components": {
@@ -3407,7 +3799,6 @@
                                 ]
                             },
                             "from": {
-                                "pattern": "^((?:\\d{4})|(?:\\d{4}-[1-4])|(?:\\d{4}-(0[1-9]|1[0-2]))|(?:\\d{4}-(0[1-9]|[1-4]\\d|5[0-3]))|(?:\\d{4}-\\d{2}-\\d{2})|(?:[0-9]|[1-5]\\d)|(?:[0-9]|[1-9]\\d{1,3}|[1-7]\\d{4}|8[0-5]\\d{3}|86[0-3]\\d{2})|(?:[0-9]|[1-5]\\d)|(?:[0-9]|[1-9]\\d{1,2}|1[0-3]\\d{2}|14[0-3]\\d)|(?:[0-9]|1\\d|2[0-3])|(?:[0-6])|(?:[1-9]|[12]\\d|3[01])|(?:[1-9]|[1-8]\\d|9[0-2])|(?:[1-9]|[1-9]\\d|[12]\\d\\d|3[0-5]\\d|36[0-6])|(?:[1-9]|[1-4]\\d|5[0-3])|(?:[1-9]|1[0-2])|(?:[1-4]))$",
                                 "type": "string",
                                 "description": "Start of the range (including), in the format matching 'granularity'. If omitted, the range is unbounded at the start.",
                                 "nullable": true,
@@ -3464,7 +3855,6 @@
                                 "type": "string"
                             },
                             "to": {
-                                "pattern": "^((?:\\d{4})|(?:\\d{4}-[1-4])|(?:\\d{4}-(0[1-9]|1[0-2]))|(?:\\d{4}-(0[1-9]|[1-4]\\d|5[0-3]))|(?:\\d{4}-\\d{2}-\\d{2})|(?:[0-9]|[1-5]\\d)|(?:[0-9]|[1-9]\\d{1,3}|[1-7]\\d{4}|8[0-5]\\d{3}|86[0-3]\\d{2})|(?:[0-9]|[1-5]\\d)|(?:[0-9]|[1-9]\\d{1,2}|1[0-3]\\d{2}|14[0-3]\\d)|(?:[0-9]|1\\d|2[0-3])|(?:[0-6])|(?:[1-9]|[12]\\d|3[01])|(?:[1-9]|[1-8]\\d|9[0-2])|(?:[1-9]|[1-9]\\d|[12]\\d\\d|3[0-5]\\d|36[0-6])|(?:[1-9]|[1-4]\\d|5[0-3])|(?:[1-9]|1[0-2])|(?:[1-4]))$",
                                 "type": "string",
                                 "description": "End of the range (including), in the format matching 'granularity'. If omitted, the range is unbounded at the end.",
                                 "nullable": true,
@@ -3566,6 +3956,34 @@
                     }
                 },
                 "description": "Response to AFM execution request"
+            },
+            "AfmFlowInput": {
+                "required": [
+                    "execution",
+                    "type"
+                ],
+                "type": "object",
+                "description": "Computes an AFM as /afm/execute does, and reads its rows as a table. It has a column for each attribute and each measure of the AFM, named by its local identifier, the attributes first. Each attribute must use a label of its own.",
+                "allOf": [
+                    {
+                        "type": "object",
+                        "properties": {
+                            "execution": {
+                                "$ref": "#/components/schemas/AFM"
+                            },
+                            "settings": {
+                                "$ref": "#/components/schemas/ExecutionSettings"
+                            },
+                            "type": {
+                                "type": "string",
+                                "description": "Type of the input.",
+                                "enum": [
+                                    "afm"
+                                ]
+                            }
+                        }
+                    }
+                ]
             },
             "AfmIdentifier": {
                 "type": "object",
@@ -5667,6 +6085,37 @@
                     }
                 }
             },
+            "FileFlowInput": {
+                "required": [
+                    "dataSourceId",
+                    "table",
+                    "type"
+                ],
+                "type": "object",
+                "description": "Reads the latest version of a table uploaded to a GDSTORAGE data source.",
+                "allOf": [
+                    {
+                        "type": "object",
+                        "properties": {
+                            "dataSourceId": {
+                                "type": "string",
+                                "description": "Identifier of the GDSTORAGE data source."
+                            },
+                            "table": {
+                                "type": "string",
+                                "description": "Name of the table in the data source."
+                            },
+                            "type": {
+                                "type": "string",
+                                "description": "Type of the input.",
+                                "enum": [
+                                    "file"
+                                ]
+                            }
+                        }
+                    }
+                ]
+            },
             "FilterBy": {
                 "type": "object",
                 "properties": {
@@ -5735,6 +6184,307 @@
                         "$ref": "#/components/schemas/AttributeFilter"
                     }
                 ]
+            },
+            "FlowColumn": {
+                "required": [
+                    "metadata",
+                    "name",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "metadata": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "description": "Metadata of the column, as the operation that produced it gives them."
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the column."
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Type of the values in the column.",
+                        "example": "double"
+                    }
+                },
+                "description": "A column of a flow result."
+            },
+            "FlowExecutionResponse": {
+                "required": [
+                    "links"
+                ],
+                "type": "object",
+                "properties": {
+                    "links": {
+                        "$ref": "#/components/schemas/ExecutionLinks"
+                    }
+                },
+                "description": "A submitted flow: where to read its result."
+            },
+            "FlowInput": {
+                "type": "object",
+                "description": "An input of a flow.",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/FileFlowInput"
+                    },
+                    {
+                        "$ref": "#/components/schemas/AfmFlowInput"
+                    },
+                    {
+                        "$ref": "#/components/schemas/SqlFlowInput"
+                    }
+                ]
+            },
+            "FlowOperationDescriptor": {
+                "required": [
+                    "description",
+                    "inputs",
+                    "name",
+                    "output",
+                    "parameters",
+                    "pure"
+                ],
+                "type": "object",
+                "properties": {
+                    "description": {
+                        "type": "string",
+                        "description": "What the operation does."
+                    },
+                    "inputs": {
+                        "type": "array",
+                        "description": "Inputs of the operation. The first one is the primary input, named data.",
+                        "items": {
+                            "$ref": "#/components/schemas/FlowOperationInput"
+                        }
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the operation. A transformation gives it as its operation."
+                    },
+                    "output": {
+                        "$ref": "#/components/schemas/FlowOperationOutput"
+                    },
+                    "parameters": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "description": "JSON Schema of the parameters of the operation."
+                    },
+                    "pure": {
+                        "type": "boolean",
+                        "description": "True when the result depends only on the inputs and the parameters. The result of an impure operation is never reused."
+                    }
+                },
+                "description": "An operation that a transformation can run."
+            },
+            "FlowOperationInput": {
+                "required": [
+                    "description",
+                    "name"
+                ],
+                "type": "object",
+                "properties": {
+                    "description": {
+                        "type": "string",
+                        "description": "What the operation expects in the input."
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the input. A transformation binds it in its inputRefs."
+                    }
+                },
+                "description": "An input of an operation."
+            },
+            "FlowOperationOutput": {
+                "required": [
+                    "description"
+                ],
+                "type": "object",
+                "properties": {
+                    "description": {
+                        "type": "string",
+                        "description": "What the operation produces."
+                    }
+                },
+                "description": "The output of an operation."
+            },
+            "FlowOperations": {
+                "required": [
+                    "operations"
+                ],
+                "type": "object",
+                "properties": {
+                    "operations": {
+                        "type": "array",
+                        "description": "Available operations.",
+                        "items": {
+                            "$ref": "#/components/schemas/FlowOperationDescriptor"
+                        }
+                    }
+                },
+                "description": "The operations that the transformations of a flow can run."
+            },
+            "FlowRequest": {
+                "required": [
+                    "inputs"
+                ],
+                "type": "object",
+                "properties": {
+                    "inputs": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/components/schemas/FlowInput"
+                        },
+                        "description": "Inputs of the flow by name. A transformation refers to an input by its name."
+                    },
+                    "transformations": {
+                        "type": "array",
+                        "description": "Transformations in the order they run. The result of the last transformation is the result of the flow. Without transformations, the result is the only input.",
+                        "items": {
+                            "$ref": "#/components/schemas/FlowTransformation"
+                        }
+                    }
+                },
+                "description": "A flow: named inputs and the transformations that run over them."
+            },
+            "FlowResultMetadata": {
+                "required": [
+                    "columns",
+                    "metadata",
+                    "totalRows"
+                ],
+                "type": "object",
+                "properties": {
+                    "columns": {
+                        "type": "array",
+                        "description": "Columns of the result, in order.",
+                        "items": {
+                            "$ref": "#/components/schemas/FlowColumn"
+                        }
+                    },
+                    "metadata": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "description": "Metadata of the result, as the operations that produced it give them."
+                    },
+                    "totalRows": {
+                        "type": "integer",
+                        "description": "Number of rows in the result.",
+                        "format": "int64"
+                    }
+                },
+                "description": "Description of a flow result."
+            },
+            "FlowTablePaging": {
+                "required": [
+                    "columnLimit",
+                    "columnOffset",
+                    "rowLimit",
+                    "rowOffset",
+                    "totalColumns",
+                    "totalRows"
+                ],
+                "type": "object",
+                "properties": {
+                    "columnLimit": {
+                        "type": "integer",
+                        "description": "Maximum number of columns in the page.",
+                        "format": "int32"
+                    },
+                    "columnOffset": {
+                        "type": "integer",
+                        "description": "Index of the first column of the page.",
+                        "format": "int32"
+                    },
+                    "rowLimit": {
+                        "type": "integer",
+                        "description": "Maximum number of rows in the page.",
+                        "format": "int32"
+                    },
+                    "rowOffset": {
+                        "type": "integer",
+                        "description": "Index of the first row of the page.",
+                        "format": "int32"
+                    },
+                    "totalColumns": {
+                        "type": "integer",
+                        "description": "Number of columns in the result.",
+                        "format": "int32"
+                    },
+                    "totalRows": {
+                        "type": "integer",
+                        "description": "Number of rows in the result.",
+                        "format": "int64"
+                    }
+                },
+                "description": "Position of a page in a table result."
+            },
+            "FlowTableResult": {
+                "required": [
+                    "columns",
+                    "data",
+                    "paging"
+                ],
+                "type": "object",
+                "properties": {
+                    "columns": {
+                        "type": "array",
+                        "description": "Columns of the page, in order.",
+                        "items": {
+                            "$ref": "#/components/schemas/FlowColumn"
+                        }
+                    },
+                    "data": {
+                        "type": "array",
+                        "description": "Rows of the page. A row has one value for each column, in the order of the columns.",
+                        "items": {
+                            "type": "array",
+                            "items": {
+                                "type": "object"
+                            }
+                        }
+                    },
+                    "paging": {
+                        "$ref": "#/components/schemas/FlowTablePaging"
+                    }
+                },
+                "description": "A page of a table result."
+            },
+            "FlowTransformation": {
+                "required": [
+                    "operation"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Identifier of the transformation. Give it when a later transformation refers to it. The identifier does not change the result.",
+                        "nullable": true
+                    },
+                    "inputRefs": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "description": "Inputs of the operation by name. Each one refers to a flow input or to an earlier transformation. The primary input is named data. When data is not given, it refers to the previous transformation, or to the only flow input for the first transformation."
+                    },
+                    "operation": {
+                        "type": "string",
+                        "description": "Name of the operation, as the operation catalog lists it.",
+                        "example": "survey_weighting"
+                    },
+                    "parameters": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "description": "Parameters of the operation. They must match the parameter schema of the operation."
+                    }
+                },
+                "description": "One transformation of a flow: an operation that runs over its inputs."
             },
             "ForecastRequest": {
                 "required": [
@@ -8151,6 +8901,38 @@
                     }
                 },
                 "description": "Sorting rule for sorting by measure value. DataColumnLocators for each dimension opposite to the sorted one must be specified."
+            },
+            "SqlFlowInput": {
+                "required": [
+                    "dataSourceId",
+                    "sql",
+                    "type"
+                ],
+                "type": "object",
+                "description": "Runs a SELECT statement on a data source and reads its rows as a table. Its columns are named and typed as the statement returns them. Data filters of the workspace and of the user do not apply. A GDSTORAGE, FlexConnect or platform-managed data source cannot run it.",
+                "allOf": [
+                    {
+                        "type": "object",
+                        "properties": {
+                            "dataSourceId": {
+                                "type": "string",
+                                "description": "Identifier of the data source that runs the statement."
+                            },
+                            "sql": {
+                                "type": "string",
+                                "description": "One SELECT statement in the SQL dialect of the data source.",
+                                "example": "SELECT region, SUM(amount) AS amount FROM sales GROUP BY region"
+                            },
+                            "type": {
+                                "type": "string",
+                                "description": "Type of the input.",
+                                "enum": [
+                                    "sql"
+                                ]
+                            }
+                        }
+                    }
+                ]
             },
             "SucceededOperation": {
                 "required": [

@@ -32,11 +32,6 @@ describe("generateHeaderMenuItemsGroups", () => {
                     href: "/workspace/TestWorkspaceId/modeler",
                     key: "gs.header.data",
                 },
-                {
-                    className: "s-menu-load",
-                    href: "/data/#/workspaces/TestWorkspaceId/datasets",
-                    key: "gs.header.load",
-                },
             ],
             [
                 {
@@ -73,11 +68,6 @@ describe("generateHeaderMenuItemsGroups", () => {
                     className: "s-menu-data",
                     href: "/workspace/TestWorkspaceId/modeler",
                     key: "gs.header.data",
-                },
-                {
-                    className: "s-menu-load",
-                    href: "/data/#/workspaces/TestWorkspaceId/datasets",
-                    key: "gs.header.load",
                 },
             ],
             [
@@ -318,11 +308,6 @@ describe("generateHeaderMenuItemsGroups", () => {
                     href: "/workspace/TestWorkspaceId/modeler",
                     key: "gs.header.data",
                 },
-                {
-                    className: "s-menu-load",
-                    href: "/data/#/workspaces/TestWorkspaceId/datasets",
-                    key: "gs.header.load",
-                },
             ],
         ]);
     });
@@ -353,11 +338,6 @@ describe("generateHeaderMenuItemsGroups", () => {
                     href: "/workspace/TestWorkspaceId/modeler",
                     key: "gs.header.data",
                 },
-                {
-                    className: "s-menu-load",
-                    href: "/data/#/workspaces/TestWorkspaceId/datasets",
-                    key: "gs.header.load",
-                },
             ],
         ]);
     });
@@ -368,7 +348,6 @@ describe("generateHeaderMenuItemsGroups", () => {
             getWorkspacePermissionsMock(true, true),
             true,
             "TestWorkspaceId",
-            false,
             false,
             false,
             false,
@@ -404,7 +383,6 @@ describe("generateHeaderMenuItemsGroups", () => {
             "TestWorkspaceId",
             false,
             true,
-            false,
             true,
             false,
         );
@@ -420,7 +398,6 @@ describe("generateHeaderMenuItemsGroups", () => {
             "TestWorkspaceId",
             false,
             true,
-            false,
             true,
             false,
             "https://cdnUrl",
@@ -437,7 +414,6 @@ describe("generateHeaderMenuItemsGroups", () => {
             "TestWorkspaceId",
             false,
             true,
-            false,
             true,
             false,
             "https://cdnUrl/",

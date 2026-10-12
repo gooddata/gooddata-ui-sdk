@@ -382,6 +382,67 @@ describe("getDateFilterTitleUsingTranslator", () => {
             expect(actual).toEqual("04/05/2026 – 04/11/2026");
         });
     });
+
+    describe("relative form with a fiscal month granularity", () => {
+        it.each([
+            [0, 0, "This period"],
+            [-1, -1, "Last period"],
+            [1, 1, "Next period"],
+            [-11, 0, "Last 12 periods"],
+            [0, 2, "Next 3 periods"],
+            [-6, -2, "From 6 to 2 periods ago"],
+            [-6, -6, "6 periods ago"],
+            [2, 6, "From 2 to 6 periods ahead"],
+            [6, 6, "6 periods ahead"],
+            [-5, 5, "From 5 periods ago to 5 periods ahead"],
+        ] as const)(
+            "should word fiscal months as periods in both label modes (from: %i, to: %i)",
+            (from, to, expected) => {
+                const filter: IUiRelativeDateFilterForm = {
+                    localIdentifier: "RELATIVE_FORM",
+                    type: "relativeForm",
+                    granularity: "GDC.time.fiscal_month",
+                    from,
+                    to,
+                    name: "",
+                    visible: true,
+                };
+                for (const labelMode of ["short", "full"] as const) {
+                    const actual = getDateFilterRepresentation(
+                        filter,
+                        "en-US",
+                        DEFAULT_MESSAGES[DEFAULT_LANGUAGE],
+                        labelMode,
+                        DEFAULT_DATE_FORMAT,
+                    );
+                    expect(actual).toEqual(expected);
+                }
+            },
+        );
+
+        it.each(["short", "full"] as const)(
+            "should word this fiscal month to date as period to date in %s label mode",
+            (labelMode) => {
+                const actual = getDateFilterRepresentation(
+                    {
+                        localIdentifier: "THIS_FISCAL_MONTH_TO_DATE",
+                        type: "relativePreset",
+                        granularity: "GDC.time.fiscal_month",
+                        from: 0,
+                        to: 0,
+                        boundedFilter: { granularity: "GDC.time.date", to: 0 },
+                        name: "",
+                        visible: true,
+                    },
+                    "en-US",
+                    DEFAULT_MESSAGES[DEFAULT_LANGUAGE],
+                    labelMode,
+                    DEFAULT_DATE_FORMAT,
+                );
+                expect(actual).toEqual("This period to date (PTD)");
+            },
+        );
+    });
 });
 
 describe("getDateFilterRepresentation", () => {

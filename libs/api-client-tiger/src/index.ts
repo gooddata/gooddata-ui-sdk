@@ -96,7 +96,6 @@ export { tigerClientBaseFactory, type ITigerClient, type ITigerClientBase, tiger
 
 export { tigerActionsClientFactory } from "./actions.js";
 export { tigerAfmExplainClientFactory } from "./explain.js";
-export { tigerAuthActionsClientFactory } from "./authActions.js";
 export { tigerAutomationClientFactory } from "./automation.js";
 export { tigerExecutionClientFactory } from "./execution.js";
 export { tigerExecutionResultClientFactory } from "./executionResult.js";
@@ -537,6 +536,32 @@ export type {
     ActionsApiUserFeedbackRequest,
     FeedbackRequestDto,
     FeedbackRequestDtoSentimentEnum,
+    ActionsApiCancelFlowsRequest,
+    ActionsApiExecuteFlowRequest,
+    FlowExecutionResponse,
+    ActionsApiListFlowOperationsRequest,
+    FlowOperations,
+    ActionsApiRetrieveFlowResultBinaryRequest,
+    ActionsApiRetrieveFlowResultMetadataRequest,
+    FlowResultMetadata,
+    ActionsApiRetrieveFlowResultTableRequest,
+    FlowTableResult,
+    AfmFlowInput,
+    AfmFlowInputTypeEnum,
+    FileFlowInput,
+    FileFlowInputTypeEnum,
+    FlowColumn,
+    FlowInput,
+    FlowOperationDescriptor,
+    FlowOperationInput,
+    FlowOperationOutput,
+    FlowRequest,
+    FlowTablePaging,
+    FlowTransformation,
+    Operation,
+    OperationKindEnum,
+    SqlFlowInput,
+    SqlFlowInputTypeEnum,
 } from "./generated/afm-rest-api/api.js";
 export type {
     AutomationTabularExportExecution,
@@ -579,12 +604,6 @@ export type {
     AutomationConditionalFormattingTarget,
     AutomationConditionalFormattingValue,
 } from "./generated/automation-json-api/api.js";
-export type {
-    ActionsApiInterface as AuthActionsApiInterface,
-    ActionsApiProcessInvitationRequest,
-    Invitation,
-} from "./generated/auth-json-api/api.js";
-export { type ConfigurationParameters, Configuration } from "./generated/auth-json-api/configuration.js";
 export type {
     AutomationNotificationFilter,
     AutomationNotificationContent,
@@ -6274,6 +6293,9 @@ export {
     type PermissionsApiManageComputedAttributePermissionsRequest,
     type ActionsApiProcessInvitationRequest as MetadataActionsApiProcessInvitationRequest,
     type Invitation as MetadataInvitation,
+    // Unprefixed names kept from the removed auth-json-api module, which served the same endpoint.
+    type ActionsApiProcessInvitationRequest,
+    type Invitation,
     type GrantedPermissionSourceEnum,
     type JsonApiAnalyticalDashboardOutRelationshipsComputedAttributes,
     type JsonApiFilterContextOutRelationshipsComputedAttributes,
@@ -6385,7 +6407,8 @@ export type {
     GeoJsonGeometry,
 } from "./generated/result-json-api/api.js";
 
-export type * from "./generated/export-json-api/index.js";
+// api.js only: the module index would also re-export its Configuration type unprefixed.
+export type * from "./generated/export-json-api/api.js";
 export type {
     Configuration as ExportConfiguration,
     ConfigurationParameters as ExportConfigurationParameters,

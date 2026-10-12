@@ -383,6 +383,11 @@ export interface IPermanentSettings {
     metadataLocale?: string;
 
     /**
+     * Locale code to use for data values.
+     */
+    dataLocale?: string;
+
+    /**
      * Locale code to use for date formatting.
      */
     formatLocale?: string;
@@ -606,6 +611,7 @@ export interface IFeatureFlags {
     enableStarrocksDataSource?: boolean;
     enableSingleStoreDataSource?: boolean;
     enableDenodoDataSource?: boolean;
+    enableTrinoDataSource?: boolean;
 
     /**
      * Enables the data source cache retention policy: the UI for viewing and setting how long

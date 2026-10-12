@@ -179,3 +179,114 @@ describe("UiAsyncTable getItemTooltip", () => {
         expect(await screen.findByRole("tooltip")).toHaveTextContent("No access");
     });
 });
+
+describe("UiAsyncTable column headerTooltip", () => {
+    const sortableColumns: IUiAsyncTableColumn<IItem>[] = [
+        { key: "title", label: "Title", sortable: true, headerTooltip: "The name of the item" },
+        { key: "id", label: "Id", sortable: true },
+    ];
+    const renderHeaderTable = () =>
+        renderWithIntl(
+            <UiAsyncTable items={[open]} totalItemsCount={1} columns={sortableColumns} onSort={() => {}} />,
+        );
+    const getHeader = () => screen.getAllByRole("row")[0];
+    const tooltipText = "The name of the item";
+    const expectNoTooltip = () =>
+        waitFor(() => expect(screen.queryByText(tooltipText)).not.toBeInTheDocument());
+
+    it("describes the column header with the tooltip text", () => {
+        renderHeaderTable();
+
+        expect(screen.getByRole("columnheader", { name: "Title" })).toHaveAttribute(
+            "aria-description",
+            "The name of the item",
+        );
+        expect(screen.getByRole("columnheader", { name: "Id" })).not.toHaveAttribute("aria-description");
+    });
+
+    it("shows the tooltip on hover", async () => {
+        renderHeaderTable();
+
+        const label = screen.getByText("Title");
+        fireEvent.mouseEnter(label.parentElement ?? label);
+
+        expect(await screen.findByText(tooltipText)).toBeInTheDocument();
+    });
+
+    it("shows the tooltip while keyboard navigation is on the column and hides it on Escape", async () => {
+        renderHeaderTable();
+        const header = getHeader();
+        act(() => header.focus());
+
+        fireEvent.keyDown(header, { key: "ArrowRight", code: "ArrowRight" });
+        await expectNoTooltip();
+
+        fireEvent.keyDown(header, { key: "ArrowLeft", code: "ArrowLeft" });
+        expect(await screen.findByText(tooltipText)).toBeInTheDocument();
+
+        fireEvent.keyDown(header, { key: "Escape", code: "Escape" });
+        await expectNoTooltip();
+    });
+
+    it("reaches the tooltip of a column that is not sortable by keyboard without sorting it", async () => {
+        const onSort = vi.fn();
+        renderWithIntl(
+            <UiAsyncTable
+                items={[open]}
+                totalItemsCount={1}
+                columns={[{ key: "title", label: "Title", headerTooltip: tooltipText }]}
+                onSort={onSort}
+            />,
+        );
+        const header = getHeader();
+        act(() => header.focus());
+
+        fireEvent.keyDown(header, { key: "ArrowRight", code: "ArrowRight" });
+        expect(await screen.findByText(tooltipText)).toBeInTheDocument();
+
+        fireEvent.keyDown(header, { key: "Enter", code: "Enter" });
+        expect(onSort).not.toHaveBeenCalled();
+    });
+
+    it("points the header row at the column that keyboard navigation reached", () => {
+        renderHeaderTable();
+        const header = getHeader();
+        act(() => header.focus());
+
+        fireEvent.keyDown(header, { key: "ArrowRight", code: "ArrowRight" });
+
+        const active = document.getElementById(header.getAttribute("aria-activedescendant") ?? "");
+        expect(active).toHaveAttribute("role", "columnheader");
+        expect(active).toHaveTextContent("Id");
+    });
+
+    it("keeps the active header inside its own table when two tables share column keys", () => {
+        renderWithIntl(
+            <>
+                <UiAsyncTable
+                    items={[open]}
+                    totalItemsCount={1}
+                    columns={sortableColumns}
+                    onSort={() => {}}
+                />
+                <UiAsyncTable
+                    items={[open]}
+                    totalItemsCount={1}
+                    columns={sortableColumns}
+                    onSort={() => {}}
+                />
+            </>,
+        );
+        const headers = screen
+            .getAllByRole("columnheader", { name: "Title" })
+            .map((cell) => cell.parentElement!);
+        expect(headers).toHaveLength(2);
+        const secondHeader = headers[1];
+        act(() => secondHeader.focus());
+
+        fireEvent.keyDown(secondHeader, { key: "ArrowRight", code: "ArrowRight" });
+
+        const active = document.getElementById(secondHeader.getAttribute("aria-activedescendant") ?? "");
+        expect(secondHeader.contains(active)).toBe(true);
+    });
+});

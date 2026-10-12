@@ -280,6 +280,24 @@ export interface IOrganizationSettingsService {
     getAiRateLimit(): Promise<IAiRateLimit | undefined>;
 
     /**
+     * Returns the metadata locale set on the organization (without resolving inherited defaults).
+     * Returns `undefined` when the organization has none.
+     *
+     * @returns promise
+     * @alpha
+     */
+    getMetadataLocale(): Promise<string | undefined>;
+
+    /**
+     * Returns the data locale set on the organization (without resolving inherited defaults).
+     * Returns `undefined` when the organization has none.
+     *
+     * @returns promise
+     * @alpha
+     */
+    getDataLocale(): Promise<string | undefined>;
+
+    /**
      * Sets enable drill to URL by default configuration for organization.
      *
      * @param enabled - whether to enable drill to URL by default for dashboard widgets.

@@ -3,7 +3,6 @@
 import { type AxiosInstance } from "axios";
 
 import { tigerActionsClientFactory } from "./actions.js";
-import { tigerAuthActionsClientFactory } from "./authActions.js";
 import { tigerAutomationClientFactory } from "./automation.js";
 import { setAxiosAuthorizationToken } from "./axios.js";
 import { tigerEntitiesObjectsClientFactory } from "./entitiesObjects.js";
@@ -54,7 +53,6 @@ export interface ITigerClient extends ITigerClientBase {
     profile: ReturnType<typeof tigerProfileClientFactory>;
     locationStyle: ReturnType<typeof tigerLocationStyleClientFactory>;
     actions: ReturnType<typeof tigerActionsClientFactory>;
-    authActions: ReturnType<typeof tigerAuthActionsClientFactory>;
     scanModel: ReturnType<typeof tigerScanModelClientFactory>;
     export: ReturnType<typeof tigerExportClientFactory>;
     result: ReturnType<typeof tigerResultClientFactory>;
@@ -98,7 +96,6 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
     const profile = tigerProfileClientFactory(axios);
     const locationStyle = tigerLocationStyleClientFactory(axios);
     const actions = tigerActionsClientFactory(axios);
-    const authActions = tigerAuthActionsClientFactory(axios);
     const scanModel = tigerScanModelClientFactory(axios);
     const exportFactory = tigerExportClientFactory(axios);
     const result = tigerResultClientFactory(axios);
@@ -123,7 +120,6 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
         profile,
         locationStyle,
         actions,
-        authActions,
         scanModel,
         result,
         userManagement,

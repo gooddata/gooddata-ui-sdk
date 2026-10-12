@@ -139,6 +139,10 @@ export interface IUiAsyncTableColumn<T> {
      */
     isLocked?: (item: T) => boolean;
     sortable?: boolean;
+    /**
+     * Text of a tooltip on the column header. It opens on hover and when keyboard navigation reaches the header.
+     */
+    headerTooltip?: string;
     align?: "left" | "center" | "right";
     getAccessibilityConfig?: (item: T) => IUiAsyncTableColumnAccessibilityConfig;
 }

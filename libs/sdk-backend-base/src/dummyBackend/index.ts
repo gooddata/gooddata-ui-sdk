@@ -82,6 +82,7 @@ import {
     type IOrganizationGenAIService,
     type IOrganizationIpAllowlistService,
     type IOrganizationLlmProvidersService,
+    type IOrganizationLocalizationService,
     type IOrganizationNotificationChannelService,
     type IOrganizationNotificationService,
     type IOrganizationPermissionService,
@@ -126,6 +127,7 @@ import {
     type IWorkspaceFactsService,
     type IWorkspaceInsightsService,
     type IWorkspaceKeyDriverAnalysisService,
+    type IWorkspaceLocalizationService,
     type IWorkspaceLogicalModelService,
     type IWorkspaceMeasuresService,
     type IWorkspaceObjectPermissionsService,
@@ -612,6 +614,23 @@ function dummyWorkspace(
         publisher(): IWorkspacePublisherService {
             return publisherService;
         },
+        localization(): IWorkspaceLocalizationService {
+            return dummyLocalizationService();
+        },
+    };
+}
+
+function dummyLocalizationService(): IOrganizationLocalizationService & IWorkspaceLocalizationService {
+    return {
+        getUsage: () =>
+            Promise.resolve({
+                defaults: { LOCALE: null, METADATA_LOCALE: null, DATA_LOCALE: null },
+                values: [],
+            }),
+        getUsageWorkspaces: () => Promise.resolve({ workspaces: [], totalCount: 0 }),
+        getUsageUsers: () => Promise.resolve({ users: [], totalCount: 0 }),
+        getStatistics: () => Promise.resolve({ metadata: { locales: [] }, data: { locales: [] } }),
+        getStatisticsWorkspaces: () => Promise.resolve({ workspaces: [], totalCount: 0 }),
     };
 }
 
@@ -1148,6 +1167,8 @@ class DummyOrganization implements IOrganization {
             setAiRateLimit: () => Promise.resolve(),
             deleteAiRateLimit: () => Promise.resolve(),
             getAiRateLimit: () => Promise.resolve(undefined),
+            getMetadataLocale: () => Promise.resolve(undefined),
+            getDataLocale: () => Promise.resolve(undefined),
             setEnableDrillToUrlByDefault: () => Promise.resolve(),
             setEnablePartialDataResults: () => Promise.resolve(),
             setEnableNullJoins: () => Promise.resolve(),
@@ -1342,6 +1363,10 @@ class DummyOrganization implements IOrganization {
             update: (definition) => Promise.resolve(echo(definition)),
             delete: () => Promise.resolve(),
         };
+    }
+
+    public localization(): IOrganizationLocalizationService {
+        return dummyLocalizationService();
     }
 }
 

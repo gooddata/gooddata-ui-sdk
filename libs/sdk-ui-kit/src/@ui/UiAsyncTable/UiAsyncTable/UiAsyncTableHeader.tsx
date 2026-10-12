@@ -1,11 +1,12 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { type FocusEvent, type KeyboardEvent, useCallback, useEffect, useId, useMemo, useState } from "react";
 
 import { useIntl } from "react-intl";
 
 import { makeTabsKeyboardNavigation } from "../../@utils/keyboardNavigation.js";
 import { UiIcon } from "../../UiIcon/UiIcon.js";
+import { UiTooltip } from "../../UiTooltip/UiTooltip.js";
 import { e } from "../asyncTableBem.js";
 import { messages } from "../locales.js";
 import { type IUiAsyncTableColumn, type IUiAsyncTableHeaderProps } from "../types.js";
@@ -25,15 +26,31 @@ export function UiAsyncTableHeader<T>({
     largeRow,
 }: IUiAsyncTableHeaderProps<T>) {
     const { handleKeyDown, isFocused, isFocusable } = useHeaderKeyboardNavigation(columns, handleColumnClick);
+    const hasFocusedTooltip = columns.some((column, index) => isFocused(index) && !!column.headerTooltip);
+    const { isKeyboardActive, onHeaderKeyDown, onHeaderFocus, onHeaderBlur } = useHeaderKeyboardActivity(
+        handleKeyDown,
+        hasFocusedTooltip,
+    );
     const intl = useIntl();
+    const tableId = useId();
+    const columnHeaderId = (column: IUiAsyncTableColumn<T>, index: number) =>
+        `${getColumnHeaderId(String(column.key ?? index))}-${tableId}`;
+    const focusedIndex = columns.findIndex((_, index) => isFocused(index));
+    const activeHeaderId =
+        isKeyboardActive && focusedIndex >= 0
+            ? columnHeaderId(columns[focusedIndex], focusedIndex)
+            : undefined;
 
     return (
         <div
             tabIndex={isFocusable ? 0 : undefined}
+            aria-activedescendant={activeHeaderId}
             className={e("header", { small: small ?? false })}
             role="row"
             aria-label={intl.formatMessage(messages["headerAriaLabel"])}
-            onKeyDown={handleKeyDown}
+            onKeyDown={onHeaderKeyDown}
+            onFocus={onHeaderFocus}
+            onBlur={onHeaderBlur}
             style={{ width }}
         >
             {hasCheckbox ? (
@@ -50,7 +67,8 @@ export function UiAsyncTableHeader<T>({
                 const width = getColumnWidth(!!column.renderMenu, largeRow ?? false, column.width);
                 const sorted = sortBy && sortBy === column.key;
                 const desc = sorted && sortDirection === "desc";
-                const { sortable, renderMenu } = column;
+                const { sortable, renderMenu, headerTooltip } = column;
+                const label = <span className={e("text")}>{column.label}</span>;
                 return (
                     <div
                         key={index}
@@ -64,19 +82,63 @@ export function UiAsyncTableHeader<T>({
                         })}
                         style={{ width }}
                         role="columnheader"
-                        id={getColumnHeaderId(String(column.key ?? index))}
+                        id={columnHeaderId(column, index)}
                         aria-sort={sorted ? (desc ? "descending" : "ascending") : "none"}
                         aria-label={
                             renderMenu ? intl.formatMessage(messages["menuHeaderAriaLabel"]) : undefined
                         }
+                        aria-description={headerTooltip}
                     >
-                        <span className={e("text")}>{column.label}</span>
+                        {headerTooltip ? (
+                            <UiTooltip
+                                anchor={label}
+                                content={headerTooltip}
+                                triggerBy={["hover"]}
+                                isOpen={(isKeyboardActive && isFocused(index)) || undefined}
+                                accessibilityHidden
+                                optimalPlacement
+                            />
+                        ) : (
+                            label
+                        )}
                         {sortable ? <div className={e("sort")}>{arrowIcon}</div> : null}
                     </div>
                 );
             })}
         </div>
     );
+}
+
+function useHeaderKeyboardActivity(
+    handleKeyDown: ((event: KeyboardEvent) => void) | undefined,
+    hasFocusedTooltip: boolean,
+) {
+    const [isKeyboardActive, setIsKeyboardActive] = useState(false);
+
+    const onHeaderKeyDown = useCallback(
+        (event: KeyboardEvent) => {
+            if (event.key === "Escape") {
+                if (isKeyboardActive && hasFocusedTooltip) {
+                    event.stopPropagation();
+                }
+                setIsKeyboardActive(false);
+                return;
+            }
+            setIsKeyboardActive(true);
+            handleKeyDown?.(event);
+        },
+        [handleKeyDown, hasFocusedTooltip, isKeyboardActive],
+    );
+
+    const onHeaderFocus = useCallback((event: FocusEvent<HTMLDivElement>) => {
+        if (event.target === event.currentTarget && event.currentTarget.matches(":focus-visible")) {
+            setIsKeyboardActive(true);
+        }
+    }, []);
+
+    const onHeaderBlur = useCallback(() => setIsKeyboardActive(false), []);
+
+    return { isKeyboardActive, onHeaderKeyDown, onHeaderFocus, onHeaderBlur };
 }
 
 function useHeaderKeyboardNavigation<T>(
@@ -90,7 +152,10 @@ function useHeaderKeyboardNavigation<T>(
     }, [columns]);
 
     const focusableIndexes = useMemo(
-        () => columns.map((_, index) => index).filter((index) => columns[index].sortable),
+        () =>
+            columns
+                .map((_, index) => index)
+                .filter((index) => columns[index].sortable || !!columns[index].headerTooltip),
         [columns],
     );
     const isFocusable = focusableIndexes.length > 0;

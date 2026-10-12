@@ -3166,6 +3166,8 @@ export interface IFeatureFlags {
     enableStringParameters?: boolean;
     enableSystemAccountFiltering?: boolean;
     enableTimezoneChange?: boolean;
+    // (undocumented)
+    enableTrinoDataSource?: boolean;
     enableUserDataFiltersUi?: boolean;
     enableVisualizationFilteringByTags?: boolean;
     enableVisualizationFineTuning?: boolean;
@@ -4654,6 +4656,7 @@ export interface IPermanentSettings {
     currencyFormatOverride?: string | null;
     // @alpha
     dashboardFiltersApplyMode?: DashboardFiltersApplyMode;
+    dataLocale?: string;
     // @alpha
     dateFilterConfig?: IDateFilterConfig;
     // @beta

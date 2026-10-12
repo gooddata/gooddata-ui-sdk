@@ -15,7 +15,7 @@ import {
 } from "@gooddata/sdk-pluggable-application-model";
 import { resolveLocale, useAutoupdateRef } from "@gooddata/sdk-ui";
 import { GenAIAssistantMode } from "@gooddata/sdk-ui-gen-ai";
-import { type IPublisherDocumentSaved } from "@gooddata/sdk-ui-gen-ai/internal";
+import { type IDashboardSaved, type IPublisherDocumentSaved } from "@gooddata/sdk-ui-gen-ai/internal";
 
 import { now } from "../debug.js";
 import { setActiveHostHandle } from "../lib/hostNotifications.js";
@@ -114,16 +114,24 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate, onError }
     const [aiVisibility, setAiVisibility] = useState<IHostChatVisibility | null>(null);
     const [aiContext, setAiContext] = useState<IHostChatContext | null>(null);
     const aiVisibilitySeqRef = useRef(0);
+
+    // Publisher document saved event and sequence number.
     const [aiPublisherDocumentSaved, setAiPublisherDocumentSaved] = useState<
         IPublisherDocumentSaved | undefined
     >(undefined);
-    const aiPublisherDocumentSavedSeqRef = useRef(0);
     const reportAiAssistantPublisherDocumentSaved = useCallback(
         (saved: Omit<IPublisherDocumentSaved, "seq">) => {
-            setAiPublisherDocumentSaved({ ...saved, seq: ++aiPublisherDocumentSavedSeqRef.current });
+            setAiPublisherDocumentSaved({ ...saved, seq: (aiPublisherDocumentSaved?.seq ?? 0) + 1 });
         },
         [],
     );
+
+    // Dashboard saved event and sequence number.
+    const [aiDashboardSaved, setAiDashboardSaved] = useState<IDashboardSaved | undefined>(undefined);
+    const reportAiAssistantDashboardSaved = useCallback((saved: Omit<IDashboardSaved, "seq">) => {
+        setAiDashboardSaved({ ...saved, seq: (aiDashboardSaved?.seq ?? 0) + 1 });
+    }, []);
+
     const requestOpenAi = useCallback(
         (
             question?: string,
@@ -369,6 +377,7 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate, onError }
                             onCloseAiAssistant={requestCloseAi}
                             onAiAssistantContext={setAiAssistantContext}
                             onAiAssistantPublisherDocumentSaved={reportAiAssistantPublisherDocumentSaved}
+                            onAiAssistantDashboardSaved={reportAiAssistantDashboardSaved}
                             aiLinkClickHandlerRef={appAiLinkClickRef}
                             navigationRequestRef={appNavigationRequestRef}
                             aiEventReceiveRef={appEventReceiveRef}
@@ -412,6 +421,7 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate, onError }
                     visibility={aiVisibility}
                     context={aiContext}
                     publisherDocumentSaved={aiPublisherDocumentSaved}
+                    dashboardSaved={aiDashboardSaved}
                     onOpenChange={setAiAssistantOpen}
                     onChatStateChange={onChatStateChange}
                     onAppLinkClick={onAppLinkClick}

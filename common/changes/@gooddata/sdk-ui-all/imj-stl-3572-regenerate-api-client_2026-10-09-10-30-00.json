@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "api-client-tiger: Regenerated the client: new Flow API in afm-rest-api, report draft parts and visualization placement in the gen-ai API, and two new organization setting types.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

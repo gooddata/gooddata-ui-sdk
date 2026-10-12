@@ -23,6 +23,7 @@ import {
     type IWorkspaceFactsService,
     type IWorkspaceInsightsService,
     type IWorkspaceKeyDriverAnalysisService,
+    type IWorkspaceLocalizationService,
     type IWorkspaceLogicalModelService,
     type IWorkspaceMeasuresService,
     type IWorkspaceObjectPermissionsService,
@@ -258,5 +259,9 @@ export class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
         }
 
         return this.decorated.publisher();
+    }
+
+    public localization(): IWorkspaceLocalizationService {
+        return this.decorated.localization();
     }
 }

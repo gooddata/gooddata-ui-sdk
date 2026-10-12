@@ -797,7 +797,7 @@ export interface AiCertificationInfo {
 
 export interface AiChartFill {
     'pattern_name_mapping'?: { [key: string]: AiPatternNameMapping; } | null;
-    'type'?: AiType54 | null;
+    'type'?: AiType57 | null;
 }
 
 
@@ -1541,7 +1541,7 @@ export interface AiDashboardInput {
     'tags'?: Array<string>;
     'timezone_config'?: AiTimezoneConfig | null;
     'title'?: string;
-    'type': AiType55;
+    'type': AiType58;
     'user_filters_reset'?: boolean | null;
     'user_filters_save'?: boolean | null;
     'version'?: AiVersion | null;
@@ -1585,7 +1585,7 @@ export interface AiDashboardOutput {
     'tags'?: Array<string>;
     'timezone_config'?: AiTimezoneConfig | null;
     'title'?: string;
-    'type': AiType55;
+    'type': AiType58;
     'user_filters_reset'?: boolean | null;
     'user_filters_save'?: boolean | null;
     'version'?: AiVersion | null;
@@ -2493,7 +2493,7 @@ export interface AiLayerItem {
     'metrics'?: Array<AiBucketItem>;
     'segment_by'?: Array<AiBucketItem>;
     'title'?: string;
-    'type': AiType51;
+    'type': AiType54;
     'view_by'?: Array<string>;
 }
 
@@ -2518,7 +2518,7 @@ export interface AiLayerItemBase {
     'metrics'?: Array<AiBucketItem> | null;
     'segment_by'?: Array<AiBucketItem> | null;
     'title'?: string;
-    'type'?: AiType51 | null;
+    'type'?: AiType54 | null;
     'view_by'?: Array<string> | null;
 }
 
@@ -2895,7 +2895,8 @@ export const AiObjectType = {
     VISUALIZATION: 'visualization',
     DASHBOARD: 'dashboard',
     FILTER_CONTEXT: 'filter_context',
-    PARAMETER: 'parameter'
+    PARAMETER: 'parameter',
+    DOCUMENT: 'document'
 } as const;
 
 export type AiObjectType = typeof AiObjectType[keyof typeof AiObjectType];
@@ -3228,6 +3229,28 @@ export interface AiPositiveAttributeFilterBody {
     'label': AiLabel4;
     'localIdentifier'?: string | null;
     'usesArbitraryValues'?: boolean | null;
+}
+
+/**
+ * What an accepted rebuild enqueued; the workers restore it in the background.
+ */
+export interface AiProjectionRebuildResponse {
+    /**
+     * Knowledge documents queued for rebuilding from their stored files.
+     */
+    'knowledgeDocuments': number;
+    /**
+     * Memory items queued for re-indexing.
+     */
+    'memoryItems': number;
+    /**
+     * Analytical objects queued for re-indexing.
+     */
+    'nodes': number;
+    /**
+     * Knowledge documents the rebuild skipped. A document is skipped when it has no stored file or its file is in storage the rebuild cannot read. All documents are skipped when this deployment cannot rebuild them.
+     */
+    'skippedKnowledgeDocuments': number;
 }
 
 export interface AiQuery {
@@ -3925,13 +3948,13 @@ export interface AiReportPart {
      */
     'format'?: AiReportPartFormatEnum;
     'page_count'?: number | null;
-    'report'?: object | null;
     'refines_ref'?: string | null;
+    'report'?: object | null;
+    'report_ref'?: string | null;
     /**
-     * True when this version was written from the report open in the editor (`view.report`). A client still showing that report, unchanged since the message was sent, can apply it there.
+     * True when this version was written from the report open in the editor (`view.report`). A client still showing that report, unchanged since the message was sent, can apply it there. Applies to the answer to a message just sent; a part replayed from history must not be applied again.
      */
     'reworks_open_report'?: boolean;
-    'report_ref'?: string | null;
     'saved_report_id'?: string | null;
     /**
      * Type of multipart part.
@@ -4444,7 +4467,8 @@ export const AiSkillName = {
     WHAT_IF_ANALYSIS: 'what_if_analysis',
     KNOWLEDGE: 'knowledge',
     DASHBOARD_BUILDER: 'dashboard_builder',
-    DASHBOARD_EDITOR: 'dashboard_editor'
+    DASHBOARD_EDITOR: 'dashboard_editor',
+    REPORT_BUILDER: 'report_builder'
 } as const;
 
 export type AiSkillName = typeof AiSkillName[keyof typeof AiSkillName];
@@ -4572,20 +4596,25 @@ export type AiSummarizeResponseFilterContextInner = AiAbsoluteDateFilter | AiAll
  */
 export interface AiSummarizeVisualizationsRequest {
     /**
-     * AFM filters in the same shape consumed by the AFM execute endpoint, merged on top of each visualization\'s stored filters using the type-aware merge rules. Send `[]` to apply no request filters.
+     * AFM filters in the same shape consumed by the AFM execute endpoint, applied to every visualization on top of its stored filters. Send `[]` to apply no request filters. Each layer is merged on top of the one below it: attribute, ranking and inline filters are added and all apply together; a date filter replaces the lower layer\'s date filter on the same date dataset; a measure value filter replaces the lower layer\'s measure value filter on the same measure.
      */
     'filterContext': Array<AiSummarizeVisualizationsRequestFilterContextInner>;
     'formatHint'?: string | null;
     /**
-     * Visualizations to summarize. They need not belong to any one dashboard.
+     * Visualizations to summarize. They need not belong to any one dashboard. Each item is one placement, and each placement is executed and summarized separately. An item is a visualization ID or an object with `visualizationId` and its own `filters`. A visualization ID gets its stored filters and `filterContext` only. The same visualization can occur more than once.
      */
-    'visualizations': Array<string>;
+    'visualizations': Array<AiSummarizeVisualizationsRequestVisualizationsInner>;
 }
 
 /**
  * @type AiSummarizeVisualizationsRequestFilterContextInner
  */
 export type AiSummarizeVisualizationsRequestFilterContextInner = AiAbsoluteDateFilter | AiAllTimeDateFilter | AiComparisonMeasureValueFilter | AiCompoundMeasureValueFilter | AiInlineFilterDefinition | AiMatchAttributeFilterInput | AiNegativeAttributeFilter | AiPositiveAttributeFilter | AiRangeMeasureValueFilter | AiRankingFilter | AiRelativeDateFilter;
+
+/**
+ * @type AiSummarizeVisualizationsRequestVisualizationsInner
+ */
+export type AiSummarizeVisualizationsRequestVisualizationsInner = AiVisualizationPlacementRequest | string;
 
 export interface AiSuppressedTargets {
     /**
@@ -4712,7 +4741,7 @@ export interface AiTo {
 
 export interface AiTotalItem {
     'title'?: string;
-    'type': AiType50;
+    'type': AiType53;
     /**
      * Local metric identifier to use for this total.
      */
@@ -4938,7 +4967,7 @@ export type AiType5 = typeof AiType5[keyof typeof AiType5];
 
 
 
-export const AiType50 = {
+export const AiType53 = {
     SUM: 'SUM',
     AVG: 'AVG',
     MAX: 'MAX',
@@ -4947,87 +4976,39 @@ export const AiType50 = {
     NAT: 'NAT'
 } as const;
 
-export type AiType50 = typeof AiType50[keyof typeof AiType50];
-
-
-
-export const AiType51 = {
-    PUSHPIN: 'pushpin',
-    AREA: 'area'
-} as const;
-
-export type AiType51 = typeof AiType51[keyof typeof AiType51];
+export type AiType53 = typeof AiType53[keyof typeof AiType53];
 
 
 
 export const AiType54 = {
-    SOLID: 'solid',
-    PATTERN: 'pattern',
-    OUTLINE: 'outline'
+    PUSHPIN: 'pushpin',
+    AREA: 'area'
 } as const;
 
 export type AiType54 = typeof AiType54[keyof typeof AiType54];
 
 
 
-export const AiType55 = {
+export const AiType57 = {
+    SOLID: 'solid',
+    PATTERN: 'pattern',
+    OUTLINE: 'outline'
+} as const;
+
+export type AiType57 = typeof AiType57[keyof typeof AiType57];
+
+
+
+export const AiType58 = {
     DASHBOARD: 'dashboard'
 } as const;
 
-export type AiType55 = typeof AiType55[keyof typeof AiType55];
-
-
-
-export const AiType63 = {
-    TABLE: 'table'
-} as const;
-
-export type AiType63 = typeof AiType63[keyof typeof AiType63];
-
-
-
-export const AiType64 = {
-    BAR_CHART: 'bar_chart'
-} as const;
-
-export type AiType64 = typeof AiType64[keyof typeof AiType64];
-
-
-
-export const AiType65 = {
-    COLUMN_CHART: 'column_chart'
-} as const;
-
-export type AiType65 = typeof AiType65[keyof typeof AiType65];
-
-
-
-export const AiType66 = {
-    LINE_CHART: 'line_chart'
-} as const;
-
-export type AiType66 = typeof AiType66[keyof typeof AiType66];
-
-
-
-export const AiType67 = {
-    AREA_CHART: 'area_chart'
-} as const;
-
-export type AiType67 = typeof AiType67[keyof typeof AiType67];
-
-
-
-export const AiType68 = {
-    SCATTER_CHART: 'scatter_chart'
-} as const;
-
-export type AiType68 = typeof AiType68[keyof typeof AiType68];
+export type AiType58 = typeof AiType58[keyof typeof AiType58];
 
 
 
 export const AiType69 = {
-    BUBBLE_CHART: 'bubble_chart'
+    TABLE: 'table'
 } as const;
 
 export type AiType69 = typeof AiType69[keyof typeof AiType69];
@@ -5043,7 +5024,7 @@ export type AiType7 = typeof AiType7[keyof typeof AiType7];
 
 
 export const AiType70 = {
-    PIE_CHART: 'pie_chart'
+    BAR_CHART: 'bar_chart'
 } as const;
 
 export type AiType70 = typeof AiType70[keyof typeof AiType70];
@@ -5051,7 +5032,7 @@ export type AiType70 = typeof AiType70[keyof typeof AiType70];
 
 
 export const AiType71 = {
-    DONUT_CHART: 'donut_chart'
+    COLUMN_CHART: 'column_chart'
 } as const;
 
 export type AiType71 = typeof AiType71[keyof typeof AiType71];
@@ -5059,7 +5040,7 @@ export type AiType71 = typeof AiType71[keyof typeof AiType71];
 
 
 export const AiType72 = {
-    TREEMAP_CHART: 'treemap_chart'
+    LINE_CHART: 'line_chart'
 } as const;
 
 export type AiType72 = typeof AiType72[keyof typeof AiType72];
@@ -5067,7 +5048,7 @@ export type AiType72 = typeof AiType72[keyof typeof AiType72];
 
 
 export const AiType73 = {
-    PYRAMID_CHART: 'pyramid_chart'
+    AREA_CHART: 'area_chart'
 } as const;
 
 export type AiType73 = typeof AiType73[keyof typeof AiType73];
@@ -5075,7 +5056,7 @@ export type AiType73 = typeof AiType73[keyof typeof AiType73];
 
 
 export const AiType74 = {
-    FUNNEL_CHART: 'funnel_chart'
+    SCATTER_CHART: 'scatter_chart'
 } as const;
 
 export type AiType74 = typeof AiType74[keyof typeof AiType74];
@@ -5083,7 +5064,7 @@ export type AiType74 = typeof AiType74[keyof typeof AiType74];
 
 
 export const AiType75 = {
-    HEATMAP_CHART: 'heatmap_chart'
+    BUBBLE_CHART: 'bubble_chart'
 } as const;
 
 export type AiType75 = typeof AiType75[keyof typeof AiType75];
@@ -5091,7 +5072,7 @@ export type AiType75 = typeof AiType75[keyof typeof AiType75];
 
 
 export const AiType76 = {
-    BULLET_CHART: 'bullet_chart'
+    PIE_CHART: 'pie_chart'
 } as const;
 
 export type AiType76 = typeof AiType76[keyof typeof AiType76];
@@ -5099,7 +5080,7 @@ export type AiType76 = typeof AiType76[keyof typeof AiType76];
 
 
 export const AiType77 = {
-    WATERFALL_CHART: 'waterfall_chart'
+    DONUT_CHART: 'donut_chart'
 } as const;
 
 export type AiType77 = typeof AiType77[keyof typeof AiType77];
@@ -5107,7 +5088,7 @@ export type AiType77 = typeof AiType77[keyof typeof AiType77];
 
 
 export const AiType78 = {
-    DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart'
+    TREEMAP_CHART: 'treemap_chart'
 } as const;
 
 export type AiType78 = typeof AiType78[keyof typeof AiType78];
@@ -5115,7 +5096,7 @@ export type AiType78 = typeof AiType78[keyof typeof AiType78];
 
 
 export const AiType79 = {
-    SANKEY_CHART: 'sankey_chart'
+    PYRAMID_CHART: 'pyramid_chart'
 } as const;
 
 export type AiType79 = typeof AiType79[keyof typeof AiType79];
@@ -5131,7 +5112,7 @@ export type AiType8 = typeof AiType8[keyof typeof AiType8];
 
 
 export const AiType80 = {
-    HEADLINE_CHART: 'headline_chart'
+    FUNNEL_CHART: 'funnel_chart'
 } as const;
 
 export type AiType80 = typeof AiType80[keyof typeof AiType80];
@@ -5139,7 +5120,7 @@ export type AiType80 = typeof AiType80[keyof typeof AiType80];
 
 
 export const AiType81 = {
-    COMBO_CHART: 'combo_chart'
+    HEATMAP_CHART: 'heatmap_chart'
 } as const;
 
 export type AiType81 = typeof AiType81[keyof typeof AiType81];
@@ -5147,7 +5128,7 @@ export type AiType81 = typeof AiType81[keyof typeof AiType81];
 
 
 export const AiType82 = {
-    GEO_CHART: 'geo_chart'
+    BULLET_CHART: 'bullet_chart'
 } as const;
 
 export type AiType82 = typeof AiType82[keyof typeof AiType82];
@@ -5155,7 +5136,7 @@ export type AiType82 = typeof AiType82[keyof typeof AiType82];
 
 
 export const AiType83 = {
-    GEO_AREA_CHART: 'geo_area_chart'
+    WATERFALL_CHART: 'waterfall_chart'
 } as const;
 
 export type AiType83 = typeof AiType83[keyof typeof AiType83];
@@ -5163,7 +5144,7 @@ export type AiType83 = typeof AiType83[keyof typeof AiType83];
 
 
 export const AiType84 = {
-    REPEATER_CHART: 'repeater_chart'
+    DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart'
 } as const;
 
 export type AiType84 = typeof AiType84[keyof typeof AiType84];
@@ -5171,10 +5152,42 @@ export type AiType84 = typeof AiType84[keyof typeof AiType84];
 
 
 export const AiType85 = {
-    RADAR_CHART: 'radar_chart'
+    SANKEY_CHART: 'sankey_chart'
 } as const;
 
 export type AiType85 = typeof AiType85[keyof typeof AiType85];
+
+
+
+export const AiType86 = {
+    HEADLINE_CHART: 'headline_chart'
+} as const;
+
+export type AiType86 = typeof AiType86[keyof typeof AiType86];
+
+
+
+export const AiType87 = {
+    COMBO_CHART: 'combo_chart'
+} as const;
+
+export type AiType87 = typeof AiType87[keyof typeof AiType87];
+
+
+
+export const AiType88 = {
+    GEO_CHART: 'geo_chart'
+} as const;
+
+export type AiType88 = typeof AiType88[keyof typeof AiType88];
+
+
+
+export const AiType89 = {
+    GEO_AREA_CHART: 'geo_area_chart'
+} as const;
+
+export type AiType89 = typeof AiType89[keyof typeof AiType89];
 
 
 
@@ -5183,6 +5196,22 @@ export const AiType9 = {
 } as const;
 
 export type AiType9 = typeof AiType9[keyof typeof AiType9];
+
+
+
+export const AiType90 = {
+    REPEATER_CHART: 'repeater_chart'
+} as const;
+
+export type AiType90 = typeof AiType90[keyof typeof AiType90];
+
+
+
+export const AiType91 = {
+    RADAR_CHART: 'radar_chart'
+} as const;
+
+export type AiType91 = typeof AiType91[keyof typeof AiType91];
 
 
 /**
@@ -5240,9 +5269,7 @@ export interface AiUserContextObjectReferenceGroup {
  */
 export interface AiUserContextReport {
     'definition'?: object | null;
-    /**
-     * `report_ref` of the conversation draft open in the editor while it is not saved yet. A change the assistant makes to it is then a new version of that draft, not a new report. Optional.
-     */
+    'draftConversationId'?: string | null;
     'draftRef'?: string | null;
     'id'?: string | null;
     'title'?: string | null;
@@ -5540,7 +5567,7 @@ export interface AiVisualisation {
     /**
      * Type of visualisation.
      */
-    'type': AiType85;
+    'type': AiType91;
     'view_by'?: Array<AiBucketItem>;
     'stack_by'?: Array<AiBucketItem>;
     'trend_by'?: Array<AiBucketItem>;
@@ -5571,7 +5598,7 @@ export interface AiVisualisation1 {
     /**
      * Type of visualisation.
      */
-    'type': AiType63;
+    'type': AiType69;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5593,7 +5620,7 @@ export interface AiVisualisation10 {
     /**
      * Type of visualisation.
      */
-    'type': AiType72;
+    'type': AiType78;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5615,7 +5642,7 @@ export interface AiVisualisation11 {
     /**
      * Type of visualisation.
      */
-    'type': AiType73;
+    'type': AiType79;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5637,7 +5664,7 @@ export interface AiVisualisation12 {
     /**
      * Type of visualisation.
      */
-    'type': AiType74;
+    'type': AiType80;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5661,7 +5688,7 @@ export interface AiVisualisation13 {
     /**
      * Type of visualisation.
      */
-    'type': AiType75;
+    'type': AiType81;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5683,7 +5710,7 @@ export interface AiVisualisation14 {
     /**
      * Type of visualisation.
      */
-    'type': AiType76;
+    'type': AiType82;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5705,7 +5732,7 @@ export interface AiVisualisation15 {
     /**
      * Type of visualisation.
      */
-    'type': AiType77;
+    'type': AiType83;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5729,7 +5756,7 @@ export interface AiVisualisation16 {
     /**
      * Type of visualisation.
      */
-    'type': AiType78;
+    'type': AiType84;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5753,7 +5780,7 @@ export interface AiVisualisation17 {
     /**
      * Type of visualisation.
      */
-    'type': AiType79;
+    'type': AiType85;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5775,7 +5802,7 @@ export interface AiVisualisation18 {
     /**
      * Type of visualisation.
      */
-    'type': AiType80;
+    'type': AiType86;
     'view_by'?: Array<any> | null;
 }
 
@@ -5797,7 +5824,7 @@ export interface AiVisualisation19 {
     /**
      * Type of visualisation.
      */
-    'type': AiType81;
+    'type': AiType87;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5820,7 +5847,7 @@ export interface AiVisualisation2 {
     /**
      * Type of visualisation.
      */
-    'type': AiType64;
+    'type': AiType70;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5843,7 +5870,7 @@ export interface AiVisualisation20 {
     /**
      * Type of visualisation.
      */
-    'type': AiType82;
+    'type': AiType88;
     'view_by'?: Array<string> | null;
 }
 
@@ -5866,7 +5893,7 @@ export interface AiVisualisation21 {
     /**
      * Type of visualisation.
      */
-    'type': AiType83;
+    'type': AiType89;
     'view_by'?: Array<string> | null;
 }
 
@@ -5890,7 +5917,7 @@ export interface AiVisualisation22 {
     /**
      * Type of visualisation.
      */
-    'type': AiType84;
+    'type': AiType90;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5912,7 +5939,7 @@ export interface AiVisualisation23 {
     /**
      * Type of visualisation.
      */
-    'type': AiType85;
+    'type': AiType91;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5935,7 +5962,7 @@ export interface AiVisualisation3 {
     /**
      * Type of visualisation.
      */
-    'type': AiType65;
+    'type': AiType71;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5958,7 +5985,7 @@ export interface AiVisualisation4 {
     /**
      * Type of visualisation.
      */
-    'type': AiType66;
+    'type': AiType72;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5981,7 +6008,7 @@ export interface AiVisualisation5 {
     /**
      * Type of visualisation.
      */
-    'type': AiType67;
+    'type': AiType73;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -6004,7 +6031,7 @@ export interface AiVisualisation6 {
     /**
      * Type of visualisation.
      */
-    'type': AiType68;
+    'type': AiType74;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -6027,7 +6054,7 @@ export interface AiVisualisation7 {
     /**
      * Type of visualisation.
      */
-    'type': AiType69;
+    'type': AiType75;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -6049,7 +6076,7 @@ export interface AiVisualisation8 {
     /**
      * Type of visualisation.
      */
-    'type': AiType70;
+    'type': AiType76;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -6071,7 +6098,7 @@ export interface AiVisualisation9 {
     /**
      * Type of visualisation.
      */
-    'type': AiType71;
+    'type': AiType77;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -6186,6 +6213,22 @@ export interface AiVisualizationPart {
 }
 
 export type AiVisualizationPartTypeEnum = 'visualization';
+
+/**
+ * One placement of a visualization, summarized under its own filters.
+ */
+export interface AiVisualizationPlacementRequest {
+    /**
+     * AFM filters for this placement only. Layers, lowest first: the visualization\'s stored filters, `filterContext`, then these filters. Send `[]` to apply no own filters. Each layer is merged on top of the one below it: attribute, ranking and inline filters are added and all apply together; a date filter replaces the lower layer\'s date filter on the same date dataset; a measure value filter replaces the lower layer\'s measure value filter on the same measure.
+     */
+    'filters': Array<AiVisualizationPlacementRequestFiltersInner>;
+    'visualizationId': string;
+}
+
+/**
+ * @type AiVisualizationPlacementRequestFiltersInner
+ */
+export type AiVisualizationPlacementRequestFiltersInner = AiAbsoluteDateFilter | AiAllTimeDateFilter | AiComparisonMeasureValueFilter | AiCompoundMeasureValueFilter | AiInlineFilterDefinition | AiMatchAttributeFilterInput | AiNegativeAttributeFilter | AiPositiveAttributeFilter | AiRangeMeasureValueFilter | AiRankingFilter | AiRelativeDateFilter;
 
 /**
  * AAC bodies of the datasets a chart stands on.  The client needs them to resolve what the chart body only names: a geo chart\'s latitude/longitude labels, and the granularities a date filter\'s values are read against. Opaque AAC pass-through (dict), like every other AAC body here.
@@ -6460,6 +6503,110 @@ export const AiYaxisSecondaryType = {
 export type AiYaxisSecondaryType = typeof AiYaxisSecondaryType[keyof typeof AiYaxisSecondaryType];
 
 
+
+
+// AISearchDataAi FP - AISearchDataAiAxiosParamCreator
+/**
+ * Rebuilds the organization\'s AI search data from its stored metadata, memory items and knowledge document files, for example after the vector store was lost. The rebuild runs in the background; the response reports what was queued. Rebuilding knowledge documents counts toward AI usage. If this deployment cannot rebuild knowledge documents, the rebuild skips them. It still rebuilds all other AI search data.
+ * @summary Rebuild AI search data
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AISearchDataAiAxiosParamCreator_RebuildOrgAiSearchData(
+    
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    const localVarPath = `/api/v1/ai/organization/projections/rebuild`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+
+// AISearchDataAi Api FP
+/**
+ * Rebuilds the organization\'s AI search data from its stored metadata, memory items and knowledge document files, for example after the vector store was lost. The rebuild runs in the background; the response reports what was queued. Rebuilding knowledge documents counts toward AI usage. If this deployment cannot rebuild knowledge documents, the rebuild skips them. It still rebuilds all other AI search data.
+ * @summary Rebuild AI search data
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AISearchDataAi_RebuildOrgAiSearchData(
+    axios: AxiosInstance, basePath: string,
+    
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AiProjectionRebuildResponse> {
+    const localVarAxiosArgs = await AISearchDataAiAxiosParamCreator_RebuildOrgAiSearchData(
+        
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+/**
+ * AISearchDataAi - interface
+ * @export
+ * @interface AISearchDataAi
+ */
+export interface AISearchDataAiInterface {
+    /**
+     * Rebuilds the organization\'s AI search data from its stored metadata, memory items and knowledge document files, for example after the vector store was lost. The rebuild runs in the background; the response reports what was queued. Rebuilding knowledge documents counts toward AI usage. If this deployment cannot rebuild knowledge documents, the rebuild skips them. It still rebuilds all other AI search data.
+     * @summary Rebuild AI search data
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AISearchDataAiInterface
+     */
+    rebuildOrgAiSearchData(options?: AxiosRequestConfig): AxiosPromise<AiProjectionRebuildResponse>;
+
+}
+
+/**
+ * AISearchDataAi - object-oriented interface
+ * @export
+ * @class AISearchDataAi
+ * @extends {BaseAPI}
+ */
+export class AISearchDataAi extends BaseAPI implements AISearchDataAiInterface {
+    /**
+     * Rebuilds the organization\'s AI search data from its stored metadata, memory items and knowledge document files, for example after the vector store was lost. The rebuild runs in the background; the response reports what was queued. Rebuilding knowledge documents counts toward AI usage. If this deployment cannot rebuild knowledge documents, the rebuild skips them. It still rebuilds all other AI search data.
+     * @summary Rebuild AI search data
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AISearchDataAi
+     */
+    public rebuildOrgAiSearchData(options?: AxiosRequestConfig) {
+        return AISearchDataAi_RebuildOrgAiSearchData(this.axios, this.basePath, options, this.configuration);
+    }
+}
 
 
 // AgentsAi FP - AgentsAiAxiosParamCreator

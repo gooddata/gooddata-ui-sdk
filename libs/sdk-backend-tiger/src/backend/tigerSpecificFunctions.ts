@@ -68,10 +68,10 @@ import {
     ActionsApi_GenerateLogicalModel,
     ActionsApi_GetDependentEntitiesGraph,
     ActionsApi_GetDependentEntitiesGraphFromEntryPoints,
+    ActionsApi_ProcessInvitation,
     ActionsApi_RegisterUploadNotification,
     ActionsApi_ResolveAllEntitlements,
 } from "@gooddata/api-client-tiger/endpoints/actions";
-import { AuthApi_ProcessInvitation } from "@gooddata/api-client-tiger/endpoints/authActions";
 import {
     EntitiesApi_CreateEntityApiTokens,
     EntitiesApi_CreateEntityCspDirectives,
@@ -1486,7 +1486,7 @@ export const buildTigerSpecificFunctions = (
         options?: AxiosRequestConfig,
     ) => {
         return authApiCall(async (sdk) => {
-            return AuthApi_ProcessInvitation(sdk.axios, sdk.basePath, requestParameters, options).then(
+            return ActionsApi_ProcessInvitation(sdk.axios, sdk.basePath, requestParameters, options).then(
                 (res) => {
                     if (res.status == 204) {
                         return {

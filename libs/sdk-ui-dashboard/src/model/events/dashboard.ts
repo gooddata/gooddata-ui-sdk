@@ -170,6 +170,24 @@ export type DashboardSavedPayload = {
      * If false, an existing dashboard was updated.
      */
     readonly newDashboard: boolean;
+
+    /**
+     * Identifier of the dashboard definition before it was persisted. This is present when an AI
+     * dashboard draft was saved and can differ from the identifier of dashboard.
+     *
+     * @internal
+     */
+    readonly originalDashboardId?: string;
+
+    /**
+     * Draft insights persisted as part of the dashboard save.
+     *
+     * @internal
+     */
+    readonly savedInsights?: ReadonlyArray<{
+        readonly originalInsightId: string;
+        readonly savedInsightId: string;
+    }>;
 };
 
 /**
@@ -188,6 +206,7 @@ export function dashboardSaved(
     dashboard: IDashboard,
     newDashboard: boolean,
     correlationId?: string,
+    savedObjects?: Pick<DashboardSavedPayload, "originalDashboardId" | "savedInsights">,
 ): DashboardSaved {
     return {
         type: "GDC.DASH/EVT.SAVED",
@@ -196,6 +215,7 @@ export function dashboardSaved(
         payload: {
             dashboard,
             newDashboard,
+            ...savedObjects,
         },
     };
 }
