@@ -153,6 +153,20 @@ export interface AfmExecutionResponse {
 }
 
 /**
+ * Computes an AFM as /afm/execute does, and reads its rows as a table. It has a column for each attribute and each measure of the AFM, named by its local identifier, the attributes first. Each attribute must use a label of its own.
+ */
+export interface AfmFlowInput {
+    'execution': AFM;
+    'settings'?: ExecutionSettings;
+    /**
+     * Type of the input.
+     */
+    'type': AfmFlowInputTypeEnum;
+}
+
+export type AfmFlowInputTypeEnum = 'afm';
+
+/**
  * @type AfmIdentifier
  * Reference to the attribute label to which the filter should be applied.
  */
@@ -1120,6 +1134,26 @@ export interface FeedbackRequestDto {
 export type FeedbackRequestDtoSentimentEnum = 'POSITIVE' | 'NEGATIVE';
 
 /**
+ * Reads the latest version of a table uploaded to a GDSTORAGE data source.
+ */
+export interface FileFlowInput {
+    /**
+     * Identifier of the GDSTORAGE data source.
+     */
+    'dataSourceId': string;
+    /**
+     * Name of the table in the data source.
+     */
+    'table': string;
+    /**
+     * Type of the input.
+     */
+    'type': FileFlowInputTypeEnum;
+}
+
+export type FileFlowInputTypeEnum = 'file';
+
+/**
  * Specifies what is used for filtering.
  */
 export interface FilterBy {
@@ -1142,6 +1176,197 @@ export type FilterDefinition = AbsoluteDateFilter | AbsoluteGranularityDateFilte
  * Abstract filter definition type for simple metric.
  */
 export type FilterDefinitionForSimpleMeasure = AttributeFilter | DateFilter;
+
+/**
+ * A column of a flow result.
+ */
+export interface FlowColumn {
+    /**
+     * Metadata of the column, as the operation that produced it gives them.
+     */
+    'metadata': { [key: string]: string; };
+    /**
+     * Name of the column.
+     */
+    'name': string;
+    /**
+     * Type of the values in the column.
+     */
+    'type': string;
+}
+
+/**
+ * A submitted flow: where to read its result.
+ */
+export interface FlowExecutionResponse {
+    'links': ExecutionLinks;
+}
+
+/**
+ * @type FlowInput
+ * An input of a flow.
+ */
+export type FlowInput = AfmFlowInput | FileFlowInput | SqlFlowInput;
+
+/**
+ * An operation that a transformation can run.
+ */
+export interface FlowOperationDescriptor {
+    /**
+     * What the operation does.
+     */
+    'description': string;
+    /**
+     * Inputs of the operation. The first one is the primary input, named data.
+     */
+    'inputs': Array<FlowOperationInput>;
+    /**
+     * Name of the operation. A transformation gives it as its operation.
+     */
+    'name': string;
+    'output': FlowOperationOutput;
+    /**
+     * JSON Schema of the parameters of the operation.
+     */
+    'parameters': { [key: string]: any; };
+    /**
+     * True when the result depends only on the inputs and the parameters. The result of an impure operation is never reused.
+     */
+    'pure': boolean;
+}
+
+/**
+ * An input of an operation.
+ */
+export interface FlowOperationInput {
+    /**
+     * What the operation expects in the input.
+     */
+    'description': string;
+    /**
+     * Name of the input. A transformation binds it in its inputRefs.
+     */
+    'name': string;
+}
+
+/**
+ * The output of an operation.
+ */
+export interface FlowOperationOutput {
+    /**
+     * What the operation produces.
+     */
+    'description': string;
+}
+
+/**
+ * The operations that the transformations of a flow can run.
+ */
+export interface FlowOperations {
+    /**
+     * Available operations.
+     */
+    'operations': Array<FlowOperationDescriptor>;
+}
+
+/**
+ * A flow: named inputs and the transformations that run over them.
+ */
+export interface FlowRequest {
+    /**
+     * Inputs of the flow by name. A transformation refers to an input by its name.
+     */
+    'inputs': { [key: string]: FlowInput; };
+    /**
+     * Transformations in the order they run. The result of the last transformation is the result of the flow. Without transformations, the result is the only input.
+     */
+    'transformations'?: Array<FlowTransformation>;
+}
+
+/**
+ * Description of a flow result.
+ */
+export interface FlowResultMetadata {
+    /**
+     * Columns of the result, in order.
+     */
+    'columns': Array<FlowColumn>;
+    /**
+     * Metadata of the result, as the operations that produced it give them.
+     */
+    'metadata': { [key: string]: string; };
+    /**
+     * Number of rows in the result.
+     */
+    'totalRows': number;
+}
+
+/**
+ * Position of a page in a table result.
+ */
+export interface FlowTablePaging {
+    /**
+     * Maximum number of columns in the page.
+     */
+    'columnLimit': number;
+    /**
+     * Index of the first column of the page.
+     */
+    'columnOffset': number;
+    /**
+     * Maximum number of rows in the page.
+     */
+    'rowLimit': number;
+    /**
+     * Index of the first row of the page.
+     */
+    'rowOffset': number;
+    /**
+     * Number of columns in the result.
+     */
+    'totalColumns': number;
+    /**
+     * Number of rows in the result.
+     */
+    'totalRows': number;
+}
+
+/**
+ * A page of a table result.
+ */
+export interface FlowTableResult {
+    /**
+     * Columns of the page, in order.
+     */
+    'columns': Array<FlowColumn>;
+    /**
+     * Rows of the page. A row has one value for each column, in the order of the columns.
+     */
+    'data': Array<Array<object>>;
+    'paging': FlowTablePaging;
+}
+
+/**
+ * One transformation of a flow: an operation that runs over its inputs.
+ */
+export interface FlowTransformation {
+    /**
+     * Identifier of the transformation. Give it when a later transformation refers to it. The identifier does not change the result.
+     */
+    'id'?: string | null;
+    /**
+     * Inputs of the operation by name. Each one refers to a flow input or to an earlier transformation. The primary input is named data. When data is not given, it refers to the previous transformation, or to the only flow input for the first transformation.
+     */
+    'inputRefs'?: { [key: string]: string; };
+    /**
+     * Name of the operation, as the operation catalog lists it.
+     */
+    'operation': string;
+    /**
+     * Parameters of the operation. They must match the parameter schema of the operation.
+     */
+    'parameters'?: { [key: string]: any; };
+}
 
 export interface ForecastRequest {
     /**
@@ -2413,6 +2638,26 @@ export interface SortKeyValueValue {
 }
 
 export type SortKeyValueValueDirectionEnum = 'ASC' | 'DESC';
+
+/**
+ * Runs a SELECT statement on a data source and reads its rows as a table. Its columns are named and typed as the statement returns them. Data filters of the workspace and of the user do not apply. A GDSTORAGE, FlexConnect or platform-managed data source cannot run it.
+ */
+export interface SqlFlowInput {
+    /**
+     * Identifier of the data source that runs the statement.
+     */
+    'dataSourceId': string;
+    /**
+     * One SELECT statement in the SQL dialect of the data source.
+     */
+    'sql': string;
+    /**
+     * Type of the input.
+     */
+    'type': SqlFlowInputTypeEnum;
+}
+
+export type SqlFlowInputTypeEnum = 'sql';
 
 /**
  * Operation that has succeeded
@@ -6699,6 +6944,68 @@ export async function ActionsApiAxiosParamCreator_CancelExecutions(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
+ * Note: This API is experimental and is going to change. Please, use it accordingly. Each result has one cancel token, which the submit of its flow returns. Applying the token cancels the flow that computes the result.
+ * @summary (EXPERIMENTAL) Apply the given cancel tokens to flows
+ * @param {string} workspaceId Workspace identifier
+ * @param {AfmCancelTokens} afmCancelTokens 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_CancelFlows(
+    workspaceId: string, afmCancelTokens: AfmCancelTokens, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('cancelFlows', 'workspaceId', workspaceId)
+    // verify required parameter 'afmCancelTokens' is not null or undefined
+    assertParamExists('cancelFlows', 'afmCancelTokens', afmCancelTokens)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/flow/cancel`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof afmCancelTokens !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(afmCancelTokens !== undefined ? afmCancelTokens : {})
+        : afmCancelTokens || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
  * 
  * @param {string} workspaceId Workspace identifier
  * @param {string} runId 
@@ -7368,6 +7675,68 @@ export async function ActionsApiAxiosParamCreator_ComputeValidObjects(
     localVarRequestOptions.data = needsSerialization
         ? JSON.stringify(afmValidObjectsQuery !== undefined ? afmValidObjectsQuery : {})
         : afmValidObjectsQuery || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * Note: This API is experimental and is going to change. Please, use it accordingly. Runs the transformations of a flow over its inputs and stores the result. The response links to the result.
+ * @summary (EXPERIMENTAL) Execute a flow
+ * @param {string} workspaceId Workspace identifier
+ * @param {FlowRequest} flowRequest 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_ExecuteFlow(
+    workspaceId: string, flowRequest: FlowRequest, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('executeFlow', 'workspaceId', workspaceId)
+    // verify required parameter 'flowRequest' is not null or undefined
+    assertParamExists('executeFlow', 'flowRequest', flowRequest)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/flow`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof flowRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(flowRequest !== undefined ? flowRequest : {})
+        : flowRequest || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -8198,6 +8567,51 @@ export async function ActionsApiAxiosParamCreator_KeyDriverAnalysisResult(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
+ * Note: This API is experimental and is going to change. Please, use it accordingly. Lists the operations that the transformations of a flow can run, with their inputs and the JSON Schema of their parameters.
+ * @summary (EXPERIMENTAL) List the operations of flows
+ * @param {string} workspaceId Workspace identifier
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_ListFlowOperations(
+    workspaceId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('listFlowOperations', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/flow/operations`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
  * Lists models available on an LLM provider with a full definition. For Azure AI Foundry providers, the model family will be set to UNKNOWN because the endpoint does not expose the family.
  * @summary List LLM Provider Models
  * @param {ListLlmProviderModelsRequest} listLlmProviderModelsRequest 
@@ -8546,6 +8960,193 @@ export async function ActionsApiAxiosParamCreator_RetrieveExecutionMetadata(
     const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * Note: This API is experimental and is going to change. Please, use it accordingly. Gets a window of rows and columns of a flow result as an Apache Arrow IPC File or Stream.
+ * @summary (EXPERIMENTAL) Get a flow result in Apache Arrow File or Stream format
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} resultId Result ID
+ * @param {number} [rowOffset] Index of the first row to return. The default is 0.
+ * @param {number} [rowLimit] Maximum number of rows to return. The default is all remaining rows.
+ * @param {number} [columnOffset] Index of the first column to return. The default is 0.
+ * @param {number} [columnLimit] Maximum number of columns to return. The default is all remaining columns.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_RetrieveFlowResultBinary(
+    workspaceId: string, resultId: string, rowOffset?: number, rowLimit?: number, columnOffset?: number, columnLimit?: number, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('retrieveFlowResultBinary', 'workspaceId', workspaceId)
+    // verify required parameter 'resultId' is not null or undefined
+    assertParamExists('retrieveFlowResultBinary', 'resultId', resultId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/flow/result/{resultId}/binary`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (rowOffset !== undefined) {
+        localVarQueryParameter['rowOffset'] = rowOffset;
+    }
+
+    if (rowLimit !== undefined) {
+        localVarQueryParameter['rowLimit'] = rowLimit;
+    }
+
+    if (columnOffset !== undefined) {
+        localVarQueryParameter['columnOffset'] = columnOffset;
+    }
+
+    if (columnLimit !== undefined) {
+        localVarQueryParameter['columnLimit'] = columnLimit;
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * Note: This API is experimental and is going to change. Please, use it accordingly. Gets the columns and the number of rows of a flow result.
+ * @summary (EXPERIMENTAL) Get the metadata of a flow result
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} resultId Result ID
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_RetrieveFlowResultMetadata(
+    workspaceId: string, resultId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('retrieveFlowResultMetadata', 'workspaceId', workspaceId)
+    // verify required parameter 'resultId' is not null or undefined
+    assertParamExists('retrieveFlowResultMetadata', 'resultId', resultId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/flow/result/{resultId}/metadata`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * Note: This API is experimental and is going to change. Please, use it accordingly. Gets a window of rows and columns of a flow result.
+ * @summary (EXPERIMENTAL) Get a page of a flow result
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} resultId Result ID
+ * @param {number} [rowOffset] Index of the first row to return. The default is 0.
+ * @param {number} [rowLimit] Maximum number of rows to return. The default is all remaining rows.
+ * @param {number} [columnOffset] Index of the first column to return. The default is 0.
+ * @param {number} [columnLimit] Maximum number of columns to return. The default is all remaining columns.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_RetrieveFlowResultTable(
+    workspaceId: string, resultId: string, rowOffset?: number, rowLimit?: number, columnOffset?: number, columnLimit?: number, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('retrieveFlowResultTable', 'workspaceId', workspaceId)
+    // verify required parameter 'resultId' is not null or undefined
+    assertParamExists('retrieveFlowResultTable', 'resultId', resultId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/flow/result/{resultId}/table`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (rowOffset !== undefined) {
+        localVarQueryParameter['rowOffset'] = rowOffset;
+    }
+
+    if (rowLimit !== undefined) {
+        localVarQueryParameter['rowLimit'] = rowLimit;
+    }
+
+    if (columnOffset !== undefined) {
+        localVarQueryParameter['columnOffset'] = columnOffset;
+    }
+
+    if (columnLimit !== undefined) {
+        localVarQueryParameter['columnLimit'] = columnLimit;
+    }
 
 
     
@@ -9231,6 +9832,32 @@ export async function ActionsApi_CancelExecutions(
 
 // ActionsApi Api FP
 /**
+ * Note: This API is experimental and is going to change. Please, use it accordingly. Each result has one cancel token, which the submit of its flow returns. Applying the token cancels the flow that computes the result.
+ * @summary (EXPERIMENTAL) Apply the given cancel tokens to flows
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiCancelFlowsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_CancelFlows(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiCancelFlowsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AfmCancelTokens> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_CancelFlows(
+        requestParameters.workspaceId, requestParameters.afmCancelTokens, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
  * 
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -9506,6 +10133,32 @@ export async function ActionsApi_ComputeValidObjects(
 ): AxiosPromise<AfmValidObjectsResponse> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ComputeValidObjects(
         requestParameters.workspaceId, requestParameters.afmValidObjectsQuery, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
+ * Note: This API is experimental and is going to change. Please, use it accordingly. Runs the transformations of a flow over its inputs and stores the result. The response links to the result.
+ * @summary (EXPERIMENTAL) Execute a flow
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiExecuteFlowRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_ExecuteFlow(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiExecuteFlowRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<FlowExecutionResponse> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ExecuteFlow(
+        requestParameters.workspaceId, requestParameters.flowRequest, 
         options || {},
         configuration,
     );
@@ -9874,6 +10527,32 @@ export async function ActionsApi_KeyDriverAnalysisResult(
 
 // ActionsApi Api FP
 /**
+ * Note: This API is experimental and is going to change. Please, use it accordingly. Lists the operations that the transformations of a flow can run, with their inputs and the JSON Schema of their parameters.
+ * @summary (EXPERIMENTAL) List the operations of flows
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiListFlowOperationsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_ListFlowOperations(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiListFlowOperationsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<FlowOperations> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ListFlowOperations(
+        requestParameters.workspaceId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
  * Lists models available on an LLM provider with a full definition. For Azure AI Foundry providers, the model family will be set to UNKNOWN because the endpoint does not expose the family.
  * @summary List LLM Provider Models
  * @param {AxiosInstance} axios Axios instance.
@@ -10047,6 +10726,84 @@ export async function ActionsApi_RetrieveExecutionMetadata(
 ): AxiosPromise<ResultCacheMetadata> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_RetrieveExecutionMetadata(
         requestParameters.workspaceId, requestParameters.resultId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
+ * Note: This API is experimental and is going to change. Please, use it accordingly. Gets a window of rows and columns of a flow result as an Apache Arrow IPC File or Stream.
+ * @summary (EXPERIMENTAL) Get a flow result in Apache Arrow File or Stream format
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiRetrieveFlowResultBinaryRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_RetrieveFlowResultBinary(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiRetrieveFlowResultBinaryRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<File> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_RetrieveFlowResultBinary(
+        requestParameters.workspaceId, requestParameters.resultId, requestParameters.rowOffset, requestParameters.rowLimit, requestParameters.columnOffset, requestParameters.columnLimit, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
+ * Note: This API is experimental and is going to change. Please, use it accordingly. Gets the columns and the number of rows of a flow result.
+ * @summary (EXPERIMENTAL) Get the metadata of a flow result
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiRetrieveFlowResultMetadataRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_RetrieveFlowResultMetadata(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiRetrieveFlowResultMetadataRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<FlowResultMetadata> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_RetrieveFlowResultMetadata(
+        requestParameters.workspaceId, requestParameters.resultId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
+ * Note: This API is experimental and is going to change. Please, use it accordingly. Gets a window of rows and columns of a flow result.
+ * @summary (EXPERIMENTAL) Get a page of a flow result
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiRetrieveFlowResultTableRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_RetrieveFlowResultTable(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiRetrieveFlowResultTableRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<FlowTableResult> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_RetrieveFlowResultTable(
+        requestParameters.workspaceId, requestParameters.resultId, requestParameters.rowOffset, requestParameters.rowLimit, requestParameters.columnOffset, requestParameters.columnLimit, 
         options || {},
         configuration,
     );
@@ -10369,6 +11126,16 @@ export interface ActionsApiInterface {
     cancelExecutions(requestParameters: ActionsApiCancelExecutionsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmCancelTokens>;
 
     /**
+     * Note: This API is experimental and is going to change. Please, use it accordingly. Each result has one cancel token, which the submit of its flow returns. Applying the token cancels the flow that computes the result.
+     * @summary (EXPERIMENTAL) Apply the given cancel tokens to flows
+     * @param {ActionsApiCancelFlowsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    cancelFlows(requestParameters: ActionsApiCancelFlowsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmCancelTokens>;
+
+    /**
      * 
      * @param {ActionsApiCancelWorkflowRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -10475,6 +11242,16 @@ export interface ActionsApiInterface {
      * @memberof ActionsApiInterface
      */
     computeValidObjects(requestParameters: ActionsApiComputeValidObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmValidObjectsResponse>;
+
+    /**
+     * Note: This API is experimental and is going to change. Please, use it accordingly. Runs the transformations of a flow over its inputs and stores the result. The response links to the result.
+     * @summary (EXPERIMENTAL) Execute a flow
+     * @param {ActionsApiExecuteFlowRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    executeFlow(requestParameters: ActionsApiExecuteFlowRequest, options?: AxiosRequestConfig): AxiosPromise<FlowExecutionResponse>;
 
     /**
      * The resource provides static structures needed for investigation of a problem with given AFM.
@@ -10612,6 +11389,16 @@ export interface ActionsApiInterface {
     keyDriverAnalysisResult(requestParameters: ActionsApiKeyDriverAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResult>;
 
     /**
+     * Note: This API is experimental and is going to change. Please, use it accordingly. Lists the operations that the transformations of a flow can run, with their inputs and the JSON Schema of their parameters.
+     * @summary (EXPERIMENTAL) List the operations of flows
+     * @param {ActionsApiListFlowOperationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    listFlowOperations(requestParameters: ActionsApiListFlowOperationsRequest, options?: AxiosRequestConfig): AxiosPromise<FlowOperations>;
+
+    /**
      * Lists models available on an LLM provider with a full definition. For Azure AI Foundry providers, the model family will be set to UNKNOWN because the endpoint does not expose the family.
      * @summary List LLM Provider Models
      * @param {ActionsApiListLlmProviderModelsRequest} requestParameters Request parameters.
@@ -10681,6 +11468,36 @@ export interface ActionsApiInterface {
      * @memberof ActionsApiInterface
      */
     retrieveExecutionMetadata(requestParameters: ActionsApiRetrieveExecutionMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<ResultCacheMetadata>;
+
+    /**
+     * Note: This API is experimental and is going to change. Please, use it accordingly. Gets a window of rows and columns of a flow result as an Apache Arrow IPC File or Stream.
+     * @summary (EXPERIMENTAL) Get a flow result in Apache Arrow File or Stream format
+     * @param {ActionsApiRetrieveFlowResultBinaryRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    retrieveFlowResultBinary(requestParameters: ActionsApiRetrieveFlowResultBinaryRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
+
+    /**
+     * Note: This API is experimental and is going to change. Please, use it accordingly. Gets the columns and the number of rows of a flow result.
+     * @summary (EXPERIMENTAL) Get the metadata of a flow result
+     * @param {ActionsApiRetrieveFlowResultMetadataRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    retrieveFlowResultMetadata(requestParameters: ActionsApiRetrieveFlowResultMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<FlowResultMetadata>;
+
+    /**
+     * Note: This API is experimental and is going to change. Please, use it accordingly. Gets a window of rows and columns of a flow result.
+     * @summary (EXPERIMENTAL) Get a page of a flow result
+     * @param {ActionsApiRetrieveFlowResultTableRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    retrieveFlowResultTable(requestParameters: ActionsApiRetrieveFlowResultTableRequest, options?: AxiosRequestConfig): AxiosPromise<FlowTableResult>;
 
     /**
      * Gets a single execution result.
@@ -10917,6 +11734,27 @@ export interface ActionsApiCancelExecutionsRequest {
      * 
      * @type {AfmCancelTokens}
      * @memberof ActionsApiCancelExecutions
+     */
+    readonly afmCancelTokens: AfmCancelTokens
+}
+
+/**
+ * Request parameters for cancelFlows operation in ActionsApi.
+ * @export
+ * @interface ActionsApiCancelFlowsRequest
+ */
+export interface ActionsApiCancelFlowsRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiCancelFlows
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {AfmCancelTokens}
+     * @memberof ActionsApiCancelFlows
      */
     readonly afmCancelTokens: AfmCancelTokens
 }
@@ -11227,6 +12065,27 @@ export interface ActionsApiComputeValidObjectsRequest {
      * @memberof ActionsApiComputeValidObjects
      */
     readonly afmValidObjectsQuery: AfmValidObjectsQuery
+}
+
+/**
+ * Request parameters for executeFlow operation in ActionsApi.
+ * @export
+ * @interface ActionsApiExecuteFlowRequest
+ */
+export interface ActionsApiExecuteFlowRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiExecuteFlow
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {FlowRequest}
+     * @memberof ActionsApiExecuteFlow
+     */
+    readonly flowRequest: FlowRequest
 }
 
 /**
@@ -11573,6 +12432,20 @@ export interface ActionsApiKeyDriverAnalysisResultRequest {
 }
 
 /**
+ * Request parameters for listFlowOperations operation in ActionsApi.
+ * @export
+ * @interface ActionsApiListFlowOperationsRequest
+ */
+export interface ActionsApiListFlowOperationsRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiListFlowOperations
+     */
+    readonly workspaceId: string
+}
+
+/**
  * Request parameters for listLlmProviderModels operation in ActionsApi.
  * @export
  * @interface ActionsApiListLlmProviderModelsRequest
@@ -11710,6 +12583,125 @@ export interface ActionsApiRetrieveExecutionMetadataRequest {
      * @memberof ActionsApiRetrieveExecutionMetadata
      */
     readonly resultId: string
+}
+
+/**
+ * Request parameters for retrieveFlowResultBinary operation in ActionsApi.
+ * @export
+ * @interface ActionsApiRetrieveFlowResultBinaryRequest
+ */
+export interface ActionsApiRetrieveFlowResultBinaryRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiRetrieveFlowResultBinary
+     */
+    readonly workspaceId: string
+
+    /**
+     * Result ID
+     * @type {string}
+     * @memberof ActionsApiRetrieveFlowResultBinary
+     */
+    readonly resultId: string
+
+    /**
+     * Index of the first row to return. The default is 0.
+     * @type {number}
+     * @memberof ActionsApiRetrieveFlowResultBinary
+     */
+    readonly rowOffset?: number
+
+    /**
+     * Maximum number of rows to return. The default is all remaining rows.
+     * @type {number}
+     * @memberof ActionsApiRetrieveFlowResultBinary
+     */
+    readonly rowLimit?: number
+
+    /**
+     * Index of the first column to return. The default is 0.
+     * @type {number}
+     * @memberof ActionsApiRetrieveFlowResultBinary
+     */
+    readonly columnOffset?: number
+
+    /**
+     * Maximum number of columns to return. The default is all remaining columns.
+     * @type {number}
+     * @memberof ActionsApiRetrieveFlowResultBinary
+     */
+    readonly columnLimit?: number
+}
+
+/**
+ * Request parameters for retrieveFlowResultMetadata operation in ActionsApi.
+ * @export
+ * @interface ActionsApiRetrieveFlowResultMetadataRequest
+ */
+export interface ActionsApiRetrieveFlowResultMetadataRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiRetrieveFlowResultMetadata
+     */
+    readonly workspaceId: string
+
+    /**
+     * Result ID
+     * @type {string}
+     * @memberof ActionsApiRetrieveFlowResultMetadata
+     */
+    readonly resultId: string
+}
+
+/**
+ * Request parameters for retrieveFlowResultTable operation in ActionsApi.
+ * @export
+ * @interface ActionsApiRetrieveFlowResultTableRequest
+ */
+export interface ActionsApiRetrieveFlowResultTableRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiRetrieveFlowResultTable
+     */
+    readonly workspaceId: string
+
+    /**
+     * Result ID
+     * @type {string}
+     * @memberof ActionsApiRetrieveFlowResultTable
+     */
+    readonly resultId: string
+
+    /**
+     * Index of the first row to return. The default is 0.
+     * @type {number}
+     * @memberof ActionsApiRetrieveFlowResultTable
+     */
+    readonly rowOffset?: number
+
+    /**
+     * Maximum number of rows to return. The default is all remaining rows.
+     * @type {number}
+     * @memberof ActionsApiRetrieveFlowResultTable
+     */
+    readonly rowLimit?: number
+
+    /**
+     * Index of the first column to return. The default is 0.
+     * @type {number}
+     * @memberof ActionsApiRetrieveFlowResultTable
+     */
+    readonly columnOffset?: number
+
+    /**
+     * Maximum number of columns to return. The default is all remaining columns.
+     * @type {number}
+     * @memberof ActionsApiRetrieveFlowResultTable
+     */
+    readonly columnLimit?: number
 }
 
 /**
@@ -11992,6 +12984,18 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
+     * Note: This API is experimental and is going to change. Please, use it accordingly. Each result has one cancel token, which the submit of its flow returns. Applying the token cancels the flow that computes the result.
+     * @summary (EXPERIMENTAL) Apply the given cancel tokens to flows
+     * @param {ActionsApiCancelFlowsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public cancelFlows(requestParameters: ActionsApiCancelFlowsRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_CancelFlows(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
      * 
      * @param {ActionsApiCancelWorkflowRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -12119,6 +13123,18 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      */
     public computeValidObjects(requestParameters: ActionsApiComputeValidObjectsRequest, options?: AxiosRequestConfig) {
         return ActionsApi_ComputeValidObjects(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Note: This API is experimental and is going to change. Please, use it accordingly. Runs the transformations of a flow over its inputs and stores the result. The response links to the result.
+     * @summary (EXPERIMENTAL) Execute a flow
+     * @param {ActionsApiExecuteFlowRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public executeFlow(requestParameters: ActionsApiExecuteFlowRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_ExecuteFlow(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -12285,6 +13301,18 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
+     * Note: This API is experimental and is going to change. Please, use it accordingly. Lists the operations that the transformations of a flow can run, with their inputs and the JSON Schema of their parameters.
+     * @summary (EXPERIMENTAL) List the operations of flows
+     * @param {ActionsApiListFlowOperationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public listFlowOperations(requestParameters: ActionsApiListFlowOperationsRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_ListFlowOperations(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
      * Lists models available on an LLM provider with a full definition. For Azure AI Foundry providers, the model family will be set to UNKNOWN because the endpoint does not expose the family.
      * @summary List LLM Provider Models
      * @param {ActionsApiListLlmProviderModelsRequest} requestParameters Request parameters.
@@ -12367,6 +13395,42 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      */
     public retrieveExecutionMetadata(requestParameters: ActionsApiRetrieveExecutionMetadataRequest, options?: AxiosRequestConfig) {
         return ActionsApi_RetrieveExecutionMetadata(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Note: This API is experimental and is going to change. Please, use it accordingly. Gets a window of rows and columns of a flow result as an Apache Arrow IPC File or Stream.
+     * @summary (EXPERIMENTAL) Get a flow result in Apache Arrow File or Stream format
+     * @param {ActionsApiRetrieveFlowResultBinaryRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public retrieveFlowResultBinary(requestParameters: ActionsApiRetrieveFlowResultBinaryRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_RetrieveFlowResultBinary(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Note: This API is experimental and is going to change. Please, use it accordingly. Gets the columns and the number of rows of a flow result.
+     * @summary (EXPERIMENTAL) Get the metadata of a flow result
+     * @param {ActionsApiRetrieveFlowResultMetadataRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public retrieveFlowResultMetadata(requestParameters: ActionsApiRetrieveFlowResultMetadataRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_RetrieveFlowResultMetadata(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Note: This API is experimental and is going to change. Please, use it accordingly. Gets a window of rows and columns of a flow result.
+     * @summary (EXPERIMENTAL) Get a page of a flow result
+     * @param {ActionsApiRetrieveFlowResultTableRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public retrieveFlowResultTable(requestParameters: ActionsApiRetrieveFlowResultTableRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_RetrieveFlowResultTable(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -14736,6 +15800,843 @@ export class ComputationApi extends BaseAPI implements ComputationApiInterface {
      */
     public retrieveResultBinary(requestParameters: ComputationApiRetrieveResultBinaryRequest, options?: AxiosRequestConfig) {
         return ComputationApi_RetrieveResultBinary(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+}
+
+
+// FlowApi FP - FlowApiAxiosParamCreator
+/**
+ * Note: This API is experimental and is going to change. Please, use it accordingly. Each result has one cancel token, which the submit of its flow returns. Applying the token cancels the flow that computes the result.
+ * @summary (EXPERIMENTAL) Apply the given cancel tokens to flows
+ * @param {string} workspaceId Workspace identifier
+ * @param {AfmCancelTokens} afmCancelTokens 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function FlowApiAxiosParamCreator_CancelFlows(
+    workspaceId: string, afmCancelTokens: AfmCancelTokens, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('cancelFlows', 'workspaceId', workspaceId)
+    // verify required parameter 'afmCancelTokens' is not null or undefined
+    assertParamExists('cancelFlows', 'afmCancelTokens', afmCancelTokens)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/flow/cancel`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof afmCancelTokens !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(afmCancelTokens !== undefined ? afmCancelTokens : {})
+        : afmCancelTokens || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// FlowApi FP - FlowApiAxiosParamCreator
+/**
+ * Note: This API is experimental and is going to change. Please, use it accordingly. Runs the transformations of a flow over its inputs and stores the result. The response links to the result.
+ * @summary (EXPERIMENTAL) Execute a flow
+ * @param {string} workspaceId Workspace identifier
+ * @param {FlowRequest} flowRequest 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function FlowApiAxiosParamCreator_ExecuteFlow(
+    workspaceId: string, flowRequest: FlowRequest, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('executeFlow', 'workspaceId', workspaceId)
+    // verify required parameter 'flowRequest' is not null or undefined
+    assertParamExists('executeFlow', 'flowRequest', flowRequest)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/flow`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof flowRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(flowRequest !== undefined ? flowRequest : {})
+        : flowRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// FlowApi FP - FlowApiAxiosParamCreator
+/**
+ * Note: This API is experimental and is going to change. Please, use it accordingly. Lists the operations that the transformations of a flow can run, with their inputs and the JSON Schema of their parameters.
+ * @summary (EXPERIMENTAL) List the operations of flows
+ * @param {string} workspaceId Workspace identifier
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function FlowApiAxiosParamCreator_ListFlowOperations(
+    workspaceId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('listFlowOperations', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/flow/operations`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// FlowApi FP - FlowApiAxiosParamCreator
+/**
+ * Note: This API is experimental and is going to change. Please, use it accordingly. Gets a window of rows and columns of a flow result as an Apache Arrow IPC File or Stream.
+ * @summary (EXPERIMENTAL) Get a flow result in Apache Arrow File or Stream format
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} resultId Result ID
+ * @param {number} [rowOffset] Index of the first row to return. The default is 0.
+ * @param {number} [rowLimit] Maximum number of rows to return. The default is all remaining rows.
+ * @param {number} [columnOffset] Index of the first column to return. The default is 0.
+ * @param {number} [columnLimit] Maximum number of columns to return. The default is all remaining columns.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function FlowApiAxiosParamCreator_RetrieveFlowResultBinary(
+    workspaceId: string, resultId: string, rowOffset?: number, rowLimit?: number, columnOffset?: number, columnLimit?: number, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('retrieveFlowResultBinary', 'workspaceId', workspaceId)
+    // verify required parameter 'resultId' is not null or undefined
+    assertParamExists('retrieveFlowResultBinary', 'resultId', resultId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/flow/result/{resultId}/binary`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (rowOffset !== undefined) {
+        localVarQueryParameter['rowOffset'] = rowOffset;
+    }
+
+    if (rowLimit !== undefined) {
+        localVarQueryParameter['rowLimit'] = rowLimit;
+    }
+
+    if (columnOffset !== undefined) {
+        localVarQueryParameter['columnOffset'] = columnOffset;
+    }
+
+    if (columnLimit !== undefined) {
+        localVarQueryParameter['columnLimit'] = columnLimit;
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// FlowApi FP - FlowApiAxiosParamCreator
+/**
+ * Note: This API is experimental and is going to change. Please, use it accordingly. Gets the columns and the number of rows of a flow result.
+ * @summary (EXPERIMENTAL) Get the metadata of a flow result
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} resultId Result ID
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function FlowApiAxiosParamCreator_RetrieveFlowResultMetadata(
+    workspaceId: string, resultId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('retrieveFlowResultMetadata', 'workspaceId', workspaceId)
+    // verify required parameter 'resultId' is not null or undefined
+    assertParamExists('retrieveFlowResultMetadata', 'resultId', resultId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/flow/result/{resultId}/metadata`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// FlowApi FP - FlowApiAxiosParamCreator
+/**
+ * Note: This API is experimental and is going to change. Please, use it accordingly. Gets a window of rows and columns of a flow result.
+ * @summary (EXPERIMENTAL) Get a page of a flow result
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} resultId Result ID
+ * @param {number} [rowOffset] Index of the first row to return. The default is 0.
+ * @param {number} [rowLimit] Maximum number of rows to return. The default is all remaining rows.
+ * @param {number} [columnOffset] Index of the first column to return. The default is 0.
+ * @param {number} [columnLimit] Maximum number of columns to return. The default is all remaining columns.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function FlowApiAxiosParamCreator_RetrieveFlowResultTable(
+    workspaceId: string, resultId: string, rowOffset?: number, rowLimit?: number, columnOffset?: number, columnLimit?: number, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('retrieveFlowResultTable', 'workspaceId', workspaceId)
+    // verify required parameter 'resultId' is not null or undefined
+    assertParamExists('retrieveFlowResultTable', 'resultId', resultId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/flow/result/{resultId}/table`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (rowOffset !== undefined) {
+        localVarQueryParameter['rowOffset'] = rowOffset;
+    }
+
+    if (rowLimit !== undefined) {
+        localVarQueryParameter['rowLimit'] = rowLimit;
+    }
+
+    if (columnOffset !== undefined) {
+        localVarQueryParameter['columnOffset'] = columnOffset;
+    }
+
+    if (columnLimit !== undefined) {
+        localVarQueryParameter['columnLimit'] = columnLimit;
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+
+// FlowApi Api FP
+/**
+ * Note: This API is experimental and is going to change. Please, use it accordingly. Each result has one cancel token, which the submit of its flow returns. Applying the token cancels the flow that computes the result.
+ * @summary (EXPERIMENTAL) Apply the given cancel tokens to flows
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {FlowApiCancelFlowsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function FlowApi_CancelFlows(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: FlowApiCancelFlowsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AfmCancelTokens> {
+    const localVarAxiosArgs = await FlowApiAxiosParamCreator_CancelFlows(
+        requestParameters.workspaceId, requestParameters.afmCancelTokens, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// FlowApi Api FP
+/**
+ * Note: This API is experimental and is going to change. Please, use it accordingly. Runs the transformations of a flow over its inputs and stores the result. The response links to the result.
+ * @summary (EXPERIMENTAL) Execute a flow
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {FlowApiExecuteFlowRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function FlowApi_ExecuteFlow(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: FlowApiExecuteFlowRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<FlowExecutionResponse> {
+    const localVarAxiosArgs = await FlowApiAxiosParamCreator_ExecuteFlow(
+        requestParameters.workspaceId, requestParameters.flowRequest, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// FlowApi Api FP
+/**
+ * Note: This API is experimental and is going to change. Please, use it accordingly. Lists the operations that the transformations of a flow can run, with their inputs and the JSON Schema of their parameters.
+ * @summary (EXPERIMENTAL) List the operations of flows
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {FlowApiListFlowOperationsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function FlowApi_ListFlowOperations(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: FlowApiListFlowOperationsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<FlowOperations> {
+    const localVarAxiosArgs = await FlowApiAxiosParamCreator_ListFlowOperations(
+        requestParameters.workspaceId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// FlowApi Api FP
+/**
+ * Note: This API is experimental and is going to change. Please, use it accordingly. Gets a window of rows and columns of a flow result as an Apache Arrow IPC File or Stream.
+ * @summary (EXPERIMENTAL) Get a flow result in Apache Arrow File or Stream format
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {FlowApiRetrieveFlowResultBinaryRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function FlowApi_RetrieveFlowResultBinary(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: FlowApiRetrieveFlowResultBinaryRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<File> {
+    const localVarAxiosArgs = await FlowApiAxiosParamCreator_RetrieveFlowResultBinary(
+        requestParameters.workspaceId, requestParameters.resultId, requestParameters.rowOffset, requestParameters.rowLimit, requestParameters.columnOffset, requestParameters.columnLimit, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// FlowApi Api FP
+/**
+ * Note: This API is experimental and is going to change. Please, use it accordingly. Gets the columns and the number of rows of a flow result.
+ * @summary (EXPERIMENTAL) Get the metadata of a flow result
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {FlowApiRetrieveFlowResultMetadataRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function FlowApi_RetrieveFlowResultMetadata(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: FlowApiRetrieveFlowResultMetadataRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<FlowResultMetadata> {
+    const localVarAxiosArgs = await FlowApiAxiosParamCreator_RetrieveFlowResultMetadata(
+        requestParameters.workspaceId, requestParameters.resultId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// FlowApi Api FP
+/**
+ * Note: This API is experimental and is going to change. Please, use it accordingly. Gets a window of rows and columns of a flow result.
+ * @summary (EXPERIMENTAL) Get a page of a flow result
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {FlowApiRetrieveFlowResultTableRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function FlowApi_RetrieveFlowResultTable(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: FlowApiRetrieveFlowResultTableRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<FlowTableResult> {
+    const localVarAxiosArgs = await FlowApiAxiosParamCreator_RetrieveFlowResultTable(
+        requestParameters.workspaceId, requestParameters.resultId, requestParameters.rowOffset, requestParameters.rowLimit, requestParameters.columnOffset, requestParameters.columnLimit, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+/**
+ * FlowApi - interface
+ * @export
+ * @interface FlowApi
+ */
+export interface FlowApiInterface {
+    /**
+     * Note: This API is experimental and is going to change. Please, use it accordingly. Each result has one cancel token, which the submit of its flow returns. Applying the token cancels the flow that computes the result.
+     * @summary (EXPERIMENTAL) Apply the given cancel tokens to flows
+     * @param {FlowApiCancelFlowsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FlowApiInterface
+     */
+    cancelFlows(requestParameters: FlowApiCancelFlowsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmCancelTokens>;
+
+    /**
+     * Note: This API is experimental and is going to change. Please, use it accordingly. Runs the transformations of a flow over its inputs and stores the result. The response links to the result.
+     * @summary (EXPERIMENTAL) Execute a flow
+     * @param {FlowApiExecuteFlowRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FlowApiInterface
+     */
+    executeFlow(requestParameters: FlowApiExecuteFlowRequest, options?: AxiosRequestConfig): AxiosPromise<FlowExecutionResponse>;
+
+    /**
+     * Note: This API is experimental and is going to change. Please, use it accordingly. Lists the operations that the transformations of a flow can run, with their inputs and the JSON Schema of their parameters.
+     * @summary (EXPERIMENTAL) List the operations of flows
+     * @param {FlowApiListFlowOperationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FlowApiInterface
+     */
+    listFlowOperations(requestParameters: FlowApiListFlowOperationsRequest, options?: AxiosRequestConfig): AxiosPromise<FlowOperations>;
+
+    /**
+     * Note: This API is experimental and is going to change. Please, use it accordingly. Gets a window of rows and columns of a flow result as an Apache Arrow IPC File or Stream.
+     * @summary (EXPERIMENTAL) Get a flow result in Apache Arrow File or Stream format
+     * @param {FlowApiRetrieveFlowResultBinaryRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FlowApiInterface
+     */
+    retrieveFlowResultBinary(requestParameters: FlowApiRetrieveFlowResultBinaryRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
+
+    /**
+     * Note: This API is experimental and is going to change. Please, use it accordingly. Gets the columns and the number of rows of a flow result.
+     * @summary (EXPERIMENTAL) Get the metadata of a flow result
+     * @param {FlowApiRetrieveFlowResultMetadataRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FlowApiInterface
+     */
+    retrieveFlowResultMetadata(requestParameters: FlowApiRetrieveFlowResultMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<FlowResultMetadata>;
+
+    /**
+     * Note: This API is experimental and is going to change. Please, use it accordingly. Gets a window of rows and columns of a flow result.
+     * @summary (EXPERIMENTAL) Get a page of a flow result
+     * @param {FlowApiRetrieveFlowResultTableRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FlowApiInterface
+     */
+    retrieveFlowResultTable(requestParameters: FlowApiRetrieveFlowResultTableRequest, options?: AxiosRequestConfig): AxiosPromise<FlowTableResult>;
+
+}
+
+/**
+ * Request parameters for cancelFlows operation in FlowApi.
+ * @export
+ * @interface FlowApiCancelFlowsRequest
+ */
+export interface FlowApiCancelFlowsRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof FlowApiCancelFlows
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {AfmCancelTokens}
+     * @memberof FlowApiCancelFlows
+     */
+    readonly afmCancelTokens: AfmCancelTokens
+}
+
+/**
+ * Request parameters for executeFlow operation in FlowApi.
+ * @export
+ * @interface FlowApiExecuteFlowRequest
+ */
+export interface FlowApiExecuteFlowRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof FlowApiExecuteFlow
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {FlowRequest}
+     * @memberof FlowApiExecuteFlow
+     */
+    readonly flowRequest: FlowRequest
+}
+
+/**
+ * Request parameters for listFlowOperations operation in FlowApi.
+ * @export
+ * @interface FlowApiListFlowOperationsRequest
+ */
+export interface FlowApiListFlowOperationsRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof FlowApiListFlowOperations
+     */
+    readonly workspaceId: string
+}
+
+/**
+ * Request parameters for retrieveFlowResultBinary operation in FlowApi.
+ * @export
+ * @interface FlowApiRetrieveFlowResultBinaryRequest
+ */
+export interface FlowApiRetrieveFlowResultBinaryRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof FlowApiRetrieveFlowResultBinary
+     */
+    readonly workspaceId: string
+
+    /**
+     * Result ID
+     * @type {string}
+     * @memberof FlowApiRetrieveFlowResultBinary
+     */
+    readonly resultId: string
+
+    /**
+     * Index of the first row to return. The default is 0.
+     * @type {number}
+     * @memberof FlowApiRetrieveFlowResultBinary
+     */
+    readonly rowOffset?: number
+
+    /**
+     * Maximum number of rows to return. The default is all remaining rows.
+     * @type {number}
+     * @memberof FlowApiRetrieveFlowResultBinary
+     */
+    readonly rowLimit?: number
+
+    /**
+     * Index of the first column to return. The default is 0.
+     * @type {number}
+     * @memberof FlowApiRetrieveFlowResultBinary
+     */
+    readonly columnOffset?: number
+
+    /**
+     * Maximum number of columns to return. The default is all remaining columns.
+     * @type {number}
+     * @memberof FlowApiRetrieveFlowResultBinary
+     */
+    readonly columnLimit?: number
+}
+
+/**
+ * Request parameters for retrieveFlowResultMetadata operation in FlowApi.
+ * @export
+ * @interface FlowApiRetrieveFlowResultMetadataRequest
+ */
+export interface FlowApiRetrieveFlowResultMetadataRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof FlowApiRetrieveFlowResultMetadata
+     */
+    readonly workspaceId: string
+
+    /**
+     * Result ID
+     * @type {string}
+     * @memberof FlowApiRetrieveFlowResultMetadata
+     */
+    readonly resultId: string
+}
+
+/**
+ * Request parameters for retrieveFlowResultTable operation in FlowApi.
+ * @export
+ * @interface FlowApiRetrieveFlowResultTableRequest
+ */
+export interface FlowApiRetrieveFlowResultTableRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof FlowApiRetrieveFlowResultTable
+     */
+    readonly workspaceId: string
+
+    /**
+     * Result ID
+     * @type {string}
+     * @memberof FlowApiRetrieveFlowResultTable
+     */
+    readonly resultId: string
+
+    /**
+     * Index of the first row to return. The default is 0.
+     * @type {number}
+     * @memberof FlowApiRetrieveFlowResultTable
+     */
+    readonly rowOffset?: number
+
+    /**
+     * Maximum number of rows to return. The default is all remaining rows.
+     * @type {number}
+     * @memberof FlowApiRetrieveFlowResultTable
+     */
+    readonly rowLimit?: number
+
+    /**
+     * Index of the first column to return. The default is 0.
+     * @type {number}
+     * @memberof FlowApiRetrieveFlowResultTable
+     */
+    readonly columnOffset?: number
+
+    /**
+     * Maximum number of columns to return. The default is all remaining columns.
+     * @type {number}
+     * @memberof FlowApiRetrieveFlowResultTable
+     */
+    readonly columnLimit?: number
+}
+
+/**
+ * FlowApi - object-oriented interface
+ * @export
+ * @class FlowApi
+ * @extends {BaseAPI}
+ */
+export class FlowApi extends BaseAPI implements FlowApiInterface {
+    /**
+     * Note: This API is experimental and is going to change. Please, use it accordingly. Each result has one cancel token, which the submit of its flow returns. Applying the token cancels the flow that computes the result.
+     * @summary (EXPERIMENTAL) Apply the given cancel tokens to flows
+     * @param {FlowApiCancelFlowsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FlowApi
+     */
+    public cancelFlows(requestParameters: FlowApiCancelFlowsRequest, options?: AxiosRequestConfig) {
+        return FlowApi_CancelFlows(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Note: This API is experimental and is going to change. Please, use it accordingly. Runs the transformations of a flow over its inputs and stores the result. The response links to the result.
+     * @summary (EXPERIMENTAL) Execute a flow
+     * @param {FlowApiExecuteFlowRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FlowApi
+     */
+    public executeFlow(requestParameters: FlowApiExecuteFlowRequest, options?: AxiosRequestConfig) {
+        return FlowApi_ExecuteFlow(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Note: This API is experimental and is going to change. Please, use it accordingly. Lists the operations that the transformations of a flow can run, with their inputs and the JSON Schema of their parameters.
+     * @summary (EXPERIMENTAL) List the operations of flows
+     * @param {FlowApiListFlowOperationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FlowApi
+     */
+    public listFlowOperations(requestParameters: FlowApiListFlowOperationsRequest, options?: AxiosRequestConfig) {
+        return FlowApi_ListFlowOperations(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Note: This API is experimental and is going to change. Please, use it accordingly. Gets a window of rows and columns of a flow result as an Apache Arrow IPC File or Stream.
+     * @summary (EXPERIMENTAL) Get a flow result in Apache Arrow File or Stream format
+     * @param {FlowApiRetrieveFlowResultBinaryRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FlowApi
+     */
+    public retrieveFlowResultBinary(requestParameters: FlowApiRetrieveFlowResultBinaryRequest, options?: AxiosRequestConfig) {
+        return FlowApi_RetrieveFlowResultBinary(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Note: This API is experimental and is going to change. Please, use it accordingly. Gets the columns and the number of rows of a flow result.
+     * @summary (EXPERIMENTAL) Get the metadata of a flow result
+     * @param {FlowApiRetrieveFlowResultMetadataRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FlowApi
+     */
+    public retrieveFlowResultMetadata(requestParameters: FlowApiRetrieveFlowResultMetadataRequest, options?: AxiosRequestConfig) {
+        return FlowApi_RetrieveFlowResultMetadata(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Note: This API is experimental and is going to change. Please, use it accordingly. Gets a window of rows and columns of a flow result.
+     * @summary (EXPERIMENTAL) Get a page of a flow result
+     * @param {FlowApiRetrieveFlowResultTableRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FlowApi
+     */
+    public retrieveFlowResultTable(requestParameters: FlowApiRetrieveFlowResultTableRequest, options?: AxiosRequestConfig) {
+        return FlowApi_RetrieveFlowResultTable(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 }
 

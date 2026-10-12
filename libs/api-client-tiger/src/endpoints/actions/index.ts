@@ -88,6 +88,9 @@ export {
     type ActionsApiComputedAttributePermissionsRequest,
     ActionsApi_ManageComputedAttributePermissions,
     type ActionsApiManageComputedAttributePermissionsRequest,
+    // User invitation, formerly served by the removed auth-json-api module.
+    ActionsApi_ProcessInvitation,
+    type ActionsApiProcessInvitationRequest,
 } from "../../generated/metadata-json-api/index.js";
 
 // Execution Result API

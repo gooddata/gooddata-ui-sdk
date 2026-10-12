@@ -4,12 +4,12 @@
 @use "../../../styles/scss/mixins";
 
 $item-height: 40px;
-$rail-item-size: 36px;
-// Rail width minus the inset on both sides leaves exactly one rail item.
-$list-inset: 6px;
+$indicator-width: 4px;
+$item-padding: 12px;
 $icon-size: 18px;
 $item-gap: 10px;
-$badge-size: 8px;
+$action-required-size: 8px;
+$flyover-width: 230px;
 
 .gd-ui-kit-resizable-sidebar-navigation {
     $root: &;
@@ -17,29 +17,33 @@ $badge-size: 8px;
     display: block;
 
     &__list,
-    &__children {
+    &__children,
+    &__flyover-list {
         display: flex;
         flex-direction: column;
-        gap: 2px;
         margin: 0;
         padding: 0;
         list-style: none;
     }
 
-    &__list {
-        padding: 0 $list-inset;
-    }
-
-    &__children {
-        margin-top: 2px;
+    // The anchor of a rail flyover spans the row, so hover and the highlight cover the whole rail.
+    &__flyover-anchor {
+        display: block;
+        width: 100%;
     }
 
     // The rail centers each row's content, whether it is the item or its tooltip anchor wrapper.
     &__row--rail {
         display: flex;
         justify-content: center;
+
+        .gd-ui-kit-tooltip__anchor {
+            display: block;
+            width: 100%;
+        }
     }
 
+    // The left border is the state indicator: neutral on hover, primary for the current page.
     &__item {
         display: flex;
         align-items: center;
@@ -47,9 +51,10 @@ $badge-size: 8px;
         box-sizing: border-box;
         width: 100%;
         min-height: $item-height;
-        padding: 0 12px;
+        padding: 0 $item-padding 0 ($item-padding - $indicator-width);
         border: 0;
-        border-radius: variables.$gd-rounded-small;
+        border-left: $indicator-width solid transparent;
+        border-radius: 0;
         background: transparent;
         color: variables.$gd-color-text;
         font-family: inherit;
@@ -60,9 +65,11 @@ $badge-size: 8px;
         cursor: pointer;
         transition: var(--gd-transition-all);
 
-        &:hover {
+        &:hover,
+        &--open {
+            border-left-color: variables.$gd-color-disabled;
             background-color: variables.$is-focused-background;
-            color: variables.$gd-color-text;
+            color: variables.$gd-color-dark;
             text-decoration: none;
         }
 
@@ -74,37 +81,57 @@ $badge-size: 8px;
             @include mixins.focus-ring;
         }
 
-        &--active {
+        &--active,
+        &--selected {
             font-weight: 700;
         }
 
-        &--selected {
+        &--active:not(#{$root}__item--child),
+        &--active:not(#{$root}__item--child):hover {
+            border-left-color: variables.$gd-palette-primary-base;
             background-color: variables.$is-focused-background;
-            color: variables.$gd-palette-primary-base;
+            color: variables.$gd-color-dark;
+        }
+
+        // Sub-items align their label with the label of the group above and show no indicator.
+        &--child {
+            padding-left: $item-padding + $icon-size + $item-gap;
+            border-left: 0;
+            color: variables.$gd-color-link;
 
             &:hover {
-                color: variables.$gd-palette-primary-base;
+                background-color: variables.$is-focused-background;
+                color: variables.$gd-color-dark;
             }
         }
 
-        // Sub-items align their label with the label of the group above.
-        &--child {
-            padding-left: 12px + $icon-size + $item-gap;
+        &--child#{$root}__item--selected,
+        &--child#{$root}__item--selected:hover {
+            background-color: variables.$is-focused-background;
+            color: variables.$gd-color-dark;
         }
 
+        &--flyover {
+            padding-left: $item-padding;
+        }
+
+        // The icon stays centered in the rail; the right padding balances the indicator.
         &--rail {
             position: relative;
             justify-content: center;
-            width: $rail-item-size;
-            min-height: $rail-item-size;
-            padding: 0;
-
-            // Without a label, the icon alone has to show that the group holds the current page.
-            &#{$root}__item--active {
-                background-color: variables.$is-focused-background;
-                color: variables.$gd-palette-primary-base;
-            }
+            padding: 0 $indicator-width 0 0;
         }
+    }
+
+    &__flyover {
+        box-sizing: border-box;
+        width: $flyover-width;
+        padding: 0 0 10px;
+        overflow: hidden auto;
+        overscroll-behavior: contain;
+        border-radius: variables.$gd-rounded-small;
+        background-color: variables.$gd-color-white;
+        box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
     }
 
     &__icon {
@@ -129,7 +156,7 @@ $badge-size: 8px;
         text-overflow: ellipsis;
     }
 
-    // Text for assistive technology only: the rail label and the badge label.
+    // Text for assistive technology only: the rail label and the action-required label.
     &__sr-only {
         position: absolute;
         width: 1px;
@@ -142,19 +169,19 @@ $badge-size: 8px;
         border: 0;
     }
 
-    &__badge {
+    &__action-required {
         position: relative;
         flex: 0 0 auto;
-        width: $badge-size;
-        height: $badge-size;
+        width: $action-required-size;
+        height: $action-required-size;
         border-radius: 50%;
-        background-color: variables.$gd-palette-warning-base;
+        background-color: variables.$gd-palette-primary-base;
 
-        // In the rail the badge sits on the corner of the icon.
+        // In the rail the dot sits on the corner of the icon.
         #{$root}__item--rail & {
             position: absolute;
-            top: 5px;
-            right: 5px;
+            top: 8px;
+            right: 10px;
         }
     }
 

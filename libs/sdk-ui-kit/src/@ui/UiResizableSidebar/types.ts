@@ -60,9 +60,14 @@ export interface IUiResizableSidebarStateOptions {
      */
     hasRail?: boolean;
     /**
-     * Width the sibling content must keep. Caps the maximum at the viewport width minus this value.
+     * Width the sibling content must keep. Caps the maximum at the available width minus this value.
      */
     minContentWidth?: number;
+    /**
+     * Width the sidebar shares with its sibling content, e.g. their measured container when the host takes
+     * part of the window. Defaults to the viewport width.
+     */
+    availableWidth?: number;
     isResizable: boolean;
     isCollapsible: boolean;
     /**
@@ -87,10 +92,14 @@ export interface IUiResizableSidebarStateOptions {
 }
 
 /**
+ * Marks a page that needs an action from the user, e.g. a setting that is not complete.
+ *
  * @internal
  */
-export interface IUiResizableSidebarNavigationBadge {
-    kind: "dot";
+export interface IUiResizableSidebarNavigationActionRequired {
+    /**
+     * Accessible text of the marker, e.g. "Action required".
+     */
     label: string;
 }
 
@@ -112,11 +121,10 @@ export interface IUiResizableSidebarNavigationSubItem {
      */
     isSelected?: boolean;
     /**
-     * A dot next to the label that marks the item as needing attention. The label is its accessible
-     * text, e.g. "Needs attention". A collapsed group, and a group in the rail, shows the badge of its
-     * first badged sub-page.
+     * Shows a dot next to the label: the page needs an action from the user. A collapsed group, and a
+     * group in the rail, shows the dot when one of its sub-pages requires an action.
      */
-    badge?: IUiResizableSidebarNavigationBadge;
+    actionRequired?: IUiResizableSidebarNavigationActionRequired;
     dataTestId?: string;
 }
 

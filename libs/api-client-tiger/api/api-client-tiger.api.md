@@ -120,7 +120,7 @@ export class ActionsApi extends MetadataBaseApi implements ActionsApiInterface {
     particularPlatformUsage(requestParameters: ActionsApiParticularPlatformUsageRequest, options?: AxiosRequestConfig): AxiosPromise<PlatformUsage[]>;
     pauseOrganizationAutomations(requestParameters: ActionsApiPauseOrganizationAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     pauseWorkspaceAutomations(requestParameters: ActionsApiPauseWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    processInvitation(requestParameters: MetadataActionsApiProcessInvitationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    processInvitation(requestParameters: ActionsApiProcessInvitationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     registerUploadNotification(requestParameters: ActionsApiRegisterUploadNotificationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     registerWorkspaceUploadNotification(requestParameters: ActionsApiRegisterWorkspaceUploadNotificationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     reloadObservabilityLayout(options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -471,6 +471,12 @@ export interface ActionsApiCancelExecutionsRequest {
 }
 
 // @public
+export interface ActionsApiCancelFlowsRequest {
+    readonly afmCancelTokens: AfmCancelTokens;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface ActionsApiCancelWorkflow1Request {
     readonly runId: string;
     readonly workspaceId: string;
@@ -608,6 +614,12 @@ export interface ActionsApiDeleteOrganizationAutomationsRequest {
 // @public
 export interface ActionsApiDeleteWorkspaceAutomationsRequest {
     readonly workspaceAutomationManagementBulkRequest: WorkspaceAutomationManagementBulkRequest;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiExecuteFlowRequest {
+    readonly flowRequest: FlowRequest;
     readonly workspaceId: string;
 }
 
@@ -778,7 +790,7 @@ export interface ActionsApiInterface {
     particularPlatformUsage(requestParameters: ActionsApiParticularPlatformUsageRequest, options?: AxiosRequestConfig): AxiosPromise<Array<PlatformUsage>>;
     pauseOrganizationAutomations(requestParameters: ActionsApiPauseOrganizationAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     pauseWorkspaceAutomations(requestParameters: ActionsApiPauseWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    processInvitation(requestParameters: MetadataActionsApiProcessInvitationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    processInvitation(requestParameters: ActionsApiProcessInvitationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     registerUploadNotification(requestParameters: ActionsApiRegisterUploadNotificationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     registerWorkspaceUploadNotification(requestParameters: ActionsApiRegisterWorkspaceUploadNotificationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     reloadObservabilityLayout(options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -829,6 +841,11 @@ export interface ActionsApiLabelPermissionsRequest {
 // @public
 export interface ActionsApiListFilesRequest {
     readonly dataSourceId: string;
+}
+
+// @public
+export interface ActionsApiListFlowOperationsRequest {
+    readonly workspaceId: string;
 }
 
 // @public
@@ -973,9 +990,11 @@ export interface ActionsApiPauseWorkspaceAutomationsRequest {
 }
 
 // @public
-export interface ActionsApiProcessInvitationRequest {
+interface ActionsApiProcessInvitationRequest {
     readonly invitation: Invitation;
 }
+export { ActionsApiProcessInvitationRequest }
+export { ActionsApiProcessInvitationRequest as MetadataActionsApiProcessInvitationRequest }
 
 // @public
 export interface ActionsApiReadCsvFileManifestsRequest {
@@ -1023,6 +1042,32 @@ export interface ActionsApiResolveSettingsWithoutWorkspaceRequest {
 // @public
 export interface ActionsApiRetrieveExecutionMetadataRequest {
     readonly resultId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiRetrieveFlowResultBinaryRequest {
+    readonly columnLimit?: number;
+    readonly columnOffset?: number;
+    readonly resultId: string;
+    readonly rowLimit?: number;
+    readonly rowOffset?: number;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiRetrieveFlowResultMetadataRequest {
+    readonly resultId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiRetrieveFlowResultTableRequest {
+    readonly columnLimit?: number;
+    readonly columnOffset?: number;
+    readonly resultId: string;
+    readonly rowLimit?: number;
+    readonly rowOffset?: number;
     readonly workspaceId: string;
 }
 
@@ -1600,6 +1645,7 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     // @deprecated
     anomalyDetectionResult(requestParameters: ActionsApiAnomalyDetectionResultRequest, options?: AxiosRequestConfig): AxiosPromise<AnomalyDetectionResult>;
     cancelExecutions(requestParameters: ActionsApiCancelExecutionsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmCancelTokens>;
+    cancelFlows(requestParameters: ActionsApiCancelFlowsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmCancelTokens>;
     // (undocumented)
     cancelWorkflow(requestParameters: ActionsApiCancelWorkflowRequest, options?: AxiosRequestConfig): AxiosPromise<{
         [key: string]: string;
@@ -1617,6 +1663,7 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     computeReportForVisualizationObject(requestParameters: ActionsApiComputeReportForVisualizationObjectRequest, options?: AxiosRequestConfig): AxiosPromise<AfmExecutionResponse>;
     computeValidDescendants(requestParameters: ActionsApiComputeValidDescendantsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmValidDescendantsResponse>;
     computeValidObjects(requestParameters: ActionsApiComputeValidObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmValidObjectsResponse>;
+    executeFlow(requestParameters: ActionsApiExecuteFlowRequest, options?: AxiosRequestConfig): AxiosPromise<FlowExecutionResponse>;
     explainAFM(requestParameters: ActionsApiExplainAFMRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
     forecast(requestParameters: ActionsApiForecastRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
     forecastResult(requestParameters: ActionsApiForecastResultRequest, options?: AxiosRequestConfig): AxiosPromise<ForecastResult>;
@@ -1636,6 +1683,7 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     getWorkflowStatus1(requestParameters: ActionsApiGetWorkflowStatus1Request, options?: AxiosRequestConfig): AxiosPromise<WorkflowStatusResponseDto>;
     keyDriverAnalysis(requestParameters: ActionsApiKeyDriverAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResponse>;
     keyDriverAnalysisResult(requestParameters: ActionsApiKeyDriverAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResult>;
+    listFlowOperations(requestParameters: ActionsApiListFlowOperationsRequest, options?: AxiosRequestConfig): AxiosPromise<FlowOperations>;
     listLlmProviderModels(requestParameters: ActionsApiListLlmProviderModelsRequest, options?: AxiosRequestConfig): AxiosPromise<ListLlmProviderModelsResponse>;
     listLlmProviderModelsById(requestParameters: ActionsApiListLlmProviderModelsByIdRequest, options?: AxiosRequestConfig): AxiosPromise<ListLlmProviderModelsResponse>;
     memoryCreatedByUsers(requestParameters: ActionsApiMemoryCreatedByUsersRequest, options?: AxiosRequestConfig): AxiosPromise<AfmMemoryItemCreatedByUsers>;
@@ -1644,6 +1692,9 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     // @deprecated
     resolveLlmEndpoints(requestParameters: ActionsApiResolveLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     retrieveExecutionMetadata(requestParameters: ActionsApiRetrieveExecutionMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<ResultCacheMetadata>;
+    retrieveFlowResultBinary(requestParameters: ActionsApiRetrieveFlowResultBinaryRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
+    retrieveFlowResultMetadata(requestParameters: ActionsApiRetrieveFlowResultMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<FlowResultMetadata>;
+    retrieveFlowResultTable(requestParameters: ActionsApiRetrieveFlowResultTableRequest, options?: AxiosRequestConfig): AxiosPromise<FlowTableResult>;
     retrieveResult(requestParameters: ActionsApiRetrieveResultRequest, options?: AxiosRequestConfig): AxiosPromise<ExecutionResult>;
     retrieveResultBinary(requestParameters: ActionsApiRetrieveResultBinaryRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
     testLlmProvider(requestParameters: ActionsApiTestLlmProviderRequest, options?: AxiosRequestConfig): AxiosPromise<TestLlmProviderResponse>;
@@ -1681,6 +1732,7 @@ export interface AfmActionsApiInterface {
     // @deprecated
     anomalyDetectionResult(requestParameters: ActionsApiAnomalyDetectionResultRequest, options?: AxiosRequestConfig): AxiosPromise<AnomalyDetectionResult>;
     cancelExecutions(requestParameters: ActionsApiCancelExecutionsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmCancelTokens>;
+    cancelFlows(requestParameters: ActionsApiCancelFlowsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmCancelTokens>;
     // (undocumented)
     cancelWorkflow(requestParameters: ActionsApiCancelWorkflowRequest, options?: AxiosRequestConfig): AxiosPromise<{
         [key: string]: string;
@@ -1698,6 +1750,7 @@ export interface AfmActionsApiInterface {
     computeReportForVisualizationObject(requestParameters: ActionsApiComputeReportForVisualizationObjectRequest, options?: AxiosRequestConfig): AxiosPromise<AfmExecutionResponse>;
     computeValidDescendants(requestParameters: ActionsApiComputeValidDescendantsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmValidDescendantsResponse>;
     computeValidObjects(requestParameters: ActionsApiComputeValidObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmValidObjectsResponse>;
+    executeFlow(requestParameters: ActionsApiExecuteFlowRequest, options?: AxiosRequestConfig): AxiosPromise<FlowExecutionResponse>;
     explainAFM(requestParameters: ActionsApiExplainAFMRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
     forecast(requestParameters: ActionsApiForecastRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
     forecastResult(requestParameters: ActionsApiForecastResultRequest, options?: AxiosRequestConfig): AxiosPromise<ForecastResult>;
@@ -1717,6 +1770,7 @@ export interface AfmActionsApiInterface {
     getWorkflowStatus1(requestParameters: ActionsApiGetWorkflowStatus1Request, options?: AxiosRequestConfig): AxiosPromise<WorkflowStatusResponseDto>;
     keyDriverAnalysis(requestParameters: ActionsApiKeyDriverAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResponse>;
     keyDriverAnalysisResult(requestParameters: ActionsApiKeyDriverAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResult>;
+    listFlowOperations(requestParameters: ActionsApiListFlowOperationsRequest, options?: AxiosRequestConfig): AxiosPromise<FlowOperations>;
     listLlmProviderModels(requestParameters: ActionsApiListLlmProviderModelsRequest, options?: AxiosRequestConfig): AxiosPromise<ListLlmProviderModelsResponse>;
     listLlmProviderModelsById(requestParameters: ActionsApiListLlmProviderModelsByIdRequest, options?: AxiosRequestConfig): AxiosPromise<ListLlmProviderModelsResponse>;
     memoryCreatedByUsers(requestParameters: ActionsApiMemoryCreatedByUsersRequest, options?: AxiosRequestConfig): AxiosPromise<AfmMemoryItemCreatedByUsers>;
@@ -1725,6 +1779,9 @@ export interface AfmActionsApiInterface {
     // @deprecated
     resolveLlmEndpoints(requestParameters: ActionsApiResolveLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     retrieveExecutionMetadata(requestParameters: ActionsApiRetrieveExecutionMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<ResultCacheMetadata>;
+    retrieveFlowResultBinary(requestParameters: ActionsApiRetrieveFlowResultBinaryRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
+    retrieveFlowResultMetadata(requestParameters: ActionsApiRetrieveFlowResultMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<FlowResultMetadata>;
+    retrieveFlowResultTable(requestParameters: ActionsApiRetrieveFlowResultTableRequest, options?: AxiosRequestConfig): AxiosPromise<FlowTableResult>;
     retrieveResult(requestParameters: ActionsApiRetrieveResultRequest, options?: AxiosRequestConfig): AxiosPromise<ExecutionResult>;
     retrieveResultBinary(requestParameters: ActionsApiRetrieveResultBinaryRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
     testLlmProvider(requestParameters: ActionsApiTestLlmProviderRequest, options?: AxiosRequestConfig): AxiosPromise<TestLlmProviderResponse>;
@@ -2018,6 +2075,18 @@ export type AfmFilterDefinition = AfmAbsoluteDateFilter | AfmAbsoluteGranularity
 
 // @public
 export type AfmFilterDefinitionForSimpleMeasure = AfmAttributeFilter | AfmDateFilter;
+
+// @public
+export interface AfmFlowInput {
+    // (undocumented)
+    'execution': AfmModel;
+    // (undocumented)
+    'settings'?: AfmExecutionSettings;
+    'type': AfmFlowInputTypeEnum;
+}
+
+// @public (undocumented)
+export type AfmFlowInputTypeEnum = 'afm';
 
 // @public
 export interface AfmGeoAreaConfig {
@@ -3662,7 +3731,7 @@ export interface AiChartFill {
         [key: string]: AiPatternNameMapping;
     } | null;
     // (undocumented)
-    'type'?: AiType54 | null;
+    'type'?: AiType57 | null;
 }
 
 // @public (undocumented)
@@ -4583,7 +4652,7 @@ export interface AiDashboardInput {
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type': AiType55;
+    'type': AiType58;
     // (undocumented)
     'user_filters_reset'?: boolean | null;
     // (undocumented)
@@ -4652,7 +4721,7 @@ export interface AiDashboardOutput {
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type': AiType55;
+    'type': AiType58;
     // (undocumented)
     'user_filters_reset'?: boolean | null;
     // (undocumented)
@@ -5459,7 +5528,7 @@ export interface AiLayerItem {
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type': AiType51;
+    'type': AiType54;
     // (undocumented)
     'view_by'?: Array<string>;
 }
@@ -5499,7 +5568,7 @@ export interface AiLayerItemBase {
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type'?: AiType51 | null;
+    'type'?: AiType54 | null;
     // (undocumented)
     'view_by'?: Array<string> | null;
 }
@@ -5907,6 +5976,7 @@ export const AiObjectType: {
     readonly DASHBOARD: 'dashboard';
     readonly FILTER_CONTEXT: 'filter_context';
     readonly PARAMETER: 'parameter';
+    readonly DOCUMENT: 'document';
 };
 
 // @public (undocumented)
@@ -6261,6 +6331,14 @@ export interface AiPositiveAttributeFilterBody {
     'localIdentifier'?: string | null;
     // (undocumented)
     'usesArbitraryValues'?: boolean | null;
+}
+
+// @public
+export interface AiProjectionRebuildResponse {
+    'knowledgeDocuments': number;
+    'memoryItems': number;
+    'nodes': number;
+    'skippedKnowledgeDocuments': number;
 }
 
 // @public (undocumented)
@@ -7176,6 +7254,22 @@ export type AiSearchAllowedRelationshipTypeSourceTypeEnum = 'attribute' | 'metri
 export type AiSearchAllowedRelationshipTypeTargetTypeEnum = 'attribute' | 'metric' | 'fact' | 'label' | 'date' | 'dataset' | 'visualization' | 'dashboard';
 
 // @public
+export class AISearchDataAi extends AiBaseAPI implements AISearchDataAiInterface {
+    rebuildOrgAiSearchData(options?: AxiosRequestConfig): AxiosPromise<AiProjectionRebuildResponse>;
+}
+
+// @public
+export function AISearchDataAi_RebuildOrgAiSearchData(axios: AxiosInstance, basePath: string, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiProjectionRebuildResponse>;
+
+// @public
+export function AISearchDataAiAxiosParamCreator_RebuildOrgAiSearchData(options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
+
+// @public
+export interface AISearchDataAiInterface {
+    rebuildOrgAiSearchData(options?: AxiosRequestConfig): AxiosPromise<AiProjectionRebuildResponse>;
+}
+
+// @public
 export interface AiSearchDocumentsResponse {
     // (undocumented)
     'results': Array<AiSearchResultItem>;
@@ -7510,6 +7604,7 @@ export const AiSkillName: {
     readonly KNOWLEDGE: 'knowledge';
     readonly DASHBOARD_BUILDER: 'dashboard_builder';
     readonly DASHBOARD_EDITOR: 'dashboard_editor';
+    readonly REPORT_BUILDER: 'report_builder';
 };
 
 // @public (undocumented)
@@ -7632,13 +7727,16 @@ interface AiSummarizeVisualizationsRequest {
     'filterContext': Array<AiSummarizeVisualizationsRequestFilterContextInner>;
     // (undocumented)
     'formatHint'?: string | null;
-    'visualizations': Array<string>;
+    'visualizations': Array<AiSummarizeVisualizationsRequestVisualizationsInner>;
 }
 export { AiSummarizeVisualizationsRequest }
 export { AiSummarizeVisualizationsRequest as GenAiApiSummarizeVisualizationsRequest }
 
 // @public
 export type AiSummarizeVisualizationsRequestFilterContextInner = AiAbsoluteDateFilter | AiAllTimeDateFilter | AiComparisonMeasureValueFilter | AiCompoundMeasureValueFilter | AiInlineFilterDefinition | AiMatchAttributeFilterInput | AiNegativeAttributeFilter | AiPositiveAttributeFilter | AiRangeMeasureValueFilter | AiRankingFilter | AiRelativeDateFilter;
+
+// @public
+export type AiSummarizeVisualizationsRequestVisualizationsInner = AiVisualizationPlacementRequest | string;
 
 // @public (undocumented)
 export interface AiSuppressedTargets {
@@ -7755,7 +7853,7 @@ export interface AiTotalItem {
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type': AiType50;
+    'type': AiType53;
     'using': string;
 }
 
@@ -7977,7 +8075,7 @@ export const AiType5: {
 export type AiType5 = typeof AiType5[keyof typeof AiType5];
 
 // @public (undocumented)
-export const AiType50: {
+export const AiType53: {
     readonly SUM: 'SUM';
     readonly AVG: 'AVG';
     readonly MAX: 'MAX';
@@ -7987,86 +8085,38 @@ export const AiType50: {
 };
 
 // @public (undocumented)
-export type AiType50 = typeof AiType50[keyof typeof AiType50];
-
-// @public (undocumented)
-export const AiType51: {
-    readonly PUSHPIN: 'pushpin';
-    readonly AREA: 'area';
-};
-
-// @public (undocumented)
-export type AiType51 = typeof AiType51[keyof typeof AiType51];
+export type AiType53 = typeof AiType53[keyof typeof AiType53];
 
 // @public (undocumented)
 export const AiType54: {
-    readonly SOLID: 'solid';
-    readonly PATTERN: 'pattern';
-    readonly OUTLINE: 'outline';
+    readonly PUSHPIN: 'pushpin';
+    readonly AREA: 'area';
 };
 
 // @public (undocumented)
 export type AiType54 = typeof AiType54[keyof typeof AiType54];
 
 // @public (undocumented)
-export const AiType55: {
+export const AiType57: {
+    readonly SOLID: 'solid';
+    readonly PATTERN: 'pattern';
+    readonly OUTLINE: 'outline';
+};
+
+// @public (undocumented)
+export type AiType57 = typeof AiType57[keyof typeof AiType57];
+
+// @public (undocumented)
+export const AiType58: {
     readonly DASHBOARD: 'dashboard';
 };
 
 // @public (undocumented)
-export type AiType55 = typeof AiType55[keyof typeof AiType55];
-
-// @public (undocumented)
-export const AiType63: {
-    readonly TABLE: 'table';
-};
-
-// @public (undocumented)
-export type AiType63 = typeof AiType63[keyof typeof AiType63];
-
-// @public (undocumented)
-export const AiType64: {
-    readonly BAR_CHART: 'bar_chart';
-};
-
-// @public (undocumented)
-export type AiType64 = typeof AiType64[keyof typeof AiType64];
-
-// @public (undocumented)
-export const AiType65: {
-    readonly COLUMN_CHART: 'column_chart';
-};
-
-// @public (undocumented)
-export type AiType65 = typeof AiType65[keyof typeof AiType65];
-
-// @public (undocumented)
-export const AiType66: {
-    readonly LINE_CHART: 'line_chart';
-};
-
-// @public (undocumented)
-export type AiType66 = typeof AiType66[keyof typeof AiType66];
-
-// @public (undocumented)
-export const AiType67: {
-    readonly AREA_CHART: 'area_chart';
-};
-
-// @public (undocumented)
-export type AiType67 = typeof AiType67[keyof typeof AiType67];
-
-// @public (undocumented)
-export const AiType68: {
-    readonly SCATTER_CHART: 'scatter_chart';
-};
-
-// @public (undocumented)
-export type AiType68 = typeof AiType68[keyof typeof AiType68];
+export type AiType58 = typeof AiType58[keyof typeof AiType58];
 
 // @public (undocumented)
 export const AiType69: {
-    readonly BUBBLE_CHART: 'bubble_chart';
+    readonly TABLE: 'table';
 };
 
 // @public (undocumented)
@@ -8082,7 +8132,7 @@ export type AiType7 = typeof AiType7[keyof typeof AiType7];
 
 // @public (undocumented)
 export const AiType70: {
-    readonly PIE_CHART: 'pie_chart';
+    readonly BAR_CHART: 'bar_chart';
 };
 
 // @public (undocumented)
@@ -8090,7 +8140,7 @@ export type AiType70 = typeof AiType70[keyof typeof AiType70];
 
 // @public (undocumented)
 export const AiType71: {
-    readonly DONUT_CHART: 'donut_chart';
+    readonly COLUMN_CHART: 'column_chart';
 };
 
 // @public (undocumented)
@@ -8098,7 +8148,7 @@ export type AiType71 = typeof AiType71[keyof typeof AiType71];
 
 // @public (undocumented)
 export const AiType72: {
-    readonly TREEMAP_CHART: 'treemap_chart';
+    readonly LINE_CHART: 'line_chart';
 };
 
 // @public (undocumented)
@@ -8106,7 +8156,7 @@ export type AiType72 = typeof AiType72[keyof typeof AiType72];
 
 // @public (undocumented)
 export const AiType73: {
-    readonly PYRAMID_CHART: 'pyramid_chart';
+    readonly AREA_CHART: 'area_chart';
 };
 
 // @public (undocumented)
@@ -8114,7 +8164,7 @@ export type AiType73 = typeof AiType73[keyof typeof AiType73];
 
 // @public (undocumented)
 export const AiType74: {
-    readonly FUNNEL_CHART: 'funnel_chart';
+    readonly SCATTER_CHART: 'scatter_chart';
 };
 
 // @public (undocumented)
@@ -8122,7 +8172,7 @@ export type AiType74 = typeof AiType74[keyof typeof AiType74];
 
 // @public (undocumented)
 export const AiType75: {
-    readonly HEATMAP_CHART: 'heatmap_chart';
+    readonly BUBBLE_CHART: 'bubble_chart';
 };
 
 // @public (undocumented)
@@ -8130,7 +8180,7 @@ export type AiType75 = typeof AiType75[keyof typeof AiType75];
 
 // @public (undocumented)
 export const AiType76: {
-    readonly BULLET_CHART: 'bullet_chart';
+    readonly PIE_CHART: 'pie_chart';
 };
 
 // @public (undocumented)
@@ -8138,7 +8188,7 @@ export type AiType76 = typeof AiType76[keyof typeof AiType76];
 
 // @public (undocumented)
 export const AiType77: {
-    readonly WATERFALL_CHART: 'waterfall_chart';
+    readonly DONUT_CHART: 'donut_chart';
 };
 
 // @public (undocumented)
@@ -8146,7 +8196,7 @@ export type AiType77 = typeof AiType77[keyof typeof AiType77];
 
 // @public (undocumented)
 export const AiType78: {
-    readonly DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart';
+    readonly TREEMAP_CHART: 'treemap_chart';
 };
 
 // @public (undocumented)
@@ -8154,7 +8204,7 @@ export type AiType78 = typeof AiType78[keyof typeof AiType78];
 
 // @public (undocumented)
 export const AiType79: {
-    readonly SANKEY_CHART: 'sankey_chart';
+    readonly PYRAMID_CHART: 'pyramid_chart';
 };
 
 // @public (undocumented)
@@ -8170,7 +8220,7 @@ export type AiType8 = typeof AiType8[keyof typeof AiType8];
 
 // @public (undocumented)
 export const AiType80: {
-    readonly HEADLINE_CHART: 'headline_chart';
+    readonly FUNNEL_CHART: 'funnel_chart';
 };
 
 // @public (undocumented)
@@ -8178,7 +8228,7 @@ export type AiType80 = typeof AiType80[keyof typeof AiType80];
 
 // @public (undocumented)
 export const AiType81: {
-    readonly COMBO_CHART: 'combo_chart';
+    readonly HEATMAP_CHART: 'heatmap_chart';
 };
 
 // @public (undocumented)
@@ -8186,7 +8236,7 @@ export type AiType81 = typeof AiType81[keyof typeof AiType81];
 
 // @public (undocumented)
 export const AiType82: {
-    readonly GEO_CHART: 'geo_chart';
+    readonly BULLET_CHART: 'bullet_chart';
 };
 
 // @public (undocumented)
@@ -8194,7 +8244,7 @@ export type AiType82 = typeof AiType82[keyof typeof AiType82];
 
 // @public (undocumented)
 export const AiType83: {
-    readonly GEO_AREA_CHART: 'geo_area_chart';
+    readonly WATERFALL_CHART: 'waterfall_chart';
 };
 
 // @public (undocumented)
@@ -8202,7 +8252,7 @@ export type AiType83 = typeof AiType83[keyof typeof AiType83];
 
 // @public (undocumented)
 export const AiType84: {
-    readonly REPEATER_CHART: 'repeater_chart';
+    readonly DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart';
 };
 
 // @public (undocumented)
@@ -8210,11 +8260,43 @@ export type AiType84 = typeof AiType84[keyof typeof AiType84];
 
 // @public (undocumented)
 export const AiType85: {
-    readonly RADAR_CHART: 'radar_chart';
+    readonly SANKEY_CHART: 'sankey_chart';
 };
 
 // @public (undocumented)
 export type AiType85 = typeof AiType85[keyof typeof AiType85];
+
+// @public (undocumented)
+export const AiType86: {
+    readonly HEADLINE_CHART: 'headline_chart';
+};
+
+// @public (undocumented)
+export type AiType86 = typeof AiType86[keyof typeof AiType86];
+
+// @public (undocumented)
+export const AiType87: {
+    readonly COMBO_CHART: 'combo_chart';
+};
+
+// @public (undocumented)
+export type AiType87 = typeof AiType87[keyof typeof AiType87];
+
+// @public (undocumented)
+export const AiType88: {
+    readonly GEO_CHART: 'geo_chart';
+};
+
+// @public (undocumented)
+export type AiType88 = typeof AiType88[keyof typeof AiType88];
+
+// @public (undocumented)
+export const AiType89: {
+    readonly GEO_AREA_CHART: 'geo_area_chart';
+};
+
+// @public (undocumented)
+export type AiType89 = typeof AiType89[keyof typeof AiType89];
 
 // @public (undocumented)
 export const AiType9: {
@@ -8223,6 +8305,22 @@ export const AiType9: {
 
 // @public (undocumented)
 export type AiType9 = typeof AiType9[keyof typeof AiType9];
+
+// @public (undocumented)
+export const AiType90: {
+    readonly REPEATER_CHART: 'repeater_chart';
+};
+
+// @public (undocumented)
+export type AiType90 = typeof AiType90[keyof typeof AiType90];
+
+// @public (undocumented)
+export const AiType91: {
+    readonly RADAR_CHART: 'radar_chart';
+};
+
+// @public (undocumented)
+export type AiType91 = typeof AiType91[keyof typeof AiType91];
 
 // @public
 export interface AiUploadDocumentResponse {
@@ -8308,6 +8406,9 @@ export type AiUserContextObjectReferenceTypeEnum = 'WIDGET' | 'METRIC' | 'ATTRIB
 export interface AiUserContextReport {
     // (undocumented)
     'definition'?: object | null;
+    // (undocumented)
+    'draftConversationId'?: string | null;
+    // (undocumented)
     'draftRef'?: string | null;
     // (undocumented)
     'id'?: string | null;
@@ -8628,7 +8729,7 @@ export interface AiVisualisation {
     'to'?: AiBucketItem;
     // (undocumented)
     'trend_by'?: Array<AiBucketItem>;
-    'type': AiType85;
+    'type': AiType91;
     // (undocumented)
     'view_by'?: Array<AiBucketItem>;
 }
@@ -8658,7 +8759,7 @@ export interface AiVisualisation1 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType63;
+    'type': AiType69;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8684,7 +8785,7 @@ export interface AiVisualisation10 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType72;
+    'type': AiType78;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8710,7 +8811,7 @@ export interface AiVisualisation11 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType73;
+    'type': AiType79;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8736,7 +8837,7 @@ export interface AiVisualisation12 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType74;
+    'type': AiType80;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8766,7 +8867,7 @@ export interface AiVisualisation13 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType75;
+    'type': AiType81;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8792,7 +8893,7 @@ export interface AiVisualisation14 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType76;
+    'type': AiType82;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8818,7 +8919,7 @@ export interface AiVisualisation15 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType77;
+    'type': AiType83;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8848,7 +8949,7 @@ export interface AiVisualisation16 {
     'title'?: string;
     // (undocumented)
     'to'?: AiBucketItem | null;
-    'type': AiType78;
+    'type': AiType84;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8878,7 +8979,7 @@ export interface AiVisualisation17 {
     'title'?: string;
     // (undocumented)
     'to'?: AiBucketItem | null;
-    'type': AiType79;
+    'type': AiType85;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8904,7 +9005,7 @@ export interface AiVisualisation18 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType80;
+    'type': AiType86;
     // (undocumented)
     'view_by'?: Array<any> | null;
 }
@@ -8930,7 +9031,7 @@ export interface AiVisualisation19 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType81;
+    'type': AiType87;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8958,7 +9059,7 @@ export interface AiVisualisation2 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType64;
+    'type': AiType70;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8986,7 +9087,7 @@ export interface AiVisualisation20 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType82;
+    'type': AiType88;
     // (undocumented)
     'view_by'?: Array<string> | null;
 }
@@ -9014,7 +9115,7 @@ export interface AiVisualisation21 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType83;
+    'type': AiType89;
     // (undocumented)
     'view_by'?: Array<string> | null;
 }
@@ -9044,7 +9145,7 @@ export interface AiVisualisation22 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType84;
+    'type': AiType90;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9070,7 +9171,7 @@ export interface AiVisualisation23 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType85;
+    'type': AiType91;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9098,7 +9199,7 @@ export interface AiVisualisation3 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType65;
+    'type': AiType71;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9126,7 +9227,7 @@ export interface AiVisualisation4 {
     'title'?: string;
     // (undocumented)
     'trend_by'?: Array<AiBucketItem> | null;
-    'type': AiType66;
+    'type': AiType72;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9154,7 +9255,7 @@ export interface AiVisualisation5 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType67;
+    'type': AiType73;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9182,7 +9283,7 @@ export interface AiVisualisation6 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType68;
+    'type': AiType74;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9210,7 +9311,7 @@ export interface AiVisualisation7 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType69;
+    'type': AiType75;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9236,7 +9337,7 @@ export interface AiVisualisation8 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType70;
+    'type': AiType76;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9262,7 +9363,7 @@ export interface AiVisualisation9 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType71;
+    'type': AiType77;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9406,6 +9507,16 @@ export interface AiVisualizationPart {
 
 // @public (undocumented)
 export type AiVisualizationPartTypeEnum = 'visualization';
+
+// @public
+export interface AiVisualizationPlacementRequest {
+    'filters': Array<AiVisualizationPlacementRequestFiltersInner>;
+    // (undocumented)
+    'visualizationId': string;
+}
+
+// @public
+export type AiVisualizationPlacementRequestFiltersInner = AiAbsoluteDateFilter | AiAllTimeDateFilter | AiComparisonMeasureValueFilter | AiCompoundMeasureValueFilter | AiInlineFilterDefinition | AiMatchAttributeFilterInput | AiNegativeAttributeFilter | AiPositiveAttributeFilter | AiRangeMeasureValueFilter | AiRankingFilter | AiRelativeDateFilter;
 
 // @public
 export interface AiVisualizationReferences {
@@ -11151,11 +11262,6 @@ export interface AttributesApiSearchEntitiesAttributesRequest {
     readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE';
     readonly workspaceId: string;
     readonly xGDCVALIDATERELATIONS?: boolean;
-}
-
-// @public
-export interface AuthActionsApiInterface {
-    processInvitation(requestParameters: ActionsApiProcessInvitationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 }
 
 // @public
@@ -14169,40 +14275,6 @@ export type ConditionalFormattingTarget = ConditionalFormattingAttributeTarget |
 
 // @public
 export type ConditionalFormattingValue = ConditionalFormattingAbsoluteDateValue | ConditionalFormattingLiteralRangeValue | ConditionalFormattingLiteralValue | ConditionalFormattingNoneValue | ConditionalFormattingRelativeDateValue;
-
-// @public (undocumented)
-export class Configuration {
-    constructor(param?: ConfigurationParameters);
-    accessToken?: string | Promise<string> | ((name?: string, scopes?: string[]) => string) | ((name?: string, scopes?: string[]) => Promise<string>);
-    apiKey?: string | Promise<string> | ((name: string) => string) | ((name: string) => Promise<string>);
-    baseOptions?: any;
-    basePath?: string;
-    formDataCtor?: new () => any;
-    isJsonMime(mime: string): boolean;
-    password?: string;
-    serverIndex?: number;
-    username?: string;
-}
-
-// @public
-export interface ConfigurationParameters {
-    // (undocumented)
-    accessToken?: string | Promise<string> | ((name?: string, scopes?: string[]) => string) | ((name?: string, scopes?: string[]) => Promise<string>);
-    // (undocumented)
-    apiKey?: string | Promise<string> | ((name: string) => string) | ((name: string) => Promise<string>);
-    // (undocumented)
-    baseOptions?: any;
-    // (undocumented)
-    basePath?: string;
-    // (undocumented)
-    formDataCtor?: new () => any;
-    // (undocumented)
-    password?: string;
-    // (undocumented)
-    serverIndex?: number;
-    // (undocumented)
-    username?: string;
-}
 
 // @public
 export interface ContentSlideTemplate {
@@ -17648,7 +17720,7 @@ export interface DeclarativeSetting {
 }
 
 // @public (undocumented)
-export type DeclarativeSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY';
+export type DeclarativeSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY';
 
 // @public (undocumented)
 export interface DeclarativeSingleWorkspacePermission {
@@ -25340,6 +25412,16 @@ export interface FeedbackRequestDto {
 export type FeedbackRequestDtoSentimentEnum = 'POSITIVE' | 'NEGATIVE';
 
 // @public
+export interface FileFlowInput {
+    'dataSourceId': string;
+    'table': string;
+    'type': FileFlowInputTypeEnum;
+}
+
+// @public (undocumented)
+export type FileFlowInputTypeEnum = 'file';
+
+// @public
 export interface FilterBy {
     'labelType'?: FilterByLabelTypeEnum;
 }
@@ -25894,6 +25976,100 @@ export interface FiscalYearCalendarDefinition {
 
 // @public (undocumented)
 export type FiscalYearCalendarDefinitionTypeEnum = 'fiscalYear';
+
+// @public
+export interface FlowColumn {
+    'metadata': {
+        [key: string]: string;
+    };
+    'name': string;
+    'type': string;
+}
+
+// @public
+export interface FlowExecutionResponse {
+    // (undocumented)
+    'links': ExecutionLinks;
+}
+
+// @public
+export type FlowInput = AfmFlowInput | FileFlowInput | SqlFlowInput;
+
+// @public
+export interface FlowOperationDescriptor {
+    'description': string;
+    'inputs': Array<FlowOperationInput>;
+    'name': string;
+    // (undocumented)
+    'output': FlowOperationOutput;
+    'parameters': {
+        [key: string]: any;
+    };
+    'pure': boolean;
+}
+
+// @public
+export interface FlowOperationInput {
+    'description': string;
+    'name': string;
+}
+
+// @public
+export interface FlowOperationOutput {
+    'description': string;
+}
+
+// @public
+export interface FlowOperations {
+    'operations': Array<FlowOperationDescriptor>;
+}
+
+// @public
+export interface FlowRequest {
+    'inputs': {
+        [key: string]: FlowInput;
+    };
+    'transformations'?: Array<FlowTransformation>;
+}
+
+// @public
+export interface FlowResultMetadata {
+    'columns': Array<FlowColumn>;
+    'metadata': {
+        [key: string]: string;
+    };
+    'totalRows': number;
+}
+
+// @public
+export interface FlowTablePaging {
+    'columnLimit': number;
+    'columnOffset': number;
+    'rowLimit': number;
+    'rowOffset': number;
+    'totalColumns': number;
+    'totalRows': number;
+}
+
+// @public
+export interface FlowTableResult {
+    'columns': Array<FlowColumn>;
+    'data': Array<Array<object>>;
+    // (undocumented)
+    'paging': FlowTablePaging;
+}
+
+// @public
+export interface FlowTransformation {
+    'id'?: string | null;
+    'inputRefs'?: {
+        [key: string]: string;
+    };
+    'operation': string;
+    'parameters'?: {
+        [key: string]: any;
+    };
+}
 
 // @public (undocumented)
 export interface ForecastRequest {
@@ -27034,7 +27210,7 @@ export interface InvalidateCacheApiRegisterWorkspaceUploadNotificationRequest {
 }
 
 // @public (undocumented)
-export interface Invitation {
+interface Invitation {
     // (undocumented)
     'email': string;
     // (undocumented)
@@ -27045,6 +27221,8 @@ export interface Invitation {
     // (undocumented)
     'userId': string;
 }
+export { Invitation }
+export { Invitation as MetadataInvitation }
 
 // @public
 export interface IpAllowlistPolicyTargets {
@@ -27285,8 +27463,6 @@ export interface ITigerBucket {
 export interface ITigerClient extends ITigerClientBase {
     // (undocumented)
     actions: ReturnType<typeof tigerActionsClientFactory>;
-    // (undocumented)
-    authActions: ReturnType<typeof tigerAuthActionsClientFactory>;
     // (undocumented)
     automation: ReturnType<typeof tigerAutomationClientFactory>;
     // (undocumented)
@@ -35239,7 +35415,7 @@ export interface JsonApiOrganizationSettingInAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiOrganizationSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY';
+export type JsonApiOrganizationSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY';
 
 // @public (undocumented)
 export interface JsonApiOrganizationSettingInDocument {
@@ -35266,7 +35442,7 @@ export interface JsonApiOrganizationSettingOutAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiOrganizationSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY';
+export type JsonApiOrganizationSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY';
 
 // @public (undocumented)
 export interface JsonApiOrganizationSettingOutDocument {
@@ -35324,7 +35500,7 @@ export interface JsonApiOrganizationSettingPatchAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiOrganizationSettingPatchAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY';
+export type JsonApiOrganizationSettingPatchAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY';
 
 // @public (undocumented)
 export interface JsonApiOrganizationSettingPatchDocument {
@@ -37236,7 +37412,7 @@ export interface JsonApiUserSettingInAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiUserSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE';
+export type JsonApiUserSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY';
 
 // @public (undocumented)
 export interface JsonApiUserSettingInDocument {
@@ -37263,7 +37439,7 @@ export interface JsonApiUserSettingOutAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiUserSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE';
+export type JsonApiUserSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY';
 
 // @public (undocumented)
 export interface JsonApiUserSettingOutDocument {
@@ -38898,7 +39074,7 @@ export interface JsonApiWorkspaceSettingInAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiWorkspaceSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE';
+export type JsonApiWorkspaceSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY';
 
 // @public (undocumented)
 export interface JsonApiWorkspaceSettingInDocument {
@@ -38927,7 +39103,7 @@ export interface JsonApiWorkspaceSettingOutAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiWorkspaceSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE';
+export type JsonApiWorkspaceSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY';
 
 // @public (undocumented)
 export interface JsonApiWorkspaceSettingOutDocument {
@@ -39002,7 +39178,7 @@ export interface JsonApiWorkspaceSettingPatchAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiWorkspaceSettingPatchAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE';
+export type JsonApiWorkspaceSettingPatchAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY';
 
 // @public (undocumented)
 export interface JsonApiWorkspaceSettingPatchDocument {
@@ -39029,7 +39205,7 @@ export interface JsonApiWorkspaceSettingPostOptionalIdAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiWorkspaceSettingPostOptionalIdAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE';
+export type JsonApiWorkspaceSettingPostOptionalIdAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY';
 
 // @public (undocumented)
 export interface JsonApiWorkspaceSettingPostOptionalIdDocument {
@@ -41336,11 +41512,6 @@ export interface MemoryItemControllerApiUpdateEntityMemoryItemsRequest {
     readonly workspaceId: string;
 }
 
-// @public
-export interface MetadataActionsApiProcessInvitationRequest {
-    readonly invitation: MetadataInvitation;
-}
-
 // @public (undocumented)
 export class MetadataBaseApi {
     constructor(configuration?: MetadataConfiguration, basePath?: string, axios?: AxiosInstance);
@@ -41432,19 +41603,6 @@ export type MetadataGetEntitiesWorkspaceParams = {
     workspaceId: string;
     filter?: string;
 };
-
-// @public (undocumented)
-export interface MetadataInvitation {
-    // (undocumented)
-    'email': string;
-    // (undocumented)
-    'firstName'?: string;
-    'forceSend'?: boolean;
-    // (undocumented)
-    'lastName'?: string;
-    // (undocumented)
-    'userId': string;
-}
 
 // @public (undocumented)
 export interface MetadataRequestArgs {
@@ -42313,6 +42471,17 @@ export interface OpenAIProviderConfig {
 
 // @public (undocumented)
 export type OpenAIProviderConfigTypeEnum = 'OPENAI';
+
+// @public
+export interface Operation {
+    'id': string;
+    'kind': OperationKindEnum;
+    // (undocumented)
+    'status': string;
+}
+
+// @public (undocumented)
+export type OperationKindEnum = 'provision-database' | 'deprovision-database' | 'run-service-command' | 'analyze-statistics';
 
 // @public
 export class OptionsApi extends MetadataBaseApi implements OptionsApiInterface {
@@ -44132,7 +44301,7 @@ export interface ResolvedSetting {
 }
 
 // @public (undocumented)
-export type ResolvedSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY';
+export type ResolvedSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY';
 
 // @public
 export interface ResolveSettingsRequest {
@@ -44728,6 +44897,16 @@ export interface SqlColumn {
 // @public (undocumented)
 export type SqlColumnDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
 
+// @public
+export interface SqlFlowInput {
+    'dataSourceId': string;
+    'sql': string;
+    'type': SqlFlowInputTypeEnum;
+}
+
+// @public (undocumented)
+export type SqlFlowInputTypeEnum = 'sql';
+
 // @public (undocumented)
 export interface SqlQuery {
     // (undocumented)
@@ -45085,9 +45264,6 @@ export const tigerActionsClientFactory: (axios: AxiosInstance) => ActionsApiInte
 
 // @public (undocumented)
 export const tigerAfmExplainClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "explainAFM">;
-
-// @public (undocumented)
-export const tigerAuthActionsClientFactory: (axios: AxiosInstance) => AuthActionsApiInterface;
 
 // @public
 export const tigerAutomationClientFactory: (axios: AxiosInstance) => ActionsAutomationInterface;

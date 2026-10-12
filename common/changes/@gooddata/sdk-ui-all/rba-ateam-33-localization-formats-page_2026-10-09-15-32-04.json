@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-backend-spi, sdk-backend-tiger: Add `getMetadataLocale` and `getDataLocale` to the organization settings service to read the locales set on the organization without resolving defaults",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

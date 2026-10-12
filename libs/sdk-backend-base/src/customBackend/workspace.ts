@@ -22,6 +22,7 @@ import {
     type IWorkspaceFactsService,
     type IWorkspaceInsightsService,
     type IWorkspaceKeyDriverAnalysisService,
+    type IWorkspaceLocalizationService,
     type IWorkspaceLogicalModelService,
     type IWorkspaceMeasuresService,
     type IWorkspaceObjectPermissionsService,
@@ -184,5 +185,9 @@ export class CustomWorkspace implements IAnalyticalWorkspace {
 
     public publisher(): IWorkspacePublisherService {
         throw new NotSupported("reports are not supported");
+    }
+
+    public localization(): IWorkspaceLocalizationService {
+        throw new NotSupported("localization is not supported");
     }
 }

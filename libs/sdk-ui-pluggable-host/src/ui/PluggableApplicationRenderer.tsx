@@ -13,6 +13,7 @@ import {
     type IPluggableAppEvent,
     type IPluggableApplicationMountHandle,
     isAiAssistantContextChangedEvent,
+    isAiAssistantDashboardSavedEvent,
     isAiAssistantPublisherDocumentSavedEvent,
     isCloseAiAssistantRequestedEvent,
     isDocumentTitleChangedEvent,
@@ -86,6 +87,16 @@ export interface IPluggableApplicationRendererProps {
         documentRef?: string;
         savedDocumentId: string;
     }) => void;
+    /** Tell the host-owned chat that the active app saved a dashboard the chat had drafted. */
+    onAiAssistantDashboardSaved?: (saved: {
+        conversationId: string;
+        originalDashboardId: string;
+        savedDashboardId: string;
+        savedInsights: ReadonlyArray<{
+            originalInsightId: string;
+            savedInsightId: string;
+        }>;
+    }) => void;
     /**
      * Ref the renderer populates with a handler that delegates a host-chat link click to the active
      * app's mount handle (`onAiAssistantLinkClicked`), so an embedded app can handle it in-app.
@@ -117,6 +128,7 @@ export function PluggableApplicationRenderer({
     onCloseAiAssistant,
     onAiAssistantContext,
     onAiAssistantPublisherDocumentSaved,
+    onAiAssistantDashboardSaved,
     aiLinkClickHandlerRef,
     aiEventReceiveRef,
     navigationRequestRef,
@@ -132,6 +144,7 @@ export function PluggableApplicationRenderer({
     const onCloseAiAssistantRef = useAutoupdateRef(onCloseAiAssistant);
     const onAiAssistantContextRef = useAutoupdateRef(onAiAssistantContext);
     const onAiAssistantPublisherDocumentSavedRef = useAutoupdateRef(onAiAssistantPublisherDocumentSaved);
+    const onAiAssistantDashboardSavedRef = useAutoupdateRef(onAiAssistantDashboardSaved);
     const containerRef = useRef<HTMLDivElement>(null);
     const mountHandleRef = useRef<IPluggableApplicationMountHandle | undefined>(undefined);
     // The app/module pair currently mounted. Held so the context-change effect can
@@ -197,6 +210,10 @@ export function PluggableApplicationRenderer({
                 });
                 return;
             }
+            if (isAiAssistantDashboardSavedEvent(event)) {
+                onAiAssistantDashboardSavedRef.current?.(event.payload);
+                return;
+            }
             if (isDocumentTitleChangedEvent(event)) {
                 onDocumentTitleChangeRef.current?.(app.id, event.payload.pageTitle);
             }
@@ -208,6 +225,7 @@ export function PluggableApplicationRenderer({
             onCloseAiAssistantRef,
             onAiAssistantContextRef,
             onAiAssistantPublisherDocumentSavedRef,
+            onAiAssistantDashboardSavedRef,
         ],
     );
 

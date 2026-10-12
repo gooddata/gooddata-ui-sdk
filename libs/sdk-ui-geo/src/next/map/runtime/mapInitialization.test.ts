@@ -77,6 +77,8 @@ class MockPopup {
     public constructor(_options: object) {}
 }
 
+vi.mock("../../../../worker/maplibre-gl-worker.source.js", () => ({ default: "" }));
+
 vi.mock("maplibre-gl", () => ({
     Map: MockMap,
     Popup: MockPopup,
@@ -103,16 +105,19 @@ describe("initializeMapLibreMap", () => {
         disableRotationMock.mockClear();
         setWorkerUrlMock.mockClear();
         configuredWorkerUrl = "";
+        // the bundled worker file is not served under vitest, so the inline worker is the outcome
+        vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: false }));
+        vi.spyOn(URL, "createObjectURL").mockReturnValue("blob:test");
     });
 
-    it("points MapLibre at the bundled worker when no worker URL is configured", async () => {
+    it("points MapLibre at the worker this package ships when no worker URL is configured", async () => {
         await initializeMapLibreMap({
             container: createContainer(),
             style: MAP_STYLE,
         });
 
         expect(setWorkerUrlMock).toHaveBeenCalledTimes(1);
-        expect(setWorkerUrlMock.mock.calls[0]?.[0]).toMatch(/\/worker\/maplibre-gl-worker\.js$/);
+        expect(setWorkerUrlMock.mock.calls[0]?.[0]).toBe("blob:test");
     });
 
     it("keeps a worker URL that was configured before the map is created", async () => {

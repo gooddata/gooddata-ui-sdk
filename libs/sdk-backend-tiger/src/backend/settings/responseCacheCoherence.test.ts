@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import axios, { type AxiosAdapter } from "axios";
+import axios, { type AxiosAdapter, type AxiosRequestConfig } from "axios";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type IUserProfile, newAxios } from "@gooddata/api-client-tiger";
@@ -137,12 +137,16 @@ function delimiterFromWritePayload(content: object | null | undefined): string |
 
 function wireEndpointMocks(stub: BackendStub) {
     vi.mocked(actions.ActionsApi_WorkspaceResolveAllSettings).mockImplementation(
-        (axiosInstance, _basePath, params, options) =>
-            axiosInstance.get("/resolveSettings/workspace", { ...options, params }),
+        (axiosInstance, _basePath, params, options) => {
+            const config: AxiosRequestConfig = { ...options, params };
+            return axiosInstance.get("/resolveSettings/workspace", config);
+        },
     );
     vi.mocked(actions.ActionsApi_ResolveAllSettingsWithoutWorkspace).mockImplementation(
-        (axiosInstance, _basePath, params, options) =>
-            axiosInstance.get("/resolveSettings/organization", { ...options, params }),
+        (axiosInstance, _basePath, params, options) => {
+            const config: AxiosRequestConfig = { ...options, params };
+            return axiosInstance.get("/resolveSettings/organization", config);
+        },
     );
     vi.mocked(entities.EntitiesApi_GetAllEntitiesWorkspaceSettings).mockImplementation(
         (axiosInstance, _basePath, params) => axiosInstance.get("/entities/workspaceSettings", { params }),

@@ -1027,22 +1027,6 @@
         "text": "Next year",
         "crowdinContext": "Filter option for the next year"
     },
-    "filters.thisFiscalMonth.title": {
-        "text": "This period",
-        "crowdinContext": "Filter option for the current period"
-    },
-    "filters.thisFiscalMonthToDate.title": {
-        "text": "This period to date",
-        "crowdinContext": "Filter option for the current period to date"
-    },
-    "filters.lastFiscalMonth.title": {
-        "text": "Last period",
-        "crowdinContext": "Filter option for the previous period"
-    },
-    "filters.nextFiscalMonth.title": {
-        "text": "Next period",
-        "crowdinContext": "Filter option for the next period"
-    },
     "filters.thisFiscalQuarter.title": {
         "text": "This fiscal quarter",
         "crowdinContext": "Filter option for the current fiscal quarter"
@@ -1111,10 +1095,6 @@
         "text": "{n, plural, one {Last # year} other {Last # years}}",
         "crowdinContext": "Filter option for the last N years (singular/plural)"
     },
-    "filters.lastNFiscalMonths": {
-        "text": "{n, plural, one {Last # fiscal month} other {Last # fiscal months}}",
-        "crowdinContext": "Filter option for the last N fiscal months (singular/plural)"
-    },
     "filters.lastNFiscalQuarters": {
         "text": "{n, plural, one {Last # fiscal quarter} other {Last # fiscal quarters}}",
         "crowdinContext": "Filter option for the last N fiscal quarters (singular/plural)"
@@ -1158,10 +1138,6 @@
     "filters.nextNYears": {
         "text": "{n, plural, one {Next # year} other {Next # years}}",
         "crowdinContext": "Filter option for the next N years (singular/plural)"
-    },
-    "filters.nextNFiscalMonths": {
-        "text": "{n, plural, one {Next # fiscal month} other {Next # fiscal months}}",
-        "crowdinContext": "Filter option for the next N fiscal months (singular/plural)"
     },
     "filters.nextNFiscalQuarters": {
         "text": "{n, plural, one {Next # fiscal quarter} other {Next # fiscal quarters}}",
@@ -1350,26 +1326,6 @@
     "filters.interval.years.mixed": {
         "text": "From {from} {from, plural, one {year} other {years}} ago to {to} {to, plural, one {year} other {years}} ahead",
         "crowdinContext": "Time interval spanning both past and future years (e.g., 'From 1 year ago to 2 years ahead'). The placeholders {from} and {to} represent the number of years in the past and future respectively."
-    },
-    "filters.interval.fiscalMonths.past": {
-        "text": "From {from} to {to} {to, plural, one {fiscal month} other {fiscal months}} ago",
-        "crowdinContext": "Time interval in past fiscal months"
-    },
-    "filters.interval.fiscalMonths.past.sameValue": {
-        "text": "{value} {value, plural, one {fiscal month} other {fiscal months}} ago",
-        "crowdinContext": "Time interval for a single past fiscal month"
-    },
-    "filters.interval.fiscalMonths.future": {
-        "text": "From {from} to {to} {to, plural, one {fiscal month} other {fiscal months}} ahead",
-        "crowdinContext": "Time interval in future fiscal months"
-    },
-    "filters.interval.fiscalMonths.future.sameValue": {
-        "text": "{value} {value, plural, one {fiscal month} other {fiscal months}} ahead",
-        "crowdinContext": "Time interval for a single future fiscal month"
-    },
-    "filters.interval.fiscalMonths.mixed": {
-        "text": "From {from} {from, plural, one {fiscal month} other {fiscal months}} ago to {to} {to, plural, one {fiscal month} other {fiscal months}} ahead",
-        "crowdinContext": "Time interval spanning both past and future fiscal months"
     },
     "filters.interval.fiscalQuarters.past": {
         "text": "From {from} to {to} {to, plural, one {fiscal quarter} other {fiscal quarters}} ago",
@@ -4950,10 +4906,6 @@
     "gs.header.kpis": {
         "text": "KPIs",
         "crowdinContext": "Navigation link to KPIs section in global header"
-    },
-    "gs.header.load": {
-        "text": "Load",
-        "crowdinContext": "Navigation link to data loading section in global header"
     },
     "gs.header.manage": {
         "text": "Manage",

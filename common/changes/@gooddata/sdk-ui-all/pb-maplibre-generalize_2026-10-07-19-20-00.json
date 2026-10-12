@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-geo: Fix geo charts that showed only a grey map in Angular CLI, esbuild and other builds that do not emit `new URL(..., import.meta.url)` assets. The MapLibre worker now starts from an inline Blob when the bundled worker file is not reachable.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

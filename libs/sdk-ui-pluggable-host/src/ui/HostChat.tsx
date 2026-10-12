@@ -6,7 +6,7 @@ import { type IGenAIUserContext, type PluggableApplicationRegistryItem } from "@
 import { type IPlatformContext } from "@gooddata/sdk-pluggable-application-model";
 import { BackendProvider, resolveLocale } from "@gooddata/sdk-ui";
 import { GenAIAssistantMode } from "@gooddata/sdk-ui-gen-ai";
-import { type IPublisherDocumentSaved } from "@gooddata/sdk-ui-gen-ai/internal";
+import { type IDashboardSaved, type IPublisherDocumentSaved } from "@gooddata/sdk-ui-gen-ai/internal";
 import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 
 import { getAppLifecycleCallbacks } from "../loader/pluggableApplicationsLoader.js";
@@ -87,6 +87,8 @@ export interface IHostChatProps {
     onAppEventReceive?: (event: GenAIChatEvent) => void;
     /** The latest document of the conversation that the active application saved. */
     publisherDocumentSaved: IPublisherDocumentSaved | undefined;
+    /** The latest dashboard save reported by the active application. */
+    dashboardSaved: IDashboardSaved | undefined;
 }
 
 /**
@@ -110,6 +112,7 @@ export function HostChat({
     onAppLinkClick,
     onAppEventReceive,
     publisherDocumentSaved,
+    dashboardSaved,
 }: IHostChatProps) {
     const features = useHostChromeWorkspaceFeatures(resolvedApplications, ctx, pathname);
 
@@ -128,6 +131,7 @@ export function HostChat({
         onAppLinkClick,
         onAppEventReceive,
         publisherDocumentSaved,
+        dashboardSaved,
     });
     const {
         askAiAssistant: chatAskAiAssistant,

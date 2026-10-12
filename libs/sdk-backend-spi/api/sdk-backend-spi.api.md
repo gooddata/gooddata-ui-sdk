@@ -414,6 +414,8 @@ export interface IAnalyticalWorkspace {
     getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined>;
     insights(): IWorkspaceInsightsService;
     keyDriverAnalysis(): IWorkspaceKeyDriverAnalysisService;
+    // @alpha
+    localization(): IWorkspaceLocalizationService;
     // @internal
     logicalModel(): IWorkspaceLogicalModelService;
     measures(): IWorkspaceMeasuresService;
@@ -646,6 +648,7 @@ export interface IBackendCapabilities {
     supportsBootstrapResource?: boolean;
     supportsCircularDependencyInFilters?: boolean;
     supportsCrossFiltering?: boolean;
+    // @deprecated
     supportsCsvUploader?: boolean;
     supportsCustomColorPalettes?: boolean;
     supportsElementsQueryParentFiltering?: boolean;
@@ -1997,6 +2000,178 @@ export interface ILlmProvidersQuery {
 // @alpha
 export type ILlmProvidersQueryResult = IPagedResource<ILlmProvider>;
 
+// @alpha
+export interface ILocalizationDefault {
+    // (undocumented)
+    content: ILocalizationValueContent;
+    // (undocumented)
+    source: LocalizationUsageSource;
+}
+
+// @alpha
+export interface ILocalizationPageQuery {
+    // (undocumented)
+    page?: number;
+    // (undocumented)
+    size?: number;
+}
+
+// @alpha
+export interface ILocalizationResolvedValue {
+    // (undocumented)
+    content: ILocalizationValueContent;
+    originId?: string;
+    // (undocumented)
+    source: LocalizationUsageSource;
+}
+
+// @alpha
+export interface ILocalizationSettingUsage {
+    // (undocumented)
+    users: ILocalizationUsageCount;
+    // (undocumented)
+    workspaces: ILocalizationUsageCount;
+}
+
+// @alpha
+export interface ILocalizationStatistics {
+    // (undocumented)
+    data: {
+        locales: ILocalizationTranslatedLocale[];
+    };
+    // (undocumented)
+    metadata: {
+        locales: ILocalizationTranslatedLocale[];
+    };
+}
+
+// @alpha
+export interface ILocalizationStatisticsWorkspace {
+    // (undocumented)
+    data: ILocalizationTranslationCoverage;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    metadata: ILocalizationTranslationCoverage;
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    parentId: string | null;
+    // (undocumented)
+    sourceLanguage: string | null;
+}
+
+// @alpha
+export interface ILocalizationStatisticsWorkspacesPage {
+    // (undocumented)
+    totalCount: number;
+    // (undocumented)
+    workspaces: ILocalizationStatisticsWorkspace[];
+}
+
+// @alpha
+export interface ILocalizationTranslatedLocale {
+    // (undocumented)
+    locale: string;
+}
+
+// @alpha
+export interface ILocalizationTranslationCoverage {
+    // (undocumented)
+    locales: Array<ILocalizationTranslatedLocale & {
+        translated: number;
+    }>;
+    // (undocumented)
+    total: number;
+}
+
+// @alpha
+export interface ILocalizationUsage {
+    defaults: Record<LocalizationSettingType, ILocalizationDefault | null>;
+    values: ILocalizationValueUsage[];
+}
+
+// @alpha
+export interface ILocalizationUsageCount {
+    // (undocumented)
+    bySource: Partial<Record<LocalizationUsageSource, number>>;
+    // (undocumented)
+    total: number;
+}
+
+// @alpha
+export interface ILocalizationUsageListQuery extends ILocalizationPageQuery {
+    // (undocumented)
+    setting?: LocalizationSettingType;
+    // (undocumented)
+    source?: LocalizationUsageSource;
+    // (undocumented)
+    value?: string;
+}
+
+// @alpha
+export interface ILocalizationUsageUser {
+    // (undocumented)
+    bySetting: Partial<Record<LocalizationSettingType, ILocalizationResolvedValue>>;
+    // (undocumented)
+    email?: string;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    name?: string;
+    // (undocumented)
+    source: LocalizationUsageSource;
+}
+
+// @alpha
+export interface ILocalizationUsageUsersPage {
+    // (undocumented)
+    totalCount: number;
+    // (undocumented)
+    users: ILocalizationUsageUser[];
+}
+
+// @alpha
+export interface ILocalizationUsageWorkspace {
+    // (undocumented)
+    bySetting: Partial<Record<LocalizationSettingType, ILocalizationResolvedValue>>;
+    // (undocumented)
+    childrenCount: number;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    parentId: string | null;
+    // (undocumented)
+    source: LocalizationUsageSource;
+}
+
+// @alpha
+export interface ILocalizationUsageWorkspacesPage {
+    // (undocumented)
+    totalCount: number;
+    // (undocumented)
+    workspaces: ILocalizationUsageWorkspace[];
+}
+
+// @alpha
+export interface ILocalizationValueContent {
+    // (undocumented)
+    value: string | null;
+}
+
+// @alpha
+export interface ILocalizationValueUsage {
+    bySetting: Partial<Record<LocalizationSettingType, ILocalizationSettingUsage>>;
+    // (undocumented)
+    content: ILocalizationValueContent;
+    // (undocumented)
+    users: ILocalizationUsageCount;
+    // (undocumented)
+    workspaces: ILocalizationUsageCount;
+}
+
 // @public
 export type IMeasureExpressionToken = IObjectExpressionToken | IAttributeElementExpressionToken | ITextExpressionToken | ICommentExpressionToken | IBracketExpressionToken;
 
@@ -2146,6 +2321,8 @@ export interface IOrganization {
     // @alpha
     ipAllowlists(): IOrganizationIpAllowlistService;
     llmProviders(): IOrganizationLlmProvidersService;
+    // @alpha
+    localization(): IOrganizationLocalizationService;
     notificationChannels(): IOrganizationNotificationChannelService;
     notifications(): IOrganizationNotificationService;
     readonly organizationId: string;
@@ -2287,6 +2464,15 @@ export interface IOrganizationLlmProvidersService {
     updateLlmProvider(provider: ILlmProvider): Promise<ILlmProvider>;
 }
 
+// @alpha
+export interface IOrganizationLocalizationService {
+    getStatistics(): Promise<ILocalizationStatistics>;
+    getStatisticsWorkspaces(query?: ILocalizationPageQuery): Promise<ILocalizationStatisticsWorkspacesPage>;
+    getUsage(): Promise<ILocalizationUsage>;
+    getUsageUsers(query?: ILocalizationUsageListQuery): Promise<ILocalizationUsageUsersPage>;
+    getUsageWorkspaces(query?: ILocalizationUsageListQuery): Promise<ILocalizationUsageWorkspacesPage>;
+}
+
 // @beta
 export interface IOrganizationNotificationChannelService {
     // (undocumented)
@@ -2344,6 +2530,10 @@ export interface IOrganizationSettingsService {
     deleteTheme(): Promise<void>;
     // @alpha
     getAiRateLimit(): Promise<IAiRateLimit | undefined>;
+    // @alpha
+    getDataLocale(): Promise<string | undefined>;
+    // @alpha
+    getMetadataLocale(): Promise<string | undefined>;
     getSettings(): Promise<ISettings>;
     setActiveCalendars(calendars: IActiveCalendars): Promise<void>;
     setActiveLlmEndpoint(endpoint: string): Promise<void>;
@@ -3145,6 +3335,15 @@ export interface IWorkspaceKeyDriverAnalysisService {
     computeChangeAnalysis(definition: IChangeAnalysisDefinition, period: IChangeAnalysisPeriod, options?: IChangeAnalysisOptions, signal?: AbortSignal): Promise<IChangeAnalysisResults>;
 }
 
+// @alpha
+export interface IWorkspaceLocalizationService {
+    getStatistics(): Promise<ILocalizationStatistics>;
+    getStatisticsWorkspaces(query?: ILocalizationPageQuery): Promise<ILocalizationStatisticsWorkspacesPage>;
+    getUsage(): Promise<ILocalizationUsage>;
+    getUsageUsers(query?: ILocalizationUsageListQuery): Promise<ILocalizationUsageUsersPage>;
+    getUsageWorkspaces(query?: ILocalizationUsageListQuery): Promise<ILocalizationUsageWorkspacesPage>;
+}
+
 // @internal
 export interface IWorkspaceLogicalModelService {
     getDatasets(includeParents: boolean): Promise<IDateDataset[]>;
@@ -3379,6 +3578,12 @@ export function layoutWidgetsWithPaths<TWidget extends IDashboardWidget>(layout:
 export class LimitReached extends AnalyticalBackendError {
     constructor(message: string, cause?: Error);
 }
+
+// @alpha
+export type LocalizationSettingType = "LOCALE" | "METADATA_LOCALE" | "DATA_LOCALE";
+
+// @alpha
+export type LocalizationUsageSource = "USER" | "WORKSPACE" | "PARENT" | "ORGANIZATION" | "ENVIRONMENT" | "DEFAULT";
 
 // @public
 export class NoDataError extends AnalyticalBackendError {

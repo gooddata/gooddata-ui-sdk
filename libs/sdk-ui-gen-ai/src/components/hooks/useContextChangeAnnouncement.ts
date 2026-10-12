@@ -32,34 +32,42 @@ const ANNOUNCEMENT_DELAY = 250;
 export function useContextChangeAnnouncement(
     selected: SelectedContext | undefined,
     references: IGenAIContextObject[],
+    loading?: boolean,
 ): string {
     const intl = useIntl();
     const [announcement, setAnnouncement] = useState("");
-    const previousReferences = useRef<IGenAIContextObject[] | null>(null);
+    const announcedReferences = useRef<IGenAIContextObject[] | null>(null);
 
     useEffect(() => {
-        const previous = previousReferences.current;
+        if (loading) {
+            return undefined;
+        }
+
+        const announced = announcedReferences.current;
         const all = [
             ...(selected?.activated && selected.dashboard ? [selected.dashboard] : []),
             ...(selected?.activated && selected.publisherDocument ? [selected.publisherDocument] : []),
             ...(selected?.activated && selected.visualization ? [selected.visualization] : []),
             ...references,
         ];
-        previousReferences.current = all;
 
-        if (previous === null) {
+        if (announced === null) {
+            announcedReferences.current = all;
             return undefined;
         }
 
-        const message = getAnnouncement(previous, all, intl);
+        const message = getAnnouncement(announced, all, intl);
         if (!message) {
             return undefined;
         }
 
         setAnnouncement("");
-        const timeout = setTimeout(() => setAnnouncement(message), ANNOUNCEMENT_DELAY);
+        const timeout = setTimeout(() => {
+            announcedReferences.current = all;
+            setAnnouncement(message);
+        }, ANNOUNCEMENT_DELAY);
         return () => clearTimeout(timeout);
-    }, [references, intl, selected]);
+    }, [references, intl, selected, loading]);
 
     return announcement;
 }

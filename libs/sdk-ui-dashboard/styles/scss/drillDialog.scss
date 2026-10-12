@@ -316,3 +316,8 @@ $description-width-mobile: 320px;
 .gd-drill-dialog-export .gd-ui-kit-tooltip__anchor {
     width: 100%;
 }
+
+.gd-drill-dialog-export-icon--pdf {
+    // PDF brand red; deliberately not a theme color, so custom themes don't recolor it
+    color: #ee2227;
+}

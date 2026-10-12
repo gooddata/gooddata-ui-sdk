@@ -82,6 +82,7 @@ export const IntlInsightView = withAgGridToken(
                 onError,
                 onDataView,
                 onInsightLoaded,
+                afterRender,
                 pushData,
 
                 ErrorComponent = DefaultError,
@@ -306,6 +307,7 @@ export const IntlInsightView = withAgGridToken(
                                 onExportReady={onExportReady}
                                 onLoadingChanged={handleLoadingChanged}
                                 onDataView={onDataView}
+                                afterRender={afterRender}
                                 pushData={pushData}
                             />
                         ) : null}

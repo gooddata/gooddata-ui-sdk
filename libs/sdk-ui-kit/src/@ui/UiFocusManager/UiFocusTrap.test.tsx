@@ -8,6 +8,7 @@ import { describe, expect, it } from "vitest";
 import { UiModalDialog } from "../UiModalDialog/UiModalDialog.js";
 
 import { UiFocusTrap } from "./UiFocusTrap.js";
+import { defaultFocusCheckFn } from "./utils.js";
 
 describe("UiFocusTrap", () => {
     it("cycles Tab through its own content", () => {
@@ -24,6 +25,24 @@ describe("UiFocusTrap", () => {
 
         expect(notPrevented).toBe(false);
         expect(screen.getByText("first")).toHaveFocus();
+    });
+
+    it("keeps focus that an element hands over to its own child", () => {
+        render(
+            <UiFocusTrap focusCheckFn={defaultFocusCheckFn}>
+                <button>first</button>
+                <div tabIndex={0} onFocus={(e) => e.currentTarget.querySelector("span")?.focus()}>
+                    <span tabIndex={-1}>chart column</span>
+                </div>
+                <button>last</button>
+            </UiFocusTrap>,
+        );
+        const first = screen.getByText("first");
+        first.focus();
+
+        fireEvent.keyDown(first, { key: "Tab", code: "Tab" });
+
+        expect(screen.getByText("chart column")).toHaveFocus();
     });
 
     it.each([

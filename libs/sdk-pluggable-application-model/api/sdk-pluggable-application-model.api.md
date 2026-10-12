@@ -30,6 +30,9 @@ export function aiAssistantContextChanged(payload?: {
 }): IAiAssistantContextChangedEvent;
 
 // @alpha
+export function aiAssistantDashboardSaved(payload: IAiAssistantDashboardSavedEvent["payload"]): IAiAssistantDashboardSavedEvent;
+
+// @alpha
 export function aiAssistantPublisherDocumentSaved(payload: IAiAssistantPublisherDocumentSavedEvent["payload"]): IAiAssistantPublisherDocumentSavedEvent;
 
 // @alpha
@@ -68,6 +71,22 @@ export interface IAiAssistantContextChangedEvent extends IPluggableAppEvent {
     };
     // (undocumented)
     readonly type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CONTEXT_CHANGED";
+}
+
+// @alpha
+export interface IAiAssistantDashboardSavedEvent extends IPluggableAppEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly conversationId: string;
+        readonly originalDashboardId: string;
+        readonly savedDashboardId: string;
+        readonly savedInsights: ReadonlyArray<{
+            readonly originalInsightId: string;
+            readonly savedInsightId: string;
+        }>;
+    };
+    // (undocumented)
+    readonly type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.DASHBOARD_SAVED";
 }
 
 // @alpha
@@ -367,6 +386,9 @@ export interface IReloadPlatformContextRequestedEvent extends IPluggableAppEvent
 export function isAiAssistantContextChangedEvent(obj: unknown): obj is IAiAssistantContextChangedEvent;
 
 // @alpha
+export function isAiAssistantDashboardSavedEvent(obj: unknown): obj is IAiAssistantDashboardSavedEvent;
+
+// @alpha
 export function isAiAssistantPublisherDocumentSavedEvent(obj: unknown): obj is IAiAssistantPublisherDocumentSavedEvent;
 
 // @alpha
@@ -445,6 +467,7 @@ export const PluggableAppEventType: {
     readonly AI_ASSISTANT_CLOSE_REQUESTED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CLOSE_REQUESTED";
     readonly AI_ASSISTANT_CONTEXT_CHANGED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CONTEXT_CHANGED";
     readonly AI_ASSISTANT_PUBLISHER_DOCUMENT_SAVED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.PUBLISHER_DOCUMENT_SAVED";
+    readonly AI_ASSISTANT_DASHBOARD_SAVED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.DASHBOARD_SAVED";
 };
 
 // @alpha

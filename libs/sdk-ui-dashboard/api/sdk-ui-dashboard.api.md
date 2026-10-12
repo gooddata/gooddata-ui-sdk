@@ -1445,6 +1445,11 @@ export type DashboardSaved = IDashboardEvent & {
 export type DashboardSavedPayload = {
     readonly dashboard: IDashboard;
     readonly newDashboard: boolean;
+    readonly originalDashboardId?: string;
+    readonly savedInsights?: ReadonlyArray<{
+        readonly originalInsightId: string;
+        readonly savedInsightId: string;
+    }>;
 };
 
 // @public

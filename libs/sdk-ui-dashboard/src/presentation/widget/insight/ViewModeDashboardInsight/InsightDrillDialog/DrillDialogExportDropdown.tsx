@@ -36,7 +36,9 @@ function InteractiveItemWithIcon({ item, isFocused }: IUiMenuInteractiveItemProp
                 "gd-ui-kit-menu__item--isDisabled": !!item.isDisabled,
             })}
         >
-            <UiIcon type={item.data.icon} />
+            <span className={`gd-drill-dialog-export-icon--${item.id}`}>
+                <UiIcon type={item.data.icon} color="currentColor" layout="block" />
+            </span>
             <ShortenedText className="gd-ui-kit-menu-item-title" ellipsisPosition="end">
                 {item.stringTitle}
             </ShortenedText>

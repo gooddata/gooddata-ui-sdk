@@ -4,8 +4,6 @@ import { defineMessage } from "react-intl";
 
 import { type ISettings, type IWorkspacePermissions } from "@gooddata/sdk-model";
 
-import { isFreemiumEdition } from "../utils/featureFlags.js";
-
 import { type IHeaderMenuItem } from "./typings.js";
 
 /**
@@ -35,10 +33,6 @@ export const HEADER_ITEM_ID_METRICS = defineMessage({ id: "gs.header.metrics" })
 /**
  * @internal
  */
-export const HEADER_ITEM_ID_LOAD = defineMessage({ id: "gs.header.load" }).id;
-/**
- * @internal
- */
 export const HEADER_ITEM_ID_DATA = defineMessage({ id: "gs.header.data" }).id;
 /**
  * @internal
@@ -60,7 +54,6 @@ export function generateHeaderMenuItemsGroups(
     workspaceId?: string,
     hasNoDataSet: boolean = false,
     backendSupportsDataItem: boolean = false,
-    backendSupportsCsvUploader: boolean = true,
     hasMeasures: boolean = false,
     hasManage: boolean = true,
     baseUrl: string = "",
@@ -76,7 +69,6 @@ export function generateHeaderMenuItemsGroups(
         workspacePermissions,
         hasAnalyticalDashboards,
         hasMeasures,
-        backendSupportsCsvUploader,
         backendSupportsDataItem,
         hasNoDataSet,
         baseUrl,
@@ -110,13 +102,10 @@ function createInsightsItemsGroup(
     workspacePermissions: IWorkspacePermissions,
     hasAnalyticalDashboards: boolean,
     hasMeasures: boolean,
-    backendSupportsCsvUploader: boolean,
     backendSupportsDataItem: boolean,
     hasNoDataSet: boolean,
     baseUrl: string,
 ) {
-    const isFreemiumCustomer = isFreemiumEdition(featureFlags.platformEdition);
-
     const insightItemsGroup: IHeaderMenuItem[] = [];
 
     const kpisUrl = kpisItemUrl(
@@ -166,13 +155,6 @@ function createInsightsItemsGroup(
             true, // isActiveByStartWith: true for catalog to match sub-routes
         ),
         canShowCatalogItem(featureFlags, workspacePermissions),
-    );
-
-    const loadUrl = loadItemUrl(baseUrl, workspaceId);
-    pushConditionally(
-        insightItemsGroup,
-        createIHeaderMenuItem(HEADER_ITEM_ID_LOAD, "s-menu-load", loadUrl),
-        canShowLoadItem(featureFlags, workspacePermissions, isFreemiumCustomer, backendSupportsCsvUploader),
     );
     return insightItemsGroup;
 }
@@ -268,21 +250,4 @@ function canShowDataItem(featureFlags: ISettings, workspacePermissions: IWorkspa
         featureFlags.enableDataSection &&
         (workspacePermissions.canInitData || workspacePermissions.canRefreshData),
     );
-}
-
-function loadItemUrl(baseUrl: string, workspaceId: string): string {
-    return withBaseUrl(baseUrl, `/data/#/workspaces/${workspaceId}/datasets`);
-}
-function canShowLoadItem(
-    featureFlags: ISettings,
-    workspacePermissions: IWorkspacePermissions,
-    isFreemiumCustomer: boolean,
-    backendSupportsCsvUploader: boolean,
-): boolean {
-    const canAccessLoadCsvPage = workspacePermissions.canUploadNonProductionCSV === true;
-    const canShowLoadCsvItem = featureFlags.enableDataSection
-        ? !isFreemiumCustomer && canAccessLoadCsvPage
-        : canAccessLoadCsvPage;
-
-    return Boolean(canShowLoadCsvItem && backendSupportsCsvUploader);
 }

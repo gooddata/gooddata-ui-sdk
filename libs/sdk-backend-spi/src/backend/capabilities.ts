@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 /**
  * Analytical Backend communicates its capabilities via objects of this type. In return, the capabilities
@@ -69,6 +69,8 @@ export interface IBackendCapabilities {
 
     /**
      * Indicates whether backend supports adding CSV datasets and switching between them.
+     *
+     * @deprecated No backend supports the CSV uploader any more. The capability is not read.
      */
     supportsCsvUploader?: boolean;
 

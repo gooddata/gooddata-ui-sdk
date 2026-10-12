@@ -12,7 +12,6 @@ The package uses a modular structure with individual API endpoint modules locate
 
 - **aac** - Analytics as Code format APIs (alternatives to layout APIs)
 - **actions** - Workspace and organization management actions
-- **authActions** - Authentication and authorization actions
 - **automation** - Automation and workflow management
 - **entitiesObjects** - Metadata entities (dashboards, visualizations, filters, etc.)
 - **execution** - AFM execution and analysis APIs

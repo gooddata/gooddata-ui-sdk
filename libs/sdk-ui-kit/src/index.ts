@@ -300,7 +300,6 @@ export {
     HEADER_ITEM_ID_KPIS,
     HEADER_ITEM_ID_ANALYZE,
     HEADER_ITEM_ID_METRICS,
-    HEADER_ITEM_ID_LOAD,
     HEADER_ITEM_ID_DATA,
     HEADER_ITEM_ID_MANAGE,
     HEADER_ITEM_ID_CATALOG,
@@ -1437,7 +1436,7 @@ export {
 export {
     type IUiResizableSidebarState,
     type IUiResizableSidebarStateOptions,
-    type IUiResizableSidebarNavigationBadge,
+    type IUiResizableSidebarNavigationActionRequired,
     type IUiResizableSidebarNavigationItem,
     type IUiResizableSidebarNavigationSubItem,
     type UiResizableSidebarNavigationNamingConfig,

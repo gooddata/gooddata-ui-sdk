@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type RefObject } from "react";
 
@@ -29,7 +29,7 @@ export const resolveRef = (
  * @internal
  */
 export const defaultFocusCheckFn = (element: HTMLElement) => {
-    return document.activeElement === element;
+    return element.contains(document.activeElement);
 };
 
 /**

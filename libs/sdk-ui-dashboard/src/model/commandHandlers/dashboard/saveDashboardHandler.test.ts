@@ -384,6 +384,12 @@ describe("save dashboard handler", () => {
             expect(savedEvent.correlationId).toBe(TestCorrelation);
             expect(areObjRefsEqual(insightWidgetAfterSave.insight, oldInsightRef)).toBe(true);
             expect(insightsAfterSave.some((insight) => insight.insight.isDraft)).toBe(false);
+            expect(savedEvent.payload.savedInsights).toEqual([
+                {
+                    originalInsightId: "unsaved-draft-insight-3",
+                    savedInsightId: "unsaved-draft-insight-3",
+                },
+            ]);
         });
 
         it("should save dashboard without warning dialog when draft insight already exists on backend", async () => {

@@ -250,6 +250,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableTrinoDataSource,
+            "enableTrinoDataSource",
+            "BOOLEAN",
+            FeatureFlagsValues.enableTrinoDataSource,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableOidcAuth,
             "enableOidcAuth",
             "BOOLEAN",

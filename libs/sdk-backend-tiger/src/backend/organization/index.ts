@@ -14,6 +14,7 @@ import {
     type IOrganizationGenAIService,
     type IOrganizationIpAllowlistService,
     type IOrganizationLlmProvidersService,
+    type IOrganizationLocalizationService,
     type IOrganizationNotificationChannelService,
     type IOrganizationNotificationService,
     type IOrganizationPermissionService,
@@ -26,6 +27,7 @@ import {
 import { type IOrganizationDescriptor, type IOrganizationDescriptorUpdate, idRef } from "@gooddata/sdk-model";
 
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
+import { TigerOrganizationLocalizationService } from "../localization/index.js";
 
 import { OrganizationAgentsService } from "./agents.js";
 import { TigerOrganizationAutomationService } from "./automations/index.js";
@@ -200,6 +202,10 @@ export class TigerOrganization implements IOrganization {
 
     public ipAllowlists(): IOrganizationIpAllowlistService {
         return new OrganizationIpAllowlistService(this.authCall);
+    }
+
+    public localization(): IOrganizationLocalizationService {
+        return new TigerOrganizationLocalizationService(this.authCall);
     }
 }
 

@@ -224,6 +224,30 @@ describe("GenAIChatContextIndicator", () => {
         );
     });
 
+    it("names the dashboard chip's toggle after what it does", () => {
+        const dashboard: IGenAIContextObject = {
+            id: "dashboard-1",
+            ref: idRef("dashboard-1", "analyticalDashboard"),
+            title: "Revenue Dashboard",
+            nesting: 0,
+            type: "dashboard",
+            where: "view.dashboard",
+        };
+        state = makeState(undefined, { activated: true, dashboard });
+
+        render(
+            <IntlProvider locale="en" messages={messages}>
+                <GenAIChatContextIndicator />
+            </IntlProvider>,
+        );
+
+        fireEvent.click(screen.getByRole("button", { name: "Stop using this context" }));
+
+        expect(dispatch).toHaveBeenCalledWith(
+            selectedContextReferencesAction({ activated: false, dashboard }),
+        );
+    });
+
     it("removes a document other than the open one through its chip", () => {
         const openDocument: IGenAIContextObject = {
             id: "q1",

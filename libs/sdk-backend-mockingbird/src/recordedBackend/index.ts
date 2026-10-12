@@ -51,6 +51,7 @@ import {
     type IWorkspaceFactsService,
     type IWorkspaceInsightsService,
     type IWorkspaceKeyDriverAnalysisService,
+    type IWorkspaceLocalizationService,
     type IWorkspaceLogicalModelService,
     type IWorkspaceMeasuresService,
     type IWorkspaceObjectPermissionsService,
@@ -627,6 +628,9 @@ function recordedWorkspace(
                     }),
             };
         },
+        localization(): IWorkspaceLocalizationService {
+            return recordedLocalizationService();
+        },
     };
 }
 
@@ -773,6 +777,8 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 setAiRateLimit: () => Promise.resolve(),
                 deleteAiRateLimit: () => Promise.resolve(),
                 getAiRateLimit: () => Promise.resolve(undefined),
+                getMetadataLocale: () => Promise.resolve(undefined),
+                getDataLocale: () => Promise.resolve(undefined),
                 setEnableDrillToUrlByDefault: () => Promise.resolve(),
                 setEnablePartialDataResults: () => Promise.resolve(),
                 setEnableNullJoins: () => Promise.resolve(),
@@ -961,6 +967,23 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 delete: () => Promise.resolve(),
             };
         },
+        localization() {
+            return recordedLocalizationService();
+        },
+    };
+}
+
+function recordedLocalizationService(): IWorkspaceLocalizationService {
+    return {
+        getUsage: () =>
+            Promise.resolve({
+                defaults: { LOCALE: null, METADATA_LOCALE: null, DATA_LOCALE: null },
+                values: [],
+            }),
+        getUsageWorkspaces: () => Promise.resolve({ workspaces: [], totalCount: 0 }),
+        getUsageUsers: () => Promise.resolve({ users: [], totalCount: 0 }),
+        getStatistics: () => Promise.resolve({ metadata: { locales: [] }, data: { locales: [] } }),
+        getStatisticsWorkspaces: () => Promise.resolve({ workspaces: [], totalCount: 0 }),
     };
 }
 

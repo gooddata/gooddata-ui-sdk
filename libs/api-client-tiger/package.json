@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/api-client-tiger",
-    "version": "11.62.0-alpha.1",
+    "version": "11.62.0-alpha.2",
     "description": "API Client for GoodData Cloud and GoodData.CN",
     "license": "MIT",
     "author": "GoodData",
@@ -34,7 +34,6 @@
         "./endpoints/profile": "./esm/endpoints/profile/index.js",
         "./endpoints/locationStyle": "./esm/endpoints/locationStyle/index.js",
         "./endpoints/genAI": "./esm/endpoints/genAI/index.js",
-        "./endpoints/authActions": "./esm/endpoints/authActions/index.js",
         "./endpoints/scanModel": "./esm/endpoints/scanModel/index.js",
         "./endpoints/export": "./esm/endpoints/export/index.js",
         "./endpoints/result": "./esm/endpoints/result/index.js",
@@ -65,8 +64,8 @@
     },
     "dependencies": {
         "@gooddata/sdk-model": "workspace:*",
-        "axios": "1.18.1",
-        "axios-cache-interceptor": "1.12.0",
+        "axios": "1.20.0",
+        "axios-cache-interceptor": "1.12.3",
         "lodash-es": "^4.17.23",
         "tslib": "2.8.1"
     },

@@ -8,6 +8,8 @@ services:
             dockerfile: Dockerfile
         volumes:
             - ./neobackstop/output:/usr/neobackstop/output
+            # CI mounts a copy with asyncCaptureLimit/asyncCompareLimit sized to the runner
+            - ${NEOBACKSTOP_CONFIG:-./neobackstop/config.json}:/usr/neobackstop/config.json:ro
         command: ${COMMAND_ARGS}
         depends_on:
             - ag-grid.com

@@ -50,6 +50,7 @@ import {
     type AacDataset,
     type AacDateDataset,
     type AacFilter,
+    type AacMetric,
     type AacVisualisation,
     type ExportEntities,
     yamlDashboardToDeclarative,
@@ -753,8 +754,8 @@ function applyDashboardPatch(
 
     // Collate insights from all cards that are related to this dashboard in history
     const references = [
-        ...all.map((part) => part.references as AiDashboardReferences),
-        patch.references,
+        ...all.map((part) => part.references as AiReferencesWithMetrics),
+        patch.references as AiReferencesWithMetrics,
     ].reduce((acc, curr) => {
         return {
             datasets: unique(acc?.datasets as AacDataset[], curr?.datasets as AacDataset[]),
@@ -762,6 +763,7 @@ function applyDashboardPatch(
                 acc?.datedatasets as AacDateDataset[],
                 curr?.datedatasets as AacDateDataset[],
             ),
+            metrics: unique(getReferencedMetrics(acc), getReferencedMetrics(curr)),
             new_visualizations: unique(
                 acc?.new_visualizations as AacVisualisation[],
                 curr?.new_visualizations as AacVisualisation[],
@@ -771,7 +773,7 @@ function applyDashboardPatch(
                 curr?.visualizations as AacVisualisation[],
             ),
         };
-    }, {} as AiDashboardReferences);
+    }, {} as AiReferencesWithMetrics);
 
     let newDocument: AacDashboard | null = null;
     try {
@@ -873,7 +875,27 @@ function buildDatasetEntities(
             };
         }) ?? [];
 
-    return [...dateDatasets, ...datasets];
+    const metrics: ExportEntities = getReferencedMetrics(references).map((data) => ({
+        data,
+        path: "",
+        type: "metric",
+        id: data.id,
+    }));
+
+    return [...dateDatasets, ...datasets, ...metrics];
+}
+
+/**
+ * References may carry the AAC bodies of the metrics the chart fields name, so their titles resolve
+ * instead of falling back to ids. Older backends do not send them, and the generated client does
+ * not type them yet. The bodies carry no MAQL, so they serve titles only and get no declarative form.
+ */
+type AiReferencesWithMetrics = AiDashboardReferences & { metrics?: object[] };
+
+function getReferencedMetrics(
+    references: AiDashboardReferences | AiVisualizationReferences | null | undefined,
+): AacMetric[] {
+    return ((references as AiReferencesWithMetrics | null | undefined)?.metrics ?? []) as AacMetric[];
 }
 
 function buildDashboardReferences(

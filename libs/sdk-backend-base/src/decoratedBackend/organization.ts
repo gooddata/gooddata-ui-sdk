@@ -8,6 +8,7 @@ import {
     type IOrganizationGenAIService,
     type IOrganizationIpAllowlistService,
     type IOrganizationLlmProvidersService,
+    type IOrganizationLocalizationService,
     type IOrganizationNotificationChannelService,
     type IOrganizationNotificationService,
     type IOrganizationPermissionService,
@@ -101,5 +102,9 @@ export class OrganizationDecorator implements IOrganization {
 
     public ipAllowlists(): IOrganizationIpAllowlistService {
         return this.decorated.ipAllowlists();
+    }
+
+    public localization(): IOrganizationLocalizationService {
+        return this.decorated.localization();
     }
 }

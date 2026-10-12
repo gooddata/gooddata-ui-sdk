@@ -452,6 +452,30 @@ export type { IOrganizationNotificationChannelService } from "./organization/not
 export type { IOrganizationGeoCollectionsService } from "./organization/geoCollections/index.js";
 export type { IOrganizationIpAllowlistService } from "./organization/ipAllowlists/index.js";
 export type {
+    LocalizationSettingType,
+    LocalizationUsageSource,
+    ILocalizationValueContent,
+    ILocalizationDefault,
+    ILocalizationUsageCount,
+    ILocalizationSettingUsage,
+    ILocalizationValueUsage,
+    ILocalizationUsage,
+    ILocalizationPageQuery,
+    ILocalizationUsageListQuery,
+    ILocalizationResolvedValue,
+    ILocalizationUsageWorkspace,
+    ILocalizationUsageWorkspacesPage,
+    ILocalizationUsageUser,
+    ILocalizationUsageUsersPage,
+    ILocalizationTranslatedLocale,
+    ILocalizationStatistics,
+    ILocalizationTranslationCoverage,
+    ILocalizationStatisticsWorkspace,
+    ILocalizationStatisticsWorkspacesPage,
+    IOrganizationLocalizationService,
+    IWorkspaceLocalizationService,
+} from "./localization/index.js";
+export type {
     INotificationChannelsQuery,
     INotificationChannelsQueryResult,
     INotificationChannelIdentifiersQueryResult,

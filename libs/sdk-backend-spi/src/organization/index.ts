@@ -2,6 +2,8 @@
 
 import { type IOrganizationDescriptor, type IOrganizationDescriptorUpdate } from "@gooddata/sdk-model";
 
+import { type IOrganizationLocalizationService } from "../localization/index.js";
+
 import { type IOrganizationAgentsService } from "./agents/index.js";
 import { type IOrganizationAutomationService } from "./automations/index.js";
 import { type IOrganizationExportTemplatesService } from "./exportTemplates/index.js";
@@ -116,6 +118,13 @@ export interface IOrganization {
      * @alpha
      */
     ipAllowlists(): IOrganizationIpAllowlistService;
+
+    /**
+     * Returns service that reports how languages and translations are used across the organization.
+     *
+     * @alpha
+     */
+    localization(): IOrganizationLocalizationService;
 }
 
 /**

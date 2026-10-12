@@ -118,7 +118,7 @@ export function GenAIChatContextIndicator({ onUpdate }: GenAIChatContextIndicato
     const ambientToggleLabel = intl.formatMessage(
         selectedContext?.activated ? msgs.stopUsingContext : msgs.startUsingContext,
     );
-    const announcement = useContextChangeAnnouncement(selectedContext, references);
+    const announcement = useContextChangeAnnouncement(selectedContext, references, ambientLoading);
 
     if (!isContextSetupEnabled || !isSelected) {
         return null;
@@ -161,21 +161,15 @@ export function GenAIChatContextIndicator({ onUpdate }: GenAIChatContextIndicato
                                     {...getIconByObject(item)}
                                     label={getSelectedTitle(selectedContext, emptyReferenceLabel)}
                                     iconAction={selectedContext.activated ? "visible" : "invisible"}
-                                    actionIconTooltip={
-                                        selectedContext.activated
-                                            ? intl.formatMessage(msgs.stopUsingContext)
-                                            : intl.formatMessage(msgs.startUsingContext)
-                                    }
+                                    actionIconTooltip={ambientToggleLabel}
                                     tooltip={intl.formatMessage(msgs.context)}
                                     variant={selectedContext.activated ? "normal" : "inactive"}
                                     onClick={toggleDropdown}
                                     onAction={onAmbientToggleHandler()}
                                     accessibilityConfig={{
                                         ...accessibilityConfig,
-                                        deleteAriaLabel: intl.formatMessage(msgs.remove, {
-                                            title: getSelectedTitle(selectedContext, emptyReferenceLabel),
-                                        }),
                                         iconBeforeAriaLabel: getTypeLabel(item.type, intl),
+                                        actionAriaLabel: ambientToggleLabel,
                                     }}
                                 />
                             );

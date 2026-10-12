@@ -1,11 +1,11 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 
 import { FormattedMessage } from "react-intl";
 
 import { type ICatalogAttribute, areObjRefsEqual } from "@gooddata/sdk-model";
-import { UiSkeleton } from "@gooddata/sdk-ui-kit";
+import { UiSkeleton, useIdPrefixed, useUiAutofocusConnectors } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
 import { selectCatalogIsLoaded } from "../../model/store/catalog/catalogSelectors.js";
@@ -16,6 +16,8 @@ import { KdaAttributesDropdown } from "./KdaAttributesDropdown.js";
 
 export function KeyDriversFooter() {
     const { state, setState } = useKdaState();
+    const [applyCount, setApplyCount] = useState(0);
+    const attributesButtonId = useIdPrefixed("kda-attributes-dropdown-button");
 
     const isCatalogLoaded = useDashboardSelector(selectCatalogIsLoaded);
     const isLoading =
@@ -30,6 +32,7 @@ export function KeyDriversFooter() {
 
     const onApply = useCallback(
         (selected: ICatalogAttribute[]) => {
+            setApplyCount((count) => count + 1);
             setState({
                 selectedAttributes: selected.map((item) => {
                     const existingRef = state.selectedAttributes.find((ref) =>
@@ -51,13 +54,19 @@ export function KeyDriversFooter() {
         setState({ attributesDropdownOpen: false });
     }, [setState]);
 
+    const autofocus = useUiAutofocusConnectors<HTMLDivElement>({
+        active: applyCount > 0 && !isLoading,
+        refocusKey: `${applyCount}-${isLoading}`,
+        initialFocus: attributesButtonId,
+    });
+
     //Do not show footer when kda is not loaded at all
     if (isError) {
         return null;
     }
 
     return (
-        <div>
+        <div ref={autofocus.ref}>
             {isLoading ? (
                 <UiSkeleton itemHeight={23} itemWidth={300} />
             ) : (
@@ -72,6 +81,7 @@ export function KeyDriversFooter() {
                                 .join("");
                             return (
                                 <KdaAttributesDropdown
+                                    buttonId={attributesButtonId}
                                     buttonLabel={buttonLabel}
                                     attributesCount={state.selectedAttributes.length}
                                     validAttributes={validAttributes}

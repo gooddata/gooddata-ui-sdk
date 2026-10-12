@@ -95,6 +95,33 @@ describe("useUiResizableSidebarState", () => {
         expect(result.current.width).toBe(240);
     });
 
+    it("caps the maximum at the available width instead of the viewport width", () => {
+        setViewportWidth(1600);
+
+        const { result } = renderHook(() =>
+            useUiResizableSidebarState({ ...options, minContentWidth: 960, availableWidth: 1200 }),
+        );
+
+        expect(result.current.max).toBe(240);
+    });
+
+    it("narrows while the available width shrinks and restores the stored width after", () => {
+        setViewportWidth(1600);
+
+        const { result, rerender } = renderHook(
+            ({ availableWidth }: { availableWidth: number }) =>
+                useUiResizableSidebarState({ ...options, minContentWidth: 960, availableWidth }),
+            { initialProps: { availableWidth: 1600 } },
+        );
+        act(() => result.current.setWidth(500));
+
+        rerender({ availableWidth: 1200 });
+        expect(result.current.width).toBe(240);
+
+        rerender({ availableWidth: 1600 });
+        expect(result.current.width).toBe(500);
+    });
+
     it("disables resizing when the content cannot keep its minimum width", () => {
         setViewportWidth(1000);
 

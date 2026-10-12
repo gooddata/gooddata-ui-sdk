@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-kit: UiResizableSidebarNavigation lists the sub-pages of a group in a flyover in rail mode, shows hover and selected indicators, and replaces the item `badge` with `actionRequired`, drawn in the primary color.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

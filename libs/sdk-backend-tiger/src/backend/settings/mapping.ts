@@ -17,7 +17,6 @@ type UnmappedTypes =
     | "JWT_JIT_PROVISIONING"
     | "ATTACHMENT_LINK_TTL"
     | "AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE"
-    | "DATA_LOCALE"
     | "LDM_DEFAULT_LOCALE"
     | "EXPORT_RESULT_POLLING_TIMEOUT_SECONDS"
     | "SORT_CASE_SENSITIVE"
@@ -27,7 +26,9 @@ type UnmappedTypes =
     | "REPORTS_BRAND_KIT"
     | "CONVERSATION_RETENTION_DAYS"
     | "ENABLE_AI_DATA_OBFUSCATION"
-    | "AUTHORIZATION_SERVER_REDIRECT_POLICY";
+    | "AUTHORIZATION_SERVER_REDIRECT_POLICY"
+    | "DEFAULT_METRIC_VISIBILITY"
+    | "DEFAULT_VISUALIZATION_VISIBILITY";
 
 // Only mandatory types
 type MandatoryTypes = Exclude<AllSettingsType, UnmappedTypes>;
@@ -44,6 +45,7 @@ const TYPE_TO_KEY_MAP = {
     GEO_ICON_SHEET: "geoIconSheet",
     AG_GRID_TOKEN: "agGridToken",
     METADATA_LOCALE: "metadataLocale",
+    DATA_LOCALE: "dataLocale",
     TIMEZONE: "timezone",
     WEEK_START: "weekStart",
     FISCAL_YEAR: "fiscalYear",

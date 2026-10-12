@@ -125,5 +125,6 @@ For additional examples of colors, separators, or legend behavior, see [Chart Co
 ## Notes
 
 - `GeoAreaChart` is a convenience wrapper over [GeoChart](./geo_chart/) for the single-area-layer scenario.
+- Geo charts start a MapLibre web worker. No bundler setup is needed; see [Map worker, bundlers and CSP](./geo_chart/#map-worker-bundlers-and-csp) for Content Security Policy requirements and self-hosting.
 - Use the `additionalLayers` prop to overlay pushpin layers on top of the area layer.
 - For full API documentation, see the [TypeScript definitions](../../API_references.md).

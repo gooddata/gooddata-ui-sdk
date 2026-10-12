@@ -8,7 +8,7 @@ import {
     type IPluggableAppTelemetryCallbacks,
 } from "@gooddata/sdk-pluggable-application-model";
 import { GenAIAssistantMode, useGenAiChatAvailability } from "@gooddata/sdk-ui-gen-ai";
-import { type IPublisherDocumentSaved } from "@gooddata/sdk-ui-gen-ai/internal";
+import { type IDashboardSaved, type IPublisherDocumentSaved } from "@gooddata/sdk-ui-gen-ai/internal";
 
 import { getBackend } from "../platformContext/backend.js";
 
@@ -89,6 +89,8 @@ export interface IUseHostChromeChatArgs {
     onAppEventReceive?: (event: GenAIChatEvent) => void;
     /** The latest document of the conversation that the active app saved. */
     publisherDocumentSaved: IPublisherDocumentSaved | undefined;
+    /** The latest dashboard save reported by the active application. */
+    dashboardSaved: IDashboardSaved | undefined;
 }
 
 /**
@@ -108,6 +110,7 @@ export function useHostChromeChat({
     onAppLinkClick,
     onAppEventReceive,
     publisherDocumentSaved,
+    dashboardSaved,
 }: IUseHostChromeChatArgs): IHostChromeChat {
     const [isChatOpen, setIsChatOpen] = useState(false);
     const [askedQuestion, setAskedQuestion] = useState<string | null>(null);
@@ -212,6 +215,7 @@ export function useHostChromeChat({
                 ambientUserContext={ambientUserContext}
                 ambientUserContextLoading={ambientUserContextLoading}
                 publisherDocumentSaved={publisherDocumentSaved}
+                dashboardSaved={dashboardSaved}
                 includeTags={includeTags}
                 excludeTags={excludeTags}
                 canManageProject={features.canManageProject}

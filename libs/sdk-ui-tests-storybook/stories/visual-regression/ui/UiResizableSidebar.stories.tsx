@@ -181,7 +181,7 @@ const SETTINGS_PAGES = [
         id: "alerts",
         label: "Alerts & exports",
         href: "#alerts",
-        badge: { kind: "dot" as const, label: "Needs attention" },
+        actionRequired: { label: "Action required" },
     },
     { id: "sql", label: "SQL generation", href: "#sql" },
     { id: "earlyAccess", label: "Early access", href: "#early-access" },
@@ -191,14 +191,25 @@ function makeNavigationItems(selectedId: string): IUiResizableSidebarNavigationI
     const items: IUiResizableSidebarNavigationItem[] = [
         { id: "home", label: "Getting started", icon: "home", href: "#home" },
         { id: "workspaces", label: "Workspaces", icon: "folder", href: "#workspaces" },
-        { id: "users", label: "Users & groups", icon: "users", href: "#users" },
+        {
+            id: "users",
+            label: "Users & groups",
+            icon: "users",
+            href: "#users",
+            actionRequired: { label: "Action required" },
+        },
         { id: "settings", label: "Settings", icon: "settings", href: "#settings", children: SETTINGS_PAGES },
     ];
 
     return items.map((item) => ({
         ...item,
         isSelected: item.id === selectedId,
-        children: item.children?.map((child) => ({ ...child, isSelected: child.id === selectedId })),
+        dataTestId: `navigation-${item.id}`,
+        children: item.children?.map((child) => ({
+            ...child,
+            isSelected: child.id === selectedId,
+            dataTestId: `navigation-${child.id}`,
+        })),
     }));
 }
 
@@ -316,4 +327,67 @@ export const NavigationThemed = () =>
 NavigationThemed.parameters = {
     kind: "navigation themed",
     screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
+} satisfies IStoryParameters;
+
+// Kit items transition their colors, so a screenshot right after the interaction would catch the fade.
+const INTERACTION_WAIT = { delay: 400 };
+
+export function NavigationHover() {
+    return <UiResizableSidebarNavigationTest selectedId="localization" />;
+}
+NavigationHover.parameters = {
+    kind: "navigation hover",
+    screenshot: {
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        hoverSelector: "[data-testid='navigation-workspaces']",
+        postInteractionWait: INTERACTION_WAIT,
+    },
+} satisfies IStoryParameters;
+
+export function NavigationRailHover() {
+    return <UiResizableSidebarNavigationTest hasRail initiallyCollapsed selectedId="localization" />;
+}
+NavigationRailHover.parameters = {
+    kind: "navigation rail hover",
+    screenshot: {
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        hoverSelector: "[data-testid='navigation-workspaces']",
+        postInteractionWait: INTERACTION_WAIT,
+    },
+} satisfies IStoryParameters;
+
+export function NavigationRailFlyover() {
+    return <UiResizableSidebarNavigationTest hasRail initiallyCollapsed selectedId="localization" />;
+}
+NavigationRailFlyover.parameters = {
+    kind: "navigation rail flyover",
+    screenshot: {
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        hoverSelector: "[data-testid='navigation-settings']",
+        postInteractionWait: { selector: ".gd-ui-kit-resizable-sidebar-navigation__flyover", delay: 400 },
+    },
+} satisfies IStoryParameters;
+
+export function NavigationRailFlyoverKeyboard() {
+    return <UiResizableSidebarNavigationTest hasRail initiallyCollapsed selectedId="localization" />;
+}
+NavigationRailFlyoverKeyboard.parameters = {
+    kind: "navigation rail flyover keyboard",
+    screenshot: {
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        delay: { postReady: 500 },
+        keyPressSelector: { selector: "[data-testid='navigation-settings']", keyPress: "ArrowRight" },
+        postInteractionWait: { selector: ".gd-ui-kit-resizable-sidebar-navigation__flyover", delay: 400 },
+    },
+} satisfies IStoryParameters;
+
+export const NavigationRailFlyoverThemed = () =>
+    wrapWithTheme(<UiResizableSidebarNavigationTest hasRail initiallyCollapsed selectedId="localization" />);
+NavigationRailFlyoverThemed.parameters = {
+    kind: "navigation rail flyover themed",
+    screenshot: {
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        hoverSelector: "[data-testid='navigation-settings']",
+        postInteractionWait: { selector: ".gd-ui-kit-resizable-sidebar-navigation__flyover", delay: 400 },
+    },
 } satisfies IStoryParameters;
