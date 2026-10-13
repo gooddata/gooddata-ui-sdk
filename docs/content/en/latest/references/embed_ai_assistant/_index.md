@@ -285,18 +285,66 @@ Here is a list of the relevant events:
 Handle user clicks on the catalog items mentioned in chat. If not provided, catalog items will be rendered as plain text.
 Each event contains the following properties:
 
-| Property       | Type       | Description                                                                              |
-| -------------- | ---------- | ---------------------------------------------------------------------------------------- |
-| type           | string     | Type of the metadata object the user clicked on. For example, "dashboard", "metric" etc. |
-| id             | string     | The ID of the metadata object                                                            |
-| itemUrl        | string     | The URL of the metadata object, if opened in GoodData Web interface                      |
-| newTab         | boolean    | Whether the link should be opened in a new tab                                           |
-| preventDefault | () => void | Prevent default behavior of the link click                                               |
-| dashboard      | IDashboard | (Optional) The dashboard definition, if the clicked item is a dashboard.                 |
-| visualization  | IInsight   | (Optional) The visualization definition, if the clicked item is a visualization.         |
+| Property        | Type               | Description                                                                              |
+| --------------- | ------------------ | ---------------------------------------------------------------------------------------- |
+| type            | string             | Type of the metadata object the user clicked on. For example, "dashboard", "metric" etc. |
+| id              | string             | The ID of the metadata object                                                            |
+| workspaceId     | string             | The ID of the workspace containing the metadata object                                   |
+| itemUrl         | string             | The URL of the metadata object, if opened in GoodData Web interface                      |
+| newTab          | boolean            | Whether the link should be opened in a new tab                                           |
+| preventDefault  | () => void         | Prevent default behavior of the link click                                               |
+| dashboard       | IDashboard         | (Optional) The dashboard definition, if the clicked item is a dashboard.                 |
+| insights        | IInsight[]         | (Optional) Insights referenced by a draft dashboard.                                     |
+| dashboardStatus | "saved" \| "draft" | (Optional) Whether the dashboard is persisted or is an in-memory draft.                  |
+| visualization   | IInsight           | (Optional) The visualization definition, if the clicked item is a visualization.         |
+| action          | "open" \| "copy"   | The operation requested for the metadata object.                                         |
 
 > Note: If `allowNativeLinks` is set to `false` (default), you must implement the `onLinkClick` handler to handle
 > the links in chat messages. Otherwise, the links will not be clickable and do not have any effect.
+
+> Important: If you activate the dashboard skill, you must implement handling for `onLinkClick` events with
+> `type: "dashboard"` and `action: "open"`. Activating the dashboard skill without this functionality is not
+> supported, even if the dashboard open button is hidden or disabled.
+
+For example, route saved dashboards by their URL and pass draft dashboards to your application's dashboard
+runtime. A draft has not been persisted yet, so use the `dashboard` definition and its referenced `insights`
+instead of trying to load it by `id` or `itemUrl`.
+
+```tsx
+import { GenAIAssistant, type LinkHandlerEvent } from "@gooddata/sdk-ui-gen-ai";
+
+const handleLinkClick = (event: LinkHandlerEvent): string | undefined => {
+    if (event.type !== "dashboard" || event.action !== "open") {
+        return event.itemUrl;
+    }
+
+    event.preventDefault();
+
+    if (event.dashboardStatus === "draft") {
+        if (event.dashboard) {
+            openDraftDashboard({
+                dashboard: event.dashboard,
+                insights: event.insights ?? [],
+            });
+        }
+        return undefined;
+    }
+
+    if (event.newTab) {
+        window.open(event.itemUrl, "_blank", "noopener,noreferrer");
+    } else {
+        navigate(event.itemUrl);
+    }
+
+    return undefined;
+};
+
+<GenAIAssistant onLinkClick={handleLinkClick} />;
+```
+
+In this example, `navigate` represents your application's router and `openDraftDashboard` represents the
+integration with your dashboard runtime. The runtime must initialize the dashboard from both the supplied
+`dashboard` and `insights`; the exact route and runtime ownership depend on your host application.
 
 #### onDefinitionReceived
 
@@ -439,7 +487,7 @@ const App = () => {
 Key Driver Analysis availability on charts is governed by two factors:
 
 1. **Mount status:** The `GenAiKeyDriverAnalysis` component must be mounted under the active `GenAiStore`. If not mounted, explain actions on charts are automatically disabled.
-2. **Customization slot override:** You can explicitly enable or disable Key Driver Analysis for visualizations using the `enableKeyDriverAnalysis` prop on the `slots.ConversationVisualizationContent` customization slot.
+2. **Customization slot override:** You can explicitly enable or disable Key Driver Analysis using the `enableKeyDriverAnalysis` prop on the `slots.ConversationVisualizationContent` and `slots.ConversationKdaContent` customization slots.
 
 ### Integration with Dashboard
 
@@ -496,6 +544,7 @@ The following slots are available:
 | `MessageReasoningContent`          | Custom rendering for assistant reasoning content.                                                             |
 | `MessageMultipartContent`          | Custom rendering for complex messages with multiple parts.                                                    |
 | `ConversationVisualizationContent` | Custom rendering for visualization parts in multipart messages, including visualization menu item visibility. |
+| `ConversationKdaContent`           | Custom rendering for Key Driver Analysis parts in multipart messages.                                         |
 | `FollowUpButtons`                  | Custom wrapper for the list of follow-up buttons.                                                             |
 | `Feedback`                         | Custom rendering for message feedback buttons.                                                                |
 | `FollowUpQuestion`                 | Custom rendering for an individual follow-up question.                                                        |
@@ -942,6 +991,7 @@ For granular control over message rendering, you can customize specific content 
 - `MessageReasoningContent`: Customizes the rendering of the assistant's reasoning or thought process.
 - `MessageMultipartContent`: Customizes the rendering of complex messages containing multiple parts.
 - `ConversationVisualizationContent`: Customizes rendering and menu actions of visualization parts in multipart content.
+- `ConversationKdaContent`: Customizes rendering of Key Driver Analysis parts in multipart content.
 
 Available components:
 
@@ -950,6 +1000,7 @@ Available components:
 - `DefaultMessageReasoningContent`
 - `DefaultMessageMultipartContent`
 - `DefaultConversationVisualizationContent`
+- `DefaultConversationKdaContent`
 
 #### Message content slots props
 
@@ -989,15 +1040,23 @@ Each content slot receives props specific to the content type:
 
 **ConversationVisualizationContent**
 
-| Prop name                 | Type                                                              | Description                                                                                                                                            |
-| ------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `message`                 | `IChatConversationItem`                                           | The original message containing the visualization part.                                                                                                |
-| `part`                    | `IChatConversationMultipartLocalPart`                             | The multipart part with visualization metadata.                                                                                                        |
-| `scenario`                | `IWhatIfRenderableScenario`                                       | What-if scenario context used when rendering comparison.                                                                                               |
-| `visualization`           | `IChatConversationVisualisationContent["visualization"]`          | The visualization payload to render.                                                                                                                   |
-| `className`               | `string`                                                          | Additional CSS class name for custom styling.                                                                                                          |
-| `menuItems`               | `{ save?: boolean; openInAnalyze?: boolean; copyLink?: boolean }` | Controls visibility of visualization menu actions.                                                                                                     |
-| `enableKeyDriverAnalysis` | `boolean`                                                         | (Optional) Controls whether key driver analysis (explain on charts) is enabled. When omitted, defaults to whether `GenAiKeyDriverAnalysis` is mounted. |
+| Prop name                 | Type                                                              | Description                                                                                                                                                                                 |
+| ------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `message`                 | `IChatConversationItem`                                           | The original message containing the visualization part.                                                                                                                                     |
+| `part`                    | `IChatConversationMultipartLocalPart`                             | The multipart part with visualization metadata.                                                                                                                                             |
+| `scenario`                | `IWhatIfRenderableScenario`                                       | What-if scenario context used when rendering comparison.                                                                                                                                    |
+| `visualization`           | `IChatConversationVisualisationContent["visualization"]`          | The visualization payload to render.                                                                                                                                                        |
+| `className`               | `string`                                                          | Additional CSS class name for custom styling.                                                                                                                                               |
+| `menuItems`               | `{ save?: boolean; openInAnalyze?: boolean; copyLink?: boolean }` | Controls visibility of visualization menu actions.                                                                                                                                          |
+| `enableKeyDriverAnalysis` | `boolean`                                                         | (Optional) Controls whether key driver analysis (explain on charts) is enabled. When omitted, defaults to whether `GenAiKeyDriverAnalysis` is mounted and the workspace setting is enabled. |
+
+**ConversationKdaContent**
+
+| Prop name                 | Type                 | Description                                                                                                                                                                     |
+| ------------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `kda`                     | `IChatKdaDefinition` | The Key Driver Analysis definition to render.                                                                                                                                   |
+| `className`               | `string`             | Additional CSS class name for custom styling.                                                                                                                                   |
+| `enableKeyDriverAnalysis` | `boolean`            | (Optional) Controls whether Key Driver Analysis content is enabled. When omitted, defaults to whether `GenAiKeyDriverAnalysis` is mounted and the workspace setting is enabled. |
 
 Use `menuItems` to disable specific menu actions:
 
@@ -1017,6 +1076,7 @@ import {
     IGenAIAssistantMessageReasoningContentProps,
     IGenAIAssistantMessageMultipartContentProps,
     IGenAIAssistantConversationVisualizationContentProps,
+    IGenAIAssistantConversationKdaContentProps,
 } from "@gooddata/sdk-ui-gen-ai";
 import { ISlotProps } from "@gooddata/sdk-ui-kit";
 
@@ -1068,6 +1128,15 @@ const CustomVisualizationContent = ({
     />
 );
 
+const CustomKdaContent = ({
+    Default,
+    defaultProps,
+}: ISlotProps<IGenAIAssistantConversationKdaContentProps>) => (
+    <div className="custom-kda-content">
+        <Default {...defaultProps} enableKeyDriverAnalysis />
+    </div>
+);
+
 export const App = () => (
     <GenAIAssistant
         slots={{
@@ -1076,6 +1145,7 @@ export const App = () => (
             MessageReasoningContent: CustomReasoningContent,
             MessageMultipartContent: CustomMultipartContent,
             ConversationVisualizationContent: CustomVisualizationContent,
+            ConversationKdaContent: CustomKdaContent,
         }}
     />
 );

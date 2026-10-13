@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/eslint-config",
-    "version": "11.62.0-alpha.2",
+    "version": "11.62.0-alpha.3",
     "license": "MIT",
     "author": "GoodData",
     "repository": {
@@ -72,13 +72,6 @@
         "./oxlint-react-vitest-rtl": {
             "import": "./dist/oxlint-react-vitest-rtl.js"
         },
-        "./react-playwright": {
-            "import": "./dist/react-playwright.js",
-            "require": "./dist/react-playwright.json"
-        },
-        "./oxlint-react-playwright": {
-            "import": "./dist/oxlint-react-playwright.js"
-        },
         "./esm-playwright": {
             "import": "./dist/esm-playwright.js",
             "require": "./dist/esm-playwright.json"
@@ -92,13 +85,6 @@
         },
         "./oxlint-esm-react": {
             "import": "./dist/oxlint-esm-react.js"
-        },
-        "./esm-react-playwright": {
-            "import": "./dist/esm-react-playwright.js",
-            "require": "./dist/esm-react-playwright.json"
-        },
-        "./oxlint-esm-react-playwright": {
-            "import": "./dist/oxlint-esm-react-playwright.js"
         },
         "./esm-react-storybook": {
             "import": "./dist/esm-react-storybook.js",

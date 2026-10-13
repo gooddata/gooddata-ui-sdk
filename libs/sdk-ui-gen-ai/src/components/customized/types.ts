@@ -2,7 +2,11 @@
 
 import { type ComponentType } from "react";
 
-import { type IChatConversationVisualisationContent, type IChatSuggestion } from "@gooddata/sdk-backend-spi";
+import {
+    type IChatConversationVisualisationContent,
+    type IChatKdaDefinition,
+    type IChatSuggestion,
+} from "@gooddata/sdk-backend-spi";
 import { type GenAIChatEffort } from "@gooddata/sdk-model";
 import {
     type ISlotProps,
@@ -298,6 +302,26 @@ export type IGenAIAssistantConversationVisualizationContentProps = {
 };
 
 /**
+ * Properties for the ConversationKdaContent slot.
+ * @alpha
+ */
+export type IGenAIAssistantConversationKdaContentProps = {
+    /**
+     * The key driver analysis definition to render.
+     */
+    kda: IChatKdaDefinition;
+    /**
+     * Additional CSS class name.
+     */
+    className?: string;
+    /**
+     * Controls whether key driver analysis content is enabled.
+     * When undefined, defaults to whether KeyDriverAnalysis is mounted and the enableChangeAnalysis setting is active.
+     */
+    enableKeyDriverAnalysis?: boolean;
+};
+
+/**
  * Properties for the FollowUpButtons slot.
  * @alpha
  */
@@ -499,6 +523,12 @@ export interface IGenAIAssistantSlots {
     ConversationVisualizationContent?: ComponentType<
         ISlotProps<IGenAIAssistantConversationVisualizationContentProps>
     >;
+
+    /**
+     * @alpha
+     * Custom React component rendered for a key driver analysis part in multipart content.
+     */
+    ConversationKdaContent?: ComponentType<ISlotProps<IGenAIAssistantConversationKdaContentProps>>;
 
     /**
      * @alpha

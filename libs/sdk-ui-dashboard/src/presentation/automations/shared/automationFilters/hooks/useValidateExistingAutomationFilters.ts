@@ -40,8 +40,8 @@ import {
     getAutomationAlertParameters,
     getAutomationExportParametersByTab,
 } from "../../../../../_staging/automation/index.js";
-import { isFilterTypeCompatibleWithSelectionType } from "../../../../../model/commandHandlers/dashboard/common/attributeFilterSelectionTypeCompatibility.js";
 import { type ExtendedDashboardWidget } from "../../../../../model/types/layoutTypes.js";
+import { isFilterTypeCompatibleWithSelectionType } from "../../../../../model/utils/attributeFilterSelectionTypeCompatibility.js";
 import { type IDashboardFilter } from "../../../../../types.js";
 import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
 import { isNoopAllTimeDateFilterFixed } from "../../filters/index.js";

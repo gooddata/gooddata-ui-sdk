@@ -216,6 +216,57 @@ describe("parameters reducers (per tab)", () => {
             expect(next.tabs?.[0]?.parameters?.parameters[0]?.runtimeOverride).toBe(99);
             expect(next.tabs?.[1]?.parameters?.parameters[0]?.runtimeOverride).toBe(10);
         });
+
+        it("writes the value onto every tab that defines the parameter when filters persist across tabs", () => {
+            const initial: ITabsState = {
+                tabs: [
+                    {
+                        localIdentifier: "tab-A",
+                        title: "Tab A",
+                        parameters: {
+                            parameters: [
+                                { parameter: topNParameter, runtimeOverride: 10, workingOverride: 40 },
+                            ],
+                        },
+                    },
+                    {
+                        localIdentifier: "tab-B",
+                        title: "Tab B",
+                        parameters: {
+                            parameters: [
+                                { parameter: topNParameter, runtimeOverride: 20, workingOverride: 30 },
+                            ],
+                        },
+                    },
+                    {
+                        localIdentifier: "tab-C",
+                        title: "Tab C",
+                        parameters: {
+                            parameters: [{ parameter: scenarioParameter, runtimeOverride: "Actual" }],
+                        },
+                    },
+                ],
+                activeTabLocalIdentifier: "tab-A",
+            };
+
+            const next = produce(initial, (draft) =>
+                parametersReducers.setParameterRuntimeValues(
+                    draft,
+                    tabsActions.setParameterRuntimeValues({
+                        values: [{ ref: topNRef, value: 99 }],
+                        enablePersistentFiltersAcrossTabs: true,
+                    }),
+                ),
+            );
+
+            expect(next.tabs?.[0]?.parameters?.parameters[0]?.runtimeOverride).toBe(99);
+            expect(next.tabs?.[0]?.parameters?.parameters[0]).not.toHaveProperty("workingOverride");
+            expect(next.tabs?.[1]?.parameters?.parameters[0]?.runtimeOverride).toBe(99);
+            expect(next.tabs?.[1]?.parameters?.parameters[0]).not.toHaveProperty("workingOverride");
+            expect(next.tabs?.[2]?.parameters?.parameters).toEqual([
+                { parameter: scenarioParameter, runtimeOverride: "Actual" },
+            ]);
+        });
     });
 
     describe("removeParameter", () => {

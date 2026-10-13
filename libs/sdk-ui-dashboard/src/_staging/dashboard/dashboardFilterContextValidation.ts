@@ -22,7 +22,7 @@ import {
     isSingleSelectionFilter,
 } from "@gooddata/sdk-model";
 
-import { isFilterTypeCompatibleWithSelectionType } from "../../model/commandHandlers/dashboard/common/attributeFilterSelectionTypeCompatibility.js";
+import { isFilterTypeCompatibleWithSelectionType } from "../../model/utils/attributeFilterSelectionTypeCompatibility.js";
 
 /**
  * Describes validation errors that can occur when merging dashboard filters.

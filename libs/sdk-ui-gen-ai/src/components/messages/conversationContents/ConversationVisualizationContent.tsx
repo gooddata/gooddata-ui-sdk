@@ -47,7 +47,6 @@ import { type IChatConversationLocalItem, type IChatConversationMultipartLocalPa
 import {
     catalogItemsSelector,
     colorPaletteSelector,
-    isKeyDriverAnalysisMountedSelector,
     settingsSelector,
 } from "../../../store/chatWindow/chatWindowSelectors.js";
 import {
@@ -70,6 +69,7 @@ import {
 } from "./ConversationVisualisation.js";
 import { SaveVisualizationDialog } from "./SaveVisualizationDialog.js";
 import { createKdaDefinitionFromDrill, getDashboardAttributeFilter } from "./useKdaDefinition.js";
+import { useKdaEnabled } from "./useKdaEnabled.js";
 import { useInsightSaveCheck } from "./useSaveCheck.js";
 
 const MORE_MENU_BUTTON_ID = "gd-gen-ai-chat__conversation__visualization__save__more-menu-button";
@@ -149,13 +149,8 @@ export function ConversationVisualizationContent({
     const enableAccessibleChartTooltip = useSelector(
         (state: RootState) => settingsSelector(state)?.enableAccessibleChartTooltip,
     );
-    const isKeyDriverAnalysisMounted = useSelector(isKeyDriverAnalysisMountedSelector);
-    const enableChangeAnalysisSetting = useSelector(
-        (state: RootState) => settingsSelector(state)?.enableChangeAnalysis,
-    );
 
-    const enableChangeAnalysis =
-        isKeyDriverAnalysisMounted && (enableKeyDriverAnalysis ?? enableChangeAnalysisSetting ?? false);
+    const enableChangeAnalysis = useKdaEnabled(enableKeyDriverAnalysis);
     const enableSecondGranularities = useSelector(
         (state: RootState) => settingsSelector(state)?.enableSecondGranularities,
     );

@@ -1,21 +1,8 @@
 // (C) 2023-2026 GoodData Corporation
 
-// oxlint-disable @typescript-eslint/no-empty-object-type
-
+import "@testing-library/jest-dom/vitest";
 import { cleanup } from "@testing-library/react";
-import { afterEach, expect, vi } from "vitest";
-import * as matchers from "vitest-dom/dist/matchers.js";
-import { type TestingLibraryMatchers } from "vitest-dom/dist/matchers.js";
-
-/**
- * Exports of types and matchers of vitest-dom is currently broken we need export matchers from dist and define types manually
- */
-declare module "vitest" {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    interface Assertion<T = any> extends TestingLibraryMatchers<typeof expect.stringContaining, T> {}
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    interface AsymmetricMatchersContaining extends TestingLibraryMatchers<unknown, unknown> {}
-}
+import { afterEach, vi } from "vitest";
 
 // This needs a manual stub; see https://github.com/jsdom/jsdom/issues/1695
 // Note: This stub is also needed for happy-dom
@@ -40,12 +27,15 @@ global.IntersectionObserver = class IntersectionObserver {
     thresholds: any[] = [];
 };
 
-expect.extend(matchers);
-
 afterEach(() => {
     cleanup();
 });
 
-global.CSS = {
-    supports: (_property: string, _value: string) => false,
-} as any;
+// happy-dom exposes window.CSS as a getter-only accessor, so a plain assignment throws
+Object.defineProperty(globalThis, "CSS", {
+    value: {
+        supports: (_property: string, _value: string) => false,
+    },
+    configurable: true,
+    writable: true,
+});

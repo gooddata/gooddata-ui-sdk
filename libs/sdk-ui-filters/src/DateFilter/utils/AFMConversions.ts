@@ -5,8 +5,10 @@ import {
     type IDateFilter,
     type IRelativeDateFilter,
     type ObjRef,
+    isAbsoluteDateFilterForm,
     isAllTimeDateFilterOption,
     isEmptyValuesDateFilterOption,
+    newAbsoluteDateFilter,
 } from "@gooddata/sdk-model";
 
 import {
@@ -22,13 +24,10 @@ import { applyExcludeCurrentPeriod } from "./PeriodExclusion.js";
 export const mapAbsoluteFilterToAfm = (
     value: AbsoluteDateFilterOption,
     dataSet: ObjRef,
-): IAbsoluteDateFilter => ({
-    absoluteDateFilter: {
-        dataSet,
-        from: value.from ?? "",
-        to: value.to ?? "",
-    },
-});
+): IAbsoluteDateFilter =>
+    newAbsoluteDateFilter(dataSet, value.from ?? "", value.to ?? "", {
+        granularity: isAbsoluteDateFilterForm(value) ? value.granularity : undefined,
+    });
 
 export const mapRelativeFilterToAfm = (
     value: RelativeDateFilterOption,

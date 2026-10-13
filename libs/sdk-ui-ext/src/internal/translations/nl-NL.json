@@ -718,5 +718,9 @@
     "properties.conditionalFormatting.operator.endsWith": "Eindigt met",
     "properties.conditionalFormatting.operator.notEndsWith": "Eindigt niet met",
     "properties.conditionalFormatting.operator.isEmpty": "Is leeg",
-    "properties.conditionalFormatting.operator.isNotEmpty": "Is niet leeg"
+    "properties.conditionalFormatting.operator.isNotEmpty": "Is niet leeg",
+    "properties.lineShape": "Lijnvorm",
+    "properties.lineShape.linear": "Lineair (standaard)",
+    "properties.lineShape.spline": "Vloeiend",
+    "properties.lineShape.stepped": "Getrapt"
 }

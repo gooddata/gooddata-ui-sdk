@@ -24,6 +24,7 @@ import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
 
 import {
     type IAutomationParameter,
+    type IAvailableAutomationParameter,
     availableAutomationParameters,
     reconstructAutomationParametersFromExportParameters,
     shouldStoreExportParameters,
@@ -35,6 +36,11 @@ import {
  * @internal
  */
 export type EditedParametersByTab = Record<string, IAutomationParameter[]>;
+
+/**
+ * @internal
+ */
+export type AvailableParametersByTab = Record<string, IAvailableAutomationParameter[]>;
 
 /**
  * @internal
@@ -82,7 +88,7 @@ export interface IUseAutomationExportParameters {
     /**
      * Per-tab workspace parameters addable via the "+" menu (catalog minus selected/hidden/readonly).
      */
-    availableParametersByTab: EditedParametersByTab;
+    availableParametersByTab: AvailableParametersByTab;
     /**
      * The tab the flat (non-tabbed) UI edits — the widget's owning tab or the single dashboard tab.
      * Undefined for multi-tab dashboards (per-tab rendering) or when no parameter context applies.
@@ -162,7 +168,7 @@ export function useAutomationExportParameters({
         // The set of tabs the export covers: the widget's owning tab, or every dashboard tab. Keyed by
         // every in-scope tab (not just seeded ones) so tabs with no current override can still add params.
         const scopeTabIds = widget ? (flatTabId ? [flatTabId] : []) : tabIds;
-        const result: EditedParametersByTab = {};
+        const result: AvailableParametersByTab = {};
         for (const tabId of scopeTabIds) {
             // Widget schedules seed addable chips from the widget-effective values, mirroring the alert
             // path; dashboard schedules have no widget context and fall back to dashboard/default

@@ -7,6 +7,7 @@ import {
     type IInsightParameterValue,
     idRef,
     insightSetParameters,
+    newAbsoluteDateFilter,
     uriRef,
 } from "@gooddata/sdk-model";
 
@@ -101,5 +102,32 @@ describe("convertInsight with a computed attribute", () => {
                 ],
             },
         ]);
+    });
+});
+
+describe("convertInsight with an absolute date filter", () => {
+    it("should store insight and layer filters without the granularity", () => {
+        const monthFilter = newAbsoluteDateFilter(idRef("date1", "dataSet"), "2026-03-01", "2026-04-30", {
+            granularity: "GDC.time.month",
+        });
+        const insight: IInsight = {
+            insight: {
+                ...emptyInsight.insight,
+                filters: [monthFilter],
+                layers: [{ id: "layer1", type: "pushpin", buckets: [], filters: [monthFilter] }],
+            },
+        };
+
+        const tigerObj = convertInsight(insight);
+        const storedDateFilter = {
+            absoluteDateFilter: {
+                dataSet: { identifier: { id: "date1", type: "dataset" } },
+                from: "2026-03-01",
+                to: "2026-04-30",
+            },
+        };
+
+        expect(tigerObj.filters).toEqual([storedDateFilter]);
+        expect(tigerObj.layers?.[0].filters).toEqual([storedDateFilter]);
     });
 });

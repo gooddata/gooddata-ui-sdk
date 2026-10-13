@@ -28,9 +28,7 @@ export function useCopyObjectPermissions(): (
             const service = backend.workspace(workspace).objectPermissions();
             try {
                 const permissions = accessListToPermissions(await service.getAccessList(from));
-                if (permissions.length > 0) {
-                    await service.manageObjectPermissions(to, permissions);
-                }
+                await service.manageObjectPermissions(to, permissions);
                 return true;
             } catch {
                 return false;

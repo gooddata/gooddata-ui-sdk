@@ -442,6 +442,35 @@ describe("factoryNotationFor", () => {
             const actual = factoryNotationFor(input);
             testModelNotation(actual, input);
         });
+        it("should handle absolute date filter with empty values handling", () => {
+            const input: IAbsoluteDateFilter = {
+                absoluteDateFilter: {
+                    dataSet: {
+                        identifier: "foo",
+                    },
+                    from: "2019-01-01",
+                    to: "2019-12-31",
+                    emptyValueHandling: "include",
+                },
+            };
+            const actual = factoryNotationFor(input);
+            testModelNotation(actual, input);
+        });
+        it("should handle absolute date filter with granularity", () => {
+            const input: IAbsoluteDateFilter = {
+                absoluteDateFilter: {
+                    dataSet: {
+                        identifier: "foo",
+                    },
+                    from: "2019-01-01",
+                    to: "2019-12-31",
+                    localIdentifier: "bar",
+                    granularity: "GDC.time.quarter",
+                },
+            };
+            const actual = factoryNotationFor(input);
+            testModelNotation(actual, input);
+        });
         it("should handle basic relative date filter", () => {
             const input: IRelativeDateFilter = {
                 relativeDateFilter: {

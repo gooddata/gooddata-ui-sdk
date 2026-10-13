@@ -19,26 +19,9 @@ type IInsightsMap = {
     get: (ref: ObjRef) => IInsight | undefined;
 };
 
-export type IMetricHeaderListItem = {
-    type: "header";
-    title: string;
-};
+import { type IStaticListItem } from "./staticListItems.js";
 
-export type IMetricSeparatorListItem = {
-    type: "separator";
-};
-
-export type IStaticMetricListItem = IMetricHeaderListItem | IMetricSeparatorListItem;
-
-export type IMetricDropdownListItem = ICatalogMeasure | IStaticMetricListItem;
-
-export const isMetricHeaderListItem = (item: unknown): item is IMetricHeaderListItem => {
-    return typeof item === "object" && item !== null && "type" in item && item.type === "header";
-};
-
-export const isMetricSeparatorListItem = (item: unknown): item is IMetricSeparatorListItem => {
-    return typeof item === "object" && item !== null && "type" in item && item.type === "separator";
-};
+export type IMetricDropdownListItem = ICatalogMeasure | IStaticListItem;
 
 interface IUseMetricDropdownItemsParams {
     measures: ICatalogMeasure[];

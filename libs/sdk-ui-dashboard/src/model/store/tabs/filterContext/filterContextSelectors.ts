@@ -43,7 +43,11 @@ import { type DashboardSelector, type DashboardState } from "../../types.js";
 import { selectActiveTabLocalIdentifier, selectTabs, selectTabsState } from "../tabsSelectors.js";
 import { DEFAULT_TAB_ID } from "../tabsState.js";
 
-import { type FilterContextState, filterContextInitialState } from "./filterContextState.js";
+import {
+    type FilterContextState,
+    type IWorkingFilterContextDefinition,
+    filterContextInitialState,
+} from "./filterContextState.js";
 import { applyFilterContext, getFilterIdentifier } from "./filterContextUtils.js";
 
 const selectSelf = createSelector(selectTabs, selectActiveTabLocalIdentifier, (tabs, activeTabId) => {
@@ -88,6 +92,23 @@ export const selectFilterContextDefinitionsByTab = createSelector(
             },
             {},
         );
+    },
+);
+
+/**
+ * Returns applied filter context definitions for each tab keyed by identifier.
+ *
+ * @internal
+ */
+export const selectWorkingFilterContextDefinitionsByTab = createSelector(
+    selectFilterContextStatesByTab,
+    (statesByTab) => {
+        return Object.entries(statesByTab).reduce<
+            Record<string, IWorkingFilterContextDefinition | undefined>
+        >((acc, [identifier, state]) => {
+            acc[identifier] = state.workingFilterContextDefinition;
+            return acc;
+        }, {});
     },
 );
 
@@ -355,6 +376,20 @@ export const selectAttributeFilterDisplayForms: DashboardSelector<IAttributeDisp
 
         return filterContextState.attributeFilterDisplayForms;
     });
+
+/**
+ * Tells whether a filter's display form ref points to the display form. The uri and the id are tried as
+ * well, as the filter may keep the ref in another form than the metadata object does.
+ *
+ * @internal
+ */
+export function isDisplayFormRefOf(ref: ObjRef, displayForm: IAttributeDisplayFormMetadataObject): boolean {
+    return (
+        areObjRefsEqual(ref, displayForm.ref) ||
+        areObjRefsEqual(ref, idRef(displayForm.id, "displayForm")) ||
+        areObjRefsEqual(ref, uriRef(displayForm.uri))
+    );
+}
 
 /**
  * Selects map of display form metadata objects referenced by attribute filters.
@@ -765,12 +800,8 @@ export const selectFilterContextAttributeFilterByDisplayForm: (
                 if (!df) {
                     return undefined;
                 }
-                // try matching both uri and id in case the type of ref is different from what is in the ref field
-                return attributeFilters.find(
-                    (filter) =>
-                        areObjRefsEqual(filter.attributeFilter.displayForm, df.ref) ||
-                        areObjRefsEqual(filter.attributeFilter.displayForm, idRef(df.id, "displayForm")) ||
-                        areObjRefsEqual(filter.attributeFilter.displayForm, uriRef(df.uri)),
+                return attributeFilters.find((filter) =>
+                    isDisplayFormRefOf(filter.attributeFilter.displayForm, df),
                 );
             },
         ),
@@ -797,14 +828,9 @@ export const selectFilterContextAttributeFilterItemByDisplayForm: (
                 if (!df) {
                     return undefined;
                 }
-                return attributeFilters.find((filter) => {
-                    const filterDf = dashboardAttributeFilterItemDisplayForm(filter);
-                    return (
-                        areObjRefsEqual(filterDf, df.ref) ||
-                        areObjRefsEqual(filterDf, idRef(df.id, "displayForm")) ||
-                        areObjRefsEqual(filterDf, uriRef(df.uri))
-                    );
-                });
+                return attributeFilters.find((filter) =>
+                    isDisplayFormRefOf(dashboardAttributeFilterItemDisplayForm(filter), df),
+                );
             },
         ),
 );
@@ -905,12 +931,8 @@ export const selectFilterContextAttributeFilterByDisplayFormForTab: (
                 if (!df) {
                     return undefined;
                 }
-                // try matching both uri and id in case the type of ref is different from what is in the ref field
-                return attributeFilters.find(
-                    (filter) =>
-                        areObjRefsEqual(filter.attributeFilter.displayForm, df.ref) ||
-                        areObjRefsEqual(filter.attributeFilter.displayForm, idRef(df.id, "displayForm")) ||
-                        areObjRefsEqual(filter.attributeFilter.displayForm, uriRef(df.uri)),
+                return attributeFilters.find((filter) =>
+                    isDisplayFormRefOf(filter.attributeFilter.displayForm, df),
                 );
             },
         ),
@@ -939,14 +961,9 @@ export const selectFilterContextAttributeFilterItemByDisplayFormForTab: (
                 if (!df) {
                     return undefined;
                 }
-                return attributeFilters.find((filter) => {
-                    const filterDf = dashboardAttributeFilterItemDisplayForm(filter);
-                    return (
-                        areObjRefsEqual(filterDf, df.ref) ||
-                        areObjRefsEqual(filterDf, idRef(df.id, "displayForm")) ||
-                        areObjRefsEqual(filterDf, uriRef(df.uri))
-                    );
-                });
+                return attributeFilters.find((filter) =>
+                    isDisplayFormRefOf(dashboardAttributeFilterItemDisplayForm(filter), df),
+                );
             },
         ),
 );

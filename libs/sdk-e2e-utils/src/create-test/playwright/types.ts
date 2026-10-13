@@ -4,7 +4,7 @@
 
 import type { Fixtures, TestDetails } from "@playwright/test";
 
-import type { IFeatureHubEnvironment } from "../feature-hub/types.js";
+import type { FeatureHubFeatureValue, IFeatureHubFeature } from "../feature-hub/types.js";
 import type { IGoodmockOptions } from "../goodmock/types.js";
 
 import type {
@@ -102,7 +102,7 @@ export interface ITestConditions<TestConditionsValue extends TestConditionsValue
  * @internal
  */
 export interface ICustomCreateTestOptions<TestConditionsValue extends TestConditionsValueConstraint = never> {
-    featureHubResponse: IFeatureHubEnvironment[];
+    featureHubFeatures: IFeatureHubFeature[];
     goodmock?: IGoodmockOptions;
     testConditions?: ITestConditions<TestConditionsValue>;
 }
@@ -132,11 +132,23 @@ export type WindowProperties = Record<string, unknown>;
 /**
  * @internal
  */
+export type FeatureFlagValue = FeatureHubFeatureValue | object;
+
+/**
+ * @internal
+ */
+export type FeatureFlags = Record<string, FeatureHubFeatureValue>;
+
+/**
+ * @internal
+ */
 export interface ITestDetails<
     TestConditionsValue extends TestConditionsValueConstraint = never,
 > extends TestDetails {
     workspaceSettings?: WorkspaceSettings;
     additionalWindowProperties?: WindowProperties;
+    /** Feature flags for this describe/test, merged on top of the enclosing describes' (own keys win). */
+    featureFlags?: FeatureFlags;
     /** See {@link ITestConditions}. */
     conditions?: TestConditionsValue;
 }
@@ -144,7 +156,8 @@ export interface ITestDetails<
 /**
  * @internal
  * Call signatures that register a test: `test`, `test.only`, `test.fail.only`.
- * Same as Playwright's, except `details` also accepts `workspaceSettings` / `additionalWindowProperties` / `conditions`.
+ * Same as Playwright's, except `details` also accepts `workspaceSettings` / `additionalWindowProperties` /
+ * `featureFlags` / `conditions`.
  */
 export interface ITestFunction<
     TestConditionsValue extends TestConditionsValueConstraint,

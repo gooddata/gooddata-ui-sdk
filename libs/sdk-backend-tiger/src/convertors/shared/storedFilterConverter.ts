@@ -11,6 +11,7 @@ import {
     type IDashboardMeasureValueFilter,
     type IFilter,
     type MeasureValueFilterCondition,
+    isAbsoluteDateFilter,
     isComparisonCondition,
     isDashboardMatchAttributeFilter,
     isDashboardMeasureValueFilter,
@@ -25,6 +26,16 @@ import {
 } from "./measureValueFilterConverter.js";
 import { isFilterContextItems, isFilters } from "./sdkFilterTypeGuards.js";
 
+/**
+ * Options of the conversion of SDK filters to Tiger stored filters.
+ */
+export interface IStoredFilterConversionOptions {
+    /**
+     * Removes the granularity from absolute date filters. It is kept by default.
+     */
+    dropAbsoluteDateGranularity?: boolean;
+}
+
 // SINGULAR FILTER CONVERSIONS
 // SDK -> Tiger
 
@@ -36,12 +47,28 @@ import { isFilterContextItems, isFilters } from "./sdkFilterTypeGuards.js";
  * For AFM/execution filters, use the AFM filter converter instead.
  *
  * @param filter - SDK filter to convert
+ * @param options - conversion options
  * @returns Tiger stored filter with sanitized IDs and converted formats
  * @public
  */
-export function convertSdkFilterToTigerStored(filter: IFilter): ITigerFilter {
-    const sanitized = cloneWithSanitizedIdsTypedToBackend<IFilter, IFilter>(filter);
+export function convertSdkFilterToTigerStored(
+    filter: IFilter,
+    options: IStoredFilterConversionOptions = {},
+): ITigerFilter {
+    const stored = options.dropAbsoluteDateGranularity ? dropAbsoluteDateFilterGranularity(filter) : filter;
+    const sanitized = cloneWithSanitizedIdsTypedToBackend<IFilter, IFilter>(stored);
     return convertMeasureValueFilterSdkToTiger(sanitized);
+}
+
+// Insights store absolute date filters without the granularity. Dropping it cannot change what the
+// filter selects, because from/to already are the first and the last day of the selected periods.
+function dropAbsoluteDateFilterGranularity(filter: IFilter): IFilter {
+    if (!isAbsoluteDateFilter(filter) || filter.absoluteDateFilter.granularity === undefined) {
+        return filter;
+    }
+
+    const { granularity: _granularity, ...absoluteDateFilter } = filter.absoluteDateFilter;
+    return { absoluteDateFilter };
 }
 
 /**
@@ -150,6 +177,7 @@ type SdkFiltersToTigerOutput<T extends SdkFiltersToTigerInput> = T extends IFilt
 
 export function convertSdkFiltersToTiger<T extends SdkFiltersToTigerInput>(
     filters: T,
+    options: IStoredFilterConversionOptions = {},
 ): SdkFiltersToTigerOutput<T> {
     if (!filters) {
         return undefined as SdkFiltersToTigerOutput<T>;
@@ -164,7 +192,9 @@ export function convertSdkFiltersToTiger<T extends SdkFiltersToTigerInput>(
     }
 
     if (isFilters(filters)) {
-        return filters.map(convertSdkFilterToTigerStored) as SdkFiltersToTigerOutput<T>;
+        return filters.map((filter) =>
+            convertSdkFilterToTigerStored(filter, options),
+        ) as SdkFiltersToTigerOutput<T>;
     }
 
     throw new Error("Unsupported filters type");

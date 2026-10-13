@@ -16,7 +16,10 @@ export {
 } from "./components/GenAIChat.js";
 export { GenAIConversations, type GenAIConversationsProps } from "./components/GenAiConversations.js";
 export { GenAiStore, type GenAiStoreProps } from "./components/GenAiStore.js";
-export { GenAiKeyDriverAnalysis } from "./components/GenAiKeyDriverAnalysis.js";
+export {
+    GenAiKeyDriverAnalysis,
+    type GenAiKeyDriverAnalysisProps,
+} from "./components/GenAiKeyDriverAnalysis.js";
 export {
     makeUserItem,
     makeAssistantItem,
@@ -162,6 +165,7 @@ export {
     type IGenAIAssistantFeedbackProps,
     type IGenAIAssistantAgentChooserProps,
     type IGenAIAssistantConversationVisualizationContentProps,
+    type IGenAIAssistantConversationKdaContentProps,
 } from "./components/customized/types.js";
 
 export { type IWhatIfRenderableScenario } from "./whatIf/whatIfMapping.js";
@@ -169,6 +173,7 @@ export { type IWhatIfRenderableScenario } from "./whatIf/whatIfMapping.js";
 export { DefaultAssistantMessage } from "./components/customized/AssistantMessage.js";
 export { DefaultMessageErrorContent } from "./components/customized/MessageErrorContent.js";
 export { DefaultConversationVisualizationContent } from "./components/customized/ConversationVisualizationContent.js";
+export { DefaultConversationKdaContent } from "./components/customized/ConversationKdaContent.js";
 export { DefaultMessageMultipartContent } from "./components/customized/MessageMultipartContent.js";
 export { DefaultMessageReasoningContent } from "./components/customized/MessageReasoningContent.js";
 export { DefaultMessageTextContent } from "./components/customized/MessageTextContent.js";

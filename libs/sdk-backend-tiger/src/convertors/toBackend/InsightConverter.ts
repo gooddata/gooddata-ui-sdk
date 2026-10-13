@@ -24,9 +24,16 @@ import {
     insightParameters,
 } from "@gooddata/sdk-model";
 
-import { convertSdkFiltersToTiger } from "../shared/storedFilterConverter.js";
+import {
+    type IStoredFilterConversionOptions,
+    convertSdkFiltersToTiger,
+} from "../shared/storedFilterConverter.js";
 
 import { cloneWithSanitizedIdsTyped } from "./IdSanitization.js";
+
+// TODO: Analytical Designer does not support the granularity of an absolute date filter yet,
+// so the insight and layer filters store only its days; measure filters in buckets keep it.
+const insightFilterConversionOptions: IStoredFilterConversionOptions = { dropAbsoluteDateGranularity: true };
 
 function removeIdentifiers(insight: IInsight): IInsightDefinition {
     const insightData = omit(insight.insight, ["ref", "uri", "identifier"]);
@@ -70,7 +77,10 @@ export const convertInsight = (
                           ITigerInsightLayerDefinition
                       >(layer);
 
-                      const convertedFilters = convertSdkFiltersToTiger(layer.filters);
+                      const convertedFilters = convertSdkFiltersToTiger(
+                          layer.filters,
+                          insightFilterConversionOptions,
+                      );
 
                       return {
                           ...tigerLayer,
@@ -93,7 +103,7 @@ export const convertInsight = (
 
     return {
         buckets: cloneWithSanitizedIdsTyped<IBucket[], ITigerBucket[]>(sanitizedInsight.insight.buckets),
-        filters: convertSdkFiltersToTiger(sanitizedInsight.insight.filters),
+        filters: convertSdkFiltersToTiger(sanitizedInsight.insight.filters, insightFilterConversionOptions),
         ...(sanitizedInsight.insight.attributeFilterConfigs
             ? {
                   attributeFilterConfigs: cloneWithSanitizedIdsTyped<

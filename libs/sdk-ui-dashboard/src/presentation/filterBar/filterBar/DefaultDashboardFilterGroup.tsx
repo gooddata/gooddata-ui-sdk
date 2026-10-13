@@ -33,7 +33,6 @@ import {
     selectSupportsElementUris,
 } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../../model/store/config/configSelectors.js";
-import { selectRestrictedDashboardFilterLocalIdentifiers } from "../../../model/store/filtering/dashboardFilterSelectors.js";
 import {
     selectAttributeFilterConfigsDisplayAsLabelMap,
     selectEffectiveAttributeFiltersModeMap,
@@ -75,9 +74,6 @@ export function DefaultDashboardFilterGroup(props: IDashboardFilterGroupProps): 
     );
     const attributeFiltersModeMap = useDashboardSelector(selectEffectiveAttributeFiltersModeMap);
     const measureValueFiltersModeMap = useDashboardSelector(selectEffectiveMeasureValueFiltersModeMap);
-    const restrictedFilterLocalIdentifiers = useDashboardSelector(
-        selectRestrictedDashboardFilterLocalIdentifiers,
-    );
 
     const getFilterIdentifier = useCallback((filter: FilterBarGroupFilterIndexed) => {
         if (isFilterBarAttributeFilter(filter)) {
@@ -176,13 +172,6 @@ export function DefaultDashboardFilterGroup(props: IDashboardFilterGroupProps): 
     const itemFilters = useMemo(() => {
         return groupItem.filters
             .map((filter): FilterBarGroupFilterIndexed | undefined => {
-                // a restricted filter is reported once by the filter bar, not inside its group
-                if (
-                    (isFilterBarAttributeFilter(filter) || isFilterBarMeasureValueFilter(filter)) &&
-                    restrictedFilterLocalIdentifiers.has(getFilterIdentifier(filter))
-                ) {
-                    return undefined;
-                }
                 if (isFilterBarMeasureValueFilter(filter)) {
                     return filter;
                 }
@@ -224,8 +213,6 @@ export function DefaultDashboardFilterGroup(props: IDashboardFilterGroupProps): 
         attributeFiltersModeMap,
         measureValueFiltersModeMap,
         onMeasureValueFilterChanged,
-        getFilterIdentifier,
-        restrictedFilterLocalIdentifiers,
     ]);
 
     const filterDependenciesByLocalIdUnstable = useMemo(() => {

@@ -26,9 +26,7 @@ type UnmappedTypes =
     | "REPORTS_BRAND_KIT"
     | "CONVERSATION_RETENTION_DAYS"
     | "ENABLE_AI_DATA_OBFUSCATION"
-    | "AUTHORIZATION_SERVER_REDIRECT_POLICY"
-    | "DEFAULT_METRIC_VISIBILITY"
-    | "DEFAULT_VISUALIZATION_VISIBILITY";
+    | "AUTHORIZATION_SERVER_REDIRECT_POLICY";
 
 // Only mandatory types
 type MandatoryTypes = Exclude<AllSettingsType, UnmappedTypes>;
@@ -76,6 +74,8 @@ const TYPE_TO_KEY_MAP = {
     ENABLE_PARTIAL_DATA_RESULTS: "enablePartialDataResults",
     ENABLE_NULL_JOINS: "enableNullJoins",
     ENABLE_TIMEZONE_CHANGE: "enableTimezoneChange",
+    DEFAULT_METRIC_VISIBILITY: "defaultMetricVisibility",
+    DEFAULT_VISUALIZATION_VISIBILITY: "defaultVisualizationVisibility",
 } as const satisfies Record<MandatoryTypes, keyof ISettings>;
 
 export function mapTypeToKey(

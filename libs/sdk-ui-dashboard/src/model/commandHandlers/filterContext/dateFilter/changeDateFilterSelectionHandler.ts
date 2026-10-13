@@ -17,13 +17,21 @@ import { invalidArgumentsProvided } from "../../../events/general.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
 import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../../store/config/configSelectors.js";
 import { selectIsCrossFiltering } from "../../../store/drill/drillSelectors.js";
+import { selectEnablePersistentFiltersAcrossTabs } from "../../../store/meta/metaSelectors.js";
 import {
     selectFilterContextDateFilter,
     selectFilterContextDateFilterByDataSet,
 } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../../store/tabs/index.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
-import { canApplyDateFilter, dispatchFilterContextChanged, resetCrossFiltering } from "../common.js";
+import {
+    type IFilterContextByTabSnapshot,
+    canApplyDateFilter,
+    captureFilterContextByTabSnapshot,
+    dispatchFilterContextChanged,
+    dispatchFilterContextChangedForMutatedTabs,
+    resetCrossFiltering,
+} from "../common.js";
 
 export function* changeDateFilterSelectionHandler(
     ctx: DashboardContext,
@@ -46,7 +54,10 @@ export function* changeDateFilterSelectionHandler(
             `Cannot apply a date filter that is invalid by the current dateFilterConfig.`,
         );
     }
+    const filterContextSnapshot: IFilterContextByTabSnapshot = yield call(captureFilterContextByTabSnapshot);
 
+    const enablePersistentFiltersAcrossTabs: ReturnType<typeof selectEnablePersistentFiltersAcrossTabs> =
+        yield select(selectEnablePersistentFiltersAcrossTabs);
     const isApplyAllAtOnceEnabledAndSet: ReturnType<typeof selectIsApplyFiltersAllAtOnceEnabledAndSet> =
         yield select(selectIsApplyFiltersAllAtOnceEnabledAndSet);
     const isWorkingSelectionChange = cmd.payload.isWorkingSelectionChange && isApplyAllAtOnceEnabledAndSet;
@@ -60,6 +71,7 @@ export function* changeDateFilterSelectionHandler(
                       type: "allTime",
                       dataSet: cmd.payload.dataSet,
                       isWorkingSelectionChange,
+                      enablePersistentFiltersAcrossTabs,
                       ...localIdentifierObj,
                       ...(cmd.payload.emptyValueHandling
                           ? { emptyValueHandling: cmd.payload.emptyValueHandling }
@@ -72,6 +84,7 @@ export function* changeDateFilterSelectionHandler(
                       to: cmd.payload.to,
                       dataSet: cmd.payload.dataSet,
                       isWorkingSelectionChange,
+                      enablePersistentFiltersAcrossTabs,
                       ...localIdentifierObj,
                       ...(cmd.payload.boundedFilter ? { boundedFilter: cmd.payload.boundedFilter } : {}),
                       ...(cmd.payload.emptyValueHandling
@@ -96,7 +109,11 @@ export function* changeDateFilterSelectionHandler(
         dateFilterChanged(ctx, affectedFilter, cmd.payload.dateFilterOptionLocalId, cmd.correlationId),
     );
 
-    yield call(dispatchFilterContextChanged, ctx, cmd);
+    if (enablePersistentFiltersAcrossTabs) {
+        yield call(dispatchFilterContextChangedForMutatedTabs, ctx, cmd, filterContextSnapshot);
+    } else {
+        yield call(dispatchFilterContextChanged, ctx, cmd);
+    }
 }
 
 function dateFilterSelectionToDateFilter(dateFilterSelection: DateFilterSelection): IDashboardDateFilter {
@@ -107,6 +124,7 @@ function dateFilterSelectionToDateFilter(dateFilterSelection: DateFilterSelectio
             undefined,
             dateFilterSelection.localIdentifier,
             dateFilterSelection.emptyValueHandling,
+            dateFilterSelection.granularity,
         );
     } else if (
         dateFilterSelection.type === "relative" &&

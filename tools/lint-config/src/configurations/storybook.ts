@@ -17,7 +17,7 @@ export const storybookPackages = [
     {
         // peer
         name: "@testing-library/dom",
-        version: "10.4.1",
+        version: "10.4.2",
     },
     {
         // peer

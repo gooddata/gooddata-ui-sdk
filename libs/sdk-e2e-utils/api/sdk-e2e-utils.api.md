@@ -45,6 +45,12 @@ export function clickByBoundingBox(page: Page, locator: Locator, options?: {
 export function createTest<TestConditionsValue extends TestConditionsValueConstraint = never, T extends {} = {}, W extends {} = {}>(options: ICreateTestOptions<TestConditionsValue, T, W>): Test<TestConditionsValue, PlaywrightBaseTestArgs & T, PlaywrightBaseWorkerArgs & W>;
 
 // @internal (undocumented)
+export type FeatureFlags = Record<string, FeatureHubFeatureValue>;
+
+// @internal (undocumented)
+export type FeatureHubFeatureValue = boolean | string | number;
+
+// @internal (undocumented)
 export type Fixtures<T extends {} = {}, W extends {} = {}> = Fixtures_2<T, W, PlaywrightBaseTestArgs, PlaywrightBaseWorkerArgs>;
 
 // @internal (undocumented)
@@ -90,7 +96,7 @@ export type ICreateTestOptions<TestConditionsValue extends TestConditionsValueCo
 // @internal (undocumented)
 export interface ICustomCreateTestOptions<TestConditionsValue extends TestConditionsValueConstraint = never> {
     // (undocumented)
-    featureHubResponse: IFeatureHubEnvironment[];
+    featureHubFeatures: IFeatureHubFeature[];
     // (undocumented)
     goodmock?: IGoodmockOptions;
     // (undocumented)
@@ -148,7 +154,7 @@ export interface IFeatureHubFeature {
     // (undocumented)
     v?: string;
     // (undocumented)
-    value?: boolean | string | number;
+    value?: FeatureHubFeatureValue;
     // (undocumented)
     version?: number;
 }
@@ -234,6 +240,7 @@ export interface ITestDetails<TestConditionsValue extends TestConditionsValueCon
     // (undocumented)
     additionalWindowProperties?: WindowProperties;
     conditions?: TestConditionsValue;
+    featureFlags?: FeatureFlags;
     // (undocumented)
     workspaceSettings?: WorkspaceSettings;
 }
@@ -272,6 +279,9 @@ export interface IWorkspaceIdMapping {
 
 // @internal
 export function loadMappings(host: string, mappingFilePath: string): Promise<void>;
+
+// @internal (undocumented)
+export function makeFeatureHubResponse(features: IFeatureHubFeature[]): IFeatureHubEnvironment[];
 
 // @internal
 export function mockLogRequests(host: string): Promise<void>;

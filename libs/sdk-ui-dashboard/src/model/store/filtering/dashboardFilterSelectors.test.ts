@@ -4,7 +4,6 @@
 
 import { describe, expect, it } from "vitest";
 
-import { type IUnavailableDashboardReference } from "@gooddata/sdk-backend-spi";
 import { type FilterContextItem, type IdentifierRef, idRef } from "@gooddata/sdk-model";
 
 import {
@@ -15,6 +14,7 @@ import {
     selectReportedRestrictedDashboardFilters,
     selectRestrictedDashboardFilterCount,
     selectRestrictedDashboardFilterLocalIdentifiers,
+    selectRestrictedDashboardFilterLocalIdentifiersByTab,
     selectRestrictedDashboardFilterLocalIdentifiersForTab,
 } from "./dashboardFilterSelectors.js";
 
@@ -41,15 +41,14 @@ function attributeFilter(
 
 const visibleFilter = attributeFilter("visible");
 const forbiddenFilter = attributeFilter("forbidden", restrictedLabel);
-const unavailable: IUnavailableDashboardReference[] = [
-    { ref: restrictedLabel, type: "displayForm", reason: "forbidden" },
-];
 
 describe("restricted filter selectors", () => {
     it("keeps restricted filters out of the executable ones", () => {
         const filters = [visibleFilter, forbiddenFilter];
 
-        expect(combinerOf(selectExecutableDashboardFilters)(filters, unavailable)).toEqual([visibleFilter]);
+        expect(combinerOf(selectExecutableDashboardFilters)(filters, [forbiddenFilter])).toEqual([
+            visibleFilter,
+        ]);
         expect(combinerOf(selectExecutableDashboardFilters)(filters, [])).toEqual(filters);
     });
 
@@ -58,7 +57,10 @@ describe("restricted filter selectors", () => {
             "forbidden",
         ]);
 
-        const restrictedByTab = { "tab-1": [], "tab-2": [forbiddenFilter] };
+        const restrictedByTab = combinerOf(selectRestrictedDashboardFilterLocalIdentifiersByTab)({
+            "tab-1": [],
+            "tab-2": [forbiddenFilter],
+        });
         const forTab = (tabId: string) =>
             combinerOf(selectRestrictedDashboardFilterLocalIdentifiersForTab(tabId))(restrictedByTab);
 
@@ -129,7 +131,7 @@ describe("automation filter selectors", () => {
         expect(
             combinerOf(selectAutomationDefaultSelectedFilters)(
                 [visibleFilter, forbiddenFilter, emptyReadable, emptyForbidden],
-                unavailable,
+                new Set(["forbidden", "empty-forbidden"]),
             ),
         ).toEqual([visibleFilter]);
     });

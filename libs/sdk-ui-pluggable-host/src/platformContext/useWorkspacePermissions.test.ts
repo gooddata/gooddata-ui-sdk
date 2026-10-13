@@ -1,11 +1,16 @@
 // (C) 2026 GoodData Corporation
 
-import { renderHook, waitFor } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { act, renderHook, waitFor } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { UnexpectedResponseError, type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import {
+    NotAuthenticated,
+    UnexpectedResponseError,
+    type IAnalyticalBackend,
+} from "@gooddata/sdk-backend-spi";
 import { type IWorkspacePermissions } from "@gooddata/sdk-model";
 
+import { NOT_AUTHENTICATED_GRACE_MS } from "./notAuthenticatedGrace.js";
 import { useWorkspacePermissions } from "./useWorkspacePermissions.js";
 
 type PermissionsFetcher = () => Promise<IWorkspacePermissions>;
@@ -211,5 +216,70 @@ describe("useWorkspacePermissions", () => {
         rerender();
 
         expect(result.current).toBe(firstRef);
+    });
+
+    describe("when the fetch fails with 401", () => {
+        afterEach(() => {
+            vi.useRealTimers();
+        });
+
+        it("stays loading during the login redirect grace period, then reports the error", async () => {
+            vi.useFakeTimers();
+            const getPermissionsForCurrentUser = vi
+                .fn()
+                .mockRejectedValue(new NotAuthenticated("Not authenticated"));
+            const backend = mockBackend(getPermissionsForCurrentUser);
+
+            const { result } = renderHook(() => useWorkspacePermissions(backend, "ws-123"));
+            await act(async () => {
+                await Promise.resolve();
+            });
+
+            expect(result.current.state).toBe("loading");
+
+            act(() => {
+                vi.advanceTimersByTime(NOT_AUTHENTICATED_GRACE_MS);
+            });
+
+            expect(result.current).toEqual({ state: "error", error: "Not authenticated" });
+        });
+
+        it("does not report the error after unmount", async () => {
+            vi.useFakeTimers();
+            const getPermissionsForCurrentUser = vi
+                .fn()
+                .mockRejectedValue(new NotAuthenticated("Not authenticated"));
+            const backend = mockBackend(getPermissionsForCurrentUser);
+
+            const { result, unmount } = renderHook(() => useWorkspacePermissions(backend, "ws-123"));
+            await act(async () => {
+                await Promise.resolve();
+            });
+            unmount();
+
+            expect(vi.getTimerCount()).toBe(0);
+            expect(result.current.state).toBe("loading");
+        });
+
+        it("does not schedule the grace timer when the 401 arrives after unmount", async () => {
+            vi.useFakeTimers();
+            let reject: (e: unknown) => void = () => {};
+            const getPermissionsForCurrentUser = vi.fn(
+                () =>
+                    new Promise<IWorkspacePermissions>((_, rej) => {
+                        reject = rej;
+                    }),
+            );
+            const backend = mockBackend(getPermissionsForCurrentUser);
+
+            const { unmount } = renderHook(() => useWorkspacePermissions(backend, "ws-123"));
+            unmount();
+            await act(async () => {
+                reject(new NotAuthenticated("Not authenticated"));
+                await Promise.resolve();
+            });
+
+            expect(vi.getTimerCount()).toBe(0);
+        });
     });
 });

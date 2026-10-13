@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 
 import { useLocation } from "react-router";
 
+import { isNotAuthenticated } from "@gooddata/sdk-backend-spi";
 import { type ILocale, isLocale } from "@gooddata/sdk-model";
 import { type IEffectiveSettings, type IPlatformContext } from "@gooddata/sdk-pluggable-application-model";
 
@@ -17,6 +18,7 @@ import {
     HostApplicationDisabledError,
     loadPlatformContext,
 } from "./loadPlatformContext.js";
+import { waitForNotAuthenticatedGrace } from "./notAuthenticatedGrace.js";
 import {
     type IBackendPlatformContext,
     type IPlatformContextLoadResult,
@@ -243,13 +245,14 @@ class BackendPlatformContextProviderClass implements IBackendPlatformContextProv
             this._setResult(this._loadingStateMemo);
         }
         this._abortController = new AbortController();
+        const signal = this._abortController.signal;
 
         try {
             if (shouldWaitForInjectedApiToken()) {
-                await waitForInjectedApiToken(this._abortController.signal);
+                await waitForInjectedApiToken(signal);
             }
             const ctx = await loadPlatformContext({
-                signal: this._abortController.signal,
+                signal,
                 callbacks: this._callbacks,
             });
             if (!this._abortController.signal.aborted) {
@@ -262,6 +265,14 @@ class BackendPlatformContextProviderClass implements IBackendPlatformContextProv
             }
             if (e instanceof DOMException && e.name === "AbortError") {
                 return;
+            }
+            // The backend redirects to login on a 401. Keep the loader up so the error does not
+            // flash before the browser leaves the page.
+            if (isNotAuthenticated(e)) {
+                await waitForNotAuthenticatedGrace(signal);
+                if (signal.aborted) {
+                    return;
+                }
             }
             console.error("[host-runtime/platform-context] Failed to load platform context.", e);
             const message = e instanceof Error ? e.message : "Unknown platform context error.";

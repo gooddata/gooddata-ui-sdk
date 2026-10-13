@@ -7,12 +7,16 @@ import { describe, expect, it } from "vitest";
 import {
     type FilterContextItem,
     type IAutomationVisibleFilter,
+    type IDashboardDateFilter,
     type IFilter,
     type IInsight,
+    type IInsightWidget,
     type IMeasureValueFilter,
     type IRankingFilter,
     idRef,
     localIdRef,
+    newAbsoluteDashboardDateFilter,
+    newAbsoluteDateFilter,
     newAllTimeDashboardDateFilter,
     newAllTimeFilter,
     newAttribute,
@@ -23,7 +27,11 @@ import {
     newRelativeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
+import { type IDashboardFilter } from "../../../../types.js";
+
 import {
+    dashboardFilterToFilterContextItem,
+    getAppliedWidgetFilters,
     getVisibleFiltersByFilters,
     isNoopAllTimeDateFilterFixed,
     resolveFilterDimensionalityLocalRefs,
@@ -272,5 +280,80 @@ describe("resolveFilterDimensionalityLocalRefs", () => {
         const [resolved] = resolveFilterDimensionalityLocalRefs([attributeFilter], insight);
 
         expect(resolved).toBe(attributeFilter);
+    });
+});
+
+describe("widget automation filter round trip", () => {
+    const widget: IInsightWidget = {
+        ref: idRef("widget-1"),
+        uri: "/widget-1",
+        identifier: "widget-1",
+        localIdentifier: "widget-1",
+        type: "insight",
+        title: "Widget",
+        description: "",
+        insight: idRef("insight-1"),
+        drills: [],
+        ignoreDashboardFilters: [],
+        dateDataSet: idRef("closed", "dataSet"),
+    };
+
+    const roundTrip = (filter: FilterContextItem): IDashboardDateFilter => {
+        const [executionFilter] = getAppliedWidgetFilters([filter], [], widget, undefined, undefined);
+
+        return dashboardFilterToFilterContextItem(
+            executionFilter as IDashboardFilter,
+            true,
+        ) as IDashboardDateFilter;
+    };
+
+    // Saved alerts used to reopen as Day whatever granularity the author had picked.
+    it.each([
+        ["GDC.time.month", "2026-03-01", "2026-04-30"],
+        ["GDC.time.quarter", "2026-01-01", "2026-06-30"],
+        ["GDC.time.year", "2025-01-01", "2026-12-31"],
+        ["GDC.time.week_us", "2026-07-20", "2026-07-26"],
+    ] as const)("keeps the %s granularity of an absolute date filter", (granularity, from, to) => {
+        const filter = newAbsoluteDashboardDateFilter(
+            from,
+            to,
+            idRef("closed", "dataSet"),
+            "date-filter-1",
+            undefined,
+            granularity,
+        );
+
+        expect(roundTrip(filter).dateFilter).toMatchObject({ type: "absolute", granularity, from, to });
+    });
+
+    it("reads an absolute date filter with no granularity as a day range", () => {
+        const filter = newAbsoluteDashboardDateFilter(
+            "2026-03-15",
+            "2026-04-10",
+            idRef("closed", "dataSet"),
+            "date-filter-1",
+        );
+
+        expect(roundTrip(filter).dateFilter).toMatchObject({
+            type: "absolute",
+            granularity: "GDC.time.date",
+            from: "2026-03-15",
+            to: "2026-04-10",
+        });
+    });
+
+    it("reads an absolute date filter at a granularity the date filter cannot select as a day range", () => {
+        const filter = newAbsoluteDateFilter(idRef("closed", "dataSet"), "2026-07-20", "2026-07-26", {
+            granularity: "GDC.time.week",
+        });
+
+        expect(dashboardFilterToFilterContextItem(filter, true)).toMatchObject({
+            dateFilter: {
+                type: "absolute",
+                granularity: "GDC.time.date",
+                from: "2026-07-20",
+                to: "2026-07-26",
+            },
+        });
     });
 });

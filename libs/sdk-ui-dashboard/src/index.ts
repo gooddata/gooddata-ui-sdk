@@ -1585,6 +1585,7 @@ export type {
 } from "./model/store/tabs/measureValueFilterConfigs/measureValueFilterConfigsReducers.js";
 export type { ILayoutState, LayoutStash } from "./model/store/tabs/layout/layoutState.js";
 export type { IApplyWorkingSelectionPayload, TabsReducer } from "./model/store/tabs/tabsReducers.js";
+export type { CrossFilteringLocalIdsByTab } from "./model/store/tabs/filterContext/filterSync.js";
 export type { IdentityMapping } from "./_staging/dashboard/dashboardLayout.js";
 export type {
     IAddAttributeFilterPayload,
@@ -1747,6 +1748,7 @@ export {
     selectIsDashboardPrivate,
     selectDashboardWorkingDefinition,
     selectDisableDashboardCrossFiltering,
+    selectDisableDashboardPersistentFiltersAcrossTabs,
     selectDisableDashboardUserFilterReset,
     selectDisableDashboardUserFilterSave,
     selectDisableFilterViews,
@@ -1758,6 +1760,7 @@ export {
     selectPersistedDashboardTimezoneConfig,
     selectPersistedDashboardFilterContextDateFilterConfig,
     selectSectionHeadersDateDataSet,
+    selectEnablePersistentFiltersAcrossTabs,
 } from "./model/store/meta/metaSelectors.js";
 export { metaActions } from "./model/store/meta/index.js";
 export {
@@ -2244,8 +2247,11 @@ export {
 export {
     AttributesDropdown,
     type IAttributesDropdownProps,
-    type IParameterDropdownListItem,
 } from "./presentation/filterBar/attributeFilter/addAttributeFilter/AttributesDropdown.js";
+export {
+    type IAddableParameter,
+    type IParameterDropdownListItem,
+} from "./presentation/filterBar/attributeFilter/addAttributeFilter/useParameterDropdownItems.js";
 export type {
     IDashboardAttributeFilterProps,
     CustomDashboardAttributeFilterComponent,
@@ -2492,7 +2498,10 @@ export type {
     IAutomationManagementDialogCallbacks,
 } from "./presentation/automations/shared/types.js";
 export type { ISlotProps } from "@gooddata/sdk-ui-kit";
-export type { IAutomationParameter } from "./presentation/automations/shared/automationFilters/automationParameters.js";
+export type {
+    IAutomationParameter,
+    IAvailableAutomationParameter,
+} from "./presentation/automations/shared/automationFilters/automationParameters.js";
 export {
     useWorkspaceUsersSearch,
     type IUseWorkspaceUsersSearchResult,

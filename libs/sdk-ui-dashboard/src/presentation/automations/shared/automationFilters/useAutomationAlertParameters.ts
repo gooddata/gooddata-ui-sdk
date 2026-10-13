@@ -17,6 +17,7 @@ import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
 
 import {
     type IAutomationParameter,
+    type IAvailableAutomationParameter,
     availableAutomationParameters,
     dropStaleAlertParameters,
     hasStaleAlertParameters,
@@ -24,7 +25,7 @@ import {
     setAlertExecutionParameters,
 } from "./automationParameters.js";
 
-const EMPTY_PARAMETERS: IAutomationParameter[] = [];
+const EMPTY_PARAMETERS: IAvailableAutomationParameter[] = [];
 
 /**
  * @internal
@@ -38,7 +39,7 @@ export interface IUseAutomationAlertParameters {
      * Workspace parameters addable via the "+" menu (catalog minus the selected set and minus
      * dashboard-`hidden`/`readonly` parameters). Empty when the feature is off.
      */
-    availableParameters: IAutomationParameter[];
+    availableParameters: IAvailableAutomationParameter[];
     onParameterAdd: (ref: IdentifierRef) => void;
     onParameterChange: (ref: IdentifierRef, value: ParameterValue) => void;
     onParameterDelete: (ref: IdentifierRef) => void;

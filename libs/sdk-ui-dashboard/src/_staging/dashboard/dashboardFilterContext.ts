@@ -22,6 +22,7 @@ import {
     isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
     isDashboardAttributeFilterItem,
+    isDateFilterGranularity,
     isMatchAttributeFilter,
     isMeasureValueFilter,
     isNegativeAttributeFilter,
@@ -219,6 +220,9 @@ export function dashboardFilterToFilterContextItem(
             keepDatasets ? filter.absoluteDateFilter.dataSet : undefined,
             filter.absoluteDateFilter.localIdentifier,
             filter.absoluteDateFilter.emptyValueHandling,
+            isDateFilterGranularity(filter.absoluteDateFilter.granularity)
+                ? filter.absoluteDateFilter.granularity
+                : "GDC.time.date",
         );
     } else if (isAllTimeDateFilter(filter)) {
         return newAllTimeDashboardDateFilter(

@@ -42,8 +42,10 @@ import {
     selectAutomationFiltersByTab,
     selectDashboardHiddenFilters,
     selectDashboardLockedFilters,
+    selectRestrictedDashboardFilterLocalIdentifiers,
+    selectRestrictedDashboardFilterLocalIdentifiersByTab,
 } from "../../../../model/store/filtering/dashboardFilterSelectors.js";
-import { isDashboardFilterRestricted } from "../../../../model/store/filtering/restrictedFilterUtils.js";
+import { isDashboardFilterCopyRestricted } from "../../../../model/store/filtering/restrictedFilterUtils.js";
 import {
     selectDashboardTimezoneConfig,
     selectEffectiveDashboardTimezone,
@@ -201,9 +203,22 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
             attrFilterDisplayFormsMap.get(displayForm) ?? catalogDisplayFormsMap.get(displayForm),
         [attrFilterDisplayFormsMap, catalogDisplayFormsMap],
     );
+    const restrictedFilterLocalIdentifiers = useDashboardSelector(
+        selectRestrictedDashboardFilterLocalIdentifiers,
+    );
+    const restrictedFilterLocalIdentifiersByTab = useDashboardSelector(
+        selectRestrictedDashboardFilterLocalIdentifiersByTab,
+    );
     const isFilterRestricted = useCallback(
-        (filter: FilterContextItem) => isDashboardFilterRestricted(filter, unavailableObjects),
-        [unavailableObjects],
+        (filter: FilterContextItem, tabId?: string) =>
+            isDashboardFilterCopyRestricted(
+                filter,
+                tabId === undefined
+                    ? restrictedFilterLocalIdentifiers
+                    : (restrictedFilterLocalIdentifiersByTab[tabId] ?? new Set<string>()),
+                unavailableObjects,
+            ),
+        [restrictedFilterLocalIdentifiers, restrictedFilterLocalIdentifiersByTab, unavailableObjects],
     );
     const widgetExistsByRef = useCallback(
         (ref: ObjRef | undefined): boolean => !!ref && widgetsMap.get(ref) !== undefined,

@@ -7,14 +7,19 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import {
     type DashboardAttributeFilterSelectionMode,
+    type FilterContextItem,
     type IAttributeElementsByRef,
     type IDashboard,
     type IDashboardAttributeFilter,
+    type IDashboardAttributeFilterConfig,
+    type IDashboardMeasureValueFilter,
     type ObjRef,
+    dashboardAttributeFilterItemFilterElementsBy,
     dashboardAttributeFilterItemLocalIdentifier,
     idRef,
     isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
+    newPositiveAttributeFilter,
     newRelativeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
@@ -32,11 +37,14 @@ import {
     removeAttributeFilter,
 } from "../../commands/filters.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
+import { selectRestrictedDashboardFilterLocalIdentifiers } from "../../store/filtering/dashboardFilterSelectors.js";
 import {
+    selectFilterContextAttributeFilterByDisplayForm,
     selectFilterContextAttributeFilterItemByDisplayForm,
     selectFilterContextAttributeFilterItemByLocalId,
     selectFilterContextAttributeFilters,
     selectFilterContextDateFilter,
+    selectFilterContextMeasureValueFilters,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { unavailableObjectsActions } from "../../store/unavailableObjects/index.js";
@@ -734,6 +742,66 @@ describe("change filter context selection handler", () => {
                         : undefined,
                 ).toEqual([FILTER_ELEMENTS[2]]);
             });
+
+            it("should not substitute a text filter restricted through its parent for a stale entry", async () => {
+                const RESTRICTED_LABEL = idRef("restricted_label", "displayForm");
+                const RESTRICTED_PARENT_LOCAL_ID = "restricted_parent";
+                TextTester.dispatch(
+                    unavailableObjectsActions.setUnavailableObjects([
+                        { ref: RESTRICTED_LABEL, type: "displayForm", reason: "forbidden" },
+                    ]),
+                );
+                TextTester.dispatch(
+                    tabsActions.addAttributeFilter({
+                        displayForm: RESTRICTED_LABEL,
+                        index: 0,
+                        initialSelection: { uris: FIRST_ELEMENT },
+                        localIdentifier: RESTRICTED_PARENT_LOCAL_ID,
+                    }),
+                );
+                TextTester.dispatch(
+                    tabsActions.setAttributeFilterParents({
+                        filterLocalId: SECOND_TEXT_LOCAL_ID,
+                        parentFilters: [
+                            { filterLocalIdentifier: RESTRICTED_PARENT_LOCAL_ID, over: { attributes: [] } },
+                        ],
+                    }),
+                );
+
+                await TextTester.dispatchAndWaitFor(
+                    changeFilterContextSelectionByParams({
+                        filters: [
+                            {
+                                arbitraryAttributeFilter: {
+                                    displayForm: SHARED_DISPLAY_FORM,
+                                    values: ["kept"],
+                                    negativeSelection: false,
+                                    localIdentifier: FIRST_TEXT_LOCAL_ID,
+                                },
+                            },
+                            {
+                                arbitraryAttributeFilter: {
+                                    displayForm: SHARED_DISPLAY_FORM,
+                                    values: ["stale"],
+                                    negativeSelection: false,
+                                    localIdentifier: "stale_local_id",
+                                },
+                            },
+                        ],
+                        matchByLocalIdentifier: true,
+                    }),
+                    "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION",
+                );
+
+                const second = selectFilterContextAttributeFilterItemByLocalId(SECOND_TEXT_LOCAL_ID)(
+                    TextTester.state(),
+                );
+                expect(
+                    second && isDashboardArbitraryAttributeFilter(second)
+                        ? second.arbitraryAttributeFilter.values
+                        : undefined,
+                ).toEqual(["second"]);
+            });
         });
 
         it("should keep the exact match when the payload gives the display form as a URI ref", async () => {
@@ -1042,5 +1110,381 @@ describe("change filter context selection handler", () => {
                 expect(getRestrictedTextFilterValues()).toEqual(["stored"]);
             },
         );
+
+        it("should keep the selection of a child of a restricted parent matched by its display form", async () => {
+            const childLabel = ReferenceMd.Product.Name.attribute.displayForm;
+            await Tester.dispatchAndWaitFor(
+                addAttributeFilter(childLabel, 2, undefined, "multi"),
+                "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADDED",
+            );
+            const getChild = () => {
+                const child = selectFilterContextAttributeFilterByDisplayForm(childLabel)(Tester.state());
+                if (!child?.attributeFilter.localIdentifier) {
+                    throw new Error("The child filter was not added.");
+                }
+                return child;
+            };
+            const childLocalId = dashboardAttributeFilterItemLocalIdentifier(getChild()) ?? "";
+            Tester.dispatch(
+                tabsActions.setAttributeFilterParents({
+                    filterLocalId: childLocalId,
+                    parentFilters: [{ filterLocalIdentifier: RESTRICTED_LOCAL_ID, over: { attributes: [] } }],
+                }),
+            );
+            const storedElements = getChild().attributeFilter.attributeElements;
+
+            // an entry without a local identifier, as a drill or an embedding host sends it
+            await Tester.dispatchAndWaitFor(
+                changeFilterContextSelectionByParams({
+                    filters: [
+                        newPositiveAttributeFilter(childLabel, { uris: FILTER_ELEMENTS }),
+                        newRelativeDashboardDateFilter("GDC.time.date", -6, 0),
+                    ],
+                }),
+                "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+            );
+
+            expect(getChild().attributeFilter.attributeElements).toEqual(storedElements);
+            expect(selectFilterContextDateFilter(Tester.state())?.dateFilter).toMatchObject({ from: -6 });
+        });
+
+        it("should apply a readable entry whose foreign local identifier names a restricted filter", async () => {
+            const readableLabel = ReferenceMd.Product.Name.attribute.displayForm;
+            await Tester.dispatchAndWaitFor(
+                addAttributeFilter(readableLabel, 2, undefined, "multi"),
+                "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADDED",
+            );
+
+            // without matchByLocalIdentifier, the entry's local identifier comes from another context
+            await Tester.dispatchAndWaitFor(
+                changeFilterContextSelectionByParams({
+                    filters: [
+                        {
+                            attributeFilter: {
+                                displayForm: readableLabel,
+                                attributeElements: { uris: FILTER_ELEMENTS },
+                                negativeSelection: false,
+                                localIdentifier: RESTRICTED_LOCAL_ID,
+                            },
+                        },
+                    ],
+                }),
+                "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+            );
+
+            expect(
+                selectFilterContextAttributeFilterByDisplayForm(readableLabel)(Tester.state())
+                    ?.attributeFilter.attributeElements,
+            ).toEqual({ uris: FILTER_ELEMENTS });
+            expect(getRestrictedFilterElements()).toEqual({ uris: FIRST_ELEMENT });
+        });
+    });
+
+    // Two filters share a readable label. The first is restricted through its parent, so the user sees
+    // only the second one, which receives the entries that match by display form.
+    describe("with a readable twin of a filter restricted through its parent", () => {
+        const PARENT_LABEL = ReferenceMd.Department.Default.attribute.displayForm;
+        const SHARED_LABEL = ReferenceMd.Product.Name.attribute.displayForm;
+        const PARENT_LOCAL_ID = "restricted_parent";
+        const CHILD_LOCAL_ID = "restricted_child";
+        const TWIN_LOCAL_ID = "readable_twin";
+        const childParents = [{ filterLocalIdentifier: PARENT_LOCAL_ID, over: { attributes: [] } }];
+        const defaultFilterContext = createDefaultFilterContext(defaultDateFilterConfig, true);
+
+        let Tester: DashboardTester;
+        const preload = async (
+            twins: FilterContextItem[],
+            attributeFilterConfigs: IDashboardAttributeFilterConfig[] = [],
+        ) => {
+            const customizationFns: PrivateDashboardContext = {
+                preloadedDashboard: {
+                    ...dashboardWithDefaults,
+                    attributeFilterConfigs,
+                    filterContext: {
+                        ...defaultFilterContext,
+                        ref: idRef("twins", "filterContext"),
+                        uri: "twins",
+                        identifier: "twins",
+                        filters: [
+                            ...defaultFilterContext.filters,
+                            {
+                                attributeFilter: {
+                                    displayForm: PARENT_LABEL,
+                                    attributeElements: { uris: FIRST_ELEMENT },
+                                    negativeSelection: false,
+                                    localIdentifier: PARENT_LOCAL_ID,
+                                },
+                            },
+                            ...twins,
+                        ],
+                    },
+                },
+            };
+            await preloadedTesterFactory(
+                (tester) => {
+                    Tester = tester;
+                },
+                EmptyDashboardIdentifier,
+                { customizationFns },
+            );
+            Tester.dispatch(
+                unavailableObjectsActions.setUnavailableObjects([
+                    { ref: PARENT_LABEL, type: "displayForm", reason: "forbidden" },
+                ]),
+            );
+        };
+
+        const getItem = (localId: string) => {
+            const item = selectFilterContextAttributeFilterItemByLocalId(localId)(Tester.state());
+            if (!item) {
+                throw new Error(`The filter ${localId} is missing.`);
+            }
+            return item;
+        };
+
+        const listFilter = (
+            localIdentifier: string,
+            uris: string[],
+            parents?: typeof childParents,
+            displayForm = SHARED_LABEL,
+        ) => ({
+            attributeFilter: {
+                displayForm,
+                attributeElements: { uris },
+                negativeSelection: false,
+                localIdentifier,
+                filterElementsBy: parents,
+            },
+        });
+        const getElements = (localId: string) => {
+            const item = getItem(localId);
+            return isDashboardAttributeFilter(item) ? item.attributeFilter.attributeElements : undefined;
+        };
+
+        describe("as list filters", () => {
+            beforeEach(async () => {
+                await preload([
+                    listFilter(CHILD_LOCAL_ID, FIRST_ELEMENT, childParents),
+                    listFilter(TWIN_LOCAL_ID, FIRST_ELEMENT),
+                ]);
+            });
+
+            it.each([false, true])(
+                "should apply a stale entry to the readable twin (matchByLocalIdentifier: %s)",
+                async (matchByLocalIdentifier) => {
+                    await Tester.dispatchAndWaitFor(
+                        changeFilterContextSelectionByParams({
+                            filters: [listFilter("stale_local_id", FILTER_ELEMENTS)],
+                            matchByLocalIdentifier,
+                        }),
+                        "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+                    );
+
+                    expect(getElements(TWIN_LOCAL_ID)).toEqual({ uris: FILTER_ELEMENTS });
+                    expect(getElements(CHILD_LOCAL_ID)).toEqual({ uris: FIRST_ELEMENT });
+                },
+            );
+
+            it("should drop an entry that addresses the restricted filter exactly", async () => {
+                await Tester.dispatchAndWaitFor(
+                    changeFilterContextSelectionByParams({
+                        filters: [listFilter(CHILD_LOCAL_ID, FILTER_ELEMENTS)],
+                        matchByLocalIdentifier: true,
+                    }),
+                    "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+                );
+
+                expect(getElements(CHILD_LOCAL_ID)).toEqual({ uris: FIRST_ELEMENT });
+                expect(getElements(TWIN_LOCAL_ID)).toEqual({ uris: FIRST_ELEMENT });
+            });
+        });
+
+        describe("as text filters", () => {
+            const textFilter = (
+                localIdentifier: string,
+                values: string[],
+                parents?: typeof childParents,
+            ) => ({
+                arbitraryAttributeFilter: {
+                    displayForm: SHARED_LABEL,
+                    values,
+                    negativeSelection: false,
+                    localIdentifier,
+                    filterElementsBy: parents,
+                },
+            });
+            const getTextValues = (localId: string) => {
+                const item = getItem(localId);
+                return isDashboardArbitraryAttributeFilter(item)
+                    ? item.arbitraryAttributeFilter.values
+                    : undefined;
+            };
+
+            beforeEach(async () => {
+                await preload([
+                    textFilter(CHILD_LOCAL_ID, ["stored"], childParents),
+                    textFilter(TWIN_LOCAL_ID, ["stored"]),
+                ]);
+            });
+
+            it.each([
+                ["a stale local identifier", "stale_local_id", true],
+                ["a foreign local identifier naming the restricted filter", CHILD_LOCAL_ID, false],
+            ])(
+                "should apply an entry with %s to the readable twin",
+                async (_, localId, matchByLocalIdentifier) => {
+                    await Tester.dispatchAndWaitFor(
+                        changeFilterContextSelectionByParams({
+                            filters: [textFilter(localId, ["new"])],
+                            matchByLocalIdentifier,
+                        }),
+                        "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+                    );
+
+                    expect(getTextValues(TWIN_LOCAL_ID)).toEqual(["new"]);
+                    expect(getTextValues(CHILD_LOCAL_ID)).toEqual(["stored"]);
+                },
+            );
+
+            it("should drop an entry that addresses the restricted filter exactly", async () => {
+                await Tester.dispatchAndWaitFor(
+                    changeFilterContextSelectionByParams({
+                        filters: [textFilter(CHILD_LOCAL_ID, ["new"])],
+                        matchByLocalIdentifier: true,
+                    }),
+                    "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+                );
+
+                expect(getTextValues(CHILD_LOCAL_ID)).toEqual(["stored"]);
+                expect(getTextValues(TWIN_LOCAL_ID)).toEqual(["stored"]);
+            });
+
+            // The entry's parent names the restricted filter here. It must not become the twin's parent,
+            // which would restrict the twin.
+            const expectTwinKeepsItsOwnParents = () => {
+                expect(dashboardAttributeFilterItemFilterElementsBy(getItem(TWIN_LOCAL_ID))).toBeUndefined();
+                expect(
+                    selectRestrictedDashboardFilterLocalIdentifiers(Tester.state()).has(TWIN_LOCAL_ID),
+                ).toBe(false);
+            };
+
+            it("should keep the readable twin's own parents when a text entry replaces it", async () => {
+                await Tester.dispatchAndWaitFor(
+                    changeFilterContextSelectionByParams({
+                        filters: [textFilter("stale_local_id", ["new"], childParents)],
+                    }),
+                    "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+                );
+
+                expect(getTextValues(TWIN_LOCAL_ID)).toEqual(["new"]);
+                expectTwinKeepsItsOwnParents();
+            });
+
+            it("should keep the readable twin's own parents when a list entry replaces it", async () => {
+                await Tester.dispatchAndWaitFor(
+                    changeFilterContextSelectionByParams({
+                        filters: [listFilter("stale_local_id", FILTER_ELEMENTS, childParents)],
+                    }),
+                    "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+                );
+
+                expect(getElements(TWIN_LOCAL_ID)).toEqual({ uris: FILTER_ELEMENTS });
+                expectTwinKeepsItsOwnParents();
+            });
+        });
+
+        // the readable filter uses another attribute and shows the restricted filter's label instead
+        describe("as a list filter shown through the label of the restricted one", () => {
+            const OTHER_LABEL = ReferenceMd.Region.Default.attribute.displayForm;
+
+            beforeEach(async () => {
+                await preload(
+                    [
+                        listFilter(CHILD_LOCAL_ID, FIRST_ELEMENT, childParents),
+                        listFilter(TWIN_LOCAL_ID, FIRST_ELEMENT, undefined, OTHER_LABEL),
+                    ],
+                    [{ localIdentifier: TWIN_LOCAL_ID, displayAsLabel: SHARED_LABEL }],
+                );
+            });
+
+            it("should apply a stale entry to the readable filter", async () => {
+                await Tester.dispatchAndWaitFor(
+                    changeFilterContextSelectionByParams({
+                        filters: [listFilter("stale_local_id", FILTER_ELEMENTS)],
+                    }),
+                    "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+                );
+
+                expect(getElements(TWIN_LOCAL_ID)).toEqual({ uris: FILTER_ELEMENTS });
+                expect(getElements(CHILD_LOCAL_ID)).toEqual({ uris: FIRST_ELEMENT });
+            });
+        });
+
+        describe("as measure value filters", () => {
+            const METRIC = idRef("metric", "measure");
+            const measureValueFilter = (
+                localIdentifier: string,
+                value: number,
+                restricted = false,
+            ): IDashboardMeasureValueFilter => ({
+                dashboardMeasureValueFilter: {
+                    measure: METRIC,
+                    localIdentifier,
+                    conditions: [{ comparison: { operator: "GREATER_THAN", value } }],
+                    dimensionality: restricted ? [PARENT_LABEL] : undefined,
+                },
+            });
+            const getConditions = (localId: string) =>
+                selectFilterContextMeasureValueFilters(Tester.state()).find(
+                    (filter) => filter.dashboardMeasureValueFilter.localIdentifier === localId,
+                )?.dashboardMeasureValueFilter.conditions;
+
+            beforeEach(async () => {
+                await preload([
+                    measureValueFilter(CHILD_LOCAL_ID, 1, true),
+                    measureValueFilter(TWIN_LOCAL_ID, 1),
+                ]);
+            });
+
+            it.each([
+                ["a stale local identifier", "stale_local_id", true],
+                ["a foreign local identifier naming the restricted filter", CHILD_LOCAL_ID, false],
+            ])(
+                "should apply an entry with %s to the readable twin",
+                async (_, localId, matchByLocalIdentifier) => {
+                    await Tester.dispatchAndWaitFor(
+                        changeFilterContextSelectionByParams({
+                            filters: [measureValueFilter(localId, 2)],
+                            matchByLocalIdentifier,
+                        }),
+                        "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+                    );
+
+                    expect(getConditions(TWIN_LOCAL_ID)).toEqual(
+                        measureValueFilter(TWIN_LOCAL_ID, 2).dashboardMeasureValueFilter.conditions,
+                    );
+                    expect(getConditions(CHILD_LOCAL_ID)).toEqual(
+                        measureValueFilter(CHILD_LOCAL_ID, 1).dashboardMeasureValueFilter.conditions,
+                    );
+                },
+            );
+
+            it("should drop an entry that addresses the restricted filter exactly", async () => {
+                await Tester.dispatchAndWaitFor(
+                    changeFilterContextSelectionByParams({
+                        filters: [measureValueFilter(CHILD_LOCAL_ID, 2)],
+                        matchByLocalIdentifier: true,
+                    }),
+                    "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+                );
+
+                expect(getConditions(CHILD_LOCAL_ID)).toEqual(
+                    measureValueFilter(CHILD_LOCAL_ID, 1).dashboardMeasureValueFilter.conditions,
+                );
+                expect(getConditions(TWIN_LOCAL_ID)).toEqual(
+                    measureValueFilter(TWIN_LOCAL_ID, 1).dashboardMeasureValueFilter.conditions,
+                );
+            });
+        });
     });
 });

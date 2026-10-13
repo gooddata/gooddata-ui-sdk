@@ -718,5 +718,9 @@
     "properties.conditionalFormatting.operator.endsWith": "Закінчується на",
     "properties.conditionalFormatting.operator.notEndsWith": "Не закінчується на",
     "properties.conditionalFormatting.operator.isEmpty": "Порожнє",
-    "properties.conditionalFormatting.operator.isNotEmpty": "Не порожнє"
+    "properties.conditionalFormatting.operator.isNotEmpty": "Не порожнє",
+    "properties.lineShape": "Форма лінії",
+    "properties.lineShape.linear": "Лінійна (за замовчуванням)",
+    "properties.lineShape.spline": "Сплайн",
+    "properties.lineShape.stepped": "Ступінчаста"
 }

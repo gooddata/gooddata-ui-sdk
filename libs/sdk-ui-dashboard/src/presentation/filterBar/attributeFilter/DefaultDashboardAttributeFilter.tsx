@@ -59,7 +59,6 @@ import {
     selectIsAttributeFilterDependentByLocalIdentifierForTab,
     selectPreloadedAttributesWithReferences,
 } from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
-import { selectRestrictedLimitingItemsMap } from "../../../model/store/unavailableObjects/unavailableObjectsSelectors.js";
 import { getVisibilityIcon } from "../utils.js";
 
 import {
@@ -133,15 +132,7 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
     const filterLocalId = dashboardAttributeFilterItemLocalIdentifier(filter)!;
     const filterTitle = dashboardAttributeFilterItemTitle(filter);
     const filterDisplayFormRef = dashboardAttributeFilterItemDisplayForm(filter);
-    // the backend refuses a values request limited by an item the user may not read
-    const restrictedLimitingItems = useDashboardSelector(selectRestrictedLimitingItemsMap);
-    const filterValidateElementsBy = useMemo(
-        () =>
-            dashboardAttributeFilterItemValidateElementsBy(filter)?.filter(
-                (item) => !restrictedLimitingItems.has(item),
-            ),
-        [filter, restrictedLimitingItems],
-    );
+    const filterValidateElementsBy = dashboardAttributeFilterItemValidateElementsBy(filter);
     const standardFilter = isDashboardAttributeFilter(filter) ? filter : undefined;
     const filterSelectionMode = standardFilter?.attributeFilter.selectionMode;
 

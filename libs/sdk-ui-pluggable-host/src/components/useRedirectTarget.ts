@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from "react";
 
+import { isNotAuthenticated } from "@gooddata/sdk-backend-spi";
 import { type PluggableApplicationRegistryItem } from "@gooddata/sdk-model";
 import { type IPlatformContext } from "@gooddata/sdk-pluggable-application-model";
 
 import { debugLog } from "../debug.js";
 import { AppNotFoundError, resolveRedirectTarget } from "../loader/redirectLogic.js";
 import { getBackend } from "../platformContext/backend.js";
+import { afterNotAuthenticatedGrace } from "../platformContext/notAuthenticatedGrace.js";
 import { getWorkspaceAccess } from "../platformContext/workspaceAccess.js";
 
 export type RedirectTargetState =
@@ -30,6 +32,7 @@ export function useRedirectTarget(
 
     useEffect(() => {
         let cancelled = false;
+        let cancelGrace: (() => void) | undefined;
         // Preserve "render" state during re-resolution so that HostUiContainer stays mounted
         // while the async redirect check runs. Other states (loading, error, not-found) reset to loading.
         setRedirectState((prev) => (prev.state === "render" ? prev : { state: "loading" }));
@@ -76,12 +79,20 @@ export function useRedirectTarget(
                 } else {
                     const error = e instanceof Error ? e.message : "Unknown redirect error.";
                     debugLog(`[host-app/redirect] useRedirectTarget: unexpected error → ${error}`);
+                    // Stay "loading" while the backend redirects to login on a 401.
+                    if (isNotAuthenticated(e)) {
+                        cancelGrace = afterNotAuthenticatedGrace(() =>
+                            setRedirectState({ state: "error", error }),
+                        );
+                        return;
+                    }
                     setRedirectState({ state: "error", error });
                 }
             });
 
         return () => {
             cancelled = true;
+            cancelGrace?.();
         };
     }, [apps, pathname, search, ctx]);
 

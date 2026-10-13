@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 import { type IObjectAccessList, idRef } from "@gooddata/sdk-model";
 
 import {
+    accessListToPermissions,
     assigneeIdentityFacts,
     buildLabelMutations,
     buildLabelRegrades,
@@ -523,6 +524,27 @@ describe("draftToPermissions", () => {
 
         expect(permissions).toEqual([
             expect.objectContaining({ type: "allWorkspaceUsers", permissions: [] }),
+        ]);
+    });
+});
+
+describe("accessListToPermissions", () => {
+    it("revokes the workspace rule when the source has none", () => {
+        expect(accessListToPermissions({ grants: [] })).toEqual([
+            { type: "allWorkspaceUsers", permissions: [], inheritedPermissions: [] },
+        ]);
+    });
+
+    it("merges the workspace rules of the hierarchy into one", () => {
+        const list: IObjectAccessList = {
+            grants: [
+                { type: "allWorkspaceUsers", permissions: ["VIEW"], inheritedPermissions: [] },
+                { type: "allWorkspaceUsers", permissions: ["SHARE", "VIEW"], inheritedPermissions: [] },
+            ],
+        };
+
+        expect(accessListToPermissions(list)).toEqual([
+            { type: "allWorkspaceUsers", permissions: ["VIEW", "SHARE"], inheritedPermissions: [] },
         ]);
     });
 });

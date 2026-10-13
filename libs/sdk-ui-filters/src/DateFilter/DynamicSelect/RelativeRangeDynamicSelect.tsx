@@ -6,6 +6,8 @@ import cx from "classnames";
 import { defaultImport } from "default-import";
 import DefaultDownshift, { type ControllerStateAndHelpers } from "downshift";
 
+import { type IAlignPoint, Overlay } from "@gooddata/sdk-ui-kit";
+
 import {
     type ISelectMenuProps,
     ScrollableSelectMenu,
@@ -23,6 +25,11 @@ import { findRelativeDateFilterOptionByValue, findRelativeDateFilterOptionIndexB
 // https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
 const Downshift = defaultImport(DefaultDownshift);
 
+const MENU_OVERLAY_ALIGN_POINTS: IAlignPoint[] = [
+    { align: "bl tl", offset: { x: 0, y: 1 } },
+    { align: "tl bl", offset: { x: 0, y: -1 } },
+];
+
 export interface IRelativeRangeDynamicSelectProps {
     getItems: (inputValue: string) => DynamicSelectItem[];
     onChange?: (item: number) => void;
@@ -36,6 +43,10 @@ export interface IRelativeRangeDynamicSelectProps {
     style?: CSSProperties;
     optionClassName?: string;
     visibleItemsRange?: number;
+    /**
+     * Render the menu in an overlay, so it is not clipped by a scrollable or overflow-hidden parent.
+     */
+    renderMenuAsOverlay?: boolean;
 
     accessibilityConfig?: {
         labelId?: string;
@@ -53,6 +64,7 @@ export function RelativeRangeDynamicSelect({
     style,
     optionClassName,
     visibleItemsRange = defaultVisibleItemsRange,
+    renderMenuAsOverlay = false,
     accessibilityConfig,
     inputValue,
     onChange = () => {},
@@ -60,6 +72,7 @@ export function RelativeRangeDynamicSelect({
     onBlur,
 }: IRelativeRangeDynamicSelectProps) {
     const [searchValue, setSearchValue] = useState("");
+    const [inputWrapper, setInputWrapper] = useState<HTMLDivElement | null>(null);
 
     const handleChange = useCallback(
         (option: DynamicSelectOption | null): void => {
@@ -189,6 +202,13 @@ export function RelativeRangeDynamicSelect({
                         ? 0
                         : (highlightedIndex ?? 0);
 
+                // Downshift drops its registered items on every render and selects a clicked option
+                // only if the option registered again via getItemProps. Overlay skips re-rendering
+                // children with deep-equal props, so register the items here, not only in the menu.
+                if (renderMenuAsOverlay && isOpen) {
+                    selectableItems.forEach((item, index) => getItemProps({ item, index }));
+                }
+
                 const menuProps: ISelectMenuProps<number> = {
                     items,
                     selectedItem: selectedItem as ISelectItemOption<number>,
@@ -218,7 +238,7 @@ export function RelativeRangeDynamicSelect({
                             }
                         }}
                     >
-                        <div className="gd-dynamic-select-input-wrapper">
+                        <div className="gd-dynamic-select-input-wrapper" ref={setInputWrapper}>
                             <input
                                 type="text"
                                 className="s-relative-range-input gd-input-field"
@@ -248,7 +268,24 @@ export function RelativeRangeDynamicSelect({
                             />
                         </div>
                         {isOpen && items.length > 0 ? (
-                            <ScrollableSelectMenu {...(menuProps as unknown as ISelectMenuProps<object>)} />
+                            renderMenuAsOverlay ? (
+                                <Overlay
+                                    alignTo={inputWrapper}
+                                    alignPoints={MENU_OVERLAY_ALIGN_POINTS}
+                                    width={inputWrapper?.offsetWidth}
+                                    className="gd-dynamic-select-menu-overlay"
+                                    closeOnMouseDrag
+                                    onClose={closeMenu}
+                                >
+                                    <ScrollableSelectMenu
+                                        {...(menuProps as unknown as ISelectMenuProps<object>)}
+                                    />
+                                </Overlay>
+                            ) : (
+                                <ScrollableSelectMenu
+                                    {...(menuProps as unknown as ISelectMenuProps<object>)}
+                                />
+                            )
                         ) : null}
                     </div>
                 );

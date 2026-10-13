@@ -40,7 +40,10 @@ import {
     uriRef,
 } from "@gooddata/sdk-model";
 
-import { selectEnableTimezoneChange } from "../config/configSelectors.js";
+import {
+    selectEnableDashboardPersistentFiltersAcrossTabs,
+    selectEnableTimezoneChange,
+} from "../config/configSelectors.js";
 import { selectAttributeFilterConfigsOverridesByTab } from "../tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
     selectDateFilterConfigOverrides,
@@ -622,7 +625,24 @@ export const selectDisableDashboardCrossFiltering: DashboardSelector<boolean> = 
 export const selectDisableDashboardPersistentFiltersAcrossTabs: DashboardSelector<boolean> = createSelector(
     selectDashboardDescriptor,
     (state) => {
-        return state.disablePersistentFiltersAcrossTabs ?? false;
+        // Missing means a dashboard saved before this setting existed: the feature stays off.
+        return state.disablePersistentFiltersAcrossTabs ?? true;
+    },
+);
+
+/**
+ * Selects whether persistent filters across tabs are enabled.
+ *
+ * @alpha
+ */
+export const selectEnablePersistentFiltersAcrossTabs: DashboardSelector<boolean> = createSelector(
+    selectEnableDashboardPersistentFiltersAcrossTabs,
+    selectDisableDashboardPersistentFiltersAcrossTabs,
+    (enableDashboardPersistentFiltersAcrossTabs, disableDashboardPersistentFiltersAcrossTabs) => {
+        return (
+            enableDashboardPersistentFiltersAcrossTabs &&
+            disableDashboardPersistentFiltersAcrossTabs === false
+        );
     },
 );
 
@@ -631,7 +651,7 @@ export const selectDisableDashboardPersistentFiltersAcrossTabs: DashboardSelecto
  * the dashboard state during the initial load of the dashboard.
  */
 const selectPersistedDashboardDisablePersistentFiltersAcrossTabs = createSelector(selectSelf, (state) => {
-    return state.persistedDashboard?.disablePersistentFiltersAcrossTabs ?? false;
+    return state.persistedDashboard?.disablePersistentFiltersAcrossTabs ?? true;
 });
 
 /**

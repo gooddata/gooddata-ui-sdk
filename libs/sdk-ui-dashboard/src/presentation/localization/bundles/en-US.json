@@ -1639,6 +1639,14 @@
         "text": "Search…",
         "crowdinContext": "Placeholder text in attribute filter search input"
     },
+    "attributesDropdown.parameters.section.from_dashboard": {
+        "text": "From dashboard",
+        "crowdinContext": "Section header in the alert/schedule dialog add-parameter dropdown, listing parameters that have a control on the dashboard"
+    },
+    "attributesDropdown.parameters.section.ungrouped": {
+        "text": "Ungrouped",
+        "crowdinContext": "Section header in the alert/schedule dialog add-parameter dropdown, listing parameters that have no tag"
+    },
     "attributesDropdown.configuration": {
         "text": "Configuration",
         "crowdinContext": "Configuration button label in attribute filter dropdown"

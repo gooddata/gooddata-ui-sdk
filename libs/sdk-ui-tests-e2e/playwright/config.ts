@@ -6,7 +6,7 @@ import { fileURLToPath } from "url";
 import {
     BACKEND_HOST,
     GOODMOCK_HOST,
-    type IFeatureHubEnvironment,
+    type IFeatureHubFeature,
     createTest,
     getBaseUrl,
     getWorkspaceId,
@@ -26,39 +26,34 @@ export function getMappingPath(specName: string): string {
     return join(RECORDINGS_DIR, `mapping-${specName}.spec.ts.json`);
 }
 
-const FEATURE_HUB_RESPONSE = [
+const featureHubFeatures: IFeatureHubFeature[] = [
     {
-        id: "d2f33050-c46b-491e-82a1-17daba57a0a8",
-        features: [
-            {
-                id: "d154cf37-9ffe-4cae-b892-017ff3429a8f",
-                key: "enableNewPivotTable",
-                l: false,
-                version: 42,
-                type: "BOOLEAN",
-                value: true,
-                strategies: [],
-            },
-            {
-                id: "64b7b92c-6721-461d-a8fb-52664f6ef219",
-                key: "enableNewExecutorFlow",
-                l: false,
-                version: 4,
-                type: "BOOLEAN",
-                value: true,
-            },
-            {
-                id: "e5f9bdd6-4f89-46be-84af-37f59548b33b",
-                key: "enableExecutionCancelling",
-                l: false,
-                version: 2,
-                type: "BOOLEAN",
-                value: true,
-                v: "0d2K",
-            },
-        ],
+        id: "d154cf37-9ffe-4cae-b892-017ff3429a8f",
+        key: "enableNewPivotTable",
+        l: false,
+        version: 42,
+        type: "BOOLEAN",
+        value: true,
+        strategies: [],
     },
-] satisfies IFeatureHubEnvironment[];
+    {
+        id: "64b7b92c-6721-461d-a8fb-52664f6ef219",
+        key: "enableNewExecutorFlow",
+        l: false,
+        version: 4,
+        type: "BOOLEAN",
+        value: true,
+    },
+    {
+        id: "e5f9bdd6-4f89-46be-84af-37f59548b33b",
+        key: "enableExecutionCancelling",
+        l: false,
+        version: 2,
+        type: "BOOLEAN",
+        value: true,
+        v: "0d2K",
+    },
+];
 
 export const test = createTest({
     goodmock: GOODMOCK_HOST
@@ -73,5 +68,5 @@ export const test = createTest({
               },
           }
         : undefined,
-    featureHubResponse: FEATURE_HUB_RESPONSE,
+    featureHubFeatures,
 });

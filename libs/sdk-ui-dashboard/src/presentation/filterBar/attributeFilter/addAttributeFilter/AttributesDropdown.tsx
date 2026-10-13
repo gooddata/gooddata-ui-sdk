@@ -34,12 +34,14 @@ import { isLocationIconEnabled } from "./addAttributeFilterUtils.js";
 import { AttributeListItem, getAttributeListItemTitle } from "./AttributeListItem.js";
 import { DateAttributeListItem, getDateAttributeListItemTitle } from "./DateAttributeListItem.js";
 import { MetricListItem, getMetricListItemTitle } from "./MetricListItem.js";
+import { isHeaderListItem, isSeparatorListItem } from "./staticListItems.js";
+import { type IMetricDropdownListItem, useMetricDropdownItems } from "./useMetricDropdownItems.js";
 import {
-    type IMetricDropdownListItem,
-    isMetricHeaderListItem,
-    isMetricSeparatorListItem,
-    useMetricDropdownItems,
-} from "./useMetricDropdownItems.js";
+    type IAddableParameter,
+    type IParameterDropdownItem,
+    isParameterDropdownListItem,
+    useParameterDropdownItems,
+} from "./useParameterDropdownItems.js";
 
 const dropdownAlignPoints = [
     {
@@ -89,33 +91,18 @@ const WIDTH = 253;
 
 type AttributesDropdownTabId = "attributes" | "dateDatasets" | "metrics" | "parameters";
 
-/**
- * Addable workspace parameter offered in the dropdown's "parameters" tab (automation dialogs only).
- *
- * @internal
- */
-export interface IParameterDropdownListItem {
-    type: "parameter";
-    ref: IdentifierRef;
-    title: string;
-}
-
-function isParameterDropdownListItem(item: unknown): item is IParameterDropdownListItem {
-    return typeof item === "object" && item !== null && "type" in item && item.type === "parameter";
-}
-
 type AddFilterListItem =
     | ICatalogAttribute
     | ICatalogDateDataset
     | IMetricDropdownListItem
-    | IParameterDropdownListItem;
+    | IParameterDropdownItem;
 
 /**
  * @internal
  */
 export interface IAttributesDropdownProps extends IDashboardAttributeFilterPlaceholderProps {
     /** Addable workspace parameters (automation dialogs only). Renders a "parameters" tab. */
-    parameters?: IParameterDropdownListItem[];
+    parameters?: IAddableParameter[];
     onParameterSelect?: (ref: IdentifierRef) => void;
 }
 
@@ -251,13 +238,7 @@ export function AttributesDropdown({
         insightsMap,
     });
 
-    const filteredParameters = useMemo(() => {
-        return searchQuery
-            ? parameters.filter((parameter) =>
-                  parameter.title.toLowerCase().includes(searchQuery.toLowerCase()),
-              )
-            : parameters;
-    }, [parameters, searchQuery]);
+    const parameterDropdownItems = useParameterDropdownItems({ parameters, searchQuery });
 
     const hasAttributes = useMemo(() => attributes.length > 0, [attributes]);
     const hasDateFilters = useMemo(
@@ -328,18 +309,24 @@ export function AttributesDropdown({
         }
 
         if (selectedTabId === "parameters") {
-            return filteredParameters;
+            return parameterDropdownItems;
         }
 
         return [];
-    }, [selectedTabId, filteredAttributes, filteredDateDatasets, metricDropdownItems, filteredParameters]);
+    }, [
+        selectedTabId,
+        filteredAttributes,
+        filteredDateDatasets,
+        metricDropdownItems,
+        parameterDropdownItems,
+    ]);
 
     const showTabs = useMemo(() => {
         return tabs.length > 1;
     }, [tabs.length]);
 
     function selectItem(item: AddFilterListItem, closeDropdown: () => void) {
-        if (isMetricHeaderListItem(item) || isMetricSeparatorListItem(item)) {
+        if (isHeaderListItem(item) || isSeparatorListItem(item)) {
             return;
         }
         if (isParameterDropdownListItem(item)) {
@@ -404,10 +391,10 @@ export function AttributesDropdown({
                             onKeyDownSelect={(item) => selectItem(item, closeDropdown)}
                             closeDropdown={closeDropdown}
                             itemTitleGetter={(item) => {
-                                if (isMetricHeaderListItem(item)) {
+                                if (isHeaderListItem(item)) {
                                     return item.title;
                                 }
-                                if (isMetricSeparatorListItem(item)) {
+                                if (isSeparatorListItem(item)) {
                                     return "";
                                 }
                                 if (isParameterDropdownListItem(item)) {
@@ -423,10 +410,10 @@ export function AttributesDropdown({
                             }}
                             renderNoData={renderNoData}
                             renderItem={({ item }) => {
-                                if (isMetricHeaderListItem(item)) {
+                                if (isHeaderListItem(item)) {
                                     return <SingleSelectListItem type={item.type} title={item.title} />;
                                 }
-                                if (isMetricSeparatorListItem(item)) {
+                                if (isSeparatorListItem(item)) {
                                     return <SingleSelectListItem type={item.type} />;
                                 }
                                 if (isParameterDropdownListItem(item)) {

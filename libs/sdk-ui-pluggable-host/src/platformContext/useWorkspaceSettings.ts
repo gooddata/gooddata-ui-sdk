@@ -6,7 +6,10 @@ import {
     UnexpectedResponseError,
     type IAnalyticalBackend,
     type IUserWorkspaceSettings,
+    isNotAuthenticated,
 } from "@gooddata/sdk-backend-spi";
+
+import { afterNotAuthenticatedGrace } from "./notAuthenticatedGrace.js";
 
 type WorkspaceSettingsState =
     | { state: "idle" }
@@ -37,6 +40,7 @@ export function useWorkspaceSettings(
         }
 
         let cancelled = false;
+        let cancelGrace: (() => void) | undefined;
         setSettingsState({ state: "loading" });
 
         backend
@@ -55,11 +59,19 @@ export function useWorkspaceSettings(
                     return;
                 }
                 const error = e instanceof Error ? e.message : "Unknown error loading workspace settings.";
+                // Stay "loading" while the backend redirects to login on a 401.
+                if (isNotAuthenticated(e)) {
+                    cancelGrace = afterNotAuthenticatedGrace(() =>
+                        setSettingsState({ state: "error", error }),
+                    );
+                    return;
+                }
                 setSettingsState({ state: "error", error });
             });
 
         return () => {
             cancelled = true;
+            cancelGrace?.();
         };
     }, [backend, workspaceId]);
 

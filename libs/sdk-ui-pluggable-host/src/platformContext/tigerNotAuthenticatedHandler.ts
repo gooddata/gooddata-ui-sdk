@@ -4,6 +4,7 @@ import { throttle } from "lodash-es";
 
 import { type IAuthenticationContext, type NotAuthenticated } from "@gooddata/sdk-backend-spi";
 import {
+    type RedirectToTigerAuthenticationHandler,
     createRedirectToTigerAuthenticationWithParams,
     redirectToTigerAuthentication,
 } from "@gooddata/sdk-backend-tiger";
@@ -12,16 +13,17 @@ import {
 
 export function createNotAuthenticatedHandler(
     externalProviderId?: string,
-): (ctx: IAuthenticationContext, err: NotAuthenticated) => void {
-    const redirectHandler = externalProviderId
+    redirectHandler: RedirectToTigerAuthenticationHandler = externalProviderId
         ? createRedirectToTigerAuthenticationWithParams({ externalProviderId })
-        : redirectToTigerAuthentication;
-    const debouncedRedirectHandler = throttle(redirectHandler, 500, {
-        leading: false,
-        trailing: true,
+        : redirectToTigerAuthentication,
+): (ctx: IAuthenticationContext, err: NotAuthenticated) => void {
+    // Boot fires several requests in parallel. Redirect on the first 401 and ignore the rest.
+    const throttledRedirectHandler = throttle(redirectHandler, 500, {
+        leading: true,
+        trailing: false,
     });
 
     return (ctx: IAuthenticationContext, err: NotAuthenticated) => {
-        debouncedRedirectHandler(ctx, err);
+        throttledRedirectHandler(ctx, err);
     };
 }

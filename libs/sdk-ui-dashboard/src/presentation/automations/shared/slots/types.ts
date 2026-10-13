@@ -11,7 +11,10 @@ import {
     type ParameterValue,
 } from "@gooddata/sdk-model";
 
-import { type IAutomationParameter } from "../automationFilters/automationParameters.js";
+import {
+    type IAutomationParameter,
+    type IAvailableAutomationParameter,
+} from "../automationFilters/automationParameters.js";
 
 /**
  * Members shared by both automation dialogs' header regions.
@@ -82,7 +85,7 @@ export interface IAutomationDialogFiltersProps {
     /**
      * Workspace parameters addable via the "+" menu.
      */
-    availableParameters?: IAutomationParameter[];
+    availableParameters?: IAvailableAutomationParameter[];
 
     /**
      * Called when a parameter is added from the "+" menu.

@@ -32,6 +32,7 @@ import { selectFilterViews } from "../../store/filterViews/filterViewsReducersSe
 import { selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { DEFAULT_TAB_ID, type ITabState } from "../../store/tabs/tabsState.js";
+import { selectUnavailableObjects } from "../../store/unavailableObjects/unavailableObjectsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { resolveInsights } from "../../utils/insightResolver.js";
 
@@ -206,10 +207,13 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
 
         const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
         const filterViews: ReturnType<typeof selectFilterViews> = yield select(selectFilterViews);
+        const unavailableObjects: ReturnType<typeof selectUnavailableObjects> =
+            yield select(selectUnavailableObjects);
         const dashboardWithUpdatedFilterContext = applyDefaultFilterView(
             persistedDashboard,
             filterViews,
             ctx.config?.exportId,
+            unavailableObjects,
         );
 
         const insightRefsFromWidgets = insightReferencesFromDashboard(dashboardWithUpdatedFilterContext);

@@ -1,24 +1,10 @@
 // (C) 2023-2026 GoodData Corporation
 
-// oxlint-disable @typescript-eslint/no-empty-object-type
-
+import "@testing-library/jest-dom/vitest";
 import { cleanup } from "@testing-library/react";
-import { afterEach, expect, vi } from "vitest";
-import * as matchers from "vitest-dom/dist/matchers.js";
-import { type TestingLibraryMatchers } from "vitest-dom/dist/matchers.js";
+import { afterEach, vi } from "vitest";
 
 import { strictBarrel } from "@gooddata/util";
-
-/**
- * Exports of types and matchers of vitest-dom is currently broken we need export matchers from dist and define types manually
- */
-declare module "vitest" {
-    // @ts-expect-error This is correct
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    interface Assertion<T = unknown> extends TestingLibraryMatchers<typeof expect.stringContaining, T> {}
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    interface AsymmetricMatchersContaining extends TestingLibraryMatchers<unknown, unknown> {}
-}
 
 /**
  * The mocks below all fix the same problem: this library imports a handful of small things from very
@@ -105,8 +91,6 @@ vi.mock("@gooddata/sdk-ui-ext", async () => {
         semanticRuleFor: cfModel.semanticRuleFor,
     });
 });
-
-expect.extend(matchers);
 
 afterEach(() => {
     cleanup();

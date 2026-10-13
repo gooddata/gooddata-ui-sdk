@@ -820,6 +820,9 @@ export type GranteeStatus = "Inactive" | "Active";
 export type GranteeType = "user" | "inactive_owner" | "group" | "groupAll" | "granularUser" | "granularGroup" | "allWorkspaceUsers";
 
 // @internal
+export function groupParametersByTag<T extends ITaggedParameter>(parameters: ReadonlyArray<T>, ungroupedLabel: string, collator: Intl.Collator): ReadonlyArray<IParameterGroup<T>>;
+
+// @internal
 export function guidFor(obj: any): string;
 
 // @internal
@@ -4549,13 +4552,27 @@ export interface IOptimalAlignment {
 }
 
 // @internal
+export interface IOverlayAlignOnParentScrollProviderProps {
+    children?: ReactNode;
+    closeOnAnchorHidden?: boolean;
+    enabled?: boolean;
+}
+
+// @internal
 export interface IOverlayControllerProviderProps {
     children?: ReactNode;
     overlayController: OverlayController;
 }
 
+// @internal
+export interface IOverlayParentScrollBehavior {
+    alignOnParentScroll: boolean;
+    closeOnAnchorHidden: boolean;
+}
+
 // @internal (undocumented)
 export interface IOverlayProps<T> {
+    alignOnParentScroll?: boolean;
     // (undocumented)
     alignPoints?: IAlignPoint[];
     // (undocumented)
@@ -4564,6 +4581,7 @@ export interface IOverlayProps<T> {
     children?: ReactNode;
     // (undocumented)
     className?: string;
+    closeOnAnchorHidden?: boolean;
     // (undocumented)
     closeOnEscape?: boolean;
     // (undocumented)
@@ -4662,6 +4680,14 @@ export type IParameterControlProps = {
     ariaAttributes?: IDropdownBodyRenderProps["ariaAttributes"];
     onClose: () => void;
 } & ParameterSubmitModeProps<ParameterValue>;
+
+// @internal (undocumented)
+export interface IParameterGroup<T extends ITaggedParameter> {
+    // (undocumented)
+    parameters: ReadonlyArray<T>;
+    // (undocumented)
+    tag: string;
+}
 
 // @internal (undocumented)
 export interface IParameterPickerProps {
@@ -5671,6 +5697,14 @@ export interface ITabsProps {
 export interface ITabsState {
     // (undocumented)
     selectedTabId: string;
+}
+
+// @internal (undocumented)
+export interface ITaggedParameter {
+    // (undocumented)
+    tags?: string[];
+    // (undocumented)
+    title: string;
 }
 
 // @internal (undocumented)
@@ -9195,6 +9229,12 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
     // (undocumented)
     UNSAFE_componentWillReceiveProps(nextProps: IOverlayProps<T>): void;
 }
+
+// @internal
+export const OverlayAlignOnParentScrollContext: Context<IOverlayParentScrollBehavior>;
+
+// @internal
+export function OverlayAlignOnParentScrollProvider(input: IOverlayAlignOnParentScrollProviderProps): JSX.Element;
 
 // @internal (undocumented)
 export const OverlayContext: Context<OverlayController | undefined>;

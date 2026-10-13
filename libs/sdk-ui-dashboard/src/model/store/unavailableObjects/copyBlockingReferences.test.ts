@@ -42,6 +42,7 @@ const unavailable: IUnavailableDashboardReference[] = [
     forbidden("restricted-dashboard", "analyticalDashboard"),
     forbidden("restricted-computed", "computedAttribute"),
     forbidden("restricted-fact", "fact"),
+    forbidden("restricted-attribute", "attribute"),
     { ref: idRef("deleted-viz", "insight"), type: "insight", reason: "notFound" },
 ];
 
@@ -97,11 +98,12 @@ const attributeFilter = (displayForm: ObjRef, validateElementsBy?: ObjRef[]): Fi
     },
 });
 
-const measureValueFilter = (metric: string): FilterContextItem =>
+const measureValueFilter = (metric: string, dimensionality?: ObjRef[]): FilterContextItem =>
     ({
         dashboardMeasureValueFilter: {
             measure: idRef(metric, "measure"),
             localIdentifier: "mvf",
+            dimensionality,
         },
     }) as FilterContextItem;
 
@@ -250,9 +252,31 @@ describe("hasCopyBlockingReference", () => {
             tab([insightWidget()], { filters: [measureValueFilter("restricted-metric")] }),
         ],
         [
+            "a measure value filter computed for a restricted attribute",
+            tab([insightWidget()], {
+                filters: [
+                    measureValueFilter("readable-metric", [idRef("restricted-attribute", "attribute")]),
+                ],
+            }),
+        ],
+        [
+            "a measure value filter computed for a restricted label",
+            tab([insightWidget()], {
+                filters: [measureValueFilter("readable-metric", [label("restricted-label")])],
+            }),
+        ],
+        [
             "a filter limited by a restricted metric",
             tab([insightWidget()], {
                 filters: [attributeFilter(label("readable-label"), [idRef("restricted-metric", "measure")])],
+            }),
+        ],
+        [
+            'a filter limited by "Count of" a restricted attribute',
+            tab([insightWidget()], {
+                filters: [
+                    attributeFilter(label("readable-label"), [idRef("restricted-attribute", "attribute")]),
+                ],
             }),
         ],
         [
@@ -282,7 +306,25 @@ describe("hasCopyBlockingReference", () => {
         ],
         [
             "a measure value filter on a readable metric",
-            tab([insightWidget()], { filters: [measureValueFilter("readable-metric")] }),
+            tab([insightWidget()], {
+                filters: [measureValueFilter("readable-metric", [idRef("readable-attribute", "attribute")])],
+            }),
+        ],
+        [
+            "a child of a restricted parent filter, which names the parent by local identifier only",
+            tab([insightWidget()], {
+                filters: [
+                    {
+                        attributeFilter: {
+                            displayForm: label("readable-label"),
+                            negativeSelection: true,
+                            attributeElements: { uris: [] },
+                            localIdentifier: "child",
+                            filterElementsBy: [{ filterLocalIdentifier: "af", over: { attributes: [] } }],
+                        },
+                    },
+                ],
+            }),
         ],
         [
             "a filter limited by a readable metric",

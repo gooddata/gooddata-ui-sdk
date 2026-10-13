@@ -7,9 +7,9 @@
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2026-10-9
+Date generated: 2026-10-13
 
-Revision ID: 3ef6d105ddec892804628036fd14253a8cc9efdf
+Revision ID: 6166453ad354903c63302d5f1be76cf8bf723061
 
 ================================================================================
 ================================================================================
@@ -109,13 +109,12 @@ No first party licenses found in gooddata-ui-sdk
 - @formatjs/intl-localematcher (0.6.2) [MIT]
 - @formatjs/ts-transformer (3.13.23) [MIT]
 - @gooddata/emailjs-mime-codec-new (3.0.2) [MIT]
-- @html-validate/stylish (4.3.0) [MIT]
+- @html-validate/stylish (6.1.0) [MIT]
 - @inquirer/external-editor (1.0.3) [MIT]
 - @inquirer/figures (1.0.15) [MIT]
 - @internationalized/date (3.12.4) [Apache-2.0]
 - @internationalized/number (3.6.8) [Apache-2.0]
 - @internationalized/string (3.2.10) [Apache-2.0]
-- @isaacs/cliui (9.0.0) [blueoak-1.0.0]
 - @isaacs/fs-minipass (4.0.1) [ISC]
 - @joint/core (4.3.3) [MPL-2.0]
 - @joint/layout-directed-graph (4.3.0) [MPL-2.0]
@@ -176,7 +175,7 @@ No first party licenses found in gooddata-ui-sdk
 - @redux-saga/types (1.4.1) [MIT]
 - @reduxjs/toolkit (2.9.0) [MIT]
 - @seznam/compose-react-refs (1.0.6) [ISC]
-- @sidvind/better-ajv-errors (4.0.0) [Apache-2.0]
+- @sidvind/better-ajv-errors (7.0.0) [Apache-2.0]
 - @sindresorhus/is (4.6.0) [MIT]
 - @standard-schema/spec (1.1.0) [MIT]
 - @standard-schema/utils (0.3.0) [MIT]
@@ -332,7 +331,6 @@ No first party licenses found in gooddata-ui-sdk
 - flat-cache (6.1.23) [MIT]
 - flatted (3.4.4) [ISC]
 - follow-redirects (1.16.1) [MIT]
-- foreground-child (3.3.1) [ISC]
 - form-data (4.0.6) [MIT]
 - fs-extra (10.1.0) [MIT]
 - function-bind (1.1.2) [MIT]
@@ -343,7 +341,6 @@ No first party licenses found in gooddata-ui-sdk
 - get-proto (1.0.1) [MIT]
 - get-stream (6.0.1) [MIT]
 - gl-matrix (3.4.4) [MIT]
-- glob (11.1.0) [ISC]
 - glob (13.0.2) [ISC]
 - glob-parent (5.1.2) [ISC]
 - global-modules (2.0.0) [MIT]
@@ -368,7 +365,7 @@ No first party licenses found in gooddata-ui-sdk
 - hookified (2.2.0) [MIT]
 - html-tags (3.3.1) [MIT]
 - html-url-attributes (3.0.1) [MIT]
-- html-validate (10.3.1) [MIT]
+- html-validate (11.16.2) [MIT]
 - http-status-codes (2.1.4) [MIT]
 - http-vary (1.0.3) [MIT]
 - https-proxy-agent (5.0.1) [MIT]
@@ -407,7 +404,6 @@ No first party licenses found in gooddata-ui-sdk
 - is-wsl (2.2.0) [MIT]
 - isarray (2.0.5) [MIT]
 - isexe (2.0.0) [ISC]
-- jackspeak (4.2.3) [blueoak-1.0.0]
 - js-tokens (4.0.0) [MIT]
 - js-yaml (4.3.2) [MIT]
 - jsesc (3.1.0) [MIT]
@@ -516,7 +512,6 @@ No first party licenses found in gooddata-ui-sdk
 - oxc-transform (0.147.0) [MIT]
 - oxfmt (0.68.0) [MIT, 0BSD]
 - p-map (3.0.0) [MIT]
-- package-json-from-dist (1.0.1) [blueoak-1.0.0]
 - parent-module (1.0.1) [MIT]
 - parse-entities (4.0.2) [MIT]
 - parse-json (5.2.0) [WTFPL, MIT]
@@ -5739,9 +5734,9 @@ Dependency Path: @gooddata/emailjs-mime-codec-new
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
-Package Title: @html-validate/stylish (4.3.0)
+Package Title: @html-validate/stylish (6.1.0)
 
-Package Locator: npm+@html-validate/stylish$4.3.0
+Package Locator: npm+@html-validate/stylish$6.1.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -5811,7 +5806,7 @@ MIT
 Authors: ext-npmjs.com@sidvind.com
 Package Manager: NPM
 Project URL: https://gitlab.com/html-validate/stylish
-Package Download URL: https://registry.npmjs.org/@html-validate/stylish/-/stylish-4.3.0.tgz
+Package Download URL: https://registry.npmjs.org/@html-validate/stylish/-/stylish-6.1.0.tgz
 Dependency Path: html-validate > @html-validate/stylish
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
@@ -7496,164 +7491,6 @@ Authors: danniintheus@gmail.com, devongovett@gmail.com
 Package Manager: NPM
 Project URL: https://github.com/adobe/react-spectrum#readme
 Dependency Path: @react-aria/interactions > react-aria > @internationalized/string > @react-aria/interactions > react-aria > react-stately > @internationalized/string
-File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
-
---------------------------------------------------------------------------------
-Package Title: @isaacs/cliui (9.0.0)
-
-Package Locator: npm+@isaacs/cliui$9.0.0
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-easily create complex multi-column command-line-interfaces
-
-* Declared Licenses *
-blueoak-1.0.0
---------------------------------------------------------------------------------
-File matches:
-- LICENSE.md
-- package.json
---------------------------------------------------------------------------------
-
-Several modules are vendored under `./src`, which are used and
-distributed according to their respective licenses, each provided
-in the same directory as the code.
-
-Everything else is released under the following license.
-
-----
-
-# Blue Oak Model License
-
-Version 1.0.0
-
-## Purpose
-
-This license gives everyone as much permission to work with
-this software as possible, while protecting contributors
-from liability.
-
-## Acceptance
-
-In order to receive this license, you must agree to its
-rules. The rules of this license are both obligations
-under that agreement and conditions to your license.
-You must not do anything with this software that triggers
-a rule that you cannot or will not follow.
-
-## Copyright
-
-Each contributor licenses you to do everything with this
-software that would otherwise infringe that contributor's
-copyright in it.
-
-## Notices
-
-You must ensure that everyone who gets a copy of
-any part of this software from you, with or without
-changes, also gets the text of this license or a link to
-<https://blueoakcouncil.org/license/1.0.0>.
-
-## Excuse
-
-If anyone notifies you in writing that you have not
-complied with [Notices](#notices), you can keep your
-license by taking all practical steps to comply within 30
-days after the notice. If you do not do so, your license
-ends immediately.
-
-## Patent
-
-Each contributor licenses you to do everything with this
-software that would otherwise infringe any patent claims
-they can license or become able to license.
-
-## Reliability
-
-No contributor can revoke this license.
-
-## No Liability
-
-**_As far as the law allows, this software comes as is,
-without any warranty or condition, and no contributor
-will be liable to anyone for any damages related to this
-software or this license, under any kind of legal claim._**
-
-
-* License Header *
-Several modules are vendored under `./src`, which are used and
-distributed according to their respective licenses, each provided
-in the same directory as the code.
-
-Everything else is released under the following license.
-
-----
-
-# Blue Oak Model License
-
-Version 1.0.0
-
-## Purpose
-
-This license gives everyone as much permission to work with
-this software as possible, while protecting contributors
-from liability.
-
-## Acceptance
-
-In order to receive this license, you must agree to its
-rules. The rules of this license are both obligations
-under that agreement and conditions to your license.
-You must not do anything with this software that triggers
-a rule that you cannot or will not follow.
-
-## Copyright
-
-Each contributor licenses you to do everything with this
-software that would otherwise infringe that contributor's
-copyright in it.
-
-## Notices
-
-You must ensure that everyone who gets a copy of
-any part of this software from you, with or without
-changes, also gets the text of this license or a link to
-<https://blueoakcouncil.org/license/1.0.0>.
-
-## Excuse
-
-If anyone notifies you in writing that you have not
-complied with [Notices](#notices), you can keep your
-license by taking all practical steps to comply within 30
-days after the notice. If you do not do so, your license
-ends immediately.
-
-## Patent
-
-Each contributor licenses you to do everything with this
-software that would otherwise infringe any patent claims
-they can license or become able to license.
-
-## Reliability
-
-No contributor can revoke this license.
-
-## No Liability
-
-**_As far as the law allows, this software comes as is,
-without any warranty or condition, and no contributor
-will be liable to anyone for any damages related to this
-software or this license, under any kind of legal claim._**
-
-
-* Package Info *
-
-Authors: i@izs.me
-Package Manager: NPM
-Project URL: https://github.com/isaacs/cliui#readme
-Package Download URL: https://registry.npmjs.org/@isaacs/cliui/-/cliui-9.0.0.tgz
-Dependency Path: html-validate > glob > jackspeak > @isaacs/cliui
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -10157,7 +9994,7 @@ MIT
 
 Authors: marijn@haverbeke.berlin
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/@lezer/yaml
+Project URL: https://github.com/lezer-parser/yaml#readme
 Package Download URL: https://registry.npmjs.org/@lezer/yaml/-/yaml-1.0.4.tgz
 Dependency Path: @codemirror/lang-yaml > @lezer/yaml
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -15649,9 +15486,9 @@ Dependency Path: react-select-async-paginate > @seznam/compose-react-refs
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
-Package Title: @sidvind/better-ajv-errors (4.0.0)
+Package Title: @sidvind/better-ajv-errors (7.0.0)
 
-Package Locator: npm+@sidvind/better-ajv-errors$4.0.0
+Package Locator: npm+@sidvind/better-ajv-errors$7.0.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -15707,7 +15544,7 @@ Apache-2.0
 Authors: ext-npmjs.com@sidvind.com
 Package Manager: NPM
 Project URL: https://github.com/ext/better-ajv-errors
-Package Download URL: https://registry.npmjs.org/@sidvind/better-ajv-errors/-/better-ajv-errors-4.0.0.tgz
+Package Download URL: https://registry.npmjs.org/@sidvind/better-ajv-errors/-/better-ajv-errors-7.0.0.tgz
 Dependency Path: html-validate > @sidvind/better-ajv-errors
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
@@ -20275,7 +20112,7 @@ Authors: julian@juliangruber.com
 Package Manager: NPM
 Project URL: https://github.com/juliangruber/balanced-match#readme
 Package Download URL: https://registry.npmjs.org/balanced-match/-/balanced-match-4.0.4.tgz
-Dependency Path: glob > minimatch > brace-expansion > balanced-match > html-validate > glob > minimatch > brace-expansion > balanced-match > ts-morph > @ts-morph/common > minimatch > brace-expansion > balanced-match
+Dependency Path: glob > minimatch > brace-expansion > balanced-match > ts-morph > @ts-morph/common > minimatch > brace-expansion > balanced-match
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -20583,7 +20420,7 @@ Authors: i@izs.me, julian@juliangruber.com
 Package Manager: NPM
 Project URL: https://github.com/juliangruber/brace-expansion#readme
 Package Download URL: https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.12.tgz
-Dependency Path: glob > minimatch > brace-expansion > html-validate > glob > minimatch > brace-expansion > ts-morph > @ts-morph/common > minimatch > brace-expansion
+Dependency Path: glob > minimatch > brace-expansion > ts-morph > @ts-morph/common > minimatch > brace-expansion
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -23825,7 +23662,7 @@ Authors: andremiguelcruz@msn.com
 Package Manager: NPM
 Project URL: https://github.com/moxystudio/node-cross-spawn
 Package Download URL: https://registry.npmjs.org/cross-spawn/-/cross-spawn-7.0.6.tgz
-Dependency Path: cross-spawn > html-validate > glob > foreground-child > cross-spawn
+Dependency Path: cross-spawn
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -28799,61 +28636,6 @@ Dependency Path: axios > follow-redirects > axios-cache-interceptor > axios > fo
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
-Package Title: foreground-child (3.3.1)
-
-Package Locator: npm+foreground-child$3.3.1
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-Run a child as if it's the foreground process.  Give it stdio.  Exit when it exits.
-
-* Declared Licenses *
-ISC
-
-The ISC License
-
-Copyright (c) Isaac Z. Schlueter and Contributors
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted, provided that the above
-copyright notice and this permission notice appear in all copies.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
-IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-* License Header *
-The ISC License
-
-Copyright (c) Isaac Z. Schlueter and Contributors
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted, provided that the above
-copyright notice and this permission notice appear in all copies.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
-IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-* Package Info *
-
-Authors: bencoe@gmail.com, git@cfware.com, i@izs.me
-Package Manager: NPM
-Project URL: https://www.npmjs.com/package/foreground-child
-Package Download URL: https://registry.npmjs.org/foreground-child/-/foreground-child-3.3.1.tgz
-Dependency Path: html-validate > glob > foreground-child
-File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
-
---------------------------------------------------------------------------------
 Package Title: form-data (4.0.6)
 
 Package Locator: npm+form-data$4.0.6
@@ -29566,65 +29348,6 @@ Package Manager: NPM
 Project URL: https://www.npmjs.com/package/gl-matrix
 Package Download URL: https://registry.npmjs.org/gl-matrix/-/gl-matrix-3.4.4.tgz
 Dependency Path: mapbox-gl > gl-matrix > maplibre-gl > gl-matrix
-File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
-
---------------------------------------------------------------------------------
-Package Title: glob (11.1.0)
-
-Package Locator: npm+glob$11.1.0
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-a little globber
-
-* Declared Licenses *
-ISC
-
-The ISC License
-
-Copyright (c) Isaac Z. Schlueter and Contributors
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted, provided that the above
-copyright notice and this permission notice appear in all copies.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
-IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-
-
-* License Header *
-The ISC License
-
-Copyright (c) Isaac Z. Schlueter and Contributors
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted, provided that the above
-copyright notice and this permission notice appear in all copies.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
-IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: i@izs.me
-Package Manager: NPM
-Project URL: https://github.com/isaacs/node-glob#readme
-Package Download URL: https://registry.npmjs.org/glob/-/glob-11.1.0.tgz
-Dependency Path: html-validate > glob
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -32039,9 +31762,9 @@ Dependency Path: react-markdown > html-url-attributes
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
-Package Title: html-validate (10.3.1)
+Package Title: html-validate (11.16.2)
 
-Package Locator: npm+html-validate$10.3.1
+Package Locator: npm+html-validate$11.16.2
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -32111,7 +31834,7 @@ MIT
 Authors: ext-npmjs.com@sidvind.com
 Package Manager: NPM
 Project URL: https://html-validate.org/
-Package Download URL: https://registry.npmjs.org/html-validate/-/html-validate-10.3.1.tgz
+Package Download URL: https://registry.npmjs.org/html-validate/-/html-validate-11.16.2.tgz
 Dependency Path: html-validate
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
@@ -34858,149 +34581,7 @@ Authors: i@izs.me
 Package Manager: NPM
 Project URL: https://github.com/isaacs/isexe#readme
 Package Download URL: https://registry.npmjs.org/isexe/-/isexe-2.0.0.tgz
-Dependency Path: cross-spawn > which > isexe > html-validate > glob > foreground-child > cross-spawn > which > isexe > stylelint > global-modules > global-prefix > which > isexe > stylelint-config-standard > stylelint > global-modules > global-prefix > which > isexe > stylelint-config-standard > stylelint-config-recommended > stylelint > global-modules > global-prefix > which > isexe > stylelint-order > stylelint > global-modules > global-prefix > which > isexe > stylelint-plugin-defensive-css > stylelint > global-modules > global-prefix > which > isexe > stylelint-scss > stylelint > global-modules > global-prefix > which > isexe
-File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
-
---------------------------------------------------------------------------------
-Package Title: jackspeak (4.2.3)
-
-Package Locator: npm+jackspeak$4.2.3
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-A very strict and proper argument parser.
-
-* Declared Licenses *
-blueoak-1.0.0
---------------------------------------------------------------------------------
-File matches:
-- LICENSE.md
-- package.json
---------------------------------------------------------------------------------
-
-# Blue Oak Model License
-
-Version 1.0.0
-
-## Purpose
-
-This license gives everyone as much permission to work with
-this software as possible, while protecting contributors
-from liability.
-
-## Acceptance
-
-In order to receive this license, you must agree to its
-rules. The rules of this license are both obligations
-under that agreement and conditions to your license.
-You must not do anything with this software that triggers
-a rule that you cannot or will not follow.
-
-## Copyright
-
-Each contributor licenses you to do everything with this
-software that would otherwise infringe that contributor's
-copyright in it.
-
-## Notices
-
-You must ensure that everyone who gets a copy of
-any part of this software from you, with or without
-changes, also gets the text of this license or a link to
-<https://blueoakcouncil.org/license/1.0.0>.
-
-## Excuse
-
-If anyone notifies you in writing that you have not
-complied with [Notices](#notices), you can keep your
-license by taking all practical steps to comply within 30
-days after the notice. If you do not do so, your license
-ends immediately.
-
-## Patent
-
-Each contributor licenses you to do everything with this
-software that would otherwise infringe any patent claims
-they can license or become able to license.
-
-## Reliability
-
-No contributor can revoke this license.
-
-## No Liability
-
-**_As far as the law allows, this software comes as is,
-without any warranty or condition, and no contributor
-will be liable to anyone for any damages related to this
-software or this license, under any kind of legal claim._**
-
-
-* License Header *
-# Blue Oak Model License
-
-Version 1.0.0
-
-## Purpose
-
-This license gives everyone as much permission to work with
-this software as possible, while protecting contributors
-from liability.
-
-## Acceptance
-
-In order to receive this license, you must agree to its
-rules. The rules of this license are both obligations
-under that agreement and conditions to your license.
-You must not do anything with this software that triggers
-a rule that you cannot or will not follow.
-
-## Copyright
-
-Each contributor licenses you to do everything with this
-software that would otherwise infringe that contributor's
-copyright in it.
-
-## Notices
-
-You must ensure that everyone who gets a copy of
-any part of this software from you, with or without
-changes, also gets the text of this license or a link to
-<https://blueoakcouncil.org/license/1.0.0>.
-
-## Excuse
-
-If anyone notifies you in writing that you have not
-complied with [Notices](#notices), you can keep your
-license by taking all practical steps to comply within 30
-days after the notice. If you do not do so, your license
-ends immediately.
-
-## Patent
-
-Each contributor licenses you to do everything with this
-software that would otherwise infringe any patent claims
-they can license or become able to license.
-
-## Reliability
-
-No contributor can revoke this license.
-
-## No Liability
-
-**_As far as the law allows, this software comes as is,
-without any warranty or condition, and no contributor
-will be liable to anyone for any damages related to this
-software or this license, under any kind of legal claim._**
-
-
-* Package Info *
-
-Authors: i@izs.me
-Package Manager: NPM
-Project URL: https://github.com/isaacs/jackspeak#readme
-Package Download URL: https://registry.npmjs.org/jackspeak/-/jackspeak-4.2.3.tgz
-Dependency Path: html-validate > glob > jackspeak
+Dependency Path: cross-spawn > which > isexe > stylelint > global-modules > global-prefix > which > isexe > stylelint-config-standard > stylelint > global-modules > global-prefix > which > isexe > stylelint-config-standard > stylelint-config-recommended > stylelint > global-modules > global-prefix > which > isexe > stylelint-order > stylelint > global-modules > global-prefix > which > isexe > stylelint-plugin-defensive-css > stylelint > global-modules > global-prefix > which > isexe > stylelint-scss > stylelint > global-modules > global-prefix > which > isexe
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -36097,7 +35678,7 @@ Authors: luke@lukeed.com
 Package Manager: NPM
 Project URL: https://github.com/lukeed/kleur#readme
 Package Download URL: https://registry.npmjs.org/kleur/-/kleur-4.1.5.tgz
-Dependency Path: html-validate > @html-validate/stylish > kleur > html-validate > @sidvind/better-ajv-errors > kleur > html-validate > kleur
+Dependency Path: html-validate > kleur
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -37090,7 +36671,7 @@ Authors: i@izs.me
 Package Manager: NPM
 Project URL: https://github.com/isaacs/node-lru-cache#readme
 Package Download URL: https://registry.npmjs.org/lru-cache/-/lru-cache-11.1.0.tgz
-Dependency Path: glob > path-scurry > lru-cache > html-validate > glob > path-scurry > lru-cache > lru-cache
+Dependency Path: glob > path-scurry > lru-cache > lru-cache
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -38428,7 +38009,7 @@ MIT
 
 Authors: keith@mcknig.ht, tituswormer@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/mdast-util-gfm-autolink-literal
+Project URL: https://github.com/syntax-tree/mdast-util-gfm-autolink-literal#readme
 Package Download URL: https://registry.npmjs.org/mdast-util-gfm-autolink-literal/-/mdast-util-gfm-autolink-literal-2.0.1.tgz
 Dependency Path: remark-gfm > mdast-util-gfm > mdast-util-gfm-autolink-literal
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -42780,7 +42361,7 @@ Authors: i@izs.me
 Package Manager: NPM
 Project URL: https://github.com/isaacs/minimatch#readme
 Package Download URL: https://registry.npmjs.org/minimatch/-/minimatch-10.2.5.tgz
-Dependency Path: glob > minimatch > html-validate > glob > minimatch > ts-morph > @ts-morph/common > minimatch
+Dependency Path: glob > minimatch > ts-morph > @ts-morph/common > minimatch
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -42848,7 +42429,7 @@ Authors: github@tixz.dk, ljharb@gmail.com, npm_j@ruru.gen.nz
 Package Manager: NPM
 Project URL: https://github.com/minimistjs/minimist
 Package Download URL: https://registry.npmjs.org/minimist/-/minimist-1.2.8.tgz
-Dependency Path: html-validate > minimist > mapbox-gl > @mapbox/geojson-rewind > minimist > maplibre-gl > @maplibre/maplibre-gl-style-spec > minimist
+Dependency Path: mapbox-gl > @mapbox/geojson-rewind > minimist > maplibre-gl > @maplibre/maplibre-gl-style-spec > minimist
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -42905,7 +42486,7 @@ Authors: cghr1990@gmail.com, darcy@darcyclarke.me, evilpacket@gmail.com, i@izs.m
 Package Manager: NPM
 Project URL: https://www.npmjs.com/package/minipass
 Package Download URL: https://registry.npmjs.org/minipass/-/minipass-7.1.3.tgz
-Dependency Path: glob > minipass > glob > path-scurry > minipass > html-validate > glob > minipass > html-validate > glob > path-scurry > minipass > tar > @isaacs/fs-minipass > minipass > tar > minipass > tar > minizlib > minipass
+Dependency Path: glob > minipass > glob > path-scurry > minipass > tar > @isaacs/fs-minipass > minipass > tar > minipass > tar > minizlib > minipass
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -44314,164 +43895,6 @@ Dependency Path: p-map
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
-Package Title: package-json-from-dist (1.0.1)
-
-Package Locator: npm+package-json-from-dist$1.0.1
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-Load the local package.json from either src or dist folder
-
-* Declared Licenses *
-blueoak-1.0.0
---------------------------------------------------------------------------------
-File matches:
-- LICENSE.md
-- package.json
---------------------------------------------------------------------------------
-
-All packages under `src/` are licensed according to the terms in
-their respective `LICENSE` or `LICENSE.md` files.
-
-The remainder of this project is licensed under the Blue Oak
-Model License, as follows:
-
------
-
-# Blue Oak Model License
-
-Version 1.0.0
-
-## Purpose
-
-This license gives everyone as much permission to work with
-this software as possible, while protecting contributors
-from liability.
-
-## Acceptance
-
-In order to receive this license, you must agree to its
-rules.  The rules of this license are both obligations
-under that agreement and conditions to your license.
-You must not do anything with this software that triggers
-a rule that you cannot or will not follow.
-
-## Copyright
-
-Each contributor licenses you to do everything with this
-software that would otherwise infringe that contributor's
-copyright in it.
-
-## Notices
-
-You must ensure that everyone who gets a copy of
-any part of this software from you, with or without
-changes, also gets the text of this license or a link to
-<https://blueoakcouncil.org/license/1.0.0>.
-
-## Excuse
-
-If anyone notifies you in writing that you have not
-complied with [Notices](#notices), you can keep your
-license by taking all practical steps to comply within 30
-days after the notice.  If you do not do so, your license
-ends immediately.
-
-## Patent
-
-Each contributor licenses you to do everything with this
-software that would otherwise infringe any patent claims
-they can license or become able to license.
-
-## Reliability
-
-No contributor can revoke this license.
-
-## No Liability
-
-***As far as the law allows, this software comes as is,
-without any warranty or condition, and no contributor
-will be liable to anyone for any damages related to this
-software or this license, under any kind of legal claim.***
-
-
-* License Header *
-All packages under `src/` are licensed according to the terms in
-their respective `LICENSE` or `LICENSE.md` files.
-
-The remainder of this project is licensed under the Blue Oak
-Model License, as follows:
-
------
-
-# Blue Oak Model License
-
-Version 1.0.0
-
-## Purpose
-
-This license gives everyone as much permission to work with
-this software as possible, while protecting contributors
-from liability.
-
-## Acceptance
-
-In order to receive this license, you must agree to its
-rules.  The rules of this license are both obligations
-under that agreement and conditions to your license.
-You must not do anything with this software that triggers
-a rule that you cannot or will not follow.
-
-## Copyright
-
-Each contributor licenses you to do everything with this
-software that would otherwise infringe that contributor's
-copyright in it.
-
-## Notices
-
-You must ensure that everyone who gets a copy of
-any part of this software from you, with or without
-changes, also gets the text of this license or a link to
-<https://blueoakcouncil.org/license/1.0.0>.
-
-## Excuse
-
-If anyone notifies you in writing that you have not
-complied with [Notices](#notices), you can keep your
-license by taking all practical steps to comply within 30
-days after the notice.  If you do not do so, your license
-ends immediately.
-
-## Patent
-
-Each contributor licenses you to do everything with this
-software that would otherwise infringe any patent claims
-they can license or become able to license.
-
-## Reliability
-
-No contributor can revoke this license.
-
-## No Liability
-
-***As far as the law allows, this software comes as is,
-without any warranty or condition, and no contributor
-will be liable to anyone for any damages related to this
-software or this license, under any kind of legal claim.***
-
-
-* Package Info *
-
-Authors: i@izs.me
-Package Manager: NPM
-Project URL: https://github.com/isaacs/package-json-from-dist#readme
-Package Download URL: https://registry.npmjs.org/package-json-from-dist/-/package-json-from-dist-1.0.1.tgz
-Dependency Path: html-validate > glob > package-json-from-dist
-File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
-
---------------------------------------------------------------------------------
 Package Title: parent-module (1.0.1)
 
 Package Locator: npm+parent-module$1.0.1
@@ -44857,7 +44280,7 @@ Authors: sindresorhus@gmail.com
 Package Manager: NPM
 Project URL: https://www.npmjs.com/package/path-key
 Package Download URL: https://registry.npmjs.org/path-key/-/path-key-3.1.1.tgz
-Dependency Path: cross-spawn > path-key > html-validate > glob > foreground-child > cross-spawn > path-key
+Dependency Path: cross-spawn > path-key
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -45078,7 +44501,7 @@ Authors: i@izs.me
 Package Manager: NPM
 Project URL: https://github.com/isaacs/path-scurry#readme
 Package Download URL: https://registry.npmjs.org/path-scurry/-/path-scurry-2.0.2.tgz
-Dependency Path: glob > path-scurry > html-validate > glob > path-scurry
+Dependency Path: glob > path-scurry
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -48871,7 +48294,7 @@ MIT
 
 Authors: david.dave.clark@gmail.com, romainmenke@gmail.com
 Package Manager: NPM
-Project URL: https://github.com/csstools/postcss-resolve-nested-selector/tree/main/packages/css-tokenizer#readme
+Project URL: https://github.com/csstools/postcss-resolve-nested-selector
 Package Download URL: https://registry.npmjs.org/postcss-resolve-nested-selector/-/postcss-resolve-nested-selector-0.1.6.tgz
 Dependency Path: stylelint > postcss-resolve-nested-selector > stylelint-config-standard > stylelint > postcss-resolve-nested-selector > stylelint-config-standard > stylelint-config-recommended > stylelint > postcss-resolve-nested-selector > stylelint-order > stylelint > postcss-resolve-nested-selector > stylelint-plugin-defensive-css > stylelint > postcss-resolve-nested-selector > stylelint-scss > postcss-resolve-nested-selector > stylelint-scss > stylelint > postcss-resolve-nested-selector
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -57086,7 +56509,7 @@ Authors: kevinmartensson@gmail.com
 Package Manager: NPM
 Project URL: https://www.npmjs.com/package/shebang-command
 Package Download URL: https://registry.npmjs.org/shebang-command/-/shebang-command-2.0.0.tgz
-Dependency Path: cross-spawn > shebang-command > html-validate > glob > foreground-child > cross-spawn > shebang-command
+Dependency Path: cross-spawn > shebang-command
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -57159,7 +56582,7 @@ Authors: sindresorhus@gmail.com
 Package Manager: NPM
 Project URL: https://www.npmjs.com/package/shebang-regex
 Package Download URL: https://registry.npmjs.org/shebang-regex/-/shebang-regex-3.0.0.tgz
-Dependency Path: cross-spawn > shebang-command > shebang-regex > html-validate > glob > foreground-child > cross-spawn > shebang-command > shebang-regex
+Dependency Path: cross-spawn > shebang-command > shebang-regex
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -57277,7 +56700,7 @@ Authors: ben@npmjs.com, i@izs.me
 Package Manager: NPM
 Project URL: https://github.com/tapjs/signal-exit
 Package Download URL: https://registry.npmjs.org/signal-exit/-/signal-exit-4.1.0.tgz
-Dependency Path: html-validate > glob > foreground-child > signal-exit > stylelint > write-file-atomic > signal-exit > stylelint-config-standard > stylelint > write-file-atomic > signal-exit > stylelint-config-standard > stylelint-config-recommended > stylelint > write-file-atomic > signal-exit > stylelint-order > stylelint > write-file-atomic > signal-exit > stylelint-plugin-defensive-css > stylelint > write-file-atomic > signal-exit > stylelint-scss > stylelint > write-file-atomic > signal-exit
+Dependency Path: stylelint > write-file-atomic > signal-exit > stylelint-config-standard > stylelint > write-file-atomic > signal-exit > stylelint-config-standard > stylelint-config-recommended > stylelint > write-file-atomic > signal-exit > stylelint-order > stylelint > write-file-atomic > signal-exit > stylelint-plugin-defensive-css > stylelint > write-file-atomic > signal-exit > stylelint-scss > stylelint > write-file-atomic > signal-exit
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -64277,7 +63700,7 @@ Authors: i@izs.me
 Package Manager: NPM
 Project URL: https://github.com/isaacs/node-which#readme
 Package Download URL: https://registry.npmjs.org/which/-/which-2.0.2.tgz
-Dependency Path: cross-spawn > which > html-validate > glob > foreground-child > cross-spawn > which
+Dependency Path: cross-spawn > which
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -64772,4 +64195,4 @@ File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2026-10-9
+Report Generated by FOSSA on 2026-10-13

@@ -112,9 +112,10 @@ export interface IGenAIService {
  */
 export interface IVisualizationsSummaryRequest {
     /**
-     * Identifiers of the visualizations to summarize. At least one.
+     * The visualizations to summarize, at least one: an identifier, or a placement carrying filters
+     * of its own. Each item is summarized separately, so one visualization may appear more than once.
      */
-    visualizations: string[];
+    visualizations: Array<string | IVisualizationSummaryPlacement>;
     /**
      * Filters merged over each visualization's own. With no dashboard there is no saved filter
      * context to fall back on, so an empty list means no filters are added.
@@ -125,6 +126,21 @@ export interface IVisualizationsSummaryRequest {
      * Use it as an additional prompt.
      */
     formatHint?: string;
+}
+
+/**
+ * A visualization summarized under filters of its own.
+ * @beta
+ */
+export interface IVisualizationSummaryPlacement {
+    /**
+     * Identifier of the visualization.
+     */
+    visualizationId: string;
+    /**
+     * Filters for this placement only, merged over the visualization's own and the request's.
+     */
+    filters: IFilter[];
 }
 
 /**

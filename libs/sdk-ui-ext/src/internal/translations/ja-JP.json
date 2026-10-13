@@ -718,5 +718,9 @@
     "properties.conditionalFormatting.operator.endsWith": "次で終わる",
     "properties.conditionalFormatting.operator.notEndsWith": "次で終わらない",
     "properties.conditionalFormatting.operator.isEmpty": "空である",
-    "properties.conditionalFormatting.operator.isNotEmpty": "空ではない"
+    "properties.conditionalFormatting.operator.isNotEmpty": "空ではない",
+    "properties.lineShape": "線の形状",
+    "properties.lineShape.linear": "線形（デフォルト）",
+    "properties.lineShape.spline": "スプライン",
+    "properties.lineShape.stepped": "ステップ状"
 }

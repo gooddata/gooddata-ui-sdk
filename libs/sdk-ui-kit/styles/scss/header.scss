@@ -284,24 +284,32 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
 
 .gd-list-help-menu-item {
     .gd-icon {
+        flex: none;
         width: 16px;
         height: 16px;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    &.gd-list-item {
+        justify-content: flex-start;
+        gap: var(--gd-spacing-6px);
     }
 
     .gd-icon-slack {
-        background: url("@gooddata/sdk-ui-kit/esm/assets/slack.svg") no-repeat;
+        background-image: url("@gooddata/sdk-ui-kit/esm/assets/slack.svg");
     }
 
     .gd-icon-documentation {
-        background: url("@gooddata/sdk-ui-kit/esm/assets/documentation.svg") no-repeat;
+        background-image: url("@gooddata/sdk-ui-kit/esm/assets/documentation.svg");
     }
 
     .gd-icon-university {
-        background: url("@gooddata/sdk-ui-kit/esm/assets/university.svg") no-repeat;
+        background-image: url("@gooddata/sdk-ui-kit/esm/assets/university.svg");
     }
 
     .gd-icon-community {
-        background: url("@gooddata/sdk-ui-kit/esm/assets/community.svg") no-repeat;
+        background-image: url("@gooddata/sdk-ui-kit/esm/assets/community.svg");
     }
 
     &.gd-list-item.gd-menu-item-divider {

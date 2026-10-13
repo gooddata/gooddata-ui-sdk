@@ -17,7 +17,12 @@ export {
 } from "./constants.js";
 
 // // create-test - feature-hub
-export type { IFeatureHubEnvironment, IFeatureHubFeature } from "./create-test/feature-hub/types.js";
+export type {
+    IFeatureHubEnvironment,
+    IFeatureHubFeature,
+    FeatureHubFeatureValue,
+} from "./create-test/feature-hub/types.js";
+export { makeFeatureHubResponse } from "./create-test/feature-hub/mock.js";
 
 // create-test - GoodMock
 export type {
@@ -54,6 +59,7 @@ export type {
 } from "./create-test/playwright/playwright-types.js";
 export type {
     Callback,
+    FeatureFlags,
     ICreateTestOptions,
     ICustomCreateTestOptions,
     IDescribe,

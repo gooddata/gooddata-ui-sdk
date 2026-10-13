@@ -16,6 +16,54 @@ exports[`tiger filter converter from model to AFM > convert absolute date filter
 }
 `;
 
+exports[`tiger filter converter from model to AFM > convert absolute date filter > should convert absolute date filter with EU week granularity 1`] = `
+{
+  "absoluteDateFilter": {
+    "dataset": {
+      "identifier": {
+        "id": "dt_closedate_timestamp",
+        "type": "dataset",
+      },
+    },
+    "from": "2026-07-20",
+    "localIdentifier": undefined,
+    "to": "2026-07-26",
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert absolute date filter > should convert absolute date filter with day granularity 1`] = `
+{
+  "absoluteDateFilter": {
+    "dataset": {
+      "identifier": {
+        "id": "dt_closedate_timestamp",
+        "type": "dataset",
+      },
+    },
+    "from": "2019-08-06",
+    "localIdentifier": undefined,
+    "to": "2019-08-12",
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert absolute date filter > should convert absolute date filter with day granularity and a time of day 1`] = `
+{
+  "absoluteDateFilter": {
+    "dataset": {
+      "identifier": {
+        "id": "dt_closedate_timestamp",
+        "type": "dataset",
+      },
+    },
+    "from": "2026-03-01 00:00",
+    "localIdentifier": undefined,
+    "to": "2026-04-30 23:59",
+  },
+}
+`;
+
 exports[`tiger filter converter from model to AFM > convert absolute date filter > should convert absolute date filter with empty values handling (exclude) 1`] = `
 {
   "absoluteDateFilter": {
@@ -63,6 +111,107 @@ exports[`tiger filter converter from model to AFM > convert absolute date filter
     "from": "2019-08-06",
     "localIdentifier": undefined,
     "to": "2019-08-12",
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert absolute date filter > should convert absolute date filter with fiscal month granularity 1`] = `
+{
+  "absoluteDateFilter": {
+    "dataset": {
+      "identifier": {
+        "id": "dt_closedate_timestamp",
+        "type": "dataset",
+      },
+    },
+    "from": "2026-03-01",
+    "localIdentifier": undefined,
+    "to": "2026-04-30",
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert absolute date filter > should convert absolute date filter with hour granularity and a time of day 1`] = `
+{
+  "absoluteDateFilter": {
+    "dataset": {
+      "identifier": {
+        "id": "dt_closedate_timestamp",
+        "type": "dataset",
+      },
+    },
+    "from": "2026-03-01 08:00",
+    "localIdentifier": undefined,
+    "to": "2026-03-01 18:00",
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert absolute date filter > should convert absolute date filter with month granularity 1`] = `
+{
+  "absoluteGranularityDateFilter": {
+    "dataset": {
+      "identifier": {
+        "id": "dt_closedate_timestamp",
+        "type": "dataset",
+      },
+    },
+    "from": "2026-03",
+    "granularity": "MONTH",
+    "localIdentifier": undefined,
+    "to": "2026-04",
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert absolute date filter > should convert absolute date filter with month granularity and empty values handling 1`] = `
+{
+  "absoluteGranularityDateFilter": {
+    "dataset": {
+      "identifier": {
+        "id": "dt_closedate_timestamp",
+        "type": "dataset",
+      },
+    },
+    "emptyValueHandling": "INCLUDE",
+    "from": "2026-03",
+    "granularity": "MONTH",
+    "localIdentifier": undefined,
+    "to": "2026-04",
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert absolute date filter > should convert absolute date filter with quarter granularity 1`] = `
+{
+  "absoluteGranularityDateFilter": {
+    "dataset": {
+      "identifier": {
+        "id": "dt_closedate_timestamp",
+        "type": "dataset",
+      },
+    },
+    "from": "2026-1",
+    "granularity": "QUARTER",
+    "localIdentifier": undefined,
+    "to": "2026-2",
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert absolute date filter > should convert absolute date filter with year granularity 1`] = `
+{
+  "absoluteGranularityDateFilter": {
+    "dataset": {
+      "identifier": {
+        "id": "dt_closedate_timestamp",
+        "type": "dataset",
+      },
+    },
+    "from": "2025",
+    "granularity": "YEAR",
+    "localIdentifier": undefined,
+    "to": "2026",
   },
 }
 `;

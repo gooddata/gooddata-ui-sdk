@@ -1,12 +1,16 @@
 // (C) 2025-2026 GoodData Corporation
 
+import { cloneDeep } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
 import {
+    type IAttributeDisplayFormMetadataObject,
     type IDashboardAttributeFilterConfig,
     type IDashboardDateFilterConfigItem,
+    type IDashboardFilterGroupsConfig,
     type IDashboardLayout,
+    type IDashboardMeasureValueFilterConfig,
     type IDateFilterConfig,
     type IFilterContextDefinition,
     type ScreenSize,
@@ -25,6 +29,9 @@ import {
     selectDateFilterConfig,
     selectSettings,
 } from "../../store/config/configSelectors.js";
+import { selectCrossFilteringFiltersLocalIdentifiersByTab } from "../../store/drill/drillSelectors.js";
+import { selectEnablePersistentFiltersAcrossTabs } from "../../store/meta/metaSelectors.js";
+import { seedSyncedTabFilters } from "../../store/tabs/filterContext/filterSync.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectScreen } from "../../store/tabs/layout/layoutSelectors.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tabsSelectors.js";
@@ -41,9 +48,13 @@ const getTabState = ({
     localIdentifier,
     isRenaming,
     filterContext,
+    originalFilterContext,
+    attributeFilterDisplayForms,
     dateFilterConfig,
     dateFilterConfigs,
     attributeFilterConfigs,
+    measureValueFilterConfigs,
+    filterGroupsConfig,
     layout,
     screen,
 }: {
@@ -51,9 +62,13 @@ const getTabState = ({
     localIdentifier: string;
     isRenaming?: boolean;
     filterContext: IFilterContextDefinition;
+    originalFilterContext?: IFilterContextDefinition;
+    attributeFilterDisplayForms?: IAttributeDisplayFormMetadataObject[];
     dateFilterConfig?: IDateFilterConfig;
     dateFilterConfigs?: IDashboardDateFilterConfigItem[];
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
+    measureValueFilterConfigs?: IDashboardMeasureValueFilterConfig[];
+    filterGroupsConfig?: IDashboardFilterGroupsConfig;
     layout: IDashboardLayout<ExtendedDashboardWidget>;
     screen: ScreenSize;
 }): ITabState => {
@@ -64,6 +79,8 @@ const getTabState = ({
         filterContext: {
             filtersWithInvalidSelection: [],
             filterContextDefinition: filterContext,
+            originalFilterContextDefinition: originalFilterContext,
+            attributeFilterDisplayForms,
         },
         dateFilterConfig: {
             dateFilterConfig: undefined,
@@ -77,6 +94,10 @@ const getTabState = ({
         attributeFilterConfigs: {
             attributeFilterConfigs,
         },
+        measureValueFilterConfigs: {
+            measureValueFilterConfigs,
+        },
+        filterGroupsConfig,
         layout: {
             layout: layout,
             stash: {},
@@ -110,7 +131,7 @@ export function* createDashboardTabHandler(ctx: DashboardContext, cmd: ICreateDa
 
     const updatedTabs = (tabs ?? []).slice();
 
-    // 2. Create new tab with an empty filter context and layout
+    // 2. Create new tab with an empty layout and a default filter context (seeded from the active tab when filters sync across tabs)
     const effectiveDateFilterConfig =
         activeCalendars?.fiscal &&
         activeCalendars?.default === "FISCAL" &&
@@ -121,13 +142,31 @@ export function* createDashboardTabHandler(ctx: DashboardContext, cmd: ICreateDa
     const newTabId = generateTabLocalIdentifier();
     const newTabFilterContext = createDefaultFilterContext(effectiveDateFilterConfig, true);
 
+    // Synced writes only update existing counterparts and reset needs originals to restore to,
+    // so a tab created while sync is on must start with the synced filters as its saved state.
+    const activeTab = tabs?.find((tab) => tab.localIdentifier === activeTabLocalIdentifier);
+    const crossFilteringLocalIdsByTab: ReturnType<typeof selectCrossFilteringFiltersLocalIdentifiersByTab> =
+        yield select(selectCrossFilteringFiltersLocalIdentifiersByTab);
+    const enablePersistentFiltersAcrossTabs: ReturnType<typeof selectEnablePersistentFiltersAcrossTabs> =
+        yield select(selectEnablePersistentFiltersAcrossTabs);
+    const seed =
+        enablePersistentFiltersAcrossTabs && activeTab
+            ? seedSyncedTabFilters(activeTab, newTabFilterContext, crossFilteringLocalIdsByTab)
+            : undefined;
+
     const newTab: ITabState = getTabState({
         localIdentifier: newTabId,
         title,
         layout: EmptyDashboardLayout,
         screen,
-        filterContext: newTabFilterContext,
+        filterContext: seed?.filterContextDefinition ?? newTabFilterContext,
+        originalFilterContext: seed ? cloneDeep(seed.filterContextDefinition) : undefined,
+        attributeFilterDisplayForms: seed?.attributeFilterDisplayForms,
         dateFilterConfig,
+        dateFilterConfigs: seed?.dateFilterConfigs,
+        attributeFilterConfigs: seed?.attributeFilterConfigs,
+        measureValueFilterConfigs: seed?.measureValueFilterConfigs,
+        filterGroupsConfig: seed?.filterGroupsConfig,
         isRenaming: shouldStartRenaming,
     });
 

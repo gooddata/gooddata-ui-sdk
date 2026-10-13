@@ -3870,6 +3870,20 @@ describe("useObjectShareController draft mode", () => {
         expect(draftToPermissions(workspace.result.current.draft!)).toEqual([]);
     });
 
+    it("carries a restriction of an object that will be created with workspace access", async () => {
+        const { result } = await renderDraft(makeService(), { initialDraftGeneralAccess: "WORKSPACE" });
+
+        act(() => result.current.actions.requestGeneralAccessChange("RESTRICTED"));
+        await act(async () => {
+            await result.current.actions.confirmGeneralAccessChange();
+        });
+
+        expect(result.current.state.generalAccess).toBe("RESTRICTED");
+        expect(draftToPermissions(result.current.draft!)).toEqual([
+            { type: "allWorkspaceUsers", permissions: [], inheritedPermissions: [] },
+        ]);
+    });
+
     it("settles even when the profile cannot be read", async () => {
         getUserMock.mockRejectedValueOnce(new Error("profile unavailable"));
         const { result } = renderController(makeService(), undefined, DRAFT_OPTS);

@@ -6,8 +6,9 @@ import { IntlProvider } from "react-intl";
 import { Provider } from "react-redux";
 import { afterEach, describe, expect, it } from "vitest";
 
-import type { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import type { IChatKdaDefinition, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { WorkspaceProvider } from "@gooddata/sdk-ui";
+import type { ISlotProps } from "@gooddata/sdk-ui-kit";
 
 import { DEFAULT_MESSAGES } from "../../../localization/translations.js";
 import type { IChatConversationLocalItem, IChatConversationMultipartLocalPart } from "../../../model.js";
@@ -18,6 +19,10 @@ import {
 } from "../../../store/chatWindow/chatWindowSlice.js";
 import { messagesSliceName, messagesSliceReducer } from "../../../store/messages/messagesSlice.js";
 import { CustomizationProvider } from "../../CustomizationProvider.js";
+import type {
+    IGenAIAssistantConversationKdaContentProps,
+    IGenAIAssistantSlots,
+} from "../../customized/types.js";
 
 import { ConversationMultipartContent } from "./ConversationMultipartContent.js";
 
@@ -39,7 +44,7 @@ const settings = (): IUserWorkspaceSettings => ({
     enableBusinessBriefingReportsApp: true,
 });
 
-function renderParts(parts: IChatConversationMultipartLocalPart[]) {
+function renderParts(parts: IChatConversationMultipartLocalPart[], slots?: IGenAIAssistantSlots) {
     const store = configureStore({
         reducer: {
             [chatWindowSliceName]: chatWindowSliceReducer,
@@ -52,7 +57,7 @@ function renderParts(parts: IChatConversationMultipartLocalPart[]) {
         <Provider store={store}>
             <IntlProvider locale="en-US" messages={DEFAULT_MESSAGES["en-US"]}>
                 <WorkspaceProvider workspace="ws-1">
-                    <CustomizationProvider>
+                    <CustomizationProvider slots={slots}>
                         <ConversationMultipartContent message={MESSAGE} parts={parts} references={[]} />
                     </CustomizationProvider>
                 </WorkspaceProvider>
@@ -105,5 +110,18 @@ describe("ConversationMultipartContent", () => {
         renderParts([{ type: "publisherDocument", publisherDocument: null }]);
 
         expect(screen.getByText("The document is unavailable.")).toBeTruthy();
+    });
+
+    it("renders KDA content through the customization slot", () => {
+        const kda = {} as IChatKdaDefinition;
+        function CustomKdaContent({ defaultProps }: ISlotProps<IGenAIAssistantConversationKdaContentProps>) {
+            return (
+                <div data-testid="custom-kda-content">{defaultProps.kda === kda ? "custom KDA" : null}</div>
+            );
+        }
+
+        renderParts([{ type: "kda", kda }], { ConversationKdaContent: CustomKdaContent });
+
+        expect(screen.getByTestId("custom-kda-content")).toHaveTextContent("custom KDA");
     });
 });

@@ -1,6 +1,6 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
-import { compact } from "lodash-es";
+import { compact, dropRightWhile } from "lodash-es";
 import stringifyObject from "stringify-object";
 
 import { type ObjRefInScope, isIdentifierRef, isUriRef } from "../../objRef/index.js";
@@ -199,10 +199,27 @@ const convertMeasureSortItem: Converter<IMeasureSortItem> = ({ measureSortItem }
 };
 
 const convertAbsoluteDateFilter: Converter<IAbsoluteDateFilter> = ({
-    absoluteDateFilter: { dataSet, from, to, localIdentifier },
+    absoluteDateFilter: { dataSet, from, to, localIdentifier, emptyValueHandling, granularity },
 }) => {
-    const restArgs = compact([from, to, localIdentifier]).map(stringify);
-    return `newAbsoluteDateFilter(${[stringifyObjRef(dataSet), ...restArgs].join(ARRAY_JOINER)})`;
+    const requiredArgs = [from, to].map(stringify);
+
+    if (granularity) {
+        const options = {
+            ...(localIdentifier ? { localIdentifier } : {}),
+            ...(emptyValueHandling ? { emptyValueHandling } : {}),
+            granularity,
+        };
+        return `newAbsoluteDateFilter(${[stringifyObjRef(dataSet), ...requiredArgs, stringify(options)].join(ARRAY_JOINER)})`;
+    }
+
+    // The factory takes these positionally, so a missing one still needs a placeholder whenever
+    // a later one is present.
+    const optionalArgs = dropRightWhile(
+        [localIdentifier, emptyValueHandling],
+        (arg) => arg === undefined || arg === null,
+    ).map((arg) => (arg === undefined || arg === null ? "undefined" : stringify(arg)));
+
+    return `newAbsoluteDateFilter(${[stringifyObjRef(dataSet), ...requiredArgs, ...optionalArgs].join(ARRAY_JOINER)})`;
 };
 
 const convertRelativeDateFilter: Converter<IRelativeDateFilter> = ({ relativeDateFilter }) => {

@@ -1,14 +1,16 @@
 // (C) 2026 GoodData Corporation
 
-import { renderHook, waitFor } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { act, renderHook, waitFor } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import {
+    NotAuthenticated,
     UnexpectedResponseError,
     type IAnalyticalBackend,
     type IUserWorkspaceSettings,
 } from "@gooddata/sdk-backend-spi";
 
+import { NOT_AUTHENTICATED_GRACE_MS } from "./notAuthenticatedGrace.js";
 import { useWorkspaceSettings } from "./useWorkspaceSettings.js";
 
 type SettingsFetcher = () => Promise<IUserWorkspaceSettings>;
@@ -154,5 +156,49 @@ describe("useWorkspaceSettings", () => {
         rerender();
 
         expect(result.current).toBe(firstRef);
+    });
+
+    describe("when the fetch fails with 401", () => {
+        afterEach(() => {
+            vi.useRealTimers();
+        });
+
+        it("stays loading during the login redirect grace period, then reports the error", async () => {
+            vi.useFakeTimers();
+            const getSettingsForCurrentUser = vi
+                .fn()
+                .mockRejectedValue(new NotAuthenticated("Not authenticated"));
+            const backend = mockBackend(getSettingsForCurrentUser);
+
+            const { result } = renderHook(() => useWorkspaceSettings(backend, "ws-123"));
+            await act(async () => {
+                await Promise.resolve();
+            });
+
+            expect(result.current.state).toBe("loading");
+
+            act(() => {
+                vi.advanceTimersByTime(NOT_AUTHENTICATED_GRACE_MS);
+            });
+
+            expect(result.current).toEqual({ state: "error", error: "Not authenticated" });
+        });
+
+        it("does not report the error after unmount", async () => {
+            vi.useFakeTimers();
+            const getSettingsForCurrentUser = vi
+                .fn()
+                .mockRejectedValue(new NotAuthenticated("Not authenticated"));
+            const backend = mockBackend(getSettingsForCurrentUser);
+
+            const { result, unmount } = renderHook(() => useWorkspaceSettings(backend, "ws-123"));
+            await act(async () => {
+                await Promise.resolve();
+            });
+            unmount();
+
+            expect(vi.getTimerCount()).toBe(0);
+            expect(result.current.state).toBe("loading");
+        });
     });
 });

@@ -18,10 +18,6 @@ import { useDashboardSelector } from "../../../model/react/DashboardStoreProvide
 import { selectSupportsSettingConnectingAttributes } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../../model/store/config/configSelectors.js";
 import {
-    selectRestrictedDashboardFilterLocalIdentifiers,
-    selectRestrictedDashboardFilterLocalIdentifiersForTab,
-} from "../../../model/store/filtering/dashboardFilterSelectors.js";
-import {
     selectFilterContextAttributeFilterItems,
     selectFilterContextAttributeFilterItemsForTab,
     selectWorkingFilterContextAttributeFilterItems,
@@ -71,11 +67,6 @@ export const useParentFilters = (
     const supportsSettingConnectingAttributes = useDashboardSelector(
         selectSupportsSettingConnectingAttributes,
     );
-    const restrictedFilterLocalIdentifiers = useDashboardSelector(
-        tabId
-            ? selectRestrictedDashboardFilterLocalIdentifiersForTab(tabId)
-            : selectRestrictedDashboardFilterLocalIdentifiers,
-    );
 
     const filterElementsBy = dashboardAttributeFilterItemFilterElementsBy(filter);
 
@@ -84,19 +75,16 @@ export const useParentFilters = (
             return undefined;
         }
 
-        return filterElementsBy.flatMap((parent) => {
-            if (restrictedFilterLocalIdentifiers.has(parent.filterLocalIdentifier)) {
-                return [];
-            }
+        return filterElementsBy.map((parent) => {
             const matchingFilter = allAttributeFilterItems.find(
                 (f) => dashboardAttributeFilterItemLocalIdentifier(f) === parent.filterLocalIdentifier,
             );
 
             invariant(matchingFilter); // if this blows up, the state is inconsistent
 
-            return [{ filter: matchingFilter, over: parent.over.attributes[0] }];
+            return { filter: matchingFilter, over: parent.over.attributes[0] };
         });
-    }, [allAttributeFilterItems, filterElementsBy, restrictedFilterLocalIdentifiers]);
+    }, [allAttributeFilterItems, filterElementsBy]);
 
     const parentFilters = useMemo(() => {
         return parentFiltersData?.map((item) => dashboardAttributeFilterItemToAttributeFilter(item.filter));

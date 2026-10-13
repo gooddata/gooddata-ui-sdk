@@ -1,6 +1,5 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { type AnyAction } from "@reduxjs/toolkit";
 import { compact, partition, uniqBy } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
@@ -24,6 +23,7 @@ import {
     dashboardAttributeFilterItemFilterElementsByDate,
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardAttributeFilterItemValidateElementsBy,
+    dashboardFilterLocalIdentifier,
     dashboardFilterObjRef,
     dashboardMeasureValueFilterLocalIdentifier,
     getAttributeElementsItems,
@@ -46,7 +46,13 @@ import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/
 import { type ChangeFilterContextSelection } from "../../commands/filters.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
-import { isDashboardFilterRestricted } from "../../store/filtering/restrictedFilterUtils.js";
+import { selectCrossFilteringFiltersLocalIdentifiersByTab } from "../../store/drill/drillSelectors.js";
+import {
+    selectRestrictedDashboardFilterLocalIdentifiers,
+    selectRestrictedDashboardFilterLocalIdentifiersForTab,
+} from "../../store/filtering/dashboardFilterSelectors.js";
+import { isDashboardFilterUsingRestrictedObject } from "../../store/filtering/restrictedFilterUtils.js";
+import { selectEnablePersistentFiltersAcrossTabs } from "../../store/meta/metaSelectors.js";
 import {
     selectAttributeFilterConfigsOverrides,
     selectAttributeFilterConfigsOverridesByTab,
@@ -58,97 +64,212 @@ import {
     type IUpsertDateFilterPayload,
 } from "../../store/tabs/filterContext/filterContextReducers.js";
 import {
+    isDisplayFormRefOf,
     selectAttributeFilterDisplayFormsMap,
-    selectFilterContextAttributeFilterByDisplayForm,
-    selectFilterContextAttributeFilterByDisplayFormForTab,
-    selectFilterContextAttributeFilterByLocalId,
-    selectFilterContextAttributeFilterByLocalIdForTab,
-    selectFilterContextAttributeFilterItemByDisplayForm,
-    selectFilterContextAttributeFilterItemByDisplayFormForTab,
-    selectFilterContextAttributeFilterItemByLocalId,
-    selectFilterContextAttributeFilterItemByLocalIdForTab,
+    type selectFilterContextAttributeFilterByDisplayForm,
+    type selectFilterContextAttributeFilterByLocalId,
+    type selectFilterContextAttributeFilterItemByDisplayForm,
+    type selectFilterContextAttributeFilterItemByLocalId,
     selectFilterContextAttributeFilterItems,
     selectFilterContextAttributeFilterItemsForTab,
-    selectFilterContextAttributeFilters,
-    selectFilterContextAttributeFiltersForTab,
+    type selectFilterContextAttributeFilters,
     selectFilterContextDateFilterByDataSet,
     selectFilterContextDateFilterByDataSetForTab,
     selectFilterContextDateFiltersWithDimension,
     selectFilterContextDateFiltersWithDimensionForTab,
+    selectFilterContextFilters,
     selectFilterContextMeasureValueFilters,
+    selectFiltersForTab,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { selectUnavailableObjects } from "../../store/unavailableObjects/unavailableObjectsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+import { canApplyFilterTypeToTarget } from "../../utils/attributeFilterSelectionTypeCompatibility.js";
 import { resolveAttributeMetadata } from "../../utils/attributeResolver.js";
 import {
     type DisplayFormResolutionResult,
     resolveDisplayFormMetadata,
 } from "../../utils/displayFormResolver.js";
-import { canApplyFilterTypeToTarget } from "../dashboard/common/attributeFilterSelectionTypeCompatibility.js";
 
 import { resolveAndRegisterDisplayFormMetadata } from "./attributeFilter/resolveDisplayFormMetadata.js";
 import {
     computedAttributesDisabledMessage,
     findDisabledComputedAttributeRef,
 } from "./attributeFilter/validation/computedAttributesEnabledValidation.js";
-import { canApplyDateFilter, dispatchFilterContextChanged } from "./common.js";
+import {
+    type IFilterContextByTabSnapshot,
+    canApplyDateFilter,
+    captureFilterContextByTabSnapshot,
+    dispatchFilterContextChanged,
+    dispatchFilterContextChangedForMutatedTabs,
+} from "./common.js";
+
+/**
+ * Actions the selection-change generators may emit.
+ * A new `tabsActions` call there is not assignable until it is added to this union.
+ */
+type SelectionUpdateAction =
+    | ReturnType<typeof tabsActions.updateAttributeFilterSelection>
+    | ReturnType<typeof tabsActions.replaceAttributeFilterItem>
+    | ReturnType<typeof tabsActions.clearAttributeFiltersSelection>
+    | ReturnType<typeof tabsActions.upsertDateFilter>
+    | ReturnType<typeof tabsActions.changeMeasureValueFilterCondition>
+    | ReturnType<typeof tabsActions.setMeasureValueFilterDimensionality>
+    | ReturnType<typeof tabsActions.addAttributeFilterDisplayForm>
+    | ReturnType<typeof tabsActions.changeAttributeDisplayForm>
+    | ReturnType<typeof tabsActions.changeDisplayAsLabel>;
+
+type AttributeFilterUpdateResult = {
+    actions: SelectionUpdateAction[];
+    displayFormsToResolve: ObjRef[];
+};
+
+/**
+ * Whether reset stamps `restoreTargetOriginal` on the action.
+ * `true` is legal only when the payload declares the flag, and `RESTORE_TARGET_ORIGINAL` must
+ * list every action in the union.
+ */
+type RestoreTargetOriginalByAction = {
+    [K in SelectionUpdateAction["type"]]: "restoreTargetOriginal" extends keyof Extract<
+        SelectionUpdateAction,
+        { type: K }
+    >["payload"]
+        ? true
+        : false;
+};
+
+function classifyRestore<K extends SelectionUpdateAction["type"]>(
+    type: K,
+    restoresOriginal: RestoreTargetOriginalByAction[K],
+): { [P in K]: RestoreTargetOriginalByAction[K] } {
+    // A computed key is not inferred as a single-property mapped type.
+    return { [type]: restoresOriginal } as { [P in K]: RestoreTargetOriginalByAction[K] };
+}
+
+const RESTORE_TARGET_ORIGINAL = {
+    ...classifyRestore(tabsActions.updateAttributeFilterSelection.type, true),
+    ...classifyRestore(tabsActions.replaceAttributeFilterItem.type, true),
+    ...classifyRestore(tabsActions.clearAttributeFiltersSelection.type, true),
+    ...classifyRestore(tabsActions.upsertDateFilter.type, true),
+    ...classifyRestore(tabsActions.changeMeasureValueFilterCondition.type, true),
+    ...classifyRestore(tabsActions.setMeasureValueFilterDimensionality.type, true),
+    ...classifyRestore(tabsActions.addAttributeFilterDisplayForm.type, false),
+    ...classifyRestore(tabsActions.changeAttributeDisplayForm.type, false),
+    ...classifyRestore(tabsActions.changeDisplayAsLabel.type, false),
+} satisfies RestoreTargetOriginalByAction;
+
+/**
+ * Reset persists one payload (the active tab's saved values). Mark the value-writing actions so
+ * other tabs restore their own originals instead of receiving that payload.
+ */
+function markRestoreTargetOriginal(
+    actions: SelectionUpdateAction[],
+    enabled: boolean,
+): SelectionUpdateAction[] {
+    if (!enabled) {
+        return actions;
+    }
+    for (const action of actions) {
+        if (RESTORE_TARGET_ORIGINAL[action.type]) {
+            (action.payload as { restoreTargetOriginal?: boolean }).restoreTargetOriginal = true;
+        }
+    }
+    return actions;
+}
 
 // Tab-aware select helpers — encapsulate the "if tab select ForTab else select" pattern.
 // Named after the base selector they wrap.
-function* selectFilterContextAttributeFilterByDisplayFormTabAware(
-    displayForm: ObjRef,
+//
+// The attribute filter helpers see readable filters only. A restricted filter keeps its stored selection,
+// so matching passes it over to a readable filter with the same label and resetOthers leaves it alone;
+// an entry that addresses it exactly is dropped before matching.
+function* selectRestrictedDashboardFilterLocalIdentifiersTabAware(
     tabLocalIdentifier?: string,
-): SagaIterator<ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByDisplayForm>>> {
+): SagaIterator<ReturnType<typeof selectRestrictedDashboardFilterLocalIdentifiers>> {
     return tabLocalIdentifier
-        ? yield select(selectFilterContextAttributeFilterByDisplayFormForTab(displayForm, tabLocalIdentifier))
-        : yield select(selectFilterContextAttributeFilterByDisplayForm(displayForm));
+        ? yield select(selectRestrictedDashboardFilterLocalIdentifiersForTab(tabLocalIdentifier))
+        : yield select(selectRestrictedDashboardFilterLocalIdentifiers);
+}
+
+function* selectFilterContextAttributeFilterItemsTabAware(
+    tabLocalIdentifier?: string,
+): SagaIterator<ReturnType<typeof selectFilterContextAttributeFilterItems>> {
+    const items: ReturnType<typeof selectFilterContextAttributeFilterItems> = tabLocalIdentifier
+        ? yield select(selectFilterContextAttributeFilterItemsForTab(tabLocalIdentifier))
+        : yield select(selectFilterContextAttributeFilterItems);
+    const restrictedLocalIdentifiers: SagaReturnType<
+        typeof selectRestrictedDashboardFilterLocalIdentifiersTabAware
+    > = yield call(selectRestrictedDashboardFilterLocalIdentifiersTabAware, tabLocalIdentifier);
+    return items.filter(
+        (item) => !restrictedLocalIdentifiers.has(dashboardAttributeFilterItemLocalIdentifier(item) ?? ""),
+    );
+}
+
+function* selectFilterContextAttributeFiltersTabAware(
+    tabLocalIdentifier?: string,
+): SagaIterator<ReturnType<typeof selectFilterContextAttributeFilters>> {
+    const items: SagaReturnType<typeof selectFilterContextAttributeFilterItemsTabAware> = yield call(
+        selectFilterContextAttributeFilterItemsTabAware,
+        tabLocalIdentifier,
+    );
+    return items.filter(isDashboardAttributeFilter);
 }
 
 function* selectFilterContextAttributeFilterItemByLocalIdTabAware(
     localId: string,
     tabLocalIdentifier?: string,
 ): SagaIterator<ReturnType<ReturnType<typeof selectFilterContextAttributeFilterItemByLocalId>>> {
-    return tabLocalIdentifier
-        ? yield select(selectFilterContextAttributeFilterItemByLocalIdForTab(localId, tabLocalIdentifier))
-        : yield select(selectFilterContextAttributeFilterItemByLocalId(localId));
-}
-
-function* selectFilterContextAttributeFilterItemByDisplayFormTabAware(
-    displayForm: ObjRef,
-    tabLocalIdentifier?: string,
-): SagaIterator<ReturnType<ReturnType<typeof selectFilterContextAttributeFilterItemByDisplayForm>>> {
-    return tabLocalIdentifier
-        ? yield select(
-              selectFilterContextAttributeFilterItemByDisplayFormForTab(displayForm, tabLocalIdentifier),
-          )
-        : yield select(selectFilterContextAttributeFilterItemByDisplayForm(displayForm));
+    const items: SagaReturnType<typeof selectFilterContextAttributeFilterItemsTabAware> = yield call(
+        selectFilterContextAttributeFilterItemsTabAware,
+        tabLocalIdentifier,
+    );
+    return items.find((item) => dashboardAttributeFilterItemLocalIdentifier(item) === localId);
 }
 
 function* selectFilterContextAttributeFilterByLocalIdTabAware(
     localId: string,
     tabLocalIdentifier?: string,
 ): SagaIterator<ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByLocalId>>> {
-    return tabLocalIdentifier
-        ? yield select(selectFilterContextAttributeFilterByLocalIdForTab(localId, tabLocalIdentifier))
-        : yield select(selectFilterContextAttributeFilterByLocalId(localId));
+    const filters: SagaReturnType<typeof selectFilterContextAttributeFiltersTabAware> = yield call(
+        selectFilterContextAttributeFiltersTabAware,
+        tabLocalIdentifier,
+    );
+    return filters.find((filter) => filter.attributeFilter.localIdentifier === localId);
 }
 
-function* selectFilterContextAttributeFiltersTabAware(
+function* selectFilterContextAttributeFilterItemByDisplayFormTabAware(
+    displayForm: ObjRef,
     tabLocalIdentifier?: string,
-): SagaIterator<ReturnType<typeof selectFilterContextAttributeFilters>> {
-    return tabLocalIdentifier
-        ? yield select(selectFilterContextAttributeFiltersForTab(tabLocalIdentifier))
-        : yield select(selectFilterContextAttributeFilters);
+): SagaIterator<ReturnType<ReturnType<typeof selectFilterContextAttributeFilterItemByDisplayForm>>> {
+    const items: SagaReturnType<typeof selectFilterContextAttributeFilterItemsTabAware> = yield call(
+        selectFilterContextAttributeFilterItemsTabAware,
+        tabLocalIdentifier,
+    );
+    const displayFormsMap: ReturnType<typeof selectAttributeFilterDisplayFormsMap> = yield select(
+        selectAttributeFilterDisplayFormsMap,
+    );
+    const df = displayFormsMap.get(displayForm);
+    return df
+        ? items.find((item) => isDisplayFormRefOf(dashboardAttributeFilterItemDisplayForm(item), df))
+        : undefined;
 }
 
-function* selectFilterContextAttributeFilterItemsTabAware(
+function* selectFilterContextAttributeFilterByDisplayFormTabAware(
+    displayForm: ObjRef,
     tabLocalIdentifier?: string,
-): SagaIterator<ReturnType<typeof selectFilterContextAttributeFilterItems>> {
-    return tabLocalIdentifier
-        ? yield select(selectFilterContextAttributeFilterItemsForTab(tabLocalIdentifier))
-        : yield select(selectFilterContextAttributeFilterItems);
+): SagaIterator<ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByDisplayForm>>> {
+    const filters: SagaReturnType<typeof selectFilterContextAttributeFiltersTabAware> = yield call(
+        selectFilterContextAttributeFiltersTabAware,
+        tabLocalIdentifier,
+    );
+    const displayFormsMap: ReturnType<typeof selectAttributeFilterDisplayFormsMap> = yield select(
+        selectAttributeFilterDisplayFormsMap,
+    );
+    const df = displayFormsMap.get(displayForm);
+    return df
+        ? filters.find((filter) => isDisplayFormRefOf(filter.attributeFilter.displayForm, df))
+        : undefined;
 }
 
 function* selectFilterContextDateFilterByDataSetTabAware(
@@ -190,6 +311,7 @@ export function* changeFilterContextSelectionHandler(
         attributeFilterConfigs = [],
         tabLocalIdentifier,
         matchByLocalIdentifier = false,
+        restorePerTabOriginals = false,
     } = cmd.payload;
 
     // Validate that the target tab exists if tabLocalIdentifier is provided
@@ -214,8 +336,39 @@ export function* changeFilterContextSelectionHandler(
     const unavailableObjects: ReturnType<typeof selectUnavailableObjects> =
         yield select(selectUnavailableObjects);
 
-    // A restricted attribute filter keeps its stored selection: its label is never resolved, so the
-    // filter can be neither matched nor changed.
+    // A restricted filter keeps its stored selection. An entry that uses a restricted object is dropped:
+    // a restricted label is never resolved, and a restricted "For attribute" would restrict the measure
+    // value filter it is applied to. With matchByLocalIdentifier, an entry that addresses a restricted
+    // filter exactly is dropped too; a list entry addresses a filter exactly only with an equivalent
+    // display form, as its element values are valid for one display form only.
+    const restrictedLocalIdentifiers: SagaReturnType<
+        typeof selectRestrictedDashboardFilterLocalIdentifiersTabAware
+    > = yield call(selectRestrictedDashboardFilterLocalIdentifiersTabAware, tabLocalIdentifier);
+    const tabFilters: ReturnType<typeof selectFilterContextFilters> = tabLocalIdentifier
+        ? yield select(selectFiltersForTab(tabLocalIdentifier))
+        : yield select(selectFilterContextFilters);
+    const displayFormsMap: ReturnType<typeof selectAttributeFilterDisplayFormsMap> = yield select(
+        selectAttributeFilterDisplayFormsMap,
+    );
+    const addressesRestrictedFilter = (entry: FilterContextItem): boolean => {
+        const localIdentifier = dashboardFilterLocalIdentifier(entry);
+        const target =
+            localIdentifier && restrictedLocalIdentifiers.has(localIdentifier)
+                ? tabFilters.find((filter) => dashboardFilterLocalIdentifier(filter) === localIdentifier)
+                : undefined;
+        if (isDashboardAttributeFilter(entry)) {
+            const df = displayFormsMap.get(entry.attributeFilter.displayForm);
+            return (
+                !!df &&
+                isDashboardAttributeFilter(target) &&
+                isDisplayFormRefOf(target.attributeFilter.displayForm, df)
+            );
+        }
+        if (isDashboardAttributeFilterItem(entry)) {
+            return isDashboardAttributeFilterItem(target);
+        }
+        return isDashboardMeasureValueFilter(entry) && isDashboardMeasureValueFilter(target);
+    };
     const normalizedFilters: FilterContextItem[] = compact(
         filters.map((filter): FilterContextItem | undefined => {
             if (
@@ -233,9 +386,9 @@ export function* changeFilterContextSelectionHandler(
     ).filter(
         (filter) =>
             !(
-                isDashboardAttributeFilterItem(filter) &&
-                isDashboardFilterRestricted(filter, unavailableObjects)
-            ),
+                (isDashboardAttributeFilterItem(filter) || isDashboardMeasureValueFilter(filter)) &&
+                isDashboardFilterUsingRestrictedObject(filter, unavailableObjects)
+            ) && !(matchByLocalIdentifier && addressesRestrictedFilter(filter)),
     );
 
     const disabledComputedAttributeRef: SagaReturnType<typeof findDisabledComputedAttributeRef> = yield call(
@@ -327,24 +480,32 @@ export function* changeFilterContextSelectionHandler(
         commonDateFilterUpdateActions,
         dateFiltersUpdateActions,
         measureValueFilterUpdateActions,
-    ]: [{ actions: AnyAction[]; displayFormsToResolve: ObjRef[] }, AnyAction[], AnyAction[], AnyAction[]] =
-        yield all([
-            call(
-                getAttributeFiltersUpdateActions,
-                [...attributeFilters].reverse(),
-                textAttributeFilters,
-                attributeFilterConfigs,
-                resetOthers,
-                unavailableObjects,
-                ctx,
-                tabLocalIdentifier,
-                selectionTypeMap,
-                matchByLocalIdentifier,
-            ),
-            call(getDateFilterUpdateActions, commonDateFilter, resetOthers, tabLocalIdentifier),
-            call(getDateFiltersUpdateActions, dateFiltersWithDimension, resetOthers, tabLocalIdentifier),
-            call(getMeasureValueFiltersUpdateActions, measureValueFilters, resetOthers),
-        ]);
+    ]: [
+        AttributeFilterUpdateResult,
+        SelectionUpdateAction[],
+        SelectionUpdateAction[],
+        SelectionUpdateAction[],
+    ] = yield all([
+        call(
+            getAttributeFiltersUpdateActions,
+            [...attributeFilters].reverse(),
+            textAttributeFilters,
+            attributeFilterConfigs,
+            resetOthers,
+            ctx,
+            tabLocalIdentifier,
+            selectionTypeMap,
+            matchByLocalIdentifier,
+        ),
+        call(getDateFilterUpdateActions, commonDateFilter, resetOthers, tabLocalIdentifier),
+        call(getDateFiltersUpdateActions, dateFiltersWithDimension, resetOthers, tabLocalIdentifier),
+        call(getMeasureValueFiltersUpdateActions, measureValueFilters, resetOthers),
+    ]);
+
+    const enablePersistentFiltersAcrossTabs: ReturnType<typeof selectEnablePersistentFiltersAcrossTabs> =
+        yield select(selectEnablePersistentFiltersAcrossTabs);
+
+    const filterContextSnapshot: IFilterContextByTabSnapshot = yield call(captureFilterContextByTabSnapshot);
 
     // Ensure display form metadata is loaded for filters that will actually be applied.
     // This handles the case where a default saved view changed filter types (e.g., list→text)
@@ -361,15 +522,24 @@ export function* changeFilterContextSelectionHandler(
     }
 
     yield put(
-        batchActions([
-            ...attributeFilterResult.actions,
-            ...commonDateFilterUpdateActions,
-            ...dateFiltersUpdateActions,
-            ...measureValueFilterUpdateActions,
-        ]),
+        batchActions(
+            markRestoreTargetOriginal(
+                [
+                    ...attributeFilterResult.actions,
+                    ...commonDateFilterUpdateActions,
+                    ...dateFiltersUpdateActions,
+                    ...measureValueFilterUpdateActions,
+                ],
+                restorePerTabOriginals,
+            ),
+        ),
     );
 
-    yield call(dispatchFilterContextChanged, ctx, cmd, tabLocalIdentifier);
+    if (enablePersistentFiltersAcrossTabs) {
+        yield call(dispatchFilterContextChangedForMutatedTabs, ctx, cmd, filterContextSnapshot);
+    } else {
+        yield call(dispatchFilterContextChanged, ctx, cmd, tabLocalIdentifier);
+    }
 }
 
 function* getDashboardFilterByAttributeMatching(
@@ -455,17 +625,21 @@ function* getDashboardFilterByDisplayAsLabelMatching(
         const dashboardFiltersConfigs = tabLocalIdentifier
             ? dashboardFiltersConfigsByTab[tabLocalIdentifier]
             : dashboardFiltersConfigsForActiveTab;
-        const matchingDashboardFilterConfig = dashboardFiltersConfigs.find((config) =>
+        // the config of a restricted filter may come first, its filter is not found
+        const matchingDashboardFilterConfigs = dashboardFiltersConfigs.filter((config) =>
             areObjRefsEqual(config.displayAsLabel, filterRef),
         );
-        if (matchingDashboardFilterConfig) {
+        for (const config of matchingDashboardFilterConfigs) {
             dashboardFilter = yield call(
                 selectFilterContextAttributeFilterByLocalIdTabAware,
-                matchingDashboardFilterConfig?.localIdentifier,
+                config.localIdentifier,
                 tabLocalIdentifier,
             );
-            foundByDashboardFilterDisplayAsLabel = !!dashboardFilter;
+            if (dashboardFilter) {
+                break;
+            }
         }
+        foundByDashboardFilterDisplayAsLabel = !!dashboardFilter;
     }
     return { foundByDisplayAsLabel, foundByDashboardFilterDisplayAsLabel, dashboardFilter };
 }
@@ -500,15 +674,20 @@ function* findTargetFilterItemByDisplayForm(
         ? dashboardFiltersConfigsByTab[tabLocalIdentifier]
         : dashboardFiltersConfigsForActiveTab;
 
-    const matchingConfig = dashboardFiltersConfigs?.find((config) =>
-        areObjRefsEqual(config.displayAsLabel, displayFormRef),
-    );
-    if (matchingConfig) {
-        return yield call(
-            selectFilterContextAttributeFilterItemByLocalIdTabAware,
-            matchingConfig.localIdentifier,
-            tabLocalIdentifier,
-        );
+    // the config of a restricted filter may come first, its filter is not found
+    const matchingConfigs =
+        dashboardFiltersConfigs?.filter((config) => areObjRefsEqual(config.displayAsLabel, displayFormRef)) ??
+        [];
+    for (const config of matchingConfigs) {
+        const target: SagaReturnType<typeof selectFilterContextAttributeFilterItemByLocalIdTabAware> =
+            yield call(
+                selectFilterContextAttributeFilterItemByLocalIdTabAware,
+                config.localIdentifier,
+                tabLocalIdentifier,
+            );
+        if (target) {
+            return target;
+        }
     }
 
     return undefined;
@@ -519,20 +698,24 @@ function* getAttributeFiltersUpdateActions(
     textAttributeFilters: DashboardAttributeFilterItem[],
     attributeFilterConfigs: IDashboardAttributeFilterConfig[],
     resetOthers: boolean,
-    unavailableObjects: ReturnType<typeof selectUnavailableObjects>,
     ctx: DashboardContext,
     tabLocalIdentifier?: string,
     selectionTypeMap?: Map<string, DashboardAttributeFilterSelectionType | undefined>,
     matchByLocalIdentifier?: boolean,
-): SagaIterator<{ actions: AnyAction[]; displayFormsToResolve: ObjRef[] }> {
-    const updateActions: AnyAction[] = [];
+): SagaIterator<AttributeFilterUpdateResult> {
+    const updateActions: SelectionUpdateAction[] = [];
     const displayFormsToResolve: ObjRef[] = [];
     const handledLocalIds = new Set<string>();
+    const crossFilteringLocalIdsByTab: ReturnType<typeof selectCrossFilteringFiltersLocalIdentifiersByTab> =
+        yield select(selectCrossFilteringFiltersLocalIdentifiersByTab);
     const resolvedDisplayForms: SagaReturnType<typeof resolveDisplayFormMetadata> = yield call(
         resolveDisplayFormMetadata,
         ctx,
         attributeFilters.map((af) => dashboardAttributeFilterItemDisplayForm(af)),
     );
+
+    const enablePersistentFiltersAcrossTabs: ReturnType<typeof selectEnablePersistentFiltersAcrossTabs> =
+        yield select(selectEnablePersistentFiltersAcrossTabs);
 
     // A payload can give a display form as a URI ref, and the dashboard can store it as an
     // identifier ref. The two refs are equal when they point to the same display form metadata.
@@ -778,6 +961,8 @@ function* getAttributeFiltersUpdateActions(
                 tabsActions.updateAttributeFilterSelection({
                     ...getAttributeFilterSelectionPayload(attributeFilter, dashboardFilter),
                     tabLocalIdentifier,
+                    crossFilteringLocalIdsByTab,
+                    enablePersistentFiltersAcrossTabs,
                 }),
             );
 
@@ -841,21 +1026,19 @@ function* getAttributeFiltersUpdateActions(
                 if (canApplyFilterTypeToTarget("list", configSelectionType, targetTextFilter)) {
                     // Text → list: set displayAsLabel to the text filter's displayForm
                     // so the list filter visually shows the same label.
-                    // Normalize: use target's localIdentifier so attributeFilterConfigs
-                    // (keyed by localId) keep matching, and strip selectionMode so the
-                    // target's own config determines single/multi presentation.
-                    const normalizedListFilter: IDashboardAttributeFilter = {
-                        attributeFilter: {
-                            ...attributeFilter.attributeFilter,
-                            localIdentifier: targetLocalId,
-                            selectionMode: undefined,
-                        },
-                    };
+                    // Strip selectionMode so the target's own config determines single/multi
+                    // presentation.
+                    const normalizedListFilter = fitReplacementToTarget(
+                        { attributeFilter: { ...attributeFilter.attributeFilter, selectionMode: undefined } },
+                        targetTextFilter,
+                    );
                     updateActions.push(
                         tabsActions.replaceAttributeFilterItem({
                             filterLocalId: targetLocalId,
                             filter: normalizedListFilter,
                             tabLocalIdentifier,
+                            crossFilteringLocalIdsByTab,
+                            enablePersistentFiltersAcrossTabs,
                         }),
                         tabsActions.changeDisplayAsLabel({
                             localIdentifier: targetLocalId,
@@ -931,14 +1114,14 @@ function* getAttributeFiltersUpdateActions(
             }
         }
 
-        // Normalize: use target's localIdentifier so attributeFilterConfigs
-        // (keyed by localId) keep matching after the replacement.
-        const normalizedTextFilter = normalizeFilterLocalIdentifier(textFilter, targetLocalId);
+        const normalizedTextFilter = fitReplacementToTarget(textFilter, existingFilter);
         updateActions.push(
             tabsActions.replaceAttributeFilterItem({
                 filterLocalId: targetLocalId,
                 filter: normalizedTextFilter,
                 tabLocalIdentifier,
+                crossFilteringLocalIdsByTab,
+                enablePersistentFiltersAcrossTabs,
             }),
         );
 
@@ -970,9 +1153,7 @@ function* getAttributeFiltersUpdateActions(
 
         // for element-based filters that have not been handled, create clear selection actions
         const unhandledFilters = currentAttributeFilters.filter(
-            (filter) =>
-                !handledLocalIds.has(dashboardAttributeFilterItemLocalIdentifier(filter)!) &&
-                !isDashboardFilterRestricted(filter, unavailableObjects),
+            (filter) => !handledLocalIds.has(dashboardAttributeFilterItemLocalIdentifier(filter)!),
         );
         if (unhandledFilters.length > 0) {
             updateActions.push(
@@ -981,6 +1162,8 @@ function* getAttributeFiltersUpdateActions(
                         dashboardAttributeFilterItemLocalIdentifier(filter)!,
                     ),
                     tabLocalIdentifier,
+                    crossFilteringLocalIdsByTab,
+                    enablePersistentFiltersAcrossTabs,
                 }),
             );
         }
@@ -995,8 +1178,7 @@ function* getAttributeFiltersUpdateActions(
         const unhandledTextFilters = currentAllFilterItems.filter(
             (filter): filter is DashboardTextAttributeFilter =>
                 isDashboardTextAttributeFilter(filter) &&
-                !handledLocalIds.has(dashboardAttributeFilterItemLocalIdentifier(filter)!) &&
-                !isDashboardFilterRestricted(filter, unavailableObjects),
+                !handledLocalIds.has(dashboardAttributeFilterItemLocalIdentifier(filter)!),
         );
         for (const textFilter of unhandledTextFilters) {
             const localId = dashboardAttributeFilterItemLocalIdentifier(textFilter)!;
@@ -1016,6 +1198,8 @@ function* getAttributeFiltersUpdateActions(
                     filterLocalId: localId,
                     filter: resetFilter,
                     tabLocalIdentifier,
+                    crossFilteringLocalIdsByTab,
+                    enablePersistentFiltersAcrossTabs,
                 }),
             );
         }
@@ -1028,12 +1212,16 @@ function* getDateFilterUpdateActions(
     dateFilter: IDashboardDateFilter | undefined,
     resetOthers: boolean,
     tabLocalIdentifier?: string,
-): SagaIterator<AnyAction[]> {
+): SagaIterator<SelectionUpdateAction[]> {
+    const enablePersistentFiltersAcrossTabs: ReturnType<typeof selectEnablePersistentFiltersAcrossTabs> =
+        yield select(selectEnablePersistentFiltersAcrossTabs);
+
     if (dateFilter) {
         const canApply: SagaReturnType<typeof canApplyDateFilter> = yield call(
             canApplyDateFilter,
             dateFilter,
         );
+
         if (!canApply) {
             return [];
         }
@@ -1051,6 +1239,7 @@ function* getDateFilterUpdateActions(
                   ...localIdentifierObj,
                   ...emptyValueHandlingObj,
                   tabLocalIdentifier,
+                  enablePersistentFiltersAcrossTabs,
               }
             : {
                   type: dateFilter.dateFilter.type,
@@ -1064,11 +1253,18 @@ function* getDateFilterUpdateActions(
                       : {}),
                   ...emptyValueHandlingObj,
                   tabLocalIdentifier,
+                  enablePersistentFiltersAcrossTabs,
               };
 
         return [tabsActions.upsertDateFilter(upsertPayload)];
     } else if (resetOthers) {
-        return [tabsActions.upsertDateFilter({ type: "allTime", tabLocalIdentifier })];
+        return [
+            tabsActions.upsertDateFilter({
+                type: "allTime",
+                tabLocalIdentifier,
+                enablePersistentFiltersAcrossTabs,
+            }),
+        ];
     }
 
     return [];
@@ -1077,15 +1273,25 @@ function* getDateFilterUpdateActions(
 function* getMeasureValueFiltersUpdateActions(
     measureValueFilters: IDashboardMeasureValueFilter[],
     resetOthers: boolean,
-): SagaIterator<AnyAction[]> {
-    const updateActions: AnyAction[] = [];
+): SagaIterator<SelectionUpdateAction[]> {
+    const updateActions: SelectionUpdateAction[] = [];
     const handledLocalIds = new Set<string>();
 
-    const currentMeasureValueFilters: ReturnType<typeof selectFilterContextMeasureValueFilters> =
-        yield select(selectFilterContextMeasureValueFilters);
+    // a restricted filter keeps its stored conditions: it is neither matched nor reset
+    const allMeasureValueFilters: ReturnType<typeof selectFilterContextMeasureValueFilters> = yield select(
+        selectFilterContextMeasureValueFilters,
+    );
+    const restrictedLocalIdentifiers: ReturnType<typeof selectRestrictedDashboardFilterLocalIdentifiers> =
+        yield select(selectRestrictedDashboardFilterLocalIdentifiers);
+    const currentMeasureValueFilters = allMeasureValueFilters.filter(
+        (filter) => !restrictedLocalIdentifiers.has(dashboardMeasureValueFilterLocalIdentifier(filter)),
+    );
     const currentByLocalId = new Map(
         currentMeasureValueFilters.map((f) => [dashboardMeasureValueFilterLocalIdentifier(f), f]),
     );
+
+    const enablePersistentFiltersAcrossTabs: ReturnType<typeof selectEnablePersistentFiltersAcrossTabs> =
+        yield select(selectEnablePersistentFiltersAcrossTabs);
 
     for (const incoming of measureValueFilters) {
         const incomingLocalIdentifier = dashboardMeasureValueFilterLocalIdentifier(incoming);
@@ -1110,6 +1316,7 @@ function* getMeasureValueFiltersUpdateActions(
             tabsActions.changeMeasureValueFilterCondition({
                 localIdentifier,
                 conditions: incoming.dashboardMeasureValueFilter.conditions,
+                enablePersistentFiltersAcrossTabs,
             }),
         );
         if ("dimensionality" in incoming.dashboardMeasureValueFilter) {
@@ -1117,6 +1324,7 @@ function* getMeasureValueFiltersUpdateActions(
                 tabsActions.setMeasureValueFilterDimensionality({
                     localIdentifier,
                     dimensionality: incoming.dashboardMeasureValueFilter.dimensionality,
+                    enablePersistentFiltersAcrossTabs,
                 }),
             );
         }
@@ -1134,6 +1342,7 @@ function* getMeasureValueFiltersUpdateActions(
                 tabsActions.changeMeasureValueFilterCondition({
                     localIdentifier,
                     conditions: undefined,
+                    enablePersistentFiltersAcrossTabs,
                 }),
             );
         }
@@ -1146,9 +1355,12 @@ function* getDateFiltersUpdateActions(
     dateFilters: IDashboardDateFilter[],
     resetOthers: boolean,
     tabLocalIdentifier?: string,
-): SagaIterator<AnyAction[]> {
-    const updateActions: AnyAction[] = [];
+): SagaIterator<SelectionUpdateAction[]> {
+    const updateActions: SelectionUpdateAction[] = [];
     const handledDataSets = new Set<string>();
+
+    const enablePersistentFiltersAcrossTabs: ReturnType<typeof selectEnablePersistentFiltersAcrossTabs> =
+        yield select(selectEnablePersistentFiltersAcrossTabs);
 
     for (const dateFilter of dateFilters) {
         const filterRef = dateFilter.dateFilter.dataSet!;
@@ -1170,6 +1382,7 @@ function* getDateFiltersUpdateActions(
                       ...localIdentifierObj,
                       ...emptyValueHandlingObj,
                       tabLocalIdentifier,
+                      enablePersistentFiltersAcrossTabs,
                   }
                 : {
                       type: dateFilter.dateFilter.type,
@@ -1183,6 +1396,7 @@ function* getDateFiltersUpdateActions(
                           : {}),
                       ...emptyValueHandlingObj,
                       tabLocalIdentifier,
+                      enablePersistentFiltersAcrossTabs,
                   };
 
             updateActions.push(tabsActions.upsertDateFilter(upsertPayload));
@@ -1210,6 +1424,7 @@ function* getDateFiltersUpdateActions(
                         dataSet: dateFilter.dateFilter.dataSet,
                         ...localIdentifierObj,
                         tabLocalIdentifier,
+                        enablePersistentFiltersAcrossTabs,
                     }),
                 );
             }
@@ -1273,23 +1488,33 @@ function canMapDashboardFilterFromAnotherDisplayForm(ctx: DashboardContext) {
 }
 
 /**
- * Returns a shallow copy of the filter with its localIdentifier replaced.
- * Used when replacing a target filter with an incoming filter from another dashboard
- * to preserve the target's localIdentifier so that attributeFilterConfigs (keyed by localId)
- * continue to match.
+ * Fits a replacement to the dashboard filter it replaces. It takes the target's localIdentifier, so
+ * attributeFilterConfigs (keyed by it) keep matching, and the target's dependencies, also when the target
+ * has none: an entry's parents may name filters of another context, and such a parent could make the
+ * replaced filter restricted.
  */
-function normalizeFilterLocalIdentifier(
+function fitReplacementToTarget(
     filter: DashboardAttributeFilterItem,
-    localIdentifier: string,
+    target: DashboardAttributeFilterItem,
 ): DashboardAttributeFilterItem {
+    const localIdentifier = dashboardAttributeFilterItemLocalIdentifier(target);
+    const dependencies = {
+        filterElementsBy: dashboardAttributeFilterItemFilterElementsBy(target),
+        filterElementsByDate: dashboardAttributeFilterItemFilterElementsByDate(target),
+        validateElementsBy: dashboardAttributeFilterItemValidateElementsBy(target),
+    };
     if (isDashboardAttributeFilter(filter)) {
         return {
-            attributeFilter: { ...filter.attributeFilter, localIdentifier },
+            attributeFilter: { ...filter.attributeFilter, localIdentifier, ...dependencies },
         };
     }
     if (isDashboardArbitraryAttributeFilter(filter)) {
         return {
-            arbitraryAttributeFilter: { ...filter.arbitraryAttributeFilter, localIdentifier },
+            arbitraryAttributeFilter: {
+                ...filter.arbitraryAttributeFilter,
+                localIdentifier,
+                ...dependencies,
+            },
         };
     }
     // IDashboardMatchAttributeFilter

@@ -16,7 +16,10 @@ import {
 import { type ISlotProps } from "@gooddata/sdk-ui-kit";
 
 import { type IAutomationFiltersTab } from "../../../model/store/filtering/types.js";
-import { type IAutomationParameter } from "../shared/automationFilters/automationParameters.js";
+import {
+    type IAutomationParameter,
+    type IAvailableAutomationParameter,
+} from "../shared/automationFilters/automationParameters.js";
 import {
     type IAutomationDialogActionBarProps,
     type IAutomationDialogDestinationProps,
@@ -135,7 +138,7 @@ export interface IScheduledEmailDialogFiltersProps extends IAutomationDialogFilt
     /**
      * Addable workspace parameters per tab (by-tab mode).
      */
-    availableParametersByTab?: Record<string, IAutomationParameter[]>;
+    availableParametersByTab?: Record<string, IAvailableAutomationParameter[]>;
 
     /**
      * Called when a parameter is added in a tab section (by-tab mode).

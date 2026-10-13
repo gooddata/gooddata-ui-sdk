@@ -504,6 +504,12 @@ export type { IOverlayProps, IOverlayState } from "./Overlay/typings.js";
 export { Overlay } from "./Overlay/Overlay.js";
 export { ZoomAwareOverlay } from "./Overlay/ZoomAwareOverlay.js";
 export { FullScreenOverlay } from "./Overlay/FullScreenOverlay.js";
+export {
+    OverlayAlignOnParentScrollContext,
+    OverlayAlignOnParentScrollProvider,
+    type IOverlayAlignOnParentScrollProviderProps,
+    type IOverlayParentScrollBehavior,
+} from "./Overlay/OverlayAlignOnParentScroll.js";
 export { OverlayController } from "./Overlay/OverlayController.js";
 export {
     OverlayContext,
@@ -1306,6 +1312,11 @@ export type {
 } from "./CatalogItemPicker/types.js";
 
 export { ParameterPicker, type IParameterPickerProps } from "./ParameterPicker/ParameterPicker.js";
+export {
+    groupParametersByTag,
+    type IParameterGroup,
+    type ITaggedParameter,
+} from "./ParameterPicker/groupParametersByTag.js";
 
 export {
     ParameterControlButton,

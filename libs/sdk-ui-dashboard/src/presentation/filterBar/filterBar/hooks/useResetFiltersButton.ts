@@ -286,6 +286,9 @@ export const useResetFiltersButton = (): {
             // The original filters come from this dashboard's own filter context, so their
             // localIdentifiers are authoritative — matching by them keeps filters that share a
             // display form from clobbering each other during the reset.
+            // When persist-filters-across-tabs is on, the applied-state reducers still visit every
+            // tab, but restorePerTabOriginals makes each tab return to its own saved initial values.
+            // Working edits and cross-filtering virtual filters stay on this tab.
             dispatch(
                 changeFilterContextSelectionByParams({
                     filters: [
@@ -297,6 +300,7 @@ export const useResetFiltersButton = (): {
                         ...otherFilters,
                     ],
                     matchByLocalIdentifier: true,
+                    restorePerTabOriginals: true,
                 }),
             );
         }

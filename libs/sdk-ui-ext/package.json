@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-ext",
-    "version": "11.62.0-alpha.2",
+    "version": "11.62.0-alpha.3",
     "description": "GoodData.UI SDK - Extensions",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",
@@ -114,6 +114,7 @@
         "@microsoft/api-documenter": "7.30.16",
         "@microsoft/api-extractor": "7.59.2",
         "@testing-library/dom": "10.4.2",
+        "@testing-library/jest-dom": "7.0.1",
         "@testing-library/react": "16.3.0",
         "@testing-library/user-event": "14.6.7",
         "@types/debounce-promise": "3.1.9",
@@ -150,8 +151,7 @@
         "stylelint": "16.26.1",
         "svgo": "2.8.4",
         "typescript": "7.0.2",
-        "vitest": "4.1.11",
-        "vitest-dom": "0.1.1"
+        "vitest": "5.0.4"
     },
     "peerDependencies": {
         "react": "^18.0.0 || ^19.0.0",

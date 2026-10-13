@@ -146,6 +146,7 @@ export {
     type IGenAIService,
     type IDashboardSummaryRequest,
     type IVisualizationsSummaryRequest,
+    type IVisualizationSummaryPlacement,
     type IDashboardSummary,
     type IDashboardSummaryIncludedVisualization,
     type IDashboardSummaryExcludedVisualization,

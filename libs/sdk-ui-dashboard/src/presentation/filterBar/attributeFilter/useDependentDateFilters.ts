@@ -17,10 +17,6 @@ import { type IAttributeFilterBaseProps } from "@gooddata/sdk-ui-filters";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../../model/store/config/configSelectors.js";
 import {
-    isDashboardFilterRestricted,
-    isDashboardObjectRestricted,
-} from "../../../model/store/filtering/restrictedFilterUtils.js";
-import {
     selectFilterContextDateFilter,
     selectFilterContextDateFilterForTab,
     selectFilterContextDateFiltersWithDimension,
@@ -30,7 +26,6 @@ import {
     selectWorkingFilterContextDateFiltersWithDimension,
     selectWorkingFilterContextDateFiltersWithDimensionForTab,
 } from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
-import { selectUnavailableObjects } from "../../../model/store/unavailableObjects/unavailableObjectsSelectors.js";
 
 /**
  * Result of the {@link useDependentDateFilters} hook, that can be used as dependent date filtering input props for {@link @gooddata/sdk-ui-filters#AttributeFilter}.
@@ -81,12 +76,9 @@ export const useDependentDateFilters = (
     const commonDateFilterWithAllTime = getCommonDateFilterWithAllTime(commonDateFilter);
 
     const filterElementsByDate = dashboardAttributeFilterItemFilterElementsByDate(filter);
-    const unavailableObjects = useDashboardSelector(selectUnavailableObjects);
 
     const dependentDateFilters = useMemo(() => {
-        // a dependency on a date the viewer may not read is dropped, so this filter loads its
-        // elements unrestricted instead of failing on the withheld data set
-        return filterElementsByDate?.flatMap((dependentDateFilter: IDashboardAttributeFilterByDate) => {
+        return filterElementsByDate?.map((dependentDateFilter: IDashboardAttributeFilterByDate) => {
             if (dependentDateFilter.isCommonDate) {
                 // The dimension to apply the common date range through.
                 // New format: the explicit `dataSet` field (filterLocalIdentifier references the common
@@ -107,9 +99,7 @@ export const useDependentDateFilters = (
                     },
                 };
 
-                return isDashboardObjectRestricted(dataSet, "dataSet", unavailableObjects)
-                    ? []
-                    : [commonDashboardDateFilter];
+                return commonDashboardDateFilter;
             } else {
                 // Try localIdentifier first (new format), then fall back to dataset identifier
                 // (legacy format) for dashboards saved before the localIdentifier-based approach.
@@ -125,12 +115,10 @@ export const useDependentDateFilters = (
 
                 invariant(matchingFilter); // if this blows up, the state is inconsistent
 
-                return isDashboardFilterRestricted(matchingFilter, unavailableObjects)
-                    ? []
-                    : [matchingFilter];
+                return matchingFilter;
             }
         });
-    }, [allDateFilters, commonDateFilterWithAllTime, filterElementsByDate, unavailableObjects]);
+    }, [allDateFilters, commonDateFilterWithAllTime, filterElementsByDate]);
 
     return {
         dependentDateFilters,

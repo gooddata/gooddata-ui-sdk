@@ -15,7 +15,10 @@ import {
 } from "@gooddata/sdk-model";
 
 import { type IAutomationFiltersTab } from "../../../../model/store/filtering/types.js";
-import { type IAutomationParameter } from "../../shared/automationFilters/automationParameters.js";
+import {
+    type IAutomationParameter,
+    type IAvailableAutomationParameter,
+} from "../../shared/automationFilters/automationParameters.js";
 import { type IScheduleTimezoneSelection, type IScheduledEmailDialogProps } from "../types.js";
 
 /**
@@ -251,7 +254,7 @@ export interface IScheduledExportFiltersContextValue {
     /**
      * Per-tab workspace parameters addable via the "+" menu.
      */
-    availableParametersByTab: Record<string, IAutomationParameter[]>;
+    availableParametersByTab: Record<string, IAvailableAutomationParameter[]>;
     /**
      * The tab the flat (non-tabbed) UI edits; undefined for multi-tab dashboards or when no
      * parameter context applies.

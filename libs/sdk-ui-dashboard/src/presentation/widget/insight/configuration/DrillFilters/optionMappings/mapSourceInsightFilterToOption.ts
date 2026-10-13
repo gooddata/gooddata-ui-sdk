@@ -105,6 +105,7 @@ export function mapSourceInsightFilterToOption({
             targetDashboardAttributeFilters,
             targetDashboardAttributeFilterConfigs,
             targetDashboardTextAttributeFilters,
+            allCatalogDisplayFormsMap,
         );
 
         return {

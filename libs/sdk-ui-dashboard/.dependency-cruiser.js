@@ -178,7 +178,7 @@ export default {
             // appears.
             //
             // model coupling — pure types and functions used by automationFilters:
-            "src/model/commandHandlers/dashboard/common/attributeFilterSelectionTypeCompatibility.ts",
+            "src/model/utils/attributeFilterSelectionTypeCompatibility.ts",
             "src/model/store/filtering/types.ts",
             // kept because ExtendedDashboardWidget stays in Phase 2 (D2 — IWidget deferred to Phase 3):
             "src/model/types/layoutTypes.ts",

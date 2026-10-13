@@ -1,6 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
+import { type Action, type CaseReducer, type PayloadAction, current } from "@reduxjs/toolkit";
 
 import { type ObjRef } from "@gooddata/sdk-model";
 
@@ -10,10 +10,20 @@ import {
 } from "./filterContext/filterContextReducers.js";
 import { initializeFilterContext } from "./filterContext/filterContextUtils.js";
 import {
+    type CrossFilteringLocalIdsByTab,
+    mirrorCommittedWorkingSelection,
+} from "./filterContext/filterSync.js";
+import {
     clearParameterWorkingValues,
     commitParameterWorkingValues,
 } from "./parameters/parametersReducers.js";
-import { DEFAULT_TAB_ID, type ITabState, type ITabsState, getActiveTab } from "./tabsState.js";
+import {
+    DEFAULT_TAB_ID,
+    type ITabState,
+    type ITabsState,
+    getActiveTab,
+    getTabsToMutate,
+} from "./tabsState.js";
 
 /**
  * @alpha
@@ -188,6 +198,11 @@ const resolveDefaultTab: TabsReducer<PayloadAction<{ newLocalIdentifier: string 
  */
 export interface IApplyWorkingSelectionPayload {
     readonly enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
+    /**
+     * Cross-filtering virtual filters per tab. They are not mirrored to or from other tabs.
+     */
+    readonly crossFilteringLocalIdsByTab?: CrossFilteringLocalIdsByTab;
+    readonly enablePersistentFiltersAcrossTabs?: boolean;
 }
 
 const applyWorkingSelection: TabsReducer<PayloadAction<IApplyWorkingSelectionPayload>> = (state, action) => {
@@ -196,21 +211,34 @@ const applyWorkingSelection: TabsReducer<PayloadAction<IApplyWorkingSelectionPay
         return;
     }
 
+    const stagedFilters = activeTab.filterContext?.workingFilterContextDefinition
+        ? current(activeTab.filterContext.workingFilterContextDefinition).filters
+        : undefined;
+    const stagedParameterRefs = (activeTab.parameters?.parameters ?? [])
+        .filter((entry) => entry.workingOverride !== undefined)
+        .map((entry) => entry.parameter.ref);
+
     commitFilterContextWorkingValues(
         activeTab,
         action.payload.enableImmediateAttributeFilterDisplayAsLabelMigration,
     );
     commitParameterWorkingValues(activeTab);
+    // Mirror the committed applied values, not the working overlay.
+    mirrorCommittedWorkingSelection(
+        state,
+        activeTab,
+        stagedFilters,
+        stagedParameterRefs,
+        action.payload.crossFilteringLocalIdsByTab,
+        action.payload.enablePersistentFiltersAcrossTabs,
+    );
 };
 
 const resetWorkingSelection: TabsReducer<PayloadAction> = (state) => {
-    const activeTab = getActiveTab(state);
-    if (!activeTab) {
-        return;
+    for (const tab of getTabsToMutate(state)) {
+        clearFilterContextWorkingValues(tab);
+        clearParameterWorkingValues(tab);
     }
-
-    clearFilterContextWorkingValues(activeTab);
-    clearParameterWorkingValues(activeTab);
 };
 
 export const tabsReducers = {

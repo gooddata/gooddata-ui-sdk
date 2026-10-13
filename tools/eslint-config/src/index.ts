@@ -48,19 +48,8 @@ export const commonVariants: Record<string, IDualConfiguration[]> = {
     react: [browserEnv, esm, react, reactHooks], // for skel tsx
     "react-vitest": [browserEnv, esm, react, reactHooks, vitest, noOnlyTests], // for gdc-ui libs
     "react-vitest-rtl": [browserEnv, esm, react, reactHooks, vitest, testingLibraryReact, noOnlyTests], // for gdc-ui libs
-    "react-playwright": [browserEnv, esm, react, reactHooks, playwright, chaiFriendly, noOnlyTests], // for gdc e2e libs
-    "esm-playwright": [browserEnv, esm, importEsm, playwright, chaiFriendly, noOnlyTests], // for e2e-utils
+    "esm-playwright": [browserEnv, esm, importEsm, playwright, chaiFriendly, noOnlyTests], // for gdc e2e libs
     "esm-react": [browserEnv, esm, react, reactHooks, importEsm], // for most react libs
-    "esm-react-playwright": [
-        browserEnv,
-        esm,
-        react,
-        reactHooks,
-        importEsm,
-        playwright,
-        chaiFriendly,
-        noOnlyTests,
-    ], // for gdc e2e libs with react
     "esm-react-storybook": [browserEnv, esm, react, reactHooks, importEsm, storybook], // for sdk-ui-tests-storybook
     "esm-react-vitest": [browserEnv, esm, react, reactHooks, importEsm, vitest, noOnlyTests], // for most sdk react libs with vitest
     "esm-react-vitest-rtl": [
