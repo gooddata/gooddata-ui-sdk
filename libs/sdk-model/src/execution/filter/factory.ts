@@ -201,6 +201,50 @@ export function newMatchAttributeFilter(
 }
 
 /**
+ * Options of a new absolute date filter.
+ *
+ * @public
+ */
+export interface IAbsoluteDateFilterOptions {
+    /**
+     * Filter local identifier.
+     */
+    localIdentifier?: string;
+
+    /**
+     * How to treat empty date values.
+     */
+    emptyValueHandling?: EmptyValues;
+
+    /**
+     * Granularity of the selected periods; day is the default and is not stored.
+     *
+     * @remarks
+     * On the Tiger backend, `GDC.time.month`, `GDC.time.quarter` and `GDC.time.year` select whole periods
+     * when 'from' and 'to' are days in the 'YYYY-MM-DD' format covering whole periods; any other range, and
+     * every other granularity, selects the days of the range as given.
+     */
+    granularity?: DateAttributeGranularity;
+}
+
+/**
+ * Creates a new absolute date filter.
+ *
+ * @param dateDataSet - ref or identifier of the date data set to filter on
+ * @param from - start of the interval in ISO-8601 calendar date format
+ * @param to - end of the interval in ISO-8601 calendar date format
+ * @param options - local identifier, empty values handling and granularity of the filter
+ *
+ * @public
+ */
+export function newAbsoluteDateFilter(
+    dateDataSet: ObjRef | Identifier,
+    from: string,
+    to: string,
+    options: IAbsoluteDateFilterOptions,
+): IAbsoluteDateFilter;
+
+/**
  * Creates a new absolute date filter.
  *
  * @param dateDataSet - ref or identifier of the date data set to filter on
@@ -216,7 +260,19 @@ export function newAbsoluteDateFilter(
     to: string,
     localIdentifier?: string,
     emptyValueHandling?: EmptyValues,
+): IAbsoluteDateFilter;
+
+export function newAbsoluteDateFilter(
+    dateDataSet: ObjRef | Identifier,
+    from: string,
+    to: string,
+    localIdentifierOrOptions?: string | IAbsoluteDateFilterOptions,
+    emptyValueHandlingArg?: EmptyValues,
 ): IAbsoluteDateFilter {
+    const { localIdentifier, emptyValueHandling, granularity }: IAbsoluteDateFilterOptions =
+        localIdentifierOrOptions !== null && typeof localIdentifierOrOptions === "object"
+            ? localIdentifierOrOptions
+            : { localIdentifier: localIdentifierOrOptions, emptyValueHandling: emptyValueHandlingArg };
     const dataSet = isObjRef(dateDataSet) ? dateDataSet : idRef(dateDataSet);
     return {
         absoluteDateFilter: {
@@ -225,6 +281,7 @@ export function newAbsoluteDateFilter(
             to,
             ...(localIdentifier ? { localIdentifier } : {}),
             ...(emptyValueHandling ? { emptyValueHandling } : {}),
+            ...(granularity && granularity !== "GDC.time.date" ? { granularity } : {}),
         },
     };
 }

@@ -718,5 +718,9 @@
     "properties.conditionalFormatting.operator.endsWith": "다음으로 끝남",
     "properties.conditionalFormatting.operator.notEndsWith": "다음으로 끝나지 않음",
     "properties.conditionalFormatting.operator.isEmpty": "비어 있음",
-    "properties.conditionalFormatting.operator.isNotEmpty": "비어 있지 않음"
+    "properties.conditionalFormatting.operator.isNotEmpty": "비어 있지 않음",
+    "properties.lineShape": "선 모양",
+    "properties.lineShape.linear": "선형 (기본값)",
+    "properties.lineShape.spline": "스플라인",
+    "properties.lineShape.stepped": "계단형"
 }

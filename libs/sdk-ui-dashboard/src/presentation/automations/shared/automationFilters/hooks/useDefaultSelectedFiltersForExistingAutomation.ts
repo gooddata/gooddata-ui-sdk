@@ -180,7 +180,7 @@ export function getDefaultSelectedFiltersByTabForExistingAutomation(
     automationToEdit: IAutomationMetadataObject | undefined,
     availableDashboardFiltersByTab: Record<string, FilterContextItem[]> = {},
     commonDateFilterId?: string,
-    isFilterRestricted: (filter: FilterContextItem) => boolean = () => false,
+    isFilterRestricted: (filter: FilterContextItem, tabId: string) => boolean = () => false,
 ): Record<string, FilterContextItem[]> | undefined {
     if (!automationToEdit) {
         return undefined;
@@ -211,7 +211,7 @@ export function getDefaultSelectedFiltersByTabForExistingAutomation(
                     commonDateFilterId,
                 ),
                 savedFiltersForTab,
-                isFilterRestricted,
+                (filter) => isFilterRestricted(filter, tabId),
             );
 
             if (reconstructedFilters.length > 0) {

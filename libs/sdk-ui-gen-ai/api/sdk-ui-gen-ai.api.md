@@ -20,6 +20,7 @@ import { IChatConversationError } from '@gooddata/sdk-backend-spi';
 import { IChatConversationItem } from '@gooddata/sdk-backend-spi';
 import { IChatConversationMultipartPart } from '@gooddata/sdk-backend-spi';
 import { IChatConversationVisualisationContent } from '@gooddata/sdk-backend-spi';
+import { IChatKdaDefinition } from '@gooddata/sdk-backend-spi';
 import { IChatSuggestion } from '@gooddata/sdk-backend-spi';
 import { IChatSuggestions } from '@gooddata/sdk-backend-spi';
 import { IColorPalette } from '@gooddata/sdk-model';
@@ -263,6 +264,9 @@ export function DefaultConversationHeader(_: IGenAIAssistantConversationHeaderPr
 export function DefaultConversationItem(props: IGenAIAssistantConversationItemProps): JSX.Element;
 
 // @alpha
+export function DefaultConversationKdaContent(props: IGenAIAssistantConversationKdaContentProps): JSX.Element;
+
+// @alpha
 export function DefaultConversationVisualizationContent(props: IGenAIAssistantConversationVisualizationContentProps): JSX.Element;
 
 // @alpha
@@ -370,7 +374,12 @@ export type GenAIConversationsProps = Omit<GenAiStoreProps, "children"> & {
 export function GenAiInteractionIntelligence(input: IGenAiInteractionIntelligenceProps): JSX.Element | null;
 
 // @public
-export function GenAiKeyDriverAnalysis(): JSX.Element | null;
+export function GenAiKeyDriverAnalysis(input: GenAiKeyDriverAnalysisProps): JSX.Element | null;
+
+// @public (undocumented)
+export type GenAiKeyDriverAnalysisProps = {
+    locale?: string;
+};
 
 // @public
 export function GenAiStore(props: GenAiStoreProps): JSX.Element | null;
@@ -520,6 +529,13 @@ export type IGenAIAssistantConversationItemProps = {
 };
 
 // @alpha
+export type IGenAIAssistantConversationKdaContentProps = {
+    kda: IChatKdaDefinition;
+    className?: string;
+    enableKeyDriverAnalysis?: boolean;
+};
+
+// @alpha
 export type IGenAIAssistantConversationVisualizationContentProps = {
     message: IChatConversationLocalItem;
     part: IChatConversationMultipartLocalPart;
@@ -610,6 +626,8 @@ export interface IGenAIAssistantSlots {
     ConversationHeader?: ComponentType<ISlotProps<IGenAIAssistantConversationHeaderProps>>;
     // @alpha
     ConversationItem?: ComponentType<ISlotProps<IGenAIAssistantConversationItemProps>>;
+    // @alpha
+    ConversationKdaContent?: ComponentType<ISlotProps<IGenAIAssistantConversationKdaContentProps>>;
     // @alpha
     ConversationVisualizationContent?: ComponentType<ISlotProps<IGenAIAssistantConversationVisualizationContentProps>>;
     Disclaimer?: ComponentType<ISlotProps<IGenAIAssistantDisclaimerProps>>;

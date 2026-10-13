@@ -135,6 +135,7 @@ export function AbsoluteDateFilterForm({
                 range,
                 localIdentifier: selectedFilterOption.localIdentifier,
                 isTimeForAbsoluteRangeEnabled: isTimeEnabled,
+                granularity: selectedGranularity,
                 emptyValueHandling: selectedFilterOption.emptyValueHandling,
                 isSecondsForAbsoluteRangeEnabled: isSecondsEnabled,
             }),

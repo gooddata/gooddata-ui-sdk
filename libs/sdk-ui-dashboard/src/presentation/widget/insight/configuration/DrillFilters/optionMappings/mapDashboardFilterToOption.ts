@@ -112,6 +112,7 @@ export function mapDashboardFilterToOption({
                   targetDashboardAttributeFilters,
                   targetDashboardAttributeFilterConfigs,
                   targetDashboardTextAttributeFilters,
+                  allCatalogDisplayFormsMap,
               );
 
         return {

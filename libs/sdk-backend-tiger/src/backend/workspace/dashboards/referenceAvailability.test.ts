@@ -870,7 +870,7 @@ describe("fetchUnavailableFilterDisplayForms", () => {
         ]);
     });
 
-    const dashboardWithMetricFilter = (contextId: string, metricId: string) =>
+    const dashboardWithMetricFilter = (contextId: string, metricId: string, dimensionality?: ObjRef[]) =>
         ({
             filterContext: {
                 ref: idRef(contextId, "filterContext"),
@@ -880,6 +880,7 @@ describe("fetchUnavailableFilterDisplayForms", () => {
                             measure: idRef(metricId, "measure"),
                             localIdentifier: "mvf1",
                             conditions: [],
+                            dimensionality,
                         },
                     },
                 ],
@@ -948,6 +949,67 @@ describe("fetchUnavailableFilterDisplayForms", () => {
         ]);
     });
 
+    it("asks for the attributes and computed attributes a metric filter is computed for", async () => {
+        respondWith([]);
+
+        await fetchUnavailableFilterDisplayForms(
+            authCall,
+            "ws",
+            dashboardWithMetricFilter("fcRoot", "revenue", [
+                idRef("city", "attribute"),
+                idRef("tier", "computedAttribute"),
+                idRef("region.name", "displayForm"),
+            ]),
+            ["displayForm", "measure", "attribute", "computedAttribute"],
+        );
+
+        expect(requestedQuery().get("include")).toEqual("labels,attributes,computedAttributes,metrics");
+    });
+
+    it("reports an attribute a metric filter is computed for that the response withholds", async () => {
+        respondWith(
+            [
+                {
+                    id: "fcRoot",
+                    type: "filterContext",
+                    attributes: {
+                        content: {
+                            filters: [
+                                {
+                                    dashboardMeasureValueFilter: {
+                                        measure: { identifier: { id: "revenue", type: "metric" } },
+                                        localIdentifier: "mvf1",
+                                        dimensionality: [{ identifier: { id: "city", type: "attribute" } }],
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                    relationships: {
+                        metrics: { data: [{ id: "revenue", type: "metric" }] },
+                        attributes: { data: [{ id: "city", type: "attribute" }] },
+                    },
+                },
+            ],
+            [{ id: "city", type: "attribute" }],
+        );
+
+        await expect(
+            fetchUnavailableFilterDisplayForms(
+                authCall,
+                "ws",
+                dashboardWithMetricFilter("fcRoot", "revenue", [idRef("city", "attribute")]),
+                ["displayForm", "measure", "attribute"],
+            ),
+        ).resolves.toEqual([
+            {
+                ref: { identifier: "city", type: "attribute" },
+                type: "attribute",
+                reason: "forbidden",
+            },
+        ]);
+    });
+
     const dashboardWithLimitedFilter = (contextId: string, limitingItems: ObjRef[]) =>
         ({
             filterContext: {
@@ -977,6 +1039,22 @@ describe("fetchUnavailableFilterDisplayForms", () => {
         );
 
         expect(requestedQuery().get("include")).toEqual("labels,metrics,facts");
+    });
+
+    it('asks for the attributes and computed attributes whose "Count of" limits a filter\'s values', async () => {
+        respondWith([]);
+
+        await fetchUnavailableFilterDisplayForms(
+            authCall,
+            "ws",
+            dashboardWithLimitedFilter("fcRoot", [
+                idRef("city", "attribute"),
+                idRef("tier", "computedAttribute"),
+            ]),
+            ["displayForm", "attribute", "computedAttribute"],
+        );
+
+        expect(requestedQuery().get("include")).toEqual("labels,attributes,computedAttributes");
     });
 
     it("reports a fact limiting a filter's values that the response withholds", async () => {

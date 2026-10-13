@@ -109,5 +109,15 @@ export default defineConfig(({ mode }): UserConfig => {
                 },
             },
         },
+        // quietDeps silences Sass deprecation warnings raised inside stylesheets reached through
+        // importers (e.g. ag-grid-community's global-builtin usage pulled in via sdk-ui-pivot).
+        // The root stylesheet still warns.
+        css: {
+            preprocessorOptions: {
+                scss: {
+                    quietDeps: true,
+                },
+            },
+        },
     };
 });

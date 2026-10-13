@@ -718,5 +718,9 @@
     "properties.conditionalFormatting.operator.endsWith": "ลงท้ายด้วย",
     "properties.conditionalFormatting.operator.notEndsWith": "ไม่ได้ลงท้ายด้วย",
     "properties.conditionalFormatting.operator.isEmpty": "ว่าง",
-    "properties.conditionalFormatting.operator.isNotEmpty": "ไม่ว่าง"
+    "properties.conditionalFormatting.operator.isNotEmpty": "ไม่ว่าง",
+    "properties.lineShape": "รูปร่างเส้น",
+    "properties.lineShape.linear": "เชิงเส้น (ค่าเริ่มต้น)",
+    "properties.lineShape.spline": "สไปลน์",
+    "properties.lineShape.stepped": "แบบขั้นบันได"
 }

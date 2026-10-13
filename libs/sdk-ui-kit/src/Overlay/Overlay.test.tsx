@@ -10,6 +10,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { registerFloatingAnchor } from "../@ui/hooks/useCloseOnOutsideClick.js";
 
 import { Overlay } from "./Overlay.js";
+import { OverlayAlignOnParentScrollProvider } from "./OverlayAlignOnParentScroll.js";
 import { OverlayControllerProvider, useContainingOverlayZIndex } from "./OverlayContext.js";
 import { OverlayController } from "./OverlayController.js";
 
@@ -509,6 +510,193 @@ describe("Overlay", () => {
             const { unmount } = renderOverlayComponent();
             unmount();
             expect(screen.queryAllByTestId("portal-scroll-anchor")).toHaveLength(0);
+        });
+    });
+
+    describe("align on parent scroll", () => {
+        const waitForAlign = () => act(() => new Promise((resolve) => setTimeout(resolve, 50)));
+        // the initial alignment re-renders the overlay, which schedules one more alignment
+        const waitForInitialAlign = async () => {
+            await waitForAlign();
+            await waitForAlign();
+        };
+
+        const renderScrollableSetup = (
+            overlayProps: {
+                alignOnParentScroll?: boolean;
+                closeOnAnchorHidden?: boolean;
+                onClose?: () => void;
+            } = {},
+            isProviderEnabled?: boolean,
+            isProviderClosingOnAnchorHidden?: boolean,
+        ) => {
+            const onAlign = vi.fn();
+            function AnchoredOverlay() {
+                return (
+                    <div className="scroll-parent">
+                        <button className="anchor" />
+                        <Overlay alignTo=".anchor" onAlign={onAlign} {...overlayProps}>
+                            <div className="scroll-inside-overlay" />
+                        </Overlay>
+                    </div>
+                );
+            }
+            render(
+                isProviderEnabled === undefined ? (
+                    <AnchoredOverlay />
+                ) : (
+                    <OverlayAlignOnParentScrollProvider
+                        enabled={isProviderEnabled}
+                        closeOnAnchorHidden={isProviderClosingOnAnchorHidden}
+                    >
+                        <AnchoredOverlay />
+                    </OverlayAlignOnParentScrollProvider>
+                ),
+            );
+            return onAlign;
+        };
+
+        const scroll = (selector: string) =>
+            act(() => {
+                document.querySelector(selector)!.dispatchEvent(new Event("scroll"));
+            });
+
+        it("should not re-align on parent scroll by default", async () => {
+            const onAlign = renderScrollableSetup();
+            await waitForInitialAlign();
+            onAlign.mockClear();
+
+            await scroll(".scroll-parent");
+            await waitForAlign();
+
+            expect(onAlign).not.toHaveBeenCalled();
+        });
+
+        it("should re-align on parent scroll when enabled by provider", async () => {
+            const onAlign = renderScrollableSetup({}, true);
+            await waitForInitialAlign();
+            onAlign.mockClear();
+
+            await scroll(".scroll-parent");
+            await waitForAlign();
+
+            expect(onAlign).toHaveBeenCalled();
+        });
+
+        it("should re-align on parent scroll when enabled by prop", async () => {
+            const onAlign = renderScrollableSetup({ alignOnParentScroll: true });
+            await waitForInitialAlign();
+            onAlign.mockClear();
+
+            await scroll(".scroll-parent");
+            await waitForAlign();
+
+            expect(onAlign).toHaveBeenCalled();
+        });
+
+        it("should prefer the prop over the provider", async () => {
+            const onAlign = renderScrollableSetup({ alignOnParentScroll: false }, true);
+            await waitForInitialAlign();
+            onAlign.mockClear();
+
+            await scroll(".scroll-parent");
+            await waitForAlign();
+
+            expect(onAlign).not.toHaveBeenCalled();
+        });
+
+        it("should not re-align when an element that does not contain the anchor scrolls", async () => {
+            const onAlign = renderScrollableSetup({}, true);
+            await waitForInitialAlign();
+            onAlign.mockClear();
+
+            await scroll(".scroll-inside-overlay");
+            await waitForAlign();
+
+            expect(onAlign).not.toHaveBeenCalled();
+        });
+
+        describe("close on anchor hidden", () => {
+            let observedElements: Element[];
+            let notifyIntersection: (...isIntersecting: boolean[]) => void;
+
+            beforeEach(() => {
+                observedElements = [];
+                vi.stubGlobal(
+                    "IntersectionObserver",
+                    class {
+                        constructor(callback: IntersectionObserverCallback) {
+                            notifyIntersection = (...isIntersecting) =>
+                                act(() => {
+                                    callback(
+                                        isIntersecting.map(
+                                            (value) =>
+                                                ({ isIntersecting: value }) as IntersectionObserverEntry,
+                                        ),
+                                        this as unknown as IntersectionObserver,
+                                    );
+                                });
+                        }
+                        observe(element: Element) {
+                            observedElements.push(element);
+                        }
+                        disconnect() {}
+                    },
+                );
+            });
+
+            afterEach(() => {
+                vi.unstubAllGlobals();
+            });
+
+            it("should not observe the anchor by default", () => {
+                renderScrollableSetup({ onClose: vi.fn() }, true);
+
+                expect(observedElements).toEqual([]);
+            });
+
+            it("should call onClose once the visible anchor gets hidden when enabled by provider", () => {
+                const onClose = vi.fn();
+                renderScrollableSetup({ onClose }, true, true);
+
+                expect(observedElements).toEqual([document.querySelector(".anchor")]);
+                notifyIntersection(true);
+                expect(onClose).not.toHaveBeenCalled();
+                notifyIntersection(false);
+                expect(onClose).toHaveBeenCalledTimes(1);
+            });
+
+            it("should call onClose once the visible anchor gets hidden when enabled by prop", () => {
+                const onClose = vi.fn();
+                renderScrollableSetup({ onClose, closeOnAnchorHidden: true });
+
+                notifyIntersection(true);
+                notifyIntersection(false);
+                expect(onClose).toHaveBeenCalledTimes(1);
+            });
+
+            it("should call onClose when visible and hidden entries come in one callback", () => {
+                const onClose = vi.fn();
+                renderScrollableSetup({ onClose }, true, true);
+
+                notifyIntersection(true, false);
+                expect(onClose).toHaveBeenCalledTimes(1);
+            });
+
+            it("should not call onClose when the anchor was hidden already when opened", () => {
+                const onClose = vi.fn();
+                renderScrollableSetup({ onClose }, true, true);
+
+                notifyIntersection(false);
+                expect(onClose).not.toHaveBeenCalled();
+            });
+
+            it("should prefer the prop over the provider", () => {
+                const onClose = vi.fn();
+                renderScrollableSetup({ onClose, closeOnAnchorHidden: false }, true, true);
+
+                expect(observedElements).toEqual([]);
+            });
         });
     });
 });

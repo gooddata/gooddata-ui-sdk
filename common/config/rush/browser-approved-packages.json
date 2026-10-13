@@ -1179,10 +1179,6 @@
             "allowedCategories": ["production", "tools"]
         },
         {
-            "name": "vitest-dom",
-            "allowedCategories": ["production"]
-        },
-        {
             "name": "wait-on",
             "allowedCategories": ["production"]
         },

@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 
-import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend, isNotAuthenticated } from "@gooddata/sdk-backend-spi";
 import { type IWorkspacePermissions } from "@gooddata/sdk-model";
 
+import { afterNotAuthenticatedGrace } from "./notAuthenticatedGrace.js";
 import { classifyWorkspaceAccessError } from "./workspaceAccess.js";
 
 type WorkspacePermissionsState =
@@ -54,6 +55,7 @@ export function useWorkspacePermissions(
         }
 
         let cancelled = false;
+        let cancelGrace: (() => void) | undefined;
         setSnapshot({ backend, workspaceId, state: LOADING });
 
         const update = (state: WorkspacePermissionsState) => {
@@ -79,11 +81,20 @@ export function useWorkspacePermissions(
                     return;
                 }
                 const error = e instanceof Error ? e.message : "Unknown error loading workspace permissions.";
+                // Stay "loading" while the backend redirects to login on a 401.
+                if (isNotAuthenticated(e)) {
+                    if (cancelled) {
+                        return;
+                    }
+                    cancelGrace = afterNotAuthenticatedGrace(() => update({ state: "error", error }));
+                    return;
+                }
                 update({ state: "error", error });
             });
 
         return () => {
             cancelled = true;
+            cancelGrace?.();
         };
     }, [backend, workspaceId]);
 

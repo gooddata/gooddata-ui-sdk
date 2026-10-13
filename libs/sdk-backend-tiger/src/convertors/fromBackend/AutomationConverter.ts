@@ -52,6 +52,7 @@ import {
     isArbitraryAttributeFilter,
     isAttributeFilterWithSelection,
     isAutomationUserRecipient,
+    isDateFilterGranularity,
     isExportDefinitionVisualizationObjectRequestPayload,
     isFilter,
     isFilterContextItem,
@@ -559,6 +560,9 @@ export function convertExecutionFilterToFilterContextItem(
             filter.absoluteDateFilter.dataSet,
             filter.absoluteDateFilter.localIdentifier,
             filter.absoluteDateFilter.emptyValueHandling,
+            isDateFilterGranularity(filter.absoluteDateFilter.granularity)
+                ? filter.absoluteDateFilter.granularity
+                : "GDC.time.date",
         );
     }
 

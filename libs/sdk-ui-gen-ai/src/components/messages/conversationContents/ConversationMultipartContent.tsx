@@ -13,7 +13,6 @@ import { useCustomization } from "../../CustomizationContext.js";
 import { ConversationAlertProposalContent } from "./ConversationAlertProposalContent.js";
 import { ConversationClarifyingQuestionsContent } from "./ConversationClarifyingQuestionsContent.js";
 import { ConversationDashboardContent } from "./ConversationDashboardContent.js";
-import { ConversationKdaContent } from "./ConversationKdaContent.js";
 import { ConversationPublisherDocumentContent } from "./ConversationPublisherDocumentContent.js";
 import { ConversationSearchContent } from "./ConversationSearchContent.js";
 import { ConversationTextContent } from "./ConversationTextContent.js";
@@ -33,7 +32,7 @@ export function ConversationMultipartContent({
     isLast,
 }: ConversationMultipartContentProps) {
     const intl = useIntl();
-    const { ConversationVisualizationContentComponent } = useCustomization();
+    const { ConversationKdaContentComponent, ConversationVisualizationContentComponent } = useCustomization();
     const whatIf = loadWhatIfScenarios(parts);
 
     return (
@@ -97,7 +96,7 @@ export function ConversationMultipartContent({
                     );
                 }
                 if (part.type === "kda") {
-                    return <ConversationKdaContent key={index} kda={part.kda} />;
+                    return <ConversationKdaContentComponent key={index} kda={part.kda} />;
                 }
                 if (part.type === "whatIf") {
                     return (

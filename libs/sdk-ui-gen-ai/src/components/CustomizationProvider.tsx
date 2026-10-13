@@ -11,6 +11,7 @@ import { DefaultConversationDrawerHeader } from "./customized/ConversationDrawer
 import { DefaultConversationFooter } from "./customized/ConversationFooter.js";
 import { DefaultConversationHeader } from "./customized/ConversationHeader.js";
 import { DefaultConversationItem } from "./customized/ConversationItem.js";
+import { DefaultConversationKdaContent } from "./customized/ConversationKdaContent.js";
 import { DefaultConversationVisualizationContent } from "./customized/ConversationVisualizationContent.js";
 import { DefaultDisclaimer } from "./customized/Disclaimer.js";
 import { DefaultFeedback } from "./customized/Feedback.js";
@@ -30,6 +31,7 @@ import {
     type IGenAIAssistantConversationFooterProps,
     type IGenAIAssistantConversationHeaderProps,
     type IGenAIAssistantConversationItemProps,
+    type IGenAIAssistantConversationKdaContentProps,
     type IGenAIAssistantConversationVisualizationContentProps,
     type IGenAIAssistantFeedbackProps,
     type IGenAIAssistantFollowUpButtonsProps,
@@ -215,6 +217,16 @@ function ConversationVisualizationContentSlotRenderer(
     return <DefaultConversationVisualizationContent {...props} />;
 }
 
+function ConversationKdaContentSlotRenderer(props: IGenAIAssistantConversationKdaContentProps) {
+    const { slots } = useContext(customizationContext);
+    const ConversationKdaContentSlot = slots?.ConversationKdaContent;
+
+    if (ConversationKdaContentSlot) {
+        return <ConversationKdaContentSlot Default={DefaultConversationKdaContent} defaultProps={props} />;
+    }
+    return <DefaultConversationKdaContent {...props} />;
+}
+
 function FollowUpButtonsSlotRenderer(props: IGenAIAssistantFollowUpButtonsProps) {
     const { slots } = useContext(customizationContext);
     const FollowUpButtonsSlot = slots?.FollowUpButtons;
@@ -273,6 +285,7 @@ export function CustomizationProvider({ children, slots }: PropsWithChildren<Cus
             MessageReasoningContentComponent: MessageReasoningContentSlotRenderer,
             MessageMultipartContentComponent: MessageMultipartContentSlotRenderer,
             ConversationVisualizationContentComponent: ConversationVisualizationContentSlotRenderer,
+            ConversationKdaContentComponent: ConversationKdaContentSlotRenderer,
             FollowUpButtonsComponent: FollowUpButtonsSlotRenderer,
             FollowUpQuestionComponent: FollowUpQuestionSlotRenderer,
             FeedbackComponent: FeedbackSlotRenderer,

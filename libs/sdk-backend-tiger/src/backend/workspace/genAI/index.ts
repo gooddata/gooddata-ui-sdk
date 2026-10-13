@@ -20,6 +20,7 @@ import type {
     ISemanticSearchQuery,
     IVisualizationsSummaryRequest,
 } from "@gooddata/sdk-backend-spi";
+import { type IFilter } from "@gooddata/sdk-model";
 
 import { type DateNormalizer } from "../../../convertors/fromBackend/dateFormatting/types.js";
 import { convertFilter } from "../../../convertors/toBackend/afm/FilterConverter.js";
@@ -116,11 +117,15 @@ export class GenAIService implements IGenAIService {
         options?: { signal?: AbortSignal },
     ): Promise<IDashboardSummary> {
         const aiSummarizeVisualizationsRequest: GenAiApiSummarizeVisualizationsRequest = {
-            visualizations: request.visualizations,
-            // Cast bridges the AFM filter definitions to the generated union type of the AI API.
-            filterContext: request.filters
-                .map((filter) => convertFilter(filter))
-                .filter(Boolean) as GenAiApiSummarizeVisualizationsRequest["filterContext"],
+            visualizations: request.visualizations.map((visualization) =>
+                typeof visualization === "string"
+                    ? visualization
+                    : {
+                          visualizationId: visualization.visualizationId,
+                          filters: convertSummaryFilters(visualization.filters),
+                      },
+            ),
+            filterContext: convertSummaryFilters(request.filters),
         };
         if (request.formatHint !== undefined) {
             aiSummarizeVisualizationsRequest.formatHint = request.formatHint;
@@ -140,6 +145,13 @@ export class GenAIService implements IGenAIService {
 
         return convertSummaryResponse(response.data);
     }
+}
+
+// Cast bridges the AFM filter definitions to the generated union type of the AI API.
+function convertSummaryFilters(filters: IFilter[]) {
+    return filters
+        .map((filter) => convertFilter(filter))
+        .filter(Boolean) as GenAiApiSummarizeVisualizationsRequest["filterContext"];
 }
 
 function convertSummaryResponse(data: GenAiApiSummarizeResponse): IDashboardSummary {

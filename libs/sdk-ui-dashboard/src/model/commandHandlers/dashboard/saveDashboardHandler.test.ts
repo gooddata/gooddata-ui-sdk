@@ -17,6 +17,7 @@ import {
 import { TestCorrelation } from "../../../tests/Dashboard.test.helpers.js";
 import {
     SimpleDashboardFilterContext,
+    SimpleDashboardIdentifier,
     SimpleDashboardWithReferences,
 } from "../../../tests/SimpleDashboard.test.helpers.js";
 import { saveDashboard } from "../../commands/dashboard.js";
@@ -24,6 +25,7 @@ import { addLayoutSection } from "../../commands/layout.js";
 import { createDashboardTab, switchDashboardTab } from "../../commands/tabs.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { type DashboardSaved } from "../../events/dashboard.js";
+import { configActions } from "../../store/config/index.js";
 import { selectInsights } from "../../store/insights/insightsSelectors.js";
 import { selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
 import { selectFilterContextIdentity } from "../../store/tabs/filterContext/filterContextSelectors.js";
@@ -171,6 +173,22 @@ describe("save dashboard handler", () => {
             expect(selectPersistedDashboard(newState)?.ref).toEqual(
                 selectPersistedDashboard(originalState)?.ref,
             );
+        });
+
+        it("should use updated AI mode when saving an existing dashboard", async () => {
+            let existingDashboardTester: DashboardTester;
+            await preloadedTesterFactory((tester) => {
+                existingDashboardTester = tester;
+            }, SimpleDashboardIdentifier);
+
+            existingDashboardTester!.dispatch(configActions.setIsAiMode(true));
+
+            const event: DashboardSaved = await existingDashboardTester!.dispatchAndWaitFor(
+                saveDashboard(),
+                "GDC.DASH/EVT.SAVED",
+            );
+
+            expect(event.payload.originalDashboardId).toEqual(SimpleDashboardIdentifier);
         });
 
         it("should emit correct events", async () => {

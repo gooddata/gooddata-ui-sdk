@@ -8,6 +8,7 @@ import { type ISetMeasureValueFilterDimensionality } from "../../../commands/fil
 import { measureValueFilterDimensionalityChanged } from "../../../events/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
+import { selectEnablePersistentFiltersAcrossTabs } from "../../../store/meta/metaSelectors.js";
 import { selectFilterContextMeasureValueFilterByLocalId } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../../store/tabs/index.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
@@ -21,6 +22,8 @@ export function* changeMeasureValueFilterDimensionalityHandler(
 
     const existingFilter: ReturnType<ReturnType<typeof selectFilterContextMeasureValueFilterByLocalId>> =
         yield select(selectFilterContextMeasureValueFilterByLocalId(localIdentifier));
+    const enablePersistentFiltersAcrossTabs: ReturnType<typeof selectEnablePersistentFiltersAcrossTabs> =
+        yield select(selectEnablePersistentFiltersAcrossTabs);
 
     if (!existingFilter) {
         throw invalidArgumentsProvided(
@@ -34,6 +37,7 @@ export function* changeMeasureValueFilterDimensionalityHandler(
         tabsActions.setMeasureValueFilterDimensionality({
             localIdentifier,
             dimensionality,
+            enablePersistentFiltersAcrossTabs,
         }),
     );
 

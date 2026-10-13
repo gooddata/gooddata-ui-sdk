@@ -244,6 +244,15 @@ export interface IFiscalYear {
 export type CalendarType = "STANDARD" | "FISCAL";
 
 /**
+ * Who can view a newly created object.
+ * RESTRICTED means only its creator.
+ * WORKSPACE means also all workspace users, with view access.
+ *
+ * @alpha
+ */
+export type ObjectVisibility = "RESTRICTED" | "WORKSPACE";
+
+/**
  * Active calendars configuration
  *
  * @public
@@ -469,6 +478,20 @@ export interface IPermanentSettings {
      * Default delimiter to use for CSV exports when not overridden by request.
      */
     exportCsvCustomDelimiter?: string;
+
+    /**
+     * Who can view a newly created metric. Applies only with `enableMetricPermissions`.
+     * The backend treats an unset value as RESTRICTED.
+     * @alpha
+     */
+    defaultMetricVisibility?: ObjectVisibility;
+
+    /**
+     * Who can view a newly created visualization. Applies only with `enableVisualizationPermissions`.
+     * The backend treats an unset value as RESTRICTED.
+     * @alpha
+     */
+    defaultVisualizationVisibility?: ObjectVisibility;
 
     /**
      * Headline component will not be underlined when it is set up with drilling.

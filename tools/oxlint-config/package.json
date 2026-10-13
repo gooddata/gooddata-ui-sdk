@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/oxlint-config",
-    "version": "11.62.0-alpha.2",
+    "version": "11.62.0-alpha.3",
     "license": "MIT",
     "author": "GoodData",
     "repository": {
@@ -27,10 +27,8 @@
         "./react": "./dist/react.json",
         "./react-vitest": "./dist/react-vitest.json",
         "./react-vitest-rtl": "./dist/react-vitest-rtl.json",
-        "./react-playwright": "./dist/react-playwright.json",
         "./esm-playwright": "./dist/esm-playwright.json",
         "./esm-react": "./dist/esm-react.json",
-        "./esm-react-playwright": "./dist/esm-react-playwright.json",
         "./esm-react-storybook": "./dist/esm-react-storybook.json",
         "./esm-react-vitest": "./dist/esm-react-vitest.json",
         "./esm-react-vitest-rtl": "./dist/esm-react-vitest-rtl.json"

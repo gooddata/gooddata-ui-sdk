@@ -718,5 +718,9 @@
     "properties.conditionalFormatting.operator.endsWith": "İle biter",
     "properties.conditionalFormatting.operator.notEndsWith": "İle bitmez",
     "properties.conditionalFormatting.operator.isEmpty": "Boş",
-    "properties.conditionalFormatting.operator.isNotEmpty": "Boş değil"
+    "properties.conditionalFormatting.operator.isNotEmpty": "Boş değil",
+    "properties.lineShape": "Çizgi şekli",
+    "properties.lineShape.linear": "Doğrusal (varsayılan)",
+    "properties.lineShape.spline": "Yumuşak eğri",
+    "properties.lineShape.stepped": "Basamaklı"
 }

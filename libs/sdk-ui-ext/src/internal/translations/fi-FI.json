@@ -718,5 +718,9 @@
     "properties.conditionalFormatting.operator.endsWith": "Päättyy merkkijonoon",
     "properties.conditionalFormatting.operator.notEndsWith": "Ei pääty merkkijonoon",
     "properties.conditionalFormatting.operator.isEmpty": "On tyhjä",
-    "properties.conditionalFormatting.operator.isNotEmpty": "Ei ole tyhjä"
+    "properties.conditionalFormatting.operator.isNotEmpty": "Ei ole tyhjä",
+    "properties.lineShape": "Viivan muoto",
+    "properties.lineShape.linear": "Lineaarinen (oletus)",
+    "properties.lineShape.spline": "Splini",
+    "properties.lineShape.stepped": "Porrastettu"
 }

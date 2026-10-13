@@ -14,7 +14,9 @@ import {
     type IExecutionDefinition,
     type IExportDefinitionDashboardRequestPayload,
     type IExportDefinitionVisualizationObjectRequestPayload,
+    type IFilter,
     idRef,
+    newAbsoluteDateFilter,
     newMeasureValueFilterWithOptions,
 } from "@gooddata/sdk-model";
 
@@ -648,6 +650,81 @@ describe("ExportDefinitionsConverter toBackend", () => {
 
         expect(result.dashboardTabsParametersOverrides).toEqual({
             tabOwning: [{ id: "topN", value: "5", title: "Top N" }],
+        });
+    });
+
+    describe("absolute date filter granularity", () => {
+        const monthFilter = newAbsoluteDateFilter(idRef("date1", "dataSet"), "2026-03-01", "2026-04-30", {
+            granularity: "GDC.time.month",
+        });
+        const storedMonthFilter = {
+            absoluteDateFilter: {
+                dataSet: { identifier: { id: "date1", type: "dataset" } },
+                from: "2026-03-01",
+                to: "2026-04-30",
+                granularity: "GDC.time.month",
+            },
+        };
+        const widgetContent = { visualizationObject: "visId", widget: "widgetId", dashboard: "dashboardId" };
+        const rawExport = (filter: IFilter) =>
+            convertToRawExportRequest(
+                {
+                    type: "visualizationObject",
+                    fileName: "raw-export",
+                    format: "CSV_RAW",
+                    content: { ...widgetContent, filters: [filter] },
+                },
+                {
+                    workspace: "workspaceId",
+                    buckets: [],
+                    attributes: [],
+                    measures: [],
+                    filters: [filter],
+                    sortBy: [],
+                    dimensions: [],
+                },
+            );
+
+        it("keeps the granularity in raw export metadata and sends the execution filter by periods", () => {
+            const result = rawExport(monthFilter);
+
+            expect((result.metadata as { filters?: unknown[] }).filters).toEqual([storedMonthFilter]);
+            expect(result.execution.filters).toMatchObject([
+                { absoluteGranularityDateFilter: { granularity: "MONTH", from: "2026-03", to: "2026-04" } },
+            ]);
+        });
+
+        it("keeps the granularity in visualization tabular export custom filters", () => {
+            const result = convertToTabularExportRequest({
+                type: "visualizationObject",
+                fileName: "tabular",
+                format: "CSV",
+                content: { ...widgetContent, filters: [monthFilter] },
+            });
+
+            expect(result.visualizationObjectCustomFilters).toEqual([storedMonthFilter]);
+        });
+
+        it("keeps the granularity in standalone export definition custom filters", () => {
+            const result = convertExportDefinitionRequestPayload({
+                type: "visualizationObject",
+                fileName: "viz-export-definition",
+                format: "CSV",
+                content: { ...widgetContent, filters: [monthFilter] },
+            }) as TabularExportRequest;
+
+            expect(result.visualizationObjectCustomFilters).toEqual([storedMonthFilter]);
+        });
+
+        it("keeps the granularity in widget slides export metadata", () => {
+            const result = convertToSlidesExportRequest({
+                type: "visualizationObject",
+                fileName: "widget-slides",
+                format: "PPTX",
+                content: { ...widgetContent, filters: [monthFilter] },
+            });
+
+            expect((result.metadata as { filters?: unknown[] }).filters).toEqual([storedMonthFilter]);
         });
     });
 

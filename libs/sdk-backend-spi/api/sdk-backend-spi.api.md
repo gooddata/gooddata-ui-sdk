@@ -3014,7 +3014,13 @@ export { IUserWorkspaceSettings }
 export interface IVisualizationsSummaryRequest {
     filters: IFilter[];
     formatHint?: string;
-    visualizations: string[];
+    visualizations: Array<string | IVisualizationSummaryPlacement>;
+}
+
+// @beta
+export interface IVisualizationSummaryPlacement {
+    filters: IFilter[];
+    visualizationId: string;
 }
 
 // @alpha
@@ -3632,7 +3638,7 @@ export class ProtectedDataError extends AnalyticalBackendError {
 export type QueryMethod = "GET" | "POST";
 
 // @alpha
-export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin" | "dataSet" | "displayForm" | "measure" | "fact" | "computedAttribute" | "analyticalDashboard";
+export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin" | "dataSet" | "displayForm" | "measure" | "fact" | "attribute" | "computedAttribute" | "analyticalDashboard";
 
 // @public
 export type SupportedInsightReferenceTypes = Exclude<InsightReferenceTypes, "displayForm" | "variable">;

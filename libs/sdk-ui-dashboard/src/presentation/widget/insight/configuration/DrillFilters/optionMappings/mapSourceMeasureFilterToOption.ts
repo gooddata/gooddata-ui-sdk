@@ -68,6 +68,7 @@ export function mapSourceMeasureFilterToOption({
             targetDashboardAttributeFilters,
             targetDashboardAttributeFilterConfigs,
             targetDashboardTextAttributeFilters,
+            allCatalogDisplayFormsMap,
         );
 
         return {

@@ -8,13 +8,19 @@ import { type IChangeMeasureValueFilterCondition } from "../../../commands/filte
 import { measureValueFilterConditionChanged } from "../../../events/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
+import { selectEnablePersistentFiltersAcrossTabs } from "../../../store/meta/metaSelectors.js";
 import {
     selectFilterContextMeasureValueFilterByLocalId,
     selectWorkingFilterContextMeasureValueFilterByLocalId,
 } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../../store/tabs/index.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
-import { dispatchFilterContextChanged } from "../common.js";
+import {
+    type IFilterContextByTabSnapshot,
+    captureFilterContextByTabSnapshot,
+    dispatchFilterContextChanged,
+    dispatchFilterContextChangedForMutatedTabs,
+} from "../common.js";
 
 export function* changeMeasureValueFilterConditionHandler(
     ctx: DashboardContext,
@@ -24,6 +30,11 @@ export function* changeMeasureValueFilterConditionHandler(
 
     const existingFilter: ReturnType<ReturnType<typeof selectFilterContextMeasureValueFilterByLocalId>> =
         yield select(selectFilterContextMeasureValueFilterByLocalId(localIdentifier));
+
+    const enablePersistentFiltersAcrossTabs: ReturnType<typeof selectEnablePersistentFiltersAcrossTabs> =
+        yield select(selectEnablePersistentFiltersAcrossTabs);
+
+    const filterContextSnapshot: IFilterContextByTabSnapshot = yield call(captureFilterContextByTabSnapshot);
 
     if (!existingFilter) {
         throw invalidArgumentsProvided(
@@ -38,6 +49,7 @@ export function* changeMeasureValueFilterConditionHandler(
             localIdentifier,
             conditions,
             ...(isWorkingSelectionChange === undefined ? {} : { isWorkingSelectionChange }),
+            enablePersistentFiltersAcrossTabs,
         }),
     );
 
@@ -59,5 +71,9 @@ export function* changeMeasureValueFilterConditionHandler(
         ),
     );
 
-    yield call(dispatchFilterContextChanged, ctx, cmd);
+    if (enablePersistentFiltersAcrossTabs) {
+        yield call(dispatchFilterContextChangedForMutatedTabs, ctx, cmd, filterContextSnapshot);
+    } else {
+        yield call(dispatchFilterContextChanged, ctx, cmd);
+    }
 }

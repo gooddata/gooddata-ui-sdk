@@ -44,6 +44,7 @@ import {
 import { generateFilterLocalIdentifier } from "../../store/_infra/generators.js";
 import { selectSupportsMultipleDateFilters } from "../../store/backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors.js";
+import { selectRestrictedDashboardFilterLocalIdentifiers } from "../../store/filtering/dashboardFilterSelectors.js";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
 import {
     selectAttributeFilterConfigsDisplayAsLabelMap,
@@ -117,7 +118,12 @@ export function* drillToDashboardHandler(
         selectAllMeasureValueFilters,
     );
     const allNonDateFilters = [...allAttributeFilters, ...allMeasureValueFilters];
-    const dashboardFiltersToResolve = includeOtherDateFilters ? allDraggableFilters : allNonDateFilters;
+    const restrictedLocalIdentifiers: ReturnType<typeof selectRestrictedDashboardFilterLocalIdentifiers> =
+        yield select(selectRestrictedDashboardFilterLocalIdentifiers);
+    // a restricted filter is applied nowhere, so the target dashboard does not get it either
+    const dashboardFiltersToResolve = (
+        includeOtherDateFilters ? allDraggableFilters : allNonDateFilters
+    ).filter((filter) => !restrictedLocalIdentifiers.has(dashboardFilterLocalIdentifier(filter) ?? ""));
 
     const widgetAwareFilters: SagaReturnType<typeof getWidgetAwareDashboardFilters> = isDrillingToSelf
         ? []

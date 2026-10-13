@@ -14,6 +14,7 @@ import {
     type IExecutionConfig,
     type IFilter,
     type IKeyDriveAnalysis,
+    type IMeasure,
     type ISeparators,
     type ISortItem,
     type ITheme,
@@ -22,7 +23,9 @@ import {
     idRef,
     isAttribute,
     isMeasure,
+    measureLocalId,
     newAttribute,
+    sortEntityIds,
 } from "@gooddata/sdk-model";
 import {
     type ExplicitDrill,
@@ -709,15 +712,16 @@ const renderBarChart = (
     },
 ) => {
     const { metrics, view, stack } = buckets;
+    const measures = stack[0] ? metrics.slice(0, 1) : metrics;
 
     return (
         <BarChart
             locale={locale}
             height={VIS_HEIGHT}
-            measures={stack[0] ? [metrics[0]] : metrics}
-            viewBy={view[0]}
+            measures={measures}
+            viewBy={view}
             stackBy={stack[0]}
-            sortBy={sortBy}
+            sortBy={sortsOver(sortBy, [...view, ...stack.slice(0, 1)], measures)}
             config={{
                 ...defaultsChartOptions,
                 ...visualizationTooltipOptions,
@@ -756,15 +760,16 @@ const renderColumnChart = (
     },
 ) => {
     const { metrics, view, stack } = buckets;
+    const measures = stack[0] ? metrics.slice(0, 1) : metrics;
 
     return (
         <ColumnChart
             locale={locale}
             height={VIS_HEIGHT}
-            measures={stack[0] ? [metrics[0]] : metrics}
+            measures={measures}
             viewBy={view}
             stackBy={stack[0]}
-            sortBy={sortBy}
+            sortBy={sortsOver(sortBy, [...view, ...stack.slice(0, 1)], measures)}
             config={{
                 ...defaultsChartOptions,
                 ...visualizationTooltipOptions,
@@ -1558,6 +1563,22 @@ const renderHeadline = (
         </ScopedThemeProvider>
     );
 };
+
+// Keeps only the sorts the chart can execute: a sort that references an attribute or measure
+// the chart does not receive (e.g. the extra measures a stacked bar drops) fails the whole render.
+function sortsOver(sortBy: ISortItem[], attributes: IAttribute[], measures: IMeasure[]): ISortItem[] {
+    const attributeIds = attributes.map(attributeLocalId);
+    const measureIds = measures.map(measureLocalId);
+
+    return sortBy.filter((sort) => {
+        const { attributeIdentifiers, measureIdentifiers } = sortEntityIds(sort);
+
+        return (
+            attributeIdentifiers.every((id) => attributeIds.includes(id)) &&
+            measureIdentifiers.every((id) => measureIds.includes(id))
+        );
+    });
+}
 
 function useBucketData(buckets: IBucket[]) {
     return useMemo(() => {

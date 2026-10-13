@@ -1,6 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { type ReactNode } from "react";
+import { type ReactNode, useMemo } from "react";
 
 import { invariant } from "ts-invariant";
 
@@ -120,6 +120,27 @@ export function DefaultFilterBarItem(props: IFilterBarItemProps): ReactNode {
     const restrictedFilterLocalIdentifiers = useDashboardSelector(
         selectRestrictedDashboardFilterLocalIdentifiers,
     );
+    // a restricted filter is reported once by the filter bar, so no group component, default or
+    // custom, gets one
+    const groupItem = useMemo(
+        () =>
+            isFilterBarFilterGroupItem(item)
+                ? {
+                      ...item,
+                      filters: item.filters.filter(
+                          (filter) =>
+                              !(
+                                  (isFilterBarAttributeFilter(filter) ||
+                                      isFilterBarMeasureValueFilter(filter)) &&
+                                  restrictedFilterLocalIdentifiers.has(
+                                      dashboardFilterLocalIdentifier(filter.filter) ?? "",
+                                  )
+                              ),
+                      ),
+                  }
+                : undefined,
+        [item, restrictedFilterLocalIdentifiers],
+    );
 
     const commonDateFilterComponentConfig: IDashboardDateFilterConfig = {
         availableGranularities,
@@ -147,14 +168,14 @@ export function DefaultFilterBarItem(props: IFilterBarItemProps): ReactNode {
     }
 
     if (isFilterBarFilterGroupItem(item)) {
-        if (!enableDashboardFilterGroups) {
+        if (!enableDashboardFilterGroups || groupItem === undefined) {
             return null;
         }
         const CustomFilterGroupComponent =
-            DashboardFilterGroupComponentProvider?.(item.groupConfig) ?? DefaultDashboardFilterGroup;
+            DashboardFilterGroupComponentProvider?.(groupItem.groupConfig) ?? DefaultDashboardFilterGroup;
         return (
             <CustomFilterGroupComponent
-                groupItem={item}
+                groupItem={groupItem}
                 onAttributeFilterChanged={onAttributeFilterChanged}
                 onMeasureValueFilterChanged={onMeasureValueFilterChanged}
             />

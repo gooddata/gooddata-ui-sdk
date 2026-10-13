@@ -718,5 +718,9 @@
     "properties.conditionalFormatting.operator.endsWith": "Diakhiri dengan",
     "properties.conditionalFormatting.operator.notEndsWith": "Tidak diakhiri dengan",
     "properties.conditionalFormatting.operator.isEmpty": "Kosong",
-    "properties.conditionalFormatting.operator.isNotEmpty": "Tidak kosong"
+    "properties.conditionalFormatting.operator.isNotEmpty": "Tidak kosong",
+    "properties.lineShape": "Bentuk garis",
+    "properties.lineShape.linear": "Linear (default)",
+    "properties.lineShape.spline": "Kurva halus",
+    "properties.lineShape.stepped": "Bertingkat"
 }

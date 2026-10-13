@@ -14,13 +14,9 @@ import {
     type ObjRef,
     type ObjectType,
     areObjRefsEqual,
-    dashboardAttributeFilterItemDisplayForm,
-    dashboardAttributeFilterItemValidateElementsBy,
     insightRef,
     isComputedAttributeRef,
-    isDashboardAttributeFilterItem,
     isDashboardAttributeFilterReference,
-    isDashboardMeasureValueFilter,
     isDashboardMeasureValueFilterReference,
     isDrillToDashboard,
     isInsightWidget,
@@ -31,14 +27,17 @@ import {
 import { collectReferences } from "@gooddata/sdk-ui-kit";
 
 import { type ExtendedDashboardWidget, isExtendedDashboardLayoutWidget } from "../../types/layoutTypes.js";
-import { isDashboardObjectRestricted } from "../filtering/restrictedFilterUtils.js";
+import {
+    isDashboardFilterUsingRestrictedObject,
+    isDashboardObjectRestricted,
+} from "../filtering/restrictedFilterUtils.js";
 import { selectInsights } from "../insights/insightsSelectors.js";
 import { selectIsInViewMode } from "../renderMode/renderModeSelectors.js";
 import { selectTabs } from "../tabs/tabsSelectors.js";
 import { type DashboardSelector } from "../types.js";
 import { isDrillRestricted } from "../widgetDrills/drillRestrictionUtils.js";
 
-import { newRestrictedLimitingItemsMap, selectUnavailableObjects } from "./unavailableObjectsSelectors.js";
+import { selectUnavailableObjects } from "./unavailableObjectsSelectors.js";
 
 /**
  * The parts of one dashboard tab a copy of the dashboard is created from.
@@ -57,9 +56,11 @@ export interface IDashboardCopySourceTab {
  *
  * @remarks
  * The backend accepts a copy that keeps a drill to a dashboard the user cannot open or an ignored
- * drill-down hierarchy, so neither counts. It refuses a copy whose filters use a label, metric or fact
- * the user may not read: an attribute filter's label, a measure value filter's metric, or a metric or
- * fact limiting a filter's values. A merely deleted object does not count.
+ * drill-down hierarchy, so neither counts. It refuses a copy whose filters use a label, attribute, metric
+ * or fact the user may not read: an attribute filter's label, a measure value filter's metric or
+ * "For attribute" item, or a metric, fact or "Count of" attribute limiting a filter's values. A filter
+ * restricted only through its parent filter does not count, as it names the parent by local identifier
+ * only. A merely deleted object does not count.
  *
  * @internal
  */
@@ -121,20 +122,6 @@ export function hasCopyBlockingReference(
         return false;
     };
 
-    const restrictedLimitingItems = newRestrictedLimitingItemsMap(unavailableObjects);
-    const isFilterForbidden = (filter: FilterContextItem): boolean => {
-        if (isDashboardMeasureValueFilter(filter)) {
-            return isForbidden(filter.dashboardMeasureValueFilter.measure, "measure");
-        }
-        return (
-            isDashboardAttributeFilterItem(filter) &&
-            (isLabelForbidden(dashboardAttributeFilterItemDisplayForm(filter)) ||
-                (dashboardAttributeFilterItemValidateElementsBy(filter) ?? []).some((item) =>
-                    restrictedLimitingItems.has(item),
-                ))
-        );
-    };
-
     const isSectionForbidden = (section: IDashboardLayoutSection<ExtendedDashboardWidget>): boolean =>
         isTextForbidden(section.header?.description) ||
         section.items.some((item) => item.widget !== undefined && isWidgetForbidden(item.widget));
@@ -143,7 +130,7 @@ export function hasCopyBlockingReference(
         (tab) =>
             (tab.layout?.sections ?? []).some(isSectionForbidden) ||
             tab.attributeFilterConfigs.some((config) => isLabelForbidden(config.displayAsLabel)) ||
-            tab.filters.some(isFilterForbidden),
+            tab.filters.some((filter) => isDashboardFilterUsingRestrictedObject(filter, unavailableObjects)),
     );
 }
 

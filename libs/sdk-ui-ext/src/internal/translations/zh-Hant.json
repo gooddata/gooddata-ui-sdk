@@ -718,5 +718,9 @@
     "properties.conditionalFormatting.operator.endsWith": "結尾為",
     "properties.conditionalFormatting.operator.notEndsWith": "結尾不為",
     "properties.conditionalFormatting.operator.isEmpty": "為空",
-    "properties.conditionalFormatting.operator.isNotEmpty": "不為空"
+    "properties.conditionalFormatting.operator.isNotEmpty": "不為空",
+    "properties.lineShape": "線條形狀",
+    "properties.lineShape.linear": "線性（預設）",
+    "properties.lineShape.spline": "樣條曲線",
+    "properties.lineShape.stepped": "階梯式"
 }

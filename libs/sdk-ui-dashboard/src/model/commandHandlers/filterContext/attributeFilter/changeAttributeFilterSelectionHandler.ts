@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { all, call, put, select } from "redux-saga/effects";
@@ -13,16 +13,24 @@ import {
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
 } from "../../../store/config/configSelectors.js";
 import {
+    selectCrossFilteringFiltersLocalIdentifiersByTab,
     selectIsCrossFiltering,
     selectIsFilterFromCrossFilteringByLocalIdentifier,
 } from "../../../store/drill/drillSelectors.js";
+import { selectEnablePersistentFiltersAcrossTabs } from "../../../store/meta/metaSelectors.js";
 import {
     selectAttributeFilterDescendants,
     selectFilterContextAttributeFilterByLocalId,
 } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../../store/tabs/index.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
-import { dispatchFilterContextChanged, resetCrossFiltering } from "../common.js";
+import {
+    type IFilterContextByTabSnapshot,
+    captureFilterContextByTabSnapshot,
+    dispatchFilterContextChanged,
+    dispatchFilterContextChangedForMutatedTabs,
+    resetCrossFiltering,
+} from "../common.js";
 
 export function* changeAttributeFilterSelectionHandler(
     ctx: DashboardContext,
@@ -50,6 +58,13 @@ export function* changeAttributeFilterSelectionHandler(
     const enableImmediateAttributeFilterDisplayAsLabelMigration: ReturnType<
         typeof selectEnableImmediateAttributeFilterDisplayAsLabelMigration
     > = yield select(selectEnableImmediateAttributeFilterDisplayAsLabelMigration);
+    const crossFilteringLocalIdsByTab: ReturnType<typeof selectCrossFilteringFiltersLocalIdentifiersByTab> =
+        yield select(selectCrossFilteringFiltersLocalIdentifiersByTab);
+
+    const enablePersistentFiltersAcrossTabs: ReturnType<typeof selectEnablePersistentFiltersAcrossTabs> =
+        yield select(selectEnablePersistentFiltersAcrossTabs);
+
+    const filterContextSnapshot: IFilterContextByTabSnapshot = yield call(captureFilterContextByTabSnapshot);
 
     yield put(
         tabsActions.updateAttributeFilterSelection({
@@ -60,6 +75,8 @@ export function* changeAttributeFilterSelectionHandler(
             enableImmediateAttributeFilterDisplayAsLabelMigration,
             isResultOfMigration,
             isSelectionInvalid,
+            crossFilteringLocalIdsByTab,
+            enablePersistentFiltersAcrossTabs,
         }),
     );
 
@@ -83,6 +100,8 @@ export function* changeAttributeFilterSelectionHandler(
                         },
                         negativeSelection: true,
                         isWorkingSelectionChange: isWorkingSelectionChange && isApplyAllAtOnceEnabledAndSet,
+                        crossFilteringLocalIdsByTab,
+                        enablePersistentFiltersAcrossTabs,
                     }),
                 ),
             ),
@@ -102,5 +121,10 @@ export function* changeAttributeFilterSelectionHandler(
     }
 
     yield dispatchDashboardEvent(attributeFilterSelectionChanged(ctx, changedFilter, cmd.correlationId));
-    yield call(dispatchFilterContextChanged, ctx, cmd);
+
+    if (enablePersistentFiltersAcrossTabs) {
+        yield call(dispatchFilterContextChangedForMutatedTabs, ctx, cmd, filterContextSnapshot);
+    } else {
+        yield call(dispatchFilterContextChanged, ctx, cmd);
+    }
 }

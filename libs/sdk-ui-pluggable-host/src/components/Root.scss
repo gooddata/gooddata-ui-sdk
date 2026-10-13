@@ -9,6 +9,18 @@
     }
 
     &__error {
+        min-height: 100vh;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         padding: 2rem;
+        text-align: center;
     }
+}
+
+// The app slot sits below the host header, so a viewport-high fallback would overflow it.
+.gd-host-chrome__app-container > .gd-host-root__error {
+    min-height: 100%;
 }

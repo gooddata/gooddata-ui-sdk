@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import {
+    type DateAttributeGranularity,
     DateGranularity,
     type IFilter,
     type IMeasureValueFilter,
@@ -144,11 +145,103 @@ describe("tiger filter converter from model to AFM", () => {
                     },
                 },
             ],
+            [
+                "absolute date filter with month granularity",
+                newAbsoluteDateFilter(ReferenceMd.DateDatasets.Closed.ref, "2026-03-01", "2026-04-30", {
+                    granularity: "GDC.time.month",
+                }),
+            ],
+            [
+                "absolute date filter with quarter granularity",
+                newAbsoluteDateFilter(ReferenceMd.DateDatasets.Closed.ref, "2026-01-01", "2026-06-30", {
+                    granularity: "GDC.time.quarter",
+                }),
+            ],
+            [
+                "absolute date filter with year granularity",
+                newAbsoluteDateFilter(ReferenceMd.DateDatasets.Closed.ref, "2025-01-01", "2026-12-31", {
+                    granularity: "GDC.time.year",
+                }),
+            ],
+            [
+                "absolute date filter with day granularity",
+                newAbsoluteDateFilter(ReferenceMd.DateDatasets.Closed.ref, "2019-08-06", "2019-08-12", {
+                    granularity: "GDC.time.date",
+                }),
+            ],
+            [
+                "absolute date filter with month granularity and empty values handling",
+                {
+                    absoluteDateFilter: {
+                        ...newAbsoluteDateFilter(
+                            ReferenceMd.DateDatasets.Closed.ref,
+                            "2026-03-01",
+                            "2026-04-30",
+                            { granularity: "GDC.time.month" },
+                        ).absoluteDateFilter,
+                        emptyValueHandling: "include",
+                    },
+                },
+            ],
+            [
+                "absolute date filter with day granularity and a time of day",
+                newAbsoluteDateFilter(
+                    ReferenceMd.DateDatasets.Closed.ref,
+                    "2026-03-01 00:00",
+                    "2026-04-30 23:59",
+                    { granularity: "GDC.time.date" },
+                ),
+            ],
+            [
+                "absolute date filter with hour granularity and a time of day",
+                newAbsoluteDateFilter(
+                    ReferenceMd.DateDatasets.Closed.ref,
+                    "2026-03-01 08:00",
+                    "2026-03-01 18:00",
+                    { granularity: "GDC.time.hour" },
+                ),
+            ],
+            [
+                "absolute date filter with fiscal month granularity",
+                newAbsoluteDateFilter(ReferenceMd.DateDatasets.Closed.ref, "2026-03-01", "2026-04-30", {
+                    granularity: "GDC.time.fiscal_month",
+                }),
+            ],
+            [
+                "absolute date filter with EU week granularity",
+                newAbsoluteDateFilter(ReferenceMd.DateDatasets.Closed.ref, "2026-07-20", "2026-07-26", {
+                    granularity: "GDC.time.week",
+                }),
+            ],
         ];
 
         it.each(Scenarios)("should convert %s", (_desc, input) => {
             expect(convertFilter(input as IFilter | IFilterWithApplyOnResult)).toMatchSnapshot();
         });
+
+        it.each([
+            ["a month range that is not whole months", "GDC.time.month", "2024-01-15", "2024-02-10"],
+            ["a year range that is not whole years", "GDC.time.year", "2024-01-01", "2024-06-30"],
+            ["a month range with a time of day", "GDC.time.month", "2026-03-01 08:00", "2026-04-30 12:00"],
+            [
+                "a month range of whole days with a time of day",
+                "GDC.time.month",
+                "2026-03-01 00:00",
+                "2026-04-30 23:59",
+            ],
+            ["an unparsable month range", "GDC.time.month", "not a date", "also not a date"],
+        ] as [string, DateAttributeGranularity, string, string][])(
+            "should send %s as its days",
+            (_desc, granularity, from, to) => {
+                const filter = newAbsoluteDateFilter(ReferenceMd.DateDatasets.Closed.ref, from, to, {
+                    granularity,
+                });
+
+                expect(convertFilter(filter)).toEqual({
+                    absoluteDateFilter: expect.objectContaining({ from, to }),
+                });
+            },
+        );
     });
     describe("convert relative date filter", () => {
         const Scenarios: Array<[string, unknown]> = [

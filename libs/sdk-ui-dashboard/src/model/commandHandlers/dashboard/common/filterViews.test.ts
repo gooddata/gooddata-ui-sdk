@@ -18,6 +18,8 @@ import {
 
 import { applyDefaultFilterView, changeFilterContextSelection } from "./filterViews.js";
 
+const NO_RESTRICTED_FILTERS: ReadonlySet<string> = new Set();
+
 const buildFilterContext = (filters: FilterContextItem[]): IFilterContext => ({
     ref: { identifier: "1c07035a-d48c-48f9-97ac-ca6a146a1b17", type: "filterContext" },
     identifier: "1c07035a-d48c-48f9-97ac-ca6a146a1b17",
@@ -69,6 +71,67 @@ function buildFilterView(filterView: Partial<IDashboardFilterView>): IDashboardF
 
 describe("filterViews", () => {
     describe("applyDefaultFilterView", () => {
+        it("keeps the stored values of restricted filters and applies the readable ones", () => {
+            const restrictedLabel = idRef("restricted_label", "displayForm");
+            const listFilter = (
+                localIdentifier: string,
+                label: string,
+                uris: string[],
+                parent?: string,
+            ): FilterContextItem => ({
+                attributeFilter: {
+                    displayForm: idRef(label, "displayForm"),
+                    attributeElements: { uris },
+                    negativeSelection: false,
+                    localIdentifier,
+                    filterElementsBy: parent
+                        ? [{ filterLocalIdentifier: parent, over: { attributes: [] } }]
+                        : undefined,
+                },
+            });
+            const measureValueFilter = (localIdentifier: string, value: number): FilterContextItem => ({
+                dashboardMeasureValueFilter: {
+                    measure: idRef("metric", "measure"),
+                    localIdentifier,
+                    conditions: [{ comparison: { operator: "GREATER_THAN", value } }],
+                    dimensionality: localIdentifier === "restricted_mvf" ? [restrictedLabel] : undefined,
+                },
+            });
+            const stored = [
+                listFilter("parent", "restricted_label", ["stored"]),
+                listFilter("child", "child_label", ["stored"], "parent"),
+                listFilter("readable", "readable_label", ["stored"]),
+                measureValueFilter("restricted_mvf", 1),
+                measureValueFilter("readable_mvf", 1),
+            ];
+            const dashboard = buildDashboard({ filterContext: buildFilterContext(stored) });
+            const filterView = buildFilterView({
+                filterContext: {
+                    title: "",
+                    description: "",
+                    filters: [
+                        listFilter("parent", "restricted_label", ["view"]),
+                        listFilter("child", "child_label", ["view"], "parent"),
+                        listFilter("readable", "readable_label", ["view"]),
+                        measureValueFilter("restricted_mvf", 2),
+                        measureValueFilter("readable_mvf", 2),
+                    ],
+                },
+            });
+
+            const updated = applyDefaultFilterView(dashboard, [filterView], undefined, [
+                { ref: restrictedLabel, type: "displayForm", reason: "forbidden" },
+            ]);
+
+            expect(updated.filterContext?.filters).toEqual([
+                stored[0],
+                stored[1],
+                listFilter("readable", "readable_label", ["view"]),
+                stored[3],
+                measureValueFilter("readable_mvf", 2),
+            ]);
+        });
+
         it("applies default filter view parameter values to matching tab parameters", () => {
             const dashboard = buildDashboard({
                 tabs: [
@@ -85,7 +148,7 @@ describe("filterViews", () => {
                 parameters: [{ ...topNParameter, value: 99 }],
             });
 
-            const updated = applyDefaultFilterView(dashboard, [filterView], undefined);
+            const updated = applyDefaultFilterView(dashboard, [filterView], undefined, []);
 
             expect(updated.tabs?.[0]?.parameters).toEqual([{ ...topNParameter, value: 99 }]);
         });
@@ -106,7 +169,7 @@ describe("filterViews", () => {
                 parameters: [topNParameter],
             });
 
-            const updated = applyDefaultFilterView(dashboard, [filterView], undefined);
+            const updated = applyDefaultFilterView(dashboard, [filterView], undefined, []);
 
             expect(updated.tabs?.[0]?.parameters).toEqual([topNParameter]);
         });
@@ -131,7 +194,7 @@ describe("filterViews", () => {
                 parameters: [{ ...topNParameter, value: 99 }],
             });
 
-            const updated = applyDefaultFilterView(dashboard, [filterView], undefined);
+            const updated = applyDefaultFilterView(dashboard, [filterView], undefined, []);
 
             expect(updated.tabs?.[0]?.parameters).toBeUndefined();
             expect(updated.tabs?.[1]?.parameters).toBeUndefined();
@@ -178,7 +241,7 @@ describe("filterViews", () => {
                     filterContext: { title: "", description: "", filters: [viewFilter] },
                 });
 
-                const updated = applyDefaultFilterView(dashboard, [filterView], "export-1");
+                const updated = applyDefaultFilterView(dashboard, [filterView], "export-1", []);
 
                 expect(updated).toBe(dashboard);
             });
@@ -202,7 +265,7 @@ describe("filterViews", () => {
                     parameters: [{ ...topNParameter, value: 99 }],
                 });
 
-                const updated = applyDefaultFilterView(dashboard, [filterView], "export-1");
+                const updated = applyDefaultFilterView(dashboard, [filterView], "export-1", []);
 
                 expect(updated).toBe(dashboard);
                 expect(updated.tabs?.[0]?.parameters).toEqual([{ ...topNParameter, value: 25 }]);
@@ -216,7 +279,7 @@ describe("filterViews", () => {
                     filterContext: { title: "", description: "", filters: [viewFilter] },
                 });
 
-                const updated = applyDefaultFilterView(dashboard, [filterView], "export-1");
+                const updated = applyDefaultFilterView(dashboard, [filterView], "export-1", []);
 
                 expect((updated.filterContext as IFilterContext).filters).toEqual([viewFilter]);
             });
@@ -233,7 +296,7 @@ describe("filterViews", () => {
                     filterContext: { title: "", description: "", filters: [viewFilter] },
                 });
 
-                const updated = applyDefaultFilterView(dashboard, [filterView], undefined);
+                const updated = applyDefaultFilterView(dashboard, [filterView], undefined, []);
 
                 expect(updated).toBe(dashboard);
             });
@@ -267,7 +330,11 @@ describe("filterViews", () => {
                     },
                 ];
 
-                const updatedFilterContext = changeFilterContextSelection(filterContext, filterViewFilters);
+                const updatedFilterContext = changeFilterContextSelection(
+                    filterContext,
+                    filterViewFilters,
+                    NO_RESTRICTED_FILTERS,
+                );
                 expect(updatedFilterContext).toEqual({
                     filterContext: {
                         ...filterContext,
@@ -341,6 +408,7 @@ describe("filterViews", () => {
                     const updatedFilterContext = changeFilterContextSelection(
                         filterContext,
                         filterViewFilters,
+                        NO_RESTRICTED_FILTERS,
                     );
                     expect(updatedFilterContext).toEqual({
                         filterContext: {
@@ -392,7 +460,11 @@ describe("filterViews", () => {
                     },
                 ];
 
-                const updatedFilterContext = changeFilterContextSelection(filterContext, filterViewFilters);
+                const updatedFilterContext = changeFilterContextSelection(
+                    filterContext,
+                    filterViewFilters,
+                    NO_RESTRICTED_FILTERS,
+                );
                 expect(updatedFilterContext.filterContext.filters).toEqual([
                     {
                         attributeFilter: {
@@ -432,7 +504,11 @@ describe("filterViews", () => {
                     },
                 ];
 
-                const updatedFilterContext = changeFilterContextSelection(filterContext, filterViewFilters);
+                const updatedFilterContext = changeFilterContextSelection(
+                    filterContext,
+                    filterViewFilters,
+                    NO_RESTRICTED_FILTERS,
+                );
                 expect(updatedFilterContext).toEqual({
                     filterContext: {
                         ...filterContext,
@@ -467,7 +543,11 @@ describe("filterViews", () => {
                     },
                 ];
 
-                const updatedFilterContext = changeFilterContextSelection(filterContext, filterViewFilters);
+                const updatedFilterContext = changeFilterContextSelection(
+                    filterContext,
+                    filterViewFilters,
+                    NO_RESTRICTED_FILTERS,
+                );
                 expect(updatedFilterContext).toEqual({
                     filterContext: {
                         ...filterContext,
@@ -502,7 +582,11 @@ describe("filterViews", () => {
                     },
                 ];
 
-                const updatedFilterContext = changeFilterContextSelection(filterContext, filterViewFilters);
+                const updatedFilterContext = changeFilterContextSelection(
+                    filterContext,
+                    filterViewFilters,
+                    NO_RESTRICTED_FILTERS,
+                );
                 expect(updatedFilterContext).toEqual({
                     filterContext: {
                         ...filterContext,
@@ -523,6 +607,7 @@ describe("filterViews", () => {
                     const updatedFilterContext = changeFilterContextSelection(
                         filterContext,
                         filterViewFilters,
+                        NO_RESTRICTED_FILTERS,
                     );
                     expect(updatedFilterContext).toEqual({
                         filterContext: {
@@ -550,6 +635,7 @@ describe("filterViews", () => {
                     const updatedFilterContext = changeFilterContextSelection(
                         filterContext,
                         filterViewFilters,
+                        NO_RESTRICTED_FILTERS,
                     );
                     expect(updatedFilterContext).toEqual({
                         filterContext: {
@@ -577,6 +663,7 @@ describe("filterViews", () => {
                     const updatedFilterContext = changeFilterContextSelection(
                         filterContext,
                         filterViewFilters,
+                        NO_RESTRICTED_FILTERS,
                     );
                     expect(updatedFilterContext).toEqual({
                         filterContext: {
@@ -613,6 +700,7 @@ describe("filterViews", () => {
                     const updatedFilterContext = changeFilterContextSelection(
                         filterContext,
                         filterViewFilters,
+                        NO_RESTRICTED_FILTERS,
                     );
                     expect(updatedFilterContext).toEqual({
                         filterContext: {
@@ -653,6 +741,7 @@ describe("filterViews", () => {
                     const updatedFilterContext = changeFilterContextSelection(
                         filterContext,
                         filterViewFilters,
+                        NO_RESTRICTED_FILTERS,
                     );
                     expect(updatedFilterContext).toEqual({
                         filterContext: {
@@ -689,6 +778,7 @@ describe("filterViews", () => {
                     const updatedFilterContext = changeFilterContextSelection(
                         filterContext,
                         filterViewFilters,
+                        NO_RESTRICTED_FILTERS,
                     );
                     expect(updatedFilterContext).toEqual({
                         filterContext: {
@@ -725,6 +815,7 @@ describe("filterViews", () => {
                     const updatedFilterContext = changeFilterContextSelection(
                         filterContext,
                         filterViewFilters,
+                        NO_RESTRICTED_FILTERS,
                     );
                     expect(updatedFilterContext).toEqual({
                         filterContext: {
@@ -763,6 +854,7 @@ describe("filterViews", () => {
                     const updatedFilterContext = changeFilterContextSelection(
                         filterContext,
                         filterViewFilters,
+                        NO_RESTRICTED_FILTERS,
                     );
                     expect(updatedFilterContext).toEqual({
                         filterContext: {
@@ -814,6 +906,7 @@ describe("filterViews", () => {
                     const updatedFilterContext = changeFilterContextSelection(
                         filterContext,
                         filterViewFilters,
+                        NO_RESTRICTED_FILTERS,
                     );
                     expect(updatedFilterContext).toEqual({
                         filterContext: {
@@ -852,6 +945,7 @@ describe("filterViews", () => {
                     const updatedFilterContext = changeFilterContextSelection(
                         filterContext,
                         filterViewFilters,
+                        NO_RESTRICTED_FILTERS,
                     );
                     expect(updatedFilterContext.filterContext.filters).toEqual([
                         {
@@ -911,6 +1005,7 @@ describe("filterViews", () => {
                     const updatedFilterContext = changeFilterContextSelection(
                         filterContext,
                         filterViewFilters,
+                        NO_RESTRICTED_FILTERS,
                     );
                     expect(updatedFilterContext.filterContext.filters).toEqual([
                         {
@@ -956,6 +1051,7 @@ describe("filterViews", () => {
                     const updatedFilterContext = changeFilterContextSelection(
                         filterContext,
                         filterViewFilters,
+                        NO_RESTRICTED_FILTERS,
                     );
                     expect(updatedFilterContext.filterContext.filters).toEqual([
                         {
@@ -990,6 +1086,7 @@ describe("filterViews", () => {
                     const updatedFilterContext = changeFilterContextSelection(
                         filterContext,
                         filterViewFilters,
+                        NO_RESTRICTED_FILTERS,
                     );
                     expect(updatedFilterContext.filterContext.filters).toEqual([
                         {
@@ -1029,6 +1126,7 @@ describe("filterViews", () => {
                     const updatedFilterContext = changeFilterContextSelection(
                         filterContext,
                         filterViewFilters,
+                        NO_RESTRICTED_FILTERS,
                     );
                     expect(updatedFilterContext.filterContext.filters).toEqual([
                         {
@@ -1073,6 +1171,7 @@ describe("filterViews", () => {
                     const updatedFilterContext = changeFilterContextSelection(
                         filterContext,
                         filterViewFilters,
+                        NO_RESTRICTED_FILTERS,
                     );
                     expect(updatedFilterContext).toEqual({
                         filterContext: {
@@ -1100,6 +1199,7 @@ describe("filterViews", () => {
                     const updatedFilterContext = changeFilterContextSelection(
                         filterContext,
                         filterViewFilters,
+                        NO_RESTRICTED_FILTERS,
                     );
                     expect(updatedFilterContext.filterContext.filters).toEqual([
                         {
@@ -1139,6 +1239,7 @@ describe("filterViews", () => {
                     const updatedFilterContext = changeFilterContextSelection(
                         filterContext,
                         filterViewFilters,
+                        NO_RESTRICTED_FILTERS,
                     );
                     expect(updatedFilterContext.filterContext.filters).toEqual([
                         {
@@ -1180,6 +1281,7 @@ describe("filterViews", () => {
                     const updatedFilterContext = changeFilterContextSelection(
                         filterContext,
                         filterViewFilters,
+                        NO_RESTRICTED_FILTERS,
                     );
                     expect(updatedFilterContext.filterContext.filters).toEqual([
                         {
@@ -1219,6 +1321,7 @@ describe("filterViews", () => {
                     const updatedFilterContext = changeFilterContextSelection(
                         filterContext,
                         filterViewFilters,
+                        NO_RESTRICTED_FILTERS,
                     );
                     expect(updatedFilterContext.filterContext.filters).toEqual([
                         {
@@ -1260,6 +1363,7 @@ describe("filterViews", () => {
                     const updatedFilterContext = changeFilterContextSelection(
                         filterContext,
                         filterViewFilters,
+                        NO_RESTRICTED_FILTERS,
                     );
                     expect(updatedFilterContext.filterContext.filters).toEqual([
                         {
@@ -1302,6 +1406,7 @@ describe("filterViews", () => {
                     const updatedFilterContext = changeFilterContextSelection(
                         filterContext,
                         filterViewFilters,
+                        NO_RESTRICTED_FILTERS,
                     );
                     expect(updatedFilterContext.filterContext.filters).toEqual([
                         {
@@ -1349,7 +1454,11 @@ describe("filterViews", () => {
                     },
                 ];
 
-                const updated = changeFilterContextSelection(filterContext, filterViewFilters);
+                const updated = changeFilterContextSelection(
+                    filterContext,
+                    filterViewFilters,
+                    NO_RESTRICTED_FILTERS,
+                );
                 expect(updated.filterContext.filters).toEqual([
                     {
                         dashboardMeasureValueFilter: {
@@ -1384,7 +1493,11 @@ describe("filterViews", () => {
                     },
                 ];
 
-                const updated = changeFilterContextSelection(filterContext, filterViewFilters);
+                const updated = changeFilterContextSelection(
+                    filterContext,
+                    filterViewFilters,
+                    NO_RESTRICTED_FILTERS,
+                );
                 expect(updated.filterContext.filters).toEqual([
                     {
                         dashboardMeasureValueFilter: {
@@ -1418,7 +1531,11 @@ describe("filterViews", () => {
                     },
                 ];
 
-                const updated = changeFilterContextSelection(filterContext, filterViewFilters);
+                const updated = changeFilterContextSelection(
+                    filterContext,
+                    filterViewFilters,
+                    NO_RESTRICTED_FILTERS,
+                );
                 expect(updated.filterContext.filters).toEqual([
                     {
                         dashboardMeasureValueFilter: {
@@ -1451,7 +1568,11 @@ describe("filterViews", () => {
                     },
                 ];
 
-                const updated = changeFilterContextSelection(filterContext, filterViewFilters);
+                const updated = changeFilterContextSelection(
+                    filterContext,
+                    filterViewFilters,
+                    NO_RESTRICTED_FILTERS,
+                );
                 expect(updated.filterContext.filters).toEqual([
                     {
                         dashboardMeasureValueFilter: {
@@ -1484,7 +1605,11 @@ describe("filterViews", () => {
                     },
                 ];
 
-                const updated = changeFilterContextSelection(filterContext, filterViewFilters);
+                const updated = changeFilterContextSelection(
+                    filterContext,
+                    filterViewFilters,
+                    NO_RESTRICTED_FILTERS,
+                );
                 expect(updated.filterContext.filters).toEqual([
                     {
                         dashboardMeasureValueFilter: {

@@ -13,6 +13,8 @@ import { UiIcon } from "../@ui/UiIcon/UiIcon.js";
 import { Input } from "../Form/Input.js";
 import { LoadingSpinner } from "../LoadingSpinner/LoadingSpinner.js";
 
+import { groupParametersByTag } from "./groupParametersByTag.js";
+
 const { b, e } = bem("gd-ui-kit-parameter-picker");
 
 const messages = defineMessages({
@@ -63,10 +65,15 @@ export function ParameterPicker({
     const collator = useMemo(() => new Intl.Collator(intl.locale), [intl.locale]);
     const ungroupedLabel = intl.formatMessage(messages.ungrouped);
 
-    const groups = useMemo(
-        () => buildFilteredGroups(parameters, deferredSearch, ungroupedLabel, collator, excludedKeys),
-        [parameters, deferredSearch, ungroupedLabel, collator, excludedKeys],
-    );
+    const groups = useMemo(() => {
+        const needle = deferredSearch.toLowerCase();
+        const offered = parameters.filter(
+            (parameter) =>
+                !excludedKeys.has(objRefToString(parameter.ref)) &&
+                (!needle || parameter.title.toLowerCase().includes(needle)),
+        );
+        return groupParametersByTag(offered, ungroupedLabel, collator);
+    }, [parameters, deferredSearch, ungroupedLabel, collator, excludedKeys]);
 
     const toggle = useCallback((key: string) => {
         setSelectedKeys((prev) => {
@@ -201,69 +208,3 @@ const ParameterPickerRow = memo(function ParameterPickerRow({
         </li>
     );
 });
-
-interface IParameterGroup {
-    tag: string;
-    parameters: ReadonlyArray<IParameterMetadataObject>;
-}
-
-function buildFilteredGroups(
-    parameters: ReadonlyArray<IParameterMetadataObject>,
-    search: string,
-    ungroupedLabel: string,
-    collator: Intl.Collator,
-    excludedKeys: ReadonlySet<string>,
-): ReadonlyArray<IParameterGroup> {
-    const needle = search.toLowerCase();
-    const tagged = new Map<string, { tag: string; parameters: IParameterMetadataObject[] }>();
-    const untagged: IParameterMetadataObject[] = [];
-
-    for (const parameter of parameters) {
-        if (excludedKeys.has(objRefToString(parameter.ref))) {
-            continue;
-        }
-        if (needle && !parameter.title.toLowerCase().includes(needle)) {
-            continue;
-        }
-
-        const paramTagKeys = new Set<string>();
-        for (const raw of parameter.tags ?? []) {
-            const trimmed = raw.trim();
-            if (!trimmed) {
-                continue;
-            }
-            const key = trimmed.toLowerCase();
-            if (paramTagKeys.has(key)) {
-                continue;
-            }
-            paramTagKeys.add(key);
-            const bucket = tagged.get(key);
-            if (bucket) {
-                bucket.parameters.push(parameter);
-            } else {
-                tagged.set(key, { tag: trimmed, parameters: [parameter] });
-            }
-        }
-
-        if (paramTagKeys.size === 0) {
-            untagged.push(parameter);
-        }
-    }
-
-    const byTitle = (a: IParameterMetadataObject, b: IParameterMetadataObject) =>
-        collator.compare(a.title, b.title);
-    const byTag = (a: { tag: string }, b: { tag: string }) => collator.compare(a.tag, b.tag);
-
-    const sortedTagged = Array.from(tagged.values())
-        .sort(byTag)
-        .map(({ tag, parameters: groupParameters }) => ({
-            tag,
-            parameters: groupParameters.sort(byTitle),
-        }));
-
-    if (untagged.length === 0) {
-        return sortedTagged;
-    }
-
-    return [...sortedTagged, { tag: ungroupedLabel, parameters: untagged.sort(byTitle) }];
-}

@@ -125,6 +125,38 @@ describe("storedFilterConverter", () => {
                 expect(dateFilter.to).toBe("2020-12-31");
             }
         });
+
+        const monthFilter = newAbsoluteDateFilter(idRef("date1", "dataSet"), "2020-01-01", "2020-12-31", {
+            granularity: "GDC.time.month",
+        });
+
+        it("keeps granularity of an absolute date filter", () => {
+            const tigerFilter = convertSdkFilterToTigerStored(monthFilter);
+
+            expect(tigerFilter).toHaveProperty("absoluteDateFilter");
+            if ("absoluteDateFilter" in tigerFilter) {
+                expect(tigerFilter.absoluteDateFilter).toMatchObject({
+                    from: "2020-01-01",
+                    to: "2020-12-31",
+                    granularity: "GDC.time.month",
+                });
+            }
+        });
+
+        it("drops granularity when the caller opts in", () => {
+            const tigerFilter = convertSdkFilterToTigerStored(monthFilter, {
+                dropAbsoluteDateGranularity: true,
+            });
+
+            expect(tigerFilter).toHaveProperty("absoluteDateFilter");
+            if ("absoluteDateFilter" in tigerFilter) {
+                expect(tigerFilter.absoluteDateFilter).not.toHaveProperty("granularity");
+                expect(tigerFilter.absoluteDateFilter).toMatchObject({
+                    from: "2020-01-01",
+                    to: "2020-12-31",
+                });
+            }
+        });
     });
 
     describe("convertTigerStoredToSdkFilter - IFilter conversions", () => {

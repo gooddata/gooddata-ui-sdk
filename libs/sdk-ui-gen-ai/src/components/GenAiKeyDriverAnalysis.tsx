@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useMemo } from "react";
 
-import { useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 
 import type { IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
@@ -21,20 +20,31 @@ import {
 } from "../store/chatWindow/chatWindowSlice.js";
 import { returnFocusToKdaTrigger } from "../utils/kdaReturnFocus.js";
 
+const DEFAULT_LOCALE = "en-US";
+
+/**
+ * @public
+ */
+export type GenAiKeyDriverAnalysisProps = {
+    /**
+     * Locale to use for the dialog.
+     */
+    locale?: string;
+};
+
 /**
  * UI component that renders the Key Driver Analysis dialog when requested in the GenAI store.
  *
  * @public
  */
-export function GenAiKeyDriverAnalysis() {
-    const intl = useIntl();
+export function GenAiKeyDriverAnalysis({ locale }: GenAiKeyDriverAnalysisProps) {
     const parentOverlayController = useOverlayController();
 
     const settings = useSelector(settingsSelector);
     const tags = useSelector(tagsSelector);
     const keyDriverAnalysis = useSelector(keyDriverAnalysisSelector);
 
-    const locale = settings?.locale;
+    const loc = locale ?? settings?.locale ?? DEFAULT_LOCALE;
     const separators = settings?.separators;
     const includeTags = tags?.includeTags;
     const excludeTags = tags?.excludeTags;
@@ -95,14 +105,14 @@ export function GenAiKeyDriverAnalysis() {
     }
 
     return (
-        <IntlWrapper locale={locale ?? intl.locale}>
+        <IntlWrapper locale={loc}>
             <KdaStoreProvider config={config}>
                 <KdaDialogController
                     requestedDefinition={keyDriverAnalysis}
                     parentOverlayController={parentOverlayController}
                     separators={separators}
                     showCloseButton
-                    locale={locale ?? intl.locale}
+                    locale={loc}
                     includeTags={includeTags}
                     excludeTags={excludeTags}
                     onRequestedDefinitionChange={onRequestedDefinitionChange}

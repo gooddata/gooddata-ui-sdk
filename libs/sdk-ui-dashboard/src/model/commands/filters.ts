@@ -27,6 +27,7 @@ import {
     isAllTimeDateFilter,
     isArbitraryAttributeFilter,
     isAttributeFilterWithSelection,
+    isDateFilterGranularity,
     isMatchAttributeFilter,
     isPositiveAttributeFilter,
     isRelativeBoundedDateFilter,
@@ -257,7 +258,7 @@ export function applyDateFilter(filter: IDateFilter, correlationId?: string): Ch
         const emptyValueHandling = filter.absoluteDateFilter.emptyValueHandling;
         return changeDateFilterSelection(
             "absolute",
-            "GDC.time.date",
+            isDateFilterGranularity(values.granularity) ? values.granularity : "GDC.time.date",
             values.from,
             values.to,
             undefined,
@@ -1186,6 +1187,15 @@ export type ChangeFilterContextSelectionPayload = {
      * payload carries localIdentifiers.
      */
     matchByLocalIdentifier?: boolean;
+
+    /**
+     * When true, tabs other than the one this command addresses keep their own saved initial
+     * filter values instead of receiving this payload. Used by filter reset when filters are
+     * persisted across tabs.
+     *
+     * @internal
+     */
+    restorePerTabOriginals?: boolean;
 };
 
 /**
@@ -1258,6 +1268,13 @@ export type ChangeFilterContextSelectionParams = {
      * as a fallback. See {@link ChangeFilterContextSelectionPayload}. Defaults to false.
      */
     matchByLocalIdentifier?: boolean;
+    /**
+     * When true, other tabs restore their own saved initial filter values.
+     * See {@link ChangeFilterContextSelectionPayload.restorePerTabOriginals}.
+     *
+     * @internal
+     */
+    restorePerTabOriginals?: boolean;
 };
 
 /**
@@ -1282,6 +1299,7 @@ export function changeFilterContextSelectionByParams({
     correlationId,
     tabLocalIdentifier,
     matchByLocalIdentifier,
+    restorePerTabOriginals,
 }: ChangeFilterContextSelectionParams): ChangeFilterContextSelection {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION",
@@ -1292,6 +1310,7 @@ export function changeFilterContextSelectionByParams({
             resetOthers,
             tabLocalIdentifier,
             matchByLocalIdentifier,
+            restorePerTabOriginals,
         },
     };
 }

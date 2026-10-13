@@ -3,7 +3,7 @@
 import { type IntlShape } from "react-intl";
 
 import {
-    type DashboardAttributeFilterSelectionType,
+    type DashboardAttributeFilterItem,
     type DashboardTextAttributeFilter,
     type FilterContextItem,
     type IAttributeDisplayFormMetadataObject,
@@ -17,8 +17,6 @@ import {
     type ObjRefInScope,
     type SourceInsightFilterObjRef,
     areObjRefsEqual,
-    dashboardAttributeFilterItemDisplayForm,
-    dashboardAttributeFilterItemLocalIdentifier,
     isDashboardDateFilterWithDimension,
     isDashboardMeasureValueFilter,
     isLocalIdRef,
@@ -33,13 +31,11 @@ import { buildMeasureTitles } from "@gooddata/sdk-ui/internal";
 
 import { sourceInsightFilterObjRefValue } from "../../../../../_staging/drills/drillingUtils.js";
 import { type ObjRefMap } from "../../../../../_staging/metadata/objRefMap.js";
-import { canApplyFilterTypeToTarget } from "../../../../../model/commandHandlers/dashboard/common/attributeFilterSelectionTypeCompatibility.js";
 import {
-    findDashboardAttributeFilterByAttributeDisplayForms,
-    findDashboardAttributeFilterByDisplayForm,
-    findDashboardAttributeFilterByIncomingDisplayAsLabel,
-    findDashboardAttributeFilterByTargetDisplayAsLabel,
-} from "../../../../../model/utils/filterContextUtils.js";
+    type AttributeFilterCounterpartResult,
+    findAttributeFilterCounterpart,
+} from "../../../../../model/utils/attributeFilterMatching.js";
+import { findDashboardAttributeFilterByDisplayForm } from "../../../../../model/utils/filterContextUtils.js";
 
 import { messages } from "./messages.js";
 import { type IDrillFiltersConfigOption } from "./types.js";
@@ -197,54 +193,6 @@ export function hasMatchingTargetDashboardAttributeFilterDisplayForm(
     return !!findDashboardAttributeFilterByDisplayForm(targetDashboardAttributeFilters, displayFormRef);
 }
 
-export function hasMatchingTargetDashboardAttributeFilter(
-    dashboardFilter: IDashboardAttributeFilter,
-    sourceDashboardAttributeFilterConfigs: IDashboardAttributeFilterConfig[],
-    targetDashboardAttributeFilters: IDashboardAttributeFilter[],
-    targetDashboardAttributeFilterConfigs: IDashboardAttributeFilterConfig[],
-    allCatalogDisplayFormsMap: ObjRefMap<IAttributeDisplayFormMetadataObject>,
-): boolean {
-    const displayFormRef = dashboardFilter.attributeFilter.displayForm;
-
-    if (
-        hasMatchingTargetDashboardAttributeFilterDisplayForm(displayFormRef, targetDashboardAttributeFilters)
-    ) {
-        return true;
-    }
-
-    const sourceDisplayForm = allCatalogDisplayFormsMap.get(displayFormRef);
-    if (sourceDisplayForm) {
-        const attributeDisplayForms = Array.from(allCatalogDisplayFormsMap.values()).filter((displayForm) =>
-            areObjRefsEqual(displayForm.attribute, sourceDisplayForm.attribute),
-        );
-
-        if (
-            findDashboardAttributeFilterByAttributeDisplayForms(
-                targetDashboardAttributeFilters,
-                attributeDisplayForms,
-            )
-        ) {
-            return true;
-        }
-    }
-
-    if (
-        findDashboardAttributeFilterByIncomingDisplayAsLabel(
-            dashboardFilter,
-            sourceDashboardAttributeFilterConfigs,
-            targetDashboardAttributeFilters,
-        )
-    ) {
-        return true;
-    }
-
-    return !!findDashboardAttributeFilterByTargetDisplayAsLabel(
-        displayFormRef,
-        targetDashboardAttributeFilters,
-        targetDashboardAttributeFilterConfigs,
-    );
-}
-
 export function hasMatchingTargetDashboardDateFilter(
     datasetRef: ObjRef,
     targetDashboardFilters: FilterContextItem[],
@@ -289,77 +237,6 @@ export function isDateIntersectionAttribute(
     );
 }
 
-function getConfigSelectionType(
-    targetFilterLocalId: string,
-    targetDashboardAttributeFilterConfigs: IDashboardAttributeFilterConfig[],
-): DashboardAttributeFilterSelectionType | undefined {
-    return targetDashboardAttributeFilterConfigs.find((c) => c.localIdentifier === targetFilterLocalId)
-        ?.selectionType;
-}
-
-/**
- * Finds a matching text filter on the target dashboard by displayForm.
- * Checks the source filter's displayForm and optionally its displayAsLabel from config.
- */
-function findMatchingTargetTextFilter(
-    displayFormRef: ObjRef,
-    sourceDashboardAttributeFilterConfigs: IDashboardAttributeFilterConfig[],
-    sourceFilterLocalId: string | undefined,
-    targetDashboardTextAttributeFilters: DashboardTextAttributeFilter[],
-): DashboardTextAttributeFilter | undefined {
-    // Direct displayForm match
-    const directMatch = targetDashboardTextAttributeFilters.find((textFilter) =>
-        areObjRefsEqual(dashboardAttributeFilterItemDisplayForm(textFilter), displayFormRef),
-    );
-    if (directMatch) {
-        return directMatch;
-    }
-
-    // Check source's displayAsLabel from config
-    if (sourceFilterLocalId) {
-        const sourceConfig = sourceDashboardAttributeFilterConfigs.find(
-            (c) => c.localIdentifier === sourceFilterLocalId,
-        );
-        if (sourceConfig?.displayAsLabel) {
-            return targetDashboardTextAttributeFilters.find((textFilter) =>
-                areObjRefsEqual(
-                    dashboardAttributeFilterItemDisplayForm(textFilter),
-                    sourceConfig.displayAsLabel!,
-                ),
-            );
-        }
-    }
-
-    return undefined;
-}
-
-/**
- * Finds a matching list filter on the target dashboard for a text source filter.
- * Text filter has only displayForm. List filter has primary displayForm + displayAsLabel in config.
- * Match if text filter's displayForm equals either of those.
- */
-function findMatchingTargetListFilterForTextSource(
-    textFilterDisplayFormRef: ObjRef,
-    targetDashboardAttributeFilters: IDashboardAttributeFilter[],
-    targetDashboardAttributeFilterConfigs: IDashboardAttributeFilterConfig[],
-): IDashboardAttributeFilter | undefined {
-    // Direct displayForm match
-    const directMatch = findDashboardAttributeFilterByDisplayForm(
-        targetDashboardAttributeFilters,
-        textFilterDisplayFormRef,
-    );
-    if (directMatch) {
-        return directMatch;
-    }
-
-    // Check target's displayAsLabel — find a config whose displayAsLabel matches the text filter's displayForm
-    return findDashboardAttributeFilterByTargetDisplayAsLabel(
-        textFilterDisplayFormRef,
-        targetDashboardAttributeFilters,
-        targetDashboardAttributeFilterConfigs,
-    );
-}
-
 /**
  * Reason why a filter cannot be transferred to the target dashboard.
  * - "transferable" — filter can be transferred
@@ -380,44 +257,17 @@ export function canTransferDashboardAttributeFilter(
     targetDashboardTextAttributeFilters: DashboardTextAttributeFilter[],
     allCatalogDisplayFormsMap: ObjRefMap<IAttributeDisplayFormMetadataObject>,
 ): FilterTransferResult {
-    // 1. Same-type match against list filters — always OK
-    if (
-        hasMatchingTargetDashboardAttributeFilter(
+    return toFilterTransferResult(
+        findAttributeFilterCounterpart(
             sourceFilter,
-            sourceDashboardAttributeFilterConfigs,
-            targetDashboardAttributeFilters,
-            targetDashboardAttributeFilterConfigs,
-            allCatalogDisplayFormsMap,
-        )
-    ) {
-        return "transferable";
-    }
-
-    // 2. Cross-type match against text filters on target
-    const matchingTextFilter = findMatchingTargetTextFilter(
-        sourceFilter.attributeFilter.displayForm,
-        sourceDashboardAttributeFilterConfigs,
-        sourceFilter.attributeFilter.localIdentifier,
-        targetDashboardTextAttributeFilters,
+            [...targetDashboardAttributeFilters, ...targetDashboardTextAttributeFilters],
+            {
+                sourceFilterConfigs: sourceDashboardAttributeFilterConfigs,
+                targetFilterConfigs: targetDashboardAttributeFilterConfigs,
+                displayForms: Array.from(allCatalogDisplayFormsMap.values()),
+            },
+        ),
     );
-
-    if (!matchingTextFilter) {
-        return "notFound";
-    }
-
-    // 3. Check if the target text filter's selection type allows list type
-    const textFilterLocalId = dashboardAttributeFilterItemLocalIdentifier(matchingTextFilter);
-    if (!textFilterLocalId) {
-        return "notFound";
-    }
-
-    const configSelectionType = getConfigSelectionType(
-        textFilterLocalId,
-        targetDashboardAttributeFilterConfigs,
-    );
-    return canApplyFilterTypeToTarget("list", configSelectionType, matchingTextFilter)
-        ? "transferable"
-        : "notCompatible";
 }
 
 /**
@@ -429,42 +279,18 @@ export function canTransferTextAttributeFilter(
     targetDashboardAttributeFilters: IDashboardAttributeFilter[],
     targetDashboardAttributeFilterConfigs: IDashboardAttributeFilterConfig[],
     targetDashboardTextAttributeFilters: DashboardTextAttributeFilter[],
+    allCatalogDisplayFormsMap: ObjRefMap<IAttributeDisplayFormMetadataObject>,
 ): FilterTransferResult {
-    const sourceDisplayFormRef = dashboardAttributeFilterItemDisplayForm(sourceFilter);
-
-    // 1. Same-type match against text filters — always OK
-    const matchingTextFilter = targetDashboardTextAttributeFilters.find((textFilter) =>
-        areObjRefsEqual(dashboardAttributeFilterItemDisplayForm(textFilter), sourceDisplayFormRef),
+    return toFilterTransferResult(
+        findAttributeFilterCounterpart(
+            sourceFilter,
+            [...targetDashboardTextAttributeFilters, ...targetDashboardAttributeFilters],
+            {
+                targetFilterConfigs: targetDashboardAttributeFilterConfigs,
+                displayForms: Array.from(allCatalogDisplayFormsMap.values()),
+            },
+        ),
     );
-    if (matchingTextFilter) {
-        return "transferable";
-    }
-
-    // 2. Cross-type match against list filters on target
-    // Text filter has only displayForm; list filter has primary displayForm + displayAsLabel in config
-    const matchingListFilter = findMatchingTargetListFilterForTextSource(
-        sourceDisplayFormRef,
-        targetDashboardAttributeFilters,
-        targetDashboardAttributeFilterConfigs,
-    );
-
-    if (!matchingListFilter) {
-        return "notFound";
-    }
-
-    // 3. Check if the target list filter's selection type allows text type
-    const listFilterLocalId = matchingListFilter.attributeFilter.localIdentifier;
-    if (!listFilterLocalId) {
-        return "notFound";
-    }
-
-    const configSelectionType = getConfigSelectionType(
-        listFilterLocalId,
-        targetDashboardAttributeFilterConfigs,
-    );
-    return canApplyFilterTypeToTarget("text", configSelectionType, matchingListFilter)
-        ? "transferable"
-        : "notCompatible";
 }
 
 /**
@@ -484,63 +310,24 @@ export function canTransferAttributeFilterByDisplayForm(
     targetDashboardAttributeFilters: IDashboardAttributeFilter[],
     targetDashboardAttributeFilterConfigs: IDashboardAttributeFilterConfig[],
     targetDashboardTextAttributeFilters: DashboardTextAttributeFilter[],
+    allCatalogDisplayFormsMap: ObjRefMap<IAttributeDisplayFormMetadataObject>,
 ): FilterTransferResult {
-    if (isSourceTextFilter) {
-        // Text source: check text targets first, then list targets with selection type
-        const matchingTextFilter = targetDashboardTextAttributeFilters.find((textFilter) =>
-            areObjRefsEqual(dashboardAttributeFilterItemDisplayForm(textFilter), displayFormRef),
-        );
-        if (matchingTextFilter) {
-            return "transferable";
-        }
-
-        const matchingListFilter = findMatchingTargetListFilterForTextSource(
-            displayFormRef,
-            targetDashboardAttributeFilters,
-            targetDashboardAttributeFilterConfigs,
-        );
-        if (!matchingListFilter) {
-            return "notFound";
-        }
-
-        const listFilterLocalId = matchingListFilter.attributeFilter.localIdentifier;
-        if (!listFilterLocalId) {
-            return "notFound";
-        }
-
-        const configSelectionType = getConfigSelectionType(
-            listFilterLocalId,
-            targetDashboardAttributeFilterConfigs,
-        );
-        return canApplyFilterTypeToTarget("text", configSelectionType, matchingListFilter)
-            ? "transferable"
-            : "notCompatible";
-    }
-
-    // List source: check list targets first, then text targets with selection type
-    if (
-        hasMatchingTargetDashboardAttributeFilterDisplayForm(displayFormRef, targetDashboardAttributeFilters)
-    ) {
-        return "transferable";
-    }
-
-    const matchingTextFilter = targetDashboardTextAttributeFilters.find((textFilter) =>
-        areObjRefsEqual(dashboardAttributeFilterItemDisplayForm(textFilter), displayFormRef),
+    const source = {
+        displayForm: displayFormRef,
+        type: isSourceTextFilter ? ("text" as const) : ("list" as const),
+    };
+    const targets: DashboardAttributeFilterItem[] = [
+        ...targetDashboardAttributeFilters,
+        ...targetDashboardTextAttributeFilters,
+    ];
+    return toFilterTransferResult(
+        findAttributeFilterCounterpart(source, targets, {
+            targetFilterConfigs: targetDashboardAttributeFilterConfigs,
+            displayForms: Array.from(allCatalogDisplayFormsMap.values()),
+        }),
     );
-    if (!matchingTextFilter) {
-        return "notFound";
-    }
+}
 
-    const textFilterLocalId = dashboardAttributeFilterItemLocalIdentifier(matchingTextFilter);
-    if (!textFilterLocalId) {
-        return "notFound";
-    }
-
-    const configSelectionType = getConfigSelectionType(
-        textFilterLocalId,
-        targetDashboardAttributeFilterConfigs,
-    );
-    return canApplyFilterTypeToTarget("list", configSelectionType, matchingTextFilter)
-        ? "transferable"
-        : "notCompatible";
+function toFilterTransferResult(result: AttributeFilterCounterpartResult): FilterTransferResult {
+    return result.status === "matched" ? "transferable" : result.status;
 }

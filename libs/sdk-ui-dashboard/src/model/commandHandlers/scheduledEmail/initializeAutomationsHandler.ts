@@ -3,7 +3,7 @@
 import { compact, omit } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
-import { all, call, put, select } from "redux-saga/effects";
+import { type SagaReturnType, all, call, put, select } from "redux-saga/effects";
 
 import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 import {
@@ -74,6 +74,11 @@ import {
     selectIsReadOnly,
     selectOpenAutomationOnLoad,
 } from "../../store/config/configSelectors.js";
+import {
+    selectRestrictedDashboardFilterLocalIdentifiers,
+    selectRestrictedDashboardFilterLocalIdentifiersForTab,
+} from "../../store/filtering/dashboardFilterSelectors.js";
+import { isDashboardFilterCopyRestricted } from "../../store/filtering/restrictedFilterUtils.js";
 import { selectInsightByWidgetRef } from "../../store/insights/insightsSelectors.js";
 import { selectDashboardId } from "../../store/meta/metaSelectors.js";
 import { notificationChannelsActions } from "../../store/notificationChannels/index.js";
@@ -90,10 +95,11 @@ import {
 import { selectWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
 import { selectActiveTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
 import { uiActions } from "../../store/ui/index.js";
+import { selectUnavailableObjects } from "../../store/unavailableObjects/unavailableObjectsSelectors.js";
 import { selectCurrentUser } from "../../store/user/userSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type PromiseFnReturnType } from "../../types/sagas.js";
-import { isFilterTypeCompatibleWithSelectionType } from "../dashboard/common/attributeFilterSelectionTypeCompatibility.js";
+import { isFilterTypeCompatibleWithSelectionType } from "../../utils/attributeFilterSelectionTypeCompatibility.js";
 import { changeFilterContextSelectionHandler } from "../filterContext/changeFilterContextSelectionHandler.js";
 import { changeParameterValuesHandler } from "../parameters/changeParameterValuesHandler.js";
 import { switchDashboardTabHandler } from "../tabs/switchDashboardTabHandler.js";
@@ -244,7 +250,9 @@ export function* initializeAutomationsHandler(
                 // Empty sanitized filters = keep filters as they are, do not reset them (all alert execution filters are insight specific / ignored).
                 // Non-empty sanitized filters = set them (some alert execution filters are originating from the dashboard).
                 if (targetAlertFilters.length === 0 || compatibleFiltersToSet.length > 0) {
-                    const cmd = changeFilterContextSelection(compatibleFiltersToSet, true, automationId);
+                    const readableFiltersToSet: SagaReturnType<typeof omitRestrictedFilterCopies> =
+                        yield call(omitRestrictedFilterCopies, compatibleFiltersToSet);
+                    const cmd = changeFilterContextSelection(readableFiltersToSet, true, automationId);
                     yield call(changeFilterContextSelectionHandler, ctx, cmd);
                 }
             }
@@ -298,8 +306,10 @@ export function* initializeAutomationsHandler(
                         // Empty sanitized filters = keep filters as they are.
                         // Non-empty sanitized filters = set them.
                         if (compactedTabFilters.length === 0 || compatibleFilters.length > 0) {
+                            const readableFilters: SagaReturnType<typeof omitRestrictedFilterCopies> =
+                                yield call(omitRestrictedFilterCopies, compatibleFilters, tabId);
                             const cmd = changeFilterContextSelectionByParams({
-                                filters: compatibleFilters,
+                                filters: readableFilters,
                                 resetOthers: true,
                                 correlationId: automationId,
                                 tabLocalIdentifier: tabId,
@@ -332,7 +342,9 @@ export function* initializeAutomationsHandler(
                     // Empty sanitized filters = keep filters as they are, do not reset them (all schedule execution filters are ignored).
                     // Non-empty sanitized filters = set them (some schedule export definition filters are originating from the dashboard).
                     if (targetExportDefinitionFilters.length === 0 || compatibleFiltersToSet.length > 0) {
-                        const cmd = changeFilterContextSelection(compatibleFiltersToSet, true, automationId);
+                        const readableFiltersToSet: SagaReturnType<typeof omitRestrictedFilterCopies> =
+                            yield call(omitRestrictedFilterCopies, compatibleFiltersToSet);
+                        const cmd = changeFilterContextSelection(readableFiltersToSet, true, automationId);
                         yield call(changeFilterContextSelectionHandler, ctx, cmd);
                     }
                 }
@@ -405,6 +417,27 @@ export function* initializeAutomationsHandler(
             ]),
         );
     }
+}
+
+/**
+ * Leaves out the stored copies of restricted filters. A restricted filter keeps its stored value, and the
+ * selection change would pass it over and apply its copy to a readable filter with the same label.
+ */
+function* omitRestrictedFilterCopies(
+    filters: FilterContextItem[],
+    tabLocalIdentifier?: string,
+): SagaIterator<FilterContextItem[]> {
+    const unavailableObjects: ReturnType<typeof selectUnavailableObjects> =
+        yield select(selectUnavailableObjects);
+    const restrictedLocalIdentifiers: ReturnType<typeof selectRestrictedDashboardFilterLocalIdentifiers> =
+        yield select(
+            tabLocalIdentifier
+                ? selectRestrictedDashboardFilterLocalIdentifiersForTab(tabLocalIdentifier)
+                : selectRestrictedDashboardFilterLocalIdentifiers,
+        );
+    return filters.filter(
+        (filter) => !isDashboardFilterCopyRestricted(filter, restrictedLocalIdentifiers, unavailableObjects),
+    );
 }
 
 function extractRelevantFilters(

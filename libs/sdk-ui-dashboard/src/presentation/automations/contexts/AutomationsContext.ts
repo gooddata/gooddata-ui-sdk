@@ -132,8 +132,12 @@ export interface IAutomationsContextValue {
     hiddenFilters: FilterContextItem[];
     /** Dashboard's applied filters with cross-filtering filters removed; from selectAllDashboardFiltersWithoutCrossFiltering. */
     availableFilters: FilterContextItem[];
-    /** Whether the user may not read the object a filter filters by. Such a filter is kept in the automation, but the filter bar reports it as a count instead of rendering it. */
-    isFilterRestricted: (filter: FilterContextItem) => boolean;
+    /**
+     * Whether a filter of the given tab (the active one when omitted) is restricted: it uses an object the
+     * user may not read, or its parent filter is restricted. Such a filter is kept in the automation, but
+     * the filter bar reports it as a count instead of rendering it.
+     */
+    isFilterRestricted: (filter: FilterContextItem, tabId?: string) => boolean;
     /** Automation-available filters structured per dashboard tab, for whole-dashboard automations on a tabbed dashboard; from selectAutomationFiltersByTab. */
     automationFiltersByTab: IAutomationFiltersTab[];
     /** Automation-available filters with empty (all-values) filters removed, except restricted ones; preselects filters for a new automation. From selectAutomationDefaultSelectedFilters. */

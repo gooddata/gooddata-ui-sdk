@@ -36,6 +36,8 @@ describe("availableAutomationParameters — addable workspace parameters", () =>
                 value: 3,
                 mode: "active",
                 definition: { type: "NUMBER", defaultValue: 3, constraints: { min: 1, max: 10 } },
+                isFromDashboard: false,
+                tags: [],
             },
             {
                 ref: idRef("limit", "parameter"),
@@ -43,6 +45,8 @@ describe("availableAutomationParameters — addable workspace parameters", () =>
                 value: 50,
                 mode: "active",
                 definition: { type: "NUMBER", defaultValue: 50 },
+                isFromDashboard: false,
+                tags: [],
             },
         ]);
     });
@@ -57,6 +61,8 @@ describe("availableAutomationParameters — addable workspace parameters", () =>
                 value: "Actual",
                 mode: "active",
                 definition: { type: "STRING", defaultValue: "Actual", constraints: { maxLength: 20 } },
+                isFromDashboard: false,
+                tags: [],
             },
         ]);
     });
@@ -151,6 +157,28 @@ describe("availableAutomationParameters — addable workspace parameters", () =>
             true,
         );
         expect(outOfRange.find((parameter) => parameter.ref.identifier === "topN")?.value).toBe(3);
+    });
+
+    it("flags parameters that have a control on the dashboard", () => {
+        const dashboardParams = [dashboardParameter("topN", { value: 5 })];
+
+        expect(
+            availableAutomationParameters(catalog, [], dashboardParams, [], true).map((parameter) => [
+                parameter.ref.identifier,
+                parameter.isFromDashboard,
+            ]),
+        ).toEqual([
+            ["topN", true],
+            ["limit", false],
+        ]);
+    });
+
+    it("carries the workspace parameter's tags", () => {
+        const tagged = [{ ...workspaceNumberParameter("topN", "Top N", 3), tags: ["sales", "kpi"] }];
+
+        expect(
+            availableAutomationParameters(tagged, [], [], [], true).map((parameter) => parameter.tags),
+        ).toEqual([["sales", "kpi"]]);
     });
 
     it("omits parameters the dashboard author set to hidden", () => {

@@ -209,6 +209,32 @@ describe("ExtendedDateFilterBody", () => {
             );
         });
 
+        it("should switch a stored Month granularity to Day when the days are edited while isAbsoluteDateFilterGranularityEnabled is not set", () => {
+            const storedMonths: IUiAbsoluteDateFilterForm = {
+                ...absoluteForm,
+                granularity: "GDC.time.month",
+                from: "2026-04-01",
+                to: "2026-06-30",
+            };
+            const onSelectedFilterOptionChange = vi.fn();
+
+            renderDateFilterBody({
+                filterOptions: { absoluteForm: storedMonths },
+                selectedFilterOption: storedMonths,
+                onSelectedFilterOptionChange,
+                isTimeForAbsoluteRangeEnabled: false,
+            });
+
+            fireEvent.click(screen.getByRole("button", { name: /Static period/i }));
+            const fromInput = screen.getByDisplayValue("04/01/2026");
+            fireEvent.change(fromInput, { target: { value: "04/05/2026" } });
+            fireEvent.blur(fromInput);
+
+            expect(onSelectedFilterOptionChange).toHaveBeenLastCalledWith(
+                expect.objectContaining({ from: "2026-04-05", granularity: "GDC.time.date" }),
+            );
+        });
+
         it("should still offer Month/Quarter/Year even when the fiscal tab is the default (fiscal calendar active)", () => {
             renderDateFilterBody({
                 filterOptions: {

@@ -3,7 +3,7 @@
 import { renderHook } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import type { DateFilterGranularity } from "@gooddata/sdk-model";
+import type { DateFilterGranularity, FilterContextItem } from "@gooddata/sdk-model";
 import type { IDateFilterOptionsByType } from "@gooddata/sdk-ui-filters";
 
 // `isolate: false` shares one module graph per worker, so the modules mocked below may already have
@@ -53,6 +53,9 @@ const selectors = vi.hoisted(() => {
         emptyArray: [] as never[],
         emptyRecord: {} as Record<string, never>,
         emptyMap: new Map<never, never>(),
+        emptySet: new Set<never>(),
+        // the child of a restricted parent on "tab1" only; it uses no restricted object itself
+        restrictedByTab: { tab1: new Set(["child"]) } as Record<string, Set<string>>,
         separators: { decimal: ".", thousand: "," },
         currentUser: { login: "test@example.com", ref: { identifier: "test" } },
         widgetsMap: { get: () => undefined },
@@ -135,6 +138,8 @@ vi.mock("../../../../model/store/filtering/dashboardFilterSelectors.js", () => (
     selectExecutableDashboardFiltersWithoutCrossFiltering: () => selectors.emptyArray,
     selectDashboardHiddenFilters: () => selectors.emptyArray,
     selectDashboardLockedFilters: () => selectors.emptyArray,
+    selectRestrictedDashboardFilterLocalIdentifiers: () => selectors.emptySet,
+    selectRestrictedDashboardFilterLocalIdentifiersByTab: () => selectors.restrictedByTab,
 }));
 
 vi.mock("../../../../model/store/unavailableObjects/unavailableObjectsSelectors.js", () => ({
@@ -217,6 +222,25 @@ describe("useBuildAutomationsContext", () => {
         expect(result.current.dateFilterConfig.getGranularitiesForTab("missing-tab")).toEqual([]);
         expect(result.current.dateFilterConfig.getOptionsForTab("missing-tab")).toBeUndefined();
         expect(result.current.features.canCreateAutomation).toBe(true);
+    });
+});
+
+describe("useBuildAutomationsContext — restricted filters", () => {
+    it("tells a restricted filter by the restricted filters of its own tab", () => {
+        const { result } = renderHook(() => useBuildAutomationsContext());
+        const child = {
+            attributeFilter: {
+                displayForm: { identifier: "readable", type: "displayForm" },
+                negativeSelection: true,
+                attributeElements: { uris: [] },
+                localIdentifier: "child",
+            },
+        } as FilterContextItem;
+
+        expect(result.current.isFilterRestricted(child, "tab1")).toBe(true);
+        expect(result.current.isFilterRestricted(child, "tab2")).toBe(false);
+        // the active tab restricts nothing here
+        expect(result.current.isFilterRestricted(child)).toBe(false);
     });
 });
 

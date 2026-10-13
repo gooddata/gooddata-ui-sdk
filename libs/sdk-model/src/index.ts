@@ -325,6 +325,7 @@ export {
     type IOptionsComparisonCondition,
     type IOptionsRangeCondition,
     type IOptionsAllCondition,
+    type IAbsoluteDateFilterOptions,
     newAbsoluteDateFilter,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
@@ -1107,6 +1108,7 @@ export {
     type IProductionFeatureConfig,
     type IProductionFeaturesConfig,
     type IMetricFormatOverrideSetting,
+    type ObjectVisibility,
     isSeparators,
 } from "./settings/settings.js";
 

@@ -18,6 +18,7 @@ import {
     newAttributeSort,
     newBucket,
     newMeasure,
+    newMeasureSort,
 } from "@gooddata/sdk-model";
 
 import { IntlWrapper } from "../../../localization/IntlWrapper.js";
@@ -50,6 +51,7 @@ type RecordedProps = {
     attributeFrom?: unknown;
     attributeTo?: unknown;
     viewBy?: unknown;
+    sortBy?: unknown;
     stackBy?: unknown;
     trendBy?: unknown;
     segmentBy?: unknown;
@@ -302,7 +304,7 @@ describe("ConversationVisualisation", () => {
 
         expect(lastProps.get("BarChart")).toMatchObject({
             measures: [newMeasure("m1")],
-            viewBy: viewAttribute,
+            viewBy: [viewAttribute],
             stackBy: stackAttribute,
         });
     });
@@ -323,9 +325,52 @@ describe("ConversationVisualisation", () => {
 
         expect(lastProps.get("BarChart")).toMatchObject({
             measures: [newMeasure("m1"), newMeasure("m2")],
-            viewBy: viewAttribute,
+            viewBy: [viewAttribute],
             stackBy: undefined,
         });
+    });
+
+    it("renders a bar sliced by both attributes of its view bucket", () => {
+        const firstView = newAttribute("region");
+        const secondView = newAttribute("category");
+        const sorts = [newAttributeSort(secondView, "asc")];
+
+        renderVisualisation(
+            "local:bar",
+            {},
+            {
+                buckets: [newBucket("measures", newMeasure("m1")), newBucket("view", firstView, secondView)],
+                sorts,
+            },
+        );
+
+        expect(lastProps.get("BarChart")).toMatchObject({
+            viewBy: [firstView, secondView],
+            sortBy: sorts,
+        });
+    });
+
+    it.each([
+        ["local:bar", "BarChart"],
+        ["local:column", "ColumnChart"],
+    ])("drops the %s sorts on the measures a stacked chart leaves out", (url, component) => {
+        const viewAttribute = newAttribute("category");
+        const keptSort = newAttributeSort(viewAttribute, "asc");
+
+        renderVisualisation(
+            url,
+            {},
+            {
+                buckets: [
+                    newBucket("measures", newMeasure("m1"), newMeasure("m2")),
+                    newBucket("view", viewAttribute),
+                    newBucket("stack", newAttribute("region")),
+                ],
+                sorts: [keptSort, newMeasureSort(newMeasure("m2"), "desc")],
+            },
+        );
+
+        expect(lastProps.get(component)?.sortBy).toEqual([keptSort]);
     });
 
     it("renders a stacked column with only the first measure", () => {

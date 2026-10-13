@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-model, sdk-backend-tiger, sdk-ui-filters, sdk-ui-dashboard: Keep the granularity of a static date filter in alerts, scheduled exports and drills. `IAbsoluteDateFilter` gets an optional `granularity`, which `newAbsoluteDateFilter` takes in a new options form and the Tiger backend sends as whole months, quarters or years when the range covers whole periods, and as its days otherwise. A week still goes as its days.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

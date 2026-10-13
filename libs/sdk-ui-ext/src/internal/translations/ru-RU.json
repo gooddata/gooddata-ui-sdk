@@ -718,5 +718,9 @@
     "properties.conditionalFormatting.operator.endsWith": "Заканчивается на",
     "properties.conditionalFormatting.operator.notEndsWith": "Не заканчивается на",
     "properties.conditionalFormatting.operator.isEmpty": "Пусто",
-    "properties.conditionalFormatting.operator.isNotEmpty": "Не пусто"
+    "properties.conditionalFormatting.operator.isNotEmpty": "Не пусто",
+    "properties.lineShape": "Форма линии",
+    "properties.lineShape.linear": "Линейная (по умолчанию)",
+    "properties.lineShape.spline": "Сплайн",
+    "properties.lineShape.stepped": "Ступенчатая"
 }

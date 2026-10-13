@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type MouseEvent, type ReactNode } from "react";
 
@@ -18,6 +18,16 @@ export interface IOverlayProps<T> {
     closeOnMouseDrag?: boolean;
     closeOnOutsideClick?: boolean;
     closeOnParentScroll?: boolean;
+    /**
+     * Re-align the overlay to its anchor when any scrollable parent of the anchor is scrolled.
+     * When not set, the value is taken from the closest OverlayAlignOnParentScrollProvider (off by default).
+     */
+    alignOnParentScroll?: boolean;
+    /**
+     * Call onClose once the anchor gets fully hidden, e.g. scrolled out of view of a scrollable parent.
+     * When not set, the value is taken from the closest OverlayAlignOnParentScrollProvider (off by default).
+     */
+    closeOnAnchorHidden?: boolean;
     closeOnEscape?: boolean;
     width?: number | string;
     maxWidth?: number | string;

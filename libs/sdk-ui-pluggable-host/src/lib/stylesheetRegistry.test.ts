@@ -6,6 +6,7 @@ import {
     activateAppStylesheets,
     deactivateAppStylesheets,
     registerAppStylesheetScope,
+    registerRemoteAssetBase,
     reserveHostStylesheetScope,
     resetStylesheetRegistry,
 } from "./stylesheetRegistry.js";
@@ -112,6 +113,50 @@ describe("stylesheetRegistry", () => {
 
         expect(appLink.disabled).toBe(true);
         expect(hostLink.disabled).toBeFalsy();
+    });
+
+    it("attributes links under a remote's CDN asset base to the app, whatever the call order", () => {
+        const manifestUrl = "/organization/remotes/gdc-home-ui/mf-manifest.json";
+        registerRemoteAssetBase(manifestUrl, "https://cdn.example.com/organization/remotes/gdc-home-ui/");
+        registerAppStylesheetScope("home-ui", manifestUrl);
+        const cdnLink = appendLink("https://cdn.example.com/organization/remotes/gdc-home-ui/static/abc.css");
+        const hostCdnLink = appendLink("https://cdn.example.com/organization/static/host.css");
+
+        deactivateAppStylesheets("home-ui");
+        expect(cdnLink.disabled).toBe(true);
+        expect(hostCdnLink.disabled).toBeFalsy();
+
+        activateAppStylesheets("home-ui");
+        expect(cdnLink.disabled).toBe(false);
+    });
+
+    it("refuses an asset base at an origin root, leaving host CDN stylesheets alone", () => {
+        const consoleWarn = vi.spyOn(console, "warn").mockImplementation(() => undefined);
+        const manifestUrl = "/organization/remotes/gdc-home-ui/mf-manifest.json";
+        registerAppStylesheetScope("home-ui", manifestUrl);
+        registerRemoteAssetBase(manifestUrl, "https://cdn.example.com/");
+        const hostCdnLink = appendLink("https://cdn.example.com/organization/static/host.css");
+
+        deactivateAppStylesheets("home-ui");
+
+        expect(hostCdnLink.disabled).toBeFalsy();
+        expect(consoleWarn).toHaveBeenCalledOnce();
+    });
+
+    it("refuses an app asset base that covers the host UI module's CDN asset base", () => {
+        const consoleWarn = vi.spyOn(console, "warn").mockImplementation(() => undefined);
+        const hostUiManifestUrl = "/organization/remotes/host-ui/mf-manifest.json";
+        reserveHostStylesheetScope(hostUiManifestUrl);
+        registerRemoteAssetBase(hostUiManifestUrl, "https://cdn.example.com/organization/remotes/host-ui/");
+        const manifestUrl = "/organization/remotes/gdc-home-ui/mf-manifest.json";
+        registerAppStylesheetScope("home-ui", manifestUrl);
+        registerRemoteAssetBase(manifestUrl, "https://cdn.example.com/organization/remotes/");
+        const hostUiLink = appendLink("https://cdn.example.com/organization/remotes/host-ui/static/ui.css");
+
+        deactivateAppStylesheets("home-ui");
+
+        expect(hostUiLink.disabled).toBeFalsy();
+        expect(consoleWarn).toHaveBeenCalledOnce();
     });
 
     it("refuses an app that shares a directory with the host UI module", () => {

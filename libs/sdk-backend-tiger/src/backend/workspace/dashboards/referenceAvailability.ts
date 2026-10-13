@@ -15,6 +15,7 @@ import type {
 } from "@gooddata/sdk-backend-spi";
 import {
     type IDashboard,
+    type IDashboardMeasureValueFilter,
     dashboardAttributeFilterItemDisplayForm,
     dashboardAttributeFilterItemValidateElementsBy,
     idRef,
@@ -43,8 +44,8 @@ import { objectTypeToTigerIdType } from "../../../types/refTypeMapping.js";
  * entity itself (a dashboard drilling to itself) is never reported: JSON:API does not repeat the
  * primary resource in `included`.
  *
- * Filter display forms, computed attributes and metrics are resolved from each filter context's own
- * document.
+ * Filter display forms, attributes, computed attributes, metrics and facts are resolved from each
+ * filter context's own document.
  * Labels referenced directly by dashboard content (including saved custom URL dependencies) are
  * inspected here.
  *
@@ -84,6 +85,7 @@ type DashboardInspectedType = keyof typeof DASHBOARD_RELATIONSHIP_KEYS;
 /** The same for the filter-context GET, which links the objects the filters use. */
 const FILTER_CONTEXT_RELATIONSHIP_KEYS = {
     displayForm: "labels",
+    attribute: "attributes",
     computedAttribute: "computedAttributes",
     measure: "metrics",
     fact: "facts",
@@ -197,10 +199,10 @@ export function resolveUnavailableDashboardReferences(
 }
 
 /**
- * Resolves which filter display forms, computed attributes, metrics and facts referenced by a filter
- * context are unavailable. Each inspected type must have been requested as an include (`labels`,
- * `computedAttributes`, `metrics`, `facts`) so the response contains both relationship linkages and
- * document-level `meta.restricted` for it.
+ * Resolves which filter display forms, attributes, computed attributes, metrics and facts referenced by
+ * a filter context are unavailable. Each inspected type must have been requested as an include
+ * (`labels`, `attributes`, `computedAttributes`, `metrics`, `facts`) so the response contains both
+ * relationship linkages and document-level `meta.restricted` for it.
  */
 export function resolveUnavailableFilterContextReferences(
     context: JsonApiFilterContextOut,
@@ -215,12 +217,14 @@ export function resolveUnavailableFilterContextReferences(
 }
 
 /**
- * Filter labels, computed attributes, metrics and facts relate to their filter-context entities: the
- * dashboard GET side-loads the filter contexts as bare items (no `relationships`), so the existence
- * linkage for filter objects is reachable only through a direct filter-context GET with `include=labels`
- * (and `computedAttributes`, `metrics`, `facts`), hence this one batched extra request. Types other than
- * labels are included only when a filter uses them (metric value filters, filters on computed
- * attributes, metrics and facts limiting a filter's values), so other dashboards never request them.
+ * Filter labels, attributes, computed attributes, metrics and facts relate to their filter-context
+ * entities: the dashboard GET side-loads the filter contexts as bare items (no `relationships`), so the
+ * existence linkage for filter objects is reachable only through a direct filter-context GET with
+ * `include=labels` (and `attributes`, `computedAttributes`, `metrics`, `facts`), hence this one batched
+ * extra request. Types other than labels are included only when a filter uses them (metric value
+ * filters and the attributes they are computed for, filters on computed attributes, metrics, facts
+ * and "Count of" attributes or computed attributes limiting a filter's values), so other dashboards
+ * never request them.
  * It inspects the contexts of the effective dashboard, so a `filterContextRef` override is covered;
  * the synthetic export-override context has no entity behind it and is skipped.
  * It would become redundant if the backend emitted `relationships.labels` on the filter-context items
@@ -266,8 +270,9 @@ export async function fetchUnavailableFilterDisplayForms(
 
 /**
  * The filter-context object types the dashboard's filters use: labels always; computed attributes of
- * attribute filters built on them; metrics of metric value filters; metrics and facts that limit an
- * attribute filter's values.
+ * attribute filters built on them; metrics of metric value filters and the attributes or computed
+ * attributes they are computed for ("For attribute"); metrics, facts and "Count of" attributes or
+ * computed attributes that limit an attribute filter's values.
  */
 function filterObjectTypes(dashboard: IDashboard): Set<FilterContextInspectedType> {
     const used = new Set<FilterContextInspectedType>(["displayForm"]);
@@ -275,6 +280,7 @@ function filterObjectTypes(dashboard: IDashboard): Set<FilterContextInspectedTyp
     for (const filter of contexts.flatMap((context) => context?.filters ?? [])) {
         if (isDashboardMeasureValueFilter(filter)) {
             used.add("measure");
+            dimensionalityObjectTypes(filter).forEach((type) => used.add(type));
         }
         if (!isDashboardAttributeFilterItem(filter)) {
             continue;
@@ -283,12 +289,27 @@ function filterObjectTypes(dashboard: IDashboard): Set<FilterContextInspectedTyp
             used.add("computedAttribute");
         }
         for (const ref of dashboardAttributeFilterItemValidateElementsBy(filter) ?? []) {
-            if (isIdentifierRef(ref) && (ref.type === "measure" || ref.type === "fact")) {
+            if (
+                isIdentifierRef(ref) &&
+                (ref.type === "measure" ||
+                    ref.type === "fact" ||
+                    ref.type === "attribute" ||
+                    ref.type === "computedAttribute")
+            ) {
                 used.add(ref.type);
             }
         }
     }
     return used;
+}
+
+/** The attribute and computed-attribute types of the items a metric value filter is computed for. */
+function dimensionalityObjectTypes(filter: IDashboardMeasureValueFilter) {
+    return (filter.dashboardMeasureValueFilter.dimensionality ?? []).flatMap((ref) =>
+        isIdentifierRef(ref) && (ref.type === "attribute" || ref.type === "computedAttribute")
+            ? [ref.type]
+            : [],
+    );
 }
 
 /**

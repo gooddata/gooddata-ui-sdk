@@ -1084,6 +1084,7 @@ export interface IAbsoluteDateFilterBody extends IIdentifiableFilter {
     dataSet: ObjRef;
     emptyValueHandling?: EmptyValues;
     from: string;
+    granularity?: DateAttributeGranularity;
     to: string;
 }
 
@@ -1092,6 +1093,13 @@ export interface IAbsoluteDateFilterForm extends IDateFilterOption {
     availableGranularities?: DateFilterGranularity[];
     emptyValueHandling?: EmptyValues;
     type: DateFilterOptionAbsoluteFormType;
+}
+
+// @public
+export interface IAbsoluteDateFilterOptions {
+    emptyValueHandling?: EmptyValues;
+    granularity?: DateAttributeGranularity;
+    localIdentifier?: string;
 }
 
 // @alpha
@@ -1110,6 +1118,8 @@ export interface IAbsoluteDateFilterValues {
     emptyValueHandling?: EmptyValues;
     // (undocumented)
     from: string;
+    // (undocumented)
+    granularity?: DateAttributeGranularity;
     // (undocumented)
     to: string;
 }
@@ -4661,6 +4671,10 @@ export interface IPermanentSettings {
     dateFilterConfig?: IDateFilterConfig;
     // @beta
     defaultExportTemplate?: IDefaultExportTemplate;
+    // @alpha
+    defaultMetricVisibility?: ObjectVisibility;
+    // @alpha
+    defaultVisualizationVisibility?: ObjectVisibility;
     disableKpiDashboardHeadlineUnderline?: boolean;
     // @beta
     earlyAccessFeatures?: IEarlyAccessFeaturesConfig;
@@ -7515,7 +7529,10 @@ export function modifyPreviousPeriodMeasure(measure: IMeasure<IPreviousPeriodMea
 export function modifySimpleMeasure(measure: IMeasure<IMeasureDefinition>, modifications?: MeasureModifications<MeasureBuilder>): IMeasure<IMeasureDefinition>;
 
 // @alpha
-export function newAbsoluteDashboardDateFilter(from: DateString, to: DateString, dataSet?: ObjRef, localIdentifier?: string, emptyValueHandling?: EmptyValues): IDashboardDateFilter;
+export function newAbsoluteDashboardDateFilter(from: DateString, to: DateString, dataSet?: ObjRef, localIdentifier?: string, emptyValueHandling?: EmptyValues, granularity?: DateFilterGranularity): IDashboardDateFilter;
+
+// @public
+export function newAbsoluteDateFilter(dateDataSet: ObjRef | Identifier, from: string, to: string, options: IAbsoluteDateFilterOptions): IAbsoluteDateFilter;
 
 // @public
 export function newAbsoluteDateFilter(dateDataSet: ObjRef | Identifier, from: string, to: string, localIdentifier?: string, emptyValueHandling?: EmptyValues): IAbsoluteDateFilter;
@@ -7675,6 +7692,9 @@ export type ObjectPermissionsObjectKind = "attribute" | "fact" | "label" | "meas
 
 // @public
 export type ObjectType = "measure" | "fact" | "attribute" | "computedAttribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "workspaceTheme" | "workspaceColorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy" | "exportDefinition" | "automation" | "filterView" | "workspaceDataFilter" | "workspaceDataFilterSetting" | "userDataFilter" | "notificationChannel" | "memoryItem" | "parameter" | "reportPageLayout" | "reportTemplate" | "report";
+
+// @alpha
+export type ObjectVisibility = "RESTRICTED" | "WORKSPACE";
 
 // @public
 export type ObjRef = UriRef | IdentifierRef;

@@ -215,7 +215,9 @@ describe("NumberParameterControlDropdown", () => {
         expect(compoundInput).toHaveClass("gd-ui-kit-parameter-input");
         fireEvent.change(getInput(), { target: { value: "999" } });
         expect(getInput()).toBeInvalid();
-        expect(getInput()).toHaveErrorMessage("Value is out of range. Enter a value between 0 and 100.");
+        expect(getInput()).toHaveAccessibleErrorMessage(
+            "Value is out of range. Enter a value between 0 and 100.",
+        );
         expect(getInput()).toHaveAccessibleDescription(
             "Value is out of range. Enter a value between 0 and 100.",
         );

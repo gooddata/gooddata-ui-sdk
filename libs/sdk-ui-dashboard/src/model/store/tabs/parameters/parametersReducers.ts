@@ -10,7 +10,13 @@ import {
 } from "@gooddata/sdk-model";
 
 import { type IParameterValueChange } from "../../../commands/parameters.js";
-import { type ITabState, type ITabsState, getActiveTab, getTabOrActive } from "../tabsState.js";
+import {
+    type ITabState,
+    type ITabsState,
+    getActiveTab,
+    getTabOrActive,
+    getTabsToMutate,
+} from "../tabsState.js";
 
 import { type IDashboardParameterEntry, parametersInitialState } from "./parametersState.js";
 
@@ -52,16 +58,29 @@ export interface ISetParameterRuntimeValuesPayload {
     values: IParameterValueChange[];
     /**
      * Target tab. When omitted, the active tab is used.
+     * With `enablePersistentFiltersAcrossTabs`, this tab is the source and every other tab is written too.
      */
     tabLocalIdentifier?: string;
+    /**
+     * When true, write the values onto every tab. A tab that does not define the parameter is unchanged.
+     */
+    enablePersistentFiltersAcrossTabs?: boolean;
 }
 
 const setParameterRuntimeValues: ParametersReducer<PayloadAction<ISetParameterRuntimeValuesPayload>> = (
     state,
     action,
 ) => {
-    for (const entry of action.payload.values) {
-        setRuntimeOverride(state, entry, action.payload.tabLocalIdentifier);
+    // Parameter values sync by parameter ref. A tab that does not define the parameter is a no-op.
+    // Working overrides are not written here.
+    for (const tab of getTabsToMutate(
+        state,
+        action.payload.tabLocalIdentifier,
+        action.payload.enablePersistentFiltersAcrossTabs,
+    )) {
+        for (const entry of action.payload.values) {
+            setRuntimeOverrideOnTab(tab, entry);
+        }
     }
 };
 
@@ -112,12 +131,10 @@ const removeParameter: ParametersReducer<PayloadAction<IRemoveParameterPayload>>
     };
 };
 
-function setRuntimeOverride(
-    state: ITabsState,
-    { ref, value }: IParameterValueChange,
-    tabLocalIdentifier?: string,
-): void {
-    const entry = findParameterEntry(state, ref, tabLocalIdentifier);
+function setRuntimeOverrideOnTab(tab: ITabState, { ref, value }: IParameterValueChange): void {
+    const entry = tab.parameters?.parameters.find((candidate) =>
+        areObjRefsEqual(candidate.parameter.ref, ref),
+    );
     if (!entry) {
         return;
     }

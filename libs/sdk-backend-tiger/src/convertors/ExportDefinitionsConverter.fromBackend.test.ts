@@ -16,11 +16,13 @@ import {
     type IDashboardExportParameter,
     type IExportDefinitionDashboardRequestPayload,
     type IExportDefinitionVisualizationObjectRequestPayload,
+    type IFilter,
     type IMeasureValueFilter,
     idRef,
     isDashboardArbitraryAttributeFilter,
     isDashboardMatchAttributeFilter,
     isMeasureValueFilter,
+    newAbsoluteDateFilter,
 } from "@gooddata/sdk-model";
 
 import {
@@ -448,6 +450,109 @@ describe("ExportDefinitionsConverter fromBackend", () => {
         ) as IExportDefinitionDashboardRequestPayload;
 
         expect(result.content.parametersByTab).toBeUndefined();
+    });
+
+    describe("absolute date filter granularity", () => {
+        const storedMonthFilter = {
+            absoluteDateFilter: {
+                dataSet: { identifier: { id: "date1", type: "dataset" } },
+                from: "2026-03-01",
+                to: "2026-04-30",
+                granularity: "GDC.time.month",
+            },
+        };
+        const monthFilter = newAbsoluteDateFilter(idRef("date1", "dataSet"), "2026-03-01", "2026-04-30", {
+            granularity: "GDC.time.month",
+        });
+
+        it("restores the granularity from raw export metadata, not from the execution filters", () => {
+            const exportRequest = {
+                requestPayload: {
+                    fileName: "raw-export",
+                    format: "CSV",
+                    execution: {
+                        attributes: [],
+                        filters: [
+                            {
+                                absoluteGranularityDateFilter: {
+                                    dataset: { identifier: { id: "date1", type: "dataset" } },
+                                    granularity: "MONTH",
+                                    from: "2026-03",
+                                    to: "2026-04",
+                                },
+                            },
+                            {
+                                positiveAttributeFilter: {
+                                    label: { identifier: { id: "attr.df", type: "label" } },
+                                    in: { values: ["A"] },
+                                },
+                            },
+                        ],
+                        measures: [],
+                        auxMeasures: [],
+                    },
+                    metadata: {
+                        widget: "widgetId",
+                        visualizationObject: "visId",
+                        filters: [storedMonthFilter],
+                    },
+                },
+            } as unknown as JsonApiAutomationInAttributesRawExportsInner;
+
+            expect(convertToRawExportRequest(exportRequest).content.filters).toEqual([monthFilter]);
+        });
+
+        it("restores the granularity from visualization tabular export custom filters", () => {
+            const exportRequest = {
+                requestPayload: {
+                    fileName: "tabular",
+                    format: "CSV",
+                    visualizationObject: "visId",
+                    relatedDashboardId: "dashboardId",
+                    visualizationObjectCustomFilters: [storedMonthFilter],
+                    metadata: { widget: "widgetId" },
+                },
+            } as AutomationAutomationTabularExport;
+
+            expect(convertTabularExportRequest(exportRequest).content.filters).toEqual([monthFilter]);
+        });
+
+        it("restores the granularity from widget slides export metadata", () => {
+            const exportRequest = {
+                requestPayload: {
+                    fileName: "widget-slides",
+                    format: "PPTX",
+                    dashboardId: "dashboardId",
+                    widgetIds: ["widgetId"],
+                    metadata: { widget: "widgetId", filters: [storedMonthFilter] },
+                },
+            } as unknown as AutomationAutomationSlidesExport;
+
+            expect(convertSlidesExportRequest(exportRequest).content.filters).toEqual([monthFilter]);
+        });
+
+        it("restores the granularity from standalone export definition custom filters", () => {
+            const exportDefinitionOut = {
+                id: "ed1",
+                attributes: {
+                    title: "viz-export-definition",
+                    requestPayload: {
+                        fileName: "viz-export-definition",
+                        format: "CSV",
+                        visualizationObject: "visId",
+                        relatedDashboardId: "dashboardId",
+                        visualizationObjectCustomFilters: [storedMonthFilter],
+                        metadata: { widget: "widgetId" },
+                    },
+                },
+            } as unknown as JsonApiExportDefinitionOutWithLinks;
+
+            const content = convertExportDefinitionMdObject(exportDefinitionOut).requestPayload.content as {
+                filters?: IFilter[];
+            };
+
+            expect(content.filters).toEqual([monthFilter]);
+        });
     });
 
     describe("timezoneId restoration", () => {

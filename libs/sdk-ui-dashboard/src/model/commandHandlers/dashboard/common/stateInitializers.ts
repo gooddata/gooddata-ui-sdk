@@ -50,7 +50,7 @@ import { type ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
 import { getPrivateContext } from "../../../store/_infra/contexts.js";
 import { drillActions } from "../../../store/drill/index.js";
 import {
-    isDashboardFilterRestricted,
+    isDashboardFilterUsingRestrictedObject,
     isDashboardObjectRestricted,
 } from "../../../store/filtering/restrictedFilterUtils.js";
 import { insightsActions } from "../../../store/insights/index.js";
@@ -162,7 +162,7 @@ function* processExistingTabFilterContext(
         resolveFilterDisplayForms,
         ctx,
         migratedFilterContext.filters.filter(
-            (filter) => !isDashboardFilterRestricted(filter, unavailableObjects),
+            (filter) => !isDashboardFilterUsingRestrictedObject(filter, unavailableObjects),
         ),
         displayAsLabels.filter(
             (displayForm) => !isDashboardObjectRestricted(displayForm, "displayForm", unavailableObjects),
@@ -439,7 +439,7 @@ function* actionsToInitializeOrFillNewDashboard(
         resolveFilterDisplayForms,
         ctx,
         filterContextDefinition.filters.filter(
-            (filter) => !isDashboardFilterRestricted(filter, unavailableObjects),
+            (filter) => !isDashboardFilterUsingRestrictedObject(filter, unavailableObjects),
         ),
         displayAsLabels.filter(
             (displayForm) => !isDashboardObjectRestricted(displayForm, "displayForm", unavailableObjects),
@@ -479,7 +479,7 @@ const keepOnlyFiltersWithValidRef = (
     validDataSetIds: string[],
     unavailableObjects: ReadonlyArray<IUnavailableDashboardReference>,
 ) => {
-    if (isDashboardFilterRestricted(filter, unavailableObjects)) {
+    if (isDashboardFilterUsingRestrictedObject(filter, unavailableObjects)) {
         return true;
     }
     if (!isDashboardAttributeFilter(filter)) {
@@ -526,7 +526,7 @@ function* sanitizeFilterContext(
 
     const usedFilterDisplayForms = filterContext.filters
         .filter(isDashboardAttributeFilter)
-        .filter((filter) => !isDashboardFilterRestricted(filter, unavailableObjects))
+        .filter((filter) => !isDashboardFilterUsingRestrictedObject(filter, unavailableObjects))
         .map((f) => f.attributeFilter.displayForm);
 
     // With enableDashboardPartialRendering on, the unavailableObjects store already knows which of
@@ -562,7 +562,6 @@ function* sanitizeFilterContext(
     const additionalDateFilters = filterContext.filters
         .filter((filter) => !isDashboardAttributeFilter(filter))
         .filter(isDashboardDateFilterWithDimension)
-        .filter((filter) => !isDashboardFilterRestricted(filter, unavailableObjects))
         .map((filter) => filter.dateFilter.dataSet!);
 
     // check which are missing and load them

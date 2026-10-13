@@ -17,13 +17,19 @@ import { collectReferences } from "../../completion/references.js";
 import { MarkdownComponent } from "../contents/Markdown.js";
 
 import { useKdaDefinition, useKdaInfo } from "./useKdaDefinition.js";
+import { useKdaEnabled } from "./useKdaEnabled.js";
 
 export type ConversationKdaContentProps = {
     kda: IChatKdaDefinition;
     className?: string;
+    enableKeyDriverAnalysis?: boolean;
 };
 
-export function ConversationKdaContent({ className, kda }: ConversationKdaContentProps) {
+export function ConversationKdaContent({
+    className,
+    kda,
+    enableKeyDriverAnalysis,
+}: ConversationKdaContentProps) {
     const intl = useIntl();
     const dispatch = useDispatch();
     const classNames = cx(
@@ -34,6 +40,8 @@ export function ConversationKdaContent({ className, kda }: ConversationKdaConten
     const catalogItems = useSelector(catalogItemsSelector);
     const locale = useSelector((state: RootState) => settingsSelector(state)?.locale);
     const format = useSelector((state: RootState) => settingsSelector(state)?.responsiveUiDateFormat);
+
+    const enableChangeAnalysis = useKdaEnabled(enableKeyDriverAnalysis);
 
     const splitter = intl.formatMessage({ id: "gd.gen-ai.changeAnalysis.splitter" });
 
@@ -49,6 +57,10 @@ export function ConversationKdaContent({ className, kda }: ConversationKdaConten
         storeKdaReturnFocusFromActiveElement();
         dispatch(setKeyDriverAnalysisAction({ keyDriverAnalysis: definition }));
     }, [dispatch, definition]);
+
+    if (!enableChangeAnalysis) {
+        return null;
+    }
 
     return (
         <div className={classNames}>

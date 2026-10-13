@@ -459,7 +459,7 @@ export const useAutomationFiltersByTab = ({
                 mvfConfigs,
                 isCommonDateFilterHidden,
                 disableDateFilters,
-                isFilterRestricted,
+                isFilterRestricted: (filter) => isFilterRestricted(filter, tabId),
             };
 
             // Use edited filters if available, otherwise default selected filters
@@ -592,7 +592,9 @@ export const useAutomationFiltersByTab = ({
 
             onFiltersByTabChange({
                 ...editedFiltersByTab,
-                [tabId]: (editedFiltersByTab[tabId] ?? []).filter((filter) => !isFilterRestricted(filter)),
+                [tabId]: (editedFiltersByTab[tabId] ?? []).filter(
+                    (filter) => !isFilterRestricted(filter, tabId),
+                ),
             });
         },
         [editedFiltersByTab, onFiltersByTabChange, isFilterRestricted],

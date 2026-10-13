@@ -19,6 +19,7 @@ import {
     setEarlyAccess,
     switchToUser,
     visit,
+    waitDashboardLoaded,
 } from "../helpers.js";
 
 const USER_PREFIX = "SDK_test_user";
@@ -88,6 +89,8 @@ test.describe(
                         // Switch to viewer user and visit the dashboard
                         await switchToUser(page, request, username);
                         await visit(page, "dashboard/dashboard-tiger-permissions");
+                        // Teardown deletes this user: let its executions finish so no failed result is cached
+                        await waitDashboardLoaded(page);
 
                         // Assert top bar exists but share button does not
                         await expect(page.locator(".s-top-bar")).toBeVisible();
@@ -166,6 +169,8 @@ test.describe(
                         // Switch to viewer user and visit the dashboard
                         await switchToUser(page, request, username);
                         await visit(page, "dashboard/dashboard-tiger-permissions");
+                        // Teardown deletes this user: let its executions finish so no failed result is cached
+                        await waitDashboardLoaded(page);
 
                         // Assert top bar exists and share button is visible
                         await expect(page.locator(".s-top-bar")).toBeVisible();
@@ -219,6 +224,8 @@ test.describe(
                         // Switch to viewer user and visit the dashboard
                         await switchToUser(page, request, username);
                         await visit(page, "dashboard/dashboard-tiger-permissions");
+                        // Teardown deletes this user: let its executions finish so no failed result is cached
+                        await waitDashboardLoaded(page);
 
                         // Assert top bar exists and share button is visible
                         await expect(page.locator(".s-top-bar")).toBeVisible();
@@ -349,6 +356,8 @@ test.describe(
                         // Switch to the user and visit the dashboard
                         await switchToUser(page, request, username);
                         await visit(page, "dashboard/dashboard-tiger-permissions");
+                        // Teardown deletes this user: let its executions finish so no failed result is cached
+                        await waitDashboardLoaded(page);
 
                         // Open the share dialog
                         const shareButton = page.locator(".s-header-share-button");
@@ -420,6 +429,8 @@ test.describe(
                         // Switch to the user and visit the dashboard
                         await switchToUser(page, request, username);
                         await visit(page, "dashboard/dashboard-tiger-permissions");
+                        // Teardown deletes this user: let its executions finish so no failed result is cached
+                        await waitDashboardLoaded(page);
 
                         // Open the share dialog
                         const shareButton = page.locator(".s-header-share-button");
@@ -505,6 +516,8 @@ test.describe(
                         // Switch to firstUser and visit the dashboard
                         await switchToUser(page, request, firstUser);
                         await visit(page, "dashboard/dashboard-tiger-permissions");
+                        // Teardown deletes this user: let its executions finish so no failed result is cached
+                        await waitDashboardLoaded(page);
 
                         // Open the share dialog
                         const shareButton = page.locator(".s-header-share-button");
@@ -599,6 +612,8 @@ test.describe(
                         // Switch to firstUser and visit the dashboard
                         await switchToUser(page, request, firstUser);
                         await visit(page, "dashboard/dashboard-tiger-permissions");
+                        // Teardown deletes this user: let its executions finish so no failed result is cached
+                        await waitDashboardLoaded(page);
 
                         // Open the share dialog
                         const shareButton = page.locator(".s-header-share-button");

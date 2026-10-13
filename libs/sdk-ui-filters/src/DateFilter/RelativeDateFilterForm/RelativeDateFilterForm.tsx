@@ -18,6 +18,10 @@ export interface IRelativeDateFilterFormProps {
     selectedFilterOption: IUiRelativeDateFilterForm;
     onSelectedFilterOptionChange: (dateFilterOption: DateFilterOption) => void;
     isMobile: boolean;
+    /**
+     * Render the from/to select menus in an overlay, so they are not clipped by the form's parent.
+     */
+    shouldOverlaySelectMenu?: boolean;
     onKeyDown?: (event: KeyboardEvent) => void;
 }
 
@@ -32,6 +36,7 @@ export const RelativeDateFilterForm = forwardRef<HTMLDivElement, IRelativeDateFi
             availableGranularities,
             onSelectedFilterOptionChange,
             isMobile,
+            shouldOverlaySelectMenu,
             onKeyDown,
         },
         ref,
@@ -66,6 +71,7 @@ export const RelativeDateFilterForm = forwardRef<HTMLDivElement, IRelativeDateFi
                         // Do not reuse components across different tabs, caused problems with focus/blur handling.
                         key={selectedFilterOption.granularity}
                         isMobile={isMobile}
+                        shouldOverlaySelectMenu={shouldOverlaySelectMenu}
                         accessibilityConfig={{
                             ariaLabelledBy: DATE_FILTER_RELATIVE_GRANULARITY_TAB_ID,
                             role: "tabpanel",

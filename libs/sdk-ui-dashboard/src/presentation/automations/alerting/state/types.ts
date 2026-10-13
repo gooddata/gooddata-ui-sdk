@@ -22,7 +22,10 @@ import {
     type ParameterValue,
 } from "@gooddata/sdk-model";
 
-import { type IAutomationParameter } from "../../shared/automationFilters/automationParameters.js";
+import {
+    type IAutomationParameter,
+    type IAvailableAutomationParameter,
+} from "../../shared/automationFilters/automationParameters.js";
 import { type AttributeValue } from "../hooks/useAttributeValuesFromExecResults.js";
 import {
     type AlertAiOperator,
@@ -229,7 +232,7 @@ export interface IAlertFiltersContextValue {
     /**
      * Workspace parameters addable via the "+" menu. Empty when the feature is off.
      */
-    availableParameters: IAutomationParameter[];
+    availableParameters: IAvailableAutomationParameter[];
     /**
      * Sets a parameter's value.
      */

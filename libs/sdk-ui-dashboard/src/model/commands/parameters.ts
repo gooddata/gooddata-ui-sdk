@@ -39,7 +39,7 @@ export interface IChangeParameterValuesPayload {
 }
 
 /**
- * Command for setting runtime parameter overrides on the currently active tab.
+ * Command for setting runtime parameter overrides.
  *
  * @remarks
  * See {@link changeParameterValues} for a factory function that will help you create this command.
@@ -56,8 +56,9 @@ export interface IChangeParameterValues extends IDashboardCommand {
  *
  * @remarks
  * Dispatching this command sets the provided parameter values as runtime overrides on the
- * currently active tab. Only parameters already present on the active tab are affected; values
- * for unknown parameter refs are ignored.
+ * target tab, or the active tab when none is named. When persistent filters across tabs are
+ * enabled, the same values are written to every tab that already defines the parameter.
+ * Unknown parameter refs are ignored.
  *
  * Mirrors {@link changeFilterContextSelectionByParams} for parameters, so drill targets can
  * inherit the source dashboard's active parameter overrides.

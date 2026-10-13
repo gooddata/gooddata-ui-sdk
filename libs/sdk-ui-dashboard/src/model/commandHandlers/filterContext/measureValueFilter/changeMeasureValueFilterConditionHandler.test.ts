@@ -36,6 +36,15 @@ function isSagaEffect(value: unknown): value is SagaEffect {
     );
 }
 
+// The handler snapshots every tab's filter context before the write so a mirrored change can
+// emit one event per updated tab. Stepping the generator sees that capture as a CALL.
+function resumePastFilterContextSnapshot(saga: Generator, flag: boolean): IteratorResult<unknown> {
+    const capture = saga.next(flag);
+    expect(isSagaEffect(capture.value)).toBe(true);
+    expect((capture.value as SagaEffect).type).toBe("CALL");
+    return saga.next({ filterContexts: {}, attributeFilterConfigs: {} });
+}
+
 function makeContext(): DashboardContext {
     return {
         backend: {} as any,
@@ -45,6 +54,7 @@ function makeContext(): DashboardContext {
 }
 
 const LOCAL_ID = "mvf-local-id";
+const ENABLE_PERSISTENT_FILTERS_ACROSS_TABS = false;
 
 const makeExistingFilter = (conditions?: MeasureValueFilterCondition[]): IDashboardMeasureValueFilter => ({
     dashboardMeasureValueFilter: {
@@ -73,23 +83,28 @@ describe("changeMeasureValueFilterConditionHandler", () => {
         expect(isSagaEffect(select1.value)).toBe(true);
         expect((select1.value as SagaEffect).type).toBe("SELECT");
 
-        // 2) feed an existing filter (with no prior conditions) → handler should put the
-        //    reducer action with the new conditions
+        // 2) feed an existing filter (with no prior conditions) → handler selects the
+        //    persistent-filters flag before dispatching
         const existing = makeExistingFilter();
-        const put1 = saga.next(existing);
+        const selectFlag = saga.next(existing);
+        expect((selectFlag.value as SagaEffect).type).toBe("SELECT");
+
+        // 3) feed the flag → handler snapshots filter contexts, then puts the reducer action with the new conditions
+        const put1 = resumePastFilterContextSnapshot(saga, ENABLE_PERSISTENT_FILTERS_ACROSS_TABS);
         expect((put1.value as SagaEffect).type).toBe("PUT");
         expect((put1.value as SagaEffect).payload.action).toEqual(
             tabsActions.changeMeasureValueFilterCondition({
                 localIdentifier: LOCAL_ID,
                 conditions: [greaterThan100],
+                enablePersistentFiltersAcrossTabs: ENABLE_PERSISTENT_FILTERS_ACROSS_TABS,
             }),
         );
 
-        // 3) re-select the now-updated filter
+        // 4) re-select the now-updated filter
         const select2 = saga.next();
         expect((select2.value as SagaEffect).type).toBe("SELECT");
 
-        // 4) feed the updated filter → handler should yield a PUT for the dashboard event
+        // 5) feed the updated filter → handler should yield a PUT for the dashboard event
         const updated = makeExistingFilter([greaterThan100]);
         const eventPut = saga.next(updated);
         expect((eventPut.value as SagaEffect).type).toBe("PUT");
@@ -102,11 +117,11 @@ describe("changeMeasureValueFilterConditionHandler", () => {
             conditions: [greaterThan100],
         });
 
-        // 5) call dispatchFilterContextChanged
+        // 6) call dispatchFilterContextChanged
         const call1 = saga.next();
         expect((call1.value as SagaEffect).type).toBe("CALL");
 
-        // 6) saga ends
+        // 7) saga ends
         const end = saga.next();
         expect(end.done).toBe(true);
     });
@@ -116,8 +131,10 @@ describe("changeMeasureValueFilterConditionHandler", () => {
         const cmd = changeMeasureValueFilterCondition(LOCAL_ID, []);
         const saga = changeMeasureValueFilterConditionHandler(ctx, cmd);
 
-        saga.next(); // select
-        const put1 = saga.next(makeExistingFilter([greaterThan100])); // feed existing filter
+        saga.next(); // select existing filter
+        const selectFlag = saga.next(makeExistingFilter([greaterThan100]));
+        expect((selectFlag.value as SagaEffect).type).toBe("SELECT");
+        const put1 = resumePastFilterContextSnapshot(saga, ENABLE_PERSISTENT_FILTERS_ACROSS_TABS);
 
         // The reducer action gets the empty array; the reducer itself normalizes [] → undefined.
         // This test pins the contract that the handler forwards conditions verbatim.
@@ -125,6 +142,7 @@ describe("changeMeasureValueFilterConditionHandler", () => {
             tabsActions.changeMeasureValueFilterCondition({
                 localIdentifier: LOCAL_ID,
                 conditions: [],
+                enablePersistentFiltersAcrossTabs: ENABLE_PERSISTENT_FILTERS_ACROSS_TABS,
             }),
         );
 
@@ -143,11 +161,15 @@ describe("changeMeasureValueFilterConditionHandler", () => {
         const saga = changeMeasureValueFilterConditionHandler(ctx, cmd);
 
         saga.next();
-        const put1 = saga.next(makeExistingFilter());
+        saga.next(makeExistingFilter()); // select persistent-filters flag
+        const put1 = resumePastFilterContextSnapshot(saga, ENABLE_PERSISTENT_FILTERS_ACROSS_TABS);
         expect((put1.value as SagaEffect).payload.action.payload.conditions).toEqual([
             greaterThan100,
             lessThan10,
         ]);
+        expect((put1.value as SagaEffect).payload.action.payload.enablePersistentFiltersAcrossTabs).toBe(
+            ENABLE_PERSISTENT_FILTERS_ACROSS_TABS,
+        );
 
         saga.next();
         const eventPut = saga.next(makeExistingFilter([greaterThan100, lessThan10]));
@@ -164,13 +186,15 @@ describe("changeMeasureValueFilterConditionHandler", () => {
         const saga = changeMeasureValueFilterConditionHandler(ctx, cmd);
 
         saga.next(); // select existing applied filter
-        const put1 = saga.next(makeExistingFilter());
+        saga.next(makeExistingFilter()); // select persistent-filters flag
+        const put1 = resumePastFilterContextSnapshot(saga, ENABLE_PERSISTENT_FILTERS_ACROSS_TABS);
 
         expect((put1.value as SagaEffect).payload.action).toEqual(
             tabsActions.changeMeasureValueFilterCondition({
                 localIdentifier: LOCAL_ID,
                 conditions: [greaterThan100],
                 isWorkingSelectionChange: true,
+                enablePersistentFiltersAcrossTabs: ENABLE_PERSISTENT_FILTERS_ACROSS_TABS,
             }),
         );
 
@@ -188,12 +212,15 @@ describe("changeMeasureValueFilterConditionHandler", () => {
         const cmd = changeMeasureValueFilterCondition("does-not-exist", [greaterThan100]);
         const saga = changeMeasureValueFilterConditionHandler(ctx, cmd);
 
-        saga.next(); // select
+        saga.next(); // select existing filter
+        const selectFlag = saga.next(undefined);
+        expect((selectFlag.value as SagaEffect).type).toBe("SELECT");
 
-        // The saga `throw`s the event object itself (not an Error). Capture and inspect.
+        // The missing filter is only rejected after the flag select resolves. The saga
+        // `throw`s the event object itself (not an Error). Capture and inspect.
         let thrown: any;
         try {
-            saga.next(undefined);
+            resumePastFilterContextSnapshot(saga, ENABLE_PERSISTENT_FILTERS_ACROSS_TABS);
         } catch (e) {
             thrown = e;
         }
@@ -212,9 +239,12 @@ describe("changeMeasureValueFilterConditionHandler", () => {
         const select1 = saga.next();
         expect((select1.value as SagaEffect).type).toBe("SELECT");
 
-        // The very next step must throw — no PUT is yielded before the throw.
+        const selectFlag = saga.next(undefined);
+        expect((selectFlag.value as SagaEffect).type).toBe("SELECT");
+
+        // Resolving the flag select must throw — no PUT is yielded before the throw.
         try {
-            saga.next(undefined);
+            resumePastFilterContextSnapshot(saga, ENABLE_PERSISTENT_FILTERS_ACROSS_TABS);
         } catch {
             // expected
         }
@@ -229,11 +259,12 @@ describe("changeMeasureValueFilterConditionHandler", () => {
         const cmd = changeMeasureValueFilterCondition(LOCAL_ID, [greaterThan100]);
         const saga = changeMeasureValueFilterConditionHandler(ctx, cmd);
 
-        saga.next(); // select
-        saga.next(makeExistingFilter()); // put reducer
+        saga.next(); // select existing filter
+        saga.next(makeExistingFilter()); // select persistent-filters flag
+        resumePastFilterContextSnapshot(saga, ENABLE_PERSISTENT_FILTERS_ACROSS_TABS);
         saga.next(); // re-select
 
-        // Simulate an inconsistent state where the second select returns nothing.
+        // Simulate an inconsistent state where the updated-filter select returns nothing.
         expect(() => saga.next(undefined)).toThrow(/Inconsistent state/);
     });
 });

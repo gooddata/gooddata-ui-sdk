@@ -5,12 +5,14 @@
 import { describe, expect, it } from "vitest";
 
 import {
+    type DateAttributeGranularity,
     type FilterContextItem,
     type IAttributeDisplayFormMetadataObject,
     type ICatalogAttribute,
     type ICatalogDateDataset,
     type IFilter,
     idRef,
+    newAbsoluteDateFilter,
     newAllTimeFilter,
     newArbitraryAttributeFilter,
     newMatchAttributeFilter,
@@ -214,6 +216,43 @@ describe("automationFilters/utils", () => {
             const filter2 = newMatchAttributeFilter(ref, "contains", "foo", {
                 caseSensitive: false,
                 negativeSelection: true,
+            });
+
+            expect(areFiltersEqual(filter1, filter2)).toBe(false);
+        });
+
+        it.each([
+            ["no granularity", "a week", true, undefined, "GDC.time.week_us"],
+            ["a month", "no granularity", true, "GDC.time.month", undefined],
+            ["a month", "a quarter", false, "GDC.time.month", "GDC.time.quarter"],
+        ] as [
+            string,
+            string,
+            boolean,
+            DateAttributeGranularity | undefined,
+            DateAttributeGranularity | undefined,
+        ][])(
+            "should compare absolute date filters of the same days at %s and at %s as equal: %s",
+            (_desc1, _desc2, expected, granularity1, granularity2) => {
+                const ref = idRef("date", "dataSet");
+                const filter1 = newAbsoluteDateFilter(ref, "2026-01-01", "2026-03-31", {
+                    granularity: granularity1,
+                });
+                const filter2 = newAbsoluteDateFilter(ref, "2026-01-01", "2026-03-31", {
+                    granularity: granularity2,
+                });
+
+                expect(areFiltersEqual(filter1, filter2)).toBe(expected);
+            },
+        );
+
+        it("should treat absolute date filters of different days at the same granularity as unequal", () => {
+            const ref = idRef("date", "dataSet");
+            const filter1 = newAbsoluteDateFilter(ref, "2026-01-01", "2026-03-31", {
+                granularity: "GDC.time.month",
+            });
+            const filter2 = newAbsoluteDateFilter(ref, "2026-01-01", "2026-04-30", {
+                granularity: "GDC.time.month",
             });
 
             expect(areFiltersEqual(filter1, filter2)).toBe(false);

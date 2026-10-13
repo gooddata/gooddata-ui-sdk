@@ -23,6 +23,7 @@ import { GOODSTRAP_DRAG_EVENT } from "../utils/drag.js";
 import { DEFAULT_ALIGN_POINTS, getOptimalAlignment, getOverlayStyles } from "../utils/overlay.js";
 import { GOODSTRAP_SCROLLED_EVENT } from "../utils/scroll.js";
 
+import { OverlayParentScrollAligner } from "./OverlayAlignOnParentScroll.js";
 import { FALLBACK_OVERLAY_Z_INDEX, OverlayContext, OverlayZIndexContext } from "./OverlayContext.js";
 import { type IOverlayProps, type IOverlayState } from "./typings.js";
 
@@ -225,6 +226,14 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
                 ref={this.containerRef}
                 style={{ display: "none" }}
             >
+                <OverlayParentScrollAligner
+                    alignOnParentScroll={this.props.alignOnParentScroll}
+                    closeOnAnchorHidden={this.props.closeOnAnchorHidden}
+                    anchorKey={this.props.alignTo}
+                    getAnchor={this.getAlignAnchor}
+                    onParentScroll={this.align}
+                    onAnchorHidden={this.closeOnAnchorHidden}
+                />
                 <Portal node={this.portalNode}>
                     {/* Do not prevent onScroll events - see ONE-4189 for details */}
                     <div
@@ -453,6 +462,18 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
         positionType: OverlayPositionType | undefined,
     ): positionType is SameAsTargetPosition => {
         return positionType === POSITION_SAME_AS_TARGET;
+    };
+
+    private closeOnAnchorHidden = (): void => {
+        if (this.isComponentMounted) {
+            this.props.onClose?.();
+        }
+    };
+
+    private getAlignAnchor = (): Element | null => {
+        const { alignTo } = this.props;
+        const anchor = typeof alignTo === "string" ? document.querySelector(alignTo) : alignTo;
+        return anchor ?? this.containerRef.current;
     };
 
     private isEventOnParent = (event: any) => {

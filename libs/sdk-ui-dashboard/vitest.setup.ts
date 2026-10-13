@@ -1,14 +1,11 @@
 // (C) 2023-2026 GoodData Corporation
 
-// oxlint-disable @typescript-eslint/no-empty-object-type
-
 import { enableCompileCache } from "node:module";
 import { join } from "node:path";
 
+import "@testing-library/jest-dom/vitest";
 import { cleanup } from "@testing-library/react";
-import { afterAll, afterEach, expect, vi } from "vitest";
-import * as matchers from "vitest-dom/dist/matchers.js";
-import { type TestingLibraryMatchers } from "vitest-dom/dist/matchers.js";
+import { afterAll, afterEach, vi } from "vitest";
 
 /**
  * The test run spends most of its wall-clock time importing modules: every test file gets a fresh
@@ -18,16 +15,6 @@ import { type TestingLibraryMatchers } from "vitest-dom/dist/matchers.js";
  * and Node version, and Node silently falls back to compiling when it cannot be used.
  */
 enableCompileCache(join(import.meta.dirname, "node_modules", ".cache", "node-compile-cache"));
-
-/**
- * Exports of types and matchers of vitest-dom is currently broken we need export matchers from dist and define types manually
- */
-declare module "vitest" {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    interface Assertion<T = any> extends TestingLibraryMatchers<typeof expect.stringContaining, T> {}
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    interface AsymmetricMatchersContaining extends TestingLibraryMatchers<unknown, unknown> {}
-}
 
 /**
  * Global test-only mocks for heavy dependencies that the dashboard module graph pulls in but that
@@ -41,7 +28,7 @@ declare module "vitest" {
 const enrichToken =
     (key: "mapboxToken" | "agGridToken") =>
     (config?: Record<string, unknown>, token?: string): Record<string, unknown> | undefined =>
-        token ? { ...(config || {}), [key]: config?.[key] || token } : config;
+        token ? { ...config, [key]: config?.[key] || token } : config;
 
 vi.mock("@gooddata/sdk-ui-geo", () => ({
     enrichMapboxToken: enrichToken("mapboxToken"),
@@ -71,8 +58,6 @@ global.IntersectionObserver = class IntersectionObserver {
     scrollMargin = "";
     thresholds = [];
 };
-
-expect.extend(matchers);
 
 afterEach(() => {
     cleanup();

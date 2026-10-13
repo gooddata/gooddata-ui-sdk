@@ -36,7 +36,7 @@ export function ConversationDashboardContent(props: ConversationDashboardContent
     const useHostedDashboards = Boolean(useSelector(settingsSelector)?.enableShellApplication_dashboards);
     const conversation = useSelector(conversationSelector);
     const { dashboardCheckLoading, dashboardSaved } = useDashboardSaveCheck(part, dashboard, true);
-    const isDashboardSaved = dashboardSaved || part.saved;
+    const isDashboardSaved = dashboardSaved && part.saved;
 
     const handleOpenDashboard = useMemo(() => {
         if (!dashboard) {

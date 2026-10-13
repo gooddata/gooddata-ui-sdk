@@ -660,6 +660,7 @@ export type ChangeFilterContextSelectionParams = {
     correlationId?: string;
     tabLocalIdentifier?: string;
     matchByLocalIdentifier?: boolean;
+    restorePerTabOriginals?: boolean;
 };
 
 // @public
@@ -669,6 +670,7 @@ export type ChangeFilterContextSelectionPayload = {
     resetOthers: boolean;
     tabLocalIdentifier?: string;
     matchByLocalIdentifier?: boolean;
+    restorePerTabOriginals?: boolean;
 };
 
 // @alpha
@@ -844,6 +846,9 @@ export function createScheduledEmail(scheduledEmail: IAutomationMetadataObjectDe
 
 // @beta
 export function crossFiltering(insight: IInsight, drillDefinition: ICrossFiltering_2, drillEvent: IDashboardDrillEvent, correlationId?: string): ICrossFiltering;
+
+// @internal
+export type CrossFilteringLocalIdsByTab = Readonly<Record<string, readonly string[]>>;
 
 // @beta
 export type CustomAlertingDialogComponent = ComponentType<IAlertingDialogProps>;
@@ -2350,6 +2355,18 @@ export interface IAccessibleDashboardsState extends EntityState<IListedDashboard
     isLoaded: boolean;
 }
 
+// @internal
+export interface IAddableParameter {
+    // (undocumented)
+    isFromDashboard: boolean;
+    // (undocumented)
+    ref: IdentifierRef;
+    // (undocumented)
+    tags: string[];
+    // (undocumented)
+    title: string;
+}
+
 // @beta (undocumented)
 export interface IAddAttributeFilter extends IDashboardCommand {
     // (undocumented)
@@ -2616,7 +2633,7 @@ export interface IAlertFiltersContextValue {
     automationIsValid: boolean;
     automationParameters: IAutomationParameter[];
     availableFilters: FilterContextItem[] | undefined;
-    availableParameters: IAutomationParameter[];
+    availableParameters: IAvailableAutomationParameter[];
     dropStaleParameters: () => void;
     filtersAreStale: boolean;
     onApplyCurrentFilters: () => void;
@@ -2863,8 +2880,11 @@ export interface IApplyFilterViewPayload {
 
 // @internal (undocumented)
 export interface IApplyWorkingSelectionPayload {
+    readonly crossFilteringLocalIdsByTab?: CrossFilteringLocalIdsByTab;
     // (undocumented)
     readonly enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
+    // (undocumented)
+    readonly enablePersistentFiltersAcrossTabs?: boolean;
 }
 
 // @alpha (undocumented)
@@ -2894,7 +2914,7 @@ export interface IAttributeHierarchyModified extends IDashboardCommand {
 export interface IAttributesDropdownProps extends IDashboardAttributeFilterPlaceholderProps {
     // (undocumented)
     onParameterSelect?: (ref: IdentifierRef) => void;
-    parameters?: IParameterDropdownListItem[];
+    parameters?: IAddableParameter[];
 }
 
 // @beta
@@ -2933,7 +2953,7 @@ export interface IAutomationDialogDestinationProps {
 // @beta
 export interface IAutomationDialogFiltersProps {
     availableFilters: FilterContextItem[] | undefined;
-    availableParameters?: IAutomationParameter[];
+    availableParameters?: IAvailableAutomationParameter[];
     onFiltersChange: (filters: FilterContextItem[]) => void;
     onParameterAdd: (ref: IdentifierRef) => void;
     onParameterChange: (ref: IdentifierRef, value: ParameterValue) => void;
@@ -3045,7 +3065,7 @@ export interface IAutomationsContextValue {
     getCatalogAttributeByRef: (ref: ObjRef) => ICatalogAttribute | ICatalogDateAttribute | undefined;
     hiddenFilters: FilterContextItem[];
     isExecutionTimestampMode: boolean;
-    isFilterRestricted: (filter: FilterContextItem) => boolean;
+    isFilterRestricted: (filter: FilterContextItem, tabId?: string) => boolean;
     isSecondaryTitleVisible: boolean;
     isWhiteLabeled: boolean;
     locale: ILocale;
@@ -3093,6 +3113,14 @@ export interface IAutomationsState {
     isLoading: boolean;
     // (undocumented)
     userAutomations: IAutomationMetadataObject[];
+}
+
+// @internal
+export interface IAvailableAutomationParameter extends IAutomationParameter {
+    // (undocumented)
+    isFromDashboard: boolean;
+    // (undocumented)
+    tags: string[];
 }
 
 // @beta (undocumented)
@@ -3484,6 +3512,8 @@ export type IChangeMeasureValueFilterConditionReducerPayload = {
     readonly localIdentifier: string;
     readonly conditions?: MeasureValueFilterCondition[];
     readonly isWorkingSelectionChange?: boolean;
+    readonly enablePersistentFiltersAcrossTabs?: boolean;
+    readonly restoreTargetOriginal?: boolean;
 };
 
 // @internal (undocumented)
@@ -3593,8 +3623,12 @@ export interface IChangeVisualizationSwitcherActiveVisualizationPayload {
 
 // @internal (undocumented)
 export interface IClearAttributeFiltersSelectionPayload {
+    readonly crossFilteringLocalIdsByTab?: CrossFilteringLocalIdsByTab;
+    // (undocumented)
+    readonly enablePersistentFiltersAcrossTabs?: boolean;
     // (undocumented)
     readonly filterLocalIds: string[];
+    readonly restoreTargetOriginal?: boolean;
     readonly tabLocalIdentifier?: string;
 }
 
@@ -8149,6 +8183,9 @@ export interface IRenderModeState {
 
 // @internal
 export interface IReplaceAttributeFilterItemPayload {
+    readonly crossFilteringLocalIdsByTab?: CrossFilteringLocalIdsByTab;
+    // (undocumented)
+    readonly enablePersistentFiltersAcrossTabs?: boolean;
     // (undocumented)
     readonly filter: DashboardAttributeFilterItem;
     // (undocumented)
@@ -8157,6 +8194,7 @@ export interface IReplaceAttributeFilterItemPayload {
     readonly isSelectionInvalid?: boolean;
     // (undocumented)
     readonly isWorkingSelectionChange?: boolean;
+    readonly restoreTargetOriginal?: boolean;
     readonly tabLocalIdentifier?: string;
 }
 
@@ -8524,7 +8562,7 @@ export interface IScheduledEmailDialogEvaluationModeProps {
 
 // @beta
 export interface IScheduledEmailDialogFiltersProps extends IAutomationDialogFiltersProps {
-    availableParametersByTab?: Record<string, IAutomationParameter[]>;
+    availableParametersByTab?: Record<string, IAvailableAutomationParameter[]>;
     editedFiltersByTab?: Record<string, FilterContextItem[]>;
     filtersByTab?: IAutomationFiltersTab[];
     isDashboardAutomation: boolean;
@@ -8736,7 +8774,7 @@ export interface IScheduledExportFiltersContextValue {
     applyLatest: () => void;
     automationIsValid: boolean;
     availableFilters: FilterContextItem[] | undefined;
-    availableParametersByTab: Record<string, IAutomationParameter[]>;
+    availableParametersByTab: Record<string, IAvailableAutomationParameter[]>;
     editedFiltersByTab: Record<string, FilterContextItem[]> | undefined;
     filtersAreStale: boolean;
     filtersByTab: IAutomationFiltersTab[] | undefined;
@@ -9526,6 +9564,7 @@ export interface ISetMeasureValueFilterTitlePayload {
 
 // @alpha (undocumented)
 export interface ISetParameterRuntimeValuesPayload {
+    enablePersistentFiltersAcrossTabs?: boolean;
     tabLocalIdentifier?: string;
     // (undocumented)
     values: IParameterValueChange[];
@@ -10098,10 +10137,13 @@ export interface IUndoPayload<T extends IDashboardCommand = IDashboardCommand> {
 
 // @internal (undocumented)
 export interface IUpdateAttributeFilterSelectionPayload {
+    readonly crossFilteringLocalIdsByTab?: CrossFilteringLocalIdsByTab;
     // (undocumented)
     readonly elements: IAttributeElements;
     // (undocumented)
     readonly enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
+    // (undocumented)
+    readonly enablePersistentFiltersAcrossTabs?: boolean;
     // (undocumented)
     readonly filterLocalId: string;
     // (undocumented)
@@ -10112,6 +10154,7 @@ export interface IUpdateAttributeFilterSelectionPayload {
     readonly isWorkingSelectionChange?: boolean;
     // (undocumented)
     readonly negativeSelection: boolean;
+    readonly restoreTargetOriginal?: boolean;
     readonly tabLocalIdentifier?: string;
 }
 
@@ -10136,9 +10179,12 @@ export interface IUpsertDateFilterAllTimePayload {
     // (undocumented)
     readonly emptyValueHandling?: EmptyValues;
     // (undocumented)
+    readonly enablePersistentFiltersAcrossTabs?: boolean;
+    // (undocumented)
     readonly isWorkingSelectionChange?: boolean;
     // (undocumented)
     readonly localIdentifier?: string;
+    readonly restoreTargetOriginal?: boolean;
     readonly tabLocalIdentifier?: string;
     // (undocumented)
     readonly type: "allTime";
@@ -10153,6 +10199,8 @@ export interface IUpsertDateFilterNonAllTimePayload {
     // (undocumented)
     readonly emptyValueHandling?: EmptyValues;
     // (undocumented)
+    readonly enablePersistentFiltersAcrossTabs?: boolean;
+    // (undocumented)
     readonly from?: DateString | number;
     // (undocumented)
     readonly granularity: DateFilterGranularity;
@@ -10160,6 +10208,7 @@ export interface IUpsertDateFilterNonAllTimePayload {
     readonly isWorkingSelectionChange?: boolean;
     // (undocumented)
     readonly localIdentifier?: string;
+    readonly restoreTargetOriginal?: boolean;
     readonly tabLocalIdentifier?: string;
     // (undocumented)
     readonly to?: DateString | number;
@@ -12035,6 +12084,9 @@ export const selectDeleteVisible: DashboardSelector<boolean>;
 // @public
 export const selectDisableDashboardCrossFiltering: DashboardSelector<boolean>;
 
+// @alpha
+export const selectDisableDashboardPersistentFiltersAcrossTabs: DashboardSelector<boolean>;
+
 // @public
 export const selectDisableDashboardUserFilterReset: DashboardSelector<boolean>;
 
@@ -12178,6 +12230,9 @@ export const selectEnableOrchestratedTabularExports: DashboardSelector<boolean>;
 
 // @alpha
 export const selectEnableParameters: DashboardSelector<boolean>;
+
+// @alpha
+export const selectEnablePersistentFiltersAcrossTabs: DashboardSelector<boolean>;
 
 // @alpha
 export const selectEnableRichTextWidgetFilterConfiguration: DashboardSelector<boolean>;
@@ -13468,6 +13523,8 @@ readonly setMeasureValueFilterDimensionality: (state: WritableDraft<ITabsState>,
 payload: {
 readonly localIdentifier: string;
 readonly dimensionality?: ObjRef[];
+readonly restoreTargetOriginal?: boolean;
+readonly enablePersistentFiltersAcrossTabs?: boolean;
 };
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;

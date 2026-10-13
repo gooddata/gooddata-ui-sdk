@@ -2,6 +2,7 @@
 
 import { isEqual, omit } from "lodash-es";
 
+import { type IUnavailableDashboardReference } from "@gooddata/sdk-backend-spi";
 import {
     type DashboardAttributeFilterItem,
     type DashboardTextAttributeFilter,
@@ -23,6 +24,7 @@ import {
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardAttributeFilterItemTitle,
     dashboardAttributeFilterItemValidateElementsBy,
+    dashboardFilterLocalIdentifier,
     dashboardMeasureValueFilterLocalIdentifier,
     isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
@@ -36,7 +38,9 @@ import {
     isSingleSelectionFilter,
 } from "@gooddata/sdk-model";
 
-import { isFilterTypeCompatibleWithSelectionType } from "./attributeFilterSelectionTypeCompatibility.js";
+import { filterLocalIdentifiers } from "../../../store/filtering/dashboardFilterSelectors.js";
+import { getRestrictedDashboardFilters } from "../../../store/filtering/restrictedFilterUtils.js";
+import { isFilterTypeCompatibleWithSelectionType } from "../../../utils/attributeFilterSelectionTypeCompatibility.js";
 
 const findMatchingAttributeFilterByLocalIdentifier = (
     filter: IDashboardAttributeFilter,
@@ -309,6 +313,7 @@ interface IFilterContextSelectionResult {
 export const changeFilterContextSelection = (
     filterContext: IFilterContext,
     filterViewFilters: FilterContextItem[],
+    restrictedLocalIdentifiers: ReadonlySet<string>,
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[],
 ): IFilterContextSelectionResult => {
     const configsMap = new Map(
@@ -316,6 +321,10 @@ export const changeFilterContextSelection = (
     );
     const configUpdates = new Map<string, DisplayAsLabelUpdate>();
     const mergedFilters: FilterContextItem[] = filterContext.filters.map((filter) => {
+        // a restricted filter keeps its stored value
+        if (restrictedLocalIdentifiers.has(dashboardFilterLocalIdentifier(filter) ?? "")) {
+            return filter;
+        }
         if (isDashboardAttributeFilter(filter)) {
             const filterLocalId = filter.attributeFilter.localIdentifier;
             const filterConfig = filterLocalId ? configsMap.get(filterLocalId) : undefined;
@@ -463,6 +472,7 @@ export function applyDefaultFilterView(
     dashboard: IDashboard,
     filterViews: IDashboardFilterView[],
     exportId: string | undefined,
+    unavailableObjects: ReadonlyArray<IUnavailableDashboardReference>,
 ): IDashboard {
     // In an export render, the loaded filter context may be synthesized from export metadata,
     // carrying the filters captured at export-request time (they replace the persisted context on
@@ -496,6 +506,9 @@ export function applyDefaultFilterView(
                 const { filterContext: updatedFilterContext, configUpdates } = changeFilterContextSelection(
                     tab.filterContext,
                     effectiveDefaultView.filterContext.filters,
+                    filterLocalIdentifiers(
+                        getRestrictedDashboardFilters(tab.filterContext.filters, unavailableObjects),
+                    ),
                     tab.attributeFilterConfigs,
                 );
                 return {
@@ -522,6 +535,9 @@ export function applyDefaultFilterView(
         const { filterContext: updatedFilterContext, configUpdates } = changeFilterContextSelection(
             dashboard.filterContext,
             defaultFilterView.filterContext.filters,
+            filterLocalIdentifiers(
+                getRestrictedDashboardFilters(dashboard.filterContext.filters, unavailableObjects),
+            ),
             dashboard.attributeFilterConfigs,
         );
         return {

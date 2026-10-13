@@ -636,7 +636,9 @@ export function draftToPermissions(draft: IObjectShareDraft): IGranularAccessGra
 
 /**
  * The permissions to POST to reproduce an object's own access elsewhere. Inherited grants are
- * left out; rule grants are merged, since a hierarchy lists one per granting workspace.
+ * left out; rule grants are merged, since a hierarchy lists one per granting workspace. The rule
+ * is always written, revoked when the source has none: the target may have been created with
+ * workspace access by default.
  */
 export function accessListToPermissions(list: IObjectAccessList): IGranularAccessGrantee[] {
     const permissions: IGranularAccessGrantee[] = [];
@@ -660,13 +662,11 @@ export function accessListToPermissions(list: IObjectAccessList): IGranularAcces
             rulePermissions.push(...grant.permissions);
         }
     }
-    if (rulePermissions.length > 0) {
-        permissions.push({
-            type: "allWorkspaceUsers",
-            permissions: Array.from(new Set(rulePermissions)),
-            inheritedPermissions: [],
-        });
-    }
+    permissions.push({
+        type: "allWorkspaceUsers",
+        permissions: Array.from(new Set(rulePermissions)),
+        inheritedPermissions: [],
+    });
     return permissions;
 }
 

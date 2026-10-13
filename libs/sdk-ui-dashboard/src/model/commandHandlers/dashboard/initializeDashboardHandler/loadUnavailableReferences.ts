@@ -16,6 +16,7 @@ const ALL_TYPES: SupportedDashboardReferenceTypes[] = [
     "analyticalDashboard",
     "measure",
     "fact",
+    "attribute",
     "computedAttribute",
 ];
 const ENRICHED_TYPES: SupportedDashboardReferenceTypes[] = [
@@ -23,6 +24,7 @@ const ENRICHED_TYPES: SupportedDashboardReferenceTypes[] = [
     "analyticalDashboard",
     "measure",
     "fact",
+    "attribute",
     "computedAttribute",
 ];
 

@@ -46,11 +46,8 @@ import {
     AUTOMATION_FILTERS_DIALOG_TITLE_ID,
     AUTOMATION_FILTERS_GROUP_LABEL_ID,
 } from "../../../../constants/automations.js";
-import {
-    AttributesDropdown,
-    type IParameterDropdownListItem,
-} from "../../../../filterBar/attributeFilter/addAttributeFilter/AttributesDropdown.js";
-import { type IAutomationParameter } from "../automationParameters.js";
+import { AttributesDropdown } from "../../../../filterBar/attributeFilter/addAttributeFilter/AttributesDropdown.js";
+import { type IAutomationParameter, type IAvailableAutomationParameter } from "../automationParameters.js";
 import { useAutomationFilters, useAutomationFiltersByTab } from "../useAutomationFilters.js";
 import { useParameterAnnouncements } from "../useParameterAnnouncements.js";
 
@@ -121,7 +118,7 @@ export interface IAutomationFiltersSelectProps {
     /**
      * Workspace parameters addable via the "+" menu (catalog minus the selected set).
      */
-    availableParameters?: IAutomationParameter[];
+    availableParameters?: IAvailableAutomationParameter[];
     /**
      * Called when a parameter is added from the "+" menu.
      */
@@ -141,7 +138,7 @@ export interface IAutomationFiltersSelectProps {
     /**
      * Addable workspace parameters per tab. Used in tab-rendering mode.
      */
-    availableParametersByTab?: Record<string, IAutomationParameter[]>;
+    availableParametersByTab?: Record<string, IAvailableAutomationParameter[]>;
     /**
      * Called when a parameter is added from a tab section's "+" menu.
      */
@@ -330,11 +327,6 @@ export function AutomationFiltersSelect({
     };
 
     const automationFilterSelectTooltipId = useIdPrefixed("automation-filter-select-tooltip");
-    const parameterDropdownItems: IParameterDropdownListItem[] = availableParameters.map((parameter) => ({
-        type: "parameter",
-        ref: parameter.ref,
-        title: parameter.title,
-    }));
     // Counting availableFilters would overcount: it keeps the restricted filters, which the dropdown
     // never offers, so the button would stay enabled over an empty dropdown.
     const isAddButtonDisabled = !flatFiltersData.hasFiltersToAdd && availableParameters.length === 0;
@@ -429,12 +421,6 @@ export function AutomationFiltersSelect({
                             {tabFiltersData.processedFiltersByTab.map((tab, index) => {
                                 const tabParameters = parametersByTab?.[tab.tabId] ?? [];
                                 const tabAvailableParameters = availableParametersByTab?.[tab.tabId] ?? [];
-                                const tabParameterDropdownItems: IParameterDropdownListItem[] =
-                                    tabAvailableParameters.map((parameter) => ({
-                                        type: "parameter",
-                                        ref: parameter.ref,
-                                        title: parameter.title,
-                                    }));
                                 const isTabAddButtonDisabled =
                                     !tab.hasFiltersToAdd && tabAvailableParameters.length === 0;
                                 const tabTooltipText = isTabAddButtonDisabled
@@ -486,7 +472,7 @@ export function AutomationFiltersSelect({
                                                         tab.dateDatasets,
                                                     );
                                                 }}
-                                                parameters={tabParameterDropdownItems}
+                                                parameters={tabAvailableParameters}
                                                 onParameterSelect={(ref) => {
                                                     announceParameterAdded(tabAvailableParameters, ref);
                                                     onParameterAddByTab?.(tab.tabId, ref);
@@ -636,7 +622,7 @@ export function AutomationFiltersSelect({
                                         handleAddFilter(value, attributes, dateDatasets);
                                         setIsExpanded(true);
                                     }}
-                                    parameters={parameterDropdownItems}
+                                    parameters={availableParameters}
                                     onParameterSelect={(ref) => {
                                         announceParameterAdded(availableParameters, ref);
                                         onParameterAdd?.(ref);

@@ -54,6 +54,21 @@ export const selectCrossFilteringItemsByTab: DashboardSelector<Record<string, IC
     });
 
 /**
+ * Returns local identifiers of cross-filtering virtual filters for all tabs keyed by tab identifier.
+ *
+ * @internal
+ */
+export const selectCrossFilteringFiltersLocalIdentifiersByTab: DashboardSelector<Record<string, string[]>> =
+    createSelector(selectCrossFilteringItemsByTab, (itemsByTab) =>
+        Object.fromEntries(
+            Object.entries(itemsByTab).map(([tabId, items]) => [
+                tabId,
+                items.flatMap((item) => item.filterLocalIdentifiers),
+            ]),
+        ),
+    );
+
+/**
  * @beta
  */
 export const selectIsCrossFiltering: DashboardSelector<boolean> = createSelector(

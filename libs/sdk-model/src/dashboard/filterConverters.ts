@@ -297,8 +297,11 @@ export function dashboardDateFilterToDateFilterByWidget(
             widget ? filter.dateFilter.dataSet || widget.dateDataSet! : filter.dateFilter.dataSet!,
             filter.dateFilter.from!.toString(),
             filter.dateFilter.to!.toString(),
-            filter.dateFilter.localIdentifier,
-            filter.dateFilter.emptyValueHandling,
+            {
+                localIdentifier: filter.dateFilter.localIdentifier,
+                emptyValueHandling: filter.dateFilter.emptyValueHandling,
+                granularity: filter.dateFilter.granularity,
+            },
         );
     }
 }
@@ -337,8 +340,11 @@ export function dashboardDateFilterToDateFilterByDateDataSet(
             dateDataSet,
             filter.dateFilter.from!.toString(),
             filter.dateFilter.to!.toString(),
-            filter.dateFilter.localIdentifier,
-            filter.dateFilter.emptyValueHandling,
+            {
+                localIdentifier: filter.dateFilter.localIdentifier,
+                emptyValueHandling: filter.dateFilter.emptyValueHandling,
+                granularity: filter.dateFilter.granularity,
+            },
         );
     }
 }

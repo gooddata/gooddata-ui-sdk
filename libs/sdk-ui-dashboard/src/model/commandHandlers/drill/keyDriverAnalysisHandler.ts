@@ -23,7 +23,11 @@ import {
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { generateFilterLocalIdentifier } from "../../store/_infra/generators.js";
 import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors.js";
-import { isDashboardFilterRestricted } from "../../store/filtering/restrictedFilterUtils.js";
+import { selectRestrictedDashboardFilterLocalIdentifiers } from "../../store/filtering/dashboardFilterSelectors.js";
+import {
+    isDashboardFilterCopyRestricted,
+    isDashboardFilterUsingRestrictedObject,
+} from "../../store/filtering/restrictedFilterUtils.js";
 import { selectWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
 import { selectUnavailableObjects } from "../../store/unavailableObjects/unavailableObjectsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
@@ -109,8 +113,10 @@ export function* keyDriverAnalysisHandler(
     const widget = yield select(selectWidgetByRef(drillEvent.widgetRef));
     const unavailableObjects: ReturnType<typeof selectUnavailableObjects> =
         yield select(selectUnavailableObjects);
+    const restrictedLocalIdentifiers: ReturnType<typeof selectRestrictedDashboardFilterLocalIdentifiers> =
+        yield select(selectRestrictedDashboardFilterLocalIdentifiers);
     const executableFilters = availableFilters.filter(
-        (filter) => !isDashboardFilterRestricted(filter, unavailableObjects),
+        (filter) => !isDashboardFilterCopyRestricted(filter, restrictedLocalIdentifiers, unavailableObjects),
     );
     const widgetFilters = removeIgnoredWidgetFilters(executableFilters, widget);
     // KDA defines its own date range — drop date filters. Keep attribute and measure value
@@ -120,7 +126,7 @@ export function* keyDriverAnalysisHandler(
 
     // the drill intersection brings its own attribute filters, which the check above did not see
     const filters = mergeFilters(intersectionFilters, attributeFilters).filter(
-        (filter) => !isDashboardFilterRestricted(filter, unavailableObjects),
+        (filter) => !isDashboardFilterUsingRestrictedObject(filter, unavailableObjects),
     );
 
     return keyDriverAnalysisResolved(

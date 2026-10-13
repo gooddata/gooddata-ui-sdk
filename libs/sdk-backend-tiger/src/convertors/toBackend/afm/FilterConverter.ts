@@ -3,6 +3,8 @@
 import {
     type AbsoluteDateFilter,
     type AbsoluteDateFilterAbsoluteDateFilterEmptyValueHandlingEnum,
+    type AbsoluteGranularityDateFilter,
+    type AbsoluteGranularityDateFilterAbsoluteGranularityDateFilterEmptyValueHandlingEnum,
     type AllTimeDateFilter,
     type AllTimeDateFilterAllTimeDateFilterEmptyValueHandlingEnum,
     type AttributeFilter,
@@ -52,6 +54,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { toTigerGranularity } from "../../fromBackend/dateGranularityConversions.js";
+import { hasPeriodLiteral, toWholePeriodLiterals } from "../../shared/absoluteGranularityLiterals.js";
 import {
     toAfmIdentifier,
     toDateDataSetQualifier,
@@ -64,6 +67,7 @@ function toTigerEmptyValueHandling(
 ):
     | AllTimeDateFilterAllTimeDateFilterEmptyValueHandlingEnum
     | AbsoluteDateFilterAbsoluteDateFilterEmptyValueHandlingEnum
+    | AbsoluteGranularityDateFilterAbsoluteGranularityDateFilterEmptyValueHandlingEnum
     | RelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum
     | undefined {
     if (emptyValues === "include") {
@@ -243,7 +247,7 @@ function convertAttributeFilter(
 function convertAbsoluteDateFilter(
     filter: IAbsoluteDateFilter,
     applyOnResultProp: ApplyOnResultProp,
-): AbsoluteDateFilter | null {
+): AbsoluteDateFilter | AbsoluteGranularityDateFilter | null {
     const { absoluteDateFilter } = filter;
 
     if (absoluteDateFilter.from === undefined || absoluteDateFilter.to === undefined) {
@@ -253,12 +257,33 @@ function convertAbsoluteDateFilter(
     const datasetRef = absoluteDateFilter.dataSet;
     const localIdentifier = absoluteDateFilter.localIdentifier;
     const emptyValueHandling = toTigerEmptyValueHandling(absoluteDateFilter.emptyValueHandling);
+    const from = String(absoluteDateFilter.from);
+    const to = String(absoluteDateFilter.to);
+    const granularity = absoluteDateFilter.granularity;
+
+    // A range of whole periods goes as period literals; any other range, which an older or an as-code
+    // dashboard can store, goes as its days, as stored.
+    if (hasPeriodLiteral(granularity)) {
+        const literals = toWholePeriodLiterals(granularity, from, to);
+        if (literals) {
+            return {
+                absoluteGranularityDateFilter: {
+                    dataset: toDateDataSetQualifier(datasetRef),
+                    granularity: toTigerGranularity(granularity),
+                    ...literals,
+                    localIdentifier,
+                    ...(emptyValueHandling === undefined ? {} : { emptyValueHandling }),
+                    ...applyOnResultProp,
+                },
+            };
+        }
+    }
 
     return {
         absoluteDateFilter: {
             dataset: toDateDataSetQualifier(datasetRef),
-            from: String(absoluteDateFilter.from),
-            to: String(absoluteDateFilter.to),
+            from,
+            to,
             localIdentifier,
             ...(emptyValueHandling === undefined ? {} : { emptyValueHandling }),
             ...applyOnResultProp,

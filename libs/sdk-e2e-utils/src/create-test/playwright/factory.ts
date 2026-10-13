@@ -7,6 +7,7 @@ import { basename } from "path";
 import { test } from "@playwright/test";
 
 import { registerFeatureHubMock } from "../feature-hub/mock.js";
+import type { IFeatureHubFeature } from "../feature-hub/types.js";
 import { registerGoodmockHooks } from "../goodmock/playwright.js";
 
 import {
@@ -52,12 +53,14 @@ export function createTest<
     // Tracks whether we're inside the outermost describe of a spec file during synchronous registration.
     let insideRootDescribe = false;
 
-    // Stacks track workspace settings / additionalWindowProperties hierarchy during
-    // synchronous describe registration. Each level merges on top of the parent's.
+    // Stacks track workspace settings / additionalWindowProperties / FeatureHub features hierarchy
+    // during synchronous describe registration. Each level merges on top of the parent's.
     // The beforeEach at each level captures the fully-merged snapshot, so the
     // innermost beforeEach (which runs last) wins.
+    // The features stack starts with the defaults, so every level merges on top of them.
     const settingsStack: WorkspaceSettings[] = [];
     const awpStack: WindowProperties[] = [];
+    const featuresStack: IFeatureHubFeature[][] = [options.featureHubFeatures];
 
     // Combined test conditions and titles of the enclosing describes, during synchronous registration.
     // Describes only feed these; each test decides for itself whether it runs (a describe whose own
@@ -111,7 +114,14 @@ export function createTest<
             if (insideRootDescribe) {
                 internals.describe(type, location, title, pwDetails, () =>
                     withDescribeScope(title, details, () =>
-                        withDescribeDetails(testInstance, settingsStack, awpStack, details, callback),
+                        withDescribeDetails(
+                            testInstance,
+                            settingsStack,
+                            awpStack,
+                            featuresStack,
+                            details,
+                            callback,
+                        ),
                     ),
                 );
                 return;
@@ -135,7 +145,9 @@ export function createTest<
             specNameFiles.set(specName, location.file);
 
             internals.describe(type, location, title, pwDetails, () => {
-                registerFeatureHubMock(testInstance, options.featureHubResponse);
+                testInstance.beforeEach(async ({ page }) => {
+                    await registerFeatureHubMock(page, options.featureHubFeatures);
+                });
 
                 if (options.goodmock) {
                     registerGoodmockHooks(testInstance, options.goodmock, specName);
@@ -146,7 +158,14 @@ export function createTest<
                 insideRootDescribe = true;
                 try {
                     withDescribeScope(title, details, () =>
-                        withDescribeDetails(testInstance, settingsStack, awpStack, details, callback),
+                        withDescribeDetails(
+                            testInstance,
+                            settingsStack,
+                            awpStack,
+                            featuresStack,
+                            details,
+                            callback,
+                        ),
                     );
                 } finally {
                     // Reset even if the body throws, so the next spec file starts outside again.
@@ -206,7 +225,7 @@ export function createTest<
                 return;
             }
 
-            withTestDetails(testInstance, settingsStack, awpStack, location, title, details);
+            withTestDetails(testInstance, settingsStack, awpStack, featuresStack, location, title, details);
             register(location, title, toPlaywrightDetails(details), body);
         };
         return testFunction;

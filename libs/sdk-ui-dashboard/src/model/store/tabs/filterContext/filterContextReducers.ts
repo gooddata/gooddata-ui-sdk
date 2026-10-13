@@ -28,11 +28,9 @@ import {
     type ObjRef,
     areObjRefsEqual,
     attributeElementsIsEmpty,
-    dashboardAttributeFilterItemFilterElementsBy,
-    dashboardAttributeFilterItemFilterElementsByDate,
     dashboardAttributeFilterItemLocalIdentifier,
-    dashboardAttributeFilterItemValidateElementsBy,
     dashboardFilterLocalIdentifier,
+    isAllTimeDashboardDateFilter,
     isAttributeElementsByRef,
     isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
@@ -49,10 +47,24 @@ import {
     generateFilterLocalIdentifier,
     generateMeasureValueFilterLocalIdentifier,
 } from "../../_infra/generators.js";
-import { type ITabState, type ITabsState, getActiveTab, getTabOrActive } from "../tabsState.js";
+import {
+    type ITabState,
+    type ITabsState,
+    getActiveTab,
+    getTabOrActive,
+    getTabsToMutate,
+} from "../tabsState.js";
 
 import { type WorkingDashboardMeasureValueFilter, filterContextInitialState } from "./filterContextState.js";
 import { applyFilterContext, initializeFilterContext } from "./filterContextUtils.js";
+import {
+    type CrossFilteringLocalIdsByTab,
+    findCounterpartFilter,
+    findOriginalFilter,
+    isCrossFilteringVirtualFilter,
+    preserveFilterDependencies,
+    retargetAttributeFilterItem,
+} from "./filterSync.js";
 
 type FilterContextReducer<A extends Action> = CaseReducer<ITabsState, A>;
 
@@ -243,11 +255,16 @@ export interface IUpsertDateFilterAllTimePayload {
     readonly isWorkingSelectionChange?: boolean;
     readonly localIdentifier?: string;
     readonly emptyValueHandling?: EmptyValues;
+    readonly enablePersistentFiltersAcrossTabs?: boolean;
     /**
      * Optional tab local identifier to target a specific tab.
      * If not provided, the active tab will be used.
      */
     readonly tabLocalIdentifier?: string;
+    /**
+     * When true, other tabs restore their own saved initial date filter instead of this payload.
+     */
+    readonly restoreTargetOriginal?: boolean;
 }
 
 /**
@@ -263,11 +280,16 @@ export interface IUpsertDateFilterNonAllTimePayload {
     readonly localIdentifier?: string;
     readonly boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
     readonly emptyValueHandling?: EmptyValues;
+    readonly enablePersistentFiltersAcrossTabs?: boolean;
     /**
      * Optional tab local identifier to target a specific tab.
      * If not provided, the active tab will be used.
      */
     readonly tabLocalIdentifier?: string;
+    /**
+     * When true, other tabs restore their own saved initial date filter instead of this payload.
+     */
+    readonly restoreTargetOriginal?: boolean;
 }
 
 /**
@@ -276,20 +298,128 @@ export interface IUpsertDateFilterNonAllTimePayload {
 export type IUpsertDateFilterPayload = IUpsertDateFilterAllTimePayload | IUpsertDateFilterNonAllTimePayload;
 
 const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayload>> = (state, action) => {
-    const targetTab = getTabOrActive(state, action.payload.tabLocalIdentifier);
-    if (!targetTab) {
+    const { tabLocalIdentifier, enablePersistentFiltersAcrossTabs, isWorkingSelectionChange } =
+        action.payload;
+    const tabs = getTabsToMutate(
+        state,
+        tabLocalIdentifier,
+        enablePersistentFiltersAcrossTabs,
+        isWorkingSelectionChange,
+    );
+
+    const source = tabs[0];
+    if (!source) {
         return;
     }
+
+    upsertDateFilterOnTab(source, action.payload, true);
+
+    for (const tab of tabs.slice(1)) {
+        const payload = action.payload.restoreTargetOriginal
+            ? restoredDateFilterPayload(tab, action.payload)
+            : action.payload;
+        if (!payload) {
+            continue;
+        }
+        upsertDateFilterOnTab(tab, payload, false);
+    }
+};
+
+/**
+ * Saved date filter for a non-source tab during reset.
+ * A common date filter with no saved original is all time, which is stored as the filter's absence.
+ * A dimension date filter with no counterpart, or no saved original, is left unchanged.
+ */
+function restoredDateFilterPayload(
+    tab: ITabState,
+    payload: IUpsertDateFilterPayload,
+): IUpsertDateFilterPayload | undefined {
+    const applied = findAppliedDateFilter(tab, payload.dataSet);
+    if (!applied && payload.dataSet) {
+        return undefined;
+    }
+
+    const original = findOriginalFilter(
+        tab,
+        applied ?? {
+            dateFilter: { type: "relative", granularity: "GDC.time.date" },
+        },
+    );
+    if (isDashboardDateFilter(original)) {
+        return toUpsertDateFilterPayload(original, payload);
+    }
+    if (!payload.dataSet) {
+        return { type: "allTime" };
+    }
+    return undefined;
+}
+
+function findAppliedDateFilter(
+    tab: ITabState,
+    dataSet: ObjRef | undefined,
+): IDashboardDateFilter | undefined {
+    const filters = tab.filterContext?.filterContextDefinition?.filters;
+    if (!filters) {
+        return undefined;
+    }
+    if (dataSet) {
+        return filters.find(
+            (item): item is IDashboardDateFilter =>
+                isDashboardDateFilter(item) && areObjRefsEqual(item.dateFilter.dataSet, dataSet),
+        );
+    }
+    return filters.find(isDashboardCommonDateFilter);
+}
+
+function toUpsertDateFilterPayload(
+    filter: IDashboardDateFilter,
+    source: IUpsertDateFilterPayload,
+): IUpsertDateFilterPayload {
+    const { dataSet, localIdentifier, emptyValueHandling, boundedFilter, type, granularity, from, to } =
+        filter.dateFilter;
+    const shared = {
+        ...(dataSet ? { dataSet } : {}),
+        ...(localIdentifier ? { localIdentifier } : {}),
+        ...(emptyValueHandling ? { emptyValueHandling } : {}),
+        ...(source.isWorkingSelectionChange ? { isWorkingSelectionChange: true } : {}),
+        ...(source.tabLocalIdentifier ? { tabLocalIdentifier: source.tabLocalIdentifier } : {}),
+    };
+
+    if (isAllTimeDashboardDateFilter(filter)) {
+        return { type: "allTime", ...shared };
+    }
+
+    return {
+        type,
+        granularity,
+        from,
+        to,
+        ...(boundedFilter ? { boundedFilter } : {}),
+        ...shared,
+    };
+}
+
+function upsertDateFilterOnTab(
+    targetTab: ITabState,
+    payload: IUpsertDateFilterPayload,
+    isSource: boolean,
+): void {
     if (!targetTab.filterContext) {
+        if (!isSource) {
+            return;
+        }
         targetTab.filterContext = { ...filterContextInitialState };
     }
 
-    const filterContextDefinition = action.payload.isWorkingSelectionChange
+    const filterContextDefinition = payload.isWorkingSelectionChange
         ? targetTab.filterContext.workingFilterContextDefinition
         : targetTab.filterContext.filterContextDefinition;
+    if (!isSource && !filterContextDefinition?.filters) {
+        return;
+    }
     invariant(filterContextDefinition?.filters, "Attempt to edit uninitialized filter context");
 
-    const dateDataSet = action.payload.dataSet;
+    const dateDataSet = payload.dataSet;
 
     let existingFilterIndex: number = -1;
 
@@ -303,7 +433,11 @@ const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayl
         );
     }
 
-    if (action.payload.isWorkingSelectionChange && action.payload.type === "allTime") {
+    if (!isSource && existingFilterIndex < 0 && dateDataSet) {
+        return;
+    }
+
+    if (payload.isWorkingSelectionChange && payload.type === "allTime") {
         // we need to allways set working filter to distinguish between "not changed" and "all time" filter
         if (existingFilterIndex >= 0) {
             const dateFilter = filterContextDefinition.filters[existingFilterIndex];
@@ -311,19 +445,19 @@ const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayl
                 filterContextDefinition.filters[existingFilterIndex] = newAllTimeDashboardDateFilter(
                     dateFilter.dateFilter.dataSet,
                     dateFilter.dateFilter.localIdentifier,
-                    action.payload.emptyValueHandling,
+                    payload.emptyValueHandling,
                 );
             }
         } else {
             filterContextDefinition.filters.unshift(
                 newAllTimeDashboardDateFilter(
-                    action.payload.dataSet,
-                    action.payload.localIdentifier,
-                    action.payload.emptyValueHandling,
+                    payload.dataSet,
+                    payload.localIdentifier,
+                    payload.emptyValueHandling,
                 ),
             );
         }
-    } else if (action.payload.type === "allTime") {
+    } else if (payload.type === "allTime") {
         if (existingFilterIndex >= 0) {
             if (dateDataSet) {
                 const dateFilter = filterContextDefinition.filters[existingFilterIndex];
@@ -332,35 +466,36 @@ const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayl
                     filterContextDefinition.filters[existingFilterIndex] = newAllTimeDashboardDateFilter(
                         dateFilter.dateFilter.dataSet,
                         dateFilter.dateFilter.localIdentifier,
-                        action.payload.emptyValueHandling,
+                        payload.emptyValueHandling,
                     );
                 }
             } else {
-                if (action.payload.emptyValueHandling) {
+                const existing = filterContextDefinition.filters[existingFilterIndex];
+                const preservedLocalIdentifier = isSource
+                    ? payload.localIdentifier
+                    : isDashboardDateFilter(existing)
+                      ? existing.dateFilter.localIdentifier
+                      : undefined;
+                if (payload.emptyValueHandling) {
                     // Preserve all-time common DF when it carries additional config (e.g. emptyValueHandling).
                     filterContextDefinition.filters[existingFilterIndex] = newAllTimeDashboardDateFilter(
                         undefined,
-                        action.payload.localIdentifier,
-                        action.payload.emptyValueHandling,
+                        preservedLocalIdentifier,
+                        payload.emptyValueHandling,
                     );
                 } else {
                     // if allTime common DF remove the date filter altogether
                     filterContextDefinition.filters.splice(existingFilterIndex, 1);
                 }
             }
-        } else if (!dateDataSet && action.payload.emptyValueHandling) {
+        } else if (!dateDataSet && payload.emptyValueHandling) {
             // No common date filter existed (all time was represented by absence); create it to preserve extra config.
             filterContextDefinition.filters.unshift(
-                newAllTimeDashboardDateFilter(
-                    undefined,
-                    action.payload.localIdentifier,
-                    action.payload.emptyValueHandling,
-                ),
+                newAllTimeDashboardDateFilter(undefined, payload.localIdentifier, payload.emptyValueHandling),
             );
         }
     } else if (existingFilterIndex >= 0) {
-        const { type, granularity, from, to, localIdentifier, boundedFilter, emptyValueHandling } =
-            action.payload;
+        const { type, granularity, from, to, localIdentifier, boundedFilter, emptyValueHandling } = payload;
         const dateFilter = filterContextDefinition.filters[existingFilterIndex];
 
         if (isDashboardDateFilter(dateFilter)) {
@@ -369,7 +504,7 @@ const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayl
             dateFilter.dateFilter.from = from;
             dateFilter.dateFilter.to = to;
 
-            if (localIdentifier) {
+            if (localIdentifier && isSource) {
                 dateFilter.dateFilter.localIdentifier = localIdentifier;
             }
 
@@ -385,9 +520,9 @@ const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayl
                 delete dateFilter.dateFilter.emptyValueHandling;
             }
         }
-    } else {
+    } else if (isSource || !dateDataSet) {
         const { type, granularity, from, to, dataSet, localIdentifier, boundedFilter, emptyValueHandling } =
-            action.payload;
+            payload;
         filterContextDefinition.filters.unshift({
             dateFilter: {
                 granularity,
@@ -401,7 +536,7 @@ const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayl
             },
         });
     }
-};
+}
 
 //
 //
@@ -423,37 +558,122 @@ export interface IUpdateAttributeFilterSelectionPayload {
      * If not provided, the active tab will be used.
      */
     readonly tabLocalIdentifier?: string;
+    /**
+     * When true, other tabs restore their own saved initial selection instead of this payload.
+     */
+    readonly restoreTargetOriginal?: boolean;
+    /**
+     * Cross-filtering virtual filters per tab. They are not mirrored to or from other tabs.
+     */
+    readonly crossFilteringLocalIdsByTab?: CrossFilteringLocalIdsByTab;
+
+    readonly enablePersistentFiltersAcrossTabs?: boolean;
 }
 
 const updateAttributeFilterSelection: FilterContextReducer<
     PayloadAction<IUpdateAttributeFilterSelectionPayload>
 > = (state, action) => {
-    const targetTab = getTabOrActive(state, action.payload.tabLocalIdentifier);
-    if (!targetTab) {
+    const {
+        tabLocalIdentifier,
+        enablePersistentFiltersAcrossTabs,
+        isWorkingSelectionChange,
+        crossFilteringLocalIdsByTab,
+    } = action.payload;
+    const tabs = getTabsToMutate(
+        state,
+        tabLocalIdentifier,
+        enablePersistentFiltersAcrossTabs,
+        isWorkingSelectionChange,
+    );
+    const source = tabs[0];
+    if (!source) {
         return;
     }
+
+    const sourceFilter = findAppliedFilterByLocalId(source, action.payload.filterLocalId);
+    updateAttributeFilterSelectionOnTab(source, action.payload, action.payload.filterLocalId, true);
+
+    if (
+        tabs.length === 1 ||
+        !sourceFilter ||
+        !isDashboardAttributeFilter(sourceFilter) ||
+        isCrossFilteringVirtualFilter(source, action.payload.filterLocalId, crossFilteringLocalIdsByTab)
+    ) {
+        return;
+    }
+
+    for (const tab of tabs.slice(1)) {
+        const match = findCounterpartFilter(source, sourceFilter, tab, state.attributesWithReferences, {
+            allowListToText: false,
+            crossFilteringLocalIdsByTab,
+        });
+        if (!match || !isDashboardAttributeFilter(match)) {
+            continue;
+        }
+        const targetLocalId = match.attributeFilter.localIdentifier;
+        if (!targetLocalId) {
+            continue;
+        }
+        const original = action.payload.restoreTargetOriginal ? findOriginalFilter(tab, match) : undefined;
+        if (action.payload.restoreTargetOriginal && !isDashboardAttributeFilter(original)) {
+            continue;
+        }
+        updateAttributeFilterSelectionOnTab(
+            tab,
+            {
+                ...action.payload,
+                filterLocalId: targetLocalId,
+                ...(isDashboardAttributeFilter(original)
+                    ? {
+                          elements: original.attributeFilter.attributeElements,
+                          negativeSelection: original.attributeFilter.negativeSelection,
+                      }
+                    : {}),
+                enableImmediateAttributeFilterDisplayAsLabelMigration: false,
+                isResultOfMigration: false,
+            },
+            targetLocalId,
+            false,
+        );
+    }
+};
+
+function updateAttributeFilterSelectionOnTab(
+    targetTab: ITabState,
+    payload: IUpdateAttributeFilterSelectionPayload,
+    filterLocalId: string,
+    isSource: boolean,
+): void {
     if (!targetTab.filterContext) {
+        if (!isSource) {
+            return;
+        }
         targetTab.filterContext = { ...filterContextInitialState };
     }
 
     const {
         elements,
-        filterLocalId,
         negativeSelection,
         isWorkingSelectionChange,
         enableImmediateAttributeFilterDisplayAsLabelMigration,
         isResultOfMigration,
         isSelectionInvalid,
-    } = action.payload;
+    } = payload;
     const filterContextDefinition = isWorkingSelectionChange
         ? targetTab.filterContext.workingFilterContextDefinition
         : targetTab.filterContext.filterContextDefinition;
+    if (!isSource && !filterContextDefinition?.filters) {
+        return;
+    }
     invariant(filterContextDefinition?.filters, "Attempt to edit uninitialized filter context");
 
     const existingFilterIndex = filterContextDefinition.filters.findIndex(
         (item) => isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
     );
 
+    if (!isSource && existingFilterIndex < 0) {
+        return;
+    }
     invariant(existingFilterIndex >= 0 || isWorkingSelectionChange, "Attempt to update non-existing filter");
 
     if (isWorkingSelectionChange && existingFilterIndex >= 0) {
@@ -498,6 +718,9 @@ const updateAttributeFilterSelection: FilterContextReducer<
         }
     }
 
+    if (!targetTab.filterContext.filtersWithInvalidSelection) {
+        targetTab.filterContext.filtersWithInvalidSelection = [];
+    }
     // Handle isSelectionInvalid flag to update filtersWithInvalidSelection array
     if (isSelectionInvalid) {
         // Add filterLocalId to the array if not already present
@@ -509,7 +732,13 @@ const updateAttributeFilterSelection: FilterContextReducer<
         targetTab.filterContext.filtersWithInvalidSelection =
             targetTab.filterContext.filtersWithInvalidSelection.filter((id) => id !== filterLocalId);
     }
-};
+}
+
+function findAppliedFilterByLocalId(tab: ITabState, localIdentifier: string): FilterContextItem | undefined {
+    return tab.filterContext?.filterContextDefinition?.filters.find(
+        (item) => dashboardFilterLocalIdentifier(item) === localIdentifier,
+    );
+}
 
 //
 //
@@ -524,73 +753,103 @@ export interface IReplaceAttributeFilterItemPayload {
     readonly filter: DashboardAttributeFilterItem;
     readonly isWorkingSelectionChange?: boolean;
     readonly isSelectionInvalid?: boolean;
+    readonly enablePersistentFiltersAcrossTabs?: boolean;
     /**
      * Optional tab local identifier to target a specific tab.
      * If not provided, the active tab will be used.
      */
     readonly tabLocalIdentifier?: string;
-}
-
-/**
- * Carries over filterElementsBy, filterElementsByDate, and validateElementsBy from the existing filter
- * to the replacement filter, so that parent filter dependencies are not lost
- * when filter selection/params change.
- */
-function preserveFilterDependencies(
-    existing: DashboardAttributeFilterItem,
-    replacement: DashboardAttributeFilterItem,
-): DashboardAttributeFilterItem {
-    const filterElementsBy = dashboardAttributeFilterItemFilterElementsBy(existing);
-    const filterElementsByDate = dashboardAttributeFilterItemFilterElementsByDate(existing);
-    const validateElementsBy = dashboardAttributeFilterItemValidateElementsBy(existing);
-
-    if (!filterElementsBy?.length && !filterElementsByDate?.length && !validateElementsBy?.length) {
-        return replacement;
-    }
-
-    const preserved = {
-        ...(filterElementsBy?.length ? { filterElementsBy } : {}),
-        ...(filterElementsByDate?.length ? { filterElementsByDate } : {}),
-        ...(validateElementsBy?.length ? { validateElementsBy } : {}),
-    };
-
-    if (isDashboardAttributeFilter(replacement)) {
-        return {
-            attributeFilter: {
-                ...replacement.attributeFilter,
-                ...preserved,
-            },
-        };
-    }
-    if (isDashboardArbitraryAttributeFilter(replacement)) {
-        return {
-            arbitraryAttributeFilter: {
-                ...replacement.arbitraryAttributeFilter,
-                ...preserved,
-            },
-        };
-    }
-    // Match filters do not support parent dependencies
-    return replacement;
+    /**
+     * When true, other tabs restore their own saved initial filter instead of this payload.
+     */
+    readonly restoreTargetOriginal?: boolean;
+    /**
+     * Cross-filtering virtual filters per tab. They are not mirrored to or from other tabs.
+     */
+    readonly crossFilteringLocalIdsByTab?: CrossFilteringLocalIdsByTab;
 }
 
 const replaceAttributeFilterItem: FilterContextReducer<PayloadAction<IReplaceAttributeFilterItemPayload>> = (
     state,
     action,
 ) => {
-    const targetTab = getTabOrActive(state, action.payload.tabLocalIdentifier);
-    if (!targetTab) {
+    const {
+        tabLocalIdentifier,
+        enablePersistentFiltersAcrossTabs,
+        isWorkingSelectionChange,
+        crossFilteringLocalIdsByTab,
+    } = action.payload;
+    const tabs = getTabsToMutate(
+        state,
+        tabLocalIdentifier,
+        enablePersistentFiltersAcrossTabs,
+        isWorkingSelectionChange,
+    );
+    const source = tabs[0];
+
+    if (!source) {
         return;
     }
+
+    const sourceFilter = findAppliedFilterByLocalId(source, action.payload.filterLocalId);
+    replaceAttributeFilterItemOnTab(source, action.payload, action.payload.filter, true);
+
+    if (
+        tabs.length === 1 ||
+        !sourceFilter ||
+        !isDashboardAttributeFilterItem(sourceFilter) ||
+        isCrossFilteringVirtualFilter(source, action.payload.filterLocalId, crossFilteringLocalIdsByTab)
+    ) {
+        return;
+    }
+
+    for (const tab of tabs.slice(1)) {
+        const match = findCounterpartFilter(source, sourceFilter, tab, state.attributesWithReferences, {
+            allowListToText: true,
+            crossFilteringLocalIdsByTab,
+        });
+        if (!match || !isDashboardAttributeFilterItem(match)) {
+            continue;
+        }
+        const targetLocalId = dashboardAttributeFilterItemLocalIdentifier(match);
+        if (!targetLocalId) {
+            continue;
+        }
+        const original = action.payload.restoreTargetOriginal ? findOriginalFilter(tab, match) : undefined;
+        if (action.payload.restoreTargetOriginal && !isDashboardAttributeFilterItem(original)) {
+            continue;
+        }
+        const replacement = isDashboardAttributeFilterItem(original) ? original : action.payload.filter;
+        replaceAttributeFilterItemOnTab(
+            tab,
+            { ...action.payload, filterLocalId: targetLocalId },
+            retargetAttributeFilterItem(replacement, targetLocalId),
+            false,
+        );
+    }
+};
+
+function replaceAttributeFilterItemOnTab(
+    targetTab: ITabState,
+    payload: IReplaceAttributeFilterItemPayload,
+    filter: DashboardAttributeFilterItem,
+    isSource: boolean,
+): void {
     if (!targetTab.filterContext) {
+        if (!isSource) {
+            return;
+        }
         targetTab.filterContext = { ...filterContextInitialState };
     }
 
-    const { filterLocalId, filter, isWorkingSelectionChange, isSelectionInvalid } = action.payload;
+    const { filterLocalId, isWorkingSelectionChange, isSelectionInvalid } = payload;
 
     const filterContextDefinition = isWorkingSelectionChange
         ? targetTab.filterContext.workingFilterContextDefinition
         : targetTab.filterContext.filterContextDefinition;
+    if (!isSource && !filterContextDefinition?.filters) {
+        return;
+    }
     invariant(filterContextDefinition?.filters, "Attempt to edit uninitialized filter context");
 
     const existingFilterIndex = filterContextDefinition.filters.findIndex(
@@ -598,6 +857,10 @@ const replaceAttributeFilterItem: FilterContextReducer<PayloadAction<IReplaceAtt
             isDashboardAttributeFilterItem(item) &&
             dashboardAttributeFilterItemLocalIdentifier(item) === filterLocalId,
     );
+
+    if (!isSource && existingFilterIndex < 0) {
+        return;
+    }
 
     // Preserve parent filter relationships from the existing filter when replacing.
     // The replacement filter typically only carries selection data, not dependency configuration.
@@ -621,6 +884,9 @@ const replaceAttributeFilterItem: FilterContextReducer<PayloadAction<IReplaceAtt
         filters[existingFilterIndex] = replacementFilter;
     }
 
+    if (!targetTab.filterContext.filtersWithInvalidSelection) {
+        targetTab.filterContext.filtersWithInvalidSelection = [];
+    }
     // Handle isSelectionInvalid flag to update filtersWithInvalidSelection array
     if (isSelectionInvalid) {
         if (!targetTab.filterContext.filtersWithInvalidSelection.includes(filterLocalId)) {
@@ -630,7 +896,7 @@ const replaceAttributeFilterItem: FilterContextReducer<PayloadAction<IReplaceAtt
         targetTab.filterContext.filtersWithInvalidSelection =
             targetTab.filterContext.filtersWithInvalidSelection.filter((id) => id !== filterLocalId);
     }
-};
+}
 
 //
 //
@@ -993,46 +1259,109 @@ export interface IClearAttributeFiltersSelectionPayload {
      * If not provided, the active tab will be used.
      */
     readonly tabLocalIdentifier?: string;
+    /**
+     * When true, other tabs restore their own saved initial selection instead of clearing to All.
+     */
+    readonly restoreTargetOriginal?: boolean;
+    /**
+     * Cross-filtering virtual filters per tab. They are not mirrored to or from other tabs.
+     */
+    readonly crossFilteringLocalIdsByTab?: CrossFilteringLocalIdsByTab;
+    readonly enablePersistentFiltersAcrossTabs?: boolean;
 }
 
 const clearAttributeFiltersSelection: FilterContextReducer<
     PayloadAction<IClearAttributeFiltersSelectionPayload>
 > = (state, action) => {
-    const targetTab = getTabOrActive(state, action.payload.tabLocalIdentifier);
-    if (!targetTab) {
+    const {
+        tabLocalIdentifier,
+        enablePersistentFiltersAcrossTabs,
+        filterLocalIds,
+        crossFilteringLocalIdsByTab,
+    } = action.payload;
+    const tabs = getTabsToMutate(state, tabLocalIdentifier, enablePersistentFiltersAcrossTabs);
+    const source = tabs[0];
+    if (!source) {
         return;
     }
-    if (!targetTab.filterContext) {
-        targetTab.filterContext = { ...filterContextInitialState };
+    if (!source.filterContext) {
+        source.filterContext = { ...filterContextInitialState };
     }
 
-    const { filterLocalIds } = action.payload;
+    const sourceFilters = filterLocalIds.map((filterLocalId) => ({
+        filterLocalId,
+        filter: findAppliedFilterByLocalId(source, filterLocalId),
+    }));
 
     filterLocalIds.forEach((filterLocalId) => {
-        invariant(
-            targetTab.filterContext?.filterContextDefinition,
-            "Attempt to edit uninitialized filter context",
-        );
-        const currentFilterIndex = targetTab.filterContext.filterContextDefinition.filters.findIndex(
-            (item) =>
-                isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
-        );
-
-        invariant(currentFilterIndex >= 0, "Attempt to clear selection of a non-existing filter");
-
-        const currentFilter = targetTab.filterContext.filterContextDefinition.filters[
-            currentFilterIndex
-        ] as IDashboardAttributeFilter;
-
-        currentFilter.attributeFilter.negativeSelection =
-            currentFilter.attributeFilter.selectionMode !== "single";
-        currentFilter.attributeFilter.attributeElements = isAttributeElementsByRef(
-            currentFilter.attributeFilter.attributeElements,
-        )
-            ? { uris: [] }
-            : { values: [] };
+        clearAttributeFilterSelectionOnTab(source, filterLocalId, true);
     });
+
+    for (const tab of tabs.slice(1)) {
+        for (const { filterLocalId, filter } of sourceFilters) {
+            if (
+                !filter ||
+                !isDashboardAttributeFilter(filter) ||
+                isCrossFilteringVirtualFilter(source, filterLocalId, crossFilteringLocalIdsByTab)
+            ) {
+                continue;
+            }
+            const match = findCounterpartFilter(source, filter, tab, state.attributesWithReferences, {
+                allowListToText: false,
+                crossFilteringLocalIdsByTab,
+            });
+            if (!match || !isDashboardAttributeFilter(match) || !match.attributeFilter.localIdentifier) {
+                continue;
+            }
+            const targetLocalId = match.attributeFilter.localIdentifier;
+            if (action.payload.restoreTargetOriginal) {
+                const original = findOriginalFilter(tab, match);
+                if (!isDashboardAttributeFilter(original)) {
+                    continue;
+                }
+                updateAttributeFilterSelectionOnTab(
+                    tab,
+                    {
+                        filterLocalId: targetLocalId,
+                        elements: original.attributeFilter.attributeElements,
+                        negativeSelection: original.attributeFilter.negativeSelection,
+                    },
+                    targetLocalId,
+                    false,
+                );
+                continue;
+            }
+            clearAttributeFilterSelectionOnTab(tab, targetLocalId, false);
+        }
+    }
 };
+
+function clearAttributeFilterSelectionOnTab(tab: ITabState, filterLocalId: string, isSource: boolean): void {
+    const filters = tab.filterContext?.filterContextDefinition?.filters;
+    if (!isSource && !filters) {
+        return;
+    }
+    invariant(tab.filterContext?.filterContextDefinition, "Attempt to edit uninitialized filter context");
+    const currentFilterIndex = tab.filterContext.filterContextDefinition.filters.findIndex(
+        (item) => isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
+    );
+    if (!isSource && currentFilterIndex < 0) {
+        return;
+    }
+    invariant(currentFilterIndex >= 0, "Attempt to clear selection of a non-existing filter");
+
+    const currentFilter = tab.filterContext.filterContextDefinition.filters[
+        currentFilterIndex
+    ] as IDashboardAttributeFilter;
+
+    currentFilter.attributeFilter.negativeSelection =
+        currentFilter.attributeFilter.selectionMode !== "single";
+    currentFilter.attributeFilter.attributeElements = isAttributeElementsByRef(
+        currentFilter.attributeFilter.attributeElements,
+    )
+        ? { uris: [] }
+        : { values: [] };
+}
 
 /**
  * @internal
@@ -1296,7 +1625,9 @@ const addMeasureValueFilter: FilterContextReducer<PayloadAction<IAddMeasureValue
     state,
     action,
 ) => {
-    const activeTab = getActiveTab(state);
+    // A new measure value filter has no counterpart yet. Creating one on other tabs would be a
+    // phantom filter, so the add stays on the source tab even when sync is on.
+    const activeTab = getTabsToMutate(state)[0];
     if (!activeTab) {
         return;
     }
@@ -1591,11 +1922,9 @@ export function clearFilterContextWorkingValues(tab: ITabState): void {
 }
 
 const resetWorkingFilterSelection: FilterContextReducer<PayloadAction> = (state) => {
-    const activeTab = getActiveTab(state);
-    if (!activeTab) {
-        return;
+    for (const tab of getTabsToMutate(state)) {
+        clearFilterContextWorkingValues(tab);
     }
-    clearFilterContextWorkingValues(activeTab);
 };
 
 //
@@ -1628,22 +1957,78 @@ export type IChangeMeasureValueFilterConditionReducerPayload = {
     readonly localIdentifier: string;
     readonly conditions?: MeasureValueFilterCondition[];
     readonly isWorkingSelectionChange?: boolean;
+    readonly enablePersistentFiltersAcrossTabs?: boolean;
+    /**
+     * When true, other tabs restore their own saved initial condition instead of this payload.
+     */
+    readonly restoreTargetOriginal?: boolean;
 };
 
 const changeMeasureValueFilterCondition: FilterContextReducer<
     PayloadAction<IChangeMeasureValueFilterConditionReducerPayload>
 > = (state, action) => {
-    const activeTab = getActiveTab(state);
-    if (!activeTab) {
+    const { localIdentifier, isWorkingSelectionChange, enablePersistentFiltersAcrossTabs } = action.payload;
+    const tabs = getTabsToMutate(
+        state,
+        undefined,
+        enablePersistentFiltersAcrossTabs,
+        isWorkingSelectionChange,
+    );
+    const source = tabs[0];
+    if (!source) {
         return;
     }
-    if (!activeTab.filterContext) {
-        activeTab.filterContext = { ...filterContextInitialState };
+    const sourceFilter = findAppliedFilterByLocalId(source, localIdentifier);
+    changeMeasureValueFilterConditionOnTab(source, action.payload, localIdentifier, true);
+    if (!sourceFilter || !isDashboardMeasureValueFilter(sourceFilter)) {
+        return;
     }
-    const { localIdentifier, conditions, isWorkingSelectionChange } = action.payload;
+    for (const tab of tabs.slice(1)) {
+        const match = findCounterpartFilter(source, sourceFilter, tab, state.attributesWithReferences);
+        const targetLocalId = match ? dashboardFilterLocalIdentifier(match) : undefined;
+        if (!targetLocalId || !match) {
+            continue;
+        }
+        if (action.payload.restoreTargetOriginal) {
+            const original = findOriginalFilter(tab, match);
+            if (!isDashboardMeasureValueFilter(original)) {
+                continue;
+            }
+            changeMeasureValueFilterConditionOnTab(
+                tab,
+                {
+                    ...action.payload,
+                    localIdentifier: targetLocalId,
+                    conditions: original.dashboardMeasureValueFilter.conditions,
+                },
+                targetLocalId,
+                false,
+            );
+            continue;
+        }
+        changeMeasureValueFilterConditionOnTab(tab, action.payload, targetLocalId, false);
+    }
+};
+
+function changeMeasureValueFilterConditionOnTab(
+    tab: ITabState,
+    payload: IChangeMeasureValueFilterConditionReducerPayload,
+    localIdentifier: string,
+    isSource: boolean,
+): void {
+    if (!tab.filterContext) {
+        if (!isSource) {
+            return;
+        }
+        tab.filterContext = { ...filterContextInitialState };
+    }
+    const { conditions, isWorkingSelectionChange } = payload;
     const filterContextDefinition = isWorkingSelectionChange
-        ? activeTab.filterContext?.workingFilterContextDefinition
-        : activeTab.filterContext?.filterContextDefinition;
+        ? tab.filterContext?.workingFilterContextDefinition
+        : tab.filterContext?.filterContextDefinition;
+    if (!isSource && !filterContextDefinition?.filters) {
+        return;
+    }
     invariant(filterContextDefinition?.filters, "Attempt to edit uninitialized filter context");
 
     const filters = filterContextDefinition.filters;
@@ -1653,6 +2038,9 @@ const changeMeasureValueFilterCondition: FilterContextReducer<
     );
 
     const hasConditions = !!conditions && conditions.length > 0;
+    if (!isSource && index < 0) {
+        return;
+    }
     invariant(
         index >= 0 || isWorkingSelectionChange,
         `Attempt to change condition of measure value filter ${localIdentifier} that does not exist`,
@@ -1665,7 +2053,7 @@ const changeMeasureValueFilterCondition: FilterContextReducer<
                 conditions: hasConditions ? conditions : undefined,
             },
         };
-        activeTab.filterContext.workingFilterContextDefinition!.filters.push(workingFilter);
+        tab.filterContext.workingFilterContextDefinition!.filters.push(workingFilter);
         return;
     }
 
@@ -1676,7 +2064,7 @@ const changeMeasureValueFilterCondition: FilterContextReducer<
             conditions: hasConditions ? conditions : undefined,
         },
     };
-};
+}
 
 type IChangeMeasureValueFilterTitleReducerPayload = {
     readonly filterLocalId: string;
@@ -1686,43 +2074,88 @@ type IChangeMeasureValueFilterTitleReducerPayload = {
 type ISetMeasureValueFilterDimensionalityReducerPayload = {
     readonly localIdentifier: string;
     readonly dimensionality?: ObjRef[];
+    /**
+     * When true, other tabs restore their own saved initial dimensionality instead of this payload.
+     */
+    readonly restoreTargetOriginal?: boolean;
+    readonly enablePersistentFiltersAcrossTabs?: boolean;
 };
 
 const setMeasureValueFilterDimensionality: FilterContextReducer<
     PayloadAction<ISetMeasureValueFilterDimensionalityReducerPayload>
 > = (state, action) => {
-    const activeTab = getActiveTab(state);
-    if (!activeTab) {
+    const { localIdentifier, restoreTargetOriginal, enablePersistentFiltersAcrossTabs } = action.payload;
+    const tabs = getTabsToMutate(state, undefined, enablePersistentFiltersAcrossTabs);
+    const source = tabs[0];
+    if (!source) {
+        return;
+    }
+    const sourceFilter = findAppliedFilterByLocalId(source, localIdentifier);
+    setMeasureValueFilterDimensionalityOnTab(source, action.payload, localIdentifier, true);
+    if (!sourceFilter || !isDashboardMeasureValueFilter(sourceFilter)) {
+        return;
+    }
+    for (const tab of tabs.slice(1)) {
+        const match = findCounterpartFilter(source, sourceFilter, tab, state.attributesWithReferences);
+        const targetLocalId = match ? dashboardFilterLocalIdentifier(match) : undefined;
+        if (!targetLocalId || !match) {
+            continue;
+        }
+        if (restoreTargetOriginal) {
+            const original = findOriginalFilter(tab, match);
+            if (!isDashboardMeasureValueFilter(original)) {
+                continue;
+            }
+            setMeasureValueFilterDimensionalityOnTab(
+                tab,
+                {
+                    ...action.payload,
+                    localIdentifier: targetLocalId,
+                    dimensionality: original.dashboardMeasureValueFilter.dimensionality,
+                },
+                targetLocalId,
+                false,
+            );
+            continue;
+        }
+        setMeasureValueFilterDimensionalityOnTab(tab, action.payload, targetLocalId, false);
+    }
+};
+
+function setMeasureValueFilterDimensionalityOnTab(
+    tab: ITabState,
+    payload: ISetMeasureValueFilterDimensionalityReducerPayload,
+    localIdentifier: string,
+    isSource: boolean,
+): void {
+    const filters = tab.filterContext?.filterContextDefinition?.filters;
+    if (!isSource && !filters) {
+        return;
+    }
+    invariant(filters, "Attempt to edit uninitialized filter context");
+
+    const index = filters.findIndex(
+        (item) =>
+            isDashboardMeasureValueFilter(item) && dashboardFilterLocalIdentifier(item) === localIdentifier,
+    );
+    if (!isSource && index < 0) {
         return;
     }
     invariant(
-        activeTab.filterContext?.filterContextDefinition?.filters,
-        "Attempt to edit uninitialized filter context",
-    );
-
-    const filters = activeTab.filterContext.filterContextDefinition.filters;
-    const index = filters.findIndex(
-        (item) =>
-            isDashboardMeasureValueFilter(item) &&
-            dashboardFilterLocalIdentifier(item) === action.payload.localIdentifier,
-    );
-    invariant(
         index >= 0,
-        `Attempt to change dimensionality of measure value filter ${action.payload.localIdentifier} that does not exist`,
+        `Attempt to change dimensionality of measure value filter ${localIdentifier} that does not exist`,
     );
 
     const filter = filters[index] as IDashboardMeasureValueFilter;
     const dimensionality =
-        action.payload.dimensionality && action.payload.dimensionality.length > 0
-            ? action.payload.dimensionality
-            : undefined;
+        payload.dimensionality && payload.dimensionality.length > 0 ? payload.dimensionality : undefined;
     filters[index] = {
         dashboardMeasureValueFilter: {
             ...filter.dashboardMeasureValueFilter,
             dimensionality,
         },
     };
-};
+}
 
 const changeMeasureValueFilterTitle: FilterContextReducer<
     PayloadAction<IChangeMeasureValueFilterTitleReducerPayload>

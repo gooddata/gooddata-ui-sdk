@@ -334,7 +334,12 @@ function* loadExistingDashboard(
     );
     yield put(unavailableObjectsActions.setUnavailableObjects(unavailableReferences));
 
-    const dashboardWithFilterView = applyDefaultFilterView(loadedDashboard, filterViews, config.exportId);
+    const dashboardWithFilterView = applyDefaultFilterView(
+        loadedDashboard,
+        filterViews,
+        config.exportId,
+        unavailableReferences,
+    );
     // Resolve active tab: URL's initialTabId takes precedence, otherwise default to first tab
     // Note: activeTabLocalIdentifier is app state only, NOT persisted to/read from dashboard MD
     const resolvedActiveTabId = resolveActiveTabId(

@@ -9,6 +9,7 @@ import {
     type DashboardAttributeFilterItem,
     type DashboardTextAttributeFilter,
     type IAttributeDisplayFormMetadataObject,
+    type IDashboardAttributeFilter,
     type IDashboardMeasureValueFilter,
     type IDrillToCustomUrl as IDrillToCustomUrlModel,
     type IInsightWidget,
@@ -19,7 +20,9 @@ import {
     type TextAttributeFilter,
     areObjRefsEqual,
     dashboardAttributeFilterItemDisplayForm,
-    dashboardFilterObjRef,
+    dashboardAttributeFilterItemLocalIdentifier,
+    dashboardFilterLocalIdentifier,
+    dashboardMeasureValueFilterLocalIdentifier,
     filterAttributeElements,
     filterObjRef,
     insightFilters as insightDefinitionFilters,
@@ -67,6 +70,7 @@ import {
     selectCatalogDateAttributes,
 } from "../../store/catalog/catalogSelectors.js";
 import { selectEnableMeasureValueFilterKD } from "../../store/config/configSelectors.js";
+import { selectRestrictedDashboardFilterLocalIdentifiers } from "../../store/filtering/dashboardFilterSelectors.js";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
 import { selectDashboardId } from "../../store/meta/metaSelectors.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
@@ -367,66 +371,108 @@ export function* getAttributeIdentifiersReplacements(
     );
 }
 
+/**
+ * The filter a dashboard attribute filter placeholder names. A readable filter wins: a text filter with
+ * the placeholder's label, then a list filter with it, then a list filter displayed by it. A restricted
+ * filter matched in any of these ways is applied nowhere, so it filters nothing.
+ */
+export type DashboardAttributeFilterPlaceholderMatch =
+    | { type: "text"; filter: DashboardTextAttributeFilter }
+    | { type: "label"; filter: IDashboardAttributeFilter }
+    | { type: "displayAsLabel"; filter: IDashboardAttributeFilter }
+    | { type: "restricted" };
+
+export function findDashboardAttributeFilterPlaceholderMatch(
+    ref: ObjRef,
+    attributeFilters: DashboardAttributeFilterItem[],
+    restrictedLocalIdentifiers: ReadonlySet<string>,
+    catalogDisplayForms: ReturnType<typeof selectAllCatalogDisplayFormsMap>,
+    attributeFilterConfigs: ReturnType<typeof selectAttributeFilterConfigsOverrides>,
+): DashboardAttributeFilterPlaceholderMatch | undefined {
+    const isReadable = (filter: DashboardAttributeFilterItem) =>
+        !restrictedLocalIdentifiers.has(dashboardFilterLocalIdentifier(filter) ?? "");
+    const hasLabel = (filter: DashboardAttributeFilterItem) => {
+        const df = catalogDisplayForms.get(dashboardAttributeFilterItemDisplayForm(filter));
+        return !!df && areObjRefsEqual(displayFormPlaceholderRef(df), ref);
+    };
+    const isDisplayedByLabel = (filter: DashboardAttributeFilterItem) =>
+        attributeFilterConfigs.some(
+            (config) =>
+                config.localIdentifier === dashboardAttributeFilterItemLocalIdentifier(filter) &&
+                !!config.displayAsLabel &&
+                areObjRefsEqual(config.displayAsLabel, ref),
+        );
+
+    const textFilter = attributeFilters.find(
+        (filter): filter is DashboardTextAttributeFilter =>
+            isDashboardTextAttributeFilter(filter) && isReadable(filter) && hasLabel(filter),
+    );
+    if (textFilter) {
+        return { type: "text", filter: textFilter };
+    }
+    const labelFilter = attributeFilters.find(
+        (filter): filter is IDashboardAttributeFilter =>
+            isDashboardAttributeFilter(filter) && isReadable(filter) && hasLabel(filter),
+    );
+    if (labelFilter) {
+        return { type: "label", filter: labelFilter };
+    }
+    const displayedFilter = attributeFilters.find(
+        (filter): filter is IDashboardAttributeFilter =>
+            isDashboardAttributeFilter(filter) && isReadable(filter) && isDisplayedByLabel(filter),
+    );
+    if (displayedFilter) {
+        return { type: "displayAsLabel", filter: displayedFilter };
+    }
+    return attributeFilters.some(
+        (filter) => !isReadable(filter) && (hasLabel(filter) || isDisplayedByLabel(filter)),
+    )
+        ? { type: "restricted" }
+        : undefined;
+}
+
 function* resolveDashboardAttributeFilterReplacement(
     { placeholder: toBeReplaced, ref }: IDrillToUrlPlaceholder,
     attributeFilters: DashboardAttributeFilterItem[],
+    restrictedLocalIdentifiers: ReadonlySet<string>,
     catalogDisplayForms: ReturnType<typeof selectAllCatalogDisplayFormsMap>,
     attributeFilterConfigs: ReturnType<typeof selectAttributeFilterConfigsOverrides>,
     ctx: DashboardContext,
 ): SagaIterator<IDrillToUrlPlaceholderReplacement> {
-    // Check for text filters (arbitrary/match) first — they use different value structures.
-    const textFilter = attributeFilters.find((filter) => {
-        if (!isDashboardTextAttributeFilter(filter)) {
-            return false;
-        }
-        const df = catalogDisplayForms.get(dashboardAttributeFilterItemDisplayForm(filter));
-        return df && areObjRefsEqual(displayFormPlaceholderRef(df), ref);
-    });
+    const match = findDashboardAttributeFilterPlaceholderMatch(
+        ref,
+        attributeFilters,
+        restrictedLocalIdentifiers,
+        catalogDisplayForms,
+        attributeFilterConfigs,
+    );
 
-    if (textFilter && isDashboardTextAttributeFilter(textFilter)) {
-        const parsedFilter = stringifyTextFilterSelection(textFilter);
-        const replacement = encodeParameterIfSet(parsedFilter);
-        return {
-            toBeReplaced,
-            replacement: replacement!,
-        };
+    // a placeholder whose filter is missing from the dashboard stays unresolved, which rejects the drill
+    let parsedFilter: string | undefined;
+    if (match?.type === "text") {
+        parsedFilter = stringifyTextFilterSelection(match.filter);
+    } else if (match?.type === "label") {
+        const elements = match.filter.attributeFilter.attributeElements;
+        parsedFilter = stringifyAttributeFilterSelection(
+            isAttributeElementsByValue(elements) ? elements.values : elements.uris,
+            match.filter.attributeFilter.negativeSelection,
+        );
+    } else if (match?.type === "displayAsLabel") {
+        const elements = match.filter.attributeFilter.attributeElements;
+        const primaryElementsValues = isAttributeElementsByValue(elements) ? elements.values : elements.uris;
+        const elementTitles: SagaReturnType<typeof loadSecondaryElementTitles> = yield call(
+            loadSecondaryElementTitles,
+            ref,
+            primaryElementsValues,
+            ctx,
+        );
+        parsedFilter = stringifyAttributeFilterSelection(
+            elementTitles,
+            match.filter.attributeFilter.negativeSelection,
+        );
+    } else if (match?.type === "restricted") {
+        parsedFilter = stringifyAttributeFilterSelection([], true);
     }
-
-    // Standard (element-based) attribute filters
-    const standardFilters = attributeFilters.filter(isDashboardAttributeFilter);
-
-    let usedFilter = standardFilters.find((filter) => {
-        const df = catalogDisplayForms.get(filter.attributeFilter.displayForm);
-        return df && areObjRefsEqual(displayFormPlaceholderRef(df), ref);
-    });
-    let attributeElementsValues = [];
-
-    if (usedFilter) {
-        const elements = usedFilter?.attributeFilter.attributeElements;
-        attributeElementsValues = isAttributeElementsByValue(elements)
-            ? elements.values
-            : (elements?.uris ?? []);
-    } else {
-        const usedConfig = attributeFilterConfigs.find((config) => {
-            return config.displayAsLabel && areObjRefsEqual(config.displayAsLabel, ref);
-        });
-        usedFilter = standardFilters.find((filter) => {
-            return filter.attributeFilter.localIdentifier === usedConfig?.localIdentifier;
-        });
-        const elements = usedFilter?.attributeFilter.attributeElements;
-        const primaryElementsValues = elements
-            ? isAttributeElementsByValue(elements)
-                ? elements.values
-                : elements.uris
-            : [];
-        attributeElementsValues = yield call(loadSecondaryElementTitles, ref, primaryElementsValues, ctx);
-    }
-
-    const isNegative = usedFilter?.attributeFilter.negativeSelection;
-
-    const parsedFilter = usedFilter
-        ? stringifyAttributeFilterSelection(attributeElementsValues, isNegative!)
-        : undefined;
 
     const replacement = encodeParameterIfSet(parsedFilter);
 
@@ -449,6 +495,8 @@ export function* getDashboardAttributeFilterReplacements(
     const attributeFilters: ReturnType<typeof selectFilterContextAttributeFilterItems> = yield select(
         selectFilterContextAttributeFilterItems,
     );
+    const restrictedLocalIdentifiers: ReturnType<typeof selectRestrictedDashboardFilterLocalIdentifiers> =
+        yield select(selectRestrictedDashboardFilterLocalIdentifiers);
     const catalogDisplayForms: ReturnType<typeof selectAllCatalogDisplayFormsMap> = yield select(
         selectAllCatalogDisplayFormsMap,
     );
@@ -463,6 +511,7 @@ export function* getDashboardAttributeFilterReplacements(
                 resolveDashboardAttributeFilterReplacement,
                 placeholder,
                 attributeFilters,
+                restrictedLocalIdentifiers,
                 catalogDisplayForms,
                 attributeFilterConfigs,
                 ctx,
@@ -474,18 +523,28 @@ export function* getDashboardAttributeFilterReplacements(
 function resolveDashboardMeasureValueFilterReplacement(
     { placeholder: toBeReplaced, identifier }: IDrillToUrlPlaceholder,
     measureValueFilters: IDashboardMeasureValueFilter[],
+    restrictedLocalIdentifiers: ReadonlySet<string>,
     catalogMeasures: ReturnType<typeof selectAllCatalogMeasuresMap>,
 ): IDrillToUrlPlaceholderReplacement {
-    const usedFilter = measureValueFilters.find((filter) => {
-        const measureRef = dashboardFilterObjRef(filter)!;
-
-        return dashboardMeasureValueFilterMatchesIdentifier(measureRef, identifier, catalogMeasures);
-    });
-
-    const parsedFilter = stringifyMeasureValueFilterCondition(
-        usedFilter?.dashboardMeasureValueFilter.conditions,
+    const isPlaceholderFilter = (filter: IDashboardMeasureValueFilter) =>
+        dashboardMeasureValueFilterMatchesIdentifier(
+            filter.dashboardMeasureValueFilter.measure,
+            identifier,
+            catalogMeasures,
+        );
+    const usedFilter = measureValueFilters.find(
+        (filter) =>
+            !restrictedLocalIdentifiers.has(dashboardMeasureValueFilterLocalIdentifier(filter)) &&
+            isPlaceholderFilter(filter),
     );
-    const replacement = usedFilter ? encodeParameterIfSet(parsedFilter) : undefined;
+
+    // A restricted filter is applied nowhere, so it filters nothing and resolves as "ALL". A
+    // placeholder whose filter is missing from the dashboard stays unresolved, which rejects the drill.
+    const parsedFilter =
+        usedFilter || measureValueFilters.some(isPlaceholderFilter)
+            ? stringifyMeasureValueFilterCondition(usedFilter?.dashboardMeasureValueFilter.conditions)
+            : undefined;
+    const replacement = encodeParameterIfSet(parsedFilter);
 
     return {
         toBeReplaced,
@@ -505,11 +564,18 @@ export function* getDashboardMeasureValueFilterReplacements(
     const measureValueFilters: ReturnType<typeof selectFilterContextMeasureValueFilters> = yield select(
         selectFilterContextMeasureValueFilters,
     );
+    const restrictedLocalIdentifiers: ReturnType<typeof selectRestrictedDashboardFilterLocalIdentifiers> =
+        yield select(selectRestrictedDashboardFilterLocalIdentifiers);
     const catalogMeasures: ReturnType<typeof selectAllCatalogMeasuresMap> =
         yield select(selectAllCatalogMeasuresMap);
 
     return measureValueFilterPlaceholders.map((placeholder: IDrillToUrlPlaceholder) =>
-        resolveDashboardMeasureValueFilterReplacement(placeholder, measureValueFilters, catalogMeasures),
+        resolveDashboardMeasureValueFilterReplacement(
+            placeholder,
+            measureValueFilters,
+            restrictedLocalIdentifiers,
+            catalogMeasures,
+        ),
     );
 }
 

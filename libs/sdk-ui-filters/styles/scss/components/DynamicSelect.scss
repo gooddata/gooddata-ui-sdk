@@ -18,3 +18,8 @@
         width: 100%;
     }
 }
+
+// the menu is positioned by the overlay, keep it in the flow so the overlay can measure it
+.gd-dynamic-select-menu-overlay .gd-select-menu {
+    position: relative;
+}

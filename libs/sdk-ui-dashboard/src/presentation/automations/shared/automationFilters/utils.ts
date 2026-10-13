@@ -385,6 +385,16 @@ export function areFiltersEqual(filter1: IFilter, filter2: IFilter): boolean {
                 filter1Type === filter2Type
             );
         }
+    } else if (isAbsoluteDateFilter(filter1) && isAbsoluteDateFilter(filter2)) {
+        // An automation does not store a granularity that has no period literal, so the granularity counts
+        // only when both filters have one.
+        const { granularity: granularity1, ...values1 } = absoluteDateFilterValues(filter1);
+        const { granularity: granularity2, ...values2 } = absoluteDateFilterValues(filter2);
+
+        return (
+            isEqual(values1, values2) &&
+            (granularity1 === undefined || granularity2 === undefined || granularity1 === granularity2)
+        );
     } else if (isDateFilter(filter1) && isDateFilter(filter2)) {
         return isEqual(dateFilterValues(filter1), dateFilterValues(filter2));
     }

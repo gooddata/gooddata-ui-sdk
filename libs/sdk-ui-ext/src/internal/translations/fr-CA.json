@@ -718,5 +718,9 @@
     "properties.conditionalFormatting.operator.endsWith": "Se termine par",
     "properties.conditionalFormatting.operator.notEndsWith": "Ne se termine pas par",
     "properties.conditionalFormatting.operator.isEmpty": "Est vide",
-    "properties.conditionalFormatting.operator.isNotEmpty": "N’est pas vide"
+    "properties.conditionalFormatting.operator.isNotEmpty": "N’est pas vide",
+    "properties.lineShape": "Forme de la ligne",
+    "properties.lineShape.linear": "Linéaire (par défaut)",
+    "properties.lineShape.spline": "Courbe spline",
+    "properties.lineShape.stepped": "En escalier"
 }

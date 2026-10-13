@@ -718,5 +718,9 @@
     "properties.conditionalFormatting.operator.endsWith": "Kết thúc bằng",
     "properties.conditionalFormatting.operator.notEndsWith": "Không kết thúc bằng",
     "properties.conditionalFormatting.operator.isEmpty": "Trống",
-    "properties.conditionalFormatting.operator.isNotEmpty": "Không trống"
+    "properties.conditionalFormatting.operator.isNotEmpty": "Không trống",
+    "properties.lineShape": "Hình dạng đường",
+    "properties.lineShape.linear": "Tuyến tính (mặc định)",
+    "properties.lineShape.spline": "Đường cong spline",
+    "properties.lineShape.stepped": "Dạng bậc thang"
 }

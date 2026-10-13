@@ -252,6 +252,19 @@ export interface IAbsoluteDateFilterBody extends IIdentifiableFilter {
     to: string;
 
     /**
+     * Granularity of the selected periods. When not set, the range is a plain range of days.
+     *
+     * 'from' and 'to' stay day-level even when this is set: they are the first day of the first
+     * selected period and the last day of the last selected period.
+     *
+     * @remarks
+     * On the Tiger backend, `GDC.time.month`, `GDC.time.quarter` and `GDC.time.year` select whole periods
+     * when 'from' and 'to' are days in the 'YYYY-MM-DD' format covering whole periods; any other range, and
+     * every other granularity, selects the days of the range as given.
+     */
+    granularity?: DateAttributeGranularity;
+
+    /**
      * How to treat empty date values.
      */
     emptyValueHandling?: EmptyValues;
@@ -1212,6 +1225,7 @@ export interface IAbsoluteDateFilterValues {
     from: string;
     to: string;
     dataSet?: ObjRef;
+    granularity?: DateAttributeGranularity;
     emptyValueHandling?: EmptyValues;
 }
 
@@ -1229,11 +1243,13 @@ export function absoluteDateFilterValues(
 ): IAbsoluteDateFilterValues {
     invariant(filter, "filter must be specified");
     const emptyValueHandling = filter.absoluteDateFilter.emptyValueHandling;
+    const granularity = filter.absoluteDateFilter.granularity;
 
     return {
         from: filter.absoluteDateFilter.from,
         to: filter.absoluteDateFilter.to,
         ...(includeDataSet ? { dataSet: filter.absoluteDateFilter.dataSet } : {}),
+        ...(granularity === undefined ? {} : { granularity }),
         ...(emptyValueHandling === undefined ? {} : { emptyValueHandling }),
     };
 }

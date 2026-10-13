@@ -1,4 +1,5 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
+
 import { invariant } from "ts-invariant";
 
 import { type DependsOnDateFilter } from "@gooddata/api-client-tiger";
@@ -12,6 +13,10 @@ import {
 } from "@gooddata/sdk-model";
 
 import { toTigerGranularity } from "../../../../convertors/fromBackend/dateGranularityConversions.js";
+import {
+    hasPeriodLiteral,
+    toWholePeriodLiterals,
+} from "../../../../convertors/shared/absoluteGranularityLiterals.js";
 
 export function mapDashboardDateFilterToDependentDateFilter(
     dateFilter: IRelativeDateFilter | IAbsoluteDateFilter,
@@ -55,21 +60,38 @@ function newRelativeDependentDateFilter(dateFilter: IRelativeDateFilter): Depend
 }
 
 function newAbsoluteDependentDateFilter(dateFilter: IAbsoluteDateFilter): DependsOnDateFilter {
-    const localIdentifier = dateFilter.absoluteDateFilter.dataSet;
+    const { dataSet: localIdentifier, from, to, granularity } = dateFilter.absoluteDateFilter;
 
     invariant(!isUriRef(localIdentifier));
+
+    const dataset = {
+        identifier: {
+            id: localIdentifier.identifier,
+            type: "dataset" as const,
+        },
+    };
+
+    if (hasPeriodLiteral(granularity)) {
+        const literals = toWholePeriodLiterals(granularity, from, to);
+        if (literals) {
+            return {
+                dateFilter: {
+                    absoluteGranularityDateFilter: {
+                        dataset,
+                        granularity: toTigerGranularity(granularity),
+                        ...literals,
+                    },
+                },
+            };
+        }
+    }
 
     return {
         dateFilter: {
             absoluteDateFilter: {
-                dataset: {
-                    identifier: {
-                        id: localIdentifier.identifier,
-                        type: "dataset",
-                    },
-                },
-                from: dateFilter.absoluteDateFilter.from,
-                to: dateFilter.absoluteDateFilter.to,
+                dataset,
+                from,
+                to,
             },
         },
     };

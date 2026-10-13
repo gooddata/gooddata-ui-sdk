@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ReactNode, memo, useCallback, useMemo, useState } from "react";
 
@@ -70,6 +70,7 @@ interface IRelativeRangePickerProps {
     selectedFilterOption: IUiRelativeDateFilterForm;
     onSelectedFilterOptionChange: (dateFilterOption: DateFilterOption) => void;
     isMobile: boolean;
+    shouldOverlaySelectMenu?: boolean;
     accessibilityConfig?: IAccessibilityConfigBase;
     id?: string;
 }
@@ -162,6 +163,7 @@ const mobileVisibleItemsRange = 5;
 export function RelativeRangePicker({
     selectedFilterOption,
     isMobile,
+    shouldOverlaySelectMenu = false,
     accessibilityConfig,
     id,
     onSelectedFilterOptionChange,
@@ -221,8 +223,9 @@ export function RelativeRangePicker({
             getItems,
             inputValue: "",
             onInputValueChange: () => {},
+            renderMenuAsOverlay: shouldOverlaySelectMenu,
         }),
-        [isMobile, getItems],
+        [isMobile, getItems, shouldOverlaySelectMenu],
     );
 
     const handleFromChange = useCallback(

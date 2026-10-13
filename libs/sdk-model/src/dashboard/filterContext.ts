@@ -512,11 +512,12 @@ export function newAbsoluteDashboardDateFilter(
     dataSet?: ObjRef,
     localIdentifier?: string,
     emptyValueHandling?: EmptyValues,
+    granularity?: DateFilterGranularity,
 ): IDashboardDateFilter {
     return {
         dateFilter: {
             type: "absolute",
-            granularity: "GDC.time.date",
+            granularity: granularity ?? "GDC.time.date",
             from,
             to,
             dataSet,

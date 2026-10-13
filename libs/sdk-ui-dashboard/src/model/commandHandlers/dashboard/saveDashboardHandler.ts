@@ -39,7 +39,7 @@ import { type DashboardSaved, dashboardSaved } from "../../events/dashboard.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
 import { accessibleDashboardsActions } from "../../store/accessibleDashboards/index.js";
 import { selectBackendCapabilities } from "../../store/backendCapabilities/backendCapabilitiesSelectors.js";
-import { selectLocale } from "../../store/config/configSelectors.js";
+import { selectIsAiMode, selectLocale } from "../../store/config/configSelectors.js";
 import { insightsActions } from "../../store/insights/index.js";
 import {
     selectDraftInsightsUsedOnDashboard,
@@ -81,6 +81,7 @@ import { dashboardWithDrillReferences } from "./dashboardDrillReferences.js";
 
 type DashboardSaveContext = {
     cmd: ISaveDashboard;
+    isAiMode: boolean;
     /**
      * This contains definition of dashboard that reflects the current state.
      */
@@ -265,7 +266,7 @@ function saveDashboard(
                     return ctx.backend
                         .workspace(ctx.workspace)
                         .dashboards()
-                        .createDashboard(dashboardToSave, !ctx.config?.isAiMode)
+                        .createDashboard(dashboardToSave, !saveCtx.isAiMode)
                         .then((dashboard) => ({ dashboard, created: true }));
                 }
                 throw error;
@@ -451,6 +452,7 @@ function resolveProcessedTabs(
 function* createDashboardSaveContext(
     cmd: ISaveDashboard,
     isNewDashboard: boolean,
+    isAiMode: boolean,
 ): SagaIterator<DashboardSaveContext> {
     const persistedDashboard: ReturnType<typeof selectPersistedDashboard> =
         yield select(selectPersistedDashboard);
@@ -571,6 +573,7 @@ function* createDashboardSaveContext(
 
     return {
         cmd,
+        isAiMode,
         persistedDashboard,
         dashboardFromState,
         dashboardToSave: getDashboardWithSharing(
@@ -753,12 +756,13 @@ export function* saveDashboardHandler(
             yield select(selectPersistedDashboard);
 
         const isNewDashboard = persistedDashboard === undefined;
-        const isAiBuilder = ctx.config?.isAiMode;
+        const isAiBuilder: ReturnType<typeof selectIsAiMode> = yield select(selectIsAiMode);
 
         const saveCtx: SagaReturnType<typeof createDashboardSaveContext> = yield call(
             createDashboardSaveContext,
             cmd,
             isNewDashboard,
+            isAiBuilder,
         );
         let result: DashboardSaveResult;
 

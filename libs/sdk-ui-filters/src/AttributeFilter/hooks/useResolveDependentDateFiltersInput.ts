@@ -52,13 +52,11 @@ export const useResolveDependentDateFiltersInput = (
                         emptyValueHandling,
                     );
                 } else {
-                    return newAbsoluteDateFilter(
-                        dataSet!,
-                        from!.toString(),
-                        to!.toString(),
+                    return newAbsoluteDateFilter(dataSet!, from!.toString(), to!.toString(), {
                         localIdentifier,
                         emptyValueHandling,
-                    );
+                        granularity,
+                    });
                 }
             })
             .filter((f): f is IRelativeDateFilter | IAbsoluteDateFilter => f !== undefined);

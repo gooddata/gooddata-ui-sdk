@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-model, sdk-backend-tiger: Settings expose who can view a newly created metric or visualization (defaultMetricVisibility, defaultVisualizationVisibility).",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

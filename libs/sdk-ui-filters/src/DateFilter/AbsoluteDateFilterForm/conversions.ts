@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { type DateString, type EmptyValues } from "@gooddata/sdk-model";
+import { type DateFilterGranularity, type DateString, type EmptyValues } from "@gooddata/sdk-model";
 
 import {
     DAY_END_TIME,
@@ -38,6 +38,7 @@ export const dateRangeToDateFilterValue = (
         type: "absoluteForm",
         name: "",
         visible: true,
+        granularity: "GDC.time.date",
         ...(emptyValueHandling ? { emptyValueHandling } : {}),
     };
 };
@@ -84,6 +85,7 @@ export interface IPeriodRangeToDateFilterValueOptions {
     range: IPeriodRange;
     localIdentifier: string;
     isTimeForAbsoluteRangeEnabled: boolean;
+    granularity: DateFilterGranularity;
     emptyValueHandling?: EmptyValues;
     isSecondsForAbsoluteRangeEnabled?: boolean;
 }
@@ -91,16 +93,22 @@ export interface IPeriodRangeToDateFilterValueOptions {
 /**
  * Converts a resolved period-picker range into an absolute date filter value, extending it to the
  * start/end of day when time-of-day is enabled.
+ *
+ * @remarks
+ * The day boundary time is only ever appended at day granularity. A wider granularity reaches the
+ * backend as whole periods only when its days have no time, so a time there would send the range as days
+ * and an alert or a scheduled export would lose the granularity.
  */
 export const periodRangeToDateFilterValue = ({
     range,
     localIdentifier,
     isTimeForAbsoluteRangeEnabled,
+    granularity,
     emptyValueHandling,
     isSecondsForAbsoluteRangeEnabled = false,
 }: IPeriodRangeToDateFilterValueOptions): IUiAbsoluteDateFilterForm => {
     const withDayBoundaryTime = (date: DateString | undefined, time: string): DateString | undefined =>
-        isTimeForAbsoluteRangeEnabled && date ? `${date} ${time}` : date;
+        isTimeForAbsoluteRangeEnabled && granularity === "GDC.time.date" && date ? `${date} ${time}` : date;
 
     return {
         from: withDayBoundaryTime(
@@ -115,6 +123,7 @@ export const periodRangeToDateFilterValue = ({
         type: "absoluteForm",
         name: "",
         visible: true,
+        granularity,
         ...(emptyValueHandling ? { emptyValueHandling } : {}),
     };
 };

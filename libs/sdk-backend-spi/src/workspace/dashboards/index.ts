@@ -230,7 +230,8 @@ export interface IGetScheduledMailOptions {
  * with the dashboard and returned in {@link IDashboardReferences}. `displayForm` loads nothing: it only
  * asks for the availability of the display forms used by the dashboard's filter contexts, reported via
  * {@link IDashboardReferences.unavailable}. `fact` does the same for the facts that limit the values of
- * the dashboard's attribute filters.
+ * the dashboard's attribute filters, and `attribute` for the attributes its measure value filters are
+ * computed for ("For attribute") and the attributes whose count limits an attribute filter's values.
  *
  * @alpha
  */
@@ -241,6 +242,7 @@ export type SupportedDashboardReferenceTypes =
     | "displayForm"
     | "measure"
     | "fact"
+    | "attribute"
     | "computedAttribute"
     | "analyticalDashboard";
 

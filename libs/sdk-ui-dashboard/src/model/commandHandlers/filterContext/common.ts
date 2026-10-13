@@ -1,10 +1,15 @@
 // (C) 2021-2026 GoodData Corporation
 
+import { isEqual } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
-import { type IDashboardDateFilter } from "@gooddata/sdk-model";
+import {
+    type IDashboardAttributeFilterConfig,
+    type IDashboardDateFilter,
+    type IFilterContextDefinition,
+} from "@gooddata/sdk-model";
 
 import { findDateFilterOptionByValue } from "../../../_staging/dateFilterConfig/dateFilterOptionMapping.js";
 import { type IDashboardCommand } from "../../commands/base.js";
@@ -14,9 +19,11 @@ import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
 import { selectEnableImmediateAttributeFilterDisplayAsLabelMigration } from "../../store/config/configSelectors.js";
 import {
     selectCrossFilteringFiltersLocalIdentifiers,
+    selectCrossFilteringFiltersLocalIdentifiersByTab,
     selectIsCrossFiltering,
 } from "../../store/drill/drillSelectors.js";
 import { drillActions } from "../../store/drill/index.js";
+import { selectEnablePersistentFiltersAcrossTabs } from "../../store/meta/metaSelectors.js";
 import {
     selectAttributeFilterConfigsOverrides,
     selectAttributeFilterConfigsOverridesByTab,
@@ -26,12 +33,66 @@ import {
     selectFilterContextDefinition,
     selectFilterContextDefinitionsByTab,
     selectIsWorkingFilterContextChanged,
+    selectWorkingFilterContextDefinitionsByTab,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { type IWorkingFilterContextDefinition } from "../../store/tabs/filterContext/filterContextState.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectParameterValuesByTab } from "../../store/tabs/parameters/parametersSelectors.js";
 import { selectActiveOrDefaultTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
-import { dispatchParametersChanged } from "../parameters/changeParameterValuesHandler.js";
+import { dispatchParametersChangedForAffectedTabs } from "../parameters/changeParameterValuesHandler.js";
+
+/**
+ * Applied filter context and attribute filter configs of every tab, taken before a write.
+ * Compared with the store afterwards so a mirrored change emits one event per tab updated.
+ */
+export interface IFilterContextByTabSnapshot {
+    readonly filterContexts: Record<string, IFilterContextDefinition | undefined>;
+    readonly workingFilterContexts: Record<string, IWorkingFilterContextDefinition | undefined>;
+    readonly attributeFilterConfigs: Record<string, IDashboardAttributeFilterConfig[]>;
+}
+
+export function* captureFilterContextByTabSnapshot(): SagaIterator<IFilterContextByTabSnapshot> {
+    const filterContexts: ReturnType<typeof selectFilterContextDefinitionsByTab> = yield select(
+        selectFilterContextDefinitionsByTab,
+    );
+    const workingFilterContexts: ReturnType<typeof selectWorkingFilterContextDefinitionsByTab> = yield select(
+        selectWorkingFilterContextDefinitionsByTab,
+    );
+    const attributeFilterConfigs: ReturnType<typeof selectAttributeFilterConfigsOverridesByTab> =
+        yield select(selectAttributeFilterConfigsOverridesByTab);
+    return { filterContexts, workingFilterContexts, attributeFilterConfigs };
+}
+
+export function* dispatchFilterContextChangedForMutatedTabs(
+    ctx: DashboardContext,
+    cmd: IDashboardCommand,
+    snapshot: IFilterContextByTabSnapshot,
+): SagaIterator<void> {
+    const filterContexts: ReturnType<typeof selectFilterContextDefinitionsByTab> = yield select(
+        selectFilterContextDefinitionsByTab,
+    );
+    const attributeFilterConfigs: ReturnType<typeof selectAttributeFilterConfigsOverridesByTab> =
+        yield select(selectAttributeFilterConfigsOverridesByTab);
+    const workingFilterContexts: ReturnType<typeof selectWorkingFilterContextDefinitionsByTab> = yield select(
+        selectWorkingFilterContextDefinitionsByTab,
+    );
+
+    for (const tabId of Object.keys(filterContexts)) {
+        if (!filterContexts[tabId]) {
+            continue;
+        }
+        const configs = attributeFilterConfigs[tabId] ?? [];
+        if (
+            isEqual(snapshot.filterContexts[tabId], filterContexts[tabId]) &&
+            isEqual(snapshot.workingFilterContexts[tabId], workingFilterContexts[tabId]) &&
+            isEqual(snapshot.attributeFilterConfigs[tabId] ?? [], configs)
+        ) {
+            continue;
+        }
+        yield call(dispatchFilterContextChanged, ctx, cmd, tabId);
+    }
+}
 
 export function* dispatchFilterContextChanged(
     ctx: DashboardContext,
@@ -123,16 +184,33 @@ export function* applyWorkingSelectionHandler(ctx: DashboardContext, cmd: IDashb
     );
     const valuesBefore: ReturnType<typeof selectParameterValuesByTab> =
         yield select(selectParameterValuesByTab);
-    yield put(tabsActions.applyWorkingSelection({ enableImmediateAttributeFilterDisplayAsLabelMigration }));
+    const crossFilteringLocalIdsByTab: ReturnType<typeof selectCrossFilteringFiltersLocalIdentifiersByTab> =
+        yield select(selectCrossFilteringFiltersLocalIdentifiersByTab);
+    const enablePersistentFiltersAcrossTabs: ReturnType<typeof selectEnablePersistentFiltersAcrossTabs> =
+        yield select(selectEnablePersistentFiltersAcrossTabs);
+    const filterContextSnapshot: IFilterContextByTabSnapshot = yield call(captureFilterContextByTabSnapshot);
+
+    yield put(
+        tabsActions.applyWorkingSelection({
+            enableImmediateAttributeFilterDisplayAsLabelMigration,
+            crossFilteringLocalIdsByTab,
+            enablePersistentFiltersAcrossTabs,
+        }),
+    );
     const isCrossFiltering: ReturnType<typeof selectIsCrossFiltering> = yield select(selectIsCrossFiltering);
 
     if (isWorkingFilterContextChanged && isCrossFiltering) {
         yield call(resetCrossFiltering, cmd);
     }
     yield dispatchDashboardEvent(filterContextWorkingSelectionApplied(ctx, cmd.correlationId));
-    yield call(dispatchFilterContextChanged, ctx, cmd);
 
-    yield call(dispatchParametersChanged, ctx, cmd, tabId, valuesBefore[tabId]);
+    if (enablePersistentFiltersAcrossTabs) {
+        yield call(dispatchFilterContextChangedForMutatedTabs, ctx, cmd, filterContextSnapshot);
+    } else {
+        yield call(dispatchFilterContextChanged, ctx, cmd);
+    }
+
+    yield call(dispatchParametersChangedForAffectedTabs, ctx, cmd, valuesBefore, tabId);
 }
 
 export function* resetWorkingSelectionHandler() {

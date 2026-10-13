@@ -129,6 +129,17 @@ export function reconstructAutomationParametersFromExportParameters(
 }
 
 /**
+ * A workspace parameter the "+" menu offers; `isFromDashboard` marks the ones with a control on
+ * the dashboard tab so the menu can list them first, `tags` drive the menu's tag groups.
+ *
+ * @internal
+ */
+export interface IAvailableAutomationParameter extends IAutomationParameter {
+    isFromDashboard: boolean;
+    tags: string[];
+}
+
+/**
  * Dashboard-`hidden` and `readonly` parameters are dropped — once added they would derive back to
  * an invisible or locked (undeletable) parameter. Catalog STRING parameters are dropped too while
  * `isStringParametersEnabled` is off.
@@ -141,7 +152,7 @@ export function availableAutomationParameters(
     dashboardParameters: IDashboardParameter[] = [],
     widgetParameterValues: IInsightParameterValue[] = [],
     isStringParametersEnabled: boolean,
-): IAutomationParameter[] {
+): IAvailableAutomationParameter[] {
     const selectedRefKeys = new Set(selected.map((parameter) => objRefToString(parameter.ref)));
     const dashboardByRef = new Map(
         dashboardParameters.map((parameter) => [objRefToString(parameter.ref), parameter]),
@@ -149,7 +160,7 @@ export function availableAutomationParameters(
     const widgetValueByRef = new Map(
         widgetParameterValues.map((row) => [objRefToString(row.ref), row.value]),
     );
-    const result: IAutomationParameter[] = [];
+    const result: IAvailableAutomationParameter[] = [];
     for (const workspaceParameter of catalog) {
         const { ref, definition } = workspaceParameter;
         if (!isIdentifierRef(ref) || (definition.type === "STRING" && !isStringParametersEnabled)) {
@@ -173,6 +184,8 @@ export function availableAutomationParameters(
             value: sanitizeParameterValue(definition, effectiveValue),
             mode: DashboardParameterModeValues.ACTIVE,
             definition,
+            isFromDashboard: dashboardParameter !== undefined,
+            tags: workspaceParameter.tags ?? [],
         });
     }
     return result;

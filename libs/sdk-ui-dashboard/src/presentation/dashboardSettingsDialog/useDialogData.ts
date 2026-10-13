@@ -26,7 +26,7 @@ export function useDialogData() {
     const disableFilterViews = useDashboardSelector(selectDisableFilterViews) ?? false;
     const disableUserFilterSave = useDashboardSelector(selectDisableDashboardUserFilterSave) ?? false;
     const disablePersistentFiltersAcrossTabs =
-        useDashboardSelector(selectDisableDashboardPersistentFiltersAcrossTabs) ?? false;
+        useDashboardSelector(selectDisableDashboardPersistentFiltersAcrossTabs) ?? true;
     const evaluationFrequency = useDashboardSelector(selectEvaluationFrequency) ?? undefined;
     const sectionHeadersDateDataSet = useDashboardSelector(selectSectionHeadersDateDataSet) ?? undefined;
     const timezoneConfig = normalizeDashboardTimezoneConfig(

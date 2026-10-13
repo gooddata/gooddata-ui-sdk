@@ -28,6 +28,7 @@ import {
     isDashboardDateFilter,
     isDashboardMeasureValueFilter,
     isDateFilter,
+    isDateFilterGranularity,
     isInsightWidget,
     isLocalIdRef,
     isMatchAttributeFilter,
@@ -56,7 +57,7 @@ import { type IDashboardFilter } from "../../../../types.js";
  */
 export interface IRestrictedVisibleFiltersFallback<TStored = IAutomationVisibleFilter[]> {
     storedVisibleFilters: TStored | undefined;
-    isFilterRestricted: (filter: FilterContextItem) => boolean;
+    isFilterRestricted: (filter: FilterContextItem, tabId?: string) => boolean;
 }
 
 function findVisibleFilter(
@@ -130,7 +131,7 @@ export const getVisibleFiltersByFiltersByTab = (
                 true,
                 restrictedFallback && {
                     storedVisibleFilters: restrictedFallback.storedVisibleFilters?.[tabId],
-                    isFilterRestricted: restrictedFallback.isFilterRestricted,
+                    isFilterRestricted: (filter) => restrictedFallback.isFilterRestricted(filter, tabId),
                 },
             );
             if (visibleFilters && visibleFilters.length > 0) {
@@ -243,6 +244,9 @@ export function dashboardFilterToFilterContextItem(
             keepDatasets ? filter.absoluteDateFilter.dataSet : undefined,
             filter.absoluteDateFilter.localIdentifier,
             filter.absoluteDateFilter.emptyValueHandling,
+            isDateFilterGranularity(filter.absoluteDateFilter.granularity)
+                ? filter.absoluteDateFilter.granularity
+                : "GDC.time.date",
         );
     } else if (isAllTimeDateFilter(filter)) {
         return newAllTimeDashboardDateFilter(
