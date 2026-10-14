@@ -76,7 +76,7 @@ export class DataTooLargeError extends AnalyticalBackendError {
          *
          * @alpha
          */
-        public readonly responseBody: IDataTooLargeResponseBody | undefined = undefined,
+        public readonly responseBody?: IDataTooLargeResponseBody | undefined,
     ) {
         super(message, AnalyticalBackendErrorTypes.DATA_TOO_LARGE, cause);
     }

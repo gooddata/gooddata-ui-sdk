@@ -409,6 +409,8 @@
     "dashboardMeasureValueFilter.section.all_other": "All other",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "The user that created this dashboard. Creators cannot be removed.",
     "attributesDropdown.placeholder": "Search…",
+    "attributesDropdown.parameters.section.from_dashboard": "From dashboard",
+    "attributesDropdown.parameters.section.ungrouped": "Ungrouped",
     "attributesDropdown.configuration": "Configuration",
     "attributesDropdown.save": "Save",
     "attributesDropdown.filterBy": "Filter by",

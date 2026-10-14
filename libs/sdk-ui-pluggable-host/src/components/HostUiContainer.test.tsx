@@ -48,6 +48,7 @@ const ctx: IPlatformContext = {
 
 const INITIAL_PATHNAME = "/workspace/ws1/analyze";
 const NEXT_PATHNAME = "/workspace/ws2/analyze";
+const PAGE_PATHNAME = "/workspace/ws2/analyze/edit";
 const TARGET = "/organization/settings";
 
 async function flushHostUiMount(): Promise<void> {
@@ -67,7 +68,7 @@ describe("HostUiContainer", () => {
         resolveHostUiModuleMock.mockResolvedValue({ mount });
     });
 
-    it("keeps the navigate callback given to the host UI module bound to the latest router and pathname", async () => {
+    it("keeps the navigate callback given to the host UI module bound to the latest router and page path", async () => {
         const firstRouterNavigate = vi.fn();
         const { rerender, unmount } = render(
             <HostUiContainer
@@ -96,6 +97,8 @@ describe("HostUiContainer", () => {
         // A second mount would mean the callback identity changed and the module kept a stale closure.
         expect(mount).toHaveBeenCalledTimes(1);
 
+        // An application's own router moves the page URL past the host router's pathname.
+        window.history.replaceState(null, "", PAGE_PATHNAME);
         navigate(TARGET);
 
         expect(firstRouterNavigate).not.toHaveBeenCalled();
@@ -103,7 +106,7 @@ describe("HostUiContainer", () => {
         expect(secondRouterNavigate).toHaveBeenCalledWith(TARGET);
         expect(runGuardedNavigationMock.mock.calls[0]![0]).toMatchObject({
             url: TARGET,
-            currentPathname: NEXT_PATHNAME,
+            currentPathname: PAGE_PATHNAME,
         });
 
         // The container tears the app root down in a microtask, so draining it has to stay inside act.

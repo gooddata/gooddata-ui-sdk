@@ -323,15 +323,14 @@ export const convertAlert = (alert: IAutomationAlert): JsonApiAutomationInAttrib
                             format: condition.measure.right.format,
                         },
                     },
-                    threshold: {
-                        ...(condition.measure.operator === "CHANGE"
+                    threshold:
+                        condition.measure.operator === "CHANGE"
                             ? {
                                   value: fixNumber(condition.threshold / 100),
                               }
                             : {
                                   value: condition.threshold,
-                              }),
-                    },
+                              },
                 },
             },
             ...base,

@@ -166,23 +166,21 @@ export const convertToImageExportRequest = (
         }
         const timezoneId = exportRequest.timezoneId;
         const isMetadataFilled = title || filters || parametersByTab || timezoneId;
-        const metadataObj = {
-            ...(isMetadataFilled
-                ? {
-                      metadata: {
-                          ...(filters
-                              ? {
-                                    filters: convertSdkFiltersToTiger(filters),
-                                }
-                              : {}),
-                          ...(parametersByTab ? { parametersByTab } : {}),
-                          // metadata copy for the headless render — see "Export timezone channels" above
-                          ...(timezoneId ? { timezoneId } : {}),
-                          ...(title ? { title } : {}),
-                      },
-                  }
-                : {}),
-        };
+        const metadataObj = isMetadataFilled
+            ? {
+                  metadata: {
+                      ...(filters
+                          ? {
+                                filters: convertSdkFiltersToTiger(filters),
+                            }
+                          : {}),
+                      ...(parametersByTab ? { parametersByTab } : {}),
+                      // metadata copy for the headless render — see "Export timezone channels" above
+                      ...(timezoneId ? { timezoneId } : {}),
+                      ...(title ? { title } : {}),
+                  },
+              }
+            : {};
 
         return {
             dashboardId: dashboard,
@@ -219,24 +217,22 @@ export const convertToSlidesExportRequest = (
 
         const timezoneId = exportRequest.timezoneId;
         const isMetadataFilled = title || filters || filtersByTab || parametersByTab || timezoneId;
-        const metadataObj = {
-            ...(isMetadataFilled
-                ? {
-                      metadata: {
-                          ...(filters
-                              ? {
-                                    filters: convertSdkFiltersToTiger(filters),
-                                }
-                              : {}),
-                          ...(filtersByTabObj ? { filtersByTab: filtersByTabObj } : {}),
-                          ...(parametersByTab ? { parametersByTab } : {}),
-                          // metadata copy for the headless render — see "Export timezone channels" above
-                          ...(timezoneId ? { timezoneId } : {}),
-                          ...(title ? { title } : {}),
-                      },
-                  }
-                : {}),
-        };
+        const metadataObj = isMetadataFilled
+            ? {
+                  metadata: {
+                      ...(filters
+                          ? {
+                                filters: convertSdkFiltersToTiger(filters),
+                            }
+                          : {}),
+                      ...(filtersByTabObj ? { filtersByTab: filtersByTabObj } : {}),
+                      ...(parametersByTab ? { parametersByTab } : {}),
+                      // metadata copy for the headless render — see "Export timezone channels" above
+                      ...(timezoneId ? { timezoneId } : {}),
+                      ...(title ? { title } : {}),
+                  },
+              }
+            : {};
 
         return {
             fileName: exportRequest.fileName,
@@ -288,24 +284,22 @@ export const convertToVisualExportRequest = (
 
     const timezoneId = exportRequest.timezoneId;
     const isMetadataFilled = title || filters || filtersByTab || parametersByTab || timezoneId;
-    const metadataObj = {
-        ...(isMetadataFilled
-            ? {
-                  metadata: {
-                      ...(filters
-                          ? {
-                                filters: convertSdkFiltersToTiger(filters),
-                            }
-                          : {}),
-                      ...(filtersByTabObj ? { filtersByTab: filtersByTabObj } : {}),
-                      ...(parametersByTab ? { parametersByTab } : {}),
-                      // metadata copy for the headless render — see "Export timezone channels" above
-                      ...(timezoneId ? { timezoneId } : {}),
-                      ...(title ? { title } : {}),
-                  },
-              }
-            : {}),
-    };
+    const metadataObj = isMetadataFilled
+        ? {
+              metadata: {
+                  ...(filters
+                      ? {
+                            filters: convertSdkFiltersToTiger(filters),
+                        }
+                      : {}),
+                  ...(filtersByTabObj ? { filtersByTab: filtersByTabObj } : {}),
+                  ...(parametersByTab ? { parametersByTab } : {}),
+                  // metadata copy for the headless render — see "Export timezone channels" above
+                  ...(timezoneId ? { timezoneId } : {}),
+                  ...(title ? { title } : {}),
+              },
+          }
+        : {};
 
     return {
         fileName: exportRequest.fileName,
@@ -474,24 +468,22 @@ export const convertExportDefinitionRequestPayload = (
 
         const timezoneId = exportRequest.timezoneId;
         const isMetadataFilled = title || filters || filtersByTab || parametersByTab || timezoneId;
-        const metadataObj = {
-            ...(isMetadataFilled
-                ? {
-                      metadata: {
-                          ...(filters
-                              ? {
-                                    filters: convertSdkFiltersToTiger(filters),
-                                }
-                              : {}),
-                          ...(filtersByTabObj ? { filtersByTab: filtersByTabObj } : {}),
-                          ...(parametersByTab ? { parametersByTab } : {}),
-                          // metadata copy for the headless render — see "Export timezone channels" above
-                          ...(timezoneId ? { timezoneId } : {}),
-                          ...(title ? { title } : {}),
-                      },
-                  }
-                : {}),
-        };
+        const metadataObj = isMetadataFilled
+            ? {
+                  metadata: {
+                      ...(filters
+                          ? {
+                                filters: convertSdkFiltersToTiger(filters),
+                            }
+                          : {}),
+                      ...(filtersByTabObj ? { filtersByTab: filtersByTabObj } : {}),
+                      ...(parametersByTab ? { parametersByTab } : {}),
+                      // metadata copy for the headless render — see "Export timezone channels" above
+                      ...(timezoneId ? { timezoneId } : {}),
+                      ...(title ? { title } : {}),
+                  },
+              }
+            : {};
 
         return {
             fileName: exportRequest.fileName,

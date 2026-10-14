@@ -201,13 +201,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableMongoDbDataSource,
-            "enableMongoDbDataSource",
-            "BOOLEAN",
-            FeatureFlagsValues.enableMongoDbDataSource,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableStarrocksDataSource,
             "enableStarrocksDataSource",
             "BOOLEAN",
@@ -614,6 +607,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableAiAssistantChartsV2,
+            "enableAiAssistantChartsV2",
+            "BOOLEAN",
+            FeatureFlagsValues.enableAiAssistantChartsV2,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableAiContextSetup,
             "enableAiContextSetup",
             "BOOLEAN",
@@ -891,6 +891,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableReportsSubsections",
             "BOOLEAN",
             FeatureFlagsValues.enableReportsSubsections,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnablePublisherV2,
+            "enablePublisherV2",
+            "BOOLEAN",
+            FeatureFlagsValues.enablePublisherV2,
         ),
         ...loadFeature(
             features,

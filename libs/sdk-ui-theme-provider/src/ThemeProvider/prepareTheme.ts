@@ -156,7 +156,7 @@ export const preparePrimaryColor = (theme: ITheme): ITheme => {
             ...theme.palette,
             primary: {
                 ...theme.palette.primary,
-                ...{ base: contrastPrimaryColor },
+                base: contrastPrimaryColor,
             },
         },
     };

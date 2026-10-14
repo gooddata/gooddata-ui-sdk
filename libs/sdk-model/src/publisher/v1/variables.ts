@@ -5,7 +5,7 @@
  *
  * @alpha
  */
-export type PublisherDateString = string;
+export type PublisherDateStringV1 = string;
 
 /**
  * Variables resolved by the rendering runtime; they are never declared or stored.
@@ -16,7 +16,7 @@ export type PublisherDateString = string;
  *
  * @alpha
  */
-export type PublisherBuiltInVariable =
+export type PublisherBuiltInVariableV1 =
     | "reportName"
     | "reportDescription"
     | "periodStart"
@@ -38,7 +38,7 @@ export type PublisherBuiltInVariable =
  *
  * @alpha
  */
-export const PublisherBuiltInVariables: PublisherBuiltInVariable[] = [
+export const PublisherBuiltInVariablesV1: PublisherBuiltInVariableV1[] = [
     "reportName",
     "reportDescription",
     "periodStart",
@@ -60,15 +60,15 @@ export const PublisherBuiltInVariables: PublisherBuiltInVariable[] = [
  * A custom variable declared by document content and given a value by a document.
  *
  * @remarks
- * Referenced from text as `{name}`. Values come from {@link IPublisherDocumentBase.variableValues},
- * falling back to {@link IPublisherVariableDefinition.defaultValue}.
+ * Referenced from text as `{name}`. Values come from {@link IPublisherDocumentBaseV1.variableValues},
+ * falling back to {@link IPublisherVariableDefinitionV1.defaultValue}.
  *
  * @alpha
  */
-export interface IPublisherVariableDefinition {
+export interface IPublisherVariableDefinitionV1 {
     /**
      * Variable name as used inside the `{...}` marker. Must match /^[a-zA-Z][a-zA-Z0-9_]*$/.
-     * Built-in names ({@link PublisherBuiltInVariable}) are reserved.
+     * Built-in names ({@link PublisherBuiltInVariableV1}) are reserved.
      */
     name: string;
 
@@ -93,7 +93,7 @@ const placeholderRegex = /\{([a-zA-Z][a-zA-Z0-9_]*)\}/g;
  *
  * @alpha
  */
-export function publisherTextPlaceholder(name: string): string {
+export function publisherTextPlaceholderV1(name: string): string {
     return `{${name}}`;
 }
 
@@ -102,7 +102,7 @@ export function publisherTextPlaceholder(name: string): string {
  *
  * @alpha
  */
-export function getPublisherTextPlaceholders(text: string): string[] {
+export function getPublisherTextPlaceholdersV1(text: string): string[] {
     const names: string[] = [];
     for (const match of text.matchAll(placeholderRegex)) {
         const name = match[1]!;
@@ -123,7 +123,7 @@ export function getPublisherTextPlaceholders(text: string): string[] {
  *
  * @alpha
  */
-export function resolvePublisherTextPlaceholders(text: string, values: Record<string, string>): string {
+export function resolvePublisherTextPlaceholdersV1(text: string, values: Record<string, string>): string {
     return text.replace(placeholderRegex, (marker, name: string) =>
         Object.prototype.hasOwnProperty.call(values, name) ? values[name]! : marker,
     );

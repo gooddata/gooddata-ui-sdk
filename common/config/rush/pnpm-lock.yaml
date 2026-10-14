@@ -4493,6 +4493,9 @@ importers:
       '@gooddata/sdk-ui-dashboard':
         specifier: workspace:*
         version: link:../sdk-ui-dashboard
+      '@gooddata/sdk-ui-ext':
+        specifier: workspace:*
+        version: link:../sdk-ui-ext
       '@gooddata/sdk-ui-filters':
         specifier: workspace:*
         version: link:../sdk-ui-filters

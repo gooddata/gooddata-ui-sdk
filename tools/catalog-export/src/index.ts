@@ -67,12 +67,13 @@ async function run() {
         const configFilePath = (options.config || DEFAULT_CONFIG_FILE_NAME) as string;
 
         const mergedConfig = mergeConfigs(
-            ...[DEFAULT_CONFIG],
+            DEFAULT_CONFIG,
             ...(await Promise.all([
                 getConfigFromPackage(process.cwd()),
                 getConfigFromConfigFile(configFilePath),
             ])),
-            ...[getConfigFromEnv(process.env), getConfigFromOptions(options)],
+            getConfigFromEnv(process.env),
+            getConfigFromOptions(options),
         );
         const { catalogOutput, hostname } = mergedConfig;
 

@@ -2,21 +2,21 @@
 
 import { isEmpty } from "lodash-es";
 
-import { type FilterContextItem, type IDashboardFilterReference } from "../dashboard/filterContext.js";
-import { type VisualizationProperties } from "../insight/index.js";
-import { type ObjRef } from "../objRef/index.js";
+import { type FilterContextItem, type IDashboardFilterReference } from "../../dashboard/filterContext.js";
+import { type VisualizationProperties } from "../../insight/index.js";
+import { type ObjRef } from "../../objRef/index.js";
 
 import {
-    DefaultPublisherHeadingType,
-    DefaultPublisherParagraphType,
-    type IPublisherHeadingStyle,
-    type IPublisherImageStyle,
-    type IPublisherParagraphStyle,
-    PublisherHeadingTypes,
-    PublisherParagraphTypes,
-    type PublisherTextType,
-    isPublisherHeadingType,
-    isPublisherParagraphType,
+    DefaultPublisherHeadingTypeV1,
+    DefaultPublisherParagraphTypeV1,
+    type IPublisherHeadingStyleV1,
+    type IPublisherImageStyleV1,
+    type IPublisherParagraphStyleV1,
+    PublisherHeadingTypesV1,
+    PublisherParagraphTypesV1,
+    type PublisherTextTypeV1,
+    isPublisherHeadingTypeV1,
+    isPublisherParagraphTypeV1,
 } from "./styling.js";
 
 /**
@@ -24,7 +24,7 @@ import {
  *
  * @alpha
  */
-export interface IPublisherSlotPlaceholder {
+export interface IPublisherSlotPlaceholderV1 {
     /**
      * Authoring hint shown in the empty slot.
      */
@@ -45,7 +45,7 @@ export interface IPublisherSlotPlaceholder {
  *
  * @alpha
  */
-export interface IPublisherSlotBase {
+export interface IPublisherSlotBaseV1 {
     type: string;
 
     /**
@@ -58,7 +58,7 @@ export interface IPublisherSlotBase {
     /**
      * Present when the slot is an unfilled placeholder.
      */
-    placeholder?: IPublisherSlotPlaceholder;
+    placeholder?: IPublisherSlotPlaceholderV1;
 }
 
 /**
@@ -66,7 +66,7 @@ export interface IPublisherSlotBase {
  *
  * @alpha
  */
-export interface IPublisherVisualizationSlot extends IPublisherSlotBase {
+export interface IPublisherVisualizationSlotV1 extends IPublisherSlotBaseV1 {
     type: "visualization";
 
     /**
@@ -116,7 +116,7 @@ export interface IPublisherVisualizationSlot extends IPublisherSlotBase {
  *
  * @alpha
  */
-export interface IPublisherStaticTextSource {
+export interface IPublisherStaticTextSourceV1 {
     type: "static";
 
     /**
@@ -131,7 +131,7 @@ export interface IPublisherStaticTextSource {
  *
  * @alpha
  */
-export interface IPublisherAiTextSource {
+export interface IPublisherAiTextSourceV1 {
     type: "ai";
 
     /**
@@ -156,7 +156,7 @@ export interface IPublisherAiTextSource {
  *
  * @alpha
  */
-export type PublisherTextSource = IPublisherStaticTextSource | IPublisherAiTextSource;
+export type PublisherTextSourceV1 = IPublisherStaticTextSourceV1 | IPublisherAiTextSourceV1;
 
 /**
  * Slot rendering a heading.
@@ -167,15 +167,15 @@ export type PublisherTextSource = IPublisherStaticTextSource | IPublisherAiTextS
  *
  * @alpha
  */
-export interface IPublisherHeadingSlot extends IPublisherSlotBase {
+export interface IPublisherHeadingSlotV1 extends IPublisherSlotBaseV1 {
     type: "heading";
 
-    style?: IPublisherHeadingStyle;
+    style?: IPublisherHeadingStyleV1;
 
     /**
      * Undefined = declared-but-empty slot.
      */
-    source?: PublisherTextSource;
+    source?: PublisherTextSourceV1;
 }
 
 /**
@@ -183,15 +183,15 @@ export interface IPublisherHeadingSlot extends IPublisherSlotBase {
  *
  * @alpha
  */
-export interface IPublisherParagraphSlot extends IPublisherSlotBase {
+export interface IPublisherParagraphSlotV1 extends IPublisherSlotBaseV1 {
     type: "paragraph";
 
-    style?: IPublisherParagraphStyle;
+    style?: IPublisherParagraphStyleV1;
 
     /**
      * Undefined = declared-but-empty slot.
      */
-    source?: PublisherTextSource;
+    source?: PublisherTextSourceV1;
 }
 
 /**
@@ -199,14 +199,14 @@ export interface IPublisherParagraphSlot extends IPublisherSlotBase {
  *
  * @alpha
  */
-export type IPublisherTextSlot = IPublisherHeadingSlot | IPublisherParagraphSlot;
+export type IPublisherTextSlotV1 = IPublisherHeadingSlotV1 | IPublisherParagraphSlotV1;
 
 /**
  * What an image slot displays.
  *
  * @alpha
  */
-export type PublisherImageSource =
+export type PublisherImageSourceV1 =
     | {
           type: "url";
 
@@ -230,32 +230,32 @@ export type PublisherImageSource =
  *
  * @alpha
  */
-export type PublisherImageFit = "contain" | "cover" | "fill";
+export type PublisherImageFitV1 = "contain" | "cover" | "fill";
 
 /**
  * Slot rendering an image.
  *
  * @alpha
  */
-export interface IPublisherImageSlot extends IPublisherSlotBase {
+export interface IPublisherImageSlotV1 extends IPublisherSlotBaseV1 {
     type: "image";
 
     /**
      * Undefined = declared-but-empty slot.
      */
-    source?: PublisherImageSource;
+    source?: PublisherImageSourceV1;
 
     altText?: string;
 
     /**
      * How the image fills the slot area. Defaults to "contain".
      */
-    fit?: PublisherImageFit;
+    fit?: PublisherImageFitV1;
 
     /**
      * Placement overrides for the drawn image; centered on both axes by default.
      */
-    style?: IPublisherImageStyle;
+    style?: IPublisherImageStyleV1;
 }
 
 /**
@@ -263,29 +263,32 @@ export interface IPublisherImageSlot extends IPublisherSlotBase {
  *
  * @alpha
  */
-export type PublisherSlot = IPublisherVisualizationSlot | IPublisherTextSlot | IPublisherImageSlot;
+export type PublisherSlotV1 = IPublisherVisualizationSlotV1 | IPublisherTextSlotV1 | IPublisherImageSlotV1;
 
 /**
  * List of built-in document slot type names.
  *
  * @alpha
  */
-export const BuiltInPublisherSlotTypes: string[] = ["visualization", "heading", "paragraph", "image"];
+export const BuiltInPublisherSlotTypesV1: string[] = ["visualization", "heading", "paragraph", "image"];
 
 /**
  * All sizes a text slot can be rendered at, headings first.
  *
  * @alpha
  */
-export const PublisherTextTypes: PublisherTextType[] = [...PublisherHeadingTypes, ...PublisherParagraphTypes];
+export const PublisherTextTypesV1: PublisherTextTypeV1[] = [
+    ...PublisherHeadingTypesV1,
+    ...PublisherParagraphTypesV1,
+];
 
 /**
  * Sizes the slot can be rendered at, which is what its own type decides.
  *
  * @alpha
  */
-export function publisherTextSlotTypes(slot: IPublisherTextSlot): PublisherTextType[] {
-    return slot.type === "heading" ? PublisherHeadingTypes : PublisherParagraphTypes;
+export function publisherTextSlotTypesV1(slot: IPublisherTextSlotV1): PublisherTextTypeV1[] {
+    return slot.type === "heading" ? PublisherHeadingTypesV1 : PublisherParagraphTypesV1;
 }
 
 /**
@@ -297,66 +300,66 @@ export function publisherTextSlotTypes(slot: IPublisherTextSlot): PublisherTextT
  *
  * @alpha
  */
-export function publisherTextSlotType(slot: IPublisherTextSlot): PublisherTextType {
+export function publisherTextSlotTypeV1(slot: IPublisherTextSlotV1): PublisherTextTypeV1 {
     const stated = slot.style?.type;
     if (slot.type === "heading") {
-        return isPublisherHeadingType(stated) ? stated : DefaultPublisherHeadingType;
+        return isPublisherHeadingTypeV1(stated) ? stated : DefaultPublisherHeadingTypeV1;
     }
-    return isPublisherParagraphType(stated) ? stated : DefaultPublisherParagraphType;
+    return isPublisherParagraphTypeV1(stated) ? stated : DefaultPublisherParagraphTypeV1;
 }
 
 /**
- * Type-guard testing whether the provided object is an instance of {@link IPublisherVisualizationSlot}.
+ * Type-guard testing whether the provided object is an instance of {@link IPublisherVisualizationSlotV1}.
  *
  * @alpha
  */
-export function isPublisherVisualizationSlot(obj: unknown): obj is IPublisherVisualizationSlot {
-    return !isEmpty(obj) && (obj as IPublisherVisualizationSlot).type === "visualization";
+export function isPublisherVisualizationSlotV1(obj: unknown): obj is IPublisherVisualizationSlotV1 {
+    return !isEmpty(obj) && (obj as IPublisherVisualizationSlotV1).type === "visualization";
 }
 
 /**
- * Type-guard testing whether the provided object is an instance of {@link IPublisherHeadingSlot}.
+ * Type-guard testing whether the provided object is an instance of {@link IPublisherHeadingSlotV1}.
  *
  * @alpha
  */
-export function isPublisherHeadingSlot(obj: unknown): obj is IPublisherHeadingSlot {
-    return !isEmpty(obj) && (obj as IPublisherHeadingSlot).type === "heading";
+export function isPublisherHeadingSlotV1(obj: unknown): obj is IPublisherHeadingSlotV1 {
+    return !isEmpty(obj) && (obj as IPublisherHeadingSlotV1).type === "heading";
 }
 
 /**
- * Type-guard testing whether the provided object is an instance of {@link IPublisherParagraphSlot}.
+ * Type-guard testing whether the provided object is an instance of {@link IPublisherParagraphSlotV1}.
  *
  * @alpha
  */
-export function isPublisherParagraphSlot(obj: unknown): obj is IPublisherParagraphSlot {
-    return !isEmpty(obj) && (obj as IPublisherParagraphSlot).type === "paragraph";
+export function isPublisherParagraphSlotV1(obj: unknown): obj is IPublisherParagraphSlotV1 {
+    return !isEmpty(obj) && (obj as IPublisherParagraphSlotV1).type === "paragraph";
 }
 
 /**
- * Type-guard testing whether the provided object is an instance of {@link IPublisherTextSlot}.
+ * Type-guard testing whether the provided object is an instance of {@link IPublisherTextSlotV1}.
  *
  * @alpha
  */
-export function isPublisherTextSlot(obj: unknown): obj is IPublisherTextSlot {
-    return isPublisherHeadingSlot(obj) || isPublisherParagraphSlot(obj);
+export function isPublisherTextSlotV1(obj: unknown): obj is IPublisherTextSlotV1 {
+    return isPublisherHeadingSlotV1(obj) || isPublisherParagraphSlotV1(obj);
 }
 
 /**
- * Type-guard testing whether the provided object is an instance of {@link IPublisherImageSlot}.
+ * Type-guard testing whether the provided object is an instance of {@link IPublisherImageSlotV1}.
  *
  * @alpha
  */
-export function isPublisherImageSlot(obj: unknown): obj is IPublisherImageSlot {
-    return !isEmpty(obj) && (obj as IPublisherImageSlot).type === "image";
+export function isPublisherImageSlotV1(obj: unknown): obj is IPublisherImageSlotV1 {
+    return !isEmpty(obj) && (obj as IPublisherImageSlotV1).type === "image";
 }
 
 /**
- * Type-guard testing whether the provided object is an instance of {@link PublisherSlot}.
+ * Type-guard testing whether the provided object is an instance of {@link PublisherSlotV1}.
  *
  * @alpha
  */
-export function isPublisherSlot(obj: unknown): obj is PublisherSlot {
-    return [isPublisherVisualizationSlot, isPublisherTextSlot, isPublisherImageSlot].some((guard) =>
+export function isPublisherSlotV1(obj: unknown): obj is PublisherSlotV1 {
+    return [isPublisherVisualizationSlotV1, isPublisherTextSlotV1, isPublisherImageSlotV1].some((guard) =>
         guard(obj),
     );
 }

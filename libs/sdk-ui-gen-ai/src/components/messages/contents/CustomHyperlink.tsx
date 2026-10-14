@@ -104,6 +104,9 @@ export function CustomHyperlinkComponent({ href, text, settings, conversation }:
     if (parsedRef.type === "visualization" && !canManageVisualisations) {
         return plainText;
     }
+    if (parsedRef.type === "report" && !canManage) {
+        return plainText;
+    }
 
     if (allowNativeLinks) {
         return (

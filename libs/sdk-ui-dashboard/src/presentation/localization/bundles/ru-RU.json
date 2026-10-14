@@ -409,6 +409,8 @@
     "dashboardMeasureValueFilter.section.all_other": "Все остальные",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "Это пользователь, создавший этот дашборд. Создателя невозможно удалить.",
     "attributesDropdown.placeholder": "Поиск…",
+    "attributesDropdown.parameters.section.from_dashboard": "Из дашборда",
+    "attributesDropdown.parameters.section.ungrouped": "Без группы",
     "attributesDropdown.configuration": "Конфигурация",
     "attributesDropdown.save": "Сохранить",
     "attributesDropdown.filterBy": "Фильтровать по",

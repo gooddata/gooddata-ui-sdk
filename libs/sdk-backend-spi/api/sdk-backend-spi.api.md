@@ -261,7 +261,7 @@ export class DataTooLargeError extends AnalyticalBackendError {
     constructor(message: string, cause?: Error,
     responseBody?: IDataTooLargeResponseBody | undefined);
     // @alpha
-    readonly responseBody: IDataTooLargeResponseBody | undefined;
+    readonly responseBody?: IDataTooLargeResponseBody | undefined;
 }
 
 // @public

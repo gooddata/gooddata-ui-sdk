@@ -409,6 +409,8 @@
     "dashboardMeasureValueFilter.section.all_other": "Tất cả khác",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "Người dùng đã tạo bảng điều khiển này. Không thể loại bỏ người tạo.",
     "attributesDropdown.placeholder": "Tìm kiếm…",
+    "attributesDropdown.parameters.section.from_dashboard": "Từ bảng điều khiển",
+    "attributesDropdown.parameters.section.ungrouped": "Chưa nhóm",
     "attributesDropdown.configuration": "Cấu hình",
     "attributesDropdown.save": "Lưu",
     "attributesDropdown.filterBy": "Lọc theo",

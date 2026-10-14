@@ -69,9 +69,9 @@ export const useDashboardAlertsCommands = () => {
             }
 
             dispatch(
-                uiActions.openAlertingManagementDialog({
-                    ...(widget?.ref ? { widgetRef: widget.ref, openedFrom } : { openedFrom }),
-                }),
+                uiActions.openAlertingManagementDialog(
+                    widget?.ref ? { widgetRef: widget.ref, openedFrom } : { openedFrom },
+                ),
             );
         },
         [activeTabId, dispatch, widgetTabMap],

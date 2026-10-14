@@ -6,7 +6,7 @@ import type { IAttribute } from "../execution/attribute/index.js";
 import type { IFilter } from "../execution/filter/index.js";
 import type { IMeasure } from "../execution/measure/index.js";
 import type { ObjRef } from "../objRef/index.js";
-import type { IPublisherDocumentDefinition } from "../publisher/document.js";
+import type { IPublisherDocumentDefinitionV1 } from "../publisher/v1/document.js";
 
 import type { GenAIObjectType } from "./common.js";
 import type { ISemanticSearchResult, ISemanticSearchResultItem } from "./semanticSearch.js";
@@ -167,8 +167,9 @@ export interface IGenAIPublisherDocumentContext {
     title?: string;
     /**
      * Document definition as the user sees it, including edits that are not saved yet.
+     * Pinned to the v1 type because the v1 copilot reads it; it does not follow newer Publisher versions.
      */
-    definition?: IPublisherDocumentDefinition;
+    definition?: IPublisherDocumentDefinitionV1;
     /**
      * Name of the conversation draft the editor shows, while that draft is not saved yet.
      */

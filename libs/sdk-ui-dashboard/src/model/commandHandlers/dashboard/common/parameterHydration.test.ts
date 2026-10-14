@@ -170,7 +170,7 @@ const scenarioWorkspace: IParameterMetadataObject = {
     definition: { type: "STRING", defaultValue: "Actual" },
 };
 
-function entry(parameter: IDashboardParameter, runtimeOverride: ParameterValue | undefined = undefined) {
+function entry(parameter: IDashboardParameter, runtimeOverride?: ParameterValue | undefined) {
     return { parameter, runtimeOverride } satisfies IDashboardParameterEntry;
 }
 

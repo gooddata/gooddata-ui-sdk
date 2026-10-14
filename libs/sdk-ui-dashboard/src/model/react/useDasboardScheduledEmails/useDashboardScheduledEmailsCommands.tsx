@@ -74,9 +74,9 @@ export const useDashboardScheduledEmailsCommands = () => {
     const openScheduleEmailingManagementDialog = useCallback(
         (widget?: IWidget, openedFrom?: string) =>
             dispatch(
-                uiActions.openScheduleEmailManagementDialog({
-                    ...(widget?.ref ? { widgetRef: widget.ref, openedFrom } : { openedFrom }),
-                }),
+                uiActions.openScheduleEmailManagementDialog(
+                    widget?.ref ? { widgetRef: widget.ref, openedFrom } : { openedFrom },
+                ),
             ),
         [dispatch],
     );

@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type CSSProperties } from "react";
 
@@ -16,8 +16,8 @@ interface IComparisonValueProps {
 export function ComparisonValue({ dataItem, comparisonStyle, isSubItem }: IComparisonValueProps) {
     const { formattedItem } = useBaseHeadlineDataItem(dataItem);
     const style: CSSProperties = {
-        ...(formattedItem?.cssStyle || {}),
-        ...(comparisonStyle || {}),
+        ...formattedItem?.cssStyle,
+        ...comparisonStyle,
     };
 
     const valueClassNames = cx(

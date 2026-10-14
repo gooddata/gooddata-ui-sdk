@@ -1527,25 +1527,140 @@ export {
 } from "./agentSkill/index.js";
 
 export {
+    type PublisherDateStringV1,
+    type PublisherBuiltInVariableV1,
+    type IPublisherVariableDefinitionV1,
+    PublisherBuiltInVariablesV1,
+    getPublisherTextPlaceholdersV1,
+    publisherTextPlaceholderV1,
+    resolvePublisherTextPlaceholdersV1,
+} from "./publisher/v1/variables.js";
+
+export {
+    type PublisherPageLayoutNodeV1,
+    type IPublisherLayoutNodeBaseV1,
+    type IPublisherLayoutSectionV1,
+    type IPublisherLayoutSlotRefV1,
+    isPublisherLayoutSectionV1,
+    isPublisherLayoutSlotRefV1,
+} from "./publisher/v1/layout.js";
+
+export {
+    type IPublisherSlotPlaceholderV1,
+    type IPublisherSlotBaseV1,
+    type IPublisherVisualizationSlotV1,
+    type IPublisherStaticTextSourceV1,
+    type IPublisherAiTextSourceV1,
+    type PublisherTextSourceV1,
+    type IPublisherHeadingSlotV1,
+    type IPublisherParagraphSlotV1,
+    type IPublisherTextSlotV1,
+    type PublisherImageSourceV1,
+    type PublisherImageFitV1,
+    type IPublisherImageSlotV1,
+    type PublisherSlotV1,
+    BuiltInPublisherSlotTypesV1,
+    PublisherTextTypesV1,
+    publisherTextSlotTypeV1,
+    publisherTextSlotTypesV1,
+    isPublisherVisualizationSlotV1,
+    isPublisherHeadingSlotV1,
+    isPublisherParagraphSlotV1,
+    isPublisherTextSlotV1,
+    isPublisherImageSlotV1,
+    isPublisherSlotV1,
+} from "./publisher/v1/slot.js";
+
+export {
+    type PublisherContentAlignmentV1,
+    type IPublisherColorBackgroundV1,
+    type IPublisherImageBackgroundV1,
+    type PublisherBackgroundV1,
+    type IPublisherBoxStyleV1,
+    type IPublisherImageStyleV1,
+    type IPublisherTextStyleV1,
+    type IPublisherHeadingStyleV1,
+    type IPublisherParagraphStyleV1,
+    type PublisherHeadingTypeV1,
+    type PublisherParagraphTypeV1,
+    type PublisherTextTypeV1,
+    PublisherHeadingTypesV1,
+    PublisherParagraphTypesV1,
+    DefaultPublisherHeadingTypeV1,
+    DefaultPublisherParagraphTypeV1,
+    isPublisherHeadingTypeV1,
+    isPublisherParagraphTypeV1,
+    isPublisherColorBackgroundV1,
+    isPublisherImageBackgroundV1,
+} from "./publisher/v1/styling.js";
+
+export {
+    type PublisherPageFormatV1,
+    DefaultPublisherPageFormatV1,
+    PublisherPageFormatsV1,
+    PublisherPageFormatAspectRatiosV1,
+    isPublisherPageFormatV1,
+} from "./publisher/v1/pageFormat.js";
+
+export {
+    type IPublisherPageBodyV1,
+    type IPublisherPageLayoutContentV1,
+    type IPublisherPageLayoutDefinitionV1,
+    type IPublisherPageLayoutV1,
+    type IPublisherPageBodyValidationIssueV1,
+    isPublisherPageLayoutDefinitionV1,
+    isPublisherPageLayoutV1,
+    isPublisherPageLayoutContentV1,
+    validatePublisherPageBodyV1,
+} from "./publisher/v1/pageLayout.js";
+
+export {
+    type IPublisherDocumentPageV1,
+    type IPublisherDocumentContentV1,
+    type IPublisherAttributeFilterConfigV1,
+    isPublisherDocumentContentV1,
+} from "./publisher/v1/content.js";
+
+export {
+    type IPublisherDocumentTemplateDefinitionV1,
+    type IPublisherDocumentTemplateV1,
+    type IPublisherDocumentBaseV1,
+    type IPublisherDocumentDefinitionV1,
+    type IPublisherDocumentV1,
+    isPublisherDocumentTemplateDefinitionV1,
+    isPublisherDocumentTemplateV1,
+    isPublisherDocumentDefinitionV1,
+    isPublisherDocumentV1,
+} from "./publisher/v1/document.js";
+
+export {
+    newPublisherPageLayoutDefinitionV1,
+    newPublisherDocumentPageFromLayoutV1,
+    newPublisherDocumentContentV1,
+    newPublisherDocumentTemplateDefinitionV1,
+    newPublisherDocumentDefinitionFromTemplateV1,
+    newAdHocPublisherDocumentDefinitionV1,
+    publisherDocumentPageV1,
+} from "./publisher/v1/factory.js";
+
+export {
+    BuiltInPublisherPageLayoutCoverV1,
+    BuiltInPublisherPageLayoutSectionV1,
+    BuiltInPublisherPageLayoutViz6TextLeftV1,
+    BuiltInPublisherPageLayoutPortraitCoverV1,
+    BuiltInPublisherPageLayoutPortraitSectionV1,
+    BuiltInPublisherPageLayoutPortraitSummaryV1,
+    BuiltInPublisherPageLayoutsV1,
+} from "./publisher/v1/builtinPageLayouts.js";
+
+export {
     type PublisherDateString,
     type PublisherBuiltInVariable,
     type IPublisherVariableDefinition,
-    PublisherBuiltInVariables,
-    getPublisherTextPlaceholders,
-    publisherTextPlaceholder,
-    resolvePublisherTextPlaceholders,
-} from "./publisher/variables.js";
-
-export {
     type PublisherPageLayoutNode,
     type IPublisherLayoutNodeBase,
     type IPublisherLayoutSection,
     type IPublisherLayoutSlotRef,
-    isPublisherLayoutSection,
-    isPublisherLayoutSlotRef,
-} from "./publisher/layout.js";
-
-export {
     type IPublisherSlotPlaceholder,
     type IPublisherSlotBase,
     type IPublisherVisualizationSlot,
@@ -1559,18 +1674,6 @@ export {
     type PublisherImageFit,
     type IPublisherImageSlot,
     type PublisherSlot,
-    BuiltInPublisherSlotTypes,
-    PublisherTextTypes,
-    publisherTextSlotType,
-    publisherTextSlotTypes,
-    isPublisherVisualizationSlot,
-    isPublisherHeadingSlot,
-    isPublisherParagraphSlot,
-    isPublisherTextSlot,
-    isPublisherImageSlot,
-    isPublisherSlot,
-} from "./publisher/slot.js";
-export {
     type PublisherContentAlignment,
     type IPublisherColorBackground,
     type IPublisherImageBackground,
@@ -1583,6 +1686,36 @@ export {
     type PublisherHeadingType,
     type PublisherParagraphType,
     type PublisherTextType,
+    type PublisherPageFormat,
+    type IPublisherPageBody,
+    type IPublisherPageLayoutContent,
+    type IPublisherPageLayoutDefinition,
+    type IPublisherPageLayout,
+    type IPublisherPageBodyValidationIssue,
+    type IPublisherDocumentPage,
+    type IPublisherDocumentContent,
+    type IPublisherAttributeFilterConfig,
+    type IPublisherDocumentTemplateDefinition,
+    type IPublisherDocumentTemplate,
+    type IPublisherDocumentBase,
+    type IPublisherDocumentDefinition,
+    type IPublisherDocument,
+    PublisherBuiltInVariables,
+    getPublisherTextPlaceholders,
+    publisherTextPlaceholder,
+    resolvePublisherTextPlaceholders,
+    isPublisherLayoutSection,
+    isPublisherLayoutSlotRef,
+    BuiltInPublisherSlotTypes,
+    PublisherTextTypes,
+    publisherTextSlotType,
+    publisherTextSlotTypes,
+    isPublisherVisualizationSlot,
+    isPublisherHeadingSlot,
+    isPublisherParagraphSlot,
+    isPublisherTextSlot,
+    isPublisherImageSlot,
+    isPublisherSlot,
     PublisherHeadingTypes,
     PublisherParagraphTypes,
     DefaultPublisherHeadingType,
@@ -1591,47 +1724,17 @@ export {
     isPublisherParagraphType,
     isPublisherColorBackground,
     isPublisherImageBackground,
-} from "./publisher/styling.js";
-export {
-    type PublisherPageFormat,
     DefaultPublisherPageFormat,
     PublisherPageFormats,
     PublisherPageFormatAspectRatios,
     isPublisherPageFormat,
-} from "./publisher/pageFormat.js";
-
-export {
-    type IPublisherPageBody,
-    type IPublisherPageLayoutContent,
-    type IPublisherPageLayoutDefinition,
-    type IPublisherPageLayout,
-    type IPublisherPageBodyValidationIssue,
     isPublisherPageLayoutDefinition,
     isPublisherPageLayout,
-    isPublisherPageLayoutContentV1,
     validatePublisherPageBody,
-} from "./publisher/pageLayout.js";
-
-export {
-    type IPublisherDocumentPage,
-    type IPublisherDocumentContent,
-    type IPublisherAttributeFilterConfig,
-    isPublisherDocumentContentV1,
-} from "./publisher/content.js";
-
-export {
-    type IPublisherDocumentTemplateDefinition,
-    type IPublisherDocumentTemplate,
-    type IPublisherDocumentBase,
-    type IPublisherDocumentDefinition,
-    type IPublisherDocument,
     isPublisherDocumentTemplateDefinition,
     isPublisherDocumentTemplate,
     isPublisherDocumentDefinition,
     isPublisherDocument,
-} from "./publisher/document.js";
-
-export {
     newPublisherPageLayoutDefinition,
     newPublisherDocumentPageFromLayout,
     newPublisherDocumentContent,
@@ -1639,9 +1742,6 @@ export {
     newPublisherDocumentDefinitionFromTemplate,
     newAdHocPublisherDocumentDefinition,
     publisherDocumentPage,
-} from "./publisher/factory.js";
-
-export {
     BuiltInPublisherPageLayoutCover,
     BuiltInPublisherPageLayoutSection,
     BuiltInPublisherPageLayoutViz6TextLeft,
@@ -1649,7 +1749,148 @@ export {
     BuiltInPublisherPageLayoutPortraitSection,
     BuiltInPublisherPageLayoutPortraitSummary,
     BuiltInPublisherPageLayouts,
-} from "./publisher/builtinPageLayouts.js";
+} from "./publisher/aliases.js";
+
+export {
+    type PublisherPxV2,
+    type PublisherOpacityV2,
+    type PublisherHorizontalAlignV2,
+    type PublisherVerticalAlignV2,
+    type PublisherColorValueV2,
+    type PublisherGapValueV2,
+    type PublisherPaddingValueV2,
+    type PublisherRadiusValueV2,
+    type PublisherShadowValueV2,
+    type PublisherBorderLineStyleV2,
+    type PublisherImageSourceV2,
+    type PublisherTextStyleNameV2,
+    PublisherTextStyleNamesV2,
+    isPublisherTextStyleNameV2,
+    type IPublisherBackgroundStyleV2,
+    type IPublisherPaddingStyleV2,
+    type IPublisherBorderStyleV2,
+    type IPublisherCornerStyleV2,
+    type IPublisherShadowStyleV2,
+    type IPublisherBoxStyleV2,
+    type IPublisherInheritedTextStyleV2,
+    type IPublisherTextStyleV2,
+    type IPublisherPageStyleV2,
+    type IPublisherContainerStyleV2,
+    type IPublisherTextWidgetStyleV2,
+    type IPublisherImageWidgetStyleV2,
+    type IPublisherVisualizationStyleV2,
+    type IPublisherChartStyleV2,
+    type IPublisherTableStyleV2,
+    type IPublisherHeadlineStyleV2,
+} from "./publisher/v2/style.js";
+
+export {
+    type PublisherWidgetTypeV2,
+    PublisherWidgetTypesV2,
+    type IPublisherWidgetPlaceholderV2,
+    type IPublisherWidgetBaseV2,
+    type IPublisherTitleWidgetV2,
+    type PublisherHeadingLevelV2,
+    type IPublisherHeadingWidgetV2,
+    type IPublisherTextWidgetV2,
+    type IPublisherImageWidgetV2,
+    type IPublisherVisualizationRefV2,
+    type IPublisherDataSetRefV2,
+    type IPublisherWidgetTitleV2,
+    type IPublisherAxisDisplayV2,
+    type IPublisherVisualizationDisplayV2,
+    type IPublisherVisualizationWidgetV2,
+    type IPublisherTakeawayGenerationV2,
+    type IPublisherTakeawayWidgetV2,
+    type PublisherWidgetV2,
+    publisherHeadingDefaultTextStyleV2,
+    isPublisherWidgetV2,
+    isPublisherTitleWidgetV2,
+    isPublisherHeadingWidgetV2,
+    isPublisherTextWidgetV2,
+    isPublisherImageWidgetV2,
+    isPublisherVisualizationWidgetV2,
+    isPublisherTakeawayWidgetV2,
+} from "./publisher/v2/widget.js";
+
+export {
+    type PublisherLayoutNodeV2,
+    type IPublisherContainerV2,
+    isPublisherContainerV2,
+    isPublisherRowV2,
+    isPublisherColumnV2,
+} from "./publisher/v2/layout.js";
+
+export {
+    type PublisherPageSizeV2,
+    PublisherPageSizesV2,
+    DefaultPublisherPageSizeV2,
+    isPublisherPageSizeV2,
+    type PublisherPageKindV2,
+    type IPublisherPageBodyV2,
+    type IPublisherDocumentPageV2,
+    isPublisherPageBodyV2,
+    isPublisherDocumentPageV2,
+} from "./publisher/v2/page.js";
+
+export {
+    type PublisherContentVersionV2,
+    type IPublisherAbsolutePeriodV2,
+    type IPublisherRelativePeriodV2,
+    type PublisherPeriodV2,
+    isPublisherAbsolutePeriodV2,
+    isPublisherRelativePeriodV2,
+    type IPublisherDocumentDefaultsV2,
+    type IPublisherDocumentStyleV2,
+    type IPublisherSectionV2,
+    type IPublisherDocumentContentBaseV2,
+    type IPublisherDocumentPagesContentV2,
+    type IPublisherDocumentSectionsContentV2,
+    type PublisherDocumentContentV2,
+    isPublisherDocumentPagesContentV2,
+    isPublisherDocumentSectionsContentV2,
+} from "./publisher/v2/content.js";
+
+export {
+    type IPublisherEntityDefinitionBaseV2,
+    type IPublisherEntityMetadataV2,
+    type IPublisherDocumentDefinitionV2,
+    type IPublisherDocumentV2,
+    type IPublisherDocumentTemplateDefinitionV2,
+    type IPublisherDocumentTemplateV2,
+    type IPublisherPageTemplateDefinitionV2,
+    type IPublisherPageTemplateV2,
+    isPublisherDocumentDefinitionV2,
+    isPublisherDocumentV2,
+    isPublisherDocumentTemplateDefinitionV2,
+    isPublisherDocumentTemplateV2,
+    isPublisherPageTemplateDefinitionV2,
+    isPublisherPageTemplateV2,
+} from "./publisher/v2/document.js";
+
+export {
+    newPublisherIdV2,
+    newPublisherPageIdV2,
+    newPublisherSectionIdV2,
+    newPublisherWidgetIdV2,
+    type INewPublisherDocumentFilterIdOptionsV2,
+    newPublisherDocumentFilterIdV2,
+    newPublisherDocumentPageFromTemplateV2,
+} from "./publisher/v2/factory.js";
+
+export {
+    type IPublisherDocumentContentSetSectionsOptionsV2,
+    publisherDocumentContentSectionsV2,
+    publisherDocumentContentSetSectionsV2,
+} from "./publisher/v2/sections.js";
+
+export { type IPublisherValidationIssueV2 } from "./publisher/v2/checks.js";
+
+export {
+    validatePublisherPageBodyV2,
+    validatePublisherDocumentContentV2,
+    validatePublisherEntityV2,
+} from "./publisher/v2/validation.js";
 
 export {
     type ISemanticQualityReport,

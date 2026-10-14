@@ -57,7 +57,7 @@ export const applyConditionalFormattingToColDef =
                     return base;
                 }
 
-                return { ...(base ?? {}), ...fragment };
+                return { ...base, ...fragment };
             },
         };
     };

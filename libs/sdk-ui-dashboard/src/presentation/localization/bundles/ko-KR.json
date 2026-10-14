@@ -409,6 +409,8 @@
     "dashboardMeasureValueFilter.section.all_other": "그 외 모두",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "이 대시보드를 생성한 사용자. 생성자는 제거할 수 없습니다.",
     "attributesDropdown.placeholder": "검색…",
+    "attributesDropdown.parameters.section.from_dashboard": "대시보드에서",
+    "attributesDropdown.parameters.section.ungrouped": "그룹 해제됨",
     "attributesDropdown.configuration": "구성",
     "attributesDropdown.save": "저장",
     "attributesDropdown.filterBy": "필터 기준",

@@ -11,87 +11,73 @@ import type { IPlaywrightLocation } from "./playwright-internals.js";
 import type { PlaywrightTestInstance } from "./playwright-types.js";
 import type {
     Callback,
+    FeatureFlags,
     ITestDetails,
     TestConditionsValueConstraint,
     WindowProperties,
-    WorkspaceSettings,
 } from "./types.js";
 
 function peekOrEmpty<T extends Record<string, unknown>>(stack: T[]): T | Record<string, never> {
     return stack.length > 0 ? stack[stack.length - 1] : {};
 }
 
-function peekFeatures(stack: IFeatureHubFeature[][]): IFeatureHubFeature[] {
-    return stack.length > 0 ? stack[stack.length - 1] : [];
-}
-
-/** Push merged settings/awp/features onto stacks, register the beforeEach hooks, call fn, pop. */
+/** Push merged awp/flags onto stacks, register the beforeEach hooks, call fn, pop. */
 export function withDescribeDetails(
     testInstance: PlaywrightTestInstance,
-    settingsStack: WorkspaceSettings[],
+    defaultFeatures: IFeatureHubFeature[],
     awpStack: WindowProperties[],
-    featuresStack: IFeatureHubFeature[][],
+    flagsStack: FeatureFlags[],
     details: ITestDetails<TestConditionsValueConstraint> | undefined,
     fn: Callback,
 ) {
-    const ws = details?.workspaceSettings;
     const awp = details?.additionalWindowProperties;
     const ff = details?.featureFlags;
-    if (!ws && !awp && !ff) {
+    if (!awp && !ff) {
         fn();
         return;
     }
-    const mergedSettings = ws ? { ...peekOrEmpty(settingsStack), ...ws } : peekOrEmpty(settingsStack);
     const mergedAwp = awp ? { ...peekOrEmpty(awpStack), ...awp } : peekOrEmpty(awpStack);
-    const mergedFeatures = ff
-        ? mergeFeatureHubFeatures(peekFeatures(featuresStack), flagsToFeatures(ff))
-        : peekFeatures(featuresStack);
+    const mergedFlags = ff ? { ...peekOrEmpty(flagsStack), ...ff } : peekOrEmpty(flagsStack);
 
-    if (ws) settingsStack.push(mergedSettings);
     if (awp) awpStack.push(mergedAwp);
-    if (ff) featuresStack.push(mergedFeatures);
+    if (ff) flagsStack.push(mergedFlags);
 
-    if (ws || awp) {
-        injectWindowProperties(testInstance, mergedSettings, mergedAwp);
+    if (awp) {
+        injectWindowProperties(testInstance, mergedAwp);
     }
     if (ff) {
-        injectFeatureHubMock(testInstance, mergedFeatures);
+        injectFeatureFlags(testInstance, defaultFeatures, mergedFlags);
     }
     try {
         fn();
     } finally {
         // Pop even if the body throws, so later describes don't inherit this level's entries.
-        if (ff) featuresStack.pop();
+        if (ff) flagsStack.pop();
         if (awp) awpStack.pop();
-        if (ws) settingsStack.pop();
     }
 }
 
 /**
- * Register a single test's own settings/awp/features, merged on top of the enclosing describes'.
+ * Register a single test's own awp/flags, merged on top of the enclosing describes'.
  * The beforeEach is registered next to the test, after the enclosing describes' injection hooks,
  * so it runs last and its values win.
  */
 export function withTestDetails(
     testInstance: PlaywrightTestInstance,
-    settingsStack: WorkspaceSettings[],
+    defaultFeatures: IFeatureHubFeature[],
     awpStack: WindowProperties[],
-    featuresStack: IFeatureHubFeature[][],
+    flagsStack: FeatureFlags[],
     location: IPlaywrightLocation,
     title: string,
     details: ITestDetails<TestConditionsValueConstraint> | undefined,
 ): void {
-    const ws = details?.workspaceSettings;
     const awp = details?.additionalWindowProperties;
     const ff = details?.featureFlags;
-    if (!ws && !awp && !ff) {
+    if (!awp && !ff) {
         return;
     }
-    const mergedSettings = ws ? { ...peekOrEmpty(settingsStack), ...ws } : peekOrEmpty(settingsStack);
     const mergedAwp = awp ? { ...peekOrEmpty(awpStack), ...awp } : peekOrEmpty(awpStack);
-    const mergedFeatures = ff
-        ? mergeFeatureHubFeatures(peekFeatures(featuresStack), flagsToFeatures(ff))
-        : peekFeatures(featuresStack);
+    const mergedFlags = ff ? { ...peekOrEmpty(flagsStack), ...ff } : peekOrEmpty(flagsStack);
 
     testInstance.beforeEach(async ({ page }, testInfo) => {
         // A beforeEach applies to every test in its describe; only act for this test. Title is part
@@ -104,48 +90,58 @@ export function withTestDetails(
         ) {
             return;
         }
-        if (ws || awp) {
-            await addWindowPropertiesInitScript(page, mergedSettings, mergedAwp);
+        if (awp) {
+            await addWindowPropertiesInitScript(page, mergedAwp);
         }
         if (ff) {
-            await reregisterFeatureHubMock(page, mergedFeatures);
+            await applyFeatureFlags(page, defaultFeatures, mergedFlags);
         }
     });
 }
 
-/** Inject workspace settings and additional window properties via a single addInitScript. */
-function injectWindowProperties(
+/** Inject additional window properties via a single addInitScript. */
+function injectWindowProperties(testInst: PlaywrightTestInstance, awp: WindowProperties): void {
+    testInst.beforeEach(async ({ page }) => {
+        await addWindowPropertiesInitScript(page, awp);
+    });
+}
+
+/** Apply the merged feature flags of a describe level to every test in it. */
+function injectFeatureFlags(
     testInst: PlaywrightTestInstance,
-    settings: WorkspaceSettings,
-    awp: WindowProperties,
+    defaultFeatures: IFeatureHubFeature[],
+    flags: FeatureFlags,
 ): void {
     testInst.beforeEach(async ({ page }) => {
-        await addWindowPropertiesInitScript(page, settings, awp);
+        await applyFeatureFlags(page, defaultFeatures, flags);
     });
 }
 
-/** Replace the FeatureHub mock registered by the root describe with one serving `features`. */
-function injectFeatureHubMock(testInst: PlaywrightTestInstance, features: IFeatureHubFeature[]): void {
-    testInst.beforeEach(async ({ page }) => {
-        await reregisterFeatureHubMock(page, features);
-    });
-}
-
-async function addWindowPropertiesInitScript(
+/**
+ * Serve `flags` on top of `defaultFeatures` from the FeatureHub mock and expose the raw flags as
+ * `window.customWorkspaceSettings`. Init scripts cannot be removed, but each one assigns the whole
+ * object, so the last registered level (the innermost) wins.
+ */
+async function applyFeatureFlags(
     page: Page,
-    settings: WorkspaceSettings,
-    awp: WindowProperties,
+    defaultFeatures: IFeatureHubFeature[],
+    flags: FeatureFlags,
 ): Promise<void> {
-    await page.addInitScript(
-        (args: { s: WorkspaceSettings; a: WindowProperties }) => {
-            const w = window as unknown as WindowProperties;
-            if (Object.keys(args.s).length > 0) {
-                w["customWorkspaceSettings"] = args.s;
-            }
-            for (const [key, value] of Object.entries(args.a)) {
-                w[key] = value;
-            }
-        },
-        { s: settings, a: awp },
-    );
+    await reregisterFeatureHubMock(page, mergeFeatureHubFeatures(defaultFeatures, flagsToFeatures(flags)));
+    await addCustomWorkspaceSettingsInitScript(page, flags);
+}
+
+async function addCustomWorkspaceSettingsInitScript(page: Page, flags: FeatureFlags): Promise<void> {
+    await page.addInitScript((s: FeatureFlags) => {
+        (window as unknown as Record<string, unknown>)["customWorkspaceSettings"] = s;
+    }, flags);
+}
+
+async function addWindowPropertiesInitScript(page: Page, awp: WindowProperties): Promise<void> {
+    await page.addInitScript((a: WindowProperties) => {
+        const w = window as unknown as WindowProperties;
+        for (const [key, value] of Object.entries(a)) {
+            w[key] = value;
+        }
+    }, awp);
 }

@@ -7,8 +7,10 @@ import { initAccessibleTooltipPluginOnce } from "./plugins/accessibleTooltip.js"
 import { adjustTickAmount } from "./plugins/adjustTickAmount.js";
 import { autohideLabels } from "./plugins/autohideLabels/autohideLabels.js";
 import { skipDataLabelsWithoutSpace } from "./plugins/autohideLabels/skipDataLabelsWithoutSpace.js";
+import { skipOverlappingLineDataLabels } from "./plugins/autohideLabels/skipOverlappingLineDataLabels.js";
 import { extendDataLabelColors } from "./plugins/dataLabelsColors.js";
 import { groupCategoriesWrapper } from "./plugins/group-categories-wrapper.js";
+import { inlineFontSize } from "./plugins/inlineFontSize.js";
 import { linearTickPositions } from "./plugins/linearTickPositions.js";
 import { applyPointHaloOptions } from "./plugins/pointHalo.js";
 import { registerPointShapeSymbols } from "./plugins/pointShapeSymbols.js";
@@ -25,6 +27,7 @@ export function initChartPlugins(
     if (!basePluginsInitialized) {
         autohideLabels(highcharts);
         skipDataLabelsWithoutSpace(highcharts);
+        skipOverlappingLineDataLabels(highcharts);
         applyPointHaloOptions(highcharts);
         linearTickPositions(highcharts);
         groupedCategories(highcharts);
@@ -34,6 +37,8 @@ export function initChartPlugins(
         renderBubbles(highcharts);
         // register custom point-shape marker symbols beyond the five Highcharts built-ins
         registerPointShapeSymbols(highcharts);
+        // read text font size from the inline style to avoid forced style recalculations
+        inlineFontSize(highcharts);
 
         basePluginsInitialized = true;
     }

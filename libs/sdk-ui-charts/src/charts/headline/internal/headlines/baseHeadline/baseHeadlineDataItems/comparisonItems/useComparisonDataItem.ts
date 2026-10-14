@@ -65,9 +65,7 @@ export const useComparisonDataItem = (
         dataItem,
     );
 
-    const style: CSSProperties = {
-        ...(color ? { color } : {}),
-    };
+    const style: CSSProperties = color ? { color } : {};
     return {
         style,
         indicator,

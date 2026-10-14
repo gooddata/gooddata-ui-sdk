@@ -409,6 +409,8 @@
     "dashboardMeasureValueFilter.section.all_other": "所有其他",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "創建此儀表板的使用者。 創作者無法被移除。",
     "attributesDropdown.placeholder": "搜尋...",
+    "attributesDropdown.parameters.section.from_dashboard": "來自儀表板",
+    "attributesDropdown.parameters.section.ungrouped": "未分組",
     "attributesDropdown.configuration": "配置",
     "attributesDropdown.save": "儲存",
     "attributesDropdown.filterBy": "篩選依據",

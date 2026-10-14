@@ -1,22 +1,22 @@
 // (C) 2026 GoodData Corporation
 
-import { type IPublisherDocumentContent, type IPublisherDocumentPage } from "./content.js";
+import { type IPublisherDocumentContentV1, type IPublisherDocumentPageV1 } from "./content.js";
 import {
-    type IPublisherDocument,
-    type IPublisherDocumentDefinition,
-    type IPublisherDocumentTemplate,
-    type IPublisherDocumentTemplateDefinition,
+    type IPublisherDocumentDefinitionV1,
+    type IPublisherDocumentTemplateDefinitionV1,
+    type IPublisherDocumentTemplateV1,
+    type IPublisherDocumentV1,
 } from "./document.js";
-import { type PublisherPageLayoutNode, isPublisherLayoutSection } from "./layout.js";
+import { type PublisherPageLayoutNodeV1, isPublisherLayoutSectionV1 } from "./layout.js";
 import {
-    type IPublisherPageBody,
-    type IPublisherPageLayout,
-    type IPublisherPageLayoutContent,
-    type IPublisherPageLayoutDefinition,
+    type IPublisherPageBodyV1,
+    type IPublisherPageLayoutContentV1,
+    type IPublisherPageLayoutDefinitionV1,
+    type IPublisherPageLayoutV1,
 } from "./pageLayout.js";
-import { type PublisherSlot } from "./slot.js";
-import { type IPublisherBoxStyle, isPublisherImageBackground } from "./styling.js";
-import { type PublisherDateString } from "./variables.js";
+import { type PublisherSlotV1 } from "./slot.js";
+import { type IPublisherBoxStyleV1, isPublisherImageBackgroundV1 } from "./styling.js";
+import { type PublisherDateStringV1 } from "./variables.js";
 
 function generatePublisherLocalId(prefix: string): string {
     const unique =
@@ -31,10 +31,10 @@ function deepClone<T>(value: T): T {
 }
 
 function prefixBackgroundSlotId(
-    style: IPublisherBoxStyle | undefined,
+    style: IPublisherBoxStyleV1 | undefined,
     prefix: string,
-): IPublisherBoxStyle | undefined {
-    if (!style?.background || !isPublisherImageBackground(style.background)) {
+): IPublisherBoxStyleV1 | undefined {
+    if (!style?.background || !isPublisherImageBackgroundV1(style.background)) {
         return style;
     }
     return {
@@ -43,8 +43,8 @@ function prefixBackgroundSlotId(
     };
 }
 
-function prefixLayoutSlotIds(node: PublisherPageLayoutNode, prefix: string): PublisherPageLayoutNode {
-    if (isPublisherLayoutSection(node)) {
+function prefixLayoutSlotIds(node: PublisherPageLayoutNodeV1, prefix: string): PublisherPageLayoutNodeV1 {
+    if (isPublisherLayoutSectionV1(node)) {
         return {
             ...node,
             ...(node.style === undefined ? {} : { style: prefixBackgroundSlotId(node.style, prefix) }),
@@ -62,12 +62,12 @@ function prefixLayoutSlotIds(node: PublisherPageLayoutNode, prefix: string): Pub
  *
  * @alpha
  */
-export function newPublisherPageLayoutDefinition(
+export function newPublisherPageLayoutDefinitionV1(
     title: string,
-    body: IPublisherPageBody,
-    modifications?: Partial<Omit<IPublisherPageLayoutDefinition, "type" | "title" | "content">>,
-): IPublisherPageLayoutDefinition {
-    const content: IPublisherPageLayoutContent = { version: "1", ...body };
+    body: IPublisherPageBodyV1,
+    modifications?: Partial<Omit<IPublisherPageLayoutDefinitionV1, "type" | "title" | "content">>,
+): IPublisherPageLayoutDefinitionV1 {
+    const content: IPublisherPageLayoutContentV1 = { version: "1", ...body };
     return {
         type: "reportPageLayout",
         title,
@@ -86,17 +86,17 @@ export function newPublisherPageLayoutDefinition(
  *
  * @alpha
  */
-export function newPublisherDocumentPageFromLayout(
-    page: IPublisherPageLayout | IPublisherPageLayoutDefinition,
+export function newPublisherDocumentPageFromLayoutV1(
+    page: IPublisherPageLayoutV1 | IPublisherPageLayoutDefinitionV1,
     localIdentifier: string = generatePublisherLocalId("page"),
-): IPublisherDocumentPage {
+): IPublisherDocumentPageV1 {
     const { version: _version, ...body } = deepClone(page.content);
     return {
         ...body,
         localIdentifier,
         ...(body.style === undefined ? {} : { style: prefixBackgroundSlotId(body.style, localIdentifier) }),
         layout: prefixLayoutSlotIds(body.layout, localIdentifier),
-        slots: body.slots.map((slot): PublisherSlot => ({
+        slots: body.slots.map((slot): PublisherSlotV1 => ({
             ...slot,
             localIdentifier: `${localIdentifier}_${slot.localIdentifier}`,
         })),
@@ -108,10 +108,10 @@ export function newPublisherDocumentPageFromLayout(
  *
  * @alpha
  */
-export function newPublisherDocumentContent(
-    pages: IPublisherDocumentPage[],
-    modifications?: Partial<Omit<IPublisherDocumentContent, "version" | "pages">>,
-): IPublisherDocumentContent {
+export function newPublisherDocumentContentV1(
+    pages: IPublisherDocumentPageV1[],
+    modifications?: Partial<Omit<IPublisherDocumentContentV1, "version" | "pages">>,
+): IPublisherDocumentContentV1 {
     return {
         version: "1",
         pages,
@@ -124,11 +124,11 @@ export function newPublisherDocumentContent(
  *
  * @alpha
  */
-export function newPublisherDocumentTemplateDefinition(
+export function newPublisherDocumentTemplateDefinitionV1(
     title: string,
-    content: IPublisherDocumentContent,
-    modifications?: Partial<Omit<IPublisherDocumentTemplateDefinition, "type" | "title" | "content">>,
-): IPublisherDocumentTemplateDefinition {
+    content: IPublisherDocumentContentV1,
+    modifications?: Partial<Omit<IPublisherDocumentTemplateDefinitionV1, "type" | "title" | "content">>,
+): IPublisherDocumentTemplateDefinitionV1 {
     return {
         type: "reportTemplate",
         title,
@@ -146,17 +146,17 @@ export function newPublisherDocumentTemplateDefinition(
  *
  * @alpha
  */
-export function newPublisherDocumentDefinitionFromTemplate(
-    template: IPublisherDocumentTemplate | IPublisherDocumentTemplateDefinition,
+export function newPublisherDocumentDefinitionFromTemplateV1(
+    template: IPublisherDocumentTemplateV1 | IPublisherDocumentTemplateDefinitionV1,
     options: {
         title: string;
-        periodStart: PublisherDateString;
-        periodEnd: PublisherDateString;
+        periodStart: PublisherDateStringV1;
+        periodEnd: PublisherDateStringV1;
     },
     modifications?: Partial<
-        Omit<IPublisherDocumentDefinition, "type" | "title" | "periodStart" | "periodEnd" | "content">
+        Omit<IPublisherDocumentDefinitionV1, "type" | "title" | "periodStart" | "periodEnd" | "content">
     >,
-): IPublisherDocumentDefinition {
+): IPublisherDocumentDefinitionV1 {
     return {
         type: "report",
         title: options.title,
@@ -172,23 +172,23 @@ export function newPublisherDocumentDefinitionFromTemplate(
  *
  * @alpha
  */
-export function newAdHocPublisherDocumentDefinition(
+export function newAdHocPublisherDocumentDefinitionV1(
     options: {
         title: string;
-        periodStart: PublisherDateString;
-        periodEnd: PublisherDateString;
-        pages?: IPublisherDocumentPage[];
+        periodStart: PublisherDateStringV1;
+        periodEnd: PublisherDateStringV1;
+        pages?: IPublisherDocumentPageV1[];
     },
     modifications?: Partial<
-        Omit<IPublisherDocumentDefinition, "type" | "title" | "periodStart" | "periodEnd" | "content">
+        Omit<IPublisherDocumentDefinitionV1, "type" | "title" | "periodStart" | "periodEnd" | "content">
     >,
-): IPublisherDocumentDefinition {
+): IPublisherDocumentDefinitionV1 {
     return {
         type: "report",
         title: options.title,
         periodStart: options.periodStart,
         periodEnd: options.periodEnd,
-        content: newPublisherDocumentContent(options.pages ?? []),
+        content: newPublisherDocumentContentV1(options.pages ?? []),
         ...modifications,
     };
 }
@@ -198,13 +198,13 @@ export function newAdHocPublisherDocumentDefinition(
  *
  * @alpha
  */
-export function publisherDocumentPage(
+export function publisherDocumentPageV1(
     documentOrTemplate:
-        | IPublisherDocument
-        | IPublisherDocumentDefinition
-        | IPublisherDocumentTemplate
-        | IPublisherDocumentTemplateDefinition,
+        | IPublisherDocumentV1
+        | IPublisherDocumentDefinitionV1
+        | IPublisherDocumentTemplateV1
+        | IPublisherDocumentTemplateDefinitionV1,
     pageLocalIdentifier: string,
-): IPublisherDocumentPage | undefined {
+): IPublisherDocumentPageV1 | undefined {
     return documentOrTemplate.content.pages.find((page) => page.localIdentifier === pageLocalIdentifier);
 }

@@ -12,9 +12,6 @@
 // and an outgoing app's lazy chunks can arrive after the next app is already up. This leaves
 // the webpack style-loader tags of customer dashboard plugins untracked.
 //
-// A remote can serve its assets from another base than its entry URL, e.g. a CDN set as the
-// manifest publicPath. Such a base is an alias of the entry-URL prefix and matches the same app.
-//
 // Links are disabled when an app unmounts and re-enabled when it comes back, never removed.
 // Vite's preload helper, the MF runtime and the host loader all cache by href, so a removed
 // <link> would never be injected again when the user navigates back.
@@ -24,15 +21,10 @@ type LinkLoadState = "awaiting-load" | "loaded";
 
 const scopePrefixes = new Map<string, Set<string>>();
 const reservedHostPrefixes = new Set<string>();
-const assetBaseAliases = new Map<string, Set<string>>();
 const deactivatedApps = new Set<string>();
 let linkLoadStates = new WeakMap<HTMLLinkElement, LinkLoadState>();
 let retiredLinks = new WeakSet<HTMLLinkElement>();
 let observer: MutationObserver | undefined;
-
-function withAliases(prefix: string): string[] {
-    return [prefix, ...(assetBaseAliases.get(prefix) ?? [])];
-}
 
 function deriveScopePrefix(remoteEntryUrl: string): string | undefined {
     try {
@@ -52,11 +44,9 @@ function findOwnerOfHref(href: string): string | undefined {
     let longestPrefixLength = -1;
     for (const [appId, prefixes] of scopePrefixes) {
         for (const prefix of prefixes) {
-            for (const candidate of withAliases(prefix)) {
-                if (href.startsWith(candidate) && candidate.length > longestPrefixLength) {
-                    owner = appId;
-                    longestPrefixLength = candidate.length;
-                }
+            if (href.startsWith(prefix) && prefix.length > longestPrefixLength) {
+                owner = appId;
+                longestPrefixLength = prefix.length;
             }
         }
     }
@@ -66,7 +56,7 @@ function findOwnerOfHref(href: string): string | undefined {
 // An app prefix above a reserved host prefix would claim the host's own links.
 function coversReservedHostScope(prefix: string): boolean {
     for (const reserved of reservedHostPrefixes) {
-        if (withAliases(reserved).some((candidate) => candidate.startsWith(prefix))) {
+        if (reserved.startsWith(prefix)) {
             return true;
         }
     }
@@ -223,34 +213,6 @@ export function reserveHostStylesheetScope(remoteEntryUrl: string): void {
 }
 
 /**
- * Declares that the remote at `remoteEntryUrl` serves its assets from `assetBaseUrl`, so
- * stylesheet links under that base belong to whichever app owns the remote entry URL.
- *
- * Call order relative to `registerAppStylesheetScope` does not matter. Refused with a warning
- * when the base is an origin root or covers the host UI module's scope, because it would then
- * claim host stylesheets.
- */
-export function registerRemoteAssetBase(remoteEntryUrl: string, assetBaseUrl: string): void {
-    if (typeof document === "undefined") {
-        return;
-    }
-    const prefix = deriveScopePrefix(remoteEntryUrl);
-    const alias = deriveScopePrefix(assetBaseUrl.endsWith("/") ? assetBaseUrl : `${assetBaseUrl}/`);
-    if (!prefix || !alias || alias === prefix) {
-        return;
-    }
-    if (new URL(alias).pathname === "/" || coversReservedHostScope(alias)) {
-        console.warn(
-            `[host-runtime/stylesheet-registry] Not tracking stylesheets under asset base "${assetBaseUrl}" of remote "${remoteEntryUrl}": the base would also cover host stylesheets.`,
-        );
-        return;
-    }
-    const aliases = assetBaseAliases.get(prefix) ?? new Set<string>();
-    aliases.add(alias);
-    assetBaseAliases.set(prefix, aliases);
-}
-
-/**
  * Re-enables all stylesheets attributed to the app. Safe to call before any of the
  * app's CSS exists and repeatedly.
  */
@@ -280,7 +242,6 @@ export function deactivateAppStylesheets(appId: string): void {
 export function resetStylesheetRegistry(): void {
     scopePrefixes.clear();
     reservedHostPrefixes.clear();
-    assetBaseAliases.clear();
     deactivatedApps.clear();
     linkLoadStates = new WeakMap();
     retiredLinks = new WeakSet();

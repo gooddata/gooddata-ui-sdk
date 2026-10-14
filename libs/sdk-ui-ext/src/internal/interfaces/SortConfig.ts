@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import {
     type IAttributeLocatorItem,
@@ -69,9 +69,7 @@ export const newAvailableSortsGroup = (
 ): IAvailableSortsGroup => {
     const metricSortsProp = measureIds.length
         ? {
-              metricSorts: [
-                  ...measureIds.map((localIdentifier) => newMeasureSortSuggestion(localIdentifier)),
-              ],
+              metricSorts: measureIds.map((localIdentifier) => newMeasureSortSuggestion(localIdentifier)),
           }
         : {};
     const explanationProp = explanation

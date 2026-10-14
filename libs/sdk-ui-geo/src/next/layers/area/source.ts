@@ -43,7 +43,7 @@ function toMaplibreProperties(
     updates: GeoJSON.GeoJsonProperties,
 ): GeoJSON.GeoJsonProperties {
     return {
-        ...(base ?? {}),
+        ...base,
         ...updates,
     };
 }

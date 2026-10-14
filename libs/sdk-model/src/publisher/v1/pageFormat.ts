@@ -10,7 +10,7 @@
  *
  * @alpha
  */
-export type PublisherPageFormat = "widescreen" | "a4Portrait" | "letterPortrait";
+export type PublisherPageFormatV1 = "widescreen" | "a4Portrait" | "letterPortrait";
 
 /**
  * Format assumed by a page that declares none, which keeps pages authored before formats existed
@@ -18,14 +18,14 @@ export type PublisherPageFormat = "widescreen" | "a4Portrait" | "letterPortrait"
  *
  * @alpha
  */
-export const DefaultPublisherPageFormat: PublisherPageFormat = "widescreen";
+export const DefaultPublisherPageFormatV1: PublisherPageFormatV1 = "widescreen";
 
 /**
  * List of built-in page format names.
  *
  * @alpha
  */
-export const PublisherPageFormats: PublisherPageFormat[] = ["widescreen", "a4Portrait", "letterPortrait"];
+export const PublisherPageFormatsV1: PublisherPageFormatV1[] = ["widescreen", "a4Portrait", "letterPortrait"];
 
 /**
  * Width divided by height for each page format: 16:9 for a widescreen page, ISO A4 (210 x 297 mm) and
@@ -33,17 +33,17 @@ export const PublisherPageFormats: PublisherPageFormat[] = ["widescreen", "a4Por
  *
  * @alpha
  */
-export const PublisherPageFormatAspectRatios: Record<PublisherPageFormat, number> = {
+export const PublisherPageFormatAspectRatiosV1: Record<PublisherPageFormatV1, number> = {
     widescreen: 16 / 9,
     a4Portrait: 210 / 297,
     letterPortrait: 8.5 / 11,
 };
 
 /**
- * Type-guard testing whether the provided value is a {@link PublisherPageFormat}.
+ * Type-guard testing whether the provided value is a {@link PublisherPageFormatV1}.
  *
  * @alpha
  */
-export function isPublisherPageFormat(value: unknown): value is PublisherPageFormat {
-    return typeof value === "string" && PublisherPageFormats.includes(value as PublisherPageFormat);
+export function isPublisherPageFormatV1(value: unknown): value is PublisherPageFormatV1 {
+    return typeof value === "string" && PublisherPageFormatsV1.includes(value as PublisherPageFormatV1);
 }

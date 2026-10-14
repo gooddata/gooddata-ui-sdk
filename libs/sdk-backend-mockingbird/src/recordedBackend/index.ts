@@ -257,7 +257,12 @@ function recordedWorkspace(
             return insightsService;
         },
         dashboards(): IWorkspaceDashboardsService {
-            return new RecordedDashboards(this.workspace, insightsService, recordings);
+            return new RecordedDashboards(
+                this.workspace,
+                insightsService,
+                recordings,
+                implConfig.filterViews ?? [],
+            );
         },
         settings(): IWorkspaceSettingsService {
             return {

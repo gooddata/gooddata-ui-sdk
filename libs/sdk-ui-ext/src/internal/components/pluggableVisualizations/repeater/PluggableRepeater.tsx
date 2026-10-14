@@ -305,7 +305,7 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         const properties = insightProperties(insight);
 
         return {
-            ...(properties?.["controls"] ?? {}),
+            ...properties?.["controls"],
             ...config,
             ...properties,
             ...customVisualizationConfig,

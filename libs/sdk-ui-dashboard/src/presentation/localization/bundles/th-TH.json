@@ -409,6 +409,8 @@
     "dashboardMeasureValueFilter.section.all_other": "ทั้งหมดอื่นๆ",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "ผู้ใช้ที่สร้างแดชบอร์ดนี้ ไม่สามารถนำผู้สร้างออกได้",
     "attributesDropdown.placeholder": "ค้นหา…",
+    "attributesDropdown.parameters.section.from_dashboard": "จากแดชบอร์ด",
+    "attributesDropdown.parameters.section.ungrouped": "ไม่จัดกลุ่ม",
     "attributesDropdown.configuration": "การกำหนดค่า",
     "attributesDropdown.save": "บันทึก",
     "attributesDropdown.filterBy": "กรองตาม",

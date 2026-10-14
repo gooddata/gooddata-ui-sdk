@@ -54,7 +54,7 @@ export function enrichMapboxToken<T>(
 ): (T & { mapboxToken?: string }) | undefined {
     return mapboxToken
         ? ({
-              ...(config || {}),
+              ...config,
               mapboxToken: config?.mapboxToken || mapboxToken,
           } as T & { mapboxToken?: string })
         : config;

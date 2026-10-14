@@ -6,9 +6,6 @@ import type { IFeatureHubEnvironment, IFeatureHubFeature } from "./types.js";
 
 const FEATURE_HUB_ROUTE = "**/features*";
 
-/**
- * @internal
- */
 export function makeFeatureHubResponse(features: IFeatureHubFeature[]): IFeatureHubEnvironment[] {
     return [
         {

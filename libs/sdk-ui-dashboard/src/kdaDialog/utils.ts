@@ -156,14 +156,12 @@ export function updateExistingAttributeFilter(
 }
 
 export function clearSummaryValue(definition: DeepReadonly<IKdaDefinition> | null): Partial<IKdaState> {
-    return {
-        ...(definition
-            ? {
-                  fromValue: { ...definition?.range[0], value: undefined },
-                  toValue: { ...definition?.range[1], value: undefined },
-              }
-            : {}),
-    };
+    return definition
+        ? {
+              fromValue: { ...definition?.range[0], value: undefined },
+              toValue: { ...definition?.range[1], value: undefined },
+          }
+        : {};
 }
 
 const ISO_TOKEN_MAP: Array<[RegExp, (match: string) => string]> = [

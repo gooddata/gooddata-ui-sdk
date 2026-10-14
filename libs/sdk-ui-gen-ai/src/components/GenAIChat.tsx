@@ -2,6 +2,7 @@
 
 import { BackendProvider, WorkspaceProvider, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { type DashboardSelectorEvaluator } from "@gooddata/sdk-ui-dashboard";
+import { OverlayAlignOnParentScrollProvider } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardAmbientContext } from "../context/hooks/useDashboardAmbientContext.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
@@ -175,7 +176,9 @@ function GenAIContent(props: GenAIChatProps) {
             canAnalyze={props.disableAnalyze ? false : (permissions.canAnalyzeWorkspace ?? false)}
         >
             <CustomizationProvider slots={slots}>
-                <GenAIChatWrapper initializing={loading} className={className} />
+                <OverlayAlignOnParentScrollProvider>
+                    <GenAIChatWrapper initializing={loading} className={className} />
+                </OverlayAlignOnParentScrollProvider>
             </CustomizationProvider>
         </ConfigProvider>
     );

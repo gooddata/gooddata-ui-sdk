@@ -27,21 +27,19 @@ export function getColumnWidths(resizingState: ResizingState): RepeaterColumnWid
         return [];
     }
 
-    return [
-        ...resizingState.manuallyResizedColumns.map((col: Column) => {
-            const column = columnApi.getColumn(col.getColId());
-            const item = getSizeItem(resizingState, column!);
-            const sizeItem = getColumnWidthItem(item!, column!, {
-                value: column!.getActualWidth(),
-                //TODO: Grow to fit
-                allowGrowToFit: false,
-            });
+    return resizingState.manuallyResizedColumns.map((col: Column) => {
+        const column = columnApi.getColumn(col.getColId());
+        const item = getSizeItem(resizingState, column!);
+        const sizeItem = getColumnWidthItem(item!, column!, {
+            value: column!.getActualWidth(),
+            //TODO: Grow to fit
+            allowGrowToFit: false,
+        });
 
-            invariant(sizeItem, `unable to find size item by filed ${col.getColId()}`);
+        invariant(sizeItem, `unable to find size item by filed ${col.getColId()}`);
 
-            return sizeItem;
-        }),
-    ];
+        return sizeItem;
+    });
 }
 
 function getSizeItem(resizingState: ResizingState, column: Column) {

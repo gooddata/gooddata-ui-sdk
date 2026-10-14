@@ -1741,11 +1741,11 @@ export const attributesAndColumnsReferencePoint: IReferencePoint = {
     buckets: [
         {
             localIdentifier: "attribute",
-            items: [...attributeItems.slice(0, 2)],
+            items: attributeItems.slice(0, 2),
         },
         {
             localIdentifier: "columns",
-            items: [...masterMeasureItems.slice(0, 2)],
+            items: masterMeasureItems.slice(0, 2),
         },
     ],
     filters: {
@@ -3603,7 +3603,7 @@ export const stackMeasuresToPercentReferencePoint: IReferencePoint = {
     buckets: [
         {
             localIdentifier: "measures",
-            items: [...masterMeasureItems.slice(0, 2)],
+            items: masterMeasureItems.slice(0, 2),
         },
         {
             localIdentifier: "view",

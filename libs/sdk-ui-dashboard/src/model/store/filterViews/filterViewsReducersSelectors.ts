@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
 import { invariant } from "ts-invariant";
@@ -46,6 +46,23 @@ export const selectFilterViews: DashboardSelector<IDashboardFilterView[]> = crea
             ? (state.filterViews.find((item) => areObjRefsEqual(item.dashboard, dashboardRef))?.filterViews ??
                   [])
             : [];
+    },
+);
+
+/**
+ * Selects the filter views of the current dashboard across all its tabs.
+ *
+ * @internal
+ */
+export const selectDashboardFilterViews: DashboardSelector<IDashboardFilterView[]> = createSelector(
+    selectSelf,
+    selectDashboardRef,
+    (state, dashboardRef) => {
+        invariant(state.filterViews, "attempting to access uninitialized filterViews state");
+
+        return state.filterViews
+            .filter((item) => areObjRefsEqual(item.dashboard, dashboardRef))
+            .flatMap((item) => item.filterViews ?? []);
     },
 );
 

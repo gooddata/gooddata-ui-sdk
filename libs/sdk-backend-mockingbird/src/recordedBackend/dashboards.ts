@@ -74,6 +74,7 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
         public readonly workspace: string,
         private readonly insights: IWorkspaceInsightsService,
         private readonly recordings: RecordingIndex,
+        private readonly filterViews: IDashboardFilterView[],
     ) {}
 
     private findRecordingOrLocalDashboard(ref: ObjRef): DashboardRecording | IDashboard | undefined {
@@ -513,8 +514,10 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
         return Promise.resolve([]);
     }
 
-    public getFilterViewsForCurrentUser(_dashboardRef: ObjRef): Promise<IDashboardFilterView[]> {
-        return Promise.resolve([]);
+    public getFilterViewsForCurrentUser(dashboardRef: ObjRef): Promise<IDashboardFilterView[]> {
+        return Promise.resolve(
+            this.filterViews.filter((filterView) => areObjRefsEqual(filterView.dashboard, dashboardRef)),
+        );
     }
 
     public createFilterView(_filterView: IDashboardFilterView): Promise<IDashboardFilterView> {

@@ -409,6 +409,8 @@
     "dashboardMeasureValueFilter.section.all_other": "所有其他",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "创建此控制面板的用户。无法删除创建者。",
     "attributesDropdown.placeholder": "搜索…",
+    "attributesDropdown.parameters.section.from_dashboard": "来自仪表板",
+    "attributesDropdown.parameters.section.ungrouped": "未分组",
     "attributesDropdown.configuration": "配置",
     "attributesDropdown.save": "保存",
     "attributesDropdown.filterBy": "筛选条件",

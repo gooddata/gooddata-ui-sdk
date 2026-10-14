@@ -510,7 +510,7 @@ function enhanceBaseChartWithClusteringConfiguration(fullConfig: IChartConfig) {
     return !isEmpty(fullConfig.clustering) && fullConfig.clustering.enabled
         ? {
               clusteringConfig: {
-                  ...(fullConfig.clustering ?? {}),
+                  ...fullConfig.clustering,
                   numberOfClusters:
                       typeof fullConfig?.clustering?.numberOfClusters === "string"
                           ? parseInt(fullConfig.clustering.numberOfClusters, 10)

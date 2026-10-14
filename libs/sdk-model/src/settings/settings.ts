@@ -630,7 +630,6 @@ export interface IFeatureFlags {
     enableOracleDataSource?: boolean;
     enableOidcAuth?: boolean;
     enableMotherDuckDataSource?: boolean;
-    enableMongoDbDataSource?: boolean;
     enableStarrocksDataSource?: boolean;
     enableSingleStoreDataSource?: boolean;
     enableDenodoDataSource?: boolean;
@@ -1207,6 +1206,11 @@ export interface IFeatureFlags {
     enableReportsSubsections?: boolean;
 
     /**
+     * Enable Publisher v2.
+     */
+    enablePublisherV2?: boolean;
+
+    /**
      * Enable the write and export postMessage commands for embedded dashboards and Analytical Designer.
      *
      * @remarks
@@ -1227,4 +1231,12 @@ export interface IFeatureFlags {
      * Disabled by default.
      */
     enableLocalizationOverview?: boolean;
+
+    /**
+     * Enable the new rendering of charts in the AI Assistant.
+     *
+     * @remarks
+     * Disabled by default.
+     */
+    enableAiAssistantChartsV2?: boolean;
 }

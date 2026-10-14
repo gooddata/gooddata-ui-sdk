@@ -200,11 +200,7 @@ function DefaultFilterBarContainerCore({ children }: { children?: ReactNode }) {
                 {isInEditMode ? <FlexibleBulletsBar /> : null}
             </div>
             {isWorkingSelectionChanged && isApplyAllAtOnceEnabledAndSet ? (
-                <div
-                    aria-hidden="true"
-                    className="filters-message"
-                    style={{ marginTop: rows.length > 1 ? "35px" : "10px" }}
-                >
+                <div aria-hidden="true" className="filters-message">
                     <Message type="progress">
                         <FormattedMessage
                             id="filterBar.unappliedFiltersNotification"
@@ -230,7 +226,7 @@ function DefaultFilterBarContainerCore({ children }: { children?: ReactNode }) {
                 </div>
             ) : null}
             {showExecutionTimestampMessage ? (
-                <div className="filters-message" style={{ marginTop: rows.length > 1 ? "35px" : "10px" }}>
+                <div className="filters-message">
                     <Message type="progress">
                         <FormattedMessage
                             id="filterBar.executionTimestampNotificationMessage"

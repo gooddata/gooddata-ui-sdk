@@ -88,7 +88,7 @@ export function* exportDashboardToPdfPresentationHandler(
     );
 
     const options: IDashboardExportPresentationOptions = {
-        ...(cmd.payload?.options ?? {}),
+        ...cmd.payload?.options,
         exportMetadata: cmd.payload?.exportMetadata,
         timeout,
         // explicit caller-provided overrides win; otherwise fall back to the store-derived effective ones

@@ -409,6 +409,8 @@
     "dashboardMeasureValueFilter.section.all_other": "Diğerlerinin tümü",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "Bu panoyu oluşturan kullanıcı. Oluşturucular kaldırılamaz.",
     "attributesDropdown.placeholder": "Ara…",
+    "attributesDropdown.parameters.section.from_dashboard": "Gösterge tablosundan",
+    "attributesDropdown.parameters.section.ungrouped": "Gruplandırılmamış",
     "attributesDropdown.configuration": "Yapılandırma",
     "attributesDropdown.save": "Kaydet",
     "attributesDropdown.filterBy": "Şuna göre filtrele",

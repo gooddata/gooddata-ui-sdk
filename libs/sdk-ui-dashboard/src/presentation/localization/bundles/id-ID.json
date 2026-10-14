@@ -409,6 +409,8 @@
     "dashboardMeasureValueFilter.section.all_other": "Semua lainnya",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "Pengguna yang membuat dasbor ini. Pembuat tidak dapat dihapus.",
     "attributesDropdown.placeholder": "Cari…",
+    "attributesDropdown.parameters.section.from_dashboard": "Dari dasbor",
+    "attributesDropdown.parameters.section.ungrouped": "Tidak dikelompokkan",
     "attributesDropdown.configuration": "Konfigurasi",
     "attributesDropdown.save": "Simpan",
     "attributesDropdown.filterBy": "Filter berdasarkan",

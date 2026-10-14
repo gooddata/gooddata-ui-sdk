@@ -409,6 +409,8 @@
     "dashboardMeasureValueFilter.section.all_other": "Alle andere",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "De gebruiker die dit dashboard heeft gemaakt. Makers kunnen niet worden verwijderd.",
     "attributesDropdown.placeholder": "Bezig met zoeken…",
+    "attributesDropdown.parameters.section.from_dashboard": "Van dashboard",
+    "attributesDropdown.parameters.section.ungrouped": "Niet gegroepeerd",
     "attributesDropdown.configuration": "Configuratie",
     "attributesDropdown.save": "Opslaan",
     "attributesDropdown.filterBy": "Filteren volgens",

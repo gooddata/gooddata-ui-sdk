@@ -38,6 +38,7 @@ export function* changeRenderModeHandler(
             resetDashboardRuntime,
             ctx,
             resetDashboardCommand(correlationId),
+            renderMode,
         );
         yield put(
             batchActions([

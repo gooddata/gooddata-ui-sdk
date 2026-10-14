@@ -409,6 +409,8 @@
     "dashboardMeasureValueFilter.section.all_other": "Усе інше",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "Користувач, який створив цей dashboard. Творців не можна видаляти.",
     "attributesDropdown.placeholder": "Пошук…",
+    "attributesDropdown.parameters.section.from_dashboard": "З інформаційної панелі",
+    "attributesDropdown.parameters.section.ungrouped": "Без групи",
     "attributesDropdown.configuration": "Конфігурація",
     "attributesDropdown.save": "Зберегти",
     "attributesDropdown.filterBy": "Фільтрувати за",

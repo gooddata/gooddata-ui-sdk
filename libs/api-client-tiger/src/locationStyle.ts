@@ -79,9 +79,7 @@ export async function LocationStyleApi_GetDefaultStyle(
     axios: AxiosInstance,
     params?: ILocationStyleParams,
 ): Promise<LocationStyleDocument> {
-    const queryParams = {
-        ...(params?.language === undefined ? {} : { language: params.language }),
-    };
+    const queryParams = params?.language === undefined ? {} : { language: params.language };
 
     const response = await axios.get<LocationStyleDocument>("/api/v1/location/style", {
         params: queryParams,
@@ -105,9 +103,7 @@ export async function LocationStyleApi_GetStyleById(
     styleId: string,
     params?: ILocationStyleParams,
 ): Promise<LocationStyleDocument> {
-    const queryParams = {
-        ...(params?.language === undefined ? {} : { language: params.language }),
-    };
+    const queryParams = params?.language === undefined ? {} : { language: params.language };
 
     const response = await axios.get<LocationStyleDocument>(
         `/api/v1/location/styles/${encodeURIComponent(styleId)}`,

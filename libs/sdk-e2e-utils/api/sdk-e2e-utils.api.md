@@ -45,7 +45,10 @@ export function clickByBoundingBox(page: Page, locator: Locator, options?: {
 export function createTest<TestConditionsValue extends TestConditionsValueConstraint = never, T extends {} = {}, W extends {} = {}>(options: ICreateTestOptions<TestConditionsValue, T, W>): Test<TestConditionsValue, PlaywrightBaseTestArgs & T, PlaywrightBaseWorkerArgs & W>;
 
 // @internal (undocumented)
-export type FeatureFlags = Record<string, FeatureHubFeatureValue>;
+export type FeatureFlags = Record<string, FeatureFlagValue>;
+
+// @internal (undocumented)
+export type FeatureFlagValue = FeatureHubFeatureValue | object;
 
 // @internal (undocumented)
 export type FeatureHubFeatureValue = boolean | string | number;
@@ -129,14 +132,6 @@ export interface IDescribeFunction<TestConditionsValue extends TestConditionsVal
 export interface IDescribeModeFunction<TestConditionsValue extends TestConditionsValueConstraint = never> extends IDescribeFunction<TestConditionsValue> {
     // (undocumented)
     only: IDescribeFunction<TestConditionsValue>;
-}
-
-// @internal (undocumented)
-export interface IFeatureHubEnvironment {
-    // (undocumented)
-    features: IFeatureHubFeature[];
-    // (undocumented)
-    id: string;
 }
 
 // @internal (undocumented)
@@ -241,8 +236,6 @@ export interface ITestDetails<TestConditionsValue extends TestConditionsValueCon
     additionalWindowProperties?: WindowProperties;
     conditions?: TestConditionsValue;
     featureFlags?: FeatureFlags;
-    // (undocumented)
-    workspaceSettings?: WorkspaceSettings;
 }
 
 // @internal
@@ -279,9 +272,6 @@ export interface IWorkspaceIdMapping {
 
 // @internal
 export function loadMappings(host: string, mappingFilePath: string): Promise<void>;
-
-// @internal (undocumented)
-export function makeFeatureHubResponse(features: IFeatureHubFeature[]): IFeatureHubEnvironment[];
 
 // @internal
 export function mockLogRequests(host: string): Promise<void>;
@@ -332,9 +322,6 @@ export type TestConditionsValueConstraint = object | string | number;
 
 // @internal (undocumented)
 export type WindowProperties = Record<string, unknown>;
-
-// @internal (undocumented)
-export type WorkspaceSettings = Record<string, unknown>;
 
 // (No @packageDocumentation comment for this package)
 

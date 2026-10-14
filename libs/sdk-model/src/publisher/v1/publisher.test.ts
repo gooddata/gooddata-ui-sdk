@@ -3,53 +3,53 @@
 import { assert, describe, expect, it } from "vitest";
 
 import {
-    BuiltInPublisherPageLayoutPortraitCover,
-    BuiltInPublisherPageLayoutPortraitSection,
-    BuiltInPublisherPageLayoutPortraitSummary,
-    BuiltInPublisherPageLayouts,
+    BuiltInPublisherPageLayoutPortraitCoverV1,
+    BuiltInPublisherPageLayoutPortraitSectionV1,
+    BuiltInPublisherPageLayoutPortraitSummaryV1,
+    BuiltInPublisherPageLayoutsV1,
 } from "./builtinPageLayouts.js";
 import { isPublisherDocumentContentV1 } from "./content.js";
 import {
-    isPublisherDocument,
-    isPublisherDocumentDefinition,
-    isPublisherDocumentTemplate,
-    isPublisherDocumentTemplateDefinition,
+    isPublisherDocumentDefinitionV1,
+    isPublisherDocumentTemplateDefinitionV1,
+    isPublisherDocumentTemplateV1,
+    isPublisherDocumentV1,
 } from "./document.js";
 import {
-    newAdHocPublisherDocumentDefinition,
-    newPublisherDocumentContent,
-    newPublisherDocumentDefinitionFromTemplate,
-    newPublisherDocumentPageFromLayout,
-    newPublisherDocumentTemplateDefinition,
-    newPublisherPageLayoutDefinition,
-    publisherDocumentPage,
+    newAdHocPublisherDocumentDefinitionV1,
+    newPublisherDocumentContentV1,
+    newPublisherDocumentDefinitionFromTemplateV1,
+    newPublisherDocumentPageFromLayoutV1,
+    newPublisherDocumentTemplateDefinitionV1,
+    newPublisherPageLayoutDefinitionV1,
+    publisherDocumentPageV1,
 } from "./factory.js";
-import { type PublisherPageLayoutNode, isPublisherLayoutSlotRef } from "./layout.js";
+import { type PublisherPageLayoutNodeV1, isPublisherLayoutSlotRefV1 } from "./layout.js";
 import {
-    DefaultPublisherPageFormat,
-    PublisherPageFormatAspectRatios,
-    PublisherPageFormats,
-    isPublisherPageFormat,
+    DefaultPublisherPageFormatV1,
+    PublisherPageFormatAspectRatiosV1,
+    PublisherPageFormatsV1,
+    isPublisherPageFormatV1,
 } from "./pageFormat.js";
 import {
-    type IPublisherPageBody,
-    isPublisherPageLayout,
-    isPublisherPageLayoutDefinition,
-    validatePublisherPageBody,
+    type IPublisherPageBodyV1,
+    isPublisherPageLayoutDefinitionV1,
+    isPublisherPageLayoutV1,
+    validatePublisherPageBodyV1,
 } from "./pageLayout.js";
 import {
-    isPublisherImageSlot,
-    isPublisherSlot,
-    isPublisherTextSlot,
-    isPublisherVisualizationSlot,
+    isPublisherImageSlotV1,
+    isPublisherSlotV1,
+    isPublisherTextSlotV1,
+    isPublisherVisualizationSlotV1,
 } from "./slot.js";
 import {
-    getPublisherTextPlaceholders,
-    publisherTextPlaceholder,
-    resolvePublisherTextPlaceholders,
+    getPublisherTextPlaceholdersV1,
+    publisherTextPlaceholderV1,
+    resolvePublisherTextPlaceholdersV1,
 } from "./variables.js";
 
-const body: IPublisherPageBody = {
+const body: IPublisherPageBodyV1 = {
     kind: "content",
     layout: {
         type: "section",
@@ -67,74 +67,74 @@ const body: IPublisherPageBody = {
 
 describe("placeholder helpers", () => {
     it("collects distinct placeholders in order of first occurrence", () => {
-        expect(getPublisherTextPlaceholders("{periodStart} to {periodEnd} ({periodStart})")).toEqual([
+        expect(getPublisherTextPlaceholdersV1("{periodStart} to {periodEnd} ({periodStart})")).toEqual([
             "periodStart",
             "periodEnd",
         ]);
     });
 
     it("ignores malformed markers", () => {
-        expect(getPublisherTextPlaceholders("{1bad} { spaced } {} {good_1}")).toEqual(["good_1"]);
+        expect(getPublisherTextPlaceholdersV1("{1bad} { spaced } {} {good_1}")).toEqual(["good_1"]);
     });
 
     it("resolves a marker inside braces, leaving the braces in place", () => {
-        expect(getPublisherTextPlaceholders("{{periodStart}}")).toEqual(["periodStart"]);
-        expect(resolvePublisherTextPlaceholders("{{a}}", { a: "1" })).toBe("{1}");
+        expect(getPublisherTextPlaceholdersV1("{{periodStart}}")).toEqual(["periodStart"]);
+        expect(resolvePublisherTextPlaceholdersV1("{{a}}", { a: "1" })).toBe("{1}");
     });
 
     it("reads markers written back to back", () => {
-        expect(getPublisherTextPlaceholders("{a}{b}")).toEqual(["a", "b"]);
-        expect(resolvePublisherTextPlaceholders("{a}{b}", { a: "1", b: "2" })).toBe("12");
+        expect(getPublisherTextPlaceholdersV1("{a}{b}")).toEqual(["a", "b"]);
+        expect(resolvePublisherTextPlaceholdersV1("{a}{b}", { a: "1", b: "2" })).toBe("12");
     });
 
     it("builds a marker the collector reads back", () => {
-        expect(getPublisherTextPlaceholders(publisherTextPlaceholder("periodStart"))).toEqual([
+        expect(getPublisherTextPlaceholdersV1(publisherTextPlaceholderV1("periodStart"))).toEqual([
             "periodStart",
         ]);
     });
 
     it("resolves known values and keeps unknown markers", () => {
-        expect(resolvePublisherTextPlaceholders("{a} and {b}", { a: "1" })).toBe("1 and {b}");
+        expect(resolvePublisherTextPlaceholdersV1("{a} and {b}", { a: "1" })).toBe("1 and {b}");
     });
 
     it("does not expand values recursively", () => {
-        expect(resolvePublisherTextPlaceholders("{a}", { a: "{b}", b: "x" })).toBe("{b}");
+        expect(resolvePublisherTextPlaceholdersV1("{a}", { a: "{b}", b: "x" })).toBe("{b}");
     });
 });
 
 describe("type guards", () => {
-    const page = newPublisherPageLayoutDefinition("Page", body);
-    const template = newPublisherDocumentTemplateDefinition(
+    const page = newPublisherPageLayoutDefinitionV1("Page", body);
+    const template = newPublisherDocumentTemplateDefinitionV1(
         "Template",
-        newPublisherDocumentContent([newPublisherDocumentPageFromLayout(page, "p1")]),
+        newPublisherDocumentContentV1([newPublisherDocumentPageFromLayoutV1(page, "p1")]),
     );
-    const publisherDocument = newPublisherDocumentDefinitionFromTemplate(template, {
+    const publisherDocument = newPublisherDocumentDefinitionFromTemplateV1(template, {
         title: "Report",
         periodStart: "2026-01-01",
         periodEnd: "2026-03-31",
     });
 
     it("distinguishes definitions from saved objects by ref", () => {
-        expect(isPublisherPageLayoutDefinition(page)).toBe(true);
-        expect(isPublisherPageLayout(page)).toBe(false);
-        expect(isPublisherPageLayout({ ...page, ref: { identifier: "p" } })).toBe(true);
+        expect(isPublisherPageLayoutDefinitionV1(page)).toBe(true);
+        expect(isPublisherPageLayoutV1(page)).toBe(false);
+        expect(isPublisherPageLayoutV1({ ...page, ref: { identifier: "p" } })).toBe(true);
 
-        expect(isPublisherDocumentTemplateDefinition(template)).toBe(true);
-        expect(isPublisherDocumentTemplate(template)).toBe(false);
-        expect(isPublisherDocumentTemplate({ ...template, ref: { identifier: "t" } })).toBe(true);
+        expect(isPublisherDocumentTemplateDefinitionV1(template)).toBe(true);
+        expect(isPublisherDocumentTemplateV1(template)).toBe(false);
+        expect(isPublisherDocumentTemplateV1({ ...template, ref: { identifier: "t" } })).toBe(true);
 
-        expect(isPublisherDocumentDefinition(publisherDocument)).toBe(true);
-        expect(isPublisherDocument(publisherDocument)).toBe(false);
-        expect(isPublisherDocument({ ...publisherDocument, ref: { identifier: "r" } })).toBe(true);
+        expect(isPublisherDocumentDefinitionV1(publisherDocument)).toBe(true);
+        expect(isPublisherDocumentV1(publisherDocument)).toBe(false);
+        expect(isPublisherDocumentV1({ ...publisherDocument, ref: { identifier: "r" } })).toBe(true);
     });
 
     it("discriminates slot types", () => {
         const [viz, text] = body.slots;
-        expect(isPublisherVisualizationSlot(viz)).toBe(true);
-        expect(isPublisherTextSlot(text)).toBe(true);
-        expect(isPublisherImageSlot(viz)).toBe(false);
-        expect(isPublisherSlot(viz)).toBe(true);
-        expect(isPublisherSlot({})).toBe(false);
+        expect(isPublisherVisualizationSlotV1(viz)).toBe(true);
+        expect(isPublisherTextSlotV1(text)).toBe(true);
+        expect(isPublisherImageSlotV1(viz)).toBe(false);
+        expect(isPublisherSlotV1(viz)).toBe(true);
+        expect(isPublisherSlotV1({})).toBe(false);
     });
 
     it("recognizes content version 1", () => {
@@ -143,20 +143,20 @@ describe("type guards", () => {
     });
 });
 
-describe("newPublisherDocumentPageFromLayout", () => {
-    const page = newPublisherPageLayoutDefinition("Page", body);
+describe("newPublisherDocumentPageFromLayoutV1", () => {
+    const page = newPublisherPageLayoutDefinitionV1("Page", body);
 
     it("prefixes slot ids and layout slotIds consistently", () => {
-        const instance = newPublisherDocumentPageFromLayout(page, "p1");
+        const instance = newPublisherDocumentPageFromLayoutV1(page, "p1");
 
         expect(instance.slots.map((slot) => slot.localIdentifier)).toEqual(["p1_widget", "p1_summary"]);
-        expect(validatePublisherPageBody(instance)).toEqual([]);
+        expect(validatePublisherPageBodyV1(instance)).toEqual([]);
     });
 
     it("keeps repeated instances of one page unique within content", () => {
-        const content = newPublisherDocumentContent([
-            newPublisherDocumentPageFromLayout(page, "p1"),
-            newPublisherDocumentPageFromLayout(page, "p2"),
+        const content = newPublisherDocumentContentV1([
+            newPublisherDocumentPageFromLayoutV1(page, "p1"),
+            newPublisherDocumentPageFromLayoutV1(page, "p2"),
         ]);
 
         const allSlotIds = content.pages.flatMap((contentPage) =>
@@ -166,8 +166,8 @@ describe("newPublisherDocumentPageFromLayout", () => {
     });
 
     it("detaches the clone from the source page", () => {
-        const mutablePage = newPublisherPageLayoutDefinition("Page", JSON.parse(JSON.stringify(body)));
-        const instance = newPublisherDocumentPageFromLayout(mutablePage, "p1");
+        const mutablePage = newPublisherPageLayoutDefinitionV1("Page", JSON.parse(JSON.stringify(body)));
+        const instance = newPublisherDocumentPageFromLayoutV1(mutablePage, "p1");
 
         mutablePage.content.slots[0]!.placeholder!.hint = "changed";
 
@@ -175,19 +175,19 @@ describe("newPublisherDocumentPageFromLayout", () => {
     });
 
     it("generates a localIdentifier when none is given", () => {
-        const instance = newPublisherDocumentPageFromLayout(page);
+        const instance = newPublisherDocumentPageFromLayoutV1(page);
         expect(instance.localIdentifier).toMatch(/^page_/);
     });
 });
 
-describe("newPublisherDocumentDefinitionFromTemplate", () => {
+describe("newPublisherDocumentDefinitionFromTemplateV1", () => {
     it("deep-copies content so the document stays frozen", () => {
-        const page = newPublisherPageLayoutDefinition("Page", JSON.parse(JSON.stringify(body)));
-        const template = newPublisherDocumentTemplateDefinition(
+        const page = newPublisherPageLayoutDefinitionV1("Page", JSON.parse(JSON.stringify(body)));
+        const template = newPublisherDocumentTemplateDefinitionV1(
             "Template",
-            newPublisherDocumentContent([newPublisherDocumentPageFromLayout(page, "p1")]),
+            newPublisherDocumentContentV1([newPublisherDocumentPageFromLayoutV1(page, "p1")]),
         );
-        const publisherDocument = newPublisherDocumentDefinitionFromTemplate(template, {
+        const publisherDocument = newPublisherDocumentDefinitionFromTemplateV1(template, {
             title: "Report",
             periodStart: "2026-01-01",
             periodEnd: "2026-03-31",
@@ -196,13 +196,13 @@ describe("newPublisherDocumentDefinitionFromTemplate", () => {
         template.content.pages[0]!.slots[0]!.placeholder!.hint = "changed";
 
         expect(publisherDocument.content.pages[0]!.slots[0]!.placeholder!.hint).toBe("Add a visualization");
-        expect(publisherDocumentPage(publisherDocument, "p1")).toBeDefined();
+        expect(publisherDocumentPageV1(publisherDocument, "p1")).toBeDefined();
     });
 });
 
-describe("newAdHocPublisherDocumentDefinition", () => {
+describe("newAdHocPublisherDocumentDefinitionV1", () => {
     it("creates a document with empty content by default", () => {
-        const publisherDocument = newAdHocPublisherDocumentDefinition({
+        const publisherDocument = newAdHocPublisherDocumentDefinitionV1({
             title: "Ad hoc",
             periodStart: "2026-01-01",
             periodEnd: "2026-01-31",
@@ -212,59 +212,59 @@ describe("newAdHocPublisherDocumentDefinition", () => {
     });
 });
 
-describe("validatePublisherPageBody", () => {
+describe("validatePublisherPageBodyV1", () => {
     it("reports duplicate slot ids as errors", () => {
-        const invalid: IPublisherPageBody = {
+        const invalid: IPublisherPageBodyV1 = {
             ...body,
             slots: [body.slots[0]!, { ...body.slots[1]!, localIdentifier: "widget" }],
         };
-        expect(validatePublisherPageBody(invalid).some((issue) => issue.severity === "error")).toBe(true);
+        expect(validatePublisherPageBodyV1(invalid).some((issue) => issue.severity === "error")).toBe(true);
     });
 
     it("reports non-positive weights as errors", () => {
-        const invalid: IPublisherPageBody = {
+        const invalid: IPublisherPageBodyV1 = {
             ...body,
             layout: { type: "slotRef", slotId: "widget", weight: 0 },
         };
-        expect(validatePublisherPageBody(invalid).some((issue) => issue.severity === "error")).toBe(true);
+        expect(validatePublisherPageBodyV1(invalid).some((issue) => issue.severity === "error")).toBe(true);
     });
 
     it("reports unresolved and unplaced slots as warnings", () => {
-        const withExtras: IPublisherPageBody = {
+        const withExtras: IPublisherPageBodyV1 = {
             ...body,
             layout: { type: "slotRef", slotId: "missing" },
         };
-        const issues = validatePublisherPageBody(withExtras);
+        const issues = validatePublisherPageBodyV1(withExtras);
         expect(issues.every((issue) => issue.severity === "warning")).toBe(true);
         expect(issues).toHaveLength(3);
     });
 });
 
-describe("BuiltInPublisherPageLayouts", () => {
+describe("BuiltInPublisherPageLayoutsV1", () => {
     it("contains 25 pages, all flagged and locked", () => {
-        expect(BuiltInPublisherPageLayouts).toHaveLength(25);
-        for (const page of BuiltInPublisherPageLayouts) {
+        expect(BuiltInPublisherPageLayoutsV1).toHaveLength(25);
+        for (const page of BuiltInPublisherPageLayoutsV1) {
             expect(page.isBuiltIn).toBe(true);
             expect(page.isLocked).toBe(true);
-            expect(isPublisherPageLayout(page)).toBe(true);
+            expect(isPublisherPageLayoutV1(page)).toBe(true);
         }
     });
 
     it("every page body is structurally valid", () => {
-        for (const page of BuiltInPublisherPageLayouts) {
-            expect(validatePublisherPageBody(page.content)).toEqual([]);
+        for (const page of BuiltInPublisherPageLayoutsV1) {
+            expect(validatePublisherPageBodyV1(page.content)).toEqual([]);
         }
     });
 
     it("has unique refs and titles", () => {
-        const refIds = BuiltInPublisherPageLayouts.map((page) => JSON.stringify(page.ref));
-        const titles = BuiltInPublisherPageLayouts.map((page) => page.title);
+        const refIds = BuiltInPublisherPageLayoutsV1.map((page) => JSON.stringify(page.ref));
+        const titles = BuiltInPublisherPageLayoutsV1.map((page) => page.title);
         expect(new Set(refIds).size).toBe(refIds.length);
         expect(new Set(titles).size).toBe(titles.length);
     });
 
     it("is deeply frozen", () => {
-        for (const layout of BuiltInPublisherPageLayouts) {
+        for (const layout of BuiltInPublisherPageLayoutsV1) {
             expect(Object.isFrozen(layout)).toBe(true);
             expect(Object.isFrozen(layout.content)).toBe(true);
             expect(Object.isFrozen(layout.content.slots[0])).toBe(true);
@@ -273,36 +273,36 @@ describe("BuiltInPublisherPageLayouts", () => {
     });
 
     it("declares a page format on every page", () => {
-        for (const page of BuiltInPublisherPageLayouts) {
-            expect(isPublisherPageFormat(page.content.format)).toBe(true);
+        for (const page of BuiltInPublisherPageLayoutsV1) {
+            expect(isPublisherPageFormatV1(page.content.format)).toBe(true);
         }
     });
 
     it("offers both widescreen and portrait pages", () => {
-        const formats = new Set(BuiltInPublisherPageLayouts.map((page) => page.content.format));
+        const formats = new Set(BuiltInPublisherPageLayoutsV1.map((page) => page.content.format));
         expect(formats).toEqual(new Set(["widescreen", "a4Portrait"]));
     });
 
     it("gives every portrait page a cover, a divider and content variants", () => {
-        const portrait = BuiltInPublisherPageLayouts.filter((page) => page.content.format === "a4Portrait");
+        const portrait = BuiltInPublisherPageLayoutsV1.filter((page) => page.content.format === "a4Portrait");
         expect(portrait).toHaveLength(9);
-        expect(portrait).toContain(BuiltInPublisherPageLayoutPortraitCover);
-        expect(portrait).toContain(BuiltInPublisherPageLayoutPortraitSection);
-        expect(portrait).toContain(BuiltInPublisherPageLayoutPortraitSummary);
+        expect(portrait).toContain(BuiltInPublisherPageLayoutPortraitCoverV1);
+        expect(portrait).toContain(BuiltInPublisherPageLayoutPortraitSectionV1);
+        expect(portrait).toContain(BuiltInPublisherPageLayoutPortraitSummaryV1);
         expect(portrait.map((page) => page.content.kind)).toContain("cover");
         expect(portrait.map((page) => page.content.kind)).toContain("section");
     });
 
     it("lays portrait content out in a column, never a wide row of visualizations", () => {
-        const widestRow = (node: PublisherPageLayoutNode): number =>
-            isPublisherLayoutSlotRef(node)
+        const widestRow = (node: PublisherPageLayoutNodeV1): number =>
+            isPublisherLayoutSlotRefV1(node)
                 ? 0
                 : Math.max(
                       node.direction === "row" ? node.children.length : 0,
                       ...node.children.map(widestRow),
                   );
 
-        for (const page of BuiltInPublisherPageLayouts.filter(
+        for (const page of BuiltInPublisherPageLayoutsV1.filter(
             (candidate) => candidate.content.format === "a4Portrait",
         )) {
             // The footer places a logo next to the page number, so two side by side is the floor.
@@ -311,14 +311,14 @@ describe("BuiltInPublisherPageLayouts", () => {
     });
 
     it("summary variants place the summary slot in the layout", () => {
-        const withSummary = BuiltInPublisherPageLayouts.filter((page) =>
+        const withSummary = BuiltInPublisherPageLayoutsV1.filter((page) =>
             page.content.slots.some((slot) => slot.localIdentifier === "summary"),
         );
         expect(withSummary).toHaveLength(8);
         for (const page of withSummary) {
             const slotIds: string[] = [];
-            const visit = (node: PublisherPageLayoutNode): void => {
-                if (isPublisherLayoutSlotRef(node)) {
+            const visit = (node: PublisherPageLayoutNodeV1): void => {
+                if (isPublisherLayoutSlotRefV1(node)) {
                     slotIds.push(node.slotId);
                 } else {
                     node.children.forEach(visit);
@@ -334,14 +334,14 @@ describe("box styling", () => {
     const imageSlot = (localIdentifier: string) =>
         ({ type: "image", localIdentifier, source: { type: "url", url: "https://x/bg.png" } }) as const;
 
-    const body = (overrides: Partial<IPublisherPageBody>): IPublisherPageBody => ({
+    const body = (overrides: Partial<IPublisherPageBodyV1>): IPublisherPageBodyV1 => ({
         layout: { type: "slotRef", slotId: "text1" },
         slots: [{ type: "paragraph", localIdentifier: "text1" }],
         ...overrides,
     });
 
     it("accepts an image background referencing an image slot, counting it as placed", () => {
-        const issues = validatePublisherPageBody(
+        const issues = validatePublisherPageBodyV1(
             body({
                 style: { background: { type: "image", slotId: "bg" } },
                 slots: [{ type: "paragraph", localIdentifier: "text1" }, imageSlot("bg")],
@@ -352,7 +352,7 @@ describe("box styling", () => {
     });
 
     it("warns about a background reference with no slot definition", () => {
-        const issues = validatePublisherPageBody(
+        const issues = validatePublisherPageBodyV1(
             body({ style: { background: { type: "image", slotId: "bg" } } }),
         );
 
@@ -362,7 +362,7 @@ describe("box styling", () => {
     });
 
     it("rejects a background reference to a non-image slot", () => {
-        const issues = validatePublisherPageBody(
+        const issues = validatePublisherPageBodyV1(
             body({ style: { background: { type: "image", slotId: "text1" } } }),
         );
 
@@ -375,7 +375,7 @@ describe("box styling", () => {
     });
 
     it("still reports a slot as unplaced when its only use is an invalid background reference", () => {
-        const issues = validatePublisherPageBody(
+        const issues = validatePublisherPageBodyV1(
             body({
                 style: { background: { type: "image", slotId: "orphan" } },
                 slots: [
@@ -400,9 +400,9 @@ describe("box styling", () => {
     });
 
     it("accepts a zero and a fractional corner radius", () => {
-        expect(validatePublisherPageBody(body({ style: { borderRadius: 0 } }))).toEqual([]);
+        expect(validatePublisherPageBodyV1(body({ style: { borderRadius: 0 } }))).toEqual([]);
         expect(
-            validatePublisherPageBody(
+            validatePublisherPageBodyV1(
                 body({
                     layout: {
                         type: "section",
@@ -416,7 +416,7 @@ describe("box styling", () => {
     });
 
     it("accepts a text slot painting its own box", () => {
-        const issues = validatePublisherPageBody(
+        const issues = validatePublisherPageBodyV1(
             body({
                 style: undefined,
                 layout: {
@@ -439,7 +439,7 @@ describe("box styling", () => {
     });
 
     it("does not count a background reference from a slot the layout never places", () => {
-        const issues = validatePublisherPageBody(
+        const issues = validatePublisherPageBodyV1(
             body({
                 slots: [
                     { type: "paragraph", localIdentifier: "text1" },
@@ -466,7 +466,7 @@ describe("box styling", () => {
     });
 
     it("counts a background named by both a placed and an unplaced slot", () => {
-        const issues = validatePublisherPageBody(
+        const issues = validatePublisherPageBodyV1(
             body({
                 layout: {
                     type: "section",
@@ -498,7 +498,7 @@ describe("box styling", () => {
     });
 
     it("checks the box of a text slot the layout never places", () => {
-        const issues = validatePublisherPageBody(
+        const issues = validatePublisherPageBodyV1(
             body({
                 slots: [
                     { type: "paragraph", localIdentifier: "text1" },
@@ -520,7 +520,7 @@ describe("box styling", () => {
     });
 
     it("rejects a text slot's background reference to a non-image slot", () => {
-        const issues = validatePublisherPageBody(
+        const issues = validatePublisherPageBodyV1(
             body({
                 slots: [
                     {
@@ -541,7 +541,7 @@ describe("box styling", () => {
     });
 
     it("rejects a negative corner radius on a text slot", () => {
-        const issues = validatePublisherPageBody(
+        const issues = validatePublisherPageBodyV1(
             body({
                 slots: [
                     {
@@ -562,10 +562,10 @@ describe("box styling", () => {
     });
 
     it("accepts a valid padding and rejects one that is negative, infinite or not a number", () => {
-        expect(validatePublisherPageBody(body({ style: { padding: 0 } }))).toEqual([]);
-        expect(validatePublisherPageBody(body({ style: { padding: 2.5 } }))).toEqual([]);
+        expect(validatePublisherPageBodyV1(body({ style: { padding: 0 } }))).toEqual([]);
+        expect(validatePublisherPageBodyV1(body({ style: { padding: 2.5 } }))).toEqual([]);
         for (const padding of [-1, Number.POSITIVE_INFINITY, Number.NaN]) {
-            expect(validatePublisherPageBody(body({ style: { padding } }))).toEqual([
+            expect(validatePublisherPageBodyV1(body({ style: { padding } }))).toEqual([
                 expect.objectContaining({
                     severity: "error",
                     message: expect.stringContaining("Padding"),
@@ -576,7 +576,7 @@ describe("box styling", () => {
 
     it("rejects a corner radius that is negative, infinite or not a number", () => {
         for (const borderRadius of [-1, Number.POSITIVE_INFINITY, Number.NaN]) {
-            expect(validatePublisherPageBody(body({ style: { borderRadius } }))).toEqual([
+            expect(validatePublisherPageBodyV1(body({ style: { borderRadius } }))).toEqual([
                 expect.objectContaining({
                     severity: "error",
                     message: expect.stringContaining("Border radius"),
@@ -584,7 +584,7 @@ describe("box styling", () => {
             ]);
         }
         expect(
-            validatePublisherPageBody(
+            validatePublisherPageBodyV1(
                 body({
                     layout: {
                         type: "section",
@@ -603,7 +603,7 @@ describe("box styling", () => {
     });
 
     it("prefixes background references when cloning a page into content", () => {
-        const definition = newPublisherPageLayoutDefinition("Hero", {
+        const definition = newPublisherPageLayoutDefinitionV1("Hero", {
             style: { background: { type: "image", slotId: "cover" } },
             layout: {
                 type: "section",
@@ -614,28 +614,28 @@ describe("box styling", () => {
             slots: [{ type: "paragraph", localIdentifier: "text1" }, imageSlot("cover"), imageSlot("band")],
         });
 
-        const page = newPublisherDocumentPageFromLayout(definition, "p1");
+        const page = newPublisherDocumentPageFromLayoutV1(definition, "p1");
 
         expect(page.style?.background).toEqual({ type: "image", slotId: "p1_cover" });
         const root = page.layout;
-        expect(isPublisherLayoutSlotRef(root)).toBe(false);
-        if (!isPublisherLayoutSlotRef(root)) {
+        expect(isPublisherLayoutSlotRefV1(root)).toBe(false);
+        if (!isPublisherLayoutSlotRefV1(root)) {
             expect(root.style?.background).toEqual({ type: "image", slotId: "p1_band" });
         }
-        expect(validatePublisherPageBody(page)).toEqual([]);
+        expect(validatePublisherPageBodyV1(page)).toEqual([]);
     });
 });
 
 describe("built-in footers", () => {
     it("pin the logo lower left and the page number lower right", () => {
-        for (const layout of BuiltInPublisherPageLayouts) {
+        for (const layout of BuiltInPublisherPageLayoutsV1) {
             const logo = layout.content.slots.find((slot) => slot.localIdentifier === "footerLogo");
             const pageNumber = layout.content.slots.find(
                 (slot) => slot.localIdentifier === "footerPageNumber",
             );
-            assert(isPublisherImageSlot(logo));
+            assert(isPublisherImageSlotV1(logo));
             expect(logo.style).toEqual({ horizontalAlign: "start", verticalAlign: "end" });
-            assert(isPublisherTextSlot(pageNumber));
+            assert(isPublisherTextSlotV1(pageNumber));
             expect(pageNumber.style).toEqual({
                 type: "largeText",
                 horizontalAlign: "end",
@@ -645,31 +645,31 @@ describe("built-in footers", () => {
     });
 });
 
-describe("PublisherPageFormat", () => {
+describe("PublisherPageFormatV1", () => {
     it("accepts only the known formats", () => {
-        for (const format of PublisherPageFormats) {
-            expect(isPublisherPageFormat(format)).toBe(true);
+        for (const format of PublisherPageFormatsV1) {
+            expect(isPublisherPageFormatV1(format)).toBe(true);
         }
-        expect(isPublisherPageFormat("a5Portrait")).toBe(false);
-        expect(isPublisherPageFormat(undefined)).toBe(false);
+        expect(isPublisherPageFormatV1("a5Portrait")).toBe(false);
+        expect(isPublisherPageFormatV1(undefined)).toBe(false);
     });
 
     it("defaults to the widescreen page shape", () => {
-        expect(DefaultPublisherPageFormat).toBe("widescreen");
-        expect(PublisherPageFormatAspectRatios[DefaultPublisherPageFormat]).toBeGreaterThan(1);
+        expect(DefaultPublisherPageFormatV1).toBe("widescreen");
+        expect(PublisherPageFormatAspectRatiosV1[DefaultPublisherPageFormatV1]).toBeGreaterThan(1);
     });
 
     it("describes the paper formats as upright", () => {
-        expect(PublisherPageFormatAspectRatios["a4Portrait"]).toBeLessThan(1);
-        expect(PublisherPageFormatAspectRatios["letterPortrait"]).toBeLessThan(1);
+        expect(PublisherPageFormatAspectRatiosV1["a4Portrait"]).toBeLessThan(1);
+        expect(PublisherPageFormatAspectRatiosV1["letterPortrait"]).toBeLessThan(1);
         // Letter is the squarer of the two sheets.
-        expect(PublisherPageFormatAspectRatios["letterPortrait"]).toBeGreaterThan(
-            PublisherPageFormatAspectRatios["a4Portrait"],
+        expect(PublisherPageFormatAspectRatiosV1["letterPortrait"]).toBeGreaterThan(
+            PublisherPageFormatAspectRatiosV1["a4Portrait"],
         );
     });
 
     it("reports an unknown format on a page body as an error", () => {
-        const issues = validatePublisherPageBody({
+        const issues = validatePublisherPageBodyV1({
             format: "a5Portrait" as never,
             layout: { type: "slotRef", slotId: "title" },
             slots: [{ type: "heading", localIdentifier: "title" }],

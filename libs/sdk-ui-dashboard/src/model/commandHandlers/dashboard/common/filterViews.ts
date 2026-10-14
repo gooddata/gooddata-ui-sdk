@@ -38,6 +38,7 @@ import {
     isSingleSelectionFilter,
 } from "@gooddata/sdk-model";
 
+import { type RenderMode } from "../../../../types.js";
 import { filterLocalIdentifiers } from "../../../store/filtering/dashboardFilterSelectors.js";
 import { getRestrictedDashboardFilters } from "../../../store/filtering/restrictedFilterUtils.js";
 import { isFilterTypeCompatibleWithSelectionType } from "../../../utils/attributeFilterSelectionTypeCompatibility.js";
@@ -467,6 +468,23 @@ export const changeFilterContextSelection = (
         configUpdates,
     };
 };
+
+/**
+ * Applies the user's default filter view for the given render mode. The view is the user's own starting
+ * point for viewing; edit mode starts from the saved filters, otherwise the view's selection would make
+ * the dashboard dirty and get saved into it.
+ */
+export function applyDefaultFilterViewForRenderMode(
+    dashboard: IDashboard,
+    filterViews: IDashboardFilterView[],
+    exportId: string | undefined,
+    unavailableObjects: ReadonlyArray<IUnavailableDashboardReference>,
+    renderMode: RenderMode,
+): IDashboard {
+    return renderMode === "edit"
+        ? dashboard
+        : applyDefaultFilterView(dashboard, filterViews, exportId, unavailableObjects);
+}
 
 export function applyDefaultFilterView(
     dashboard: IDashboard,

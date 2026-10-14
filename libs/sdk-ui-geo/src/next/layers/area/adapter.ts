@@ -325,7 +325,7 @@ export const areaAdapter: IGeoLayerAdapter<IGeoLayerArea, IAreaLayerOutput> = {
         }
 
         const config = {
-            ...(context.config ?? {}),
+            ...context.config,
             customTooltip: resolveLayerCustomTooltip(layer, context.config),
         };
         const ids = getAreaLayerIds(layer.id);
