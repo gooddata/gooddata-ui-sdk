@@ -34,7 +34,7 @@ export function* resolveAndRegisterDisplayFormMetadata(
             query,
             queryAttributeByDisplayForm([displayForm]),
         );
-        const attributeDisplayFormsMap = newDisplayFormMap([...attributes.flatMap((a) => a.displayForms)]);
+        const attributeDisplayFormsMap = newDisplayFormMap(attributes.flatMap((a) => a.displayForms));
         displayFormData = attributeDisplayFormsMap.get(displayForm);
     }
 

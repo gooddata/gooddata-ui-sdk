@@ -123,7 +123,7 @@ export function getHeadlineSupportedProperties(
 ): IVisualizationProperties<HeadlineControlProperties> {
     const comparison: IComparison = {
         ...HEADLINE_DEFAULT_CONTROL_PROPERTIES.comparison,
-        ...(visualizationProperties?.controls?.["comparison"] || {}),
+        ...visualizationProperties?.controls?.["comparison"],
     };
 
     return {

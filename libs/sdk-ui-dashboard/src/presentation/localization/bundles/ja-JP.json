@@ -409,6 +409,8 @@
     "dashboardMeasureValueFilter.section.all_other": "その他すべて",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "このダッシュボードを作成したユーザー。作成者は削除できません。",
     "attributesDropdown.placeholder": "検索…",
+    "attributesDropdown.parameters.section.from_dashboard": "ダッシュボードから",
+    "attributesDropdown.parameters.section.ungrouped": "グループなし",
     "attributesDropdown.configuration": "設定",
     "attributesDropdown.save": "保存",
     "attributesDropdown.filterBy": "次によりフィルター:",

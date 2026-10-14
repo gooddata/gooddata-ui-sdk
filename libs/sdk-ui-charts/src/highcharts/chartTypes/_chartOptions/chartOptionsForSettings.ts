@@ -34,12 +34,12 @@ export function updateConfigWithSettings(
     if (!settings) {
         return {
             enableCompactSize: true,
-            ...(config || {}),
+            ...config,
         };
     }
 
     const updatedConfig: IChartConfig = {
-        ...(config || {}),
+        ...config,
         enableCompactSize: true,
         ...(config?.enableJoinedAttributeAxisName === undefined
             ? {

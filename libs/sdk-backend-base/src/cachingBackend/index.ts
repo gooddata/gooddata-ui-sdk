@@ -509,13 +509,13 @@ class WithExecutionResultCaching extends DecoratedExecutionResult {
         private readonly execWrapper: PreparedExecutionWrapper,
         private readonly ctx: CachingContext,
         private readonly deleteExecutionCacheEntry: () => void,
-        private allData: Promise<IDataView> | undefined = undefined,
-        private allForecastConfig: IForecastConfig | undefined = undefined,
-        private allForecastData: Promise<IForecastResult> | undefined = undefined,
-        private allOutliersConfig: IOutliersConfig | undefined = undefined,
-        private allOutliersData: Promise<IOutliersResult> | undefined = undefined,
-        private windows: LRUCache<string, Promise<IDataView>> | undefined = undefined,
-        private collectionItemsCache: CollectionItemsCache | undefined = undefined,
+        private allData?: Promise<IDataView> | undefined,
+        private allForecastConfig?: IForecastConfig | undefined,
+        private allForecastData?: Promise<IForecastResult> | undefined,
+        private allOutliersConfig?: IOutliersConfig | undefined,
+        private allOutliersData?: Promise<IOutliersResult> | undefined,
+        private windows?: LRUCache<string, Promise<IDataView>> | undefined,
+        private collectionItemsCache?: CollectionItemsCache | undefined,
     ) {
         super(decorated, execWrapper);
 

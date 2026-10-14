@@ -409,6 +409,8 @@
     "dashboardMeasureValueFilter.section.all_other": "Tous les autres",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "L'utilisateur qui a créé ce tableau de bord. Les créateurs ne peuvent pas être retirés.",
     "attributesDropdown.placeholder": "Rechercher…",
+    "attributesDropdown.parameters.section.from_dashboard": "Du tableau de bord",
+    "attributesDropdown.parameters.section.ungrouped": "Non groupés",
     "attributesDropdown.configuration": "Configuration",
     "attributesDropdown.save": "Enregistrer",
     "attributesDropdown.filterBy": "Filtrer par",

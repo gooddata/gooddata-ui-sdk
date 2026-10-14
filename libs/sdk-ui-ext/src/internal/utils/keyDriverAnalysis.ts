@@ -15,7 +15,7 @@ export function cleanupKeyDriverAnalysisOnMetrics(
         return extendedPoint;
     }
 
-    const cloned = { ...(disableKeyDriveAnalysisOn ?? {}) };
+    const cloned = { ...disableKeyDriveAnalysisOn };
     const usedMeasures = Object.keys(cloned);
     const unused = usedMeasures.filter((m) => !measures.includes(m));
 
@@ -44,7 +44,7 @@ export function cleanupKeyDriverAnalysisOnMetrics(
 export function hideKeyDriverOnMetrics(extendedPoint: IExtendedReferencePoint): IExtendedReferencePoint {
     const measures = getAllItemsByType(extendedPoint.buckets ?? [], [METRIC]);
     const cloned = {
-        ...(extendedPoint.properties?.controls?.["disableKeyDriveAnalysisOn"] ?? {}),
+        ...extendedPoint.properties?.controls?.["disableKeyDriveAnalysisOn"],
     };
 
     measures.forEach((m) => {

@@ -25,6 +25,7 @@ import { ICatalogGroup } from '@gooddata/sdk-model';
 import { ICatalogMeasure } from '@gooddata/sdk-model';
 import { ICollectionItemsResult } from '@gooddata/sdk-backend-spi';
 import { IColorPalette } from '@gooddata/sdk-model';
+import { IDashboardFilterView } from '@gooddata/sdk-model';
 import { IDashboardWithReferences } from '@gooddata/sdk-backend-spi';
 import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IDateFilter } from '@gooddata/sdk-model';
@@ -181,6 +182,7 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
     attributeElementsFiltering?: AttributeElementsFiltering;
     getValidDescendants?: (refs: ObjRef[]) => ObjRef[];
     geoStyleSpecification?: IGeoStyleSpecification;
+    filterViews?: IDashboardFilterView[];
 };
 
 // @internal

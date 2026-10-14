@@ -7,12 +7,6 @@ import type { ITestDetails, TestConditionsValueConstraint } from "./types.js";
 /** Strip custom fields before passing details to Playwright. */
 export function toPlaywrightDetails(details: ITestDetails<TestConditionsValueConstraint>): TestDetails {
     // oxlint-disable-next-line @typescript-eslint/no-unused-vars
-    const {
-        workspaceSettings: _ws,
-        additionalWindowProperties: _awp,
-        featureFlags: _ff,
-        conditions: _c,
-        ...rest
-    } = details;
+    const { additionalWindowProperties: _awp, featureFlags: _ff, conditions: _c, ...rest } = details;
     return Object.keys(rest).length > 0 ? rest : {};
 }

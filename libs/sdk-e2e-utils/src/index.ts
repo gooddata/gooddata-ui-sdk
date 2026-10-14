@@ -17,12 +17,7 @@ export {
 } from "./constants.js";
 
 // // create-test - feature-hub
-export type {
-    IFeatureHubEnvironment,
-    IFeatureHubFeature,
-    FeatureHubFeatureValue,
-} from "./create-test/feature-hub/types.js";
-export { makeFeatureHubResponse } from "./create-test/feature-hub/mock.js";
+export type { IFeatureHubFeature, FeatureHubFeatureValue } from "./create-test/feature-hub/types.js";
 
 // create-test - GoodMock
 export type {
@@ -60,6 +55,7 @@ export type {
 export type {
     Callback,
     FeatureFlags,
+    FeatureFlagValue,
     ICreateTestOptions,
     ICustomCreateTestOptions,
     IDescribe,
@@ -74,7 +70,6 @@ export type {
     Test,
     TestConditionsValueConstraint,
     WindowProperties,
-    WorkspaceSettings,
 } from "./create-test/playwright/types.js";
 
 // helpers

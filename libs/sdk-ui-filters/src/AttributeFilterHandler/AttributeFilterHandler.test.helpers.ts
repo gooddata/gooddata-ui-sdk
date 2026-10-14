@@ -156,7 +156,7 @@ export const newTestAttributeFilterHandlerWithAttributeFilter = (
 ) => {
     const options: IAttributeFilterHandlerOptions = {
         selectionMode: "multi",
-        ...(advancedOptions ?? {}),
+        ...advancedOptions,
     };
 
     return newAttributeFilterHandler(backend, workspace, attributeFilter, options);

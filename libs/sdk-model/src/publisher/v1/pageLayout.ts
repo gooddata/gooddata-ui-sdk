@@ -2,25 +2,25 @@
 
 import { isEmpty } from "lodash-es";
 
-import { type IAuditableDates, type IAuditableUsers } from "../base/metadata.js";
-import { type FilterContextItem } from "../dashboard/filterContext.js";
-import { type ObjRef, isObjRef } from "../objRef/index.js";
+import { type IAuditableDates, type IAuditableUsers } from "../../base/metadata.js";
+import { type FilterContextItem } from "../../dashboard/filterContext.js";
+import { type ObjRef, isObjRef } from "../../objRef/index.js";
 
 import {
-    type PublisherPageLayoutNode,
-    isPublisherLayoutSection,
-    isPublisherLayoutSlotRef,
+    type PublisherPageLayoutNodeV1,
+    isPublisherLayoutSectionV1,
+    isPublisherLayoutSlotRefV1,
 } from "./layout.js";
-import { type PublisherPageFormat, isPublisherPageFormat } from "./pageFormat.js";
-import { type PublisherSlot, isPublisherImageSlot, isPublisherTextSlot } from "./slot.js";
-import { type IPublisherBoxStyle, isPublisherImageBackground } from "./styling.js";
+import { type PublisherPageFormatV1, isPublisherPageFormatV1 } from "./pageFormat.js";
+import { type PublisherSlotV1, isPublisherImageSlotV1, isPublisherTextSlotV1 } from "./slot.js";
+import { type IPublisherBoxStyleV1, isPublisherImageBackgroundV1 } from "./styling.js";
 
 /**
  * Body of a document page: geometry (flex split tree) plus the slots it places.
  *
  * @remarks
- * This is both the content of the standalone {@link IPublisherPageLayout} object and the shape
- * embedded in template/document content ({@link IPublisherDocumentPage}).
+ * This is both the content of the standalone {@link IPublisherPageLayoutV1} object and the shape
+ * embedded in template/document content ({@link IPublisherDocumentPageV1}).
  *
  * There is no header/footer chrome: page title, description, footer, page numbers and
  * logos are ordinary slots in the layout tree (text slots with `{currentPageNumber}`/`{totalPages}`,
@@ -28,7 +28,7 @@ import { type IPublisherBoxStyle, isPublisherImageBackground } from "./styling.j
  *
  * @alpha
  */
-export interface IPublisherPageBody {
+export interface IPublisherPageBodyV1 {
     /**
      * Editor hint only (template galleries, default styling, AI context).
      * Renderers must not branch layout logic on it — geometry always comes from `layout`.
@@ -37,24 +37,24 @@ export interface IPublisherPageBody {
 
     /**
      * Page proportions the layout was authored for. Defaults to
-     * {@link DefaultPublisherPageFormat}.
+     * {@link DefaultPublisherPageFormatV1}.
      */
-    format?: PublisherPageFormat;
+    format?: PublisherPageFormatV1;
 
     /**
      * Paint of the page itself, behind everything the layout places.
      */
-    style?: IPublisherBoxStyle;
+    style?: IPublisherBoxStyleV1;
 
     /**
      * Root of the page layout tree.
      */
-    layout: PublisherPageLayoutNode;
+    layout: PublisherPageLayoutNodeV1;
 
     /**
      * All slots referenced by the layout, flat, keyed by localIdentifier.
      */
-    slots: PublisherSlot[];
+    slots: PublisherSlotV1[];
 
     /**
      * Page-level filters: merged over content-level filters (a filter targeting the
@@ -68,7 +68,7 @@ export interface IPublisherPageBody {
  *
  * @alpha
  */
-export interface IPublisherPageLayoutContent extends IPublisherPageBody {
+export interface IPublisherPageLayoutContentV1 extends IPublisherPageBodyV1 {
     /**
      * Content model version, for stored-content evolution.
      */
@@ -80,7 +80,7 @@ export interface IPublisherPageLayoutContent extends IPublisherPageBody {
  *
  * @alpha
  */
-export interface IPublisherPageLayoutDefinition {
+export interface IPublisherPageLayoutDefinitionV1 {
     type: "reportPageLayout";
 
     /**
@@ -94,7 +94,7 @@ export interface IPublisherPageLayoutDefinition {
 
     tags?: string[];
 
-    content: IPublisherPageLayoutContent;
+    content: IPublisherPageLayoutContentV1;
 }
 
 /**
@@ -102,8 +102,8 @@ export interface IPublisherPageLayoutDefinition {
  *
  * @alpha
  */
-export interface IPublisherPageLayout
-    extends IPublisherPageLayoutDefinition, IAuditableDates, IAuditableUsers {
+export interface IPublisherPageLayoutV1
+    extends IPublisherPageLayoutDefinitionV1, IAuditableDates, IAuditableUsers {
     ref: ObjRef;
 
     /**
@@ -120,34 +120,34 @@ export interface IPublisherPageLayout
 }
 
 /**
- * Type-guard testing whether the provided object is an instance of {@link IPublisherPageLayoutDefinition}.
+ * Type-guard testing whether the provided object is an instance of {@link IPublisherPageLayoutDefinitionV1}.
  *
  * @alpha
  */
-export function isPublisherPageLayoutDefinition(obj: unknown): obj is IPublisherPageLayoutDefinition {
-    return !isEmpty(obj) && (obj as IPublisherPageLayoutDefinition).type === "reportPageLayout";
+export function isPublisherPageLayoutDefinitionV1(obj: unknown): obj is IPublisherPageLayoutDefinitionV1 {
+    return !isEmpty(obj) && (obj as IPublisherPageLayoutDefinitionV1).type === "reportPageLayout";
 }
 
 /**
- * Type-guard testing whether the provided object is an instance of {@link IPublisherPageLayout}.
+ * Type-guard testing whether the provided object is an instance of {@link IPublisherPageLayoutV1}.
  *
  * @alpha
  */
-export function isPublisherPageLayout(obj: unknown): obj is IPublisherPageLayout {
-    return isPublisherPageLayoutDefinition(obj) && isObjRef((obj as IPublisherPageLayout).ref);
+export function isPublisherPageLayoutV1(obj: unknown): obj is IPublisherPageLayoutV1 {
+    return isPublisherPageLayoutDefinitionV1(obj) && isObjRef((obj as IPublisherPageLayoutV1).ref);
 }
 
 /**
- * Type-guard testing whether the provided object is an instance of {@link IPublisherPageLayoutContent}.
+ * Type-guard testing whether the provided object is an instance of {@link IPublisherPageLayoutContentV1}.
  *
  * @alpha
  */
-export function isPublisherPageLayoutContentV1(obj: unknown): obj is IPublisherPageLayoutContent {
+export function isPublisherPageLayoutContentV1(obj: unknown): obj is IPublisherPageLayoutContentV1 {
     return (
         !isEmpty(obj) &&
-        (obj as IPublisherPageLayoutContent).version === "1" &&
-        !isEmpty((obj as IPublisherPageLayoutContent).layout) &&
-        Array.isArray((obj as IPublisherPageLayoutContent).slots)
+        (obj as IPublisherPageLayoutContentV1).version === "1" &&
+        !isEmpty((obj as IPublisherPageLayoutContentV1).layout) &&
+        Array.isArray((obj as IPublisherPageLayoutContentV1).slots)
     );
 }
 
@@ -156,7 +156,7 @@ export function isPublisherPageLayoutContentV1(obj: unknown): obj is IPublisherP
  *
  * @alpha
  */
-export interface IPublisherPageBodyValidationIssue {
+export interface IPublisherPageBodyValidationIssueV1 {
     severity: "error" | "warning";
     message: string;
 }
@@ -171,10 +171,12 @@ export interface IPublisherPageBodyValidationIssue {
  *
  * @alpha
  */
-export function validatePublisherPageBody(body: IPublisherPageBody): IPublisherPageBodyValidationIssue[] {
-    const issues: IPublisherPageBodyValidationIssue[] = [];
+export function validatePublisherPageBodyV1(
+    body: IPublisherPageBodyV1,
+): IPublisherPageBodyValidationIssueV1[] {
+    const issues: IPublisherPageBodyValidationIssueV1[] = [];
 
-    if (body.format !== undefined && !isPublisherPageFormat(body.format)) {
+    if (body.format !== undefined && !isPublisherPageFormatV1(body.format)) {
         issues.push({ severity: "error", message: `Unknown page format "${body.format}".` });
     }
 
@@ -200,10 +202,10 @@ export function validatePublisherPageBody(body: IPublisherPageBody): IPublisherP
 
     const slotsById = new Map(body.slots.map((slot) => [slot.localIdentifier, slot]));
     const backgroundIds = new Set<string>();
-    const checkBoxStyle = (style: IPublisherBoxStyle | undefined, isDrawn: boolean): void => {
+    const checkBoxStyle = (style: IPublisherBoxStyleV1 | undefined, isDrawn: boolean): void => {
         checkLength("Border radius", style?.borderRadius);
         checkLength("Padding", style?.padding);
-        if (!style?.background || !isPublisherImageBackground(style.background)) {
+        if (!style?.background || !isPublisherImageBackgroundV1(style.background)) {
             return;
         }
         const { slotId } = style.background;
@@ -215,7 +217,7 @@ export function validatePublisherPageBody(body: IPublisherPageBody): IPublisherP
             });
             return;
         }
-        if (!isPublisherImageSlot(slot)) {
+        if (!isPublisherImageSlotV1(slot)) {
             issues.push({
                 severity: "error",
                 message: `Background references slot "${slotId}" which is not an image slot.`,
@@ -229,14 +231,14 @@ export function validatePublisherPageBody(body: IPublisherPageBody): IPublisherP
     checkBoxStyle(body.style, true);
 
     const referencedIds = new Set<string>();
-    const visit = (node: PublisherPageLayoutNode): void => {
+    const visit = (node: PublisherPageLayoutNodeV1): void => {
         if (node.weight !== undefined && !(node.weight > 0)) {
             issues.push({
                 severity: "error",
                 message: `Layout node weight must be positive, got ${node.weight}.`,
             });
         }
-        if (isPublisherLayoutSlotRef(node)) {
+        if (isPublisherLayoutSlotRefV1(node)) {
             referencedIds.add(node.slotId);
             if (!slotIds.has(node.slotId)) {
                 issues.push({
@@ -244,7 +246,7 @@ export function validatePublisherPageBody(body: IPublisherPageBody): IPublisherP
                     message: `Layout references slot "${node.slotId}" which has no definition; it renders empty.`,
                 });
             }
-        } else if (isPublisherLayoutSection(node)) {
+        } else if (isPublisherLayoutSectionV1(node)) {
             checkBoxStyle(node.style, true);
             node.children.forEach(visit);
         }
@@ -252,7 +254,7 @@ export function validatePublisherPageBody(body: IPublisherPageBody): IPublisherP
     visit(body.layout);
 
     // After the layout, so a slot the layout never places cannot vouch for the image it names.
-    for (const slot of body.slots.filter(isPublisherTextSlot)) {
+    for (const slot of body.slots.filter(isPublisherTextSlotV1)) {
         checkBoxStyle(slot.style, referencedIds.has(slot.localIdentifier));
     }
 

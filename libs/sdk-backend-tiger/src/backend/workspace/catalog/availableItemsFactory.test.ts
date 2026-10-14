@@ -179,7 +179,7 @@ describe("available item filtering", () => {
                 measure: localIdRef(measureLocalId(measureA)),
                 dimensionality: [localIdRef(attributeLocalId(attributeA))],
                 condition: comparisonCondition,
-                ...(overrides.measureValueFilter ?? {}),
+                ...overrides.measureValueFilter,
             },
         });
 
@@ -189,7 +189,7 @@ describe("available item filtering", () => {
                 attributes: [localIdRef(attributeLocalId(attributeA))],
                 operator: "TOP",
                 value: 5,
-                ...(overrides.rankingFilter ?? {}),
+                ...overrides.rankingFilter,
             },
         });
 

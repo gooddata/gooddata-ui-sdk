@@ -50,13 +50,16 @@ export function ConversationPublisherDocumentContent({
         );
     }
 
-    const itemUrl = getPublisherDocumentItemUrl({
-        workspaceId,
-        saved,
-        baseDocumentId,
-        conversationId,
-        itemId: message.id,
-    });
+    // The Publisher app needs workspace manage; a user who has lost it gets a disabled Open button.
+    const itemUrl = config.canManage
+        ? getPublisherDocumentItemUrl({
+              workspaceId,
+              saved,
+              baseDocumentId,
+              conversationId,
+              itemId: message.id,
+          })
+        : undefined;
     // The card only opens the version: a change to the document in the editor is applied there by the editor.
     const buttonLabel = intl.formatMessage({ id: "gd.gen-ai.publisherDocument.open" });
 

@@ -7,7 +7,6 @@ import { basename } from "path";
 import { test } from "@playwright/test";
 
 import { registerFeatureHubMock } from "../feature-hub/mock.js";
-import type { IFeatureHubFeature } from "../feature-hub/types.js";
 import { registerGoodmockHooks } from "../goodmock/playwright.js";
 
 import {
@@ -30,12 +29,12 @@ import {
 import { toPlaywrightDetails } from "./to-playwright-details.js";
 import type {
     Callback,
+    FeatureFlags,
     ICreateTestOptions,
     ITestDetails,
     Test,
     TestConditionsValueConstraint,
     WindowProperties,
-    WorkspaceSettings,
 } from "./types.js";
 import { withDescribeDetails, withTestDetails } from "./with-describe-details.js";
 
@@ -53,14 +52,14 @@ export function createTest<
     // Tracks whether we're inside the outermost describe of a spec file during synchronous registration.
     let insideRootDescribe = false;
 
-    // Stacks track workspace settings / additionalWindowProperties / FeatureHub features hierarchy
-    // during synchronous describe registration. Each level merges on top of the parent's.
+    // Stacks track additionalWindowProperties / feature flags hierarchy during synchronous
+    // describe registration. Each level merges on top of the parent's.
     // The beforeEach at each level captures the fully-merged snapshot, so the
     // innermost beforeEach (which runs last) wins.
-    // The features stack starts with the defaults, so every level merges on top of them.
-    const settingsStack: WorkspaceSettings[] = [];
+    // The flags stack holds raw flag records; they are converted to FeatureHub features and merged
+    // onto the defaults only when applied.
     const awpStack: WindowProperties[] = [];
-    const featuresStack: IFeatureHubFeature[][] = [options.featureHubFeatures];
+    const flagsStack: FeatureFlags[] = [];
 
     // Combined test conditions and titles of the enclosing describes, during synchronous registration.
     // Describes only feed these; each test decides for itself whether it runs (a describe whose own
@@ -116,9 +115,9 @@ export function createTest<
                     withDescribeScope(title, details, () =>
                         withDescribeDetails(
                             testInstance,
-                            settingsStack,
+                            options.featureHubFeatures,
                             awpStack,
-                            featuresStack,
+                            flagsStack,
                             details,
                             callback,
                         ),
@@ -153,16 +152,16 @@ export function createTest<
                     registerGoodmockHooks(testInstance, options.goodmock, specName);
                 }
 
-                // Workspace settings + additional window properties — merge with parent
+                // Feature flags + additional window properties — merge with parent
                 // stack and inject beforeEach. Wraps the callback so nested describes inherit.
                 insideRootDescribe = true;
                 try {
                     withDescribeScope(title, details, () =>
                         withDescribeDetails(
                             testInstance,
-                            settingsStack,
+                            options.featureHubFeatures,
                             awpStack,
-                            featuresStack,
+                            flagsStack,
                             details,
                             callback,
                         ),
@@ -225,7 +224,15 @@ export function createTest<
                 return;
             }
 
-            withTestDetails(testInstance, settingsStack, awpStack, featuresStack, location, title, details);
+            withTestDetails(
+                testInstance,
+                options.featureHubFeatures,
+                awpStack,
+                flagsStack,
+                location,
+                title,
+                details,
+            );
             register(location, title, toPlaywrightDetails(details), body);
         };
         return testFunction;

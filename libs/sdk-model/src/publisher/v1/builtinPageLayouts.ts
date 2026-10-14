@@ -1,17 +1,17 @@
 // (C) 2026 GoodData Corporation
 
-import { idRef } from "../objRef/factory.js";
+import { idRef } from "../../objRef/factory.js";
 
-import { type PublisherPageLayoutNode } from "./layout.js";
-import { type PublisherPageFormat } from "./pageFormat.js";
-import { type IPublisherPageBody, type IPublisherPageLayout } from "./pageLayout.js";
+import { type PublisherPageLayoutNodeV1 } from "./layout.js";
+import { type PublisherPageFormatV1 } from "./pageFormat.js";
+import { type IPublisherPageBodyV1, type IPublisherPageLayoutV1 } from "./pageLayout.js";
 import {
-    type IPublisherHeadingSlot,
-    type IPublisherImageSlot,
-    type IPublisherParagraphSlot,
-    type IPublisherVisualizationSlot,
+    type IPublisherHeadingSlotV1,
+    type IPublisherImageSlotV1,
+    type IPublisherParagraphSlotV1,
+    type IPublisherVisualizationSlotV1,
 } from "./slot.js";
-import { type PublisherHeadingType, type PublisherParagraphType } from "./styling.js";
+import { type PublisherHeadingTypeV1, type PublisherParagraphTypeV1 } from "./styling.js";
 
 type TextSlotSpec = { localIdentifier: string } & (
     | { hint: string; content?: never }
@@ -23,14 +23,16 @@ const textSource = (spec: TextSlotSpec) =>
         ? ({ placeholder: { hint: spec.hint } } as const)
         : ({ source: { type: "static", content: spec.content } } as const);
 
-const headingSlot = (spec: TextSlotSpec & { type: PublisherHeadingType }): IPublisherHeadingSlot => ({
+const headingSlot = (spec: TextSlotSpec & { type: PublisherHeadingTypeV1 }): IPublisherHeadingSlotV1 => ({
     type: "heading",
     localIdentifier: spec.localIdentifier,
     style: { type: spec.type },
     ...textSource(spec),
 });
 
-const paragraphSlot = (spec: TextSlotSpec & { type: PublisherParagraphType }): IPublisherParagraphSlot => ({
+const paragraphSlot = (
+    spec: TextSlotSpec & { type: PublisherParagraphTypeV1 },
+): IPublisherParagraphSlotV1 => ({
     type: "paragraph",
     localIdentifier: spec.localIdentifier,
     style: { type: spec.type },
@@ -39,7 +41,7 @@ const paragraphSlot = (spec: TextSlotSpec & { type: PublisherParagraphType }): I
 
 // The prompt is what makes the text AI-written, so a takeaway nobody has instructed yet carries an
 // empty one rather than none.
-const takeawaySlot = (localIdentifier: string): IPublisherParagraphSlot => ({
+const takeawaySlot = (localIdentifier: string): IPublisherParagraphSlotV1 => ({
     type: "paragraph",
     localIdentifier,
     style: { type: "normalText" },
@@ -47,14 +49,14 @@ const takeawaySlot = (localIdentifier: string): IPublisherParagraphSlot => ({
     placeholder: { hint: "Generate or write takeaway ..." },
 });
 
-const vizSlot = (localIdentifier: string): IPublisherVisualizationSlot => ({
+const vizSlot = (localIdentifier: string): IPublisherVisualizationSlotV1 => ({
     type: "visualization",
     localIdentifier,
     showTitle: true,
     placeholder: { hint: "Add a visualization" },
 });
 
-const logoSlot = (localIdentifier: string): IPublisherImageSlot => ({
+const logoSlot = (localIdentifier: string): IPublisherImageSlotV1 => ({
     type: "image",
     localIdentifier,
     source: { type: "url", url: "{logo}" },
@@ -63,20 +65,20 @@ const logoSlot = (localIdentifier: string): IPublisherImageSlot => ({
     style: { horizontalAlign: "start", verticalAlign: "end" },
 });
 
-const slot = (slotId: string, weight?: number): PublisherPageLayoutNode => ({
+const slot = (slotId: string, weight?: number): PublisherPageLayoutNodeV1 => ({
     type: "slotRef",
     slotId,
     ...(weight === undefined ? {} : { weight }),
 });
 
-const row = (children: PublisherPageLayoutNode[], weight?: number): PublisherPageLayoutNode => ({
+const row = (children: PublisherPageLayoutNodeV1[], weight?: number): PublisherPageLayoutNodeV1 => ({
     type: "section",
     direction: "row",
     children,
     ...(weight === undefined ? {} : { weight }),
 });
 
-const column = (children: PublisherPageLayoutNode[], weight?: number): PublisherPageLayoutNode => ({
+const column = (children: PublisherPageLayoutNodeV1[], weight?: number): PublisherPageLayoutNodeV1 => ({
     type: "section",
     direction: "column",
     children,
@@ -94,7 +96,7 @@ const footerSlots = () => {
         {
             ...pageNumber,
             style: { ...pageNumber.style, horizontalAlign: "end", verticalAlign: "end" },
-        } satisfies IPublisherParagraphSlot,
+        } satisfies IPublisherParagraphSlotV1,
     ];
 };
 
@@ -110,7 +112,7 @@ interface IWidescreenPageSpec {
     gridWeights?: number[];
 }
 
-const vizGrid = ({ vizRows, gridWeights }: IWidescreenPageSpec, weight: number): PublisherPageLayoutNode =>
+const vizGrid = ({ vizRows, gridWeights }: IWidescreenPageSpec, weight: number): PublisherPageLayoutNodeV1 =>
     vizRows.length === 1
         ? row(
               vizRows[0]!.map((id, index) => slot(id, gridWeights?.[index])),
@@ -121,7 +123,7 @@ const vizGrid = ({ vizRows, gridWeights }: IWidescreenPageSpec, weight: number):
               weight,
           );
 
-const widescreenContentPage = (spec: IWidescreenPageSpec): IPublisherPageBody => {
+const widescreenContentPage = (spec: IWidescreenPageSpec): IPublisherPageBodyV1 => {
     const { vizRows, summary } = spec;
     const body = summary === undefined ? vizGrid(spec, 9) : row([vizGrid(spec, 2), slot("summary", 1)], 9);
 
@@ -171,8 +173,8 @@ const builtInPage = ({
     id: string;
     title: string;
     description: string;
-    body: IPublisherPageBody;
-}): IPublisherPageLayout =>
+    body: IPublisherPageBodyV1;
+}): IPublisherPageLayoutV1 =>
     deepFreeze({
         type: "reportPageLayout",
         ref: idRef(`builtin.reportPageLayout.${id}`, "reportPageLayout"),
@@ -188,7 +190,7 @@ const builtInPage = ({
  *
  * @alpha
  */
-export const BuiltInPublisherPageLayoutCover: IPublisherPageLayout = builtInPage({
+export const BuiltInPublisherPageLayoutCoverV1: IPublisherPageLayoutV1 = builtInPage({
     id: "cover",
     title: "Cover",
     description: "Title page",
@@ -213,7 +215,7 @@ export const BuiltInPublisherPageLayoutCover: IPublisherPageLayout = builtInPage
  *
  * @alpha
  */
-export const BuiltInPublisherPageLayoutSection: IPublisherPageLayout = builtInPage({
+export const BuiltInPublisherPageLayoutSectionV1: IPublisherPageLayoutV1 = builtInPage({
     id: "section",
     title: "Section",
     description: "Section divider page",
@@ -290,7 +292,7 @@ const widescreenContentPages: [id: string, title: string, description: string, s
  *
  * @alpha
  */
-export const BuiltInPublisherPageLayoutViz6TextLeft: IPublisherPageLayout = builtInPage({
+export const BuiltInPublisherPageLayoutViz6TextLeftV1: IPublisherPageLayoutV1 = builtInPage({
     id: "viz6TextLeft",
     title: "6 visualizations + text",
     description: "Two rows of three visualizations with a text column on the left",
@@ -324,7 +326,7 @@ export const BuiltInPublisherPageLayoutViz6TextLeft: IPublisherPageLayout = buil
 // spreading them across it, and the title band takes a smaller share of the taller page.
 //
 
-const PORTRAIT_FORMAT: PublisherPageFormat = "a4Portrait";
+const PORTRAIT_FORMAT: PublisherPageFormatV1 = "a4Portrait";
 
 interface IPortraitPageSpec {
     /** Visualization rows, top to bottom. A row holding two ids places them side by side. */
@@ -335,8 +337,8 @@ interface IPortraitPageSpec {
     summary?: boolean;
 }
 
-const portraitContentPage = ({ vizRows, text, summary }: IPortraitPageSpec): IPublisherPageBody => {
-    const bodyChildren: PublisherPageLayoutNode[] = [
+const portraitContentPage = ({ vizRows, text, summary }: IPortraitPageSpec): IPublisherPageBodyV1 => {
+    const bodyChildren: PublisherPageLayoutNodeV1[] = [
         ...(text ? [slot("text1", 2)] : []),
         ...vizRows.map((ids) =>
             row(
@@ -370,7 +372,7 @@ const portraitContentPage = ({ vizRows, text, summary }: IPortraitPageSpec): IPu
  *
  * @alpha
  */
-export const BuiltInPublisherPageLayoutPortraitCover: IPublisherPageLayout = builtInPage({
+export const BuiltInPublisherPageLayoutPortraitCoverV1: IPublisherPageLayoutV1 = builtInPage({
     id: "portraitCover",
     title: "Cover (portrait)",
     description: "Title page of an upright document",
@@ -395,7 +397,7 @@ export const BuiltInPublisherPageLayoutPortraitCover: IPublisherPageLayout = bui
  *
  * @alpha
  */
-export const BuiltInPublisherPageLayoutPortraitSection: IPublisherPageLayout = builtInPage({
+export const BuiltInPublisherPageLayoutPortraitSectionV1: IPublisherPageLayoutV1 = builtInPage({
     id: "portraitSection",
     title: "Section (portrait)",
     description: "Section divider page of an upright document",
@@ -415,7 +417,7 @@ export const BuiltInPublisherPageLayoutPortraitSection: IPublisherPageLayout = b
  *
  * @alpha
  */
-export const BuiltInPublisherPageLayoutPortraitSummary: IPublisherPageLayout = builtInPage({
+export const BuiltInPublisherPageLayoutPortraitSummaryV1: IPublisherPageLayoutV1 = builtInPage({
     id: "portraitSummary",
     title: "Summary (portrait)",
     description: "Full-page narrative with no visualization",
@@ -481,16 +483,16 @@ const portraitContentPages: [id: string, title: string, description: string, spe
  *
  * @alpha
  */
-export const BuiltInPublisherPageLayouts: readonly IPublisherPageLayout[] = Object.freeze([
-    BuiltInPublisherPageLayoutCover,
-    BuiltInPublisherPageLayoutSection,
+export const BuiltInPublisherPageLayoutsV1: readonly IPublisherPageLayoutV1[] = Object.freeze([
+    BuiltInPublisherPageLayoutCoverV1,
+    BuiltInPublisherPageLayoutSectionV1,
     ...widescreenContentPages.map(([id, title, description, spec]) =>
         builtInPage({ id, title, description, body: widescreenContentPage(spec) }),
     ),
-    BuiltInPublisherPageLayoutViz6TextLeft,
-    BuiltInPublisherPageLayoutPortraitCover,
-    BuiltInPublisherPageLayoutPortraitSection,
-    BuiltInPublisherPageLayoutPortraitSummary,
+    BuiltInPublisherPageLayoutViz6TextLeftV1,
+    BuiltInPublisherPageLayoutPortraitCoverV1,
+    BuiltInPublisherPageLayoutPortraitSectionV1,
+    BuiltInPublisherPageLayoutPortraitSummaryV1,
     ...portraitContentPages.map(([id, title, description, spec]) =>
         builtInPage({ id, title, description, body: portraitContentPage(spec) }),
     ),

@@ -19,9 +19,6 @@ export interface IFeatureHubFeature {
     v?: string;
 }
 
-/**
- * @internal
- */
 export interface IFeatureHubEnvironment {
     id: string;
     features: IFeatureHubFeature[];

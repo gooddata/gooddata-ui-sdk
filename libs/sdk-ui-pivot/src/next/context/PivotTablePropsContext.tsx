@@ -103,12 +103,12 @@ export function applyPivotTableDefaultProps(props: ICorePivotTableNextProps): Pi
             columnHeadersPosition: props.config?.columnHeadersPosition ?? "top",
             grandTotalsPosition: props.config?.grandTotalsPosition ?? "pinnedBottom",
             columnSizing: {
-                ...(props.config?.columnSizing ?? {}),
+                ...props.config?.columnSizing,
                 columnWidths: props.config?.columnSizing?.columnWidths ?? EMPTY_COLUMN_WIDTHS,
             },
             textWrapping: props.config?.textWrapping ?? EMPTY_OBJECT,
             menu: {
-                ...(props.config?.menu ?? {}),
+                ...props.config?.menu,
                 aggregations: props.config?.menu?.aggregations ?? false,
                 aggregationsSubMenu: props.config?.menu?.aggregationsSubMenu ?? false,
                 aggregationsSubMenuForRows: props.config?.menu?.aggregationsSubMenuForRows ?? false,

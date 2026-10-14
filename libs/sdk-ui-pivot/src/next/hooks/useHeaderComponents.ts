@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
@@ -33,7 +33,7 @@ export function useHeaderComponents(): (props: AgGridProps) => AgGridProps {
         return {
             ...props,
             components: {
-                ...(props.components ?? {}),
+                ...props.components,
                 PivotGroupHeader,
                 MeasureGroupHeader,
                 MeasureHeader,

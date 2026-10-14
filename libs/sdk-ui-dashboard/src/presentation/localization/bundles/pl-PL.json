@@ -409,6 +409,8 @@
     "dashboardMeasureValueFilter.section.all_other": "Wszystkie pozostałe",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "Użytkownik, który utworzył ten pulpit nawigacyjny. Twórcy nie mogą być usunięci.",
     "attributesDropdown.placeholder": "Szukaj…",
+    "attributesDropdown.parameters.section.from_dashboard": "Z pulpitu",
+    "attributesDropdown.parameters.section.ungrouped": "Niezgrupowane",
     "attributesDropdown.configuration": "Konfiguracja",
     "attributesDropdown.save": "Zapisz",
     "attributesDropdown.filterBy": "Filtruj wg",

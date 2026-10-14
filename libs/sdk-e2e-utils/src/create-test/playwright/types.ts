@@ -122,11 +122,6 @@ export type ICreateTestOptions<
 /**
  * @internal
  */
-export type WorkspaceSettings = Record<string, unknown>;
-
-/**
- * @internal
- */
 export type WindowProperties = Record<string, unknown>;
 
 /**
@@ -137,7 +132,7 @@ export type FeatureFlagValue = FeatureHubFeatureValue | object;
 /**
  * @internal
  */
-export type FeatureFlags = Record<string, FeatureHubFeatureValue>;
+export type FeatureFlags = Record<string, FeatureFlagValue>;
 
 /**
  * @internal
@@ -145,7 +140,6 @@ export type FeatureFlags = Record<string, FeatureHubFeatureValue>;
 export interface ITestDetails<
     TestConditionsValue extends TestConditionsValueConstraint = never,
 > extends TestDetails {
-    workspaceSettings?: WorkspaceSettings;
     additionalWindowProperties?: WindowProperties;
     /** Feature flags for this describe/test, merged on top of the enclosing describes' (own keys win). */
     featureFlags?: FeatureFlags;
@@ -156,8 +150,7 @@ export interface ITestDetails<
 /**
  * @internal
  * Call signatures that register a test: `test`, `test.only`, `test.fail.only`.
- * Same as Playwright's, except `details` also accepts `workspaceSettings` / `additionalWindowProperties` /
- * `featureFlags` / `conditions`.
+ * Same as Playwright's, except `details` also accepts `featureFlags` / `additionalWindowProperties` / `conditions`.
  */
 export interface ITestFunction<
     TestConditionsValue extends TestConditionsValueConstraint,

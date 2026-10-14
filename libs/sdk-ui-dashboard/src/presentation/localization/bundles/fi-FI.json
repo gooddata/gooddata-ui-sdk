@@ -409,6 +409,8 @@
     "dashboardMeasureValueFilter.section.all_other": "Kaikki muut",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "Käyttäjä, joka loi tämän kojelaudan. Luoja ei voi poistaa.",
     "attributesDropdown.placeholder": "Hae…",
+    "attributesDropdown.parameters.section.from_dashboard": "Koontinäytöstä",
+    "attributesDropdown.parameters.section.ungrouped": "Ryhmittelemätön",
     "attributesDropdown.configuration": "Konfiguraatio",
     "attributesDropdown.save": "Tallenna",
     "attributesDropdown.filterBy": "Suodata",

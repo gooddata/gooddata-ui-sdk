@@ -64,7 +64,7 @@ import { type PromiseFnReturnType } from "../../../types/sagas.js";
 import { collectDashboardParameterRoots } from "../../parameters/dashboardParameterRoots.js";
 import { loadParameterDependencies } from "../../parameters/loadParameterDependencies.js";
 import { changeDashboardTimezoneOverrideHandler } from "../../timezone/changeDashboardTimezoneOverrideHandler.js";
-import { applyDefaultFilterView } from "../common/filterViews.js";
+import { applyDefaultFilterViewForRenderMode } from "../common/filterViews.js";
 import {
     actionsToInitializeExistingDashboard,
     actionsToInitializeNewDashboard,
@@ -334,11 +334,12 @@ function* loadExistingDashboard(
     );
     yield put(unavailableObjectsActions.setUnavailableObjects(unavailableReferences));
 
-    const dashboardWithFilterView = applyDefaultFilterView(
+    const dashboardWithFilterView = applyDefaultFilterViewForRenderMode(
         loadedDashboard,
         filterViews,
         config.exportId,
         unavailableReferences,
+        config.initialRenderMode,
     );
     // Resolve active tab: URL's initialTabId takes precedence, otherwise default to first tab
     // Note: activeTabLocalIdentifier is app state only, NOT persisted to/read from dashboard MD
@@ -382,7 +383,8 @@ function* loadExistingDashboard(
         tabsDateFilterConfig,
         tabsDateFilterConfigSource,
         createDisplayFormMap([], []),
-        cmd.payload.persistedDashboard,
+        // the default filter view changes only the working filters, never the persisted ones
+        cmd.payload.persistedDashboard ?? loadedDashboard,
         resolvedActiveTabId,
         workspaceParametersList,
     );

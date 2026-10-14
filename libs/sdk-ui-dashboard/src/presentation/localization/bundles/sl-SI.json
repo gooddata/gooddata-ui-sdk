@@ -409,6 +409,8 @@
     "dashboardMeasureValueFilter.section.all_other": "Vsi drugi",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "Uporabnik, ki je ustvaril to nadzorno ploščo. Ustvarjalcev ni mogoče odstraniti.",
     "attributesDropdown.placeholder": "Iskanje…",
+    "attributesDropdown.parameters.section.from_dashboard": "Z nadzorne plošče",
+    "attributesDropdown.parameters.section.ungrouped": "Nerazvrščeno",
     "attributesDropdown.configuration": "Konfiguracija",
     "attributesDropdown.save": "Shrani",
     "attributesDropdown.filterBy": "Filtriraj po",

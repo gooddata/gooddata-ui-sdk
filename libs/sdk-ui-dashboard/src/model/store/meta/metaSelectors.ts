@@ -1388,7 +1388,7 @@ export const selectDashboardWorkingDefinition: DashboardSelector<IDashboardDefin
                                   : undefined,
                               filterContext: tab.filterContext?.filterContextDefinition
                                   ? ({
-                                        ...(tab.filterContext.filterContextIdentity ?? {}),
+                                        ...tab.filterContext.filterContextIdentity,
                                         ...tab.filterContext.filterContextDefinition,
                                     } as IFilterContext)
                                   : undefined,

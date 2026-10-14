@@ -67,6 +67,10 @@ import {
     ConversationVisualisation,
     type ConversationVisualisationProps,
 } from "./ConversationVisualisation.js";
+import {
+    ConversationVisualisation as ConversationVisualisationV2,
+    type ConversationVisualisationProps as ConversationVisualisationV2Props,
+} from "./ConversationVisualisationV2.js";
 import { SaveVisualizationDialog } from "./SaveVisualizationDialog.js";
 import { createKdaDefinitionFromDrill, getDashboardAttributeFilter } from "./useKdaDefinition.js";
 import { useKdaEnabled } from "./useKdaEnabled.js";
@@ -141,19 +145,15 @@ export function ConversationVisualizationContent({
     enableKeyDriverAnalysis,
 }: ConversationVisualizationContentProps) {
     const colorPalette = useSelector((state: RootState) => colorPaletteSelector(state));
-    const separators = useSelector((state: RootState) => settingsSelector(state)?.separators);
-    const agGridToken = useSelector((state: RootState) => settingsSelector(state)?.agGridToken);
-    const enableNewPivotTable = useSelector(
-        (state: RootState) => settingsSelector(state)?.enableNewPivotTable,
-    );
-    const enableAccessibleChartTooltip = useSelector(
-        (state: RootState) => settingsSelector(state)?.enableAccessibleChartTooltip,
-    );
+    const settings = useSelector((state: RootState) => settingsSelector(state));
+    const separators = settings?.separators;
+    const agGridToken = settings?.agGridToken;
+    const enableAccessibleChartTooltip = settings?.enableAccessibleChartTooltip;
+    const enableSecondGranularities = settings?.enableSecondGranularities;
+    const enableNewPivotTable = settings?.enableNewPivotTable;
+    const enableAiAssistantChartsV2 = settings?.enableAiAssistantChartsV2;
 
     const enableChangeAnalysis = useKdaEnabled(enableKeyDriverAnalysis);
-    const enableSecondGranularities = useSelector(
-        (state: RootState) => settingsSelector(state)?.enableSecondGranularities,
-    );
 
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -233,22 +233,41 @@ export function ConversationVisualizationContent({
                         isLoading={part.reporting ?? false}
                     />
                     <Title id={moreButtonDescId} visualization={visualization} scenario={scenario} />
-                    <VisualisationWrapper
-                        message={message}
-                        colorPalette={colorPalette}
-                        separators={separators}
-                        isTable={isTable}
-                        visualization={visualization}
-                        agGridToken={agGridToken}
-                        execConfig={scenario?.execConfig}
-                        enableChangeAnalysis={enableChangeAnalysis}
-                        enableSecondGranularities={!!enableSecondGranularities}
-                        enableNewPivotTable={enableNewPivotTable}
-                        enableAccessibleChartTooltip={enableAccessibleChartTooltip}
-                        enableDrilling={!scenario || scenario.isBaseline}
-                        onDrillFired={setDrillState}
-                        onVisualisationError={onVisualizationError}
-                    />
+                    {enableAiAssistantChartsV2 ? (
+                        <VisualisationWrapper2
+                            message={message}
+                            colorPalette={colorPalette}
+                            separators={separators}
+                            isTable={isTable}
+                            visualization={visualization}
+                            agGridToken={agGridToken}
+                            execConfig={scenario?.execConfig}
+                            settings={settings}
+                            enableChangeAnalysis={enableChangeAnalysis}
+                            enableSecondGranularities={!!enableSecondGranularities}
+                            enableAccessibleChartTooltip={enableAccessibleChartTooltip}
+                            enableDrilling={!scenario || scenario.isBaseline}
+                            onDrillFired={setDrillState}
+                            onVisualisationError={onVisualizationError}
+                        />
+                    ) : (
+                        <VisualisationWrapper
+                            message={message}
+                            colorPalette={colorPalette}
+                            separators={separators}
+                            isTable={isTable}
+                            visualization={visualization}
+                            agGridToken={agGridToken}
+                            execConfig={scenario?.execConfig}
+                            enableChangeAnalysis={enableChangeAnalysis}
+                            enableSecondGranularities={!!enableSecondGranularities}
+                            enableNewPivotTable={enableNewPivotTable}
+                            enableAccessibleChartTooltip={enableAccessibleChartTooltip}
+                            enableDrilling={!scenario || scenario.isBaseline}
+                            onDrillFired={setDrillState}
+                            onVisualisationError={onVisualizationError}
+                        />
+                    )}
                     <SaveDialog />
                 </Wrapper>
             </DrillState>
@@ -541,6 +560,21 @@ function VisualisationWrapper(props: ConversationVisualisationProps) {
         >
             <VisualizationErrorBoundary>
                 <ConversationVisualisation {...props} />
+            </VisualizationErrorBoundary>
+        </div>
+    );
+}
+
+function VisualisationWrapper2(props: ConversationVisualisationV2Props) {
+    return (
+        <div
+            className={cx(
+                "gd-gen-ai-chat__conversation__visualization__wrapper",
+                `gd-gen-ai-chat__conversation__visualization__wrapper--${props.isTable ? "table" : (props.visualization?.insight.visualizationUrl.replace("local:", "").toLowerCase() ?? "unknown")}`,
+            )}
+        >
+            <VisualizationErrorBoundary>
+                <ConversationVisualisationV2 {...props} />
             </VisualizationErrorBoundary>
         </div>
     );

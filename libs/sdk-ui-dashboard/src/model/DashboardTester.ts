@@ -71,7 +71,7 @@ export class DashboardTester extends HeadlessDashboard {
                     ...backendConfig,
                     getCommonAttributesResponses: {
                         ...commonAttributeResponses,
-                        ...(backendConfig?.getCommonAttributesResponses || {}),
+                        ...backendConfig?.getCommonAttributesResponses,
                     },
                 },
                 {
@@ -100,7 +100,7 @@ export class DashboardTester extends HeadlessDashboard {
                 ...backendConfig,
                 getCommonAttributesResponses: {
                     ...commonAttributeResponses,
-                    ...(backendConfig?.getCommonAttributesResponses || {}),
+                    ...backendConfig?.getCommonAttributesResponses,
                 },
             }),
             workspace: "reference-workspace",

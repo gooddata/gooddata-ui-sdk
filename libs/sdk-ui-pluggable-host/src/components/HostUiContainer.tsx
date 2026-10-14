@@ -202,12 +202,14 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate, onError }
         (url: string) => {
             runGuardedNavigation({
                 url,
-                currentPathname: latestMountStateRef.current.pathname,
+                // The page's, not the router's: an application moving its own router leaves the host
+                // router on the path it last navigated to.
+                currentPathname: window.location.pathname,
                 guardRef: appNavigationRequestRef,
                 navigate: (target) => void navigateRef.current(target),
             });
         },
-        [navigateRef, latestMountStateRef],
+        [navigateRef],
     );
     const replace = useCallback(
         (url: string) => {

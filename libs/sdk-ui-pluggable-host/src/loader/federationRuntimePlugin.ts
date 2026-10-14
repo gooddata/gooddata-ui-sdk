@@ -2,8 +2,6 @@
 
 import { type ModuleFederationRuntimePlugin } from "@module-federation/runtime";
 
-import { registerRemoteAssetBase } from "../lib/stylesheetRegistry.js";
-
 /**
  * Timeout applied to every `<link rel="preload">` Module Federation creates.
  *
@@ -60,7 +58,7 @@ export function evictRemoteEntryLoadCache(remoteInfo: { name: string; entry: str
 
 /**
  * Host-side Module Federation runtime plugin. Registered on the federation instance created
- * by the remote loader; its hooks work around behaviour of the MF runtime we cannot
+ * by the remote loader; both hooks work around behaviour of the MF runtime we cannot
  * configure any other way.
  */
 export function createHostFederationPlugin(): ModuleFederationRuntimePlugin {
@@ -77,16 +75,6 @@ export function createHostFederationPlugin(): ModuleFederationRuntimePlugin {
             if (error) {
                 evictRemoteEntryLoadCache(remoteInfo);
             }
-        },
-
-        // A manifest publicPath (e.g. the CDN base) moves the remote's CSS off its entry URL.
-        // The stylesheet registry must know that base to attribute those links to the app.
-        loadRemoteSnapshot: async (args) => {
-            const { moduleInfo, remoteSnapshot } = args;
-            if ("entry" in moduleInfo && "publicPath" in remoteSnapshot && remoteSnapshot.publicPath) {
-                registerRemoteAssetBase(moduleInfo.entry, remoteSnapshot.publicPath);
-            }
-            return args;
         },
     };
 }

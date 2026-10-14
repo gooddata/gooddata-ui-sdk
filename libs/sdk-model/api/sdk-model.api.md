@@ -327,28 +327,52 @@ export function bucketsTotals(buckets: IBucket[]): ITotal[];
 export function bucketTotals(bucket: IBucket): ITotal[];
 
 // @alpha
-export const BuiltInPublisherPageLayoutCover: IPublisherPageLayout;
+export const BuiltInPublisherPageLayoutCover: IPublisherPageLayoutV1;
 
 // @alpha
-export const BuiltInPublisherPageLayoutPortraitCover: IPublisherPageLayout;
+export const BuiltInPublisherPageLayoutCoverV1: IPublisherPageLayoutV1;
 
 // @alpha
-export const BuiltInPublisherPageLayoutPortraitSection: IPublisherPageLayout;
+export const BuiltInPublisherPageLayoutPortraitCover: IPublisherPageLayoutV1;
 
 // @alpha
-export const BuiltInPublisherPageLayoutPortraitSummary: IPublisherPageLayout;
+export const BuiltInPublisherPageLayoutPortraitCoverV1: IPublisherPageLayoutV1;
 
 // @alpha
-export const BuiltInPublisherPageLayouts: readonly IPublisherPageLayout[];
+export const BuiltInPublisherPageLayoutPortraitSection: IPublisherPageLayoutV1;
 
 // @alpha
-export const BuiltInPublisherPageLayoutSection: IPublisherPageLayout;
+export const BuiltInPublisherPageLayoutPortraitSectionV1: IPublisherPageLayoutV1;
 
 // @alpha
-export const BuiltInPublisherPageLayoutViz6TextLeft: IPublisherPageLayout;
+export const BuiltInPublisherPageLayoutPortraitSummary: IPublisherPageLayoutV1;
+
+// @alpha
+export const BuiltInPublisherPageLayoutPortraitSummaryV1: IPublisherPageLayoutV1;
+
+// @alpha
+export const BuiltInPublisherPageLayouts: readonly IPublisherPageLayoutV1[];
+
+// @alpha
+export const BuiltInPublisherPageLayoutSection: IPublisherPageLayoutV1;
+
+// @alpha
+export const BuiltInPublisherPageLayoutSectionV1: IPublisherPageLayoutV1;
+
+// @alpha
+export const BuiltInPublisherPageLayoutsV1: readonly IPublisherPageLayoutV1[];
+
+// @alpha
+export const BuiltInPublisherPageLayoutViz6TextLeft: IPublisherPageLayoutV1;
+
+// @alpha
+export const BuiltInPublisherPageLayoutViz6TextLeftV1: IPublisherPageLayoutV1;
 
 // @alpha
 export const BuiltInPublisherSlotTypes: string[];
+
+// @alpha
+export const BuiltInPublisherSlotTypesV1: string[];
 
 // @alpha
 export const BuiltInWidgetTypes: string[];
@@ -670,13 +694,25 @@ export function defaultDimensionsGenerator(definition: IExecutionDefinition): ID
 export const DefaultLocale: ILocale;
 
 // @alpha
-export const DefaultPublisherHeadingType: PublisherHeadingType;
+export const DefaultPublisherHeadingType: PublisherHeadingTypeV1;
 
 // @alpha
-export const DefaultPublisherPageFormat: PublisherPageFormat;
+export const DefaultPublisherHeadingTypeV1: PublisherHeadingTypeV1;
 
 // @alpha
-export const DefaultPublisherParagraphType: PublisherParagraphType;
+export const DefaultPublisherPageFormat: PublisherPageFormatV1;
+
+// @alpha
+export const DefaultPublisherPageFormatV1: PublisherPageFormatV1;
+
+// @alpha (undocumented)
+export const DefaultPublisherPageSizeV2: PublisherPageSizeV2;
+
+// @alpha
+export const DefaultPublisherParagraphType: PublisherParagraphTypeV1;
+
+// @alpha
+export const DefaultPublisherParagraphTypeV1: PublisherParagraphTypeV1;
 
 // @public
 export function defFingerprint(def: IExecutionDefinition): string;
@@ -1050,7 +1086,10 @@ export function getPluggableApplicationHref(app: PluggableApplicationRegistryIte
 export function getPluggableApplicationLocalizedTitle(app: PluggableApplicationRegistryItem, locale: ILocale | undefined): string;
 
 // @alpha
-export function getPublisherTextPlaceholders(text: string): string[];
+export const getPublisherTextPlaceholders: typeof getPublisherTextPlaceholdersV1;
+
+// @alpha
+export function getPublisherTextPlaceholdersV1(text: string): string[];
 
 // @alpha
 export function getSelectedElementsCount(filter: IDashboardAttributeFilter): number;
@@ -3045,6 +3084,7 @@ export interface IFeatureFlags {
     enableAgentInstructions?: boolean;
     enableAiAgenticMultiConversations?: boolean;
     enableAiAgenticSuggestions?: boolean;
+    enableAiAssistantChartsV2?: boolean;
     enableAiContextSetup?: boolean;
     enableAIDataSetting?: boolean;
     enableAiLlmAnthropicProvider?: boolean;
@@ -3135,8 +3175,6 @@ export interface IFeatureFlags {
     enableMetricFormatOverrides?: boolean;
     enableMetricPermissions?: boolean;
     // (undocumented)
-    enableMongoDbDataSource?: boolean;
-    // (undocumented)
     enableMotherDuckDataSource?: boolean;
     // (undocumented)
     enableMySqlDataSource?: boolean;
@@ -3153,6 +3191,7 @@ export interface IFeatureFlags {
     enableParameters?: boolean;
     enablePartialDataResults?: boolean;
     enablePreAggregationDatasets?: boolean;
+    enablePublisherV2?: boolean;
     enableQueryTags?: boolean;
     enableRadarChart?: boolean;
     enableRankingStrictLimit?: boolean;
@@ -3350,7 +3389,7 @@ export interface IGenAIObjectReferenceGroup {
 
 // @internal
 export interface IGenAIPublisherDocumentContext {
-    definition?: IPublisherDocumentDefinition;
+    definition?: IPublisherDocumentDefinitionV1;
     draftRef?: string;
     ref?: ObjRef;
     title?: string;
@@ -4215,6 +4254,12 @@ export interface INegativeAttributeFilterBody extends IIdentifiableFilter {
     notIn: IAttributeElements;
 }
 
+// @alpha (undocumented)
+export interface INewPublisherDocumentFilterIdOptionsV2 {
+    target: ObjRef;
+    usedIds: ReadonlySet<string>;
+}
+
 // @public
 export class InlineMeasureBuilder extends MeasureBuilderBase<IInlineMeasureDefinition> {
     // @internal
@@ -4806,7 +4851,20 @@ export interface IProductionFeaturesConfig {
 }
 
 // @alpha
-export interface IPublisherAiTextSource {
+export interface IPublisherAbsolutePeriodV2 {
+    from: string;
+    // (undocumented)
+    granularity: "GDC.time.date";
+    to: string;
+    // (undocumented)
+    type: "absolute";
+}
+
+// @alpha
+export type IPublisherAiTextSource = IPublisherAiTextSourceV1;
+
+// @alpha
+export interface IPublisherAiTextSourceV1 {
     content?: string;
     generatedAt?: string;
     prompt: string;
@@ -4815,37 +4873,196 @@ export interface IPublisherAiTextSource {
 }
 
 // @alpha
-export type IPublisherAttributeFilterConfig = Pick<IDashboardAttributeFilterConfig, "localIdentifier" | "displayAsLabel">;
+export type IPublisherAttributeFilterConfig = IPublisherAttributeFilterConfigV1;
 
 // @alpha
-export interface IPublisherBoxStyle {
+export type IPublisherAttributeFilterConfigV1 = Pick<IDashboardAttributeFilterConfig, "localIdentifier" | "displayAsLabel">;
+
+// @alpha (undocumented)
+export interface IPublisherAxisDisplayV2 {
     // (undocumented)
-    background?: PublisherBackground;
+    max?: number;
+    // (undocumented)
+    min?: number;
+    name?: {
+        visible?: boolean;
+        position?: "low" | "middle" | "high";
+    };
+    values?: {
+        visible?: boolean;
+        rotation?: number;
+    };
+    // (undocumented)
+    visible?: boolean;
+}
+
+// @alpha (undocumented)
+export interface IPublisherBackgroundStyleV2 {
+    // (undocumented)
+    backgroundColor?: PublisherColorValueV2;
+    backgroundFit?: "cover" | "contain" | "fill" | "tile";
+    // (undocumented)
+    backgroundHorizontalAlign?: PublisherHorizontalAlignV2;
+    // (undocumented)
+    backgroundImage?: PublisherImageSourceV2;
+    // (undocumented)
+    backgroundImageOpacity?: PublisherOpacityV2;
+    // (undocumented)
+    backgroundOffset?: PublisherPxV2;
+    // (undocumented)
+    backgroundOffsetBottom?: PublisherPxV2;
+    // (undocumented)
+    backgroundOffsetLeft?: PublisherPxV2;
+    // (undocumented)
+    backgroundOffsetRight?: PublisherPxV2;
+    // (undocumented)
+    backgroundOffsetTop?: PublisherPxV2;
+    backgroundOpacity?: PublisherOpacityV2;
+    // (undocumented)
+    backgroundVerticalAlign?: PublisherVerticalAlignV2;
+}
+
+// @alpha (undocumented)
+export interface IPublisherBorderStyleV2 {
+    // (undocumented)
+    borderBottomColor?: PublisherColorValueV2;
+    // (undocumented)
+    borderBottomStyle?: PublisherBorderLineStyleV2;
+    // (undocumented)
+    borderBottomWidth?: PublisherPxV2;
+    // (undocumented)
+    borderColor?: PublisherColorValueV2;
+    // (undocumented)
+    borderLeftColor?: PublisherColorValueV2;
+    // (undocumented)
+    borderLeftStyle?: PublisherBorderLineStyleV2;
+    // (undocumented)
+    borderLeftWidth?: PublisherPxV2;
+    // (undocumented)
+    borderRightColor?: PublisherColorValueV2;
+    // (undocumented)
+    borderRightStyle?: PublisherBorderLineStyleV2;
+    // (undocumented)
+    borderRightWidth?: PublisherPxV2;
+    // (undocumented)
+    borderStyle?: PublisherBorderLineStyleV2;
+    // (undocumented)
+    borderTopColor?: PublisherColorValueV2;
+    // (undocumented)
+    borderTopStyle?: PublisherBorderLineStyleV2;
+    // (undocumented)
+    borderTopWidth?: PublisherPxV2;
+    // (undocumented)
+    borderWidth?: PublisherPxV2;
+}
+
+// @alpha
+export type IPublisherBoxStyle = IPublisherBoxStyleV1;
+
+// @alpha
+export interface IPublisherBoxStyleV1 {
+    // (undocumented)
+    background?: PublisherBackgroundV1;
     borderRadius?: number;
     padding?: number;
 }
 
 // @alpha
-export interface IPublisherColorBackground {
+export interface IPublisherBoxStyleV2 extends IPublisherBackgroundStyleV2, IPublisherPaddingStyleV2, IPublisherBorderStyleV2, IPublisherCornerStyleV2, IPublisherShadowStyleV2 {
+    opacity?: PublisherOpacityV2;
+}
+
+// @alpha (undocumented)
+export interface IPublisherChartStyleV2 {
+    // (undocumented)
+    axisLineColor?: PublisherColorValueV2;
+    axisNameColor?: PublisherColorValueV2;
+    // (undocumented)
+    axisNameSize?: PublisherPxV2;
+    axisValueColor?: PublisherColorValueV2;
+    // (undocumented)
+    axisValueSize?: PublisherPxV2;
+    // (undocumented)
+    dataLabelColor?: PublisherColorValueV2;
+    // (undocumented)
+    dataLabelSize?: PublisherPxV2;
+    // (undocumented)
+    fontSize?: PublisherPxV2;
+    // (undocumented)
+    gridColor?: PublisherColorValueV2;
+    // (undocumented)
+    legendColor?: PublisherColorValueV2;
+    // (undocumented)
+    legendSize?: PublisherPxV2;
+    // (undocumented)
+    plotLineColor?: PublisherColorValueV2;
+    // (undocumented)
+    textColor?: PublisherColorValueV2;
+}
+
+// @alpha
+export type IPublisherColorBackground = IPublisherColorBackgroundV1;
+
+// @alpha
+export interface IPublisherColorBackgroundV1 {
     color: string;
     // (undocumented)
     type: "color";
 }
 
-// @alpha
-export interface IPublisherDocument extends IPublisherDocumentDefinition, IAuditableDates, IAuditableUsers {
-    isLocked?: boolean;
+// @alpha (undocumented)
+export interface IPublisherContainerStyleV2 extends IPublisherBoxStyleV2, IPublisherInheritedTextStyleV2 {
     // (undocumented)
-    ref: ObjRef;
+    gap?: PublisherGapValueV2;
 }
 
 // @alpha
-export interface IPublisherDocumentBase {
-    content: IPublisherDocumentContent;
+export interface IPublisherContainerV2 {
+    children: PublisherLayoutNodeV2[];
+    id?: string;
+    locked?: boolean;
+    proportion?: number;
+    // (undocumented)
+    style?: IPublisherContainerStyleV2;
+    // (undocumented)
+    type: "row" | "column";
+}
+
+// @alpha (undocumented)
+export interface IPublisherCornerStyleV2 {
+    // (undocumented)
+    borderBottomLeftRadius?: PublisherRadiusValueV2;
+    // (undocumented)
+    borderBottomRightRadius?: PublisherRadiusValueV2;
+    // (undocumented)
+    borderRadius?: PublisherRadiusValueV2;
+    // (undocumented)
+    borderTopLeftRadius?: PublisherRadiusValueV2;
+    // (undocumented)
+    borderTopRightRadius?: PublisherRadiusValueV2;
+}
+
+// @alpha (undocumented)
+export interface IPublisherDataSetRefV2 {
+    // (undocumented)
+    identifier: string;
+    // (undocumented)
+    type: "dataSet";
+}
+
+// @alpha
+export type IPublisherDocument = IPublisherDocumentV1;
+
+// @alpha
+export type IPublisherDocumentBase = IPublisherDocumentBaseV1;
+
+// @alpha
+export interface IPublisherDocumentBaseV1 {
+    content: IPublisherDocumentContentV1;
     // (undocumented)
     description?: string;
-    periodEnd: PublisherDateString;
-    periodStart: PublisherDateString;
+    periodEnd: PublisherDateStringV1;
+    periodStart: PublisherDateStringV1;
     // (undocumented)
     tags?: string[];
     // (undocumented)
@@ -4854,38 +5071,112 @@ export interface IPublisherDocumentBase {
 }
 
 // @alpha
-export interface IPublisherDocumentContent {
-    attributeFilterConfigs?: IPublisherAttributeFilterConfig[];
+export type IPublisherDocumentContent = IPublisherDocumentContentV1;
+
+// @alpha
+export interface IPublisherDocumentContentBaseV2 {
+    // (undocumented)
+    attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
+    // (undocumented)
+    defaults?: IPublisherDocumentDefaultsV2;
     filters?: FilterContextItem[];
-    pages: IPublisherDocumentPage[];
-    takeawaysInstruction?: string;
-    variables?: IPublisherVariableDefinition[];
-    version: "1";
+    formatLocale?: string;
+    locale?: string;
+    // (undocumented)
+    style?: IPublisherDocumentStyleV2;
+}
+
+// @alpha (undocumented)
+export interface IPublisherDocumentContentSetSectionsOptionsV2 {
+    content: PublisherDocumentContentV2;
+    // (undocumented)
+    sections: IPublisherSectionV2[];
 }
 
 // @alpha
-export interface IPublisherDocumentDefinition extends IPublisherDocumentBase {
+export interface IPublisherDocumentContentV1 {
+    attributeFilterConfigs?: IPublisherAttributeFilterConfigV1[];
+    filters?: FilterContextItem[];
+    pages: IPublisherDocumentPageV1[];
+    takeawaysInstruction?: string;
+    variables?: IPublisherVariableDefinitionV1[];
+    version: "1";
+}
+
+// @alpha (undocumented)
+export interface IPublisherDocumentDefaultsV2 {
+    pageSize?: PublisherPageSizeV2;
+    period?: PublisherPeriodV2;
+    // (undocumented)
+    takeaway?: {
+        generation?: IPublisherTakeawayGenerationV2;
+    };
+}
+
+// @alpha
+export type IPublisherDocumentDefinition = IPublisherDocumentDefinitionV1;
+
+// @alpha
+export interface IPublisherDocumentDefinitionV1 extends IPublisherDocumentBaseV1 {
     ref?: ObjRef;
     // (undocumented)
     type: "report";
 }
 
 // @alpha
-export interface IPublisherDocumentPage extends IPublisherPageBody {
+export interface IPublisherDocumentDefinitionV2 extends IPublisherEntityDefinitionBaseV2 {
+    content: PublisherDocumentContentV2;
+    // (undocumented)
+    period: PublisherPeriodV2;
+    // (undocumented)
+    type: "document";
+}
+
+// @alpha
+export type IPublisherDocumentPage = IPublisherDocumentPageV1;
+
+// @alpha
+export interface IPublisherDocumentPagesContentV2 extends IPublisherDocumentContentBaseV2 {
+    // (undocumented)
+    pages: IPublisherDocumentPageV2[];
+    // (undocumented)
+    sections?: never;
+}
+
+// @alpha
+export interface IPublisherDocumentPageV1 extends IPublisherPageBodyV1 {
     localIdentifier: string;
 }
 
 // @alpha
-export interface IPublisherDocumentTemplate extends IPublisherDocumentTemplateDefinition, IAuditableDates, IAuditableUsers {
-    isLocked?: boolean;
-    // (undocumented)
-    ref: ObjRef;
+export interface IPublisherDocumentPageV2 extends IPublisherPageBodyV2 {
+    id: string;
+    visible?: boolean;
 }
 
 // @alpha
-export interface IPublisherDocumentTemplateDefinition {
+export interface IPublisherDocumentSectionsContentV2 extends IPublisherDocumentContentBaseV2 {
     // (undocumented)
-    content: IPublisherDocumentContent;
+    pages?: never;
+    // (undocumented)
+    sections: IPublisherSectionV2[];
+}
+
+// @alpha
+export interface IPublisherDocumentStyleV2 extends IPublisherBackgroundStyleV2 {
+    gap?: PublisherGapValueV2;
+}
+
+// @alpha
+export type IPublisherDocumentTemplate = IPublisherDocumentTemplateV1;
+
+// @alpha
+export type IPublisherDocumentTemplateDefinition = IPublisherDocumentTemplateDefinitionV1;
+
+// @alpha
+export interface IPublisherDocumentTemplateDefinitionV1 {
+    // (undocumented)
+    content: IPublisherDocumentContentV1;
     // (undocumented)
     description?: string;
     ref?: ObjRef;
@@ -4898,79 +5189,251 @@ export interface IPublisherDocumentTemplateDefinition {
 }
 
 // @alpha
-export interface IPublisherHeadingSlot extends IPublisherSlotBase {
-    source?: PublisherTextSource;
+export interface IPublisherDocumentTemplateDefinitionV2 extends IPublisherEntityDefinitionBaseV2 {
     // (undocumented)
-    style?: IPublisherHeadingStyle;
+    content: PublisherDocumentContentV2;
+    // (undocumented)
+    type: "documentTemplate";
+}
+
+// @alpha
+export interface IPublisherDocumentTemplateV1 extends IPublisherDocumentTemplateDefinitionV1, IAuditableDates, IAuditableUsers {
+    isLocked?: boolean;
+    // (undocumented)
+    ref: ObjRef;
+}
+
+// @alpha
+export interface IPublisherDocumentTemplateV2 extends IPublisherDocumentTemplateDefinitionV2, IPublisherEntityMetadataV2 {
+    // (undocumented)
+    ref: ObjRef;
+}
+
+// @alpha
+export interface IPublisherDocumentV1 extends IPublisherDocumentDefinitionV1, IAuditableDates, IAuditableUsers {
+    isLocked?: boolean;
+    // (undocumented)
+    ref: ObjRef;
+}
+
+// @alpha
+export interface IPublisherDocumentV2 extends IPublisherDocumentDefinitionV2, IPublisherEntityMetadataV2 {
+    // (undocumented)
+    ref: ObjRef;
+}
+
+// @alpha
+export interface IPublisherEntityDefinitionBaseV2 {
+    // (undocumented)
+    description?: string;
+    ref?: ObjRef;
+    // (undocumented)
+    tags?: string[];
+    // (undocumented)
+    title: string;
+    // (undocumented)
+    version: PublisherContentVersionV2;
+}
+
+// @alpha
+export interface IPublisherEntityMetadataV2 extends IAuditableDates, IAuditableUsers {
+    isLocked?: boolean;
+    // (undocumented)
+    ref: ObjRef;
+}
+
+// @alpha
+export type IPublisherHeadingSlot = IPublisherHeadingSlotV1;
+
+// @alpha
+export interface IPublisherHeadingSlotV1 extends IPublisherSlotBaseV1 {
+    source?: PublisherTextSourceV1;
+    // (undocumented)
+    style?: IPublisherHeadingStyleV1;
     // (undocumented)
     type: "heading";
 }
 
 // @alpha
-export interface IPublisherHeadingStyle extends IPublisherTextStyle {
-    type?: PublisherHeadingType;
+export type IPublisherHeadingStyle = IPublisherHeadingStyleV1;
+
+// @alpha
+export interface IPublisherHeadingStyleV1 extends IPublisherTextStyleV1 {
+    type?: PublisherHeadingTypeV1;
+}
+
+// @alpha (undocumented)
+export interface IPublisherHeadingWidgetV2 extends IPublisherWidgetBaseV2 {
+    level?: PublisherHeadingLevelV2;
+    markdown?: string;
+    style?: IPublisherTextWidgetStyleV2;
+    // (undocumented)
+    type: "heading";
+}
+
+// @alpha (undocumented)
+export interface IPublisherHeadlineStyleV2 {
+    // (undocumented)
+    negativeColor?: PublisherColorValueV2;
+    // (undocumented)
+    positiveColor?: PublisherColorValueV2;
+    // (undocumented)
+    primaryValueColor?: PublisherColorValueV2;
+    // (undocumented)
+    primaryValueSize?: PublisherPxV2;
+    // (undocumented)
+    secondaryValueColor?: PublisherColorValueV2;
+    // (undocumented)
+    secondaryValueSize?: PublisherPxV2;
 }
 
 // @alpha
-export interface IPublisherImageBackground {
+export type IPublisherImageBackground = IPublisherImageBackgroundV1;
+
+// @alpha
+export interface IPublisherImageBackgroundV1 {
     slotId: string;
     // (undocumented)
     type: "image";
 }
 
 // @alpha
-export interface IPublisherImageSlot extends IPublisherSlotBase {
+export type IPublisherImageSlot = IPublisherImageSlotV1;
+
+// @alpha
+export interface IPublisherImageSlotV1 extends IPublisherSlotBaseV1 {
     // (undocumented)
     altText?: string;
-    fit?: PublisherImageFit;
-    source?: PublisherImageSource;
-    style?: IPublisherImageStyle;
+    fit?: PublisherImageFitV1;
+    source?: PublisherImageSourceV1;
+    style?: IPublisherImageStyleV1;
     // (undocumented)
     type: "image";
 }
 
 // @alpha
-export interface IPublisherImageStyle {
+export type IPublisherImageStyle = IPublisherImageStyleV1;
+
+// @alpha
+export interface IPublisherImageStyleV1 {
     // (undocumented)
-    horizontalAlign?: PublisherContentAlignment;
+    horizontalAlign?: PublisherContentAlignmentV1;
     // (undocumented)
-    verticalAlign?: PublisherContentAlignment;
+    verticalAlign?: PublisherContentAlignmentV1;
+}
+
+// @alpha (undocumented)
+export interface IPublisherImageWidgetStyleV2 extends IPublisherBoxStyleV2 {
+    fit?: "contain" | "cover" | "fill";
+    // (undocumented)
+    horizontalAlign?: PublisherHorizontalAlignV2;
+    // (undocumented)
+    verticalAlign?: PublisherVerticalAlignV2;
+}
+
+// @alpha (undocumented)
+export interface IPublisherImageWidgetV2 extends IPublisherWidgetBaseV2 {
+    // (undocumented)
+    altText?: string;
+    // (undocumented)
+    decorative?: boolean;
+    // (undocumented)
+    source?: PublisherImageSourceV2;
+    // (undocumented)
+    style?: IPublisherImageWidgetStyleV2;
+    // (undocumented)
+    type: "image";
 }
 
 // @alpha
-export interface IPublisherLayoutNodeBase {
+export interface IPublisherInheritedTextStyleV2 {
+    horizontalAlign?: PublisherHorizontalAlignV2 | "justify";
+    // (undocumented)
+    textColor?: PublisherColorValueV2;
+    // (undocumented)
+    textStyle?: PublisherTextStyleNameV2;
+    // (undocumented)
+    verticalAlign?: PublisherVerticalAlignV2;
+}
+
+// @alpha
+export type IPublisherLayoutNodeBase = IPublisherLayoutNodeBaseV1;
+
+// @alpha
+export interface IPublisherLayoutNodeBaseV1 {
     weight?: number;
 }
 
 // @alpha
-export interface IPublisherLayoutSection extends IPublisherLayoutNodeBase {
+export type IPublisherLayoutSection = IPublisherLayoutSectionV1;
+
+// @alpha
+export interface IPublisherLayoutSectionV1 extends IPublisherLayoutNodeBaseV1 {
     // (undocumented)
-    children: PublisherPageLayoutNode[];
+    children: PublisherPageLayoutNodeV1[];
     direction: "row" | "column";
-    style?: IPublisherBoxStyle;
+    style?: IPublisherBoxStyleV1;
     // (undocumented)
     type: "section";
 }
 
 // @alpha
-export interface IPublisherLayoutSlotRef extends IPublisherLayoutNodeBase {
+export type IPublisherLayoutSlotRef = IPublisherLayoutSlotRefV1;
+
+// @alpha
+export interface IPublisherLayoutSlotRefV1 extends IPublisherLayoutNodeBaseV1 {
     slotId: string;
     // (undocumented)
     type: "slotRef";
 }
 
-// @alpha
-export interface IPublisherPageBody {
-    filters?: FilterContextItem[];
-    format?: PublisherPageFormat;
-    kind?: "cover" | "section" | "content";
-    layout: PublisherPageLayoutNode;
-    slots: PublisherSlot[];
-    style?: IPublisherBoxStyle;
+// @alpha (undocumented)
+export interface IPublisherPaddingStyleV2 {
+    // (undocumented)
+    padding?: PublisherPaddingValueV2;
+    // (undocumented)
+    paddingBottom?: PublisherPaddingValueV2;
+    // (undocumented)
+    paddingLeft?: PublisherPaddingValueV2;
+    // (undocumented)
+    paddingRight?: PublisherPaddingValueV2;
+    // (undocumented)
+    paddingTop?: PublisherPaddingValueV2;
 }
 
 // @alpha
-export interface IPublisherPageBodyValidationIssue {
+export type IPublisherPageBody = IPublisherPageBodyV1;
+
+// @alpha
+export interface IPublisherPageBodyV1 {
+    filters?: FilterContextItem[];
+    format?: PublisherPageFormatV1;
+    kind?: "cover" | "section" | "content";
+    layout: PublisherPageLayoutNodeV1;
+    slots: PublisherSlotV1[];
+    style?: IPublisherBoxStyleV1;
+}
+
+// @alpha
+export interface IPublisherPageBodyV2 {
+    // (undocumented)
+    filters?: FilterContextItem[];
+    // (undocumented)
+    kind?: PublisherPageKindV2;
+    // (undocumented)
+    layout: PublisherLayoutNodeV2;
+    notes?: string;
+    // (undocumented)
+    pageSize?: PublisherPageSizeV2;
+    // (undocumented)
+    style?: IPublisherPageStyleV2;
+}
+
+// @alpha
+export type IPublisherPageBodyValidationIssue = IPublisherPageBodyValidationIssueV1;
+
+// @alpha
+export interface IPublisherPageBodyValidationIssueV1 {
     // (undocumented)
     message: string;
     // (undocumented)
@@ -4978,22 +5441,23 @@ export interface IPublisherPageBodyValidationIssue {
 }
 
 // @alpha
-export interface IPublisherPageLayout extends IPublisherPageLayoutDefinition, IAuditableDates, IAuditableUsers {
-    isBuiltIn?: boolean;
-    isLocked?: boolean;
-    // (undocumented)
-    ref: ObjRef;
-}
+export type IPublisherPageLayout = IPublisherPageLayoutV1;
 
 // @alpha
-export interface IPublisherPageLayoutContent extends IPublisherPageBody {
+export type IPublisherPageLayoutContent = IPublisherPageLayoutContentV1;
+
+// @alpha
+export interface IPublisherPageLayoutContentV1 extends IPublisherPageBodyV1 {
     version: "1";
 }
 
 // @alpha
-export interface IPublisherPageLayoutDefinition {
+export type IPublisherPageLayoutDefinition = IPublisherPageLayoutDefinitionV1;
+
+// @alpha
+export interface IPublisherPageLayoutDefinitionV1 {
     // (undocumented)
-    content: IPublisherPageLayoutContent;
+    content: IPublisherPageLayoutContentV1;
     // (undocumented)
     description?: string;
     ref?: ObjRef;
@@ -5006,54 +5470,232 @@ export interface IPublisherPageLayoutDefinition {
 }
 
 // @alpha
-export interface IPublisherParagraphSlot extends IPublisherSlotBase {
-    source?: PublisherTextSource;
+export interface IPublisherPageLayoutV1 extends IPublisherPageLayoutDefinitionV1, IAuditableDates, IAuditableUsers {
+    isBuiltIn?: boolean;
+    isLocked?: boolean;
     // (undocumented)
-    style?: IPublisherParagraphStyle;
+    ref: ObjRef;
+}
+
+// @alpha (undocumented)
+export interface IPublisherPageStyleV2 extends IPublisherBackgroundStyleV2, IPublisherPaddingStyleV2, IPublisherInheritedTextStyleV2 {
+    gap?: PublisherGapValueV2;
+}
+
+// @alpha
+export interface IPublisherPageTemplateDefinitionV2 extends IPublisherEntityDefinitionBaseV2 {
+    // (undocumented)
+    content: IPublisherPageBodyV2;
+    // (undocumented)
+    type: "pageTemplate";
+}
+
+// @alpha
+export interface IPublisherPageTemplateV2 extends IPublisherPageTemplateDefinitionV2, IPublisherEntityMetadataV2 {
+    isDefault?: boolean;
+    // (undocumented)
+    ref: ObjRef;
+}
+
+// @alpha
+export type IPublisherParagraphSlot = IPublisherParagraphSlotV1;
+
+// @alpha
+export interface IPublisherParagraphSlotV1 extends IPublisherSlotBaseV1 {
+    source?: PublisherTextSourceV1;
+    // (undocumented)
+    style?: IPublisherParagraphStyleV1;
     // (undocumented)
     type: "paragraph";
 }
 
 // @alpha
-export interface IPublisherParagraphStyle extends IPublisherTextStyle {
-    type?: PublisherParagraphType;
+export type IPublisherParagraphStyle = IPublisherParagraphStyleV1;
+
+// @alpha
+export interface IPublisherParagraphStyleV1 extends IPublisherTextStyleV1 {
+    type?: PublisherParagraphTypeV1;
 }
 
 // @alpha
-export interface IPublisherSlotBase {
+export interface IPublisherRelativePeriodV2 {
+    from: number;
+    // (undocumented)
+    granularity: DateFilterGranularity;
+    // (undocumented)
+    to: number;
+    // (undocumented)
+    type: "relative";
+}
+
+// @alpha
+export interface IPublisherSectionV2 {
+    // (undocumented)
+    description?: string;
+    id: string;
+    // (undocumented)
+    pages: IPublisherDocumentPageV2[];
+    // (undocumented)
+    title?: string;
+}
+
+// @alpha (undocumented)
+export interface IPublisherShadowStyleV2 {
+    // (undocumented)
+    shadow?: PublisherShadowValueV2;
+    // (undocumented)
+    shadowBlur?: PublisherPxV2;
+    // (undocumented)
+    shadowColor?: PublisherColorValueV2;
+    // (undocumented)
+    shadowOpacity?: PublisherOpacityV2;
+    shadowSpread?: number;
+    shadowX?: number;
+    shadowY?: number;
+}
+
+// @alpha
+export type IPublisherSlotBase = IPublisherSlotBaseV1;
+
+// @alpha
+export interface IPublisherSlotBaseV1 {
     localIdentifier: string;
-    placeholder?: IPublisherSlotPlaceholder;
+    placeholder?: IPublisherSlotPlaceholderV1;
     // (undocumented)
     type: string;
 }
 
 // @alpha
-export interface IPublisherSlotPlaceholder {
+export type IPublisherSlotPlaceholder = IPublisherSlotPlaceholderV1;
+
+// @alpha
+export interface IPublisherSlotPlaceholderV1 {
     hint?: string;
     required?: boolean;
 }
 
 // @alpha
-export interface IPublisherStaticTextSource {
+export type IPublisherStaticTextSource = IPublisherStaticTextSourceV1;
+
+// @alpha
+export interface IPublisherStaticTextSourceV1 {
     content: string;
     // (undocumented)
     type: "static";
 }
 
-// @alpha
-export type IPublisherTextSlot = IPublisherHeadingSlot | IPublisherParagraphSlot;
+// @alpha (undocumented)
+export interface IPublisherTableStyleV2 {
+    // (undocumented)
+    fontSize?: PublisherPxV2;
+    // (undocumented)
+    gridColor?: PublisherColorValueV2;
+    // (undocumented)
+    headerBackgroundColor?: PublisherColorValueV2;
+    // (undocumented)
+    headerLabelColor?: PublisherColorValueV2;
+    // (undocumented)
+    nullValueColor?: PublisherColorValueV2;
+    // (undocumented)
+    rowHeight?: PublisherPxV2;
+    // (undocumented)
+    subtotalBackgroundColor?: PublisherColorValueV2;
+    // (undocumented)
+    totalBackgroundColor?: PublisherColorValueV2;
+    // (undocumented)
+    totalValueColor?: PublisherColorValueV2;
+    // (undocumented)
+    valueColor?: PublisherColorValueV2;
+}
 
-// @alpha
-export interface IPublisherTextStyle extends IPublisherBoxStyle {
-    color?: string;
+// @alpha (undocumented)
+export interface IPublisherTakeawayGenerationV2 {
+    context?: {
+        widgets?: string[];
+        pageTitle?: boolean;
+        filters?: boolean;
+        otherPages?: boolean;
+    };
+    instructions?: string;
+}
+
+// @alpha (undocumented)
+export interface IPublisherTakeawayWidgetV2 extends IPublisherWidgetBaseV2 {
     // (undocumented)
-    horizontalAlign?: PublisherContentAlignment;
+    generation?: IPublisherTakeawayGenerationV2;
+    markdown?: string;
     // (undocumented)
-    verticalAlign?: PublisherContentAlignment;
+    style?: IPublisherTextWidgetStyleV2;
+    title?: IPublisherWidgetTitleV2;
+    // (undocumented)
+    type: "takeaway";
 }
 
 // @alpha
-export interface IPublisherVariableDefinition {
+export type IPublisherTextSlot = IPublisherTextSlotV1;
+
+// @alpha
+export type IPublisherTextSlotV1 = IPublisherHeadingSlotV1 | IPublisherParagraphSlotV1;
+
+// @alpha
+export type IPublisherTextStyle = IPublisherTextStyleV1;
+
+// @alpha
+export interface IPublisherTextStyleV1 extends IPublisherBoxStyleV1 {
+    color?: string;
+    // (undocumented)
+    horizontalAlign?: PublisherContentAlignmentV1;
+    // (undocumented)
+    verticalAlign?: PublisherContentAlignmentV1;
+}
+
+// @alpha (undocumented)
+export interface IPublisherTextStyleV2 extends IPublisherInheritedTextStyleV2 {
+    // (undocumented)
+    fontSize?: PublisherPxV2;
+    // (undocumented)
+    fontStyle?: "normal" | "italic";
+    fontWeight?: number;
+    letterSpacing?: number;
+    lineHeight?: number;
+    textOverflow?: "shrink" | "clip" | "ellipsis";
+    // (undocumented)
+    textTransform?: "none" | "uppercase" | "lowercase" | "capitalize";
+}
+
+// @alpha (undocumented)
+export interface IPublisherTextWidgetStyleV2 extends IPublisherBoxStyleV2, IPublisherTextStyleV2 {
+}
+
+// @alpha (undocumented)
+export interface IPublisherTextWidgetV2 extends IPublisherWidgetBaseV2 {
+    decorative?: boolean;
+    markdown?: string;
+    style?: IPublisherTextWidgetStyleV2;
+    // (undocumented)
+    type: "text";
+}
+
+// @alpha
+export interface IPublisherTitleWidgetV2 extends IPublisherWidgetBaseV2 {
+    markdown?: string;
+    style?: IPublisherTextWidgetStyleV2;
+    // (undocumented)
+    type: "title";
+}
+
+// @alpha (undocumented)
+export interface IPublisherValidationIssueV2 {
+    // (undocumented)
+    message: string;
+    path: string;
+}
+
+// @alpha
+export type IPublisherVariableDefinition = IPublisherVariableDefinitionV1;
+
+// @alpha
+export interface IPublisherVariableDefinitionV1 {
     defaultValue?: string;
     // (undocumented)
     description?: string;
@@ -5062,7 +5704,45 @@ export interface IPublisherVariableDefinition {
 }
 
 // @alpha
-export interface IPublisherVisualizationSlot extends IPublisherSlotBase {
+export interface IPublisherVisualizationDisplayV2 {
+    // (undocumented)
+    dataLabels?: {
+        visible?: boolean | "auto";
+    };
+    // (undocumented)
+    dataPoints?: {
+        visible?: boolean | "auto";
+    };
+    // (undocumented)
+    gridlines?: {
+        visible?: boolean;
+    };
+    // (undocumented)
+    legend?: {
+        visible?: boolean;
+        position?: "auto" | "top" | "bottom" | "left" | "right";
+    };
+    // (undocumented)
+    secondaryYAxis?: IPublisherAxisDisplayV2;
+    // (undocumented)
+    xAxis?: IPublisherAxisDisplayV2;
+    // (undocumented)
+    yAxis?: IPublisherAxisDisplayV2;
+}
+
+// @alpha (undocumented)
+export interface IPublisherVisualizationRefV2 {
+    // (undocumented)
+    identifier: string;
+    // (undocumented)
+    type: "insight";
+}
+
+// @alpha
+export type IPublisherVisualizationSlot = IPublisherVisualizationSlotV1;
+
+// @alpha
+export interface IPublisherVisualizationSlotV1 extends IPublisherSlotBaseV1 {
     dateDataSet?: ObjRef;
     filters?: FilterContextItem[];
     ignoredFilters?: IDashboardFilterReference[];
@@ -5074,6 +5754,64 @@ export interface IPublisherVisualizationSlot extends IPublisherSlotBase {
     title?: string;
     // (undocumented)
     type: "visualization";
+}
+
+// @alpha (undocumented)
+export interface IPublisherVisualizationStyleV2 extends IPublisherBoxStyleV2 {
+    // (undocumented)
+    chart?: IPublisherChartStyleV2;
+    // (undocumented)
+    headline?: IPublisherHeadlineStyleV2;
+    // (undocumented)
+    table?: IPublisherTableStyleV2;
+}
+
+// @alpha (undocumented)
+export interface IPublisherVisualizationWidgetV2 extends IPublisherWidgetBaseV2 {
+    altText?: string;
+    dateDataSet?: IPublisherDataSetRefV2;
+    // (undocumented)
+    display?: IPublisherVisualizationDisplayV2;
+    // (undocumented)
+    filters?: FilterContextItem[];
+    ignoreDocumentFilters?: IDashboardFilterReference[];
+    // (undocumented)
+    ignoreDocumentPeriod?: boolean;
+    // (undocumented)
+    style?: IPublisherVisualizationStyleV2;
+    // (undocumented)
+    title?: IPublisherWidgetTitleV2;
+    // (undocumented)
+    type: "visualization";
+    // (undocumented)
+    visualization?: IPublisherVisualizationRefV2;
+}
+
+// @alpha (undocumented)
+export interface IPublisherWidgetBaseV2 {
+    id: string;
+    locked?: boolean;
+    // (undocumented)
+    placeholder?: IPublisherWidgetPlaceholderV2;
+    proportion?: number;
+    // (undocumented)
+    type: PublisherWidgetTypeV2;
+}
+
+// @alpha (undocumented)
+export interface IPublisherWidgetPlaceholderV2 {
+    // (undocumented)
+    hint?: string;
+    // (undocumented)
+    required?: boolean;
+}
+
+// @alpha (undocumented)
+export interface IPublisherWidgetTitleV2 {
+    // (undocumented)
+    style?: IPublisherTextStyleV2;
+    text?: string;
+    visible?: boolean;
 }
 
 // @public (undocumented)
@@ -6045,68 +6783,201 @@ export function isPreviousPeriodMeasure(obj: unknown): obj is IMeasure<IPrevious
 // @public
 export function isPreviousPeriodMeasureDefinition(obj: unknown): obj is IPreviousPeriodMeasureDefinition;
 
-// @alpha
-export function isPublisherColorBackground(obj: unknown): obj is IPublisherColorBackground;
+// @alpha (undocumented)
+export function isPublisherAbsolutePeriodV2(obj: unknown): obj is IPublisherAbsolutePeriodV2;
 
 // @alpha
-export function isPublisherDocument(obj: unknown): obj is IPublisherDocument;
+export const isPublisherColorBackground: typeof isPublisherColorBackgroundV1;
 
 // @alpha
-export function isPublisherDocumentContentV1(obj: unknown): obj is IPublisherDocumentContent;
+export function isPublisherColorBackgroundV1(obj: unknown): obj is IPublisherColorBackgroundV1;
+
+// @alpha (undocumented)
+export function isPublisherColumnV2(obj: unknown): obj is IPublisherContainerV2 & {
+    type: "column";
+};
+
+// @alpha (undocumented)
+export function isPublisherContainerV2(obj: unknown): obj is IPublisherContainerV2;
 
 // @alpha
-export function isPublisherDocumentDefinition(obj: unknown): obj is IPublisherDocumentDefinition;
+export const isPublisherDocument: typeof isPublisherDocumentV1;
 
 // @alpha
-export function isPublisherDocumentTemplate(obj: unknown): obj is IPublisherDocumentTemplate;
+export function isPublisherDocumentContentV1(obj: unknown): obj is IPublisherDocumentContentV1;
 
 // @alpha
-export function isPublisherDocumentTemplateDefinition(obj: unknown): obj is IPublisherDocumentTemplateDefinition;
+export const isPublisherDocumentDefinition: typeof isPublisherDocumentDefinitionV1;
 
 // @alpha
-export function isPublisherHeadingSlot(obj: unknown): obj is IPublisherHeadingSlot;
+export function isPublisherDocumentDefinitionV1(obj: unknown): obj is IPublisherDocumentDefinitionV1;
+
+// @alpha (undocumented)
+export function isPublisherDocumentDefinitionV2(obj: unknown): obj is IPublisherDocumentDefinitionV2;
+
+// @alpha (undocumented)
+export function isPublisherDocumentPagesContentV2(obj: unknown): obj is IPublisherDocumentPagesContentV2;
+
+// @alpha (undocumented)
+export function isPublisherDocumentPageV2(obj: unknown): obj is IPublisherDocumentPageV2;
+
+// @alpha (undocumented)
+export function isPublisherDocumentSectionsContentV2(obj: unknown): obj is IPublisherDocumentSectionsContentV2;
 
 // @alpha
-export function isPublisherHeadingType(value: unknown): value is PublisherHeadingType;
+export const isPublisherDocumentTemplate: typeof isPublisherDocumentTemplateV1;
 
 // @alpha
-export function isPublisherImageBackground(obj: unknown): obj is IPublisherImageBackground;
+export const isPublisherDocumentTemplateDefinition: typeof isPublisherDocumentTemplateDefinitionV1;
 
 // @alpha
-export function isPublisherImageSlot(obj: unknown): obj is IPublisherImageSlot;
+export function isPublisherDocumentTemplateDefinitionV1(obj: unknown): obj is IPublisherDocumentTemplateDefinitionV1;
+
+// @alpha (undocumented)
+export function isPublisherDocumentTemplateDefinitionV2(obj: unknown): obj is IPublisherDocumentTemplateDefinitionV2;
 
 // @alpha
-export function isPublisherLayoutSection(obj: unknown): obj is IPublisherLayoutSection;
+export function isPublisherDocumentTemplateV1(obj: unknown): obj is IPublisherDocumentTemplateV1;
+
+// @alpha (undocumented)
+export function isPublisherDocumentTemplateV2(obj: unknown): obj is IPublisherDocumentTemplateV2;
 
 // @alpha
-export function isPublisherLayoutSlotRef(obj: unknown): obj is IPublisherLayoutSlotRef;
+export function isPublisherDocumentV1(obj: unknown): obj is IPublisherDocumentV1;
+
+// @alpha (undocumented)
+export function isPublisherDocumentV2(obj: unknown): obj is IPublisherDocumentV2;
 
 // @alpha
-export function isPublisherPageFormat(value: unknown): value is PublisherPageFormat;
+export const isPublisherHeadingSlot: typeof isPublisherHeadingSlotV1;
 
 // @alpha
-export function isPublisherPageLayout(obj: unknown): obj is IPublisherPageLayout;
+export function isPublisherHeadingSlotV1(obj: unknown): obj is IPublisherHeadingSlotV1;
 
 // @alpha
-export function isPublisherPageLayoutContentV1(obj: unknown): obj is IPublisherPageLayoutContent;
+export const isPublisherHeadingType: typeof isPublisherHeadingTypeV1;
 
 // @alpha
-export function isPublisherPageLayoutDefinition(obj: unknown): obj is IPublisherPageLayoutDefinition;
+export function isPublisherHeadingTypeV1(value: unknown): value is PublisherHeadingTypeV1;
+
+// @alpha (undocumented)
+export function isPublisherHeadingWidgetV2(obj: unknown): obj is IPublisherHeadingWidgetV2;
 
 // @alpha
-export function isPublisherParagraphSlot(obj: unknown): obj is IPublisherParagraphSlot;
+export const isPublisherImageBackground: typeof isPublisherImageBackgroundV1;
 
 // @alpha
-export function isPublisherParagraphType(value: unknown): value is PublisherParagraphType;
+export function isPublisherImageBackgroundV1(obj: unknown): obj is IPublisherImageBackgroundV1;
 
 // @alpha
-export function isPublisherSlot(obj: unknown): obj is PublisherSlot;
+export const isPublisherImageSlot: typeof isPublisherImageSlotV1;
 
 // @alpha
-export function isPublisherTextSlot(obj: unknown): obj is IPublisherTextSlot;
+export function isPublisherImageSlotV1(obj: unknown): obj is IPublisherImageSlotV1;
+
+// @alpha (undocumented)
+export function isPublisherImageWidgetV2(obj: unknown): obj is IPublisherImageWidgetV2;
 
 // @alpha
-export function isPublisherVisualizationSlot(obj: unknown): obj is IPublisherVisualizationSlot;
+export const isPublisherLayoutSection: typeof isPublisherLayoutSectionV1;
+
+// @alpha
+export function isPublisherLayoutSectionV1(obj: unknown): obj is IPublisherLayoutSectionV1;
+
+// @alpha
+export const isPublisherLayoutSlotRef: typeof isPublisherLayoutSlotRefV1;
+
+// @alpha
+export function isPublisherLayoutSlotRefV1(obj: unknown): obj is IPublisherLayoutSlotRefV1;
+
+// @alpha (undocumented)
+export function isPublisherPageBodyV2(obj: unknown): obj is IPublisherPageBodyV2;
+
+// @alpha
+export const isPublisherPageFormat: typeof isPublisherPageFormatV1;
+
+// @alpha
+export function isPublisherPageFormatV1(value: unknown): value is PublisherPageFormatV1;
+
+// @alpha
+export const isPublisherPageLayout: typeof isPublisherPageLayoutV1;
+
+// @alpha
+export function isPublisherPageLayoutContentV1(obj: unknown): obj is IPublisherPageLayoutContentV1;
+
+// @alpha
+export const isPublisherPageLayoutDefinition: typeof isPublisherPageLayoutDefinitionV1;
+
+// @alpha
+export function isPublisherPageLayoutDefinitionV1(obj: unknown): obj is IPublisherPageLayoutDefinitionV1;
+
+// @alpha
+export function isPublisherPageLayoutV1(obj: unknown): obj is IPublisherPageLayoutV1;
+
+// @alpha (undocumented)
+export function isPublisherPageSizeV2(value: unknown): value is PublisherPageSizeV2;
+
+// @alpha (undocumented)
+export function isPublisherPageTemplateDefinitionV2(obj: unknown): obj is IPublisherPageTemplateDefinitionV2;
+
+// @alpha (undocumented)
+export function isPublisherPageTemplateV2(obj: unknown): obj is IPublisherPageTemplateV2;
+
+// @alpha
+export const isPublisherParagraphSlot: typeof isPublisherParagraphSlotV1;
+
+// @alpha
+export function isPublisherParagraphSlotV1(obj: unknown): obj is IPublisherParagraphSlotV1;
+
+// @alpha
+export const isPublisherParagraphType: typeof isPublisherParagraphTypeV1;
+
+// @alpha
+export function isPublisherParagraphTypeV1(value: unknown): value is PublisherParagraphTypeV1;
+
+// @alpha (undocumented)
+export function isPublisherRelativePeriodV2(obj: unknown): obj is IPublisherRelativePeriodV2;
+
+// @alpha (undocumented)
+export function isPublisherRowV2(obj: unknown): obj is IPublisherContainerV2 & {
+    type: "row";
+};
+
+// @alpha
+export const isPublisherSlot: typeof isPublisherSlotV1;
+
+// @alpha
+export function isPublisherSlotV1(obj: unknown): obj is PublisherSlotV1;
+
+// @alpha (undocumented)
+export function isPublisherTakeawayWidgetV2(obj: unknown): obj is IPublisherTakeawayWidgetV2;
+
+// @alpha
+export const isPublisherTextSlot: typeof isPublisherTextSlotV1;
+
+// @alpha
+export function isPublisherTextSlotV1(obj: unknown): obj is IPublisherTextSlotV1;
+
+// @alpha (undocumented)
+export function isPublisherTextStyleNameV2(value: unknown): value is PublisherTextStyleNameV2;
+
+// @alpha (undocumented)
+export function isPublisherTextWidgetV2(obj: unknown): obj is IPublisherTextWidgetV2;
+
+// @alpha (undocumented)
+export function isPublisherTitleWidgetV2(obj: unknown): obj is IPublisherTitleWidgetV2;
+
+// @alpha
+export const isPublisherVisualizationSlot: typeof isPublisherVisualizationSlotV1;
+
+// @alpha
+export function isPublisherVisualizationSlotV1(obj: unknown): obj is IPublisherVisualizationSlotV1;
+
+// @alpha (undocumented)
+export function isPublisherVisualizationWidgetV2(obj: unknown): obj is IPublisherVisualizationWidgetV2;
+
+// @alpha (undocumented)
+export function isPublisherWidgetV2(obj: unknown): obj is PublisherWidgetV2;
 
 // @public
 export function isRangeCondition(obj: unknown): obj is IRangeCondition;
@@ -7538,12 +8409,15 @@ export function newAbsoluteDateFilter(dateDataSet: ObjRef | Identifier, from: st
 export function newAbsoluteDateFilter(dateDataSet: ObjRef | Identifier, from: string, to: string, localIdentifier?: string, emptyValueHandling?: EmptyValues): IAbsoluteDateFilter;
 
 // @alpha
-export function newAdHocPublisherDocumentDefinition(options: {
+export const newAdHocPublisherDocumentDefinition: typeof newAdHocPublisherDocumentDefinitionV1;
+
+// @alpha
+export function newAdHocPublisherDocumentDefinitionV1(options: {
     title: string;
-    periodStart: PublisherDateString;
-    periodEnd: PublisherDateString;
-    pages?: IPublisherDocumentPage[];
-}, modifications?: Partial<Omit<IPublisherDocumentDefinition, "type" | "title" | "periodStart" | "periodEnd" | "content">>): IPublisherDocumentDefinition;
+    periodStart: PublisherDateStringV1;
+    periodEnd: PublisherDateStringV1;
+    pages?: IPublisherDocumentPageV1[];
+}, modifications?: Partial<Omit<IPublisherDocumentDefinitionV1, "type" | "title" | "periodStart" | "periodEnd" | "content">>): IPublisherDocumentDefinitionV1;
 
 // @alpha
 export function newAllTimeDashboardDateFilter(dataSet?: ObjRef, localIdentifier?: string, emptyValueHandling?: EmptyValues): IDashboardDateFilter;
@@ -7630,23 +8504,56 @@ export function newPositiveAttributeFilter(attributeOrRef: IAttribute | ObjRef |
 export function newPreviousPeriodMeasure(measureIdOrLocalId: MeasureOrLocalId, dateDataSets: IPreviousPeriodDateDataSetSimple[], modifications?: MeasureModifications<PreviousPeriodMeasureBuilder>): IMeasure<IPreviousPeriodMeasureDefinition>;
 
 // @alpha
-export function newPublisherDocumentContent(pages: IPublisherDocumentPage[], modifications?: Partial<Omit<IPublisherDocumentContent, "version" | "pages">>): IPublisherDocumentContent;
+export const newPublisherDocumentContent: typeof newPublisherDocumentContentV1;
 
 // @alpha
-export function newPublisherDocumentDefinitionFromTemplate(template: IPublisherDocumentTemplate | IPublisherDocumentTemplateDefinition, options: {
+export function newPublisherDocumentContentV1(pages: IPublisherDocumentPageV1[], modifications?: Partial<Omit<IPublisherDocumentContentV1, "version" | "pages">>): IPublisherDocumentContentV1;
+
+// @alpha
+export const newPublisherDocumentDefinitionFromTemplate: typeof newPublisherDocumentDefinitionFromTemplateV1;
+
+// @alpha
+export function newPublisherDocumentDefinitionFromTemplateV1(template: IPublisherDocumentTemplateV1 | IPublisherDocumentTemplateDefinitionV1, options: {
     title: string;
-    periodStart: PublisherDateString;
-    periodEnd: PublisherDateString;
-}, modifications?: Partial<Omit<IPublisherDocumentDefinition, "type" | "title" | "periodStart" | "periodEnd" | "content">>): IPublisherDocumentDefinition;
+    periodStart: PublisherDateStringV1;
+    periodEnd: PublisherDateStringV1;
+}, modifications?: Partial<Omit<IPublisherDocumentDefinitionV1, "type" | "title" | "periodStart" | "periodEnd" | "content">>): IPublisherDocumentDefinitionV1;
 
 // @alpha
-export function newPublisherDocumentPageFromLayout(page: IPublisherPageLayout | IPublisherPageLayoutDefinition, localIdentifier?: string): IPublisherDocumentPage;
+export function newPublisherDocumentFilterIdV2(input: INewPublisherDocumentFilterIdOptionsV2): string;
 
 // @alpha
-export function newPublisherDocumentTemplateDefinition(title: string, content: IPublisherDocumentContent, modifications?: Partial<Omit<IPublisherDocumentTemplateDefinition, "type" | "title" | "content">>): IPublisherDocumentTemplateDefinition;
+export const newPublisherDocumentPageFromLayout: typeof newPublisherDocumentPageFromLayoutV1;
 
 // @alpha
-export function newPublisherPageLayoutDefinition(title: string, body: IPublisherPageBody, modifications?: Partial<Omit<IPublisherPageLayoutDefinition, "type" | "title" | "content">>): IPublisherPageLayoutDefinition;
+export function newPublisherDocumentPageFromLayoutV1(page: IPublisherPageLayoutV1 | IPublisherPageLayoutDefinitionV1, localIdentifier?: string): IPublisherDocumentPageV1;
+
+// @alpha
+export function newPublisherDocumentPageFromTemplateV2(body: IPublisherPageBodyV2 & Partial<Pick<IPublisherDocumentPageV2, "id" | "visible">>, id?: string): IPublisherDocumentPageV2;
+
+// @alpha
+export const newPublisherDocumentTemplateDefinition: typeof newPublisherDocumentTemplateDefinitionV1;
+
+// @alpha
+export function newPublisherDocumentTemplateDefinitionV1(title: string, content: IPublisherDocumentContentV1, modifications?: Partial<Omit<IPublisherDocumentTemplateDefinitionV1, "type" | "title" | "content">>): IPublisherDocumentTemplateDefinitionV1;
+
+// @alpha
+export function newPublisherIdV2(prefix: string): string;
+
+// @alpha
+export function newPublisherPageIdV2(): string;
+
+// @alpha
+export const newPublisherPageLayoutDefinition: typeof newPublisherPageLayoutDefinitionV1;
+
+// @alpha
+export function newPublisherPageLayoutDefinitionV1(title: string, body: IPublisherPageBodyV1, modifications?: Partial<Omit<IPublisherPageLayoutDefinitionV1, "type" | "title" | "content">>): IPublisherPageLayoutDefinitionV1;
+
+// @alpha
+export function newPublisherSectionIdV2(): string;
+
+// @alpha
+export function newPublisherWidgetIdV2(): string;
 
 // @public
 export function newRankingFilter(measureOrRef: IMeasure | ObjRefInScope | string, attributesOrRefs: Array<IAttribute | ObjRefInScope | string>, operator: RankingFilterOperator, value: number): IRankingFilter;
@@ -7842,34 +8749,94 @@ export type PreviousPeriodMeasureBuilderInput = {
 } | IMeasure<IPreviousPeriodMeasureDefinition>;
 
 // @alpha
-export type PublisherBackground = IPublisherColorBackground | IPublisherImageBackground;
+export type PublisherBackground = PublisherBackgroundV1;
 
 // @alpha
-export type PublisherBuiltInVariable = "reportName" | "reportDescription" | "periodStart" | "periodEnd" | "reportDateRange" | "reportAttributeFilters" | "exportedAt" | "exportedBy" | "lastModifiedAt" | "lastModifiedBy" | "workspaceName" | "workspaceId" | "totalPages" | "currentPageNumber" | "logo";
+export type PublisherBackgroundV1 = IPublisherColorBackgroundV1 | IPublisherImageBackgroundV1;
+
+// @alpha (undocumented)
+export type PublisherBorderLineStyleV2 = "solid" | "dashed" | "dotted" | "none";
 
 // @alpha
-export const PublisherBuiltInVariables: PublisherBuiltInVariable[];
+export type PublisherBuiltInVariable = PublisherBuiltInVariableV1;
 
 // @alpha
-export type PublisherContentAlignment = "start" | "center" | "end";
+export const PublisherBuiltInVariables: PublisherBuiltInVariableV1[];
 
 // @alpha
-export type PublisherDateString = string;
+export const PublisherBuiltInVariablesV1: PublisherBuiltInVariableV1[];
 
 // @alpha
-export function publisherDocumentPage(documentOrTemplate: IPublisherDocument | IPublisherDocumentDefinition | IPublisherDocumentTemplate | IPublisherDocumentTemplateDefinition, pageLocalIdentifier: string): IPublisherDocumentPage | undefined;
+export type PublisherBuiltInVariableV1 = "reportName" | "reportDescription" | "periodStart" | "periodEnd" | "reportDateRange" | "reportAttributeFilters" | "exportedAt" | "exportedBy" | "lastModifiedAt" | "lastModifiedBy" | "workspaceName" | "workspaceId" | "totalPages" | "currentPageNumber" | "logo";
 
 // @alpha
-export type PublisherHeadingType = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+export type PublisherColorValueV2 = string;
 
 // @alpha
-export const PublisherHeadingTypes: PublisherHeadingType[];
+export type PublisherContentAlignment = PublisherContentAlignmentV1;
 
 // @alpha
-export type PublisherImageFit = "contain" | "cover" | "fill";
+export type PublisherContentAlignmentV1 = "start" | "center" | "end";
+
+// @alpha (undocumented)
+export type PublisherContentVersionV2 = "2";
 
 // @alpha
-export type PublisherImageSource = {
+export type PublisherDateString = PublisherDateStringV1;
+
+// @alpha
+export type PublisherDateStringV1 = string;
+
+// @alpha
+export function publisherDocumentContentSectionsV2(content: PublisherDocumentContentV2): IPublisherSectionV2[];
+
+// @alpha
+export function publisherDocumentContentSetSectionsV2(input: IPublisherDocumentContentSetSectionsOptionsV2): PublisherDocumentContentV2;
+
+// @alpha
+export type PublisherDocumentContentV2 = IPublisherDocumentPagesContentV2 | IPublisherDocumentSectionsContentV2;
+
+// @alpha
+export const publisherDocumentPage: typeof publisherDocumentPageV1;
+
+// @alpha
+export function publisherDocumentPageV1(documentOrTemplate: IPublisherDocumentV1 | IPublisherDocumentDefinitionV1 | IPublisherDocumentTemplateV1 | IPublisherDocumentTemplateDefinitionV1, pageLocalIdentifier: string): IPublisherDocumentPageV1 | undefined;
+
+// @alpha (undocumented)
+export type PublisherGapValueV2 = PublisherPxV2 | "{theme.spacing.gap.compact}" | "{theme.spacing.gap.normal}" | "{theme.spacing.gap.spacious}";
+
+// @alpha
+export function publisherHeadingDefaultTextStyleV2(level?: PublisherHeadingLevelV2): Extract<PublisherTextStyleNameV2, "h2" | "h3" | "h4" | "h5" | "h6">;
+
+// @alpha (undocumented)
+export type PublisherHeadingLevelV2 = 1 | 2 | 3 | 4 | 5 | 6;
+
+// @alpha
+export type PublisherHeadingType = PublisherHeadingTypeV1;
+
+// @alpha
+export const PublisherHeadingTypes: PublisherHeadingTypeV1[];
+
+// @alpha
+export const PublisherHeadingTypesV1: PublisherHeadingTypeV1[];
+
+// @alpha
+export type PublisherHeadingTypeV1 = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+
+// @alpha (undocumented)
+export type PublisherHorizontalAlignV2 = "left" | "center" | "right";
+
+// @alpha
+export type PublisherImageFit = PublisherImageFitV1;
+
+// @alpha
+export type PublisherImageFitV1 = "contain" | "cover" | "fill";
+
+// @alpha
+export type PublisherImageSource = PublisherImageSourceV1;
+
+// @alpha
+export type PublisherImageSourceV1 = {
     type: "url";
     url: string;
 } | {
@@ -7878,43 +8845,133 @@ export type PublisherImageSource = {
 };
 
 // @alpha
-export type PublisherPageFormat = "widescreen" | "a4Portrait" | "letterPortrait";
+export type PublisherImageSourceV2 = string;
+
+// @alpha (undocumented)
+export type PublisherLayoutNodeV2 = IPublisherContainerV2 | PublisherWidgetV2;
 
 // @alpha
-export const PublisherPageFormatAspectRatios: Record<PublisherPageFormat, number>;
+export type PublisherOpacityV2 = number;
+
+// @alpha (undocumented)
+export type PublisherPaddingValueV2 = PublisherPxV2 | "{theme.spacing.padding.compact}" | "{theme.spacing.padding.normal}" | "{theme.spacing.padding.spacious}";
 
 // @alpha
-export const PublisherPageFormats: PublisherPageFormat[];
+export type PublisherPageFormat = PublisherPageFormatV1;
 
 // @alpha
-export type PublisherPageLayoutNode = IPublisherLayoutSection | IPublisherLayoutSlotRef;
+export const PublisherPageFormatAspectRatios: Record<PublisherPageFormatV1, number>;
 
 // @alpha
-export type PublisherParagraphType = "largeText" | "normalText" | "smallText";
+export const PublisherPageFormatAspectRatiosV1: Record<PublisherPageFormatV1, number>;
 
 // @alpha
-export const PublisherParagraphTypes: PublisherParagraphType[];
+export const PublisherPageFormats: PublisherPageFormatV1[];
 
 // @alpha
-export type PublisherSlot = IPublisherVisualizationSlot | IPublisherTextSlot | IPublisherImageSlot;
+export const PublisherPageFormatsV1: PublisherPageFormatV1[];
 
 // @alpha
-export function publisherTextPlaceholder(name: string): string;
+export type PublisherPageFormatV1 = "widescreen" | "a4Portrait" | "letterPortrait";
 
 // @alpha
-export function publisherTextSlotType(slot: IPublisherTextSlot): PublisherTextType;
+export type PublisherPageKindV2 = "cover" | "section" | "content";
 
 // @alpha
-export function publisherTextSlotTypes(slot: IPublisherTextSlot): PublisherTextType[];
+export type PublisherPageLayoutNode = PublisherPageLayoutNodeV1;
 
 // @alpha
-export type PublisherTextSource = IPublisherStaticTextSource | IPublisherAiTextSource;
+export type PublisherPageLayoutNodeV1 = IPublisherLayoutSectionV1 | IPublisherLayoutSlotRefV1;
+
+// @alpha (undocumented)
+export const PublisherPageSizesV2: readonly ["widescreen"];
 
 // @alpha
-export type PublisherTextType = PublisherHeadingType | PublisherParagraphType;
+export type PublisherPageSizeV2 = (typeof PublisherPageSizesV2)[number];
 
 // @alpha
-export const PublisherTextTypes: PublisherTextType[];
+export type PublisherParagraphType = PublisherParagraphTypeV1;
+
+// @alpha
+export const PublisherParagraphTypes: PublisherParagraphTypeV1[];
+
+// @alpha
+export const PublisherParagraphTypesV1: PublisherParagraphTypeV1[];
+
+// @alpha
+export type PublisherParagraphTypeV1 = "largeText" | "normalText" | "smallText";
+
+// @alpha
+export type PublisherPeriodV2 = IPublisherAbsolutePeriodV2 | IPublisherRelativePeriodV2;
+
+// @alpha
+export type PublisherPxV2 = number;
+
+// @alpha (undocumented)
+export type PublisherRadiusValueV2 = PublisherPxV2 | "{theme.corners.small}" | "{theme.corners.medium}" | "{theme.corners.large}" | "{theme.corners.full}";
+
+// @alpha
+export type PublisherShadowValueV2 = string;
+
+// @alpha
+export type PublisherSlot = PublisherSlotV1;
+
+// @alpha
+export type PublisherSlotV1 = IPublisherVisualizationSlotV1 | IPublisherTextSlotV1 | IPublisherImageSlotV1;
+
+// @alpha
+export const publisherTextPlaceholder: typeof publisherTextPlaceholderV1;
+
+// @alpha
+export function publisherTextPlaceholderV1(name: string): string;
+
+// @alpha
+export const publisherTextSlotType: typeof publisherTextSlotTypeV1;
+
+// @alpha
+export const publisherTextSlotTypes: typeof publisherTextSlotTypesV1;
+
+// @alpha
+export function publisherTextSlotTypesV1(slot: IPublisherTextSlotV1): PublisherTextTypeV1[];
+
+// @alpha
+export function publisherTextSlotTypeV1(slot: IPublisherTextSlotV1): PublisherTextTypeV1;
+
+// @alpha
+export type PublisherTextSource = PublisherTextSourceV1;
+
+// @alpha
+export type PublisherTextSourceV1 = IPublisherStaticTextSourceV1 | IPublisherAiTextSourceV1;
+
+// @alpha (undocumented)
+export const PublisherTextStyleNamesV2: readonly ["title", "h1", "h2", "h3", "h4", "h5", "h6", "largeText", "normalText", "smallText"];
+
+// @alpha
+export type PublisherTextStyleNameV2 = (typeof PublisherTextStyleNamesV2)[number];
+
+// @alpha
+export type PublisherTextType = PublisherTextTypeV1;
+
+// @alpha
+export const PublisherTextTypes: PublisherTextTypeV1[];
+
+// @alpha
+export const PublisherTextTypesV1: PublisherTextTypeV1[];
+
+// @alpha
+export type PublisherTextTypeV1 = PublisherHeadingTypeV1 | PublisherParagraphTypeV1;
+
+// @alpha (undocumented)
+export type PublisherVerticalAlignV2 = "top" | "center" | "bottom";
+
+// @alpha (undocumented)
+export const PublisherWidgetTypesV2: readonly ["title", "heading", "text", "image", "visualization", "takeaway"];
+
+// @alpha (undocumented)
+export type PublisherWidgetTypeV2 = (typeof PublisherWidgetTypesV2)[number];
+
+// @alpha (undocumented)
+export type PublisherWidgetV2 = IPublisherTitleWidgetV2 | IPublisherHeadingWidgetV2 | IPublisherTextWidgetV2 | IPublisherImageWidgetV2 | IPublisherVisualizationWidgetV2 | IPublisherTakeawayWidgetV2;
 
 // @public (undocumented)
 export type RangeConditionOperator = "BETWEEN" | "NOT_BETWEEN";
@@ -7949,7 +9006,10 @@ export type RequiredSettings = Condition<Partial<IPermanentSettings | IFeatureFl
 export type RequiredWorkspacePermissions = Condition<Partial<IPluggableApplicationWorkspacePermissions>>;
 
 // @alpha
-export function resolvePublisherTextPlaceholders(text: string, values: Record<string, string>): string;
+export const resolvePublisherTextPlaceholders: typeof resolvePublisherTextPlaceholdersV1;
+
+// @alpha
+export function resolvePublisherTextPlaceholdersV1(text: string, values: Record<string, string>): string;
 
 // @alpha
 export function resolveTimezoneId(timezoneId: DashboardTimezoneId | undefined): string | undefined;
@@ -8097,7 +9157,19 @@ export type UserDataFilterDefinition = IUserDataFilterDefinition | IUserGroupDat
 export function userFullName(user: IUser): string | undefined;
 
 // @alpha
-export function validatePublisherPageBody(body: IPublisherPageBody): IPublisherPageBodyValidationIssue[];
+export function validatePublisherDocumentContentV2(content: unknown): IPublisherValidationIssueV2[];
+
+// @alpha
+export function validatePublisherEntityV2(entity: unknown): IPublisherValidationIssueV2[];
+
+// @alpha
+export const validatePublisherPageBody: typeof validatePublisherPageBodyV1;
+
+// @alpha
+export function validatePublisherPageBodyV1(body: IPublisherPageBodyV1): IPublisherPageBodyValidationIssueV1[];
+
+// @alpha
+export function validatePublisherPageBodyV2(body: unknown): IPublisherValidationIssueV2[];
 
 // @internal
 export class VirtualArithmeticMeasureBuilder extends ArithmeticMeasureBuilder {

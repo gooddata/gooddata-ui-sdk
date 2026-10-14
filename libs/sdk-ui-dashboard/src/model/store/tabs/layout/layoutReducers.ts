@@ -291,9 +291,9 @@ const toggleLayoutSectionHeadersCore: CoreLayoutReducer<ToggleLayoutSectionHeade
         layout.widget = {
             ...layout.widget,
             configuration: {
-                ...(layout.widget.configuration ?? {}),
+                ...layout.widget.configuration,
                 sections: {
-                    ...(layout.widget.configuration?.sections ?? {}),
+                    ...layout.widget.configuration?.sections,
                     enableHeader: enableSectionHeaders,
                 },
             },
@@ -319,7 +319,7 @@ const toggleLayoutDirectionCore: CoreLayoutReducer<ToggleLayoutDirectionPayload>
         layout.widget = {
             ...layout.widget,
             configuration: {
-                ...(layout.widget.configuration ?? {}),
+                ...layout.widget.configuration,
                 direction,
             },
         };

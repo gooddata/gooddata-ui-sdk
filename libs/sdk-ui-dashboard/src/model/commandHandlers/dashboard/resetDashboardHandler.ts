@@ -16,6 +16,7 @@ import {
     isDashboardAttributeFilter,
 } from "@gooddata/sdk-model";
 
+import { type RenderMode } from "../../../types.js";
 import { type IResetDashboard } from "../../commands/dashboard.js";
 import { type IDashboardWasReset, dashboardWasReset } from "../../events/dashboard.js";
 import {
@@ -28,15 +29,16 @@ import {
     selectSettings,
 } from "../../store/config/configSelectors.js";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
-import { selectFilterViews } from "../../store/filterViews/filterViewsReducersSelectors.js";
+import { selectDashboardFilterViews } from "../../store/filterViews/filterViewsReducersSelectors.js";
 import { selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
+import { selectRenderMode } from "../../store/renderMode/renderModeSelectors.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { DEFAULT_TAB_ID, type ITabState } from "../../store/tabs/tabsState.js";
 import { selectUnavailableObjects } from "../../store/unavailableObjects/unavailableObjectsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { resolveInsights } from "../../utils/insightResolver.js";
 
-import { applyDefaultFilterView } from "./common/filterViews.js";
+import { applyDefaultFilterViewForRenderMode } from "./common/filterViews.js";
 import { insightReferencesFromDashboard } from "./common/insightReferences.js";
 import { getMigratedAttributeFilters } from "./common/migratedAttributeFilters.js";
 import {
@@ -48,18 +50,24 @@ export function* resetDashboardHandler(
     ctx: DashboardContext,
     cmd: IResetDashboard,
 ): SagaIterator<IDashboardWasReset> {
+    const renderMode: ReturnType<typeof selectRenderMode> = yield select(selectRenderMode);
     const data: SagaReturnType<typeof resetDashboardFromPersisted> = yield call(
         resetDashboardFromPersisted,
         ctx,
+        renderMode,
     );
     yield put(batchActions(data.batch, "@@GDC.DASH/RESET"));
     return dashboardWasReset(ctx, data.persistedDashboard, cmd.correlationId);
 }
 
-export function* resetDashboardRuntime(ctx: DashboardContext, cmd: IResetDashboard) {
+/**
+ * Resets the dashboard for the render mode it is switching to.
+ */
+export function* resetDashboardRuntime(ctx: DashboardContext, cmd: IResetDashboard, renderMode: RenderMode) {
     const data: SagaReturnType<typeof resetDashboardFromPersisted> = yield call(
         resetDashboardFromPersisted,
         ctx,
+        renderMode,
     );
     return {
         batch: batchActions(data.batch, "@@GDC.DASH/RESET"),
@@ -140,7 +148,7 @@ function* getFilterRelatedParamsPerTab(
     };
 }
 
-function* resetDashboardFromPersisted(ctx: DashboardContext) {
+function* resetDashboardFromPersisted(ctx: DashboardContext, renderMode: RenderMode) {
     const persistedDashboard: ReturnType<typeof selectPersistedDashboard> =
         yield select(selectPersistedDashboard);
 
@@ -206,14 +214,17 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
         // end of ad-hoc migration content
 
         const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
-        const filterViews: ReturnType<typeof selectFilterViews> = yield select(selectFilterViews);
+        // all tabs are rebuilt, so each needs its own default view, not only the active one
+        const filterViews: ReturnType<typeof selectDashboardFilterViews> =
+            yield select(selectDashboardFilterViews);
         const unavailableObjects: ReturnType<typeof selectUnavailableObjects> =
             yield select(selectUnavailableObjects);
-        const dashboardWithUpdatedFilterContext = applyDefaultFilterView(
+        const dashboardWithUpdatedFilterContext = applyDefaultFilterViewForRenderMode(
             persistedDashboard,
             filterViews,
             ctx.config?.exportId,
             unavailableObjects,
+            renderMode,
         );
 
         const insightRefsFromWidgets = insightReferencesFromDashboard(dashboardWithUpdatedFilterContext);

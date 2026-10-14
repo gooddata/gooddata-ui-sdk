@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ComponentType, type ReactNode, createContext, useContext } from "react";
 
@@ -48,7 +48,7 @@ export function enrichAgGridToken<T>(
 ): (T & { agGridToken?: string }) | undefined {
     return agGridToken
         ? ({
-              ...(config || {}),
+              ...config,
               agGridToken: config?.agGridToken || agGridToken,
           } as T & { agGridToken?: string })
         : config;

@@ -79,7 +79,7 @@ export class ParametersQuery implements IParametersQuery {
     query(): Promise<IParametersQueryResult> {
         return ServerPaging.for(
             async ({ limit, offset }) => {
-                const filter: IFilterBaseOptions = { ...(this.filter ?? {}) };
+                const filter: IFilterBaseOptions = { ...this.filter };
 
                 // Parameters API doesn't support `isHidden` filter yet.
                 // When filtering for hidden parameters, return empty results since no parameters can be hidden.

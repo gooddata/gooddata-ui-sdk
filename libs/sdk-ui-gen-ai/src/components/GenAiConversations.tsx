@@ -7,6 +7,7 @@ import noop from "lodash-es/noop.js";
 import { useDispatch, useSelector } from "react-redux";
 
 import { BackendProvider, WorkspaceProvider, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { OverlayAlignOnParentScrollProvider } from "@gooddata/sdk-ui-kit";
 
 import { IntlWrapper } from "../localization/IntlWrapper.js";
 import { type IChatConversationLocal } from "../model.js";
@@ -147,10 +148,12 @@ function GenAIConversationsContent(props: GenAIConversationsProps) {
             canAnalyze={false}
         >
             <CustomizationProvider slots={slots}>
-                <GenAIChatConversations
-                    wrapper={<div className={classNames} />}
-                    onSelect={onSelectConversation}
-                />
+                <OverlayAlignOnParentScrollProvider>
+                    <GenAIChatConversations
+                        wrapper={<div className={classNames} />}
+                        onSelect={onSelectConversation}
+                    />
+                </OverlayAlignOnParentScrollProvider>
             </CustomizationProvider>
         </ConfigProvider>
     );

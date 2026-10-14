@@ -142,7 +142,7 @@ export const buildWidgetUrl: IWidgetUrlBuilder = ({
         isEmbedded,
         useHostRoute,
         queryParams: {
-            ...(queryParams ?? {}),
+            ...queryParams,
             widgetId,
         },
     });

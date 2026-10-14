@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-dashboard: Edit mode starts from the dashboard's saved filters instead of the user's default filter view, so Save stays disabled until something changes and the view's filters are no longer saved into the dashboard.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

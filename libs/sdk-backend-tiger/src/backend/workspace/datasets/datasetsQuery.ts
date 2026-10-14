@@ -83,7 +83,7 @@ export class DatasetsQuery implements IDatasetsQuery {
     query(): Promise<IDatasetsQueryResult> {
         return ServerPaging.for(
             async ({ limit, offset }) => {
-                const filter: IDatasetsQueryFilterOptions = { ...(this.filter ?? {}) };
+                const filter: IDatasetsQueryFilterOptions = { ...this.filter };
 
                 // NOTE: Datasets endpoint does not support filtering by createdBy.
                 if ("createdBy" in filter) {

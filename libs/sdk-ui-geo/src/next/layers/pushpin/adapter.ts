@@ -458,7 +458,7 @@ export const pushpinAdapter: IGeoLayerAdapter<IGeoLayerPushpin, IPushpinLayerOut
         }
 
         const config = {
-            ...(context.config ?? {}),
+            ...context.config,
             customTooltip: resolveLayerCustomTooltip(layer, context.config),
         };
         const ids = getPushpinLayerIds(layer.id);

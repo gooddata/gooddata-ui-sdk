@@ -23,6 +23,7 @@ import {
     type ICatalogGroup,
     type ICatalogMeasure,
     type IColorPalette,
+    type IDashboardFilterView,
     type IDateFilter,
     type IDateFilterConfig,
     type IExecutionDefinition,
@@ -148,6 +149,11 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
      * Provide a custom geo style specification returned by the mock geo service.
      */
     geoStyleSpecification?: IGeoStyleSpecification;
+
+    /**
+     * Specify filter views of the current user. Each dashboard returns the views that reference it.
+     */
+    filterViews?: IDashboardFilterView[];
 };
 
 /**

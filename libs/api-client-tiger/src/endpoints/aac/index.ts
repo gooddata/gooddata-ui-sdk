@@ -108,7 +108,7 @@ export function AacApi_SetAnalyticsModelAac(
         headers: {
             "Content-Type": "application/json",
             // oxlint-disable-next-line typescript-eslint/no-misused-spread
-            ...(options.headers ?? {}),
+            ...options.headers,
         },
     });
 }
@@ -140,7 +140,7 @@ export function AacApi_SetLogicalModelAac(
         headers: {
             "Content-Type": "application/json",
             // oxlint-disable-next-line typescript-eslint/no-misused-spread
-            ...(options.headers ?? {}),
+            ...options.headers,
         },
     });
 }

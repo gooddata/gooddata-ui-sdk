@@ -409,6 +409,8 @@
     "dashboardMeasureValueFilter.section.all_other": "Tutti gli altri",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "L'utente che ha creato questo cruscotto. Gli autori non possono essere rimossi.",
     "attributesDropdown.placeholder": "Cerca…",
+    "attributesDropdown.parameters.section.from_dashboard": "Dal cruscotto",
+    "attributesDropdown.parameters.section.ungrouped": "Non raggruppati",
     "attributesDropdown.configuration": "Configurazione",
     "attributesDropdown.save": "Salva",
     "attributesDropdown.filterBy": "Filtra per",

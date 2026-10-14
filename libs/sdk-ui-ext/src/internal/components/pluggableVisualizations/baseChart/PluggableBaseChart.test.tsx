@@ -514,23 +514,21 @@ describe("PluggableBaseChart", () => {
 
             expect(referencePointWithDerivedItems).toEqual({
                 ...multipleMetricsNoCategoriesReferencePoint,
-                ...{
-                    buckets: [
-                        {
-                            localIdentifier: BucketNames.MEASURES,
-                            items: [
-                                derivedMeasureItems[0],
-                                masterMeasureItems[0],
-                                derivedMeasureItems[1],
-                                masterMeasureItems[1],
-                                masterMeasureItems[2],
-                                masterMeasureItems[3],
-                            ],
-                        },
-                        multipleMetricsNoCategoriesReferencePoint.buckets[1],
-                        multipleMetricsNoCategoriesReferencePoint.buckets[2],
-                    ],
-                },
+                buckets: [
+                    {
+                        localIdentifier: BucketNames.MEASURES,
+                        items: [
+                            derivedMeasureItems[0],
+                            masterMeasureItems[0],
+                            derivedMeasureItems[1],
+                            masterMeasureItems[1],
+                            masterMeasureItems[2],
+                            masterMeasureItems[3],
+                        ],
+                    },
+                    multipleMetricsNoCategoriesReferencePoint.buckets[1],
+                    multipleMetricsNoCategoriesReferencePoint.buckets[2],
+                ],
             });
         });
 

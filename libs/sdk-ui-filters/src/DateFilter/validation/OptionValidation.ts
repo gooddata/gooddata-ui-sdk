@@ -29,7 +29,7 @@ const setError = (
     return {
         ...errors,
         absoluteForm: {
-            ...(errors.absoluteForm ?? {}),
+            ...errors.absoluteForm,
             [field]: true,
         },
     };

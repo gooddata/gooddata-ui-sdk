@@ -10,7 +10,7 @@ export function getGeoControlsWithFallback(
 ): GeoVisualizationControls {
     return {
         ...insightControlsWithFallback,
-        ...(visualizationProperties.controls ?? {}),
+        ...visualizationProperties.controls,
     };
 }
 

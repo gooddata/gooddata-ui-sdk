@@ -233,7 +233,7 @@ function checkResults(
         missingMessages = [],
         unusedMessages = [],
         ignoredMessages = [],
-        ignore = undefined,
+        ignore,
         loaded = 0,
         missing = 0,
         extracted = 0,

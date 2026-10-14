@@ -2,17 +2,13 @@
 
 // @vitest-environment node
 
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-
-import { registerRemoteAssetBase } from "../lib/stylesheetRegistry.js";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
 import {
     PRELOAD_LINK_TIMEOUT_MS,
     createHostFederationPlugin,
     evictRemoteEntryLoadCache,
 } from "./federationRuntimePlugin.js";
-
-vi.mock("../lib/stylesheetRegistry.js", () => ({ registerRemoteAssetBase: vi.fn() }));
 
 const GLOBAL_LOADING_REMOTE_ENTRY = "__GLOBAL_LOADING_REMOTE_ENTRY__";
 
@@ -107,25 +103,6 @@ describe("federationRuntimePlugin", () => {
             });
 
             expect(getEntryCache()[cacheKey]).toBe("resolved promise");
-        });
-
-        it("registers the manifest publicPath as the remote's stylesheet asset base", async () => {
-            const args = {
-                moduleInfo: {
-                    name: "gdc_home_ui",
-                    entry: "/organization/remotes/gdc-home-ui/mf-manifest.json",
-                },
-                remoteSnapshot: { publicPath: "https://cdn.example.com/organization/remotes/gdc-home-ui/" },
-                from: "manifest",
-            };
-
-            const result = await createHostFederationPlugin().loadRemoteSnapshot?.(args as never);
-
-            expect(result).toBe(args);
-            expect(registerRemoteAssetBase).toHaveBeenCalledWith(
-                "/organization/remotes/gdc-home-ui/mf-manifest.json",
-                "https://cdn.example.com/organization/remotes/gdc-home-ui/",
-            );
         });
     });
 });

@@ -85,7 +85,7 @@ const measureRef2 = idRef("measureId2");
 const createMeasureValueFilter = (
     measure: ObjRef,
     localIdentifier: string,
-    conditions: MeasureValueFilterCondition[] | undefined = undefined,
+    conditions?: MeasureValueFilterCondition[] | undefined,
 ): IDashboardMeasureValueFilter => ({
     dashboardMeasureValueFilter: {
         measure,

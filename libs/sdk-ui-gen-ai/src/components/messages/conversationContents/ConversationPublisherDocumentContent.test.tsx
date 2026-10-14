@@ -128,7 +128,7 @@ function renderCard({
         <Provider store={store}>
             <IntlProvider locale="en-US" messages={DEFAULT_MESSAGES["en-US"]}>
                 <WorkspaceProvider workspace="ws-1">
-                    <ConfigProvider linkHandler={linkHandler} allowNativeLinks={allowNativeLinks}>
+                    <ConfigProvider linkHandler={linkHandler} allowNativeLinks={allowNativeLinks} canManage>
                         <ConversationPublisherDocumentContent
                             message={message}
                             publisherDocument={publisherDocument}

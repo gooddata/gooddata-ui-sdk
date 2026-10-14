@@ -338,7 +338,7 @@ export function createTigerAuthenticationUrl(
 
     const params = {
         [authenticationFlow.returnRedirectParam]: returnAddress,
-        ...(additionalParams ?? {}),
+        ...additionalParams,
     };
 
     const paramsString = Object.entries(params)

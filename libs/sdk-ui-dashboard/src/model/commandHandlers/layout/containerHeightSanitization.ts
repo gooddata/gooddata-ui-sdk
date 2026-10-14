@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type SagaReturnType, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
@@ -129,7 +129,7 @@ const getContainersWithUpdatedHeights = (
     layout: IDashboardLayout<ExtendedDashboardWidget>,
     screen: ScreenSize,
     getPreviouslyComputedHeight: HeightLookupFunction,
-    parentSize: IDashboardLayoutSizeByScreenSize | undefined = undefined,
+    parentSize?: IDashboardLayoutSizeByScreenSize | undefined,
     currentPath: ILayoutItemPath = [],
 ): IItemWithHeight[] => {
     return layout.sections.flatMap((section, sectionIndex) => {
