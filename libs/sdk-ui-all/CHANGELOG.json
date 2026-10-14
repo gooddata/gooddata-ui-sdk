@@ -2,6 +2,196 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.62.0",
+            "tag": "@gooddata/sdk-ui-all_v11.62.0",
+            "date": "Wed, 14 Oct 2026 06:23:37 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-backend-tiger, sdk-code-convertors: AI Assistant charts title their metrics from the metric references the chat sends, instead of from the metric ids."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Bar charts in the AI Assistant show both view-by attributes, and bar and column charts ignore sorts on items they leave out."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Group the alert and schedule dialog's addable parameters into a \"From dashboard\" section and tag groups"
+                    },
+                    {
+                        "comment": "sdk-model, sdk-backend-tiger: Add `enableTrinoDataSource` feature flag"
+                    },
+                    {
+                        "comment": "sdk-model: Remove `enableMongoDbDataSource` setting"
+                    },
+                    {
+                        "comment": "sdk-ui-ext: InsightView passes afterRender on to the visualization it renders."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: remove enableGenAiDashboardSummarySkill feature flag"
+                    },
+                    {
+                        "comment": "sdk-ui-filters: The year range picker shows one grid of 15 years with ‹ / › arrows that page by 15 years, and opens on the page of the field being edited. The day, week, month and quarter pickers show the same grid when switched to years."
+                    },
+                    {
+                        "comment": "sdk-ui-filters: The period range picker no longer reports the end period as being before the start period when both name the same month, quarter or year."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Added support for line shape configuration for line, area and combo charts."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Fixed neighboring button to the right overlaps pressed button's right border (`<UiButtonSegmentedControl />`)."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Fixed lighter hover background being applied on pressed icon button."
+                    },
+                    {
+                        "comment": "sdk-ui-ext: Fixed vertical misalignment of \"Data Points\" configuration control."
+                    },
+                    {
+                        "comment": "sdk-ui-ext: Brought `.gd-canvas-section` checkbox configuration control spacing more in line with Figma."
+                    },
+                    {
+                        "comment": "sdk-model: Add the v2 Publisher document model, id factories and validators"
+                    },
+                    {
+                        "comment": "sdk-model: Add the v2 Publisher page model types"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: The pdf icon no longer forces its color and can be recolored."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Renamed reports to publisher, report to document and slide to page."
+                    },
+                    {
+                        "comment": "sdk-model, sdk-backend-tiger: Add the `enablePublisherV2` feature flag"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Add UiToolbarInput and UiToolbarPagination, give UiToolbarStepper a bordered value field and drop its pagination variant, and split the toolbar radius into --gd-toolbar-borderRadius (container, 4px, themable via the new toolbar.borderRadius theme property) and --gd-toolbar-control-borderRadius (controls, 2px)"
+                    },
+                    {
+                        "comment": "sdk-model, sdk-backend-tiger, sdk-ui-filters, sdk-ui-dashboard: Keep the granularity of a static date filter in alerts, scheduled exports and drills. `IAbsoluteDateFilter` gets an optional `granularity`, which `newAbsoluteDateFilter` takes in a new options form and the Tiger backend sends as whole months, quarters or years when the range covers whole periods, and as its days otherwise. A week still goes as its days."
+                    },
+                    {
+                        "comment": "sdk-ui-filters: The Week tab of the static period picker lists weeks grouped by month, and the filter button names a weekly range by its days. `getDateFilterRepresentation` and `getDateFilterTitleUsingTranslator` no longer take a week start."
+                    },
+                    {
+                        "comment": "sdk-ui-filters: Tab and Shift+Tab keep moving through the static period picker after its calendar has been opened and closed."
+                    },
+                    {
+                        "comment": "api-client-tiger: Regenerated the client: new Flow API in afm-rest-api, report draft parts and visualization placement in the gen-ai API, and two new organization setting types."
+                    },
+                    {
+                        "comment": "api-client-tiger: Removed the auth-json-api module from client generation; its endpoints live in metadata-json-api. `ActionsApiProcessInvitationRequest` and `Invitation` now come from metadata-json-api and `ActionsApi_ProcessInvitation` is exported from `endpoints/actions`. Removed `tigerAuthActionsClientFactory`, `AuthActionsApiInterface`, `ITigerClient.authActions`, the `endpoints/authActions` entry point and the unprefixed `Configuration`/`ConfigurationParameters` exports (use the module-prefixed ones, e.g. `MetadataConfiguration`)."
+                    },
+                    {
+                        "comment": "api-client-tiger: Added `emptyValueHandling` to the stored relative and absolute date filter types."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Date filter bound to a date dimension offers only the granularities the dimension exposes"
+                    },
+                    {
+                        "comment": "sdk-ui-filters: Fiscal month date filter labels always say \"period\"; the fiscal month strings are removed."
+                    },
+                    {
+                        "comment": "Keep date filter dropdowns attached to their buttons when the filter dialog scrolls, and close them once their button is scrolled out of view"
+                    },
+                    {
+                        "comment": "sdk-backend-tiger, sdk-ui-dashboard: A dashboard filter is now restricted also when its parent filter is restricted, or when a \"Filter values by\" item (a metric, a fact or a \"Count of\" attribute) is one the user cannot access. It is hidden, counted among the restricted filters and applied nowhere: not in widgets, exports, automations, key driver analysis, drills to dashboards or custom URL drills. Before, the filter stayed applied and only lost the restricted parent or limit."
+                    },
+                    {
+                        "comment": "sdk-backend-spi, sdk-backend-tiger, sdk-ui-dashboard: A dashboard metric value filter computed for an attribute or label the user cannot access (\"For attribute\") is now shown as a restricted filter and left out of the widgets' computations instead of making them fail. Save as new is no longer offered when the copy would keep such a filter. SupportedDashboardReferenceTypes gains attribute."
+                    },
+                    {
+                        "comment": "sdk-ui-ext: Copying an object's access onto another also revokes workspace access the source does not have."
+                    },
+                    {
+                        "comment": "sdk-model, sdk-backend-tiger: Settings expose who can view a newly created metric or visualization (defaultMetricVisibility, defaultVisualizationVisibility)."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Edit mode starts from the dashboard's saved filters instead of the user's default filter view, so Save stays disabled until something changes and the view's filters are no longer saved into the dashboard."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: The resizable sidebar state can cap its width against the width its container actually has, not only the window."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Synchronize applied dashboard filters and parameters across tabs when persistent filters are enabled. Dashboards saved without this setting keep each tab independent until the setting is turned on. Reset restores each tab to its own saved filter values."
+                    },
+                    {
+                        "comment": "sdk-ui-charts: Charts render faster when they have many data labels. Chart text no longer causes a style recalculation for each label, and line charts with 'auto' data labels do not create the labels that Highcharts would hide as overlapping. The visible labels do not change."
+                    },
+                    {
+                        "comment": "sdk-ui-pluggable-host: window.customWorkspaceSettings, set by e2e tests, wins over the workspace settings of the host backend, so the host UI and ctx.settings see the same values as the pluggable applications."
+                    },
+                    {
+                        "comment": "sdk-ui-geo: Fix geo charts that showed only a grey map in Angular CLI, esbuild and other builds that do not emit `new URL(..., import.meta.url)` assets. The MapLibre worker now starts from an inline Blob when the bundled worker file is not reachable."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: `UiResizableSidebarNavigation` items accept a custom icon node"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Add `UiResizableSidebarNavigation`, a sidebar item list with expandable groups of sub-pages"
+                    },
+                    {
+                        "comment": "sdk-model, sdk-backend-tiger: Add the `enableLocalizationOverview` feature flag"
+                    },
+                    {
+                        "comment": "sdk-backend-spi, sdk-backend-base, sdk-backend-tiger: Add the organization and workspace localization services (language usage and translation statistics) with a fixture implementation in tiger; sdk-model, sdk-backend-tiger: Map the `DATA_LOCALE` setting to `dataLocale`; sdk-ui-kit: Add `headerTooltip` to `UiAsyncTable` columns"
+                    },
+                    {
+                        "comment": "sdk-ui-pluggable-host: Keep the loader while redirecting to login instead of flashing a \"Failed to load\" error, and center host error screens."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Fix spacing and alignment of icons in the header help menu."
+                    },
+                    {
+                        "comment": "sdk-backend-spi: `IBackendCapabilities.supportsCsvUploader` is deprecated. No backend supports the CSV uploader, and nothing reads the capability."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: UiResizableSidebarNavigation lists the sub-pages of a group in a flyover in rail mode, shows hover and selected indicators, and replaces the item `badge` with `actionRequired`, drawn in the primary color."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Hide the AI Assistant context picker when AI context setup is disabled."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Name the AI Assistant context toggle button for screen readers."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Return keyboard focus to the KDA attributes button after applying the selection."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Fix geo pushpin charts not rendering in the AI assistant chat."
+                    },
+                    {
+                        "comment": "Announce dashboard navigation in the AI assistant context as one switch instead of an empty context"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Keep keyboard focus in charts tabbed into inside dialogs."
+                    },
+                    {
+                        "comment": "sdk-backend-spi, sdk-backend-tiger: Add `getMetadataLocale` and `getDataLocale` to the organization settings service to read the locales set on the organization without resolving defaults"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Repair filters and datasets loading in ai mode."
+                    },
+                    {
+                        "comment": "sdk-code-convertors: A date filter stored without granularity is written as code as a filter by day instead of failing the conversion."
+                    },
+                    {
+                        "comment": "sdk-ui-ext: The workspace permission dialog no longer keeps permissions hidden by a feature flag when the access level changes."
+                    }
+                ],
+                "patch": [
+                    {
+                        "comment": "sdk-ui-dashboard: Unapplied filters hint no longer overlaps and blocks dashboard content"
+                    }
+                ],
+                "minor": [
+                    {
+                        "comment": "sdk-ui-charts: Add public `config.tooltip.zIndex` to set the z-index of chart tooltips. Charts inside a GoodData.UI overlay now place tooltips above that overlay automatically, and dashboard tooltips stay above the sticky filter bar. The `.highcharts-tooltip-container` z-index CSS rules were removed; if you relied on them, set `config.tooltip.zIndex` instead. stylelint-config: Disallow z-index on `.highcharts-tooltip-container` rules."
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.61.0",
             "tag": "@gooddata/sdk-ui-all_v11.61.0",
             "date": "Thu, 08 Oct 2026 06:26:11 GMT",

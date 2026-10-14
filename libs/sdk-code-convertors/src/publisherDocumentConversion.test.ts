@@ -259,6 +259,63 @@ describe("a page's filters", () => {
         expect(stored.filters).toEqual([attributeFilter, dateFilter]);
         expect(stored.slots[0]).toMatchObject({ filters: [metricFilter], ignoredFilters });
     });
+
+    it("write a date filter stored without granularity as one by day", () => {
+        const stored = {
+            ...content,
+            filters: [
+                {
+                    dateFilter: {
+                        localIdentifier: "date",
+                        type: "absolute",
+                        from: "2026-01-01",
+                        to: "2026-03-31",
+                        dataSet: idRef("date", "dataSet"),
+                    },
+                },
+            ],
+        } as IPublisherPageLayoutContent;
+
+        expect(pageDocument(stored).filters.date).not.toHaveProperty("granularity");
+        expect(storedPage(stored).filters).toEqual([dateFilter]);
+    });
+
+    it("write a document whose date filter names neither granularity nor date", () => {
+        const publisherDocument = {
+            type: "report",
+            title: "Reproducer report",
+            periodStart: "2026-01-01",
+            periodEnd: "2026-12-31",
+            content: {
+                version: "1",
+                pages: [],
+                filters: [
+                    {
+                        dateFilter: {
+                            type: "absolute",
+                            from: "2026-01-01",
+                            to: "2026-12-31",
+                            localIdentifier: "my_date_filter",
+                        },
+                    },
+                ],
+            },
+        } as unknown as IPublisherDocumentDefinition;
+
+        const aacDocument = asDocument(publisherDocumentDefinitionToYaml(publisherDocument).json);
+
+        expect(yamlPublisherDocumentToDefinition(aacDocument).content.filters).toEqual([
+            {
+                dateFilter: {
+                    type: "absolute",
+                    granularity: "GDC.time.date",
+                    from: "2026-01-01",
+                    to: "2026-12-31",
+                    localIdentifier: "my_date_filter",
+                },
+            },
+        ]);
+    });
 });
 
 describe("a document", () => {
