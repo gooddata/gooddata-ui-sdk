@@ -1232,7 +1232,8 @@ function declarativeDateFilterToYaml(filter: IDashboardDateFilter, errorContext?
 
     dateFilter.add(new Pair("type", "date_filter"));
 
-    const gran = parseGranularity(filter.dateFilter.granularity);
+    // A filter stored through the API can lack granularity; the reader takes a missing one as DAY.
+    const gran = parseGranularity(filter.dateFilter.granularity ?? "GDC.time.date");
     if (gran !== "DAY") {
         dateFilter.add(new Pair("granularity", gran));
     }
