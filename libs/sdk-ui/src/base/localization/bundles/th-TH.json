@@ -54,6 +54,7 @@
     "filterGroup.aria.label.withState": "กลุ่มตัวกรอง: {title}: {state}",
     "gs.list.searchResults": "ผลการค้นหา",
     "gs.visualizationsList.loading": "กำลังโหลด…",
+    "gs.visualizationsList.delete": "ลบการแสดงภาพข้อมูล",
     "gs.color-picker.inputPlaceholder": "#color",
     "gs.color-picker.currentColor": "ปัจจุบัน",
     "gs.color-picker.newColor": "ใหม่",

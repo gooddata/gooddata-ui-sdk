@@ -37,6 +37,7 @@ export function useConversationClarifyingQuestions(props: IUseConversationClarif
             dispatch(
                 filledFormAction({
                     assistantMessageId: message.localId,
+                    responses: newAnswers,
                 }),
             );
             if (entries.length > 0) {

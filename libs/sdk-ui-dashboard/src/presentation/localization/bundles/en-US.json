@@ -1843,6 +1843,62 @@
         "text": "No visualization matched.",
         "crowdinContext": "Message shown when search returns no visualizations"
     },
+    "deleteInsightDialog.headline": {
+        "text": "Delete visualization?",
+        "crowdinContext": "Headline of the confirmation dialog for deleting a visualization from the workspace"
+    },
+    "deleteInsightDialog.description": {
+        "text": "The visualization <strong>{title}</strong> will be permanently deleted.",
+        "crowdinContext": "Body of the delete visualization dialog when the visualization can be deleted; {title} is the visualization name"
+    },
+    "deleteInsightDialog.notUsed": {
+        "text": "The visualization is not used on any dashboard.",
+        "crowdinContext": "Info line in the delete visualization dialog when no dashboard uses the visualization"
+    },
+    "deleteInsightDialog.checking": {
+        "text": "Checking where the visualization is used…",
+        "crowdinContext": "Shown in the delete visualization dialog while the usage lookup is running"
+    },
+    "deleteInsightDialog.checkFailed": {
+        "text": "We could not check where the visualization is used. Close the dialog and try again.",
+        "crowdinContext": "Shown in the delete visualization dialog when the usage lookup failed; delete stays disabled"
+    },
+    "deleteInsightDialog.usedOnDashboards": {
+        "text": "The visualization <strong>{title}</strong> cannot be deleted because it is used in some dashboards. To delete this visualization, remove it from all dashboards first.",
+        "crowdinContext": "Shown in the delete visualization dialog when other saved dashboards still use the visualization; {title} is the visualization name"
+    },
+    "deleteInsightDialog.usage": {
+        "text": "This visualization is used in <strong>{count, plural, one {# dashboard} other {# dashboards}}</strong>.",
+        "crowdinContext": "Warning line in the delete visualization dialog with the number of dashboards using the visualization"
+    },
+    "deleteInsightDialog.usage.showMore": {
+        "text": "Show more",
+        "crowdinContext": "Link in the delete visualization dialog that reveals the list of dashboards using the visualization"
+    },
+    "deleteInsightDialog.usage.showLess": {
+        "text": "Show less",
+        "crowdinContext": "Link in the delete visualization dialog that hides the list of dashboards using the visualization"
+    },
+    "deleteInsightDialog.inaccessibleDashboards": {
+        "text": "and <strong>{count} more</strong> not shared with you",
+        "crowdinContext": "Appended to the list of dashboards using the visualization for the dashboards the current user cannot open; {count} is their number"
+    },
+    "deleteInsightDialog.inaccessibleDashboardsOnly": {
+        "text": "{count, plural, one {# dashboard} other {# dashboards}} not shared with you",
+        "crowdinContext": "Shown instead of the list in the delete visualization dialog when the current user cannot open any of the dashboards using the visualization; {count} is their number"
+    },
+    "deleteInsightDialog.usedOnThisDashboard": {
+        "text": "The visualization <strong>{title}</strong> cannot be deleted because it is used on the dashboard you are currently editing. To delete this visualization, remove it from this dashboard first.",
+        "crowdinContext": "Shown in the delete visualization dialog when the dashboard being edited uses the visualization; {title} is the visualization name"
+    },
+    "deleteInsightDialog.success": {
+        "text": "Visualization deleted.",
+        "crowdinContext": "Toast shown after a visualization was deleted from the dashboard edit mode list"
+    },
+    "deleteInsightDialog.error": {
+        "text": "The visualization could not be deleted. Try again.",
+        "crowdinContext": "Toast shown when deleting a visualization from the dashboard edit mode list failed"
+    },
     "search_insights": {
         "text": "Search all visualizations…",
         "crowdinContext": "Placeholder text in visualization search input field"

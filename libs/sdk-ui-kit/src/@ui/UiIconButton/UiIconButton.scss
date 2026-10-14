@@ -35,6 +35,16 @@
      * Size
      */
     &--size {
+        &-xsmall#{$root}--variant-bare,
+        &-xsmall#{$root}--variant-tertiary {
+            height: var(--gd-button-XS);
+            border-width: 0;
+
+            &#{$root}--type-button {
+                width: var(--gd-button-width, var(--gd-button-XS));
+            }
+        }
+
         &-small {
             height: var(--gd-button-S);
 
@@ -158,10 +168,6 @@
                 }
             }
 
-            &#{$root}--destructive:not(&:disabled):hover {
-                --gd-icon-fill-color: var(--gd-palette-error-base);
-            }
-
             &:disabled {
                 --gd-icon-fill-color: var(--gd-palette-complementary-5);
             }
@@ -261,6 +267,11 @@
                 --gd-icon-fill-color: var(--gd-palette-complementary-4);
             }
         }
+    }
+
+    // After the variants so it wins their hover colour.
+    &--destructive:not(&:disabled):hover {
+        --gd-icon-fill-color: var(--gd-palette-error-base);
     }
 
     /**

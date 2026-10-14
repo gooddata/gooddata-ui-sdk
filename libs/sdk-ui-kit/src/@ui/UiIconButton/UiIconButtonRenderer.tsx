@@ -14,6 +14,7 @@ import {
     type SizeXLarge,
     type SizeXSmall,
     type SizeXXLarge,
+    type SizeXXSmall,
 } from "../@types/size.js";
 import { type ThemeColor } from "../@types/themeColors.js";
 import {
@@ -36,7 +37,7 @@ export interface IUiIconButtonPublicProps {
     icon: IconType;
     iconColor?: ThemeColor | "currentColor";
     label?: string;
-    size?: SizeXSmall | SizeSmall | SizeMedium | SizeLarge | SizeXLarge | SizeXXLarge;
+    size?: SizeXXSmall | SizeXSmall | SizeSmall | SizeMedium | SizeLarge | SizeXLarge | SizeXXLarge;
 
     disableAnimation?: boolean;
 
@@ -49,7 +50,7 @@ export interface IUiIconButtonPublicProps {
         | VariantTable
         | VariantBare;
     /**
-     * When `true` and `variant="tertiary"`, icon hover color uses the error palette color.
+     * When `true` and `variant="tertiary"` or `variant="bare"`, icon hover color uses the error palette color.
      */
     isDesctructive?: boolean;
     isDisabled?: boolean;
@@ -67,7 +68,7 @@ export interface IUiIconButtonPublicProps {
 
 export interface IUiIconButtonInternalProps {
     iconAfter?: IconType;
-    iconAfterSize?: SizeXSmall | SizeSmall | SizeMedium | SizeLarge;
+    iconAfterSize?: SizeXXSmall | SizeXSmall | SizeSmall | SizeMedium | SizeLarge;
 }
 
 export type UiIconButtonRendererProps = IUiIconButtonPublicProps & IUiIconButtonInternalProps;
@@ -80,7 +81,7 @@ export const UiIconButtonRenderer = forwardRef<HTMLButtonElement, UiIconButtonRe
             icon,
             iconColor,
             iconAfter,
-            iconAfterSize = "xsmall",
+            iconAfterSize = "xxsmall",
             disableAnimation,
             label,
             size = "medium",
@@ -109,7 +110,7 @@ export const UiIconButtonRenderer = forwardRef<HTMLButtonElement, UiIconButtonRe
                     size,
                     variant,
                     active: isActive ?? false,
-                    destructive: variant === "tertiary" && (isDesctructive ?? false),
+                    destructive: (variant === "tertiary" || variant === "bare") && (isDesctructive ?? false),
                 })}
                 id={id}
                 disabled={isDisabled}

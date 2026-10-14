@@ -54,6 +54,7 @@
     "filterGroup.aria.label.withState": "Grup filter: {title}: {state}",
     "gs.list.searchResults": "hasil pencarian",
     "gs.visualizationsList.loading": "Memuat…",
+    "gs.visualizationsList.delete": "Hapus visualisasi",
     "gs.color-picker.inputPlaceholder": "#color",
     "gs.color-picker.currentColor": "saat ini",
     "gs.color-picker.newColor": "baru",

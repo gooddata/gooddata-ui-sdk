@@ -258,6 +258,6 @@ export function convertGenAiTypeToReferenceType(type: IGenAIContextObject["type"
 export function isClarificationQuestionsItem(item: IChatConversationLocalItem | undefined) {
     return (
         item?.content?.type === "multipart" &&
-        item.content.parts[item.content.parts.length - 1]?.type === "clarifyingQuestions"
+        item.content.parts.some((part) => part.type === "clarifyingQuestions")
     );
 }

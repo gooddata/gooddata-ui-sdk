@@ -91,6 +91,11 @@ export {
     // User invitation, formerly served by the removed auth-json-api module.
     ActionsApi_ProcessInvitation,
     type ActionsApiProcessInvitationRequest,
+    ActionsApi_OrganizationLocalizationUsage,
+    ActionsApi_OrganizationLocalizationUsageWorkspaces,
+    type ActionsApiOrganizationLocalizationUsageWorkspacesRequest,
+    ActionsApi_OrganizationLocalizationUsageUsers,
+    type ActionsApiOrganizationLocalizationUsageUsersRequest,
 } from "../../generated/metadata-json-api/index.js";
 
 // Execution Result API

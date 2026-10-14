@@ -9,6 +9,8 @@ import {
     PantherTier,
 } from "@gooddata/sdk-pluggable-application-model";
 
+import { applyCustomWorkspaceSettings } from "./backend.js";
+
 const DEFAULT_WHITE_LABELING: IWhiteLabeling = { enabled: false };
 const BOOTSTRAP_LOG_PREFIX = "[host-runtime/bootstrap]";
 
@@ -86,6 +88,9 @@ export async function bootstrapApplication(backend: IAnalyticalBackend): Promise
             .currentUser()
             .settings()
             .getSettings()
+            // The workspace-settings decorator does not cover the current-user service, so the e2e
+            // override (window.customWorkspaceSettings) is applied here as well.
+            .then(applyCustomWorkspaceSettings)
             .catch(logAndRethrow("Failed to load current user settings.")),
     ]);
 

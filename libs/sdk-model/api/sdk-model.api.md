@@ -3126,6 +3126,7 @@ export interface IFeatureFlags {
     enableDashboardsSearch?: boolean;
     enableDashboardTabularExport?: boolean;
     enableDashboardTimezone?: boolean;
+    enableDashboardVisualizationDelete?: boolean;
     // (undocumented)
     enableDataSection?: boolean;
     enableDefaultSmtp?: boolean;

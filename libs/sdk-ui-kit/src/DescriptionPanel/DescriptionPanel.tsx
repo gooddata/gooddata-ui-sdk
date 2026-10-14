@@ -62,6 +62,7 @@ export const DESCRIPTION_PANEL_ARROW_OFFSETS = {
  */
 export interface IDescriptionTriggerProps {
     className?: string;
+    glyph?: "svg" | "font";
 }
 
 /**
@@ -112,7 +113,7 @@ export function DescriptionPanelContent(props: IDescriptionPanelProps) {
 /**
  * @internal
  */
-export function DescriptionIcon({ className }: IDescriptionTriggerProps) {
+export function DescriptionIcon({ className, glyph = "svg" }: IDescriptionTriggerProps) {
     const isMobileDevice = useMediaQuery("mobileDevice");
     return (
         <div
@@ -120,12 +121,16 @@ export function DescriptionIcon({ className }: IDescriptionTriggerProps) {
                 "s-description-trigger",
                 {
                     "is-mobile": isMobileDevice,
-                    "gd-icon-circle-question-wrapper": !className,
+                    "gd-icon-circle-question-wrapper": glyph === "svg",
                 },
                 className,
             )}
         >
-            <div className="gd-icon-circle-question" />
+            {glyph === "svg" ? (
+                <UiIcon type="question" size={14} color="currentColor" />
+            ) : (
+                <div className="gd-icon-circle-question" />
+            )}
         </div>
     );
 }

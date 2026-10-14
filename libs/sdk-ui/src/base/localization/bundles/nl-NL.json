@@ -54,6 +54,7 @@
     "filterGroup.aria.label.withState": "Filtergroep: {title}: {state}",
     "gs.list.searchResults": "zoekresultaten",
     "gs.visualizationsList.loading": "Wordt geladen…",
+    "gs.visualizationsList.delete": "Visualisatie verwijderen",
     "gs.color-picker.inputPlaceholder": "#color",
     "gs.color-picker.currentColor": "huidig",
     "gs.color-picker.newColor": "nieuw",

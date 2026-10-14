@@ -54,6 +54,7 @@
     "filterGroup.aria.label.withState": "Filtre grubu: {title}: {state}",
     "gs.list.searchResults": "arama sonuçları",
     "gs.visualizationsList.loading": "Yükleniyor…",
+    "gs.visualizationsList.delete": "Görselleştirmeyi sil",
     "gs.color-picker.inputPlaceholder": "#renk",
     "gs.color-picker.currentColor": "güncel",
     "gs.color-picker.newColor": "yeni",

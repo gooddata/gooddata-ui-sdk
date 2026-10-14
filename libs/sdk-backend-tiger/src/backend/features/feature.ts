@@ -838,6 +838,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableDashboardVisualizationDelete,
+            "enableDashboardVisualizationDelete",
+            "BOOLEAN",
+            FeatureFlagsValues.enableDashboardVisualizationDelete,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableDashboardSidebarResize,
             "enableDashboardSidebarResize",
             "BOOLEAN",

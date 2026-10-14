@@ -54,6 +54,7 @@
     "filterGroup.aria.label.withState": "Группа фильтров: {title}: {state}",
     "gs.list.searchResults": "результаты поиска",
     "gs.visualizationsList.loading": "Загрузка…",
+    "gs.visualizationsList.delete": "Удалить визуализацию",
     "gs.color-picker.inputPlaceholder": "#цвет",
     "gs.color-picker.currentColor": "текущий",
     "gs.color-picker.newColor": "новый",

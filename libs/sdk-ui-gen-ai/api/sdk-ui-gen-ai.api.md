@@ -62,6 +62,25 @@ export type ChatAssistantMessageEvent = BaseEvent & {
 };
 
 // @public
+export type ChatClarificationQuestion = {
+    text: string;
+    control: {
+        type: "singleChoice";
+        options: Array<{
+            text: string;
+        }>;
+    };
+};
+
+// @public
+export type ChatClarificationQuestionsEvent = BaseEvent & {
+    type: "chatClarificationQuestions";
+    interactionId: string;
+    questions: ChatClarificationQuestion[];
+    responses?: Record<string, string> | null;
+};
+
+// @public
 export type ChatClosedEvent = BaseEvent & {
     type: "chatClosed";
 };
@@ -159,7 +178,7 @@ export type ChatDefinitionReceivedEvent = BaseEvent & {
 };
 
 // @public
-export type ChatEvent = ChatOpenedEvent | ChatClosedEvent | ChatResetEvent | ChatModeChangeEvent | ChatConversationPinnedEvent | ChatConversationPinErrorEvent | ChatConversationDeleteEvent | ChatConversationDeletedSuccessEvent | ChatConversationDeletedErrorEvent | ChatConversationRenameEvent | ChatConversationRenamedSuccessEvent | ChatConversationRenamedErrorEvent | ChatUserMessageEvent | ChatAgentChangeEvent | ChatAssistantMessageEvent | ChatFeedbackEvent | ChatFeedbackErrorEvent | ChatContextChangeEvent | ChatCopyToClipboardEvent | ChatVisualizationErrorEvent | ChatSaveVisualizationErrorEvent | ChatSaveVisualizationSuccessEvent | ChatConversationChangedEvent | ChatDefinitionReceivedEvent;
+export type ChatEvent = ChatOpenedEvent | ChatClosedEvent | ChatResetEvent | ChatModeChangeEvent | ChatConversationPinnedEvent | ChatConversationPinErrorEvent | ChatConversationDeleteEvent | ChatConversationDeletedSuccessEvent | ChatConversationDeletedErrorEvent | ChatConversationRenameEvent | ChatConversationRenamedSuccessEvent | ChatConversationRenamedErrorEvent | ChatUserMessageEvent | ChatAgentChangeEvent | ChatAssistantMessageEvent | ChatFeedbackEvent | ChatFeedbackErrorEvent | ChatContextChangeEvent | ChatCopyToClipboardEvent | ChatVisualizationErrorEvent | ChatSaveVisualizationErrorEvent | ChatSaveVisualizationSuccessEvent | ChatConversationChangedEvent | ChatDefinitionReceivedEvent | ChatClarificationQuestionsEvent;
 
 // @public
 export type ChatEventHandler<TEvent extends ChatEvent = any> = {
@@ -705,6 +724,9 @@ export const isChatAgentChangeEvent: (event: ChatEvent) => event is ChatAgentCha
 
 // @public
 export const isChatAssistantMessageEvent: (event: ChatEvent) => event is ChatAssistantMessageEvent;
+
+// @public
+export const isChatClarificationQuestionsEvent: (event: ChatEvent) => event is ChatClarificationQuestionsEvent;
 
 // @public
 export const isChatClosedEvent: (event: ChatEvent) => event is ChatClosedEvent;

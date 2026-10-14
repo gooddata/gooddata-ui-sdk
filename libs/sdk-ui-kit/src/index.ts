@@ -870,6 +870,7 @@ export {
 export { type StyleProps, bem, bemFactory } from "./@ui/@utils/bem.js";
 export type {
     SizeXSmall,
+    SizeXXSmall,
     SizeSmall,
     SizeMedium,
     SizeLarge,

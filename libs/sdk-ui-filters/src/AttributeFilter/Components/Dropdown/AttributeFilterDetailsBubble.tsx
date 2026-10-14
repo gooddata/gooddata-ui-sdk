@@ -152,7 +152,7 @@ export function AttributeFilterDetailsBubble({
                     <span className="s-attribute-filter-details-trigger">
                         <UiIconButton
                             icon="question"
-                            size="xsmall"
+                            size="xxsmall"
                             variant="tertiary"
                             iconColor="complementary-7"
                             label={intl.formatMessage(messages["attributeFilterDetailsInfoButtonLabel"])}

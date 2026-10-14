@@ -61,9 +61,8 @@ $visualization-types:
 .gd-visualizations-list-item {
     display: flex;
     align-items: stretch;
-    flex-direction: row-reverse;
     margin: 0 3px 0 15px;
-    padding: 5px 2px;
+    padding: 5px;
     border: 1px solid transparent;
     cursor: pointer;
     align-content: stretch;
@@ -79,7 +78,7 @@ $visualization-types:
         box-shadow:
             0 1px 3px 0 button-variables.$button-shadow-lighter,
             0 2px 9px 0 button-variables.$button-shadow-darker;
-        background-color: var(--gd-palette-complementary-0, #fff);
+        background-color: var(--gd-visualizations-list-item-hover-bg);
     }
 
     &.is-selected {
@@ -131,57 +130,28 @@ $visualization-types:
         flex: 0 0 32px;
     }
 
-    .gd-visualizations-list-item-description {
-        flex: 0 0 15px;
-        padding-top: 8px;
-        padding-left: 10px;
-
-        // When actions are missing, compensate the whitespace.
-        &:first-child {
-            margin-right: 15px;
-        }
+    .gd-visualizations-list-item-actions {
+        display: flex;
+        flex: 0 0 auto;
+        align-items: center;
+        gap: 5px;
+        padding: 0 5px;
     }
 
-    .gd-visualizations-list-item-actions {
-        flex: 0 0 40px;
+    .gd-visualizations-list-item-action-delete {
+        display: inline-flex;
+    }
 
-        &:hover {
-            background: var(--gd-palette-error-lightest, #fff2f1);
-
-            ~ .gd-visualizations-list-item-content {
-                background: var(--gd-palette-error-lightest, #fff2f1);
-            }
-
-            ~ .gd-visualizations-list-item-description {
-                background: var(--gd-palette-error-lightest, #fff2f1);
-            }
-
-            ~ .gd-vis-type-container {
-                background: var(--gd-palette-error-lightest, #fff2f1);
-            }
-
-            .gd-visualizations-list-item-action-delete {
-                // stylelint-disable-next-line max-nesting-depth
-                &::before {
-                    color: variables.$gd-palette-error-base;
-                }
-            }
-        }
+    &:has(.gd-visualizations-list-item-action-delete:hover) {
+        --gd-visualizations-list-item-hover-bg: var(--gd-palette-error-dimmed);
     }
 }
 
 .gd-visualizations-list-item-actions {
     opacity: 0;
 
-    .gd-visualizations-list-item:hover & {
-        opacity: 1;
-    }
-}
-
-.gd-visualizations-list-item-description {
-    opacity: 0;
-
-    .gd-visualizations-list-item:hover & {
+    .gd-visualizations-list-item:hover &,
+    .gd-visualizations-list-item:focus-within & {
         opacity: 1;
     }
 }

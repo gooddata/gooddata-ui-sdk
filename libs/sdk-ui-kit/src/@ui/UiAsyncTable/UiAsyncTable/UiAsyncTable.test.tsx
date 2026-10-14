@@ -97,6 +97,29 @@ describe("UiAsyncTable isItemClickable", () => {
     });
 });
 
+describe("UiAsyncTable row click", () => {
+    it("makes the clicked row the active row", () => {
+        renderTable(vi.fn(), [open, locked, { id: "third", title: "Third" }]);
+
+        fireEvent.click(screen.getByText("Third"));
+
+        expect(getRowsContainer()).toHaveAttribute("aria-activedescendant", getRow("Third").id);
+    });
+
+    it("continues keyboard navigation from the clicked row", () => {
+        const onItemClick = vi.fn<(item: IItem) => void>();
+        const third: IItem = { id: "third", title: "Third" };
+        renderTable(onItemClick, [open, third, locked]);
+
+        fireEvent.click(screen.getByText("Third"));
+        onItemClick.mockClear();
+        fireEvent.keyDown(getRowsContainer(), { key: "ArrowUp", code: "ArrowUp" });
+        fireEvent.keyDown(getRowsContainer(), { key: "Enter", code: "Enter" });
+
+        expect(onItemClick).toHaveBeenCalledWith(open);
+    });
+});
+
 describe("UiAsyncTable column isLocked", () => {
     it("shows a lock before the first line of locked items only", () => {
         const multiLineColumns: IUiAsyncTableColumn<IItem>[] = [

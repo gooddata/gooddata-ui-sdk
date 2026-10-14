@@ -38,12 +38,14 @@ interface IInsightsQueryStub {
     withSorting: () => IInsightsQueryStub;
     withInclude: () => IInsightsQueryStub;
     withFilter: (filter: IFilterBaseOptions) => IInsightsQueryStub;
+    withMetaInclude: (metaInclude: string[]) => IInsightsQueryStub;
     query: () => Promise<{ items: IInsight[]; totalCount: number }>;
 }
 
 interface IQueryCall {
     page: number;
     createdBy: string[] | undefined;
+    metaInclude?: string[];
 }
 
 /**
@@ -52,10 +54,13 @@ interface IQueryCall {
  */
 function createBackend() {
     const calls: IQueryCall[] = [];
+    let holdNext: ((value: { items: IInsight[]; totalCount: number }) => void) | undefined;
+    let held = false;
 
     const getInsightsQuery = (): IInsightsQueryStub => {
         let page = 0;
         let filter: IFilterBaseOptions | undefined;
+        let metaInclude: string[] | undefined;
 
         const query: IInsightsQueryStub = {
             withSize: () => query,
@@ -69,15 +74,26 @@ function createBackend() {
                 filter = nextFilter;
                 return query;
             },
+            withMetaInclude: (nextMetaInclude: string[]) => {
+                metaInclude = nextMetaInclude;
+                return query;
+            },
             query: () => {
-                calls.push({ page, createdBy: filter?.createdBy });
+                calls.push({ page, createdBy: filter?.createdBy, ...(metaInclude ? { metaInclude } : {}) });
                 if (filter?.createdBy?.length) {
                     return Promise.resolve({ items: [], totalCount: 0 });
                 }
-                return Promise.resolve({
+                const result = {
                     items: allInsights.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE),
                     totalCount: TOTAL_INSIGHTS,
-                });
+                };
+                if (held) {
+                    held = false;
+                    return new Promise((resolve) => {
+                        holdNext = resolve;
+                    }).then(() => result);
+                }
+                return Promise.resolve(result);
             },
         };
 
@@ -88,7 +104,14 @@ function createBackend() {
         workspace: () => ({ insights: () => ({ getInsightsQuery }) }),
     } as unknown as IAnalyticalBackend;
 
-    return { backend, calls };
+    return {
+        backend,
+        calls,
+        holdNextQuery: () => {
+            held = true;
+        },
+        releaseHeldQuery: () => holdNext?.({ items: [], totalCount: 0 }),
+    };
 }
 
 describe("useInsightPagedList", () => {
@@ -205,6 +228,68 @@ describe("useInsightPagedList", () => {
         expect(calls).toEqual([
             { page: 0, createdBy: [AUTHOR] },
             { page: 0, createdBy: undefined },
+        ]);
+    });
+
+    it("keeps the rows on screen while a refresh reloads the first page", async () => {
+        const { backend, calls, holdNextQuery, releaseHeldQuery } = createBackend();
+
+        const { result } = renderHook(() =>
+            useInsightPagedList({
+                backend,
+                workspaceId: "workspace",
+                author: AUTHOR,
+                tabsIds,
+                includeAuthorInfo: true,
+            }),
+        );
+
+        act(() => {
+            result.current.loadInitialItems();
+        });
+
+        await waitFor(() => expect(result.current.items).toHaveLength(PAGE_SIZE));
+
+        holdNextQuery();
+        act(() => {
+            result.current.refreshItems();
+        });
+
+        expect(result.current.isLoading).toBe(true);
+        expect(result.current.items).toHaveLength(PAGE_SIZE);
+
+        act(() => {
+            releaseHeldQuery();
+        });
+
+        await waitFor(() => expect(result.current.isLoading).toBe(false));
+        expect(result.current.items).toHaveLength(PAGE_SIZE);
+        expect(calls.map((call) => call.page)).toEqual([0, 0]);
+    });
+
+    it("keeps the permissions include when it widens to all authors", async () => {
+        const { backend, calls } = createBackend();
+
+        const { result } = renderHook(() =>
+            useInsightPagedList({
+                backend,
+                workspaceId: "workspace",
+                author: AUTHOR,
+                tabsIds,
+                includePermissions: true,
+            }),
+        );
+
+        act(() => {
+            result.current.loadInitialItems();
+        });
+
+        await waitFor(() => expect(result.current.items).toHaveLength(PAGE_SIZE));
+
+        expect(result.current.selectedTabId).toBe(tabsIds.all);
+        expect(calls).toEqual([
+            { page: 0, createdBy: [AUTHOR], metaInclude: ["permissions"] },
+            { page: 0, createdBy: undefined, metaInclude: ["permissions"] },
         ]);
     });
 });

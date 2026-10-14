@@ -6,7 +6,7 @@ import { describe, expect, it } from "vitest";
 
 import { idRef } from "@gooddata/sdk-model";
 
-import { insightReferences } from "./common/insightReferences.js";
+import { insightReferences } from "./insightReferences.js";
 
 describe("insight references check", () => {
     it("empty", () => {

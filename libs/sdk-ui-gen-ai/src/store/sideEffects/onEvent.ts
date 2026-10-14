@@ -18,7 +18,7 @@ import {
     setOpenAction,
     setUserContextAction,
 } from "../chatWindow/chatWindowSlice.js";
-import { type EventDispatcher } from "../events.js";
+import { type ChatClarificationQuestion, type EventDispatcher } from "../events.js";
 import { setIsOpened } from "../localStorage.js";
 import { conversationMessagesSelector, threadIdSelector } from "../messages/messagesSelectors.js";
 import {
@@ -27,6 +27,8 @@ import {
     deleteConversationFailureAction,
     deleteConversationSuccessAction,
     evaluateMessageCompleteAction,
+    evaluateMessageStreamingAction,
+    filledFormAction,
     loadConversationSuccessAction,
     newMessageAction,
     pinConversationFailureAction,
@@ -43,6 +45,8 @@ import {
     visualizationErrorAction,
 } from "../messages/messagesSlice.js";
 
+import { convertToChatClarificationQuestions } from "./converters/toChatClarificationQuestions.js";
+
 export function* onEvent() {
     yield takeEvery(setOpenAction.type, onSetOpen);
     yield takeEvery(setFullscreenAction.type, onFullscreenChanged);
@@ -50,7 +54,9 @@ export function* onEvent() {
     yield takeEvery(loadConversationSuccessAction.type, onThreadLoaded);
     yield takeEvery(clearThreadAction.type, onClearThread);
     yield takeEvery(newMessageAction.type, onNewMessage);
+    yield takeEvery(evaluateMessageStreamingAction.type, onEvaluateMessageStreaming);
     yield takeEvery(evaluateMessageCompleteAction.type, onEvaluateMessageComplete);
+    yield takeEvery(filledFormAction.type, onClarificationQuestionsAnswered);
     yield takeEvery(setUserFeedback.type, onUserFeedback);
     yield takeEvery(setUserFeedbackError.type, onUserFeedbackError);
     yield takeEvery(visualizationErrorAction.type, onVisualizationError);
@@ -294,7 +300,7 @@ function* onNewMessage({ payload: message }: ReturnType<typeof newMessageAction>
     });
 }
 
-function* onEvaluateMessageComplete({
+export function* onEvaluateMessageComplete({
     payload: { assistantMessageId },
 }: ReturnType<typeof evaluateMessageCompleteAction>) {
     const message: MessageInfo | null = yield call(loadMessage, assistantMessageId);
@@ -311,6 +317,47 @@ function* onEvaluateMessageComplete({
         interactionId: message.id,
         useCase: message.useCase,
         threadId,
+    });
+}
+
+export function* onEvaluateMessageStreaming({
+    payload: { assistantMessageId },
+}: ReturnType<typeof evaluateMessageStreamingAction>) {
+    const message: MessageInfo | null = yield call(loadMessage, assistantMessageId);
+
+    if (!message?.clarificationQuestions?.length || message.filled) {
+        return;
+    }
+
+    const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
+    const threadId: string | undefined = yield select(threadIdSelector);
+
+    eventDispatcher.dispatch({
+        type: "chatClarificationQuestions",
+        interactionId: message.id,
+        threadId,
+        questions: message.clarificationQuestions,
+    });
+}
+
+export function* onClarificationQuestionsAnswered({
+    payload: { assistantMessageId, responses },
+}: ReturnType<typeof filledFormAction>) {
+    const message: MessageInfo | null = yield call(loadMessage, assistantMessageId);
+
+    if (!message?.clarificationQuestions?.length) {
+        return;
+    }
+
+    const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
+    const threadId: string | undefined = yield select(threadIdSelector);
+
+    eventDispatcher.dispatch({
+        type: "chatClarificationQuestions",
+        interactionId: message.id,
+        threadId,
+        questions: message.clarificationQuestions,
+        responses,
     });
 }
 
@@ -420,6 +467,8 @@ type MessageInfo = {
     id: string;
     localId: string;
     useCase: GenAIChatRoutingUseCase | undefined;
+    clarificationQuestions?: ChatClarificationQuestion[];
+    filled?: boolean;
 };
 
 function* loadMessage(assistantMessageId: string): Generator<unknown, MessageInfo | null> {
@@ -431,6 +480,8 @@ function* loadMessage(assistantMessageId: string): Generator<unknown, MessageInf
               id: message.id,
               localId: message.localId,
               useCase: convertMessageTypeTo(message?.content),
+              clarificationQuestions: convertToChatClarificationQuestions(message.content),
+              filled: message.filled,
           }
         : null;
 }

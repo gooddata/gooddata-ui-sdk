@@ -43,6 +43,7 @@ export function DraggableInsightListItemWrapper({
     filters,
     width,
     disabled,
+    onDelete,
 }: IDraggableInsightListItemWrapperProps) {
     return (
         <DraggableInsightListItem
@@ -64,6 +65,7 @@ export function DraggableInsightListItemWrapper({
                 filters,
                 width,
                 disabled,
+                onDelete,
             }}
             insight={insight}
             disabled={disabled}

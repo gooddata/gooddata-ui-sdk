@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { Bubble, BubbleHoverTrigger, UiIconButton } from "@gooddata/sdk-ui-kit";
 
@@ -28,7 +28,7 @@ function AutomationIconTooltipCore({
                                 <div className={e("icon-button")}>
                                     <UiIconButton
                                         icon={section.icon}
-                                        size="xsmall"
+                                        size="xxsmall"
                                         variant="tertiary"
                                         onClick={section.onIconClick}
                                     />

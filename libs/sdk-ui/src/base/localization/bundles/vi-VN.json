@@ -54,6 +54,7 @@
     "filterGroup.aria.label.withState": "Nhóm bộ lọc: {title}: {state}",
     "gs.list.searchResults": "kết quả tìm kiếm",
     "gs.visualizationsList.loading": "Đang tải…",
+    "gs.visualizationsList.delete": "Xóa trực quan hóa",
     "gs.color-picker.inputPlaceholder": "#color",
     "gs.color-picker.currentColor": "hiện tại",
     "gs.color-picker.newColor": "mới",

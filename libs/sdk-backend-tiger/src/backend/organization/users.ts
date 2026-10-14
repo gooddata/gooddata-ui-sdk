@@ -33,6 +33,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
+import { rsqlQuote } from "../../utils/rsql.js";
 
 import {
     convertEntityUserToOrganizationUser,
@@ -43,15 +44,6 @@ import {
     convertUser,
     convertUserGroup,
 } from "./fromBackend/userConvertor.js";
-
-/**
- * Quote a string value for use in RSQL filters using double quotes.
- * Escapes backslashes and embedded double quotes to prevent malformed queries.
- */
-function rsqlQuote(value: string): string {
-    const escaped = value.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
-    return `"${escaped}"`;
-}
 
 export class OrganizationUsersService implements IOrganizationUserService {
     constructor(public readonly authCall: TigerAuthenticatedCallGuard) {}

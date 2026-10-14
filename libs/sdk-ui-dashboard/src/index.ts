@@ -616,6 +616,11 @@ export {
     exportImageInsightWidget,
 } from "./model/commands/insight.js";
 export {
+    type IDeleteInsight,
+    type IDeleteInsightPayload,
+    deleteInsight,
+} from "./model/commands/insightDelete.js";
+export {
     type IChangeRichTextWidgetContent,
     type IChangeRichTextWidgetContentPayload,
     type IChangeRichTextWidgetFilterSettings,
@@ -1030,6 +1035,11 @@ export {
     isDashboardInsightWidgetExportResolved,
     isDashboardInsightWidgetRefreshed,
 } from "./model/events/insight.js";
+export {
+    type IDashboardInsightDeleted,
+    type IDashboardInsightDeletedPayload,
+    isDashboardInsightDeleted,
+} from "./model/events/insightDelete.js";
 export {
     type IDashboardRichTextWidgetContentChanged,
     type IDashboardRichTextWidgetContentChangedPayload,
@@ -2779,7 +2789,7 @@ export type {
     IDashboardSettingsApplyPayload,
 } from "./presentation/dashboardSettingsDialog/types.js";
 export { DashboardSettingsDialog } from "./presentation/dashboardSettingsDialog/DashboardSettingsDialog.js";
-export type { IInsightListProps } from "./presentation/insightList/types.js";
+export type { IInsightListProps, InsightListRow } from "./presentation/insightList/types.js";
 export { InsightList } from "./presentation/insightList/InsightList.js";
 export type { ICancelEditDialogProps } from "./presentation/cancelEditDialog/types.js";
 export {

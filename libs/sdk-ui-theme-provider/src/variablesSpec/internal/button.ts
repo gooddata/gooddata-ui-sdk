@@ -25,6 +25,11 @@ export const internalButtonThemeVariables: ThemeInternalCssVariable[] = [
     },
     {
         type: "internal",
+        variableName: "--gd-button-XS",
+        defaultValue: "14px",
+    },
+    {
+        type: "internal",
         variableName: "--gd-button-S",
         defaultValue: "27px",
     },

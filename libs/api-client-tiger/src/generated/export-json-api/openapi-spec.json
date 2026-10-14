@@ -1028,7 +1028,7 @@
                     "actions"
                 ],
                 "summary": "(EXPERIMENTAL) Create report export request",
-                "description": "Note: This API is an experimental and is going to change. Please, use it accordingly. A report export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.",
+                "description": "Deprecated, use createDocumentExport. Note: This API is an experimental and is going to change. Please, use it accordingly. A report export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.",
                 "operationId": "createReportExport",
                 "parameters": [
                     {
@@ -1071,6 +1071,7 @@
                         }
                     }
                 },
+                "deprecated": true,
                 "x-gdc-security-info": {
                     "permissions": [
                         "EXPORT_PDF"
@@ -1086,8 +1087,213 @@
                     "actions"
                 ],
                 "summary": "(EXPERIMENTAL) Retrieve metadata context",
-                "description": "Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/report endpoint. The metadata structure is not verified.",
+                "description": "Deprecated, use getDocumentExportMetadata. Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/report endpoint. The metadata structure is not verified.",
                 "operationId": "getReportExportMetadata",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "exportId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Json metadata representation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "deprecated": true,
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "VIEW"
+                    ],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/export/report/{exportId}": {
+            "get": {
+                "tags": [
+                    "Report export",
+                    "actions"
+                ],
+                "summary": "(EXPERIMENTAL) Retrieve exported files",
+                "description": "Deprecated, use getDocumentExport. Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn't ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.",
+                "operationId": "getReportExport",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "exportId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Binary export result.",
+                        "headers": {
+                            "Content-Disposition": {
+                                "style": "simple",
+                                "schema": {
+                                    "pattern": "attachment; filename='[^']+'",
+                                    "type": "string",
+                                    "example": "attachment; filename='result.pdf'"
+                                }
+                            }
+                        },
+                        "content": {
+                            "application/pdf": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    },
+                    "202": {
+                        "description": "Request is accepted, provided exportId exists, but export is not yet ready.",
+                        "content": {
+                            "application/pdf": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "char": {
+                                                "type": "string"
+                                            },
+                                            "direct": {
+                                                "type": "boolean"
+                                            },
+                                            "double": {
+                                                "type": "number",
+                                                "format": "double"
+                                            },
+                                            "float": {
+                                                "type": "number",
+                                                "format": "float"
+                                            },
+                                            "int": {
+                                                "type": "integer",
+                                                "format": "int32"
+                                            },
+                                            "long": {
+                                                "type": "integer",
+                                                "format": "int64"
+                                            },
+                                            "readOnly": {
+                                                "type": "boolean"
+                                            },
+                                            "short": {
+                                                "type": "integer",
+                                                "format": "int32"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": true,
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "EXPORT_PDF"
+                    ],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/export/document": {
+            "post": {
+                "tags": [
+                    "Report export",
+                    "actions"
+                ],
+                "summary": "(EXPERIMENTAL) Create document export request",
+                "description": "Note: This API is an experimental and is going to change. Please, use it accordingly. A document export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.",
+                "operationId": "createDocumentExport",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "X-Gdc-Debug",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ReportExportRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Document export request created successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExportResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "EXPORT_PDF"
+                    ],
+                    "description": "Permissions required to execute document export."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/export/document/{exportId}/metadata": {
+            "get": {
+                "tags": [
+                    "Report export",
+                    "actions"
+                ],
+                "summary": "(EXPERIMENTAL) Retrieve document export metadata",
+                "description": "Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/document endpoint. The metadata structure is not verified.",
+                "operationId": "getDocumentExportMetadata",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -1122,15 +1328,15 @@
                 }
             }
         },
-        "/api/v1/actions/workspaces/{workspaceId}/export/report/{exportId}": {
+        "/api/v1/actions/workspaces/{workspaceId}/export/document/{exportId}": {
             "get": {
                 "tags": [
                     "Report export",
                     "actions"
                 ],
-                "summary": "(EXPERIMENTAL) Retrieve exported files",
+                "summary": "(EXPERIMENTAL) Retrieve exported document",
                 "description": "Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn't ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.",
-                "operationId": "getReportExport",
+                "operationId": "getDocumentExport",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -1422,7 +1628,7 @@
                         }
                     }
                 },
-                "description": "An absolute date range filter defined at a specific granularity. The 'from'/'to' literals must match the format of the chosen granularity (e.g. '2020' for YEAR, '2012-05' for MONTH, '2012-3' for QUARTER, '1996-01' for WEEK, '2010-10-30' for DAY, or a plain ordinal like '6' for periodical granularities such as MONTH_OF_YEAR). At least one of 'from'/'to' must be provided; specifying only one yields an open-ended range."
+                "description": "An absolute date range filter defined at a specific granularity. The 'from'/'to' literals must match the format of the chosen granularity (e.g. '2020' for YEAR, '2012-05' for MONTH, '2012-3' for QUARTER, '1996-01' for WEEK, '2010-10-30' for DAY, '2010-10-30 13' for HOUR, '2010-10-30 13:30' for MINUTE, '2010-10-30 13:30:45' for SECOND, or a plain ordinal like '6' for periodical granularities such as MONTH_OF_YEAR). At least one of 'from'/'to' must be provided; specifying only one yields an open-ended range."
             },
             "AbstractMeasureValueFilter": {
                 "type": "object",
@@ -4210,11 +4416,15 @@
             "ReportExportRequest": {
                 "required": [
                     "fileName",
-                    "format",
-                    "reportId"
+                    "format"
                 ],
                 "type": "object",
                 "properties": {
+                    "documentId": {
+                        "type": "string",
+                        "description": "Document identifier; the export renders the Publisher document page.",
+                        "example": "761cd28b-3f57-4ac9-bbdc-1c552cc0d1d0"
+                    },
                     "fileName": {
                         "type": "string",
                         "description": "File name to be used for retrieving the pdf document.",
@@ -4233,8 +4443,9 @@
                     },
                     "reportId": {
                         "type": "string",
-                        "description": "Report identifier",
-                        "example": "761cd28b-3f57-4ac9-bbdc-1c552cc0d1d0"
+                        "description": "Document identifier; the export renders the Publisher report page. Deprecated. 'documentId' renders the Publisher document page instead, so switching changes the page the export opens. Must not be set together with 'documentId'.",
+                        "example": "761cd28b-3f57-4ac9-bbdc-1c552cc0d1d0",
+                        "deprecated": true
                     },
                     "timezoneId": {
                         "type": "string",
@@ -4243,7 +4454,7 @@
                         "example": "Asia/Kolkata"
                     }
                 },
-                "description": "Export request object describing the export properties and metadata for report exports."
+                "description": "Export request object describing the export properties and metadata for document exports."
             },
             "Settings": {
                 "type": "object",

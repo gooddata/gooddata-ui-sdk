@@ -3,6 +3,7 @@
 import { createIntl } from "react-intl";
 import { describe, expect, it } from "vitest";
 
+import { type IChatConversationLocalItem } from "./model.js";
 import {
     convertGenAiTypeToReferenceType,
     convertReferenceTypeToGenAiType,
@@ -13,6 +14,7 @@ import {
     getPublisherDocumentItemUrl,
     getPublisherDocumentModifyHref,
     getVisualizationHref,
+    isClarificationQuestionsItem,
 } from "./utils.js";
 
 describe("generateTitleFromQuestion", () => {
@@ -48,6 +50,22 @@ describe("generateTitleFromQuestion", () => {
         const input = `  ${"a".repeat(30)}\n\t${"b".repeat(30)}  `;
 
         expect(generateTitleFromQuestion(input)).toBe(`${"a".repeat(30)} ${"b".repeat(19)}...`);
+    });
+});
+
+describe("isClarificationQuestionsItem", () => {
+    it("detects clarifying questions before another multipart part", () => {
+        const item = {
+            content: {
+                type: "multipart",
+                parts: [
+                    { type: "clarifyingQuestions", questions: [] },
+                    { type: "text", text: "Additional details" },
+                ],
+            },
+        } as IChatConversationLocalItem;
+
+        expect(isClarificationQuestionsItem(item)).toBe(true);
     });
 });
 

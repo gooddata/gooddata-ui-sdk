@@ -106,7 +106,7 @@ export function MeasureValueFilterDetailsBubble({
                     <span className="s-mvf-details-trigger">
                         <UiIconButton
                             icon="question"
-                            size="xsmall"
+                            size="xxsmall"
                             variant="tertiary"
                             iconColor="complementary-7"
                             label={intl.formatMessage(messages["measureValueFilterDetailsInfoButtonLabel"])}

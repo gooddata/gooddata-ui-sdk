@@ -90,6 +90,7 @@ import {
     type IDashboardInsightWidgetVisConfigurationChanged,
     type IDashboardInsightWidgetVisPropertiesChanged,
 } from "./insight.js";
+import { type IDashboardInsightDeleted } from "./insightDelete.js";
 import {
     type IDashboardKpiWidgetChanged,
     type IDashboardKpiWidgetComparisonChanged,
@@ -242,6 +243,7 @@ export type DashboardEvents =
     | IDashboardInsightWidgetInsightSwitched
     | IDashboardInsightWidgetDrillsModified
     | IDashboardInsightWidgetDrillsRemoved
+    | IDashboardInsightDeleted
     | IDashboardInsightWidgetChanged
     | IDashboardInsightWidgetExportRequested
     | IDashboardInsightWidgetExportResolved

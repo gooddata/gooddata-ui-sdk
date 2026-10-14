@@ -29845,6 +29845,233 @@
                     }
                 }
             }
+        },
+        "/api/v1/actions/organization/localization/usage/workspaces": {
+            "get": {
+                "tags": [
+                    "Localization",
+                    "actions"
+                ],
+                "summary": "(BETA) Workspaces that use a language.",
+                "description": "(BETA) Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one.",
+                "operationId": "organizationLocalizationUsageWorkspaces",
+                "parameters": [
+                    {
+                        "name": "value",
+                        "in": "query",
+                        "description": "Language tag that the workspace gets.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "de-DE"
+                    },
+                    {
+                        "name": "setting",
+                        "in": "query",
+                        "description": "One of LOCALE, METADATA_LOCALE and DATA_LOCALE.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "LOCALE",
+                                "METADATA_LOCALE",
+                                "DATA_LOCALE"
+                            ]
+                        },
+                        "example": "LOCALE"
+                    },
+                    {
+                        "name": "source",
+                        "in": "query",
+                        "description": "Where the value comes from.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Where the value comes from, from the strongest source to the weakest: USER - the user set it. WORKSPACE - the workspace sets it. PARENT - the workspace inherits it from a parent workspace. ORGANIZATION - the organization default. ENVIRONMENT - the default set for the whole deployment. DEFAULT - the built-in default.",
+                            "enum": [
+                                "USER",
+                                "WORKSPACE",
+                                "PARENT",
+                                "ORGANIZATION",
+                                "ENVIRONMENT",
+                                "DEFAULT"
+                            ]
+                        },
+                        "example": "PARENT"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Zero-based page index (0..N)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 0
+                        },
+                        "example": 0
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "The size of the page to be returned.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 20
+                        },
+                        "example": 20
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LocalizationUsageWorkspaces"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/actions/organization/localization/usage": {
+            "get": {
+                "tags": [
+                    "Localization",
+                    "actions"
+                ],
+                "summary": "(BETA) Languages used in the organization.",
+                "description": "(BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count only under the languages they set themselves.",
+                "operationId": "organizationLocalizationUsage",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LocalizationUsage"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/actions/organization/localization/usage/users": {
+            "get": {
+                "tags": [
+                    "Localization",
+                    "actions"
+                ],
+                "summary": "(BETA) Users who set a language themselves.",
+                "description": "(BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Only the settings that users set themselves match, so only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. Users counted in the usage entry without a language are not listed.",
+                "operationId": "organizationLocalizationUsageUsers",
+                "parameters": [
+                    {
+                        "name": "value",
+                        "in": "query",
+                        "description": "Language tag that the user sets.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "de-DE"
+                    },
+                    {
+                        "name": "setting",
+                        "in": "query",
+                        "description": "One of LOCALE, METADATA_LOCALE and DATA_LOCALE.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "LOCALE",
+                                "METADATA_LOCALE",
+                                "DATA_LOCALE"
+                            ]
+                        },
+                        "example": "LOCALE"
+                    },
+                    {
+                        "name": "source",
+                        "in": "query",
+                        "description": "Where the value comes from.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Where the value comes from, from the strongest source to the weakest: USER - the user set it. WORKSPACE - the workspace sets it. PARENT - the workspace inherits it from a parent workspace. ORGANIZATION - the organization default. ENVIRONMENT - the default set for the whole deployment. DEFAULT - the built-in default.",
+                            "enum": [
+                                "USER",
+                                "WORKSPACE",
+                                "PARENT",
+                                "ORGANIZATION",
+                                "ENVIRONMENT",
+                                "DEFAULT"
+                            ]
+                        },
+                        "example": "USER"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Zero-based page index (0..N)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 0
+                        },
+                        "example": 0
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "The size of the page to be returned.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 20
+                        },
+                        "example": 20
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LocalizationUsageUsers"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
         }
     },
     "components": {
@@ -30044,7 +30271,7 @@
                         }
                     }
                 },
-                "description": "An absolute date range filter defined at a specific granularity. The 'from'/'to' literals must match the format of the chosen granularity (e.g. '2020' for YEAR, '2012-05' for MONTH, '2012-3' for QUARTER, '1996-01' for WEEK, '2010-10-30' for DAY, or a plain ordinal like '6' for periodical granularities such as MONTH_OF_YEAR). At least one of 'from'/'to' must be provided; specifying only one yields an open-ended range."
+                "description": "An absolute date range filter defined at a specific granularity. The 'from'/'to' literals must match the format of the chosen granularity (e.g. '2020' for YEAR, '2012-05' for MONTH, '2012-3' for QUARTER, '1996-01' for WEEK, '2010-10-30' for DAY, '2010-10-30 13' for HOUR, '2010-10-30 13:30' for MINUTE, '2010-10-30 13:30:45' for SECOND, or a plain ordinal like '6' for periodical granularities such as MONTH_OF_YEAR). At least one of 'from'/'to' must be provided; specifying only one yields an open-ended range."
             },
             "AbstractMeasureValueFilter": {
                 "type": "object",
@@ -34583,11 +34810,21 @@
                             "$ref": "#/components/schemas/Parameter"
                         }
                     },
+                    "disableStatistics": {
+                        "type": "boolean",
+                        "description": "Whether to skip the collection of physical statistics from the database. Statistics are collected when this is false or unset.",
+                        "nullable": true
+                    },
                     "id": {
                         "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
                         "type": "string",
                         "description": "Data source ID.",
                         "example": "pg_local_docker-demo"
+                    },
+                    "ignoreJwtAud": {
+                        "type": "boolean",
+                        "description": "Turns off the check that the audience of an OIDC access token names the host of the data source, for the OIDC_PASSTHROUGH authentication type. Only an organization administrator may set it.",
+                        "nullable": true
                     },
                     "name": {
                         "maxLength": 255,
@@ -36596,7 +36833,8 @@
                             "ENABLE_TIMEZONE_CHANGE",
                             "AUTHORIZATION_SERVER_REDIRECT_POLICY",
                             "DEFAULT_VISUALIZATION_VISIBILITY",
-                            "DEFAULT_METRIC_VISIBILITY"
+                            "DEFAULT_METRIC_VISIBILITY",
+                            "GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE"
                         ]
                     }
                 },
@@ -45459,6 +45697,16 @@
                                     "UTC"
                                 ]
                             },
+                            "disableStatistics": {
+                                "type": "boolean",
+                                "description": "Whether to skip the collection of physical statistics from the database. Statistics are collected when this is false or unset.",
+                                "nullable": true
+                            },
+                            "ignoreJwtAud": {
+                                "type": "boolean",
+                                "description": "Turns off the check that the audience of an OIDC access token names the host of the data source, for the OIDC_PASSTHROUGH authentication type. Only an organization administrator may set it.",
+                                "nullable": true
+                            },
                             "name": {
                                 "maxLength": 255,
                                 "type": "string",
@@ -45682,6 +45930,16 @@
                                         }
                                     }
                                 }
+                            },
+                            "disableStatistics": {
+                                "type": "boolean",
+                                "description": "Whether to skip the collection of physical statistics from the database. Statistics are collected when this is false or unset.",
+                                "nullable": true
+                            },
+                            "ignoreJwtAud": {
+                                "type": "boolean",
+                                "description": "Turns off the check that the audience of an OIDC access token names the host of the data source, for the OIDC_PASSTHROUGH authentication type. Only an organization administrator may set it.",
+                                "nullable": true
                             },
                             "managed": {
                                 "type": "boolean",
@@ -45923,6 +46181,16 @@
                                     "LOCAL",
                                     "UTC"
                                 ]
+                            },
+                            "disableStatistics": {
+                                "type": "boolean",
+                                "description": "Whether to skip the collection of physical statistics from the database. Statistics are collected when this is false or unset.",
+                                "nullable": true
+                            },
+                            "ignoreJwtAud": {
+                                "type": "boolean",
+                                "description": "Turns off the check that the audience of an OIDC access token names the host of the data source, for the OIDC_PASSTHROUGH authentication type. Only an organization administrator may set it.",
+                                "nullable": true
                             },
                             "name": {
                                 "maxLength": 255,
@@ -54148,7 +54416,8 @@
                                     "ENABLE_TIMEZONE_CHANGE",
                                     "AUTHORIZATION_SERVER_REDIRECT_POLICY",
                                     "DEFAULT_VISUALIZATION_VISIBILITY",
-                                    "DEFAULT_METRIC_VISIBILITY"
+                                    "DEFAULT_METRIC_VISIBILITY",
+                                    "GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE"
                                 ]
                             }
                         }
@@ -54257,7 +54526,8 @@
                                     "ENABLE_TIMEZONE_CHANGE",
                                     "AUTHORIZATION_SERVER_REDIRECT_POLICY",
                                     "DEFAULT_VISUALIZATION_VISIBILITY",
-                                    "DEFAULT_METRIC_VISIBILITY"
+                                    "DEFAULT_METRIC_VISIBILITY",
+                                    "GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE"
                                 ]
                             }
                         }
@@ -54406,7 +54676,8 @@
                                     "ENABLE_TIMEZONE_CHANGE",
                                     "AUTHORIZATION_SERVER_REDIRECT_POLICY",
                                     "DEFAULT_VISUALIZATION_VISIBILITY",
-                                    "DEFAULT_METRIC_VISIBILITY"
+                                    "DEFAULT_METRIC_VISIBILITY",
+                                    "GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE"
                                 ]
                             }
                         }
@@ -60283,7 +60554,8 @@
                                     "HLL_TYPE",
                                     "ENABLE_TIMEZONE_CHANGE",
                                     "DEFAULT_VISUALIZATION_VISIBILITY",
-                                    "DEFAULT_METRIC_VISIBILITY"
+                                    "DEFAULT_METRIC_VISIBILITY",
+                                    "GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE"
                                 ]
                             }
                         }
@@ -60391,7 +60663,8 @@
                                     "HLL_TYPE",
                                     "ENABLE_TIMEZONE_CHANGE",
                                     "DEFAULT_VISUALIZATION_VISIBILITY",
-                                    "DEFAULT_METRIC_VISIBILITY"
+                                    "DEFAULT_METRIC_VISIBILITY",
+                                    "GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE"
                                 ]
                             }
                         }
@@ -63630,7 +63903,8 @@
                                     "HLL_TYPE",
                                     "ENABLE_TIMEZONE_CHANGE",
                                     "DEFAULT_VISUALIZATION_VISIBILITY",
-                                    "DEFAULT_METRIC_VISIBILITY"
+                                    "DEFAULT_METRIC_VISIBILITY",
+                                    "GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE"
                                 ]
                             }
                         }
@@ -63738,7 +64012,8 @@
                                     "HLL_TYPE",
                                     "ENABLE_TIMEZONE_CHANGE",
                                     "DEFAULT_VISUALIZATION_VISIBILITY",
-                                    "DEFAULT_METRIC_VISIBILITY"
+                                    "DEFAULT_METRIC_VISIBILITY",
+                                    "GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE"
                                 ]
                             }
                         }
@@ -63912,7 +64187,8 @@
                                     "HLL_TYPE",
                                     "ENABLE_TIMEZONE_CHANGE",
                                     "DEFAULT_VISUALIZATION_VISIBILITY",
-                                    "DEFAULT_METRIC_VISIBILITY"
+                                    "DEFAULT_METRIC_VISIBILITY",
+                                    "GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE"
                                 ]
                             }
                         }
@@ -64019,7 +64295,8 @@
                                     "HLL_TYPE",
                                     "ENABLE_TIMEZONE_CHANGE",
                                     "DEFAULT_VISUALIZATION_VISIBILITY",
-                                    "DEFAULT_METRIC_VISIBILITY"
+                                    "DEFAULT_METRIC_VISIBILITY",
+                                    "GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE"
                                 ]
                             }
                         }
@@ -64502,6 +64779,385 @@
                         "example": "en-US"
                     }
                 }
+            },
+            "LocalizationContent": {
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "string",
+                        "description": "Language tag, or null when no language is set.",
+                        "nullable": true,
+                        "example": "de-DE"
+                    }
+                }
+            },
+            "LocalizationCount": {
+                "required": [
+                    "bySource",
+                    "total"
+                ],
+                "type": "object",
+                "properties": {
+                    "bySource": {
+                        "$ref": "#/components/schemas/LocalizationSourceCounts"
+                    },
+                    "total": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "LocalizationDefault": {
+                "required": [
+                    "content",
+                    "source"
+                ],
+                "type": "object",
+                "properties": {
+                    "content": {
+                        "$ref": "#/components/schemas/LocalizationContent"
+                    },
+                    "source": {
+                        "type": "string",
+                        "description": "Where the value comes from, from the strongest source to the weakest: USER - the user set it. WORKSPACE - the workspace sets it. PARENT - the workspace inherits it from a parent workspace. ORGANIZATION - the organization default. ENVIRONMENT - the default set for the whole deployment. DEFAULT - the built-in default.",
+                        "enum": [
+                            "USER",
+                            "WORKSPACE",
+                            "PARENT",
+                            "ORGANIZATION",
+                            "ENVIRONMENT",
+                            "DEFAULT"
+                        ]
+                    }
+                },
+                "nullable": true
+            },
+            "LocalizationDefaults": {
+                "type": "object",
+                "properties": {
+                    "DATA_LOCALE": {
+                        "$ref": "#/components/schemas/LocalizationDefault"
+                    },
+                    "LOCALE": {
+                        "$ref": "#/components/schemas/LocalizationDefault"
+                    },
+                    "METADATA_LOCALE": {
+                        "$ref": "#/components/schemas/LocalizationDefault"
+                    }
+                },
+                "description": "The value a workspace gets when it and its parents set nothing. Null when the setting has no value."
+            },
+            "LocalizationResolvedValue": {
+                "required": [
+                    "content",
+                    "source"
+                ],
+                "type": "object",
+                "properties": {
+                    "content": {
+                        "$ref": "#/components/schemas/LocalizationContent"
+                    },
+                    "originId": {
+                        "type": "string",
+                        "description": "The ancestor workspace that sets the value. Null unless the source is PARENT.",
+                        "nullable": true
+                    },
+                    "source": {
+                        "type": "string",
+                        "description": "Where the value comes from, from the strongest source to the weakest: USER - the user set it. WORKSPACE - the workspace sets it. PARENT - the workspace inherits it from a parent workspace. ORGANIZATION - the organization default. ENVIRONMENT - the default set for the whole deployment. DEFAULT - the built-in default.",
+                        "enum": [
+                            "USER",
+                            "WORKSPACE",
+                            "PARENT",
+                            "ORGANIZATION",
+                            "ENVIRONMENT",
+                            "DEFAULT"
+                        ]
+                    }
+                }
+            },
+            "LocalizationResolvedValues": {
+                "required": [
+                    "DATA_LOCALE",
+                    "LOCALE",
+                    "METADATA_LOCALE"
+                ],
+                "type": "object",
+                "properties": {
+                    "DATA_LOCALE": {
+                        "$ref": "#/components/schemas/LocalizationResolvedValue"
+                    },
+                    "LOCALE": {
+                        "$ref": "#/components/schemas/LocalizationResolvedValue"
+                    },
+                    "METADATA_LOCALE": {
+                        "$ref": "#/components/schemas/LocalizationResolvedValue"
+                    }
+                },
+                "description": "The value the workspace gets for each setting."
+            },
+            "LocalizationSettingUsage": {
+                "required": [
+                    "users",
+                    "workspaces"
+                ],
+                "type": "object",
+                "properties": {
+                    "users": {
+                        "$ref": "#/components/schemas/LocalizationCount"
+                    },
+                    "workspaces": {
+                        "$ref": "#/components/schemas/LocalizationCount"
+                    }
+                }
+            },
+            "LocalizationSettingUsages": {
+                "type": "object",
+                "properties": {
+                    "DATA_LOCALE": {
+                        "$ref": "#/components/schemas/LocalizationSettingUsage"
+                    },
+                    "LOCALE": {
+                        "$ref": "#/components/schemas/LocalizationSettingUsage"
+                    },
+                    "METADATA_LOCALE": {
+                        "$ref": "#/components/schemas/LocalizationSettingUsage"
+                    }
+                },
+                "description": "The same counts per setting. Settings without this language are left out."
+            },
+            "LocalizationSourceCounts": {
+                "type": "object",
+                "properties": {
+                    "DEFAULT": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "ENVIRONMENT": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "ORGANIZATION": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "PARENT": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "USER": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "WORKSPACE": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                },
+                "description": "Counts per source. Sources without any count are left out. Users without their own setting have no source and are only in the total."
+            },
+            "LocalizationUsage": {
+                "required": [
+                    "defaults",
+                    "values"
+                ],
+                "type": "object",
+                "properties": {
+                    "defaults": {
+                        "$ref": "#/components/schemas/LocalizationDefaults"
+                    },
+                    "values": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/LocalizationUsageValue"
+                        }
+                    }
+                }
+            },
+            "LocalizationUsageUser": {
+                "required": [
+                    "bySetting",
+                    "id",
+                    "source"
+                ],
+                "type": "object",
+                "properties": {
+                    "bySetting": {
+                        "$ref": "#/components/schemas/LocalizationUserValues"
+                    },
+                    "email": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "First and last name. Null when the user has neither.",
+                        "nullable": true
+                    },
+                    "source": {
+                        "type": "string",
+                        "description": "Where the value comes from, from the strongest source to the weakest: USER - the user set it. WORKSPACE - the workspace sets it. PARENT - the workspace inherits it from a parent workspace. ORGANIZATION - the organization default. ENVIRONMENT - the default set for the whole deployment. DEFAULT - the built-in default.",
+                        "enum": [
+                            "USER",
+                            "WORKSPACE",
+                            "PARENT",
+                            "ORGANIZATION",
+                            "ENVIRONMENT",
+                            "DEFAULT"
+                        ]
+                    }
+                }
+            },
+            "LocalizationUsageUsers": {
+                "required": [
+                    "totalCount",
+                    "users"
+                ],
+                "type": "object",
+                "properties": {
+                    "totalCount": {
+                        "type": "integer",
+                        "description": "The total number of users that match the filters.",
+                        "format": "int32"
+                    },
+                    "users": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/LocalizationUsageUser"
+                        }
+                    }
+                }
+            },
+            "LocalizationUsageValue": {
+                "required": [
+                    "bySetting",
+                    "content",
+                    "users",
+                    "workspaces"
+                ],
+                "type": "object",
+                "properties": {
+                    "bySetting": {
+                        "$ref": "#/components/schemas/LocalizationSettingUsages"
+                    },
+                    "content": {
+                        "$ref": "#/components/schemas/LocalizationContent"
+                    },
+                    "users": {
+                        "$ref": "#/components/schemas/LocalizationCount"
+                    },
+                    "workspaces": {
+                        "$ref": "#/components/schemas/LocalizationCount"
+                    }
+                },
+                "description": "One language. `workspaces` counts the workspaces that get it in any of the settings, once each. `users` counts the users who set it themselves in any of the settings, once each. In the entry with a null value, `users` counts the users who set none of the three settings."
+            },
+            "LocalizationUsageWorkspace": {
+                "required": [
+                    "bySetting",
+                    "childrenCount",
+                    "id",
+                    "name",
+                    "source"
+                ],
+                "type": "object",
+                "properties": {
+                    "bySetting": {
+                        "$ref": "#/components/schemas/LocalizationResolvedValues"
+                    },
+                    "childrenCount": {
+                        "type": "integer",
+                        "description": "Number of direct child workspaces.",
+                        "format": "int32"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "parentId": {
+                        "type": "string",
+                        "description": "The parent workspace, or null for a root workspace.",
+                        "nullable": true
+                    },
+                    "source": {
+                        "type": "string",
+                        "description": "Where the value comes from, from the strongest source to the weakest: USER - the user set it. WORKSPACE - the workspace sets it. PARENT - the workspace inherits it from a parent workspace. ORGANIZATION - the organization default. ENVIRONMENT - the default set for the whole deployment. DEFAULT - the built-in default.",
+                        "enum": [
+                            "USER",
+                            "WORKSPACE",
+                            "PARENT",
+                            "ORGANIZATION",
+                            "ENVIRONMENT",
+                            "DEFAULT"
+                        ]
+                    }
+                }
+            },
+            "LocalizationUsageWorkspaces": {
+                "required": [
+                    "totalCount",
+                    "workspaces"
+                ],
+                "type": "object",
+                "properties": {
+                    "totalCount": {
+                        "type": "integer",
+                        "description": "The total number of workspaces that match the filters.",
+                        "format": "int32"
+                    },
+                    "workspaces": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/LocalizationUsageWorkspace"
+                        }
+                    }
+                }
+            },
+            "LocalizationUserValue": {
+                "required": [
+                    "content",
+                    "source"
+                ],
+                "type": "object",
+                "properties": {
+                    "content": {
+                        "$ref": "#/components/schemas/LocalizationContent"
+                    },
+                    "source": {
+                        "type": "string",
+                        "description": "Where the value comes from, from the strongest source to the weakest: USER - the user set it. WORKSPACE - the workspace sets it. PARENT - the workspace inherits it from a parent workspace. ORGANIZATION - the organization default. ENVIRONMENT - the default set for the whole deployment. DEFAULT - the built-in default.",
+                        "enum": [
+                            "USER",
+                            "WORKSPACE",
+                            "PARENT",
+                            "ORGANIZATION",
+                            "ENVIRONMENT",
+                            "DEFAULT"
+                        ]
+                    }
+                },
+                "description": "Null when the user does not set the setting.",
+                "nullable": true
+            },
+            "LocalizationUserValues": {
+                "type": "object",
+                "properties": {
+                    "DATA_LOCALE": {
+                        "$ref": "#/components/schemas/LocalizationUserValue"
+                    },
+                    "LOCALE": {
+                        "$ref": "#/components/schemas/LocalizationUserValue"
+                    },
+                    "METADATA_LOCALE": {
+                        "$ref": "#/components/schemas/LocalizationUserValue"
+                    }
+                },
+                "description": "The value the user sets for each setting."
             },
             "MatchAttributeFilter": {
                 "required": [
@@ -66271,7 +66927,8 @@
                             "ENABLE_TIMEZONE_CHANGE",
                             "AUTHORIZATION_SERVER_REDIRECT_POLICY",
                             "DEFAULT_VISUALIZATION_VISIBILITY",
-                            "DEFAULT_METRIC_VISIBILITY"
+                            "DEFAULT_METRIC_VISIBILITY",
+                            "GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE"
                         ]
                     }
                 },

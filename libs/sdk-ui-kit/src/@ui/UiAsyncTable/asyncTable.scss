@@ -64,10 +64,18 @@
                 cursor: pointer;
             }
 
+            // The sort icon keeps its space and sits before the label, so a right-aligned label does not shift on hover.
+            &--align-right #{$root}__sort {
+                order: -1;
+                display: flex;
+                visibility: hidden;
+            }
+
             &--sorted,
             &:hover {
                 #{$root}__sort {
                     display: flex;
+                    visibility: visible;
                 }
             }
 

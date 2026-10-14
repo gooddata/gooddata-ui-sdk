@@ -130,6 +130,10 @@ export interface ILocalizationResolvedValue {
      * Workspace the value is inherited from. Set only when `source` is `PARENT`.
      */
     originId?: string;
+    /**
+     * Name of the workspace in `originId`.
+     */
+    originName?: string;
 }
 
 /**
@@ -141,6 +145,10 @@ export interface ILocalizationUsageWorkspace {
     id: string;
     name: string;
     parentId: string | null;
+    /**
+     * Name of the workspace in `parentId`.
+     */
+    parentName?: string;
     childrenCount: number;
     source: LocalizationUsageSource;
     bySetting: Partial<Record<LocalizationSettingType, ILocalizationResolvedValue>>;

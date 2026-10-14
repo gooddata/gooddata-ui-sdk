@@ -36,10 +36,10 @@ import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tab
 import { DEFAULT_TAB_ID, type ITabState } from "../../store/tabs/tabsState.js";
 import { selectUnavailableObjects } from "../../store/unavailableObjects/unavailableObjectsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+import { insightReferencesFromDashboard } from "../../utils/insightReferences.js";
 import { resolveInsights } from "../../utils/insightResolver.js";
 
 import { applyDefaultFilterViewForRenderMode } from "./common/filterViews.js";
-import { insightReferencesFromDashboard } from "./common/insightReferences.js";
 import { getMigratedAttributeFilters } from "./common/migratedAttributeFilters.js";
 import {
     actionsToInitializeExistingDashboard,

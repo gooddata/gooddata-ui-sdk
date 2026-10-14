@@ -279,6 +279,7 @@ Here is a list of the relevant events:
 | `ChatAgentChangeEvent`                | `isChatAgentChangeEvent`                | Assistant agent changed                        |
 | `ChatContextChangeEvent`              | `isChatContextChangeEvent`              | Assistant context changed                      |
 | `ChatDefinitionReceivedEvent`         | `isChatDefinitionReceivedEvent`         | Dashboard or visualization definition received |
+| `ChatClarificationQuestionsEvent`     | `isChatClarificationQuestionsEvent`     | Clarification questions presented or resolved  |
 
 #### onLinkClick
 
@@ -359,6 +360,51 @@ This event is triggered immediately when a message with a visualization or dashb
 | interactionId  | string                         | (Optional) The ID of the interaction.    |
 | dashboard      | IDashboard                     | (Optional) The dashboard definition.     |
 | visualization  | IInsight                       | (Optional) The visualization definition. |
+
+#### chatClarificationQuestions
+
+This event is triggered when the assistant presents clarification questions and again when the user submits
+answers or cancels the questions by sending another message.
+
+| Property      | Type                             | Description                                                  |
+| ------------- | -------------------------------- | ------------------------------------------------------------ |
+| type          | `chatClarificationQuestions`     | Event type identifier.                                       |
+| interactionId | `string`                         | ID of the assistant interaction that contains the questions. |
+| threadId      | `string`                         | (Optional) ID of the conversation thread.                    |
+| questions     | `ChatClarificationQuestion[]`    | Questions with their single-choice options.                  |
+| responses     | `Record<string, string> \| null` | (Optional) Answers for the current clarification state.      |
+
+Use `responses` to distinguish the stages of the clarification flow:
+
+- `undefined` means the clarification questions were received and presented, but the user has not responded yet.
+- A response object means the user submitted the form. A non-empty object contains the answered questions; omitted
+  questions were skipped. An empty object means the user submitted the form while skipping all questions.
+- `null` means the user skipped the clarification form entirely, for example by sending another message.
+
+```tsx
+import {
+    GenAIAssistant,
+    type ChatClarificationQuestionsEvent,
+    isChatClarificationQuestionsEvent,
+} from "@gooddata/sdk-ui-gen-ai";
+
+<GenAIAssistant
+    eventHandlers={[
+        {
+            eval: isChatClarificationQuestionsEvent,
+            handler: (event: ChatClarificationQuestionsEvent) => {
+                if (event.responses === undefined) {
+                    console.log("Clarification questions presented:", event.questions);
+                } else if (event.responses === null) {
+                    console.log("Clarification questions cancelled");
+                } else {
+                    console.log("Clarification answers submitted:", event.responses);
+                }
+            },
+        },
+    ]}
+/>;
+```
 
 #### onModeChange
 

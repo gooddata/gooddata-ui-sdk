@@ -2021,6 +2021,7 @@ export interface ILocalizationResolvedValue {
     // (undocumented)
     content: ILocalizationValueContent;
     originId?: string;
+    originName?: string;
     // (undocumented)
     source: LocalizationUsageSource;
 }
@@ -2143,6 +2144,7 @@ export interface ILocalizationUsageWorkspace {
     name: string;
     // (undocumented)
     parentId: string | null;
+    parentName?: string;
     // (undocumented)
     source: LocalizationUsageSource;
 }

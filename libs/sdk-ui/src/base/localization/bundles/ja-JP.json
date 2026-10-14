@@ -54,6 +54,7 @@
     "filterGroup.aria.label.withState": "フィルター グループ: {title}: {state}",
     "gs.list.searchResults": "検索結果",
     "gs.visualizationsList.loading": "読み込んでいます…",
+    "gs.visualizationsList.delete": "ビジュアライゼーションを削除",
     "gs.color-picker.inputPlaceholder": "#color",
     "gs.color-picker.currentColor": "現在",
     "gs.color-picker.newColor": "新規",

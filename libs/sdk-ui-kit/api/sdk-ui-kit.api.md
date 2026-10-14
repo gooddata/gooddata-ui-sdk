@@ -2158,6 +2158,8 @@ export interface IDescriptionPanelProps {
 export interface IDescriptionTriggerProps {
     // (undocumented)
     className?: string;
+    // (undocumented)
+    glyph?: "svg" | "font";
 }
 
 // @internal (undocumented)
@@ -7030,7 +7032,7 @@ export interface IUiIconButtonPublicProps {
     // (undocumented)
     onKeyDown?: (e: KeyboardEvent_2<HTMLButtonElement>) => void;
     // (undocumented)
-    size?: SizeXSmall | SizeSmall | SizeMedium | SizeLarge | SizeXLarge | SizeXXLarge;
+    size?: SizeXXSmall | SizeXSmall | SizeSmall | SizeMedium | SizeLarge | SizeXLarge | SizeXXLarge;
     // (undocumented)
     tabIndex?: number;
     // (undocumented)
@@ -9485,6 +9487,9 @@ export type SizeXSmall = "xsmall";
 
 // @internal (undocumented)
 export type SizeXXLarge = "xxlarge";
+
+// @internal (undocumented)
+export type SizeXXSmall = "xxsmall";
 
 // @internal (undocumented)
 export enum SnapPoint {

@@ -1,54 +1,70 @@
 // (C) 2026 GoodData Corporation
 
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { NotAuthenticated } from "@gooddata/sdk-backend-spi";
 
-import { loadPlatformContext } from "./loadPlatformContext.js";
 import { NOT_AUTHENTICATED_GRACE_MS } from "./notAuthenticatedGrace.js";
-import { BackendPlatformContextProvider } from "./useLoadPlatformContext.js";
+import { type IBackendPlatformContextProvider } from "./useLoadPlatformContext.js";
 
-vi.mock("./loadPlatformContext.js", () => ({
-    loadPlatformContext: vi.fn(),
-    HostApplicationDisabledError: class extends Error {},
-}));
+const loadPlatformContext = vi.fn();
 
-vi.mock("./waitForInjectedApiToken.js", () => ({
-    shouldWaitForInjectedApiToken: () => false,
-    waitForInjectedApiToken: vi.fn(),
-}));
+// The package runs test files in one shared module registry (isolate: false), and other files load
+// useLoadPlatformContext.js with their own mocks. This file loads its own copy and drops it afterwards.
+async function loadProvider(): Promise<IBackendPlatformContextProvider> {
+    vi.resetModules();
+    vi.doMock("./loadPlatformContext.js", () => ({
+        loadPlatformContext,
+        HostApplicationDisabledError: class extends Error {},
+    }));
+    vi.doMock("./waitForInjectedApiToken.js", () => ({
+        shouldWaitForInjectedApiToken: () => false,
+        waitForInjectedApiToken: vi.fn(),
+    }));
+    const { BackendPlatformContextProvider } = await import("./useLoadPlatformContext.js");
+    return BackendPlatformContextProvider;
+}
 
 describe("BackendPlatformContextProvider", () => {
+    let provider: IBackendPlatformContextProvider;
+
+    beforeEach(async () => {
+        provider = await loadProvider();
+    });
+
     afterEach(() => {
         vi.useRealTimers();
         vi.restoreAllMocks();
     });
 
+    afterAll(() => {
+        vi.doUnmock("./loadPlatformContext.js");
+        vi.doUnmock("./waitForInjectedApiToken.js");
+        vi.resetModules();
+    });
+
     it("stays loading during the login redirect grace period, then reports the 401", async () => {
         vi.useFakeTimers();
         vi.spyOn(console, "error").mockImplementation(() => {});
-        vi.mocked(loadPlatformContext).mockRejectedValue(new NotAuthenticated("Not authenticated"));
+        loadPlatformContext.mockRejectedValue(new NotAuthenticated("Not authenticated"));
 
-        const loading = BackendPlatformContextProvider.load();
+        const loading = provider.load();
         await vi.advanceTimersByTimeAsync(NOT_AUTHENTICATED_GRACE_MS - 1);
 
-        expect(BackendPlatformContextProvider.getResult()).toEqual({ state: "loading" });
+        expect(provider.getResult()).toEqual({ state: "loading" });
 
         await vi.advanceTimersByTimeAsync(1);
         await loading;
 
-        expect(BackendPlatformContextProvider.getResult()).toEqual({
-            state: "error",
-            error: "Not authenticated",
-        });
+        expect(provider.getResult()).toEqual({ state: "error", error: "Not authenticated" });
     });
 
     it("reports other failures immediately", async () => {
         vi.spyOn(console, "error").mockImplementation(() => {});
-        vi.mocked(loadPlatformContext).mockRejectedValue(new Error("Boom"));
+        loadPlatformContext.mockRejectedValue(new Error("Boom"));
 
-        await BackendPlatformContextProvider.load();
+        await provider.load();
 
-        expect(BackendPlatformContextProvider.getResult()).toEqual({ state: "error", error: "Boom" });
+        expect(provider.getResult()).toEqual({ state: "error", error: "Boom" });
     });
 });

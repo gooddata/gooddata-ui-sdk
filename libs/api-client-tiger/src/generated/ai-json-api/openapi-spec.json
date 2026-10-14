@@ -2400,8 +2400,9 @@
                     "Conversations"
                 ],
                 "summary": "Link a saved report",
-                "description": "Records the report entity the user saved the conversation's report draft as.",
+                "description": "Deprecated: call `PATCH .../conversations/{conversation_id}/documents/{document_ref}` instead. Records the report entity the user saved the conversation's report draft as.",
                 "operationId": "patch_report_api_v1_ai_workspaces__workspace_id__chat_conversations__conversation_id__reports__report_ref__patch",
+                "deprecated": true,
                 "parameters": [
                     {
                         "name": "workspace_id",
@@ -2449,7 +2450,7 @@
                         "description": "Bad request payload."
                     },
                     "404": {
-                        "description": "Conversation or report draft not found, or the dashboard builder or Reports app feature is disabled."
+                        "description": "Conversation or report draft not found, the report builder or Reports app feature is disabled, or the user lacks MANAGE on the workspace."
                     },
                     "422": {
                         "description": "Validation Error",
@@ -2491,6 +2492,76 @@
                     },
                     "429": {
                         "description": "A rebuild was accepted recently. The Retry-After header says when to retry."
+                    }
+                }
+            }
+        },
+        "/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/documents/{document_ref}": {
+            "patch": {
+                "tags": [
+                    "Conversations"
+                ],
+                "summary": "Link a saved document",
+                "description": "Records the document the user saved the conversation's document draft as.",
+                "operationId": "patch_document_api_v1_ai_workspaces__workspace_id__chat_conversations__conversation_id__documents__document_ref__patch",
+                "parameters": [
+                    {
+                        "name": "workspace_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Workspace Id"
+                        }
+                    },
+                    {
+                        "name": "conversation_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Conversation Id"
+                        }
+                    },
+                    {
+                        "name": "document_ref",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Document Ref"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PublisherDocumentIdUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "Successful Response"
+                    },
+                    "400": {
+                        "description": "Bad request payload."
+                    },
+                    "404": {
+                        "description": "Conversation or document draft not found, the report builder or Reports app feature is disabled, or the user lacks MANAGE on the workspace."
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -7888,6 +7959,15 @@
                         "title": "Datedatasets",
                         "description": "Full AAC body of every date dataset the chart uses."
                     },
+                    "metrics": {
+                        "items": {
+                            "additionalProperties": true,
+                            "type": "object"
+                        },
+                        "type": "array",
+                        "title": "Metrics",
+                        "description": "AAC body of every metric the chart uses, reduced to id, title, description and tags; no `maql`."
+                    },
                     "new_visualizations": {
                         "items": {
                             "additionalProperties": true,
@@ -7913,7 +7993,7 @@
                     "visualizations"
                 ],
                 "title": "DashboardReferences",
-                "description": "AAC bodies of every widget-referenced visualization in a dashboard draft, and its datasets.\n\nEach entry is opaque AAC pass-through (dict), not modeled as a schema — same\ntreatment the codebase gives elsewhere to full AAC visualization bodies."
+                "description": "AAC bodies of every widget-referenced visualization in a dashboard draft, and its datasets and metrics.\n\nEach entry is opaque AAC pass-through (dict), not modeled as a schema — same\ntreatment the codebase gives elsewhere to full AAC visualization bodies."
             },
             "DashboardRelativeDateFilter": {
                 "properties": {
@@ -11144,6 +11224,22 @@
                 ],
                 "title": "ProjectionRebuildResponse",
                 "description": "What an accepted rebuild enqueued; the workers restore it in the background."
+            },
+            "PublisherDocumentIdUpdateRequest": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "title": "Id",
+                        "description": "Id of the document the client saved the draft as."
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id"
+                ],
+                "title": "PublisherDocumentIdUpdateRequest",
+                "description": "PATCH /conversations/{conversationId}/documents/{documentRef} body."
             },
             "Query": {
                 "properties": {
@@ -17016,6 +17112,48 @@
                 ],
                 "title": "UserContextObjectReferenceGroup"
             },
+            "UserContextPublisherDocument": {
+                "properties": {
+                    "definition": {
+                        "anyOf": [
+                            {
+                                "type": "object"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Definition",
+                        "description": "The document open in the client, as an Analytics as Code (AAC) document. It has the same shape as the `report` answer part. Send the copy the client is holding, including any unsaved edits. The assistant reads its title, period and page count for the context summary. Optional."
+                    },
+                    "id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Id",
+                        "description": "Id of the saved document open in the editor; null while the document is not saved yet."
+                    },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title"
+                    }
+                },
+                "type": "object",
+                "title": "UserContextPublisherDocument",
+                "description": "The document open in the document editor, so refinements can target it without an id."
+            },
             "UserContextReport": {
                 "properties": {
                     "definition": {
@@ -17198,6 +17336,17 @@
                             }
                         ]
                     },
+                    "document": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/UserContextPublisherDocument"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "The document open in the document editor, if the client is showing one. Optional."
+                    },
                     "report": {
                         "anyOf": [
                             {
@@ -17207,7 +17356,8 @@
                                 "type": "null"
                             }
                         ],
-                        "description": "The report currently open in the report editor, if the client is showing one. Optional."
+                        "description": "Deprecated: send `document` instead. The report open in the report editor, if the client is showing one. Optional.",
+                        "deprecated": true
                     }
                 },
                 "type": "object",
@@ -21433,7 +21583,7 @@
                                 "type": "null"
                             }
                         ],
-                        "description": "AAC bodies of the datasets the visualization is built on, when available."
+                        "description": "AAC bodies of the datasets and metrics the visualization is built on, when available."
                     },
                     "type": {
                         "type": "string",
@@ -21548,12 +21698,21 @@
                         "type": "array",
                         "title": "Datedatasets",
                         "description": "Full AAC body of every date dataset the chart uses."
+                    },
+                    "metrics": {
+                        "items": {
+                            "additionalProperties": true,
+                            "type": "object"
+                        },
+                        "type": "array",
+                        "title": "Metrics",
+                        "description": "AAC body of every metric the chart uses, reduced to id, title, description and tags; no `maql`."
                     }
                 },
                 "additionalProperties": false,
                 "type": "object",
                 "title": "VisualizationReferences",
-                "description": "AAC bodies of the datasets a chart stands on.\n\nThe client needs them to resolve what the chart body only names: a geo chart's\nlatitude/longitude labels, and the granularities a date filter's values are read against.\nOpaque AAC pass-through (dict), like every other AAC body here."
+                "description": "AAC bodies of the datasets and metrics a chart stands on.\n\nThe client needs them to resolve what the chart body only names: a geo chart's\nlatitude/longitude labels, the granularities a date filter's values are read against, and\nthe titles of the metrics it plots. Opaque AAC pass-through (dict), like every other AAC\nbody here."
             },
             "VisualizationRelativeDateFilter": {
                 "properties": {

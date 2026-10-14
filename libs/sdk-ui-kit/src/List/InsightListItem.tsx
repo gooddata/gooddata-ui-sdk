@@ -9,7 +9,7 @@ import { type IExecutionConfig, type IFilter, type ISeparators, type ObjRef } fr
 import { simplifyText } from "@gooddata/util";
 
 import { UiIcon } from "../@ui/UiIcon/UiIcon.js";
-import { Button } from "../Button/Button.js";
+import { UiIconButton } from "../@ui/UiIconButton/UiIconButton.js";
 import { DESCRIPTION_PANEL_ARROW_OFFSETS, DescriptionPanel } from "../DescriptionPanel/DescriptionPanel.js";
 import { type IShortenedTextHandle, ShortenedText } from "../ShortenedText/ShortenedText.js";
 import { getDateTimeConfig } from "../utils/dateTimeConfig.js";
@@ -96,7 +96,9 @@ export function InsightListItem({
     const intl = useIntl();
     const shortenedTextRef = useRef<IShortenedTextHandle>(null);
     const currentWidthRef = useRef<number | undefined>(width);
-    const shouldRenderActions = !!onDelete;
+    const hasDelete = !!onDelete;
+    const deleteLabel = intl.formatMessage({ id: "gs.visualizationsList.delete" });
+    const showActions = showDescriptionPanel || hasDelete;
 
     useEffect(() => {
         if (shortenedTextRef.current && currentWidthRef.current !== width) {
@@ -124,33 +126,7 @@ export function InsightListItem({
             )}
             onClick={onClick}
         >
-            {/* reversed order of items because of hover effect for whole item when hovering over trash bin - css hack with flex-direction: row-reverse; */}
-            {shouldRenderActions ? (
-                <div className="gd-visualizations-list-item-actions">
-                    <Button
-                        className="gd-button-link gd-button-icon-only gd-button-small
-                        gd-icon-trash gd-visualizations-list-item-action-delete s-delete-item"
-                        onClick={handleClickDelete}
-                    />
-                </div>
-            ) : null}
-            {showDescriptionPanel ? (
-                <div className="gd-visualizations-list-item-description">
-                    <DescriptionPanel
-                        onBubbleOpen={onDescriptionPanelOpen}
-                        title={title}
-                        description={description}
-                        isLocked={isLocked}
-                        arrowOffsets={shouldRenderActions ? modifiedArrowOffsets : undefined}
-                        useReferences={useReferences}
-                        filters={filters}
-                        separators={separators}
-                        restrictedReferences={restrictedReferences}
-                        LoadingComponent={LoadingComponent}
-                        execConfig={richTextExecConfig}
-                    />
-                </div>
-            ) : null}
+            <InsightListItemTypeIcon type={type} />
             <div className="gd-visualizations-list-item-content">
                 <div className="gd-visualizations-list-item-content-name">
                     {isLocked ? <UiIcon type="lock" size={14} color="complementary-6" /> : null}
@@ -170,7 +146,38 @@ export function InsightListItem({
                     <UpdatedDateTime date={updated} type={type} metadataTimeZone={metadataTimeZone} />
                 </div>
             </div>
-            <InsightListItemTypeIcon type={type} />
+            {showActions ? (
+                <div className="gd-visualizations-list-item-actions">
+                    {showDescriptionPanel ? (
+                        <DescriptionPanel
+                            onBubbleOpen={onDescriptionPanelOpen}
+                            title={title}
+                            description={description}
+                            isLocked={isLocked}
+                            arrowOffsets={hasDelete ? modifiedArrowOffsets : undefined}
+                            useReferences={useReferences}
+                            filters={filters}
+                            separators={separators}
+                            restrictedReferences={restrictedReferences}
+                            LoadingComponent={LoadingComponent}
+                            execConfig={richTextExecConfig}
+                        />
+                    ) : null}
+                    {hasDelete ? (
+                        <span className="gd-visualizations-list-item-action-delete s-delete-item">
+                            <UiIconButton
+                                icon="trash"
+                                size="xsmall"
+                                variant="bare"
+                                isDesctructive
+                                label={deleteLabel}
+                                onClick={handleClickDelete}
+                                accessibilityConfig={{ ariaLabel: deleteLabel }}
+                            />
+                        </span>
+                    ) : null}
+                </div>
+            ) : null}
         </div>
     );
 }

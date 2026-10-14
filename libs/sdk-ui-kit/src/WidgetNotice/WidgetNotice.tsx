@@ -103,7 +103,7 @@ export function WidgetNotice({
                     <UiIconButton
                         icon="cross"
                         variant="tertiary"
-                        size="xsmall"
+                        size="xxsmall"
                         label={effectiveCloseButtonLabel}
                         onClick={onClose}
                         dataTestId="widget-notice-close"

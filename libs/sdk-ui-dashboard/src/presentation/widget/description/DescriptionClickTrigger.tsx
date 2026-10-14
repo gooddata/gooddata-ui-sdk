@@ -101,7 +101,7 @@ export function DescriptionClickTrigger(props: IDescriptionClickTriggerProps) {
                         role="button"
                         tabIndex={0}
                     >
-                        <DescriptionIcon className={triggerClassName} />
+                        <DescriptionIcon className={triggerClassName} glyph="font" />
                     </div>
                 }
             />

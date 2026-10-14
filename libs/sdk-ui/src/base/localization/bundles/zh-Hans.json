@@ -54,6 +54,7 @@
     "filterGroup.aria.label.withState": "筛选器组：{title}：{state}",
     "gs.list.searchResults": "搜索结果",
     "gs.visualizationsList.loading": "正在加载…",
+    "gs.visualizationsList.delete": "删除可视化",
     "gs.color-picker.inputPlaceholder": "#color",
     "gs.color-picker.currentColor": "当前",
     "gs.color-picker.newColor": "新建",

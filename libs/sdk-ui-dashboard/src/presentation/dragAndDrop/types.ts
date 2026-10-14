@@ -494,6 +494,7 @@ export type CustomDashboardInsightListItemComponentProps = {
     LoadingComponent?: ComponentType;
     width?: number;
     disabled?: boolean;
+    onDelete?: () => void;
 };
 
 /**

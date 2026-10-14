@@ -36,7 +36,7 @@ export function ArbitraryValuesTooltip() {
                 <span className="gd-text-filter-body__values-help-icon">
                     <UiIconButton
                         icon="question"
-                        size="xsmall"
+                        size="xxsmall"
                         variant="bare"
                         iconColor="complementary-7"
                         label={intl.formatMessage({
