@@ -72,7 +72,7 @@ export interface AutomationAbsoluteDateFilterAbsoluteDateFilter {
 export type AutomationAbsoluteDateFilterAbsoluteDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
 
 /**
- * An absolute date range filter defined at a specific granularity. The \'from\'/\'to\' literals must match the format of the chosen granularity (e.g. \'2020\' for YEAR, \'2012-05\' for MONTH, \'2012-3\' for QUARTER, \'1996-01\' for WEEK, \'2010-10-30\' for DAY, or a plain ordinal like \'6\' for periodical granularities such as MONTH_OF_YEAR). At least one of \'from\'/\'to\' must be provided; specifying only one yields an open-ended range.
+ * An absolute date range filter defined at a specific granularity. The \'from\'/\'to\' literals must match the format of the chosen granularity (e.g. \'2020\' for YEAR, \'2012-05\' for MONTH, \'2012-3\' for QUARTER, \'1996-01\' for WEEK, \'2010-10-30\' for DAY, \'2010-10-30 13\' for HOUR, \'2010-10-30 13:30\' for MINUTE, \'2010-10-30 13:30:45\' for SECOND, or a plain ordinal like \'6\' for periodical granularities such as MONTH_OF_YEAR). At least one of \'from\'/\'to\' must be provided; specifying only one yields an open-ended range.
  */
 export interface AutomationAbsoluteGranularityDateFilter {
     'absoluteGranularityDateFilter': AutomationAbsoluteGranularityDateFilterAbsoluteGranularityDateFilter;

@@ -7,6 +7,7 @@ import { useIntl } from "react-intl";
 import {
     type IInsight,
     type ISemanticSearchResultItem,
+    type ObjRef,
     areObjRefsEqual,
     insightCreated,
     insightIsLocked,
@@ -47,7 +48,7 @@ import { useDashboardComponentsContext } from "../dashboardContexts/DashboardCom
 
 import { DIVIDER, InsightListDivider } from "./InsightListDivider.js";
 import { InsightListNoData } from "./InsightListNoData.js";
-import { type IInsightListProps } from "./types.js";
+import { type IInsightListProps, type InsightListRow } from "./types.js";
 
 const ITEM_HEIGHT = 40;
 const LIST_WIDTH = 229;
@@ -112,6 +113,8 @@ export function InsightList({
     renderItem,
     selectedRef,
     onSelect,
+    includePermissions,
+    excludeRefs,
 }: IInsightListProps) {
     const intl = useIntl();
 
@@ -148,7 +151,7 @@ export function InsightList({
         onSearch,
         onTabSelect,
         loadInitialItems,
-        resetItems,
+        refreshItems,
     } = useInsightPagedList({
         backend,
         workspaceId,
@@ -156,6 +159,7 @@ export function InsightList({
         tabsIds,
         tags,
         excludeTags,
+        includePermissions,
     });
 
     const matcher = useMemo(
@@ -179,30 +183,33 @@ export function InsightList({
         setHybridSearchQuery(search);
     }, [search, setHybridSearchQuery]);
 
-    const { semanticSearchState, searchRelatedItems } = useMemo(
+    const { semanticSearchState, searchRelatedItems: allRelatedItems } = useMemo(
         () => hybridSearch({ items: pagedInsights.map((insight) => insight.insight) }),
         [hybridSearch, pagedInsights],
     );
+    const isExcluded = (ref: ObjRef) =>
+        excludeRefs?.some((excluded) => areObjRefsEqual(excluded, ref)) ?? false;
+    const visibleInsights = pagedInsights.filter((insight) => !isExcluded(insight.insight.ref));
+    const searchRelatedItems = allRelatedItems.filter((insight) => !isExcluded(insight.ref));
+    const excludedCount = pagedInsights.length - visibleInsights.length;
 
     const isRelatedLoading = semanticSearchState.state === "loading";
 
     const totalItems =
-        (totalInsightsCount ?? pagedInsights.length) +
+        (totalInsightsCount ?? pagedInsights.length) -
+        excludedCount +
         (isRelatedLoading ? 4 : searchRelatedItems.length + (searchRelatedItems.length ? 1 : 0));
     const loadingItemsCount = skeletonItemsCount + (isRelatedLoading ? 4 : 0);
 
-    const insights = useMemo(
-        () => [
-            ...pagedInsights,
-            ...(isRelatedLoading
-                ? [DIVIDER]
-                : [
-                      ...(searchRelatedItems.length ? [DIVIDER] : []),
-                      ...searchRelatedItems.map((insight) => ({ insight })),
-                  ]),
-        ],
-        [pagedInsights, searchRelatedItems, isRelatedLoading],
-    );
+    const insights: InsightListRow[] = [
+        ...visibleInsights,
+        ...(isRelatedLoading
+            ? [DIVIDER]
+            : [
+                  ...(searchRelatedItems.length ? [DIVIDER] : []),
+                  ...searchRelatedItems.map((insight) => ({ insight, isRelated: true })),
+              ]),
+    ];
 
     const prevInsightListLastUpdateRequestedRef = useRef(insightListLastUpdateRequested);
 
@@ -213,10 +220,10 @@ export function InsightList({
     useEffect(() => {
         // Only refresh when insightListLastUpdateRequested actually changed
         if (insightListLastUpdateRequested !== prevInsightListLastUpdateRequestedRef.current) {
-            resetItems();
+            refreshItems();
         }
         prevInsightListLastUpdateRequestedRef.current = insightListLastUpdateRequested;
-    }, [insightListLastUpdateRequested, resetItems]);
+    }, [insightListLastUpdateRequested, refreshItems]);
 
     const itemHeightGetter = (index: number) => {
         // Modify item heights for first/last item so that their hover states don't overlap.

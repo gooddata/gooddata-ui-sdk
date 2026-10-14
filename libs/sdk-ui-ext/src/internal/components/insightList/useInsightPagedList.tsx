@@ -62,6 +62,8 @@ export interface IUsePagedDropdownConfig {
      * Only used by the enhanced insight picker — other consumers should leave this off.
      */
     includeAuthorInfo?: boolean;
+    /** Ask the backend for the caller's permissions on every listed insight. */
+    includePermissions?: boolean;
     /**
      * Search term owned by the caller. It replaces the hook's own search state, so that every page
      * the hook fetches is already narrowed by the server instead of by the caller afterwards. It is
@@ -99,6 +101,7 @@ export interface IUsePagedDropdownResult {
     shouldLoadNextPage: (lastItemIndex: number, itemsCount: number) => boolean;
     loadInitialItems: () => void;
     resetItems: () => void;
+    refreshItems: () => void;
 }
 
 const DEFAULT_SORT_DIRECTION: InsightListSortDirection = "desc";
@@ -135,6 +138,7 @@ export function useInsightPagedList({
     sortDirection = DEFAULT_SORT_DIRECTION,
     createdByFilter,
     includeAuthorInfo = false,
+    includePermissions = false,
     searchTerm,
 }: IUsePagedDropdownConfig): IUsePagedDropdownResult {
     const [items, setItems] = useState<IInsight[]>([]);
@@ -157,6 +161,67 @@ export function useInsightPagedList({
     const totalItems = totalItemsCount ?? items.length;
     const hasNextPage = totalItems > items.length;
     const skeletonItemsCount = hasNextPage ? Math.min(ITEMS_PER_PAGE, totalItems - items.length) : 0;
+
+    const buildQuery = useCallback(
+        ({ page, search: searchValue, tabId }: { page: number; search: string; tabId: string }) => {
+            const query = backend
+                .workspace(workspaceId)
+                .insights()
+                .getInsightsQuery()
+                .withSize(ITEMS_PER_PAGE)
+                .withPage(page)
+                .withSorting(sorting);
+
+            const searchedText = searchValue || undefined;
+            // When includeAuthorInfo is true (picker mode), only use the explicit createdByFilter.
+            // Otherwise fall back to the legacy tab-based author filtering.
+            const searchedAuthor =
+                !includeAuthorInfo && tabId === tabsIds.my && isEmpty(searchValue) ? author : undefined;
+            const effectiveCreatedBy = createdByFilter?.length
+                ? createdByFilter
+                : searchedAuthor
+                  ? [searchedAuthor]
+                  : undefined;
+
+            if (includeAuthorInfo || effectiveCreatedBy) {
+                query.withInclude(["createdBy", "modifiedBy"]);
+            }
+
+            if (includePermissions) {
+                query.withMetaInclude(["permissions"]);
+            }
+
+            const filter: IFilterBaseOptions = {
+                ...((tags?.length ?? 0) > 0 ? { tags } : {}),
+                ...((excludeTags?.length ?? 0) > 0 ? { excludeTags } : {}),
+                ...(searchedText
+                    ? ownsSearchTerm
+                        ? { search: searchedText }
+                        : { title: searchedText }
+                    : {}),
+                ...(effectiveCreatedBy ? { createdBy: effectiveCreatedBy } : {}),
+            };
+
+            if (Object.keys(filter).length > 0) {
+                query.withFilter(filter);
+            }
+
+            return query;
+        },
+        [
+            backend,
+            workspaceId,
+            sorting,
+            includeAuthorInfo,
+            tabsIds,
+            author,
+            createdByFilter,
+            includePermissions,
+            tags,
+            excludeTags,
+            ownsSearchTerm,
+        ],
+    );
 
     const fetchItems = useCallback(
         async (params: { page: number; search: string; tabId: string | undefined; resetItems?: boolean }) => {
@@ -184,43 +249,7 @@ export function useInsightPagedList({
             }
 
             try {
-                const query = backend
-                    .workspace(workspaceId)
-                    .insights()
-                    .getInsightsQuery()
-                    .withSize(ITEMS_PER_PAGE)
-                    .withPage(page)
-                    .withSorting(sorting);
-
-                const searchedText = searchValue || undefined;
-                // When includeAuthorInfo is true (picker mode), only use the explicit createdByFilter.
-                // Otherwise fall back to the legacy tab-based author filtering.
-                const searchedAuthor =
-                    !includeAuthorInfo && tabId === tabsIds.my && isEmpty(searchValue) ? author : undefined;
-                const effectiveCreatedBy = createdByFilter?.length
-                    ? createdByFilter
-                    : searchedAuthor
-                      ? [searchedAuthor]
-                      : undefined;
-
-                if (includeAuthorInfo || effectiveCreatedBy) {
-                    query.withInclude(["createdBy", "modifiedBy"]);
-                }
-
-                const filter: IFilterBaseOptions = {
-                    ...((tags?.length ?? 0) > 0 ? { tags } : {}),
-                    ...((excludeTags?.length ?? 0) > 0 ? { excludeTags } : {}),
-                    ...(searchedText
-                        ? ownsSearchTerm
-                            ? { search: searchedText }
-                            : { title: searchedText }
-                        : {}),
-                    ...(effectiveCreatedBy ? { createdBy: effectiveCreatedBy } : {}),
-                };
-
-                if (Object.keys(filter).length > 0) {
-                    query.withFilter(filter);
-                }
+                const query = buildQuery({ page, search: searchValue, tabId });
 
                 const result = await query.query();
 
@@ -253,22 +282,7 @@ export function useInsightPagedList({
                     ) {
                         setSelectedTabId(tabsIds.all);
                         // Fetch all insights immediately
-                        const allQuery = backend
-                            .workspace(workspaceId)
-                            .insights()
-                            .getInsightsQuery()
-                            .withSize(ITEMS_PER_PAGE)
-                            .withPage(0)
-                            .withSorting(sorting);
-
-                        const allFilter: IFilterBaseOptions = {
-                            ...((tags?.length ?? 0) > 0 ? { tags } : {}),
-                            ...((excludeTags?.length ?? 0) > 0 ? { excludeTags } : {}),
-                        };
-
-                        if (Object.keys(allFilter).length > 0) {
-                            allQuery.withFilter(allFilter);
-                        }
+                        const allQuery = buildQuery({ page: 0, search: searchValue, tabId: tabsIds.all });
 
                         const allResult = await allQuery.query();
 
@@ -292,18 +306,7 @@ export function useInsightPagedList({
                 }
             }
         },
-        [
-            backend,
-            workspaceId,
-            author,
-            tabsIds,
-            tags,
-            excludeTags,
-            sorting,
-            createdByFilter,
-            includeAuthorInfo,
-            ownsSearchTerm,
-        ],
+        [buildQuery, tabsIds, includeAuthorInfo, createdByFilter],
     );
 
     const loadNextPage = useCallback(() => {
@@ -362,6 +365,11 @@ export function useInsightPagedList({
         void fetchItems({ page: 0, search: effectiveSearch, tabId: selectedTabId, resetItems: true });
     }, [fetchItems, effectiveSearch, selectedTabId]);
 
+    const refreshItems = useCallback(() => {
+        setCurrentPage(0);
+        void fetchItems({ page: 0, search: effectiveSearch, tabId: selectedTabId });
+    }, [fetchItems, effectiveSearch, selectedTabId]);
+
     return {
         items,
         totalItemsCount,
@@ -381,5 +389,6 @@ export function useInsightPagedList({
         shouldLoadNextPage,
         loadInitialItems,
         resetItems,
+        refreshItems,
     };
 }

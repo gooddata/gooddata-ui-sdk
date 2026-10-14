@@ -27,7 +27,7 @@ export function FilterMenuSectionHeader({
                             <span className="gd-filter-menu__section-icon" aria-hidden="true">
                                 <UiIconButton
                                     icon="question"
-                                    size="xsmall"
+                                    size="xxsmall"
                                     variant="tertiary"
                                     iconColor="complementary-7"
                                 />

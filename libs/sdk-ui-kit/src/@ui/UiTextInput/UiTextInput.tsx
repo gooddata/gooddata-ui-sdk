@@ -162,7 +162,7 @@ export function UiTextInput({
                     <span className={e("icon-after")}>
                         <UiIconButton
                             icon={onIconAfter.icon}
-                            size="xsmall"
+                            size="xxsmall"
                             variant="tertiary"
                             onClick={onIconAfter.onClick}
                             isDisabled={disabled}

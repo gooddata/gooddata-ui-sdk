@@ -114,6 +114,7 @@ export enum TigerFeaturesNames {
     EnableAutomationTrigger = "enableAutomationTrigger",
     EnableUserDataFiltersUi = "enableUserDataFiltersUi",
     EnableEnhancedInsightPicker = "enableEnhancedInsightPicker",
+    EnableDashboardVisualizationDelete = "enableDashboardVisualizationDelete",
     EnableAiAgenticMultiConversations = "enableAiAgenticMultiConversations",
     EnableAiLlmAnthropicProvider = "enableAiLlmAnthropicProvider",
     EnableRadarChart = "enableRadarChart",
@@ -255,6 +256,7 @@ export type ITigerFeatureFlags = {
     enableAutomationTrigger: (typeof FeatureFlagsValues)["enableAutomationTrigger"][number];
     enableUserDataFiltersUi: (typeof FeatureFlagsValues)["enableUserDataFiltersUi"][number];
     enableEnhancedInsightPicker: (typeof FeatureFlagsValues)["enableEnhancedInsightPicker"][number];
+    enableDashboardVisualizationDelete: (typeof FeatureFlagsValues)["enableDashboardVisualizationDelete"][number];
     enableAiLlmAnthropicProvider: (typeof FeatureFlagsValues)["enableAiLlmAnthropicProvider"][number];
     enableDashboardSidebarResize: (typeof FeatureFlagsValues)["enableDashboardSidebarResize"][number];
     enableCollapsibleLeftSidebar: (typeof FeatureFlagsValues)["enableCollapsibleLeftSidebar"][number];
@@ -386,6 +388,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAutomationTrigger: false,
     enableUserDataFiltersUi: false,
     enableEnhancedInsightPicker: false,
+    enableDashboardVisualizationDelete: false,
     enableAiLlmAnthropicProvider: false,
     enableDashboardSidebarResize: true,
     enableCollapsibleLeftSidebar: false,
@@ -517,6 +520,7 @@ export const FeatureFlagsValues = {
     enableAutomationTrigger: [true, false] as const,
     enableUserDataFiltersUi: [true, false] as const,
     enableEnhancedInsightPicker: [true, false] as const,
+    enableDashboardVisualizationDelete: [true, false] as const,
     enableAiLlmAnthropicProvider: [true, false] as const,
     enableDashboardSidebarResize: [true, false] as const,
     enableCollapsibleLeftSidebar: [true, false] as const,

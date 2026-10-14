@@ -177,7 +177,7 @@ function GenAIContent(props: GenAIChatProps) {
         >
             <CustomizationProvider slots={slots}>
                 <OverlayAlignOnParentScrollProvider>
-                    <GenAIChatWrapper initializing={loading} className={className} />
+                    <GenAIChatWrapper initializing={loading} className={className} autofocus />
                 </OverlayAlignOnParentScrollProvider>
             </CustomizationProvider>
         </ConfigProvider>

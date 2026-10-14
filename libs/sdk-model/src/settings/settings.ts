@@ -1129,6 +1129,11 @@ export interface IFeatureFlags {
     enableEnhancedInsightPicker?: boolean;
 
     /**
+     * Enable deleting visualizations from the dashboard edit mode visualization list.
+     */
+    enableDashboardVisualizationDelete?: boolean;
+
+    /**
      * Enable ai agentic suggestions.
      */
     enableAiAgenticSuggestions?: boolean;

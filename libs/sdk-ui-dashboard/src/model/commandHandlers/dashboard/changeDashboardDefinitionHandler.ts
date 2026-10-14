@@ -33,9 +33,9 @@ import { selectActiveTabLocalIdentifier } from "../../store/tabs/tabsSelectors.j
 import { DEFAULT_TAB_ID } from "../../store/tabs/tabsState.js";
 import { unavailableObjectsActions } from "../../store/unavailableObjects/index.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+import { insightReferencesFromDashboard } from "../../utils/insightReferences.js";
 import { resolveInsights } from "../../utils/insightResolver.js";
 
-import { insightReferencesFromDashboard } from "./common/insightReferences.js";
 import { actionsToInitializeExistingDashboard } from "./common/stateInitializers.js";
 import { loadUnavailableReferences } from "./initializeDashboardHandler/loadUnavailableReferences.js";
 import {

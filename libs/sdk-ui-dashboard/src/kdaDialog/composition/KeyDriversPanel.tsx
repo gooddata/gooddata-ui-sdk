@@ -72,7 +72,7 @@ export function KeyDriversPanel({ loading, detailsId }: IKeyDriversPanelProps) {
                                 <UiIconButton
                                     icon="question"
                                     variant="tertiary"
-                                    size="xsmall"
+                                    size="xxsmall"
                                     accessibilityConfig={{
                                         ariaLabel: label,
                                         ariaDescribedBy: tooltipId,

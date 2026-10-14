@@ -190,24 +190,11 @@ export function PluggableApplicationRenderer({
                 return;
             }
             if (isAiAssistantContextChangedEvent(event)) {
-                onAiAssistantContextRef.current?.({
-                    includeTags: event.payload.includeTags,
-                    excludeTags: event.payload.excludeTags,
-                    dialogPosition: event.payload.dialogPosition,
-                    embedded: event.payload.embedded,
-                    disabled: event.payload.disabled,
-                    userContext: event.payload.userContext,
-                    userContextLoading: event.payload.userContextLoading,
-                });
+                onAiAssistantContextRef.current?.(event.payload);
                 return;
             }
             if (isAiAssistantPublisherDocumentSavedEvent(event)) {
-                onAiAssistantPublisherDocumentSavedRef.current?.({
-                    conversationId: event.payload.conversationId,
-                    itemId: event.payload.itemId,
-                    documentRef: event.payload.documentRef,
-                    savedDocumentId: event.payload.savedDocumentId,
-                });
+                onAiAssistantPublisherDocumentSavedRef.current?.(event.payload);
                 return;
             }
             if (isAiAssistantDashboardSavedEvent(event)) {

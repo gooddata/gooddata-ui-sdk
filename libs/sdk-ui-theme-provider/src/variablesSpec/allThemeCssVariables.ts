@@ -9,6 +9,7 @@ import { internalButtonThemeVariables } from "./internal/button.js";
 import { internalFontThemeVariables } from "./internal/font.js";
 import { internalGeoThemeVariables } from "./internal/geo.js";
 import { internalIconThemeVariables } from "./internal/icon.js";
+import { internalListThemeVariables } from "./internal/list.js";
 import { internalModelerThemeVariables } from "./internal/modeler.js";
 import { internalSpacingThemeVariables } from "./internal/spacing.js";
 import { internalTableThemeVariables } from "./internal/table.js";
@@ -87,6 +88,7 @@ export const themeInternalCssVariables: ThemeInternalCssVariable[] = [
     ...internalAvatarThemeVariables,
     ...internalButtonThemeVariables,
     ...internalIconThemeVariables,
+    ...internalListThemeVariables,
     ...internalTabsThemeVariables,
     ...internalTableThemeVariables,
     ...internalToolbarThemeVariables,

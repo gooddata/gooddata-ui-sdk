@@ -54,6 +54,7 @@
     "filterGroup.aria.label.withState": "Groupe de filtres : {title} : {state}",
     "gs.list.searchResults": "résultats de la recherche",
     "gs.visualizationsList.loading": "Chargement en cours…",
+    "gs.visualizationsList.delete": "Supprimer la visualisation",
     "gs.color-picker.inputPlaceholder": "#color",
     "gs.color-picker.currentColor": "en cours",
     "gs.color-picker.newColor": "nouvelle",

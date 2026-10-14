@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type SizeLarge,
@@ -7,14 +7,17 @@ import {
     type SizeXLarge,
     type SizeXSmall,
     type SizeXXLarge,
+    type SizeXXSmall,
 } from "../@types/size.js";
 
 export const getButtonIconSize = (
-    size: SizeXSmall | SizeSmall | SizeMedium | SizeLarge | SizeXLarge | SizeXXLarge,
+    size: SizeXXSmall | SizeXSmall | SizeSmall | SizeMedium | SizeLarge | SizeXLarge | SizeXXLarge,
 ) => {
     switch (size) {
-        case "xsmall":
+        case "xxsmall":
             return 12;
+        case "xsmall":
+            return 14;
         case "small":
             return 16;
         case "medium":

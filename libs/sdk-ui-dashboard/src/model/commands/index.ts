@@ -93,6 +93,7 @@ import {
     type IRemoveDrillToUrlForInsightWidget,
     type IRemoveDrillsForInsightWidget,
 } from "./insight.js";
+import { type IDeleteInsight } from "./insightDelete.js";
 import {
     type IChangeKpiWidgetComparison,
     type IChangeKpiWidgetConfiguration,
@@ -215,6 +216,7 @@ export type DashboardCommands =
     | IChangeInsightWidgetHeader
     | IChangeInsightWidgetDescription
     | IChangeInsightWidgetIgnoreCrossFiltering
+    | IDeleteInsight
     | IChangeInsightWidgetFilterSettings
     | IChangeInsightWidgetVisProperties
     | ChangeInsightWidgetVisConfiguration

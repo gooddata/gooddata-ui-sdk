@@ -41,6 +41,10 @@ interface IUsageSubject {
 export interface IUsageScope {
     workspaces: IFixtureWorkspace[];
     people: Array<IFixturePerson & { settings: ResolvedSettings }>;
+    /**
+     * Names of workspaces outside `workspaces` that rows refer to as parent or origin.
+     */
+    workspaceNames?: ReadonlyMap<string, string>;
 }
 
 function strongest(sources: LocalizationUsageSource[]): LocalizationUsageSource {
@@ -150,10 +154,27 @@ function page<T>(items: T[], query: ILocalizationPageQuery): T[] {
 
 const byName = (a: { name: string }, b: { name: string }) => a.name.localeCompare(b.name);
 
+function withOriginNames(
+    settings: ResolvedSettings,
+    nameOf: (id: string) => string | undefined,
+): ResolvedSettings {
+    return Object.fromEntries(
+        Object.entries(settings).map(([type, setting]) => [
+            type,
+            setting.originId ? { ...setting, originName: nameOf(setting.originId) } : setting,
+        ]),
+    );
+}
+
 export function usageWorkspaces(
     scope: IUsageScope,
     query: ILocalizationUsageListQuery,
 ): { workspaces: ILocalizationUsageWorkspace[]; totalCount: number } {
+    const names = new Map([
+        ...(scope.workspaceNames ?? []),
+        ...scope.workspaces.map((workspace): [string, string] => [workspace.id, workspace.name]),
+    ]);
+    const nameOf = (id: string) => names.get(id);
     const rows = scope.workspaces
         .map((workspace) => ({ workspace, source: matches(workspace.settings, query) }))
         .filter(
@@ -163,9 +184,10 @@ export function usageWorkspaces(
             id: workspace.id,
             name: workspace.name,
             parentId: workspace.parentId,
+            parentName: workspace.parentId ? nameOf(workspace.parentId) : undefined,
             childrenCount: workspace.childrenCount,
             source,
-            bySetting: workspace.settings,
+            bySetting: withOriginNames(workspace.settings, nameOf),
         }))
         .sort(byName);
     return { workspaces: page(rows, query), totalCount: rows.length };

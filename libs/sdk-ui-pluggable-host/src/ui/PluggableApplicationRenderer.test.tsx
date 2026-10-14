@@ -15,6 +15,7 @@ import {
     type IPluggableApp,
     type IPluggableAppEvent,
     type IPluggableApplicationMountHandle,
+    aiAssistantContextChanged,
     aiAssistantPublisherDocumentSaved,
 } from "@gooddata/sdk-pluggable-application-model";
 
@@ -114,11 +115,16 @@ type PublisherDocumentSaved = Parameters<
     NonNullable<ComponentProps<typeof PluggableApplicationRenderer>["onAiAssistantPublisherDocumentSaved"]>
 >[0];
 
+type AiAssistantContext = Parameters<
+    NonNullable<ComponentProps<typeof PluggableApplicationRenderer>["onAiAssistantContext"]>
+>[0];
+
 function renderer(options: {
     pathname: string;
     ctx: IPlatformContext;
     navigationRequestRef: NavigationGuardRef;
     app?: PluggableApplicationRegistryItem;
+    onAiAssistantContext?: ComponentProps<typeof PluggableApplicationRenderer>["onAiAssistantContext"];
     onAiAssistantPublisherDocumentSaved?: ComponentProps<
         typeof PluggableApplicationRenderer
     >["onAiAssistantPublisherDocumentSaved"];
@@ -130,6 +136,7 @@ function renderer(options: {
                 ctx={options.ctx}
                 pathname={options.pathname}
                 navigationRequestRef={options.navigationRequestRef}
+                onAiAssistantContext={options.onAiAssistantContext}
                 onAiAssistantPublisherDocumentSaved={options.onAiAssistantPublisherDocumentSaved}
             />
         </HostIntlProvider>
@@ -180,6 +187,39 @@ describe("PluggableApplicationRenderer", () => {
 
         expect(navigationRequestRef.current?.(request)).toBe(true);
         expect(onHostNavigationRequested).toHaveBeenCalledWith(request);
+    });
+
+    it("forwards every AI assistant context field unchanged", async () => {
+        const emitted: { onEvent?: (event: IPluggableAppEvent) => void } = {};
+        mocks.loadPluggableApplication.mockResolvedValue({
+            mount: (options): IPluggableApplicationMountHandle => {
+                emitted.onEvent = options.onEvent;
+                return { unmount: vi.fn(), onHostNavigationRequested };
+            },
+        });
+        const onAiAssistantContext = vi.fn<(context: AiAssistantContext) => void>();
+        const payload: AiAssistantContext = {
+            includeTags: ["included"],
+            excludeTags: ["excluded"],
+            dialogPosition: "right",
+            embedded: true,
+            disabled: false,
+            userContext: { view: { publisherDocument: { title: "Draft" } } },
+            userContextLoading: true,
+        };
+        render(
+            renderer({
+                pathname: WS1_PATHNAME,
+                ctx: context(),
+                navigationRequestRef,
+                onAiAssistantContext,
+            }),
+        );
+        await flushMount();
+
+        emitted.onEvent?.(aiAssistantContextChanged(payload));
+
+        expect(onAiAssistantContext).toHaveBeenCalledExactlyOnceWith(payload);
     });
 
     describe("a document the application saved", () => {

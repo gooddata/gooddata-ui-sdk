@@ -15,8 +15,17 @@ export interface IInsightListProps {
     height?: number;
     width?: number;
     searchAutofocus?: boolean;
-    renderItem?: (props: IRenderListItemProps<IInsight | { divider: true }>) => ReactElement;
+    renderItem?: (props: IRenderListItemProps<InsightListRow>) => ReactElement;
     selectedRef?: ObjRef;
     onSelect?: (insight: IInsight) => void;
     disabled?: boolean;
+    includePermissions?: boolean;
+    excludeRefs?: ObjRef[];
 }
+
+/**
+ * Related rows come from the semantic search and carry no permissions, so they take no actions.
+ *
+ * @internal
+ */
+export type InsightListRow = (IInsight & { isRelated?: boolean }) | { divider: true };

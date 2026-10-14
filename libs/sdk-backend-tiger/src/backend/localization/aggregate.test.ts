@@ -70,3 +70,37 @@ describe("usage lists", () => {
         expect(users.every((user) => user.source === "USER")).toBe(true);
     });
 });
+
+describe("usageWorkspaces names", () => {
+    it("names the parent and the origin of an inherited value", () => {
+        const { workspaces: rows } = usageWorkspaces(organizationScope, {
+            value: "de-DE",
+            setting: "LOCALE",
+            source: "PARENT",
+        });
+        const row = rows[0];
+        const parent = workspaces.find((workspace) => workspace.id === row.parentId);
+        const origin = workspaces.find((workspace) => workspace.id === row.bySetting.LOCALE?.originId);
+
+        expect(row.parentName).toBeDefined();
+        expect(row.parentName).toBe(parent?.name);
+        expect(row.bySetting.LOCALE?.originName).toBeDefined();
+        expect(row.bySetting.LOCALE?.originName).toBe(origin?.name);
+    });
+
+    it("names a parent outside the scope from the scope's name list", () => {
+        const child = workspaces.find((workspace) => workspace.parentId !== null)!;
+        const { workspaces: rows } = usageWorkspaces(
+            {
+                workspaces: [child],
+                people: [],
+                workspaceNames: new Map(workspaces.map((workspace) => [workspace.id, workspace.name])),
+            },
+            {},
+        );
+
+        expect(rows[0].parentName).toBe(
+            workspaces.find((workspace) => workspace.id === child.parentId)?.name,
+        );
+    });
+});

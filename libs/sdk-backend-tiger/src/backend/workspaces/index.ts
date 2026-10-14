@@ -27,6 +27,7 @@ import {
 } from "../../convertors/fromBackend/dateFormatting/types.js";
 import { workspaceConverter } from "../../convertors/fromBackend/WorkspaceConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
+import { rsqlSingleQuote } from "../../utils/rsql.js";
 import { TigerWorkspace } from "../workspace/index.js";
 
 export class TigerWorkspaceQueryFactory implements IWorkspacesQueryFactory {
@@ -199,7 +200,7 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
             this.filter.rootWorkspacesOnly && "parent.id=isnull=true",
             this.parentWorkspaceId && `parent.id==${this.parentWorkspaceId}`,
             // case-insensitive search
-            this.search && `name=containsic='${this.search}'`,
+            this.search && `name=containsic=${rsqlSingleQuote(this.search)}`,
         ]).join(";");
         return filterParam === "" ? undefined : filterParam;
     }

@@ -56,15 +56,21 @@ const getCustomWorkspaceSettings = (): ISettings | undefined => {
     return (window as { customWorkspaceSettings?: ISettings }).customWorkspaceSettings;
 };
 
+/**
+ * Merges `window.customWorkspaceSettings` over `settings`. Used both for the workspace settings
+ * decorator and for the current-user settings read at bootstrap, which the decorator does not reach.
+ */
+export function applyCustomWorkspaceSettings<T extends ISettings>(settings: T): T {
+    const customSettings = getCustomWorkspaceSettings();
+    return customSettings ? { ...settings, ...customSettings } : settings;
+}
+
 export const wrapWithCustomWorkspaceSettings = (backend: IAnalyticalBackend): IAnalyticalBackend => {
     if (!getCustomWorkspaceSettings()) {
         return backend;
     }
     return withCustomWorkspaceSettings(backend, {
-        commonSettingsWrapper: (originalSettings) => ({
-            ...originalSettings,
-            ...getCustomWorkspaceSettings(),
-        }),
+        commonSettingsWrapper: applyCustomWorkspaceSettings,
     });
 };
 

@@ -219,6 +219,10 @@
         "text": "Loading…",
         "crowdinContext": "Loading indicator text shown while visualizations or data are being fetched or processed."
     },
+    "gs.visualizationsList.delete": {
+        "text": "Delete visualization",
+        "crowdinContext": "Accessible name and tooltip of the trash icon on a row of the visualization list."
+    },
     "gs.color-picker.inputPlaceholder": {
         "text": "#color",
         "crowdinContext": "Placeholder text in the color input field, showing the expected format for hexadecimal color codes."

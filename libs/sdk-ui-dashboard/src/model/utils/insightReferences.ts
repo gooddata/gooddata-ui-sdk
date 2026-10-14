@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { walkLayout } from "@gooddata/sdk-backend-spi";
 import {
@@ -38,6 +38,13 @@ const getReferencesFromVisualizationSwitcherWidget = (widget: any) => {
     }
     return insightRefs;
 };
+
+export function insightReferencesFromWidget(widget: unknown): ObjRef[] {
+    return [
+        ...getReferencesFromInsightWidget(widget),
+        ...getReferencesFromVisualizationSwitcherWidget(widget),
+    ];
+}
 
 export function insightReferences(layout?: IDashboardLayout): ObjRef[] {
     const insightRefsFromWidgets: ObjRef[] = [];

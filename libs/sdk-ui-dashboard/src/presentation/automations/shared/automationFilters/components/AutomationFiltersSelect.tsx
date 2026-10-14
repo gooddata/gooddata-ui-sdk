@@ -207,7 +207,7 @@ function AutomationCheckboxOrNote({
                         <UiIconButton
                             icon="question"
                             variant="tertiary"
-                            size="xsmall"
+                            size="xxsmall"
                             accessibilityConfig={{
                                 ariaLabel: intl.formatMessage({
                                     id: "dialogs.automation.filters.schedule.ariaLabel",

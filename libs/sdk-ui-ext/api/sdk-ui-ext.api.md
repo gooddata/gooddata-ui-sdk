@@ -1204,6 +1204,7 @@ export interface IUsePagedDropdownConfig {
     // (undocumented)
     excludeTags?: string[];
     includeAuthorInfo?: boolean;
+    includePermissions?: boolean;
     searchTerm?: string;
     sortBy?: InsightListSortBy;
     sortDirection?: InsightListSortDirection;
@@ -1244,6 +1245,8 @@ export interface IUsePagedDropdownResult {
     onSearch: (searchString: string) => void;
     // (undocumented)
     onTabSelect?: (tab: ITab) => void;
+    // (undocumented)
+    refreshItems: () => void;
     // (undocumented)
     reset: () => void;
     // (undocumented)

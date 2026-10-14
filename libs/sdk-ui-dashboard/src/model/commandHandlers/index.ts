@@ -77,6 +77,7 @@ import { changeMeasureValueFilterTitleHandler } from "./filterContext/measureVal
 import { moveMeasureValueFilterHandler } from "./filterContext/measureValueFilter/moveMeasureValueFilterHandler.js";
 import { removeMeasureValueFilterHandler } from "./filterContext/measureValueFilter/removeMeasureValueFilterHandler.js";
 import { removeRestrictedFiltersHandler } from "./filterContext/removeRestrictedFiltersHandler.js";
+import { deleteInsightHandler } from "./insight/deleteInsightHandler.js";
 import { addLayoutSectionHandler } from "./layout/addLayoutSectionHandler.js";
 import { addSectionItemsHandler } from "./layout/addSectionItemsHandler.js";
 import { changeLayoutSectionHeaderHandler } from "./layout/changeLayoutSectionHeaderHandler.js";
@@ -240,6 +241,7 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_CONFIGURATION": changeInsightWidgetVisConfigurationHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_IGNORE_CROSS_FILTERING":
         changeInsightWidgetIgnoreCrossFilteringHandler,
+    "GDC.DASH/CMD.INSIGHT.DELETE": deleteInsightHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_INSIGHT": changeInsightWidgetInsightHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS": modifyDrillsForInsightWidgetHandler,
     "GDC.DASH/CMD.ATTRIBUTE_HIERARCHY_MODIFIED": attributeHierarchyModifiedHandler,

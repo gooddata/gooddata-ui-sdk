@@ -3,6 +3,7 @@
 import {
     type FocusEvent,
     type KeyboardEvent,
+    type MouseEvent,
     type Ref,
     useCallback,
     useEffect,
@@ -43,7 +44,7 @@ export function UiAsyncTableBody<T extends { id: string } | { ref: ObjRef }>({
 
     const gridRef = useRef<HTMLElement>(null);
 
-    const { handleKeyDown, handleFocus, focusedRowIndex, focusedColumnIndex, focusedItemRef } =
+    const { handleKeyDown, handleFocus, focusRow, focusedRowIndex, focusedColumnIndex, focusedItemRef } =
         useAsyncTableBodyKeyboardNavigation(items.length, columns.length, !!bulkActions, scrollToIndex);
 
     // The grid keeps DOM focus and marks the active row virtually, so the active row's tooltip is opened
@@ -77,6 +78,17 @@ export function UiAsyncTableBody<T extends { id: string } | { ref: ObjRef }>({
             handleFocus(e);
         },
         [handleFocus],
+    );
+    // A clicked row becomes the active row, so keyboard work and a returning focus continue from it.
+    const handleGridClick = useCallback(
+        (e: MouseEvent) => {
+            const row = (e.target as HTMLElement).closest<HTMLElement>("[role='row'][aria-rowindex]");
+            const rowIndex = Number(row?.getAttribute("aria-rowindex")) - 1;
+            if (row && e.currentTarget.contains(row) && rowIndex >= 0 && rowIndex < items.length) {
+                focusRow(rowIndex);
+            }
+        },
+        [focusRow, items.length],
     );
     const handleGridBlur = useCallback((e: FocusEvent) => {
         if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
@@ -119,6 +131,7 @@ export function UiAsyncTableBody<T extends { id: string } | { ref: ObjRef }>({
                     "aria-activedescendant": activeDescendantId,
                     ref: gridRef,
                     onBlur: handleGridBlur,
+                    onClick: handleGridClick,
                 }}
             >
                 {(item: T, focusedIndex?: number) => {
@@ -231,9 +244,15 @@ const useAsyncTableBodyKeyboardNavigation = (
         [focusedRowIndex],
     );
 
+    const focusRow = useCallback((rowIndex: number) => {
+        setFocusedRowIndex(rowIndex);
+        setFocusedColumnIndex(undefined);
+    }, []);
+
     return {
         handleKeyDown,
         handleFocus,
+        focusRow,
         focusedRowIndex,
         focusedColumnIndex,
         focusedItemRef,

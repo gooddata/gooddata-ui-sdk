@@ -484,6 +484,63 @@ export const isChatContextChangeEvent = (event: ChatEvent): event is ChatContext
 };
 
 /**
+ * A clarification question presented by the chat assistant.
+ *
+ * @public
+ */
+export type ChatClarificationQuestion = {
+    /**
+     * Text of the question.
+     */
+    text: string;
+    /**
+     * Single-choice control used to answer the question.
+     */
+    control: {
+        /**
+         * Type of the clarification control.
+         */
+        type: "singleChoice";
+        /**
+         * Options available for the question.
+         */
+        options: Array<{
+            /**
+             * Text of the option.
+             */
+            text: string;
+        }>;
+    };
+};
+
+/**
+ * An event emitted when clarification questions are presented, answered, or cancelled.
+ *
+ * @remarks
+ * `responses` is `undefined` when the questions are first presented, contains the selected answers after
+ * submission, and is `null` when the user cancels the questions by sending another message.
+ *
+ * @public
+ */
+export type ChatClarificationQuestionsEvent = BaseEvent & {
+    type: "chatClarificationQuestions";
+    interactionId: string;
+    questions: ChatClarificationQuestion[];
+    responses?: Record<string, string> | null;
+};
+
+/**
+ * Type guard for the ChatClarificationQuestionsEvent.
+ *
+ * @public
+ */
+export const isChatClarificationQuestionsEvent = (
+    event: ChatEvent,
+): event is ChatClarificationQuestionsEvent => {
+    return event.type === "chatClarificationQuestions";
+};
+
+/**
  * A union type for all chat events.
  * @public
  */
@@ -511,7 +568,8 @@ export type ChatEvent =
     | ChatSaveVisualizationErrorEvent
     | ChatSaveVisualizationSuccessEvent
     | ChatConversationChangedEvent
-    | ChatDefinitionReceivedEvent;
+    | ChatDefinitionReceivedEvent
+    | ChatClarificationQuestionsEvent;
 
 /**
  * An event handler for the Chat component.

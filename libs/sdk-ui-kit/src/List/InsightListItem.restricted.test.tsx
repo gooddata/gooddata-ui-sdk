@@ -31,4 +31,14 @@ describe("InsightListItem", () => {
 
         expect(await screen.findByText("restricted")).toBeInTheDocument();
     });
+
+    it("draws the delete action as a 14px icon", () => {
+        const { container } = render(
+            <IntlWrapper>
+                <InsightListItem title="Sales" onDelete={() => {}} />
+            </IntlWrapper>,
+        );
+
+        expect(container.querySelector(".s-delete-item svg")?.getAttribute("width")).toBe("14");
+    });
 });

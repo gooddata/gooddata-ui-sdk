@@ -727,8 +727,8 @@ export async function ActionsApiAxiosParamCreator_ScanSql(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * (BETA) Reads pre-computed CBO statistics from StarRocks. Supports both internal catalog (native/PIPE tables) and external catalog (Iceberg tables). Statistics include row counts, data sizes, NDV (number of distinct values), null counts, and min/max values.
- * @summary (BETA) Collect physical table and column statistics from a StarRocks data source
+ * (BETA) Reads the statistics the database already maintains in its own catalog, without scanning any data. Supported for StarRocks (both internal catalog for native/PIPE tables and external catalog for Iceberg tables), BigQuery, PostgreSQL, Redshift, Snowflake, Vertica, SQL Server, Azure SQL, MySQL, MariaDB and SingleStore. Statistics include row counts and data sizes, and, where the database exposes them, NDV (number of distinct values), null counts and min/max values. Returns an empty result for a data source whose database exposes no such catalog. Also returns an empty result for a data source that sets disableStatistics.
+ * @summary (BETA) Collect physical table and column statistics from a data source
  * @param {string} dataSourceId 
  * @param {TableStatisticsRequest} tableStatisticsRequest 
  * @param {*} [options] Override http request option.
@@ -1014,8 +1014,8 @@ export async function ActionsApi_ScanSql(
 
 // ActionsApi Api FP
 /**
- * (BETA) Reads pre-computed CBO statistics from StarRocks. Supports both internal catalog (native/PIPE tables) and external catalog (Iceberg tables). Statistics include row counts, data sizes, NDV (number of distinct values), null counts, and min/max values.
- * @summary (BETA) Collect physical table and column statistics from a StarRocks data source
+ * (BETA) Reads the statistics the database already maintains in its own catalog, without scanning any data. Supported for StarRocks (both internal catalog for native/PIPE tables and external catalog for Iceberg tables), BigQuery, PostgreSQL, Redshift, Snowflake, Vertica, SQL Server, Azure SQL, MySQL, MariaDB and SingleStore. Statistics include row counts and data sizes, and, where the database exposes them, NDV (number of distinct values), null counts and min/max values. Returns an empty result for a data source whose database exposes no such catalog. Also returns an empty result for a data source that sets disableStatistics.
+ * @summary (BETA) Collect physical table and column statistics from a data source
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {ActionsApiScanStatisticsRequest} requestParameters Request parameters.
@@ -1137,8 +1137,8 @@ export interface ActionsApiInterface {
     scanSql(requestParameters: ActionsApiScanSqlRequest, options?: AxiosRequestConfig): AxiosPromise<ScanSqlResponse>;
 
     /**
-     * (BETA) Reads pre-computed CBO statistics from StarRocks. Supports both internal catalog (native/PIPE tables) and external catalog (Iceberg tables). Statistics include row counts, data sizes, NDV (number of distinct values), null counts, and min/max values.
-     * @summary (BETA) Collect physical table and column statistics from a StarRocks data source
+     * (BETA) Reads the statistics the database already maintains in its own catalog, without scanning any data. Supported for StarRocks (both internal catalog for native/PIPE tables and external catalog for Iceberg tables), BigQuery, PostgreSQL, Redshift, Snowflake, Vertica, SQL Server, Azure SQL, MySQL, MariaDB and SingleStore. Statistics include row counts and data sizes, and, where the database exposes them, NDV (number of distinct values), null counts and min/max values. Returns an empty result for a data source whose database exposes no such catalog. Also returns an empty result for a data source that sets disableStatistics.
+     * @summary (BETA) Collect physical table and column statistics from a data source
      * @param {ActionsApiScanStatisticsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1357,8 +1357,8 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * (BETA) Reads pre-computed CBO statistics from StarRocks. Supports both internal catalog (native/PIPE tables) and external catalog (Iceberg tables). Statistics include row counts, data sizes, NDV (number of distinct values), null counts, and min/max values.
-     * @summary (BETA) Collect physical table and column statistics from a StarRocks data source
+     * (BETA) Reads the statistics the database already maintains in its own catalog, without scanning any data. Supported for StarRocks (both internal catalog for native/PIPE tables and external catalog for Iceberg tables), BigQuery, PostgreSQL, Redshift, Snowflake, Vertica, SQL Server, Azure SQL, MySQL, MariaDB and SingleStore. Statistics include row counts and data sizes, and, where the database exposes them, NDV (number of distinct values), null counts and min/max values. Returns an empty result for a data source whose database exposes no such catalog. Also returns an empty result for a data source that sets disableStatistics.
+     * @summary (BETA) Collect physical table and column statistics from a data source
      * @param {ActionsApiScanStatisticsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1545,8 +1545,8 @@ export class ComputationApi extends BaseAPI implements ComputationApiInterface {
 
 // DataSourceStatisticsApi FP - DataSourceStatisticsApiAxiosParamCreator
 /**
- * (BETA) Reads pre-computed CBO statistics from StarRocks. Supports both internal catalog (native/PIPE tables) and external catalog (Iceberg tables). Statistics include row counts, data sizes, NDV (number of distinct values), null counts, and min/max values.
- * @summary (BETA) Collect physical table and column statistics from a StarRocks data source
+ * (BETA) Reads the statistics the database already maintains in its own catalog, without scanning any data. Supported for StarRocks (both internal catalog for native/PIPE tables and external catalog for Iceberg tables), BigQuery, PostgreSQL, Redshift, Snowflake, Vertica, SQL Server, Azure SQL, MySQL, MariaDB and SingleStore. Statistics include row counts and data sizes, and, where the database exposes them, NDV (number of distinct values), null counts and min/max values. Returns an empty result for a data source whose database exposes no such catalog. Also returns an empty result for a data source that sets disableStatistics.
+ * @summary (BETA) Collect physical table and column statistics from a data source
  * @param {string} dataSourceId 
  * @param {TableStatisticsRequest} tableStatisticsRequest 
  * @param {*} [options] Override http request option.
@@ -1608,8 +1608,8 @@ export async function DataSourceStatisticsApiAxiosParamCreator_ScanStatistics(
 
 // DataSourceStatisticsApi Api FP
 /**
- * (BETA) Reads pre-computed CBO statistics from StarRocks. Supports both internal catalog (native/PIPE tables) and external catalog (Iceberg tables). Statistics include row counts, data sizes, NDV (number of distinct values), null counts, and min/max values.
- * @summary (BETA) Collect physical table and column statistics from a StarRocks data source
+ * (BETA) Reads the statistics the database already maintains in its own catalog, without scanning any data. Supported for StarRocks (both internal catalog for native/PIPE tables and external catalog for Iceberg tables), BigQuery, PostgreSQL, Redshift, Snowflake, Vertica, SQL Server, Azure SQL, MySQL, MariaDB and SingleStore. Statistics include row counts and data sizes, and, where the database exposes them, NDV (number of distinct values), null counts and min/max values. Returns an empty result for a data source whose database exposes no such catalog. Also returns an empty result for a data source that sets disableStatistics.
+ * @summary (BETA) Collect physical table and column statistics from a data source
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {DataSourceStatisticsApiScanStatisticsRequest} requestParameters Request parameters.
@@ -1639,8 +1639,8 @@ export async function DataSourceStatisticsApi_ScanStatistics(
  */
 export interface DataSourceStatisticsApiInterface {
     /**
-     * (BETA) Reads pre-computed CBO statistics from StarRocks. Supports both internal catalog (native/PIPE tables) and external catalog (Iceberg tables). Statistics include row counts, data sizes, NDV (number of distinct values), null counts, and min/max values.
-     * @summary (BETA) Collect physical table and column statistics from a StarRocks data source
+     * (BETA) Reads the statistics the database already maintains in its own catalog, without scanning any data. Supported for StarRocks (both internal catalog for native/PIPE tables and external catalog for Iceberg tables), BigQuery, PostgreSQL, Redshift, Snowflake, Vertica, SQL Server, Azure SQL, MySQL, MariaDB and SingleStore. Statistics include row counts and data sizes, and, where the database exposes them, NDV (number of distinct values), null counts and min/max values. Returns an empty result for a data source whose database exposes no such catalog. Also returns an empty result for a data source that sets disableStatistics.
+     * @summary (BETA) Collect physical table and column statistics from a data source
      * @param {DataSourceStatisticsApiScanStatisticsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1679,8 +1679,8 @@ export interface DataSourceStatisticsApiScanStatisticsRequest {
  */
 export class DataSourceStatisticsApi extends BaseAPI implements DataSourceStatisticsApiInterface {
     /**
-     * (BETA) Reads pre-computed CBO statistics from StarRocks. Supports both internal catalog (native/PIPE tables) and external catalog (Iceberg tables). Statistics include row counts, data sizes, NDV (number of distinct values), null counts, and min/max values.
-     * @summary (BETA) Collect physical table and column statistics from a StarRocks data source
+     * (BETA) Reads the statistics the database already maintains in its own catalog, without scanning any data. Supported for StarRocks (both internal catalog for native/PIPE tables and external catalog for Iceberg tables), BigQuery, PostgreSQL, Redshift, Snowflake, Vertica, SQL Server, Azure SQL, MySQL, MariaDB and SingleStore. Statistics include row counts and data sizes, and, where the database exposes them, NDV (number of distinct values), null counts and min/max values. Returns an empty result for a data source whose database exposes no such catalog. Also returns an empty result for a data source that sets disableStatistics.
+     * @summary (BETA) Collect physical table and column statistics from a data source
      * @param {DataSourceStatisticsApiScanStatisticsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

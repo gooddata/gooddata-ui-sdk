@@ -54,6 +54,7 @@
     "filterGroup.aria.label.withState": "篩選器群組：{title}：{state}",
     "gs.list.searchResults": "搜索結果",
     "gs.visualizationsList.loading": "載入中...",
+    "gs.visualizationsList.delete": "刪除可視化",
     "gs.color-picker.inputPlaceholder": "#顏色",
     "gs.color-picker.currentColor": "當前",
     "gs.color-picker.newColor": "新增功能",

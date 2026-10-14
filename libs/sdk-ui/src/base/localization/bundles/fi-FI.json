@@ -54,6 +54,7 @@
     "filterGroup.aria.label.withState": "Suodatinryhmä: {title}: {state}",
     "gs.list.searchResults": "hakutulokset",
     "gs.visualizationsList.loading": "Ladataan…",
+    "gs.visualizationsList.delete": "Poista visualisointi",
     "gs.color-picker.inputPlaceholder": "#väri",
     "gs.color-picker.currentColor": "nykyinen",
     "gs.color-picker.newColor": "uusi",

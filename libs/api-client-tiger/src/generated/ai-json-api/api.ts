@@ -1649,6 +1649,10 @@ export interface AiDashboardPatchReferences {
      */
     'datedatasets'?: Array<object>;
     /**
+     * AAC body of every metric the chart uses, reduced to id, title, description and tags; no `maql`.
+     */
+    'metrics'?: Array<object>;
+    /**
      * Full AAC body of every widget-referenced visualization the workspace does NOT hold yet, which saving must create — under the id each body carries, which the widgets point at. Everything in `visualizations` already exists and must not be recreated.
      */
     'new_visualizations'?: Array<object>;
@@ -1667,7 +1671,7 @@ export interface AiDashboardRef {
 }
 
 /**
- * AAC bodies of every widget-referenced visualization in a dashboard draft, and its datasets.  Each entry is opaque AAC pass-through (dict), not modeled as a schema — same treatment the codebase gives elsewhere to full AAC visualization bodies.
+ * AAC bodies of every widget-referenced visualization in a dashboard draft, and its datasets and metrics.  Each entry is opaque AAC pass-through (dict), not modeled as a schema — same treatment the codebase gives elsewhere to full AAC visualization bodies.
  */
 export interface AiDashboardReferences {
     [key: string]: any;
@@ -1680,6 +1684,10 @@ export interface AiDashboardReferences {
      * Full AAC body of every date dataset the chart uses.
      */
     'datedatasets'?: Array<object>;
+    /**
+     * AAC body of every metric the chart uses, reduced to id, title, description and tags; no `maql`.
+     */
+    'metrics'?: Array<object>;
     /**
      * Full AAC body of every widget-referenced visualization the workspace does NOT hold yet, which saving must create — under the id each body carries, which the widgets point at. Everything in `visualizations` already exists and must not be recreated.
      */
@@ -3251,6 +3259,16 @@ export interface AiProjectionRebuildResponse {
      * Knowledge documents the rebuild skipped. A document is skipped when it has no stored file or its file is in storage the rebuild cannot read. All documents are skipped when this deployment cannot rebuild them.
      */
     'skippedKnowledgeDocuments': number;
+}
+
+/**
+ * PATCH /conversations/{conversationId}/documents/{documentRef} body.
+ */
+export interface AiPublisherDocumentIdUpdateRequest {
+    /**
+     * Id of the document the client saved the draft as.
+     */
+    'id': string;
 }
 
 export interface AiQuery {
@@ -5265,6 +5283,15 @@ export interface AiUserContextObjectReferenceGroup {
 }
 
 /**
+ * The document open in the document editor, so refinements can target it without an id.
+ */
+export interface AiUserContextPublisherDocument {
+    'definition'?: object | null;
+    'id'?: string | null;
+    'title'?: string | null;
+}
+
+/**
  * The report open in the report editor, so refinements can target it without an id.
  */
 export interface AiUserContextReport {
@@ -5294,6 +5321,7 @@ export interface AiUserContextSwitcherVisualization {
 
 export interface AiUserContextView {
     'dashboard'?: AiUserContextDashboard | null;
+    'document'?: AiUserContextPublisherDocument | null;
     'report'?: AiUserContextReport | null;
 }
 
@@ -6231,7 +6259,7 @@ export interface AiVisualizationPlacementRequest {
 export type AiVisualizationPlacementRequestFiltersInner = AiAbsoluteDateFilter | AiAllTimeDateFilter | AiComparisonMeasureValueFilter | AiCompoundMeasureValueFilter | AiInlineFilterDefinition | AiMatchAttributeFilterInput | AiNegativeAttributeFilter | AiPositiveAttributeFilter | AiRangeMeasureValueFilter | AiRankingFilter | AiRelativeDateFilter;
 
 /**
- * AAC bodies of the datasets a chart stands on.  The client needs them to resolve what the chart body only names: a geo chart\'s latitude/longitude labels, and the granularities a date filter\'s values are read against. Opaque AAC pass-through (dict), like every other AAC body here.
+ * AAC bodies of the datasets and metrics a chart stands on.  The client needs them to resolve what the chart body only names: a geo chart\'s latitude/longitude labels, the granularities a date filter\'s values are read against, and the titles of the metrics it plots. Opaque AAC pass-through (dict), like every other AAC body here.
  */
 export interface AiVisualizationReferences {
     [key: string]: any;
@@ -6244,6 +6272,10 @@ export interface AiVisualizationReferences {
      * Full AAC body of every date dataset the chart uses.
      */
     'datedatasets'?: Array<object>;
+    /**
+     * AAC body of every metric the chart uses, reduced to id, title, description and tags; no `maql`.
+     */
+    'metrics'?: Array<object>;
 }
 
 export interface AiVisualizationRelativeDateFilter {
@@ -7268,7 +7300,77 @@ export async function ConversationsAiAxiosParamCreator_PatchDashboardApiV1AiWork
 
 // ConversationsAi FP - ConversationsAiAxiosParamCreator
 /**
- * Records the report entity the user saved the conversation\'s report draft as.
+ * Records the document the user saved the conversation\'s document draft as.
+ * @summary Link a saved document
+ * @param {string} workspaceId 
+ * @param {string} conversationId 
+ * @param {string} documentRef 
+ * @param {AiPublisherDocumentIdUpdateRequest} aiPublisherDocumentIdUpdateRequest 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ConversationsAiAxiosParamCreator_PatchDocumentApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDocumentsDocumentRefPatch(
+    workspaceId: string, conversationId: string, documentRef: string, aiPublisherDocumentIdUpdateRequest: AiPublisherDocumentIdUpdateRequest, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('patchDocumentApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDocumentsDocumentRefPatch', 'workspaceId', workspaceId)
+    // verify required parameter 'conversationId' is not null or undefined
+    assertParamExists('patchDocumentApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDocumentsDocumentRefPatch', 'conversationId', conversationId)
+    // verify required parameter 'documentRef' is not null or undefined
+    assertParamExists('patchDocumentApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDocumentsDocumentRefPatch', 'documentRef', documentRef)
+    // verify required parameter 'aiPublisherDocumentIdUpdateRequest' is not null or undefined
+    assertParamExists('patchDocumentApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDocumentsDocumentRefPatch', 'aiPublisherDocumentIdUpdateRequest', aiPublisherDocumentIdUpdateRequest)
+    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/documents/{document_ref}`
+        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"conversation_id"}}`, encodeURIComponent(String(conversationId)))
+        .replace(`{${"document_ref"}}`, encodeURIComponent(String(documentRef)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof aiPublisherDocumentIdUpdateRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(aiPublisherDocumentIdUpdateRequest !== undefined ? aiPublisherDocumentIdUpdateRequest : {})
+        : aiPublisherDocumentIdUpdateRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ConversationsAi FP - ConversationsAiAxiosParamCreator
+/**
+ * Deprecated: call `PATCH .../conversations/{conversation_id}/documents/{document_ref}` instead. Records the report entity the user saved the conversation\'s report draft as.
  * @summary Link a saved report
  * @param {string} workspaceId 
  * @param {string} conversationId 
@@ -7999,7 +8101,33 @@ export async function ConversationsAi_PatchDashboardApiV1AiWorkspacesWorkspaceId
 
 // ConversationsAi Api FP
 /**
- * Records the report entity the user saved the conversation\'s report draft as.
+ * Records the document the user saved the conversation\'s document draft as.
+ * @summary Link a saved document
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ConversationsAiPatchDocumentApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDocumentsDocumentRefPatchRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ConversationsAi_PatchDocumentApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDocumentsDocumentRefPatch(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ConversationsAiPatchDocumentApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDocumentsDocumentRefPatchRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await ConversationsAiAxiosParamCreator_PatchDocumentApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDocumentsDocumentRefPatch(
+        requestParameters.workspaceId, requestParameters.conversationId, requestParameters.documentRef, requestParameters.aiPublisherDocumentIdUpdateRequest, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ConversationsAi Api FP
+/**
+ * Deprecated: call `PATCH .../conversations/{conversation_id}/documents/{document_ref}` instead. Records the report entity the user saved the conversation\'s report draft as.
  * @summary Link a saved report
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -8292,10 +8420,21 @@ export interface ConversationsAiInterface {
     patchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(requestParameters: ConversationsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
-     * Records the report entity the user saved the conversation\'s report draft as.
+     * Records the document the user saved the conversation\'s document draft as.
+     * @summary Link a saved document
+     * @param {ConversationsAiPatchDocumentApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDocumentsDocumentRefPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConversationsAiInterface
+     */
+    patchDocumentApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDocumentsDocumentRefPatch(requestParameters: ConversationsAiPatchDocumentApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDocumentsDocumentRefPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * Deprecated: call `PATCH .../conversations/{conversation_id}/documents/{document_ref}` instead. Records the report entity the user saved the conversation\'s report draft as.
      * @summary Link a saved report
      * @param {ConversationsAiPatchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof ConversationsAiInterface
      */
@@ -8581,6 +8720,41 @@ export interface ConversationsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatCo
      * @memberof ConversationsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch
      */
     readonly aiDashboardIdUpdateRequest: AiDashboardIdUpdateRequest
+}
+
+/**
+ * Request parameters for patchDocumentApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDocumentsDocumentRefPatch operation in ConversationsAi.
+ * @export
+ * @interface ConversationsAiPatchDocumentApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDocumentsDocumentRefPatchRequest
+ */
+export interface ConversationsAiPatchDocumentApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDocumentsDocumentRefPatchRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ConversationsAiPatchDocumentApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDocumentsDocumentRefPatch
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ConversationsAiPatchDocumentApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDocumentsDocumentRefPatch
+     */
+    readonly conversationId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ConversationsAiPatchDocumentApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDocumentsDocumentRefPatch
+     */
+    readonly documentRef: string
+
+    /**
+     * 
+     * @type {AiPublisherDocumentIdUpdateRequest}
+     * @memberof ConversationsAiPatchDocumentApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDocumentsDocumentRefPatch
+     */
+    readonly aiPublisherDocumentIdUpdateRequest: AiPublisherDocumentIdUpdateRequest
 }
 
 /**
@@ -8925,10 +9099,23 @@ export class ConversationsAi extends BaseAPI implements ConversationsAiInterface
     }
 
     /**
-     * Records the report entity the user saved the conversation\'s report draft as.
+     * Records the document the user saved the conversation\'s document draft as.
+     * @summary Link a saved document
+     * @param {ConversationsAiPatchDocumentApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDocumentsDocumentRefPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConversationsAi
+     */
+    public patchDocumentApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDocumentsDocumentRefPatch(requestParameters: ConversationsAiPatchDocumentApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDocumentsDocumentRefPatchRequest, options?: AxiosRequestConfig) {
+        return ConversationsAi_PatchDocumentApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDocumentsDocumentRefPatch(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Deprecated: call `PATCH .../conversations/{conversation_id}/documents/{document_ref}` instead. Records the report entity the user saved the conversation\'s report draft as.
      * @summary Link a saved report
      * @param {ConversationsAiPatchReportApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdReportsReportRefPatchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof ConversationsAi
      */

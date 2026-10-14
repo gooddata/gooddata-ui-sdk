@@ -322,7 +322,7 @@ export const UiInlineTextGenerator = forwardRef<HTMLDivElement, IUiInlineTextGen
                                         <UiIconButton
                                             ref={undoButtonRef}
                                             icon="undo"
-                                            size="xsmall"
+                                            size="xxsmall"
                                             variant="tertiary"
                                             dataTestId={undoButtonDataTestId}
                                             label={undoButtonLabel}
@@ -341,7 +341,7 @@ export const UiInlineTextGenerator = forwardRef<HTMLDivElement, IUiInlineTextGen
                                         <UiIconButton
                                             ref={generateButtonRef}
                                             icon="ai"
-                                            size="xsmall"
+                                            size="xxsmall"
                                             variant="tertiary"
                                             dataTestId={generateButtonDataTestId}
                                             label={generateButtonLabel}

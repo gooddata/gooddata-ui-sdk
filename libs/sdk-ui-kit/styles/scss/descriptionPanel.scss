@@ -25,23 +25,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
-    width: 15px;
-    height: 15px;
-    background-color: transparent;
+    width: 14px;
+    height: 14px;
     cursor: help;
-    font-size: 14px;
-    line-height: 14px;
-
-    .gd-icon-circle-question {
-        margin-top: 1px;
-        color: variables.$gd-medium-gray;
-    }
+    color: variables.$gd-color-state-blank;
 
     &:hover {
-        .gd-icon-circle-question {
-            color: variables.$gd-color-text;
-        }
+        color: variables.$gd-color-text;
     }
 }
 

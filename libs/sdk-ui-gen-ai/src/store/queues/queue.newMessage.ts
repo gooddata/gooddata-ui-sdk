@@ -2,7 +2,9 @@
 
 import { type Middleware, type PayloadAction } from "@reduxjs/toolkit";
 
-import { loadThreadAction, newMessageAction } from "../messages/messagesSlice.js";
+import { isClarificationQuestionsItem } from "../../utils.js";
+import { conversationMessagesSelector } from "../messages/messagesSelectors.js";
+import { filledFormAction, loadThreadAction, newMessageAction } from "../messages/messagesSlice.js";
 import { type RootState } from "../types.js";
 import { checkConversationData } from "../utils.js";
 
@@ -40,6 +42,22 @@ export const queueMiddleware: Middleware = (storeAPI) => {
 
         // Load async process from right place
         const asyncProcess = loadAsyncProcess(state);
+
+        // Send clarification questions if new message is added
+        if (action?.type === newMessageAction.type) {
+            const messages = conversationMessagesSelector(state);
+            const pendingClarifications = messages.filter(
+                (message) => isClarificationQuestionsItem(message) && !message.filled,
+            );
+            pendingClarifications.forEach((message) => {
+                storeAPI.dispatch(
+                    filledFormAction({
+                        assistantMessageId: message.localId,
+                        responses: null,
+                    }),
+                );
+            });
+        }
 
         // Ignore loadThreadAction if the thread is being cleared
         if (action?.type === loadThreadAction.type && asyncProcess === "clearing") {

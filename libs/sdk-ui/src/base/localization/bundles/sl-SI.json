@@ -54,6 +54,7 @@
     "filterGroup.aria.label.withState": "Skupina filtrov: {title}: {state}",
     "gs.list.searchResults": "rezultati iskanja",
     "gs.visualizationsList.loading": "Nalaganje…",
+    "gs.visualizationsList.delete": "Izbris vizualizacije",
     "gs.color-picker.inputPlaceholder": "#barva",
     "gs.color-picker.currentColor": "trenutna",
     "gs.color-picker.newColor": "nova",

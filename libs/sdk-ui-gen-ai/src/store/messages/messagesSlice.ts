@@ -850,6 +850,7 @@ const messagesSlice = createSlice({
                 payload,
             }: PayloadAction<{
                 assistantMessageId: string;
+                responses: Record<string, string> | null;
             }>,
         ) => {
             const conversationId = getConversationLocalId(state.currentConversation);

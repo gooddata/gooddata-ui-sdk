@@ -4,3 +4,58 @@
     padding: 0 20px;
     margin: 10px 0;
 }
+
+.gd-delete-insight-dialog {
+    width: 440px;
+    max-width: 100%;
+
+    &__checking {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    &__usage,
+    &__not-used {
+        display: block;
+        width: 100%;
+        margin-top: 20px;
+        padding-right: 10px;
+    }
+
+    &__usage-header {
+        display: flex;
+        gap: 10px;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__usage-toggle {
+        padding: 0;
+        border: 0;
+        background: none;
+        color: inherit;
+        font: inherit;
+        text-decoration: underline;
+        white-space: nowrap;
+        cursor: pointer;
+    }
+
+    &__usage-details {
+        margin-top: 6px;
+        padding-top: 6px;
+        border-top: 1px solid var(--gd-palette-warning-dimmed);
+    }
+
+    &__usage-list {
+        max-height: 120px;
+        margin: 0;
+        padding-inline-start: 25px;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
+
+    &__usage-inaccessible {
+        margin: 4px 0 0;
+    }
+}
