@@ -9,6 +9,7 @@ import { makeUserItem } from "../model.js";
 import { setAmbientUserContextAction, setUserContextAction } from "../store/chatWindow/chatWindowSlice.js";
 import {
     type ChatAssistantMessageEvent,
+    type ChatClarificationQuestionsEvent,
     type ChatClosedEvent,
     type ChatCopyToClipboardEvent,
     type ChatDefinitionReceivedEvent,
@@ -22,6 +23,7 @@ import {
     type ChatSaveVisualizationSuccessEvent,
     type ChatUserMessageEvent,
     isChatAssistantMessageEvent,
+    isChatClarificationQuestionsEvent,
     isChatClosedEvent,
     isChatCopyToClipboardEvent,
     isChatDefinitionReceivedEvent,
@@ -70,7 +72,39 @@ export type GenAIChatConnectedEvent =
     | { name: "save-visualization-success"; payload: ChatSaveVisualizationSuccessEvent }
     | { name: "save-visualization-error"; payload: ChatSaveVisualizationErrorEvent }
     | { name: "copy-to-clipboard"; payload: ChatCopyToClipboardEvent }
-    | { name: "definition-received"; payload: ChatDefinitionReceivedEvent };
+    | { name: "definition-received"; payload: ChatDefinitionReceivedEvent }
+    | { name: "clarification-questions"; payload: ChatClarificationQuestionsEvent };
+
+export function toGenAIChatConnectedEvent(event: ChatEvent): GenAIChatConnectedEvent | undefined {
+    if (isChatOpenedEvent(event)) {
+        return { name: "opened", payload: event };
+    } else if (isChatClosedEvent(event)) {
+        return { name: "closed", payload: event };
+    } else if (isChatResetEvent(event)) {
+        return { name: "reset", payload: event };
+    } else if (isChatUserMessageEvent(event)) {
+        return { name: "user-message", payload: event };
+    } else if (isChatAssistantMessageEvent(event)) {
+        return { name: "assistant-message", payload: event };
+    } else if (isChatFeedbackEvent(event)) {
+        return { name: "feedback", payload: event };
+    } else if (isChatFeedbackErrorEvent(event)) {
+        return { name: "feedback-error", payload: event };
+    } else if (isChatSaveVisualizationSuccessEvent(event)) {
+        return { name: "save-visualization-success", payload: event };
+    } else if (isChatSaveVisualizationErrorEvent(event)) {
+        return { name: "save-visualization-error", payload: event };
+    } else if (isChatCopyToClipboardEvent(event)) {
+        return { name: "copy-to-clipboard", payload: event };
+    } else if (isChatDefinitionReceivedEvent(event)) {
+        return { name: "definition-received", payload: event };
+    } else if (isChatClarificationQuestionsEvent(event)) {
+        return { name: "clarification-questions", payload: event };
+    } else if (isChatModeChangeEvent(event)) {
+        return { name: "mode-changed", payload: event };
+    }
+    return undefined;
+}
 
 type Dispatch = Parameters<Required<GenAIChatDialogProps>["onDispatcher"]>[0];
 
@@ -248,33 +282,9 @@ export function GenAIChatDialogConnected({
                 eval: (_e: ChatEvent): _e is ChatEvent => true,
                 handler: (event: ChatEvent) => {
                     onAnyEvent?.(event);
-                    if (!onEvent) {
-                        return;
-                    }
-                    if (isChatOpenedEvent(event)) {
-                        onEvent({ name: "opened", payload: event });
-                    } else if (isChatClosedEvent(event)) {
-                        onEvent({ name: "closed", payload: event });
-                    } else if (isChatResetEvent(event)) {
-                        onEvent({ name: "reset", payload: event });
-                    } else if (isChatUserMessageEvent(event)) {
-                        onEvent({ name: "user-message", payload: event });
-                    } else if (isChatAssistantMessageEvent(event)) {
-                        onEvent({ name: "assistant-message", payload: event });
-                    } else if (isChatFeedbackEvent(event)) {
-                        onEvent({ name: "feedback", payload: event });
-                    } else if (isChatFeedbackErrorEvent(event)) {
-                        onEvent({ name: "feedback-error", payload: event });
-                    } else if (isChatSaveVisualizationSuccessEvent(event)) {
-                        onEvent({ name: "save-visualization-success", payload: event });
-                    } else if (isChatSaveVisualizationErrorEvent(event)) {
-                        onEvent({ name: "save-visualization-error", payload: event });
-                    } else if (isChatCopyToClipboardEvent(event)) {
-                        onEvent({ name: "copy-to-clipboard", payload: event });
-                    } else if (isChatDefinitionReceivedEvent(event)) {
-                        onEvent({ name: "definition-received", payload: event });
-                    } else if (isChatModeChangeEvent(event)) {
-                        onEvent({ name: "mode-changed", payload: event });
+                    const connectedEvent = toGenAIChatConnectedEvent(event);
+                    if (connectedEvent) {
+                        onEvent?.(connectedEvent);
                     }
                 },
             },

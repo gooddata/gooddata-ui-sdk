@@ -18,6 +18,12 @@ const setIsAiGenerating: ConfigReducer<PayloadAction<boolean>> = (state, action)
     }
 };
 
+const setIsAiWaiting: ConfigReducer<PayloadAction<boolean>> = (state, action) => {
+    if (state.config) {
+        state.config.isAiWaiting = action.payload;
+    }
+};
+
 const setIsAiMode: ConfigReducer<PayloadAction<boolean>> = (state, action) => {
     if (state.config) {
         state.config.isAiMode = action.payload;
@@ -27,5 +33,6 @@ const setIsAiMode: ConfigReducer<PayloadAction<boolean>> = (state, action) => {
 export const configReducers = {
     setConfig,
     setIsAiGenerating,
+    setIsAiWaiting,
     setIsAiMode,
 };

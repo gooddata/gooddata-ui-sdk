@@ -7,7 +7,7 @@ import { type FilterContextItem } from "../../dashboard/filterContext.js";
 import { type ObjRef, isObjRef } from "../../objRef/index.js";
 
 import {
-    type PublisherPageLayoutNodeV1,
+    type PublisherLayoutNodeV1,
     isPublisherLayoutSectionV1,
     isPublisherLayoutSlotRefV1,
 } from "./layout.js";
@@ -19,7 +19,7 @@ import { type IPublisherBoxStyleV1, isPublisherImageBackgroundV1 } from "./styli
  * Body of a document page: geometry (flex split tree) plus the slots it places.
  *
  * @remarks
- * This is both the content of the standalone {@link IPublisherPageLayoutV1} object and the shape
+ * This is both the content of the standalone {@link IPublisherPageTemplateV1} object and the shape
  * embedded in template/document content ({@link IPublisherDocumentPageV1}).
  *
  * There is no header/footer chrome: page title, description, footer, page numbers and
@@ -47,9 +47,9 @@ export interface IPublisherPageBodyV1 {
     style?: IPublisherBoxStyleV1;
 
     /**
-     * Root of the page layout tree.
+     * Root of the layout tree.
      */
-    layout: PublisherPageLayoutNodeV1;
+    layout: PublisherLayoutNodeV1;
 
     /**
      * All slots referenced by the layout, flat, keyed by localIdentifier.
@@ -68,7 +68,7 @@ export interface IPublisherPageBodyV1 {
  *
  * @alpha
  */
-export interface IPublisherPageLayoutContentV1 extends IPublisherPageBodyV1 {
+export interface IPublisherPageTemplateContentV1 extends IPublisherPageBodyV1 {
     /**
      * Content model version, for stored-content evolution.
      */
@@ -76,11 +76,11 @@ export interface IPublisherPageLayoutContentV1 extends IPublisherPageBodyV1 {
 }
 
 /**
- * Payload for creating or updating a page layout.
+ * Payload for creating or updating a page template.
  *
  * @alpha
  */
-export interface IPublisherPageLayoutDefinitionV1 {
+export interface IPublisherPageTemplateDefinitionV1 {
     type: "reportPageLayout";
 
     /**
@@ -94,16 +94,16 @@ export interface IPublisherPageLayoutDefinitionV1 {
 
     tags?: string[];
 
-    content: IPublisherPageLayoutContentV1;
+    content: IPublisherPageTemplateContentV1;
 }
 
 /**
- * Reusable page layout metadata object.
+ * Reusable page template metadata object.
  *
  * @alpha
  */
-export interface IPublisherPageLayoutV1
-    extends IPublisherPageLayoutDefinitionV1, IAuditableDates, IAuditableUsers {
+export interface IPublisherPageTemplateV1
+    extends IPublisherPageTemplateDefinitionV1, IAuditableDates, IAuditableUsers {
     ref: ObjRef;
 
     /**
@@ -114,40 +114,40 @@ export interface IPublisherPageLayoutV1
 
     /**
      * Predefined page shipped with the product, populated by the SPI. Never sent to or
-     * stored on the backend; UI must disable deletion and editing of built-in pages.
+     * stored on the backend; UI must disable deletion and editing of default page templates.
      */
-    isBuiltIn?: boolean;
+    isDefault?: boolean;
 }
 
 /**
- * Type-guard testing whether the provided object is an instance of {@link IPublisherPageLayoutDefinitionV1}.
+ * Type-guard testing whether the provided object is an instance of {@link IPublisherPageTemplateDefinitionV1}.
  *
  * @alpha
  */
-export function isPublisherPageLayoutDefinitionV1(obj: unknown): obj is IPublisherPageLayoutDefinitionV1 {
-    return !isEmpty(obj) && (obj as IPublisherPageLayoutDefinitionV1).type === "reportPageLayout";
+export function isPublisherPageTemplateDefinitionV1(obj: unknown): obj is IPublisherPageTemplateDefinitionV1 {
+    return !isEmpty(obj) && (obj as IPublisherPageTemplateDefinitionV1).type === "reportPageLayout";
 }
 
 /**
- * Type-guard testing whether the provided object is an instance of {@link IPublisherPageLayoutV1}.
+ * Type-guard testing whether the provided object is an instance of {@link IPublisherPageTemplateV1}.
  *
  * @alpha
  */
-export function isPublisherPageLayoutV1(obj: unknown): obj is IPublisherPageLayoutV1 {
-    return isPublisherPageLayoutDefinitionV1(obj) && isObjRef((obj as IPublisherPageLayoutV1).ref);
+export function isPublisherPageTemplateV1(obj: unknown): obj is IPublisherPageTemplateV1 {
+    return isPublisherPageTemplateDefinitionV1(obj) && isObjRef((obj as IPublisherPageTemplateV1).ref);
 }
 
 /**
- * Type-guard testing whether the provided object is an instance of {@link IPublisherPageLayoutContentV1}.
+ * Type-guard testing whether the provided object is an instance of {@link IPublisherPageTemplateContentV1}.
  *
  * @alpha
  */
-export function isPublisherPageLayoutContentV1(obj: unknown): obj is IPublisherPageLayoutContentV1 {
+export function isPublisherPageTemplateContentV1(obj: unknown): obj is IPublisherPageTemplateContentV1 {
     return (
         !isEmpty(obj) &&
-        (obj as IPublisherPageLayoutContentV1).version === "1" &&
-        !isEmpty((obj as IPublisherPageLayoutContentV1).layout) &&
-        Array.isArray((obj as IPublisherPageLayoutContentV1).slots)
+        (obj as IPublisherPageTemplateContentV1).version === "1" &&
+        !isEmpty((obj as IPublisherPageTemplateContentV1).layout) &&
+        Array.isArray((obj as IPublisherPageTemplateContentV1).slots)
     );
 }
 
@@ -231,7 +231,7 @@ export function validatePublisherPageBodyV1(
     checkBoxStyle(body.style, true);
 
     const referencedIds = new Set<string>();
-    const visit = (node: PublisherPageLayoutNodeV1): void => {
+    const visit = (node: PublisherLayoutNodeV1): void => {
         if (node.weight !== undefined && !(node.weight > 0)) {
             issues.push({
                 severity: "error",

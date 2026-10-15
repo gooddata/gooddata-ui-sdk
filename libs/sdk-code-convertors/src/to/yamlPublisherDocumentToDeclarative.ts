@@ -3,27 +3,27 @@
 import { type DeclarativeReport, type DeclarativeReportPageLayout } from "@gooddata/api-client-tiger";
 import type { Report, ReportPageLayout, ReportTemplate, ReportVariable } from "@gooddata/sdk-code-schemas/v1";
 import {
-    type IPublisherDocumentContent,
-    type IPublisherDocumentDefinition,
-    type IPublisherDocumentTemplateDefinition,
-    type IPublisherPageLayoutDefinition,
-    type IPublisherVariableDefinition,
-    type PublisherDateString,
+    type IPublisherDocumentContentV1,
+    type IPublisherDocumentDefinitionV1,
+    type IPublisherDocumentTemplateDefinitionV1,
+    type IPublisherPageTemplateDefinitionV1,
+    type IPublisherVariableDefinitionV1,
+    type PublisherDateStringV1,
     idRef,
 } from "@gooddata/sdk-model";
 
 import { type IErrorContext } from "../utils/errors.js";
+import { filtersToDeclarative } from "../utils/publisherFilters.js";
 import { convertIdToTitle } from "../utils/sharedUtils.js";
 
 import {
-    filtersToDeclarative,
     yamlPublisherDocumentPageToDeclarative,
     yamlPublisherPageBodyToDeclarative,
 } from "./yamlPublisherDocumentPageToDeclarative.js";
 
 function variablesToDeclarative(
     variables: ReportVariable[] | undefined,
-): IPublisherVariableDefinition[] | undefined {
+): IPublisherVariableDefinitionV1[] | undefined {
     return variables?.map((variable) => ({
         name: variable.name,
         ...(variable.title === undefined ? {} : { title: variable.title }),
@@ -38,7 +38,7 @@ type PublisherContentDocument = Pick<Report, "pages" | "filters" | "variables" |
 function contentToDeclarative(
     document: PublisherContentDocument,
     errorContext?: IErrorContext,
-): IPublisherDocumentContent {
+): IPublisherDocumentContentV1 {
     // The stored content states its own version; a document states the schema's instead, so the
     // convertor is what knows which shape it just wrote.
     const declared = filtersToDeclarative(document.filters);
@@ -87,15 +87,15 @@ export function yamlPublisherDocumentToDeclarative(
 export function yamlPublisherDocumentToDefinition(
     input: Report,
     errorContext?: IErrorContext,
-): IPublisherDocumentDefinition {
+): IPublisherDocumentDefinitionV1 {
     return {
         type: "report",
         ...(input.id === undefined ? {} : { ref: idRef(input.id) }),
         title: input.title ?? convertIdToTitle(input.id ?? ""),
         ...(input.description === undefined ? {} : { description: input.description }),
         ...(input.tags === undefined ? {} : { tags: input.tags }),
-        periodStart: input.period.start as PublisherDateString,
-        periodEnd: input.period.end as PublisherDateString,
+        periodStart: input.period.start as PublisherDateStringV1,
+        periodEnd: input.period.end as PublisherDateStringV1,
         ...(input.variable_values === undefined ? {} : { variableValues: input.variable_values }),
         content: contentToDeclarative(input, errorContext),
     };
@@ -105,7 +105,7 @@ export function yamlPublisherDocumentToDefinition(
 export function yamlPublisherDocumentTemplateToDefinition(
     input: ReportTemplate,
     errorContext?: IErrorContext,
-): IPublisherDocumentTemplateDefinition {
+): IPublisherDocumentTemplateDefinitionV1 {
     return {
         type: "reportTemplate",
         ...(input.id === undefined ? {} : { ref: idRef(input.id) }),
@@ -120,7 +120,7 @@ export function yamlPublisherDocumentTemplateToDefinition(
 export function yamlPublisherPageLayoutToDefinition(
     input: ReportPageLayout,
     errorContext?: IErrorContext,
-): IPublisherPageLayoutDefinition {
+): IPublisherPageTemplateDefinitionV1 {
     return {
         type: "reportPageLayout",
         ...(input.id === undefined ? {} : { ref: idRef(input.id) }),

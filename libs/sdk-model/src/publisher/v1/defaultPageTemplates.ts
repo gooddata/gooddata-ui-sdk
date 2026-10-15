@@ -2,9 +2,9 @@
 
 import { idRef } from "../../objRef/factory.js";
 
-import { type PublisherPageLayoutNodeV1 } from "./layout.js";
+import { type PublisherLayoutNodeV1 } from "./layout.js";
 import { type PublisherPageFormatV1 } from "./pageFormat.js";
-import { type IPublisherPageBodyV1, type IPublisherPageLayoutV1 } from "./pageLayout.js";
+import { type IPublisherPageBodyV1, type IPublisherPageTemplateV1 } from "./pageTemplate.js";
 import {
     type IPublisherHeadingSlotV1,
     type IPublisherImageSlotV1,
@@ -65,20 +65,20 @@ const logoSlot = (localIdentifier: string): IPublisherImageSlotV1 => ({
     style: { horizontalAlign: "start", verticalAlign: "end" },
 });
 
-const slot = (slotId: string, weight?: number): PublisherPageLayoutNodeV1 => ({
+const slot = (slotId: string, weight?: number): PublisherLayoutNodeV1 => ({
     type: "slotRef",
     slotId,
     ...(weight === undefined ? {} : { weight }),
 });
 
-const row = (children: PublisherPageLayoutNodeV1[], weight?: number): PublisherPageLayoutNodeV1 => ({
+const row = (children: PublisherLayoutNodeV1[], weight?: number): PublisherLayoutNodeV1 => ({
     type: "section",
     direction: "row",
     children,
     ...(weight === undefined ? {} : { weight }),
 });
 
-const column = (children: PublisherPageLayoutNodeV1[], weight?: number): PublisherPageLayoutNodeV1 => ({
+const column = (children: PublisherLayoutNodeV1[], weight?: number): PublisherLayoutNodeV1 => ({
     type: "section",
     direction: "column",
     children,
@@ -112,7 +112,7 @@ interface IWidescreenPageSpec {
     gridWeights?: number[];
 }
 
-const vizGrid = ({ vizRows, gridWeights }: IWidescreenPageSpec, weight: number): PublisherPageLayoutNodeV1 =>
+const vizGrid = ({ vizRows, gridWeights }: IWidescreenPageSpec, weight: number): PublisherLayoutNodeV1 =>
     vizRows.length === 1
         ? row(
               vizRows[0]!.map((id, index) => slot(id, gridWeights?.[index])),
@@ -152,7 +152,7 @@ const vizIds = (count: number, perRow: number): string[][] => {
     return rows;
 };
 
-// Built-ins are shared singletons served by every backend implementation;
+// Default page templates are shared singletons served by every backend implementation;
 // freezing makes accidental mutation by a consumer throw instead of corrupting them.
 function deepFreeze<T>(value: T): T {
     if (value && typeof value === "object" && !Object.isFrozen(value)) {
@@ -164,7 +164,7 @@ function deepFreeze<T>(value: T): T {
     return value;
 }
 
-const builtInPage = ({
+const defaultPage = ({
     id,
     title,
     description,
@@ -174,23 +174,23 @@ const builtInPage = ({
     title: string;
     description: string;
     body: IPublisherPageBodyV1;
-}): IPublisherPageLayoutV1 =>
+}): IPublisherPageTemplateV1 =>
     deepFreeze({
         type: "reportPageLayout",
         ref: idRef(`builtin.reportPageLayout.${id}`, "reportPageLayout"),
         title,
         description,
         content: { version: "1", ...body },
-        isBuiltIn: true,
+        isDefault: true,
         isLocked: true,
     });
 
 /**
- * Built-in cover page: document title and subtitle.
+ * Default cover page: document title and subtitle.
  *
  * @alpha
  */
-export const BuiltInPublisherPageLayoutCoverV1: IPublisherPageLayoutV1 = builtInPage({
+export const DefaultPublisherPageTemplateCoverV1: IPublisherPageTemplateV1 = defaultPage({
     id: "cover",
     title: "Cover",
     description: "Title page",
@@ -211,11 +211,11 @@ export const BuiltInPublisherPageLayoutCoverV1: IPublisherPageLayoutV1 = builtIn
 });
 
 /**
- * Built-in section divider page.
+ * Default section divider page.
  *
  * @alpha
  */
-export const BuiltInPublisherPageLayoutSectionV1: IPublisherPageLayoutV1 = builtInPage({
+export const DefaultPublisherPageTemplateSectionV1: IPublisherPageTemplateV1 = defaultPage({
     id: "section",
     title: "Section",
     description: "Section divider page",
@@ -288,11 +288,11 @@ const widescreenContentPages: [id: string, title: string, description: string, s
     ];
 
 /**
- * Built-in content page with six visualizations and a text column on the left.
+ * Default content page with six visualizations and a text column on the left.
  *
  * @alpha
  */
-export const BuiltInPublisherPageLayoutViz6TextLeftV1: IPublisherPageLayoutV1 = builtInPage({
+export const DefaultPublisherPageTemplateViz6TextLeftV1: IPublisherPageTemplateV1 = defaultPage({
     id: "viz6TextLeft",
     title: "6 visualizations + text",
     description: "Two rows of three visualizations with a text column on the left",
@@ -338,7 +338,7 @@ interface IPortraitPageSpec {
 }
 
 const portraitContentPage = ({ vizRows, text, summary }: IPortraitPageSpec): IPublisherPageBodyV1 => {
-    const bodyChildren: PublisherPageLayoutNodeV1[] = [
+    const bodyChildren: PublisherLayoutNodeV1[] = [
         ...(text ? [slot("text1", 2)] : []),
         ...vizRows.map((ids) =>
             row(
@@ -368,11 +368,11 @@ const portraitContentPage = ({ vizRows, text, summary }: IPortraitPageSpec): IPu
 };
 
 /**
- * Built-in portrait cover page: document title and subtitle.
+ * Default portrait cover page: document title and subtitle.
  *
  * @alpha
  */
-export const BuiltInPublisherPageLayoutPortraitCoverV1: IPublisherPageLayoutV1 = builtInPage({
+export const DefaultPublisherPageTemplatePortraitCoverV1: IPublisherPageTemplateV1 = defaultPage({
     id: "portraitCover",
     title: "Cover (portrait)",
     description: "Title page of an upright document",
@@ -393,11 +393,11 @@ export const BuiltInPublisherPageLayoutPortraitCoverV1: IPublisherPageLayoutV1 =
 });
 
 /**
- * Built-in portrait section divider page.
+ * Default portrait section divider page.
  *
  * @alpha
  */
-export const BuiltInPublisherPageLayoutPortraitSectionV1: IPublisherPageLayoutV1 = builtInPage({
+export const DefaultPublisherPageTemplatePortraitSectionV1: IPublisherPageTemplateV1 = defaultPage({
     id: "portraitSection",
     title: "Section (portrait)",
     description: "Section divider page of an upright document",
@@ -413,11 +413,11 @@ export const BuiltInPublisherPageLayoutPortraitSectionV1: IPublisherPageLayoutV1
 });
 
 /**
- * Built-in portrait page carrying a full-page narrative, with no visualization.
+ * Default portrait page carrying a full-page narrative, with no visualization.
  *
  * @alpha
  */
-export const BuiltInPublisherPageLayoutPortraitSummaryV1: IPublisherPageLayoutV1 = builtInPage({
+export const DefaultPublisherPageTemplatePortraitSummaryV1: IPublisherPageTemplateV1 = defaultPage({
     id: "portraitSummary",
     title: "Summary (portrait)",
     description: "Full-page narrative with no visualization",
@@ -478,22 +478,22 @@ const portraitContentPages: [id: string, title: string, description: string, spe
 ];
 
 /**
- * All built-in page layouts served by the SPI. Built-ins are read-only: they cannot be
+ * All default page templates served by the SPI. They are read-only: they cannot be
  * edited or deleted, and they are never persisted on the backend.
  *
  * @alpha
  */
-export const BuiltInPublisherPageLayoutsV1: readonly IPublisherPageLayoutV1[] = Object.freeze([
-    BuiltInPublisherPageLayoutCoverV1,
-    BuiltInPublisherPageLayoutSectionV1,
+export const DefaultPublisherPageTemplatesV1: readonly IPublisherPageTemplateV1[] = Object.freeze([
+    DefaultPublisherPageTemplateCoverV1,
+    DefaultPublisherPageTemplateSectionV1,
     ...widescreenContentPages.map(([id, title, description, spec]) =>
-        builtInPage({ id, title, description, body: widescreenContentPage(spec) }),
+        defaultPage({ id, title, description, body: widescreenContentPage(spec) }),
     ),
-    BuiltInPublisherPageLayoutViz6TextLeftV1,
-    BuiltInPublisherPageLayoutPortraitCoverV1,
-    BuiltInPublisherPageLayoutPortraitSectionV1,
-    BuiltInPublisherPageLayoutPortraitSummaryV1,
+    DefaultPublisherPageTemplateViz6TextLeftV1,
+    DefaultPublisherPageTemplatePortraitCoverV1,
+    DefaultPublisherPageTemplatePortraitSectionV1,
+    DefaultPublisherPageTemplatePortraitSummaryV1,
     ...portraitContentPages.map(([id, title, description, spec]) =>
-        builtInPage({ id, title, description, body: portraitContentPage(spec) }),
+        defaultPage({ id, title, description, body: portraitContentPage(spec) }),
     ),
 ]);

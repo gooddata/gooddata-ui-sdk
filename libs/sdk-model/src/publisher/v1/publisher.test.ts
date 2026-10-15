@@ -2,13 +2,13 @@
 
 import { assert, describe, expect, it } from "vitest";
 
-import {
-    BuiltInPublisherPageLayoutPortraitCoverV1,
-    BuiltInPublisherPageLayoutPortraitSectionV1,
-    BuiltInPublisherPageLayoutPortraitSummaryV1,
-    BuiltInPublisherPageLayoutsV1,
-} from "./builtinPageLayouts.js";
 import { isPublisherDocumentContentV1 } from "./content.js";
+import {
+    DefaultPublisherPageTemplatePortraitCoverV1,
+    DefaultPublisherPageTemplatePortraitSectionV1,
+    DefaultPublisherPageTemplatePortraitSummaryV1,
+    DefaultPublisherPageTemplatesV1,
+} from "./defaultPageTemplates.js";
 import {
     isPublisherDocumentDefinitionV1,
     isPublisherDocumentTemplateDefinitionV1,
@@ -19,12 +19,12 @@ import {
     newAdHocPublisherDocumentDefinitionV1,
     newPublisherDocumentContentV1,
     newPublisherDocumentDefinitionFromTemplateV1,
-    newPublisherDocumentPageFromLayoutV1,
+    newPublisherDocumentPageFromTemplateV1,
     newPublisherDocumentTemplateDefinitionV1,
-    newPublisherPageLayoutDefinitionV1,
+    newPublisherPageTemplateDefinitionV1,
     publisherDocumentPageV1,
 } from "./factory.js";
-import { type PublisherPageLayoutNodeV1, isPublisherLayoutSlotRefV1 } from "./layout.js";
+import { type PublisherLayoutNodeV1, isPublisherLayoutSlotRefV1 } from "./layout.js";
 import {
     DefaultPublisherPageFormatV1,
     PublisherPageFormatAspectRatiosV1,
@@ -33,10 +33,10 @@ import {
 } from "./pageFormat.js";
 import {
     type IPublisherPageBodyV1,
-    isPublisherPageLayoutDefinitionV1,
-    isPublisherPageLayoutV1,
+    isPublisherPageTemplateDefinitionV1,
+    isPublisherPageTemplateV1,
     validatePublisherPageBodyV1,
-} from "./pageLayout.js";
+} from "./pageTemplate.js";
 import {
     isPublisherImageSlotV1,
     isPublisherSlotV1,
@@ -103,10 +103,10 @@ describe("placeholder helpers", () => {
 });
 
 describe("type guards", () => {
-    const page = newPublisherPageLayoutDefinitionV1("Page", body);
+    const page = newPublisherPageTemplateDefinitionV1("Page", body);
     const template = newPublisherDocumentTemplateDefinitionV1(
         "Template",
-        newPublisherDocumentContentV1([newPublisherDocumentPageFromLayoutV1(page, "p1")]),
+        newPublisherDocumentContentV1([newPublisherDocumentPageFromTemplateV1(page, "p1")]),
     );
     const publisherDocument = newPublisherDocumentDefinitionFromTemplateV1(template, {
         title: "Report",
@@ -115,9 +115,9 @@ describe("type guards", () => {
     });
 
     it("distinguishes definitions from saved objects by ref", () => {
-        expect(isPublisherPageLayoutDefinitionV1(page)).toBe(true);
-        expect(isPublisherPageLayoutV1(page)).toBe(false);
-        expect(isPublisherPageLayoutV1({ ...page, ref: { identifier: "p" } })).toBe(true);
+        expect(isPublisherPageTemplateDefinitionV1(page)).toBe(true);
+        expect(isPublisherPageTemplateV1(page)).toBe(false);
+        expect(isPublisherPageTemplateV1({ ...page, ref: { identifier: "p" } })).toBe(true);
 
         expect(isPublisherDocumentTemplateDefinitionV1(template)).toBe(true);
         expect(isPublisherDocumentTemplateV1(template)).toBe(false);
@@ -143,11 +143,11 @@ describe("type guards", () => {
     });
 });
 
-describe("newPublisherDocumentPageFromLayoutV1", () => {
-    const page = newPublisherPageLayoutDefinitionV1("Page", body);
+describe("newPublisherDocumentPageFromTemplateV1", () => {
+    const page = newPublisherPageTemplateDefinitionV1("Page", body);
 
     it("prefixes slot ids and layout slotIds consistently", () => {
-        const instance = newPublisherDocumentPageFromLayoutV1(page, "p1");
+        const instance = newPublisherDocumentPageFromTemplateV1(page, "p1");
 
         expect(instance.slots.map((slot) => slot.localIdentifier)).toEqual(["p1_widget", "p1_summary"]);
         expect(validatePublisherPageBodyV1(instance)).toEqual([]);
@@ -155,8 +155,8 @@ describe("newPublisherDocumentPageFromLayoutV1", () => {
 
     it("keeps repeated instances of one page unique within content", () => {
         const content = newPublisherDocumentContentV1([
-            newPublisherDocumentPageFromLayoutV1(page, "p1"),
-            newPublisherDocumentPageFromLayoutV1(page, "p2"),
+            newPublisherDocumentPageFromTemplateV1(page, "p1"),
+            newPublisherDocumentPageFromTemplateV1(page, "p2"),
         ]);
 
         const allSlotIds = content.pages.flatMap((contentPage) =>
@@ -166,8 +166,8 @@ describe("newPublisherDocumentPageFromLayoutV1", () => {
     });
 
     it("detaches the clone from the source page", () => {
-        const mutablePage = newPublisherPageLayoutDefinitionV1("Page", JSON.parse(JSON.stringify(body)));
-        const instance = newPublisherDocumentPageFromLayoutV1(mutablePage, "p1");
+        const mutablePage = newPublisherPageTemplateDefinitionV1("Page", JSON.parse(JSON.stringify(body)));
+        const instance = newPublisherDocumentPageFromTemplateV1(mutablePage, "p1");
 
         mutablePage.content.slots[0]!.placeholder!.hint = "changed";
 
@@ -175,17 +175,17 @@ describe("newPublisherDocumentPageFromLayoutV1", () => {
     });
 
     it("generates a localIdentifier when none is given", () => {
-        const instance = newPublisherDocumentPageFromLayoutV1(page);
+        const instance = newPublisherDocumentPageFromTemplateV1(page);
         expect(instance.localIdentifier).toMatch(/^page_/);
     });
 });
 
 describe("newPublisherDocumentDefinitionFromTemplateV1", () => {
     it("deep-copies content so the document stays frozen", () => {
-        const page = newPublisherPageLayoutDefinitionV1("Page", JSON.parse(JSON.stringify(body)));
+        const page = newPublisherPageTemplateDefinitionV1("Page", JSON.parse(JSON.stringify(body)));
         const template = newPublisherDocumentTemplateDefinitionV1(
             "Template",
-            newPublisherDocumentContentV1([newPublisherDocumentPageFromLayoutV1(page, "p1")]),
+            newPublisherDocumentContentV1([newPublisherDocumentPageFromTemplateV1(page, "p1")]),
         );
         const publisherDocument = newPublisherDocumentDefinitionFromTemplateV1(template, {
             title: "Report",
@@ -240,31 +240,31 @@ describe("validatePublisherPageBodyV1", () => {
     });
 });
 
-describe("BuiltInPublisherPageLayoutsV1", () => {
+describe("DefaultPublisherPageTemplatesV1", () => {
     it("contains 25 pages, all flagged and locked", () => {
-        expect(BuiltInPublisherPageLayoutsV1).toHaveLength(25);
-        for (const page of BuiltInPublisherPageLayoutsV1) {
-            expect(page.isBuiltIn).toBe(true);
+        expect(DefaultPublisherPageTemplatesV1).toHaveLength(25);
+        for (const page of DefaultPublisherPageTemplatesV1) {
+            expect(page.isDefault).toBe(true);
             expect(page.isLocked).toBe(true);
-            expect(isPublisherPageLayoutV1(page)).toBe(true);
+            expect(isPublisherPageTemplateV1(page)).toBe(true);
         }
     });
 
     it("every page body is structurally valid", () => {
-        for (const page of BuiltInPublisherPageLayoutsV1) {
+        for (const page of DefaultPublisherPageTemplatesV1) {
             expect(validatePublisherPageBodyV1(page.content)).toEqual([]);
         }
     });
 
     it("has unique refs and titles", () => {
-        const refIds = BuiltInPublisherPageLayoutsV1.map((page) => JSON.stringify(page.ref));
-        const titles = BuiltInPublisherPageLayoutsV1.map((page) => page.title);
+        const refIds = DefaultPublisherPageTemplatesV1.map((page) => JSON.stringify(page.ref));
+        const titles = DefaultPublisherPageTemplatesV1.map((page) => page.title);
         expect(new Set(refIds).size).toBe(refIds.length);
         expect(new Set(titles).size).toBe(titles.length);
     });
 
     it("is deeply frozen", () => {
-        for (const layout of BuiltInPublisherPageLayoutsV1) {
+        for (const layout of DefaultPublisherPageTemplatesV1) {
             expect(Object.isFrozen(layout)).toBe(true);
             expect(Object.isFrozen(layout.content)).toBe(true);
             expect(Object.isFrozen(layout.content.slots[0])).toBe(true);
@@ -273,28 +273,30 @@ describe("BuiltInPublisherPageLayoutsV1", () => {
     });
 
     it("declares a page format on every page", () => {
-        for (const page of BuiltInPublisherPageLayoutsV1) {
+        for (const page of DefaultPublisherPageTemplatesV1) {
             expect(isPublisherPageFormatV1(page.content.format)).toBe(true);
         }
     });
 
     it("offers both widescreen and portrait pages", () => {
-        const formats = new Set(BuiltInPublisherPageLayoutsV1.map((page) => page.content.format));
+        const formats = new Set(DefaultPublisherPageTemplatesV1.map((page) => page.content.format));
         expect(formats).toEqual(new Set(["widescreen", "a4Portrait"]));
     });
 
     it("gives every portrait page a cover, a divider and content variants", () => {
-        const portrait = BuiltInPublisherPageLayoutsV1.filter((page) => page.content.format === "a4Portrait");
+        const portrait = DefaultPublisherPageTemplatesV1.filter(
+            (page) => page.content.format === "a4Portrait",
+        );
         expect(portrait).toHaveLength(9);
-        expect(portrait).toContain(BuiltInPublisherPageLayoutPortraitCoverV1);
-        expect(portrait).toContain(BuiltInPublisherPageLayoutPortraitSectionV1);
-        expect(portrait).toContain(BuiltInPublisherPageLayoutPortraitSummaryV1);
+        expect(portrait).toContain(DefaultPublisherPageTemplatePortraitCoverV1);
+        expect(portrait).toContain(DefaultPublisherPageTemplatePortraitSectionV1);
+        expect(portrait).toContain(DefaultPublisherPageTemplatePortraitSummaryV1);
         expect(portrait.map((page) => page.content.kind)).toContain("cover");
         expect(portrait.map((page) => page.content.kind)).toContain("section");
     });
 
     it("lays portrait content out in a column, never a wide row of visualizations", () => {
-        const widestRow = (node: PublisherPageLayoutNodeV1): number =>
+        const widestRow = (node: PublisherLayoutNodeV1): number =>
             isPublisherLayoutSlotRefV1(node)
                 ? 0
                 : Math.max(
@@ -302,7 +304,7 @@ describe("BuiltInPublisherPageLayoutsV1", () => {
                       ...node.children.map(widestRow),
                   );
 
-        for (const page of BuiltInPublisherPageLayoutsV1.filter(
+        for (const page of DefaultPublisherPageTemplatesV1.filter(
             (candidate) => candidate.content.format === "a4Portrait",
         )) {
             // The footer places a logo next to the page number, so two side by side is the floor.
@@ -311,13 +313,13 @@ describe("BuiltInPublisherPageLayoutsV1", () => {
     });
 
     it("summary variants place the summary slot in the layout", () => {
-        const withSummary = BuiltInPublisherPageLayoutsV1.filter((page) =>
+        const withSummary = DefaultPublisherPageTemplatesV1.filter((page) =>
             page.content.slots.some((slot) => slot.localIdentifier === "summary"),
         );
         expect(withSummary).toHaveLength(8);
         for (const page of withSummary) {
             const slotIds: string[] = [];
-            const visit = (node: PublisherPageLayoutNodeV1): void => {
+            const visit = (node: PublisherLayoutNodeV1): void => {
                 if (isPublisherLayoutSlotRefV1(node)) {
                     slotIds.push(node.slotId);
                 } else {
@@ -603,7 +605,7 @@ describe("box styling", () => {
     });
 
     it("prefixes background references when cloning a page into content", () => {
-        const definition = newPublisherPageLayoutDefinitionV1("Hero", {
+        const definition = newPublisherPageTemplateDefinitionV1("Hero", {
             style: { background: { type: "image", slotId: "cover" } },
             layout: {
                 type: "section",
@@ -614,7 +616,7 @@ describe("box styling", () => {
             slots: [{ type: "paragraph", localIdentifier: "text1" }, imageSlot("cover"), imageSlot("band")],
         });
 
-        const page = newPublisherDocumentPageFromLayoutV1(definition, "p1");
+        const page = newPublisherDocumentPageFromTemplateV1(definition, "p1");
 
         expect(page.style?.background).toEqual({ type: "image", slotId: "p1_cover" });
         const root = page.layout;
@@ -628,7 +630,7 @@ describe("box styling", () => {
 
 describe("built-in footers", () => {
     it("pin the logo lower left and the page number lower right", () => {
-        for (const layout of BuiltInPublisherPageLayoutsV1) {
+        for (const layout of DefaultPublisherPageTemplatesV1) {
             const logo = layout.content.slots.find((slot) => slot.localIdentifier === "footerLogo");
             const pageNumber = layout.content.slots.find(
                 (slot) => slot.localIdentifier === "footerPageNumber",

@@ -139,8 +139,8 @@ import { IPublisherDocument } from '@gooddata/sdk-model';
 import { IPublisherDocumentDefinition } from '@gooddata/sdk-model';
 import { IPublisherDocumentTemplate } from '@gooddata/sdk-model';
 import { IPublisherDocumentTemplateDefinition } from '@gooddata/sdk-model';
-import { IPublisherPageLayout } from '@gooddata/sdk-model';
-import { IPublisherPageLayoutDefinition } from '@gooddata/sdk-model';
+import { IPublisherPageTemplate } from '@gooddata/sdk-model';
+import { IPublisherPageTemplateDefinition } from '@gooddata/sdk-model';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { IResultHeader } from '@gooddata/sdk-model';
 import { IResultWarning } from '@gooddata/sdk-model';
@@ -3403,20 +3403,20 @@ export interface IWorkspacePermissionsService {
 export interface IWorkspacePublisherService {
     createDocument(publisherDocument: IPublisherDocumentDefinition): Promise<IPublisherDocument>;
     createDocumentTemplate(template: IPublisherDocumentTemplateDefinition): Promise<IPublisherDocumentTemplate>;
-    createPageLayout(page: IPublisherPageLayoutDefinition): Promise<IPublisherPageLayout>;
+    createPageTemplate(page: IPublisherPageTemplateDefinition): Promise<IPublisherPageTemplate>;
     deleteDocument(ref: ObjRef): Promise<void>;
     deleteDocumentTemplate(ref: ObjRef): Promise<void>;
-    deletePageLayout(ref: ObjRef): Promise<void>;
+    deletePageTemplate(ref: ObjRef): Promise<void>;
     exportDocumentToPdf(ref: ObjRef, options?: IPublisherDocumentExportPdfOptions): Promise<IExportResult>;
     getDocument(ref: ObjRef): Promise<IPublisherDocument>;
     getDocuments(): Promise<IPublisherDocument[]>;
     getDocumentTemplate(ref: ObjRef): Promise<IPublisherDocumentTemplate>;
     getDocumentTemplates(): Promise<IPublisherDocumentTemplate[]>;
-    getPageLayout(ref: ObjRef): Promise<IPublisherPageLayout>;
-    getPageLayouts(): Promise<IPublisherPageLayout[]>;
+    getPageTemplate(ref: ObjRef): Promise<IPublisherPageTemplate>;
+    getPageTemplates(): Promise<IPublisherPageTemplate[]>;
     updateDocument(publisherDocument: IPublisherDocument): Promise<IPublisherDocument>;
     updateDocumentTemplate(template: IPublisherDocumentTemplate): Promise<IPublisherDocumentTemplate>;
-    updatePageLayout(page: IPublisherPageLayout): Promise<IPublisherPageLayout>;
+    updatePageTemplate(page: IPublisherPageTemplate): Promise<IPublisherPageTemplate>;
 }
 
 export { IWorkspaceSettings }

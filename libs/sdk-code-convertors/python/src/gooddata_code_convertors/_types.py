@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: ec5aab995abb310888541381dce7782837bdc6d938ea41a20c8f2acfc8c644e3
+# schema-hash: d9210f9a6587451f1b46c1a461f26efd8e26a35c3103c82be6ad2a457dd7b8ed
 
 from __future__ import annotations
 
@@ -32,6 +32,7 @@ __all__ = [
     "Config",
     "Constraints",
     "Constraints1",
+    "Context",
     "CustomTooltip",
     "Dashboard",
     "Dashboard1",
@@ -51,6 +52,8 @@ __all__ = [
     "DashboardTextFilter",
     "DashboardTextFilter1",
     "DashboardTextFilter2",
+    "DataLabels",
+    "DataPoints",
     "DataType",
     "Dataset",
     "Dataset1",
@@ -70,6 +73,7 @@ __all__ = [
     "Fields",
     "Format",
     "GeoAreaConfig",
+    "Gridlines",
     "HeadingSlot",
     "Identifier",
     "IgnoredDrillDown",
@@ -99,6 +103,7 @@ __all__ = [
     "LayerItemBase",
     "LayoutColumn",
     "LayoutRow",
+    "Legend",
     "LineStyleMapping",
     "LineStyleMapping1",
     "Locale",
@@ -110,6 +115,7 @@ __all__ = [
     "MvfCondition1",
     "MvfCondition2",
     "MvfCondition3",
+    "Name",
     "NumberParameterDefinition",
     "OpenUrl",
     "ParagraphSlot",
@@ -121,6 +127,59 @@ __all__ = [
     "Permissions",
     "Plugin",
     "Plugins",
+    "PublisherAxisDisplayV2",
+    "PublisherBorderLineStyleV2",
+    "PublisherChartStyleV2",
+    "PublisherColorValueV2",
+    "PublisherContainerStyleV2",
+    "PublisherContainerV2",
+    "PublisherDocumentContentV2",
+    "PublisherDocumentDefaultsV2",
+    "PublisherDocumentPageV2",
+    "PublisherDocumentStyleV2",
+    "PublisherDocumentTemplateV2",
+    "PublisherDocumentV2",
+    "PublisherEntityDescriptionV2",
+    "PublisherEntityTagsV2",
+    "PublisherEntityTagsV2Item",
+    "PublisherEntityTitleV2",
+    "PublisherGapValueV2",
+    "PublisherHeadingWidgetV2",
+    "PublisherHeadlineStyleV2",
+    "PublisherHorizontalAlignV2",
+    "PublisherImageSourceV2",
+    "PublisherImageWidgetStyleV2",
+    "PublisherImageWidgetV2",
+    "PublisherLayoutNodeV2",
+    "PublisherOpacityV2",
+    "PublisherPaddingValueV2",
+    "PublisherPageBodyV2",
+    "PublisherPageNodeIdV2",
+    "PublisherPageProportionV2",
+    "PublisherPageSizeV2",
+    "PublisherPageStyleV2",
+    "PublisherPageTemplateV2",
+    "PublisherPeriodV2",
+    "PublisherPeriodV21",
+    "PublisherPeriodV22",
+    "PublisherPxV2",
+    "PublisherRadiusValueV2",
+    "PublisherSectionV2",
+    "PublisherShadowValueV2",
+    "PublisherTableStyleV2",
+    "PublisherTakeawayGenerationV2",
+    "PublisherTakeawayWidgetV2",
+    "PublisherTextStyleNameV2",
+    "PublisherTextStyleV2",
+    "PublisherTextWidgetStyleV2",
+    "PublisherTextWidgetV2",
+    "PublisherTitleWidgetV2",
+    "PublisherVerticalAlignV2",
+    "PublisherVisualizationDisplayV2",
+    "PublisherVisualizationStyleV2",
+    "PublisherVisualizationWidgetV2",
+    "PublisherWidgetPlaceholderV2",
+    "PublisherWidgetTitleV2",
     "Query",
     "QueryAttributeFilter",
     "QueryAttributeSort",
@@ -194,6 +253,7 @@ __all__ = [
     "SuppressedTargets1",
     "Tab",
     "Tags",
+    "Takeaway",
     "Target",
     "Target1",
     "TextWrapping",
@@ -207,6 +267,7 @@ __all__ = [
     "Value",
     "Value1",
     "Value2",
+    "Values",
     "Visualisation",
     "Visualisation1",
     "Visualisation10",
@@ -577,6 +638,51 @@ class Source(TypedDict):
     null_value_join_replacement: NotRequired[str]
 
 
+class Name(TypedDict):
+    visible: NotRequired[bool]
+    position: NotRequired[Literal['low', 'middle', 'high']]
+
+
+class Values(TypedDict):
+    visible: NotRequired[bool]
+    rotation: NotRequired[float]
+
+
+class PublisherAxisDisplayV2(TypedDict):
+    visible: NotRequired[bool]
+    name: NotRequired[Name]
+    values: NotRequired[Values]
+    min: NotRequired[float]
+    max: NotRequired[float]
+
+
+class Legend(TypedDict):
+    visible: NotRequired[bool]
+    position: NotRequired[Literal['auto', 'top', 'bottom', 'left', 'right']]
+
+
+class Gridlines(TypedDict):
+    visible: NotRequired[bool]
+
+
+class DataLabels(TypedDict):
+    visible: NotRequired[bool | Literal['auto']]
+
+
+class DataPoints(TypedDict):
+    visible: NotRequired[bool | Literal['auto']]
+
+
+class PublisherVisualizationDisplayV2(TypedDict):
+    legend: NotRequired[Legend]
+    x_axis: NotRequired[PublisherAxisDisplayV2]
+    y_axis: NotRequired[PublisherAxisDisplayV2]
+    secondary_y_axis: NotRequired[PublisherAxisDisplayV2]
+    gridlines: NotRequired[Gridlines]
+    data_labels: NotRequired[DataLabels]
+    data_points: NotRequired[DataPoints]
+
+
 class Constraints1(TypedDict):
     min: NotRequired[float]
     max: NotRequired[float]
@@ -748,6 +854,72 @@ class ConditionalFormatting(TypedDict):
 Locale: TypeAlias = str
 
 
+PublisherColorValueV2: TypeAlias = str
+
+
+PublisherEntityDescriptionV2: TypeAlias = str
+
+
+PublisherEntityTagsV2Item: TypeAlias = str
+
+
+PublisherEntityTagsV2: TypeAlias = list[PublisherEntityTagsV2Item]
+
+
+PublisherEntityTitleV2: TypeAlias = str
+
+
+PublisherImageSourceV2: TypeAlias = str
+
+
+PublisherPageNodeIdV2: TypeAlias = str
+
+
+PublisherPageProportionV2: TypeAlias = float
+
+
+PublisherPeriodV21 = TypedDict(
+    'PublisherPeriodV21',
+    {
+        'granularity': Literal['SECOND', 'MINUTE', 'HOUR', 'DAY', 'WEEK_US', 'MONTH', 'QUARTER', 'YEAR', 'FISCAL_YEAR', 'FISCAL_QUARTER', 'FISCAL_MONTH'],
+        'from': int,
+        'to': int,
+    },
+)
+
+
+PublisherPeriodV22 = TypedDict(
+    'PublisherPeriodV22',
+    {
+        'from': str,
+        'to': str,
+    },
+)
+
+
+PublisherPeriodV2: TypeAlias = PublisherPeriodV21 | PublisherPeriodV22
+
+
+PublisherPxV2: TypeAlias = float
+
+
+class Context(TypedDict):
+    widgets: NotRequired[list[PublisherPageNodeIdV2]]
+    page_title: NotRequired[bool]
+    filters: NotRequired[bool]
+    other_pages: NotRequired[bool]
+
+
+class PublisherTakeawayGenerationV2(TypedDict):
+    instructions: NotRequired[str]
+    context: NotRequired[Context]
+
+
+class PublisherWidgetPlaceholderV2(TypedDict):
+    hint: NotRequired[str]
+    required: NotRequired[bool]
+
+
 ReportPageFormat: TypeAlias = Literal['widescreen', 'a4Portrait', 'letterPortrait']
 
 
@@ -780,6 +952,49 @@ ReportText: TypeAlias = str | ReportText1
 
 
 ReportWeight: TypeAlias = float
+
+
+PublisherBorderLineStyleV2: TypeAlias = Literal['solid', 'dashed', 'dotted', 'none']
+
+
+class Takeaway(TypedDict):
+    generation: NotRequired[PublisherTakeawayGenerationV2]
+
+
+PublisherGapValueV2: TypeAlias = (
+    float
+    | Literal['{theme.spacing.gap.compact}', '{theme.spacing.gap.normal}', '{theme.spacing.gap.spacious}']
+)
+
+
+PublisherHorizontalAlignV2: TypeAlias = Literal['left', 'center', 'right']
+
+
+PublisherOpacityV2: TypeAlias = float
+
+
+PublisherPaddingValueV2: TypeAlias = (
+    float
+    | Literal['{theme.spacing.padding.compact}', '{theme.spacing.padding.normal}', '{theme.spacing.padding.spacious}']
+)
+
+
+PublisherPageSizeV2: TypeAlias = Literal['widescreen']
+
+
+PublisherRadiusValueV2: TypeAlias = (
+    float
+    | Literal['{theme.corners.small}', '{theme.corners.medium}', '{theme.corners.large}', '{theme.corners.full}']
+)
+
+
+PublisherShadowValueV2: TypeAlias = str
+
+
+PublisherTextStyleNameV2: TypeAlias = Literal['title', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'largeText', 'normalText', 'smallText']
+
+
+PublisherVerticalAlignV2: TypeAlias = Literal['top', 'center', 'bottom']
 
 
 ReportAlignment: TypeAlias = Literal['start', 'center', 'end']
@@ -1099,6 +1314,44 @@ class Metric(TypedDict):
     is_hidden: NotRequired[bool]
 
 
+class PublisherChartStyleV2(TypedDict):
+    font_size: NotRequired[PublisherPxV2]
+    text_color: NotRequired[PublisherColorValueV2]
+    axis_line_color: NotRequired[PublisherColorValueV2]
+    axis_name_color: NotRequired[PublisherColorValueV2]
+    axis_name_size: NotRequired[PublisherPxV2]
+    axis_value_color: NotRequired[PublisherColorValueV2]
+    axis_value_size: NotRequired[PublisherPxV2]
+    grid_color: NotRequired[PublisherColorValueV2]
+    plot_line_color: NotRequired[PublisherColorValueV2]
+    legend_color: NotRequired[PublisherColorValueV2]
+    legend_size: NotRequired[PublisherPxV2]
+    data_label_color: NotRequired[PublisherColorValueV2]
+    data_label_size: NotRequired[PublisherPxV2]
+
+
+class PublisherTableStyleV2(TypedDict):
+    font_size: NotRequired[PublisherPxV2]
+    row_height: NotRequired[PublisherPxV2]
+    grid_color: NotRequired[PublisherColorValueV2]
+    value_color: NotRequired[PublisherColorValueV2]
+    null_value_color: NotRequired[PublisherColorValueV2]
+    header_label_color: NotRequired[PublisherColorValueV2]
+    header_background_color: NotRequired[PublisherColorValueV2]
+    total_value_color: NotRequired[PublisherColorValueV2]
+    total_background_color: NotRequired[PublisherColorValueV2]
+    subtotal_background_color: NotRequired[PublisherColorValueV2]
+
+
+class PublisherHeadlineStyleV2(TypedDict):
+    primary_value_color: NotRequired[PublisherColorValueV2]
+    primary_value_size: NotRequired[PublisherPxV2]
+    secondary_value_color: NotRequired[PublisherColorValueV2]
+    secondary_value_size: NotRequired[PublisherPxV2]
+    positive_color: NotRequired[PublisherColorValueV2]
+    negative_color: NotRequired[PublisherColorValueV2]
+
+
 class Constraints(TypedDict):
     minLength: NotRequired[int]
     maxLength: NotRequired[int]
@@ -1350,6 +1603,220 @@ class Config(TypedDict):
     conditional_formatting: NotRequired[ConditionalFormatting]
 
 
+class PublisherContainerStyleV2(TypedDict):
+    background_color: NotRequired[PublisherColorValueV2]
+    background_opacity: NotRequired[PublisherOpacityV2]
+    background_image: NotRequired[PublisherImageSourceV2]
+    background_image_opacity: NotRequired[PublisherOpacityV2]
+    background_fit: NotRequired[Literal['cover', 'contain', 'fill', 'tile']]
+    background_horizontal_align: NotRequired[PublisherHorizontalAlignV2]
+    background_vertical_align: NotRequired[PublisherVerticalAlignV2]
+    background_offset: NotRequired[PublisherPxV2]
+    background_offset_top: NotRequired[PublisherPxV2]
+    background_offset_right: NotRequired[PublisherPxV2]
+    background_offset_bottom: NotRequired[PublisherPxV2]
+    background_offset_left: NotRequired[PublisherPxV2]
+    padding: NotRequired[PublisherPaddingValueV2]
+    padding_top: NotRequired[PublisherPaddingValueV2]
+    padding_right: NotRequired[PublisherPaddingValueV2]
+    padding_bottom: NotRequired[PublisherPaddingValueV2]
+    padding_left: NotRequired[PublisherPaddingValueV2]
+    border_width: NotRequired[PublisherPxV2]
+    border_style: NotRequired[PublisherBorderLineStyleV2]
+    border_color: NotRequired[PublisherColorValueV2]
+    border_top_width: NotRequired[PublisherPxV2]
+    border_top_style: NotRequired[PublisherBorderLineStyleV2]
+    border_top_color: NotRequired[PublisherColorValueV2]
+    border_right_width: NotRequired[PublisherPxV2]
+    border_right_style: NotRequired[PublisherBorderLineStyleV2]
+    border_right_color: NotRequired[PublisherColorValueV2]
+    border_bottom_width: NotRequired[PublisherPxV2]
+    border_bottom_style: NotRequired[PublisherBorderLineStyleV2]
+    border_bottom_color: NotRequired[PublisherColorValueV2]
+    border_left_width: NotRequired[PublisherPxV2]
+    border_left_style: NotRequired[PublisherBorderLineStyleV2]
+    border_left_color: NotRequired[PublisherColorValueV2]
+    border_radius: NotRequired[PublisherRadiusValueV2]
+    border_top_left_radius: NotRequired[PublisherRadiusValueV2]
+    border_top_right_radius: NotRequired[PublisherRadiusValueV2]
+    border_bottom_right_radius: NotRequired[PublisherRadiusValueV2]
+    border_bottom_left_radius: NotRequired[PublisherRadiusValueV2]
+    shadow: NotRequired[PublisherShadowValueV2]
+    shadow_x: NotRequired[float]
+    shadow_y: NotRequired[float]
+    shadow_blur: NotRequired[PublisherPxV2]
+    shadow_spread: NotRequired[float]
+    shadow_color: NotRequired[PublisherColorValueV2]
+    shadow_opacity: NotRequired[PublisherOpacityV2]
+    opacity: NotRequired[PublisherOpacityV2]
+    text_style: NotRequired[PublisherTextStyleNameV2]
+    text_color: NotRequired[PublisherColorValueV2]
+    horizontal_align: NotRequired[Literal['left', 'center', 'right', 'justify']]
+    vertical_align: NotRequired[PublisherVerticalAlignV2]
+    gap: NotRequired[PublisherGapValueV2]
+
+
+class PublisherImageWidgetStyleV2(TypedDict):
+    background_color: NotRequired[PublisherColorValueV2]
+    background_opacity: NotRequired[PublisherOpacityV2]
+    background_image: NotRequired[PublisherImageSourceV2]
+    background_image_opacity: NotRequired[PublisherOpacityV2]
+    background_fit: NotRequired[Literal['cover', 'contain', 'fill', 'tile']]
+    background_horizontal_align: NotRequired[PublisherHorizontalAlignV2]
+    background_vertical_align: NotRequired[PublisherVerticalAlignV2]
+    background_offset: NotRequired[PublisherPxV2]
+    background_offset_top: NotRequired[PublisherPxV2]
+    background_offset_right: NotRequired[PublisherPxV2]
+    background_offset_bottom: NotRequired[PublisherPxV2]
+    background_offset_left: NotRequired[PublisherPxV2]
+    padding: NotRequired[PublisherPaddingValueV2]
+    padding_top: NotRequired[PublisherPaddingValueV2]
+    padding_right: NotRequired[PublisherPaddingValueV2]
+    padding_bottom: NotRequired[PublisherPaddingValueV2]
+    padding_left: NotRequired[PublisherPaddingValueV2]
+    border_width: NotRequired[PublisherPxV2]
+    border_style: NotRequired[PublisherBorderLineStyleV2]
+    border_color: NotRequired[PublisherColorValueV2]
+    border_top_width: NotRequired[PublisherPxV2]
+    border_top_style: NotRequired[PublisherBorderLineStyleV2]
+    border_top_color: NotRequired[PublisherColorValueV2]
+    border_right_width: NotRequired[PublisherPxV2]
+    border_right_style: NotRequired[PublisherBorderLineStyleV2]
+    border_right_color: NotRequired[PublisherColorValueV2]
+    border_bottom_width: NotRequired[PublisherPxV2]
+    border_bottom_style: NotRequired[PublisherBorderLineStyleV2]
+    border_bottom_color: NotRequired[PublisherColorValueV2]
+    border_left_width: NotRequired[PublisherPxV2]
+    border_left_style: NotRequired[PublisherBorderLineStyleV2]
+    border_left_color: NotRequired[PublisherColorValueV2]
+    border_radius: NotRequired[PublisherRadiusValueV2]
+    border_top_left_radius: NotRequired[PublisherRadiusValueV2]
+    border_top_right_radius: NotRequired[PublisherRadiusValueV2]
+    border_bottom_right_radius: NotRequired[PublisherRadiusValueV2]
+    border_bottom_left_radius: NotRequired[PublisherRadiusValueV2]
+    shadow: NotRequired[PublisherShadowValueV2]
+    shadow_x: NotRequired[float]
+    shadow_y: NotRequired[float]
+    shadow_blur: NotRequired[PublisherPxV2]
+    shadow_spread: NotRequired[float]
+    shadow_color: NotRequired[PublisherColorValueV2]
+    shadow_opacity: NotRequired[PublisherOpacityV2]
+    opacity: NotRequired[PublisherOpacityV2]
+    fit: NotRequired[Literal['contain', 'cover', 'fill']]
+    horizontal_align: NotRequired[PublisherHorizontalAlignV2]
+    vertical_align: NotRequired[PublisherVerticalAlignV2]
+
+
+class PublisherTextWidgetStyleV2(TypedDict):
+    background_color: NotRequired[PublisherColorValueV2]
+    background_opacity: NotRequired[PublisherOpacityV2]
+    background_image: NotRequired[PublisherImageSourceV2]
+    background_image_opacity: NotRequired[PublisherOpacityV2]
+    background_fit: NotRequired[Literal['cover', 'contain', 'fill', 'tile']]
+    background_horizontal_align: NotRequired[PublisherHorizontalAlignV2]
+    background_vertical_align: NotRequired[PublisherVerticalAlignV2]
+    background_offset: NotRequired[PublisherPxV2]
+    background_offset_top: NotRequired[PublisherPxV2]
+    background_offset_right: NotRequired[PublisherPxV2]
+    background_offset_bottom: NotRequired[PublisherPxV2]
+    background_offset_left: NotRequired[PublisherPxV2]
+    padding: NotRequired[PublisherPaddingValueV2]
+    padding_top: NotRequired[PublisherPaddingValueV2]
+    padding_right: NotRequired[PublisherPaddingValueV2]
+    padding_bottom: NotRequired[PublisherPaddingValueV2]
+    padding_left: NotRequired[PublisherPaddingValueV2]
+    border_width: NotRequired[PublisherPxV2]
+    border_style: NotRequired[PublisherBorderLineStyleV2]
+    border_color: NotRequired[PublisherColorValueV2]
+    border_top_width: NotRequired[PublisherPxV2]
+    border_top_style: NotRequired[PublisherBorderLineStyleV2]
+    border_top_color: NotRequired[PublisherColorValueV2]
+    border_right_width: NotRequired[PublisherPxV2]
+    border_right_style: NotRequired[PublisherBorderLineStyleV2]
+    border_right_color: NotRequired[PublisherColorValueV2]
+    border_bottom_width: NotRequired[PublisherPxV2]
+    border_bottom_style: NotRequired[PublisherBorderLineStyleV2]
+    border_bottom_color: NotRequired[PublisherColorValueV2]
+    border_left_width: NotRequired[PublisherPxV2]
+    border_left_style: NotRequired[PublisherBorderLineStyleV2]
+    border_left_color: NotRequired[PublisherColorValueV2]
+    border_radius: NotRequired[PublisherRadiusValueV2]
+    border_top_left_radius: NotRequired[PublisherRadiusValueV2]
+    border_top_right_radius: NotRequired[PublisherRadiusValueV2]
+    border_bottom_right_radius: NotRequired[PublisherRadiusValueV2]
+    border_bottom_left_radius: NotRequired[PublisherRadiusValueV2]
+    shadow: NotRequired[PublisherShadowValueV2]
+    shadow_x: NotRequired[float]
+    shadow_y: NotRequired[float]
+    shadow_blur: NotRequired[PublisherPxV2]
+    shadow_spread: NotRequired[float]
+    shadow_color: NotRequired[PublisherColorValueV2]
+    shadow_opacity: NotRequired[PublisherOpacityV2]
+    opacity: NotRequired[PublisherOpacityV2]
+    text_style: NotRequired[PublisherTextStyleNameV2]
+    text_color: NotRequired[PublisherColorValueV2]
+    horizontal_align: NotRequired[Literal['left', 'center', 'right', 'justify']]
+    vertical_align: NotRequired[PublisherVerticalAlignV2]
+    font_size: NotRequired[PublisherPxV2]
+    font_weight: NotRequired[float]
+    font_style: NotRequired[Literal['normal', 'italic']]
+    line_height: NotRequired[float]
+    letter_spacing: NotRequired[float]
+    text_transform: NotRequired[Literal['none', 'uppercase', 'lowercase', 'capitalize']]
+    text_overflow: NotRequired[Literal['shrink', 'clip', 'ellipsis']]
+
+
+class PublisherVisualizationStyleV2(TypedDict):
+    background_color: NotRequired[PublisherColorValueV2]
+    background_opacity: NotRequired[PublisherOpacityV2]
+    background_image: NotRequired[PublisherImageSourceV2]
+    background_image_opacity: NotRequired[PublisherOpacityV2]
+    background_fit: NotRequired[Literal['cover', 'contain', 'fill', 'tile']]
+    background_horizontal_align: NotRequired[PublisherHorizontalAlignV2]
+    background_vertical_align: NotRequired[PublisherVerticalAlignV2]
+    background_offset: NotRequired[PublisherPxV2]
+    background_offset_top: NotRequired[PublisherPxV2]
+    background_offset_right: NotRequired[PublisherPxV2]
+    background_offset_bottom: NotRequired[PublisherPxV2]
+    background_offset_left: NotRequired[PublisherPxV2]
+    padding: NotRequired[PublisherPaddingValueV2]
+    padding_top: NotRequired[PublisherPaddingValueV2]
+    padding_right: NotRequired[PublisherPaddingValueV2]
+    padding_bottom: NotRequired[PublisherPaddingValueV2]
+    padding_left: NotRequired[PublisherPaddingValueV2]
+    border_width: NotRequired[PublisherPxV2]
+    border_style: NotRequired[PublisherBorderLineStyleV2]
+    border_color: NotRequired[PublisherColorValueV2]
+    border_top_width: NotRequired[PublisherPxV2]
+    border_top_style: NotRequired[PublisherBorderLineStyleV2]
+    border_top_color: NotRequired[PublisherColorValueV2]
+    border_right_width: NotRequired[PublisherPxV2]
+    border_right_style: NotRequired[PublisherBorderLineStyleV2]
+    border_right_color: NotRequired[PublisherColorValueV2]
+    border_bottom_width: NotRequired[PublisherPxV2]
+    border_bottom_style: NotRequired[PublisherBorderLineStyleV2]
+    border_bottom_color: NotRequired[PublisherColorValueV2]
+    border_left_width: NotRequired[PublisherPxV2]
+    border_left_style: NotRequired[PublisherBorderLineStyleV2]
+    border_left_color: NotRequired[PublisherColorValueV2]
+    border_radius: NotRequired[PublisherRadiusValueV2]
+    border_top_left_radius: NotRequired[PublisherRadiusValueV2]
+    border_top_right_radius: NotRequired[PublisherRadiusValueV2]
+    border_bottom_right_radius: NotRequired[PublisherRadiusValueV2]
+    border_bottom_left_radius: NotRequired[PublisherRadiusValueV2]
+    shadow: NotRequired[PublisherShadowValueV2]
+    shadow_x: NotRequired[float]
+    shadow_y: NotRequired[float]
+    shadow_blur: NotRequired[PublisherPxV2]
+    shadow_spread: NotRequired[float]
+    shadow_color: NotRequired[PublisherColorValueV2]
+    shadow_opacity: NotRequired[PublisherOpacityV2]
+    opacity: NotRequired[PublisherOpacityV2]
+    chart: NotRequired[PublisherChartStyleV2]
+    table: NotRequired[PublisherTableStyleV2]
+    headline: NotRequired[PublisherHeadlineStyleV2]
+
+
 class ReportImage1(TypedDict):
     url: NotRequired[str]
     asset: NotRequired[Identifier]
@@ -1367,6 +1834,67 @@ class ReportVariable(TypedDict):
     title: NotRequired[Title]
     description: NotRequired[Description]
     default: NotRequired[str]
+
+
+class PublisherDocumentDefaultsV2(TypedDict):
+    page_size: NotRequired[PublisherPageSizeV2]
+    takeaway: NotRequired[Takeaway]
+    period: NotRequired[PublisherPeriodV2]
+
+
+class PublisherDocumentStyleV2(TypedDict):
+    background_color: NotRequired[PublisherColorValueV2]
+    background_opacity: NotRequired[PublisherOpacityV2]
+    background_image: NotRequired[PublisherImageSourceV2]
+    background_image_opacity: NotRequired[PublisherOpacityV2]
+    background_fit: NotRequired[Literal['cover', 'contain', 'fill', 'tile']]
+    background_horizontal_align: NotRequired[PublisherHorizontalAlignV2]
+    background_vertical_align: NotRequired[PublisherVerticalAlignV2]
+    background_offset: NotRequired[PublisherPxV2]
+    background_offset_top: NotRequired[PublisherPxV2]
+    background_offset_right: NotRequired[PublisherPxV2]
+    background_offset_bottom: NotRequired[PublisherPxV2]
+    background_offset_left: NotRequired[PublisherPxV2]
+    gap: NotRequired[PublisherGapValueV2]
+
+
+class PublisherPageStyleV2(TypedDict):
+    background_color: NotRequired[PublisherColorValueV2]
+    background_opacity: NotRequired[PublisherOpacityV2]
+    background_image: NotRequired[PublisherImageSourceV2]
+    background_image_opacity: NotRequired[PublisherOpacityV2]
+    background_fit: NotRequired[Literal['cover', 'contain', 'fill', 'tile']]
+    background_horizontal_align: NotRequired[PublisherHorizontalAlignV2]
+    background_vertical_align: NotRequired[PublisherVerticalAlignV2]
+    background_offset: NotRequired[PublisherPxV2]
+    background_offset_top: NotRequired[PublisherPxV2]
+    background_offset_right: NotRequired[PublisherPxV2]
+    background_offset_bottom: NotRequired[PublisherPxV2]
+    background_offset_left: NotRequired[PublisherPxV2]
+    padding: NotRequired[PublisherPaddingValueV2]
+    padding_top: NotRequired[PublisherPaddingValueV2]
+    padding_right: NotRequired[PublisherPaddingValueV2]
+    padding_bottom: NotRequired[PublisherPaddingValueV2]
+    padding_left: NotRequired[PublisherPaddingValueV2]
+    text_style: NotRequired[PublisherTextStyleNameV2]
+    text_color: NotRequired[PublisherColorValueV2]
+    horizontal_align: NotRequired[Literal['left', 'center', 'right', 'justify']]
+    vertical_align: NotRequired[PublisherVerticalAlignV2]
+    gap: NotRequired[PublisherGapValueV2]
+
+
+class PublisherTextStyleV2(TypedDict):
+    text_style: NotRequired[PublisherTextStyleNameV2]
+    text_color: NotRequired[PublisherColorValueV2]
+    horizontal_align: NotRequired[Literal['left', 'center', 'right', 'justify']]
+    vertical_align: NotRequired[PublisherVerticalAlignV2]
+    font_size: NotRequired[PublisherPxV2]
+    font_weight: NotRequired[float]
+    font_style: NotRequired[Literal['normal', 'italic']]
+    line_height: NotRequired[float]
+    letter_spacing: NotRequired[float]
+    text_transform: NotRequired[Literal['none', 'uppercase', 'lowercase', 'capitalize']]
+    text_overflow: NotRequired[Literal['shrink', 'clip', 'ellipsis']]
 
 
 class ReportBackground1(TypedDict):
@@ -1433,6 +1961,50 @@ class Label(TypedDict):
     null_value_join_replacement: NotRequired[str]
 
 
+class PublisherTitleWidgetV2(TypedDict):
+    type: Literal['title']
+    id: PublisherPageNodeIdV2
+    proportion: NotRequired[PublisherPageProportionV2]
+    placeholder: NotRequired[PublisherWidgetPlaceholderV2]
+    locked: NotRequired[bool]
+    markdown: NotRequired[str]
+    style: NotRequired[PublisherTextWidgetStyleV2]
+
+
+class PublisherHeadingWidgetV2(TypedDict):
+    type: Literal['heading']
+    id: PublisherPageNodeIdV2
+    proportion: NotRequired[PublisherPageProportionV2]
+    placeholder: NotRequired[PublisherWidgetPlaceholderV2]
+    locked: NotRequired[bool]
+    markdown: NotRequired[str]
+    level: NotRequired[Literal[1, 2, 3, 4, 5, 6]]
+    style: NotRequired[PublisherTextWidgetStyleV2]
+
+
+class PublisherTextWidgetV2(TypedDict):
+    type: Literal['text']
+    id: PublisherPageNodeIdV2
+    proportion: NotRequired[PublisherPageProportionV2]
+    placeholder: NotRequired[PublisherWidgetPlaceholderV2]
+    locked: NotRequired[bool]
+    markdown: NotRequired[str]
+    decorative: NotRequired[bool]
+    style: NotRequired[PublisherTextWidgetStyleV2]
+
+
+class PublisherImageWidgetV2(TypedDict):
+    type: Literal['image']
+    id: PublisherPageNodeIdV2
+    proportion: NotRequired[PublisherPageProportionV2]
+    placeholder: NotRequired[PublisherWidgetPlaceholderV2]
+    locked: NotRequired[bool]
+    source: NotRequired[PublisherImageSourceV2]
+    alt_text: NotRequired[str]
+    decorative: NotRequired[bool]
+    style: NotRequired[PublisherImageWidgetStyleV2]
+
+
 ParameterDefinition: TypeAlias = StringParameterDefinition | NumberParameterDefinition
 
 
@@ -1487,6 +2059,12 @@ class Parameter(TypedDict):
     definition: ParameterDefinition
 
 
+class PublisherWidgetTitleV2(TypedDict):
+    visible: NotRequired[bool]
+    text: NotRequired[str]
+    style: NotRequired[PublisherTextStyleV2]
+
+
 QueryFilters: TypeAlias = dict[str, QueryFilter]
 
 
@@ -1532,6 +2110,35 @@ class Attribute(TypedDict):
     is_nullable: NotRequired[bool]
     null_value_join_replacement: NotRequired[str]
     labels: NotRequired[dict[str, Label]]
+
+
+class PublisherVisualizationWidgetV2(TypedDict):
+    type: Literal['visualization']
+    id: PublisherPageNodeIdV2
+    proportion: NotRequired[PublisherPageProportionV2]
+    placeholder: NotRequired[PublisherWidgetPlaceholderV2]
+    locked: NotRequired[bool]
+    visualization: NotRequired[Identifier]
+    title: NotRequired[PublisherWidgetTitleV2]
+    alt_text: NotRequired[str]
+    date: NotRequired[Identifier]
+    ignore_document_period: NotRequired[bool]
+    filters: NotRequired[DashboardFilters]
+    ignored_filters: NotRequired[list[str]]
+    display: NotRequired[PublisherVisualizationDisplayV2]
+    style: NotRequired[PublisherVisualizationStyleV2]
+
+
+class PublisherTakeawayWidgetV2(TypedDict):
+    type: Literal['takeaway']
+    id: PublisherPageNodeIdV2
+    proportion: NotRequired[PublisherPageProportionV2]
+    placeholder: NotRequired[PublisherWidgetPlaceholderV2]
+    locked: NotRequired[bool]
+    title: NotRequired[PublisherWidgetTitleV2]
+    markdown: NotRequired[str]
+    generation: NotRequired[PublisherTakeawayGenerationV2]
+    style: NotRequired[PublisherTextWidgetStyleV2]
 
 
 QuerySorts: TypeAlias = list[QuerySort]
@@ -2154,6 +2761,9 @@ Metadata: TypeAlias = Union[
     "Report",
     "ReportTemplate",
     "ReportPageLayout",
+    "PublisherDocumentV2",
+    "PublisherDocumentTemplateV2",
+    "PublisherPageTemplateV2",
 ]
 
 
@@ -2201,6 +2811,46 @@ class Widget3(TypedDict):
 
 
 Widget: TypeAlias = VisualizationWidget | Widget1 | Widget2 | Widget3
+
+
+class PublisherDocumentV2(TypedDict):
+    id: str
+    type: Literal['document']
+    version: Literal['2']
+    title: PublisherEntityTitleV2
+    description: NotRequired[PublisherEntityDescriptionV2]
+    tags: NotRequired[PublisherEntityTagsV2]
+    period: PublisherPeriodV2
+    content: PublisherDocumentContentV2
+
+
+class PublisherDocumentTemplateV2(TypedDict):
+    id: str
+    type: Literal['document_template']
+    version: Literal['2']
+    title: PublisherEntityTitleV2
+    description: NotRequired[PublisherEntityDescriptionV2]
+    tags: NotRequired[PublisherEntityTagsV2]
+    content: PublisherDocumentContentV2
+
+
+class PublisherContainerV2(TypedDict):
+    type: Literal['row', 'column']
+    id: NotRequired[PublisherPageNodeIdV2]
+    children: list[PublisherLayoutNodeV2]
+    proportion: NotRequired[PublisherPageProportionV2]
+    locked: NotRequired[bool]
+    style: NotRequired[PublisherContainerStyleV2]
+
+
+class PublisherPageTemplateV2(TypedDict):
+    id: str
+    type: Literal['page_template']
+    version: Literal['2']
+    title: PublisherEntityTitleV2
+    description: NotRequired[PublisherEntityDescriptionV2]
+    tags: NotRequired[PublisherEntityTagsV2]
+    content: PublisherPageBodyV2
 
 
 class Report(TypedDict):
@@ -2275,6 +2925,36 @@ class Dashboard(TypedDict):
     permissions: NotRequired[Permissions]
 
 
+class PublisherDocumentContentV2(TypedDict):
+    defaults: NotRequired[PublisherDocumentDefaultsV2]
+    filters: NotRequired[DashboardFilters]
+    style: NotRequired[PublisherDocumentStyleV2]
+    locale: NotRequired[Locale]
+    format_locale: NotRequired[Locale]
+    pages: NotRequired[list[PublisherDocumentPageV2]]
+    sections: NotRequired[list[PublisherSectionV2]]
+
+
+PublisherLayoutNodeV2: TypeAlias = (
+    PublisherContainerV2
+    | PublisherTitleWidgetV2
+    | PublisherHeadingWidgetV2
+    | PublisherTextWidgetV2
+    | PublisherImageWidgetV2
+    | PublisherVisualizationWidgetV2
+    | PublisherTakeawayWidgetV2
+)
+
+
+class PublisherPageBodyV2(TypedDict):
+    kind: NotRequired[Literal['cover', 'section', 'content']]
+    page_size: NotRequired[PublisherPageSizeV2]
+    notes: NotRequired[str]
+    style: NotRequired[PublisherPageStyleV2]
+    layout: PublisherLayoutNodeV2
+    filters: NotRequired[DashboardFilters]
+
+
 ReportLayoutNode: TypeAlias = (
     LayoutColumn
     | LayoutRow
@@ -2292,3 +2972,21 @@ class ReportPageBody(TypedDict):
     style: NotRequired[ReportBoxStyle]
     layout: ReportLayoutNode
     filters: NotRequired[DashboardFilters]
+
+
+class PublisherDocumentPageV2(TypedDict):
+    id: PublisherPageNodeIdV2
+    visible: NotRequired[bool]
+    kind: NotRequired[Literal['cover', 'section', 'content']]
+    page_size: NotRequired[PublisherPageSizeV2]
+    notes: NotRequired[str]
+    style: NotRequired[PublisherPageStyleV2]
+    layout: PublisherLayoutNodeV2
+    filters: NotRequired[DashboardFilters]
+
+
+class PublisherSectionV2(TypedDict):
+    id: PublisherPageNodeIdV2
+    title: NotRequired[str]
+    description: NotRequired[str]
+    pages: list[PublisherDocumentPageV2]

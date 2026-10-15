@@ -1153,6 +1153,7 @@ export type DashboardConfig = {
     widgetsOverlay?: Record<string, IDashboardWidgetOverlay>;
     isAiMode?: boolean;
     isAiGenerating?: boolean;
+    isAiWaiting?: boolean;
     exportId?: string;
     exportType?: "visual" | "slides";
     exportMetadata?: Record<string, string>;

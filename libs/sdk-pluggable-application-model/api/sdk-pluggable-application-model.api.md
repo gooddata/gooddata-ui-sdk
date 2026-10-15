@@ -9,6 +9,7 @@ import { IColorPalette } from '@gooddata/sdk-model';
 import { IEntitlementDescriptor } from '@gooddata/sdk-model';
 import { IGenAIUserContext } from '@gooddata/sdk-model';
 import { ILocale } from '@gooddata/sdk-model';
+import { IPublisherDocumentDefinition } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
 import { IUserSettings } from '@gooddata/sdk-model';
@@ -87,6 +88,15 @@ export interface IAiAssistantDashboardSavedEvent extends IPluggableAppEvent {
     };
     // (undocumented)
     readonly type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.DASHBOARD_SAVED";
+}
+
+// @alpha
+export interface IAiAssistantPublisherDocumentDefinition {
+    readonly baseDocumentId?: string;
+    readonly documentRef?: string;
+    readonly publisherDocument: IPublisherDocumentDefinition;
+    readonly refines?: string;
+    readonly reworksOpenDocument?: boolean;
 }
 
 // @alpha
@@ -387,6 +397,11 @@ export function isAiAssistantContextChangedEvent(obj: unknown): obj is IAiAssist
 
 // @alpha
 export function isAiAssistantDashboardSavedEvent(obj: unknown): obj is IAiAssistantDashboardSavedEvent;
+
+// @alpha
+export function isAiAssistantPublisherDocumentDefinition(obj: unknown): obj is Omit<IAiAssistantPublisherDocumentDefinition, "publisherDocument"> & {
+    readonly publisherDocument: unknown;
+};
 
 // @alpha
 export function isAiAssistantPublisherDocumentSavedEvent(obj: unknown): obj is IAiAssistantPublisherDocumentSavedEvent;

@@ -3,6 +3,7 @@
 import { v4 as uuidv4 } from "uuid";
 
 import {
+    type JsonApiAgentInAttributes,
     type JsonApiAgentInAttributesInstructionsInner,
     type JsonApiAgentInDocument,
     type JsonApiAgentPatchDocument,
@@ -38,6 +39,13 @@ function convertInstructionsToBackend(
     }));
 }
 
+function convertCustomSkillsToBackend(
+    customSkills: IAgent["customSkills"],
+): JsonApiAgentInAttributes["customSkills"] {
+    // The generated enum can lag behind the server, which accepts every AgentCustomSkill.
+    return customSkills as JsonApiAgentInAttributes["customSkills"];
+}
+
 export function convertAgentToBackend(agent: IAgent): JsonApiAgentInDocument {
     const relationships = buildRelationships(agent);
 
@@ -51,7 +59,7 @@ export function convertAgentToBackend(agent: IAgent): JsonApiAgentInDocument {
                 description: agent.description,
                 personality: agent.personality,
                 skillsMode: agent.skillsMode,
-                customSkills: agent.customSkills,
+                customSkills: convertCustomSkillsToBackend(agent.customSkills),
                 aiKnowledge: agent.aiKnowledge,
                 availableToAll: agent.availableToAll,
                 isPreview: agent.isPreview,
@@ -76,7 +84,7 @@ export function convertAgentPatchToBackend(agent: IAgentPatch): JsonApiAgentPatc
                     description: agent.description,
                     personality: agent.personality,
                     skillsMode: agent.skillsMode,
-                    customSkills: agent.customSkills,
+                    customSkills: convertCustomSkillsToBackend(agent.customSkills),
                     aiKnowledge: agent.aiKnowledge,
                     availableToAll: agent.availableToAll,
                     isPreview: agent.isPreview,

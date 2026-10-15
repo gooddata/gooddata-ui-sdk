@@ -28,13 +28,13 @@ import {
     UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
 import {
-    BuiltInPublisherPageLayouts,
+    DefaultPublisherPageTemplates,
     type IPublisherDocument,
     type IPublisherDocumentDefinition,
     type IPublisherDocumentTemplate,
     type IPublisherDocumentTemplateDefinition,
-    type IPublisherPageLayout,
-    type IPublisherPageLayoutDefinition,
+    type IPublisherPageTemplate,
+    type IPublisherPageTemplateDefinition,
     type ObjRef,
     areObjRefsEqual,
     objRefToString,
@@ -59,8 +59,8 @@ const auditInclude = ["createdBy" as const, "modifiedBy" as const];
 // The backend orders a never-modified object by its creation time.
 const byLastChange = ["modifiedAt,desc"];
 
-function findBuiltInPageLayout(ref: ObjRef): IPublisherPageLayout | undefined {
-    return BuiltInPublisherPageLayouts.find((layout) => areObjRefsEqual(layout.ref, ref));
+function findDefaultPageTemplate(ref: ObjRef): IPublisherPageTemplate | undefined {
+    return DefaultPublisherPageTemplates.find((layout) => areObjRefsEqual(layout.ref, ref));
 }
 
 export class TigerWorkspacePublisherService implements IWorkspacePublisherService {
@@ -69,7 +69,7 @@ export class TigerWorkspacePublisherService implements IWorkspacePublisherServic
         private readonly workspace: string,
     ) {}
 
-    public getPageLayouts = async (): Promise<IPublisherPageLayout[]> => {
+    public getPageTemplates = async (): Promise<IPublisherPageTemplate[]> => {
         const layouts = await this.authCall((client) =>
             ActionsUtilities.loadAllPages(({ page, size }) =>
                 EntitiesApi_GetAllEntitiesReportPageLayouts(client.axios, client.basePath, {
@@ -85,13 +85,13 @@ export class TigerWorkspacePublisherService implements IWorkspacePublisherServic
                 ),
             ),
         );
-        return [...BuiltInPublisherPageLayouts, ...layouts];
+        return [...DefaultPublisherPageTemplates, ...layouts];
     };
 
-    public getPageLayout = async (ref: ObjRef): Promise<IPublisherPageLayout> => {
-        const builtIn = findBuiltInPageLayout(ref);
-        if (builtIn) {
-            return builtIn;
+    public getPageTemplate = async (ref: ObjRef): Promise<IPublisherPageTemplate> => {
+        const defaultTemplate = findDefaultPageTemplate(ref);
+        if (defaultTemplate) {
+            return defaultTemplate;
         }
         const objectId = objRefToIdentifier(ref, this.authCall);
         return this.authCall(async (client) => {
@@ -105,10 +105,10 @@ export class TigerWorkspacePublisherService implements IWorkspacePublisherServic
         });
     };
 
-    public createPageLayout = async (
-        layout: IPublisherPageLayoutDefinition,
-    ): Promise<IPublisherPageLayout> => {
-        const id = this.newObjectId(layout.ref, "Page layout");
+    public createPageTemplate = async (
+        layout: IPublisherPageTemplateDefinition,
+    ): Promise<IPublisherPageTemplate> => {
+        const id = this.newObjectId(layout.ref, "Page template");
         return this.authCall(async (client) => {
             const response = await EntitiesApi_CreateEntityReportPageLayouts(client.axios, client.basePath, {
                 workspaceId: this.workspace,
@@ -125,8 +125,8 @@ export class TigerWorkspacePublisherService implements IWorkspacePublisherServic
         });
     };
 
-    public updatePageLayout = async (layout: IPublisherPageLayout): Promise<IPublisherPageLayout> => {
-        const objectId = this.editableObjectId(layout.ref, "Page layout");
+    public updatePageTemplate = async (layout: IPublisherPageTemplate): Promise<IPublisherPageTemplate> => {
+        const objectId = this.editableObjectId(layout.ref, "Page template");
         return this.authCall(async (client) => {
             const response = await EntitiesApi_UpdateEntityReportPageLayouts(client.axios, client.basePath, {
                 workspaceId: this.workspace,
@@ -144,8 +144,8 @@ export class TigerWorkspacePublisherService implements IWorkspacePublisherServic
         });
     };
 
-    public deletePageLayout = async (ref: ObjRef): Promise<void> => {
-        const objectId = this.editableObjectId(ref, "Page layout");
+    public deletePageTemplate = async (ref: ObjRef): Promise<void> => {
+        const objectId = this.editableObjectId(ref, "Page template");
         await this.authCall((client) =>
             EntitiesApi_DeleteEntityReportPageLayouts(client.axios, client.basePath, {
                 workspaceId: this.workspace,
@@ -351,18 +351,20 @@ export class TigerWorkspacePublisherService implements IWorkspacePublisherServic
         if (!ref) {
             return uuidv4();
         }
-        this.assertNotBuiltIn(ref, what);
+        this.assertNotDefault(ref, what);
         return objRefToIdentifier(ref, this.authCall);
     }
 
     private editableObjectId(ref: ObjRef, what: string): string {
-        this.assertNotBuiltIn(ref, what);
+        this.assertNotDefault(ref, what);
         return objRefToIdentifier(ref, this.authCall);
     }
 
-    private assertNotBuiltIn(ref: ObjRef, what: string): void {
-        if (findBuiltInPageLayout(ref)) {
-            throw new UnexpectedError(`${what} "${objRefToString(ref)}" is built-in and cannot be changed.`);
+    private assertNotDefault(ref: ObjRef, what: string): void {
+        if (findDefaultPageTemplate(ref)) {
+            throw new UnexpectedError(
+                `${what} "${objRefToString(ref)}" is one of the defaults and cannot be changed.`,
+            );
         }
     }
 }

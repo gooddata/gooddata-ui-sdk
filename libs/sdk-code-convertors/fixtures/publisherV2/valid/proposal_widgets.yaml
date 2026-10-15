@@ -1,0 +1,101 @@
+type: page_template
+id: proposal_widgets
+version: "2"
+title: Widget examples from the page templates proposal
+content:
+    layout:
+        type: column
+        children:
+            - type: title
+              id: pageTitle
+              proportion: 2
+              markdown: Revenue grew **12 %** in {documentDateRange}
+              placeholder:
+                  hint: Page title
+              style:
+                  text_style: title
+                  vertical_align: bottom
+            - type: heading
+              id: emeaHeading
+              markdown: EMEA, *preliminary*
+              style:
+                  text_style: h3
+                  text_color: "{theme.colors.texts.muted}"
+            - type: text
+              id: summary
+              markdown: |-
+                  Revenue grew in every region.
+
+                  - **EMEA** led with +18 %
+                  - Americas held flat
+              placeholder:
+                  hint: Add a summary
+              style:
+                  text_style: normalText
+                  text_overflow: shrink
+            - type: image
+              id: productPhoto
+              source: https://cdn.example.com/{brandName}/hero.png
+              alt_text: "{brandName} spring collection"
+              style:
+                  fit: cover
+                  vertical_align: top
+                  border_radius: 16
+            - type: visualization
+              id: widget1
+              visualization: revenue_by_month
+              title:
+                  visible: true
+                  text: Revenue by month, {documentDateRange}
+              alt_text: Monthly revenue from January to June
+              date: date
+              placeholder:
+                  hint: Add a visualization
+                  required: true
+            - type: visualization
+              id: widget2
+              proportion: 2
+              title:
+                  visible: true
+                  style:
+                      text_style: h5
+                      text_color: "{theme.colors.texts.muted}"
+              display:
+                  legend:
+                      visible: true
+                      position: bottom
+                  y_axis:
+                      name:
+                          visible: false
+                  gridlines:
+                      visible: false
+                  data_labels:
+                      visible: auto
+              style:
+                  background_color: "{theme.colors.backgrounds.surface}"
+                  padding: 24
+                  border_radius: 16
+                  shadow: "{theme.shadows.small}"
+                  chart:
+                      font_size: 20
+                      axis_value_color: "{theme.colors.texts.muted}"
+            - type: takeaway
+              id: takeaway
+              proportion: 2
+              title:
+                  text: Key takeaway
+              generation:
+                  instructions: Prompt
+                  context:
+                      widgets:
+                          - widget1
+                          - widget2
+              placeholder:
+                  hint: Generate a takeaway
+              style:
+                  background_color: "{theme.colors.backgrounds.accent}"
+                  background_opacity: 0.08
+                  border_left_width: 8
+                  border_left_color: "{theme.colors.lines.accent}"
+                  padding: 32
+                  text_style: largeText

@@ -13,8 +13,8 @@ import {
     type IPublisherDocument,
     type IPublisherDocumentContent,
     type IPublisherDocumentTemplate,
-    type IPublisherPageLayout,
-    type IPublisherPageLayoutContent,
+    type IPublisherPageTemplate,
+    type IPublisherPageTemplateContent,
     idRef,
 } from "@gooddata/sdk-model";
 
@@ -30,14 +30,14 @@ function asContent<T>(content: object): T {
 export function convertPublisherPageLayout(
     entity: JsonApiReportPageLayoutOut | JsonApiReportPageLayoutOutWithLinks,
     included: JsonApiUserIdentifierOutWithLinks[] = [],
-): IPublisherPageLayout {
+): IPublisherPageTemplate {
     return {
         type: "reportPageLayout",
         ref: idRef(entity.id, "reportPageLayout"),
         title: entity.attributes.title,
         description: entity.attributes.description,
         tags: entity.attributes.tags,
-        content: asContent<IPublisherPageLayoutContent>(entity.attributes.content),
+        content: asContent<IPublisherPageTemplateContent>(entity.attributes.content),
         isLocked: isInheritedObject(entity),
         created: entity.attributes.createdAt ?? undefined,
         updated: entity.attributes.modifiedAt ?? undefined,

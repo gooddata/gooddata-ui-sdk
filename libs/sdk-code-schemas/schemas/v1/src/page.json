@@ -1,0 +1,1687 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "PageCommonV2",
+    "description": "Page body, layout and widgets shared by documents, document templates and page templates",
+    "$defs": {
+        "publisherEntityTitleV2": {
+            "$id": "/gaac/publisherEntityTitleV2",
+            "title": "Publisher Entity Title V2",
+            "description": "A human readable title.",
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255
+        },
+        "publisherEntityDescriptionV2": {
+            "$id": "/gaac/publisherEntityDescriptionV2",
+            "title": "Publisher Entity Description V2",
+            "description": "An optional description.",
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 10000
+        },
+        "publisherEntityTagsV2": {
+            "$id": "/gaac/publisherEntityTagsV2",
+            "title": "Publisher Entity Tags V2",
+            "description": "A list of strings - metadata tags.",
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+                "type": "string",
+                "minLength": 1
+            }
+        },
+        "publisherPageNodeIdV2": {
+            "$id": "/gaac/publisherPageNodeIdV2",
+            "title": "Publisher Page Node Id V2",
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.-]{1,64}$"
+        },
+        "publisherPxV2": {
+            "$id": "/gaac/publisherPxV2",
+            "title": "Publisher Px V2",
+            "type": "number",
+            "minimum": 0,
+            "description": "Pixels on the page's design canvas (1920 x 1080 for widescreen)."
+        },
+        "publisherOpacityV2": {
+            "$id": "/gaac/publisherOpacityV2",
+            "title": "Publisher Opacity V2",
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+        },
+        "publisherPageProportionV2": {
+            "$id": "/gaac/publisherPageProportionV2",
+            "title": "Publisher Page Proportion V2",
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Share of the parent container this node takes, relative to its siblings. Defaults to 1."
+        },
+        "publisherColorValueV2": {
+            "$id": "/gaac/publisherColorValueV2",
+            "title": "Publisher Color Value V2",
+            "type": "string",
+            "pattern": "^(#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|rgb\\(\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*(,\\s*\\d*\\.?\\d+\\s*)?\\)|\\{theme\\.(colors\\.(backgrounds|texts|lines)\\.[A-Za-z0-9_-]+|palette\\.(primary|success|error|warning))\\})$",
+            "description": "A theme color reference such as {theme.palette.primary}, or #rgb, #rrggbb, #rrggbbaa, or rgb() with 3 or 4 arguments."
+        },
+        "publisherImageSourceV2": {
+            "$id": "/gaac/publisherImageSourceV2",
+            "title": "Publisher Image Source V2",
+            "type": "string",
+            "pattern": "^(\\{theme\\.(logo|coverImage|assets\\.(logos|images)\\.[A-Za-z0-9_-]+)\\}|https://\\S+)$",
+            "description": "A theme image reference such as {theme.logo}, or an https URL, which may contain text variables."
+        },
+        "publisherShadowValueV2": {
+            "$id": "/gaac/publisherShadowValueV2",
+            "title": "Publisher Shadow Value V2",
+            "type": "string",
+            "pattern": "^(none|\\{theme\\.shadows\\.[A-Za-z0-9_-]+\\})$",
+            "description": "\"none\" or a {theme.shadows.<name>} reference."
+        },
+        "publisherGapValueV2": {
+            "$id": "/gaac/publisherGapValueV2",
+            "title": "Publisher Gap Value V2",
+            "description": "Space between children, in pixels or as a theme spacing reference.",
+            "oneOf": [
+                {
+                    "type": "number",
+                    "minimum": 0
+                },
+                {
+                    "type": "string",
+                    "enum": [
+                        "{theme.spacing.gap.compact}",
+                        "{theme.spacing.gap.normal}",
+                        "{theme.spacing.gap.spacious}"
+                    ]
+                }
+            ]
+        },
+        "publisherPaddingValueV2": {
+            "$id": "/gaac/publisherPaddingValueV2",
+            "title": "Publisher Padding Value V2",
+            "description": "Inner spacing, in pixels or as a theme spacing reference.",
+            "oneOf": [
+                {
+                    "type": "number",
+                    "minimum": 0
+                },
+                {
+                    "type": "string",
+                    "enum": [
+                        "{theme.spacing.padding.compact}",
+                        "{theme.spacing.padding.normal}",
+                        "{theme.spacing.padding.spacious}"
+                    ]
+                }
+            ]
+        },
+        "publisherRadiusValueV2": {
+            "$id": "/gaac/publisherRadiusValueV2",
+            "title": "Publisher Radius Value V2",
+            "description": "Corner radius, in pixels or as a theme corner reference.",
+            "oneOf": [
+                {
+                    "type": "number",
+                    "minimum": 0
+                },
+                {
+                    "type": "string",
+                    "enum": [
+                        "{theme.corners.small}",
+                        "{theme.corners.medium}",
+                        "{theme.corners.large}",
+                        "{theme.corners.full}"
+                    ]
+                }
+            ]
+        },
+        "publisherHorizontalAlignV2": {
+            "$id": "/gaac/publisherHorizontalAlignV2",
+            "title": "Publisher Horizontal Align V2",
+            "type": "string",
+            "enum": ["left", "center", "right"]
+        },
+        "publisherVerticalAlignV2": {
+            "$id": "/gaac/publisherVerticalAlignV2",
+            "title": "Publisher Vertical Align V2",
+            "type": "string",
+            "enum": ["top", "center", "bottom"]
+        },
+        "publisherBorderLineStyleV2": {
+            "$id": "/gaac/publisherBorderLineStyleV2",
+            "title": "Publisher Border Line Style V2",
+            "type": "string",
+            "enum": ["solid", "dashed", "dotted", "none"]
+        },
+        "publisherTextStyleNameV2": {
+            "$id": "/gaac/publisherTextStyleNameV2",
+            "title": "Publisher Text Style Name V2",
+            "type": "string",
+            "enum": ["title", "h1", "h2", "h3", "h4", "h5", "h6", "largeText", "normalText", "smallText"],
+            "description": "Named text style from the theme."
+        },
+        "publisherPageSizeV2": {
+            "$id": "/gaac/publisherPageSizeV2",
+            "title": "Publisher Page Size V2",
+            "type": "string",
+            "enum": ["widescreen"],
+            "description": "The widescreen design canvas is 1920 x 1080 px."
+        },
+        "publisherPageStyleV2": {
+            "$id": "/gaac/publisherPageStyleV2",
+            "title": "Publisher Page Style V2",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "background_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "background_opacity": {
+                    "$ref": "/gaac/publisherOpacityV2"
+                },
+                "background_image": {
+                    "$ref": "/gaac/publisherImageSourceV2"
+                },
+                "background_image_opacity": {
+                    "$ref": "/gaac/publisherOpacityV2"
+                },
+                "background_fit": {
+                    "type": "string",
+                    "enum": ["cover", "contain", "fill", "tile"]
+                },
+                "background_horizontal_align": {
+                    "$ref": "/gaac/publisherHorizontalAlignV2"
+                },
+                "background_vertical_align": {
+                    "$ref": "/gaac/publisherVerticalAlignV2"
+                },
+                "background_offset": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "background_offset_top": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "background_offset_right": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "background_offset_bottom": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "background_offset_left": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "padding": {
+                    "$ref": "/gaac/publisherPaddingValueV2"
+                },
+                "padding_top": {
+                    "$ref": "/gaac/publisherPaddingValueV2"
+                },
+                "padding_right": {
+                    "$ref": "/gaac/publisherPaddingValueV2"
+                },
+                "padding_bottom": {
+                    "$ref": "/gaac/publisherPaddingValueV2"
+                },
+                "padding_left": {
+                    "$ref": "/gaac/publisherPaddingValueV2"
+                },
+                "text_style": {
+                    "$ref": "/gaac/publisherTextStyleNameV2"
+                },
+                "text_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "horizontal_align": {
+                    "type": "string",
+                    "enum": ["left", "center", "right", "justify"]
+                },
+                "vertical_align": {
+                    "$ref": "/gaac/publisherVerticalAlignV2"
+                },
+                "gap": {
+                    "$ref": "/gaac/publisherGapValueV2"
+                }
+            }
+        },
+        "publisherContainerStyleV2": {
+            "$id": "/gaac/publisherContainerStyleV2",
+            "title": "Publisher Container Style V2",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "background_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "background_opacity": {
+                    "$ref": "/gaac/publisherOpacityV2"
+                },
+                "background_image": {
+                    "$ref": "/gaac/publisherImageSourceV2"
+                },
+                "background_image_opacity": {
+                    "$ref": "/gaac/publisherOpacityV2"
+                },
+                "background_fit": {
+                    "type": "string",
+                    "enum": ["cover", "contain", "fill", "tile"]
+                },
+                "background_horizontal_align": {
+                    "$ref": "/gaac/publisherHorizontalAlignV2"
+                },
+                "background_vertical_align": {
+                    "$ref": "/gaac/publisherVerticalAlignV2"
+                },
+                "background_offset": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "background_offset_top": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "background_offset_right": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "background_offset_bottom": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "background_offset_left": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "padding": {
+                    "$ref": "/gaac/publisherPaddingValueV2"
+                },
+                "padding_top": {
+                    "$ref": "/gaac/publisherPaddingValueV2"
+                },
+                "padding_right": {
+                    "$ref": "/gaac/publisherPaddingValueV2"
+                },
+                "padding_bottom": {
+                    "$ref": "/gaac/publisherPaddingValueV2"
+                },
+                "padding_left": {
+                    "$ref": "/gaac/publisherPaddingValueV2"
+                },
+                "border_width": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "border_style": {
+                    "$ref": "/gaac/publisherBorderLineStyleV2"
+                },
+                "border_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "border_top_width": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "border_top_style": {
+                    "$ref": "/gaac/publisherBorderLineStyleV2"
+                },
+                "border_top_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "border_right_width": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "border_right_style": {
+                    "$ref": "/gaac/publisherBorderLineStyleV2"
+                },
+                "border_right_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "border_bottom_width": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "border_bottom_style": {
+                    "$ref": "/gaac/publisherBorderLineStyleV2"
+                },
+                "border_bottom_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "border_left_width": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "border_left_style": {
+                    "$ref": "/gaac/publisherBorderLineStyleV2"
+                },
+                "border_left_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "border_radius": {
+                    "$ref": "/gaac/publisherRadiusValueV2"
+                },
+                "border_top_left_radius": {
+                    "$ref": "/gaac/publisherRadiusValueV2"
+                },
+                "border_top_right_radius": {
+                    "$ref": "/gaac/publisherRadiusValueV2"
+                },
+                "border_bottom_right_radius": {
+                    "$ref": "/gaac/publisherRadiusValueV2"
+                },
+                "border_bottom_left_radius": {
+                    "$ref": "/gaac/publisherRadiusValueV2"
+                },
+                "shadow": {
+                    "$ref": "/gaac/publisherShadowValueV2"
+                },
+                "shadow_x": {
+                    "type": "number"
+                },
+                "shadow_y": {
+                    "type": "number"
+                },
+                "shadow_blur": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "shadow_spread": {
+                    "type": "number"
+                },
+                "shadow_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "shadow_opacity": {
+                    "$ref": "/gaac/publisherOpacityV2"
+                },
+                "opacity": {
+                    "$ref": "/gaac/publisherOpacityV2"
+                },
+                "text_style": {
+                    "$ref": "/gaac/publisherTextStyleNameV2"
+                },
+                "text_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "horizontal_align": {
+                    "type": "string",
+                    "enum": ["left", "center", "right", "justify"]
+                },
+                "vertical_align": {
+                    "$ref": "/gaac/publisherVerticalAlignV2"
+                },
+                "gap": {
+                    "$ref": "/gaac/publisherGapValueV2"
+                }
+            }
+        },
+        "publisherTextStyleV2": {
+            "$id": "/gaac/publisherTextStyleV2",
+            "title": "Publisher Text Style V2",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "text_style": {
+                    "$ref": "/gaac/publisherTextStyleNameV2"
+                },
+                "text_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "horizontal_align": {
+                    "type": "string",
+                    "enum": ["left", "center", "right", "justify"]
+                },
+                "vertical_align": {
+                    "$ref": "/gaac/publisherVerticalAlignV2"
+                },
+                "font_size": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "font_weight": {
+                    "type": "number",
+                    "minimum": 1,
+                    "maximum": 1000
+                },
+                "font_style": {
+                    "type": "string",
+                    "enum": ["normal", "italic"]
+                },
+                "line_height": {
+                    "type": "number"
+                },
+                "letter_spacing": {
+                    "type": "number"
+                },
+                "text_transform": {
+                    "type": "string",
+                    "enum": ["none", "uppercase", "lowercase", "capitalize"]
+                },
+                "text_overflow": {
+                    "type": "string",
+                    "enum": ["shrink", "clip", "ellipsis"]
+                }
+            }
+        },
+        "publisherTextWidgetStyleV2": {
+            "$id": "/gaac/publisherTextWidgetStyleV2",
+            "title": "Publisher Text Widget Style V2",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "background_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "background_opacity": {
+                    "$ref": "/gaac/publisherOpacityV2"
+                },
+                "background_image": {
+                    "$ref": "/gaac/publisherImageSourceV2"
+                },
+                "background_image_opacity": {
+                    "$ref": "/gaac/publisherOpacityV2"
+                },
+                "background_fit": {
+                    "type": "string",
+                    "enum": ["cover", "contain", "fill", "tile"]
+                },
+                "background_horizontal_align": {
+                    "$ref": "/gaac/publisherHorizontalAlignV2"
+                },
+                "background_vertical_align": {
+                    "$ref": "/gaac/publisherVerticalAlignV2"
+                },
+                "background_offset": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "background_offset_top": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "background_offset_right": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "background_offset_bottom": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "background_offset_left": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "padding": {
+                    "$ref": "/gaac/publisherPaddingValueV2"
+                },
+                "padding_top": {
+                    "$ref": "/gaac/publisherPaddingValueV2"
+                },
+                "padding_right": {
+                    "$ref": "/gaac/publisherPaddingValueV2"
+                },
+                "padding_bottom": {
+                    "$ref": "/gaac/publisherPaddingValueV2"
+                },
+                "padding_left": {
+                    "$ref": "/gaac/publisherPaddingValueV2"
+                },
+                "border_width": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "border_style": {
+                    "$ref": "/gaac/publisherBorderLineStyleV2"
+                },
+                "border_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "border_top_width": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "border_top_style": {
+                    "$ref": "/gaac/publisherBorderLineStyleV2"
+                },
+                "border_top_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "border_right_width": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "border_right_style": {
+                    "$ref": "/gaac/publisherBorderLineStyleV2"
+                },
+                "border_right_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "border_bottom_width": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "border_bottom_style": {
+                    "$ref": "/gaac/publisherBorderLineStyleV2"
+                },
+                "border_bottom_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "border_left_width": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "border_left_style": {
+                    "$ref": "/gaac/publisherBorderLineStyleV2"
+                },
+                "border_left_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "border_radius": {
+                    "$ref": "/gaac/publisherRadiusValueV2"
+                },
+                "border_top_left_radius": {
+                    "$ref": "/gaac/publisherRadiusValueV2"
+                },
+                "border_top_right_radius": {
+                    "$ref": "/gaac/publisherRadiusValueV2"
+                },
+                "border_bottom_right_radius": {
+                    "$ref": "/gaac/publisherRadiusValueV2"
+                },
+                "border_bottom_left_radius": {
+                    "$ref": "/gaac/publisherRadiusValueV2"
+                },
+                "shadow": {
+                    "$ref": "/gaac/publisherShadowValueV2"
+                },
+                "shadow_x": {
+                    "type": "number"
+                },
+                "shadow_y": {
+                    "type": "number"
+                },
+                "shadow_blur": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "shadow_spread": {
+                    "type": "number"
+                },
+                "shadow_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "shadow_opacity": {
+                    "$ref": "/gaac/publisherOpacityV2"
+                },
+                "opacity": {
+                    "$ref": "/gaac/publisherOpacityV2"
+                },
+                "text_style": {
+                    "$ref": "/gaac/publisherTextStyleNameV2"
+                },
+                "text_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "horizontal_align": {
+                    "type": "string",
+                    "enum": ["left", "center", "right", "justify"]
+                },
+                "vertical_align": {
+                    "$ref": "/gaac/publisherVerticalAlignV2"
+                },
+                "font_size": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "font_weight": {
+                    "type": "number",
+                    "minimum": 1,
+                    "maximum": 1000
+                },
+                "font_style": {
+                    "type": "string",
+                    "enum": ["normal", "italic"]
+                },
+                "line_height": {
+                    "type": "number"
+                },
+                "letter_spacing": {
+                    "type": "number"
+                },
+                "text_transform": {
+                    "type": "string",
+                    "enum": ["none", "uppercase", "lowercase", "capitalize"]
+                },
+                "text_overflow": {
+                    "type": "string",
+                    "enum": ["shrink", "clip", "ellipsis"]
+                }
+            }
+        },
+        "publisherImageWidgetStyleV2": {
+            "$id": "/gaac/publisherImageWidgetStyleV2",
+            "title": "Publisher Image Widget Style V2",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "background_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "background_opacity": {
+                    "$ref": "/gaac/publisherOpacityV2"
+                },
+                "background_image": {
+                    "$ref": "/gaac/publisherImageSourceV2"
+                },
+                "background_image_opacity": {
+                    "$ref": "/gaac/publisherOpacityV2"
+                },
+                "background_fit": {
+                    "type": "string",
+                    "enum": ["cover", "contain", "fill", "tile"]
+                },
+                "background_horizontal_align": {
+                    "$ref": "/gaac/publisherHorizontalAlignV2"
+                },
+                "background_vertical_align": {
+                    "$ref": "/gaac/publisherVerticalAlignV2"
+                },
+                "background_offset": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "background_offset_top": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "background_offset_right": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "background_offset_bottom": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "background_offset_left": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "padding": {
+                    "$ref": "/gaac/publisherPaddingValueV2"
+                },
+                "padding_top": {
+                    "$ref": "/gaac/publisherPaddingValueV2"
+                },
+                "padding_right": {
+                    "$ref": "/gaac/publisherPaddingValueV2"
+                },
+                "padding_bottom": {
+                    "$ref": "/gaac/publisherPaddingValueV2"
+                },
+                "padding_left": {
+                    "$ref": "/gaac/publisherPaddingValueV2"
+                },
+                "border_width": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "border_style": {
+                    "$ref": "/gaac/publisherBorderLineStyleV2"
+                },
+                "border_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "border_top_width": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "border_top_style": {
+                    "$ref": "/gaac/publisherBorderLineStyleV2"
+                },
+                "border_top_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "border_right_width": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "border_right_style": {
+                    "$ref": "/gaac/publisherBorderLineStyleV2"
+                },
+                "border_right_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "border_bottom_width": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "border_bottom_style": {
+                    "$ref": "/gaac/publisherBorderLineStyleV2"
+                },
+                "border_bottom_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "border_left_width": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "border_left_style": {
+                    "$ref": "/gaac/publisherBorderLineStyleV2"
+                },
+                "border_left_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "border_radius": {
+                    "$ref": "/gaac/publisherRadiusValueV2"
+                },
+                "border_top_left_radius": {
+                    "$ref": "/gaac/publisherRadiusValueV2"
+                },
+                "border_top_right_radius": {
+                    "$ref": "/gaac/publisherRadiusValueV2"
+                },
+                "border_bottom_right_radius": {
+                    "$ref": "/gaac/publisherRadiusValueV2"
+                },
+                "border_bottom_left_radius": {
+                    "$ref": "/gaac/publisherRadiusValueV2"
+                },
+                "shadow": {
+                    "$ref": "/gaac/publisherShadowValueV2"
+                },
+                "shadow_x": {
+                    "type": "number"
+                },
+                "shadow_y": {
+                    "type": "number"
+                },
+                "shadow_blur": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "shadow_spread": {
+                    "type": "number"
+                },
+                "shadow_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "shadow_opacity": {
+                    "$ref": "/gaac/publisherOpacityV2"
+                },
+                "opacity": {
+                    "$ref": "/gaac/publisherOpacityV2"
+                },
+                "fit": {
+                    "type": "string",
+                    "enum": ["contain", "cover", "fill"]
+                },
+                "horizontal_align": {
+                    "$ref": "/gaac/publisherHorizontalAlignV2"
+                },
+                "vertical_align": {
+                    "$ref": "/gaac/publisherVerticalAlignV2"
+                }
+            }
+        },
+        "publisherChartStyleV2": {
+            "title": "Publisher Chart Style V2",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "font_size": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "text_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "axis_line_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "axis_name_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "axis_name_size": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "axis_value_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "axis_value_size": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "grid_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "plot_line_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "legend_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "legend_size": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "data_label_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "data_label_size": {
+                    "$ref": "/gaac/publisherPxV2"
+                }
+            }
+        },
+        "publisherTableStyleV2": {
+            "title": "Publisher Table Style V2",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "font_size": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "row_height": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "grid_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "value_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "null_value_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "header_label_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "header_background_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "total_value_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "total_background_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "subtotal_background_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                }
+            }
+        },
+        "publisherHeadlineStyleV2": {
+            "title": "Publisher Headline Style V2",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "primary_value_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "primary_value_size": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "secondary_value_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "secondary_value_size": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "positive_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "negative_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                }
+            }
+        },
+        "publisherVisualizationStyleV2": {
+            "$id": "/gaac/publisherVisualizationStyleV2",
+            "title": "Publisher Visualization Style V2",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "background_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "background_opacity": {
+                    "$ref": "/gaac/publisherOpacityV2"
+                },
+                "background_image": {
+                    "$ref": "/gaac/publisherImageSourceV2"
+                },
+                "background_image_opacity": {
+                    "$ref": "/gaac/publisherOpacityV2"
+                },
+                "background_fit": {
+                    "type": "string",
+                    "enum": ["cover", "contain", "fill", "tile"]
+                },
+                "background_horizontal_align": {
+                    "$ref": "/gaac/publisherHorizontalAlignV2"
+                },
+                "background_vertical_align": {
+                    "$ref": "/gaac/publisherVerticalAlignV2"
+                },
+                "background_offset": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "background_offset_top": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "background_offset_right": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "background_offset_bottom": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "background_offset_left": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "padding": {
+                    "$ref": "/gaac/publisherPaddingValueV2"
+                },
+                "padding_top": {
+                    "$ref": "/gaac/publisherPaddingValueV2"
+                },
+                "padding_right": {
+                    "$ref": "/gaac/publisherPaddingValueV2"
+                },
+                "padding_bottom": {
+                    "$ref": "/gaac/publisherPaddingValueV2"
+                },
+                "padding_left": {
+                    "$ref": "/gaac/publisherPaddingValueV2"
+                },
+                "border_width": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "border_style": {
+                    "$ref": "/gaac/publisherBorderLineStyleV2"
+                },
+                "border_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "border_top_width": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "border_top_style": {
+                    "$ref": "/gaac/publisherBorderLineStyleV2"
+                },
+                "border_top_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "border_right_width": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "border_right_style": {
+                    "$ref": "/gaac/publisherBorderLineStyleV2"
+                },
+                "border_right_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "border_bottom_width": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "border_bottom_style": {
+                    "$ref": "/gaac/publisherBorderLineStyleV2"
+                },
+                "border_bottom_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "border_left_width": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "border_left_style": {
+                    "$ref": "/gaac/publisherBorderLineStyleV2"
+                },
+                "border_left_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "border_radius": {
+                    "$ref": "/gaac/publisherRadiusValueV2"
+                },
+                "border_top_left_radius": {
+                    "$ref": "/gaac/publisherRadiusValueV2"
+                },
+                "border_top_right_radius": {
+                    "$ref": "/gaac/publisherRadiusValueV2"
+                },
+                "border_bottom_right_radius": {
+                    "$ref": "/gaac/publisherRadiusValueV2"
+                },
+                "border_bottom_left_radius": {
+                    "$ref": "/gaac/publisherRadiusValueV2"
+                },
+                "shadow": {
+                    "$ref": "/gaac/publisherShadowValueV2"
+                },
+                "shadow_x": {
+                    "type": "number"
+                },
+                "shadow_y": {
+                    "type": "number"
+                },
+                "shadow_blur": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "shadow_spread": {
+                    "type": "number"
+                },
+                "shadow_color": {
+                    "$ref": "/gaac/publisherColorValueV2"
+                },
+                "shadow_opacity": {
+                    "$ref": "/gaac/publisherOpacityV2"
+                },
+                "opacity": {
+                    "$ref": "/gaac/publisherOpacityV2"
+                },
+                "chart": {
+                    "$ref": "#/$defs/publisherChartStyleV2"
+                },
+                "table": {
+                    "$ref": "#/$defs/publisherTableStyleV2"
+                },
+                "headline": {
+                    "$ref": "#/$defs/publisherHeadlineStyleV2"
+                }
+            }
+        },
+        "publisherWidgetPlaceholderV2": {
+            "$id": "/gaac/publisherWidgetPlaceholderV2",
+            "title": "Publisher Widget Placeholder V2",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "hint": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Authoring hint shown in the empty widget."
+                },
+                "required": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "publisherWidgetTitleV2": {
+            "$id": "/gaac/publisherWidgetTitleV2",
+            "title": "Publisher Widget Title V2",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "visible": {
+                    "type": "boolean"
+                },
+                "text": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "style": {
+                    "$ref": "/gaac/publisherTextStyleV2"
+                }
+            }
+        },
+        "publisherTakeawayGenerationV2": {
+            "$id": "/gaac/publisherTakeawayGenerationV2",
+            "title": "Publisher Takeaway Generation V2",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "instructions": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Instructions the takeaway is generated with."
+                },
+                "context": {
+                    "title": "Publisher Takeaway Context V2",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "widgets": {
+                            "type": "array",
+                            "description": "Ids of the widgets on this page the takeaway is generated from.",
+                            "items": {
+                                "$ref": "/gaac/publisherPageNodeIdV2"
+                            }
+                        },
+                        "page_title": {
+                            "type": "boolean"
+                        },
+                        "filters": {
+                            "type": "boolean"
+                        },
+                        "other_pages": {
+                            "type": "boolean"
+                        }
+                    }
+                }
+            }
+        },
+        "publisherAxisDisplayV2": {
+            "title": "Publisher Axis Display V2",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "visible": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "title": "Publisher Axis Name Display V2",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "visible": {
+                            "type": "boolean"
+                        },
+                        "position": {
+                            "type": "string",
+                            "enum": ["low", "middle", "high"]
+                        }
+                    }
+                },
+                "values": {
+                    "title": "Publisher Axis Values Display V2",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "visible": {
+                            "type": "boolean"
+                        },
+                        "rotation": {
+                            "type": "number",
+                            "minimum": -90,
+                            "maximum": 90
+                        }
+                    }
+                },
+                "min": {
+                    "type": "number"
+                },
+                "max": {
+                    "type": "number"
+                }
+            }
+        },
+        "publisherVisualizationDisplayV2": {
+            "title": "Publisher Visualization Display V2",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "legend": {
+                    "title": "Publisher Legend Display V2",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "visible": {
+                            "type": "boolean"
+                        },
+                        "position": {
+                            "type": "string",
+                            "enum": ["auto", "top", "bottom", "left", "right"]
+                        }
+                    }
+                },
+                "x_axis": {
+                    "$ref": "#/$defs/publisherAxisDisplayV2"
+                },
+                "y_axis": {
+                    "$ref": "#/$defs/publisherAxisDisplayV2"
+                },
+                "secondary_y_axis": {
+                    "$ref": "#/$defs/publisherAxisDisplayV2"
+                },
+                "gridlines": {
+                    "title": "Publisher Visibility V2",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "visible": {
+                            "type": "boolean"
+                        }
+                    }
+                },
+                "data_labels": {
+                    "title": "Publisher Auto Visibility V2",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "visible": {
+                            "oneOf": [
+                                {
+                                    "type": "boolean"
+                                },
+                                {
+                                    "type": "string",
+                                    "enum": ["auto"]
+                                }
+                            ]
+                        }
+                    }
+                },
+                "data_points": {
+                    "title": "Publisher Auto Visibility V2",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "visible": {
+                            "oneOf": [
+                                {
+                                    "type": "boolean"
+                                },
+                                {
+                                    "type": "string",
+                                    "enum": ["auto"]
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "publisherTitleWidgetV2": {
+            "title": "Publisher Title Widget V2",
+            "type": "object",
+            "additionalProperties": false,
+            "description": "The page title. At most one per page.",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["title"]
+                },
+                "id": {
+                    "$ref": "/gaac/publisherPageNodeIdV2",
+                    "description": "Unique within the page."
+                },
+                "proportion": {
+                    "$ref": "/gaac/publisherPageProportionV2"
+                },
+                "placeholder": {
+                    "$ref": "/gaac/publisherWidgetPlaceholderV2"
+                },
+                "locked": {
+                    "type": "boolean"
+                },
+                "markdown": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Inline markdown only: strong, emphasis, highlight, strike, links and line breaks."
+                },
+                "style": {
+                    "$ref": "/gaac/publisherTextWidgetStyleV2"
+                }
+            },
+            "required": ["type", "id"]
+        },
+        "publisherHeadingWidgetV2": {
+            "title": "Publisher Heading Widget V2",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["heading"]
+                },
+                "id": {
+                    "$ref": "/gaac/publisherPageNodeIdV2",
+                    "description": "Unique within the page."
+                },
+                "proportion": {
+                    "$ref": "/gaac/publisherPageProportionV2"
+                },
+                "placeholder": {
+                    "$ref": "/gaac/publisherWidgetPlaceholderV2"
+                },
+                "locked": {
+                    "type": "boolean"
+                },
+                "markdown": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Inline markdown only."
+                },
+                "level": {
+                    "type": "integer",
+                    "enum": [1, 2, 3, 4, 5, 6],
+                    "description": "Defaults to 1."
+                },
+                "style": {
+                    "$ref": "/gaac/publisherTextWidgetStyleV2"
+                }
+            },
+            "required": ["type", "id"]
+        },
+        "publisherTextWidgetV2": {
+            "title": "Publisher Text Widget V2",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["text"]
+                },
+                "id": {
+                    "$ref": "/gaac/publisherPageNodeIdV2",
+                    "description": "Unique within the page."
+                },
+                "proportion": {
+                    "$ref": "/gaac/publisherPageProportionV2"
+                },
+                "placeholder": {
+                    "$ref": "/gaac/publisherWidgetPlaceholderV2"
+                },
+                "locked": {
+                    "type": "boolean"
+                },
+                "markdown": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Full markdown: paragraphs, lists, quotes and headings."
+                },
+                "decorative": {
+                    "type": "boolean",
+                    "description": "Page furniture such as page numbers: kept out of the accessibility tree, PDF tags and AI context."
+                },
+                "style": {
+                    "$ref": "/gaac/publisherTextWidgetStyleV2"
+                }
+            },
+            "required": ["type", "id"]
+        },
+        "publisherImageWidgetV2": {
+            "title": "Publisher Image Widget V2",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["image"]
+                },
+                "id": {
+                    "$ref": "/gaac/publisherPageNodeIdV2",
+                    "description": "Unique within the page."
+                },
+                "proportion": {
+                    "$ref": "/gaac/publisherPageProportionV2"
+                },
+                "placeholder": {
+                    "$ref": "/gaac/publisherWidgetPlaceholderV2"
+                },
+                "locked": {
+                    "type": "boolean"
+                },
+                "source": {
+                    "$ref": "/gaac/publisherImageSourceV2"
+                },
+                "alt_text": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "decorative": {
+                    "type": "boolean",
+                    "description": "A decorative image needs no alt text."
+                },
+                "style": {
+                    "$ref": "/gaac/publisherImageWidgetStyleV2"
+                }
+            },
+            "required": ["type", "id"]
+        },
+        "publisherVisualizationWidgetV2": {
+            "title": "Publisher Visualization Widget V2",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["visualization"]
+                },
+                "id": {
+                    "$ref": "/gaac/publisherPageNodeIdV2",
+                    "description": "Unique within the page."
+                },
+                "proportion": {
+                    "$ref": "/gaac/publisherPageProportionV2"
+                },
+                "placeholder": {
+                    "$ref": "/gaac/publisherWidgetPlaceholderV2"
+                },
+                "locked": {
+                    "type": "boolean"
+                },
+                "visualization": {
+                    "$ref": "/gaac/identifier",
+                    "description": "An id of the visualization rendered here.",
+                    "$semantic": {
+                        "type": "reference",
+                        "source": "visualisation.id"
+                    }
+                },
+                "title": {
+                    "$ref": "/gaac/publisherWidgetTitleV2"
+                },
+                "alt_text": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "date": {
+                    "$ref": "/gaac/identifier",
+                    "description": "An id of the date dataset the document period applies to.",
+                    "$semantic": {
+                        "type": "reference",
+                        "source": "dateDataset.id"
+                    }
+                },
+                "ignore_document_period": {
+                    "type": "boolean",
+                    "description": "When true, the document period does not apply here."
+                },
+                "filters": {
+                    "$ref": "/gaac/dashboardFilters",
+                    "description": "Filters applied on top of the page and document filters."
+                },
+                "ignored_filters": {
+                    "type": "array",
+                    "description": "Document filters ignored here.",
+                    "items": {
+                        "type": "string",
+                        "pattern": "^(label|computed_attribute|dataset|metric)/(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "description": "A type-prefixed id, for example label/region.name, dataset/order_date or metric/revenue.",
+                        "$semantic": {
+                            "type": "reference",
+                            "sources": ["label.id", "computedAttribute.id", "dateDataset.id", "metric.id"],
+                            "typePrefix": true
+                        }
+                    }
+                },
+                "display": {
+                    "$ref": "#/$defs/publisherVisualizationDisplayV2"
+                },
+                "style": {
+                    "$ref": "/gaac/publisherVisualizationStyleV2"
+                }
+            },
+            "required": ["type", "id"]
+        },
+        "publisherTakeawayWidgetV2": {
+            "title": "Publisher Takeaway Widget V2",
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Generated or written text about the page.",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["takeaway"]
+                },
+                "id": {
+                    "$ref": "/gaac/publisherPageNodeIdV2",
+                    "description": "Unique within the page."
+                },
+                "proportion": {
+                    "$ref": "/gaac/publisherPageProportionV2"
+                },
+                "placeholder": {
+                    "$ref": "/gaac/publisherWidgetPlaceholderV2"
+                },
+                "locked": {
+                    "type": "boolean"
+                },
+                "title": {
+                    "$ref": "/gaac/publisherWidgetTitleV2"
+                },
+                "markdown": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "The generated or written text."
+                },
+                "generation": {
+                    "$ref": "/gaac/publisherTakeawayGenerationV2"
+                },
+                "style": {
+                    "$ref": "/gaac/publisherTextWidgetStyleV2"
+                }
+            },
+            "required": ["type", "id"]
+        },
+        "publisherContainerV2": {
+            "title": "Publisher Container V2",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["row", "column"]
+                },
+                "id": {
+                    "$ref": "/gaac/publisherPageNodeIdV2"
+                },
+                "children": {
+                    "type": "array",
+                    "description": "Nodes laid out along the container's direction. An empty list renders as a spacer.",
+                    "items": {
+                        "$ref": "/gaac/publisherLayoutNodeV2"
+                    }
+                },
+                "proportion": {
+                    "$ref": "/gaac/publisherPageProportionV2"
+                },
+                "locked": {
+                    "type": "boolean"
+                },
+                "style": {
+                    "$ref": "/gaac/publisherContainerStyleV2"
+                }
+            },
+            "required": ["type", "children"]
+        },
+        "publisherLayoutNodeV2": {
+            "$id": "/gaac/publisherLayoutNodeV2",
+            "title": "Publisher Layout Node V2",
+            "description": "A row or column container, or a widget.",
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "row",
+                        "column",
+                        "title",
+                        "heading",
+                        "text",
+                        "image",
+                        "visualization",
+                        "takeaway"
+                    ]
+                }
+            },
+            "required": ["type"],
+            "allOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "enum": ["row", "column"]
+                            }
+                        },
+                        "required": ["type"]
+                    },
+                    "then": {
+                        "$ref": "#/$defs/publisherContainerV2"
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "const": "title"
+                            }
+                        },
+                        "required": ["type"]
+                    },
+                    "then": {
+                        "$ref": "#/$defs/publisherTitleWidgetV2"
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "const": "heading"
+                            }
+                        },
+                        "required": ["type"]
+                    },
+                    "then": {
+                        "$ref": "#/$defs/publisherHeadingWidgetV2"
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "const": "text"
+                            }
+                        },
+                        "required": ["type"]
+                    },
+                    "then": {
+                        "$ref": "#/$defs/publisherTextWidgetV2"
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "const": "image"
+                            }
+                        },
+                        "required": ["type"]
+                    },
+                    "then": {
+                        "$ref": "#/$defs/publisherImageWidgetV2"
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "const": "visualization"
+                            }
+                        },
+                        "required": ["type"]
+                    },
+                    "then": {
+                        "$ref": "#/$defs/publisherVisualizationWidgetV2"
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "const": "takeaway"
+                            }
+                        },
+                        "required": ["type"]
+                    },
+                    "then": {
+                        "$ref": "#/$defs/publisherTakeawayWidgetV2"
+                    }
+                }
+            ]
+        },
+        "publisherPageBodyV2": {
+            "$id": "/gaac/publisherPageBodyV2",
+            "title": "Publisher Page Body V2",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "kind": {
+                    "type": "string",
+                    "enum": ["cover", "section", "content"],
+                    "description": "Editor hint. It does not change how the page renders."
+                },
+                "page_size": {
+                    "$ref": "/gaac/publisherPageSizeV2"
+                },
+                "notes": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Markdown speaker notes, never drawn on the page."
+                },
+                "style": {
+                    "$ref": "/gaac/publisherPageStyleV2"
+                },
+                "layout": {
+                    "$ref": "/gaac/publisherLayoutNodeV2",
+                    "description": "Root of the page layout tree."
+                },
+                "filters": {
+                    "$ref": "/gaac/dashboardFilters",
+                    "description": "Page filters, applied on top of the document filters."
+                }
+            },
+            "required": ["layout"]
+        }
+    }
+}

@@ -19,12 +19,18 @@ vi.hoisted(() => {
     vi.resetModules();
 });
 
+const mocks = vi.hoisted(() => ({
+    isAiLoading: false,
+}));
+
 vi.mock("../../../model/react/DashboardStoreProvider.js", () => ({
-    useDashboardSelector: () => false,
+    useDashboardSelector: () => mocks.isAiLoading,
 }));
 
 vi.mock("./DraggableInsightList/DraggableInsightList.js", () => ({
-    DraggableInsightList: () => null,
+    DraggableInsightList: ({ disabled }: { disabled?: boolean }) => (
+        <button disabled={disabled}>saved insight</button>
+    ),
 }));
 
 const sidebar: IUiResizableSidebarState = {
@@ -50,7 +56,9 @@ function componentSet<T>(type: DraggableContentItemType, label: string) {
     return {
         creating: {
             type,
-            CreatePanelListItemComponent: () => <div>{label}</div>,
+            CreatePanelListItemComponent: ({ disabled }: { disabled?: boolean }) => (
+                <button disabled={disabled}>{label}</button>
+            ),
         },
     } as unknown as T;
 }
@@ -76,6 +84,16 @@ describe("CreationPanel", () => {
     beforeEach(() => {
         sidebar.isCollapsed = false;
         sidebar.hasRail = true;
+        mocks.isAiLoading = false;
+    });
+
+    it("disables creation controls while AI is waiting for user input", () => {
+        mocks.isAiLoading = true;
+
+        render(panel());
+
+        expect(screen.getByRole("button", { name: "insight item" })).toBeDisabled();
+        expect(screen.getByRole("button", { name: "saved insight" })).toBeDisabled();
     });
 
     it("names the palette item on hover once the panel is only an icon rail", async () => {

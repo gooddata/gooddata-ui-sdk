@@ -250,6 +250,7 @@ const CONFIG_DEFAULTS: Required<
         | "hideAddTabButton"
         | "isAiMode"
         | "isAiGenerating"
+        | "isAiWaiting"
     >
 > &
     Pick<DashboardConfig, "externalRecipient"> = {
@@ -260,6 +261,7 @@ const CONFIG_DEFAULTS: Required<
     isWhiteLabeled: false,
     isAiMode: false,
     isAiGenerating: false,
+    isAiWaiting: false,
     disableDefaultDrills: false,
     enableFilterValuesResolutionInDrillEvents: false,
     menuButtonItemsVisibility: {},

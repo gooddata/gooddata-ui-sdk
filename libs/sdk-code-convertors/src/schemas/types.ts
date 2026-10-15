@@ -18,6 +18,9 @@ import type {
     Metric,
     Parameter,
     Plugin,
+    PublisherDocumentTemplateV2,
+    PublisherDocumentV2,
+    PublisherPageTemplateV2,
     Query,
     Report,
     ReportPageLayout,
@@ -54,6 +57,18 @@ export type AacPublisherDocument = Report;
 export type AacPublisherPageLayout = ReportPageLayout;
 /** @alpha */
 export type AacPublisherDocumentTemplate = ReportTemplate;
+/** @alpha */
+export type AacPublisherDocumentV2 = PublisherDocumentV2;
+/** @alpha */
+export type AacPublisherDocumentTemplateV2 = PublisherDocumentTemplateV2;
+/** @alpha */
+export type AacPublisherPageTemplateV2 = PublisherPageTemplateV2;
+/**
+ * A v2 Publisher entity as code written before the entity has an id.
+ *
+ * @alpha
+ */
+export type AacPublisherEntityWithOptionalIdV2<T extends { id: string }> = Omit<T, "id"> & { id?: string };
 /** @public */
 export type AacSection = Section;
 /** @public */

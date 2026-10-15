@@ -1171,6 +1171,23 @@ export {
     type IThemePublisherParagraph,
     type IThemeColorPaletteRef,
     type ThemePublisherLength,
+    type IThemeDocuments,
+    type IThemeDocumentsColor,
+    type IThemeDocumentsColors,
+    type IThemeDocumentsCorners,
+    type IThemeDocumentsFontFace,
+    type IThemeDocumentsHeading,
+    type IThemeDocumentsMarkStyle,
+    type IThemeDocumentsPage,
+    type IThemeDocumentsShadow,
+    type IThemeDocumentsSpacing,
+    type IThemeDocumentsSteps,
+    type IThemeDocumentsText,
+    type IThemeDocumentsTextGroup,
+    type IThemeDocumentsTextLevel,
+    type IThemeDocumentsTextStyle,
+    type IThemeDocumentsTypography,
+    type ThemeDocumentsLength,
     type ImageUri,
     type IThemeAxis,
     type IThemeChartTooltip,
@@ -1537,7 +1554,7 @@ export {
 } from "./publisher/v1/variables.js";
 
 export {
-    type PublisherPageLayoutNodeV1,
+    type PublisherLayoutNodeV1,
     type IPublisherLayoutNodeBaseV1,
     type IPublisherLayoutSectionV1,
     type IPublisherLayoutSlotRefV1,
@@ -1604,15 +1621,15 @@ export {
 
 export {
     type IPublisherPageBodyV1,
-    type IPublisherPageLayoutContentV1,
-    type IPublisherPageLayoutDefinitionV1,
-    type IPublisherPageLayoutV1,
+    type IPublisherPageTemplateContentV1,
+    type IPublisherPageTemplateDefinitionV1,
+    type IPublisherPageTemplateV1,
     type IPublisherPageBodyValidationIssueV1,
-    isPublisherPageLayoutDefinitionV1,
-    isPublisherPageLayoutV1,
-    isPublisherPageLayoutContentV1,
+    isPublisherPageTemplateDefinitionV1,
+    isPublisherPageTemplateV1,
+    isPublisherPageTemplateContentV1,
     validatePublisherPageBodyV1,
-} from "./publisher/v1/pageLayout.js";
+} from "./publisher/v1/pageTemplate.js";
 
 export {
     type IPublisherDocumentPageV1,
@@ -1634,8 +1651,8 @@ export {
 } from "./publisher/v1/document.js";
 
 export {
-    newPublisherPageLayoutDefinitionV1,
-    newPublisherDocumentPageFromLayoutV1,
+    newPublisherPageTemplateDefinitionV1,
+    newPublisherDocumentPageFromTemplateV1,
     newPublisherDocumentContentV1,
     newPublisherDocumentTemplateDefinitionV1,
     newPublisherDocumentDefinitionFromTemplateV1,
@@ -1644,20 +1661,20 @@ export {
 } from "./publisher/v1/factory.js";
 
 export {
-    BuiltInPublisherPageLayoutCoverV1,
-    BuiltInPublisherPageLayoutSectionV1,
-    BuiltInPublisherPageLayoutViz6TextLeftV1,
-    BuiltInPublisherPageLayoutPortraitCoverV1,
-    BuiltInPublisherPageLayoutPortraitSectionV1,
-    BuiltInPublisherPageLayoutPortraitSummaryV1,
-    BuiltInPublisherPageLayoutsV1,
-} from "./publisher/v1/builtinPageLayouts.js";
+    DefaultPublisherPageTemplateCoverV1,
+    DefaultPublisherPageTemplateSectionV1,
+    DefaultPublisherPageTemplateViz6TextLeftV1,
+    DefaultPublisherPageTemplatePortraitCoverV1,
+    DefaultPublisherPageTemplatePortraitSectionV1,
+    DefaultPublisherPageTemplatePortraitSummaryV1,
+    DefaultPublisherPageTemplatesV1,
+} from "./publisher/v1/defaultPageTemplates.js";
 
 export {
     type PublisherDateString,
     type PublisherBuiltInVariable,
     type IPublisherVariableDefinition,
-    type PublisherPageLayoutNode,
+    type PublisherLayoutNode,
     type IPublisherLayoutNodeBase,
     type IPublisherLayoutSection,
     type IPublisherLayoutSlotRef,
@@ -1688,9 +1705,9 @@ export {
     type PublisherTextType,
     type PublisherPageFormat,
     type IPublisherPageBody,
-    type IPublisherPageLayoutContent,
-    type IPublisherPageLayoutDefinition,
-    type IPublisherPageLayout,
+    type IPublisherPageTemplateContent,
+    type IPublisherPageTemplateDefinition,
+    type IPublisherPageTemplate,
     type IPublisherPageBodyValidationIssue,
     type IPublisherDocumentPage,
     type IPublisherDocumentContent,
@@ -1728,27 +1745,27 @@ export {
     PublisherPageFormats,
     PublisherPageFormatAspectRatios,
     isPublisherPageFormat,
-    isPublisherPageLayoutDefinition,
-    isPublisherPageLayout,
+    isPublisherPageTemplateDefinition,
+    isPublisherPageTemplate,
     validatePublisherPageBody,
     isPublisherDocumentTemplateDefinition,
     isPublisherDocumentTemplate,
     isPublisherDocumentDefinition,
     isPublisherDocument,
-    newPublisherPageLayoutDefinition,
-    newPublisherDocumentPageFromLayout,
+    newPublisherPageTemplateDefinition,
+    newPublisherDocumentPageFromTemplate,
     newPublisherDocumentContent,
     newPublisherDocumentTemplateDefinition,
     newPublisherDocumentDefinitionFromTemplate,
     newAdHocPublisherDocumentDefinition,
     publisherDocumentPage,
-    BuiltInPublisherPageLayoutCover,
-    BuiltInPublisherPageLayoutSection,
-    BuiltInPublisherPageLayoutViz6TextLeft,
-    BuiltInPublisherPageLayoutPortraitCover,
-    BuiltInPublisherPageLayoutPortraitSection,
-    BuiltInPublisherPageLayoutPortraitSummary,
-    BuiltInPublisherPageLayouts,
+    DefaultPublisherPageTemplateCover,
+    DefaultPublisherPageTemplateSection,
+    DefaultPublisherPageTemplateViz6TextLeft,
+    DefaultPublisherPageTemplatePortraitCover,
+    DefaultPublisherPageTemplatePortraitSection,
+    DefaultPublisherPageTemplatePortraitSummary,
+    DefaultPublisherPageTemplates,
 } from "./publisher/aliases.js";
 
 export {
@@ -1891,6 +1908,18 @@ export {
     validatePublisherDocumentContentV2,
     validatePublisherEntityV2,
 } from "./publisher/v2/validation.js";
+
+export {
+    type PublisherTextVariableV2,
+    PublisherTextVariablesV2,
+    publisherTextPlaceholderV2,
+    getPublisherTextPlaceholdersV2,
+    resolvePublisherTextPlaceholdersV2,
+} from "./publisher/v2/variables.js";
+export {
+    getPublisherThemeReferencePathV2,
+    publisherThemeReferenceV2,
+} from "./publisher/v2/themeReference.js";
 
 export {
     type ISemanticQualityReport,

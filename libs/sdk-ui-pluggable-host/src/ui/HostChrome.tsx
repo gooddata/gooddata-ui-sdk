@@ -222,9 +222,7 @@ export function HostChrome({
             if (!newId || newId === features.workspaceId) {
                 return;
             }
-            const search = typeof window === "undefined" ? "" : window.location.search;
-            const newPath = getWorkspaceSwitchPath(pathname, newId, resolvedApplications, ctx);
-            onNavigate(`${newPath}${search}`);
+            onNavigate(getWorkspaceSwitchPath(pathname, newId, resolvedApplications, ctx));
         },
         [pathname, onNavigate, resolvedApplications, ctx, features.workspaceId],
     );

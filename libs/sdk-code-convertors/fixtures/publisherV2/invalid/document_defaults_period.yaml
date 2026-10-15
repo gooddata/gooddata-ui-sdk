@@ -1,0 +1,21 @@
+type: document
+id: quarterly_review
+version: "2"
+title: Quarterly review
+period:
+    granularity: QUARTER
+    from: -1
+    to: -1
+content:
+    defaults:
+        period:
+            granularity: QUARTER
+            from: -1
+            to: -1
+    pages:
+        - id: cover
+          kind: cover
+          layout:
+              type: title
+              id: title
+              markdown: "{documentName}"

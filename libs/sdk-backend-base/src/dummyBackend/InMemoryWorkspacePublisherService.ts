@@ -8,13 +8,13 @@ import {
     UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
 import {
-    BuiltInPublisherPageLayouts,
+    DefaultPublisherPageTemplates,
     type IPublisherDocument,
     type IPublisherDocumentDefinition,
     type IPublisherDocumentTemplate,
     type IPublisherDocumentTemplateDefinition,
-    type IPublisherPageLayout,
-    type IPublisherPageLayoutDefinition,
+    type IPublisherPageTemplate,
+    type IPublisherPageTemplateDefinition,
     type ObjRef,
     areObjRefsEqual,
     idRef,
@@ -39,13 +39,13 @@ function deepClone<T>(value: T): T {
  * In-memory implementation of the publisher service.
  *
  * @remarks
- * Serves the built-in page layouts and stores created layouts, templates and documents in
+ * Serves the default page templates and stores created page templates, document templates and documents in
  * memory for the lifetime of the instance (dummy backend, tests).
  *
  * @alpha
  */
 export class InMemoryWorkspacePublisherService implements IWorkspacePublisherService {
-    private readonly pageLayouts = new Map<string, IPublisherPageLayout>();
+    private readonly pageTemplates = new Map<string, IPublisherPageTemplate>();
     private readonly templates = new Map<string, IPublisherDocumentTemplate>();
     private readonly documents = new Map<string, IPublisherDocument>();
     private sequence = 0;
@@ -62,63 +62,61 @@ export class InMemoryWorkspacePublisherService implements IWorkspacePublisherSer
         return ref;
     }
 
-    private findBuiltInPageLayout(ref: ObjRef): IPublisherPageLayout | undefined {
-        return BuiltInPublisherPageLayouts.find((layout) => areObjRefsEqual(layout.ref, ref));
+    private findDefaultPageTemplate(ref: ObjRef): IPublisherPageTemplate | undefined {
+        return DefaultPublisherPageTemplates.find((layout) => areObjRefsEqual(layout.ref, ref));
     }
 
-    public getPageLayouts(): Promise<IPublisherPageLayout[]> {
+    public getPageTemplates(): Promise<IPublisherPageTemplate[]> {
         return Promise.resolve([
-            ...BuiltInPublisherPageLayouts,
-            ...deepClone([...this.pageLayouts.values()]),
+            ...DefaultPublisherPageTemplates,
+            ...deepClone([...this.pageTemplates.values()]),
         ]);
     }
 
-    public getPageLayout(ref: ObjRef): Promise<IPublisherPageLayout> {
-        const builtIn = this.findBuiltInPageLayout(ref);
-        if (builtIn) {
-            return Promise.resolve(builtIn);
+    public getPageTemplate(ref: ObjRef): Promise<IPublisherPageTemplate> {
+        const defaultTemplate = this.findDefaultPageTemplate(ref);
+        if (defaultTemplate) {
+            return Promise.resolve(defaultTemplate);
         }
-        const layout = this.pageLayouts.get(refKey(ref));
+        const layout = this.pageTemplates.get(refKey(ref));
         if (!layout) {
-            throw new UnexpectedError(`Page layout "${objRefToString(ref)}" does not exist.`);
+            throw new UnexpectedError(`Page template "${objRefToString(ref)}" does not exist.`);
         }
         return Promise.resolve(deepClone(layout));
     }
 
-    public createPageLayout(layout: IPublisherPageLayoutDefinition): Promise<IPublisherPageLayout> {
-        if (layout.ref && this.findBuiltInPageLayout(layout.ref)) {
+    public createPageTemplate(layout: IPublisherPageTemplateDefinition): Promise<IPublisherPageTemplate> {
+        if (layout.ref && this.findDefaultPageTemplate(layout.ref)) {
             throw new UnexpectedError(
-                `Page layout "${objRefToString(layout.ref)}" is built-in and cannot be replaced.`,
+                `Default page template "${objRefToString(layout.ref)}" cannot be replaced.`,
             );
         }
-        const created: IPublisherPageLayout = {
+        const created: IPublisherPageTemplate = {
             ...deepClone(layout),
-            ref: layout.ref ?? this.newRef("reportPageLayout", this.pageLayouts),
+            ref: layout.ref ?? this.newRef("reportPageLayout", this.pageTemplates),
         };
-        this.store(this.pageLayouts, created, "Page layout");
+        this.store(this.pageTemplates, created, "Page template");
         return Promise.resolve(deepClone(created));
     }
 
-    public updatePageLayout(layout: IPublisherPageLayout): Promise<IPublisherPageLayout> {
-        this.assertPageLayoutEditable(layout.ref);
-        const updated: IPublisherPageLayout = { ...deepClone(layout), isBuiltIn: undefined };
-        this.pageLayouts.set(refKey(layout.ref), updated);
+    public updatePageTemplate(layout: IPublisherPageTemplate): Promise<IPublisherPageTemplate> {
+        this.assertPageTemplateEditable(layout.ref);
+        const updated: IPublisherPageTemplate = { ...deepClone(layout), isDefault: undefined };
+        this.pageTemplates.set(refKey(layout.ref), updated);
         return Promise.resolve(deepClone(updated));
     }
 
-    public deletePageLayout(ref: ObjRef): Promise<void> {
-        this.assertPageLayoutEditable(ref);
-        this.pageLayouts.delete(refKey(ref));
+    public deletePageTemplate(ref: ObjRef): Promise<void> {
+        this.assertPageTemplateEditable(ref);
+        this.pageTemplates.delete(refKey(ref));
         return Promise.resolve();
     }
 
-    private assertPageLayoutEditable(ref: ObjRef): void {
-        if (this.findBuiltInPageLayout(ref)) {
-            throw new UnexpectedError(
-                `Page layout "${objRefToString(ref)}" is built-in and cannot be changed.`,
-            );
+    private assertPageTemplateEditable(ref: ObjRef): void {
+        if (this.findDefaultPageTemplate(ref)) {
+            throw new UnexpectedError(`Default page template "${objRefToString(ref)}" cannot be changed.`);
         }
-        this.assertExistsAndUnlocked(this.pageLayouts, ref, "Page layout");
+        this.assertExistsAndUnlocked(this.pageTemplates, ref, "Page template");
     }
 
     public getDocumentTemplates(): Promise<IPublisherDocumentTemplate[]> {

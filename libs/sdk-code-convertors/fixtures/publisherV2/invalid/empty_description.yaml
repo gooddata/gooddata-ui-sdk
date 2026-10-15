@@ -1,0 +1,10 @@
+type: page_template
+id: cover_page
+version: "2"
+title: Cover page
+description: ""
+content:
+    layout:
+        type: title
+        id: title
+        markdown: "{documentName}"

@@ -5,7 +5,7 @@ import { isEmpty } from "lodash-es";
 import { type IDashboardAttributeFilterConfig } from "../../dashboard/dashboard.js";
 import { type FilterContextItem } from "../../dashboard/filterContext.js";
 
-import { type IPublisherPageBodyV1 } from "./pageLayout.js";
+import { type IPublisherPageBodyV1 } from "./pageTemplate.js";
 import { type IPublisherVariableDefinitionV1 } from "./variables.js";
 
 /**
@@ -13,7 +13,7 @@ import { type IPublisherVariableDefinitionV1 } from "./variables.js";
  * plus its own identity.
  *
  * @remarks
- * Cloning a {@link IPublisherPageLayoutV1} into content assigns the localIdentifier and regenerates
+ * Cloning a {@link IPublisherPageTemplateV1} into content assigns the localIdentifier and regenerates
  * slot localIdentifiers (with the layout slotIds) so repeated use of one page stays unique.
  * Deliberately carries NO reference back to the source page — later page edits never
  * affect existing templates or documents.

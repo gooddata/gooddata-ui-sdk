@@ -55,6 +55,8 @@ export {
     isCloseAiAssistantRequestedEvent,
     isAiAssistantContextChangedEvent,
     isAiAssistantPublisherDocumentSavedEvent,
+    type IAiAssistantPublisherDocumentDefinition,
+    isAiAssistantPublisherDocumentDefinition,
     isReloadPlatformContextRequestedEvent,
     openAiAssistantRequested,
     closeAiAssistantRequested,

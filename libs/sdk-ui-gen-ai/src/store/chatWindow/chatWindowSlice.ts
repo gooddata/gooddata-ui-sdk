@@ -11,9 +11,9 @@ import {
     type IDashboard,
     type IGenAIUserContext,
     type IInsight,
-    type IPublisherDocumentDefinition,
     serializeObjRef,
 } from "@gooddata/sdk-model";
+import { type IAiAssistantPublisherDocumentDefinition } from "@gooddata/sdk-pluggable-application-model";
 import type { IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
 
 import { addContextReference } from "../../context/addContextReference.js";
@@ -378,20 +378,17 @@ const chatWindowSlice = createSlice({
         },
         onDefinitionReceivedAction: (
             state,
-            _action: PayloadAction<{
-                definitionType: "dashboard" | "visualization" | "publisherDocument";
-                conversationId: string;
-                itemId: string;
-                interactionId?: string;
-                dashboard?: IDashboard;
-                insights?: IInsight[];
-                visualization?: IInsight;
-                publisherDocument?: IPublisherDocumentDefinition;
-                documentRef?: string;
-                refines?: string;
-                reworksOpenDocument?: boolean;
-                baseDocumentId?: string;
-            }>,
+            _action: PayloadAction<
+                {
+                    definitionType: "dashboard" | "visualization" | "publisherDocument";
+                    conversationId: string;
+                    itemId: string;
+                    interactionId?: string;
+                    dashboard?: IDashboard;
+                    insights?: IInsight[];
+                    visualization?: IInsight;
+                } & Partial<IAiAssistantPublisherDocumentDefinition>
+            >,
         ) => state,
         copyToClipboardAction: (state, _action: PayloadAction<{ content: string }>) => state,
     },

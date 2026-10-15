@@ -23,6 +23,9 @@ import {
     declarativeMetricToYaml,
     declarativePluginToYaml,
     declarativePublisherDocumentToYaml,
+    declarativePublisherDocumentTemplateToYamlV2,
+    declarativePublisherDocumentToYamlV2,
+    declarativePublisherPageTemplateToYamlV2,
     declarativeVisualisationToYaml,
     yamlAttributeHierarchyToDeclarative,
     yamlComputedAttributeToDeclarative,
@@ -32,7 +35,12 @@ import {
     yamlMetricToDeclarative,
     yamlPluginToDeclarative,
     yamlPublisherDocumentToDeclarative,
+    yamlPublisherDocumentTemplateToDeclarativeV2,
+    yamlPublisherDocumentToDeclarativeV2,
+    yamlPublisherPageTemplateToDeclarativeV2,
     yamlVisualisationToDeclarative,
+    validateDeclarativePublisherEntityV2,
+    fillPublisherIdsV2,
 } from "../esm/index.js";
 
 const converters = {
@@ -45,6 +53,9 @@ const converters = {
     yamlPluginToDeclarative,
     yamlAttributeHierarchyToDeclarative,
     yamlPublisherDocumentToDeclarative,
+    yamlPublisherDocumentToDeclarativeV2,
+    yamlPublisherDocumentTemplateToDeclarativeV2,
+    yamlPublisherPageTemplateToDeclarativeV2,
     declarativeDatasetToYaml,
     declarativeDateInstanceToYaml,
     declarativeMetricToYaml,
@@ -54,6 +65,11 @@ const converters = {
     declarativePluginToYaml,
     declarativeAttributeHierarchyToYaml,
     declarativePublisherDocumentToYaml,
+    declarativePublisherDocumentToYamlV2,
+    declarativePublisherDocumentTemplateToYamlV2,
+    declarativePublisherPageTemplateToYamlV2,
+    validateDeclarativePublisherEntityV2,
+    fillPublisherIdsV2,
     buildAfmExecution,
 };
 

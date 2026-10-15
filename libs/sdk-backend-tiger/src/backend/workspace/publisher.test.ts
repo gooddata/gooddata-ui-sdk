@@ -2,20 +2,20 @@
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { BuiltInPublisherPageLayouts, idRef } from "@gooddata/sdk-model";
+import { DefaultPublisherPageTemplates, idRef } from "@gooddata/sdk-model";
 
 const getAllPageLayouts = vi.fn();
-const getPageLayout = vi.fn();
-const updatePageLayout = vi.fn();
-const deletePageLayout = vi.fn();
+const getPageLayoutEntity = vi.fn();
+const updatePageLayoutEntity = vi.fn();
+const deletePageLayoutEntity = vi.fn();
 const getAllTemplates = vi.fn();
 const getAllDocuments = vi.fn();
 
 vi.mock("@gooddata/api-client-tiger/endpoints/entitiesObjects", () => ({
     EntitiesApi_GetAllEntitiesReportPageLayouts: (...args: unknown[]) => getAllPageLayouts(...args),
-    EntitiesApi_GetEntityReportPageLayouts: (...args: unknown[]) => getPageLayout(...args),
-    EntitiesApi_UpdateEntityReportPageLayouts: (...args: unknown[]) => updatePageLayout(...args),
-    EntitiesApi_DeleteEntityReportPageLayouts: (...args: unknown[]) => deletePageLayout(...args),
+    EntitiesApi_GetEntityReportPageLayouts: (...args: unknown[]) => getPageLayoutEntity(...args),
+    EntitiesApi_UpdateEntityReportPageLayouts: (...args: unknown[]) => updatePageLayoutEntity(...args),
+    EntitiesApi_DeleteEntityReportPageLayouts: (...args: unknown[]) => deletePageLayoutEntity(...args),
     EntitiesApi_CreateEntityReportPageLayouts: vi.fn(),
     EntitiesApi_GetAllEntitiesReportTemplates: (...args: unknown[]) => getAllTemplates(...args),
     EntitiesApi_GetEntityReportTemplates: vi.fn(),
@@ -37,7 +37,7 @@ function newService() {
     return new TigerWorkspacePublisherService(authCall, "ws1");
 }
 
-const builtInRef = BuiltInPublisherPageLayouts[0]!.ref;
+const builtInRef = DefaultPublisherPageTemplates[0]!.ref;
 
 beforeEach(() => {
     vi.clearAllMocks();
@@ -46,8 +46,8 @@ beforeEach(() => {
     getAllDocuments.mockResolvedValue({ data: { data: [] } });
 });
 
-describe("TigerWorkspacePublisherService page layouts", () => {
-    it("serves the built-in layouts ahead of the persisted ones", async () => {
+describe("TigerWorkspacePublisherService page templates", () => {
+    it("serves the default page templates ahead of the persisted ones", async () => {
         getAllPageLayouts.mockResolvedValueOnce({
             data: {
                 data: [
@@ -60,28 +60,30 @@ describe("TigerWorkspacePublisherService page layouts", () => {
             },
         });
 
-        const layouts = await newService().getPageLayouts();
+        const layouts = await newService().getPageTemplates();
 
-        expect(layouts).toHaveLength(BuiltInPublisherPageLayouts.length + 1);
-        expect(layouts.slice(0, BuiltInPublisherPageLayouts.length)).toEqual([
-            ...BuiltInPublisherPageLayouts,
+        expect(layouts).toHaveLength(DefaultPublisherPageTemplates.length + 1);
+        expect(layouts.slice(0, DefaultPublisherPageTemplates.length)).toEqual([
+            ...DefaultPublisherPageTemplates,
         ]);
         expect(layouts.at(-1)!.title).toBe("Mine");
     });
 
-    it("resolves a built-in layout without calling the backend", async () => {
-        await expect(newService().getPageLayout(builtInRef)).resolves.toEqual(BuiltInPublisherPageLayouts[0]);
-        expect(getPageLayout).not.toHaveBeenCalled();
+    it("resolves a default page template without calling the backend", async () => {
+        await expect(newService().getPageTemplate(builtInRef)).resolves.toEqual(
+            DefaultPublisherPageTemplates[0],
+        );
+        expect(getPageLayoutEntity).not.toHaveBeenCalled();
     });
 
-    it("refuses to update or delete a built-in layout", async () => {
+    it("refuses to update or delete a default page template", async () => {
         const service = newService();
-        const builtIn = BuiltInPublisherPageLayouts[0]!;
+        const builtIn = DefaultPublisherPageTemplates[0]!;
 
-        await expect(service.updatePageLayout(builtIn)).rejects.toThrow(/built-in/);
-        await expect(service.deletePageLayout(builtInRef)).rejects.toThrow(/built-in/);
-        expect(updatePageLayout).not.toHaveBeenCalled();
-        expect(deletePageLayout).not.toHaveBeenCalled();
+        await expect(service.updatePageTemplate(builtIn)).rejects.toThrow(/one of the defaults/);
+        await expect(service.deletePageTemplate(builtInRef)).rejects.toThrow(/one of the defaults/);
+        expect(updatePageLayoutEntity).not.toHaveBeenCalled();
+        expect(deletePageLayoutEntity).not.toHaveBeenCalled();
     });
 
     it("requests the audit users and resolves them from the included resources", async () => {
@@ -99,7 +101,7 @@ describe("TigerWorkspacePublisherService page layouts", () => {
             },
         });
 
-        const layouts = await newService().getPageLayouts();
+        const layouts = await newService().getPageTemplates();
 
         expect(getAllPageLayouts).toHaveBeenCalledWith(
             expect.anything(),
@@ -110,11 +112,11 @@ describe("TigerWorkspacePublisherService page layouts", () => {
     });
 
     it("deletes a workspace layout by its identifier", async () => {
-        deletePageLayout.mockResolvedValue({});
+        deletePageLayoutEntity.mockResolvedValue({});
 
-        await newService().deletePageLayout(idRef("layout1", "reportPageLayout"));
+        await newService().deletePageTemplate(idRef("layout1", "reportPageLayout"));
 
-        expect(deletePageLayout).toHaveBeenCalledWith(
+        expect(deletePageLayoutEntity).toHaveBeenCalledWith(
             expect.anything(),
             expect.anything(),
             expect.objectContaining({ workspaceId: "ws1", objectId: "layout1" }),

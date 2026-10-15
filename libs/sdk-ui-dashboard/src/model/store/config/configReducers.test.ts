@@ -47,6 +47,30 @@ describe("configReducers", () => {
         });
     });
 
+    describe("setIsAiWaiting", () => {
+        it("should set isAiWaiting", () => {
+            const initialState: ConfigState = {
+                config: {
+                    isAiWaiting: false,
+                } as ResolvedDashboardConfig,
+            };
+
+            const action = { type: "config/setIsAiWaiting", payload: true };
+            configReducers.setIsAiWaiting(initialState, action as any);
+
+            expect(initialState.config?.isAiWaiting).toBe(true);
+        });
+
+        it("should do nothing if config is not initialized", () => {
+            const initialState: ConfigState = { config: undefined };
+
+            const action = { type: "config/setIsAiWaiting", payload: true };
+            configReducers.setIsAiWaiting(initialState, action as any);
+
+            expect(initialState.config).toBeUndefined();
+        });
+    });
+
     describe("setIsAiMode", () => {
         it("should set isAiMode to true", () => {
             const initialState: ConfigState = {

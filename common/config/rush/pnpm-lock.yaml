@@ -4484,6 +4484,9 @@ importers:
       '@gooddata/sdk-model':
         specifier: workspace:*
         version: link:../sdk-model
+      '@gooddata/sdk-pluggable-application-model':
+        specifier: workspace:*
+        version: link:../sdk-pluggable-application-model
       '@gooddata/sdk-ui':
         specifier: workspace:*
         version: link:../sdk-ui

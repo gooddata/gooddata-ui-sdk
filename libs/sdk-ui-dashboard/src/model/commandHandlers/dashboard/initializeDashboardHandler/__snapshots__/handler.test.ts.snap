@@ -482,6 +482,7 @@ exports[`initialize dashboard handler > for any dashboard > should resolve confi
   "initialRenderMode": "view",
   "isAiGenerating": false,
   "isAiMode": false,
+  "isAiWaiting": false,
   "isEmbedded": false,
   "isExport": false,
   "isReadOnly": false,

@@ -2,50 +2,31 @@
 
 import { Pair, YAMLMap, YAMLSeq } from "yaml";
 
-import { type DeclarativeFilterContext } from "@gooddata/api-client-tiger";
 import {
-    type FilterContextItem,
-    type IPublisherBoxStyle,
-    type IPublisherDocumentPage,
-    type IPublisherImageSlot,
-    type IPublisherPageBody,
-    type IPublisherSlotPlaceholder,
-    type IPublisherTextSlot,
-    type IPublisherTextStyle,
-    type IPublisherVisualizationSlot,
-    type PublisherPageLayoutNode,
-    type PublisherSlot,
-    type PublisherTextSource,
+    type IPublisherBoxStyleV1,
+    type IPublisherDocumentPageV1,
+    type IPublisherImageSlotV1,
+    type IPublisherPageBodyV1,
+    type IPublisherSlotPlaceholderV1,
+    type IPublisherTextSlotV1,
+    type IPublisherTextStyleV1,
+    type IPublisherVisualizationSlotV1,
+    type PublisherLayoutNodeV1,
+    type PublisherSlotV1,
+    type PublisherTextSourceV1,
     dashboardFilterReferenceObjRef,
-    isPublisherImageBackground,
-    isPublisherImageSlot,
-    isPublisherLayoutSection,
-    isPublisherTextSlot,
-    isPublisherVisualizationSlot,
+    isPublisherImageBackgroundV1,
+    isPublisherImageSlotV1,
+    isPublisherLayoutSectionV1,
+    isPublisherTextSlotV1,
+    isPublisherVisualizationSlotV1,
     objRefToString,
 } from "@gooddata/sdk-model";
 
 import { CoreErrorCode, newError } from "../utils/errors.js";
 import { referencesAsWritten } from "../utils/publisherFilterRefs.js";
+import { filtersToYaml } from "../utils/publisherFilters.js";
 import { getIdentifier } from "../utils/yamlUtils.js";
-
-import { declarativeFilterContextToYaml } from "./declarativeDashboardToYaml.js";
-
-/**
- * A document holds its filters the way a dashboard's filter context does, so the same convertor writes
- * them; only the envelope it expects is put around them here.
- *
- * @internal
- */
-export function filtersToYaml(filters: FilterContextItem[] | undefined): YAMLMap | undefined {
-    if (!filters?.length) {
-        return undefined;
-    }
-    const { filters: written } = declarativeFilterContextToYaml(undefined, {
-        content: { filters: referencesAsWritten(filters), version: "2" },
-    } as DeclarativeFilterContext);
-    return emptyToUndefined(written);
-}
 
 /**
  * Collapses a mapping that says only one thing down to that thing, the way a bucket with nothing
@@ -78,7 +59,7 @@ function emptyToUndefined(map: YAMLMap): YAMLMap | undefined {
     return map.items.length === 0 ? undefined : map;
 }
 
-function placeholderToYaml(placeholder: IPublisherSlotPlaceholder | undefined): unknown | undefined {
+function placeholderToYaml(placeholder: IPublisherSlotPlaceholderV1 | undefined): unknown | undefined {
     if (placeholder === undefined) {
         return undefined;
     }
@@ -91,7 +72,7 @@ function placeholderToYaml(placeholder: IPublisherSlotPlaceholder | undefined): 
     return shorten(map, ["hint", "required"]) ?? emptyToUndefined(map);
 }
 
-function textToYaml(source: PublisherTextSource | undefined): unknown | undefined {
+function textToYaml(source: PublisherTextSourceV1 | undefined): unknown | undefined {
     if (source === undefined) {
         return undefined;
     }
@@ -106,7 +87,7 @@ function textToYaml(source: PublisherTextSource | undefined): unknown | undefine
 }
 
 function textStyleToYaml(
-    style: IPublisherTextStyle | undefined,
+    style: IPublisherTextStyleV1 | undefined,
     page: IPageBeingWritten,
 ): unknown | undefined {
     if (style === undefined) {
@@ -124,7 +105,7 @@ function textStyleToYaml(
     return shorten(map, ["type"]) ?? emptyToUndefined(map);
 }
 
-function imageStyleToYaml(style: IPublisherImageSlot["style"]): YAMLMap | undefined {
+function imageStyleToYaml(style: IPublisherImageSlotV1["style"]): YAMLMap | undefined {
     if (style === undefined) {
         return undefined;
     }
@@ -137,7 +118,7 @@ function imageStyleToYaml(style: IPublisherImageSlot["style"]): YAMLMap | undefi
 }
 
 /** The image itself, without the identity of whatever draws it. */
-function imageContentToYaml(slot: IPublisherImageSlot): unknown {
+function imageContentToYaml(slot: IPublisherImageSlotV1): unknown {
     const source = slot.source;
     const map = mapOf([
         ["url", source?.type === "url" ? source.url : undefined],
@@ -155,13 +136,13 @@ function imageContentToYaml(slot: IPublisherImageSlot): unknown {
  * backdrops already written down, so nothing is written twice under two different boxes.
  */
 interface IPageBeingWritten {
-    slotsById: Map<string, PublisherSlot>;
+    slotsById: Map<string, PublisherSlotV1>;
     placedByLayout: Set<string>;
     writtenBackdrops: Set<string>;
 }
 
-function placedSlotIds(node: PublisherPageLayoutNode, into: Set<string>): Set<string> {
-    if (isPublisherLayoutSection(node)) {
+function placedSlotIds(node: PublisherLayoutNodeV1, into: Set<string>): Set<string> {
+    if (isPublisherLayoutSectionV1(node)) {
         for (const child of node.children) {
             placedSlotIds(child, into);
         }
@@ -172,13 +153,13 @@ function placedSlotIds(node: PublisherPageLayoutNode, into: Set<string>): Set<st
 }
 
 function backgroundToYaml(
-    background: IPublisherBoxStyle["background"],
+    background: IPublisherBoxStyleV1["background"],
     page: IPageBeingWritten,
 ): unknown | undefined {
     if (background === undefined) {
         return undefined;
     }
-    if (!isPublisherImageBackground(background)) {
+    if (!isPublisherImageBackgroundV1(background)) {
         return background.color;
     }
 
@@ -194,7 +175,7 @@ function backgroundToYaml(
     const slot = page.slotsById.get(slotId);
     // A backdrop naming a slot the page does not hold paints nothing, and is written as the bare
     // reference it is rather than invented content.
-    if (slot === undefined || !isPublisherImageSlot(slot)) {
+    if (slot === undefined || !isPublisherImageSlotV1(slot)) {
         return mapOf([["image", mapOf([["ref", slotId]])]]);
     }
 
@@ -206,7 +187,10 @@ function backgroundToYaml(
     return mapOf([["image", mapOf([["id", slotId] as [string, unknown], ...entries])]]);
 }
 
-function boxStyleToYaml(style: IPublisherBoxStyle | undefined, page: IPageBeingWritten): YAMLMap | undefined {
+function boxStyleToYaml(
+    style: IPublisherBoxStyleV1 | undefined,
+    page: IPageBeingWritten,
+): YAMLMap | undefined {
     if (style === undefined) {
         return undefined;
     }
@@ -219,7 +203,7 @@ function boxStyleToYaml(style: IPublisherBoxStyle | undefined, page: IPageBeingW
     );
 }
 
-function visualizationSlotToYaml(slot: IPublisherVisualizationSlot, weight: number | undefined): YAMLMap {
+function visualizationSlotToYaml(slot: IPublisherVisualizationSlotV1, weight: number | undefined): YAMLMap {
     // A hidden title with no text to keep is written as `title: false`, which says both at once;
     // every other combination states the two separately, so neither is lost.
     const hiddenWithNoText = slot.showTitle === false && slot.title === undefined;
@@ -247,7 +231,7 @@ function visualizationSlotToYaml(slot: IPublisherVisualizationSlot, weight: numb
 }
 
 function textSlotToYaml(
-    slot: IPublisherTextSlot,
+    slot: IPublisherTextSlotV1,
     weight: number | undefined,
     page: IPageBeingWritten,
 ): YAMLMap {
@@ -260,7 +244,7 @@ function textSlotToYaml(
     ]);
 }
 
-function imageSlotToYaml(slot: IPublisherImageSlot, weight: number | undefined): YAMLMap {
+function imageSlotToYaml(slot: IPublisherImageSlotV1, weight: number | undefined): YAMLMap {
     return mapOf([
         ["id", slot.localIdentifier],
         ["weight", weight],
@@ -268,8 +252,8 @@ function imageSlotToYaml(slot: IPublisherImageSlot, weight: number | undefined):
     ]);
 }
 
-function layoutNodeToYaml(node: PublisherPageLayoutNode, page: IPageBeingWritten): YAMLMap {
-    if (isPublisherLayoutSection(node)) {
+function layoutNodeToYaml(node: PublisherLayoutNodeV1, page: IPageBeingWritten): YAMLMap {
+    if (isPublisherLayoutSectionV1(node)) {
         const children = new YAMLSeq();
         for (const child of node.children) {
             children.add(layoutNodeToYaml(child, page));
@@ -291,18 +275,20 @@ function layoutNodeToYaml(node: PublisherPageLayoutNode, page: IPageBeingWritten
             ["visualization", null],
         ]);
     }
-    if (isPublisherVisualizationSlot(slot)) {
+    if (isPublisherVisualizationSlotV1(slot)) {
         return visualizationSlotToYaml(slot, node.weight);
     }
-    if (isPublisherTextSlot(slot)) {
+    if (isPublisherTextSlotV1(slot)) {
         return textSlotToYaml(slot, node.weight, page);
     }
-    if (isPublisherImageSlot(slot)) {
+    if (isPublisherImageSlotV1(slot)) {
         return imageSlotToYaml(slot, node.weight);
     }
     // A slot of a kind this version does not know cannot be written without saying it is something
     // it is not, so the page is refused rather than quietly rewritten into a shape it never had.
-    throw newError(CoreErrorCode.ItemNotSupported, [JSON.stringify({ slot: (slot as PublisherSlot).type })]);
+    throw newError(CoreErrorCode.ItemNotSupported, [
+        JSON.stringify({ slot: (slot as PublisherSlotV1).type }),
+    ]);
 }
 
 /**
@@ -315,7 +301,7 @@ function layoutNodeToYaml(node: PublisherPageLayoutNode, page: IPageBeingWritten
  *
  * @internal
  */
-export function publisherPageBodyEntries(body: IPublisherPageBody): Array<[string, unknown]> {
+export function publisherPageBodyEntries(body: IPublisherPageBodyV1): Array<[string, unknown]> {
     const page: IPageBeingWritten = {
         slotsById: new Map(body.slots.map((slot) => [slot.localIdentifier, slot])),
         placedByLayout: placedSlotIds(body.layout, new Set()),
@@ -337,6 +323,6 @@ export function publisherPageBodyEntries(body: IPublisherPageBody): Array<[strin
 }
 
 /** @internal */
-export function declarativePublisherDocumentPageToYaml(body: IPublisherDocumentPage): YAMLMap {
+export function declarativePublisherDocumentPageToYaml(body: IPublisherDocumentPageV1): YAMLMap {
     return mapOf([["id", body.localIdentifier] as [string, unknown], ...publisherPageBodyEntries(body)]);
 }

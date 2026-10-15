@@ -840,6 +840,13 @@ interface DashboardFilters1 {
     [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
 }
 
+// Warning: (ae-missing-release-tag) "DashboardFilters10" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface DashboardFilters10 {
+    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
+}
+
 // Warning: (ae-missing-release-tag) "DashboardFilters2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public
@@ -872,6 +879,27 @@ interface DashboardFilters5 {
 //
 // @public
 interface DashboardFilters6 {
+    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
+}
+
+// Warning: (ae-missing-release-tag) "DashboardFilters7" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface DashboardFilters7 {
+    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
+}
+
+// Warning: (ae-missing-release-tag) "DashboardFilters8" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface DashboardFilters8 {
+    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
+}
+
+// Warning: (ae-missing-release-tag) "DashboardFilters9" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface DashboardFilters9 {
     [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
 }
 
@@ -1603,6 +1631,16 @@ type Id52 = string;
 // @public
 type Id53 = string;
 
+// Warning: (ae-missing-release-tag) "Id54" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Id54 = string;
+
+// Warning: (ae-missing-release-tag) "Id55" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Id55 = string;
+
 // Warning: (ae-missing-release-tag) "Id6" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public
@@ -2079,6 +2117,16 @@ type Locale2 = string;
 // @public
 type Locale3 = string;
 
+// Warning: (ae-missing-release-tag) "Locale4" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Locale4 = string;
+
+// Warning: (ae-missing-release-tag) "Locale5" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Locale5 = string;
+
 // Warning: (ae-missing-release-tag) "LocationBucket" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
@@ -2096,7 +2144,7 @@ interface Metadata1 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout";
+    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout" | "document" | "document_template" | "page_template";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata10" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -2106,7 +2154,7 @@ interface Metadata10 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout";
+    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout" | "document" | "document_template" | "page_template";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata11" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -2126,7 +2174,7 @@ interface Metadata13 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout";
+    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout" | "document" | "document_template" | "page_template";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata14" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -2146,7 +2194,7 @@ interface Metadata16 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout";
+    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout" | "document" | "document_template" | "page_template";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata17" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -2166,13 +2214,13 @@ interface Metadata19 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout";
+    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout" | "document" | "document_template" | "page_template";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-type Metadata2 = Metadata3 | Metadata6 | Metadata9 | Metadata12 | Metadata15 | Metadata18 | Metadata21 | Metadata24 | Metadata27 | Metadata30 | Metadata33 | Metadata36 | Metadata39;
+type Metadata2 = Metadata3 | Metadata6 | Metadata9 | Metadata12 | Metadata15 | Metadata18 | Metadata21 | Metadata24 | Metadata27 | Metadata30 | Metadata33 | Metadata36 | Metadata39 | Metadata42 | Metadata45 | Metadata48;
 
 // Warning: (ae-missing-release-tag) "Metadata20" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
@@ -2191,7 +2239,7 @@ interface Metadata22 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout";
+    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout" | "document" | "document_template" | "page_template";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata23" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -2211,7 +2259,7 @@ interface Metadata25 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout";
+    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout" | "document" | "document_template" | "page_template";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata26" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -2231,7 +2279,7 @@ interface Metadata28 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout";
+    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout" | "document" | "document_template" | "page_template";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata29" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -2256,7 +2304,7 @@ interface Metadata31 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout";
+    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout" | "document" | "document_template" | "page_template";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata32" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -2276,7 +2324,7 @@ interface Metadata34 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout";
+    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout" | "document" | "document_template" | "page_template";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata35" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -2296,7 +2344,7 @@ interface Metadata37 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout";
+    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout" | "document" | "document_template" | "page_template";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata38" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -2316,7 +2364,7 @@ interface Metadata4 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout";
+    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout" | "document" | "document_template" | "page_template";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata40" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -2326,20 +2374,80 @@ interface Metadata40 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout";
+    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout" | "document" | "document_template" | "page_template";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata41" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-type Metadata41 = {
+type Metadata41 = PublisherDocumentV2;
+
+// Warning: (ae-missing-release-tag) "Metadata42" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Metadata42 = Metadata43 & Metadata44;
+
+// Warning: (ae-missing-release-tag) "Metadata43" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface Metadata43 {
+    // (undocumented)
     [k: string]: unknown;
-};
+    // (undocumented)
+    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout" | "document" | "document_template" | "page_template";
+}
+
+// Warning: (ae-missing-release-tag) "Metadata44" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+type Metadata44 = PublisherDocumentTemplateV2;
+
+// Warning: (ae-missing-release-tag) "Metadata45" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Metadata45 = Metadata46 & Metadata47;
+
+// Warning: (ae-missing-release-tag) "Metadata46" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface Metadata46 {
+    // (undocumented)
+    [k: string]: unknown;
+    // (undocumented)
+    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout" | "document" | "document_template" | "page_template";
+}
+
+// Warning: (ae-missing-release-tag) "Metadata47" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+type Metadata47 = PublisherPageTemplateV2;
+
+// Warning: (ae-missing-release-tag) "Metadata48" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Metadata48 = Metadata49 & Metadata50;
+
+// Warning: (ae-missing-release-tag) "Metadata49" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface Metadata49 {
+    // (undocumented)
+    [k: string]: unknown;
+    // (undocumented)
+    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout" | "document" | "document_template" | "page_template";
+}
 
 // Warning: (ae-missing-release-tag) "Metadata5" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
 type Metadata5 = Dataset;
+
+// Warning: (ae-missing-release-tag) "Metadata50" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+type Metadata50 = {
+    [k: string]: unknown;
+};
 
 // Warning: (ae-missing-release-tag) "Metadata6" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
@@ -2353,7 +2461,7 @@ interface Metadata7 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout";
+    type: "dataset" | "date" | "metric" | "computed_attribute" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter" | "report" | "report_template" | "report_page_layout" | "document" | "document_template" | "page_template";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata8" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -4487,6 +4595,169 @@ export const metadata_v1: {
                 required: string[];
                 description: string;
             };
+            publisherDocumentV2: {
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                properties: {
+                    id: {
+                        type: string;
+                        pattern: string;
+                        description: string;
+                        $semantic: ({
+                            type: string;
+                            source: string;
+                            code: string;
+                        } | {
+                            code?: undefined;
+                            type: string;
+                            source: string;
+                        })[];
+                    };
+                    type: {
+                        type: string;
+                        enum: string[];
+                    };
+                    version: {
+                        type: string;
+                        enum: string[];
+                        description: string;
+                    };
+                    title: {
+                        $ref: string;
+                    };
+                    description: {
+                        $ref: string;
+                    };
+                    tags: {
+                        $ref: string;
+                    };
+                    period: {
+                        $ref: string;
+                    };
+                    content: {
+                        $ref: string;
+                    };
+                };
+                required: string[];
+                $semantic: {
+                    type: string;
+                    snippets: string[];
+                };
+                not: {
+                    $comment: string;
+                    type: string;
+                    required: string[];
+                    properties: {
+                        content: {
+                            type: string;
+                            required: string[];
+                            properties: {
+                                defaults: {
+                                    type: string;
+                                    required: string[];
+                                };
+                            };
+                        };
+                    };
+                };
+            };
+            publisherDocumentTemplateV2: {
+                title: string;
+                description: string;
+                type: string;
+                additionalProperties: boolean;
+                properties: {
+                    id: {
+                        type: string;
+                        pattern: string;
+                        description: string;
+                        $semantic: ({
+                            type: string;
+                            source: string;
+                            code: string;
+                        } | {
+                            code?: undefined;
+                            type: string;
+                            source: string;
+                        })[];
+                    };
+                    type: {
+                        type: string;
+                        enum: string[];
+                    };
+                    version: {
+                        type: string;
+                        enum: string[];
+                        description: string;
+                    };
+                    title: {
+                        $ref: string;
+                    };
+                    description: {
+                        $ref: string;
+                    };
+                    tags: {
+                        $ref: string;
+                    };
+                    content: {
+                        $ref: string;
+                    };
+                };
+                required: string[];
+                $semantic: {
+                    type: string;
+                    snippets: string[];
+                };
+            };
+            publisherPageTemplateV2: {
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                properties: {
+                    id: {
+                        type: string;
+                        pattern: string;
+                        description: string;
+                        $semantic: ({
+                            type: string;
+                            source: string;
+                            code: string;
+                        } | {
+                            code?: undefined;
+                            type: string;
+                            source: string;
+                        })[];
+                    };
+                    type: {
+                        type: string;
+                        enum: string[];
+                    };
+                    version: {
+                        type: string;
+                        enum: string[];
+                        description: string;
+                    };
+                    title: {
+                        $ref: string;
+                    };
+                    description: {
+                        $ref: string;
+                    };
+                    tags: {
+                        $ref: string;
+                    };
+                    content: {
+                        $ref: string;
+                        description: string;
+                    };
+                };
+                required: string[];
+                $semantic: {
+                    type: string;
+                    snippets: string[];
+                };
+            };
             identifier: {
                 title: string;
                 type: string;
@@ -4640,6 +4911,1283 @@ export const metadata_v1: {
                     source: string;
                     typePrefix: boolean;
                 };
+            };
+            publisherEntityTitleV2: {
+                title: string;
+                description: string;
+                type: string;
+                minLength: number;
+                maxLength: number;
+            };
+            publisherEntityDescriptionV2: {
+                title: string;
+                description: string;
+                type: string;
+                minLength: number;
+                maxLength: number;
+            };
+            publisherEntityTagsV2: {
+                title: string;
+                description: string;
+                type: string;
+                uniqueItems: boolean;
+                items: {
+                    type: string;
+                    minLength: number;
+                };
+            };
+            publisherPeriodV2: {
+                title: string;
+                description: string;
+                oneOf: ({
+                    title: string;
+                    type: string;
+                    additionalProperties: boolean;
+                    properties: {
+                        granularity: {
+                            type: string;
+                            enum: string[];
+                        };
+                        from: {
+                            type: string;
+                            description: string;
+                            pattern?: undefined;
+                        };
+                        to: {
+                            type: string;
+                            description: string;
+                            pattern?: undefined;
+                        };
+                    };
+                    required: string[];
+                } | {
+                    title: string;
+                    type: string;
+                    additionalProperties: boolean;
+                    properties: {
+                        granularity?: undefined;
+                        from: {
+                            type: string;
+                            pattern: string;
+                            description: string;
+                        };
+                        to: {
+                            type: string;
+                            pattern: string;
+                            description: string;
+                        };
+                    };
+                    required: string[];
+                })[];
+            };
+            publisherDocumentContentV2: {
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                description: string;
+                properties: {
+                    defaults: {
+                        $ref: string;
+                    };
+                    filters: {
+                        $ref: string;
+                        description: string;
+                    };
+                    style: {
+                        $ref: string;
+                    };
+                    locale: {
+                        $ref: string;
+                        description: string;
+                    };
+                    format_locale: {
+                        $ref: string;
+                        description: string;
+                    };
+                    pages: {
+                        type: string;
+                        items: {
+                            $ref: string;
+                        };
+                    };
+                    sections: {
+                        type: string;
+                        items: {
+                            $ref: string;
+                        };
+                    };
+                };
+                not: {
+                    $comment: string;
+                    type: string;
+                    anyOf: ({
+                        not?: undefined;
+                        required: string[];
+                    } | {
+                        required?: undefined;
+                        not: {
+                            anyOf: {
+                                required: string[];
+                            }[];
+                        };
+                    })[];
+                };
+            };
+            publisherPageNodeIdV2: {
+                title: string;
+                type: string;
+                pattern: string;
+            };
+            publisherPageSizeV2: {
+                title: string;
+                type: string;
+                enum: string[];
+                description: string;
+            };
+            publisherPageStyleV2: {
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                properties: {
+                    background_color: {
+                        $ref: string;
+                    };
+                    background_opacity: {
+                        $ref: string;
+                    };
+                    background_image: {
+                        $ref: string;
+                    };
+                    background_image_opacity: {
+                        $ref: string;
+                    };
+                    background_fit: {
+                        type: string;
+                        enum: string[];
+                    };
+                    background_horizontal_align: {
+                        $ref: string;
+                    };
+                    background_vertical_align: {
+                        $ref: string;
+                    };
+                    background_offset: {
+                        $ref: string;
+                    };
+                    background_offset_top: {
+                        $ref: string;
+                    };
+                    background_offset_right: {
+                        $ref: string;
+                    };
+                    background_offset_bottom: {
+                        $ref: string;
+                    };
+                    background_offset_left: {
+                        $ref: string;
+                    };
+                    padding: {
+                        $ref: string;
+                    };
+                    padding_top: {
+                        $ref: string;
+                    };
+                    padding_right: {
+                        $ref: string;
+                    };
+                    padding_bottom: {
+                        $ref: string;
+                    };
+                    padding_left: {
+                        $ref: string;
+                    };
+                    text_style: {
+                        $ref: string;
+                    };
+                    text_color: {
+                        $ref: string;
+                    };
+                    horizontal_align: {
+                        type: string;
+                        enum: string[];
+                    };
+                    vertical_align: {
+                        $ref: string;
+                    };
+                    gap: {
+                        $ref: string;
+                    };
+                };
+            };
+            publisherLayoutNodeV2: {
+                title: string;
+                description: string;
+                type: string;
+                properties: {
+                    type: {
+                        type: string;
+                        enum: string[];
+                    };
+                };
+                required: string[];
+                allOf: ({
+                    if: {
+                        properties: {
+                            type: {
+                                const?: undefined;
+                                enum: string[];
+                            };
+                        };
+                        required: string[];
+                    };
+                    then: {
+                        $ref: string;
+                    };
+                } | {
+                    if: {
+                        properties: {
+                            type: {
+                                enum?: undefined;
+                                const: string;
+                            };
+                        };
+                        required: string[];
+                    };
+                    then: {
+                        $ref: string;
+                    };
+                })[];
+            };
+            publisherDocumentPageV2: {
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                description: string;
+                properties: {
+                    id: {
+                        $ref: string;
+                        description: string;
+                    };
+                    visible: {
+                        type: string;
+                        description: string;
+                    };
+                    kind: {
+                        type: string;
+                        enum: string[];
+                        description: string;
+                    };
+                    page_size: {
+                        $ref: string;
+                    };
+                    notes: {
+                        type: string;
+                        minLength: number;
+                        description: string;
+                    };
+                    style: {
+                        $ref: string;
+                    };
+                    layout: {
+                        $ref: string;
+                        description: string;
+                    };
+                    filters: {
+                        $ref: string;
+                        description: string;
+                    };
+                };
+                required: string[];
+                $comment: string;
+            };
+            publisherTakeawayGenerationV2: {
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                properties: {
+                    instructions: {
+                        type: string;
+                        minLength: number;
+                        description: string;
+                    };
+                    context: {
+                        title: string;
+                        type: string;
+                        additionalProperties: boolean;
+                        properties: {
+                            widgets: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref: string;
+                                };
+                            };
+                            page_title: {
+                                type: string;
+                            };
+                            filters: {
+                                type: string;
+                            };
+                            other_pages: {
+                                type: string;
+                            };
+                        };
+                    };
+                };
+            };
+            publisherColorValueV2: {
+                title: string;
+                type: string;
+                pattern: string;
+                description: string;
+            };
+            publisherOpacityV2: {
+                title: string;
+                type: string;
+                minimum: number;
+                maximum: number;
+            };
+            publisherImageSourceV2: {
+                title: string;
+                type: string;
+                pattern: string;
+                description: string;
+            };
+            publisherHorizontalAlignV2: {
+                title: string;
+                type: string;
+                enum: string[];
+            };
+            publisherVerticalAlignV2: {
+                title: string;
+                type: string;
+                enum: string[];
+            };
+            publisherPxV2: {
+                title: string;
+                type: string;
+                minimum: number;
+                description: string;
+            };
+            publisherGapValueV2: {
+                title: string;
+                description: string;
+                oneOf: ({
+                    enum?: undefined;
+                    type: string;
+                    minimum: number;
+                } | {
+                    minimum?: undefined;
+                    type: string;
+                    enum: string[];
+                })[];
+            };
+            publisherDocumentDefaultsV2: {
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                properties: {
+                    page_size: {
+                        $ref: string;
+                        description: string;
+                    };
+                    takeaway: {
+                        title: string;
+                        type: string;
+                        additionalProperties: boolean;
+                        properties: {
+                            generation: {
+                                $ref: string;
+                                description: string;
+                            };
+                        };
+                    };
+                    period: {
+                        $ref: string;
+                        description: string;
+                    };
+                };
+            };
+            publisherDocumentStyleV2: {
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                description: string;
+                properties: {
+                    background_color: {
+                        $ref: string;
+                    };
+                    background_opacity: {
+                        $ref: string;
+                    };
+                    background_image: {
+                        $ref: string;
+                    };
+                    background_image_opacity: {
+                        $ref: string;
+                    };
+                    background_fit: {
+                        type: string;
+                        enum: string[];
+                    };
+                    background_horizontal_align: {
+                        $ref: string;
+                    };
+                    background_vertical_align: {
+                        $ref: string;
+                    };
+                    background_offset: {
+                        $ref: string;
+                    };
+                    background_offset_top: {
+                        $ref: string;
+                    };
+                    background_offset_right: {
+                        $ref: string;
+                    };
+                    background_offset_bottom: {
+                        $ref: string;
+                    };
+                    background_offset_left: {
+                        $ref: string;
+                    };
+                    gap: {
+                        $ref: string;
+                        description: string;
+                    };
+                };
+            };
+            publisherSectionV2: {
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                description: string;
+                properties: {
+                    id: {
+                        $ref: string;
+                        description: string;
+                    };
+                    title: {
+                        type: string;
+                        minLength: number;
+                    };
+                    description: {
+                        type: string;
+                        minLength: number;
+                    };
+                    pages: {
+                        type: string;
+                        items: {
+                            $ref: string;
+                        };
+                    };
+                };
+                required: string[];
+            };
+            publisherPaddingValueV2: {
+                title: string;
+                description: string;
+                oneOf: ({
+                    enum?: undefined;
+                    type: string;
+                    minimum: number;
+                } | {
+                    minimum?: undefined;
+                    type: string;
+                    enum: string[];
+                })[];
+            };
+            publisherTextStyleNameV2: {
+                title: string;
+                type: string;
+                enum: string[];
+                description: string;
+            };
+            publisherBorderLineStyleV2: {
+                title: string;
+                type: string;
+                enum: string[];
+            };
+            publisherRadiusValueV2: {
+                title: string;
+                description: string;
+                oneOf: ({
+                    enum?: undefined;
+                    type: string;
+                    minimum: number;
+                } | {
+                    minimum?: undefined;
+                    type: string;
+                    enum: string[];
+                })[];
+            };
+            publisherShadowValueV2: {
+                title: string;
+                type: string;
+                pattern: string;
+                description: string;
+            };
+            publisherTextStyleV2: {
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                properties: {
+                    text_style: {
+                        $ref: string;
+                    };
+                    text_color: {
+                        $ref: string;
+                    };
+                    horizontal_align: {
+                        type: string;
+                        enum: string[];
+                    };
+                    vertical_align: {
+                        $ref: string;
+                    };
+                    font_size: {
+                        $ref: string;
+                    };
+                    font_weight: {
+                        type: string;
+                        minimum: number;
+                        maximum: number;
+                    };
+                    font_style: {
+                        type: string;
+                        enum: string[];
+                    };
+                    line_height: {
+                        type: string;
+                    };
+                    letter_spacing: {
+                        type: string;
+                    };
+                    text_transform: {
+                        type: string;
+                        enum: string[];
+                    };
+                    text_overflow: {
+                        type: string;
+                        enum: string[];
+                    };
+                };
+            };
+            publisherPageProportionV2: {
+                title: string;
+                type: string;
+                exclusiveMinimum: number;
+                description: string;
+            };
+            publisherWidgetPlaceholderV2: {
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                properties: {
+                    hint: {
+                        type: string;
+                        minLength: number;
+                        description: string;
+                    };
+                    required: {
+                        type: string;
+                    };
+                };
+            };
+            publisherTextWidgetStyleV2: {
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                properties: {
+                    background_color: {
+                        $ref: string;
+                    };
+                    background_opacity: {
+                        $ref: string;
+                    };
+                    background_image: {
+                        $ref: string;
+                    };
+                    background_image_opacity: {
+                        $ref: string;
+                    };
+                    background_fit: {
+                        type: string;
+                        enum: string[];
+                    };
+                    background_horizontal_align: {
+                        $ref: string;
+                    };
+                    background_vertical_align: {
+                        $ref: string;
+                    };
+                    background_offset: {
+                        $ref: string;
+                    };
+                    background_offset_top: {
+                        $ref: string;
+                    };
+                    background_offset_right: {
+                        $ref: string;
+                    };
+                    background_offset_bottom: {
+                        $ref: string;
+                    };
+                    background_offset_left: {
+                        $ref: string;
+                    };
+                    padding: {
+                        $ref: string;
+                    };
+                    padding_top: {
+                        $ref: string;
+                    };
+                    padding_right: {
+                        $ref: string;
+                    };
+                    padding_bottom: {
+                        $ref: string;
+                    };
+                    padding_left: {
+                        $ref: string;
+                    };
+                    border_width: {
+                        $ref: string;
+                    };
+                    border_style: {
+                        $ref: string;
+                    };
+                    border_color: {
+                        $ref: string;
+                    };
+                    border_top_width: {
+                        $ref: string;
+                    };
+                    border_top_style: {
+                        $ref: string;
+                    };
+                    border_top_color: {
+                        $ref: string;
+                    };
+                    border_right_width: {
+                        $ref: string;
+                    };
+                    border_right_style: {
+                        $ref: string;
+                    };
+                    border_right_color: {
+                        $ref: string;
+                    };
+                    border_bottom_width: {
+                        $ref: string;
+                    };
+                    border_bottom_style: {
+                        $ref: string;
+                    };
+                    border_bottom_color: {
+                        $ref: string;
+                    };
+                    border_left_width: {
+                        $ref: string;
+                    };
+                    border_left_style: {
+                        $ref: string;
+                    };
+                    border_left_color: {
+                        $ref: string;
+                    };
+                    border_radius: {
+                        $ref: string;
+                    };
+                    border_top_left_radius: {
+                        $ref: string;
+                    };
+                    border_top_right_radius: {
+                        $ref: string;
+                    };
+                    border_bottom_right_radius: {
+                        $ref: string;
+                    };
+                    border_bottom_left_radius: {
+                        $ref: string;
+                    };
+                    shadow: {
+                        $ref: string;
+                    };
+                    shadow_x: {
+                        type: string;
+                    };
+                    shadow_y: {
+                        type: string;
+                    };
+                    shadow_blur: {
+                        $ref: string;
+                    };
+                    shadow_spread: {
+                        type: string;
+                    };
+                    shadow_color: {
+                        $ref: string;
+                    };
+                    shadow_opacity: {
+                        $ref: string;
+                    };
+                    opacity: {
+                        $ref: string;
+                    };
+                    text_style: {
+                        $ref: string;
+                    };
+                    text_color: {
+                        $ref: string;
+                    };
+                    horizontal_align: {
+                        type: string;
+                        enum: string[];
+                    };
+                    vertical_align: {
+                        $ref: string;
+                    };
+                    font_size: {
+                        $ref: string;
+                    };
+                    font_weight: {
+                        type: string;
+                        minimum: number;
+                        maximum: number;
+                    };
+                    font_style: {
+                        type: string;
+                        enum: string[];
+                    };
+                    line_height: {
+                        type: string;
+                    };
+                    letter_spacing: {
+                        type: string;
+                    };
+                    text_transform: {
+                        type: string;
+                        enum: string[];
+                    };
+                    text_overflow: {
+                        type: string;
+                        enum: string[];
+                    };
+                };
+            };
+            publisherImageWidgetStyleV2: {
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                properties: {
+                    background_color: {
+                        $ref: string;
+                    };
+                    background_opacity: {
+                        $ref: string;
+                    };
+                    background_image: {
+                        $ref: string;
+                    };
+                    background_image_opacity: {
+                        $ref: string;
+                    };
+                    background_fit: {
+                        type: string;
+                        enum: string[];
+                    };
+                    background_horizontal_align: {
+                        $ref: string;
+                    };
+                    background_vertical_align: {
+                        $ref: string;
+                    };
+                    background_offset: {
+                        $ref: string;
+                    };
+                    background_offset_top: {
+                        $ref: string;
+                    };
+                    background_offset_right: {
+                        $ref: string;
+                    };
+                    background_offset_bottom: {
+                        $ref: string;
+                    };
+                    background_offset_left: {
+                        $ref: string;
+                    };
+                    padding: {
+                        $ref: string;
+                    };
+                    padding_top: {
+                        $ref: string;
+                    };
+                    padding_right: {
+                        $ref: string;
+                    };
+                    padding_bottom: {
+                        $ref: string;
+                    };
+                    padding_left: {
+                        $ref: string;
+                    };
+                    border_width: {
+                        $ref: string;
+                    };
+                    border_style: {
+                        $ref: string;
+                    };
+                    border_color: {
+                        $ref: string;
+                    };
+                    border_top_width: {
+                        $ref: string;
+                    };
+                    border_top_style: {
+                        $ref: string;
+                    };
+                    border_top_color: {
+                        $ref: string;
+                    };
+                    border_right_width: {
+                        $ref: string;
+                    };
+                    border_right_style: {
+                        $ref: string;
+                    };
+                    border_right_color: {
+                        $ref: string;
+                    };
+                    border_bottom_width: {
+                        $ref: string;
+                    };
+                    border_bottom_style: {
+                        $ref: string;
+                    };
+                    border_bottom_color: {
+                        $ref: string;
+                    };
+                    border_left_width: {
+                        $ref: string;
+                    };
+                    border_left_style: {
+                        $ref: string;
+                    };
+                    border_left_color: {
+                        $ref: string;
+                    };
+                    border_radius: {
+                        $ref: string;
+                    };
+                    border_top_left_radius: {
+                        $ref: string;
+                    };
+                    border_top_right_radius: {
+                        $ref: string;
+                    };
+                    border_bottom_right_radius: {
+                        $ref: string;
+                    };
+                    border_bottom_left_radius: {
+                        $ref: string;
+                    };
+                    shadow: {
+                        $ref: string;
+                    };
+                    shadow_x: {
+                        type: string;
+                    };
+                    shadow_y: {
+                        type: string;
+                    };
+                    shadow_blur: {
+                        $ref: string;
+                    };
+                    shadow_spread: {
+                        type: string;
+                    };
+                    shadow_color: {
+                        $ref: string;
+                    };
+                    shadow_opacity: {
+                        $ref: string;
+                    };
+                    opacity: {
+                        $ref: string;
+                    };
+                    fit: {
+                        type: string;
+                        enum: string[];
+                    };
+                    horizontal_align: {
+                        $ref: string;
+                    };
+                    vertical_align: {
+                        $ref: string;
+                    };
+                };
+            };
+            publisherWidgetTitleV2: {
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                properties: {
+                    visible: {
+                        type: string;
+                    };
+                    text: {
+                        type: string;
+                        minLength: number;
+                    };
+                    style: {
+                        $ref: string;
+                    };
+                };
+            };
+            publisherVisualizationStyleV2: {
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                properties: {
+                    background_color: {
+                        $ref: string;
+                    };
+                    background_opacity: {
+                        $ref: string;
+                    };
+                    background_image: {
+                        $ref: string;
+                    };
+                    background_image_opacity: {
+                        $ref: string;
+                    };
+                    background_fit: {
+                        type: string;
+                        enum: string[];
+                    };
+                    background_horizontal_align: {
+                        $ref: string;
+                    };
+                    background_vertical_align: {
+                        $ref: string;
+                    };
+                    background_offset: {
+                        $ref: string;
+                    };
+                    background_offset_top: {
+                        $ref: string;
+                    };
+                    background_offset_right: {
+                        $ref: string;
+                    };
+                    background_offset_bottom: {
+                        $ref: string;
+                    };
+                    background_offset_left: {
+                        $ref: string;
+                    };
+                    padding: {
+                        $ref: string;
+                    };
+                    padding_top: {
+                        $ref: string;
+                    };
+                    padding_right: {
+                        $ref: string;
+                    };
+                    padding_bottom: {
+                        $ref: string;
+                    };
+                    padding_left: {
+                        $ref: string;
+                    };
+                    border_width: {
+                        $ref: string;
+                    };
+                    border_style: {
+                        $ref: string;
+                    };
+                    border_color: {
+                        $ref: string;
+                    };
+                    border_top_width: {
+                        $ref: string;
+                    };
+                    border_top_style: {
+                        $ref: string;
+                    };
+                    border_top_color: {
+                        $ref: string;
+                    };
+                    border_right_width: {
+                        $ref: string;
+                    };
+                    border_right_style: {
+                        $ref: string;
+                    };
+                    border_right_color: {
+                        $ref: string;
+                    };
+                    border_bottom_width: {
+                        $ref: string;
+                    };
+                    border_bottom_style: {
+                        $ref: string;
+                    };
+                    border_bottom_color: {
+                        $ref: string;
+                    };
+                    border_left_width: {
+                        $ref: string;
+                    };
+                    border_left_style: {
+                        $ref: string;
+                    };
+                    border_left_color: {
+                        $ref: string;
+                    };
+                    border_radius: {
+                        $ref: string;
+                    };
+                    border_top_left_radius: {
+                        $ref: string;
+                    };
+                    border_top_right_radius: {
+                        $ref: string;
+                    };
+                    border_bottom_right_radius: {
+                        $ref: string;
+                    };
+                    border_bottom_left_radius: {
+                        $ref: string;
+                    };
+                    shadow: {
+                        $ref: string;
+                    };
+                    shadow_x: {
+                        type: string;
+                    };
+                    shadow_y: {
+                        type: string;
+                    };
+                    shadow_blur: {
+                        $ref: string;
+                    };
+                    shadow_spread: {
+                        type: string;
+                    };
+                    shadow_color: {
+                        $ref: string;
+                    };
+                    shadow_opacity: {
+                        $ref: string;
+                    };
+                    opacity: {
+                        $ref: string;
+                    };
+                    chart: {
+                        $ref: string;
+                    };
+                    table: {
+                        $ref: string;
+                    };
+                    headline: {
+                        $ref: string;
+                    };
+                };
+            };
+            publisherContainerStyleV2: {
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                properties: {
+                    background_color: {
+                        $ref: string;
+                    };
+                    background_opacity: {
+                        $ref: string;
+                    };
+                    background_image: {
+                        $ref: string;
+                    };
+                    background_image_opacity: {
+                        $ref: string;
+                    };
+                    background_fit: {
+                        type: string;
+                        enum: string[];
+                    };
+                    background_horizontal_align: {
+                        $ref: string;
+                    };
+                    background_vertical_align: {
+                        $ref: string;
+                    };
+                    background_offset: {
+                        $ref: string;
+                    };
+                    background_offset_top: {
+                        $ref: string;
+                    };
+                    background_offset_right: {
+                        $ref: string;
+                    };
+                    background_offset_bottom: {
+                        $ref: string;
+                    };
+                    background_offset_left: {
+                        $ref: string;
+                    };
+                    padding: {
+                        $ref: string;
+                    };
+                    padding_top: {
+                        $ref: string;
+                    };
+                    padding_right: {
+                        $ref: string;
+                    };
+                    padding_bottom: {
+                        $ref: string;
+                    };
+                    padding_left: {
+                        $ref: string;
+                    };
+                    border_width: {
+                        $ref: string;
+                    };
+                    border_style: {
+                        $ref: string;
+                    };
+                    border_color: {
+                        $ref: string;
+                    };
+                    border_top_width: {
+                        $ref: string;
+                    };
+                    border_top_style: {
+                        $ref: string;
+                    };
+                    border_top_color: {
+                        $ref: string;
+                    };
+                    border_right_width: {
+                        $ref: string;
+                    };
+                    border_right_style: {
+                        $ref: string;
+                    };
+                    border_right_color: {
+                        $ref: string;
+                    };
+                    border_bottom_width: {
+                        $ref: string;
+                    };
+                    border_bottom_style: {
+                        $ref: string;
+                    };
+                    border_bottom_color: {
+                        $ref: string;
+                    };
+                    border_left_width: {
+                        $ref: string;
+                    };
+                    border_left_style: {
+                        $ref: string;
+                    };
+                    border_left_color: {
+                        $ref: string;
+                    };
+                    border_radius: {
+                        $ref: string;
+                    };
+                    border_top_left_radius: {
+                        $ref: string;
+                    };
+                    border_top_right_radius: {
+                        $ref: string;
+                    };
+                    border_bottom_right_radius: {
+                        $ref: string;
+                    };
+                    border_bottom_left_radius: {
+                        $ref: string;
+                    };
+                    shadow: {
+                        $ref: string;
+                    };
+                    shadow_x: {
+                        type: string;
+                    };
+                    shadow_y: {
+                        type: string;
+                    };
+                    shadow_blur: {
+                        $ref: string;
+                    };
+                    shadow_spread: {
+                        type: string;
+                    };
+                    shadow_color: {
+                        $ref: string;
+                    };
+                    shadow_opacity: {
+                        $ref: string;
+                    };
+                    opacity: {
+                        $ref: string;
+                    };
+                    text_style: {
+                        $ref: string;
+                    };
+                    text_color: {
+                        $ref: string;
+                    };
+                    horizontal_align: {
+                        type: string;
+                        enum: string[];
+                    };
+                    vertical_align: {
+                        $ref: string;
+                    };
+                    gap: {
+                        $ref: string;
+                    };
+                };
+            };
+            publisherPageBodyV2: {
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                properties: {
+                    kind: {
+                        type: string;
+                        enum: string[];
+                        description: string;
+                    };
+                    page_size: {
+                        $ref: string;
+                    };
+                    notes: {
+                        type: string;
+                        minLength: number;
+                        description: string;
+                    };
+                    style: {
+                        $ref: string;
+                    };
+                    layout: {
+                        $ref: string;
+                        description: string;
+                    };
+                    filters: {
+                        $ref: string;
+                        description: string;
+                    };
+                };
+                required: string[];
             };
             queryFilters: {
                 title: string;
@@ -7073,14 +8621,14 @@ export const metadata_v1: {
                             description: string;
                         };
                         from: {
+                            pattern?: undefined;
                             type: string;
                             description: string;
-                            pattern?: undefined;
                         };
                         to: {
+                            pattern?: undefined;
                             type: string;
                             description: string;
-                            pattern?: undefined;
                         };
                         with: {
                             type: string;
@@ -9563,6 +11111,121 @@ export const metadata_v1: {
             };
             required: string[];
         };
+        publisherDocumentV2: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                id: {
+                    type: string;
+                    pattern: string;
+                    description: string;
+                    $semantic: ({
+                        type: string;
+                        source: string;
+                        code: string;
+                    } | {
+                        code?: undefined;
+                        type: string;
+                        source: string;
+                    })[];
+                };
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                version: {
+                    type: string;
+                    enum: string[];
+                    description: string;
+                };
+                title: {
+                    $ref: string;
+                };
+                description: {
+                    $ref: string;
+                };
+                tags: {
+                    $ref: string;
+                };
+                period: {
+                    $ref: string;
+                };
+                content: {
+                    $ref: string;
+                };
+            };
+            required: string[];
+            $semantic: {
+                type: string;
+                snippets: string[];
+            };
+            not: {
+                $comment: string;
+                type: string;
+                required: string[];
+                properties: {
+                    content: {
+                        type: string;
+                        required: string[];
+                        properties: {
+                            defaults: {
+                                type: string;
+                                required: string[];
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        publisherDocumentTemplateV2: {
+            title: string;
+            description: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                id: {
+                    type: string;
+                    pattern: string;
+                    description: string;
+                    $semantic: ({
+                        type: string;
+                        source: string;
+                        code: string;
+                    } | {
+                        code?: undefined;
+                        type: string;
+                        source: string;
+                    })[];
+                };
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                version: {
+                    type: string;
+                    enum: string[];
+                    description: string;
+                };
+                title: {
+                    $ref: string;
+                };
+                description: {
+                    $ref: string;
+                };
+                tags: {
+                    $ref: string;
+                };
+                content: {
+                    $ref: string;
+                };
+            };
+            required: string[];
+            $semantic: {
+                type: string;
+                snippets: string[];
+            };
+        };
         metric: {
             title: string;
             type: string;
@@ -9623,6 +11286,574 @@ export const metadata_v1: {
                 snippets: string[];
             };
             required: string[];
+        };
+        publisherChartStyleV2: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                font_size: {
+                    $ref: string;
+                };
+                text_color: {
+                    $ref: string;
+                };
+                axis_line_color: {
+                    $ref: string;
+                };
+                axis_name_color: {
+                    $ref: string;
+                };
+                axis_name_size: {
+                    $ref: string;
+                };
+                axis_value_color: {
+                    $ref: string;
+                };
+                axis_value_size: {
+                    $ref: string;
+                };
+                grid_color: {
+                    $ref: string;
+                };
+                plot_line_color: {
+                    $ref: string;
+                };
+                legend_color: {
+                    $ref: string;
+                };
+                legend_size: {
+                    $ref: string;
+                };
+                data_label_color: {
+                    $ref: string;
+                };
+                data_label_size: {
+                    $ref: string;
+                };
+            };
+        };
+        publisherTableStyleV2: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                font_size: {
+                    $ref: string;
+                };
+                row_height: {
+                    $ref: string;
+                };
+                grid_color: {
+                    $ref: string;
+                };
+                value_color: {
+                    $ref: string;
+                };
+                null_value_color: {
+                    $ref: string;
+                };
+                header_label_color: {
+                    $ref: string;
+                };
+                header_background_color: {
+                    $ref: string;
+                };
+                total_value_color: {
+                    $ref: string;
+                };
+                total_background_color: {
+                    $ref: string;
+                };
+                subtotal_background_color: {
+                    $ref: string;
+                };
+            };
+        };
+        publisherHeadlineStyleV2: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                primary_value_color: {
+                    $ref: string;
+                };
+                primary_value_size: {
+                    $ref: string;
+                };
+                secondary_value_color: {
+                    $ref: string;
+                };
+                secondary_value_size: {
+                    $ref: string;
+                };
+                positive_color: {
+                    $ref: string;
+                };
+                negative_color: {
+                    $ref: string;
+                };
+            };
+        };
+        publisherAxisDisplayV2: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                visible: {
+                    type: string;
+                };
+                name: {
+                    title: string;
+                    type: string;
+                    additionalProperties: boolean;
+                    properties: {
+                        visible: {
+                            type: string;
+                        };
+                        position: {
+                            type: string;
+                            enum: string[];
+                        };
+                    };
+                };
+                values: {
+                    title: string;
+                    type: string;
+                    additionalProperties: boolean;
+                    properties: {
+                        visible: {
+                            type: string;
+                        };
+                        rotation: {
+                            type: string;
+                            minimum: number;
+                            maximum: number;
+                        };
+                    };
+                };
+                min: {
+                    type: string;
+                };
+                max: {
+                    type: string;
+                };
+            };
+        };
+        publisherVisualizationDisplayV2: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                legend: {
+                    title: string;
+                    type: string;
+                    additionalProperties: boolean;
+                    properties: {
+                        visible: {
+                            type: string;
+                        };
+                        position: {
+                            type: string;
+                            enum: string[];
+                        };
+                    };
+                };
+                x_axis: {
+                    $ref: string;
+                };
+                y_axis: {
+                    $ref: string;
+                };
+                secondary_y_axis: {
+                    $ref: string;
+                };
+                gridlines: {
+                    title: string;
+                    type: string;
+                    additionalProperties: boolean;
+                    properties: {
+                        visible: {
+                            type: string;
+                        };
+                    };
+                };
+                data_labels: {
+                    title: string;
+                    type: string;
+                    additionalProperties: boolean;
+                    properties: {
+                        visible: {
+                            oneOf: ({
+                                enum?: undefined;
+                                type: string;
+                            } | {
+                                type: string;
+                                enum: string[];
+                            })[];
+                        };
+                    };
+                };
+                data_points: {
+                    title: string;
+                    type: string;
+                    additionalProperties: boolean;
+                    properties: {
+                        visible: {
+                            oneOf: ({
+                                enum?: undefined;
+                                type: string;
+                            } | {
+                                type: string;
+                                enum: string[];
+                            })[];
+                        };
+                    };
+                };
+            };
+        };
+        publisherContainerV2: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                id: {
+                    $ref: string;
+                };
+                children: {
+                    type: string;
+                    description: string;
+                    items: {
+                        $ref: string;
+                    };
+                };
+                proportion: {
+                    $ref: string;
+                };
+                locked: {
+                    type: string;
+                };
+                style: {
+                    $ref: string;
+                };
+            };
+            required: string[];
+        };
+        publisherTitleWidgetV2: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            description: string;
+            properties: {
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                id: {
+                    $ref: string;
+                    description: string;
+                };
+                proportion: {
+                    $ref: string;
+                };
+                placeholder: {
+                    $ref: string;
+                };
+                locked: {
+                    type: string;
+                };
+                markdown: {
+                    type: string;
+                    minLength: number;
+                    description: string;
+                };
+                style: {
+                    $ref: string;
+                };
+            };
+            required: string[];
+        };
+        publisherHeadingWidgetV2: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                id: {
+                    $ref: string;
+                    description: string;
+                };
+                proportion: {
+                    $ref: string;
+                };
+                placeholder: {
+                    $ref: string;
+                };
+                locked: {
+                    type: string;
+                };
+                markdown: {
+                    type: string;
+                    minLength: number;
+                    description: string;
+                };
+                level: {
+                    type: string;
+                    enum: number[];
+                    description: string;
+                };
+                style: {
+                    $ref: string;
+                };
+            };
+            required: string[];
+        };
+        publisherTextWidgetV2: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                id: {
+                    $ref: string;
+                    description: string;
+                };
+                proportion: {
+                    $ref: string;
+                };
+                placeholder: {
+                    $ref: string;
+                };
+                locked: {
+                    type: string;
+                };
+                markdown: {
+                    type: string;
+                    minLength: number;
+                    description: string;
+                };
+                decorative: {
+                    type: string;
+                    description: string;
+                };
+                style: {
+                    $ref: string;
+                };
+            };
+            required: string[];
+        };
+        publisherImageWidgetV2: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                id: {
+                    $ref: string;
+                    description: string;
+                };
+                proportion: {
+                    $ref: string;
+                };
+                placeholder: {
+                    $ref: string;
+                };
+                locked: {
+                    type: string;
+                };
+                source: {
+                    $ref: string;
+                };
+                alt_text: {
+                    type: string;
+                    minLength: number;
+                };
+                decorative: {
+                    type: string;
+                    description: string;
+                };
+                style: {
+                    $ref: string;
+                };
+            };
+            required: string[];
+        };
+        publisherVisualizationWidgetV2: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                id: {
+                    $ref: string;
+                    description: string;
+                };
+                proportion: {
+                    $ref: string;
+                };
+                placeholder: {
+                    $ref: string;
+                };
+                locked: {
+                    type: string;
+                };
+                visualization: {
+                    $ref: string;
+                    description: string;
+                    $semantic: {
+                        type: string;
+                        source: string;
+                    };
+                };
+                title: {
+                    $ref: string;
+                };
+                alt_text: {
+                    type: string;
+                    minLength: number;
+                };
+                date: {
+                    $ref: string;
+                    description: string;
+                    $semantic: {
+                        type: string;
+                        source: string;
+                    };
+                };
+                ignore_document_period: {
+                    type: string;
+                    description: string;
+                };
+                filters: {
+                    $ref: string;
+                    description: string;
+                };
+                ignored_filters: {
+                    type: string;
+                    description: string;
+                    items: {
+                        type: string;
+                        pattern: string;
+                        description: string;
+                        $semantic: {
+                            type: string;
+                            sources: string[];
+                            typePrefix: boolean;
+                        };
+                    };
+                };
+                display: {
+                    $ref: string;
+                };
+                style: {
+                    $ref: string;
+                };
+            };
+            required: string[];
+        };
+        publisherTakeawayWidgetV2: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            description: string;
+            properties: {
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                id: {
+                    $ref: string;
+                    description: string;
+                };
+                proportion: {
+                    $ref: string;
+                };
+                placeholder: {
+                    $ref: string;
+                };
+                locked: {
+                    type: string;
+                };
+                title: {
+                    $ref: string;
+                };
+                markdown: {
+                    type: string;
+                    minLength: number;
+                    description: string;
+                };
+                generation: {
+                    $ref: string;
+                };
+                style: {
+                    $ref: string;
+                };
+            };
+            required: string[];
+        };
+        publisherPageTemplateV2: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                id: {
+                    type: string;
+                    pattern: string;
+                    description: string;
+                    $semantic: ({
+                        type: string;
+                        source: string;
+                        code: string;
+                    } | {
+                        code?: undefined;
+                        type: string;
+                        source: string;
+                    })[];
+                };
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                version: {
+                    type: string;
+                    enum: string[];
+                    description: string;
+                };
+                title: {
+                    $ref: string;
+                };
+                description: {
+                    $ref: string;
+                };
+                tags: {
+                    $ref: string;
+                };
+                content: {
+                    $ref: string;
+                    description: string;
+                };
+            };
+            required: string[];
+            $semantic: {
+                type: string;
+                snippets: string[];
+            };
         };
         parameter: {
             title: string;
@@ -11476,6 +13707,1309 @@ type PrimaryKey1 = string;
 // @public
 type PrimaryKey2 = string;
 
+// Warning: (ae-missing-release-tag) "PublisherAbsolutePeriodV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface PublisherAbsolutePeriodV2 {
+    from: string;
+    to: string;
+}
+
+// Warning: (ae-missing-release-tag) "PublisherAutoVisibilityV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface PublisherAutoVisibilityV2 {
+    // (undocumented)
+    visible?: boolean | "auto";
+}
+
+// Warning: (ae-missing-release-tag) "PublisherAutoVisibilityV21" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface PublisherAutoVisibilityV21 {
+    // (undocumented)
+    visible?: boolean | "auto";
+}
+
+// Warning: (ae-missing-release-tag) "PublisherAxisDisplayV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface PublisherAxisDisplayV2 {
+    // (undocumented)
+    max?: number;
+    // (undocumented)
+    min?: number;
+    // (undocumented)
+    name?: PublisherAxisNameDisplayV2;
+    // (undocumented)
+    values?: PublisherAxisValuesDisplayV2;
+    // (undocumented)
+    visible?: boolean;
+}
+
+// Warning: (ae-missing-release-tag) "PublisherAxisNameDisplayV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface PublisherAxisNameDisplayV2 {
+    // (undocumented)
+    position?: "low" | "middle" | "high";
+    // (undocumented)
+    visible?: boolean;
+}
+
+// Warning: (ae-missing-release-tag) "PublisherAxisValuesDisplayV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface PublisherAxisValuesDisplayV2 {
+    // (undocumented)
+    rotation?: number;
+    // (undocumented)
+    visible?: boolean;
+}
+
+// Warning: (ae-missing-release-tag) "PublisherBorderLineStyleV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+type PublisherBorderLineStyleV2 = "solid" | "dashed" | "dotted" | "none";
+
+// Warning: (ae-missing-release-tag) "PublisherChartStyleV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface PublisherChartStyleV2 {
+    // (undocumented)
+    axis_line_color?: PublisherColorValueV2;
+    // (undocumented)
+    axis_name_color?: PublisherColorValueV2;
+    // (undocumented)
+    axis_name_size?: PublisherPxV2;
+    // (undocumented)
+    axis_value_color?: PublisherColorValueV2;
+    // (undocumented)
+    axis_value_size?: PublisherPxV2;
+    // (undocumented)
+    data_label_color?: PublisherColorValueV2;
+    // (undocumented)
+    data_label_size?: PublisherPxV2;
+    // (undocumented)
+    font_size?: PublisherPxV2;
+    // (undocumented)
+    grid_color?: PublisherColorValueV2;
+    // (undocumented)
+    legend_color?: PublisherColorValueV2;
+    // (undocumented)
+    legend_size?: PublisherPxV2;
+    // (undocumented)
+    plot_line_color?: PublisherColorValueV2;
+    // (undocumented)
+    text_color?: PublisherColorValueV2;
+}
+
+// Warning: (ae-missing-release-tag) "PublisherColorValueV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherColorValueV2 = string;
+
+// Warning: (ae-missing-release-tag) "PublisherContainerStyleV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface PublisherContainerStyleV2 {
+    // (undocumented)
+    background_color?: PublisherColorValueV2;
+    // (undocumented)
+    background_fit?: "cover" | "contain" | "fill" | "tile";
+    // (undocumented)
+    background_horizontal_align?: PublisherHorizontalAlignV2;
+    // (undocumented)
+    background_image?: PublisherImageSourceV2;
+    // (undocumented)
+    background_image_opacity?: PublisherOpacityV2;
+    // (undocumented)
+    background_offset?: PublisherPxV2;
+    // (undocumented)
+    background_offset_bottom?: PublisherPxV2;
+    // (undocumented)
+    background_offset_left?: PublisherPxV2;
+    // (undocumented)
+    background_offset_right?: PublisherPxV2;
+    // (undocumented)
+    background_offset_top?: PublisherPxV2;
+    // (undocumented)
+    background_opacity?: PublisherOpacityV2;
+    // (undocumented)
+    background_vertical_align?: PublisherVerticalAlignV2;
+    // (undocumented)
+    border_bottom_color?: PublisherColorValueV2;
+    // (undocumented)
+    border_bottom_left_radius?: PublisherRadiusValueV2;
+    // (undocumented)
+    border_bottom_right_radius?: PublisherRadiusValueV2;
+    // (undocumented)
+    border_bottom_style?: PublisherBorderLineStyleV2;
+    // (undocumented)
+    border_bottom_width?: PublisherPxV2;
+    // (undocumented)
+    border_color?: PublisherColorValueV2;
+    // (undocumented)
+    border_left_color?: PublisherColorValueV2;
+    // (undocumented)
+    border_left_style?: PublisherBorderLineStyleV2;
+    // (undocumented)
+    border_left_width?: PublisherPxV2;
+    // (undocumented)
+    border_radius?: PublisherRadiusValueV2;
+    // (undocumented)
+    border_right_color?: PublisherColorValueV2;
+    // (undocumented)
+    border_right_style?: PublisherBorderLineStyleV2;
+    // (undocumented)
+    border_right_width?: PublisherPxV2;
+    // (undocumented)
+    border_style?: PublisherBorderLineStyleV2;
+    // (undocumented)
+    border_top_color?: PublisherColorValueV2;
+    // (undocumented)
+    border_top_left_radius?: PublisherRadiusValueV2;
+    // (undocumented)
+    border_top_right_radius?: PublisherRadiusValueV2;
+    // (undocumented)
+    border_top_style?: PublisherBorderLineStyleV2;
+    // (undocumented)
+    border_top_width?: PublisherPxV2;
+    // (undocumented)
+    border_width?: PublisherPxV2;
+    // (undocumented)
+    gap?: PublisherGapValueV23;
+    // (undocumented)
+    horizontal_align?: "left" | "center" | "right" | "justify";
+    // (undocumented)
+    opacity?: PublisherOpacityV2;
+    // (undocumented)
+    padding?: PublisherPaddingValueV2;
+    // (undocumented)
+    padding_bottom?: PublisherPaddingValueV2;
+    // (undocumented)
+    padding_left?: PublisherPaddingValueV2;
+    // (undocumented)
+    padding_right?: PublisherPaddingValueV2;
+    // (undocumented)
+    padding_top?: PublisherPaddingValueV2;
+    // (undocumented)
+    shadow?: PublisherShadowValueV2;
+    // (undocumented)
+    shadow_blur?: PublisherPxV2;
+    // (undocumented)
+    shadow_color?: PublisherColorValueV2;
+    // (undocumented)
+    shadow_opacity?: PublisherOpacityV2;
+    // (undocumented)
+    shadow_spread?: number;
+    // (undocumented)
+    shadow_x?: number;
+    // (undocumented)
+    shadow_y?: number;
+    // (undocumented)
+    text_color?: PublisherColorValueV2;
+    // (undocumented)
+    text_style?: PublisherTextStyleNameV2;
+    // (undocumented)
+    vertical_align?: PublisherVerticalAlignV2;
+}
+
+// Warning: (ae-missing-release-tag) "PublisherContainerV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface PublisherContainerV2 {
+    children: PublisherLayoutNodeV22[];
+    // (undocumented)
+    id?: PublisherPageNodeIdV2;
+    // (undocumented)
+    locked?: boolean;
+    // (undocumented)
+    proportion?: PublisherPageProportionV2;
+    // (undocumented)
+    style?: PublisherContainerStyleV2;
+    // (undocumented)
+    type: "row" | "column";
+}
+
+// Warning: (ae-missing-release-tag) "PublisherDocumentContentV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface PublisherDocumentContentV2 {
+    // (undocumented)
+    defaults?: PublisherDocumentDefaultsV2;
+    // (undocumented)
+    filters?: DashboardFilters7;
+    // (undocumented)
+    format_locale?: Locale5;
+    // (undocumented)
+    locale?: Locale4;
+    // (undocumented)
+    pages?: PublisherDocumentPageV2[];
+    // (undocumented)
+    sections?: PublisherSectionV2[];
+    // (undocumented)
+    style?: PublisherDocumentStyleV2;
+}
+
+// Warning: (ae-missing-release-tag) "PublisherDocumentDefaultsV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface PublisherDocumentDefaultsV2 {
+    // (undocumented)
+    page_size?: PublisherPageSizeV2;
+    // (undocumented)
+    period?: PublisherPeriodV21;
+    // (undocumented)
+    takeaway?: PublisherDocumentTakeawayDefaultsV2;
+}
+
+// Warning: (ae-missing-release-tag) "PublisherDocumentPageV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface PublisherDocumentPageV2 {
+    // (undocumented)
+    filters?: DashboardFilters9;
+    // (undocumented)
+    id: PublisherPageNodeIdV21;
+    kind?: "cover" | "section" | "content";
+    // (undocumented)
+    layout: PublisherLayoutNodeV2;
+    notes?: string;
+    // (undocumented)
+    page_size?: PublisherPageSizeV21;
+    // (undocumented)
+    style?: PublisherPageStyleV2;
+    visible?: boolean;
+}
+
+// Warning: (ae-missing-release-tag) "PublisherDocumentStyleV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface PublisherDocumentStyleV2 {
+    // (undocumented)
+    background_color?: PublisherColorValueV2;
+    // (undocumented)
+    background_fit?: "cover" | "contain" | "fill" | "tile";
+    // (undocumented)
+    background_horizontal_align?: PublisherHorizontalAlignV2;
+    // (undocumented)
+    background_image?: PublisherImageSourceV2;
+    // (undocumented)
+    background_image_opacity?: PublisherOpacityV2;
+    // (undocumented)
+    background_offset?: PublisherPxV2;
+    // (undocumented)
+    background_offset_bottom?: PublisherPxV2;
+    // (undocumented)
+    background_offset_left?: PublisherPxV2;
+    // (undocumented)
+    background_offset_right?: PublisherPxV2;
+    // (undocumented)
+    background_offset_top?: PublisherPxV2;
+    // (undocumented)
+    background_opacity?: PublisherOpacityV2;
+    // (undocumented)
+    background_vertical_align?: PublisherVerticalAlignV2;
+    // (undocumented)
+    gap?: PublisherGapValueV2;
+}
+
+// Warning: (ae-missing-release-tag) "PublisherDocumentTakeawayDefaultsV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface PublisherDocumentTakeawayDefaultsV2 {
+    // (undocumented)
+    generation?: PublisherTakeawayGenerationV2;
+}
+
+// Warning: (ae-missing-release-tag) "PublisherDocumentTemplateV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface PublisherDocumentTemplateV2 {
+    // (undocumented)
+    content: PublisherDocumentContentV2;
+    // (undocumented)
+    description?: PublisherEntityDescriptionV2;
+    id: string;
+    // (undocumented)
+    tags?: PublisherEntityTagsV2;
+    // (undocumented)
+    title: PublisherEntityTitleV2;
+    // (undocumented)
+    type: "document_template";
+    version: "2";
+}
+
+// Warning: (ae-missing-release-tag) "PublisherDocumentV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface PublisherDocumentV2 {
+    // (undocumented)
+    content: PublisherDocumentContentV2;
+    // (undocumented)
+    description?: PublisherEntityDescriptionV2;
+    id: string;
+    // (undocumented)
+    period: PublisherPeriodV2;
+    // (undocumented)
+    tags?: PublisherEntityTagsV2;
+    // (undocumented)
+    title: PublisherEntityTitleV2;
+    // (undocumented)
+    type: "document";
+    version: "2";
+}
+
+// Warning: (ae-missing-release-tag) "PublisherEntityDescriptionV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherEntityDescriptionV2 = string;
+
+// Warning: (ae-missing-release-tag) "PublisherEntityTagsV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherEntityTagsV2 = string[];
+
+// Warning: (ae-missing-release-tag) "PublisherEntityTitleV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherEntityTitleV2 = string;
+
+// Warning: (ae-missing-release-tag) "PublisherGapValueV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherGapValueV2 = PublisherGapValueV21 | PublisherGapValueV22;
+
+// Warning: (ae-missing-release-tag) "PublisherGapValueV21" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherGapValueV21 = number;
+
+// Warning: (ae-missing-release-tag) "PublisherGapValueV22" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherGapValueV22 = "{theme.spacing.gap.compact}" | "{theme.spacing.gap.normal}" | "{theme.spacing.gap.spacious}";
+
+// Warning: (ae-missing-release-tag) "PublisherGapValueV23" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherGapValueV23 = PublisherGapValueV21 | PublisherGapValueV22;
+
+// Warning: (ae-missing-release-tag) "PublisherHeadingWidgetV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface PublisherHeadingWidgetV2 {
+    // (undocumented)
+    id: PublisherPageNodeIdV23;
+    level?: 1 | 2 | 3 | 4 | 5 | 6;
+    // (undocumented)
+    locked?: boolean;
+    markdown?: string;
+    // (undocumented)
+    placeholder?: PublisherWidgetPlaceholderV2;
+    // (undocumented)
+    proportion?: PublisherPageProportionV2;
+    // (undocumented)
+    style?: PublisherTextWidgetStyleV2;
+    // (undocumented)
+    type: "heading";
+}
+
+// Warning: (ae-missing-release-tag) "PublisherHeadlineStyleV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface PublisherHeadlineStyleV2 {
+    // (undocumented)
+    negative_color?: PublisherColorValueV2;
+    // (undocumented)
+    positive_color?: PublisherColorValueV2;
+    // (undocumented)
+    primary_value_color?: PublisherColorValueV2;
+    // (undocumented)
+    primary_value_size?: PublisherPxV2;
+    // (undocumented)
+    secondary_value_color?: PublisherColorValueV2;
+    // (undocumented)
+    secondary_value_size?: PublisherPxV2;
+}
+
+// Warning: (ae-missing-release-tag) "PublisherHorizontalAlignV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+type PublisherHorizontalAlignV2 = "left" | "center" | "right";
+
+// Warning: (ae-missing-release-tag) "PublisherImageSourceV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherImageSourceV2 = string;
+
+// Warning: (ae-missing-release-tag) "PublisherImageWidgetStyleV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface PublisherImageWidgetStyleV2 {
+    // (undocumented)
+    background_color?: PublisherColorValueV2;
+    // (undocumented)
+    background_fit?: "cover" | "contain" | "fill" | "tile";
+    // (undocumented)
+    background_horizontal_align?: PublisherHorizontalAlignV2;
+    // (undocumented)
+    background_image?: PublisherImageSourceV2;
+    // (undocumented)
+    background_image_opacity?: PublisherOpacityV2;
+    // (undocumented)
+    background_offset?: PublisherPxV2;
+    // (undocumented)
+    background_offset_bottom?: PublisherPxV2;
+    // (undocumented)
+    background_offset_left?: PublisherPxV2;
+    // (undocumented)
+    background_offset_right?: PublisherPxV2;
+    // (undocumented)
+    background_offset_top?: PublisherPxV2;
+    // (undocumented)
+    background_opacity?: PublisherOpacityV2;
+    // (undocumented)
+    background_vertical_align?: PublisherVerticalAlignV2;
+    // (undocumented)
+    border_bottom_color?: PublisherColorValueV2;
+    // (undocumented)
+    border_bottom_left_radius?: PublisherRadiusValueV2;
+    // (undocumented)
+    border_bottom_right_radius?: PublisherRadiusValueV2;
+    // (undocumented)
+    border_bottom_style?: PublisherBorderLineStyleV2;
+    // (undocumented)
+    border_bottom_width?: PublisherPxV2;
+    // (undocumented)
+    border_color?: PublisherColorValueV2;
+    // (undocumented)
+    border_left_color?: PublisherColorValueV2;
+    // (undocumented)
+    border_left_style?: PublisherBorderLineStyleV2;
+    // (undocumented)
+    border_left_width?: PublisherPxV2;
+    // (undocumented)
+    border_radius?: PublisherRadiusValueV2;
+    // (undocumented)
+    border_right_color?: PublisherColorValueV2;
+    // (undocumented)
+    border_right_style?: PublisherBorderLineStyleV2;
+    // (undocumented)
+    border_right_width?: PublisherPxV2;
+    // (undocumented)
+    border_style?: PublisherBorderLineStyleV2;
+    // (undocumented)
+    border_top_color?: PublisherColorValueV2;
+    // (undocumented)
+    border_top_left_radius?: PublisherRadiusValueV2;
+    // (undocumented)
+    border_top_right_radius?: PublisherRadiusValueV2;
+    // (undocumented)
+    border_top_style?: PublisherBorderLineStyleV2;
+    // (undocumented)
+    border_top_width?: PublisherPxV2;
+    // (undocumented)
+    border_width?: PublisherPxV2;
+    // (undocumented)
+    fit?: "contain" | "cover" | "fill";
+    // (undocumented)
+    horizontal_align?: PublisherHorizontalAlignV2;
+    // (undocumented)
+    opacity?: PublisherOpacityV2;
+    // (undocumented)
+    padding?: PublisherPaddingValueV2;
+    // (undocumented)
+    padding_bottom?: PublisherPaddingValueV2;
+    // (undocumented)
+    padding_left?: PublisherPaddingValueV2;
+    // (undocumented)
+    padding_right?: PublisherPaddingValueV2;
+    // (undocumented)
+    padding_top?: PublisherPaddingValueV2;
+    // (undocumented)
+    shadow?: PublisherShadowValueV2;
+    // (undocumented)
+    shadow_blur?: PublisherPxV2;
+    // (undocumented)
+    shadow_color?: PublisherColorValueV2;
+    // (undocumented)
+    shadow_opacity?: PublisherOpacityV2;
+    // (undocumented)
+    shadow_spread?: number;
+    // (undocumented)
+    shadow_x?: number;
+    // (undocumented)
+    shadow_y?: number;
+    // (undocumented)
+    vertical_align?: PublisherVerticalAlignV2;
+}
+
+// Warning: (ae-missing-release-tag) "PublisherImageWidgetV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface PublisherImageWidgetV2 {
+    // (undocumented)
+    alt_text?: string;
+    decorative?: boolean;
+    // (undocumented)
+    id: PublisherPageNodeIdV25;
+    // (undocumented)
+    locked?: boolean;
+    // (undocumented)
+    placeholder?: PublisherWidgetPlaceholderV2;
+    // (undocumented)
+    proportion?: PublisherPageProportionV2;
+    // (undocumented)
+    source?: PublisherImageSourceV2;
+    // (undocumented)
+    style?: PublisherImageWidgetStyleV2;
+    // (undocumented)
+    type: "image";
+}
+
+// Warning: (ae-missing-release-tag) "PublisherLayoutNodeV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherLayoutNodeV2 = PublisherLayoutNodeV21 | PublisherLayoutNodeV23 | PublisherLayoutNodeV24 | PublisherLayoutNodeV25 | PublisherLayoutNodeV26 | PublisherLayoutNodeV27 | PublisherLayoutNodeV28;
+
+// Warning: (ae-missing-release-tag) "PublisherLayoutNodeV21" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherLayoutNodeV21 = PublisherContainerV2;
+
+// Warning: (ae-missing-release-tag) "PublisherLayoutNodeV22" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherLayoutNodeV22 = PublisherLayoutNodeV21 | PublisherLayoutNodeV23 | PublisherLayoutNodeV24 | PublisherLayoutNodeV25 | PublisherLayoutNodeV26 | PublisherLayoutNodeV27 | PublisherLayoutNodeV28;
+
+// Warning: (ae-missing-release-tag) "PublisherLayoutNodeV23" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherLayoutNodeV23 = PublisherTitleWidgetV2;
+
+// Warning: (ae-missing-release-tag) "PublisherLayoutNodeV24" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherLayoutNodeV24 = PublisherHeadingWidgetV2;
+
+// Warning: (ae-missing-release-tag) "PublisherLayoutNodeV25" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherLayoutNodeV25 = PublisherTextWidgetV2;
+
+// Warning: (ae-missing-release-tag) "PublisherLayoutNodeV26" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherLayoutNodeV26 = PublisherImageWidgetV2;
+
+// Warning: (ae-missing-release-tag) "PublisherLayoutNodeV27" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherLayoutNodeV27 = PublisherVisualizationWidgetV2;
+
+// Warning: (ae-missing-release-tag) "PublisherLayoutNodeV28" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherLayoutNodeV28 = PublisherTakeawayWidgetV2;
+
+// Warning: (ae-missing-release-tag) "PublisherLayoutNodeV29" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherLayoutNodeV29 = PublisherLayoutNodeV21 | PublisherLayoutNodeV23 | PublisherLayoutNodeV24 | PublisherLayoutNodeV25 | PublisherLayoutNodeV26 | PublisherLayoutNodeV27 | PublisherLayoutNodeV28;
+
+// Warning: (ae-missing-release-tag) "PublisherLegendDisplayV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface PublisherLegendDisplayV2 {
+    // (undocumented)
+    position?: "auto" | "top" | "bottom" | "left" | "right";
+    // (undocumented)
+    visible?: boolean;
+}
+
+// Warning: (ae-missing-release-tag) "PublisherOpacityV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+type PublisherOpacityV2 = number;
+
+// Warning: (ae-missing-release-tag) "PublisherPaddingValueV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherPaddingValueV2 = PublisherPaddingValueV21 | PublisherPaddingValueV22;
+
+// Warning: (ae-missing-release-tag) "PublisherPaddingValueV21" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherPaddingValueV21 = number;
+
+// Warning: (ae-missing-release-tag) "PublisherPaddingValueV22" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherPaddingValueV22 = "{theme.spacing.padding.compact}" | "{theme.spacing.padding.normal}" | "{theme.spacing.padding.spacious}";
+
+// Warning: (ae-missing-release-tag) "PublisherPageBodyV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface PublisherPageBodyV2 {
+    // (undocumented)
+    filters?: DashboardFilters10;
+    kind?: "cover" | "section" | "content";
+    // (undocumented)
+    layout: PublisherLayoutNodeV29;
+    notes?: string;
+    // (undocumented)
+    page_size?: PublisherPageSizeV21;
+    // (undocumented)
+    style?: PublisherPageStyleV2;
+}
+
+// Warning: (ae-missing-release-tag) "PublisherPageNodeIdV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+type PublisherPageNodeIdV2 = string;
+
+// Warning: (ae-missing-release-tag) "PublisherPageNodeIdV21" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherPageNodeIdV21 = string;
+
+// Warning: (ae-missing-release-tag) "PublisherPageNodeIdV22" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherPageNodeIdV22 = string;
+
+// Warning: (ae-missing-release-tag) "PublisherPageNodeIdV23" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherPageNodeIdV23 = string;
+
+// Warning: (ae-missing-release-tag) "PublisherPageNodeIdV24" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherPageNodeIdV24 = string;
+
+// Warning: (ae-missing-release-tag) "PublisherPageNodeIdV25" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherPageNodeIdV25 = string;
+
+// Warning: (ae-missing-release-tag) "PublisherPageNodeIdV26" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherPageNodeIdV26 = string;
+
+// Warning: (ae-missing-release-tag) "PublisherPageNodeIdV27" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherPageNodeIdV27 = string;
+
+// Warning: (ae-missing-release-tag) "PublisherPageNodeIdV28" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherPageNodeIdV28 = string;
+
+// Warning: (ae-missing-release-tag) "PublisherPageProportionV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherPageProportionV2 = number;
+
+// Warning: (ae-missing-release-tag) "PublisherPageSizeV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherPageSizeV2 = "widescreen";
+
+// Warning: (ae-missing-release-tag) "PublisherPageSizeV21" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherPageSizeV21 = "widescreen";
+
+// Warning: (ae-missing-release-tag) "PublisherPageStyleV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface PublisherPageStyleV2 {
+    // (undocumented)
+    background_color?: PublisherColorValueV2;
+    // (undocumented)
+    background_fit?: "cover" | "contain" | "fill" | "tile";
+    // (undocumented)
+    background_horizontal_align?: PublisherHorizontalAlignV2;
+    // (undocumented)
+    background_image?: PublisherImageSourceV2;
+    // (undocumented)
+    background_image_opacity?: PublisherOpacityV2;
+    // (undocumented)
+    background_offset?: PublisherPxV2;
+    // (undocumented)
+    background_offset_bottom?: PublisherPxV2;
+    // (undocumented)
+    background_offset_left?: PublisherPxV2;
+    // (undocumented)
+    background_offset_right?: PublisherPxV2;
+    // (undocumented)
+    background_offset_top?: PublisherPxV2;
+    // (undocumented)
+    background_opacity?: PublisherOpacityV2;
+    // (undocumented)
+    background_vertical_align?: PublisherVerticalAlignV2;
+    // (undocumented)
+    gap?: PublisherGapValueV23;
+    // (undocumented)
+    horizontal_align?: "left" | "center" | "right" | "justify";
+    // (undocumented)
+    padding?: PublisherPaddingValueV2;
+    // (undocumented)
+    padding_bottom?: PublisherPaddingValueV2;
+    // (undocumented)
+    padding_left?: PublisherPaddingValueV2;
+    // (undocumented)
+    padding_right?: PublisherPaddingValueV2;
+    // (undocumented)
+    padding_top?: PublisherPaddingValueV2;
+    // (undocumented)
+    text_color?: PublisherColorValueV2;
+    // (undocumented)
+    text_style?: PublisherTextStyleNameV2;
+    // (undocumented)
+    vertical_align?: PublisherVerticalAlignV2;
+}
+
+// Warning: (ae-missing-release-tag) "PublisherPageTemplateV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface PublisherPageTemplateV2 {
+    // (undocumented)
+    content: PublisherPageBodyV2;
+    // (undocumented)
+    description?: PublisherEntityDescriptionV2;
+    id: string;
+    // (undocumented)
+    tags?: PublisherEntityTagsV2;
+    // (undocumented)
+    title: PublisherEntityTitleV2;
+    // (undocumented)
+    type: "page_template";
+    version: "2";
+}
+
+// Warning: (ae-missing-release-tag) "PublisherPeriodV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherPeriodV2 = PublisherRelativePeriodV2 | PublisherAbsolutePeriodV2;
+
+// Warning: (ae-missing-release-tag) "PublisherPeriodV21" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherPeriodV21 = PublisherRelativePeriodV2 | PublisherAbsolutePeriodV2;
+
+// Warning: (ae-missing-release-tag) "PublisherPxV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherPxV2 = number;
+
+// Warning: (ae-missing-release-tag) "PublisherRadiusValueV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherRadiusValueV2 = PublisherRadiusValueV21 | PublisherRadiusValueV22;
+
+// Warning: (ae-missing-release-tag) "PublisherRadiusValueV21" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherRadiusValueV21 = number;
+
+// Warning: (ae-missing-release-tag) "PublisherRadiusValueV22" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherRadiusValueV22 = "{theme.corners.small}" | "{theme.corners.medium}" | "{theme.corners.large}" | "{theme.corners.full}";
+
+// Warning: (ae-missing-release-tag) "PublisherRelativePeriodV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface PublisherRelativePeriodV2 {
+    from: number;
+    // (undocumented)
+    granularity: "SECOND" | "MINUTE" | "HOUR" | "DAY" | "WEEK_US" | "MONTH" | "QUARTER" | "YEAR" | "FISCAL_YEAR" | "FISCAL_QUARTER" | "FISCAL_MONTH";
+    to: number;
+}
+
+// Warning: (ae-missing-release-tag) "PublisherSectionV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface PublisherSectionV2 {
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    id: PublisherPageNodeIdV28;
+    // (undocumented)
+    pages: PublisherDocumentPageV2[];
+    // (undocumented)
+    title?: string;
+}
+
+// Warning: (ae-missing-release-tag) "PublisherShadowValueV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherShadowValueV2 = string;
+
+// Warning: (ae-missing-release-tag) "PublisherTableStyleV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface PublisherTableStyleV2 {
+    // (undocumented)
+    font_size?: PublisherPxV2;
+    // (undocumented)
+    grid_color?: PublisherColorValueV2;
+    // (undocumented)
+    header_background_color?: PublisherColorValueV2;
+    // (undocumented)
+    header_label_color?: PublisherColorValueV2;
+    // (undocumented)
+    null_value_color?: PublisherColorValueV2;
+    // (undocumented)
+    row_height?: PublisherPxV2;
+    // (undocumented)
+    subtotal_background_color?: PublisherColorValueV2;
+    // (undocumented)
+    total_background_color?: PublisherColorValueV2;
+    // (undocumented)
+    total_value_color?: PublisherColorValueV2;
+    // (undocumented)
+    value_color?: PublisherColorValueV2;
+}
+
+// Warning: (ae-missing-release-tag) "PublisherTakeawayContextV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface PublisherTakeawayContextV2 {
+    // (undocumented)
+    filters?: boolean;
+    // (undocumented)
+    other_pages?: boolean;
+    // (undocumented)
+    page_title?: boolean;
+    widgets?: PublisherPageNodeIdV2[];
+}
+
+// Warning: (ae-missing-release-tag) "PublisherTakeawayGenerationV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface PublisherTakeawayGenerationV2 {
+    // (undocumented)
+    context?: PublisherTakeawayContextV2;
+    instructions?: string;
+}
+
+// Warning: (ae-missing-release-tag) "PublisherTakeawayGenerationV21" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface PublisherTakeawayGenerationV21 {
+    // (undocumented)
+    context?: PublisherTakeawayContextV2;
+    instructions?: string;
+}
+
+// Warning: (ae-missing-release-tag) "PublisherTakeawayWidgetV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface PublisherTakeawayWidgetV2 {
+    // (undocumented)
+    generation?: PublisherTakeawayGenerationV21;
+    // (undocumented)
+    id: PublisherPageNodeIdV27;
+    // (undocumented)
+    locked?: boolean;
+    markdown?: string;
+    // (undocumented)
+    placeholder?: PublisherWidgetPlaceholderV2;
+    // (undocumented)
+    proportion?: PublisherPageProportionV2;
+    // (undocumented)
+    style?: PublisherTextWidgetStyleV2;
+    // (undocumented)
+    title?: PublisherWidgetTitleV2;
+    // (undocumented)
+    type: "takeaway";
+}
+
+// Warning: (ae-missing-release-tag) "PublisherTextStyleNameV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PublisherTextStyleNameV2 = "title" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "largeText" | "normalText" | "smallText";
+
+// Warning: (ae-missing-release-tag) "PublisherTextStyleV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface PublisherTextStyleV2 {
+    // (undocumented)
+    font_size?: PublisherPxV2;
+    // (undocumented)
+    font_style?: "normal" | "italic";
+    // (undocumented)
+    font_weight?: number;
+    // (undocumented)
+    horizontal_align?: "left" | "center" | "right" | "justify";
+    // (undocumented)
+    letter_spacing?: number;
+    // (undocumented)
+    line_height?: number;
+    // (undocumented)
+    text_color?: PublisherColorValueV2;
+    // (undocumented)
+    text_overflow?: "shrink" | "clip" | "ellipsis";
+    // (undocumented)
+    text_style?: PublisherTextStyleNameV2;
+    // (undocumented)
+    text_transform?: "none" | "uppercase" | "lowercase" | "capitalize";
+    // (undocumented)
+    vertical_align?: PublisherVerticalAlignV2;
+}
+
+// Warning: (ae-missing-release-tag) "PublisherTextWidgetStyleV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface PublisherTextWidgetStyleV2 {
+    // (undocumented)
+    background_color?: PublisherColorValueV2;
+    // (undocumented)
+    background_fit?: "cover" | "contain" | "fill" | "tile";
+    // (undocumented)
+    background_horizontal_align?: PublisherHorizontalAlignV2;
+    // (undocumented)
+    background_image?: PublisherImageSourceV2;
+    // (undocumented)
+    background_image_opacity?: PublisherOpacityV2;
+    // (undocumented)
+    background_offset?: PublisherPxV2;
+    // (undocumented)
+    background_offset_bottom?: PublisherPxV2;
+    // (undocumented)
+    background_offset_left?: PublisherPxV2;
+    // (undocumented)
+    background_offset_right?: PublisherPxV2;
+    // (undocumented)
+    background_offset_top?: PublisherPxV2;
+    // (undocumented)
+    background_opacity?: PublisherOpacityV2;
+    // (undocumented)
+    background_vertical_align?: PublisherVerticalAlignV2;
+    // (undocumented)
+    border_bottom_color?: PublisherColorValueV2;
+    // (undocumented)
+    border_bottom_left_radius?: PublisherRadiusValueV2;
+    // (undocumented)
+    border_bottom_right_radius?: PublisherRadiusValueV2;
+    // (undocumented)
+    border_bottom_style?: PublisherBorderLineStyleV2;
+    // (undocumented)
+    border_bottom_width?: PublisherPxV2;
+    // (undocumented)
+    border_color?: PublisherColorValueV2;
+    // (undocumented)
+    border_left_color?: PublisherColorValueV2;
+    // (undocumented)
+    border_left_style?: PublisherBorderLineStyleV2;
+    // (undocumented)
+    border_left_width?: PublisherPxV2;
+    // (undocumented)
+    border_radius?: PublisherRadiusValueV2;
+    // (undocumented)
+    border_right_color?: PublisherColorValueV2;
+    // (undocumented)
+    border_right_style?: PublisherBorderLineStyleV2;
+    // (undocumented)
+    border_right_width?: PublisherPxV2;
+    // (undocumented)
+    border_style?: PublisherBorderLineStyleV2;
+    // (undocumented)
+    border_top_color?: PublisherColorValueV2;
+    // (undocumented)
+    border_top_left_radius?: PublisherRadiusValueV2;
+    // (undocumented)
+    border_top_right_radius?: PublisherRadiusValueV2;
+    // (undocumented)
+    border_top_style?: PublisherBorderLineStyleV2;
+    // (undocumented)
+    border_top_width?: PublisherPxV2;
+    // (undocumented)
+    border_width?: PublisherPxV2;
+    // (undocumented)
+    font_size?: PublisherPxV2;
+    // (undocumented)
+    font_style?: "normal" | "italic";
+    // (undocumented)
+    font_weight?: number;
+    // (undocumented)
+    horizontal_align?: "left" | "center" | "right" | "justify";
+    // (undocumented)
+    letter_spacing?: number;
+    // (undocumented)
+    line_height?: number;
+    // (undocumented)
+    opacity?: PublisherOpacityV2;
+    // (undocumented)
+    padding?: PublisherPaddingValueV2;
+    // (undocumented)
+    padding_bottom?: PublisherPaddingValueV2;
+    // (undocumented)
+    padding_left?: PublisherPaddingValueV2;
+    // (undocumented)
+    padding_right?: PublisherPaddingValueV2;
+    // (undocumented)
+    padding_top?: PublisherPaddingValueV2;
+    // (undocumented)
+    shadow?: PublisherShadowValueV2;
+    // (undocumented)
+    shadow_blur?: PublisherPxV2;
+    // (undocumented)
+    shadow_color?: PublisherColorValueV2;
+    // (undocumented)
+    shadow_opacity?: PublisherOpacityV2;
+    // (undocumented)
+    shadow_spread?: number;
+    // (undocumented)
+    shadow_x?: number;
+    // (undocumented)
+    shadow_y?: number;
+    // (undocumented)
+    text_color?: PublisherColorValueV2;
+    // (undocumented)
+    text_overflow?: "shrink" | "clip" | "ellipsis";
+    // (undocumented)
+    text_style?: PublisherTextStyleNameV2;
+    // (undocumented)
+    text_transform?: "none" | "uppercase" | "lowercase" | "capitalize";
+    // (undocumented)
+    vertical_align?: PublisherVerticalAlignV2;
+}
+
+// Warning: (ae-missing-release-tag) "PublisherTextWidgetV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface PublisherTextWidgetV2 {
+    decorative?: boolean;
+    // (undocumented)
+    id: PublisherPageNodeIdV24;
+    // (undocumented)
+    locked?: boolean;
+    markdown?: string;
+    // (undocumented)
+    placeholder?: PublisherWidgetPlaceholderV2;
+    // (undocumented)
+    proportion?: PublisherPageProportionV2;
+    // (undocumented)
+    style?: PublisherTextWidgetStyleV2;
+    // (undocumented)
+    type: "text";
+}
+
+// Warning: (ae-missing-release-tag) "PublisherTitleWidgetV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface PublisherTitleWidgetV2 {
+    // (undocumented)
+    id: PublisherPageNodeIdV22;
+    // (undocumented)
+    locked?: boolean;
+    markdown?: string;
+    // (undocumented)
+    placeholder?: PublisherWidgetPlaceholderV2;
+    // (undocumented)
+    proportion?: PublisherPageProportionV2;
+    // (undocumented)
+    style?: PublisherTextWidgetStyleV2;
+    // (undocumented)
+    type: "title";
+}
+
+// Warning: (ae-missing-release-tag) "PublisherVerticalAlignV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+type PublisherVerticalAlignV2 = "top" | "center" | "bottom";
+
+// Warning: (ae-missing-release-tag) "PublisherVisibilityV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface PublisherVisibilityV2 {
+    // (undocumented)
+    visible?: boolean;
+}
+
+// Warning: (ae-missing-release-tag) "PublisherVisualizationDisplayV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface PublisherVisualizationDisplayV2 {
+    // (undocumented)
+    data_labels?: PublisherAutoVisibilityV2;
+    // (undocumented)
+    data_points?: PublisherAutoVisibilityV21;
+    // (undocumented)
+    gridlines?: PublisherVisibilityV2;
+    // (undocumented)
+    legend?: PublisherLegendDisplayV2;
+    // (undocumented)
+    secondary_y_axis?: PublisherAxisDisplayV2;
+    // (undocumented)
+    x_axis?: PublisherAxisDisplayV2;
+    // (undocumented)
+    y_axis?: PublisherAxisDisplayV2;
+}
+
+// Warning: (ae-missing-release-tag) "PublisherVisualizationStyleV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface PublisherVisualizationStyleV2 {
+    // (undocumented)
+    background_color?: PublisherColorValueV2;
+    // (undocumented)
+    background_fit?: "cover" | "contain" | "fill" | "tile";
+    // (undocumented)
+    background_horizontal_align?: PublisherHorizontalAlignV2;
+    // (undocumented)
+    background_image?: PublisherImageSourceV2;
+    // (undocumented)
+    background_image_opacity?: PublisherOpacityV2;
+    // (undocumented)
+    background_offset?: PublisherPxV2;
+    // (undocumented)
+    background_offset_bottom?: PublisherPxV2;
+    // (undocumented)
+    background_offset_left?: PublisherPxV2;
+    // (undocumented)
+    background_offset_right?: PublisherPxV2;
+    // (undocumented)
+    background_offset_top?: PublisherPxV2;
+    // (undocumented)
+    background_opacity?: PublisherOpacityV2;
+    // (undocumented)
+    background_vertical_align?: PublisherVerticalAlignV2;
+    // (undocumented)
+    border_bottom_color?: PublisherColorValueV2;
+    // (undocumented)
+    border_bottom_left_radius?: PublisherRadiusValueV2;
+    // (undocumented)
+    border_bottom_right_radius?: PublisherRadiusValueV2;
+    // (undocumented)
+    border_bottom_style?: PublisherBorderLineStyleV2;
+    // (undocumented)
+    border_bottom_width?: PublisherPxV2;
+    // (undocumented)
+    border_color?: PublisherColorValueV2;
+    // (undocumented)
+    border_left_color?: PublisherColorValueV2;
+    // (undocumented)
+    border_left_style?: PublisherBorderLineStyleV2;
+    // (undocumented)
+    border_left_width?: PublisherPxV2;
+    // (undocumented)
+    border_radius?: PublisherRadiusValueV2;
+    // (undocumented)
+    border_right_color?: PublisherColorValueV2;
+    // (undocumented)
+    border_right_style?: PublisherBorderLineStyleV2;
+    // (undocumented)
+    border_right_width?: PublisherPxV2;
+    // (undocumented)
+    border_style?: PublisherBorderLineStyleV2;
+    // (undocumented)
+    border_top_color?: PublisherColorValueV2;
+    // (undocumented)
+    border_top_left_radius?: PublisherRadiusValueV2;
+    // (undocumented)
+    border_top_right_radius?: PublisherRadiusValueV2;
+    // (undocumented)
+    border_top_style?: PublisherBorderLineStyleV2;
+    // (undocumented)
+    border_top_width?: PublisherPxV2;
+    // (undocumented)
+    border_width?: PublisherPxV2;
+    // (undocumented)
+    chart?: PublisherChartStyleV2;
+    // (undocumented)
+    headline?: PublisherHeadlineStyleV2;
+    // (undocumented)
+    opacity?: PublisherOpacityV2;
+    // (undocumented)
+    padding?: PublisherPaddingValueV2;
+    // (undocumented)
+    padding_bottom?: PublisherPaddingValueV2;
+    // (undocumented)
+    padding_left?: PublisherPaddingValueV2;
+    // (undocumented)
+    padding_right?: PublisherPaddingValueV2;
+    // (undocumented)
+    padding_top?: PublisherPaddingValueV2;
+    // (undocumented)
+    shadow?: PublisherShadowValueV2;
+    // (undocumented)
+    shadow_blur?: PublisherPxV2;
+    // (undocumented)
+    shadow_color?: PublisherColorValueV2;
+    // (undocumented)
+    shadow_opacity?: PublisherOpacityV2;
+    // (undocumented)
+    shadow_spread?: number;
+    // (undocumented)
+    shadow_x?: number;
+    // (undocumented)
+    shadow_y?: number;
+    // (undocumented)
+    table?: PublisherTableStyleV2;
+}
+
+// Warning: (ae-missing-release-tag) "PublisherVisualizationWidgetV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface PublisherVisualizationWidgetV2 {
+    // (undocumented)
+    alt_text?: string;
+    // (undocumented)
+    date?: Id55;
+    // (undocumented)
+    display?: PublisherVisualizationDisplayV2;
+    // (undocumented)
+    filters?: DashboardFilters8;
+    // (undocumented)
+    id: PublisherPageNodeIdV26;
+    ignore_document_period?: boolean;
+    ignored_filters?: string[];
+    // (undocumented)
+    locked?: boolean;
+    // (undocumented)
+    placeholder?: PublisherWidgetPlaceholderV2;
+    // (undocumented)
+    proportion?: PublisherPageProportionV2;
+    // (undocumented)
+    style?: PublisherVisualizationStyleV2;
+    // (undocumented)
+    title?: PublisherWidgetTitleV2;
+    // (undocumented)
+    type: "visualization";
+    // (undocumented)
+    visualization?: Id54;
+}
+
+// Warning: (ae-missing-release-tag) "PublisherWidgetPlaceholderV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface PublisherWidgetPlaceholderV2 {
+    hint?: string;
+    // (undocumented)
+    required?: boolean;
+}
+
+// Warning: (ae-missing-release-tag) "PublisherWidgetTitleV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface PublisherWidgetTitleV2 {
+    // (undocumented)
+    style?: PublisherTextStyleV2;
+    // (undocumented)
+    text?: string;
+    // (undocumented)
+    visible?: boolean;
+}
+
 // Warning: (ae-missing-release-tag) "PushpinLocationBucket" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
@@ -13245,6 +16779,62 @@ declare namespace v1 {
         ReportLayoutNode8,
         Metadata39,
         Metadata41,
+        PublisherEntityTitleV2,
+        PublisherEntityDescriptionV2,
+        PublisherEntityTagsV2,
+        PublisherPeriodV2,
+        PublisherPageSizeV2,
+        PublisherPageNodeIdV2,
+        PublisherPeriodV21,
+        PublisherColorValueV2,
+        PublisherOpacityV2,
+        PublisherImageSourceV2,
+        PublisherHorizontalAlignV2,
+        PublisherVerticalAlignV2,
+        PublisherPxV2,
+        PublisherGapValueV2,
+        PublisherGapValueV21,
+        PublisherGapValueV22,
+        Locale4,
+        Locale5,
+        PublisherPageNodeIdV21,
+        PublisherPageSizeV21,
+        PublisherPaddingValueV2,
+        PublisherPaddingValueV21,
+        PublisherPaddingValueV22,
+        PublisherTextStyleNameV2,
+        PublisherGapValueV23,
+        PublisherLayoutNodeV2,
+        PublisherLayoutNodeV21,
+        PublisherLayoutNodeV22,
+        PublisherLayoutNodeV23,
+        PublisherPageNodeIdV22,
+        PublisherPageProportionV2,
+        PublisherBorderLineStyleV2,
+        PublisherRadiusValueV2,
+        PublisherRadiusValueV21,
+        PublisherRadiusValueV22,
+        PublisherShadowValueV2,
+        PublisherLayoutNodeV24,
+        PublisherPageNodeIdV23,
+        PublisherLayoutNodeV25,
+        PublisherPageNodeIdV24,
+        PublisherLayoutNodeV26,
+        PublisherPageNodeIdV25,
+        PublisherLayoutNodeV27,
+        PublisherPageNodeIdV26,
+        Id54,
+        Id55,
+        PublisherLayoutNodeV28,
+        PublisherPageNodeIdV27,
+        PublisherPageNodeIdV28,
+        Metadata42,
+        Metadata44,
+        Metadata45,
+        Metadata47,
+        PublisherLayoutNodeV29,
+        Metadata48,
+        Metadata50,
         Metadata1,
         Metadata4,
         NormalDataset,
@@ -13456,7 +17046,55 @@ declare namespace v1 {
         ReportPageLayout,
         ReportBoxStyle3,
         DashboardFilters6,
-        Metadata40
+        Metadata40,
+        PublisherDocumentV2,
+        PublisherRelativePeriodV2,
+        PublisherAbsolutePeriodV2,
+        PublisherDocumentContentV2,
+        PublisherDocumentDefaultsV2,
+        PublisherDocumentTakeawayDefaultsV2,
+        PublisherTakeawayGenerationV2,
+        PublisherTakeawayContextV2,
+        DashboardFilters7,
+        PublisherDocumentStyleV2,
+        PublisherDocumentPageV2,
+        PublisherPageStyleV2,
+        PublisherContainerV2,
+        PublisherTitleWidgetV2,
+        PublisherWidgetPlaceholderV2,
+        PublisherTextWidgetStyleV2,
+        PublisherHeadingWidgetV2,
+        PublisherTextWidgetV2,
+        PublisherImageWidgetV2,
+        PublisherImageWidgetStyleV2,
+        PublisherVisualizationWidgetV2,
+        PublisherWidgetTitleV2,
+        PublisherTextStyleV2,
+        DashboardFilters8,
+        PublisherVisualizationDisplayV2,
+        PublisherLegendDisplayV2,
+        PublisherAxisDisplayV2,
+        PublisherAxisNameDisplayV2,
+        PublisherAxisValuesDisplayV2,
+        PublisherVisibilityV2,
+        PublisherAutoVisibilityV2,
+        PublisherAutoVisibilityV21,
+        PublisherVisualizationStyleV2,
+        PublisherChartStyleV2,
+        PublisherTableStyleV2,
+        PublisherHeadlineStyleV2,
+        PublisherTakeawayWidgetV2,
+        PublisherTakeawayGenerationV21,
+        PublisherContainerStyleV2,
+        DashboardFilters9,
+        PublisherSectionV2,
+        Metadata43,
+        PublisherDocumentTemplateV2,
+        Metadata46,
+        PublisherPageTemplateV2,
+        PublisherPageBodyV2,
+        DashboardFilters10,
+        Metadata49
     }
 }
 

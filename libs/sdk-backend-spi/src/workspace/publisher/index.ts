@@ -5,8 +5,8 @@ import {
     type IPublisherDocumentDefinition,
     type IPublisherDocumentTemplate,
     type IPublisherDocumentTemplateDefinition,
-    type IPublisherPageLayout,
-    type IPublisherPageLayoutDefinition,
+    type IPublisherPageTemplate,
+    type IPublisherPageTemplateDefinition,
     type ObjRef,
 } from "@gooddata/sdk-model";
 
@@ -33,44 +33,44 @@ export interface IPublisherDocumentExportPdfOptions {
 }
 
 /**
- * Service for managing page layouts, document templates and documents.
+ * Service for managing page templates, document templates and documents.
  *
  * @remarks
- * Page layouts returned by this service include the built-in layouts shipped with the
- * product ({@link @gooddata/sdk-model#BuiltInPublisherPageLayouts}). Built-ins carry
- * `isBuiltIn: true`, are never persisted on the backend, and reject update and delete.
+ * Page templates returned by this service include the default page templates shipped with the
+ * product ({@link @gooddata/sdk-model#DefaultPublisherPageTemplates}). Default page templates carry
+ * `isDefault: true`, are never persisted on the backend, and reject update and delete.
  *
  * @alpha
  */
 export interface IWorkspacePublisherService {
     //
-    // Page layouts
+    // Page templates
     //
 
     /**
-     * Get the list of page layouts available in the workspace, built-in layouts first.
+     * Get the list of page templates available in the workspace, default page templates first.
      */
-    getPageLayouts(): Promise<IPublisherPageLayout[]>;
+    getPageTemplates(): Promise<IPublisherPageTemplate[]>;
 
     /**
-     * Get a single page layout by its reference.
+     * Get a single page template by its reference.
      */
-    getPageLayout(ref: ObjRef): Promise<IPublisherPageLayout>;
+    getPageTemplate(ref: ObjRef): Promise<IPublisherPageTemplate>;
 
     /**
-     * Create a new page layout.
+     * Create a new page template.
      */
-    createPageLayout(page: IPublisherPageLayoutDefinition): Promise<IPublisherPageLayout>;
+    createPageTemplate(page: IPublisherPageTemplateDefinition): Promise<IPublisherPageTemplate>;
 
     /**
-     * Update an existing page layout. Rejects built-in and locked layouts.
+     * Update an existing page template. Rejects default and locked page templates.
      */
-    updatePageLayout(page: IPublisherPageLayout): Promise<IPublisherPageLayout>;
+    updatePageTemplate(page: IPublisherPageTemplate): Promise<IPublisherPageTemplate>;
 
     /**
-     * Delete an existing page layout. Rejects built-in and locked layouts.
+     * Delete an existing page template. Rejects default and locked page templates.
      */
-    deletePageLayout(ref: ObjRef): Promise<void>;
+    deletePageTemplate(ref: ObjRef): Promise<void>;
 
     //
     // Document templates

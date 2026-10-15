@@ -125,6 +125,12 @@ export const useInitializeDashboardStore = (
 
     useEffect(() => {
         if (dashboardStore) {
+            dashboardStore.store.dispatch(configActions.setIsAiWaiting(!!props.config?.isAiWaiting));
+        }
+    }, [dashboardStore, props.config?.isAiWaiting]);
+
+    useEffect(() => {
+        if (dashboardStore) {
             dashboardStore.store.dispatch(configActions.setIsAiMode(!!props.config?.isAiMode));
         }
     }, [dashboardStore, props.config?.isAiMode]);

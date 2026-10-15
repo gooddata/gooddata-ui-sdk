@@ -1,0 +1,72 @@
+type: document
+id: levis-h1-2026
+version: "2"
+title: Levi's, H1 2026
+description: Half-year brand performance
+tags:
+    - brand
+    - h1
+period:
+    from: "2026-01-01"
+    to: "2026-06-30"
+content:
+    style:
+        background_color: "{theme.colors.backgrounds.inverse}"
+    defaults:
+        page_size: widescreen
+        takeaway:
+            generation:
+                instructions: Write for executives. Lead with the change.
+    filters:
+        document_filter_brand_name:
+            type: attribute_filter
+            using: label/brand.name
+            title: Brand
+    sections:
+        - id: section_5e0a1f3c
+          pages:
+              - id: page_7f3a91c4
+                kind: cover
+                layout:
+                    type: column
+                    children:
+                        - type: title
+                          id: coverTitle
+                          proportion: 2
+                          markdown: "{documentName}"
+                        - type: text
+                          id: coverSubtitle
+                          markdown: "{documentDateRange}"
+                          style:
+                              text_style: h3
+        - id: section_9a4d2b71
+          title: Revenue
+          description: Sales by region and channel
+          pages:
+              - id: page_3c19e0b7
+                kind: section
+                layout:
+                    type: title
+                    id: sectionTitle
+                    markdown: "{sectionName}"
+              - id: page_c41d9a07
+                kind: content
+                notes: Mention the EMEA promotion.
+                layout:
+                    type: column
+                    children:
+                        - type: title
+                          id: pageTitle
+                          proportion: 2
+                          markdown: Revenue by month
+                        - type: row
+                          proportion: 9
+                          children:
+                              - type: visualization
+                                id: widget1
+                                proportion: 2
+                                visualization: revenue_by_month
+                                date: date
+                              - type: text
+                                id: summary
+                                markdown: Revenue grew **12 %**, led by EMEA.

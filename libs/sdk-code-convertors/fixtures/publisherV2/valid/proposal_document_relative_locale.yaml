@@ -1,0 +1,12 @@
+type: document
+id: monthly_board_deck
+version: "2"
+title: Monthly board deck
+period:
+    granularity: MONTH
+    from: -1
+    to: -1
+content:
+    locale: de-DE
+    format_locale: de-DE
+    pages: []

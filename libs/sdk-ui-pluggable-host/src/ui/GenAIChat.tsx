@@ -8,9 +8,10 @@ import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import type { IGenAIUserContext } from "@gooddata/sdk-model";
 import { useBackendStrict } from "@gooddata/sdk-ui";
 import {
-    type ChatDefinitionReceivedEvent,
     type ChatAssistantMessageEvent,
+    type ChatClarificationQuestionsEvent,
     type ChatClosedEvent,
+    type ChatDefinitionReceivedEvent,
     type ChatFeedbackEvent,
     type ChatOpenedEvent,
     type ChatResetEvent,
@@ -52,7 +53,33 @@ export type GenAIChatEvent =
     | { name: "chat.user-message"; payload: ChatUserMessageEvent }
     | { name: "chat.mode-changed"; payload: ChatModeChangeEvent }
     | { name: "chat.definition-received"; payload: ChatDefinitionReceivedEvent }
+    | { name: "chat.clarification-questions"; payload: ChatClarificationQuestionsEvent }
     | { name: "chat.assistant-message"; payload: ChatAssistantMessageEvent };
+
+export function toHostGenAIChatEvent(event: GenAIChatConnectedEvent): GenAIChatEvent | undefined {
+    switch (event.name) {
+        case "opened":
+            return { name: "chat.opened", payload: event.payload };
+        case "closed":
+            return { name: "chat.closed", payload: event.payload };
+        case "reset":
+            return { name: "chat.reset", payload: event.payload };
+        case "feedback":
+            return { name: "chat.feedback", payload: event.payload };
+        case "user-message":
+            return { name: "chat.user-message", payload: event.payload };
+        case "assistant-message":
+            return { name: "chat.assistant-message", payload: event.payload };
+        case "definition-received":
+            return { name: "chat.definition-received", payload: event.payload };
+        case "clarification-questions":
+            return { name: "chat.clarification-questions", payload: event.payload };
+        case "mode-changed":
+            return { name: "chat.mode-changed", payload: event.payload };
+        default:
+            return undefined;
+    }
+}
 
 export interface IGenAIChatProps {
     workspaceId: string;
@@ -165,25 +192,12 @@ export function GenAIChat({
 
     const handleEvent = useCallback(
         (event: GenAIChatConnectedEvent) => {
+            const hostEvent = toHostGenAIChatEvent(event);
+            if (hostEvent) {
+                onEvent?.(hostEvent);
+                return;
+            }
             switch (event.name) {
-                case "opened":
-                    onEvent?.({ name: "chat.opened", payload: event.payload });
-                    break;
-                case "closed":
-                    onEvent?.({ name: "chat.closed", payload: event.payload });
-                    break;
-                case "reset":
-                    onEvent?.({ name: "chat.reset", payload: event.payload });
-                    break;
-                case "feedback":
-                    onEvent?.({ name: "chat.feedback", payload: event.payload });
-                    break;
-                case "user-message":
-                    onEvent?.({ name: "chat.user-message", payload: event.payload });
-                    break;
-                case "assistant-message":
-                    onEvent?.({ name: "chat.assistant-message", payload: event.payload });
-                    break;
                 case "save-visualization-success":
                     addSuccess(defineMessage({ id: "messages.genAi.visualisation.saved.success" }));
                     break;
@@ -203,12 +217,6 @@ export function GenAIChat({
                     break;
                 case "copy-to-clipboard":
                     addSuccess(defineMessage({ id: "messages.genAi.visualisation.link.copied" }));
-                    break;
-                case "definition-received":
-                    onEvent?.({ name: "chat.definition-received", payload: event.payload });
-                    break;
-                case "mode-changed":
-                    onEvent?.({ name: "chat.mode-changed", payload: event.payload });
                     break;
                 default:
                     break;

@@ -221,7 +221,7 @@ export interface IAnalyticalWorkspace {
     exportTemplates(): IWorkspaceExportTemplatesService;
 
     /**
-     * Returns service that can be used to manage page layouts, document templates and documents.
+     * Returns service that can be used to manage page templates, document templates and documents.
      *
      * @alpha
      */

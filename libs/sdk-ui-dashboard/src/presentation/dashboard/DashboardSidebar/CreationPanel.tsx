@@ -10,7 +10,7 @@ import { Typography, UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectSupportsRichTextWidgets } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
-import { selectIsAiGenerating } from "../../../model/store/config/configSelectors.js";
+import { selectIsAiLoading } from "../../../model/store/config/configSelectors.js";
 import { selectIsNewDashboard } from "../../../model/store/meta/metaSelectors.js";
 import {
     type AttributeFilterComponentSet,
@@ -54,7 +54,7 @@ export function CreationPanel(props: ICreationPanelProps) {
     const intl = useIntl();
     const supportsRichText = useDashboardSelector(selectSupportsRichTextWidgets);
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
-    const isAiGenerating = useDashboardSelector(selectIsAiGenerating);
+    const isAiLoading = useDashboardSelector(selectIsAiLoading);
     const { canCollapse, isCollapsed, setCollapsed, hasRail: keepsRail } = useResizableSidebar();
     const hasRail = canCollapse && keepsRail;
     const isRailCollapsed = hasRail && isCollapsed;
@@ -78,7 +78,7 @@ export function CreationPanel(props: ICreationPanelProps) {
             const listItem = (
                 <CreatePanelListItemComponent
                     WrapCreatePanelItemWithDragComponent={WrapCreatePanelItemWithDragComponent}
-                    disabled={isAiGenerating}
+                    disabled={isAiLoading}
                 />
             );
             const tooltip = RAIL_TOOLTIPS[type];
@@ -107,7 +107,7 @@ export function CreationPanel(props: ICreationPanelProps) {
         DashboardLayoutWidgetComponentSet,
         supportsRichText,
         WrapCreatePanelItemWithDragComponent,
-        isAiGenerating,
+        isAiLoading,
         isRailCollapsed,
     ]);
 
@@ -172,7 +172,7 @@ export function CreationPanel(props: ICreationPanelProps) {
                         WrapInsightListItemWithDragComponent={WrapInsightListItemWithDragComponent}
                         recalculateSizeReference={className}
                         searchAutofocus={!isCollapsed && (focusSearch ?? !isNewDashboard)}
-                        disabled={isAiGenerating}
+                        disabled={isAiLoading}
                     />
                 </div>
             </div>

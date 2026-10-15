@@ -1,12 +1,21 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: ec5aab995abb310888541381dce7782837bdc6d938ea41a20c8f2acfc8c644e3
+# schema-hash: d9210f9a6587451f1b46c1a461f26efd8e26a35c3103c82be6ad2a457dd7b8ed
 
 from __future__ import annotations
 
 from enum import Enum, IntEnum
 from typing import Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, RootModel, confloat, conint, constr
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    PositiveFloat,
+    RootModel,
+    confloat,
+    conint,
+    constr,
+)
 
 import re as _re
 import pydantic as _pydantic
@@ -42,6 +51,7 @@ __all__ = [
     "AttributeHierarchy1",
     "AttributeIdentifier",
     "Axis",
+    "BackgroundFit",
     "BucketEmptyItem",
     "BucketGeoAreaItem",
     "BucketItem",
@@ -75,6 +85,7 @@ __all__ = [
     "Config",
     "Constraints",
     "Constraints1",
+    "Context",
     "CustomTooltip",
     "Dashboard",
     "Dashboard1",
@@ -94,7 +105,9 @@ __all__ = [
     "DashboardTextFilter",
     "DashboardTextFilter1",
     "DashboardTextFilter2",
+    "DataLabels",
     "DataLabelsStyle",
+    "DataPoints",
     "DataType",
     "Dataset",
     "Dataset1",
@@ -124,6 +137,7 @@ __all__ = [
     "FactIdentifier",
     "Fields",
     "Fit",
+    "FontStyle",
     "Format",
     "Function",
     "GeoAreaConfig",
@@ -132,8 +146,11 @@ __all__ = [
     "Granularity1",
     "Granularity2",
     "Granularity3",
+    "Granularity4",
     "GridLineShape",
+    "Gridlines",
     "HeadingSlot",
+    "HorizontalAlign",
     "Identifier",
     "IgnoredDrillDown",
     "IgnoredDrillDown1",
@@ -153,6 +170,7 @@ __all__ = [
     "InteractionOpenParamUrl",
     "InteractionOpenPlainUrl",
     "InteractionOpenVisualization",
+    "Kind",
     "Label",
     "LabelIdentifier",
     "LabelTranslation",
@@ -163,6 +181,8 @@ __all__ = [
     "LayoutColumn",
     "LayoutDirection",
     "LayoutRow",
+    "Legend",
+    "Level",
     "LineShape",
     "LineStyleMapping",
     "LineStyleMapping1",
@@ -183,6 +203,7 @@ __all__ = [
     "MvfCondition1",
     "MvfCondition2",
     "MvfCondition3",
+    "Name",
     "NumberParameterDefinition",
     "OpenUrl",
     "Operator",
@@ -212,6 +233,67 @@ __all__ = [
     "Plugin1",
     "Plugins",
     "PointShapeMapping",
+    "Position",
+    "Position1",
+    "PublisherAxisDisplayV2",
+    "PublisherBorderLineStyleV2",
+    "PublisherChartStyleV2",
+    "PublisherColorValueV2",
+    "PublisherContainerStyleV2",
+    "PublisherContainerV2",
+    "PublisherDocumentContentV2",
+    "PublisherDocumentDefaultsV2",
+    "PublisherDocumentPageV2",
+    "PublisherDocumentStyleV2",
+    "PublisherDocumentTemplateV2",
+    "PublisherDocumentTemplateV21",
+    "PublisherDocumentV2",
+    "PublisherDocumentV21",
+    "PublisherEntityDescriptionV2",
+    "PublisherEntityTagsV2",
+    "PublisherEntityTagsV2Item",
+    "PublisherEntityTitleV2",
+    "PublisherGapValueV2",
+    "PublisherGapValueV21",
+    "PublisherHeadingWidgetV2",
+    "PublisherHeadlineStyleV2",
+    "PublisherHorizontalAlignV2",
+    "PublisherImageSourceV2",
+    "PublisherImageWidgetStyleV2",
+    "PublisherImageWidgetV2",
+    "PublisherLayoutNodeV2",
+    "PublisherOpacityV2",
+    "PublisherPaddingValueV2",
+    "PublisherPaddingValueV21",
+    "PublisherPageBodyV2",
+    "PublisherPageNodeIdV2",
+    "PublisherPageProportionV2",
+    "PublisherPageSizeV2",
+    "PublisherPageStyleV2",
+    "PublisherPageTemplateV2",
+    "PublisherPageTemplateV21",
+    "PublisherPeriodV2",
+    "PublisherPeriodV21",
+    "PublisherPeriodV22",
+    "PublisherPxV2",
+    "PublisherRadiusValueV2",
+    "PublisherRadiusValueV21",
+    "PublisherSectionV2",
+    "PublisherShadowValueV2",
+    "PublisherTableStyleV2",
+    "PublisherTakeawayGenerationV2",
+    "PublisherTakeawayWidgetV2",
+    "PublisherTextStyleNameV2",
+    "PublisherTextStyleV2",
+    "PublisherTextWidgetStyleV2",
+    "PublisherTextWidgetV2",
+    "PublisherTitleWidgetV2",
+    "PublisherVerticalAlignV2",
+    "PublisherVisualizationDisplayV2",
+    "PublisherVisualizationStyleV2",
+    "PublisherVisualizationWidgetV2",
+    "PublisherWidgetPlaceholderV2",
+    "PublisherWidgetTitleV2",
     "Query",
     "QueryAttributeFilter",
     "QueryAttributeSort",
@@ -302,9 +384,12 @@ __all__ = [
     "SuppressedTargets1",
     "Tab",
     "Tags",
+    "Takeaway",
     "Target",
     "Target1",
     "Template",
+    "TextOverflow",
+    "TextTransform",
     "TextWrapping",
     "TimezoneConfig",
     "TimezoneId",
@@ -314,6 +399,11 @@ __all__ = [
     "TotalItem",
     "Type",
     "Type1",
+    "Type100",
+    "Type101",
+    "Type102",
+    "Type103",
+    "Type104",
     "Type11",
     "Type12",
     "Type14",
@@ -358,6 +448,8 @@ __all__ = [
     "Type57",
     "Type58",
     "Type59",
+    "Type60",
+    "Type61",
     "Type62",
     "Type63",
     "Type64",
@@ -367,8 +459,6 @@ __all__ = [
     "Type68",
     "Type69",
     "Type7",
-    "Type70",
-    "Type71",
     "Type72",
     "Type73",
     "Type74",
@@ -391,6 +481,14 @@ __all__ = [
     "Type9",
     "Type90",
     "Type91",
+    "Type92",
+    "Type93",
+    "Type94",
+    "Type95",
+    "Type96",
+    "Type97",
+    "Type98",
+    "Type99",
     "Using",
     "Using1",
     "Using2",
@@ -400,8 +498,13 @@ __all__ = [
     "ValueType",
     "ValueType1",
     "ValueType2",
+    "Values",
     "Version",
+    "Version1",
+    "Version4",
+    "Version5",
     "Viewport",
+    "Visible",
     "Visualisation",
     "Visualisation1",
     "Visualisation10",
@@ -1447,18 +1550,159 @@ class Source(BaseModel):
 
 
 class Type29(Enum):
-    metric = 'metric'
+    document = 'document'
+
+
+class Version1(Enum):
+    field_2 = '2'
 
 
 class Type30(Enum):
-    parameter = 'parameter'
+    document_template = 'document_template'
 
 
 class Type31(Enum):
-    STRING = 'STRING'
+    metric = 'metric'
+
+
+class Position(Enum):
+    low = 'low'
+    middle = 'middle'
+    high = 'high'
+
+
+class Name(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    visible: bool | None = None
+    position: Position | None = None
+
+
+class Values(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    visible: bool | None = None
+    rotation: confloat(ge=-90.0, le=90.0) | None = None
+
+
+class PublisherAxisDisplayV2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    visible: bool | None = None
+    name: Name | None = Field(None, title='Publisher Axis Name Display V2')
+    values: Values | None = Field(None, title='Publisher Axis Values Display V2')
+    min: float | None = None
+    max: float | None = None
+
+
+class Position1(Enum):
+    auto = 'auto'
+    top = 'top'
+    bottom = 'bottom'
+    left = 'left'
+    right = 'right'
+
+
+class Legend(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    visible: bool | None = None
+    position: Position1 | None = None
+
+
+class Gridlines(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    visible: bool | None = None
+
+
+class Visible(Enum):
+    auto = 'auto'
+
+
+class DataLabels(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    visible: bool | Visible | None = None
+
+
+class DataPoints(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    visible: bool | Visible | None = None
+
+
+class PublisherVisualizationDisplayV2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    legend: Legend | None = Field(None, title='Publisher Legend Display V2')
+    x_axis: PublisherAxisDisplayV2 | None = None
+    y_axis: PublisherAxisDisplayV2 | None = None
+    secondary_y_axis: PublisherAxisDisplayV2 | None = None
+    gridlines: Gridlines | None = Field(None, title='Publisher Visibility V2')
+    data_labels: DataLabels | None = Field(None, title='Publisher Auto Visibility V2')
+    data_points: DataPoints | None = Field(None, title='Publisher Auto Visibility V2')
 
 
 class Type32(Enum):
+    row = 'row'
+    column = 'column'
+
+
+class Type33(Enum):
+    title = 'title'
+
+
+class Type34(Enum):
+    heading = 'heading'
+
+
+class Level(IntEnum):
+    integer_1 = 1
+    integer_2 = 2
+    integer_3 = 3
+    integer_4 = 4
+    integer_5 = 5
+    integer_6 = 6
+
+
+class Type35(Enum):
+    text = 'text'
+
+
+class Type36(Enum):
+    image = 'image'
+
+
+class Type37(Enum):
+    visualization = 'visualization'
+
+
+class Type38(Enum):
+    takeaway = 'takeaway'
+
+
+class Type39(Enum):
+    page_template = 'page_template'
+
+
+class Type40(Enum):
+    parameter = 'parameter'
+
+
+class Type41(Enum):
+    STRING = 'STRING'
+
+
+class Type42(Enum):
     NUMBER = 'NUMBER'
 
 
@@ -1478,7 +1722,7 @@ class NumberParameterDefinition(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type32
+    type: Type42
     defaultValue: float = Field(
         ..., description='The value used whenever the parameter is not overridden.'
     )
@@ -1502,7 +1746,7 @@ class ParameterAllowedValue(BaseModel):
     )
 
 
-class Type33(Enum):
+class Type43(Enum):
     plugin = 'plugin'
 
 
@@ -1525,7 +1769,7 @@ class Operator(Enum):
     CHANGE = 'CHANGE'
 
 
-class Type34(Enum):
+class Type44(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
 
@@ -1562,7 +1806,7 @@ class Operator1(Enum):
     CHANGE_1 = 'CHANGE'
 
 
-class Type35(Enum):
+class Type45(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
     PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
@@ -1578,7 +1822,7 @@ class QueryField2(BaseModel):
     operator: Operator1 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type35 | None = Field(
+    type: Type45 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -1623,7 +1867,7 @@ class Operator2(Enum):
     CHANGE = 'CHANGE'
 
 
-class Type36(Enum):
+class Type46(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
 
@@ -1660,7 +1904,7 @@ class Operator3(Enum):
     CHANGE_1 = 'CHANGE'
 
 
-class Type37(Enum):
+class Type47(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
     PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
@@ -1676,7 +1920,7 @@ class QueryField4(BaseModel):
     operator: Operator3 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type37 | None = Field(
+    type: Type47 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -1693,7 +1937,7 @@ class Operator4(Enum):
     CHANGE = 'CHANGE'
 
 
-class Type38(Enum):
+class Type48(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
 
@@ -1711,7 +1955,7 @@ class Operator5(Enum):
     CHANGE_1 = 'CHANGE'
 
 
-class Type39(Enum):
+class Type49(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
     PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
@@ -1727,7 +1971,7 @@ class QueryField6(BaseModel):
     operator: Operator5 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type39 | None = Field(
+    type: Type49 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -1755,7 +1999,7 @@ class Operator6(Enum):
     CHANGE = 'CHANGE'
 
 
-class Type40(Enum):
+class Type50(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
 
@@ -1792,7 +2036,7 @@ class Operator7(Enum):
     CHANGE_1 = 'CHANGE'
 
 
-class Type41(Enum):
+class Type51(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
     PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
@@ -1808,7 +2052,7 @@ class QueryField8(BaseModel):
     operator: Operator7 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type41 | None = Field(
+    type: Type51 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -1828,7 +2072,7 @@ class Aggregation8(Enum):
     RUNSUM = 'RUNSUM'
 
 
-class Type42(Enum):
+class Type52(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
 
@@ -1852,7 +2096,7 @@ class Aggregation9(Enum):
     RUNSUM_1 = 'RUNSUM'
 
 
-class Type43(Enum):
+class Type53(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
     PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
@@ -1868,7 +2112,7 @@ class QueryField10(BaseModel):
     operator: Operator7 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type43 | None = Field(
+    type: Type53 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -1896,7 +2140,7 @@ class Operator10(Enum):
     CHANGE = 'CHANGE'
 
 
-class Type44(Enum):
+class Type54(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
     PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
@@ -1934,7 +2178,7 @@ class Operator11(Enum):
     CHANGE_1 = 'CHANGE'
 
 
-class Type45(Enum):
+class Type55(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
     PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
@@ -1950,7 +2194,7 @@ class QueryField12(BaseModel):
     operator: Operator11 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type45 | None = Field(
+    type: Type55 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -1978,7 +2222,7 @@ class Operator12(Enum):
     CHANGE = 'CHANGE'
 
 
-class Type46(Enum):
+class Type56(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
     PREVIOUS_PERIOD_1 = 'PREVIOUS_PERIOD'
@@ -2016,7 +2260,7 @@ class Operator13(Enum):
     CHANGE_1 = 'CHANGE'
 
 
-class Type47(Enum):
+class Type57(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
     PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
@@ -2032,7 +2276,7 @@ class QueryField14(BaseModel):
     operator: Operator13 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type47 | None = Field(
+    type: Type57 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -2041,7 +2285,7 @@ class QueryField14(BaseModel):
     )
 
 
-class Type48(Enum):
+class Type58(Enum):
     attribute_sort = 'attribute_sort'
 
 
@@ -2054,7 +2298,7 @@ class Aggregation14(Enum):
     SUM = 'SUM'
 
 
-class Type49(Enum):
+class Type59(Enum):
     metric_sort = 'metric_sort'
 
 
@@ -2067,15 +2311,15 @@ class Function(Enum):
     NAT = 'NAT'
 
 
-class Type50(Enum):
+class Type60(Enum):
     report = 'report'
 
 
-class Type51(Enum):
+class Type61(Enum):
     report_page_layout = 'report_page_layout'
 
 
-class Type52(Enum):
+class Type62(Enum):
     report_template = 'report_template'
 
 
@@ -2109,7 +2353,7 @@ class BucketGeoAreaItem(RootModel[str]):
     root: str = Field(..., title='Geo Area Bucket')
 
 
-class Type53(Enum):
+class Type63(Enum):
     SUM = 'SUM'
     AVG = 'AVG'
     MAX = 'MAX'
@@ -2122,16 +2366,16 @@ class BucketLocationItem(RootModel[str]):
     root: str = Field(..., title='Location Bucket')
 
 
-class Type54(Enum):
+class Type64(Enum):
     pushpin = 'pushpin'
     area = 'area'
 
 
-class Type55(Enum):
+class Type65(Enum):
     attribute_hierarchy = 'attribute_hierarchy'
 
 
-class Type56(Enum):
+class Type66(Enum):
     computed_attribute = 'computed_attribute'
 
 
@@ -2152,7 +2396,7 @@ class DataLabelsStyle(Enum):
     backplate = 'backplate'
 
 
-class Type57(Enum):
+class Type67(Enum):
     solid = 'solid'
     pattern = 'pattern'
     outline = 'outline'
@@ -2186,7 +2430,7 @@ class PatternNameMapping(Enum):
 
 
 class ChartFill(BaseModel):
-    type: Type57 | None = None
+    type: Type67 | None = None
     pattern_name_mapping: dict[str, PatternNameMapping] | None = None
 
 
@@ -2525,11 +2769,16 @@ class ConditionalFormatting(BaseModel):
     )
 
 
-class Type58(Enum):
+class Type68(Enum):
     dashboard = 'dashboard'
 
 
-class Type59(Enum):
+class Version4(Enum):
+    field_2 = '2'
+    field_3 = '3'
+
+
+class Type69(Enum):
     dataset = 'dataset'
     dataset_1 = 'dataset'
 
@@ -2546,7 +2795,7 @@ class DatasetType5(Enum):
     auxiliary = 'auxiliary'
 
 
-class Type62(Enum):
+class Type72(Enum):
     date = 'date'
 
 
@@ -2594,26 +2843,238 @@ class Locale(RootModel[constr(pattern=r'^[a-zA-Z]{2,3}(-[a-zA-Z0-9]{1,8})*$')]):
     )
 
 
-class Type63(Enum):
+class Type73(Enum):
     metric = 'metric'
 
 
-class Type64(Enum):
+class Type74(Enum):
     parameter = 'parameter'
 
 
-class Type65(Enum):
+class Type75(Enum):
     plugin = 'plugin'
 
 
-class Type66(Enum):
-    report = 'report'
+class PublisherColorValueV2(
+    RootModel[
+        constr(
+            pattern=r'^(#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*(,\s*\d*\.?\d+\s*)?\)|\{theme\.(colors\.(backgrounds|texts|lines)\.[A-Za-z0-9_-]+|palette\.(primary|success|error|warning))\})$'
+        )
+    ]
+):
+    root: constr(
+        pattern=r'^(#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*(,\s*\d*\.?\d+\s*)?\)|\{theme\.(colors\.(backgrounds|texts|lines)\.[A-Za-z0-9_-]+|palette\.(primary|success|error|warning))\})$'
+    ) = Field(
+        ...,
+        description='A theme color reference such as {theme.palette.primary}, or #rgb, #rrggbb, #rrggbbaa, or rgb() with 3 or 4 arguments.',
+        title='Publisher Color Value V2',
+    )
+
+
+class BackgroundFit(Enum):
+    cover = 'cover'
+    contain = 'contain'
+    fill = 'fill'
+    tile = 'tile'
+
+
+class HorizontalAlign(Enum):
+    left = 'left'
+    center = 'center'
+    right = 'right'
+    justify = 'justify'
+
+
+class Type76(Enum):
+    document_template = 'document_template'
+
+
+class Version5(Enum):
+    field_2 = '2'
+
+
+class Type77(Enum):
+    document = 'document'
+
+
+class PublisherEntityDescriptionV2(RootModel[constr(min_length=1, max_length=10000)]):
+    root: constr(min_length=1, max_length=10000) = Field(
+        ...,
+        description='An optional description.',
+        title='Publisher Entity Description V2',
+    )
+
+
+class PublisherEntityTagsV2Item(RootModel[constr(min_length=1)]):
+    root: constr(min_length=1)
+
+
+class PublisherEntityTagsV2(RootModel[list[PublisherEntityTagsV2Item]]):
+    root: list[PublisherEntityTagsV2Item] = Field(
+        ...,
+        description='A list of strings - metadata tags.',
+        title='Publisher Entity Tags V2',
+    )
+
+
+class PublisherEntityTitleV2(RootModel[constr(min_length=1, max_length=255)]):
+    root: constr(min_length=1, max_length=255) = Field(
+        ..., description='A human readable title.', title='Publisher Entity Title V2'
+    )
+
+
+class PublisherImageSourceV2(
+    RootModel[
+        constr(
+            pattern=r'^(\{theme\.(logo|coverImage|assets\.(logos|images)\.[A-Za-z0-9_-]+)\}|https://\S+)$'
+        )
+    ]
+):
+    root: constr(
+        pattern=r'^(\{theme\.(logo|coverImage|assets\.(logos|images)\.[A-Za-z0-9_-]+)\}|https://\S+)$'
+    ) = Field(
+        ...,
+        description='A theme image reference such as {theme.logo}, or an https URL, which may contain text variables.',
+        title='Publisher Image Source V2',
+    )
 
 
 class Fit(Enum):
     contain = 'contain'
     cover = 'cover'
     fill = 'fill'
+
+
+class Kind(Enum):
+    cover = 'cover'
+    section = 'section'
+    content = 'content'
+
+
+class PublisherPageNodeIdV2(RootModel[constr(pattern=r'^[A-Za-z0-9_.-]{1,64}$')]):
+    root: constr(pattern=r'^[A-Za-z0-9_.-]{1,64}$') = Field(
+        ..., title='Publisher Page Node Id V2'
+    )
+
+
+class PublisherPageProportionV2(RootModel[PositiveFloat]):
+    root: PositiveFloat = Field(
+        ...,
+        description='Share of the parent container this node takes, relative to its siblings. Defaults to 1.',
+        title='Publisher Page Proportion V2',
+    )
+
+
+class Type78(Enum):
+    page_template = 'page_template'
+
+
+class Granularity4(Enum):
+    SECOND = 'SECOND'
+    MINUTE = 'MINUTE'
+    HOUR = 'HOUR'
+    DAY = 'DAY'
+    WEEK_US = 'WEEK_US'
+    MONTH = 'MONTH'
+    QUARTER = 'QUARTER'
+    YEAR = 'YEAR'
+    FISCAL_YEAR = 'FISCAL_YEAR'
+    FISCAL_QUARTER = 'FISCAL_QUARTER'
+    FISCAL_MONTH = 'FISCAL_MONTH'
+
+
+class PublisherPeriodV21(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    granularity: Granularity4
+    from_: int = Field(
+        ..., alias='from', description='Offset from the current period, for example -1.'
+    )
+    to: int = Field(..., description='Offset from the current period, for example -1.')
+
+
+class PublisherPeriodV22(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    from_: constr(pattern=r'^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$') = Field(
+        ..., alias='from', description='YYYY-MM-DD.'
+    )
+    to: constr(pattern=r'^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$') = Field(
+        ..., description='YYYY-MM-DD.'
+    )
+
+
+class PublisherPeriodV2(RootModel[PublisherPeriodV21 | PublisherPeriodV22]):
+    root: PublisherPeriodV21 | PublisherPeriodV22 = Field(
+        ...,
+        description='The period the document reports on, in the date filter grammar without a dataset. Numbers for from and to make it relative; dates make it absolute. Both ends are inclusive.',
+        title='Publisher Period V2',
+    )
+
+
+class PublisherPxV2(RootModel[confloat(ge=0.0)]):
+    root: confloat(ge=0.0) = Field(
+        ...,
+        description="Pixels on the page's design canvas (1920 x 1080 for widescreen).",
+        title='Publisher Px V2',
+    )
+
+
+class Context(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    widgets: list[PublisherPageNodeIdV2] | None = Field(
+        None,
+        description='Ids of the widgets on this page the takeaway is generated from.',
+    )
+    page_title: bool | None = None
+    filters: bool | None = None
+    other_pages: bool | None = None
+
+
+class PublisherTakeawayGenerationV2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    instructions: constr(min_length=1) | None = Field(
+        None, description='Instructions the takeaway is generated with.'
+    )
+    context: Context | None = Field(None, title='Publisher Takeaway Context V2')
+
+
+class FontStyle(Enum):
+    normal = 'normal'
+    italic = 'italic'
+
+
+class TextTransform(Enum):
+    none = 'none'
+    uppercase = 'uppercase'
+    lowercase = 'lowercase'
+    capitalize = 'capitalize'
+
+
+class TextOverflow(Enum):
+    shrink = 'shrink'
+    clip = 'clip'
+    ellipsis = 'ellipsis'
+
+
+class PublisherWidgetPlaceholderV2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    hint: constr(min_length=1) | None = Field(
+        None, description='Authoring hint shown in the empty widget.'
+    )
+    required: bool | None = None
+
+
+class Type79(Enum):
+    report = 'report'
 
 
 class ReportPageFormat(Enum):
@@ -2704,11 +3165,11 @@ class ReportWeight(RootModel[float]):
     )
 
 
-class Type67(Enum):
+class Type80(Enum):
     report_page_layout = 'report_page_layout'
 
 
-class Type68(Enum):
+class Type81(Enum):
     report_template = 'report_template'
 
 
@@ -2716,96 +3177,198 @@ class Title(RootModel[constr(max_length=255)]):
     root: constr(max_length=255)
 
 
-class Type69(Enum):
+class Type82(Enum):
     table = 'table'
 
 
-class Type70(Enum):
+class Type83(Enum):
     bar_chart = 'bar_chart'
 
 
-class Type71(Enum):
+class Type84(Enum):
     column_chart = 'column_chart'
 
 
-class Type72(Enum):
+class Type85(Enum):
     line_chart = 'line_chart'
 
 
-class Type73(Enum):
+class Type86(Enum):
     area_chart = 'area_chart'
 
 
-class Type74(Enum):
+class Type87(Enum):
     scatter_chart = 'scatter_chart'
 
 
-class Type75(Enum):
+class Type88(Enum):
     bubble_chart = 'bubble_chart'
 
 
-class Type76(Enum):
+class Type89(Enum):
     pie_chart = 'pie_chart'
 
 
-class Type77(Enum):
+class Type90(Enum):
     donut_chart = 'donut_chart'
 
 
-class Type78(Enum):
+class Type91(Enum):
     treemap_chart = 'treemap_chart'
 
 
-class Type79(Enum):
+class Type92(Enum):
     pyramid_chart = 'pyramid_chart'
 
 
-class Type80(Enum):
+class Type93(Enum):
     funnel_chart = 'funnel_chart'
 
 
-class Type81(Enum):
+class Type94(Enum):
     heatmap_chart = 'heatmap_chart'
 
 
-class Type82(Enum):
+class Type95(Enum):
     bullet_chart = 'bullet_chart'
 
 
-class Type83(Enum):
+class Type96(Enum):
     waterfall_chart = 'waterfall_chart'
 
 
-class Type84(Enum):
+class Type97(Enum):
     dependency_wheel_chart = 'dependency_wheel_chart'
 
 
-class Type85(Enum):
+class Type98(Enum):
     sankey_chart = 'sankey_chart'
 
 
-class Type86(Enum):
+class Type99(Enum):
     headline_chart = 'headline_chart'
 
 
-class Type87(Enum):
+class Type100(Enum):
     combo_chart = 'combo_chart'
 
 
-class Type88(Enum):
+class Type101(Enum):
     geo_chart = 'geo_chart'
 
 
-class Type89(Enum):
+class Type102(Enum):
     geo_area_chart = 'geo_area_chart'
 
 
-class Type90(Enum):
+class Type103(Enum):
     repeater_chart = 'repeater_chart'
 
 
-class Type91(Enum):
+class Type104(Enum):
     radar_chart = 'radar_chart'
+
+
+class PublisherBorderLineStyleV2(Enum):
+    solid = 'solid'
+    dashed = 'dashed'
+    dotted = 'dotted'
+    none = 'none'
+
+
+class Takeaway(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    generation: PublisherTakeawayGenerationV2 | None = Field(
+        None, description="Combined with each takeaway widget's own generation."
+    )
+
+
+class PublisherGapValueV21(Enum):
+    field_theme_spacing_gap_compact_ = '{theme.spacing.gap.compact}'
+    field_theme_spacing_gap_normal_ = '{theme.spacing.gap.normal}'
+    field_theme_spacing_gap_spacious_ = '{theme.spacing.gap.spacious}'
+
+
+class PublisherGapValueV2(RootModel[confloat(ge=0.0) | PublisherGapValueV21]):
+    root: confloat(ge=0.0) | PublisherGapValueV21 = Field(
+        ...,
+        description='Space between children, in pixels or as a theme spacing reference.',
+        title='Publisher Gap Value V2',
+    )
+
+
+class PublisherHorizontalAlignV2(Enum):
+    left = 'left'
+    center = 'center'
+    right = 'right'
+
+
+class PublisherOpacityV2(RootModel[confloat(ge=0.0, le=1.0)]):
+    root: confloat(ge=0.0, le=1.0) = Field(..., title='Publisher Opacity V2')
+
+
+class PublisherPaddingValueV21(Enum):
+    field_theme_spacing_padding_compact_ = '{theme.spacing.padding.compact}'
+    field_theme_spacing_padding_normal_ = '{theme.spacing.padding.normal}'
+    field_theme_spacing_padding_spacious_ = '{theme.spacing.padding.spacious}'
+
+
+class PublisherPaddingValueV2(RootModel[confloat(ge=0.0) | PublisherPaddingValueV21]):
+    root: confloat(ge=0.0) | PublisherPaddingValueV21 = Field(
+        ...,
+        description='Inner spacing, in pixels or as a theme spacing reference.',
+        title='Publisher Padding Value V2',
+    )
+
+
+class PublisherPageSizeV2(Enum):
+    widescreen = 'widescreen'
+
+
+class PublisherRadiusValueV21(Enum):
+    field_theme_corners_small_ = '{theme.corners.small}'
+    field_theme_corners_medium_ = '{theme.corners.medium}'
+    field_theme_corners_large_ = '{theme.corners.large}'
+    field_theme_corners_full_ = '{theme.corners.full}'
+
+
+class PublisherRadiusValueV2(RootModel[confloat(ge=0.0) | PublisherRadiusValueV21]):
+    root: confloat(ge=0.0) | PublisherRadiusValueV21 = Field(
+        ...,
+        description='Corner radius, in pixels or as a theme corner reference.',
+        title='Publisher Radius Value V2',
+    )
+
+
+class PublisherShadowValueV2(
+    RootModel[constr(pattern=r'^(none|\{theme\.shadows\.[A-Za-z0-9_-]+\})$')]
+):
+    root: constr(pattern=r'^(none|\{theme\.shadows\.[A-Za-z0-9_-]+\})$') = Field(
+        ...,
+        description='"none" or a {theme.shadows.<name>} reference.',
+        title='Publisher Shadow Value V2',
+    )
+
+
+class PublisherTextStyleNameV2(Enum):
+    title = 'title'
+    h1 = 'h1'
+    h2 = 'h2'
+    h3 = 'h3'
+    h4 = 'h4'
+    h5 = 'h5'
+    h6 = 'h6'
+    largeText = 'largeText'
+    normalText = 'normalText'
+    smallText = 'smallText'
+
+
+class PublisherVerticalAlignV2(Enum):
+    top = 'top'
+    center = 'center'
+    bottom = 'bottom'
 
 
 class ReportAlignment(Enum):
@@ -3488,7 +4051,7 @@ class Metric1(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the metric.')
-    type: Type29
+    type: Type31
     title: Title | None = Field(
         None,
         description='An optional human readable title for the metric. Will be derived from id if not provided explicitly.',
@@ -3512,6 +4075,53 @@ class Metric1(BaseModel):
     )
 
 
+class PublisherChartStyleV2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    font_size: PublisherPxV2 | None = None
+    text_color: PublisherColorValueV2 | None = None
+    axis_line_color: PublisherColorValueV2 | None = None
+    axis_name_color: PublisherColorValueV2 | None = None
+    axis_name_size: PublisherPxV2 | None = None
+    axis_value_color: PublisherColorValueV2 | None = None
+    axis_value_size: PublisherPxV2 | None = None
+    grid_color: PublisherColorValueV2 | None = None
+    plot_line_color: PublisherColorValueV2 | None = None
+    legend_color: PublisherColorValueV2 | None = None
+    legend_size: PublisherPxV2 | None = None
+    data_label_color: PublisherColorValueV2 | None = None
+    data_label_size: PublisherPxV2 | None = None
+
+
+class PublisherTableStyleV2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    font_size: PublisherPxV2 | None = None
+    row_height: PublisherPxV2 | None = None
+    grid_color: PublisherColorValueV2 | None = None
+    value_color: PublisherColorValueV2 | None = None
+    null_value_color: PublisherColorValueV2 | None = None
+    header_label_color: PublisherColorValueV2 | None = None
+    header_background_color: PublisherColorValueV2 | None = None
+    total_value_color: PublisherColorValueV2 | None = None
+    total_background_color: PublisherColorValueV2 | None = None
+    subtotal_background_color: PublisherColorValueV2 | None = None
+
+
+class PublisherHeadlineStyleV2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    primary_value_color: PublisherColorValueV2 | None = None
+    primary_value_size: PublisherPxV2 | None = None
+    secondary_value_color: PublisherColorValueV2 | None = None
+    secondary_value_size: PublisherPxV2 | None = None
+    positive_color: PublisherColorValueV2 | None = None
+    negative_color: PublisherColorValueV2 | None = None
+
+
 class Constraints(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
@@ -3533,7 +4143,7 @@ class StringParameterDefinition(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type31
+    type: Type41
     defaultValue: str = Field(
         ..., description='The value used whenever the parameter is not overridden.'
     )
@@ -3549,7 +4159,7 @@ class Plugin1(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the plugin.')
-    type: Type33
+    type: Type43
     title: Title | None = Field(
         None,
         description='An optional human readable title for the plugin. Will be derived from id if not provided explicitly.',
@@ -3585,7 +4195,7 @@ class QueryField1(BaseModel):
     operator: Operator | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type34 | None = Field(
+    type: Type44 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -3611,7 +4221,7 @@ class QueryField7(BaseModel):
     operator: Operator6 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type40 | None = Field(
+    type: Type50 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -3633,7 +4243,7 @@ class QueryField9(BaseModel):
     operator: Operator7 = Field(
         ..., description='Arithmetic operator to use for this field.'
     )
-    type: Type42 | None = Field(
+    type: Type52 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -3655,7 +4265,7 @@ class QueryField11(BaseModel):
     operator: Operator10 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type44 = Field(
+    type: Type54 = Field(
         ...,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -3675,7 +4285,7 @@ class QueryField13(BaseModel):
     operator: Operator12 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type46 = Field(
+    type: Type56 = Field(
         ...,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -3690,7 +4300,7 @@ class QueryAttributeSort(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type48
+    type: Type58
     by: str | AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier = (
         Field(..., description='Local attribute or label to use in this sort.')
     )
@@ -3719,7 +4329,7 @@ class QueryMetricSort(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type49
+    type: Type59
     direction: Direction = Field(..., description='Sort direction.')
     metrics: list[str | Metrics] = Field(..., min_length=1)
 
@@ -3735,7 +4345,7 @@ class TotalItem(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type53
+    type: Type63
     title: Title | None = Field(None, description='A total title.')
     using: str = Field(
         ..., description='Local metric identifier to use for this total.'
@@ -3749,7 +4359,7 @@ class AttributeHierarchy(BaseModel):
     id: Identifier = Field(
         ..., description='A unique identifier of the attribute hierarchy.'
     )
-    type: Type55
+    type: Type65
     title: Title | None = Field(
         None,
         description='An optional human readable title for the attribute hierarchy. Will be derived from id if not provided explicitly.',
@@ -3776,7 +4386,7 @@ class ComputedAttribute(BaseModel):
         ...,
         description='A unique identifier of the computed attribute. Must not collide with the identifier of an attribute or a label.',
     )
-    type: Type56
+    type: Type66
     title: Title | None = Field(
         None,
         description='An optional human readable title for the computed attribute. Will be derived from id if not provided explicitly.',
@@ -3979,7 +4589,7 @@ class DateDataset(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the date instance.')
-    type: Type62
+    type: Type72
     title: Title | None = Field(
         None,
         description='An optional human readable title for the date instance. Will be derived from id if not provided explicitly.',
@@ -4004,7 +4614,7 @@ class Metric(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the metric.')
-    type: Type63
+    type: Type73
     title: Title | None = Field(
         None,
         description='An optional human readable title for the metric. Will be derived from id if not provided explicitly.',
@@ -4033,7 +4643,7 @@ class Plugin(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the plugin.')
-    type: Type65
+    type: Type75
     title: Title | None = Field(
         None,
         description='An optional human readable title for the plugin. Will be derived from id if not provided explicitly.',
@@ -4047,6 +4657,232 @@ class Plugin(BaseModel):
     url: constr(
         pattern=r'[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)'
     ) = Field(..., description='URL of the plugin.')
+
+
+class PublisherContainerStyleV2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    background_color: PublisherColorValueV2 | None = None
+    background_opacity: PublisherOpacityV2 | None = None
+    background_image: PublisherImageSourceV2 | None = None
+    background_image_opacity: PublisherOpacityV2 | None = None
+    background_fit: BackgroundFit | None = None
+    background_horizontal_align: PublisherHorizontalAlignV2 | None = None
+    background_vertical_align: PublisherVerticalAlignV2 | None = None
+    background_offset: PublisherPxV2 | None = None
+    background_offset_top: PublisherPxV2 | None = None
+    background_offset_right: PublisherPxV2 | None = None
+    background_offset_bottom: PublisherPxV2 | None = None
+    background_offset_left: PublisherPxV2 | None = None
+    padding: PublisherPaddingValueV2 | None = None
+    padding_top: PublisherPaddingValueV2 | None = None
+    padding_right: PublisherPaddingValueV2 | None = None
+    padding_bottom: PublisherPaddingValueV2 | None = None
+    padding_left: PublisherPaddingValueV2 | None = None
+    border_width: PublisherPxV2 | None = None
+    border_style: PublisherBorderLineStyleV2 | None = None
+    border_color: PublisherColorValueV2 | None = None
+    border_top_width: PublisherPxV2 | None = None
+    border_top_style: PublisherBorderLineStyleV2 | None = None
+    border_top_color: PublisherColorValueV2 | None = None
+    border_right_width: PublisherPxV2 | None = None
+    border_right_style: PublisherBorderLineStyleV2 | None = None
+    border_right_color: PublisherColorValueV2 | None = None
+    border_bottom_width: PublisherPxV2 | None = None
+    border_bottom_style: PublisherBorderLineStyleV2 | None = None
+    border_bottom_color: PublisherColorValueV2 | None = None
+    border_left_width: PublisherPxV2 | None = None
+    border_left_style: PublisherBorderLineStyleV2 | None = None
+    border_left_color: PublisherColorValueV2 | None = None
+    border_radius: PublisherRadiusValueV2 | None = None
+    border_top_left_radius: PublisherRadiusValueV2 | None = None
+    border_top_right_radius: PublisherRadiusValueV2 | None = None
+    border_bottom_right_radius: PublisherRadiusValueV2 | None = None
+    border_bottom_left_radius: PublisherRadiusValueV2 | None = None
+    shadow: PublisherShadowValueV2 | None = None
+    shadow_x: float | None = None
+    shadow_y: float | None = None
+    shadow_blur: PublisherPxV2 | None = None
+    shadow_spread: float | None = None
+    shadow_color: PublisherColorValueV2 | None = None
+    shadow_opacity: PublisherOpacityV2 | None = None
+    opacity: PublisherOpacityV2 | None = None
+    text_style: PublisherTextStyleNameV2 | None = None
+    text_color: PublisherColorValueV2 | None = None
+    horizontal_align: HorizontalAlign | None = None
+    vertical_align: PublisherVerticalAlignV2 | None = None
+    gap: PublisherGapValueV2 | None = None
+
+
+class PublisherImageWidgetStyleV2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    background_color: PublisherColorValueV2 | None = None
+    background_opacity: PublisherOpacityV2 | None = None
+    background_image: PublisherImageSourceV2 | None = None
+    background_image_opacity: PublisherOpacityV2 | None = None
+    background_fit: BackgroundFit | None = None
+    background_horizontal_align: PublisherHorizontalAlignV2 | None = None
+    background_vertical_align: PublisherVerticalAlignV2 | None = None
+    background_offset: PublisherPxV2 | None = None
+    background_offset_top: PublisherPxV2 | None = None
+    background_offset_right: PublisherPxV2 | None = None
+    background_offset_bottom: PublisherPxV2 | None = None
+    background_offset_left: PublisherPxV2 | None = None
+    padding: PublisherPaddingValueV2 | None = None
+    padding_top: PublisherPaddingValueV2 | None = None
+    padding_right: PublisherPaddingValueV2 | None = None
+    padding_bottom: PublisherPaddingValueV2 | None = None
+    padding_left: PublisherPaddingValueV2 | None = None
+    border_width: PublisherPxV2 | None = None
+    border_style: PublisherBorderLineStyleV2 | None = None
+    border_color: PublisherColorValueV2 | None = None
+    border_top_width: PublisherPxV2 | None = None
+    border_top_style: PublisherBorderLineStyleV2 | None = None
+    border_top_color: PublisherColorValueV2 | None = None
+    border_right_width: PublisherPxV2 | None = None
+    border_right_style: PublisherBorderLineStyleV2 | None = None
+    border_right_color: PublisherColorValueV2 | None = None
+    border_bottom_width: PublisherPxV2 | None = None
+    border_bottom_style: PublisherBorderLineStyleV2 | None = None
+    border_bottom_color: PublisherColorValueV2 | None = None
+    border_left_width: PublisherPxV2 | None = None
+    border_left_style: PublisherBorderLineStyleV2 | None = None
+    border_left_color: PublisherColorValueV2 | None = None
+    border_radius: PublisherRadiusValueV2 | None = None
+    border_top_left_radius: PublisherRadiusValueV2 | None = None
+    border_top_right_radius: PublisherRadiusValueV2 | None = None
+    border_bottom_right_radius: PublisherRadiusValueV2 | None = None
+    border_bottom_left_radius: PublisherRadiusValueV2 | None = None
+    shadow: PublisherShadowValueV2 | None = None
+    shadow_x: float | None = None
+    shadow_y: float | None = None
+    shadow_blur: PublisherPxV2 | None = None
+    shadow_spread: float | None = None
+    shadow_color: PublisherColorValueV2 | None = None
+    shadow_opacity: PublisherOpacityV2 | None = None
+    opacity: PublisherOpacityV2 | None = None
+    fit: Fit | None = None
+    horizontal_align: PublisherHorizontalAlignV2 | None = None
+    vertical_align: PublisherVerticalAlignV2 | None = None
+
+
+class PublisherTextWidgetStyleV2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    background_color: PublisherColorValueV2 | None = None
+    background_opacity: PublisherOpacityV2 | None = None
+    background_image: PublisherImageSourceV2 | None = None
+    background_image_opacity: PublisherOpacityV2 | None = None
+    background_fit: BackgroundFit | None = None
+    background_horizontal_align: PublisherHorizontalAlignV2 | None = None
+    background_vertical_align: PublisherVerticalAlignV2 | None = None
+    background_offset: PublisherPxV2 | None = None
+    background_offset_top: PublisherPxV2 | None = None
+    background_offset_right: PublisherPxV2 | None = None
+    background_offset_bottom: PublisherPxV2 | None = None
+    background_offset_left: PublisherPxV2 | None = None
+    padding: PublisherPaddingValueV2 | None = None
+    padding_top: PublisherPaddingValueV2 | None = None
+    padding_right: PublisherPaddingValueV2 | None = None
+    padding_bottom: PublisherPaddingValueV2 | None = None
+    padding_left: PublisherPaddingValueV2 | None = None
+    border_width: PublisherPxV2 | None = None
+    border_style: PublisherBorderLineStyleV2 | None = None
+    border_color: PublisherColorValueV2 | None = None
+    border_top_width: PublisherPxV2 | None = None
+    border_top_style: PublisherBorderLineStyleV2 | None = None
+    border_top_color: PublisherColorValueV2 | None = None
+    border_right_width: PublisherPxV2 | None = None
+    border_right_style: PublisherBorderLineStyleV2 | None = None
+    border_right_color: PublisherColorValueV2 | None = None
+    border_bottom_width: PublisherPxV2 | None = None
+    border_bottom_style: PublisherBorderLineStyleV2 | None = None
+    border_bottom_color: PublisherColorValueV2 | None = None
+    border_left_width: PublisherPxV2 | None = None
+    border_left_style: PublisherBorderLineStyleV2 | None = None
+    border_left_color: PublisherColorValueV2 | None = None
+    border_radius: PublisherRadiusValueV2 | None = None
+    border_top_left_radius: PublisherRadiusValueV2 | None = None
+    border_top_right_radius: PublisherRadiusValueV2 | None = None
+    border_bottom_right_radius: PublisherRadiusValueV2 | None = None
+    border_bottom_left_radius: PublisherRadiusValueV2 | None = None
+    shadow: PublisherShadowValueV2 | None = None
+    shadow_x: float | None = None
+    shadow_y: float | None = None
+    shadow_blur: PublisherPxV2 | None = None
+    shadow_spread: float | None = None
+    shadow_color: PublisherColorValueV2 | None = None
+    shadow_opacity: PublisherOpacityV2 | None = None
+    opacity: PublisherOpacityV2 | None = None
+    text_style: PublisherTextStyleNameV2 | None = None
+    text_color: PublisherColorValueV2 | None = None
+    horizontal_align: HorizontalAlign | None = None
+    vertical_align: PublisherVerticalAlignV2 | None = None
+    font_size: PublisherPxV2 | None = None
+    font_weight: confloat(ge=1.0, le=1000.0) | None = None
+    font_style: FontStyle | None = None
+    line_height: float | None = None
+    letter_spacing: float | None = None
+    text_transform: TextTransform | None = None
+    text_overflow: TextOverflow | None = None
+
+
+class PublisherVisualizationStyleV2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    background_color: PublisherColorValueV2 | None = None
+    background_opacity: PublisherOpacityV2 | None = None
+    background_image: PublisherImageSourceV2 | None = None
+    background_image_opacity: PublisherOpacityV2 | None = None
+    background_fit: BackgroundFit | None = None
+    background_horizontal_align: PublisherHorizontalAlignV2 | None = None
+    background_vertical_align: PublisherVerticalAlignV2 | None = None
+    background_offset: PublisherPxV2 | None = None
+    background_offset_top: PublisherPxV2 | None = None
+    background_offset_right: PublisherPxV2 | None = None
+    background_offset_bottom: PublisherPxV2 | None = None
+    background_offset_left: PublisherPxV2 | None = None
+    padding: PublisherPaddingValueV2 | None = None
+    padding_top: PublisherPaddingValueV2 | None = None
+    padding_right: PublisherPaddingValueV2 | None = None
+    padding_bottom: PublisherPaddingValueV2 | None = None
+    padding_left: PublisherPaddingValueV2 | None = None
+    border_width: PublisherPxV2 | None = None
+    border_style: PublisherBorderLineStyleV2 | None = None
+    border_color: PublisherColorValueV2 | None = None
+    border_top_width: PublisherPxV2 | None = None
+    border_top_style: PublisherBorderLineStyleV2 | None = None
+    border_top_color: PublisherColorValueV2 | None = None
+    border_right_width: PublisherPxV2 | None = None
+    border_right_style: PublisherBorderLineStyleV2 | None = None
+    border_right_color: PublisherColorValueV2 | None = None
+    border_bottom_width: PublisherPxV2 | None = None
+    border_bottom_style: PublisherBorderLineStyleV2 | None = None
+    border_bottom_color: PublisherColorValueV2 | None = None
+    border_left_width: PublisherPxV2 | None = None
+    border_left_style: PublisherBorderLineStyleV2 | None = None
+    border_left_color: PublisherColorValueV2 | None = None
+    border_radius: PublisherRadiusValueV2 | None = None
+    border_top_left_radius: PublisherRadiusValueV2 | None = None
+    border_top_right_radius: PublisherRadiusValueV2 | None = None
+    border_bottom_right_radius: PublisherRadiusValueV2 | None = None
+    border_bottom_left_radius: PublisherRadiusValueV2 | None = None
+    shadow: PublisherShadowValueV2 | None = None
+    shadow_x: float | None = None
+    shadow_y: float | None = None
+    shadow_blur: PublisherPxV2 | None = None
+    shadow_spread: float | None = None
+    shadow_color: PublisherColorValueV2 | None = None
+    shadow_opacity: PublisherOpacityV2 | None = None
+    opacity: PublisherOpacityV2 | None = None
+    chart: PublisherChartStyleV2 | None = None
+    table: PublisherTableStyleV2 | None = None
+    headline: PublisherHeadlineStyleV2 | None = None
 
 
 class ReportImage1(BaseModel):
@@ -4090,6 +4926,88 @@ class ReportVariable(BaseModel):
     default: str | None = Field(
         None, description='Value used when the document gives the variable none.'
     )
+
+
+class PublisherDocumentDefaultsV2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    page_size: PublisherPageSizeV2 | None = Field(
+        None, description='Applies to every page without its own page_size.'
+    )
+    takeaway: Takeaway | None = Field(
+        None, title='Publisher Document Takeaway Defaults V2'
+    )
+    period: PublisherPeriodV2 | None = Field(
+        None,
+        description='Document templates only: the period a document created from the template starts with.',
+    )
+
+
+class PublisherDocumentStyleV2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    background_color: PublisherColorValueV2 | None = None
+    background_opacity: PublisherOpacityV2 | None = None
+    background_image: PublisherImageSourceV2 | None = None
+    background_image_opacity: PublisherOpacityV2 | None = None
+    background_fit: BackgroundFit | None = None
+    background_horizontal_align: PublisherHorizontalAlignV2 | None = None
+    background_vertical_align: PublisherVerticalAlignV2 | None = None
+    background_offset: PublisherPxV2 | None = None
+    background_offset_top: PublisherPxV2 | None = None
+    background_offset_right: PublisherPxV2 | None = None
+    background_offset_bottom: PublisherPxV2 | None = None
+    background_offset_left: PublisherPxV2 | None = None
+    gap: PublisherGapValueV2 | None = Field(
+        None, description='Space between pages in the viewer and the editor.'
+    )
+
+
+class PublisherPageStyleV2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    background_color: PublisherColorValueV2 | None = None
+    background_opacity: PublisherOpacityV2 | None = None
+    background_image: PublisherImageSourceV2 | None = None
+    background_image_opacity: PublisherOpacityV2 | None = None
+    background_fit: BackgroundFit | None = None
+    background_horizontal_align: PublisherHorizontalAlignV2 | None = None
+    background_vertical_align: PublisherVerticalAlignV2 | None = None
+    background_offset: PublisherPxV2 | None = None
+    background_offset_top: PublisherPxV2 | None = None
+    background_offset_right: PublisherPxV2 | None = None
+    background_offset_bottom: PublisherPxV2 | None = None
+    background_offset_left: PublisherPxV2 | None = None
+    padding: PublisherPaddingValueV2 | None = None
+    padding_top: PublisherPaddingValueV2 | None = None
+    padding_right: PublisherPaddingValueV2 | None = None
+    padding_bottom: PublisherPaddingValueV2 | None = None
+    padding_left: PublisherPaddingValueV2 | None = None
+    text_style: PublisherTextStyleNameV2 | None = None
+    text_color: PublisherColorValueV2 | None = None
+    horizontal_align: HorizontalAlign | None = None
+    vertical_align: PublisherVerticalAlignV2 | None = None
+    gap: PublisherGapValueV2 | None = None
+
+
+class PublisherTextStyleV2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    text_style: PublisherTextStyleNameV2 | None = None
+    text_color: PublisherColorValueV2 | None = None
+    horizontal_align: HorizontalAlign | None = None
+    vertical_align: PublisherVerticalAlignV2 | None = None
+    font_size: PublisherPxV2 | None = None
+    font_weight: confloat(ge=1.0, le=1000.0) | None = None
+    font_style: FontStyle | None = None
+    line_height: float | None = None
+    letter_spacing: float | None = None
+    text_transform: TextTransform | None = None
+    text_overflow: TextOverflow | None = None
 
 
 class ReportBackground1(BaseModel):
@@ -4252,6 +5170,74 @@ class Label(BaseModel):
     )
 
 
+class PublisherTitleWidgetV2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    type: Type33
+    id: PublisherPageNodeIdV2 = Field(..., description='Unique within the page.')
+    proportion: PublisherPageProportionV2 | None = None
+    placeholder: PublisherWidgetPlaceholderV2 | None = None
+    locked: bool | None = None
+    markdown: constr(min_length=1) | None = Field(
+        None,
+        description='Inline markdown only: strong, emphasis, highlight, strike, links and line breaks.',
+    )
+    style: PublisherTextWidgetStyleV2 | None = None
+
+
+class PublisherHeadingWidgetV2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    type: Type34
+    id: PublisherPageNodeIdV2 = Field(..., description='Unique within the page.')
+    proportion: PublisherPageProportionV2 | None = None
+    placeholder: PublisherWidgetPlaceholderV2 | None = None
+    locked: bool | None = None
+    markdown: constr(min_length=1) | None = Field(
+        None, description='Inline markdown only.'
+    )
+    level: Level | None = Field(None, description='Defaults to 1.')
+    style: PublisherTextWidgetStyleV2 | None = None
+
+
+class PublisherTextWidgetV2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    type: Type35
+    id: PublisherPageNodeIdV2 = Field(..., description='Unique within the page.')
+    proportion: PublisherPageProportionV2 | None = None
+    placeholder: PublisherWidgetPlaceholderV2 | None = None
+    locked: bool | None = None
+    markdown: constr(min_length=1) | None = Field(
+        None, description='Full markdown: paragraphs, lists, quotes and headings.'
+    )
+    decorative: bool | None = Field(
+        None,
+        description='Page furniture such as page numbers: kept out of the accessibility tree, PDF tags and AI context.',
+    )
+    style: PublisherTextWidgetStyleV2 | None = None
+
+
+class PublisherImageWidgetV2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    type: Type36
+    id: PublisherPageNodeIdV2 = Field(..., description='Unique within the page.')
+    proportion: PublisherPageProportionV2 | None = None
+    placeholder: PublisherWidgetPlaceholderV2 | None = None
+    locked: bool | None = None
+    source: PublisherImageSourceV2 | None = None
+    alt_text: constr(min_length=1) | None = None
+    decorative: bool | None = Field(
+        None, description='A decorative image needs no alt text.'
+    )
+    style: PublisherImageWidgetStyleV2 | None = None
+
+
 class ParameterDefinition(
     RootModel[StringParameterDefinition | NumberParameterDefinition]
 ):
@@ -4310,7 +5296,7 @@ class LayerItemBase(BaseModel):
         None,
         description='An optional human readable title for the layer. Will be derived from id if not provided explicitly.',
     )
-    type: Type54 | None = Field(
+    type: Type64 | None = Field(
         None, description='Type of visualisation for this layer.'
     )
     config: Config | None = Field(
@@ -4359,7 +5345,7 @@ class Parameter(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the parameter.')
-    type: Type64
+    type: Type74
     title: Title | None = Field(
         None,
         description='An optional human readable title for the parameter. Will be derived from id if not provided explicitly.',
@@ -4374,6 +5360,15 @@ class Parameter(BaseModel):
         ...,
         description='The typed definition of the parameter - its data type, default value and constraints.',
     )
+
+
+class PublisherWidgetTitleV2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    visible: bool | None = None
+    text: constr(min_length=1) | None = None
+    style: PublisherTextStyleV2 | None = None
 
 
 class QueryFilters(RootModel[dict[str, QueryFilter]]):
@@ -4495,12 +5490,65 @@ class Attribute(BaseModel):
     labels: dict[constr(pattern=r'^(?!\.)[.A-Za-z0-9_-]{1,255}$'), Label] | None = None
 
 
+class PublisherVisualizationWidgetV2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+        regex_engine="python-re",
+    )
+    type: Type37
+    id: PublisherPageNodeIdV2 = Field(..., description='Unique within the page.')
+    proportion: PublisherPageProportionV2 | None = None
+    placeholder: PublisherWidgetPlaceholderV2 | None = None
+    locked: bool | None = None
+    visualization: Identifier | None = Field(
+        None, description='An id of the visualization rendered here.'
+    )
+    title: PublisherWidgetTitleV2 | None = None
+    alt_text: constr(min_length=1) | None = None
+    date: Identifier | None = Field(
+        None, description='An id of the date dataset the document period applies to.'
+    )
+    ignore_document_period: bool | None = Field(
+        None, description='When true, the document period does not apply here.'
+    )
+    filters: DashboardFilters | None = Field(
+        None, description='Filters applied on top of the page and document filters.'
+    )
+    ignored_filters: (
+        list[
+            constr(
+                pattern=r'^(label|computed_attribute|dataset|metric)/(?!\.)[.A-Za-z0-9_-]{1,255}$'
+            )
+        ]
+        | None
+    ) = Field(None, description='Document filters ignored here.')
+    display: PublisherVisualizationDisplayV2 | None = None
+    style: PublisherVisualizationStyleV2 | None = None
+
+
+class PublisherTakeawayWidgetV2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    type: Type38
+    id: PublisherPageNodeIdV2 = Field(..., description='Unique within the page.')
+    proportion: PublisherPageProportionV2 | None = None
+    placeholder: PublisherWidgetPlaceholderV2 | None = None
+    locked: bool | None = None
+    title: PublisherWidgetTitleV2 | None = None
+    markdown: constr(min_length=1) | None = Field(
+        None, description='The generated or written text.'
+    )
+    generation: PublisherTakeawayGenerationV2 | None = None
+    style: PublisherTextWidgetStyleV2 | None = None
+
+
 class Parameter1(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the parameter.')
-    type: Type30
+    type: Type40
     title: Title | None = Field(
         None,
         description='An optional human readable title for the parameter. Will be derived from id if not provided explicitly.',
@@ -4537,7 +5585,7 @@ class QueryField3(BaseModel):
     operator: Operator2 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type36 | None = Field(
+    type: Type46 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -4572,7 +5620,7 @@ class QueryField5(BaseModel):
     operator: Operator4 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type38 | None = Field(
+    type: Type48 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -4727,7 +5775,7 @@ class Dataset5(BaseModel):
         regex_engine="python-re",
     )
     id: Identifier = Field(..., description='A unique identifier of the dataset.')
-    type: Type59
+    type: Type69
     title: Title | None = Field(
         None,
         description='An optional human readable title for the dataset. Will be derived from id if not provided explicitly.',
@@ -4773,7 +5821,7 @@ class Dataset6(BaseModel):
         regex_engine="python-re",
     )
     id: Identifier = Field(..., description='A unique identifier of the dataset.')
-    type: Type59
+    type: Type69
     title: Title | None = Field(
         None,
         description='An optional human readable title for the dataset. Will be derived from id if not provided explicitly.',
@@ -4819,7 +5867,7 @@ class Dataset7(BaseModel):
         regex_engine="python-re",
     )
     id: Identifier = Field(..., description='A unique identifier of the dataset.')
-    type: Type59
+    type: Type69
     title: Title | None = Field(
         None,
         description='An optional human readable title for the dataset. Will be derived from id if not provided explicitly.',
@@ -5006,7 +6054,7 @@ class Visualisation1(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type69 = Field(..., description='Type of visualisation.')
+    type: Type82 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5052,7 +6100,7 @@ class Visualisation2(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type70 = Field(..., description='Type of visualisation.')
+    type: Type83 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5095,7 +6143,7 @@ class Visualisation3(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type71 = Field(..., description='Type of visualisation.')
+    type: Type84 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5138,7 +6186,7 @@ class Visualisation4(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type72 = Field(..., description='Type of visualisation.')
+    type: Type85 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5181,7 +6229,7 @@ class Visualisation5(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type73 = Field(..., description='Type of visualisation.')
+    type: Type86 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5224,7 +6272,7 @@ class Visualisation6(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type74 = Field(..., description='Type of visualisation.')
+    type: Type87 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5267,7 +6315,7 @@ class Visualisation7(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type75 = Field(..., description='Type of visualisation.')
+    type: Type88 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5310,7 +6358,7 @@ class Visualisation8(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type76 = Field(..., description='Type of visualisation.')
+    type: Type89 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5350,7 +6398,7 @@ class Visualisation9(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type77 = Field(..., description='Type of visualisation.')
+    type: Type90 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5390,7 +6438,7 @@ class Visualisation10(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type78 = Field(..., description='Type of visualisation.')
+    type: Type91 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5430,7 +6478,7 @@ class Visualisation11(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type79 = Field(..., description='Type of visualisation.')
+    type: Type92 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5470,7 +6518,7 @@ class Visualisation12(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type80 = Field(..., description='Type of visualisation.')
+    type: Type93 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5510,7 +6558,7 @@ class Visualisation13(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type81 = Field(..., description='Type of visualisation.')
+    type: Type94 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5556,7 +6604,7 @@ class Visualisation14(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type82 = Field(..., description='Type of visualisation.')
+    type: Type95 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5596,7 +6644,7 @@ class Visualisation15(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type83 = Field(..., description='Type of visualisation.')
+    type: Type96 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5636,7 +6684,7 @@ class Visualisation16(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type84 = Field(..., description='Type of visualisation.')
+    type: Type97 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5682,7 +6730,7 @@ class Visualisation17(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type85 = Field(..., description='Type of visualisation.')
+    type: Type98 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5728,7 +6776,7 @@ class Visualisation18(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type86 = Field(..., description='Type of visualisation.')
+    type: Type99 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5766,7 +6814,7 @@ class Visualisation19(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type87 = Field(..., description='Type of visualisation.')
+    type: Type100 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5806,7 +6854,7 @@ class Visualisation20(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type88 = Field(..., description='Type of visualisation.')
+    type: Type101 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5850,7 +6898,7 @@ class Visualisation21(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type89 = Field(..., description='Type of visualisation.')
+    type: Type102 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5894,7 +6942,7 @@ class Visualisation22(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type90 = Field(..., description='Type of visualisation.')
+    type: Type103 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5940,7 +6988,7 @@ class Visualisation23(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type91 = Field(..., description='Type of visualisation.')
+    type: Type104 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6157,12 +7205,82 @@ class Widget3(BaseModel):
     )
 
 
+class PublisherDocumentV21(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+        regex_engine="python-re",
+    )
+    id: constr(pattern=r'^(?!default\.)(?!\.)[.A-Za-z0-9_-]{1,255}$') = Field(
+        ...,
+        description='A unique identifier of the document. Ids starting with default. are reserved.',
+    )
+    type: Type29
+    version: Version1 = Field(..., description='Version of the content format.')
+    title: PublisherEntityTitleV2
+    description: PublisherEntityDescriptionV2 | None = None
+    tags: PublisherEntityTagsV2 | None = None
+    period: PublisherPeriodV2
+    content: PublisherDocumentContentV2
+
+
+class PublisherDocumentTemplateV21(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+        regex_engine="python-re",
+    )
+    id: constr(pattern=r'^(?!default\.)(?!\.)[.A-Za-z0-9_-]{1,255}$') = Field(
+        ...,
+        description='A unique identifier of the document template. Ids starting with default. are reserved.',
+    )
+    type: Type30
+    version: Version1 = Field(..., description='Version of the content format.')
+    title: PublisherEntityTitleV2
+    description: PublisherEntityDescriptionV2 | None = None
+    tags: PublisherEntityTagsV2 | None = None
+    content: PublisherDocumentContentV2
+
+
+class PublisherContainerV2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    type: Type32
+    id: PublisherPageNodeIdV2 | None = None
+    children: list[PublisherLayoutNodeV2] = Field(
+        ...,
+        description="Nodes laid out along the container's direction. An empty list renders as a spacer.",
+    )
+    proportion: PublisherPageProportionV2 | None = None
+    locked: bool | None = None
+    style: PublisherContainerStyleV2 | None = None
+
+
+class PublisherPageTemplateV21(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+        regex_engine="python-re",
+    )
+    id: constr(pattern=r'^(?!default\.)(?!\.)[.A-Za-z0-9_-]{1,255}$') = Field(
+        ...,
+        description='A unique identifier of the page template. Ids starting with default. are reserved.',
+    )
+    type: Type39
+    version: Version1 = Field(..., description='Version of the content format.')
+    title: PublisherEntityTitleV2
+    description: PublisherEntityDescriptionV2 | None = None
+    tags: PublisherEntityTagsV2 | None = None
+    content: PublisherPageBodyV2 = Field(
+        ...,
+        description='Copied into a document, with a page id added, when the template is used.',
+    )
+
+
 class Report1(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the document.')
-    type: Type50
+    type: Type60
     title: Title = Field(..., description='A human readable title for the document.')
     description: Description | None = Field(
         None, description='An optional description of the document.'
@@ -6231,7 +7349,7 @@ class ReportPageLayout1(BaseModel):
     id: Identifier = Field(
         ..., description='A unique identifier of the document page layout.'
     )
-    type: Type51
+    type: Type61
     title: Title = Field(
         ..., description='A human readable title for the document page layout.'
     )
@@ -6262,7 +7380,7 @@ class ReportTemplate1(BaseModel):
     id: Identifier = Field(
         ..., description='A unique identifier of the document template.'
     )
-    type: Type52
+    type: Type62
     title: Title = Field(
         ..., description='A human readable title for the document template.'
     )
@@ -6295,8 +7413,8 @@ class Dashboard(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the dashboard.')
-    type: Type58
-    version: Version | None = Field(
+    type: Type68
+    version: Version4 | None = Field(
         None,
         description='Dashboard model version. "2" (default if omitted) — legacy shape: root-level sections/filters are also mirrored into a default tab, producing a declarative model with duplicated content for backward compatibility with older SDK readers. "3" — clean shape: tabs are the sole source of layout and filters; root sections/filters in YAML are still allowed as an authoring shortcut but are wrapped into a single synthetic tab without duplication. Use "3" for new dashboards; "2" exists to keep existing files round-trippable.',
     )
@@ -6354,12 +7472,107 @@ class Dashboard(BaseModel):
     )
 
 
+class PublisherDocumentContentV2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    defaults: PublisherDocumentDefaultsV2 | None = None
+    filters: DashboardFilters | None = Field(
+        None,
+        description='Document filters. Date filters name their date dataset. At most one filter per attribute or date dataset.',
+    )
+    style: PublisherDocumentStyleV2 | None = None
+    locale: Locale | None = Field(
+        None, description='Overrides the workspace locale for this document.'
+    )
+    format_locale: Locale | None = Field(
+        None, description='Overrides the workspace format locale used for dates.'
+    )
+    pages: list[PublisherDocumentPageV2] | None = None
+    sections: list[PublisherSectionV2] | None = None
+
+
+class PublisherDocumentTemplateV2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+        regex_engine="python-re",
+    )
+    id: constr(pattern=r'^(?!default\.)(?!\.)[.A-Za-z0-9_-]{1,255}$') = Field(
+        ...,
+        description='A unique identifier of the document template. Ids starting with default. are reserved.',
+    )
+    type: Type76
+    version: Version5 = Field(..., description='Version of the content format.')
+    title: PublisherEntityTitleV2
+    description: PublisherEntityDescriptionV2 | None = None
+    tags: PublisherEntityTagsV2 | None = None
+    content: PublisherDocumentContentV2
+
+
+class PublisherDocumentV2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+        regex_engine="python-re",
+    )
+    id: constr(pattern=r'^(?!default\.)(?!\.)[.A-Za-z0-9_-]{1,255}$') = Field(
+        ...,
+        description='A unique identifier of the document. Ids starting with default. are reserved.',
+    )
+    type: Type77
+    version: Version5 = Field(..., description='Version of the content format.')
+    title: PublisherEntityTitleV2
+    description: PublisherEntityDescriptionV2 | None = None
+    tags: PublisherEntityTagsV2 | None = None
+    period: PublisherPeriodV2
+    content: PublisherDocumentContentV2
+
+
+class PublisherPageBodyV2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    kind: Kind | None = Field(
+        None, description='Editor hint. It does not change how the page renders.'
+    )
+    page_size: PublisherPageSizeV2 | None = None
+    notes: constr(min_length=1) | None = Field(
+        None, description='Markdown speaker notes, never drawn on the page.'
+    )
+    style: PublisherPageStyleV2 | None = None
+    layout: PublisherLayoutNodeV2 = Field(
+        ..., description='Root of the page layout tree.'
+    )
+    filters: DashboardFilters | None = Field(
+        None, description='Page filters, applied on top of the document filters.'
+    )
+
+
+class PublisherPageTemplateV2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+        regex_engine="python-re",
+    )
+    id: constr(pattern=r'^(?!default\.)(?!\.)[.A-Za-z0-9_-]{1,255}$') = Field(
+        ...,
+        description='A unique identifier of the page template. Ids starting with default. are reserved.',
+    )
+    type: Type78
+    version: Version5 = Field(..., description='Version of the content format.')
+    title: PublisherEntityTitleV2
+    description: PublisherEntityDescriptionV2 | None = None
+    tags: PublisherEntityTagsV2 | None = None
+    content: PublisherPageBodyV2 = Field(
+        ...,
+        description='Copied into a document, with a page id added, when the template is used.',
+    )
+
+
 class Report(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the document.')
-    type: Type66
+    type: Type79
     title: Title = Field(..., description='A human readable title for the document.')
     description: Description | None = Field(
         None, description='An optional description of the document.'
@@ -6420,7 +7633,7 @@ class ReportPageLayout(BaseModel):
     id: Identifier = Field(
         ..., description='A unique identifier of the document page layout.'
     )
-    type: Type67
+    type: Type80
     title: Title = Field(
         ..., description='A human readable title for the document page layout.'
     )
@@ -6451,7 +7664,7 @@ class ReportTemplate(BaseModel):
     id: Identifier = Field(
         ..., description='A unique identifier of the document template.'
     )
-    type: Type68
+    type: Type81
     title: Title = Field(
         ..., description='A human readable title for the document template.'
     )
@@ -6479,8 +7692,69 @@ class ReportTemplate(BaseModel):
     )
 
 
+class PublisherDocumentPageV2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    id: PublisherPageNodeIdV2 = Field(..., description='Unique within the document.')
+    visible: bool | None = Field(
+        None,
+        description='Defaults to true. A hidden page is left out of the viewer, exports and page numbers.',
+    )
+    kind: Kind | None = Field(
+        None, description='Editor hint. It does not change how the page renders.'
+    )
+    page_size: PublisherPageSizeV2 | None = None
+    notes: constr(min_length=1) | None = Field(
+        None, description='Markdown speaker notes, never drawn on the page.'
+    )
+    style: PublisherPageStyleV2 | None = None
+    layout: PublisherLayoutNodeV2 = Field(
+        ..., description='Root of the page layout tree.'
+    )
+    filters: DashboardFilters | None = Field(
+        None, description='Page filters, applied on top of the document filters.'
+    )
+
+
+class PublisherSectionV2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    id: PublisherPageNodeIdV2 = Field(..., description='Unique within the document.')
+    title: constr(min_length=1) | None = None
+    description: constr(min_length=1) | None = None
+    pages: list[PublisherDocumentPageV2]
+
+
 class Widget(RootModel[VisualizationWidget | Widget1 | Widget2 | Widget3]):
     root: VisualizationWidget | Widget1 | Widget2 | Widget3 = Field(..., title='Widget')
+
+
+class PublisherLayoutNodeV2(
+    RootModel[
+        PublisherContainerV2
+        | PublisherTitleWidgetV2
+        | PublisherHeadingWidgetV2
+        | PublisherTextWidgetV2
+        | PublisherImageWidgetV2
+        | PublisherVisualizationWidgetV2
+        | PublisherTakeawayWidgetV2
+    ]
+):
+    root: (
+        PublisherContainerV2
+        | PublisherTitleWidgetV2
+        | PublisherHeadingWidgetV2
+        | PublisherTextWidgetV2
+        | PublisherImageWidgetV2
+        | PublisherVisualizationWidgetV2
+        | PublisherTakeawayWidgetV2
+    ) = Field(
+        ...,
+        description='A row or column container, or a widget.',
+        title='Publisher Layout Node V2',
+    )
 
 
 class ReportLayoutNode(
@@ -6521,6 +7795,9 @@ class Metadata(
         | Report
         | ReportTemplate
         | ReportPageLayout
+        | PublisherDocumentV2
+        | PublisherDocumentTemplateV2
+        | PublisherPageTemplateV2
     ]
 ):
     root: (
@@ -6536,17 +7813,27 @@ class Metadata(
         | Report
         | ReportTemplate
         | ReportPageLayout
+        | PublisherDocumentV2
+        | PublisherDocumentTemplateV2
+        | PublisherPageTemplateV2
     ) = Field(..., description='JSON schema for Gooddata Analytics', title='Metadata')
 
 
 Dashboard1.model_rebuild()
 Section.model_rebuild()
 Section1.model_rebuild()
+PublisherDocumentV21.model_rebuild()
+PublisherDocumentTemplateV21.model_rebuild()
+PublisherContainerV2.model_rebuild()
+PublisherPageTemplateV21.model_rebuild()
 Report1.model_rebuild()
 LayoutColumn.model_rebuild()
 LayoutRow.model_rebuild()
 ReportPageLayout1.model_rebuild()
 ReportTemplate1.model_rebuild()
+PublisherDocumentContentV2.model_rebuild()
+PublisherPageBodyV2.model_rebuild()
 Report.model_rebuild()
 ReportPageBody.model_rebuild()
 ReportPageLayout.model_rebuild()
+PublisherDocumentPageV2.model_rebuild()

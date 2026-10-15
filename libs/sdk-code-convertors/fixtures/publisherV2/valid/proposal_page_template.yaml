@@ -1,0 +1,64 @@
+type: page_template
+id: viz2_summary_right
+version: "2"
+title: 2 visualizations + summary
+description: Two visualizations with a summary column on the right
+content:
+    kind: content
+    page_size: widescreen
+    layout:
+        type: column
+        children:
+            - type: title
+              id: pageTitle
+              proportion: 2
+              placeholder:
+                  hint: Page title
+              style:
+                  text_style: title
+            - type: row
+              proportion: 9
+              children:
+                  - type: row
+                    proportion: 2
+                    children:
+                        - type: visualization
+                          id: widget1
+                          title:
+                              visible: true
+                          placeholder:
+                              hint: Add a visualization
+                        - type: visualization
+                          id: widget2
+                          title:
+                              visible: true
+                          placeholder:
+                              hint: Add a visualization
+                  - type: text
+                    id: summary
+                    proportion: 1
+                    placeholder:
+                        hint: Add a summary
+                    style:
+                        text_style: normalText
+            - type: row
+              proportion: 1
+              children:
+                  - type: image
+                    id: footerLogo
+                    proportion: 1
+                    source: "{theme.logo}"
+                    decorative: true
+                    style:
+                        fit: contain
+                        horizontal_align: left
+                        vertical_align: bottom
+                  - type: text
+                    id: footerPageNumber
+                    proportion: 8
+                    markdown: "{currentPageNumber} / {totalPages}"
+                    decorative: true
+                    style:
+                        text_style: largeText
+                        horizontal_align: right
+                        vertical_align: bottom

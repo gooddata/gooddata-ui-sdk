@@ -149,11 +149,15 @@ def post_process(source: str, schema_hash: str, *, require_pydantic: bool = Fals
             "    )\n\n"
         )
 
-    # Insert the version guard and __all__ after the imports block (after the last
-    # import line) — must come after `from __future__ import annotations`, which
-    # datamodel-code-generator always emits first.
-    last_import = max(source.rfind("\nimport "), source.rfind("\nfrom "))
-    insert_pos = source.index("\n", last_import + 1) + 1
+    # Insert the version guard and __all__ after the last import statement, which may
+    # wrap over several lines in parentheses. It must follow
+    # `from __future__ import annotations`, which datamodel-code-generator always emits first.
+    imports = re.finditer(
+        r"^(?:import [^\n]*|from [^\n]* import (?:\([^)]*\)|[^\n]*))$",
+        source,
+        re.MULTILINE,
+    )
+    insert_pos = list(imports)[-1].end() + 1
     source = source[:insert_pos] + "\n" + version_guard + all_block + source[insert_pos:]
 
     # Deduplicate Literal values. The narrowed JSON Schema repeats enum values
