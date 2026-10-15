@@ -1,19 +1,19 @@
 // (C) 2026 GoodData Corporation
 
 import {
-    BuiltInPublisherPageLayoutCoverV1,
-    BuiltInPublisherPageLayoutPortraitCoverV1,
-    BuiltInPublisherPageLayoutPortraitSectionV1,
-    BuiltInPublisherPageLayoutPortraitSummaryV1,
-    BuiltInPublisherPageLayoutSectionV1,
-    BuiltInPublisherPageLayoutViz6TextLeftV1,
-    BuiltInPublisherPageLayoutsV1,
-} from "./v1/builtinPageLayouts.js";
-import {
     type IPublisherAttributeFilterConfigV1,
     type IPublisherDocumentContentV1,
     type IPublisherDocumentPageV1,
 } from "./v1/content.js";
+import {
+    DefaultPublisherPageTemplateCoverV1,
+    DefaultPublisherPageTemplatePortraitCoverV1,
+    DefaultPublisherPageTemplatePortraitSectionV1,
+    DefaultPublisherPageTemplatePortraitSummaryV1,
+    DefaultPublisherPageTemplateSectionV1,
+    DefaultPublisherPageTemplateViz6TextLeftV1,
+    DefaultPublisherPageTemplatesV1,
+} from "./v1/defaultPageTemplates.js";
 import {
     type IPublisherDocumentBaseV1,
     type IPublisherDocumentDefinitionV1,
@@ -29,16 +29,16 @@ import {
     newAdHocPublisherDocumentDefinitionV1,
     newPublisherDocumentContentV1,
     newPublisherDocumentDefinitionFromTemplateV1,
-    newPublisherDocumentPageFromLayoutV1,
+    newPublisherDocumentPageFromTemplateV1,
     newPublisherDocumentTemplateDefinitionV1,
-    newPublisherPageLayoutDefinitionV1,
+    newPublisherPageTemplateDefinitionV1,
     publisherDocumentPageV1,
 } from "./v1/factory.js";
 import {
     type IPublisherLayoutNodeBaseV1,
     type IPublisherLayoutSectionV1,
     type IPublisherLayoutSlotRefV1,
-    type PublisherPageLayoutNodeV1,
+    type PublisherLayoutNodeV1,
     isPublisherLayoutSectionV1,
     isPublisherLayoutSlotRefV1,
 } from "./v1/layout.js";
@@ -52,13 +52,13 @@ import {
 import {
     type IPublisherPageBodyV1,
     type IPublisherPageBodyValidationIssueV1,
-    type IPublisherPageLayoutContentV1,
-    type IPublisherPageLayoutDefinitionV1,
-    type IPublisherPageLayoutV1,
-    isPublisherPageLayoutDefinitionV1,
-    isPublisherPageLayoutV1,
+    type IPublisherPageTemplateContentV1,
+    type IPublisherPageTemplateDefinitionV1,
+    type IPublisherPageTemplateV1,
+    isPublisherPageTemplateDefinitionV1,
+    isPublisherPageTemplateV1,
     validatePublisherPageBodyV1,
-} from "./v1/pageLayout.js";
+} from "./v1/pageTemplate.js";
 import {
     BuiltInPublisherSlotTypesV1,
     type IPublisherAiTextSourceV1,
@@ -166,11 +166,11 @@ export const publisherTextPlaceholder = publisherTextPlaceholderV1;
 export const resolvePublisherTextPlaceholders = resolvePublisherTextPlaceholdersV1;
 
 /**
- * Current version of {@link PublisherPageLayoutNodeV1}.
+ * Current version of {@link PublisherLayoutNodeV1}.
  *
  * @alpha
  */
-export type PublisherPageLayoutNode = PublisherPageLayoutNodeV1;
+export type PublisherLayoutNode = PublisherLayoutNodeV1;
 
 /**
  * Current version of {@link IPublisherLayoutNodeBaseV1}.
@@ -551,25 +551,25 @@ export const isPublisherPageFormat = isPublisherPageFormatV1;
 export type IPublisherPageBody = IPublisherPageBodyV1;
 
 /**
- * Current version of {@link IPublisherPageLayoutContentV1}.
+ * Current version of {@link IPublisherPageTemplateContentV1}.
  *
  * @alpha
  */
-export type IPublisherPageLayoutContent = IPublisherPageLayoutContentV1;
+export type IPublisherPageTemplateContent = IPublisherPageTemplateContentV1;
 
 /**
- * Current version of {@link IPublisherPageLayoutDefinitionV1}.
+ * Current version of {@link IPublisherPageTemplateDefinitionV1}.
  *
  * @alpha
  */
-export type IPublisherPageLayoutDefinition = IPublisherPageLayoutDefinitionV1;
+export type IPublisherPageTemplateDefinition = IPublisherPageTemplateDefinitionV1;
 
 /**
- * Current version of {@link IPublisherPageLayoutV1}.
+ * Current version of {@link IPublisherPageTemplateV1}.
  *
  * @alpha
  */
-export type IPublisherPageLayout = IPublisherPageLayoutV1;
+export type IPublisherPageTemplate = IPublisherPageTemplateV1;
 
 /**
  * Current version of {@link IPublisherPageBodyValidationIssueV1}.
@@ -579,18 +579,18 @@ export type IPublisherPageLayout = IPublisherPageLayoutV1;
 export type IPublisherPageBodyValidationIssue = IPublisherPageBodyValidationIssueV1;
 
 /**
- * Current version of {@link isPublisherPageLayoutDefinitionV1}.
+ * Current version of {@link isPublisherPageTemplateDefinitionV1}.
  *
  * @alpha
  */
-export const isPublisherPageLayoutDefinition = isPublisherPageLayoutDefinitionV1;
+export const isPublisherPageTemplateDefinition = isPublisherPageTemplateDefinitionV1;
 
 /**
- * Current version of {@link isPublisherPageLayoutV1}.
+ * Current version of {@link isPublisherPageTemplateV1}.
  *
  * @alpha
  */
-export const isPublisherPageLayout = isPublisherPageLayoutV1;
+export const isPublisherPageTemplate = isPublisherPageTemplateV1;
 
 /**
  * Current version of {@link validatePublisherPageBodyV1}.
@@ -684,18 +684,18 @@ export const isPublisherDocumentDefinition = isPublisherDocumentDefinitionV1;
 export const isPublisherDocument = isPublisherDocumentV1;
 
 /**
- * Current version of {@link newPublisherPageLayoutDefinitionV1}.
+ * Current version of {@link newPublisherPageTemplateDefinitionV1}.
  *
  * @alpha
  */
-export const newPublisherPageLayoutDefinition = newPublisherPageLayoutDefinitionV1;
+export const newPublisherPageTemplateDefinition = newPublisherPageTemplateDefinitionV1;
 
 /**
- * Current version of {@link newPublisherDocumentPageFromLayoutV1}.
+ * Current version of {@link newPublisherDocumentPageFromTemplateV1}.
  *
  * @alpha
  */
-export const newPublisherDocumentPageFromLayout = newPublisherDocumentPageFromLayoutV1;
+export const newPublisherDocumentPageFromTemplate = newPublisherDocumentPageFromTemplateV1;
 
 /**
  * Current version of {@link newPublisherDocumentContentV1}.
@@ -733,50 +733,50 @@ export const newAdHocPublisherDocumentDefinition = newAdHocPublisherDocumentDefi
 export const publisherDocumentPage = publisherDocumentPageV1;
 
 /**
- * Current version of {@link BuiltInPublisherPageLayoutCoverV1}.
+ * Current version of {@link DefaultPublisherPageTemplateCoverV1}.
  *
  * @alpha
  */
-export const BuiltInPublisherPageLayoutCover = BuiltInPublisherPageLayoutCoverV1;
+export const DefaultPublisherPageTemplateCover = DefaultPublisherPageTemplateCoverV1;
 
 /**
- * Current version of {@link BuiltInPublisherPageLayoutSectionV1}.
+ * Current version of {@link DefaultPublisherPageTemplateSectionV1}.
  *
  * @alpha
  */
-export const BuiltInPublisherPageLayoutSection = BuiltInPublisherPageLayoutSectionV1;
+export const DefaultPublisherPageTemplateSection = DefaultPublisherPageTemplateSectionV1;
 
 /**
- * Current version of {@link BuiltInPublisherPageLayoutViz6TextLeftV1}.
+ * Current version of {@link DefaultPublisherPageTemplateViz6TextLeftV1}.
  *
  * @alpha
  */
-export const BuiltInPublisherPageLayoutViz6TextLeft = BuiltInPublisherPageLayoutViz6TextLeftV1;
+export const DefaultPublisherPageTemplateViz6TextLeft = DefaultPublisherPageTemplateViz6TextLeftV1;
 
 /**
- * Current version of {@link BuiltInPublisherPageLayoutPortraitCoverV1}.
+ * Current version of {@link DefaultPublisherPageTemplatePortraitCoverV1}.
  *
  * @alpha
  */
-export const BuiltInPublisherPageLayoutPortraitCover = BuiltInPublisherPageLayoutPortraitCoverV1;
+export const DefaultPublisherPageTemplatePortraitCover = DefaultPublisherPageTemplatePortraitCoverV1;
 
 /**
- * Current version of {@link BuiltInPublisherPageLayoutPortraitSectionV1}.
+ * Current version of {@link DefaultPublisherPageTemplatePortraitSectionV1}.
  *
  * @alpha
  */
-export const BuiltInPublisherPageLayoutPortraitSection = BuiltInPublisherPageLayoutPortraitSectionV1;
+export const DefaultPublisherPageTemplatePortraitSection = DefaultPublisherPageTemplatePortraitSectionV1;
 
 /**
- * Current version of {@link BuiltInPublisherPageLayoutPortraitSummaryV1}.
+ * Current version of {@link DefaultPublisherPageTemplatePortraitSummaryV1}.
  *
  * @alpha
  */
-export const BuiltInPublisherPageLayoutPortraitSummary = BuiltInPublisherPageLayoutPortraitSummaryV1;
+export const DefaultPublisherPageTemplatePortraitSummary = DefaultPublisherPageTemplatePortraitSummaryV1;
 
 /**
- * Current version of {@link BuiltInPublisherPageLayoutsV1}.
+ * Current version of {@link DefaultPublisherPageTemplatesV1}.
  *
  * @alpha
  */
-export const BuiltInPublisherPageLayouts = BuiltInPublisherPageLayoutsV1;
+export const DefaultPublisherPageTemplates = DefaultPublisherPageTemplatesV1;

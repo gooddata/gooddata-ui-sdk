@@ -24,7 +24,10 @@ export type Metadata2 =
     | Metadata30
     | Metadata33
     | Metadata36
-    | Metadata39;
+    | Metadata39
+    | Metadata42
+    | Metadata45
+    | Metadata48;
 /**
  * JSON schema for Gooddata Analytics
  */
@@ -1423,7 +1426,248 @@ export type ReportLayoutNode8 =
  * JSON schema for Gooddata Analytics
  */
 export type Metadata39 = Metadata40 & Metadata41;
-export type Metadata41 = {
+export type Metadata41 = PublisherDocumentV2;
+/**
+ * A human readable title.
+ */
+export type PublisherEntityTitleV2 = string;
+/**
+ * An optional description.
+ */
+export type PublisherEntityDescriptionV2 = string;
+/**
+ * A list of strings - metadata tags.
+ */
+export type PublisherEntityTagsV2 = string[];
+/**
+ * The period the document reports on, in the date filter grammar without a dataset. Numbers for from and to make it relative; dates make it absolute. Both ends are inclusive.
+ */
+export type PublisherPeriodV2 = PublisherRelativePeriodV2 | PublisherAbsolutePeriodV2;
+/**
+ * Applies to every page without its own page_size.
+ */
+export type PublisherPageSizeV2 = "widescreen";
+export type PublisherPageNodeIdV2 = string;
+/**
+ * The period the document reports on, in the date filter grammar without a dataset. Numbers for from and to make it relative; dates make it absolute. Both ends are inclusive.
+ */
+export type PublisherPeriodV21 = PublisherRelativePeriodV2 | PublisherAbsolutePeriodV2;
+/**
+ * A theme color reference such as \{theme.palette.primary\}, or #rgb, #rrggbb, #rrggbbaa, or rgb() with 3 or 4 arguments.
+ */
+export type PublisherColorValueV2 = string;
+export type PublisherOpacityV2 = number;
+/**
+ * A theme image reference such as \{theme.logo\}, or an https URL, which may contain text variables.
+ */
+export type PublisherImageSourceV2 = string;
+export type PublisherHorizontalAlignV2 = "left" | "center" | "right";
+export type PublisherVerticalAlignV2 = "top" | "center" | "bottom";
+/**
+ * Pixels on the page's design canvas (1920 x 1080 for widescreen).
+ */
+export type PublisherPxV2 = number;
+/**
+ * Space between pages in the viewer and the editor.
+ */
+export type PublisherGapValueV2 = PublisherGapValueV21 | PublisherGapValueV22;
+/**
+ * Space between children, in pixels or as a theme spacing reference.
+ */
+export type PublisherGapValueV21 = number;
+/**
+ * Space between children, in pixels or as a theme spacing reference.
+ */
+export type PublisherGapValueV22 =
+    | "{theme.spacing.gap.compact}"
+    | "{theme.spacing.gap.normal}"
+    | "{theme.spacing.gap.spacious}";
+/**
+ * Overrides the workspace locale for this document.
+ */
+export type Locale4 = string;
+/**
+ * Overrides the workspace format locale used for dates.
+ */
+export type Locale5 = string;
+/**
+ * Unique within the document.
+ */
+export type PublisherPageNodeIdV21 = string;
+/**
+ * The widescreen design canvas is 1920 x 1080 px.
+ */
+export type PublisherPageSizeV21 = "widescreen";
+/**
+ * Inner spacing, in pixels or as a theme spacing reference.
+ */
+export type PublisherPaddingValueV2 = PublisherPaddingValueV21 | PublisherPaddingValueV22;
+/**
+ * Inner spacing, in pixels or as a theme spacing reference.
+ */
+export type PublisherPaddingValueV21 = number;
+/**
+ * Inner spacing, in pixels or as a theme spacing reference.
+ */
+export type PublisherPaddingValueV22 =
+    | "{theme.spacing.padding.compact}"
+    | "{theme.spacing.padding.normal}"
+    | "{theme.spacing.padding.spacious}";
+/**
+ * Named text style from the theme.
+ */
+export type PublisherTextStyleNameV2 =
+    | "title"
+    | "h1"
+    | "h2"
+    | "h3"
+    | "h4"
+    | "h5"
+    | "h6"
+    | "largeText"
+    | "normalText"
+    | "smallText";
+/**
+ * Space between children, in pixels or as a theme spacing reference.
+ */
+export type PublisherGapValueV23 = PublisherGapValueV21 | PublisherGapValueV22;
+/**
+ * Root of the page layout tree.
+ */
+export type PublisherLayoutNodeV2 =
+    | PublisherLayoutNodeV21
+    | PublisherLayoutNodeV23
+    | PublisherLayoutNodeV24
+    | PublisherLayoutNodeV25
+    | PublisherLayoutNodeV26
+    | PublisherLayoutNodeV27
+    | PublisherLayoutNodeV28;
+/**
+ * A row or column container, or a widget.
+ */
+export type PublisherLayoutNodeV21 = PublisherContainerV2;
+/**
+ * A row or column container, or a widget.
+ */
+export type PublisherLayoutNodeV22 =
+    | PublisherLayoutNodeV21
+    | PublisherLayoutNodeV23
+    | PublisherLayoutNodeV24
+    | PublisherLayoutNodeV25
+    | PublisherLayoutNodeV26
+    | PublisherLayoutNodeV27
+    | PublisherLayoutNodeV28;
+/**
+ * A row or column container, or a widget.
+ */
+export type PublisherLayoutNodeV23 = PublisherTitleWidgetV2;
+/**
+ * Unique within the page.
+ */
+export type PublisherPageNodeIdV22 = string;
+/**
+ * Share of the parent container this node takes, relative to its siblings. Defaults to 1.
+ */
+export type PublisherPageProportionV2 = number;
+export type PublisherBorderLineStyleV2 = "solid" | "dashed" | "dotted" | "none";
+/**
+ * Corner radius, in pixels or as a theme corner reference.
+ */
+export type PublisherRadiusValueV2 = PublisherRadiusValueV21 | PublisherRadiusValueV22;
+/**
+ * Corner radius, in pixels or as a theme corner reference.
+ */
+export type PublisherRadiusValueV21 = number;
+/**
+ * Corner radius, in pixels or as a theme corner reference.
+ */
+export type PublisherRadiusValueV22 =
+    | "{theme.corners.small}"
+    | "{theme.corners.medium}"
+    | "{theme.corners.large}"
+    | "{theme.corners.full}";
+/**
+ * "none" or a \{theme.shadows.<name>\} reference.
+ */
+export type PublisherShadowValueV2 = string;
+/**
+ * A row or column container, or a widget.
+ */
+export type PublisherLayoutNodeV24 = PublisherHeadingWidgetV2;
+/**
+ * Unique within the page.
+ */
+export type PublisherPageNodeIdV23 = string;
+/**
+ * A row or column container, or a widget.
+ */
+export type PublisherLayoutNodeV25 = PublisherTextWidgetV2;
+/**
+ * Unique within the page.
+ */
+export type PublisherPageNodeIdV24 = string;
+/**
+ * A row or column container, or a widget.
+ */
+export type PublisherLayoutNodeV26 = PublisherImageWidgetV2;
+/**
+ * Unique within the page.
+ */
+export type PublisherPageNodeIdV25 = string;
+/**
+ * A row or column container, or a widget.
+ */
+export type PublisherLayoutNodeV27 = PublisherVisualizationWidgetV2;
+/**
+ * Unique within the page.
+ */
+export type PublisherPageNodeIdV26 = string;
+/**
+ * An id of the visualization rendered here.
+ */
+export type Id54 = string;
+/**
+ * An id of the date dataset the document period applies to.
+ */
+export type Id55 = string;
+/**
+ * A row or column container, or a widget.
+ */
+export type PublisherLayoutNodeV28 = PublisherTakeawayWidgetV2;
+/**
+ * Unique within the page.
+ */
+export type PublisherPageNodeIdV27 = string;
+/**
+ * Unique within the document.
+ */
+export type PublisherPageNodeIdV28 = string;
+/**
+ * JSON schema for Gooddata Analytics
+ */
+export type Metadata42 = Metadata43 & Metadata44;
+export type Metadata44 = PublisherDocumentTemplateV2;
+/**
+ * JSON schema for Gooddata Analytics
+ */
+export type Metadata45 = Metadata46 & Metadata47;
+export type Metadata47 = PublisherPageTemplateV2;
+/**
+ * A row or column container, or a widget.
+ */
+export type PublisherLayoutNodeV29 =
+    | PublisherLayoutNodeV21
+    | PublisherLayoutNodeV23
+    | PublisherLayoutNodeV24
+    | PublisherLayoutNodeV25
+    | PublisherLayoutNodeV26
+    | PublisherLayoutNodeV27
+    | PublisherLayoutNodeV28;
+/**
+ * JSON schema for Gooddata Analytics
+ */
+export type Metadata48 = Metadata49 & Metadata50;
+export type Metadata50 = {
     [k: string]: unknown;
 };
 
@@ -1462,7 +1706,10 @@ export interface Metadata1 {
         | "parameter"
         | "report"
         | "report_template"
-        | "report_page_layout";
+        | "report_page_layout"
+        | "document"
+        | "document_template"
+        | "page_template";
     [k: string]: unknown;
 }
 export interface Metadata4 {
@@ -1500,7 +1747,10 @@ export interface Metadata4 {
         | "parameter"
         | "report"
         | "report_template"
-        | "report_page_layout";
+        | "report_page_layout"
+        | "document"
+        | "document_template"
+        | "page_template";
     [k: string]: unknown;
 }
 export interface NormalDataset {
@@ -1957,7 +2207,10 @@ export interface Metadata7 {
         | "parameter"
         | "report"
         | "report_template"
-        | "report_page_layout";
+        | "report_page_layout"
+        | "document"
+        | "document_template"
+        | "page_template";
     [k: string]: unknown;
 }
 export interface DateDataset {
@@ -2047,7 +2300,10 @@ export interface Metadata10 {
         | "parameter"
         | "report"
         | "report_template"
-        | "report_page_layout";
+        | "report_page_layout"
+        | "document"
+        | "document_template"
+        | "page_template";
     [k: string]: unknown;
 }
 export interface Metric {
@@ -2115,7 +2371,10 @@ export interface Metadata13 {
         | "parameter"
         | "report"
         | "report_template"
-        | "report_page_layout";
+        | "report_page_layout"
+        | "document"
+        | "document_template"
+        | "page_template";
     [k: string]: unknown;
 }
 export interface ComputedAttribute {
@@ -2208,7 +2467,10 @@ export interface Metadata16 {
         | "parameter"
         | "report"
         | "report_template"
-        | "report_page_layout";
+        | "report_page_layout"
+        | "document"
+        | "document_template"
+        | "page_template";
     [k: string]: unknown;
 }
 export interface Dashboard {
@@ -2555,6 +2817,14 @@ export interface DashboardFilters {
      * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
      * This interface was referenced by `DashboardFilters6`'s JSON-Schema definition
      * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters7`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters8`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters9`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters10`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
      */
     [k: string]:
         | DashboardAbsoluteDateFilter
@@ -2745,6 +3015,14 @@ export interface DashboardFilters1 {
      * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
      * This interface was referenced by `DashboardFilters6`'s JSON-Schema definition
      * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters7`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters8`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters9`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters10`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
      */
     [k: string]:
         | DashboardAbsoluteDateFilter
@@ -2798,7 +3076,10 @@ export interface Metadata19 {
         | "parameter"
         | "report"
         | "report_template"
-        | "report_page_layout";
+        | "report_page_layout"
+        | "document"
+        | "document_template"
+        | "page_template";
     [k: string]: unknown;
 }
 export interface Plugin {
@@ -2853,7 +3134,10 @@ export interface Metadata22 {
         | "parameter"
         | "report"
         | "report_template"
-        | "report_page_layout";
+        | "report_page_layout"
+        | "document"
+        | "document_template"
+        | "page_template";
     [k: string]: unknown;
 }
 export interface AttributeHierarchy {
@@ -2908,7 +3192,10 @@ export interface Metadata25 {
         | "parameter"
         | "report"
         | "report_template"
-        | "report_page_layout";
+        | "report_page_layout"
+        | "document"
+        | "document_template"
+        | "page_template";
     [k: string]: unknown;
 }
 export interface Parameter {
@@ -3022,7 +3309,10 @@ export interface Metadata28 {
         | "parameter"
         | "report"
         | "report_template"
-        | "report_page_layout";
+        | "report_page_layout"
+        | "document"
+        | "document_template"
+        | "page_template";
     [k: string]: unknown;
 }
 export interface Table {
@@ -13265,7 +13555,10 @@ export interface Metadata31 {
         | "parameter"
         | "report"
         | "report_template"
-        | "report_page_layout";
+        | "report_page_layout"
+        | "document"
+        | "document_template"
+        | "page_template";
     [k: string]: unknown;
 }
 export interface Report {
@@ -13468,6 +13761,14 @@ export interface DashboardFilters2 {
      * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
      * This interface was referenced by `DashboardFilters6`'s JSON-Schema definition
      * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters7`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters8`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters9`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters10`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
      */
     [k: string]:
         | DashboardAbsoluteDateFilter
@@ -13579,6 +13880,14 @@ export interface DashboardFilters3 {
      * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
      * This interface was referenced by `DashboardFilters6`'s JSON-Schema definition
      * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters7`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters8`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters9`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters10`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
      */
     [k: string]:
         | DashboardAbsoluteDateFilter
@@ -13606,6 +13915,14 @@ export interface DashboardFilters4 {
      * This interface was referenced by `DashboardFilters5`'s JSON-Schema definition
      * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
      * This interface was referenced by `DashboardFilters6`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters7`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters8`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters9`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters10`'s JSON-Schema definition
      * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
      */
     [k: string]:
@@ -13663,7 +13980,10 @@ export interface Metadata34 {
         | "parameter"
         | "report"
         | "report_template"
-        | "report_page_layout";
+        | "report_page_layout"
+        | "document"
+        | "document_template"
+        | "page_template";
     [k: string]: unknown;
 }
 export interface ReportTemplate {
@@ -13711,6 +14031,14 @@ export interface DashboardFilters5 {
      * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
      * This interface was referenced by `DashboardFilters6`'s JSON-Schema definition
      * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters7`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters8`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters9`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters10`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
      */
     [k: string]:
         | DashboardAbsoluteDateFilter
@@ -13755,7 +14083,10 @@ export interface Metadata37 {
         | "parameter"
         | "report"
         | "report_template"
-        | "report_page_layout";
+        | "report_page_layout"
+        | "document"
+        | "document_template"
+        | "page_template";
     [k: string]: unknown;
 }
 /**
@@ -13812,6 +14143,14 @@ export interface DashboardFilters6 {
      * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
      * This interface was referenced by `DashboardFilters6`'s JSON-Schema definition
      * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters7`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters8`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters9`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters10`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
      */
     [k: string]:
         | DashboardAbsoluteDateFilter
@@ -13856,6 +14195,917 @@ export interface Metadata40 {
         | "parameter"
         | "report"
         | "report_template"
-        | "report_page_layout";
+        | "report_page_layout"
+        | "document"
+        | "document_template"
+        | "page_template";
+    [k: string]: unknown;
+}
+export interface PublisherDocumentV2 {
+    /**
+     * A unique identifier of the document. Ids starting with default. are reserved.
+     */
+    id: string;
+    type: "document";
+    /**
+     * Version of the content format.
+     */
+    version: "2";
+    title: PublisherEntityTitleV2;
+    description?: PublisherEntityDescriptionV2;
+    tags?: PublisherEntityTagsV2;
+    period: PublisherPeriodV2;
+    content: PublisherDocumentContentV2;
+}
+/**
+ * The period the document reports on, in the date filter grammar without a dataset. Numbers for from and to make it relative; dates make it absolute. Both ends are inclusive.
+ */
+export interface PublisherRelativePeriodV2 {
+    granularity:
+        | "SECOND"
+        | "MINUTE"
+        | "HOUR"
+        | "DAY"
+        | "WEEK_US"
+        | "MONTH"
+        | "QUARTER"
+        | "YEAR"
+        | "FISCAL_YEAR"
+        | "FISCAL_QUARTER"
+        | "FISCAL_MONTH";
+    /**
+     * Offset from the current period, for example -1.
+     */
+    from: number;
+    /**
+     * Offset from the current period, for example -1.
+     */
+    to: number;
+}
+/**
+ * The period the document reports on, in the date filter grammar without a dataset. Numbers for from and to make it relative; dates make it absolute. Both ends are inclusive.
+ */
+export interface PublisherAbsolutePeriodV2 {
+    /**
+     * YYYY-MM-DD.
+     */
+    from: string;
+    /**
+     * YYYY-MM-DD.
+     */
+    to: string;
+}
+/**
+ * Holds exactly one of pages and sections.
+ */
+export interface PublisherDocumentContentV2 {
+    defaults?: PublisherDocumentDefaultsV2;
+    filters?: DashboardFilters7;
+    style?: PublisherDocumentStyleV2;
+    locale?: Locale4;
+    format_locale?: Locale5;
+    pages?: PublisherDocumentPageV2[];
+    sections?: PublisherSectionV2[];
+}
+export interface PublisherDocumentDefaultsV2 {
+    page_size?: PublisherPageSizeV2;
+    takeaway?: PublisherDocumentTakeawayDefaultsV2;
+    period?: PublisherPeriodV21;
+}
+export interface PublisherDocumentTakeawayDefaultsV2 {
+    generation?: PublisherTakeawayGenerationV2;
+}
+/**
+ * Combined with each takeaway widget's own generation.
+ */
+export interface PublisherTakeawayGenerationV2 {
+    /**
+     * Instructions the takeaway is generated with.
+     */
+    instructions?: string;
+    context?: PublisherTakeawayContextV2;
+}
+export interface PublisherTakeawayContextV2 {
+    /**
+     * Ids of the widgets on this page the takeaway is generated from.
+     */
+    widgets?: PublisherPageNodeIdV2[];
+    page_title?: boolean;
+    filters?: boolean;
+    other_pages?: boolean;
+}
+/**
+ * Document filters. Date filters name their date dataset. At most one filter per attribute or date dataset.
+ */
+export interface DashboardFilters7 {
+    /**
+     * This interface was referenced by `DashboardFilters`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters1`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters2`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters3`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters4`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters5`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters6`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters7`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters8`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters9`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters10`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     */
+    [k: string]:
+        | DashboardAbsoluteDateFilter
+        | DashboardRelativeDateFilter
+        | DashboardAttributeFilter
+        | DashboardTextFilter
+        | DashboardMetricValueFilter
+        | DashboardFilterGroup;
+}
+/**
+ * Style of the area behind the pages. Exports ignore it.
+ */
+export interface PublisherDocumentStyleV2 {
+    background_color?: PublisherColorValueV2;
+    background_opacity?: PublisherOpacityV2;
+    background_image?: PublisherImageSourceV2;
+    background_image_opacity?: PublisherOpacityV2;
+    background_fit?: "cover" | "contain" | "fill" | "tile";
+    background_horizontal_align?: PublisherHorizontalAlignV2;
+    background_vertical_align?: PublisherVerticalAlignV2;
+    background_offset?: PublisherPxV2;
+    background_offset_top?: PublisherPxV2;
+    background_offset_right?: PublisherPxV2;
+    background_offset_bottom?: PublisherPxV2;
+    background_offset_left?: PublisherPxV2;
+    gap?: PublisherGapValueV2;
+}
+/**
+ * A page of a document.
+ */
+export interface PublisherDocumentPageV2 {
+    id: PublisherPageNodeIdV21;
+    /**
+     * Defaults to true. A hidden page is left out of the viewer, exports and page numbers.
+     */
+    visible?: boolean;
+    /**
+     * Editor hint. It does not change how the page renders.
+     */
+    kind?: "cover" | "section" | "content";
+    page_size?: PublisherPageSizeV21;
+    /**
+     * Markdown speaker notes, never drawn on the page.
+     */
+    notes?: string;
+    style?: PublisherPageStyleV2;
+    layout: PublisherLayoutNodeV2;
+    filters?: DashboardFilters9;
+}
+export interface PublisherPageStyleV2 {
+    background_color?: PublisherColorValueV2;
+    background_opacity?: PublisherOpacityV2;
+    background_image?: PublisherImageSourceV2;
+    background_image_opacity?: PublisherOpacityV2;
+    background_fit?: "cover" | "contain" | "fill" | "tile";
+    background_horizontal_align?: PublisherHorizontalAlignV2;
+    background_vertical_align?: PublisherVerticalAlignV2;
+    background_offset?: PublisherPxV2;
+    background_offset_top?: PublisherPxV2;
+    background_offset_right?: PublisherPxV2;
+    background_offset_bottom?: PublisherPxV2;
+    background_offset_left?: PublisherPxV2;
+    padding?: PublisherPaddingValueV2;
+    padding_top?: PublisherPaddingValueV2;
+    padding_right?: PublisherPaddingValueV2;
+    padding_bottom?: PublisherPaddingValueV2;
+    padding_left?: PublisherPaddingValueV2;
+    text_style?: PublisherTextStyleNameV2;
+    text_color?: PublisherColorValueV2;
+    horizontal_align?: "left" | "center" | "right" | "justify";
+    vertical_align?: PublisherVerticalAlignV2;
+    gap?: PublisherGapValueV23;
+}
+export interface PublisherContainerV2 {
+    type: "row" | "column";
+    id?: PublisherPageNodeIdV2;
+    /**
+     * Nodes laid out along the container's direction. An empty list renders as a spacer.
+     */
+    children: PublisherLayoutNodeV22[];
+    proportion?: PublisherPageProportionV2;
+    locked?: boolean;
+    style?: PublisherContainerStyleV2;
+}
+/**
+ * The page title. At most one per page.
+ */
+export interface PublisherTitleWidgetV2 {
+    type: "title";
+    id: PublisherPageNodeIdV22;
+    proportion?: PublisherPageProportionV2;
+    placeholder?: PublisherWidgetPlaceholderV2;
+    locked?: boolean;
+    /**
+     * Inline markdown only: strong, emphasis, highlight, strike, links and line breaks.
+     */
+    markdown?: string;
+    style?: PublisherTextWidgetStyleV2;
+}
+export interface PublisherWidgetPlaceholderV2 {
+    /**
+     * Authoring hint shown in the empty widget.
+     */
+    hint?: string;
+    required?: boolean;
+}
+export interface PublisherTextWidgetStyleV2 {
+    background_color?: PublisherColorValueV2;
+    background_opacity?: PublisherOpacityV2;
+    background_image?: PublisherImageSourceV2;
+    background_image_opacity?: PublisherOpacityV2;
+    background_fit?: "cover" | "contain" | "fill" | "tile";
+    background_horizontal_align?: PublisherHorizontalAlignV2;
+    background_vertical_align?: PublisherVerticalAlignV2;
+    background_offset?: PublisherPxV2;
+    background_offset_top?: PublisherPxV2;
+    background_offset_right?: PublisherPxV2;
+    background_offset_bottom?: PublisherPxV2;
+    background_offset_left?: PublisherPxV2;
+    padding?: PublisherPaddingValueV2;
+    padding_top?: PublisherPaddingValueV2;
+    padding_right?: PublisherPaddingValueV2;
+    padding_bottom?: PublisherPaddingValueV2;
+    padding_left?: PublisherPaddingValueV2;
+    border_width?: PublisherPxV2;
+    border_style?: PublisherBorderLineStyleV2;
+    border_color?: PublisherColorValueV2;
+    border_top_width?: PublisherPxV2;
+    border_top_style?: PublisherBorderLineStyleV2;
+    border_top_color?: PublisherColorValueV2;
+    border_right_width?: PublisherPxV2;
+    border_right_style?: PublisherBorderLineStyleV2;
+    border_right_color?: PublisherColorValueV2;
+    border_bottom_width?: PublisherPxV2;
+    border_bottom_style?: PublisherBorderLineStyleV2;
+    border_bottom_color?: PublisherColorValueV2;
+    border_left_width?: PublisherPxV2;
+    border_left_style?: PublisherBorderLineStyleV2;
+    border_left_color?: PublisherColorValueV2;
+    border_radius?: PublisherRadiusValueV2;
+    border_top_left_radius?: PublisherRadiusValueV2;
+    border_top_right_radius?: PublisherRadiusValueV2;
+    border_bottom_right_radius?: PublisherRadiusValueV2;
+    border_bottom_left_radius?: PublisherRadiusValueV2;
+    shadow?: PublisherShadowValueV2;
+    shadow_x?: number;
+    shadow_y?: number;
+    shadow_blur?: PublisherPxV2;
+    shadow_spread?: number;
+    shadow_color?: PublisherColorValueV2;
+    shadow_opacity?: PublisherOpacityV2;
+    opacity?: PublisherOpacityV2;
+    text_style?: PublisherTextStyleNameV2;
+    text_color?: PublisherColorValueV2;
+    horizontal_align?: "left" | "center" | "right" | "justify";
+    vertical_align?: PublisherVerticalAlignV2;
+    font_size?: PublisherPxV2;
+    font_weight?: number;
+    font_style?: "normal" | "italic";
+    line_height?: number;
+    letter_spacing?: number;
+    text_transform?: "none" | "uppercase" | "lowercase" | "capitalize";
+    text_overflow?: "shrink" | "clip" | "ellipsis";
+}
+export interface PublisherHeadingWidgetV2 {
+    type: "heading";
+    id: PublisherPageNodeIdV23;
+    proportion?: PublisherPageProportionV2;
+    placeholder?: PublisherWidgetPlaceholderV2;
+    locked?: boolean;
+    /**
+     * Inline markdown only.
+     */
+    markdown?: string;
+    /**
+     * Defaults to 1.
+     */
+    level?: 1 | 2 | 3 | 4 | 5 | 6;
+    style?: PublisherTextWidgetStyleV2;
+}
+export interface PublisherTextWidgetV2 {
+    type: "text";
+    id: PublisherPageNodeIdV24;
+    proportion?: PublisherPageProportionV2;
+    placeholder?: PublisherWidgetPlaceholderV2;
+    locked?: boolean;
+    /**
+     * Full markdown: paragraphs, lists, quotes and headings.
+     */
+    markdown?: string;
+    /**
+     * Page furniture such as page numbers: kept out of the accessibility tree, PDF tags and AI context.
+     */
+    decorative?: boolean;
+    style?: PublisherTextWidgetStyleV2;
+}
+export interface PublisherImageWidgetV2 {
+    type: "image";
+    id: PublisherPageNodeIdV25;
+    proportion?: PublisherPageProportionV2;
+    placeholder?: PublisherWidgetPlaceholderV2;
+    locked?: boolean;
+    source?: PublisherImageSourceV2;
+    alt_text?: string;
+    /**
+     * A decorative image needs no alt text.
+     */
+    decorative?: boolean;
+    style?: PublisherImageWidgetStyleV2;
+}
+export interface PublisherImageWidgetStyleV2 {
+    background_color?: PublisherColorValueV2;
+    background_opacity?: PublisherOpacityV2;
+    background_image?: PublisherImageSourceV2;
+    background_image_opacity?: PublisherOpacityV2;
+    background_fit?: "cover" | "contain" | "fill" | "tile";
+    background_horizontal_align?: PublisherHorizontalAlignV2;
+    background_vertical_align?: PublisherVerticalAlignV2;
+    background_offset?: PublisherPxV2;
+    background_offset_top?: PublisherPxV2;
+    background_offset_right?: PublisherPxV2;
+    background_offset_bottom?: PublisherPxV2;
+    background_offset_left?: PublisherPxV2;
+    padding?: PublisherPaddingValueV2;
+    padding_top?: PublisherPaddingValueV2;
+    padding_right?: PublisherPaddingValueV2;
+    padding_bottom?: PublisherPaddingValueV2;
+    padding_left?: PublisherPaddingValueV2;
+    border_width?: PublisherPxV2;
+    border_style?: PublisherBorderLineStyleV2;
+    border_color?: PublisherColorValueV2;
+    border_top_width?: PublisherPxV2;
+    border_top_style?: PublisherBorderLineStyleV2;
+    border_top_color?: PublisherColorValueV2;
+    border_right_width?: PublisherPxV2;
+    border_right_style?: PublisherBorderLineStyleV2;
+    border_right_color?: PublisherColorValueV2;
+    border_bottom_width?: PublisherPxV2;
+    border_bottom_style?: PublisherBorderLineStyleV2;
+    border_bottom_color?: PublisherColorValueV2;
+    border_left_width?: PublisherPxV2;
+    border_left_style?: PublisherBorderLineStyleV2;
+    border_left_color?: PublisherColorValueV2;
+    border_radius?: PublisherRadiusValueV2;
+    border_top_left_radius?: PublisherRadiusValueV2;
+    border_top_right_radius?: PublisherRadiusValueV2;
+    border_bottom_right_radius?: PublisherRadiusValueV2;
+    border_bottom_left_radius?: PublisherRadiusValueV2;
+    shadow?: PublisherShadowValueV2;
+    shadow_x?: number;
+    shadow_y?: number;
+    shadow_blur?: PublisherPxV2;
+    shadow_spread?: number;
+    shadow_color?: PublisherColorValueV2;
+    shadow_opacity?: PublisherOpacityV2;
+    opacity?: PublisherOpacityV2;
+    fit?: "contain" | "cover" | "fill";
+    horizontal_align?: PublisherHorizontalAlignV2;
+    vertical_align?: PublisherVerticalAlignV2;
+}
+export interface PublisherVisualizationWidgetV2 {
+    type: "visualization";
+    id: PublisherPageNodeIdV26;
+    proportion?: PublisherPageProportionV2;
+    placeholder?: PublisherWidgetPlaceholderV2;
+    locked?: boolean;
+    visualization?: Id54;
+    title?: PublisherWidgetTitleV2;
+    alt_text?: string;
+    date?: Id55;
+    /**
+     * When true, the document period does not apply here.
+     */
+    ignore_document_period?: boolean;
+    filters?: DashboardFilters8;
+    /**
+     * Document filters ignored here.
+     */
+    ignored_filters?: string[];
+    display?: PublisherVisualizationDisplayV2;
+    style?: PublisherVisualizationStyleV2;
+}
+export interface PublisherWidgetTitleV2 {
+    visible?: boolean;
+    text?: string;
+    style?: PublisherTextStyleV2;
+}
+export interface PublisherTextStyleV2 {
+    text_style?: PublisherTextStyleNameV2;
+    text_color?: PublisherColorValueV2;
+    horizontal_align?: "left" | "center" | "right" | "justify";
+    vertical_align?: PublisherVerticalAlignV2;
+    font_size?: PublisherPxV2;
+    font_weight?: number;
+    font_style?: "normal" | "italic";
+    line_height?: number;
+    letter_spacing?: number;
+    text_transform?: "none" | "uppercase" | "lowercase" | "capitalize";
+    text_overflow?: "shrink" | "clip" | "ellipsis";
+}
+/**
+ * Filters applied on top of the page and document filters.
+ */
+export interface DashboardFilters8 {
+    /**
+     * This interface was referenced by `DashboardFilters`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters1`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters2`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters3`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters4`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters5`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters6`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters7`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters8`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters9`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters10`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     */
+    [k: string]:
+        | DashboardAbsoluteDateFilter
+        | DashboardRelativeDateFilter
+        | DashboardAttributeFilter
+        | DashboardTextFilter
+        | DashboardMetricValueFilter
+        | DashboardFilterGroup;
+}
+export interface PublisherVisualizationDisplayV2 {
+    legend?: PublisherLegendDisplayV2;
+    x_axis?: PublisherAxisDisplayV2;
+    y_axis?: PublisherAxisDisplayV2;
+    secondary_y_axis?: PublisherAxisDisplayV2;
+    gridlines?: PublisherVisibilityV2;
+    data_labels?: PublisherAutoVisibilityV2;
+    data_points?: PublisherAutoVisibilityV21;
+}
+export interface PublisherLegendDisplayV2 {
+    visible?: boolean;
+    position?: "auto" | "top" | "bottom" | "left" | "right";
+}
+export interface PublisherAxisDisplayV2 {
+    visible?: boolean;
+    name?: PublisherAxisNameDisplayV2;
+    values?: PublisherAxisValuesDisplayV2;
+    min?: number;
+    max?: number;
+}
+export interface PublisherAxisNameDisplayV2 {
+    visible?: boolean;
+    position?: "low" | "middle" | "high";
+}
+export interface PublisherAxisValuesDisplayV2 {
+    visible?: boolean;
+    rotation?: number;
+}
+export interface PublisherVisibilityV2 {
+    visible?: boolean;
+}
+export interface PublisherAutoVisibilityV2 {
+    visible?: boolean | "auto";
+}
+export interface PublisherAutoVisibilityV21 {
+    visible?: boolean | "auto";
+}
+export interface PublisherVisualizationStyleV2 {
+    background_color?: PublisherColorValueV2;
+    background_opacity?: PublisherOpacityV2;
+    background_image?: PublisherImageSourceV2;
+    background_image_opacity?: PublisherOpacityV2;
+    background_fit?: "cover" | "contain" | "fill" | "tile";
+    background_horizontal_align?: PublisherHorizontalAlignV2;
+    background_vertical_align?: PublisherVerticalAlignV2;
+    background_offset?: PublisherPxV2;
+    background_offset_top?: PublisherPxV2;
+    background_offset_right?: PublisherPxV2;
+    background_offset_bottom?: PublisherPxV2;
+    background_offset_left?: PublisherPxV2;
+    padding?: PublisherPaddingValueV2;
+    padding_top?: PublisherPaddingValueV2;
+    padding_right?: PublisherPaddingValueV2;
+    padding_bottom?: PublisherPaddingValueV2;
+    padding_left?: PublisherPaddingValueV2;
+    border_width?: PublisherPxV2;
+    border_style?: PublisherBorderLineStyleV2;
+    border_color?: PublisherColorValueV2;
+    border_top_width?: PublisherPxV2;
+    border_top_style?: PublisherBorderLineStyleV2;
+    border_top_color?: PublisherColorValueV2;
+    border_right_width?: PublisherPxV2;
+    border_right_style?: PublisherBorderLineStyleV2;
+    border_right_color?: PublisherColorValueV2;
+    border_bottom_width?: PublisherPxV2;
+    border_bottom_style?: PublisherBorderLineStyleV2;
+    border_bottom_color?: PublisherColorValueV2;
+    border_left_width?: PublisherPxV2;
+    border_left_style?: PublisherBorderLineStyleV2;
+    border_left_color?: PublisherColorValueV2;
+    border_radius?: PublisherRadiusValueV2;
+    border_top_left_radius?: PublisherRadiusValueV2;
+    border_top_right_radius?: PublisherRadiusValueV2;
+    border_bottom_right_radius?: PublisherRadiusValueV2;
+    border_bottom_left_radius?: PublisherRadiusValueV2;
+    shadow?: PublisherShadowValueV2;
+    shadow_x?: number;
+    shadow_y?: number;
+    shadow_blur?: PublisherPxV2;
+    shadow_spread?: number;
+    shadow_color?: PublisherColorValueV2;
+    shadow_opacity?: PublisherOpacityV2;
+    opacity?: PublisherOpacityV2;
+    chart?: PublisherChartStyleV2;
+    table?: PublisherTableStyleV2;
+    headline?: PublisherHeadlineStyleV2;
+}
+export interface PublisherChartStyleV2 {
+    font_size?: PublisherPxV2;
+    text_color?: PublisherColorValueV2;
+    axis_line_color?: PublisherColorValueV2;
+    axis_name_color?: PublisherColorValueV2;
+    axis_name_size?: PublisherPxV2;
+    axis_value_color?: PublisherColorValueV2;
+    axis_value_size?: PublisherPxV2;
+    grid_color?: PublisherColorValueV2;
+    plot_line_color?: PublisherColorValueV2;
+    legend_color?: PublisherColorValueV2;
+    legend_size?: PublisherPxV2;
+    data_label_color?: PublisherColorValueV2;
+    data_label_size?: PublisherPxV2;
+}
+export interface PublisherTableStyleV2 {
+    font_size?: PublisherPxV2;
+    row_height?: PublisherPxV2;
+    grid_color?: PublisherColorValueV2;
+    value_color?: PublisherColorValueV2;
+    null_value_color?: PublisherColorValueV2;
+    header_label_color?: PublisherColorValueV2;
+    header_background_color?: PublisherColorValueV2;
+    total_value_color?: PublisherColorValueV2;
+    total_background_color?: PublisherColorValueV2;
+    subtotal_background_color?: PublisherColorValueV2;
+}
+export interface PublisherHeadlineStyleV2 {
+    primary_value_color?: PublisherColorValueV2;
+    primary_value_size?: PublisherPxV2;
+    secondary_value_color?: PublisherColorValueV2;
+    secondary_value_size?: PublisherPxV2;
+    positive_color?: PublisherColorValueV2;
+    negative_color?: PublisherColorValueV2;
+}
+/**
+ * Generated or written text about the page.
+ */
+export interface PublisherTakeawayWidgetV2 {
+    type: "takeaway";
+    id: PublisherPageNodeIdV27;
+    proportion?: PublisherPageProportionV2;
+    placeholder?: PublisherWidgetPlaceholderV2;
+    locked?: boolean;
+    title?: PublisherWidgetTitleV2;
+    /**
+     * The generated or written text.
+     */
+    markdown?: string;
+    generation?: PublisherTakeawayGenerationV21;
+    style?: PublisherTextWidgetStyleV2;
+}
+export interface PublisherTakeawayGenerationV21 {
+    /**
+     * Instructions the takeaway is generated with.
+     */
+    instructions?: string;
+    context?: PublisherTakeawayContextV2;
+}
+export interface PublisherContainerStyleV2 {
+    background_color?: PublisherColorValueV2;
+    background_opacity?: PublisherOpacityV2;
+    background_image?: PublisherImageSourceV2;
+    background_image_opacity?: PublisherOpacityV2;
+    background_fit?: "cover" | "contain" | "fill" | "tile";
+    background_horizontal_align?: PublisherHorizontalAlignV2;
+    background_vertical_align?: PublisherVerticalAlignV2;
+    background_offset?: PublisherPxV2;
+    background_offset_top?: PublisherPxV2;
+    background_offset_right?: PublisherPxV2;
+    background_offset_bottom?: PublisherPxV2;
+    background_offset_left?: PublisherPxV2;
+    padding?: PublisherPaddingValueV2;
+    padding_top?: PublisherPaddingValueV2;
+    padding_right?: PublisherPaddingValueV2;
+    padding_bottom?: PublisherPaddingValueV2;
+    padding_left?: PublisherPaddingValueV2;
+    border_width?: PublisherPxV2;
+    border_style?: PublisherBorderLineStyleV2;
+    border_color?: PublisherColorValueV2;
+    border_top_width?: PublisherPxV2;
+    border_top_style?: PublisherBorderLineStyleV2;
+    border_top_color?: PublisherColorValueV2;
+    border_right_width?: PublisherPxV2;
+    border_right_style?: PublisherBorderLineStyleV2;
+    border_right_color?: PublisherColorValueV2;
+    border_bottom_width?: PublisherPxV2;
+    border_bottom_style?: PublisherBorderLineStyleV2;
+    border_bottom_color?: PublisherColorValueV2;
+    border_left_width?: PublisherPxV2;
+    border_left_style?: PublisherBorderLineStyleV2;
+    border_left_color?: PublisherColorValueV2;
+    border_radius?: PublisherRadiusValueV2;
+    border_top_left_radius?: PublisherRadiusValueV2;
+    border_top_right_radius?: PublisherRadiusValueV2;
+    border_bottom_right_radius?: PublisherRadiusValueV2;
+    border_bottom_left_radius?: PublisherRadiusValueV2;
+    shadow?: PublisherShadowValueV2;
+    shadow_x?: number;
+    shadow_y?: number;
+    shadow_blur?: PublisherPxV2;
+    shadow_spread?: number;
+    shadow_color?: PublisherColorValueV2;
+    shadow_opacity?: PublisherOpacityV2;
+    opacity?: PublisherOpacityV2;
+    text_style?: PublisherTextStyleNameV2;
+    text_color?: PublisherColorValueV2;
+    horizontal_align?: "left" | "center" | "right" | "justify";
+    vertical_align?: PublisherVerticalAlignV2;
+    gap?: PublisherGapValueV23;
+}
+/**
+ * Page filters, applied on top of the document filters.
+ */
+export interface DashboardFilters9 {
+    /**
+     * This interface was referenced by `DashboardFilters`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters1`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters2`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters3`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters4`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters5`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters6`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters7`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters8`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters9`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters10`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     */
+    [k: string]:
+        | DashboardAbsoluteDateFilter
+        | DashboardRelativeDateFilter
+        | DashboardAttributeFilter
+        | DashboardTextFilter
+        | DashboardMetricValueFilter
+        | DashboardFilterGroup;
+}
+/**
+ * A named group of pages.
+ */
+export interface PublisherSectionV2 {
+    id: PublisherPageNodeIdV28;
+    title?: string;
+    description?: string;
+    pages: PublisherDocumentPageV2[];
+}
+export interface Metadata43 {
+    type:
+        | "dataset"
+        | "date"
+        | "metric"
+        | "computed_attribute"
+        | "dashboard"
+        | "plugin"
+        | "table"
+        | "bar_chart"
+        | "column_chart"
+        | "line_chart"
+        | "area_chart"
+        | "scatter_chart"
+        | "bubble_chart"
+        | "pie_chart"
+        | "donut_chart"
+        | "treemap_chart"
+        | "pyramid_chart"
+        | "funnel_chart"
+        | "heatmap_chart"
+        | "bullet_chart"
+        | "waterfall_chart"
+        | "dependency_wheel_chart"
+        | "sankey_chart"
+        | "headline_chart"
+        | "combo_chart"
+        | "geo_chart"
+        | "geo_area_chart"
+        | "repeater_chart"
+        | "radar_chart"
+        | "attribute_hierarchy"
+        | "parameter"
+        | "report"
+        | "report_template"
+        | "report_page_layout"
+        | "document"
+        | "document_template"
+        | "page_template";
+    [k: string]: unknown;
+}
+/**
+ * A document created from the template gets a deep copy of its content and keeps no reference back.
+ */
+export interface PublisherDocumentTemplateV2 {
+    /**
+     * A unique identifier of the document template. Ids starting with default. are reserved.
+     */
+    id: string;
+    type: "document_template";
+    /**
+     * Version of the content format.
+     */
+    version: "2";
+    title: PublisherEntityTitleV2;
+    description?: PublisherEntityDescriptionV2;
+    tags?: PublisherEntityTagsV2;
+    content: PublisherDocumentContentV2;
+}
+export interface Metadata46 {
+    type:
+        | "dataset"
+        | "date"
+        | "metric"
+        | "computed_attribute"
+        | "dashboard"
+        | "plugin"
+        | "table"
+        | "bar_chart"
+        | "column_chart"
+        | "line_chart"
+        | "area_chart"
+        | "scatter_chart"
+        | "bubble_chart"
+        | "pie_chart"
+        | "donut_chart"
+        | "treemap_chart"
+        | "pyramid_chart"
+        | "funnel_chart"
+        | "heatmap_chart"
+        | "bullet_chart"
+        | "waterfall_chart"
+        | "dependency_wheel_chart"
+        | "sankey_chart"
+        | "headline_chart"
+        | "combo_chart"
+        | "geo_chart"
+        | "geo_area_chart"
+        | "repeater_chart"
+        | "radar_chart"
+        | "attribute_hierarchy"
+        | "parameter"
+        | "report"
+        | "report_template"
+        | "report_page_layout"
+        | "document"
+        | "document_template"
+        | "page_template";
+    [k: string]: unknown;
+}
+export interface PublisherPageTemplateV2 {
+    /**
+     * A unique identifier of the page template. Ids starting with default. are reserved.
+     */
+    id: string;
+    type: "page_template";
+    /**
+     * Version of the content format.
+     */
+    version: "2";
+    title: PublisherEntityTitleV2;
+    description?: PublisherEntityDescriptionV2;
+    tags?: PublisherEntityTagsV2;
+    content: PublisherPageBodyV2;
+}
+/**
+ * Copied into a document, with a page id added, when the template is used.
+ */
+export interface PublisherPageBodyV2 {
+    /**
+     * Editor hint. It does not change how the page renders.
+     */
+    kind?: "cover" | "section" | "content";
+    page_size?: PublisherPageSizeV21;
+    /**
+     * Markdown speaker notes, never drawn on the page.
+     */
+    notes?: string;
+    style?: PublisherPageStyleV2;
+    layout: PublisherLayoutNodeV29;
+    filters?: DashboardFilters10;
+}
+/**
+ * Page filters, applied on top of the document filters.
+ */
+export interface DashboardFilters10 {
+    /**
+     * This interface was referenced by `DashboardFilters`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters1`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters2`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters3`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters4`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters5`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters6`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters7`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters8`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters9`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     * This interface was referenced by `DashboardFilters10`'s JSON-Schema definition
+     * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
+     */
+    [k: string]:
+        | DashboardAbsoluteDateFilter
+        | DashboardRelativeDateFilter
+        | DashboardAttributeFilter
+        | DashboardTextFilter
+        | DashboardMetricValueFilter
+        | DashboardFilterGroup;
+}
+export interface Metadata49 {
+    type:
+        | "dataset"
+        | "date"
+        | "metric"
+        | "computed_attribute"
+        | "dashboard"
+        | "plugin"
+        | "table"
+        | "bar_chart"
+        | "column_chart"
+        | "line_chart"
+        | "area_chart"
+        | "scatter_chart"
+        | "bubble_chart"
+        | "pie_chart"
+        | "donut_chart"
+        | "treemap_chart"
+        | "pyramid_chart"
+        | "funnel_chart"
+        | "heatmap_chart"
+        | "bullet_chart"
+        | "waterfall_chart"
+        | "dependency_wheel_chart"
+        | "sankey_chart"
+        | "headline_chart"
+        | "combo_chart"
+        | "geo_chart"
+        | "geo_area_chart"
+        | "repeater_chart"
+        | "radar_chart"
+        | "attribute_hierarchy"
+        | "parameter"
+        | "report"
+        | "report_template"
+        | "report_page_layout"
+        | "document"
+        | "document_template"
+        | "page_template";
     [k: string]: unknown;
 }

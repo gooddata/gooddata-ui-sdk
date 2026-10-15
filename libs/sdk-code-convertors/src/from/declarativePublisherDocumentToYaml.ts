@@ -5,18 +5,19 @@ import { Document, Scalar, YAMLSeq } from "yaml";
 import { type DeclarativeReport, type DeclarativeReportPageLayout } from "@gooddata/api-client-tiger";
 import type { Report, ReportPageBody, ReportPageLayout, ReportTemplate } from "@gooddata/sdk-code-schemas/v1";
 import {
-    type IPublisherDocumentContent,
-    type IPublisherDocumentDefinition,
-    type IPublisherDocumentPage,
-    type IPublisherDocumentTemplate,
-    type IPublisherDocumentTemplateDefinition,
-    type IPublisherPageLayout,
-    type IPublisherPageLayoutContent,
-    type IPublisherPageLayoutDefinition,
-    type IPublisherVariableDefinition,
+    type IPublisherDocumentContentV1,
+    type IPublisherDocumentDefinitionV1,
+    type IPublisherDocumentPageV1,
+    type IPublisherDocumentTemplateDefinitionV1,
+    type IPublisherDocumentTemplateV1,
+    type IPublisherPageTemplateContentV1,
+    type IPublisherPageTemplateDefinitionV1,
+    type IPublisherPageTemplateV1,
+    type IPublisherVariableDefinitionV1,
     objRefToString,
 } from "@gooddata/sdk-model";
 
+import { filtersToYaml } from "../utils/publisherFilters.js";
 import {
     PUBLISHER_DOCUMENT_COMMENT,
     PUBLISHER_DOCUMENT_TEMPLATE_COMMENT,
@@ -25,7 +26,6 @@ import {
 
 import {
     declarativePublisherDocumentPageToYaml,
-    filtersToYaml,
     mapOf,
     publisherPageBodyEntries,
 } from "./declarativePublisherDocumentPageToYaml.js";
@@ -43,7 +43,7 @@ function quotedDate(value: string | undefined): Scalar | undefined {
     return scalar;
 }
 
-function variablesToYaml(variables: IPublisherVariableDefinition[] | undefined): YAMLSeq | undefined {
+function variablesToYaml(variables: IPublisherVariableDefinitionV1[] | undefined): YAMLSeq | undefined {
     if (!variables?.length) {
         return undefined;
     }
@@ -61,7 +61,7 @@ function variablesToYaml(variables: IPublisherVariableDefinition[] | undefined):
     return seq;
 }
 
-function pagesToYaml(content: IPublisherDocumentContent): YAMLSeq {
+function pagesToYaml(content: IPublisherDocumentContentV1): YAMLSeq {
     const seq = new YAMLSeq();
     for (const page of content.pages) {
         seq.add(declarativePublisherDocumentPageToYaml(page));
@@ -69,7 +69,7 @@ function pagesToYaml(content: IPublisherDocumentContent): YAMLSeq {
     return seq;
 }
 
-function bodyEntries(content: IPublisherDocumentContent): Array<[string, unknown]> {
+function bodyEntries(content: IPublisherDocumentContentV1): Array<[string, unknown]> {
     return [
         ["pages", pagesToYaml(content)],
         ["filters", filtersToYaml(content.filters)],
@@ -108,7 +108,7 @@ export function declarativePublisherDocumentToYaml(publisherDocument: Declarativ
                 ["end", quotedDate(publisherDocument.periodEnd)],
             ]),
         ],
-        ...bodyEntries(publisherDocument.content as IPublisherDocumentContent),
+        ...bodyEntries(publisherDocument.content as IPublisherDocumentContentV1),
         [
             "variable_values",
             Object.keys(publisherDocument.variableValues ?? {}).length
@@ -124,7 +124,7 @@ export function declarativePublisherDocumentToYaml(publisherDocument: Declarativ
  *
  * @alpha
  */
-export function publisherDocumentDefinitionToYaml(publisherDocument: IPublisherDocumentDefinition): {
+export function publisherDocumentDefinitionToYaml(publisherDocument: IPublisherDocumentDefinitionV1): {
     content: string;
     json: Report;
 } {
@@ -153,7 +153,7 @@ export function publisherDocumentDefinitionToYaml(publisherDocument: IPublisherD
 
 /** @alpha */
 export function publisherDocumentTemplateDefinitionToYaml(
-    template: IPublisherDocumentTemplate | IPublisherDocumentTemplateDefinition,
+    template: IPublisherDocumentTemplateV1 | IPublisherDocumentTemplateDefinitionV1,
 ): {
     content: string;
     json: ReportTemplate;
@@ -178,7 +178,7 @@ export function publisherDocumentTemplateDefinitionToYaml(
  * @alpha
  */
 export function publisherPageLayoutDefinitionToYaml(
-    layout: IPublisherPageLayout | IPublisherPageLayoutDefinition,
+    layout: IPublisherPageTemplateV1 | IPublisherPageTemplateDefinitionV1,
 ): {
     content: string;
     json: ReportPageLayout;
@@ -208,7 +208,7 @@ export function declarativePublisherPageLayoutToYaml(layout: DeclarativeReportPa
             ["title", layout.title],
             ["description", layout.description || undefined],
             ["tags", layout.tags?.length ? layout.tags : undefined],
-            ...publisherPageBodyEntries(layout.content as IPublisherPageLayoutContent),
+            ...publisherPageBodyEntries(layout.content as IPublisherPageTemplateContentV1),
         ],
         PUBLISHER_PAGE_LAYOUT_COMMENT,
     );
@@ -219,6 +219,6 @@ export function declarativePublisherPageLayoutToYaml(layout: DeclarativeReportPa
  *
  * @internal
  */
-export function publisherDocumentPageToAacPage(page: IPublisherDocumentPage): ReportPageBody {
+export function publisherDocumentPageToAacPage(page: IPublisherDocumentPageV1): ReportPageBody {
     return declarativePublisherDocumentPageToYaml(page).toJSON() as ReportPageBody;
 }

@@ -39,3 +39,4 @@ export {
     findMissingRequiredThemeColors,
     type IInvalidThemeColor,
 } from "./colorValidation.js";
+export { findDocumentLengthsWithUnits } from "./documentsTheme.js";

@@ -363,6 +363,26 @@ export const selectIsAiGenerating: DashboardSelector<boolean> = createSelector(s
 });
 
 /**
+ * Returns whether AI is waiting for user input before it can continue.
+ *
+ * @internal
+ */
+export const selectIsAiWaiting: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
+    return state.isAiWaiting ?? false;
+});
+
+/**
+ * Returns whether AI is generating the dashboard or waiting for user input.
+ *
+ * @internal
+ */
+export const selectIsAiLoading: DashboardSelector<boolean> = createSelector(
+    selectIsAiGenerating,
+    selectIsAiWaiting,
+    (isAiGenerating, isAiWaiting) => isAiGenerating || isAiWaiting,
+);
+
+/**
  * Returns whether dependent filters are enabled.
  *
  * @internal

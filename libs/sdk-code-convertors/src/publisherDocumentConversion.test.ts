@@ -4,13 +4,13 @@ import { describe, expect, it } from "vitest";
 
 import type { ReportPageLayout } from "@gooddata/sdk-code-schemas/v1";
 import {
-    BuiltInPublisherPageLayouts,
+    DefaultPublisherPageTemplatesV1,
     type FilterContextItem,
     type IDashboardFilterReference,
-    type IPublisherDocumentDefinition,
-    type IPublisherPageBody,
-    type IPublisherPageLayoutContent,
-    type PublisherSlot,
+    type IPublisherDocumentDefinitionV1,
+    type IPublisherPageBodyV1,
+    type IPublisherPageTemplateContentV1,
+    type PublisherSlotV1,
     idRef,
 } from "@gooddata/sdk-model";
 
@@ -33,18 +33,18 @@ function asDocument<T>(value: T): T {
 }
 
 /** Typed loosely on purpose: what is asserted here is what the document literally says. */
-function pageDocument(content: IPublisherPageLayoutContent): any {
+function pageDocument(content: IPublisherPageTemplateContentV1): any {
     return asDocument(
         publisherPageLayoutDefinitionToYaml({ type: "reportPageLayout", title: "A page", content }).json,
     );
 }
 
-function storedPage(content: IPublisherPageLayoutContent): IPublisherPageBody {
+function storedPage(content: IPublisherPageTemplateContentV1): IPublisherPageBodyV1 {
     return yamlPublisherPageLayoutToDefinition(pageDocument(content)).content;
 }
 
 /** The tree decides which order the slots come back in, and the page renders the same either way. */
-function ordered(body: IPublisherPageBody): IPublisherPageBody {
+function ordered(body: IPublisherPageBodyV1): IPublisherPageBodyV1 {
     const slots = [...body.slots].sort((one, other) =>
         one.localIdentifier.localeCompare(other.localIdentifier),
     );
@@ -52,8 +52,8 @@ function ordered(body: IPublisherPageBody): IPublisherPageBody {
 }
 
 const page = (
-    body: Omit<IPublisherPageBody, "slots"> & { slots: PublisherSlot[] },
-): IPublisherPageLayoutContent => ({
+    body: Omit<IPublisherPageBodyV1, "slots"> & { slots: PublisherSlotV1[] },
+): IPublisherPageTemplateContentV1 => ({
     version: "1",
     ...body,
 });
@@ -63,10 +63,10 @@ const row = (...slotIds: string[]) =>
         type: "section",
         direction: "row",
         children: slotIds.map((slotId) => ({ type: "slotRef" as const, slotId })),
-    }) as IPublisherPageBody["layout"];
+    }) as IPublisherPageBodyV1["layout"];
 
 describe("a built-in page", () => {
-    it.each(BuiltInPublisherPageLayouts.map((layout) => [layout.title, layout] as const))(
+    it.each(DefaultPublisherPageTemplatesV1.map((layout) => [layout.title, layout] as const))(
         "comes back as it went out: %s",
         (_title, layout) => {
             expect(ordered(storedPage(layout.content))).toEqual(ordered(layout.content));
@@ -135,7 +135,7 @@ describe("a page's slots", () => {
 });
 
 describe("a backdrop", () => {
-    const backdrop: PublisherSlot = {
+    const backdrop: PublisherSlotV1 = {
         type: "image",
         localIdentifier: "bg",
         source: { type: "url", url: "https://example.com/bg.png" },
@@ -145,7 +145,7 @@ describe("a backdrop", () => {
     it("is written once when the page and a box inside it share it", () => {
         const content = page({
             style: paint,
-            layout: { ...row("h"), style: paint } as IPublisherPageBody["layout"],
+            layout: { ...row("h"), style: paint } as IPublisherPageBodyV1["layout"],
             slots: [backdrop, { type: "heading", localIdentifier: "h" }],
         });
         const written = pageDocument(content);
@@ -274,7 +274,7 @@ describe("a page's filters", () => {
                     },
                 },
             ],
-        } as IPublisherPageLayoutContent;
+        } as IPublisherPageTemplateContentV1;
 
         expect(pageDocument(stored).filters.date).not.toHaveProperty("granularity");
         expect(storedPage(stored).filters).toEqual([dateFilter]);
@@ -300,7 +300,7 @@ describe("a page's filters", () => {
                     },
                 ],
             },
-        } as unknown as IPublisherDocumentDefinition;
+        } as unknown as IPublisherDocumentDefinitionV1;
 
         const aacDocument = asDocument(publisherDocumentDefinitionToYaml(publisherDocument).json);
 
@@ -319,7 +319,7 @@ describe("a page's filters", () => {
 });
 
 describe("a document", () => {
-    const publisherDocument: IPublisherDocumentDefinition = {
+    const publisherDocument: IPublisherDocumentDefinitionV1 = {
         type: "report",
         ref: idRef("q1"),
         title: "Q1",

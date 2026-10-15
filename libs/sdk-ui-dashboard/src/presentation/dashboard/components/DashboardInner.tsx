@@ -17,7 +17,7 @@ import { useDashboardAutomations } from "../../../model/react/useDashboardAutoma
 import { selectAccessibleDashboardsLoaded } from "../../../model/store/accessibleDashboards/accessibleDashboardsSelectors.js";
 import { selectCatalogIsLoaded } from "../../../model/store/catalog/catalogSelectors.js";
 import {
-    selectIsAiGenerating,
+    selectIsAiLoading,
     selectLocale,
     selectSettings,
 } from "../../../model/store/config/configSelectors.js";
@@ -55,7 +55,7 @@ export function DashboardInner(props: IDashboardProps) {
     const accessibleDashboardsLoaded = useDashboardSelector(selectAccessibleDashboardsLoaded);
     const density = useDashboardSelector(selectDashboardDensity);
     const settings = useDashboardSelector(selectSettings);
-    const isAiGenerating = useDashboardSelector(selectIsAiGenerating);
+    const isAiLoading = useDashboardSelector(selectIsAiLoading);
     const enableEnhancedInsightPicker = settings?.enableEnhancedInsightPicker ?? false;
 
     const headerRef = useRef<HTMLDivElement | null>(null);
@@ -120,7 +120,7 @@ export function DashboardInner(props: IDashboardProps) {
                         <div
                             className={cx("gd-dashboards-root gd-flex-container", {
                                 "gd-dashboards-root--floating-toolbar": enableEnhancedInsightPicker,
-                                "sdk-dashboard-generating": isAiGenerating,
+                                "sdk-dashboard-generating": isAiLoading,
                             })}
                             style={dashboardsRootStyle}
                         >
@@ -141,7 +141,7 @@ export function DashboardInner(props: IDashboardProps) {
                                         <DashboardHeader />
                                     </OverlayControllerProvider>
                                 </div>
-                                {isAiGenerating ? (
+                                {isAiLoading ? (
                                     <div className="gd-flex-item-stretch dash-section dash-section-kpis">
                                         <DashboardScreenSizeProvider>
                                             <DashboardSkeleton />

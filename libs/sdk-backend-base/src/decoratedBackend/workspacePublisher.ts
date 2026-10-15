@@ -10,8 +10,8 @@ import {
     type IPublisherDocumentDefinition,
     type IPublisherDocumentTemplate,
     type IPublisherDocumentTemplateDefinition,
-    type IPublisherPageLayout,
-    type IPublisherPageLayoutDefinition,
+    type IPublisherPageTemplate,
+    type IPublisherPageTemplateDefinition,
     type ObjRef,
 } from "@gooddata/sdk-model";
 
@@ -24,24 +24,24 @@ import {
 export abstract class DecoratedWorkspacePublisherService implements IWorkspacePublisherService {
     protected constructor(protected readonly decorated: IWorkspacePublisherService) {}
 
-    public getPageLayouts(): Promise<IPublisherPageLayout[]> {
-        return this.decorated.getPageLayouts();
+    public getPageTemplates(): Promise<IPublisherPageTemplate[]> {
+        return this.decorated.getPageTemplates();
     }
 
-    public getPageLayout(ref: ObjRef): Promise<IPublisherPageLayout> {
-        return this.decorated.getPageLayout(ref);
+    public getPageTemplate(ref: ObjRef): Promise<IPublisherPageTemplate> {
+        return this.decorated.getPageTemplate(ref);
     }
 
-    public createPageLayout(page: IPublisherPageLayoutDefinition): Promise<IPublisherPageLayout> {
-        return this.decorated.createPageLayout(page);
+    public createPageTemplate(page: IPublisherPageTemplateDefinition): Promise<IPublisherPageTemplate> {
+        return this.decorated.createPageTemplate(page);
     }
 
-    public updatePageLayout(page: IPublisherPageLayout): Promise<IPublisherPageLayout> {
-        return this.decorated.updatePageLayout(page);
+    public updatePageTemplate(page: IPublisherPageTemplate): Promise<IPublisherPageTemplate> {
+        return this.decorated.updatePageTemplate(page);
     }
 
-    public deletePageLayout(ref: ObjRef): Promise<void> {
-        return this.decorated.deletePageLayout(ref);
+    public deletePageTemplate(ref: ObjRef): Promise<void> {
+        return this.decorated.deletePageTemplate(ref);
     }
 
     public getDocumentTemplates(): Promise<IPublisherDocumentTemplate[]> {

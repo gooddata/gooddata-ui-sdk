@@ -84,6 +84,18 @@
             "then": { "$ref": "#/$global/gaac/report_page_layout" }
         },
         {
+            "if": { "properties": { "type": { "const": "document" } }, "required": ["type"] },
+            "then": { "$ref": "#/$global/gaac/publisherDocumentV2" }
+        },
+        {
+            "if": { "properties": { "type": { "const": "document_template" } }, "required": ["type"] },
+            "then": { "$ref": "#/$global/gaac/publisherDocumentTemplateV2" }
+        },
+        {
+            "if": { "properties": { "type": { "const": "page_template" } }, "required": ["type"] },
+            "then": { "$ref": "#/$global/gaac/publisherPageTemplateV2" }
+        },
+        {
             "if": { "not": { "properties": { "type": { "type": "string" } }, "required": ["type"] } },
             "then": {
                 "$semantic": {
@@ -122,7 +134,10 @@
                         "parameter",
                         "report",
                         "report_template",
-                        "report_page_layout"
+                        "report_page_layout",
+                        "document",
+                        "document_template",
+                        "page_template"
                     ]
                 }
             }
@@ -165,7 +180,10 @@
                 "parameter",
                 "report",
                 "report_template",
-                "report_page_layout"
+                "report_page_layout",
+                "document",
+                "document_template",
+                "page_template"
             ]
         }
     },
@@ -2785,6 +2803,119 @@
                 "required": ["id", "type", "title", "layout"],
                 "description": "A reusable page. Its content fields are the same page body a document and a document template carry inline, so a field added to /gaac/reportPageBody belongs here too: JSON Schema cannot compose the two, because the page body closes itself to the entity's own id, title and tags."
             },
+            "publisherDocumentV2": {
+                "title": "Publisher Document V2",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "pattern": "^(?!default\\.)(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "description": "A unique identifier of the document. Ids starting with default. are reserved.",
+                        "$semantic": [
+                            {
+                                "type": "uniqueness",
+                                "source": "document.id",
+                                "code": "core.uniqueness.documents.id"
+                            },
+                            { "type": "definition", "source": "document.id" }
+                        ]
+                    },
+                    "type": { "type": "string", "enum": ["document"] },
+                    "version": {
+                        "type": "string",
+                        "enum": ["2"],
+                        "description": "Version of the content format."
+                    },
+                    "title": { "$ref": "#/$global/gaac/publisherEntityTitleV2" },
+                    "description": { "$ref": "#/$global/gaac/publisherEntityDescriptionV2" },
+                    "tags": { "$ref": "#/$global/gaac/publisherEntityTagsV2" },
+                    "period": { "$ref": "#/$global/gaac/publisherPeriodV2" },
+                    "content": { "$ref": "#/$global/gaac/publisherDocumentContentV2" }
+                },
+                "required": ["id", "type", "version", "title", "period", "content"],
+                "$semantic": { "type": "snippet", "snippets": ["document"] },
+                "not": {
+                    "$comment": "Only a document template sets content.defaults.period. Each level states type: object, because a value that is not an object satisfies required and properties, so the rule would also fire on it.",
+                    "type": "object",
+                    "required": ["content"],
+                    "properties": {
+                        "content": {
+                            "type": "object",
+                            "required": ["defaults"],
+                            "properties": { "defaults": { "type": "object", "required": ["period"] } }
+                        }
+                    }
+                }
+            },
+            "publisherDocumentTemplateV2": {
+                "title": "Publisher Document Template V2",
+                "description": "A document created from the template gets a deep copy of its content and keeps no reference back.",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "pattern": "^(?!default\\.)(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "description": "A unique identifier of the document template. Ids starting with default. are reserved.",
+                        "$semantic": [
+                            {
+                                "type": "uniqueness",
+                                "source": "documentTemplate.id",
+                                "code": "core.uniqueness.documentTemplates.id"
+                            },
+                            { "type": "definition", "source": "documentTemplate.id" }
+                        ]
+                    },
+                    "type": { "type": "string", "enum": ["document_template"] },
+                    "version": {
+                        "type": "string",
+                        "enum": ["2"],
+                        "description": "Version of the content format."
+                    },
+                    "title": { "$ref": "#/$global/gaac/publisherEntityTitleV2" },
+                    "description": { "$ref": "#/$global/gaac/publisherEntityDescriptionV2" },
+                    "tags": { "$ref": "#/$global/gaac/publisherEntityTagsV2" },
+                    "content": { "$ref": "#/$global/gaac/publisherDocumentContentV2" }
+                },
+                "required": ["id", "type", "version", "title", "content"],
+                "$semantic": { "type": "snippet", "snippets": ["document_template"] }
+            },
+            "publisherPageTemplateV2": {
+                "title": "Publisher Page Template V2",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "pattern": "^(?!default\\.)(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "description": "A unique identifier of the page template. Ids starting with default. are reserved.",
+                        "$semantic": [
+                            {
+                                "type": "uniqueness",
+                                "source": "pageTemplate.id",
+                                "code": "core.uniqueness.pageTemplates.id"
+                            },
+                            { "type": "definition", "source": "pageTemplate.id" }
+                        ]
+                    },
+                    "type": { "type": "string", "enum": ["page_template"] },
+                    "version": {
+                        "type": "string",
+                        "enum": ["2"],
+                        "description": "Version of the content format."
+                    },
+                    "title": { "$ref": "#/$global/gaac/publisherEntityTitleV2" },
+                    "description": { "$ref": "#/$global/gaac/publisherEntityDescriptionV2" },
+                    "tags": { "$ref": "#/$global/gaac/publisherEntityTagsV2" },
+                    "content": {
+                        "$ref": "#/$global/gaac/publisherPageBodyV2",
+                        "description": "Copied into a document, with a page id added, when the template is used."
+                    }
+                },
+                "required": ["id", "type", "version", "title", "content"],
+                "$semantic": { "type": "snippet", "snippets": ["page_template"] }
+            },
             "identifier": { "title": "Id", "type": "string", "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$" },
             "title": { "type": "string", "maxLength": 255 },
             "description": { "type": "string", "maxLength": 10000 },
@@ -2889,6 +3020,757 @@
                 "type": "string",
                 "pattern": "^computed_attribute/(?!\\.)[.A-Za-z0-9_-]{1,255}$",
                 "$semantic": { "type": "reference", "source": "computedAttribute.id", "typePrefix": true }
+            },
+            "publisherEntityTitleV2": {
+                "title": "Publisher Entity Title V2",
+                "description": "A human readable title.",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 255
+            },
+            "publisherEntityDescriptionV2": {
+                "title": "Publisher Entity Description V2",
+                "description": "An optional description.",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 10000
+            },
+            "publisherEntityTagsV2": {
+                "title": "Publisher Entity Tags V2",
+                "description": "A list of strings - metadata tags.",
+                "type": "array",
+                "uniqueItems": true,
+                "items": { "type": "string", "minLength": 1 }
+            },
+            "publisherPeriodV2": {
+                "title": "Publisher Period V2",
+                "description": "The period the document reports on, in the date filter grammar without a dataset. Numbers for from and to make it relative; dates make it absolute. Both ends are inclusive.",
+                "oneOf": [
+                    {
+                        "title": "Publisher Relative Period V2",
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                            "granularity": {
+                                "type": "string",
+                                "enum": [
+                                    "SECOND",
+                                    "MINUTE",
+                                    "HOUR",
+                                    "DAY",
+                                    "WEEK_US",
+                                    "MONTH",
+                                    "QUARTER",
+                                    "YEAR",
+                                    "FISCAL_YEAR",
+                                    "FISCAL_QUARTER",
+                                    "FISCAL_MONTH"
+                                ]
+                            },
+                            "from": {
+                                "type": "integer",
+                                "description": "Offset from the current period, for example -1."
+                            },
+                            "to": {
+                                "type": "integer",
+                                "description": "Offset from the current period, for example -1."
+                            }
+                        },
+                        "required": ["granularity", "from", "to"]
+                    },
+                    {
+                        "title": "Publisher Absolute Period V2",
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                            "from": {
+                                "type": "string",
+                                "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$",
+                                "description": "YYYY-MM-DD."
+                            },
+                            "to": {
+                                "type": "string",
+                                "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$",
+                                "description": "YYYY-MM-DD."
+                            }
+                        },
+                        "required": ["from", "to"]
+                    }
+                ]
+            },
+            "publisherDocumentContentV2": {
+                "title": "Publisher Document Content V2",
+                "type": "object",
+                "additionalProperties": false,
+                "description": "Holds exactly one of pages and sections.",
+                "properties": {
+                    "defaults": { "$ref": "#/$global/gaac/publisherDocumentDefaultsV2" },
+                    "filters": {
+                        "$ref": "#/$global/gaac/dashboardFilters",
+                        "description": "Document filters. Date filters name their date dataset. At most one filter per attribute or date dataset."
+                    },
+                    "style": { "$ref": "#/$global/gaac/publisherDocumentStyleV2" },
+                    "locale": {
+                        "$ref": "#/$global/gaac/locale",
+                        "description": "Overrides the workspace locale for this document."
+                    },
+                    "format_locale": {
+                        "$ref": "#/$global/gaac/locale",
+                        "description": "Overrides the workspace format locale used for dates."
+                    },
+                    "pages": {
+                        "type": "array",
+                        "items": { "$ref": "#/$global/gaac/publisherDocumentPageV2" }
+                    },
+                    "sections": { "type": "array", "items": { "$ref": "#/$global/gaac/publisherSectionV2" } }
+                },
+                "not": {
+                    "$comment": "Rejects both and neither. type: object, because a value that is not an object satisfies required, so the rule would also fire on it.",
+                    "type": "object",
+                    "anyOf": [
+                        { "required": ["pages", "sections"] },
+                        { "not": { "anyOf": [{ "required": ["pages"] }, { "required": ["sections"] }] } }
+                    ]
+                }
+            },
+            "publisherPageNodeIdV2": {
+                "title": "Publisher Page Node Id V2",
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.-]{1,64}$"
+            },
+            "publisherPageSizeV2": {
+                "title": "Publisher Page Size V2",
+                "type": "string",
+                "enum": ["widescreen"],
+                "description": "The widescreen design canvas is 1920 x 1080 px."
+            },
+            "publisherPageStyleV2": {
+                "title": "Publisher Page Style V2",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "background_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                    "background_opacity": { "$ref": "#/$global/gaac/publisherOpacityV2" },
+                    "background_image": { "$ref": "#/$global/gaac/publisherImageSourceV2" },
+                    "background_image_opacity": { "$ref": "#/$global/gaac/publisherOpacityV2" },
+                    "background_fit": { "type": "string", "enum": ["cover", "contain", "fill", "tile"] },
+                    "background_horizontal_align": { "$ref": "#/$global/gaac/publisherHorizontalAlignV2" },
+                    "background_vertical_align": { "$ref": "#/$global/gaac/publisherVerticalAlignV2" },
+                    "background_offset": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "background_offset_top": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "background_offset_right": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "background_offset_bottom": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "background_offset_left": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "padding": { "$ref": "#/$global/gaac/publisherPaddingValueV2" },
+                    "padding_top": { "$ref": "#/$global/gaac/publisherPaddingValueV2" },
+                    "padding_right": { "$ref": "#/$global/gaac/publisherPaddingValueV2" },
+                    "padding_bottom": { "$ref": "#/$global/gaac/publisherPaddingValueV2" },
+                    "padding_left": { "$ref": "#/$global/gaac/publisherPaddingValueV2" },
+                    "text_style": { "$ref": "#/$global/gaac/publisherTextStyleNameV2" },
+                    "text_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                    "horizontal_align": { "type": "string", "enum": ["left", "center", "right", "justify"] },
+                    "vertical_align": { "$ref": "#/$global/gaac/publisherVerticalAlignV2" },
+                    "gap": { "$ref": "#/$global/gaac/publisherGapValueV2" }
+                }
+            },
+            "publisherLayoutNodeV2": {
+                "title": "Publisher Layout Node V2",
+                "description": "A row or column container, or a widget.",
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "row",
+                            "column",
+                            "title",
+                            "heading",
+                            "text",
+                            "image",
+                            "visualization",
+                            "takeaway"
+                        ]
+                    }
+                },
+                "required": ["type"],
+                "allOf": [
+                    {
+                        "if": {
+                            "properties": { "type": { "enum": ["row", "column"] } },
+                            "required": ["type"]
+                        },
+                        "then": { "$ref": "#/$defs/publisherContainerV2" }
+                    },
+                    {
+                        "if": { "properties": { "type": { "const": "title" } }, "required": ["type"] },
+                        "then": { "$ref": "#/$defs/publisherTitleWidgetV2" }
+                    },
+                    {
+                        "if": { "properties": { "type": { "const": "heading" } }, "required": ["type"] },
+                        "then": { "$ref": "#/$defs/publisherHeadingWidgetV2" }
+                    },
+                    {
+                        "if": { "properties": { "type": { "const": "text" } }, "required": ["type"] },
+                        "then": { "$ref": "#/$defs/publisherTextWidgetV2" }
+                    },
+                    {
+                        "if": { "properties": { "type": { "const": "image" } }, "required": ["type"] },
+                        "then": { "$ref": "#/$defs/publisherImageWidgetV2" }
+                    },
+                    {
+                        "if": {
+                            "properties": { "type": { "const": "visualization" } },
+                            "required": ["type"]
+                        },
+                        "then": { "$ref": "#/$defs/publisherVisualizationWidgetV2" }
+                    },
+                    {
+                        "if": { "properties": { "type": { "const": "takeaway" } }, "required": ["type"] },
+                        "then": { "$ref": "#/$defs/publisherTakeawayWidgetV2" }
+                    }
+                ]
+            },
+            "publisherDocumentPageV2": {
+                "title": "Publisher Document Page V2",
+                "type": "object",
+                "additionalProperties": false,
+                "description": "A page of a document.",
+                "properties": {
+                    "id": {
+                        "$ref": "#/$global/gaac/publisherPageNodeIdV2",
+                        "description": "Unique within the document."
+                    },
+                    "visible": {
+                        "type": "boolean",
+                        "description": "Defaults to true. A hidden page is left out of the viewer, exports and page numbers."
+                    },
+                    "kind": {
+                        "type": "string",
+                        "enum": ["cover", "section", "content"],
+                        "description": "Editor hint. It does not change how the page renders."
+                    },
+                    "page_size": { "$ref": "#/$global/gaac/publisherPageSizeV2" },
+                    "notes": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "Markdown speaker notes, never drawn on the page."
+                    },
+                    "style": { "$ref": "#/$global/gaac/publisherPageStyleV2" },
+                    "layout": {
+                        "$ref": "#/$global/gaac/publisherLayoutNodeV2",
+                        "description": "Root of the page layout tree."
+                    },
+                    "filters": {
+                        "$ref": "#/$global/gaac/dashboardFilters",
+                        "description": "Page filters, applied on top of the document filters."
+                    }
+                },
+                "required": ["id", "layout"],
+                "$comment": "The keys are a page body's plus id and visible. JSON Schema cannot extend the closed /gaac/publisherPageBodyV2, so a key added there belongs here too."
+            },
+            "publisherTakeawayGenerationV2": {
+                "title": "Publisher Takeaway Generation V2",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "instructions": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "Instructions the takeaway is generated with."
+                    },
+                    "context": {
+                        "title": "Publisher Takeaway Context V2",
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                            "widgets": {
+                                "type": "array",
+                                "description": "Ids of the widgets on this page the takeaway is generated from.",
+                                "items": { "$ref": "#/$global/gaac/publisherPageNodeIdV2" }
+                            },
+                            "page_title": { "type": "boolean" },
+                            "filters": { "type": "boolean" },
+                            "other_pages": { "type": "boolean" }
+                        }
+                    }
+                }
+            },
+            "publisherColorValueV2": {
+                "title": "Publisher Color Value V2",
+                "type": "string",
+                "pattern": "^(#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|rgb\\(\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*(,\\s*\\d*\\.?\\d+\\s*)?\\)|\\{theme\\.(colors\\.(backgrounds|texts|lines)\\.[A-Za-z0-9_-]+|palette\\.(primary|success|error|warning))\\})$",
+                "description": "A theme color reference such as {theme.palette.primary}, or #rgb, #rrggbb, #rrggbbaa, or rgb() with 3 or 4 arguments."
+            },
+            "publisherOpacityV2": {
+                "title": "Publisher Opacity V2",
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+            },
+            "publisherImageSourceV2": {
+                "title": "Publisher Image Source V2",
+                "type": "string",
+                "pattern": "^(\\{theme\\.(logo|coverImage|assets\\.(logos|images)\\.[A-Za-z0-9_-]+)\\}|https://\\S+)$",
+                "description": "A theme image reference such as {theme.logo}, or an https URL, which may contain text variables."
+            },
+            "publisherHorizontalAlignV2": {
+                "title": "Publisher Horizontal Align V2",
+                "type": "string",
+                "enum": ["left", "center", "right"]
+            },
+            "publisherVerticalAlignV2": {
+                "title": "Publisher Vertical Align V2",
+                "type": "string",
+                "enum": ["top", "center", "bottom"]
+            },
+            "publisherPxV2": {
+                "title": "Publisher Px V2",
+                "type": "number",
+                "minimum": 0,
+                "description": "Pixels on the page's design canvas (1920 x 1080 for widescreen)."
+            },
+            "publisherGapValueV2": {
+                "title": "Publisher Gap Value V2",
+                "description": "Space between children, in pixels or as a theme spacing reference.",
+                "oneOf": [
+                    { "type": "number", "minimum": 0 },
+                    {
+                        "type": "string",
+                        "enum": [
+                            "{theme.spacing.gap.compact}",
+                            "{theme.spacing.gap.normal}",
+                            "{theme.spacing.gap.spacious}"
+                        ]
+                    }
+                ]
+            },
+            "publisherDocumentDefaultsV2": {
+                "title": "Publisher Document Defaults V2",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "page_size": {
+                        "$ref": "#/$global/gaac/publisherPageSizeV2",
+                        "description": "Applies to every page without its own page_size."
+                    },
+                    "takeaway": {
+                        "title": "Publisher Document Takeaway Defaults V2",
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                            "generation": {
+                                "$ref": "#/$global/gaac/publisherTakeawayGenerationV2",
+                                "description": "Combined with each takeaway widget's own generation."
+                            }
+                        }
+                    },
+                    "period": {
+                        "$ref": "#/$global/gaac/publisherPeriodV2",
+                        "description": "Document templates only: the period a document created from the template starts with."
+                    }
+                }
+            },
+            "publisherDocumentStyleV2": {
+                "title": "Publisher Document Style V2",
+                "type": "object",
+                "additionalProperties": false,
+                "description": "Style of the area behind the pages. Exports ignore it.",
+                "properties": {
+                    "background_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                    "background_opacity": { "$ref": "#/$global/gaac/publisherOpacityV2" },
+                    "background_image": { "$ref": "#/$global/gaac/publisherImageSourceV2" },
+                    "background_image_opacity": { "$ref": "#/$global/gaac/publisherOpacityV2" },
+                    "background_fit": { "type": "string", "enum": ["cover", "contain", "fill", "tile"] },
+                    "background_horizontal_align": { "$ref": "#/$global/gaac/publisherHorizontalAlignV2" },
+                    "background_vertical_align": { "$ref": "#/$global/gaac/publisherVerticalAlignV2" },
+                    "background_offset": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "background_offset_top": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "background_offset_right": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "background_offset_bottom": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "background_offset_left": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "gap": {
+                        "$ref": "#/$global/gaac/publisherGapValueV2",
+                        "description": "Space between pages in the viewer and the editor."
+                    }
+                }
+            },
+            "publisherSectionV2": {
+                "title": "Publisher Section V2",
+                "type": "object",
+                "additionalProperties": false,
+                "description": "A named group of pages.",
+                "properties": {
+                    "id": {
+                        "$ref": "#/$global/gaac/publisherPageNodeIdV2",
+                        "description": "Unique within the document."
+                    },
+                    "title": { "type": "string", "minLength": 1 },
+                    "description": { "type": "string", "minLength": 1 },
+                    "pages": {
+                        "type": "array",
+                        "items": { "$ref": "#/$global/gaac/publisherDocumentPageV2" }
+                    }
+                },
+                "required": ["id", "pages"]
+            },
+            "publisherPaddingValueV2": {
+                "title": "Publisher Padding Value V2",
+                "description": "Inner spacing, in pixels or as a theme spacing reference.",
+                "oneOf": [
+                    { "type": "number", "minimum": 0 },
+                    {
+                        "type": "string",
+                        "enum": [
+                            "{theme.spacing.padding.compact}",
+                            "{theme.spacing.padding.normal}",
+                            "{theme.spacing.padding.spacious}"
+                        ]
+                    }
+                ]
+            },
+            "publisherTextStyleNameV2": {
+                "title": "Publisher Text Style Name V2",
+                "type": "string",
+                "enum": ["title", "h1", "h2", "h3", "h4", "h5", "h6", "largeText", "normalText", "smallText"],
+                "description": "Named text style from the theme."
+            },
+            "publisherBorderLineStyleV2": {
+                "title": "Publisher Border Line Style V2",
+                "type": "string",
+                "enum": ["solid", "dashed", "dotted", "none"]
+            },
+            "publisherRadiusValueV2": {
+                "title": "Publisher Radius Value V2",
+                "description": "Corner radius, in pixels or as a theme corner reference.",
+                "oneOf": [
+                    { "type": "number", "minimum": 0 },
+                    {
+                        "type": "string",
+                        "enum": [
+                            "{theme.corners.small}",
+                            "{theme.corners.medium}",
+                            "{theme.corners.large}",
+                            "{theme.corners.full}"
+                        ]
+                    }
+                ]
+            },
+            "publisherShadowValueV2": {
+                "title": "Publisher Shadow Value V2",
+                "type": "string",
+                "pattern": "^(none|\\{theme\\.shadows\\.[A-Za-z0-9_-]+\\})$",
+                "description": "\"none\" or a {theme.shadows.<name>} reference."
+            },
+            "publisherTextStyleV2": {
+                "title": "Publisher Text Style V2",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "text_style": { "$ref": "#/$global/gaac/publisherTextStyleNameV2" },
+                    "text_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                    "horizontal_align": { "type": "string", "enum": ["left", "center", "right", "justify"] },
+                    "vertical_align": { "$ref": "#/$global/gaac/publisherVerticalAlignV2" },
+                    "font_size": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "font_weight": { "type": "number", "minimum": 1, "maximum": 1000 },
+                    "font_style": { "type": "string", "enum": ["normal", "italic"] },
+                    "line_height": { "type": "number" },
+                    "letter_spacing": { "type": "number" },
+                    "text_transform": {
+                        "type": "string",
+                        "enum": ["none", "uppercase", "lowercase", "capitalize"]
+                    },
+                    "text_overflow": { "type": "string", "enum": ["shrink", "clip", "ellipsis"] }
+                }
+            },
+            "publisherPageProportionV2": {
+                "title": "Publisher Page Proportion V2",
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Share of the parent container this node takes, relative to its siblings. Defaults to 1."
+            },
+            "publisherWidgetPlaceholderV2": {
+                "title": "Publisher Widget Placeholder V2",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "hint": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "Authoring hint shown in the empty widget."
+                    },
+                    "required": { "type": "boolean" }
+                }
+            },
+            "publisherTextWidgetStyleV2": {
+                "title": "Publisher Text Widget Style V2",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "background_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                    "background_opacity": { "$ref": "#/$global/gaac/publisherOpacityV2" },
+                    "background_image": { "$ref": "#/$global/gaac/publisherImageSourceV2" },
+                    "background_image_opacity": { "$ref": "#/$global/gaac/publisherOpacityV2" },
+                    "background_fit": { "type": "string", "enum": ["cover", "contain", "fill", "tile"] },
+                    "background_horizontal_align": { "$ref": "#/$global/gaac/publisherHorizontalAlignV2" },
+                    "background_vertical_align": { "$ref": "#/$global/gaac/publisherVerticalAlignV2" },
+                    "background_offset": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "background_offset_top": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "background_offset_right": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "background_offset_bottom": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "background_offset_left": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "padding": { "$ref": "#/$global/gaac/publisherPaddingValueV2" },
+                    "padding_top": { "$ref": "#/$global/gaac/publisherPaddingValueV2" },
+                    "padding_right": { "$ref": "#/$global/gaac/publisherPaddingValueV2" },
+                    "padding_bottom": { "$ref": "#/$global/gaac/publisherPaddingValueV2" },
+                    "padding_left": { "$ref": "#/$global/gaac/publisherPaddingValueV2" },
+                    "border_width": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "border_style": { "$ref": "#/$global/gaac/publisherBorderLineStyleV2" },
+                    "border_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                    "border_top_width": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "border_top_style": { "$ref": "#/$global/gaac/publisherBorderLineStyleV2" },
+                    "border_top_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                    "border_right_width": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "border_right_style": { "$ref": "#/$global/gaac/publisherBorderLineStyleV2" },
+                    "border_right_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                    "border_bottom_width": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "border_bottom_style": { "$ref": "#/$global/gaac/publisherBorderLineStyleV2" },
+                    "border_bottom_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                    "border_left_width": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "border_left_style": { "$ref": "#/$global/gaac/publisherBorderLineStyleV2" },
+                    "border_left_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                    "border_radius": { "$ref": "#/$global/gaac/publisherRadiusValueV2" },
+                    "border_top_left_radius": { "$ref": "#/$global/gaac/publisherRadiusValueV2" },
+                    "border_top_right_radius": { "$ref": "#/$global/gaac/publisherRadiusValueV2" },
+                    "border_bottom_right_radius": { "$ref": "#/$global/gaac/publisherRadiusValueV2" },
+                    "border_bottom_left_radius": { "$ref": "#/$global/gaac/publisherRadiusValueV2" },
+                    "shadow": { "$ref": "#/$global/gaac/publisherShadowValueV2" },
+                    "shadow_x": { "type": "number" },
+                    "shadow_y": { "type": "number" },
+                    "shadow_blur": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "shadow_spread": { "type": "number" },
+                    "shadow_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                    "shadow_opacity": { "$ref": "#/$global/gaac/publisherOpacityV2" },
+                    "opacity": { "$ref": "#/$global/gaac/publisherOpacityV2" },
+                    "text_style": { "$ref": "#/$global/gaac/publisherTextStyleNameV2" },
+                    "text_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                    "horizontal_align": { "type": "string", "enum": ["left", "center", "right", "justify"] },
+                    "vertical_align": { "$ref": "#/$global/gaac/publisherVerticalAlignV2" },
+                    "font_size": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "font_weight": { "type": "number", "minimum": 1, "maximum": 1000 },
+                    "font_style": { "type": "string", "enum": ["normal", "italic"] },
+                    "line_height": { "type": "number" },
+                    "letter_spacing": { "type": "number" },
+                    "text_transform": {
+                        "type": "string",
+                        "enum": ["none", "uppercase", "lowercase", "capitalize"]
+                    },
+                    "text_overflow": { "type": "string", "enum": ["shrink", "clip", "ellipsis"] }
+                }
+            },
+            "publisherImageWidgetStyleV2": {
+                "title": "Publisher Image Widget Style V2",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "background_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                    "background_opacity": { "$ref": "#/$global/gaac/publisherOpacityV2" },
+                    "background_image": { "$ref": "#/$global/gaac/publisherImageSourceV2" },
+                    "background_image_opacity": { "$ref": "#/$global/gaac/publisherOpacityV2" },
+                    "background_fit": { "type": "string", "enum": ["cover", "contain", "fill", "tile"] },
+                    "background_horizontal_align": { "$ref": "#/$global/gaac/publisherHorizontalAlignV2" },
+                    "background_vertical_align": { "$ref": "#/$global/gaac/publisherVerticalAlignV2" },
+                    "background_offset": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "background_offset_top": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "background_offset_right": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "background_offset_bottom": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "background_offset_left": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "padding": { "$ref": "#/$global/gaac/publisherPaddingValueV2" },
+                    "padding_top": { "$ref": "#/$global/gaac/publisherPaddingValueV2" },
+                    "padding_right": { "$ref": "#/$global/gaac/publisherPaddingValueV2" },
+                    "padding_bottom": { "$ref": "#/$global/gaac/publisherPaddingValueV2" },
+                    "padding_left": { "$ref": "#/$global/gaac/publisherPaddingValueV2" },
+                    "border_width": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "border_style": { "$ref": "#/$global/gaac/publisherBorderLineStyleV2" },
+                    "border_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                    "border_top_width": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "border_top_style": { "$ref": "#/$global/gaac/publisherBorderLineStyleV2" },
+                    "border_top_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                    "border_right_width": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "border_right_style": { "$ref": "#/$global/gaac/publisherBorderLineStyleV2" },
+                    "border_right_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                    "border_bottom_width": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "border_bottom_style": { "$ref": "#/$global/gaac/publisherBorderLineStyleV2" },
+                    "border_bottom_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                    "border_left_width": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "border_left_style": { "$ref": "#/$global/gaac/publisherBorderLineStyleV2" },
+                    "border_left_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                    "border_radius": { "$ref": "#/$global/gaac/publisherRadiusValueV2" },
+                    "border_top_left_radius": { "$ref": "#/$global/gaac/publisherRadiusValueV2" },
+                    "border_top_right_radius": { "$ref": "#/$global/gaac/publisherRadiusValueV2" },
+                    "border_bottom_right_radius": { "$ref": "#/$global/gaac/publisherRadiusValueV2" },
+                    "border_bottom_left_radius": { "$ref": "#/$global/gaac/publisherRadiusValueV2" },
+                    "shadow": { "$ref": "#/$global/gaac/publisherShadowValueV2" },
+                    "shadow_x": { "type": "number" },
+                    "shadow_y": { "type": "number" },
+                    "shadow_blur": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "shadow_spread": { "type": "number" },
+                    "shadow_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                    "shadow_opacity": { "$ref": "#/$global/gaac/publisherOpacityV2" },
+                    "opacity": { "$ref": "#/$global/gaac/publisherOpacityV2" },
+                    "fit": { "type": "string", "enum": ["contain", "cover", "fill"] },
+                    "horizontal_align": { "$ref": "#/$global/gaac/publisherHorizontalAlignV2" },
+                    "vertical_align": { "$ref": "#/$global/gaac/publisherVerticalAlignV2" }
+                }
+            },
+            "publisherWidgetTitleV2": {
+                "title": "Publisher Widget Title V2",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "visible": { "type": "boolean" },
+                    "text": { "type": "string", "minLength": 1 },
+                    "style": { "$ref": "#/$global/gaac/publisherTextStyleV2" }
+                }
+            },
+            "publisherVisualizationStyleV2": {
+                "title": "Publisher Visualization Style V2",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "background_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                    "background_opacity": { "$ref": "#/$global/gaac/publisherOpacityV2" },
+                    "background_image": { "$ref": "#/$global/gaac/publisherImageSourceV2" },
+                    "background_image_opacity": { "$ref": "#/$global/gaac/publisherOpacityV2" },
+                    "background_fit": { "type": "string", "enum": ["cover", "contain", "fill", "tile"] },
+                    "background_horizontal_align": { "$ref": "#/$global/gaac/publisherHorizontalAlignV2" },
+                    "background_vertical_align": { "$ref": "#/$global/gaac/publisherVerticalAlignV2" },
+                    "background_offset": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "background_offset_top": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "background_offset_right": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "background_offset_bottom": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "background_offset_left": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "padding": { "$ref": "#/$global/gaac/publisherPaddingValueV2" },
+                    "padding_top": { "$ref": "#/$global/gaac/publisherPaddingValueV2" },
+                    "padding_right": { "$ref": "#/$global/gaac/publisherPaddingValueV2" },
+                    "padding_bottom": { "$ref": "#/$global/gaac/publisherPaddingValueV2" },
+                    "padding_left": { "$ref": "#/$global/gaac/publisherPaddingValueV2" },
+                    "border_width": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "border_style": { "$ref": "#/$global/gaac/publisherBorderLineStyleV2" },
+                    "border_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                    "border_top_width": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "border_top_style": { "$ref": "#/$global/gaac/publisherBorderLineStyleV2" },
+                    "border_top_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                    "border_right_width": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "border_right_style": { "$ref": "#/$global/gaac/publisherBorderLineStyleV2" },
+                    "border_right_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                    "border_bottom_width": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "border_bottom_style": { "$ref": "#/$global/gaac/publisherBorderLineStyleV2" },
+                    "border_bottom_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                    "border_left_width": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "border_left_style": { "$ref": "#/$global/gaac/publisherBorderLineStyleV2" },
+                    "border_left_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                    "border_radius": { "$ref": "#/$global/gaac/publisherRadiusValueV2" },
+                    "border_top_left_radius": { "$ref": "#/$global/gaac/publisherRadiusValueV2" },
+                    "border_top_right_radius": { "$ref": "#/$global/gaac/publisherRadiusValueV2" },
+                    "border_bottom_right_radius": { "$ref": "#/$global/gaac/publisherRadiusValueV2" },
+                    "border_bottom_left_radius": { "$ref": "#/$global/gaac/publisherRadiusValueV2" },
+                    "shadow": { "$ref": "#/$global/gaac/publisherShadowValueV2" },
+                    "shadow_x": { "type": "number" },
+                    "shadow_y": { "type": "number" },
+                    "shadow_blur": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "shadow_spread": { "type": "number" },
+                    "shadow_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                    "shadow_opacity": { "$ref": "#/$global/gaac/publisherOpacityV2" },
+                    "opacity": { "$ref": "#/$global/gaac/publisherOpacityV2" },
+                    "chart": { "$ref": "#/$defs/publisherChartStyleV2" },
+                    "table": { "$ref": "#/$defs/publisherTableStyleV2" },
+                    "headline": { "$ref": "#/$defs/publisherHeadlineStyleV2" }
+                }
+            },
+            "publisherContainerStyleV2": {
+                "title": "Publisher Container Style V2",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "background_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                    "background_opacity": { "$ref": "#/$global/gaac/publisherOpacityV2" },
+                    "background_image": { "$ref": "#/$global/gaac/publisherImageSourceV2" },
+                    "background_image_opacity": { "$ref": "#/$global/gaac/publisherOpacityV2" },
+                    "background_fit": { "type": "string", "enum": ["cover", "contain", "fill", "tile"] },
+                    "background_horizontal_align": { "$ref": "#/$global/gaac/publisherHorizontalAlignV2" },
+                    "background_vertical_align": { "$ref": "#/$global/gaac/publisherVerticalAlignV2" },
+                    "background_offset": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "background_offset_top": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "background_offset_right": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "background_offset_bottom": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "background_offset_left": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "padding": { "$ref": "#/$global/gaac/publisherPaddingValueV2" },
+                    "padding_top": { "$ref": "#/$global/gaac/publisherPaddingValueV2" },
+                    "padding_right": { "$ref": "#/$global/gaac/publisherPaddingValueV2" },
+                    "padding_bottom": { "$ref": "#/$global/gaac/publisherPaddingValueV2" },
+                    "padding_left": { "$ref": "#/$global/gaac/publisherPaddingValueV2" },
+                    "border_width": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "border_style": { "$ref": "#/$global/gaac/publisherBorderLineStyleV2" },
+                    "border_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                    "border_top_width": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "border_top_style": { "$ref": "#/$global/gaac/publisherBorderLineStyleV2" },
+                    "border_top_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                    "border_right_width": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "border_right_style": { "$ref": "#/$global/gaac/publisherBorderLineStyleV2" },
+                    "border_right_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                    "border_bottom_width": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "border_bottom_style": { "$ref": "#/$global/gaac/publisherBorderLineStyleV2" },
+                    "border_bottom_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                    "border_left_width": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "border_left_style": { "$ref": "#/$global/gaac/publisherBorderLineStyleV2" },
+                    "border_left_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                    "border_radius": { "$ref": "#/$global/gaac/publisherRadiusValueV2" },
+                    "border_top_left_radius": { "$ref": "#/$global/gaac/publisherRadiusValueV2" },
+                    "border_top_right_radius": { "$ref": "#/$global/gaac/publisherRadiusValueV2" },
+                    "border_bottom_right_radius": { "$ref": "#/$global/gaac/publisherRadiusValueV2" },
+                    "border_bottom_left_radius": { "$ref": "#/$global/gaac/publisherRadiusValueV2" },
+                    "shadow": { "$ref": "#/$global/gaac/publisherShadowValueV2" },
+                    "shadow_x": { "type": "number" },
+                    "shadow_y": { "type": "number" },
+                    "shadow_blur": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "shadow_spread": { "type": "number" },
+                    "shadow_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                    "shadow_opacity": { "$ref": "#/$global/gaac/publisherOpacityV2" },
+                    "opacity": { "$ref": "#/$global/gaac/publisherOpacityV2" },
+                    "text_style": { "$ref": "#/$global/gaac/publisherTextStyleNameV2" },
+                    "text_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                    "horizontal_align": { "type": "string", "enum": ["left", "center", "right", "justify"] },
+                    "vertical_align": { "$ref": "#/$global/gaac/publisherVerticalAlignV2" },
+                    "gap": { "$ref": "#/$global/gaac/publisherGapValueV2" }
+                }
+            },
+            "publisherPageBodyV2": {
+                "title": "Publisher Page Body V2",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "kind": {
+                        "type": "string",
+                        "enum": ["cover", "section", "content"],
+                        "description": "Editor hint. It does not change how the page renders."
+                    },
+                    "page_size": { "$ref": "#/$global/gaac/publisherPageSizeV2" },
+                    "notes": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "Markdown speaker notes, never drawn on the page."
+                    },
+                    "style": { "$ref": "#/$global/gaac/publisherPageStyleV2" },
+                    "layout": {
+                        "$ref": "#/$global/gaac/publisherLayoutNodeV2",
+                        "description": "Root of the page layout tree."
+                    },
+                    "filters": {
+                        "$ref": "#/$global/gaac/dashboardFilters",
+                        "description": "Page filters, applied on top of the document filters."
+                    }
+                },
+                "required": ["layout"]
             },
             "queryFilters": {
                 "title": "Query Filters",
@@ -7127,6 +8009,84 @@
             },
             "required": ["source_column", "data_type", "target"]
         },
+        "publisherDocumentV2": {
+            "title": "Publisher Document V2",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "pattern": "^(?!default\\.)(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                    "description": "A unique identifier of the document. Ids starting with default. are reserved.",
+                    "$semantic": [
+                        {
+                            "type": "uniqueness",
+                            "source": "document.id",
+                            "code": "core.uniqueness.documents.id"
+                        },
+                        { "type": "definition", "source": "document.id" }
+                    ]
+                },
+                "type": { "type": "string", "enum": ["document"] },
+                "version": {
+                    "type": "string",
+                    "enum": ["2"],
+                    "description": "Version of the content format."
+                },
+                "title": { "$ref": "#/$global/gaac/publisherEntityTitleV2" },
+                "description": { "$ref": "#/$global/gaac/publisherEntityDescriptionV2" },
+                "tags": { "$ref": "#/$global/gaac/publisherEntityTagsV2" },
+                "period": { "$ref": "#/$global/gaac/publisherPeriodV2" },
+                "content": { "$ref": "#/$global/gaac/publisherDocumentContentV2" }
+            },
+            "required": ["id", "type", "version", "title", "period", "content"],
+            "$semantic": { "type": "snippet", "snippets": ["document"] },
+            "not": {
+                "$comment": "Only a document template sets content.defaults.period. Each level states type: object, because a value that is not an object satisfies required and properties, so the rule would also fire on it.",
+                "type": "object",
+                "required": ["content"],
+                "properties": {
+                    "content": {
+                        "type": "object",
+                        "required": ["defaults"],
+                        "properties": { "defaults": { "type": "object", "required": ["period"] } }
+                    }
+                }
+            }
+        },
+        "publisherDocumentTemplateV2": {
+            "title": "Publisher Document Template V2",
+            "description": "A document created from the template gets a deep copy of its content and keeps no reference back.",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "pattern": "^(?!default\\.)(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                    "description": "A unique identifier of the document template. Ids starting with default. are reserved.",
+                    "$semantic": [
+                        {
+                            "type": "uniqueness",
+                            "source": "documentTemplate.id",
+                            "code": "core.uniqueness.documentTemplates.id"
+                        },
+                        { "type": "definition", "source": "documentTemplate.id" }
+                    ]
+                },
+                "type": { "type": "string", "enum": ["document_template"] },
+                "version": {
+                    "type": "string",
+                    "enum": ["2"],
+                    "description": "Version of the content format."
+                },
+                "title": { "$ref": "#/$global/gaac/publisherEntityTitleV2" },
+                "description": { "$ref": "#/$global/gaac/publisherEntityDescriptionV2" },
+                "tags": { "$ref": "#/$global/gaac/publisherEntityTagsV2" },
+                "content": { "$ref": "#/$global/gaac/publisherDocumentContentV2" }
+            },
+            "required": ["id", "type", "version", "title", "content"],
+            "$semantic": { "type": "snippet", "snippets": ["document_template"] }
+        },
         "metric": {
             "title": "Metric",
             "type": "object",
@@ -7171,6 +8131,347 @@
             },
             "$semantic": { "type": "snippet", "snippets": ["metric"] },
             "required": ["id", "type", "maql"]
+        },
+        "publisherChartStyleV2": {
+            "title": "Publisher Chart Style V2",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "font_size": { "$ref": "#/$global/gaac/publisherPxV2" },
+                "text_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                "axis_line_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                "axis_name_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                "axis_name_size": { "$ref": "#/$global/gaac/publisherPxV2" },
+                "axis_value_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                "axis_value_size": { "$ref": "#/$global/gaac/publisherPxV2" },
+                "grid_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                "plot_line_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                "legend_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                "legend_size": { "$ref": "#/$global/gaac/publisherPxV2" },
+                "data_label_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                "data_label_size": { "$ref": "#/$global/gaac/publisherPxV2" }
+            }
+        },
+        "publisherTableStyleV2": {
+            "title": "Publisher Table Style V2",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "font_size": { "$ref": "#/$global/gaac/publisherPxV2" },
+                "row_height": { "$ref": "#/$global/gaac/publisherPxV2" },
+                "grid_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                "value_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                "null_value_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                "header_label_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                "header_background_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                "total_value_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                "total_background_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                "subtotal_background_color": { "$ref": "#/$global/gaac/publisherColorValueV2" }
+            }
+        },
+        "publisherHeadlineStyleV2": {
+            "title": "Publisher Headline Style V2",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "primary_value_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                "primary_value_size": { "$ref": "#/$global/gaac/publisherPxV2" },
+                "secondary_value_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                "secondary_value_size": { "$ref": "#/$global/gaac/publisherPxV2" },
+                "positive_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
+                "negative_color": { "$ref": "#/$global/gaac/publisherColorValueV2" }
+            }
+        },
+        "publisherAxisDisplayV2": {
+            "title": "Publisher Axis Display V2",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "visible": { "type": "boolean" },
+                "name": {
+                    "title": "Publisher Axis Name Display V2",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "visible": { "type": "boolean" },
+                        "position": { "type": "string", "enum": ["low", "middle", "high"] }
+                    }
+                },
+                "values": {
+                    "title": "Publisher Axis Values Display V2",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "visible": { "type": "boolean" },
+                        "rotation": { "type": "number", "minimum": -90, "maximum": 90 }
+                    }
+                },
+                "min": { "type": "number" },
+                "max": { "type": "number" }
+            }
+        },
+        "publisherVisualizationDisplayV2": {
+            "title": "Publisher Visualization Display V2",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "legend": {
+                    "title": "Publisher Legend Display V2",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "visible": { "type": "boolean" },
+                        "position": { "type": "string", "enum": ["auto", "top", "bottom", "left", "right"] }
+                    }
+                },
+                "x_axis": { "$ref": "#/$defs/publisherAxisDisplayV2" },
+                "y_axis": { "$ref": "#/$defs/publisherAxisDisplayV2" },
+                "secondary_y_axis": { "$ref": "#/$defs/publisherAxisDisplayV2" },
+                "gridlines": {
+                    "title": "Publisher Visibility V2",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": { "visible": { "type": "boolean" } }
+                },
+                "data_labels": {
+                    "title": "Publisher Auto Visibility V2",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "visible": {
+                            "oneOf": [{ "type": "boolean" }, { "type": "string", "enum": ["auto"] }]
+                        }
+                    }
+                },
+                "data_points": {
+                    "title": "Publisher Auto Visibility V2",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "visible": {
+                            "oneOf": [{ "type": "boolean" }, { "type": "string", "enum": ["auto"] }]
+                        }
+                    }
+                }
+            }
+        },
+        "publisherContainerV2": {
+            "title": "Publisher Container V2",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": { "type": "string", "enum": ["row", "column"] },
+                "id": { "$ref": "#/$global/gaac/publisherPageNodeIdV2" },
+                "children": {
+                    "type": "array",
+                    "description": "Nodes laid out along the container's direction. An empty list renders as a spacer.",
+                    "items": { "$ref": "#/$global/gaac/publisherLayoutNodeV2" }
+                },
+                "proportion": { "$ref": "#/$global/gaac/publisherPageProportionV2" },
+                "locked": { "type": "boolean" },
+                "style": { "$ref": "#/$global/gaac/publisherContainerStyleV2" }
+            },
+            "required": ["type", "children"]
+        },
+        "publisherTitleWidgetV2": {
+            "title": "Publisher Title Widget V2",
+            "type": "object",
+            "additionalProperties": false,
+            "description": "The page title. At most one per page.",
+            "properties": {
+                "type": { "type": "string", "enum": ["title"] },
+                "id": {
+                    "$ref": "#/$global/gaac/publisherPageNodeIdV2",
+                    "description": "Unique within the page."
+                },
+                "proportion": { "$ref": "#/$global/gaac/publisherPageProportionV2" },
+                "placeholder": { "$ref": "#/$global/gaac/publisherWidgetPlaceholderV2" },
+                "locked": { "type": "boolean" },
+                "markdown": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Inline markdown only: strong, emphasis, highlight, strike, links and line breaks."
+                },
+                "style": { "$ref": "#/$global/gaac/publisherTextWidgetStyleV2" }
+            },
+            "required": ["type", "id"]
+        },
+        "publisherHeadingWidgetV2": {
+            "title": "Publisher Heading Widget V2",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": { "type": "string", "enum": ["heading"] },
+                "id": {
+                    "$ref": "#/$global/gaac/publisherPageNodeIdV2",
+                    "description": "Unique within the page."
+                },
+                "proportion": { "$ref": "#/$global/gaac/publisherPageProportionV2" },
+                "placeholder": { "$ref": "#/$global/gaac/publisherWidgetPlaceholderV2" },
+                "locked": { "type": "boolean" },
+                "markdown": { "type": "string", "minLength": 1, "description": "Inline markdown only." },
+                "level": { "type": "integer", "enum": [1, 2, 3, 4, 5, 6], "description": "Defaults to 1." },
+                "style": { "$ref": "#/$global/gaac/publisherTextWidgetStyleV2" }
+            },
+            "required": ["type", "id"]
+        },
+        "publisherTextWidgetV2": {
+            "title": "Publisher Text Widget V2",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": { "type": "string", "enum": ["text"] },
+                "id": {
+                    "$ref": "#/$global/gaac/publisherPageNodeIdV2",
+                    "description": "Unique within the page."
+                },
+                "proportion": { "$ref": "#/$global/gaac/publisherPageProportionV2" },
+                "placeholder": { "$ref": "#/$global/gaac/publisherWidgetPlaceholderV2" },
+                "locked": { "type": "boolean" },
+                "markdown": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Full markdown: paragraphs, lists, quotes and headings."
+                },
+                "decorative": {
+                    "type": "boolean",
+                    "description": "Page furniture such as page numbers: kept out of the accessibility tree, PDF tags and AI context."
+                },
+                "style": { "$ref": "#/$global/gaac/publisherTextWidgetStyleV2" }
+            },
+            "required": ["type", "id"]
+        },
+        "publisherImageWidgetV2": {
+            "title": "Publisher Image Widget V2",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": { "type": "string", "enum": ["image"] },
+                "id": {
+                    "$ref": "#/$global/gaac/publisherPageNodeIdV2",
+                    "description": "Unique within the page."
+                },
+                "proportion": { "$ref": "#/$global/gaac/publisherPageProportionV2" },
+                "placeholder": { "$ref": "#/$global/gaac/publisherWidgetPlaceholderV2" },
+                "locked": { "type": "boolean" },
+                "source": { "$ref": "#/$global/gaac/publisherImageSourceV2" },
+                "alt_text": { "type": "string", "minLength": 1 },
+                "decorative": { "type": "boolean", "description": "A decorative image needs no alt text." },
+                "style": { "$ref": "#/$global/gaac/publisherImageWidgetStyleV2" }
+            },
+            "required": ["type", "id"]
+        },
+        "publisherVisualizationWidgetV2": {
+            "title": "Publisher Visualization Widget V2",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": { "type": "string", "enum": ["visualization"] },
+                "id": {
+                    "$ref": "#/$global/gaac/publisherPageNodeIdV2",
+                    "description": "Unique within the page."
+                },
+                "proportion": { "$ref": "#/$global/gaac/publisherPageProportionV2" },
+                "placeholder": { "$ref": "#/$global/gaac/publisherWidgetPlaceholderV2" },
+                "locked": { "type": "boolean" },
+                "visualization": {
+                    "$ref": "#/$global/gaac/identifier",
+                    "description": "An id of the visualization rendered here.",
+                    "$semantic": { "type": "reference", "source": "visualisation.id" }
+                },
+                "title": { "$ref": "#/$global/gaac/publisherWidgetTitleV2" },
+                "alt_text": { "type": "string", "minLength": 1 },
+                "date": {
+                    "$ref": "#/$global/gaac/identifier",
+                    "description": "An id of the date dataset the document period applies to.",
+                    "$semantic": { "type": "reference", "source": "dateDataset.id" }
+                },
+                "ignore_document_period": {
+                    "type": "boolean",
+                    "description": "When true, the document period does not apply here."
+                },
+                "filters": {
+                    "$ref": "#/$global/gaac/dashboardFilters",
+                    "description": "Filters applied on top of the page and document filters."
+                },
+                "ignored_filters": {
+                    "type": "array",
+                    "description": "Document filters ignored here.",
+                    "items": {
+                        "type": "string",
+                        "pattern": "^(label|computed_attribute|dataset|metric)/(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "description": "A type-prefixed id, for example label/region.name, dataset/order_date or metric/revenue.",
+                        "$semantic": {
+                            "type": "reference",
+                            "sources": ["label.id", "computedAttribute.id", "dateDataset.id", "metric.id"],
+                            "typePrefix": true
+                        }
+                    }
+                },
+                "display": { "$ref": "#/$defs/publisherVisualizationDisplayV2" },
+                "style": { "$ref": "#/$global/gaac/publisherVisualizationStyleV2" }
+            },
+            "required": ["type", "id"]
+        },
+        "publisherTakeawayWidgetV2": {
+            "title": "Publisher Takeaway Widget V2",
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Generated or written text about the page.",
+            "properties": {
+                "type": { "type": "string", "enum": ["takeaway"] },
+                "id": {
+                    "$ref": "#/$global/gaac/publisherPageNodeIdV2",
+                    "description": "Unique within the page."
+                },
+                "proportion": { "$ref": "#/$global/gaac/publisherPageProportionV2" },
+                "placeholder": { "$ref": "#/$global/gaac/publisherWidgetPlaceholderV2" },
+                "locked": { "type": "boolean" },
+                "title": { "$ref": "#/$global/gaac/publisherWidgetTitleV2" },
+                "markdown": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "The generated or written text."
+                },
+                "generation": { "$ref": "#/$global/gaac/publisherTakeawayGenerationV2" },
+                "style": { "$ref": "#/$global/gaac/publisherTextWidgetStyleV2" }
+            },
+            "required": ["type", "id"]
+        },
+        "publisherPageTemplateV2": {
+            "title": "Publisher Page Template V2",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "pattern": "^(?!default\\.)(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                    "description": "A unique identifier of the page template. Ids starting with default. are reserved.",
+                    "$semantic": [
+                        {
+                            "type": "uniqueness",
+                            "source": "pageTemplate.id",
+                            "code": "core.uniqueness.pageTemplates.id"
+                        },
+                        { "type": "definition", "source": "pageTemplate.id" }
+                    ]
+                },
+                "type": { "type": "string", "enum": ["page_template"] },
+                "version": {
+                    "type": "string",
+                    "enum": ["2"],
+                    "description": "Version of the content format."
+                },
+                "title": { "$ref": "#/$global/gaac/publisherEntityTitleV2" },
+                "description": { "$ref": "#/$global/gaac/publisherEntityDescriptionV2" },
+                "tags": { "$ref": "#/$global/gaac/publisherEntityTagsV2" },
+                "content": {
+                    "$ref": "#/$global/gaac/publisherPageBodyV2",
+                    "description": "Copied into a document, with a page id added, when the template is used."
+                }
+            },
+            "required": ["id", "type", "version", "title", "content"],
+            "$semantic": { "type": "snippet", "snippets": ["page_template"] }
         },
         "parameter": {
             "title": "Parameter",

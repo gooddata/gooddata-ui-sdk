@@ -2,46 +2,50 @@
 
 import { describe, expect, it } from "vitest";
 
-import { BuiltInPublisherPageLayouts, idRef, newAdHocPublisherDocumentDefinition } from "@gooddata/sdk-model";
+import {
+    DefaultPublisherPageTemplates,
+    idRef,
+    newAdHocPublisherDocumentDefinition,
+} from "@gooddata/sdk-model";
 
 import { InMemoryWorkspacePublisherService } from "./InMemoryWorkspacePublisherService.js";
 
 describe("InMemoryWorkspacePublisherService", () => {
-    it("serves built-in pages", async () => {
+    it("serves default page templates", async () => {
         const service = new InMemoryWorkspacePublisherService();
 
-        const pages = await service.getPageLayouts();
+        const pages = await service.getPageTemplates();
 
-        expect(pages).toHaveLength(BuiltInPublisherPageLayouts.length);
-        expect(pages.every((page) => page.isBuiltIn)).toBe(true);
-        await expect(service.getPageLayout(BuiltInPublisherPageLayouts[0]!.ref)).resolves.toBe(
-            BuiltInPublisherPageLayouts[0],
+        expect(pages).toHaveLength(DefaultPublisherPageTemplates.length);
+        expect(pages.every((page) => page.isDefault)).toBe(true);
+        await expect(service.getPageTemplate(DefaultPublisherPageTemplates[0]!.ref)).resolves.toBe(
+            DefaultPublisherPageTemplates[0],
         );
     });
 
-    it("rejects update and delete of built-in pages", async () => {
+    it("rejects update and delete of default page templates", async () => {
         const service = new InMemoryWorkspacePublisherService();
-        const builtIn = BuiltInPublisherPageLayouts[0]!;
+        const builtIn = DefaultPublisherPageTemplates[0]!;
 
-        expect(() => service.deletePageLayout(builtIn.ref)).toThrow(/built-in/);
-        expect(() => service.updatePageLayout(builtIn)).toThrow(/built-in/);
+        expect(() => service.deletePageTemplate(builtIn.ref)).toThrow(/default page template/i);
+        expect(() => service.updatePageTemplate(builtIn)).toThrow(/default page template/i);
     });
 
     it("round-trips a custom page", async () => {
         const service = new InMemoryWorkspacePublisherService();
 
-        const created = await service.createPageLayout({
+        const created = await service.createPageTemplate({
             type: "reportPageLayout",
             title: "Custom",
             content: { version: "1", layout: { type: "slotRef", slotId: "a" }, slots: [] },
         });
         expect(created.ref).toBeDefined();
 
-        const pages = await service.getPageLayouts();
-        expect(pages).toHaveLength(BuiltInPublisherPageLayouts.length + 1);
+        const pages = await service.getPageTemplates();
+        expect(pages).toHaveLength(DefaultPublisherPageTemplates.length + 1);
 
-        await service.deletePageLayout(created.ref);
-        await expect(service.getPageLayouts()).resolves.toHaveLength(BuiltInPublisherPageLayouts.length);
+        await service.deletePageTemplate(created.ref);
+        await expect(service.getPageTemplates()).resolves.toHaveLength(DefaultPublisherPageTemplates.length);
     });
 
     it("round-trips templates and documents", async () => {
@@ -98,13 +102,13 @@ describe("InMemoryWorkspacePublisherService", () => {
 
         expect(() => service.createDocument({ ...definition, ref: created.ref })).toThrow(/already exists/);
         expect(() =>
-            service.createPageLayout({
+            service.createPageTemplate({
                 type: "reportPageLayout",
                 title: "Clash",
-                ref: BuiltInPublisherPageLayouts[0]!.ref,
+                ref: DefaultPublisherPageTemplates[0]!.ref,
                 content: { version: "1", layout: { type: "slotRef", slotId: "a" }, slots: [] },
             }),
-        ).toThrow(/built-in/);
+        ).toThrow(/default page template/i);
     });
 
     it("detaches stored state from caller-held objects", async () => {

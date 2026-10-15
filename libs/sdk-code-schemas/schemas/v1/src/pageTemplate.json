@@ -1,0 +1,80 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Page Template V2 Type",
+    "description": "JSON schema for Gooddata Analytics Page Template, content version 2",
+    "allOf": [
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "page_template"
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "$ref": "#/$defs/publisherPageTemplateV2"
+            }
+        }
+    ],
+    "properties": {
+        "type": {
+            "type": "string",
+            "enum": ["page_template"]
+        }
+    },
+    "required": ["type"],
+    "$defs": {
+        "publisherPageTemplateV2": {
+            "$id": "/gaac/publisherPageTemplateV2",
+            "title": "Publisher Page Template V2",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "pattern": "^(?!default\\.)(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                    "description": "A unique identifier of the page template. Ids starting with default. are reserved.",
+                    "$semantic": [
+                        {
+                            "type": "uniqueness",
+                            "source": "pageTemplate.id",
+                            "code": "core.uniqueness.pageTemplates.id"
+                        },
+                        {
+                            "type": "definition",
+                            "source": "pageTemplate.id"
+                        }
+                    ]
+                },
+                "type": {
+                    "type": "string",
+                    "enum": ["page_template"]
+                },
+                "version": {
+                    "type": "string",
+                    "enum": ["2"],
+                    "description": "Version of the content format."
+                },
+                "title": {
+                    "$ref": "/gaac/publisherEntityTitleV2"
+                },
+                "description": {
+                    "$ref": "/gaac/publisherEntityDescriptionV2"
+                },
+                "tags": {
+                    "$ref": "/gaac/publisherEntityTagsV2"
+                },
+                "content": {
+                    "$ref": "/gaac/publisherPageBodyV2",
+                    "description": "Copied into a document, with a page id added, when the template is used."
+                }
+            },
+            "required": ["id", "type", "version", "title", "content"],
+            "$semantic": {
+                "type": "snippet",
+                "snippets": ["page_template"]
+            }
+        }
+    }
+}

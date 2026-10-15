@@ -1,7 +1,6 @@
 // (C) 2026 GoodData Corporation
 
 import type {
-    DashboardFilters,
     ReportBackground,
     ReportBackgroundImage,
     ReportImage,
@@ -12,55 +11,34 @@ import type {
     ReportTextStyle,
 } from "@gooddata/sdk-code-schemas/v1";
 import {
-    type FilterContextItem,
     type IDashboardFilterReference,
-    type IFilterContextDefinition,
-    type IPublisherBoxStyle,
-    type IPublisherDocumentPage,
-    type IPublisherImageSlot,
-    type IPublisherPageBody,
-    type IPublisherSlotPlaceholder,
-    type IPublisherTextStyle,
-    type PublisherImageFit,
-    type PublisherPageLayoutNode,
-    type PublisherSlot,
-    type PublisherTextSource,
+    type IPublisherBoxStyleV1,
+    type IPublisherDocumentPageV1,
+    type IPublisherImageSlotV1,
+    type IPublisherPageBodyV1,
+    type IPublisherSlotPlaceholderV1,
+    type IPublisherTextStyleV1,
+    type PublisherImageFitV1,
+    type PublisherLayoutNodeV1,
+    type PublisherSlotV1,
+    type PublisherTextSourceV1,
     idRef,
 } from "@gooddata/sdk-model";
 
 import { CoreErrorCode, type IErrorContext, newError, updateErrorContext } from "../utils/errors.js";
 import { referencesAsStored } from "../utils/publisherFilterRefs.js";
+import { filtersToDeclarative } from "../utils/publisherFilters.js";
 
-import {
-    yamlFilterContextToDeclarative,
-    yamlIgnoredFilterToDeclarative,
-} from "./yamlDashboardToDeclarative.js";
-
-/**
- * A document holds its filters the way a dashboard's filter context does, so they are written and read
- * back by the same convertor; only the envelope it expects is put around them here.
- *
- * @internal
- */
-export function filtersToDeclarative(filters: DashboardFilters | undefined): FilterContextItem[] | undefined {
-    if (filters === undefined) {
-        return undefined;
-    }
-    // The filter context the shared convertor builds around them is thrown away, so what it is
-    // named does not matter; only the filters inside it are what a document stores.
-    const { filterContext } = yamlFilterContextToDeclarative("report", filters);
-    const content = filterContext.content as IFilterContextDefinition | undefined;
-    return content?.filters?.length ? referencesAsStored(content.filters) : undefined;
-}
+import { yamlIgnoredFilterToDeclarative } from "./yamlDashboardToDeclarative.js";
 
 /** The slots read out of the tree so far, which a leaf and a painted box both add to. */
 interface IPageUnderConstruction {
-    slots: PublisherSlot[];
+    slots: PublisherSlotV1[];
 }
 
 function placeholderToDeclarative(
     placeholder: ReportSlotPlaceholder | undefined,
-): IPublisherSlotPlaceholder | undefined {
+): IPublisherSlotPlaceholderV1 | undefined {
     if (placeholder === undefined) {
         return undefined;
     }
@@ -73,7 +51,7 @@ function placeholderToDeclarative(
     return placeholder;
 }
 
-function textToDeclarative(text: ReportText): PublisherTextSource | undefined {
+function textToDeclarative(text: ReportText): PublisherTextSourceV1 | undefined {
     if (typeof text === "string") {
         // A slot written with no text has none, rather than text that happens to be empty: the key
         // is there because it is what says which kind of slot this is.
@@ -94,12 +72,12 @@ function textToDeclarative(text: ReportText): PublisherTextSource | undefined {
 function textStyleToDeclarative(
     style: ReportTextStyle | undefined,
     page: IPageUnderConstruction,
-): IPublisherTextStyle | undefined {
+): IPublisherTextStyleV1 | undefined {
     if (style === undefined) {
         return undefined;
     }
     if (typeof style === "string") {
-        return { type: style } as IPublisherTextStyle;
+        return { type: style } as IPublisherTextStyleV1;
     }
     const { horizontal_align, vertical_align, border_radius, background, ...rest } = style;
     return {
@@ -108,11 +86,11 @@ function textStyleToDeclarative(
         ...(vertical_align === undefined ? {} : { verticalAlign: vertical_align }),
         ...(border_radius === undefined ? {} : { borderRadius: border_radius }),
         ...(background === undefined ? {} : { background: backgroundToDeclarative(background, page) }),
-    } as IPublisherTextStyle;
+    } as IPublisherTextStyleV1;
 }
 
 /** The content of an image, without the identity of whatever draws it. */
-function imageContentToDeclarative(image: ReportImage): Omit<IPublisherImageSlot, "localIdentifier"> {
+function imageContentToDeclarative(image: ReportImage): Omit<IPublisherImageSlotV1, "localIdentifier"> {
     if (typeof image === "string") {
         return { type: "image", source: { type: "url", url: image } };
     }
@@ -123,7 +101,7 @@ function imageContentToDeclarative(image: ReportImage): Omit<IPublisherImageSlot
         ...(url === undefined ? {} : { source: { type: "url" as const, url } }),
         ...(asset === undefined ? {} : { source: { type: "asset" as const, ref: idRef(asset) } }),
         ...(alt_text === undefined ? {} : { altText: alt_text }),
-        ...(fit === undefined ? {} : { fit: fit as PublisherImageFit }),
+        ...(fit === undefined ? {} : { fit: fit as PublisherImageFitV1 }),
         ...(style === undefined
             ? {}
             : {
@@ -155,7 +133,7 @@ function backgroundImageToDeclarative(image: ReportBackgroundImage, page: IPageU
 function backgroundToDeclarative(
     background: ReportBackground,
     page: IPageUnderConstruction,
-): IPublisherBoxStyle["background"] {
+): IPublisherBoxStyleV1["background"] {
     if (typeof background === "string") {
         return { type: "color", color: background };
     }
@@ -165,7 +143,7 @@ function backgroundToDeclarative(
 function boxStyleToDeclarative(
     style: { background?: ReportBackground; border_radius?: number; padding?: number } | undefined,
     page: IPageUnderConstruction,
-): IPublisherBoxStyle | undefined {
+): IPublisherBoxStyleV1 | undefined {
     if (style === undefined) {
         return undefined;
     }
@@ -182,7 +160,7 @@ function layoutNodeToDeclarative(
     node: ReportLayoutNode,
     page: IPageUnderConstruction,
     errorContext?: IErrorContext,
-): PublisherPageLayoutNode {
+): PublisherLayoutNodeV1 {
     const weight = "weight" in node && node.weight !== undefined ? { weight: node.weight } : {};
 
     if ("column" in node || "row" in node) {
@@ -205,7 +183,7 @@ function slotToDeclarative(
     node: ReportLayoutNode,
     page: IPageUnderConstruction,
     errorContext?: IErrorContext,
-): PublisherSlot {
+): PublisherSlotV1 {
     const placeholder = placeholderToDeclarative(
         "placeholder" in node ? (node.placeholder as ReportSlotPlaceholder | undefined) : undefined,
     );
@@ -246,7 +224,7 @@ function slotToDeclarative(
             type: isHeading ? "heading" : "paragraph",
             ...(source === undefined ? {} : { source }),
             ...(node.style === undefined ? {} : { style: textStyleToDeclarative(node.style, page)! }),
-        } as PublisherSlot;
+        } as PublisherSlotV1;
     }
 
     if (!("image" in node)) {
@@ -260,7 +238,7 @@ function slotToDeclarative(
     }
 
     const image = imageContentToDeclarative(node.image);
-    return { ...image, ...shared } as IPublisherImageSlot;
+    return { ...image, ...shared } as IPublisherImageSlotV1;
 }
 
 /**
@@ -272,7 +250,7 @@ function slotToDeclarative(
 export function yamlPublisherDocumentPageToDeclarative(
     body: ReportPageBody,
     errorContext?: IErrorContext,
-): IPublisherDocumentPage {
+): IPublisherDocumentPageV1 {
     return { localIdentifier: body.id, ...yamlPublisherPageBodyToDeclarative(body, errorContext) };
 }
 
@@ -285,7 +263,7 @@ export function yamlPublisherDocumentPageToDeclarative(
 export function yamlPublisherPageBodyToDeclarative(
     body: ReportPageBody,
     errorContext?: IErrorContext,
-): IPublisherPageBody {
+): IPublisherPageBodyV1 {
     const page: IPageUnderConstruction = { slots: [] };
     const style = boxStyleToDeclarative(body.style, page);
     const layout = layoutNodeToDeclarative(body.layout, page, errorContext);
@@ -298,5 +276,5 @@ export function yamlPublisherPageBodyToDeclarative(
         layout,
         slots: page.slots,
         ...(filters === undefined ? {} : { filters }),
-    } satisfies IPublisherPageBody;
+    } satisfies IPublisherPageBodyV1;
 }

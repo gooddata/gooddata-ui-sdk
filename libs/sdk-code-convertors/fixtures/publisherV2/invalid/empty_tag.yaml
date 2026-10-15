@@ -1,0 +1,13 @@
+type: document_template
+id: quarterly_review
+version: "2"
+title: Quarterly review
+tags:
+    - ""
+content:
+    pages:
+        - id: cover
+          layout:
+              type: title
+              id: title
+              markdown: "{documentName}"

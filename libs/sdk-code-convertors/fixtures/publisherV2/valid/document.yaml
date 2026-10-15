@@ -1,0 +1,152 @@
+type: document
+id: northwind-h1-2026
+version: "2"
+title: Northwind, H1 2026
+description: Half-year revenue review
+tags:
+    - revenue
+    - h1
+period:
+    from: "2026-01-01"
+    to: "2026-06-30"
+content:
+    defaults:
+        page_size: widescreen
+        takeaway:
+            generation:
+                instructions: Write for executives. Lead with the change.
+    style:
+        background_color: "{theme.colors.backgrounds.inverse}"
+        gap: 40
+    filters:
+        document_filter_region_name:
+            type: attribute_filter
+            using: label/region.name
+            title: Region
+        document_filter_ship_date:
+            type: date_filter
+            granularity: MONTH
+            from: -6
+            to: -1
+            date: ship_date
+    sections:
+        - id: section_5e0a1f3c
+          pages:
+              - id: page_7f3a91c4
+                kind: cover
+                style:
+                    background_image: "{theme.coverImage}"
+                    padding: "{theme.spacing.padding.spacious}"
+                    text_color: "{theme.colors.texts.inverse}"
+                layout:
+                    type: column
+                    children:
+                        - type: image
+                          id: coverLogo
+                          source: "{theme.logo}"
+                          decorative: true
+                          style:
+                              fit: contain
+                              horizontal_align: left
+                        - type: title
+                          id: coverTitle
+                          proportion: 3
+                          markdown: "{documentName}"
+                          style:
+                              vertical_align: bottom
+                        - type: text
+                          id: coverSubtitle
+                          markdown: "{documentDateRange}"
+                          style:
+                              text_style: h3
+        - id: section_9a4d2b71
+          title: Revenue
+          description: Sales by region and month
+          pages:
+              - id: page_3c19e0b7
+                kind: section
+                layout:
+                    type: title
+                    id: sectionTitle
+                    markdown: Revenue
+              - id: page_c41d9a07
+                kind: content
+                notes: Mention the EMEA promotion.
+                style:
+                    padding: "{theme.spacing.padding.normal}"
+                    gap: "{theme.spacing.gap.normal}"
+                layout:
+                    type: column
+                    children:
+                        - type: title
+                          id: pageTitle
+                          proportion: 2
+                          markdown: Revenue grew **12 %** in {documentDateRange}
+                        - type: row
+                          proportion: 9
+                          children:
+                              - type: visualization
+                                id: widget1
+                                proportion: 2
+                                visualization: revenue_by_month
+                                title:
+                                    visible: true
+                                    text: Revenue by month
+                                alt_text: Monthly revenue from January to June
+                                date: order_date
+                                ignored_filters:
+                                    - label/region.name
+                                style:
+                                    background_color: "{theme.colors.backgrounds.surface}"
+                                    padding: 24
+                                    border_radius: "{theme.corners.medium}"
+                              - type: takeaway
+                                id: takeaway
+                                title:
+                                    text: Key takeaway
+                                markdown: EMEA led growth with **+18 %**, while the Americas held flat.
+                                generation:
+                                    instructions: Compare the regions.
+                                style:
+                                    background_color: "{theme.colors.backgrounds.surface}"
+                                    padding: "{theme.spacing.padding.normal}"
+                                    text_style: largeText
+                        - type: row
+                          children:
+                              - type: image
+                                id: footerLogo
+                                source: "{theme.logo}"
+                                decorative: true
+                                locked: true
+                                style:
+                                    fit: contain
+                                    horizontal_align: left
+                                    vertical_align: bottom
+                              - type: text
+                                id: footerPageNumber
+                                proportion: 8
+                                markdown: "{currentPageNumber} / {totalPages}"
+                                decorative: true
+                                locked: true
+                                style:
+                                    text_style: smallText
+                                    horizontal_align: right
+                                    vertical_align: bottom
+              - id: page_d82e4b10
+                visible: false
+                kind: content
+                layout:
+                    type: column
+                    children:
+                        - type: heading
+                          id: appendixHeading
+                          level: 1
+                          markdown: "Appendix: *method*"
+                        - type: text
+                          id: method
+                          proportion: 6
+                          markdown: |-
+                              Revenue is net of returns.
+
+                              - Source: ERP export
+                              - Currency: USD

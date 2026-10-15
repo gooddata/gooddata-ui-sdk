@@ -8,11 +8,11 @@ import {
 import {
     type IPublisherDocumentDefinition,
     type IPublisherDocumentTemplateDefinition,
-    type IPublisherPageLayoutDefinition,
+    type IPublisherPageTemplateDefinition,
 } from "@gooddata/sdk-model";
 
 export function convertPublisherPageLayoutToBackend(
-    layout: IPublisherPageLayoutDefinition,
+    layout: IPublisherPageTemplateDefinition,
 ): JsonApiReportPageLayoutInAttributes {
     return {
         title: layout.title,

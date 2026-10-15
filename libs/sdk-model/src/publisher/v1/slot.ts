@@ -20,7 +20,7 @@ import {
 } from "./styling.js";
 
 /**
- * Metadata of a slot that is intentionally left unfilled in a page layout or template.
+ * Metadata of a slot that is intentionally left unfilled in a page template or document template.
  *
  * @alpha
  */

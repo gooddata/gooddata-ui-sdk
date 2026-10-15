@@ -6,6 +6,7 @@ import atexit
 import json
 import os
 import tempfile
+from datetime import date, datetime
 from pathlib import Path
 from typing import Any
 
@@ -66,11 +67,26 @@ atexit.register(_cleanup)
 
 
 class ConversionError(Exception):
-    """Raised when a WASM converter function returns an error."""
+    """Raised when a converter returns an error, or an argument cannot be encoded."""
 
     def __init__(self, message: str, stack: str | None = None):
         self.stack = stack
         super().__init__(message)
+
+
+def _encode_yaml_value(value: Any) -> str:
+    """Encode a date yaml.safe_load made of an unquoted value; refuse anything else."""
+    # A datetime is a date too, and its isoformat() differs from what the YAML says.
+    if isinstance(value, datetime):
+        raise ConversionError(
+            f"Cannot convert the datetime value {value!r}. "
+            "Quote it in the YAML so it is read as a string."
+        )
+    if isinstance(value, date):
+        return value.isoformat()
+    raise ConversionError(
+        f"JSON cannot carry a {type(value).__name__} value: {value!r}."
+    )
 
 
 def call(function_name: str, *args: Any) -> Any:
@@ -84,11 +100,18 @@ def call(function_name: str, *args: Any) -> Any:
         The result value from the converter.
 
     Raises:
-        ConversionError: If the converter returns an error.
+        ConversionError: If the converter returns an error, or an argument holds a
+            value JSON cannot carry, such as a datetime. A date is passed as its
+            YYYY-MM-DD text.
     """
     engine, module, linker = _ensure_loaded()
 
-    payload = json.dumps({"function": function_name, "args": list(args)})
+    try:
+        payload = json.dumps(
+            {"function": function_name, "args": list(args)}, default=_encode_yaml_value
+        )
+    except TypeError as error:
+        raise ConversionError(f"Cannot convert the input: {error}.") from error
 
     # Use delete=False so WASI can open the files by path (Windows locks
     # NamedTemporaryFile with delete=True, blocking other handles).

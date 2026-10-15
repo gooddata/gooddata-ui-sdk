@@ -33,6 +33,9 @@ __all__ = [
     "yaml_plugin_to_declarative",
     "yaml_attribute_hierarchy_to_declarative",
     "yaml_publisher_document_to_declarative",
+    "yaml_publisher_document_to_declarative_v2",
+    "yaml_publisher_document_template_to_declarative_v2",
+    "yaml_publisher_page_template_to_declarative_v2",
     # Declarative -> YAML
     "declarative_dataset_to_yaml",
     "declarative_date_instance_to_yaml",
@@ -43,6 +46,12 @@ __all__ = [
     "declarative_plugin_to_yaml",
     "declarative_attribute_hierarchy_to_yaml",
     "declarative_publisher_document_to_yaml",
+    "declarative_publisher_document_to_yaml_v2",
+    "declarative_publisher_document_template_to_yaml_v2",
+    "declarative_publisher_page_template_to_yaml_v2",
+    # Validation
+    "validate_publisher_entity_v2",
+    "fill_publisher_ids_v2",
     # Utilities
     "build_afm_execution",
     # Former names of the publisher document converters
@@ -99,6 +108,21 @@ def yaml_publisher_document_to_declarative(*args) -> dict:
     return _call("yamlPublisherDocumentToDeclarative", *args)
 
 
+def yaml_publisher_document_to_declarative_v2(document: dict) -> dict:
+    """Convert a parsed v2 publisher document YAML dict to the stored v2 document dict."""
+    return _call("yamlPublisherDocumentToDeclarativeV2", document)
+
+
+def yaml_publisher_document_template_to_declarative_v2(template: dict) -> dict:
+    """Convert a parsed v2 publisher document template YAML dict to the stored v2 template dict."""
+    return _call("yamlPublisherDocumentTemplateToDeclarativeV2", template)
+
+
+def yaml_publisher_page_template_to_declarative_v2(template: dict) -> dict:
+    """Convert a parsed v2 publisher page template YAML dict to the stored v2 page template dict."""
+    return _call("yamlPublisherPageTemplateToDeclarativeV2", template)
+
+
 # Declarative -> YAML
 
 
@@ -147,8 +171,42 @@ def declarative_publisher_document_to_yaml(*args) -> dict:
     return _call("declarativePublisherDocumentToYaml", *args)
 
 
+def declarative_publisher_document_to_yaml_v2(document: dict) -> dict:
+    """Convert a stored v2 publisher document dict to YAML: {"content": <YAML text>, "json": <YAML dict>}."""
+    return _call("declarativePublisherDocumentToYamlV2", document)
+
+
+def declarative_publisher_document_template_to_yaml_v2(template: dict) -> dict:
+    """Convert a stored v2 publisher document template dict to YAML: {"content": ..., "json": ...}."""
+    return _call("declarativePublisherDocumentTemplateToYamlV2", template)
+
+
+def declarative_publisher_page_template_to_yaml_v2(template: dict) -> dict:
+    """Convert a stored v2 publisher page template dict to YAML: {"content": ..., "json": ...}."""
+    return _call("declarativePublisherPageTemplateToYamlV2", template)
+
+
 yaml_report_document_to_declarative = yaml_publisher_document_to_declarative
 declarative_report_to_yaml = declarative_publisher_document_to_yaml
+
+
+# Validation
+
+
+def validate_publisher_entity_v2(entity: dict) -> list[dict]:
+    """Validate a stored v2 publisher document, document template or page template dict.
+
+    Returns the issues as [{"path": ..., "message": ...}]; an empty list means the entity is valid.
+    """
+    return _call("validateDeclarativePublisherEntityV2", entity)
+
+
+def fill_publisher_ids_v2(content: str) -> dict:
+    """Add the section, page and widget ids a v2 publisher entity's YAML text leaves out.
+
+    Returns {"content": <YAML text>, "changed": <bool>}; comments and formatting survive.
+    """
+    return _call("fillPublisherIdsV2", content)
 
 
 # Utilities

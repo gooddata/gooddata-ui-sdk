@@ -18,6 +18,10 @@ export type {
     AacPublisherDocument,
     AacPublisherPageLayout,
     AacPublisherDocumentTemplate,
+    AacPublisherDocumentV2,
+    AacPublisherDocumentTemplateV2,
+    AacPublisherPageTemplateV2,
+    AacPublisherEntityWithOptionalIdV2,
     AacSection,
     AacVisualisation,
     AacFilter,
@@ -49,6 +53,29 @@ export {
     publisherDocumentPageToAacPage,
     publisherDocumentTemplateDefinitionToYaml,
 } from "./from/declarativePublisherDocumentToYaml.js";
+export {
+    yamlPublisherDocumentToDeclarativeV2,
+    yamlPublisherDocumentTemplateToDeclarativeV2,
+    yamlPublisherPageTemplateToDeclarativeV2,
+    yamlPublisherDocumentToDefinitionV2,
+    yamlPublisherDocumentTemplateToDefinitionV2,
+    yamlPublisherPageTemplateToDefinitionV2,
+} from "./to/yamlPublisherEntityToDeclarativeV2.js";
+export {
+    declarativePublisherDocumentToYamlV2,
+    declarativePublisherDocumentTemplateToYamlV2,
+    declarativePublisherPageTemplateToYamlV2,
+    publisherDocumentDefinitionToYamlV2,
+    publisherDocumentTemplateDefinitionToYamlV2,
+    publisherPageTemplateDefinitionToYamlV2,
+} from "./from/declarativePublisherEntityToYamlV2.js";
+export { validateDeclarativePublisherEntityV2 } from "./validateDeclarativePublisherEntityV2.js";
+export { fillPublisherIdsV2 } from "./fillPublisherIdsV2.js";
+export type {
+    DeclarativePublisherDocumentV2,
+    DeclarativePublisherDocumentTemplateV2,
+    DeclarativePublisherPageTemplateV2,
+} from "./declarativePublisherTypesV2.js";
 // Entity converters: YAML → Declarative API
 export {
     yamlDatasetToDeclarative,

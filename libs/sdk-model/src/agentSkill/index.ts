@@ -15,6 +15,7 @@ export type AgentCustomSkill =
     | "dashboard_builder"
     | "dashboard_editor"
     | "dashboard_summary"
+    | "document_builder"
     | "forecasting"
     | "key_driver_analysis"
     | "metric"

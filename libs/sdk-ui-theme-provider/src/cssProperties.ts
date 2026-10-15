@@ -12,6 +12,7 @@ import {
 
 import { type CssProperty, getCssProperty } from "./cssProperty.js";
 import { generateDerivedColors } from "./derivedColors.js";
+import { documentsThemeCssValues } from "./documentsTheme.js";
 import { themeDefinedCssVariables } from "./variablesSpec/allThemeCssVariables.js";
 import { inconsistentVariables } from "./variablesSpec/inconsistent/inconsistent.js";
 
@@ -236,6 +237,7 @@ const customParserFunctions: ParserFunction[] = [
     { key: "--gd-reports-textStyle-typography-fonts", fn: () => "" },
     // Inline colors become indexed variables; a palette reference is resolved by the application.
     { key: "--gd-reports-visualizationPalette", fn: (value: unknown) => (Array.isArray(value) ? value : "") },
+    { key: "--gd-documents", fn: documentsThemeCssValues },
     ...reportLengthParserFunctions,
 ];
 

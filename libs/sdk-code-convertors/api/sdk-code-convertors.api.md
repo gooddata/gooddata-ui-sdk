@@ -76,12 +76,16 @@ import type { Interaction } from '@gooddata/sdk-code-schemas/v1';
 import { IPoPMeasureDefinition } from '@gooddata/sdk-model';
 import { IPositiveAttributeFilterBody } from '@gooddata/sdk-model';
 import { IPreviousPeriodMeasureDefinition } from '@gooddata/sdk-model';
-import { IPublisherDocumentDefinition } from '@gooddata/sdk-model';
-import { IPublisherDocumentPage } from '@gooddata/sdk-model';
-import { IPublisherDocumentTemplate } from '@gooddata/sdk-model';
-import { IPublisherDocumentTemplateDefinition } from '@gooddata/sdk-model';
-import { IPublisherPageLayout } from '@gooddata/sdk-model';
-import { IPublisherPageLayoutDefinition } from '@gooddata/sdk-model';
+import { IPublisherDocumentDefinitionV1 } from '@gooddata/sdk-model';
+import { IPublisherDocumentDefinitionV2 } from '@gooddata/sdk-model';
+import { IPublisherDocumentPageV1 } from '@gooddata/sdk-model';
+import { IPublisherDocumentTemplateDefinitionV1 } from '@gooddata/sdk-model';
+import { IPublisherDocumentTemplateDefinitionV2 } from '@gooddata/sdk-model';
+import { IPublisherDocumentTemplateV1 } from '@gooddata/sdk-model';
+import { IPublisherPageTemplateDefinitionV1 } from '@gooddata/sdk-model';
+import { IPublisherPageTemplateDefinitionV2 } from '@gooddata/sdk-model';
+import { IPublisherPageTemplateV1 } from '@gooddata/sdk-model';
+import { IPublisherValidationIssueV2 } from '@gooddata/sdk-model';
 import { IRankingFilterBody } from '@gooddata/sdk-model';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
@@ -99,6 +103,9 @@ import type { Parameter } from '@gooddata/sdk-code-schemas/v1';
 import type { Plugin as Plugin_2 } from '@gooddata/sdk-code-schemas/v1';
 import type { PoPMetricField } from '@gooddata/sdk-code-schemas/v1';
 import type { PreviousPeriodMetricField } from '@gooddata/sdk-code-schemas/v1';
+import type { PublisherDocumentTemplateV2 } from '@gooddata/sdk-code-schemas/v1';
+import type { PublisherDocumentV2 } from '@gooddata/sdk-code-schemas/v1';
+import type { PublisherPageTemplateV2 } from '@gooddata/sdk-code-schemas/v1';
 import type { Query } from '@gooddata/sdk-code-schemas/v1';
 import type { QueryFilters } from '@gooddata/sdk-code-schemas/v1';
 import type { Report as Report_2 } from '@gooddata/sdk-code-schemas/v1';
@@ -159,7 +166,23 @@ export type AacPublisherDocument = Report_2;
 export type AacPublisherDocumentTemplate = ReportTemplate;
 
 // @alpha (undocumented)
+export type AacPublisherDocumentTemplateV2 = PublisherDocumentTemplateV2;
+
+// @alpha (undocumented)
+export type AacPublisherDocumentV2 = PublisherDocumentV2;
+
+// @alpha
+export type AacPublisherEntityWithOptionalIdV2<T extends {
+    id: string;
+}> = Omit<T, "id"> & {
+    id?: string;
+};
+
+// @alpha (undocumented)
 export type AacPublisherPageLayout = ReportPageLayout;
+
+// @alpha (undocumented)
+export type AacPublisherPageTemplateV2 = PublisherPageTemplateV2;
 
 // @public (undocumented)
 export type AacQuery = Query;
@@ -1265,6 +1288,8 @@ export enum CoreErrorCode {
     // (undocumented)
     BucketItemTypeNotSupported = "core.bucketItemTypeNotSupported",
     // (undocumented)
+    DateFilterWithoutDataSet = "core.dateFilterWithoutDataSet",
+    // (undocumented)
     DuplicateFieldName = "core.duplicateFieldName",
     // (undocumented)
     DuplicateFilterLocalIdentifier = "core.duplicateFilterLocalIdentifier",
@@ -1276,6 +1301,8 @@ export enum CoreErrorCode {
     DuplicateTabIdentifier = "core.duplicateTabIdentifier",
     // (undocumented)
     FilterItemTypeNotSupported = "core.filterItemTypeNotSupported",
+    // (undocumented)
+    FilterSettingNotStorable = "core.filterSettingNotStorable",
     // (undocumented)
     InvalidIanaTimezoneId = "core.invalidIanaTimezoneId",
     // (undocumented)
@@ -1291,9 +1318,15 @@ export enum CoreErrorCode {
     // (undocumented)
     OnlyOneDateDatasetAllowed = "core.onlyOneDateDatasetAllowed",
     // (undocumented)
+    PagesAndSectionsMutuallyExclusive = "core.pagesAndSectionsMutuallyExclusive",
+    // (undocumented)
+    PagesOrSectionsRequired = "core.pagesOrSectionsRequired",
+    // (undocumented)
     ReferenceTypeNotSupported = "core.referenceTypeNotSupported",
     // (undocumented)
     TabsAndRootContentMutuallyExclusive = "core.tabsAndRootContentMutuallyExclusive",
+    // (undocumented)
+    UnsupportedContentVersion = "core.unsupportedContentVersion",
     // (undocumented)
     VisualizationNotSupported = "core.visualizationNotSupported"
 }
@@ -1489,16 +1522,49 @@ export function declarativePositiveAttributeFilterToYaml(entities: FromEntities,
 // @internal (undocumented)
 export function declarativePreviousPeriodMetricToYaml(def: IMeasureBody, previousDefinition: IPreviousPeriodMeasureDefinition, errorContext?: IErrorContext): YAMLMap;
 
+// @alpha
+export function declarativePublisherDocumentTemplateToYamlV2(template: DeclarativePublisherDocumentTemplateV2, errorContext?: IErrorContext): {
+    content: string;
+    json: AacPublisherDocumentTemplateV2;
+};
+
+// @alpha
+export type DeclarativePublisherDocumentTemplateV2 = Omit<IPublisherDocumentTemplateDefinitionV2, "ref"> & {
+    id: string;
+};
+
 // @alpha (undocumented)
 export function declarativePublisherDocumentToYaml(publisherDocument: DeclarativeReport): {
     content: string;
     json: Report_2;
 };
 
+// @alpha
+export function declarativePublisherDocumentToYamlV2(document: DeclarativePublisherDocumentV2, errorContext?: IErrorContext): {
+    content: string;
+    json: AacPublisherDocumentV2;
+};
+
+// @alpha
+export type DeclarativePublisherDocumentV2 = Omit<IPublisherDocumentDefinitionV2, "ref"> & {
+    id: string;
+};
+
 // @alpha (undocumented)
 export function declarativePublisherPageLayoutToYaml(layout: DeclarativeReportPageLayout): {
     content: string;
     json: ReportPageLayout;
+};
+
+// @alpha
+export function declarativePublisherPageTemplateToYamlV2(template: DeclarativePublisherPageTemplateV2, errorContext?: IErrorContext): {
+    content: string;
+    json: AacPublisherPageTemplateV2;
+};
+
+// @alpha
+export type DeclarativePublisherPageTemplateV2 = Omit<IPublisherPageTemplateDefinitionV2, "ref"> & {
+    id: string;
 };
 
 // @internal (undocumented)
@@ -1756,6 +1822,12 @@ export type FileNamesUsed = {
 
 // @public (undocumented)
 export type FilePath = string[] | string;
+
+// @alpha
+export function fillPublisherIdsV2(content: string): {
+    content: string;
+    changed: boolean;
+};
 
 // @internal (undocumented)
 export type FilterContextDefinition = Pick<IFilterContextDefinition, "filters"> & {
@@ -3129,24 +3201,42 @@ export type Profile = {
 };
 
 // @alpha
-export function publisherDocumentDefinitionToYaml(publisherDocument: IPublisherDocumentDefinition): {
+export function publisherDocumentDefinitionToYaml(publisherDocument: IPublisherDocumentDefinitionV1): {
     content: string;
     json: Report_2;
 };
 
+// @alpha
+export function publisherDocumentDefinitionToYamlV2(document: IPublisherDocumentDefinitionV2, errorContext?: IErrorContext): {
+    content: string;
+    json: AacPublisherEntityWithOptionalIdV2<AacPublisherDocumentV2>;
+};
+
 // @internal
-export function publisherDocumentPageToAacPage(page: IPublisherDocumentPage): ReportPageBody;
+export function publisherDocumentPageToAacPage(page: IPublisherDocumentPageV1): ReportPageBody;
 
 // @alpha (undocumented)
-export function publisherDocumentTemplateDefinitionToYaml(template: IPublisherDocumentTemplate | IPublisherDocumentTemplateDefinition): {
+export function publisherDocumentTemplateDefinitionToYaml(template: IPublisherDocumentTemplateV1 | IPublisherDocumentTemplateDefinitionV1): {
     content: string;
     json: ReportTemplate;
 };
 
+// @alpha (undocumented)
+export function publisherDocumentTemplateDefinitionToYamlV2(template: IPublisherDocumentTemplateDefinitionV2, errorContext?: IErrorContext): {
+    content: string;
+    json: AacPublisherEntityWithOptionalIdV2<AacPublisherDocumentTemplateV2>;
+};
+
 // @alpha
-export function publisherPageLayoutDefinitionToYaml(layout: IPublisherPageLayout | IPublisherPageLayoutDefinition): {
+export function publisherPageLayoutDefinitionToYaml(layout: IPublisherPageTemplateV1 | IPublisherPageTemplateDefinitionV1): {
     content: string;
     json: ReportPageLayout;
+};
+
+// @alpha (undocumented)
+export function publisherPageTemplateDefinitionToYamlV2(template: IPublisherPageTemplateDefinitionV2, errorContext?: IErrorContext): {
+    content: string;
+    json: AacPublisherEntityWithOptionalIdV2<AacPublisherPageTemplateV2>;
 };
 
 // @internal (undocumented)
@@ -4090,6 +4180,9 @@ export function treemapChartSave(_fields: Visualisation["query"]["fields"] | und
     customTooltip: CustomTooltip | undefined;
 } | undefined;
 
+// @alpha
+export function validateDeclarativePublisherEntityV2(entity: unknown): IPublisherValidationIssueV2[];
+
 // @public (undocumented)
 export type ValueType = "string" | "bool" | "number" | "bool_auto" | "array";
 
@@ -4384,20 +4477,38 @@ export type YamlPostProcessors = {
     }>;
 };
 
+// @alpha
+export function yamlPublisherDocumentTemplateToDeclarativeV2(input: AacPublisherDocumentTemplateV2, errorContext?: IErrorContext): DeclarativePublisherDocumentTemplateV2;
+
 // @alpha (undocumented)
-export function yamlPublisherDocumentTemplateToDefinition(input: ReportTemplate, errorContext?: IErrorContext): IPublisherDocumentTemplateDefinition;
+export function yamlPublisherDocumentTemplateToDefinition(input: ReportTemplate, errorContext?: IErrorContext): IPublisherDocumentTemplateDefinitionV1;
+
+// @alpha (undocumented)
+export function yamlPublisherDocumentTemplateToDefinitionV2(input: AacPublisherEntityWithOptionalIdV2<AacPublisherDocumentTemplateV2>, errorContext?: IErrorContext): IPublisherDocumentTemplateDefinitionV2;
 
 // @alpha
 export function yamlPublisherDocumentToDeclarative(input: Report_2, errorContext?: IErrorContext): DeclarativeReport;
 
 // @alpha
-export function yamlPublisherDocumentToDefinition(input: Report_2, errorContext?: IErrorContext): IPublisherDocumentDefinition;
+export function yamlPublisherDocumentToDeclarativeV2(input: AacPublisherDocumentV2, errorContext?: IErrorContext): DeclarativePublisherDocumentV2;
+
+// @alpha
+export function yamlPublisherDocumentToDefinition(input: Report_2, errorContext?: IErrorContext): IPublisherDocumentDefinitionV1;
+
+// @alpha
+export function yamlPublisherDocumentToDefinitionV2(input: AacPublisherEntityWithOptionalIdV2<AacPublisherDocumentV2>, errorContext?: IErrorContext): IPublisherDocumentDefinitionV2;
 
 // @alpha (undocumented)
 export function yamlPublisherPageLayoutToDeclarative(input: ReportPageLayout, errorContext?: IErrorContext): DeclarativeReportPageLayout;
 
 // @alpha (undocumented)
-export function yamlPublisherPageLayoutToDefinition(input: ReportPageLayout, errorContext?: IErrorContext): IPublisherPageLayoutDefinition;
+export function yamlPublisherPageLayoutToDefinition(input: ReportPageLayout, errorContext?: IErrorContext): IPublisherPageTemplateDefinitionV1;
+
+// @alpha
+export function yamlPublisherPageTemplateToDeclarativeV2(input: AacPublisherPageTemplateV2, errorContext?: IErrorContext): DeclarativePublisherPageTemplateV2;
+
+// @alpha (undocumented)
+export function yamlPublisherPageTemplateToDefinitionV2(input: AacPublisherEntityWithOptionalIdV2<AacPublisherPageTemplateV2>, errorContext?: IErrorContext): IPublisherPageTemplateDefinitionV2;
 
 // @internal (undocumented)
 export function yamlReportToDeclarative(entities: ExportEntities, input: Visualisation): {

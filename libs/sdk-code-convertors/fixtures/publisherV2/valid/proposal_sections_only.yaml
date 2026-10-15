@@ -1,0 +1,9 @@
+type: document_template
+id: sectioned_template
+version: "2"
+title: Sectioned template
+content:
+    sections:
+        - id: revenue
+          title: Revenue
+          pages: []

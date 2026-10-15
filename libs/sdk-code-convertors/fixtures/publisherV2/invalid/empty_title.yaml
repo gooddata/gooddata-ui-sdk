@@ -1,0 +1,15 @@
+type: document
+id: monthly
+version: "2"
+title: ""
+period:
+    granularity: MONTH
+    from: -1
+    to: -1
+content:
+    pages:
+        - id: cover
+          layout:
+              type: title
+              id: title
+              markdown: "{documentName}"

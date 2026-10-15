@@ -1,0 +1,7 @@
+type: document_template
+id: no_pages
+version: "2"
+title: No pages
+content:
+    defaults:
+        page_size: widescreen

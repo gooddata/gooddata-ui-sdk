@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type IGenAIUserContext } from "@gooddata/sdk-model";
+import { type IGenAIUserContext, type IPublisherDocumentDefinition } from "@gooddata/sdk-model";
 
 import { type IPlatformContext } from "./platformContext.js";
 
@@ -450,6 +450,74 @@ export function isAiAssistantPublisherDocumentSavedEvent(
         typeof itemId === "string" &&
         (documentRef === undefined || typeof documentRef === "string") &&
         typeof savedDocumentId === "string"
+    );
+}
+
+/**
+ * A document version the host assistant drafted, carried by the `chat.definition-received` event an
+ * application receives through {@link IPluggableApplicationMountHandle.onAiAssistantEventReceive}.
+ *
+ * @remarks
+ * The assistant writes these fields and the editor applies the version from them, so both type them
+ * from here.
+ *
+ * @alpha
+ */
+export interface IAiAssistantPublisherDocumentDefinition {
+    /**
+     * The whole document version.
+     */
+    readonly publisherDocument: IPublisherDocumentDefinition;
+
+    /**
+     * Name of the document version in the conversation, the one its save is recorded under.
+     */
+    readonly documentRef?: string;
+
+    /**
+     * Name of the document version this one reworks.
+     */
+    readonly refines?: string;
+
+    /**
+     * Whether the version was written from the document open in the editor.
+     */
+    readonly reworksOpenDocument?: boolean;
+
+    /**
+     * Identifier of the saved document this version edits.
+     */
+    readonly baseDocumentId?: string;
+}
+
+/**
+ * Type guard for the fields of {@link IAiAssistantPublisherDocumentDefinition}.
+ *
+ * @remarks
+ * The document itself stays `unknown`: whoever applies it validates it.
+ *
+ * @alpha
+ */
+export function isAiAssistantPublisherDocumentDefinition(obj: unknown): obj is Omit<
+    IAiAssistantPublisherDocumentDefinition,
+    "publisherDocument"
+> & {
+    readonly publisherDocument: unknown;
+} {
+    if (typeof obj !== "object" || obj === null) {
+        return false;
+    }
+    const { publisherDocument, documentRef, refines, reworksOpenDocument, baseDocumentId } = obj as {
+        [key in keyof IAiAssistantPublisherDocumentDefinition]?: unknown;
+    };
+    return (
+        typeof publisherDocument === "object" &&
+        publisherDocument !== null &&
+        !Array.isArray(publisherDocument) &&
+        (documentRef === undefined || typeof documentRef === "string") &&
+        (refines === undefined || typeof refines === "string") &&
+        (reworksOpenDocument === undefined || typeof reworksOpenDocument === "boolean") &&
+        (baseDocumentId === undefined || typeof baseDocumentId === "string")
     );
 }
 

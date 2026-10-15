@@ -4,12 +4,8 @@ import {
     type IChatConversation,
     type IChatConversationVisualisationContent,
 } from "@gooddata/sdk-backend-spi";
-import {
-    type IDashboard,
-    type IGenAIUserContext,
-    type IInsight,
-    type IPublisherDocumentDefinition,
-} from "@gooddata/sdk-model";
+import { type IDashboard, type IGenAIUserContext, type IInsight } from "@gooddata/sdk-model";
+import { type IAiAssistantPublisherDocumentDefinition } from "@gooddata/sdk-pluggable-application-model";
 import { type SdkErrorType } from "@gooddata/sdk-ui";
 
 import { type GenAIAssistantMode } from "../components/ConfigContext.js";
@@ -399,27 +395,7 @@ export type ChatDefinitionReceivedEvent = BaseEvent & {
     dashboard?: IDashboard;
     insights?: IInsight[];
     visualization?: NonNullable<IChatConversationVisualisationContent["visualization"]>;
-    /**
-     * The whole document version.
-     */
-    publisherDocument?: IPublisherDocumentDefinition;
-    /**
-     * Name of the document version in the conversation, the one its save is recorded under.
-     */
-    documentRef?: string;
-    /**
-     * Name of the document version this one reworks.
-     */
-    refines?: string;
-    /**
-     * Whether the version was written from the document open in the editor.
-     */
-    reworksOpenDocument?: boolean;
-    /**
-     * Id of the saved document this version edits.
-     */
-    baseDocumentId?: string;
-};
+} & Partial<IAiAssistantPublisherDocumentDefinition>;
 
 /**
  * Type guard for the ChatDefinitionReceivedEvent.

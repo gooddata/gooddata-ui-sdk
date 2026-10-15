@@ -22,6 +22,11 @@ export enum CoreErrorCode {
     DuplicateTabIdentifier = "core.duplicateTabIdentifier",
     TabsAndRootContentMutuallyExclusive = "core.tabsAndRootContentMutuallyExclusive",
     InvalidIanaTimezoneId = "core.invalidIanaTimezoneId",
+    UnsupportedContentVersion = "core.unsupportedContentVersion",
+    DateFilterWithoutDataSet = "core.dateFilterWithoutDataSet",
+    FilterSettingNotStorable = "core.filterSettingNotStorable",
+    PagesAndSectionsMutuallyExclusive = "core.pagesAndSectionsMutuallyExclusive",
+    PagesOrSectionsRequired = "core.pagesOrSectionsRequired",
 }
 
 /**
@@ -45,6 +50,11 @@ export const CoreErrorMessages: Record<CoreErrorCode, string> = {
     [CoreErrorCode.DuplicateTabIdentifier]: `Duplicate tab identifier "{0}". Each tab must have a unique identifier within the dashboard.`,
     [CoreErrorCode.TabsAndRootContentMutuallyExclusive]: `Dashboard "{0}" defines both "tabs" and root-level "sections" or "filters". These are mutually exclusive — keep all content inside tabs or at the root, not both.`,
     [CoreErrorCode.InvalidIanaTimezoneId]: `"{0}" is not a valid IANA timezone ID. Use a real timezone such as Europe/Prague or $browserDetected.`,
+    [CoreErrorCode.UnsupportedContentVersion]: `Content version "{0}" is not supported. Supported version: "{1}".`,
+    [CoreErrorCode.DateFilterWithoutDataSet]: `Date filter "{0}" names no date dataset. A document date filter must name the date dataset it applies to.`,
+    [CoreErrorCode.FilterSettingNotStorable]: `Filter "{0}" sets "{1}", which a {2} cannot store.`,
+    [CoreErrorCode.PagesAndSectionsMutuallyExclusive]: `Content defines both "pages" and "sections". Keep the pages at the top level or inside sections, not both.`,
+    [CoreErrorCode.PagesOrSectionsRequired]: `Content defines neither "pages" nor "sections". Add one of them; an empty document has "pages: []".`,
 };
 
 /**
@@ -68,6 +78,11 @@ export const CoreErrorTypes: Record<CoreErrorCode, string> = {
     [CoreErrorCode.DuplicateTabIdentifier]: "DuplicateTabIdentifier",
     [CoreErrorCode.TabsAndRootContentMutuallyExclusive]: "TabsAndRootContentMutuallyExclusive",
     [CoreErrorCode.InvalidIanaTimezoneId]: "InvalidIanaTimezoneId",
+    [CoreErrorCode.UnsupportedContentVersion]: "UnsupportedContentVersion",
+    [CoreErrorCode.DateFilterWithoutDataSet]: "DateFilterWithoutDataSet",
+    [CoreErrorCode.FilterSettingNotStorable]: "FilterSettingNotStorable",
+    [CoreErrorCode.PagesAndSectionsMutuallyExclusive]: "PagesAndSectionsMutuallyExclusive",
+    [CoreErrorCode.PagesOrSectionsRequired]: "PagesOrSectionsRequired",
 };
 
 /**

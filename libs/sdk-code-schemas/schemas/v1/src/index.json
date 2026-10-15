@@ -186,6 +186,45 @@
         },
         {
             "if": {
+                "properties": {
+                    "type": {
+                        "const": "document"
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "$ref": "/gaac/publisherDocumentV2"
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "document_template"
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "$ref": "/gaac/publisherDocumentTemplateV2"
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "page_template"
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "$ref": "/gaac/publisherPageTemplateV2"
+            }
+        },
+        {
+            "if": {
                 "not": {
                     "properties": {
                         "type": {
@@ -232,7 +271,10 @@
                         "parameter",
                         "report",
                         "report_template",
-                        "report_page_layout"
+                        "report_page_layout",
+                        "document",
+                        "document_template",
+                        "page_template"
                     ]
                 }
             }
@@ -275,7 +317,10 @@
                 "parameter",
                 "report",
                 "report_template",
-                "report_page_layout"
+                "report_page_layout",
+                "document",
+                "document_template",
+                "page_template"
             ]
         }
     },

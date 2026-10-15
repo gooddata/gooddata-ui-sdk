@@ -1,6 +1,15 @@
 // (C) 2020-2026 GoodData Corporation
 
 import { type IMetadataObject } from "../ldm/metadata/types.js";
+import {
+    type IPublisherChartStyleV2,
+    type IPublisherHeadlineStyleV2,
+    type IPublisherTableStyleV2,
+    type IPublisherTextWidgetStyleV2,
+    type PublisherColorValueV2,
+    type PublisherGapValueV2,
+    type PublisherPaddingValueV2,
+} from "../publisher/v2/style.js";
 
 /**
  * Custom font URI which is used to override the default font
@@ -1329,6 +1338,256 @@ export function isThemeColorPaletteRef(value: unknown): value is IThemeColorPale
 }
 
 /**
+ * A length on the document page canvas, in px. Units are not accepted.
+ *
+ * @alpha
+ */
+export type ThemeDocumentsLength = number;
+
+/**
+ * The named steps of a document spacing scale.
+ *
+ * @alpha
+ */
+export interface IThemeDocumentsSteps {
+    compact?: ThemeDocumentsLength;
+    normal?: ThemeDocumentsLength;
+    spacious?: ThemeDocumentsLength;
+}
+
+/**
+ * A color offered to documents. Content stores its id, never its position in the list.
+ *
+ * @alpha
+ */
+export interface IThemeDocumentsColor {
+    id: string;
+
+    /**
+     * Absent: the role keeps its inherited value. May reference `{theme.palette.<name>}`.
+     */
+    color?: PublisherColorValueV2;
+}
+
+/**
+ * Colors offered to documents, one list per kind of paint.
+ *
+ * @remarks
+ * The ids `default`, `surface` and `inverse` (backgrounds), `default`, `muted` and `inverse` (texts),
+ * `default` (lines) and `accent` (any list) always resolve, falling back to the platform palette.
+ *
+ * @alpha
+ */
+export interface IThemeDocumentsColors {
+    backgrounds?: IThemeDocumentsColor[];
+    texts?: IThemeDocumentsColor[];
+
+    /**
+     * Borders, dividers, accent bars, gridlines and axis lines.
+     */
+    lines?: IThemeDocumentsColor[];
+
+    /**
+     * Colors of visualizations: stated inline, or a reference to a color palette object. When
+     * absent, documents use the workspace's active color palette.
+     */
+    visualizationPalette?: PublisherColorValueV2[] | IThemeColorPaletteRef;
+}
+
+/**
+ * One hosted font file registered as a font face for documents.
+ *
+ * @alpha
+ */
+export interface IThemeDocumentsFontFace {
+    family: string;
+    url: string;
+
+    /**
+     * `"400 700"` covers a variable font's range with one face.
+     */
+    weight?: number | string;
+    style?: "normal" | "italic";
+    unicodeRange?: string;
+}
+
+/**
+ * Fonts of documents.
+ *
+ * @alpha
+ */
+export interface IThemeDocumentsTypography {
+    /**
+     * A CSS font family list; a name with a digit must be quoted.
+     */
+    fontFamily?: string;
+    fonts?: IThemeDocumentsFontFace[];
+}
+
+/**
+ * Values a group of text styles shares unless a level sets its own.
+ *
+ * @alpha
+ */
+export interface IThemeDocumentsTextGroup {
+    color?: PublisherColorValueV2;
+
+    /**
+     * A multiple of the font size.
+     */
+    lineHeight?: number;
+}
+
+/**
+ * One named text style.
+ *
+ * @alpha
+ */
+export interface IThemeDocumentsTextLevel extends IThemeDocumentsTextGroup {
+    fontSize?: ThemeDocumentsLength;
+}
+
+/**
+ * Heading text styles.
+ *
+ * @alpha
+ */
+export interface IThemeDocumentsHeading extends IThemeDocumentsTextGroup {
+    h1?: IThemeDocumentsTextLevel;
+    h2?: IThemeDocumentsTextLevel;
+    h3?: IThemeDocumentsTextLevel;
+    h4?: IThemeDocumentsTextLevel;
+    h5?: IThemeDocumentsTextLevel;
+    h6?: IThemeDocumentsTextLevel;
+}
+
+/**
+ * Body text styles.
+ *
+ * @alpha
+ */
+export interface IThemeDocumentsText extends IThemeDocumentsTextGroup {
+    largeText?: IThemeDocumentsTextLevel;
+    normalText?: IThemeDocumentsTextLevel;
+    smallText?: IThemeDocumentsTextLevel;
+}
+
+/**
+ * The look of marked text: strong, emphasis, highlight or link.
+ *
+ * @alpha
+ */
+export interface IThemeDocumentsMarkStyle {
+    color?: PublisherColorValueV2;
+    backgroundColor?: PublisherColorValueV2;
+    fontWeight?: number;
+    fontStyle?: "normal" | "italic";
+}
+
+/**
+ * The named text styles of documents.
+ *
+ * @alpha
+ */
+export interface IThemeDocumentsTextStyle {
+    typography?: IThemeDocumentsTypography;
+
+    /**
+     * Falls back to `heading.h1`.
+     */
+    title?: IThemeDocumentsTextLevel;
+    heading?: IThemeDocumentsHeading;
+    text?: IThemeDocumentsText;
+
+    /**
+     * Default: bold.
+     */
+    strong?: IThemeDocumentsMarkStyle;
+
+    /**
+     * Default: italic.
+     */
+    emphasis?: IThemeDocumentsMarkStyle;
+    highlight?: IThemeDocumentsMarkStyle;
+
+    /**
+     * Default color: `{theme.palette.primary}`.
+     */
+    link?: IThemeDocumentsMarkStyle;
+}
+
+/**
+ * A named shadow, referenced from content as `{theme.shadows.<name>}`.
+ *
+ * @alpha
+ */
+export interface IThemeDocumentsShadow {
+    x?: number;
+    y?: number;
+    blur?: ThemeDocumentsLength;
+    spread?: number;
+    color?: PublisherColorValueV2;
+    opacity?: number;
+}
+
+/**
+ * Page defaults of documents.
+ *
+ * @alpha
+ */
+export interface IThemeDocumentsPage {
+    padding?: PublisherPaddingValueV2;
+    gap?: PublisherGapValueV2;
+}
+
+/**
+ * Corner radius steps; `full` is built in.
+ *
+ * @alpha
+ */
+export interface IThemeDocumentsCorners {
+    small?: ThemeDocumentsLength;
+    medium?: ThemeDocumentsLength;
+    large?: ThemeDocumentsLength;
+}
+
+/**
+ * Spacing scales of documents.
+ *
+ * @alpha
+ */
+export interface IThemeDocumentsSpacing {
+    gap?: IThemeDocumentsSteps;
+    padding?: IThemeDocumentsSteps;
+}
+
+/**
+ * How documents with content version 2 look.
+ *
+ * @remarks
+ * A key left out falls back to the matching platform key, then the complementary palette, then the
+ * built-in default. Only documents follow it; the Publisher UI around them follows the platform theme.
+ *
+ * @alpha
+ */
+export interface IThemeDocuments {
+    colors?: IThemeDocumentsColors;
+    textStyle?: IThemeDocumentsTextStyle;
+    chart?: IPublisherChartStyleV2;
+    table?: IPublisherTableStyleV2;
+    headline?: IPublisherHeadlineStyleV2;
+    shadows?: Record<string, IThemeDocumentsShadow>;
+
+    /**
+     * The default look of a takeaway widget.
+     */
+    takeaway?: IPublisherTextWidgetStyleV2;
+    page?: IThemeDocumentsPage;
+    corners?: IThemeDocumentsCorners;
+    spacing?: IThemeDocumentsSpacing;
+}
+
+/**
  * Theme used to customize selected parts of the UI
  *
  * @remarks
@@ -1437,6 +1696,14 @@ export interface ITheme {
      * @alpha
      */
     reports?: IThemePublisher;
+
+    /**
+     * How documents with content version 2 look. Version 1 documents read `reports` until the
+     * switch to version 2.
+     *
+     * @alpha
+     */
+    documents?: IThemeDocuments;
 
     /**
      * Image assets offered to documents

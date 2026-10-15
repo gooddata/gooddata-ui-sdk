@@ -20,6 +20,9 @@ export function ConditionalScopedThemeProvider(input: {
 export const defaultHeaderTheme: IThemeHeader;
 
 // @internal
+export function findDocumentLengthsWithUnits(theme: ITheme | undefined): string[];
+
+// @internal
 export const findInvalidThemeColors: (theme: ITheme | undefined) => IInvalidThemeColor[];
 
 // @internal

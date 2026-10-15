@@ -7,13 +7,13 @@ import {
     type IPublisherDocumentTemplateV1,
     type IPublisherDocumentV1,
 } from "./document.js";
-import { type PublisherPageLayoutNodeV1, isPublisherLayoutSectionV1 } from "./layout.js";
+import { type PublisherLayoutNodeV1, isPublisherLayoutSectionV1 } from "./layout.js";
 import {
     type IPublisherPageBodyV1,
-    type IPublisherPageLayoutContentV1,
-    type IPublisherPageLayoutDefinitionV1,
-    type IPublisherPageLayoutV1,
-} from "./pageLayout.js";
+    type IPublisherPageTemplateContentV1,
+    type IPublisherPageTemplateDefinitionV1,
+    type IPublisherPageTemplateV1,
+} from "./pageTemplate.js";
 import { type PublisherSlotV1 } from "./slot.js";
 import { type IPublisherBoxStyleV1, isPublisherImageBackgroundV1 } from "./styling.js";
 import { type PublisherDateStringV1 } from "./variables.js";
@@ -43,7 +43,7 @@ function prefixBackgroundSlotId(
     };
 }
 
-function prefixLayoutSlotIds(node: PublisherPageLayoutNodeV1, prefix: string): PublisherPageLayoutNodeV1 {
+function prefixLayoutSlotIds(node: PublisherLayoutNodeV1, prefix: string): PublisherLayoutNodeV1 {
     if (isPublisherLayoutSectionV1(node)) {
         return {
             ...node,
@@ -58,16 +58,16 @@ function prefixLayoutSlotIds(node: PublisherPageLayoutNodeV1, prefix: string): P
 }
 
 /**
- * Creates a new page layout definition.
+ * Creates a new page template definition.
  *
  * @alpha
  */
-export function newPublisherPageLayoutDefinitionV1(
+export function newPublisherPageTemplateDefinitionV1(
     title: string,
     body: IPublisherPageBodyV1,
-    modifications?: Partial<Omit<IPublisherPageLayoutDefinitionV1, "type" | "title" | "content">>,
-): IPublisherPageLayoutDefinitionV1 {
-    const content: IPublisherPageLayoutContentV1 = { version: "1", ...body };
+    modifications?: Partial<Omit<IPublisherPageTemplateDefinitionV1, "type" | "title" | "content">>,
+): IPublisherPageTemplateDefinitionV1 {
+    const content: IPublisherPageTemplateContentV1 = { version: "1", ...body };
     return {
         type: "reportPageLayout",
         title,
@@ -77,7 +77,7 @@ export function newPublisherPageLayoutDefinitionV1(
 }
 
 /**
- * Clones a page layout into a page instance embeddable in template/document content.
+ * Clones a page template into a page instance embeddable in template/document content.
  *
  * @remarks
  * The body is deep-copied and detached from the source page — no reference is kept.
@@ -86,8 +86,8 @@ export function newPublisherPageLayoutDefinitionV1(
  *
  * @alpha
  */
-export function newPublisherDocumentPageFromLayoutV1(
-    page: IPublisherPageLayoutV1 | IPublisherPageLayoutDefinitionV1,
+export function newPublisherDocumentPageFromTemplateV1(
+    page: IPublisherPageTemplateV1 | IPublisherPageTemplateDefinitionV1,
     localIdentifier: string = generatePublisherLocalId("page"),
 ): IPublisherDocumentPageV1 {
     const { version: _version, ...body } = deepClone(page.content);

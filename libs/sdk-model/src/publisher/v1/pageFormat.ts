@@ -1,7 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 /**
- * Page shape a page layout is designed for.
+ * Page shape a page template is designed for.
  *
  * @remarks
  * A layout's geometry only reads correctly at the proportions it was authored for: a row of three

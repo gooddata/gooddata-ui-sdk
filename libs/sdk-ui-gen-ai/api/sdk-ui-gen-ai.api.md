@@ -13,6 +13,7 @@ import { DashboardSelectorEvaluator } from '@gooddata/sdk-ui-dashboard';
 import { EnhancedStore } from '@reduxjs/toolkit';
 import { GenAIChatEffort } from '@gooddata/sdk-model';
 import { GenAIObjectType } from '@gooddata/sdk-model';
+import { IAiAssistantPublisherDocumentDefinition } from '@gooddata/sdk-pluggable-application-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IChatConversation } from '@gooddata/sdk-backend-spi';
 import { IChatConversationContent } from '@gooddata/sdk-backend-spi';
@@ -29,7 +30,6 @@ import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IGenAIUserContext } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IListedDashboard } from '@gooddata/sdk-model';
-import { IPublisherDocumentDefinition } from '@gooddata/sdk-model';
 import { ISlotProps } from '@gooddata/sdk-ui-kit';
 import { IUiButtonProps } from '@gooddata/sdk-ui-kit';
 import { IUiMenuGroupItemProps } from '@gooddata/sdk-ui-kit';
@@ -170,12 +170,7 @@ export type ChatDefinitionReceivedEvent = BaseEvent & {
     dashboard?: IDashboard;
     insights?: IInsight[];
     visualization?: NonNullable<IChatConversationVisualisationContent["visualization"]>;
-    publisherDocument?: IPublisherDocumentDefinition;
-    documentRef?: string;
-    refines?: string;
-    reworksOpenDocument?: boolean;
-    baseDocumentId?: string;
-};
+} & Partial<IAiAssistantPublisherDocumentDefinition>;
 
 // @public
 export type ChatEvent = ChatOpenedEvent | ChatClosedEvent | ChatResetEvent | ChatModeChangeEvent | ChatConversationPinnedEvent | ChatConversationPinErrorEvent | ChatConversationDeleteEvent | ChatConversationDeletedSuccessEvent | ChatConversationDeletedErrorEvent | ChatConversationRenameEvent | ChatConversationRenamedSuccessEvent | ChatConversationRenamedErrorEvent | ChatUserMessageEvent | ChatAgentChangeEvent | ChatAssistantMessageEvent | ChatFeedbackEvent | ChatFeedbackErrorEvent | ChatContextChangeEvent | ChatCopyToClipboardEvent | ChatVisualizationErrorEvent | ChatSaveVisualizationErrorEvent | ChatSaveVisualizationSuccessEvent | ChatConversationChangedEvent | ChatDefinitionReceivedEvent | ChatClarificationQuestionsEvent;

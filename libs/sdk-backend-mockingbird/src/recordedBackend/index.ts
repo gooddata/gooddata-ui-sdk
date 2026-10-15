@@ -69,7 +69,7 @@ import {
     type ValidationContext,
 } from "@gooddata/sdk-backend-spi";
 import {
-    BuiltInPublisherPageLayouts,
+    DefaultPublisherPageTemplates,
     type IColorPalette,
     type IColorPaletteDefinition,
     type IColorPaletteMetadataObject,
@@ -580,9 +580,9 @@ function recordedWorkspace(
         },
         publisher(): IWorkspacePublisherService {
             return {
-                getPageLayouts: () => Promise.resolve([...BuiltInPublisherPageLayouts]),
-                getPageLayout: (ref) => {
-                    const page = BuiltInPublisherPageLayouts.find((candidate) =>
+                getPageTemplates: () => Promise.resolve([...DefaultPublisherPageTemplates]),
+                getPageTemplate: (ref) => {
+                    const page = DefaultPublisherPageTemplates.find((candidate) =>
                         areObjRefsEqual(candidate.ref, ref),
                     );
                     if (!page) {
@@ -590,22 +590,22 @@ function recordedWorkspace(
                     }
                     return Promise.resolve(page);
                 },
-                createPageLayout: (page) => Promise.resolve({ ...page, ref: idRef("recordedReportPage") }),
-                updatePageLayout: (page) => {
+                createPageTemplate: (page) => Promise.resolve({ ...page, ref: idRef("recordedReportPage") }),
+                updatePageTemplate: (page) => {
                     if (
-                        BuiltInPublisherPageLayouts.some((candidate) =>
+                        DefaultPublisherPageTemplates.some((candidate) =>
                             areObjRefsEqual(candidate.ref, page.ref),
                         )
                     ) {
-                        throw new NotSupported("Built-in report page layouts cannot be updated.");
+                        throw new NotSupported("Default page templates cannot be updated.");
                     }
                     return Promise.resolve(page);
                 },
-                deletePageLayout: (ref) => {
+                deletePageTemplate: (ref) => {
                     if (
-                        BuiltInPublisherPageLayouts.some((candidate) => areObjRefsEqual(candidate.ref, ref))
+                        DefaultPublisherPageTemplates.some((candidate) => areObjRefsEqual(candidate.ref, ref))
                     ) {
-                        throw new NotSupported("Built-in report page layouts cannot be deleted.");
+                        throw new NotSupported("Default page templates cannot be deleted.");
                     }
                     return Promise.resolve();
                 },

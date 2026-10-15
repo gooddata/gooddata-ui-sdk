@@ -142,8 +142,8 @@ import { IPublisherDocumentDefinition } from '@gooddata/sdk-model';
 import { IPublisherDocumentExportPdfOptions } from '@gooddata/sdk-backend-spi';
 import { IPublisherDocumentTemplate } from '@gooddata/sdk-model';
 import { IPublisherDocumentTemplateDefinition } from '@gooddata/sdk-model';
-import { IPublisherPageLayout } from '@gooddata/sdk-model';
-import { IPublisherPageLayoutDefinition } from '@gooddata/sdk-model';
+import { IPublisherPageTemplate } from '@gooddata/sdk-model';
+import { IPublisherPageTemplateDefinition } from '@gooddata/sdk-model';
 import { IRawExportCustomOverrides } from '@gooddata/sdk-backend-spi';
 import { IRequestCorrelationMetadata } from '@gooddata/sdk-backend-spi';
 import { IResultHeader } from '@gooddata/sdk-model';
@@ -869,7 +869,7 @@ export abstract class DecoratedWorkspacePublisherService implements IWorkspacePu
     // (undocumented)
     createDocumentTemplate(template: IPublisherDocumentTemplateDefinition): Promise<IPublisherDocumentTemplate>;
     // (undocumented)
-    createPageLayout(page: IPublisherPageLayoutDefinition): Promise<IPublisherPageLayout>;
+    createPageTemplate(page: IPublisherPageTemplateDefinition): Promise<IPublisherPageTemplate>;
     // (undocumented)
     protected readonly decorated: IWorkspacePublisherService;
     // (undocumented)
@@ -877,7 +877,7 @@ export abstract class DecoratedWorkspacePublisherService implements IWorkspacePu
     // (undocumented)
     deleteDocumentTemplate(ref: ObjRef): Promise<void>;
     // (undocumented)
-    deletePageLayout(ref: ObjRef): Promise<void>;
+    deletePageTemplate(ref: ObjRef): Promise<void>;
     // (undocumented)
     exportDocumentToPdf(ref: ObjRef, options?: IPublisherDocumentExportPdfOptions): Promise<IExportResult>;
     // (undocumented)
@@ -889,15 +889,15 @@ export abstract class DecoratedWorkspacePublisherService implements IWorkspacePu
     // (undocumented)
     getDocumentTemplates(): Promise<IPublisherDocumentTemplate[]>;
     // (undocumented)
-    getPageLayout(ref: ObjRef): Promise<IPublisherPageLayout>;
+    getPageTemplate(ref: ObjRef): Promise<IPublisherPageTemplate>;
     // (undocumented)
-    getPageLayouts(): Promise<IPublisherPageLayout[]>;
+    getPageTemplates(): Promise<IPublisherPageTemplate[]>;
     // (undocumented)
     updateDocument(publisherDocument: IPublisherDocument): Promise<IPublisherDocument>;
     // (undocumented)
     updateDocumentTemplate(template: IPublisherDocumentTemplate): Promise<IPublisherDocumentTemplate>;
     // (undocumented)
-    updatePageLayout(page: IPublisherPageLayout): Promise<IPublisherPageLayout>;
+    updatePageTemplate(page: IPublisherPageTemplate): Promise<IPublisherPageTemplate>;
 }
 
 // @alpha (undocumented)
@@ -1229,13 +1229,13 @@ export class InMemoryWorkspacePublisherService implements IWorkspacePublisherSer
     // (undocumented)
     createDocumentTemplate(template: IPublisherDocumentTemplateDefinition): Promise<IPublisherDocumentTemplate>;
     // (undocumented)
-    createPageLayout(layout: IPublisherPageLayoutDefinition): Promise<IPublisherPageLayout>;
+    createPageTemplate(layout: IPublisherPageTemplateDefinition): Promise<IPublisherPageTemplate>;
     // (undocumented)
     deleteDocument(ref: ObjRef): Promise<void>;
     // (undocumented)
     deleteDocumentTemplate(ref: ObjRef): Promise<void>;
     // (undocumented)
-    deletePageLayout(ref: ObjRef): Promise<void>;
+    deletePageTemplate(ref: ObjRef): Promise<void>;
     // (undocumented)
     exportDocumentToPdf(_ref: ObjRef, _options?: IPublisherDocumentExportPdfOptions): Promise<IExportResult>;
     // (undocumented)
@@ -1247,15 +1247,15 @@ export class InMemoryWorkspacePublisherService implements IWorkspacePublisherSer
     // (undocumented)
     getDocumentTemplates(): Promise<IPublisherDocumentTemplate[]>;
     // (undocumented)
-    getPageLayout(ref: ObjRef): Promise<IPublisherPageLayout>;
+    getPageTemplate(ref: ObjRef): Promise<IPublisherPageTemplate>;
     // (undocumented)
-    getPageLayouts(): Promise<IPublisherPageLayout[]>;
+    getPageTemplates(): Promise<IPublisherPageTemplate[]>;
     // (undocumented)
     updateDocument(publisherDocument: IPublisherDocument): Promise<IPublisherDocument>;
     // (undocumented)
     updateDocumentTemplate(template: IPublisherDocumentTemplate): Promise<IPublisherDocumentTemplate>;
     // (undocumented)
-    updatePageLayout(layout: IPublisherPageLayout): Promise<IPublisherPageLayout>;
+    updatePageTemplate(layout: IPublisherPageTemplate): Promise<IPublisherPageTemplate>;
 }
 
 // @internal (undocumented)

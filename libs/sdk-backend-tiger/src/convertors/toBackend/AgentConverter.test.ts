@@ -13,6 +13,8 @@ const rule: IAgentInstruction = {
     isDisabled: false,
 };
 
+const customSkills: IAgent["customSkills"] = ["report_builder", "document_builder"];
+
 const agent = (instructions?: IAgentInstruction[]): IAgent => ({
     ref: idRef("agent1"),
     name: "Agent",
@@ -36,6 +38,14 @@ describe("convertAgentToBackend — instructions", () => {
     });
 });
 
+describe("convertAgentToBackend — custom skills", () => {
+    it("sends every Publisher skill id as stored", () => {
+        expect(convertAgentToBackend({ ...agent(), customSkills }).data.attributes?.customSkills).toEqual(
+            customSkills,
+        );
+    });
+});
+
 describe("convertAgentPatchToBackend — instructions", () => {
     it("omits the field when the patch does not carry it, leaving stored instructions alone", () => {
         const attributes = convertAgentPatchToBackend({ ref: idRef("agent1"), enabled: true }).data
@@ -49,5 +59,13 @@ describe("convertAgentPatchToBackend — instructions", () => {
             instructions: [rule],
         }).data.attributes;
         expect(attributes?.instructions).toEqual([rule]);
+    });
+});
+
+describe("convertAgentPatchToBackend — custom skills", () => {
+    it("sends every Publisher skill id as stored", () => {
+        expect(
+            convertAgentPatchToBackend({ ref: idRef("agent1"), customSkills }).data.attributes?.customSkills,
+        ).toEqual(customSkills);
     });
 });

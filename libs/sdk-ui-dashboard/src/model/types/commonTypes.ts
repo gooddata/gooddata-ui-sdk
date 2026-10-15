@@ -336,6 +336,16 @@ export type DashboardConfig = {
 
     /**
      * @internal
+     * Specifies if AI is waiting for user input before it can continue.
+     *
+     * @remarks
+     * This flag can be used to replace the dashboard content with a loading state while the AI
+     * process is blocked waiting for the user to respond.
+     */
+    isAiWaiting?: boolean;
+
+    /**
+     * @internal
      * Identifier of the export
      *
      * @remarks

@@ -1,0 +1,80 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Document Template V2 Type",
+    "description": "JSON schema for Gooddata Analytics Document Template, content version 2",
+    "allOf": [
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "document_template"
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "$ref": "#/$defs/publisherDocumentTemplateV2"
+            }
+        }
+    ],
+    "properties": {
+        "type": {
+            "type": "string",
+            "enum": ["document_template"]
+        }
+    },
+    "required": ["type"],
+    "$defs": {
+        "publisherDocumentTemplateV2": {
+            "$id": "/gaac/publisherDocumentTemplateV2",
+            "title": "Publisher Document Template V2",
+            "description": "A document created from the template gets a deep copy of its content and keeps no reference back.",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "pattern": "^(?!default\\.)(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                    "description": "A unique identifier of the document template. Ids starting with default. are reserved.",
+                    "$semantic": [
+                        {
+                            "type": "uniqueness",
+                            "source": "documentTemplate.id",
+                            "code": "core.uniqueness.documentTemplates.id"
+                        },
+                        {
+                            "type": "definition",
+                            "source": "documentTemplate.id"
+                        }
+                    ]
+                },
+                "type": {
+                    "type": "string",
+                    "enum": ["document_template"]
+                },
+                "version": {
+                    "type": "string",
+                    "enum": ["2"],
+                    "description": "Version of the content format."
+                },
+                "title": {
+                    "$ref": "/gaac/publisherEntityTitleV2"
+                },
+                "description": {
+                    "$ref": "/gaac/publisherEntityDescriptionV2"
+                },
+                "tags": {
+                    "$ref": "/gaac/publisherEntityTagsV2"
+                },
+                "content": {
+                    "$ref": "/gaac/publisherDocumentContentV2"
+                }
+            },
+            "required": ["id", "type", "version", "title", "content"],
+            "$semantic": {
+                "type": "snippet",
+                "snippets": ["document_template"]
+            }
+        }
+    }
+}

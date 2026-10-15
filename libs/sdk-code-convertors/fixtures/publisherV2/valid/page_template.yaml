@@ -1,0 +1,25 @@
+type: page_template
+id: two_charts
+version: "2"
+title: Two charts
+content:
+    kind: content
+    page_size: widescreen
+    layout:
+        type: row
+        children:
+            - type: visualization
+              id: left
+              placeholder:
+                  hint: Pick the main chart
+                  required: true
+            - type: visualization
+              id: right
+              display:
+                  legend:
+                      position: bottom
+                  x_axis:
+                      values:
+                          rotation: -45
+                  data_labels:
+                      visible: auto

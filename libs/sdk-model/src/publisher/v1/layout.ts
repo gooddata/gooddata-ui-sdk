@@ -5,16 +5,16 @@ import { isEmpty } from "lodash-es";
 import { type IPublisherBoxStyleV1 } from "./styling.js";
 
 /**
- * Node of a page layout: a recursive row/column split tree (flexbox semantics)
+ * Node of a page's layout tree: a recursive row/column split tree (flexbox semantics)
  * over a fixed page. Leaves assign their area to slots; the tree carries geometry and
  * box paint, slot content lives in {@link IPublisherPageBodyV1.slots}.
  *
  * @alpha
  */
-export type PublisherPageLayoutNodeV1 = IPublisherLayoutSectionV1 | IPublisherLayoutSlotRefV1;
+export type PublisherLayoutNodeV1 = IPublisherLayoutSectionV1 | IPublisherLayoutSlotRefV1;
 
 /**
- * Fields common to all page layout nodes.
+ * Fields common to all layout nodes.
  *
  * @alpha
  */
@@ -39,7 +39,7 @@ export interface IPublisherLayoutSectionV1 extends IPublisherLayoutNodeBaseV1 {
      */
     direction: "row" | "column";
 
-    children: PublisherPageLayoutNodeV1[];
+    children: PublisherLayoutNodeV1[];
 
     /**
      * Paint of this section's box. Never affects how children are laid out.

@@ -83,3 +83,9 @@ export const PUBLISHER_PAGE_LAYOUT_COMMENT = [
     " It places what it draws in a tree of rows and columns, and a slot left",
     " empty here is one whatever uses the page is expected to fill.",
 ].join("\n");
+
+export const PUBLISHER_PAGE_TEMPLATE_COMMENT_V2 = [
+    " A page template is one page a document or a document template can copy.",
+    " It places widgets in a tree of rows and columns, and a widget left empty",
+    " here is one the document is expected to fill.",
+].join("\n");
