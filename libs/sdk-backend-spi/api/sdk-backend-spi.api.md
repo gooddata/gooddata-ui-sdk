@@ -2077,6 +2077,14 @@ export interface ILocalizationTranslatedLocale {
 }
 
 // @alpha
+export interface ILocalizationTranslationCount {
+    // (undocumented)
+    users: number;
+    // (undocumented)
+    workspaces: number;
+}
+
+// @alpha
 export interface ILocalizationTranslationCoverage {
     // (undocumented)
     locales: Array<ILocalizationTranslatedLocale & {
@@ -2084,6 +2092,19 @@ export interface ILocalizationTranslationCoverage {
     }>;
     // (undocumented)
     total: number;
+}
+
+// @alpha
+export interface ILocalizationTranslationUsage {
+    values: ILocalizationTranslationValueUsage[];
+}
+
+// @alpha
+export interface ILocalizationTranslationValueUsage {
+    // (undocumented)
+    bySetting: Partial<Record<LocalizationTranslatedSettingType, Record<LocalizationTranslationState, ILocalizationTranslationCount>>>;
+    // (undocumented)
+    content: ILocalizationValueContent;
 }
 
 // @alpha
@@ -2106,6 +2127,7 @@ export interface ILocalizationUsageListQuery extends ILocalizationPageQuery {
     setting?: LocalizationSettingType;
     // (undocumented)
     source?: LocalizationUsageSource;
+    translation?: LocalizationTranslationState;
     // (undocumented)
     value?: string;
 }
@@ -2470,6 +2492,7 @@ export interface IOrganizationLlmProvidersService {
 export interface IOrganizationLocalizationService {
     getStatistics(): Promise<ILocalizationStatistics>;
     getStatisticsWorkspaces(query?: ILocalizationPageQuery): Promise<ILocalizationStatisticsWorkspacesPage>;
+    getTranslationUsage(): Promise<ILocalizationTranslationUsage>;
     getUsage(): Promise<ILocalizationUsage>;
     getUsageUsers(query?: ILocalizationUsageListQuery): Promise<ILocalizationUsageUsersPage>;
     getUsageWorkspaces(query?: ILocalizationUsageListQuery): Promise<ILocalizationUsageWorkspacesPage>;
@@ -2628,12 +2651,14 @@ export interface IOrganizationUserService {
     getUserGroups(): Promise<IOrganizationUserGroup[]>;
     getUserGroupsOfUser(userId: string): Promise<IUserGroup[]>;
     getUserGroupsQuery(): IOrganizationUserGroupsQuery;
+    getUserLocalizationSettings(userId: string): Promise<IUserLocalizationSettings>;
     getUsers(): Promise<IOrganizationUser[]>;
     getUsersByEmail(email: string): Promise<IUser[]>;
     getUsersOfUserGroup(userGroupId: string): Promise<IUser[]>;
     getUsersQuery(): IOrganizationUsersQuery;
     getUsersSummary(): Promise<IOrganizationUser[]>;
     removeUsersFromUserGroups(userIds: string[], userGroupIds: string[]): Promise<void>;
+    setUserLocalizationSetting(userId: string, type: LocalizationSettingType, value: string | undefined): Promise<void>;
     updateUser(user: IUser): Promise<void>;
     updateUserGroup(group: IUserGroup): Promise<void>;
 }
@@ -2987,6 +3012,9 @@ export interface IUpsertKnowledgeDocumentRequest {
     // (undocumented)
     file: File;
 }
+
+// @alpha
+export type IUserLocalizationSettings = Partial<Record<LocalizationSettingType, string>>;
 
 // @public
 export interface IUserService {
@@ -3347,6 +3375,7 @@ export interface IWorkspaceKeyDriverAnalysisService {
 export interface IWorkspaceLocalizationService {
     getStatistics(): Promise<ILocalizationStatistics>;
     getStatisticsWorkspaces(query?: ILocalizationPageQuery): Promise<ILocalizationStatisticsWorkspacesPage>;
+    getTranslationUsage(): Promise<ILocalizationTranslationUsage>;
     getUsage(): Promise<ILocalizationUsage>;
     getUsageUsers(query?: ILocalizationUsageListQuery): Promise<ILocalizationUsageUsersPage>;
     getUsageWorkspaces(query?: ILocalizationUsageListQuery): Promise<ILocalizationUsageWorkspacesPage>;
@@ -3589,6 +3618,12 @@ export class LimitReached extends AnalyticalBackendError {
 
 // @alpha
 export type LocalizationSettingType = "LOCALE" | "METADATA_LOCALE" | "DATA_LOCALE";
+
+// @alpha
+export type LocalizationTranslatedSettingType = "METADATA_LOCALE" | "DATA_LOCALE";
+
+// @alpha
+export type LocalizationTranslationState = "missing" | "available";
 
 // @alpha
 export type LocalizationUsageSource = "USER" | "WORKSPACE" | "PARENT" | "ORGANIZATION" | "ENVIRONMENT" | "DEFAULT";

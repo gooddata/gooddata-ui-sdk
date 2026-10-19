@@ -250,6 +250,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableSavFileStorage,
+            "enableSavFileStorage",
+            "BOOLEAN",
+            FeatureFlagsValues.enableSavFileStorage,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableOidcAuth,
             "enableOidcAuth",
             "BOOLEAN",

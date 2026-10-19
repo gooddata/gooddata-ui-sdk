@@ -2,8 +2,16 @@
 
 import { describe, expect, it } from "vitest";
 
-import { effectiveSettings, ownSettings, summarize, usageUsers, usageWorkspaces } from "./aggregate.js";
-import { acmePeople, acmeWorkspaces } from "./fixture.js";
+import {
+    effectiveSettings,
+    ownSettings,
+    summarize,
+    translatedLocalesOf,
+    translationUsage,
+    usageUsers,
+    usageWorkspaces,
+} from "./aggregate.js";
+import { acmePeople, acmeStatisticsWorkspaces, acmeWorkspaces } from "./fixture.js";
 
 const workspaces = acmeWorkspaces();
 const people = acmePeople(workspaces.map((workspace) => workspace.id));
@@ -102,5 +110,63 @@ describe("usageWorkspaces names", () => {
         expect(rows[0].parentName).toBe(
             workspaces.find((workspace) => workspace.id === child.parentId)?.name,
         );
+    });
+});
+
+describe("translationUsage", () => {
+    const scope = {
+        ...organizationScope,
+        translatedLocales: translatedLocalesOf(workspaces, acmeStatisticsWorkspaces()),
+    };
+    const translationsOf = (code: string) =>
+        translationUsage(scope).values.find((entry) => entry.content.value === code)?.bySetting;
+
+    it("counts the workspaces that set a language without a translation", () => {
+        expect(translationsOf("es-ES")?.METADATA_LOCALE?.missing.workspaces).toBe(10);
+    });
+
+    it("counts the workspaces that could use a translation to their interface language", () => {
+        expect(translationsOf("it-IT")?.METADATA_LOCALE?.available).toEqual({ workspaces: 9, users: 0 });
+        expect(translationsOf("it-IT")?.DATA_LOCALE).toBeUndefined();
+    });
+
+    it("finds nothing missing where every workspace has the translation", () => {
+        expect(translationsOf("de-DE")?.METADATA_LOCALE?.missing.workspaces ?? 0).toBe(0);
+    });
+
+    it("lists the workspaces behind a count", () => {
+        const page = usageWorkspaces(scope, {
+            value: "es-ES",
+            setting: "METADATA_LOCALE",
+            translation: "missing",
+        });
+
+        expect(page.totalCount).toBe(10);
+        expect(page.workspaces.map((workspace) => workspace.id)).toContain("iberia-16");
+        expect(page.workspaces.map((workspace) => workspace.id)).not.toContain("iberia-01");
+    });
+});
+
+describe("translatedLocalesOf", () => {
+    const row = (total: number) => ({
+        id: "italy",
+        name: "Italy",
+        parentId: null,
+        sourceLanguage: "it-IT",
+        metadata: { total, locales: [] },
+        data: { total: 0, locales: [] },
+    });
+
+    it("counts the source language of content as translated", () => {
+        expect(translatedLocalesOf(workspaces, [row(5)])("italy-01", "METADATA_LOCALE").has("it-IT")).toBe(
+            true,
+        );
+    });
+
+    it("ignores the source language where there is no content of that kind", () => {
+        expect(translatedLocalesOf(workspaces, [row(0)])("italy-01", "METADATA_LOCALE").has("it-IT")).toBe(
+            false,
+        );
+        expect(translatedLocalesOf(workspaces, [row(5)])("italy-01", "DATA_LOCALE").has("it-IT")).toBe(false);
     });
 });

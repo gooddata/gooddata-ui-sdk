@@ -5,9 +5,34 @@ import { describe, expect, it, vi } from "vitest";
 
 import { type JsonApiAttributeOutAttributesGranularityEnum } from "@gooddata/api-client-tiger";
 
-import { isSupportedTigerGranularity, toSdkGranularity } from "./dateGranularityConversions.js";
+import {
+    dateAttributeIdToSdkGranularity,
+    isSupportedTigerGranularity,
+    toSdkGranularity,
+} from "./dateGranularityConversions.js";
 
 describe("dateGranularityConversions", () => {
+    describe("dateAttributeIdToSdkGranularity", () => {
+        it.each([
+            ["order_date.minuteOfHour", "GDC.time.minute_in_hour"],
+            ["order_date.year", "GDC.time.year"],
+            ["order_date.dayOfMonth", "GDC.time.day_in_month"],
+            ["order_date.secondOfMinute", "GDC.time.second_in_minute"],
+            ["order_date.fiscalQuarter", "GDC.time.fiscal_quarter"],
+            ["dt.with.dots.hourOfDay", "GDC.time.hour_in_day"],
+        ])("resolves %s to %s", (identifier, granularity) => {
+            expect(dateAttributeIdToSdkGranularity(identifier)).toBe(granularity);
+        });
+
+        it.each([
+            ["no granularity part", "order_date"],
+            ["unknown granularity part", "order_date.region"],
+            ["granularity the SDK does not model", "order_date.fiscalWeek"],
+        ])("answers undefined for an identifier with %s", (_case, identifier) => {
+            expect(dateAttributeIdToSdkGranularity(identifier)).toBeUndefined();
+        });
+    });
+
     describe("toSdkGranularity", () => {
         it.each([
             ["YEAR", "GDC.time.year"],

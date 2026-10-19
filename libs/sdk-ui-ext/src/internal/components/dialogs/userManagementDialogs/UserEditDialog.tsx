@@ -16,11 +16,13 @@ import { UserDetailsView } from "./Details/UserDetailsView.js";
 import {
     useDeleteDialog,
     useDeleteUser,
+    useLanguageStatistics,
     useOrganizationDetails,
     useUser,
     useUserDialogMode,
     useUserDialogTabs,
     useUserGroups,
+    useUserLanguages,
 } from "./dialogHooks.js";
 import { ErrorDialog } from "./ErrorDialog.js";
 import { usePermissions } from "./hooks/usePermissions.js";
@@ -59,6 +61,7 @@ export interface IUserEditDialogProps extends IWithTelemetryProps {
     isCreateVisualizationWorkspacePermissionEnabled?: boolean;
     areComputedAttributesEnabled?: boolean;
     areVisualizationPermissionsEnabled?: boolean;
+    isLocalizationEnabled?: boolean;
     selectedTab?: UserTabId;
 }
 
@@ -76,6 +79,7 @@ function UserEditDialogComponent({
     isCreateVisualizationWorkspacePermissionEnabled = false,
     areComputedAttributesEnabled = false,
     areVisualizationPermissionsEnabled = false,
+    isLocalizationEnabled = false,
     selectedTab = undefined,
 }: IUserEditDialogProps) {
     const intl = useIntl();
@@ -88,6 +92,17 @@ function UserEditDialogComponent({
         error,
         isLoading: userIsLoading,
     } = useUser(userId, organizationId, isAdmin, onSuccess);
+    const {
+        languages,
+        setLanguages,
+        reloadLanguages,
+        isLoading: languagesAreLoading,
+        isError: isLanguagesError,
+    } = useUserLanguages(userId, organizationId, isLocalizationEnabled);
+    const { statistics, isLoading: statisticsAreLoading } = useLanguageStatistics(
+        organizationId,
+        isLocalizationEnabled,
+    );
     const { isBootstrapUser, bootstrapUserGroupId } = useOrganizationDetails(organizationId);
     const {
         grantedWorkspaces,
@@ -157,7 +172,12 @@ function UserEditDialogComponent({
 
     const isLoading = error
         ? false
-        : userIsLoading || !grantedWorkspaces || !grantedUserGroups || !grantedDataSources;
+        : userIsLoading ||
+          languagesAreLoading ||
+          statisticsAreLoading ||
+          !grantedWorkspaces ||
+          !grantedUserGroups ||
+          !grantedDataSources;
 
     const isOpenedInEditMode = initialView !== "VIEW";
 
@@ -269,6 +289,9 @@ function UserEditDialogComponent({
                                             isBootstrapUser={isBootstrapUser(user)}
                                             mode="VIEW"
                                             isSystemAccountFilteringEnabled={isSystemAccountFilteringEnabled}
+                                            isLocalizationEnabled={isLocalizationEnabled}
+                                            languages={languages}
+                                            isLanguagesError={isLanguagesError}
                                         />
                                     )}
                                     {selectedTabId.id === userDialogTabsMessages.dataSources.id && (
@@ -331,7 +354,15 @@ function UserEditDialogComponent({
                                     enableBackButton={!isOpenedInEditMode}
                                     changeUserMembership={changeUserMembership}
                                     isSystemAccountFilteringEnabled={isSystemAccountFilteringEnabled}
-                                    onSubmit={onUserDetailsChanged}
+                                    isLocalizationEnabled={isLocalizationEnabled}
+                                    languages={languages}
+                                    isLanguagesError={isLanguagesError}
+                                    statistics={statistics}
+                                    onLanguagesSaveFailed={reloadLanguages}
+                                    onSubmit={(updatedUser, isUpdatedAdmin, updatedLanguages) => {
+                                        setLanguages(updatedLanguages);
+                                        onUserDetailsChanged(updatedUser, isUpdatedAdmin);
+                                    }}
                                     onCancel={isOpenedInEditMode ? onClose : () => setDialogMode("VIEW")}
                                     onClose={onClose}
                                     removeAdminGroup={removeAdminGroup}

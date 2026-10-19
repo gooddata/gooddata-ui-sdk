@@ -21,6 +21,8 @@
     "gd.gen-ai.global-unsupported-model": "Model nie jest obsługiwany",
     "gd.gen-ai.global-unsupported-model.description": "Asystent AI wymaga GPT-5.2 lub nowszego. Skontaktuj się z administratorem, aby zaktualizować model.",
     "gd.gen-ai.global-unsupported-model.button-change-model": "Zmień model LLM",
+    "gd.gen-ai.visualization.error.no_data": "<b>Brak dostępnych danych.</b> Zmień dane lub filtry.",
+    "gd.gen-ai.visualization.error.negative_values": "<b>W wizualizacji znaleziono wartości ujemne.</b> Zmień dane.",
     "gd.gen-ai.visualization.error.forecast": "<b>Nie otrzymano prognozy:</b> {error}",
     "gd.gen-ai.visualization.error.clustering": "<b>Nie otrzymano klastrowania:</b> {error}",
     "gd.gen-ai.visualization.error.data_too_large": "<b>Dane są zbyt duże.</b> Poproś o ograniczenie danych przez zastosowanie filtrów.",

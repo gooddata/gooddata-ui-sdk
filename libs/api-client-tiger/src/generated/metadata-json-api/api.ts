@@ -1578,7 +1578,7 @@ export interface DeclarativeAgent {
     'userGroups'?: Array<DeclarativeUserGroupIdentifier>;
 }
 
-export type DeclarativeAgentCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge' | 'dashboard_builder' | 'dashboard_editor' | 'report_builder';
+export type DeclarativeAgentCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge' | 'dashboard_builder' | 'dashboard_editor' | 'report_builder' | 'document_builder';
 export type DeclarativeAgentSkillsModeEnum = 'all' | 'custom';
 
 /**
@@ -1662,7 +1662,7 @@ export interface DeclarativeAnalyticalDashboard {
     'modifiedAt'?: string | null;
     'modifiedBy'?: DeclarativeUserIdentifier;
     /**
-     * A list of permissions.
+     * A list of permissions. A PUT without this property removes all existing permissions.
      */
     'permissions'?: Array<DeclarativeAnalyticalDashboardPermissionsInner>;
     /**
@@ -2887,6 +2887,10 @@ export interface DeclarativeMetric {
     'modifiedAt'?: string | null;
     'modifiedBy'?: DeclarativeUserIdentifier;
     /**
+     * A list of permissions. A PUT without this property keeps the existing permissions. An empty list removes all of them.
+     */
+    'permissions'?: Array<DeclarativeMetricPermissionsInner> | null;
+    /**
      * A list of tags.
      */
     'tags'?: Array<string>;
@@ -2897,6 +2901,49 @@ export interface DeclarativeMetric {
 }
 
 export type DeclarativeMetricCertificationEnum = 'CERTIFIED';
+
+/**
+ * Metric permission.
+ */
+export interface DeclarativeMetricPermissionAssignment {
+    /**
+     * Permission name.
+     */
+    'name': DeclarativeMetricPermissionAssignmentNameEnum;
+}
+
+export type DeclarativeMetricPermissionAssignmentNameEnum = 'EDIT' | 'SHARE' | 'VIEW';
+
+/**
+ * Metric permission for an assignee.
+ */
+export interface DeclarativeMetricPermissionForAssignee {
+    /**
+     * Permission name.
+     */
+    'name': DeclarativeMetricPermissionForAssigneeNameEnum;
+    'assignee': AssigneeIdentifier;
+}
+
+export type DeclarativeMetricPermissionForAssigneeNameEnum = 'EDIT' | 'SHARE' | 'VIEW';
+
+/**
+ * Metric permission for a collection of assignees identified by a rule.
+ */
+export interface DeclarativeMetricPermissionForAssigneeRule {
+    /**
+     * Permission name.
+     */
+    'name': DeclarativeMetricPermissionForAssigneeRuleNameEnum;
+    'assigneeRule': AssigneeRule;
+}
+
+export type DeclarativeMetricPermissionForAssigneeRuleNameEnum = 'EDIT' | 'SHARE' | 'VIEW';
+
+/**
+ * @type DeclarativeMetricPermissionsInner
+ */
+export type DeclarativeMetricPermissionsInner = DeclarativeMetricPermissionForAssignee | DeclarativeMetricPermissionForAssigneeRule;
 
 /**
  * A data model structured as a set of its attributes.
@@ -3551,6 +3598,10 @@ export interface DeclarativeVisualizationObject {
     'modifiedAt'?: string | null;
     'modifiedBy'?: DeclarativeUserIdentifier;
     /**
+     * A list of permissions. A PUT without this property keeps the existing permissions. An empty list removes all of them.
+     */
+    'permissions'?: Array<DeclarativeVisualizationObjectPermissionsInner> | null;
+    /**
      * A list of tags.
      */
     'tags'?: Array<string>;
@@ -3561,6 +3612,49 @@ export interface DeclarativeVisualizationObject {
 }
 
 export type DeclarativeVisualizationObjectCertificationEnum = 'CERTIFIED';
+
+/**
+ * Visualization object permission.
+ */
+export interface DeclarativeVisualizationObjectPermissionAssignment {
+    /**
+     * Permission name.
+     */
+    'name': DeclarativeVisualizationObjectPermissionAssignmentNameEnum;
+}
+
+export type DeclarativeVisualizationObjectPermissionAssignmentNameEnum = 'EDIT' | 'SHARE' | 'VIEW';
+
+/**
+ * Visualization object permission for an assignee.
+ */
+export interface DeclarativeVisualizationObjectPermissionForAssignee {
+    /**
+     * Permission name.
+     */
+    'name': DeclarativeVisualizationObjectPermissionForAssigneeNameEnum;
+    'assignee': AssigneeIdentifier;
+}
+
+export type DeclarativeVisualizationObjectPermissionForAssigneeNameEnum = 'EDIT' | 'SHARE' | 'VIEW';
+
+/**
+ * Visualization object permission for a collection of assignees identified by a rule.
+ */
+export interface DeclarativeVisualizationObjectPermissionForAssigneeRule {
+    /**
+     * Permission name.
+     */
+    'name': DeclarativeVisualizationObjectPermissionForAssigneeRuleNameEnum;
+    'assigneeRule': AssigneeRule;
+}
+
+export type DeclarativeVisualizationObjectPermissionForAssigneeRuleNameEnum = 'EDIT' | 'SHARE' | 'VIEW';
+
+/**
+ * @type DeclarativeVisualizationObjectPermissionsInner
+ */
+export type DeclarativeVisualizationObjectPermissionsInner = DeclarativeVisualizationObjectPermissionForAssignee | DeclarativeVisualizationObjectPermissionForAssigneeRule;
 
 /**
  * A declarative form of a particular workspace.
@@ -4376,7 +4470,7 @@ export interface JsonApiAgentInAttributes {
     'skillsMode'?: JsonApiAgentInAttributesSkillsModeEnum;
 }
 
-export type JsonApiAgentInAttributesCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge' | 'dashboard_builder' | 'dashboard_editor' | 'report_builder';
+export type JsonApiAgentInAttributesCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge' | 'dashboard_builder' | 'dashboard_editor' | 'report_builder' | 'document_builder';
 export type JsonApiAgentInAttributesSkillsModeEnum = 'all' | 'custom';
 
 /**
@@ -4454,7 +4548,7 @@ export interface JsonApiAgentOutAttributes {
     'skillsMode'?: JsonApiAgentOutAttributesSkillsModeEnum;
 }
 
-export type JsonApiAgentOutAttributesCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge' | 'dashboard_builder' | 'dashboard_editor' | 'report_builder';
+export type JsonApiAgentOutAttributesCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge' | 'dashboard_builder' | 'dashboard_editor' | 'report_builder' | 'document_builder';
 export type JsonApiAgentOutAttributesSkillsModeEnum = 'all' | 'custom';
 
 /**
@@ -4595,7 +4689,7 @@ export interface JsonApiAgentPatchAttributes {
     'skillsMode'?: JsonApiAgentPatchAttributesSkillsModeEnum;
 }
 
-export type JsonApiAgentPatchAttributesCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge' | 'dashboard_builder' | 'dashboard_editor' | 'report_builder';
+export type JsonApiAgentPatchAttributesCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge' | 'dashboard_builder' | 'dashboard_editor' | 'report_builder' | 'document_builder';
 export type JsonApiAgentPatchAttributesSkillsModeEnum = 'all' | 'custom';
 
 /**
@@ -16679,6 +16773,13 @@ export interface LocalizationCount {
     'total': number;
 }
 
+/**
+ * Translations of labels in the logical data model. `locales` lists the languages with at least one label translation, sorted. Language tags do not include extensions.
+ */
+export interface LocalizationDataStatistics {
+    'locales': Array<LocalizationStatisticsLocale>;
+}
+
 export interface LocalizationDefault {
     'content': LocalizationContent;
     /**
@@ -16696,6 +16797,13 @@ export interface LocalizationDefaults {
     'DATA_LOCALE'?: LocalizationDefault | null;
     'LOCALE'?: LocalizationDefault | null;
     'METADATA_LOCALE'?: LocalizationDefault | null;
+}
+
+/**
+ * Translations of titles, descriptions, tags and free-form texts of workspace objects. `locales` lists the languages that have stored translations, sorted. A language counts once translations for it are uploaded, even when they are empty.
+ */
+export interface LocalizationMetadataStatistics {
+    'locales': Array<LocalizationStatisticsLocale>;
 }
 
 export interface LocalizationResolvedValue {
@@ -16745,6 +16853,18 @@ export interface LocalizationSourceCounts {
     'PARENT'?: number;
     'USER'?: number;
     'WORKSPACE'?: number;
+}
+
+export interface LocalizationStatistics {
+    'data': LocalizationDataStatistics;
+    'metadata': LocalizationMetadataStatistics;
+}
+
+export interface LocalizationStatisticsLocale {
+    /**
+     * Language tag.
+     */
+    'locale': string;
 }
 
 export interface LocalizationUsage {
@@ -21004,6 +21124,47 @@ export async function ActionsApiAxiosParamCreator_MetricPermissions(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
+ * (BETA) Lists the languages that have at least one translation, separately for each kind of translation.
+ * @summary (BETA) Languages with translations in the organization.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_OrganizationLocalizationStatistics(
+    
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    const localVarPath = `/api/v1/actions/organization/localization/statistics`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
  * (BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count only under the languages they set themselves.
  * @summary (BETA) Languages used in the organization.
  * @param {*} [options] Override http request option.
@@ -23560,6 +23721,31 @@ export async function ActionsApi_MetricPermissions(
 
 // ActionsApi Api FP
 /**
+ * (BETA) Lists the languages that have at least one translation, separately for each kind of translation.
+ * @summary (BETA) Languages with translations in the organization.
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_OrganizationLocalizationStatistics(
+    axios: AxiosInstance, basePath: string,
+    
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<LocalizationStatistics> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_OrganizationLocalizationStatistics(
+        
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
  * (BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count only under the languages they set themselves.
  * @summary (BETA) Languages used in the organization.
  * @param {AxiosInstance} axios Axios instance.
@@ -24707,6 +24893,15 @@ export interface ActionsApiInterface {
      * @memberof ActionsApiInterface
      */
     metricPermissions(requestParameters: ActionsApiMetricPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<MetricPermissions>;
+
+    /**
+     * (BETA) Lists the languages that have at least one translation, separately for each kind of translation.
+     * @summary (BETA) Languages with translations in the organization.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    organizationLocalizationStatistics(options?: AxiosRequestConfig): AxiosPromise<LocalizationStatistics>;
 
     /**
      * (BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count only under the languages they set themselves.
@@ -26615,6 +26810,17 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      */
     public metricPermissions(requestParameters: ActionsApiMetricPermissionsRequest, options?: AxiosRequestConfig) {
         return ActionsApi_MetricPermissions(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * (BETA) Lists the languages that have at least one translation, separately for each kind of translation.
+     * @summary (BETA) Languages with translations in the organization.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public organizationLocalizationStatistics(options?: AxiosRequestConfig) {
+        return ActionsApi_OrganizationLocalizationStatistics(this.axios, this.basePath, options, this.configuration);
     }
 
     /**
@@ -141161,6 +141367,47 @@ export class LlmProviderControllerApi extends BaseAPI implements LlmProviderCont
 
 // LocalizationApi FP - LocalizationApiAxiosParamCreator
 /**
+ * (BETA) Lists the languages that have at least one translation, separately for each kind of translation.
+ * @summary (BETA) Languages with translations in the organization.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function LocalizationApiAxiosParamCreator_OrganizationLocalizationStatistics(
+    
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    const localVarPath = `/api/v1/actions/organization/localization/statistics`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// LocalizationApi FP - LocalizationApiAxiosParamCreator
+/**
  * (BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count only under the languages they set themselves.
  * @summary (BETA) Languages used in the organization.
  * @param {*} [options] Override http request option.
@@ -141335,6 +141582,31 @@ export async function LocalizationApiAxiosParamCreator_OrganizationLocalizationU
 
 // LocalizationApi Api FP
 /**
+ * (BETA) Lists the languages that have at least one translation, separately for each kind of translation.
+ * @summary (BETA) Languages with translations in the organization.
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function LocalizationApi_OrganizationLocalizationStatistics(
+    axios: AxiosInstance, basePath: string,
+    
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<LocalizationStatistics> {
+    const localVarAxiosArgs = await LocalizationApiAxiosParamCreator_OrganizationLocalizationStatistics(
+        
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// LocalizationApi Api FP
+/**
  * (BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count only under the languages they set themselves.
  * @summary (BETA) Languages used in the organization.
  * @param {AxiosInstance} axios Axios instance.
@@ -141416,6 +141688,15 @@ export async function LocalizationApi_OrganizationLocalizationUsageWorkspaces(
  * @interface LocalizationApi
  */
 export interface LocalizationApiInterface {
+    /**
+     * (BETA) Lists the languages that have at least one translation, separately for each kind of translation.
+     * @summary (BETA) Languages with translations in the organization.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LocalizationApiInterface
+     */
+    organizationLocalizationStatistics(options?: AxiosRequestConfig): AxiosPromise<LocalizationStatistics>;
+
     /**
      * (BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count only under the languages they set themselves.
      * @summary (BETA) Languages used in the organization.
@@ -141538,6 +141819,17 @@ export interface LocalizationApiOrganizationLocalizationUsageWorkspacesRequest {
  * @extends {BaseAPI}
  */
 export class LocalizationApi extends BaseAPI implements LocalizationApiInterface {
+    /**
+     * (BETA) Lists the languages that have at least one translation, separately for each kind of translation.
+     * @summary (BETA) Languages with translations in the organization.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LocalizationApi
+     */
+    public organizationLocalizationStatistics(options?: AxiosRequestConfig) {
+        return LocalizationApi_OrganizationLocalizationStatistics(this.axios, this.basePath, options, this.configuration);
+    }
+
     /**
      * (BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count only under the languages they set themselves.
      * @summary (BETA) Languages used in the organization.

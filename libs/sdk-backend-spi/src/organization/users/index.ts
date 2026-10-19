@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import {
     type IOrganizationUser,
@@ -8,6 +8,17 @@ import {
 } from "@gooddata/sdk-model";
 
 import { type IPagedResource } from "../../common/paging.js";
+import { type LocalizationSettingType } from "../../localization/index.js";
+
+/**
+ * Languages a user set for themselves, by setting type.
+ *
+ * @remarks
+ * A type that is missing is not set: the user follows the language of each workspace they use.
+ *
+ * @alpha
+ */
+export type IUserLocalizationSettings = Partial<Record<LocalizationSettingType, string>>;
 
 /**
  * This service provides access to organization users.
@@ -169,6 +180,30 @@ export interface IOrganizationUserService {
      * @returns promise
      */
     removeUsersFromUserGroups(userIds: string[], userGroupIds: string[]): Promise<void>;
+
+    /**
+     * Get the languages a user set for themselves.
+     *
+     * @param userId - ID of the user.
+     *
+     * @returns promise with the settings the user has; types the user did not set are missing
+     */
+    getUserLocalizationSettings(userId: string): Promise<IUserLocalizationSettings>;
+
+    /**
+     * Set or remove a language a user has for themselves.
+     *
+     * @param userId - ID of the user.
+     * @param type - the language setting to change.
+     * @param value - the language code; `undefined` removes the setting, so the user follows each workspace.
+     *
+     * @returns promise
+     */
+    setUserLocalizationSetting(
+        userId: string,
+        type: LocalizationSettingType,
+        value: string | undefined,
+    ): Promise<void>;
 }
 
 /**

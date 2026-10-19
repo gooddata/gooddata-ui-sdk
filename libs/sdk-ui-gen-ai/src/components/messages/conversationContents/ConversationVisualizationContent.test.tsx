@@ -1,17 +1,17 @@
 // (C) 2026 GoodData Corporation
 
 import { configureStore } from "@reduxjs/toolkit";
-import { render, screen } from "@testing-library/react";
-import type { ReactElement } from "react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
+import type { PropsWithChildren, ReactElement } from "react";
 import { IntlProvider } from "react-intl";
 import { Provider } from "react-redux";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
     type IChatConversationVisualisationContent,
     type IUserWorkspaceSettings,
 } from "@gooddata/sdk-backend-spi";
-import { WorkspaceProvider } from "@gooddata/sdk-ui";
+import { NegativeValuesSdkError, UnexpectedSdkError, WorkspaceProvider } from "@gooddata/sdk-ui";
 
 import { en_US } from "../../../localization/bundles/en-US.localization-bundle.js";
 import { type IChatConversationLocalItem, type IChatConversationMultipartLocalPart } from "../../../model.js";
@@ -21,18 +21,32 @@ import {
     getInitialChatWindowState,
 } from "../../../store/chatWindow/chatWindowSlice.js";
 import { messagesSliceName, messagesSliceReducer } from "../../../store/messages/messagesSlice.js";
+import { ConfigProvider } from "../../ConfigContext.js";
 
 import { ConversationVisualizationContent } from "./ConversationVisualizationContent.js";
 
 const messages = Object.fromEntries(Object.entries(en_US).map(([id, message]) => [id, message.text]));
 
+const visualisationMock = vi.hoisted(() => ({
+    props: undefined as
+        | {
+              enableChangeAnalysis?: boolean;
+              onVisualisationError?: (error: Error) => void;
+              onVisualisationSuccess?: () => void;
+          }
+        | undefined,
+}));
+
 vi.mock("./ConversationVisualisation.js", () => ({
-    ConversationVisualisation: (props: { enableChangeAnalysis?: boolean }) => (
-        <div
-            data-testid="mock-conversation-vis"
-            data-enable-change-analysis={String(props.enableChangeAnalysis)}
-        />
-    ),
+    ConversationVisualisation: (props: NonNullable<typeof visualisationMock.props>) => {
+        visualisationMock.props = props;
+        return (
+            <div
+                data-testid="mock-conversation-vis"
+                data-enable-change-analysis={String(props.enableChangeAnalysis)}
+            />
+        );
+    },
 }));
 
 vi.mock("./useSaveCheck.js", () => ({
@@ -89,16 +103,26 @@ describe("ConversationVisualizationContent - Key Driver Analysis enablement", ()
             },
         });
 
-        return render(
-            <Provider store={store}>
-                <WorkspaceProvider workspace="test-workspace">
-                    <IntlProvider locale="en" messages={messages}>
-                        {ui}
-                    </IntlProvider>
-                </WorkspaceProvider>
-            </Provider>,
-        );
+        function Wrapper({ children }: PropsWithChildren) {
+            return (
+                <Provider store={store}>
+                    <WorkspaceProvider workspace="test-workspace">
+                        <ConfigProvider canAnalyze>
+                            <IntlProvider locale="en" messages={messages}>
+                                {children}
+                            </IntlProvider>
+                        </ConfigProvider>
+                    </WorkspaceProvider>
+                </Provider>
+            );
+        }
+
+        return render(ui, { wrapper: Wrapper });
     };
+
+    beforeEach(() => {
+        visualisationMock.props = undefined;
+    });
 
     it("should disable change analysis when KeyDriverAnalysis is not mounted", () => {
         renderWithStore(
@@ -185,5 +209,81 @@ describe("ConversationVisualizationContent - Key Driver Analysis enablement", ()
 
         const vis = screen.getByTestId("mock-conversation-vis");
         expect(vis.getAttribute("data-enable-change-analysis")).toBe("true");
+    });
+
+    it("clears the visualization error when switching between chart and table", () => {
+        renderWithStore(
+            <ConversationVisualizationContent
+                message={mockMessage}
+                part={mockPart}
+                visualization={mockVisualization}
+            />,
+        );
+
+        act(() => visualisationMock.props?.onVisualisationError?.(new NegativeValuesSdkError()));
+        expect(screen.getByText("Negative values found in visualization.")).toBeInTheDocument();
+
+        fireEvent.click(screen.getByTestId("gen-ai-visualization-toggle-button"));
+
+        expect(screen.queryByText("Negative values found in visualization.")).not.toBeInTheDocument();
+    });
+
+    it("clears the visualization error when the active insight changes", () => {
+        const { rerender } = renderWithStore(
+            <ConversationVisualizationContent
+                message={mockMessage}
+                part={mockPart}
+                visualization={mockVisualization}
+            />,
+        );
+        const nextVisualization = {
+            ...mockVisualization,
+            insight: {
+                ...mockVisualization.insight,
+                identifier: "vis2",
+                uri: "/vis2",
+            },
+        };
+
+        act(() => visualisationMock.props?.onVisualisationError?.(new NegativeValuesSdkError()));
+        rerender(
+            <ConversationVisualizationContent
+                message={mockMessage}
+                part={mockPart}
+                visualization={nextVisualization}
+            />,
+        );
+
+        expect(screen.queryByText("Negative values found in visualization.")).not.toBeInTheDocument();
+    });
+
+    it("clears the visualization error after a successful render", () => {
+        renderWithStore(
+            <ConversationVisualizationContent
+                message={mockMessage}
+                part={mockPart}
+                visualization={mockVisualization}
+            />,
+        );
+
+        act(() => visualisationMock.props?.onVisualisationError?.(new NegativeValuesSdkError()));
+        act(() => visualisationMock.props?.onVisualisationSuccess?.());
+
+        expect(screen.queryByText("Negative values found in visualization.")).not.toBeInTheDocument();
+    });
+
+    it("records a later visualization error after an earlier error", () => {
+        renderWithStore(
+            <ConversationVisualizationContent
+                message={mockMessage}
+                part={mockPart}
+                visualization={mockVisualization}
+            />,
+        );
+
+        act(() => visualisationMock.props?.onVisualisationError?.(new NegativeValuesSdkError()));
+        act(() => visualisationMock.props?.onVisualisationError?.(new UnexpectedSdkError()));
+
+        expect(screen.queryByText("Negative values found in visualization.")).not.toBeInTheDocument();
     });
 });

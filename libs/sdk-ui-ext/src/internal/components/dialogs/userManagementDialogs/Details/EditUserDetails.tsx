@@ -4,6 +4,7 @@ import { useCallback, useEffect } from "react";
 
 import { useIntl } from "react-intl";
 
+import { type ILocalizationStatistics, type IUserLocalizationSettings } from "@gooddata/sdk-backend-spi";
 import { type IUser } from "@gooddata/sdk-model";
 import { BackButton, ConfirmDialogBase } from "@gooddata/sdk-ui-kit";
 
@@ -20,7 +21,12 @@ export interface IEditUserDetailsProps {
     enableBackButton?: boolean;
     changeUserMembership?: boolean;
     isSystemAccountFilteringEnabled?: boolean;
-    onSubmit: (user: IUser, isAdmin: boolean) => void;
+    isLocalizationEnabled?: boolean;
+    languages?: IUserLocalizationSettings;
+    isLanguagesError?: boolean;
+    statistics?: ILocalizationStatistics;
+    onLanguagesSaveFailed?: () => void;
+    onSubmit: (user: IUser, isAdmin: boolean, languages?: IUserLocalizationSettings) => void;
     onCancel: () => void;
     onClose: () => void;
     removeAdminGroup: () => Promise<void>;
@@ -33,19 +39,35 @@ export function EditUserDetails({
     enableBackButton,
     changeUserMembership,
     isSystemAccountFilteringEnabled,
+    isLocalizationEnabled,
+    languages,
+    isLanguagesError,
+    statistics,
+    onLanguagesSaveFailed,
     onSubmit,
     onCancel,
     onClose,
     removeAdminGroup,
 }: IEditUserDetailsProps) {
     const intl = useIntl();
-    const { updatedUser, isUpdatedAdmin, isProcessing, onSave, onChange, isDirty } = useUserDetails(
+    const {
+        updatedUser,
+        isUpdatedAdmin,
+        updatedLanguages,
+        isProcessing,
+        onSave,
+        onChange,
+        onLanguagesChange,
+        isDirty,
+    } = useUserDetails(
         user,
         isAdmin,
         onSubmit,
         onCancel,
         removeAdminGroup,
         isSystemAccountFilteringEnabled,
+        languages,
+        onLanguagesSaveFailed,
     );
 
     // change user membership if dialog was opened for that reason, enable Save button, do it just once
@@ -81,7 +103,12 @@ export function EditUserDetails({
                 isBootstrapUser={isBootstrapUser}
                 mode="EDIT"
                 isSystemAccountFilteringEnabled={isSystemAccountFilteringEnabled}
+                isLocalizationEnabled={isLocalizationEnabled}
+                languages={updatedLanguages}
+                isLanguagesError={isLanguagesError}
+                statistics={statistics}
                 onChange={onChange}
+                onLanguagesChange={onLanguagesChange}
             />
         </ConfirmDialogBase>
     );

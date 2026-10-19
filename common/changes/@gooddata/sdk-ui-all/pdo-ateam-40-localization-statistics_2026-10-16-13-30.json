@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "api-client-tiger, sdk-backend-tiger: The languages with translations in the organization come from the backend localization statistics endpoint. api-client-tiger drops the types of the removed AI agent workflow endpoints.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

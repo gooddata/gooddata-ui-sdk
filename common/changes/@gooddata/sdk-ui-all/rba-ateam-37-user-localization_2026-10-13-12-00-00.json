@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-backend-spi, sdk-backend-tiger: Read and change the interface, metadata and data language a user set for themselves. sdk-ui-ext: The user detail dialog shows and edits these languages when localization is enabled.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

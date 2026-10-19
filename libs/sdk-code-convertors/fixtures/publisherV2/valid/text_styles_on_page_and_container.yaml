@@ -1,0 +1,29 @@
+type: page_template
+id: styled_text
+version: "2"
+title: Styled text
+content:
+    style:
+        text_style: normalText
+        font_size: 14
+        font_weight: 600
+        font_style: italic
+        line_height: 1.4
+        letter_spacing: 0.02
+        text_transform: uppercase
+        text_overflow: ellipsis
+    layout:
+        type: column
+        style:
+            text_color: "#333333"
+            font_size: 12
+            font_weight: 400
+            font_style: normal
+            line_height: 1.2
+            letter_spacing: 0
+            text_transform: none
+            text_overflow: clip
+        children:
+            - type: text
+              id: body
+              markdown: Body

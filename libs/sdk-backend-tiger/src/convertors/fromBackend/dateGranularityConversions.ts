@@ -136,6 +136,35 @@ export function toSdkGranularity(
 }
 
 /**
+ * Resolves the SDK granularity of a date attribute or one of its labels from the identifier alone.
+ *
+ * @remarks
+ * Tiger names a date dataset's attributes and labels `<date dataset id>.<granularity>`, where the
+ * granularity part is the tiger granularity in camel case: `order_date.minuteOfHour` is
+ * `MINUTE_OF_HOUR`, which is `GDC.time.minute_in_hour`. Because it needs no metadata, this also works
+ * for a date attribute that no longer exists, for example after its granularity was disabled in the
+ * logical data model.
+ *
+ * @param identifier - identifier of a date attribute or of one of its labels
+ * @returns the SDK granularity, or undefined when the identifier does not follow the pattern or names
+ *  a granularity the SDK does not model
+ * @internal
+ */
+export function dateAttributeIdToSdkGranularity(identifier: string): DateAttributeGranularity | undefined {
+    const separator = identifier.lastIndexOf(".");
+    if (separator < 0) {
+        return undefined;
+    }
+    const tigerGranularity = identifier
+        .slice(separator + 1)
+        .replace(/([a-z0-9])([A-Z])/g, "$1_$2")
+        .toUpperCase();
+    return (TigerToSdkGranularityMap as Record<string, DateAttributeGranularity | undefined>)[
+        tigerGranularity
+    ];
+}
+
+/**
  * Whether a tiger granularity is modeled in the SDK (i.e. maps to a real SDK granularity rather than the
  * fallback). Use this to drop unsupported date attributes at the boundary — e.g. so extended fiscal-calendar
  * granularities are excluded from the catalog instead of surfacing as the fallback granularity.

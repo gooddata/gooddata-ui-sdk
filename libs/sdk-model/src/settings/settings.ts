@@ -642,6 +642,15 @@ export interface IFeatureFlags {
     enableCacheRetentionPolicy?: boolean;
 
     /**
+     * Enables SPSS (.sav) files in GDSTORAGE data sources: the file uploader accepts them next to
+     * CSV files and names its texts after files instead of CSV files.
+     *
+     * @remarks
+     * Defaults to false when not provided by the backend.
+     */
+    enableSavFileStorage?: boolean;
+
+    /**
      * Enable Semantic Search in the UI.
      */
     enableSemanticSearch?: boolean;

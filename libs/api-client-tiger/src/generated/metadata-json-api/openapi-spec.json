@@ -30072,6 +30072,35 @@
                     "description": "Minimal permission required to use this endpoint."
                 }
             }
+        },
+        "/api/v1/actions/organization/localization/statistics": {
+            "get": {
+                "tags": [
+                    "Localization",
+                    "actions"
+                ],
+                "summary": "(BETA) Languages with translations in the organization.",
+                "description": "(BETA) Lists the languages that have at least one translation, separately for each kind of translation.",
+                "operationId": "organizationLocalizationStatistics",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LocalizationStatistics"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
         }
     },
     "components": {
@@ -33500,7 +33529,8 @@
                                 "knowledge",
                                 "dashboard_builder",
                                 "dashboard_editor",
-                                "report_builder"
+                                "report_builder",
+                                "document_builder"
                             ]
                         }
                     },
@@ -33716,7 +33746,7 @@
                     },
                     "permissions": {
                         "type": "array",
-                        "description": "A list of permissions.",
+                        "description": "A list of permissions. A PUT without this property removes all existing permissions.",
                         "items": {
                             "oneOf": [
                                 {
@@ -36049,6 +36079,21 @@
                     "modifiedBy": {
                         "$ref": "#/components/schemas/DeclarativeUserIdentifier"
                     },
+                    "permissions": {
+                        "type": "array",
+                        "description": "A list of permissions. A PUT without this property keeps the existing permissions. An empty list removes all of them.",
+                        "nullable": true,
+                        "items": {
+                            "oneOf": [
+                                {
+                                    "$ref": "#/components/schemas/DeclarativeMetricPermissionForAssignee"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/DeclarativeMetricPermissionForAssigneeRule"
+                                }
+                            ]
+                        }
+                    },
                     "tags": {
                         "uniqueItems": true,
                         "type": "array",
@@ -36069,6 +36114,67 @@
                         "example": "Total sales"
                     }
                 }
+            },
+            "DeclarativeMetricPermissionAssignment": {
+                "required": [
+                    "name"
+                ],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Permission name.",
+                        "enum": [
+                            "EDIT",
+                            "SHARE",
+                            "VIEW"
+                        ]
+                    }
+                },
+                "description": "Metric permission.",
+                "nullable": true
+            },
+            "DeclarativeMetricPermissionForAssignee": {
+                "required": [
+                    "assignee",
+                    "name"
+                ],
+                "type": "object",
+                "description": "Metric permission for an assignee.",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/DeclarativeMetricPermissionAssignment"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "assignee": {
+                                "$ref": "#/components/schemas/AssigneeIdentifier"
+                            }
+                        }
+                    }
+                ]
+            },
+            "DeclarativeMetricPermissionForAssigneeRule": {
+                "required": [
+                    "assigneeRule",
+                    "name"
+                ],
+                "type": "object",
+                "description": "Metric permission for a collection of assignees identified by a rule.",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/DeclarativeMetricPermissionAssignment"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "assigneeRule": {
+                                "$ref": "#/components/schemas/AssigneeRule"
+                            }
+                        }
+                    }
+                ]
             },
             "DeclarativeModel": {
                 "type": "object",
@@ -37374,6 +37480,21 @@
                     "modifiedBy": {
                         "$ref": "#/components/schemas/DeclarativeUserIdentifier"
                     },
+                    "permissions": {
+                        "type": "array",
+                        "description": "A list of permissions. A PUT without this property keeps the existing permissions. An empty list removes all of them.",
+                        "nullable": true,
+                        "items": {
+                            "oneOf": [
+                                {
+                                    "$ref": "#/components/schemas/DeclarativeVisualizationObjectPermissionForAssignee"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/DeclarativeVisualizationObjectPermissionForAssigneeRule"
+                                }
+                            ]
+                        }
+                    },
                     "tags": {
                         "uniqueItems": true,
                         "type": "array",
@@ -37394,6 +37515,67 @@
                         "example": "Count of goods"
                     }
                 }
+            },
+            "DeclarativeVisualizationObjectPermissionAssignment": {
+                "required": [
+                    "name"
+                ],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Permission name.",
+                        "enum": [
+                            "EDIT",
+                            "SHARE",
+                            "VIEW"
+                        ]
+                    }
+                },
+                "description": "Visualization object permission.",
+                "nullable": true
+            },
+            "DeclarativeVisualizationObjectPermissionForAssignee": {
+                "required": [
+                    "assignee",
+                    "name"
+                ],
+                "type": "object",
+                "description": "Visualization object permission for an assignee.",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/DeclarativeVisualizationObjectPermissionAssignment"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "assignee": {
+                                "$ref": "#/components/schemas/AssigneeIdentifier"
+                            }
+                        }
+                    }
+                ]
+            },
+            "DeclarativeVisualizationObjectPermissionForAssigneeRule": {
+                "required": [
+                    "assigneeRule",
+                    "name"
+                ],
+                "type": "object",
+                "description": "Visualization object permission for a collection of assignees identified by a rule.",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/DeclarativeVisualizationObjectPermissionAssignment"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "assigneeRule": {
+                                "$ref": "#/components/schemas/AssigneeRule"
+                            }
+                        }
+                    }
+                ]
             },
             "DeclarativeWorkspace": {
                 "required": [
@@ -39115,7 +39297,8 @@
                                         "knowledge",
                                         "dashboard_builder",
                                         "dashboard_editor",
-                                        "report_builder"
+                                        "report_builder",
+                                        "document_builder"
                                     ]
                                 }
                             },
@@ -39272,7 +39455,8 @@
                                         "knowledge",
                                         "dashboard_builder",
                                         "dashboard_editor",
-                                        "report_builder"
+                                        "report_builder",
+                                        "document_builder"
                                     ]
                                 }
                             },
@@ -39538,7 +39722,8 @@
                                         "knowledge",
                                         "dashboard_builder",
                                         "dashboard_editor",
-                                        "report_builder"
+                                        "report_builder",
+                                        "document_builder"
                                     ]
                                 }
                             },
@@ -64807,6 +64992,21 @@
                     }
                 }
             },
+            "LocalizationDataStatistics": {
+                "required": [
+                    "locales"
+                ],
+                "type": "object",
+                "properties": {
+                    "locales": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/LocalizationStatisticsLocale"
+                        }
+                    }
+                },
+                "description": "Translations of labels in the logical data model. `locales` lists the languages with at least one label translation, sorted. Language tags do not include extensions."
+            },
             "LocalizationDefault": {
                 "required": [
                     "content",
@@ -64846,6 +65046,21 @@
                     }
                 },
                 "description": "The value a workspace gets when it and its parents set nothing. Null when the setting has no value."
+            },
+            "LocalizationMetadataStatistics": {
+                "required": [
+                    "locales"
+                ],
+                "type": "object",
+                "properties": {
+                    "locales": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/LocalizationStatisticsLocale"
+                        }
+                    }
+                },
+                "description": "Translations of titles, descriptions, tags and free-form texts of workspace objects. `locales` lists the languages that have stored translations, sorted. A language counts once translations for it are uploaded, even when they are empty."
             },
             "LocalizationResolvedValue": {
                 "required": [
@@ -64955,6 +65170,34 @@
                     }
                 },
                 "description": "Counts per source. Sources without any count are left out. Users without their own setting have no source and are only in the total."
+            },
+            "LocalizationStatistics": {
+                "required": [
+                    "data",
+                    "metadata"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/LocalizationDataStatistics"
+                    },
+                    "metadata": {
+                        "$ref": "#/components/schemas/LocalizationMetadataStatistics"
+                    }
+                }
+            },
+            "LocalizationStatisticsLocale": {
+                "required": [
+                    "locale"
+                ],
+                "type": "object",
+                "properties": {
+                    "locale": {
+                        "type": "string",
+                        "description": "Language tag.",
+                        "example": "de-DE"
+                    }
+                }
             },
             "LocalizationUsage": {
                 "required": [

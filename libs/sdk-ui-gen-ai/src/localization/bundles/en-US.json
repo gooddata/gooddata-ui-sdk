@@ -87,6 +87,14 @@
         "text": "Change LLM model",
         "crowdinContext": "Button label to open AI settings when configured model is not supported"
     },
+    "gd.gen-ai.visualization.error.no_data": {
+        "text": "<b>No data available.</b> Change the data or filters.",
+        "crowdinContext": "Error message when no data is available"
+    },
+    "gd.gen-ai.visualization.error.negative_values": {
+        "text": "<b>Negative values found in visualization.</b> Change the data.",
+        "crowdinContext": "Error message when negative values are found"
+    },
     "gd.gen-ai.visualization.error.forecast": {
         "text": "<b>Forecast not received:</b> {error}",
         "crowdinContext": "Error message when forecast is not received"

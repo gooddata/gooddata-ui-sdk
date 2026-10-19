@@ -21,6 +21,7 @@ export type Check = (value: unknown, path: string, issues: Issues) => void;
 interface IField {
     check: Check;
     required: boolean;
+    emptyStringAllowed?: boolean;
 }
 
 interface IOptionalField extends IField {
@@ -50,6 +51,11 @@ export function optional(check: Check): IOptionalField {
 
 export function required(check: Check): IRequiredField {
     return { check, required: true };
+}
+
+/** A required key for which `""` is a value of its own rather than an empty one. */
+export function requiredAllowingEmptyString(check: Check): IRequiredField {
+    return { check, required: true, emptyStringAllowed: true };
 }
 
 export function joinPath(path: string, segment: string | number): string {
@@ -86,7 +92,7 @@ export function objectOf<T>(): <Table extends KeyTable<T>>(table: ExactKeyTable<
                 const field = Object.hasOwn(fields, key) ? fields[key] : undefined;
                 if (field === undefined) {
                     issues.push({ path: keyPath, message: `Unknown key "${key}".` });
-                } else if (fieldValue === null || fieldValue === "") {
+                } else if (fieldValue === null || (fieldValue === "" && field.emptyStringAllowed !== true)) {
                     issues.push({
                         path: keyPath,
                         message: field.required
@@ -103,6 +109,29 @@ export function objectOf<T>(): <Table extends KeyTable<T>>(table: ExactKeyTable<
                 }
             }
         };
+    };
+}
+
+/** The first key of `variants` that `value` holds. */
+function variantKey<Variants extends Record<string, Check>>(
+    value: unknown,
+    variants: Variants,
+): (keyof Variants & string) | undefined {
+    return isPlainObject(value) ? Object.keys(variants).find((key) => Object.hasOwn(value, key)) : undefined;
+}
+
+/**
+ * Checks an object that is told apart by the key it holds. Another variant's key next to it is reported
+ * by the chosen variant as an unknown key.
+ */
+export function oneKeyOf(variants: Record<string, Check>, expected: string): Check {
+    return (value, path, issues) => {
+        const key = variantKey(value, variants);
+        if (key === undefined) {
+            issues.push({ path, message: `Expected ${expected}, got ${describeValue(value)}.` });
+        } else {
+            variants[key](value, path, issues);
+        }
     };
 }
 
@@ -126,6 +155,13 @@ export function satisfying(predicate: (value: unknown) => boolean, expected: str
 
 export function isFiniteNumber(value: unknown): value is number {
     return typeof value === "number" && Number.isFinite(value);
+}
+
+const minInt32 = -(2 ** 31);
+const maxInt32 = 2 ** 31 - 1;
+
+export function isInt32(value: unknown): value is number {
+    return typeof value === "number" && Number.isInteger(value) && value >= minInt32 && value <= maxInt32;
 }
 
 export function isNonEmptyString(value: unknown): value is string {
@@ -154,6 +190,7 @@ export function numberIn(min: number, max: number): Check {
 export const nonEmptyString = satisfying(isNonEmptyString, "a non-empty string");
 export const trueOrFalse = satisfying((value) => typeof value === "boolean", "true or false");
 export const finiteNumber = satisfying(isFiniteNumber, "a finite number");
+export const int32 = satisfying(isInt32, `an integer from ${minInt32} to ${maxInt32}`);
 export const px = satisfying(isLength, "a length of 0 or more");
 export const opacity = numberIn(0, 1);
 export const positive = satisfying((value) => isFiniteNumber(value) && value > 0, "a number greater than 0");

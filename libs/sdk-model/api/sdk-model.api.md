@@ -3207,6 +3207,7 @@ export interface IFeatureFlags {
     enableReportsSubsections?: boolean;
     // @alpha
     enableRichTextWidgetFilterConfiguration?: boolean;
+    enableSavFileStorage?: boolean;
     enableSecondGranularities?: boolean;
     enableSemanticConditionalFormatting?: boolean;
     enableSemanticSearch?: boolean;
@@ -5018,7 +5019,7 @@ export interface IPublisherColorBackgroundV1 {
 }
 
 // @alpha (undocumented)
-export interface IPublisherContainerStyleV2 extends IPublisherBoxStyleV2, IPublisherInheritedTextStyleV2 {
+export interface IPublisherContainerStyleV2 extends IPublisherBoxStyleV2, IPublisherTextStyleV2 {
     // (undocumented)
     gap?: PublisherGapValueV2;
 }
@@ -5448,7 +5449,7 @@ export interface IPublisherPageBodyValidationIssueV1 {
 }
 
 // @alpha (undocumented)
-export interface IPublisherPageStyleV2 extends IPublisherBackgroundStyleV2, IPublisherPaddingStyleV2, IPublisherInheritedTextStyleV2 {
+export interface IPublisherPageStyleV2 extends IPublisherBackgroundStyleV2, IPublisherPaddingStyleV2, IPublisherTextStyleV2 {
     gap?: PublisherGapValueV2;
 }
 

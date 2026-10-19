@@ -195,6 +195,7 @@ describe("validatePublisherDocumentContentV2", () => {
                         displayForm: { identifier: "region.name", type: "displayForm" },
                         operator: "contains",
                         literal: "EU",
+                        localIdentifier: "region_match",
                     },
                 },
             ],
@@ -215,6 +216,7 @@ describe("validatePublisherDocumentContentV2", () => {
                         from: "2026-01-01",
                         to: "2026-03-31",
                         dataSet: { identifier: "ship_date", type: "dataSet" },
+                        localIdentifier: "ship_date_absolute",
                     },
                 },
             ],
@@ -234,6 +236,7 @@ describe("validatePublisherDocumentContentV2", () => {
                         type: "relative",
                         granularity: "GDC.time.year",
                         dataSet: { identifier: "order_date", type: "dataSet" },
+                        localIdentifier: "order_date",
                     },
                 },
             ],
@@ -245,7 +248,17 @@ describe("validatePublisherDocumentContentV2", () => {
     it("rejects a date filter without a dataSet", () => {
         const issues = validatePublisherDocumentContentV2({
             pages: [],
-            filters: [{ dateFilter: { type: "relative", granularity: "GDC.time.month", from: -1, to: -1 } }],
+            filters: [
+                {
+                    dateFilter: {
+                        type: "relative",
+                        granularity: "GDC.time.month",
+                        from: -1,
+                        to: -1,
+                        localIdentifier: "period",
+                    },
+                },
+            ],
         });
 
         expect(issues).toEqual([{ path: "filters[0]", message: expect.stringContaining("dataSet") }]);
@@ -655,7 +668,13 @@ describe("document structure", () => {
 
     it("rejects the dashboard's common date filter, which has no dataSet", () => {
         const commonDateFilter = {
-            dateFilter: { type: "relative", granularity: "GDC.time.month", from: -1, to: -1 },
+            dateFilter: {
+                type: "relative",
+                granularity: "GDC.time.month",
+                from: -1,
+                to: -1,
+                localIdentifier: "common_date",
+            },
         };
 
         expect(paths(validatePublisherDocumentContentV2({ pages: [], filters: [commonDateFilter] }))).toEqual(
@@ -681,7 +700,8 @@ describe("document structure", () => {
                 dateFilter: {
                     type: "relative",
                     granularity: "GDC.time.decade",
-                    dataSet: { identifier: "d" },
+                    dataSet: { identifier: "d", type: "dataSet" },
+                    localIdentifier: "d",
                 },
             },
             "filters[0].dateFilter.granularity",
@@ -812,5 +832,325 @@ describe("entity structure", () => {
         };
 
         expect(validatePublisherEntityV2(persisted)).toEqual([]);
+    });
+});
+
+function documentFilterPaths(filter: unknown): string[] {
+    return paths(validatePublisherDocumentContentV2({ pages: [], filters: [filter] }));
+}
+
+function regionFilterWith(keys: Record<string, unknown>): unknown {
+    return { attributeFilter: { ...regionFilterBody, ...keys } };
+}
+
+function shipDateFilterWith(keys: Record<string, unknown>): unknown {
+    return { dateFilter: { ...(shipDateFilter as { dateFilter: object }).dateFilter, ...keys } };
+}
+
+function measureFilterWith(conditions: unknown[]): unknown {
+    return {
+        dashboardMeasureValueFilter: {
+            measure: { identifier: "revenue", type: "measure" },
+            localIdentifier: "revenue_filter",
+            conditions,
+        },
+    };
+}
+
+describe("filters as the backend reads them", () => {
+    it.each([
+        ["without a type", { identifier: "region.name" }, "displayForm.type"],
+        ["by uri", { uri: "/gdc/md/workspace/obj/1" }, "displayForm.uri"],
+        [
+            "with another key",
+            { identifier: "region.name", type: "displayForm", title: "Region" },
+            "displayForm.title",
+        ],
+        [
+            "with a wrapped identifier",
+            { identifier: { id: "region.name", type: "label" } },
+            "displayForm.identifier",
+        ],
+    ])("rejects a reference %s", (_, displayForm, key) => {
+        expect(documentFilterPaths(regionFilterWith({ displayForm }))).toContain(
+            `filters[0].attributeFilter.${key}`,
+        );
+    });
+
+    it("accepts any object type on a shared filter reference", () => {
+        const displayForm = { identifier: "region", type: "attribute" };
+
+        expect(documentFilterPaths(regionFilterWith({ displayForm }))).toEqual([]);
+    });
+
+    it.each([
+        ["both values and uris", { values: [], uris: [] }, "attributeElements.uris"],
+        ["neither values nor uris", {}, "attributeElements"],
+        ["another key", { values: [], extra: 1 }, "attributeElements.extra"],
+        ["a number among the values", { values: [1] }, "attributeElements.values[0]"],
+    ])("rejects attribute elements with %s", (_, attributeElements, key) => {
+        expect(documentFilterPaths(regionFilterWith({ attributeElements }))).toEqual([
+            `filters[0].attributeFilter.${key}`,
+        ]);
+    });
+
+    it("accepts attribute elements by uri, null among them", () => {
+        expect(
+            documentFilterPaths(regionFilterWith({ attributeElements: { uris: ["/e/1", null] } })),
+        ).toEqual([]);
+    });
+
+    it.each([
+        [
+            "a parent filter without over",
+            { filterElementsBy: [{ filterLocalIdentifier: "p" }] },
+            "filterElementsBy[0].over",
+        ],
+        [
+            "labels in over",
+            { filterElementsBy: [{ filterLocalIdentifier: "p", over: { attributes: [], labels: [] } }] },
+            "filterElementsBy[0].over.labels",
+        ],
+        [
+            "a date dependency without isCommonDate",
+            { filterElementsByDate: [{ filterLocalIdentifier: "d" }] },
+            "filterElementsByDate[0].isCommonDate",
+        ],
+        [
+            "a granularity on a date dependency",
+            {
+                filterElementsByDate: [
+                    { filterLocalIdentifier: "d", isCommonDate: false, granularity: "GDC.time.year" },
+                ],
+            },
+            "filterElementsByDate[0].granularity",
+        ],
+    ])("rejects %s", (_, keys, key) => {
+        expect(documentFilterPaths(regionFilterWith(keys))).toEqual([`filters[0].attributeFilter.${key}`]);
+    });
+
+    it("accepts dependencies on a parent filter and on a common date", () => {
+        const keys = {
+            filterElementsBy: [
+                {
+                    filterLocalIdentifier: "p",
+                    over: { attributes: [{ identifier: "a", type: "attribute" }] },
+                },
+            ],
+            filterElementsByDate: [
+                {
+                    filterLocalIdentifier: "d",
+                    isCommonDate: true,
+                    dataSet: { identifier: "ship_date", type: "dataSet" },
+                },
+            ],
+        };
+
+        expect(documentFilterPaths(regionFilterWith(keys))).toEqual([]);
+    });
+
+    it.each([
+        ["both ends", { granularity: "GDC.time.month", from: -1, to: 0 }, "boundedFilter.to"],
+        ["no end", { granularity: "GDC.time.month" }, "boundedFilter"],
+        ["a fraction", { granularity: "GDC.time.month", from: -1.5 }, "boundedFilter.from"],
+        ["an end beyond 32 bits", { granularity: "GDC.time.month", to: 2 ** 31 }, "boundedFilter.to"],
+        ["another key", { granularity: "GDC.time.month", from: -1, limit: 1 }, "boundedFilter.limit"],
+    ])("rejects a bounded filter with %s", (_, boundedFilter, key) => {
+        expect(documentFilterPaths(shipDateFilterWith({ boundedFilter }))).toEqual([
+            `filters[0].dateFilter.${key}`,
+        ]);
+    });
+
+    it("accepts a bounded filter with one end", () => {
+        const boundedFilter = { granularity: "GDC.time.month", from: -12 };
+
+        expect(documentFilterPaths(shipDateFilterWith({ boundedFilter }))).toEqual([]);
+    });
+
+    it.each([
+        ["a fraction", -1.5],
+        ["an offset below 32 bits", -(2 ** 31) - 1],
+        ["an offset above 32 bits", 2 ** 31],
+    ])("rejects a date filter offset that is %s", (_, from) => {
+        expect(documentFilterPaths(shipDateFilterWith({ from }))).toEqual(["filters[0].dateFilter.from"]);
+    });
+
+    it("accepts date filter offsets at the 32-bit limits", () => {
+        expect(documentFilterPaths(shipDateFilterWith({ from: -(2 ** 31), to: 2 ** 31 - 1 }))).toEqual([]);
+    });
+
+    it.each([
+        ["of no known kind", [{ ranking: {} }], "conditions[0]"],
+        [
+            "of two kinds",
+            [{ comparison: { operator: "EQUAL_TO", value: 1 }, range: {} }],
+            "conditions[0].range",
+        ],
+        [
+            "with a comparison operator on a range",
+            [{ range: { operator: "GREATER_THAN", from: 1, to: 2 } }],
+            "conditions[0].range.operator",
+        ],
+        [
+            "with another key",
+            [{ comparison: { operator: "EQUAL_TO", value: 1, measure: {} } }],
+            "conditions[0].comparison.measure",
+        ],
+    ])("rejects a metric value condition %s", (_, conditions, key) => {
+        expect(documentFilterPaths(measureFilterWith(conditions))).toEqual([
+            `filters[0].dashboardMeasureValueFilter.${key}`,
+        ]);
+    });
+
+    it("accepts comparison and range conditions", () => {
+        const conditions = [
+            { comparison: { operator: "GREATER_THAN", value: 10, treatNullValuesAs: 0 } },
+            { range: { operator: "NOT_BETWEEN", from: 1, to: 2 } },
+        ];
+
+        expect(documentFilterPaths(measureFilterWith(conditions))).toEqual([]);
+    });
+
+    it.each([
+        ["attributeFilter", regionFilterWith({ localIdentifier: undefined })],
+        ["dateFilter", shipDateFilterWith({ localIdentifier: undefined })],
+        [
+            "matchAttributeFilter",
+            {
+                matchAttributeFilter: {
+                    displayForm: { identifier: "region.name", type: "displayForm" },
+                    operator: "contains",
+                    literal: "EU",
+                },
+            },
+        ],
+        [
+            "arbitraryAttributeFilter",
+            {
+                arbitraryAttributeFilter: {
+                    displayForm: { identifier: "region.name", type: "displayForm" },
+                    values: ["EU"],
+                    negativeSelection: false,
+                },
+            },
+        ],
+    ])("requires a localIdentifier on a document %s", (variant, filter) => {
+        expect(documentFilterPaths(filter)).toEqual([`filters[0].${variant}.localIdentifier`]);
+    });
+
+    it.each([
+        ["empty", ""],
+        ["null", null],
+    ])("asks for a value when a document filter's localIdentifier is %s", (_, localIdentifier) => {
+        const issues = validatePublisherDocumentContentV2({
+            pages: [],
+            filters: [regionFilterWith({ localIdentifier })],
+        });
+
+        expect(issues).toEqual([
+            {
+                path: "filters[0].attributeFilter.localIdentifier",
+                message: `Expected a value, got ${JSON.stringify(localIdentifier)}.`,
+            },
+        ]);
+    });
+
+    it("reports a document metric value filter without a localIdentifier once", () => {
+        const filter = {
+            dashboardMeasureValueFilter: { measure: { identifier: "revenue", type: "measure" } },
+        };
+
+        expect(documentFilterPaths(filter)).toEqual([
+            "filters[0].dashboardMeasureValueFilter.localIdentifier",
+        ]);
+    });
+
+    it("leaves the localIdentifier optional on page and widget filters", () => {
+        const unnamed = regionFilterWith({ localIdentifier: undefined });
+        const filtered = {
+            filters: [unnamed],
+            layout: { type: "visualization", id: "widget1", filters: [unnamed] },
+        };
+
+        expect(validatePublisherPageBodyV2(filtered)).toEqual([]);
+    });
+
+    it.each([
+        ["all", false],
+        ["none", true],
+    ])("accepts an empty match literal, which means %s", (_, negativeSelection) => {
+        const filter = {
+            matchAttributeFilter: {
+                displayForm: { identifier: "region.name", type: "displayForm" },
+                operator: "contains",
+                literal: "",
+                negativeSelection,
+                localIdentifier: "region_match",
+            },
+        };
+
+        expect(documentFilterPaths(filter)).toEqual([]);
+    });
+
+    it.each([
+        ["null", null],
+        ["a number", 1],
+    ])("rejects a match literal that is %s", (_, literal) => {
+        const filter = {
+            matchAttributeFilter: {
+                displayForm: { identifier: "region.name", type: "displayForm" },
+                operator: "contains",
+                literal,
+                localIdentifier: "region_match",
+            },
+        };
+
+        expect(documentFilterPaths(filter)).toEqual(["filters[0].matchAttributeFilter.literal"]);
+    });
+
+    it.each([
+        ["a fraction", -1.5],
+        ["beyond 32 bits", -(2 ** 31) - 1],
+    ])("rejects a relative period offset that is %s", (_, from) => {
+        const period = { type: "relative", granularity: "GDC.time.month", from, to: -1 };
+
+        expect(paths(validatePublisherEntityV2({ ...document, period }))).toEqual(["period.from"]);
+    });
+
+    it("keeps an entity's own reference as the model writes it", () => {
+        expect(validatePublisherEntityV2({ ...document, ref: { identifier: "northwind" } })).toEqual([]);
+    });
+});
+
+describe("text keys on pages and containers", () => {
+    const textKeys = {
+        fontSize: 14,
+        fontWeight: 600,
+        fontStyle: "italic",
+        lineHeight: 1.4,
+        letterSpacing: 0.02,
+        textTransform: "uppercase",
+        textOverflow: "ellipsis",
+    };
+
+    it("accepts the full text group on a page and on a container", () => {
+        const styled = { style: textKeys, layout: { type: "column", style: textKeys, children: [] } };
+
+        expect(validatePublisherPageBodyV2(styled)).toEqual([]);
+    });
+
+    it.each([
+        [
+            "a page",
+            { style: { fontWeight: 0 }, layout: { type: "column", children: [] } },
+            "style.fontWeight",
+        ],
+        [
+            "a container",
+            { layout: { type: "column", style: { fontWeight: 0 }, children: [] } },
+            "layout.style.fontWeight",
+        ],
+    ])("checks the ranges of the text keys on %s", (_, styled, key) => {
+        expect(paths(validatePublisherPageBodyV2(styled))).toEqual([key]);
     });
 });

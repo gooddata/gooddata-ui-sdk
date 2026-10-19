@@ -71,6 +71,16 @@
     gap: 20px;
 }
 
+.gd-user-management-dialog-detail-localization .gd-user-management-dialog-detail-row .input-checkbox-label {
+    margin: 0;
+    vertical-align: top;
+}
+
+.gd-user-management-dialog-detail-row-checkbox-edit {
+    align-items: center;
+    min-height: 32px;
+}
+
 .gd-user-management-dialog-detail-label {
     width: 150px;
     color: kit-variables.$default-gd-color-label;
@@ -279,4 +289,49 @@
         cursor: default;
         color: var(--gd-palette-complementary-6, #94a1ad);
     }
+}
+
+.gd-user-management-dialog-detail-section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 28px;
+    margin-top: 20px;
+    color: kit-variables.$gd-color-state-blank;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+
+    &::after {
+        content: "";
+        flex: 1;
+        border-top: 1px solid kit-variables.$gd-border-color;
+    }
+}
+
+.gd-user-management-dialog-detail-code {
+    color: kit-variables.$gd-color-state-blank;
+
+    .gd-user-management-dialog-detail-input & {
+        font-size: 12px;
+    }
+}
+
+.gd-user-management-dialog-detail-value-not-set {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: kit-variables.$gd-color-state-blank;
+
+    .gd-bubble-trigger {
+        display: inline-flex;
+    }
+}
+
+.gd-message.gd-user-management-dialog-detail-notice {
+    align-self: flex-start;
+    margin-left: 170px;
+    padding: 4px 10px;
+    font-size: 12px;
+    line-height: 16px;
 }

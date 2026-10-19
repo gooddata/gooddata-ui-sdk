@@ -14392,6 +14392,13 @@ export interface PublisherPageStyleV2 {
     text_color?: PublisherColorValueV2;
     horizontal_align?: "left" | "center" | "right" | "justify";
     vertical_align?: PublisherVerticalAlignV2;
+    font_size?: PublisherPxV2;
+    font_weight?: number;
+    font_style?: "normal" | "italic";
+    line_height?: number;
+    letter_spacing?: number;
+    text_transform?: "none" | "uppercase" | "lowercase" | "capitalize";
+    text_overflow?: "shrink" | "clip" | "ellipsis";
     gap?: PublisherGapValueV23;
 }
 export interface PublisherContainerV2 {
@@ -14853,6 +14860,13 @@ export interface PublisherContainerStyleV2 {
     text_color?: PublisherColorValueV2;
     horizontal_align?: "left" | "center" | "right" | "justify";
     vertical_align?: PublisherVerticalAlignV2;
+    font_size?: PublisherPxV2;
+    font_weight?: number;
+    font_style?: "normal" | "italic";
+    line_height?: number;
+    letter_spacing?: number;
+    text_transform?: "none" | "uppercase" | "lowercase" | "capitalize";
+    text_overflow?: "shrink" | "clip" | "ellipsis";
     gap?: PublisherGapValueV23;
 }
 /**

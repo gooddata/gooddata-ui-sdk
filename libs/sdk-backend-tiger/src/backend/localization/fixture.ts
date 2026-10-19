@@ -149,7 +149,6 @@ export function acmeStatisticsWorkspaces(): ILocalizationStatisticsWorkspace[] {
                 total: 1000,
                 locales: [
                     { locale: "de-DE", translated: 1000 },
-                    { locale: "es-ES", translated: 640 },
                     { locale: "cs-CZ", translated: 1000 },
                     { locale: "nl-NL", translated: 410 },
                 ],
@@ -164,5 +163,25 @@ export function acmeStatisticsWorkspaces(): ILocalizationStatisticsWorkspace[] {
             metadata: { total: 20, locales: [{ locale: "de-DE", translated: 20 }] },
             data: { total: 0, locales: [] },
         },
+        {
+            id: "italy",
+            name: "Italy",
+            parentId: ROOT_ID,
+            sourceLanguage: "en-US",
+            metadata: { total: 120, locales: [{ locale: "it-IT", translated: 120 }] },
+            data: { total: 0, locales: [] },
+        },
+        // Spanish names exist in the first 15 Iberia workspaces only, so the last 10 miss them.
+        ...Array.from({ length: 15 }, (_, index): ILocalizationStatisticsWorkspace => {
+            const id = `iberia-${String(index + 1).padStart(2, "0")}`;
+            return {
+                id,
+                name: `Iberia ${index + 1}`,
+                parentId: "iberia",
+                sourceLanguage: "en-US",
+                metadata: { total: 640, locales: [{ locale: "es-ES", translated: 640 }] },
+                data: { total: 0, locales: [] },
+            };
+        }),
     ];
 }

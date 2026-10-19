@@ -444,6 +444,7 @@ export type {
     IOrganizationUsersQueryResult,
     IOrganizationUserGroupsQuery,
     IOrganizationUserGroupsQueryResult,
+    IUserLocalizationSettings,
 } from "./organization/users/index.js";
 export type {
     IOrganizationPermissionService,
@@ -473,6 +474,11 @@ export type {
     ILocalizationTranslationCoverage,
     ILocalizationStatisticsWorkspace,
     ILocalizationStatisticsWorkspacesPage,
+    LocalizationTranslatedSettingType,
+    LocalizationTranslationState,
+    ILocalizationTranslationCount,
+    ILocalizationTranslationValueUsage,
+    ILocalizationTranslationUsage,
     IOrganizationLocalizationService,
     IWorkspaceLocalizationService,
 } from "./localization/index.js";

@@ -3170,6 +3170,16 @@
                     "text_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
                     "horizontal_align": { "type": "string", "enum": ["left", "center", "right", "justify"] },
                     "vertical_align": { "$ref": "#/$global/gaac/publisherVerticalAlignV2" },
+                    "font_size": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "font_weight": { "type": "number", "minimum": 1, "maximum": 1000 },
+                    "font_style": { "type": "string", "enum": ["normal", "italic"] },
+                    "line_height": { "type": "number" },
+                    "letter_spacing": { "type": "number" },
+                    "text_transform": {
+                        "type": "string",
+                        "enum": ["none", "uppercase", "lowercase", "capitalize"]
+                    },
+                    "text_overflow": { "type": "string", "enum": ["shrink", "clip", "ellipsis"] },
                     "gap": { "$ref": "#/$global/gaac/publisherGapValueV2" }
                 }
             },
@@ -3741,6 +3751,16 @@
                     "text_color": { "$ref": "#/$global/gaac/publisherColorValueV2" },
                     "horizontal_align": { "type": "string", "enum": ["left", "center", "right", "justify"] },
                     "vertical_align": { "$ref": "#/$global/gaac/publisherVerticalAlignV2" },
+                    "font_size": { "$ref": "#/$global/gaac/publisherPxV2" },
+                    "font_weight": { "type": "number", "minimum": 1, "maximum": 1000 },
+                    "font_style": { "type": "string", "enum": ["normal", "italic"] },
+                    "line_height": { "type": "number" },
+                    "letter_spacing": { "type": "number" },
+                    "text_transform": {
+                        "type": "string",
+                        "enum": ["none", "uppercase", "lowercase", "capitalize"]
+                    },
+                    "text_overflow": { "type": "string", "enum": ["shrink", "clip", "ellipsis"] },
                     "gap": { "$ref": "#/$global/gaac/publisherGapValueV2" }
                 }
             },

@@ -4187,6 +4187,54 @@
         "text": "not set",
         "crowdinContext": "Value displayed in user form when user detail does not have value (for example he does not have first name, last name, etc.)"
     },
+    "userManagement.userDetail.languages.title": {
+        "text": "Languages",
+        "crowdinContext": "Heading of the section with the languages a user set for themselves in the user detail dialog"
+    },
+    "userManagement.userDetail.interfaceLanguage.label": {
+        "text": "Interface language",
+        "crowdinContext": "Label of the user's own interface language, the language of the GoodData interface"
+    },
+    "userManagement.userDetail.metadataLanguage.label": {
+        "text": "Metadata language",
+        "crowdinContext": "Label of the user's own metadata language, the language of names and descriptions of objects like dashboards and metrics"
+    },
+    "userManagement.userDetail.dataLanguage.label": {
+        "text": "Data language",
+        "crowdinContext": "Label of the user's own data language, the language of data values in charts and tables"
+    },
+    "userManagement.userDetail.language.notSet": {
+        "text": "Not set",
+        "crowdinContext": "Shown instead of a language when the user did not set one for themselves. A help icon next to it explains that each workspace's language applies"
+    },
+    "userManagement.userDetail.language.notSetOption": {
+        "text": "Not set, follows each workspace",
+        "crowdinContext": "First item in the list of languages. Choosing it removes the user's own language, so each workspace's language applies"
+    },
+    "userManagement.userDetail.interfaceLanguage.notSet.tooltip": {
+        "text": "Interface language follows each workspace",
+        "crowdinContext": "Tooltip of the help icon next to 'Not set' when the user did not set their own interface language"
+    },
+    "userManagement.userDetail.metadataLanguage.notSet.tooltip": {
+        "text": "Metadata language follows each workspace",
+        "crowdinContext": "Tooltip of the help icon next to 'Not set' when the user did not set their own metadata language"
+    },
+    "userManagement.userDetail.dataLanguage.notSet.tooltip": {
+        "text": "Data language follows each workspace",
+        "crowdinContext": "Tooltip of the help icon next to 'Not set' when the user did not set their own data language"
+    },
+    "userManagement.userDetail.language.option": {
+        "text": "{name} ({code})",
+        "crowdinContext": "Item in the list of languages. {name} is the language name, e.g. Spanish (Spain), {code} is its code, e.g. es-ES"
+    },
+    "userManagement.userDetail.interfaceLanguage.notSupported": {
+        "text": "<b>Error:</b> Language not supported – English (United States) shows instead.",
+        "crowdinContext": "Error under an interface language that GoodData does not offer. Keep the <b> tags around the label"
+    },
+    "userManagement.userDetail.languages.loadError": {
+        "text": "The languages could not be loaded.",
+        "crowdinContext": "Error shown in the Languages section of the user detail dialog when the user's languages fail to load"
+    },
     "userManagement.userGroups.emptySelection.view": {
         "text": "This user is not a member of any groups.",
         "crowdinContext": "Information message shown when lst of user's user groups is empty."

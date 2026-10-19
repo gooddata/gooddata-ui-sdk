@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: d9210f9a6587451f1b46c1a461f26efd8e26a35c3103c82be6ad2a457dd7b8ed
+# schema-hash: 52db43276615e2f90fac570c9c8b308d512ff91dac93d08876a5d9e0b5843960
 
 from __future__ import annotations
 
@@ -2885,6 +2885,24 @@ class HorizontalAlign(Enum):
     justify = 'justify'
 
 
+class FontStyle(Enum):
+    normal = 'normal'
+    italic = 'italic'
+
+
+class TextTransform(Enum):
+    none = 'none'
+    uppercase = 'uppercase'
+    lowercase = 'lowercase'
+    capitalize = 'capitalize'
+
+
+class TextOverflow(Enum):
+    shrink = 'shrink'
+    clip = 'clip'
+    ellipsis = 'ellipsis'
+
+
 class Type76(Enum):
     document_template = 'document_template'
 
@@ -3043,24 +3061,6 @@ class PublisherTakeawayGenerationV2(BaseModel):
         None, description='Instructions the takeaway is generated with.'
     )
     context: Context | None = Field(None, title='Publisher Takeaway Context V2')
-
-
-class FontStyle(Enum):
-    normal = 'normal'
-    italic = 'italic'
-
-
-class TextTransform(Enum):
-    none = 'none'
-    uppercase = 'uppercase'
-    lowercase = 'lowercase'
-    capitalize = 'capitalize'
-
-
-class TextOverflow(Enum):
-    shrink = 'shrink'
-    clip = 'clip'
-    ellipsis = 'ellipsis'
 
 
 class PublisherWidgetPlaceholderV2(BaseModel):
@@ -4712,6 +4712,13 @@ class PublisherContainerStyleV2(BaseModel):
     text_color: PublisherColorValueV2 | None = None
     horizontal_align: HorizontalAlign | None = None
     vertical_align: PublisherVerticalAlignV2 | None = None
+    font_size: PublisherPxV2 | None = None
+    font_weight: confloat(ge=1.0, le=1000.0) | None = None
+    font_style: FontStyle | None = None
+    line_height: float | None = None
+    letter_spacing: float | None = None
+    text_transform: TextTransform | None = None
+    text_overflow: TextOverflow | None = None
     gap: PublisherGapValueV2 | None = None
 
 
@@ -4990,6 +4997,13 @@ class PublisherPageStyleV2(BaseModel):
     text_color: PublisherColorValueV2 | None = None
     horizontal_align: HorizontalAlign | None = None
     vertical_align: PublisherVerticalAlignV2 | None = None
+    font_size: PublisherPxV2 | None = None
+    font_weight: confloat(ge=1.0, le=1000.0) | None = None
+    font_style: FontStyle | None = None
+    line_height: float | None = None
+    letter_spacing: float | None = None
+    text_transform: TextTransform | None = None
+    text_overflow: TextOverflow | None = None
     gap: PublisherGapValueV2 | None = None
 
 

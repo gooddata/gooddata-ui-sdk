@@ -8,6 +8,8 @@ import {
     type ActionsApiProcessInvitationRequest,
     type AnalyzeCsvRequest,
     type AnalyzeCsvResponse,
+    type AnalyzeSavRequest,
+    type AnalyzeSavResponse,
     type ApiEntitlement,
     type DataSourceParameter,
     type DeclarativeAnalytics,
@@ -22,6 +24,8 @@ import {
     type IdentifierDuplications,
     type ImportCsvRequest,
     type ImportCsvResponse,
+    type ImportSavRequest,
+    type ImportSavResponse,
     type JsonApiApiTokenInDocument,
     type JsonApiApiTokenOutList,
     type JsonApiCspDirectiveInDocument,
@@ -117,8 +121,10 @@ import {
 import {
     type ResultApiReadCsvFileManifestsRequest,
     ResultApi_AnalyzeCsv,
+    ResultApi_AnalyzeSav,
     ResultApi_DeleteFiles,
     ResultApi_ImportCsv,
+    ResultApi_ImportSav,
     ResultApi_ListFiles,
     ResultApi_ReadCsvFileManifests,
     ResultApi_StagingUpload,
@@ -654,6 +660,22 @@ export type TigerSpecificFunctions = {
         dataSourceId: string,
         importCsvRequest: ImportCsvRequest,
     ) => Promise<Array<ImportCsvResponse>>;
+
+    /**
+     * Analyze SPSS (.sav) files in GDSTORAGE data source staging location
+     * @param analyzeSavRequest - the request to analyze SPSS files
+     */
+    analyzeSav?: (analyzeSavRequest: AnalyzeSavRequest) => Promise<Array<AnalyzeSavResponse>>;
+
+    /**
+     * Import SPSS (.sav) files from GDSTORAGE data source staging location
+     * @param dataSourceId - id of the data source
+     * @param importSavRequest - the request to import SPSS files
+     */
+    importSav?: (
+        dataSourceId: string,
+        importSavRequest: ImportSavRequest,
+    ) => Promise<Array<ImportSavResponse>>;
 
     /**
      * List CSV files from GDSTORAGE data source staging location
@@ -1854,6 +1876,35 @@ export const buildTigerSpecificFunctions = (
                 return await ResultApi_ImportCsv(sdk.axios, sdk.basePath, {
                     dataSourceId: dataSourceId,
                     importCsvRequest: importCsvRequest,
+                }).then((res: any) => {
+                    return res?.data;
+                });
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+
+    analyzeSav: async (analyzeSavRequest: AnalyzeSavRequest) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                return await ResultApi_AnalyzeSav(sdk.axios, sdk.basePath, {
+                    analyzeSavRequest: analyzeSavRequest,
+                }).then((res: any) => {
+                    return res?.data;
+                });
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+
+    importSav: async (dataSourceId: string, importSavRequest: ImportSavRequest) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                return await ResultApi_ImportSav(sdk.axios, sdk.basePath, {
+                    dataSourceId: dataSourceId,
+                    importSavRequest: importSavRequest,
                 }).then((res: any) => {
                     return res?.data;
                 });

@@ -3,12 +3,13 @@
 import { type ReactNode } from "react";
 
 import { configureStore } from "@reduxjs/toolkit";
-import { render } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { type IInsight, type ISeparators, idRef, newBucket, newMeasure } from "@gooddata/sdk-model";
+import { type GoodDataSdkError, NegativeValuesSdkError, NoDataSdkError } from "@gooddata/sdk-ui";
 
 import { IntlWrapper } from "../../../localization/IntlWrapper.js";
 import { type IChatConversationLocalItem } from "../../../model.js";
@@ -41,8 +42,9 @@ type RecordedProps = {
     filters?: unknown;
     drillableItems?: unknown;
     onDrill?: unknown;
-    onError?: unknown;
-    onExportReady?: unknown;
+    onError?: (error: GoodDataSdkError) => void;
+    onLoadingChanged?: (loadingState: { isLoading: boolean }) => void;
+    onExportReady?: () => void;
     execConfig?: unknown;
 };
 
@@ -111,14 +113,14 @@ function visualizationOf(visualizationUrl: string): IInsight {
     };
 }
 
-function renderVisualisation(
+function visualisationElement(
     visualizationUrl: string,
     props: Partial<ConversationVisualisationProps> = {},
     insight: Partial<IInsight["insight"]> = {},
 ) {
     const base = visualizationOf(visualizationUrl);
 
-    return render(
+    return (
         <Provider store={configureStore({ reducer: () => ({}) })}>
             <IntlWrapper>
                 <ConversationVisualisation
@@ -128,8 +130,16 @@ function renderVisualisation(
                     {...props}
                 />
             </IntlWrapper>
-        </Provider>,
+        </Provider>
     );
+}
+
+function renderVisualisation(
+    visualizationUrl: string,
+    props: Partial<ConversationVisualisationProps> = {},
+    insight: Partial<IInsight["insight"]> = {},
+) {
+    return render(visualisationElement(visualizationUrl, props, insight));
 }
 
 describe("ConversationVisualisation", () => {
@@ -198,6 +208,32 @@ describe("ConversationVisualisation", () => {
         });
     });
 
+    it("notifies when a visualization renders successfully", () => {
+        const onVisualisationSuccess = vi.fn();
+        renderVisualisation("local:bar", { onVisualisationSuccess });
+
+        act(() => rendered[0].props.onExportReady?.());
+
+        expect(onVisualisationSuccess).toHaveBeenCalledTimes(1);
+    });
+
+    it("accepts a successful repeater render after an earlier insight failed", () => {
+        const onVisualisationSuccess = vi.fn();
+        const { rerender } = renderVisualisation("local:repeater", { onVisualisationSuccess });
+
+        act(() => rendered[0].props.onError?.(new NoDataSdkError()));
+        rerender(
+            visualisationElement(
+                "local:repeater",
+                { onVisualisationSuccess },
+                { identifier: "vis-2", uri: "/vis-2", ref: idRef("vis-2") },
+            ),
+        );
+        act(() => rendered[1].props.onLoadingChanged?.({ isLoading: false }));
+
+        expect(onVisualisationSuccess).toHaveBeenCalledTimes(1);
+    });
+
     it("maps clustering controls only for scatter insights", () => {
         const controls = { clustering: { numberOfClusters: 5, threshold: 0.1 } };
 
@@ -239,5 +275,23 @@ describe("ConversationVisualisation", () => {
                 config: { agGridToken: "token", separators },
             },
         });
+    });
+
+    it.each([false, true])("renders the no-data error for chart and table mode", (isTable) => {
+        renderVisualisation("local:bar", { isTable });
+
+        act(() => rendered[0].props.onError?.(new NoDataSdkError()));
+
+        expect(screen.getByText("No data")).toBeInTheDocument();
+        expect(screen.getByText("No data for your filter selection.")).toBeInTheDocument();
+    });
+
+    it("renders the generic error for a chart that cannot be displayed", () => {
+        renderVisualisation("local:pie");
+
+        act(() => rendered[0].props.onError?.(new NegativeValuesSdkError()));
+
+        expect(screen.getByText("Sorry, we can't display this visualization")).toBeInTheDocument();
+        expect(screen.getByText("Contact your administrator.")).toBeInTheDocument();
     });
 });
