@@ -8,12 +8,15 @@ import { ActionsApiProcessInvitationRequest } from '@gooddata/api-client-tiger';
 import { AfmExecution } from '@gooddata/api-client-tiger';
 import { AnalyzeCsvRequest } from '@gooddata/api-client-tiger';
 import { AnalyzeCsvResponse } from '@gooddata/api-client-tiger';
+import { AnalyzeSavRequest } from '@gooddata/api-client-tiger';
+import { AnalyzeSavResponse } from '@gooddata/api-client-tiger';
 import { AnonymousAuthProvider } from '@gooddata/sdk-backend-base';
 import { ApiEntitlement } from '@gooddata/api-client-tiger';
 import { ApiEntitlementNameEnum } from '@gooddata/api-client-tiger';
 import { AuthenticationFlow } from '@gooddata/sdk-backend-spi';
 import { AxiosRequestConfig } from 'axios';
 import { DataSourceParameter } from '@gooddata/api-client-tiger';
+import { DateAttributeGranularity } from '@gooddata/sdk-model';
 import { DeclarativeAnalytics } from '@gooddata/api-client-tiger';
 import { DeclarativeModel } from '@gooddata/api-client-tiger';
 import { DeclarativeWorkspaceDataFilters } from '@gooddata/api-client-tiger';
@@ -34,6 +37,8 @@ import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { ImportCsvRequest } from '@gooddata/api-client-tiger';
 import { ImportCsvResponse } from '@gooddata/api-client-tiger';
+import { ImportSavRequest } from '@gooddata/api-client-tiger';
+import { ImportSavResponse } from '@gooddata/api-client-tiger';
 import { Invitation } from '@gooddata/api-client-tiger';
 import { ITigerClient } from '@gooddata/api-client-tiger';
 import { IUser } from '@gooddata/sdk-model';
@@ -70,6 +75,10 @@ export { AnalyzeCsvRequest }
 
 export { AnalyzeCsvResponse }
 
+export { AnalyzeSavRequest }
+
+export { AnalyzeSavResponse }
+
 export { AnonymousAuthProvider }
 
 export { ApiEntitlement }
@@ -104,6 +113,9 @@ export function createTigerSpecificFunctionsProxy(initialImplementation?: TigerS
 
 // @internal (undocumented)
 export type DataSourceDefinition = JsonApiDataSourceInDocument;
+
+// @internal
+export function dateAttributeIdToSdkGranularity(identifier: string): DateAttributeGranularity | undefined;
 
 // @internal (undocumented)
 export type DeclarativeAnalyticsModel = DeclarativeAnalytics;
@@ -356,6 +368,10 @@ export { ImportCsvRequest }
 
 export { ImportCsvResponse }
 
+export { ImportSavRequest }
+
+export { ImportSavResponse }
+
 // @internal (undocumented)
 export type INotificationChannel = Omit<JsonApiNotificationChannelOut, "type">;
 
@@ -556,6 +572,8 @@ export type TigerSpecificFunctions = {
     stagingUpload?: (file: File) => Promise<UploadFileResponse>;
     analyzeCsv?: (analyzeCsvRequest: AnalyzeCsvRequest) => Promise<Array<AnalyzeCsvResponse>>;
     importCsv?: (dataSourceId: string, importCsvRequest: ImportCsvRequest) => Promise<Array<ImportCsvResponse>>;
+    analyzeSav?: (analyzeSavRequest: AnalyzeSavRequest) => Promise<Array<AnalyzeSavResponse>>;
+    importSav?: (dataSourceId: string, importSavRequest: ImportSavRequest) => Promise<Array<ImportSavResponse>>;
     listFiles?: (dataSourceId: string) => Promise<Array<GdStorageFile>>;
     deleteFiles?: (dataSourceId: string, fileNames: string[]) => Promise<void>;
     readFileManifests?: (dataSourceId: string, fileNames: string[]) => Promise<ReadCsvFileManifestsResponse[]>;

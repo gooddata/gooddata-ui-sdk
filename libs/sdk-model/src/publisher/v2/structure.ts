@@ -4,6 +4,8 @@ import { type IDashboardAttributeFilterConfig } from "../../dashboard/dashboard.
 import {
     type IDashboardArbitraryAttributeFilter,
     type IDashboardAttributeFilter,
+    type IDashboardAttributeFilterByDate,
+    type IDashboardAttributeFilterParent,
     type IDashboardAttributeFilterReference,
     type IDashboardDateFilter,
     type IDashboardDateFilterReference,
@@ -12,6 +14,19 @@ import {
     type IDashboardMeasureValueFilterReference,
 } from "../../dashboard/filterContext.js";
 import { isDateFilterGranularity } from "../../dateFilterConfig/index.js";
+import {
+    type IAttributeElementsByRef,
+    type IAttributeElementsByValue,
+    type IComparisonCondition,
+    type IComparisonConditionBody,
+    type ILowerBoundedFilter,
+    type IRangeCondition,
+    type IRangeConditionBody,
+    type IUpperBoundedFilter,
+    isComparisonConditionOperator,
+    isRangeConditionOperator,
+} from "../../execution/filter/index.js";
+import { type IdentifierRef } from "../../objRef/index.js";
 
 import {
     type Check,
@@ -21,7 +36,8 @@ import {
     describeValue,
     finiteNumber,
     id,
-    isFiniteNumber,
+    int32,
+    isInt32,
     isLength,
     isNonEmptyString,
     isPlainObject,
@@ -30,12 +46,14 @@ import {
     numberIn,
     objRef,
     objectOf,
+    oneKeyOf,
     oneOf,
     opacity,
     optional,
     positive,
     px,
     required,
+    requiredAllowingEmptyString,
     satisfying,
     trueOrFalse,
 } from "./checks.js";
@@ -241,13 +259,13 @@ const textKeys = {
 const pageStyle = objectOf<IPublisherPageStyleV2>()({
     ...backgroundKeys,
     ...paddingKeys,
-    ...inheritedTextKeys,
+    ...textKeys,
     gap: optional(gap),
 });
 
 const containerStyle = objectOf<IPublisherContainerStyleV2>()({
     ...boxKeys,
-    ...inheritedTextKeys,
+    ...textKeys,
     gap: optional(gap),
 });
 
@@ -307,117 +325,217 @@ const visualizationStyle = objectOf<IPublisherVisualizationStyleV2>()({
     headline: optional(headlineStyle),
 });
 
-const plainObject = satisfying(isPlainObject, "an object");
-const objRefs = arrayOf(objRef);
-const plainObjects = arrayOf(plainObject);
+const ref = objectOf<Required<IdentifierRef>>()({
+    identifier: required(nonEmptyString),
+    type: required(nonEmptyString),
+});
+const refs = arrayOf(ref);
+
+const elementValues = arrayOf(
+    satisfying((value) => value === null || typeof value === "string", "a string or null"),
+);
+
+const attributeElements = oneKeyOf(
+    {
+        values: objectOf<IAttributeElementsByValue>()({ values: required(elementValues) }),
+        uris: objectOf<IAttributeElementsByRef>()({ uris: required(elementValues) }),
+    },
+    'an object with "values" or "uris"',
+);
+
+const filterParent = objectOf<IDashboardAttributeFilterParent>()({
+    filterLocalIdentifier: required(nonEmptyString),
+    over: required(
+        objectOf<IDashboardAttributeFilterParent["over"]>()({
+            attributes: required(refs),
+        }),
+    ),
+});
+
+const filterByDate = objectOf<IDashboardAttributeFilterByDate>()({
+    filterLocalIdentifier: required(nonEmptyString),
+    isCommonDate: required(trueOrFalse),
+    dataSet: optional(ref),
+});
 
 const attributeFilterSourceKeys = {
-    displayForm: required(objRef),
+    displayForm: required(ref),
     localIdentifier: optional(id),
     title: optional(nonEmptyString),
-    filterElementsBy: optional(plainObjects),
-    filterElementsByDate: optional(plainObjects),
-    validateElementsBy: optional(objRefs),
+    filterElementsBy: optional(arrayOf(filterParent)),
+    filterElementsByDate: optional(arrayOf(filterByDate)),
+    validateElementsBy: optional(refs),
 };
 
-const filterVariants = {
-    attributeFilter: objectOf<IDashboardAttributeFilter>()({
-        attributeFilter: required(
-            objectOf<IDashboardAttributeFilter["attributeFilter"]>()({
-                ...attributeFilterSourceKeys,
-                negativeSelection: required(trueOrFalse),
-                attributeElements: required(plainObject),
-                selectionMode: optional(oneOf(["single", "multi"])),
-            }),
-        ),
-    }),
-    arbitraryAttributeFilter: objectOf<IDashboardArbitraryAttributeFilter>()({
-        arbitraryAttributeFilter: required(
-            objectOf<IDashboardArbitraryAttributeFilter["arbitraryAttributeFilter"]>()({
-                ...attributeFilterSourceKeys,
-                values: required(
-                    arrayOf(satisfying((value) => value === null || typeof value === "string", "a value")),
-                ),
-                negativeSelection: required(trueOrFalse),
-            }),
-        ),
-    }),
-    matchAttributeFilter: objectOf<IDashboardMatchAttributeFilter>()({
-        matchAttributeFilter: required(
-            objectOf<IDashboardMatchAttributeFilter["matchAttributeFilter"]>()({
-                displayForm: required(objRef),
-                operator: required(oneOf(["contains", "startsWith", "endsWith"])),
-                literal: required(nonEmptyString),
-                caseSensitive: optional(trueOrFalse),
-                negativeSelection: optional(trueOrFalse),
-                localIdentifier: optional(id),
-                title: optional(nonEmptyString),
-            }),
-        ),
-    }),
-    dateFilter: objectOf<IDashboardDateFilter>()({
-        dateFilter: required(
-            objectOf<IDashboardDateFilter["dateFilter"]>()({
-                type: required(oneOf(["relative", "absolute"])),
-                granularity: required(satisfying(isDateFilterGranularity, "a date filter granularity")),
-                from: optional(
-                    satisfying(
-                        (value) => isNonEmptyString(value) || isFiniteNumber(value),
-                        "a date or an offset",
-                    ),
-                ),
-                to: optional(
-                    satisfying(
-                        (value) => isNonEmptyString(value) || isFiniteNumber(value),
-                        "a date or an offset",
-                    ),
-                ),
-                dataSet: optional(objRef),
-                attribute: optional(objRef),
-                localIdentifier: optional(id),
-                boundedFilter: optional(plainObject),
-                emptyValueHandling: optional(oneOf(["include", "exclude", "only"])),
-            }),
-        ),
-    }),
-    dashboardMeasureValueFilter: objectOf<IDashboardMeasureValueFilter>()({
-        dashboardMeasureValueFilter: required(
-            objectOf<IDashboardMeasureValueFilter["dashboardMeasureValueFilter"]>()({
-                measure: required(objRef),
-                localIdentifier: required(id),
-                conditions: optional(plainObjects),
-                dimensionality: optional(objRefs),
-                title: optional(nonEmptyString),
-            }),
-        ),
-    }),
-};
+const dateFilterGranularity = satisfying(isDateFilterGranularity, "a date filter granularity");
 
-function filterItem(value: unknown, path: string, issues: Issues): void {
-    const variant = isPlainObject(value)
-        ? Object.keys(filterVariants).find((key) => Object.hasOwn(value, key))
-        : undefined;
-    if (variant === undefined) {
-        issues.push({ path, message: `Expected a dashboard filter, got ${describeValue(value)}.` });
-        return;
-    }
-    filterVariants[variant as keyof typeof filterVariants](value, path, issues);
-}
+const boundedFilter = oneKeyOf(
+    {
+        from: objectOf<ILowerBoundedFilter>()({
+            granularity: required(dateFilterGranularity),
+            from: required(int32),
+        }),
+        to: objectOf<IUpperBoundedFilter>()({
+            granularity: required(dateFilterGranularity),
+            to: required(int32),
+        }),
+    },
+    'an object with "from" or "to"',
+);
 
-const filters = arrayOf(filterItem);
+const dateOrOffset = satisfying(
+    (value) => isNonEmptyString(value) || isInt32(value),
+    "a date or an integer offset",
+);
+
+const condition = oneKeyOf(
+    {
+        comparison: objectOf<IComparisonCondition>()({
+            comparison: required(
+                objectOf<IComparisonConditionBody>()({
+                    operator: required(satisfying(isComparisonConditionOperator, "a comparison operator")),
+                    value: required(finiteNumber),
+                    treatNullValuesAs: optional(finiteNumber),
+                }),
+            ),
+        }),
+        range: objectOf<IRangeCondition>()({
+            range: required(
+                objectOf<IRangeConditionBody>()({
+                    operator: required(satisfying(isRangeConditionOperator, "a range operator")),
+                    from: required(finiteNumber),
+                    to: required(finiteNumber),
+                    treatNullValuesAs: optional(finiteNumber),
+                }),
+            ),
+        }),
+    },
+    'an object with "comparison" or "range"',
+);
+
+type AttributeFilterBody = IDashboardAttributeFilter["attributeFilter"];
+type ArbitraryAttributeFilterBody = IDashboardArbitraryAttributeFilter["arbitraryAttributeFilter"];
+type MatchAttributeFilterBody = IDashboardMatchAttributeFilter["matchAttributeFilter"];
+type DateFilterBody = IDashboardDateFilter["dateFilter"];
+type Named<T> = T & { localIdentifier: string };
+
+const attributeFilterKeys = {
+    ...attributeFilterSourceKeys,
+    negativeSelection: required(trueOrFalse),
+    attributeElements: required(attributeElements),
+    selectionMode: optional(oneOf(["single", "multi"])),
+} satisfies KeyTable<AttributeFilterBody>;
+
+const arbitraryAttributeFilterKeys = {
+    ...attributeFilterSourceKeys,
+    values: required(elementValues),
+    negativeSelection: required(trueOrFalse),
+} satisfies KeyTable<ArbitraryAttributeFilterBody>;
+
+const matchAttributeFilterKeys = {
+    displayForm: required(ref),
+    operator: required(oneOf(["contains", "startsWith", "endsWith"])),
+    literal: requiredAllowingEmptyString(satisfying((value) => typeof value === "string", "a string")),
+    caseSensitive: optional(trueOrFalse),
+    negativeSelection: optional(trueOrFalse),
+    localIdentifier: optional(id),
+    title: optional(nonEmptyString),
+} satisfies KeyTable<MatchAttributeFilterBody>;
+
+const dateFilterKeys = {
+    type: required(oneOf(["relative", "absolute"])),
+    granularity: required(dateFilterGranularity),
+    from: optional(dateOrOffset),
+    to: optional(dateOrOffset),
+    dataSet: optional(ref),
+    attribute: optional(ref),
+    localIdentifier: optional(id),
+    boundedFilter: optional(boundedFilter),
+    emptyValueHandling: optional(oneOf(["include", "exclude", "only"])),
+} satisfies KeyTable<DateFilterBody>;
+
+const measureValueFilter = objectOf<IDashboardMeasureValueFilter>()({
+    dashboardMeasureValueFilter: required(
+        objectOf<IDashboardMeasureValueFilter["dashboardMeasureValueFilter"]>()({
+            measure: required(ref),
+            localIdentifier: required(id),
+            conditions: optional(arrayOf(condition)),
+            dimensionality: optional(refs),
+            title: optional(nonEmptyString),
+        }),
+    ),
+});
+
+const filters = arrayOf(
+    oneKeyOf(
+        {
+            attributeFilter: objectOf<IDashboardAttributeFilter>()({
+                attributeFilter: required(objectOf<AttributeFilterBody>()(attributeFilterKeys)),
+            }),
+            arbitraryAttributeFilter: objectOf<IDashboardArbitraryAttributeFilter>()({
+                arbitraryAttributeFilter: required(
+                    objectOf<ArbitraryAttributeFilterBody>()(arbitraryAttributeFilterKeys),
+                ),
+            }),
+            matchAttributeFilter: objectOf<IDashboardMatchAttributeFilter>()({
+                matchAttributeFilter: required(
+                    objectOf<MatchAttributeFilterBody>()(matchAttributeFilterKeys),
+                ),
+            }),
+            dateFilter: objectOf<IDashboardDateFilter>()({
+                dateFilter: required(objectOf<DateFilterBody>()(dateFilterKeys)),
+            }),
+            dashboardMeasureValueFilter: measureValueFilter,
+        },
+        "a dashboard filter",
+    ),
+);
+
+const named = { localIdentifier: required(id) };
+
+/** The document's own filters are named, so a page or widget can point at one. */
+const documentFilters = arrayOf(
+    oneKeyOf(
+        {
+            attributeFilter: objectOf<IDashboardAttributeFilter>()({
+                attributeFilter: required(
+                    objectOf<Named<AttributeFilterBody>>()({ ...attributeFilterKeys, ...named }),
+                ),
+            }),
+            arbitraryAttributeFilter: objectOf<IDashboardArbitraryAttributeFilter>()({
+                arbitraryAttributeFilter: required(
+                    objectOf<Named<ArbitraryAttributeFilterBody>>()({
+                        ...arbitraryAttributeFilterKeys,
+                        ...named,
+                    }),
+                ),
+            }),
+            matchAttributeFilter: objectOf<IDashboardMatchAttributeFilter>()({
+                matchAttributeFilter: required(
+                    objectOf<Named<MatchAttributeFilterBody>>()({ ...matchAttributeFilterKeys, ...named }),
+                ),
+            }),
+            dateFilter: objectOf<IDashboardDateFilter>()({
+                dateFilter: required(objectOf<Named<DateFilterBody>>()({ ...dateFilterKeys, ...named })),
+            }),
+            dashboardMeasureValueFilter: measureValueFilter,
+        },
+        "a dashboard filter",
+    ),
+);
 
 const filterReferenceVariants = {
     attributeFilterReference: objectOf<IDashboardAttributeFilterReference>()({
         type: required(oneOf(["attributeFilterReference"])),
-        displayForm: required(objRef),
+        displayForm: required(ref),
     }),
     dateFilterReference: objectOf<IDashboardDateFilterReference>()({
         type: required(oneOf(["dateFilterReference"])),
-        dataSet: required(objRef),
+        dataSet: required(ref),
     }),
     measureValueFilterReference: objectOf<IDashboardMeasureValueFilterReference>()({
         type: required(oneOf(["measureValueFilterReference"])),
-        measure: required(objRef),
+        measure: required(ref),
     }),
 };
 
@@ -433,7 +551,7 @@ function filterReference(value: unknown, path: string, issues: Issues): void {
 const attributeFilterConfig = objectOf<IDashboardAttributeFilterConfig>()({
     localIdentifier: required(id),
     mode: optional(oneOf(["readonly", "hidden", "active"])),
-    displayAsLabel: optional(objRef),
+    displayAsLabel: optional(ref),
     selectionType: optional(oneOf(["list", "text", "listOrText"])),
 });
 
@@ -628,9 +746,9 @@ const periodVariants = {
     }),
     relative: objectOf<IPublisherRelativePeriodV2>()({
         type: required(oneOf(["relative"])),
-        granularity: required(satisfying(isDateFilterGranularity, "a date filter granularity")),
-        from: required(satisfying(Number.isInteger, "an integer")),
-        to: required(satisfying(Number.isInteger, "an integer")),
+        granularity: required(dateFilterGranularity),
+        from: required(int32),
+        to: required(int32),
     }),
 };
 
@@ -671,7 +789,7 @@ export const checkDocumentContent = objectOf<
     IPublisherDocumentContentBaseV2 & { pages?: IPublisherDocumentPageV2[]; sections?: IPublisherSectionV2[] }
 >()({
     defaults: optional(defaults),
-    filters: optional(filters),
+    filters: optional(documentFilters),
     attributeFilterConfigs: optional(arrayOf(attributeFilterConfig)),
     style: optional(objectOf<IPublisherDocumentStyleV2>()({ ...backgroundKeys, gap: optional(gap) })),
     locale: optional(nonEmptyString),

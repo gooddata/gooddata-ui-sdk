@@ -3013,232 +3013,12 @@
                 }
             }
         },
-        "/api/v1/actions/workspaces/{workspaceId}/ai/agent/{runId}/feedback": {
-            "post": {
-                "tags": [
-                    "actions"
-                ],
-                "operationId": "userFeedback",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "description": "Workspace identifier",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "runId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/FeedbackRequestDto"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "additionalProperties": {
-                                        "type": "string"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/actions/workspaces/{workspaceId}/ai/agent/{runId}/cancel": {
-            "post": {
-                "tags": [
-                    "actions"
-                ],
-                "operationId": "cancelWorkflow_1",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "description": "Workspace identifier",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "runId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "additionalProperties": {
-                                        "type": "string"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/actions/workspaces/{workspaceId}/ai/agent/knowledgeRecommendations": {
-            "post": {
-                "tags": [
-                    "actions"
-                ],
-                "operationId": "generateKnowledgeRecommendations",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "description": "Workspace identifier",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/KnowledgeRecommendationsRequestDto"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/KnowledgeRecommendationsResponseDto"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/actions/workspaces/{workspaceId}/ai/agent/dashboardSummary": {
-            "post": {
-                "tags": [
-                    "actions"
-                ],
-                "operationId": "generateDashboardSummary_1",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "description": "Workspace identifier",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/DashboardSummaryRequestDto"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/DashboardSummaryResponseDto"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/api/v1/actions/workspaces/{workspaceId}/ai/workflow/{runId}/status": {
             "get": {
                 "tags": [
                     "actions"
                 ],
                 "operationId": "getWorkflowStatus",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "description": "Workspace identifier",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "runId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/WorkflowStatusResponseDto"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/actions/workspaces/{workspaceId}/ai/agent/{runId}/status": {
-            "get": {
-                "tags": [
-                    "actions"
-                ],
-                "operationId": "getWorkflowStatus_1",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -4612,6 +4392,20 @@
                                 "type": "string",
                                 "description": "Attribute name."
                             },
+                            "dataType": {
+                                "type": "string",
+                                "description": "Data type of the attribute values, only filled for computed attributes.",
+                                "enum": [
+                                    "INT",
+                                    "STRING",
+                                    "DATE",
+                                    "NUMERIC",
+                                    "TIMESTAMP",
+                                    "TIMESTAMP_TZ",
+                                    "BOOLEAN",
+                                    "HLL"
+                                ]
+                            },
                             "format": {
                                 "$ref": "#/components/schemas/AttributeFormat"
                             },
@@ -4675,6 +4469,10 @@
                                 "pattern": "^[.a-zA-Z0-9_-]+$",
                                 "type": "string",
                                 "description": "Local identifier of the attribute this header relates to."
+                            },
+                            "numberFormat": {
+                                "type": "string",
+                                "description": "Format to be used to format the attribute values, the same kind of format string as the measure format. Only filled for computed attributes with a format."
                             },
                             "primaryLabel": {
                                 "$ref": "#/components/schemas/RestApiIdentifier"
@@ -5243,64 +5041,6 @@
                 },
                 "description": "Filter the result by applying multiple comparison and/or range conditions combined with OR logic. If conditions list is empty, no filtering is applied (all rows are returned)."
             },
-            "DashboardSummaryRequestDto": {
-                "required": [
-                    "dashboardId"
-                ],
-                "type": "object",
-                "properties": {
-                    "aiModel": {
-                        "type": "string"
-                    },
-                    "customUserPrompt": {
-                        "type": "string"
-                    },
-                    "dashboardId": {
-                        "type": "string"
-                    },
-                    "dryRun": {
-                        "type": "boolean"
-                    },
-                    "gooddataHost": {
-                        "type": "string"
-                    },
-                    "gooddataToken": {
-                        "type": "string"
-                    },
-                    "keyMetricIds": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    },
-                    "referenceQuarter": {
-                        "type": "string"
-                    },
-                    "temperature": {
-                        "type": "number",
-                        "format": "double"
-                    }
-                }
-            },
-            "DashboardSummaryResponseDto": {
-                "required": [
-                    "message",
-                    "runId",
-                    "status"
-                ],
-                "type": "object",
-                "properties": {
-                    "message": {
-                        "type": "string"
-                    },
-                    "runId": {
-                        "type": "string"
-                    },
-                    "status": {
-                        "type": "string"
-                    }
-                }
-            },
             "DataColumnLocator": {
                 "required": [
                     "properties"
@@ -5688,6 +5428,20 @@
                         "type": "string",
                         "description": "The client can use this in subsequent requests (like paging or search) to get results from the same point in time as the previous request. This is useful when the underlying data source has caches disabled and the client wants to avoid seeing inconsistent results and to also avoid excessive queries to the database itself."
                     },
+                    "dataType": {
+                        "type": "string",
+                        "description": "Data type of the element values, only filled for computed attributes.",
+                        "enum": [
+                            "INT",
+                            "STRING",
+                            "DATE",
+                            "NUMERIC",
+                            "TIMESTAMP",
+                            "TIMESTAMP_TZ",
+                            "BOOLEAN",
+                            "HLL"
+                        ]
+                    },
                     "elements": {
                         "type": "array",
                         "description": "List of returned elements.",
@@ -5743,6 +5497,10 @@
                             "FISCAL_SEMESTER_OF_FISCAL_YEAR",
                             "FISCAL_YEAR"
                         ]
+                    },
+                    "numberFormat": {
+                        "type": "string",
+                        "description": "Format to be used to format the element values, the same kind of format string as the measure format. Only filled for computed attributes with a format."
                     },
                     "paging": {
                         "$ref": "#/components/schemas/Paging"
@@ -6069,21 +5827,6 @@
                         }
                     }
                 ]
-            },
-            "FeedbackRequestDto": {
-                "required": [
-                    "sentiment"
-                ],
-                "type": "object",
-                "properties": {
-                    "sentiment": {
-                        "type": "string",
-                        "enum": [
-                            "POSITIVE",
-                            "NEGATIVE"
-                        ]
-                    }
-                }
             },
             "FileFlowInput": {
                 "required": [
@@ -7171,97 +6914,6 @@
                 "properties": {
                     "data": {
                         "type": "object"
-                    }
-                }
-            },
-            "KnowledgeRecommendationsRequestDto": {
-                "required": [
-                    "comparisonType",
-                    "metricId"
-                ],
-                "type": "object",
-                "properties": {
-                    "aiModel": {
-                        "type": "string"
-                    },
-                    "analyticalDashboardId": {
-                        "type": "string"
-                    },
-                    "analyzedValue": {
-                        "type": "number",
-                        "format": "double"
-                    },
-                    "comparisonType": {
-                        "type": "string",
-                        "enum": [
-                            "MONTH",
-                            "QUARTER",
-                            "YEAR"
-                        ]
-                    },
-                    "direction": {
-                        "type": "string",
-                        "enum": [
-                            "INCREASED",
-                            "DECREASED"
-                        ]
-                    },
-                    "dryRun": {
-                        "type": "boolean"
-                    },
-                    "gooddataHost": {
-                        "type": "string"
-                    },
-                    "gooddataToken": {
-                        "type": "string"
-                    },
-                    "limit": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "maxTokens": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "metricId": {
-                        "type": "string"
-                    },
-                    "minScore": {
-                        "type": "number",
-                        "format": "double"
-                    },
-                    "referenceValue": {
-                        "type": "number",
-                        "format": "double"
-                    },
-                    "temperature": {
-                        "type": "number",
-                        "format": "double"
-                    },
-                    "widgetId": {
-                        "type": "string"
-                    },
-                    "widgetName": {
-                        "type": "string"
-                    }
-                }
-            },
-            "KnowledgeRecommendationsResponseDto": {
-                "required": [
-                    "message",
-                    "runId",
-                    "status"
-                ],
-                "type": "object",
-                "properties": {
-                    "message": {
-                        "type": "string"
-                    },
-                    "runId": {
-                        "type": "string"
-                    },
-                    "status": {
-                        "type": "string"
                     }
                 }
             },

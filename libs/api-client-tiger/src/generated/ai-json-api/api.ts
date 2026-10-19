@@ -719,9 +719,14 @@ export interface AiCatalogSearchDetail {
      */
     'category'?: AiCatalogSearchDetailCategoryEnum;
     /**
+     * Objects the results had to be compatible with, as refs: measures with their aggregation (`fact/amount@SUM`), then attributes (`label/region`). Empty when the search did not filter by compatibility.
+     */
+    'compatibleWith'?: Array<string>;
+    /**
      * Titles the search returned, grouped by object type.
      */
     'found'?: Array<AiSearchedGroup>;
+    'limit'?: number | null;
     /**
      * Keywords the search looked for. Each runs against every requested type.
      */
@@ -820,7 +825,7 @@ export interface AiClarifyingQuestion {
 }
 
 /**
- * Questions the assistant needs answered before it can continue.  Rides a turn whose ``status`` is ``input_required``. Answers go back as an ordinary text message -- each question\'s ``text``, then the answer on the next line, questions separated by a blank line -- so a client that renders none of the controls stays functional. Echoing the question is what attributes an answer, which is why an option carries no submit text of its own.
+ * Questions the assistant needs answered before it can continue.  Appears in a turn whose ``status`` is ``input_required``. Send the answers back as a ``clarifyingAnswers`` message. It points at this item, and at each question and option by position. A client without these controls can send a text message instead. Start each answered question with its ``text`` in bold. Add a blank line, then the answer. Separate the questions with a blank line. The question text identifies the answer, so an option has no submit text of its own.
  */
 export interface AiClarifyingQuestionsPart {
     /**
@@ -1228,6 +1233,11 @@ export interface AiConfig {
  * Conversation item content payload.
  */
 export type AiContent = { type: 'multipart' } & AiMultipartContent | { type: 'reasoning' } & AiReasoningContent | { type: 'text' } & AiTextMessageContent | { type: 'toolCall' } & AiFunctionCallContent | { type: 'toolResult' } & AiFunctionResultContent;
+
+/**
+ * @type AiContent1
+ */
+export type AiContent1 = { type: 'clarifyingAnswers' } & AiSendClarifyingAnswersContent | { type: 'text' } & AiSendMessageContent;
 
 export interface AiConversationFeedbackRequest {
     'feedback': AiResponseFeedback | null;
@@ -4387,6 +4397,35 @@ export const AiSelectionType = {
 export type AiSelectionType = typeof AiSelectionType[keyof typeof AiSelectionType];
 
 
+export interface AiSendClarifyingAnswer {
+    'answer': AiSendSingleChoiceAnswer;
+    /**
+     * Position of the question among the item\'s clarifying questions, from zero, counting across its clarifyingQuestions parts in order.
+     */
+    'questionIndex': number;
+    /**
+     * The question as the user saw it.
+     */
+    'questionText': string;
+}
+
+/**
+ * Answers to clarifying questions the assistant asked.  The assistant reads the question and option text the user saw, in the same format as a text answer. The positions link each answer to its question. A question with no answer in the list was skipped.
+ */
+export interface AiSendClarifyingAnswersContent {
+    /**
+     * One entry per answered question. Skipping every question sends no message.
+     */
+    'answers': Array<AiSendClarifyingAnswer>;
+    /**
+     * ID of the assistant item that asked the questions.
+     */
+    'questionsItemId': string;
+    'type': AiSendClarifyingAnswersContentTypeEnum;
+}
+
+export type AiSendClarifyingAnswersContentTypeEnum = 'clarifyingAnswers';
+
 export interface AiSendMessageContent {
     'text': string;
     'type': AiSendMessageContentTypeEnum;
@@ -4395,7 +4434,7 @@ export interface AiSendMessageContent {
 export type AiSendMessageContentTypeEnum = 'text';
 
 export interface AiSendMessageItem {
-    'content': AiSendMessageContent;
+    'content': AiContent1;
     'role': AiSendMessageItemRoleEnum;
 }
 
@@ -4424,6 +4463,20 @@ export interface AiSendMessageSearchOptions {
     'objectTypes'?: Array<AiObjectType> | null;
     'searchLimit'?: number | null;
 }
+
+export interface AiSendSingleChoiceAnswer {
+    /**
+     * Position of the picked option in the question\'s options, from zero.
+     */
+    'optionIndex': number;
+    /**
+     * The picked option as the user saw it.
+     */
+    'optionText': string;
+    'type': AiSendSingleChoiceAnswerTypeEnum;
+}
+
+export type AiSendSingleChoiceAnswerTypeEnum = 'singleChoice';
 
 /**
  * Sensitivity level for anomaly detection.

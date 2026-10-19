@@ -861,6 +861,8 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 getUsers: () => Promise.resolve([]),
                 getUsersSummary: () => Promise.resolve([]),
                 getUsersByEmail: () => Promise.resolve([]),
+                getUserLocalizationSettings: () => Promise.resolve({}),
+                setUserLocalizationSetting: () => Promise.resolve(),
                 removeUsersFromUserGroups: () => Promise.resolve(),
                 updateUser: () => Promise.resolve(),
                 updateUserGroup: () => Promise.resolve(),
@@ -988,6 +990,7 @@ function recordedLocalizationService(): IWorkspaceLocalizationService {
         getUsageWorkspaces: () => Promise.resolve({ workspaces: [], totalCount: 0 }),
         getUsageUsers: () => Promise.resolve({ users: [], totalCount: 0 }),
         getStatistics: () => Promise.resolve({ metadata: { locales: [] }, data: { locales: [] } }),
+        getTranslationUsage: () => Promise.resolve({ values: [] }),
         getStatisticsWorkspaces: () => Promise.resolve({ workspaces: [], totalCount: 0 }),
     };
 }

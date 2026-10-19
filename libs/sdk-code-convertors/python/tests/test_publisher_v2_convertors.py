@@ -171,6 +171,38 @@ def test_validator_reports_content_issues_with_their_paths():
     assert [issue["path"] for issue in validate_publisher_entity_v2(invalid)] == ["content.layout.type"]
 
 
+def with_document_filter(attribute_filter: dict) -> dict:
+    return {
+        **DOCUMENT,
+        "content": {
+            **DOCUMENT["content"],
+            "filters": [{"attributeFilter": {**REGION_FILTER["attributeFilter"], **attribute_filter}}],
+        },
+    }
+
+
+@pytest.mark.parametrize(
+    ("changed", "path"),
+    [
+        ({"displayForm": {"identifier": "region.name"}}, "displayForm.type"),
+        ({"attributeElements": {"uris": [], "values": []}}, "attributeElements.uris"),
+    ],
+)
+def test_validator_holds_filters_to_the_backend_grammar(changed, path):
+    issues = validate_publisher_entity_v2(with_document_filter(changed))
+
+    assert [issue["path"] for issue in issues] == [f"content.filters[0].attributeFilter.{path}"]
+
+
+def test_validator_requires_a_local_identifier_on_a_document_filter():
+    unnamed = with_document_filter({})
+    del unnamed["content"]["filters"][0]["attributeFilter"]["localIdentifier"]
+
+    assert [issue["path"] for issue in validate_publisher_entity_v2(unnamed)] == [
+        "content.filters[0].attributeFilter.localIdentifier"
+    ]
+
+
 def test_validator_reports_an_issue_on_the_reference_on_the_id():
     reserved = {**PAGE_TEMPLATE, "id": "default.cover"}
 

@@ -439,6 +439,10 @@ export interface AttributeHeaderAttributeHeader {
      * Attribute name.
      */
     'attributeName': string;
+    /**
+     * Data type of the attribute values, only filled for computed attributes.
+     */
+    'dataType'?: AttributeHeaderAttributeHeaderDataTypeEnum;
     'format'?: AttributeFormat;
     'geoAreaConfig'?: GeoAreaConfig;
     /**
@@ -454,6 +458,10 @@ export interface AttributeHeaderAttributeHeader {
      * Local identifier of the attribute this header relates to.
      */
     'localIdentifier': string;
+    /**
+     * Format to be used to format the attribute values, the same kind of format string as the measure format. Only filled for computed attributes with a format.
+     */
+    'numberFormat'?: string;
     'primaryLabel': RestApiIdentifier;
     /**
      * Attribute value type.
@@ -461,6 +469,7 @@ export interface AttributeHeaderAttributeHeader {
     'valueType'?: AttributeHeaderAttributeHeaderValueTypeEnum;
 }
 
+export type AttributeHeaderAttributeHeaderDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
 export type AttributeHeaderAttributeHeaderGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
 export type AttributeHeaderAttributeHeaderValueTypeEnum = 'TEXT' | 'HYPERLINK' | 'GEO' | 'GEO_LONGITUDE' | 'GEO_LATITUDE' | 'GEO_AREA' | 'GEO_ICON' | 'IMAGE' | 'HYPERLOGLOG';
 
@@ -717,24 +726,6 @@ export interface CompoundMeasureValueFilterCompoundMeasureValueFilter {
     'treatNullValuesAs'?: number;
 }
 
-export interface DashboardSummaryRequestDto {
-    'aiModel'?: string;
-    'customUserPrompt'?: string;
-    'dashboardId': string;
-    'dryRun'?: boolean;
-    'gooddataHost'?: string;
-    'gooddataToken'?: string;
-    'keyMetricIds'?: Array<string>;
-    'referenceQuarter'?: string;
-    'temperature'?: number;
-}
-
-export interface DashboardSummaryResponseDto {
-    'message': string;
-    'runId': string;
-    'status': string;
-}
-
 /**
  * Mapping from dimension items (either \'localIdentifier\' from \'AttributeItem\', or \"measureGroup\") to their respective values. This effectively specifies the path (location) of the data column used for sorting. Therefore values for all dimension items must be specified.
  */
@@ -951,6 +942,10 @@ export interface ElementsResponse {
      */
     'cacheId'?: string;
     /**
+     * Data type of the element values, only filled for computed attributes.
+     */
+    'dataType'?: ElementsResponseDataTypeEnum;
+    /**
      * List of returned elements.
      */
     'elements': Array<Element>;
@@ -959,10 +954,15 @@ export interface ElementsResponse {
      * Granularity of requested label in case of date attribute
      */
     'granularity'?: ElementsResponseGranularityEnum;
+    /**
+     * Format to be used to format the element values, the same kind of format string as the measure format. Only filled for computed attributes with a format.
+     */
+    'numberFormat'?: string;
     'paging': Paging;
     'primaryLabel': RestApiIdentifier;
 }
 
+export type ElementsResponseDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
 export type ElementsResponseGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
 
 /**
@@ -1126,12 +1126,6 @@ export interface FailedOperation extends Operation {
 }
 
 export type FailedOperationStatusEnum = 'failed';
-
-export interface FeedbackRequestDto {
-    'sentiment': FeedbackRequestDtoSentimentEnum;
-}
-
-export type FeedbackRequestDtoSentimentEnum = 'POSITIVE' | 'NEGATIVE';
 
 /**
  * Reads the latest version of a table uploaded to a GDSTORAGE data source.
@@ -1720,34 +1714,6 @@ export interface KeyDriversResponse {
 
 export interface KeyDriversResult {
     'data': object;
-}
-
-export interface KnowledgeRecommendationsRequestDto {
-    'aiModel'?: string;
-    'analyticalDashboardId'?: string;
-    'analyzedValue'?: number;
-    'comparisonType': KnowledgeRecommendationsRequestDtoComparisonTypeEnum;
-    'direction'?: KnowledgeRecommendationsRequestDtoDirectionEnum;
-    'dryRun'?: boolean;
-    'gooddataHost'?: string;
-    'gooddataToken'?: string;
-    'limit'?: number;
-    'maxTokens'?: number;
-    'metricId': string;
-    'minScore'?: number;
-    'referenceValue'?: number;
-    'temperature'?: number;
-    'widgetId'?: string;
-    'widgetName'?: string;
-}
-
-export type KnowledgeRecommendationsRequestDtoComparisonTypeEnum = 'MONTH' | 'QUARTER' | 'YEAR';
-export type KnowledgeRecommendationsRequestDtoDirectionEnum = 'INCREASED' | 'DECREASED';
-
-export interface KnowledgeRecommendationsResponseDto {
-    'message': string;
-    'runId': string;
-    'status': string;
 }
 
 export interface ListLlmProviderModelsRequest {
@@ -7054,54 +7020,6 @@ export async function ActionsApiAxiosParamCreator_CancelWorkflow(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * 
- * @param {string} workspaceId Workspace identifier
- * @param {string} runId 
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function ActionsApiAxiosParamCreator_CancelWorkflow1(
-    workspaceId: string, runId: string, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('cancelWorkflow1', 'workspaceId', workspaceId)
-    // verify required parameter 'runId' is not null or undefined
-    assertParamExists('cancelWorkflow1', 'runId', runId)
-    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/agent/{runId}/cancel`
-        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-        .replace(`{${"runId"}}`, encodeURIComponent(String(runId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-
-    
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// ActionsApi FP - ActionsApiAxiosParamCreator
-/**
  * Computes change analysis for the provided execution definition.
  * @summary Compute change analysis
  * @param {string} workspaceId Workspace identifier
@@ -8005,67 +7923,6 @@ export async function ActionsApiAxiosParamCreator_GenerateDashboardSummary(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * 
- * @param {string} workspaceId Workspace identifier
- * @param {DashboardSummaryRequestDto} dashboardSummaryRequestDto 
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function ActionsApiAxiosParamCreator_GenerateDashboardSummary1(
-    workspaceId: string, dashboardSummaryRequestDto: DashboardSummaryRequestDto, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('generateDashboardSummary1', 'workspaceId', workspaceId)
-    // verify required parameter 'dashboardSummaryRequestDto' is not null or undefined
-    assertParamExists('generateDashboardSummary1', 'dashboardSummaryRequestDto', dashboardSummaryRequestDto)
-    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/agent/dashboardSummary`
-        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-
-    
-    const consumes = [
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-    const needsSerialization =
-        typeof dashboardSummaryRequestDto !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(dashboardSummaryRequestDto !== undefined ? dashboardSummaryRequestDto : {})
-        : dashboardSummaryRequestDto || "";
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// ActionsApi FP - ActionsApiAxiosParamCreator
-/**
  * Generates a description for the specified analytics object. Returns description and a note with details if generation was not performed.
  * @summary Generate Description for Analytics Object
  * @param {string} workspaceId Workspace identifier
@@ -8118,67 +7975,6 @@ export async function ActionsApiAxiosParamCreator_GenerateDescription(
     localVarRequestOptions.data = needsSerialization
         ? JSON.stringify(generateDescriptionRequest !== undefined ? generateDescriptionRequest : {})
         : generateDescriptionRequest || "";
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// ActionsApi FP - ActionsApiAxiosParamCreator
-/**
- * 
- * @param {string} workspaceId Workspace identifier
- * @param {KnowledgeRecommendationsRequestDto} knowledgeRecommendationsRequestDto 
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function ActionsApiAxiosParamCreator_GenerateKnowledgeRecommendations(
-    workspaceId: string, knowledgeRecommendationsRequestDto: KnowledgeRecommendationsRequestDto, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('generateKnowledgeRecommendations', 'workspaceId', workspaceId)
-    // verify required parameter 'knowledgeRecommendationsRequestDto' is not null or undefined
-    assertParamExists('generateKnowledgeRecommendations', 'knowledgeRecommendationsRequestDto', knowledgeRecommendationsRequestDto)
-    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/agent/knowledgeRecommendations`
-        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-
-    
-    const consumes = [
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-    const needsSerialization =
-        typeof knowledgeRecommendationsRequestDto !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(knowledgeRecommendationsRequestDto !== undefined ? knowledgeRecommendationsRequestDto : {})
-        : knowledgeRecommendationsRequestDto || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -8362,54 +8158,6 @@ export async function ActionsApiAxiosParamCreator_GetWorkflowStatus(
     // verify required parameter 'runId' is not null or undefined
     assertParamExists('getWorkflowStatus', 'runId', runId)
     const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/workflow/{runId}/status`
-        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-        .replace(`{${"runId"}}`, encodeURIComponent(String(runId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-
-    
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// ActionsApi FP - ActionsApiAxiosParamCreator
-/**
- * 
- * @param {string} workspaceId Workspace identifier
- * @param {string} runId 
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function ActionsApiAxiosParamCreator_GetWorkflowStatus1(
-    workspaceId: string, runId: string, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('getWorkflowStatus1', 'workspaceId', workspaceId)
-    // verify required parameter 'runId' is not null or undefined
-    assertParamExists('getWorkflowStatus1', 'runId', runId)
-    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/agent/{runId}/status`
         .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
         .replace(`{${"runId"}}`, encodeURIComponent(String(runId)));
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -9498,71 +9246,6 @@ export async function ActionsApiAxiosParamCreator_TriggerQualityIssuesCalculatio
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * 
- * @param {string} workspaceId Workspace identifier
- * @param {string} runId 
- * @param {FeedbackRequestDto} feedbackRequestDto 
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function ActionsApiAxiosParamCreator_UserFeedback(
-    workspaceId: string, runId: string, feedbackRequestDto: FeedbackRequestDto, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('userFeedback', 'workspaceId', workspaceId)
-    // verify required parameter 'runId' is not null or undefined
-    assertParamExists('userFeedback', 'runId', runId)
-    // verify required parameter 'feedbackRequestDto' is not null or undefined
-    assertParamExists('userFeedback', 'feedbackRequestDto', feedbackRequestDto)
-    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/agent/{runId}/feedback`
-        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-        .replace(`{${"runId"}}`, encodeURIComponent(String(runId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-
-    
-    const consumes = [
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-    const needsSerialization =
-        typeof feedbackRequestDto !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(feedbackRequestDto !== undefined ? feedbackRequestDto : {})
-        : feedbackRequestDto || "";
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// ActionsApi FP - ActionsApiAxiosParamCreator
-/**
  * Permanently removed. Use POST /api/v1/actions/ai/llmProvider/test instead. Always returns 410 Gone.
  * @summary Validate LLM Endpoint (Removed)
  * @param {*} [options] Override http request option.
@@ -9873,31 +9556,6 @@ export async function ActionsApi_CancelWorkflow(
     configuration?: Configuration,
 ): AxiosPromise<{ [key: string]: string; }> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_CancelWorkflow(
-        requestParameters.workspaceId, requestParameters.runId, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// ActionsApi Api FP
-/**
- * 
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {ActionsApiCancelWorkflow1Request} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function ActionsApi_CancelWorkflow1(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: ActionsApiCancelWorkflow1Request, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<{ [key: string]: string; }> {
-    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_CancelWorkflow1(
         requestParameters.workspaceId, requestParameters.runId, 
         options || {},
         configuration,
@@ -10271,31 +9929,6 @@ export async function ActionsApi_GenerateDashboardSummary(
 
 // ActionsApi Api FP
 /**
- * 
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {ActionsApiGenerateDashboardSummary1Request} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function ActionsApi_GenerateDashboardSummary1(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: ActionsApiGenerateDashboardSummary1Request, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<DashboardSummaryResponseDto> {
-    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_GenerateDashboardSummary1(
-        requestParameters.workspaceId, requestParameters.dashboardSummaryRequestDto, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// ActionsApi Api FP
-/**
  * Generates a description for the specified analytics object. Returns description and a note with details if generation was not performed.
  * @summary Generate Description for Analytics Object
  * @param {AxiosInstance} axios Axios instance.
@@ -10313,31 +9946,6 @@ export async function ActionsApi_GenerateDescription(
 ): AxiosPromise<GenerateDescriptionResponse> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_GenerateDescription(
         requestParameters.workspaceId, requestParameters.generateDescriptionRequest, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// ActionsApi Api FP
-/**
- * 
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {ActionsApiGenerateKnowledgeRecommendationsRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function ActionsApi_GenerateKnowledgeRecommendations(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: ActionsApiGenerateKnowledgeRecommendationsRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<KnowledgeRecommendationsResponseDto> {
-    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_GenerateKnowledgeRecommendations(
-        requestParameters.workspaceId, requestParameters.knowledgeRecommendationsRequestDto, 
         options || {},
         configuration,
     );
@@ -10440,31 +10048,6 @@ export async function ActionsApi_GetWorkflowStatus(
     configuration?: Configuration,
 ): AxiosPromise<WorkflowStatusResponseDto> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_GetWorkflowStatus(
-        requestParameters.workspaceId, requestParameters.runId, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// ActionsApi Api FP
-/**
- * 
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {ActionsApiGetWorkflowStatus1Request} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function ActionsApi_GetWorkflowStatus1(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: ActionsApiGetWorkflowStatus1Request, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<WorkflowStatusResponseDto> {
-    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_GetWorkflowStatus1(
         requestParameters.workspaceId, requestParameters.runId, 
         options || {},
         configuration,
@@ -10969,31 +10552,6 @@ export async function ActionsApi_TriggerQualityIssuesCalculation(
 
 // ActionsApi Api FP
 /**
- * 
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {ActionsApiUserFeedbackRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function ActionsApi_UserFeedback(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: ActionsApiUserFeedbackRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<{ [key: string]: string; }> {
-    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_UserFeedback(
-        requestParameters.workspaceId, requestParameters.runId, requestParameters.feedbackRequestDto, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// ActionsApi Api FP
-/**
  * Permanently removed. Use POST /api/v1/actions/ai/llmProvider/test instead. Always returns 410 Gone.
  * @summary Validate LLM Endpoint (Removed)
  * @param {AxiosInstance} axios Axios instance.
@@ -11145,15 +10703,6 @@ export interface ActionsApiInterface {
     cancelWorkflow(requestParameters: ActionsApiCancelWorkflowRequest, options?: AxiosRequestConfig): AxiosPromise<{ [key: string]: string; }>;
 
     /**
-     * 
-     * @param {ActionsApiCancelWorkflow1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ActionsApiInterface
-     */
-    cancelWorkflow1(requestParameters: ActionsApiCancelWorkflow1Request, options?: AxiosRequestConfig): AxiosPromise<{ [key: string]: string; }>;
-
-    /**
      * Computes change analysis for the provided execution definition.
      * @summary Compute change analysis
      * @param {ActionsApiChangeAnalysisRequest} requestParameters Request parameters.
@@ -11293,15 +10842,6 @@ export interface ActionsApiInterface {
     generateDashboardSummary(requestParameters: ActionsApiGenerateDashboardSummaryRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowDashboardSummaryResponseDto>;
 
     /**
-     * 
-     * @param {ActionsApiGenerateDashboardSummary1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ActionsApiInterface
-     */
-    generateDashboardSummary1(requestParameters: ActionsApiGenerateDashboardSummary1Request, options?: AxiosRequestConfig): AxiosPromise<DashboardSummaryResponseDto>;
-
-    /**
      * Generates a description for the specified analytics object. Returns description and a note with details if generation was not performed.
      * @summary Generate Description for Analytics Object
      * @param {ActionsApiGenerateDescriptionRequest} requestParameters Request parameters.
@@ -11310,15 +10850,6 @@ export interface ActionsApiInterface {
      * @memberof ActionsApiInterface
      */
     generateDescription(requestParameters: ActionsApiGenerateDescriptionRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateDescriptionResponse>;
-
-    /**
-     * 
-     * @param {ActionsApiGenerateKnowledgeRecommendationsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ActionsApiInterface
-     */
-    generateKnowledgeRecommendations(requestParameters: ActionsApiGenerateKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<KnowledgeRecommendationsResponseDto>;
 
     /**
      * Generates a title for the specified analytics object. Returns title and a note with details if generation was not performed.
@@ -11358,15 +10889,6 @@ export interface ActionsApiInterface {
      * @memberof ActionsApiInterface
      */
     getWorkflowStatus(requestParameters: ActionsApiGetWorkflowStatusRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowStatusResponseDto>;
-
-    /**
-     * 
-     * @param {ActionsApiGetWorkflowStatus1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ActionsApiInterface
-     */
-    getWorkflowStatus1(requestParameters: ActionsApiGetWorkflowStatus1Request, options?: AxiosRequestConfig): AxiosPromise<WorkflowStatusResponseDto>;
 
     /**
      * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
@@ -11558,15 +11080,6 @@ export interface ActionsApiInterface {
      * @memberof ActionsApiInterface
      */
     triggerQualityIssuesCalculation(requestParameters: ActionsApiTriggerQualityIssuesCalculationRequest, options?: AxiosRequestConfig): AxiosPromise<TriggerQualityIssuesCalculationResponse>;
-
-    /**
-     * 
-     * @param {ActionsApiUserFeedbackRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ActionsApiInterface
-     */
-    userFeedback(requestParameters: ActionsApiUserFeedbackRequest, options?: AxiosRequestConfig): AxiosPromise<{ [key: string]: string; }>;
 
     /**
      * Permanently removed. Use POST /api/v1/actions/ai/llmProvider/test instead. Always returns 410 Gone.
@@ -11776,27 +11289,6 @@ export interface ActionsApiCancelWorkflowRequest {
      * 
      * @type {string}
      * @memberof ActionsApiCancelWorkflow
-     */
-    readonly runId: string
-}
-
-/**
- * Request parameters for cancelWorkflow1 operation in ActionsApi.
- * @export
- * @interface ActionsApiCancelWorkflow1Request
- */
-export interface ActionsApiCancelWorkflow1Request {
-    /**
-     * Workspace identifier
-     * @type {string}
-     * @memberof ActionsApiCancelWorkflow1
-     */
-    readonly workspaceId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionsApiCancelWorkflow1
      */
     readonly runId: string
 }
@@ -12208,27 +11700,6 @@ export interface ActionsApiGenerateDashboardSummaryRequest {
 }
 
 /**
- * Request parameters for generateDashboardSummary1 operation in ActionsApi.
- * @export
- * @interface ActionsApiGenerateDashboardSummary1Request
- */
-export interface ActionsApiGenerateDashboardSummary1Request {
-    /**
-     * Workspace identifier
-     * @type {string}
-     * @memberof ActionsApiGenerateDashboardSummary1
-     */
-    readonly workspaceId: string
-
-    /**
-     * 
-     * @type {DashboardSummaryRequestDto}
-     * @memberof ActionsApiGenerateDashboardSummary1
-     */
-    readonly dashboardSummaryRequestDto: DashboardSummaryRequestDto
-}
-
-/**
  * Request parameters for generateDescription operation in ActionsApi.
  * @export
  * @interface ActionsApiGenerateDescriptionRequest
@@ -12247,27 +11718,6 @@ export interface ActionsApiGenerateDescriptionRequest {
      * @memberof ActionsApiGenerateDescription
      */
     readonly generateDescriptionRequest: GenerateDescriptionRequest
-}
-
-/**
- * Request parameters for generateKnowledgeRecommendations operation in ActionsApi.
- * @export
- * @interface ActionsApiGenerateKnowledgeRecommendationsRequest
- */
-export interface ActionsApiGenerateKnowledgeRecommendationsRequest {
-    /**
-     * Workspace identifier
-     * @type {string}
-     * @memberof ActionsApiGenerateKnowledgeRecommendations
-     */
-    readonly workspaceId: string
-
-    /**
-     * 
-     * @type {KnowledgeRecommendationsRequestDto}
-     * @memberof ActionsApiGenerateKnowledgeRecommendations
-     */
-    readonly knowledgeRecommendationsRequestDto: KnowledgeRecommendationsRequestDto
 }
 
 /**
@@ -12343,27 +11793,6 @@ export interface ActionsApiGetWorkflowStatusRequest {
      * 
      * @type {string}
      * @memberof ActionsApiGetWorkflowStatus
-     */
-    readonly runId: string
-}
-
-/**
- * Request parameters for getWorkflowStatus1 operation in ActionsApi.
- * @export
- * @interface ActionsApiGetWorkflowStatus1Request
- */
-export interface ActionsApiGetWorkflowStatus1Request {
-    /**
-     * Workspace identifier
-     * @type {string}
-     * @memberof ActionsApiGetWorkflowStatus1
-     */
-    readonly workspaceId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionsApiGetWorkflowStatus1
      */
     readonly runId: string
 }
@@ -12845,34 +12274,6 @@ export interface ActionsApiTriggerQualityIssuesCalculationRequest {
 }
 
 /**
- * Request parameters for userFeedback operation in ActionsApi.
- * @export
- * @interface ActionsApiUserFeedbackRequest
- */
-export interface ActionsApiUserFeedbackRequest {
-    /**
-     * Workspace identifier
-     * @type {string}
-     * @memberof ActionsApiUserFeedback
-     */
-    readonly workspaceId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionsApiUserFeedback
-     */
-    readonly runId: string
-
-    /**
-     * 
-     * @type {FeedbackRequestDto}
-     * @memberof ActionsApiUserFeedback
-     */
-    readonly feedbackRequestDto: FeedbackRequestDto
-}
-
-/**
  * Request parameters for validateLLMEndpointById operation in ActionsApi.
  * @export
  * @interface ActionsApiValidateLLMEndpointByIdRequest
@@ -13004,17 +12405,6 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      */
     public cancelWorkflow(requestParameters: ActionsApiCancelWorkflowRequest, options?: AxiosRequestConfig) {
         return ActionsApi_CancelWorkflow(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * 
-     * @param {ActionsApiCancelWorkflow1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ActionsApi
-     */
-    public cancelWorkflow1(requestParameters: ActionsApiCancelWorkflow1Request, options?: AxiosRequestConfig) {
-        return ActionsApi_CancelWorkflow1(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -13185,17 +12575,6 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * 
-     * @param {ActionsApiGenerateDashboardSummary1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ActionsApi
-     */
-    public generateDashboardSummary1(requestParameters: ActionsApiGenerateDashboardSummary1Request, options?: AxiosRequestConfig) {
-        return ActionsApi_GenerateDashboardSummary1(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
      * Generates a description for the specified analytics object. Returns description and a note with details if generation was not performed.
      * @summary Generate Description for Analytics Object
      * @param {ActionsApiGenerateDescriptionRequest} requestParameters Request parameters.
@@ -13205,17 +12584,6 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      */
     public generateDescription(requestParameters: ActionsApiGenerateDescriptionRequest, options?: AxiosRequestConfig) {
         return ActionsApi_GenerateDescription(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * 
-     * @param {ActionsApiGenerateKnowledgeRecommendationsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ActionsApi
-     */
-    public generateKnowledgeRecommendations(requestParameters: ActionsApiGenerateKnowledgeRecommendationsRequest, options?: AxiosRequestConfig) {
-        return ActionsApi_GenerateKnowledgeRecommendations(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -13263,17 +12631,6 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      */
     public getWorkflowStatus(requestParameters: ActionsApiGetWorkflowStatusRequest, options?: AxiosRequestConfig) {
         return ActionsApi_GetWorkflowStatus(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * 
-     * @param {ActionsApiGetWorkflowStatus1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ActionsApi
-     */
-    public getWorkflowStatus1(requestParameters: ActionsApiGetWorkflowStatus1Request, options?: AxiosRequestConfig) {
-        return ActionsApi_GetWorkflowStatus1(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -13503,17 +12860,6 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      */
     public triggerQualityIssuesCalculation(requestParameters: ActionsApiTriggerQualityIssuesCalculationRequest, options?: AxiosRequestConfig) {
         return ActionsApi_TriggerQualityIssuesCalculation(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * 
-     * @param {ActionsApiUserFeedbackRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ActionsApi
-     */
-    public userFeedback(requestParameters: ActionsApiUserFeedbackRequest, options?: AxiosRequestConfig) {
-        return ActionsApi_UserFeedback(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**

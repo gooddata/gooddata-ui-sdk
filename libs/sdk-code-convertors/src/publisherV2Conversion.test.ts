@@ -46,6 +46,7 @@ import {
     yamlPublisherPageTemplateToDefinitionV2,
 } from "./to/yamlPublisherEntityToDeclarativeV2.js";
 import { CoreErrorCode, type ICoreError } from "./utils/errors.js";
+import { validateDeclarativePublisherEntityV2 } from "./validateDeclarativePublisherEntityV2.js";
 
 const fixturesDir = join(import.meta.dirname, "../fixtures/publisherV2/valid");
 
@@ -325,6 +326,29 @@ function withYamlContent(
     return { ...declarativePublisherDocumentToYamlV2(document).json, content };
 }
 
+type AacPublisherEntityV2 =
+    | AacPublisherDocumentV2
+    | AacPublisherDocumentTemplateV2
+    | AacPublisherPageTemplateV2;
+
+function fixture(file: string): AacPublisherEntityV2 {
+    return parse(readFileSync(join(fixturesDir, file), "utf8")) as AacPublisherEntityV2;
+}
+
+function storedFrom(
+    written: AacPublisherEntityV2,
+):
+    | DeclarativePublisherDocumentV2
+    | DeclarativePublisherDocumentTemplateV2
+    | DeclarativePublisherPageTemplateV2 {
+    if (written.type === "document") {
+        return yamlPublisherDocumentToDeclarativeV2(written);
+    }
+    return written.type === "document_template"
+        ? yamlPublisherDocumentTemplateToDeclarativeV2(written)
+        : yamlPublisherPageTemplateToDeclarativeV2(written);
+}
+
 function thrownCode(convert: () => unknown): CoreErrorCode | undefined {
     return thrown(convert)?.code;
 }
@@ -362,26 +386,24 @@ describe("v2 Publisher entities as code", () => {
     });
 
     it.each(readdirSync(fixturesDir))("writes back what it reads: %s", (file) => {
-        const written = parse(readFileSync(join(fixturesDir, file), "utf8")) as
-            | AacPublisherDocumentV2
-            | AacPublisherDocumentTemplateV2
-            | AacPublisherPageTemplateV2;
+        const written = fixture(file);
+        const stored = storedFrom(written);
 
         const { json, content } =
-            written.type === "document"
-                ? declarativePublisherDocumentToYamlV2(yamlPublisherDocumentToDeclarativeV2(written))
-                : written.type === "document_template"
-                  ? declarativePublisherDocumentTemplateToYamlV2(
-                        yamlPublisherDocumentTemplateToDeclarativeV2(written),
-                    )
-                  : declarativePublisherPageTemplateToYamlV2(
-                        yamlPublisherPageTemplateToDeclarativeV2(written),
-                    );
+            stored.type === "document"
+                ? declarativePublisherDocumentToYamlV2(stored)
+                : stored.type === "documentTemplate"
+                  ? declarativePublisherDocumentTemplateToYamlV2(stored)
+                  : declarativePublisherPageTemplateToYamlV2(stored);
 
         expect(json).toEqual(written);
         expect(Object.keys(json)).toEqual(Object.keys(written));
         expect(parse(content)).toEqual(json);
         expect(parse(content, { version: "1.1" })).toEqual(json);
+    });
+
+    it.each(readdirSync(fixturesDir))("reads %s into an entity the stored validator accepts", (file) => {
+        expect(validateDeclarativePublisherEntityV2(storedFrom(fixture(file)))).toEqual([]);
     });
 
     it("writes strings that YAML 1.1 or 1.2 would read as another type quoted", () => {

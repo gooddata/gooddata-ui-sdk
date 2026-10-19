@@ -3993,6 +3993,14 @@
                         "description": "Category this body belongs to.",
                         "default": "catalogSearch"
                     },
+                    "compatibleWith": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Compatiblewith",
+                        "description": "Objects the results had to be compatible with, as refs: measures with their aggregation (`fact/amount@SUM`), then attributes (`label/region`). Empty when the search did not filter by compatibility."
+                    },
                     "found": {
                         "items": {
                             "$ref": "#/components/schemas/SearchedGroup"
@@ -4000,6 +4008,18 @@
                         "type": "array",
                         "title": "Found",
                         "description": "Titles the search returned, grouped by object type."
+                    },
+                    "limit": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Limit",
+                        "description": "Maximum number of results the search asked for, null when it set none."
                     },
                     "query": {
                         "items": {
@@ -4213,7 +4233,7 @@
                     "questions"
                 ],
                 "title": "ClarifyingQuestionsPart",
-                "description": "Questions the assistant needs answered before it can continue.\n\nRides a turn whose ``status`` is ``input_required``. Answers go back as an ordinary text\nmessage -- each question's ``text``, then the answer on the next line, questions separated\nby a blank line -- so a client that renders none of the controls stays functional. Echoing\nthe question is what attributes an answer, which is why an option carries no submit text of\nits own."
+                "description": "Questions the assistant needs answered before it can continue.\n\nAppears in a turn whose ``status`` is ``input_required``. Send the answers back as a\n``clarifyingAnswers`` message. It points at this item, and at each question and option by\nposition. A client without these controls can send a text message instead. Start each\nanswered question with its ``text`` in bold. Add a blank line, then the answer. Separate\nthe questions with a blank line. The question text identifies the answer, so an option has\nno submit text of its own."
             },
             "ColorDefinition": {
                 "properties": {
@@ -15329,6 +15349,74 @@
                 ],
                 "title": "SelectionType"
             },
+            "SendClarifyingAnswer": {
+                "properties": {
+                    "answer": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/SendSingleChoiceAnswer"
+                            }
+                        ],
+                        "title": "Answer",
+                        "discriminator": {
+                            "propertyName": "type",
+                            "mapping": {
+                                "singleChoice": "#/components/schemas/SendSingleChoiceAnswer"
+                            }
+                        }
+                    },
+                    "questionIndex": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "title": "Questionindex",
+                        "description": "Position of the question among the item's clarifying questions, from zero, counting across its clarifyingQuestions parts in order."
+                    },
+                    "questionText": {
+                        "type": "string",
+                        "minLength": 1,
+                        "title": "Questiontext",
+                        "description": "The question as the user saw it."
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "questionIndex",
+                    "questionText",
+                    "answer"
+                ],
+                "title": "SendClarifyingAnswer"
+            },
+            "SendClarifyingAnswersContent": {
+                "properties": {
+                    "answers": {
+                        "items": {
+                            "$ref": "#/components/schemas/SendClarifyingAnswer"
+                        },
+                        "type": "array",
+                        "minItems": 1,
+                        "title": "Answers",
+                        "description": "One entry per answered question. Skipping every question sends no message."
+                    },
+                    "questionsItemId": {
+                        "type": "string",
+                        "title": "Questionsitemid",
+                        "description": "ID of the assistant item that asked the questions."
+                    },
+                    "type": {
+                        "type": "string",
+                        "const": "clarifyingAnswers",
+                        "title": "Type"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "type",
+                    "questionsItemId",
+                    "answers"
+                ],
+                "title": "SendClarifyingAnswersContent",
+                "description": "Answers to clarifying questions the assistant asked.\n\nThe assistant reads the question and option text the user saw, in the same format as a\ntext answer. The positions link each answer to its question. A question with no answer in\nthe list was skipped."
+            },
             "SendMessageContent": {
                 "properties": {
                     "text": {
@@ -15351,7 +15439,22 @@
             "SendMessageItem": {
                 "properties": {
                     "content": {
-                        "$ref": "#/components/schemas/SendMessageContent"
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/SendMessageContent"
+                            },
+                            {
+                                "$ref": "#/components/schemas/SendClarifyingAnswersContent"
+                            }
+                        ],
+                        "title": "Content",
+                        "discriminator": {
+                            "propertyName": "type",
+                            "mapping": {
+                                "clarifyingAnswers": "#/components/schemas/SendClarifyingAnswersContent",
+                                "text": "#/components/schemas/SendMessageContent"
+                            }
+                        }
                     },
                     "role": {
                         "type": "string",
@@ -15515,6 +15618,34 @@
                 },
                 "type": "object",
                 "title": "SendMessageSearchOptions"
+            },
+            "SendSingleChoiceAnswer": {
+                "properties": {
+                    "optionIndex": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "title": "Optionindex",
+                        "description": "Position of the picked option in the question's options, from zero."
+                    },
+                    "optionText": {
+                        "type": "string",
+                        "minLength": 1,
+                        "title": "Optiontext",
+                        "description": "The picked option as the user saw it."
+                    },
+                    "type": {
+                        "type": "string",
+                        "const": "singleChoice",
+                        "title": "Type"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "type",
+                    "optionIndex",
+                    "optionText"
+                ],
+                "title": "SendSingleChoiceAnswer"
             },
             "Sensitivity": {
                 "type": "string",

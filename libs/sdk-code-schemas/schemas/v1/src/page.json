@@ -239,6 +239,32 @@
                 "vertical_align": {
                     "$ref": "/gaac/publisherVerticalAlignV2"
                 },
+                "font_size": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "font_weight": {
+                    "type": "number",
+                    "minimum": 1,
+                    "maximum": 1000
+                },
+                "font_style": {
+                    "type": "string",
+                    "enum": ["normal", "italic"]
+                },
+                "line_height": {
+                    "type": "number"
+                },
+                "letter_spacing": {
+                    "type": "number"
+                },
+                "text_transform": {
+                    "type": "string",
+                    "enum": ["none", "uppercase", "lowercase", "capitalize"]
+                },
+                "text_overflow": {
+                    "type": "string",
+                    "enum": ["shrink", "clip", "ellipsis"]
+                },
                 "gap": {
                     "$ref": "/gaac/publisherGapValueV2"
                 }
@@ -398,6 +424,32 @@
                 },
                 "vertical_align": {
                     "$ref": "/gaac/publisherVerticalAlignV2"
+                },
+                "font_size": {
+                    "$ref": "/gaac/publisherPxV2"
+                },
+                "font_weight": {
+                    "type": "number",
+                    "minimum": 1,
+                    "maximum": 1000
+                },
+                "font_style": {
+                    "type": "string",
+                    "enum": ["normal", "italic"]
+                },
+                "line_height": {
+                    "type": "number"
+                },
+                "letter_spacing": {
+                    "type": "number"
+                },
+                "text_transform": {
+                    "type": "string",
+                    "enum": ["none", "uppercase", "lowercase", "capitalize"]
+                },
+                "text_overflow": {
+                    "type": "string",
+                    "enum": ["shrink", "clip", "ellipsis"]
                 },
                 "gap": {
                     "$ref": "/gaac/publisherGapValueV2"

@@ -122,6 +122,10 @@ function InputComponent({ autofocus = false, canManage, canAnalyze, targetRef }:
     };
 
     const handleContextMouseDown = (e: MouseEvent<HTMLDivElement>) => {
+        if (!e.currentTarget.contains(e.target as Node)) {
+            return;
+        }
+
         e.preventDefault();
         editorApi?.focus();
     };

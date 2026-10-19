@@ -1280,6 +1280,8 @@ export interface IUserEditDialogProps extends IWithTelemetryProps {
     // (undocumented)
     isCreateVisualizationWorkspacePermissionEnabled?: boolean;
     // (undocumented)
+    isLocalizationEnabled?: boolean;
+    // (undocumented)
     isSystemAccountFilteringEnabled?: boolean;
     // (undocumented)
     onClose: () => void;

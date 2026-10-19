@@ -3,7 +3,7 @@
 import { type ReactNode } from "react";
 
 import { configureStore } from "@reduxjs/toolkit";
-import { render } from "@testing-library/react";
+import { act, render } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -63,6 +63,7 @@ type RecordedProps = {
     latitude?: unknown;
     longitude?: unknown;
     area?: unknown;
+    onExportReady?: () => void;
 };
 
 const rendered: { component: string; separators: ISeparators | undefined }[] = [];
@@ -155,6 +156,7 @@ function renderVisualisation(
     props: {
         isTable?: boolean;
         enableNewPivotTable?: boolean;
+        onVisualisationSuccess?: () => void;
     } = {},
     insight: Partial<IInsight["insight"]> = {},
 ) {
@@ -212,6 +214,15 @@ describe("ConversationVisualisation", () => {
         renderVisualisation("local:bar", { isTable: true });
 
         expect(rendered).toEqual([{ component: "PivotTableNext", separators }]);
+    });
+
+    it("notifies when a visualization renders successfully", () => {
+        const onVisualisationSuccess = vi.fn();
+        renderVisualisation("local:bar", { onVisualisationSuccess });
+
+        act(() => lastProps.get("BarChart")?.onExportReady?.());
+
+        expect(onVisualisationSuccess).toHaveBeenCalledTimes(1);
     });
 
     it("passes the workspace separators to the legacy pivot table", () => {

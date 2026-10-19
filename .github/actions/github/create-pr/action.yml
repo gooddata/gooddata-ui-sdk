@@ -45,27 +45,35 @@ runs:
       shell: bash
       env:
         GH_TOKEN: ${{ inputs.github-token }}
+        PR_TITLE: ${{ inputs.title }}
+        PR_BODY: ${{ inputs.body }}
+        PR_BASE: ${{ inputs.base }}
+        PR_HEAD: ${{ inputs.head }}
+        PR_DRAFT: ${{ inputs.draft }}
+        PR_LABELS: ${{ inputs.labels }}
+        PR_ASSIGNEES: ${{ inputs.assignees }}
+        PR_REVIEWERS: ${{ inputs.reviewers }}
       run: |
-        PR_CREATE_CMD="gh pr create --title \"${{ inputs.title }}\" --body \"${{ inputs.body }}\" --base ${{ inputs.base }} --head ${{ inputs.head }}"
-        
-        if [[ "${{ inputs.draft }}" == "true" ]]; then
-          PR_CREATE_CMD="${PR_CREATE_CMD} --draft"
+        ARGS=(--title "$PR_TITLE" --body "$PR_BODY" --base "$PR_BASE" --head "$PR_HEAD")
+
+        if [[ "$PR_DRAFT" == "true" ]]; then
+          ARGS+=(--draft)
         fi
-        
-        if [[ -n "${{ inputs.labels }}" ]]; then
-          PR_CREATE_CMD="${PR_CREATE_CMD} --label ${{ inputs.labels }}"
+
+        if [[ -n "$PR_LABELS" ]]; then
+          ARGS+=(--label "$PR_LABELS")
         fi
-        
-        if [[ -n "${{ inputs.assignees }}" ]]; then
-          PR_CREATE_CMD="${PR_CREATE_CMD} --assignee ${{ inputs.assignees }}"
+
+        if [[ -n "$PR_ASSIGNEES" ]]; then
+          ARGS+=(--assignee "$PR_ASSIGNEES")
         fi
-        
-        if [[ -n "${{ inputs.reviewers }}" ]]; then
-          PR_CREATE_CMD="${PR_CREATE_CMD} --reviewer ${{ inputs.reviewers }}"
+
+        if [[ -n "$PR_REVIEWERS" ]]; then
+          ARGS+=(--reviewer "$PR_REVIEWERS")
         fi
-        
-        PR_URL=$(eval ${PR_CREATE_CMD})
-        echo "pr_url=${PR_URL}" >> $GITHUB_OUTPUT
-        PR_NUMBER=$(echo $PR_URL | awk -F'/' '{print $NF}')
-        echo "pr_number=${PR_NUMBER}" >> $GITHUB_OUTPUT
-        echo "Created PR: ${PR_URL}" | tee -a $GITHUB_STEP_SUMMARY
+
+        PR_URL=$(gh pr create "${ARGS[@]}")
+        echo "pr_url=${PR_URL}" >> "$GITHUB_OUTPUT"
+        PR_NUMBER=$(echo "$PR_URL" | awk -F'/' '{print $NF}')
+        echo "pr_number=${PR_NUMBER}" >> "$GITHUB_OUTPUT"
+        echo "Created PR: ${PR_URL}" | tee -a "$GITHUB_STEP_SUMMARY"

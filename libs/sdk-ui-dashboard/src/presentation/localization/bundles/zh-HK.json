@@ -460,7 +460,7 @@
     "visualizationsList.create": "創建可視化效果",
     "visualizationsList.noUserInsights": "未創建任何可視化效果。",
     "visualizationsList.noVisualizationsFound": "沒有相符的可視化。",
-    "deleteInsightDialog.headline": "刪除可視化效果？",
+    "deleteInsightDialog.headline": "刪除可視化？",
     "deleteInsightDialog.description": "可視化 <strong>{title}</strong> 將被永久刪除。",
     "deleteInsightDialog.notUsed": "此可視化未用於任何儀表板。",
     "deleteInsightDialog.checking": "正在檢查可視化的使用位置……",

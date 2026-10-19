@@ -284,10 +284,14 @@ export interface IPublisherTextStyleV2 extends IPublisherInheritedTextStyleV2 {
 }
 
 /**
+ * @remarks
+ * Of the text keys, only those of {@link IPublisherInheritedTextStyleV2} change how the page renders;
+ * the others are kept and validated.
+ *
  * @alpha
  */
 export interface IPublisherPageStyleV2
-    extends IPublisherBackgroundStyleV2, IPublisherPaddingStyleV2, IPublisherInheritedTextStyleV2 {
+    extends IPublisherBackgroundStyleV2, IPublisherPaddingStyleV2, IPublisherTextStyleV2 {
     /**
      * Default gap of every container on the page.
      */
@@ -295,9 +299,13 @@ export interface IPublisherPageStyleV2
 }
 
 /**
+ * @remarks
+ * Of the text keys, only those of {@link IPublisherInheritedTextStyleV2} change how the container
+ * renders; the others are kept and validated.
+ *
  * @alpha
  */
-export interface IPublisherContainerStyleV2 extends IPublisherBoxStyleV2, IPublisherInheritedTextStyleV2 {
+export interface IPublisherContainerStyleV2 extends IPublisherBoxStyleV2, IPublisherTextStyleV2 {
     gap?: PublisherGapValueV2;
 }
 

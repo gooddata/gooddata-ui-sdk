@@ -462,7 +462,7 @@
     "visualizationsList.noVisualizationsFound": "没有匹配的可视化。",
     "deleteInsightDialog.headline": "删除可视化？",
     "deleteInsightDialog.description": "可视化 <strong>{title}</strong> 将被永久删除。",
-    "deleteInsightDialog.notUsed": "此可视化未在任何控制面板上使用。",
+    "deleteInsightDialog.notUsed": "此可视化未在任何仪表板上使用。",
     "deleteInsightDialog.checking": "正在检查可视化的使用位置……",
     "deleteInsightDialog.checkFailed": "无法检查可视化的使用位置。请关闭对话框并重试。",
     "deleteInsightDialog.usedOnDashboards": "无法删除可视化 <strong>{title}</strong>，因为它已用于某些仪表板。要删除此可视化，请先将其从所有仪表板中移除。",

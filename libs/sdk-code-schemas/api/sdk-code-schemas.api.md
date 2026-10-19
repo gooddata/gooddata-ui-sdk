@@ -5114,6 +5114,32 @@ export const metadata_v1: {
                     vertical_align: {
                         $ref: string;
                     };
+                    font_size: {
+                        $ref: string;
+                    };
+                    font_weight: {
+                        type: string;
+                        minimum: number;
+                        maximum: number;
+                    };
+                    font_style: {
+                        type: string;
+                        enum: string[];
+                    };
+                    line_height: {
+                        type: string;
+                    };
+                    letter_spacing: {
+                        type: string;
+                    };
+                    text_transform: {
+                        type: string;
+                        enum: string[];
+                    };
+                    text_overflow: {
+                        type: string;
+                        enum: string[];
+                    };
                     gap: {
                         $ref: string;
                     };
@@ -6151,6 +6177,32 @@ export const metadata_v1: {
                     };
                     vertical_align: {
                         $ref: string;
+                    };
+                    font_size: {
+                        $ref: string;
+                    };
+                    font_weight: {
+                        type: string;
+                        minimum: number;
+                        maximum: number;
+                    };
+                    font_style: {
+                        type: string;
+                        enum: string[];
+                    };
+                    line_height: {
+                        type: string;
+                    };
+                    letter_spacing: {
+                        type: string;
+                    };
+                    text_transform: {
+                        type: string;
+                        enum: string[];
+                    };
+                    text_overflow: {
+                        type: string;
+                        enum: string[];
                     };
                     gap: {
                         $ref: string;
@@ -13878,9 +13930,19 @@ interface PublisherContainerStyleV2 {
     // (undocumented)
     border_width?: PublisherPxV2;
     // (undocumented)
+    font_size?: PublisherPxV2;
+    // (undocumented)
+    font_style?: "normal" | "italic";
+    // (undocumented)
+    font_weight?: number;
+    // (undocumented)
     gap?: PublisherGapValueV23;
     // (undocumented)
     horizontal_align?: "left" | "center" | "right" | "justify";
+    // (undocumented)
+    letter_spacing?: number;
+    // (undocumented)
+    line_height?: number;
     // (undocumented)
     opacity?: PublisherOpacityV2;
     // (undocumented)
@@ -13910,7 +13972,11 @@ interface PublisherContainerStyleV2 {
     // (undocumented)
     text_color?: PublisherColorValueV2;
     // (undocumented)
+    text_overflow?: "shrink" | "clip" | "ellipsis";
+    // (undocumented)
     text_style?: PublisherTextStyleNameV2;
+    // (undocumented)
+    text_transform?: "none" | "uppercase" | "lowercase" | "capitalize";
     // (undocumented)
     vertical_align?: PublisherVerticalAlignV2;
 }
@@ -14454,9 +14520,19 @@ interface PublisherPageStyleV2 {
     // (undocumented)
     background_vertical_align?: PublisherVerticalAlignV2;
     // (undocumented)
+    font_size?: PublisherPxV2;
+    // (undocumented)
+    font_style?: "normal" | "italic";
+    // (undocumented)
+    font_weight?: number;
+    // (undocumented)
     gap?: PublisherGapValueV23;
     // (undocumented)
     horizontal_align?: "left" | "center" | "right" | "justify";
+    // (undocumented)
+    letter_spacing?: number;
+    // (undocumented)
+    line_height?: number;
     // (undocumented)
     padding?: PublisherPaddingValueV2;
     // (undocumented)
@@ -14470,7 +14546,11 @@ interface PublisherPageStyleV2 {
     // (undocumented)
     text_color?: PublisherColorValueV2;
     // (undocumented)
+    text_overflow?: "shrink" | "clip" | "ellipsis";
+    // (undocumented)
     text_style?: PublisherTextStyleNameV2;
+    // (undocumented)
+    text_transform?: "none" | "uppercase" | "lowercase" | "capitalize";
     // (undocumented)
     vertical_align?: PublisherVerticalAlignV2;
 }

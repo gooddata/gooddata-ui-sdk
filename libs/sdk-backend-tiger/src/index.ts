@@ -59,6 +59,10 @@ export type {
     AnalyzeCsvResponse,
     ImportCsvRequest,
     ImportCsvResponse,
+    AnalyzeSavRequest,
+    AnalyzeSavResponse,
+    ImportSavRequest,
+    ImportSavResponse,
     GdStorageFile,
     UploadFileResponse,
     ReadCsvFileManifestsResponse,
@@ -135,6 +139,7 @@ export {
     objectTypeToTigerIdType,
 } from "./types/refTypeMapping.js";
 export { type IOriginInfoWithId, getIdOrigin } from "./convertors/fromBackend/ObjectInheritance.js";
+export { dateAttributeIdToSdkGranularity } from "./convertors/fromBackend/dateGranularityConversions.js";
 export { toAfmExecution } from "./convertors/toBackend/afm/toAfmResultSpec.js";
 export {
     type IVisualizationObjectMetadata,

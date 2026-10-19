@@ -116,6 +116,11 @@ export interface ILocalizationUsageListQuery extends ILocalizationPageQuery {
     value?: string;
     setting?: LocalizationSettingType;
     source?: LocalizationUsageSource;
+    /**
+     * Lists the workspaces and people behind one count of {@link ILocalizationTranslationUsage}.
+     * Use it together with `value` and a metadata or data `setting`.
+     */
+    translation?: LocalizationTranslationState;
 }
 
 /**
@@ -185,6 +190,62 @@ export interface ILocalizationUsageUser {
 export interface ILocalizationUsageUsersPage {
     users: ILocalizationUsageUser[];
     totalCount: number;
+}
+
+/**
+ * Locale setting that uses translations.
+ *
+ * @alpha
+ */
+export type LocalizationTranslatedSettingType = "METADATA_LOCALE" | "DATA_LOCALE";
+
+/**
+ * Whether the workspaces and people behind a count have a translation to a language.
+ *
+ * @remarks
+ * `missing`: they use the language for the setting, but their workspace has no translation to it.
+ * `available`: they use the language for the interface but not for the setting, and their workspace has a translation to it.
+ * A person counts over the workspaces they can open.
+ *
+ * @alpha
+ */
+export type LocalizationTranslationState = "missing" | "available";
+
+/**
+ * Workspaces and people behind one translation state.
+ *
+ * @alpha
+ */
+export interface ILocalizationTranslationCount {
+    workspaces: number;
+    users: number;
+}
+
+/**
+ * Translation states of one language.
+ *
+ * @alpha
+ */
+export interface ILocalizationTranslationValueUsage {
+    content: ILocalizationValueContent;
+    bySetting: Partial<
+        Record<
+            LocalizationTranslatedSettingType,
+            Record<LocalizationTranslationState, ILocalizationTranslationCount>
+        >
+    >;
+}
+
+/**
+ * Where languages are used without a translation, or have a translation nobody uses.
+ *
+ * @alpha
+ */
+export interface ILocalizationTranslationUsage {
+    /**
+     * One entry per language that has a non-zero count.
+     */
+    values: ILocalizationTranslationValueUsage[];
 }
 
 /**
@@ -270,6 +331,11 @@ export interface IOrganizationLocalizationService {
     getStatistics(): Promise<ILocalizationStatistics>;
 
     /**
+     * Count the workspaces and people that miss a translation, or do not use an available one.
+     */
+    getTranslationUsage(): Promise<ILocalizationTranslationUsage>;
+
+    /**
      * List translation coverage per workspace.
      */
     getStatisticsWorkspaces(query?: ILocalizationPageQuery): Promise<ILocalizationStatisticsWorkspacesPage>;
@@ -303,6 +369,11 @@ export interface IWorkspaceLocalizationService {
      * List the languages with translations in the workspace and its ancestors.
      */
     getStatistics(): Promise<ILocalizationStatistics>;
+
+    /**
+     * Count the workspace and the people with access to it that miss a translation, or do not use an available one.
+     */
+    getTranslationUsage(): Promise<ILocalizationTranslationUsage>;
 
     /**
      * List translation coverage of the workspace and its ancestors.

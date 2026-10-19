@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 import cx from "classnames";
 
+import { type IUserLocalizationSettings } from "@gooddata/sdk-backend-spi";
 import {
     type IOrganizationDescriptor,
     type IUser,
@@ -53,6 +54,56 @@ export const useUser = (userId: string, organizationId: string, isAdmin: boolean
         isCurrentlyAdmin,
         setIsAdmin,
         error,
+        isLoading: status === "loading",
+    };
+};
+
+export const useUserLanguages = (userId: string, organizationId: string, isEnabled: boolean) => {
+    const [languages, setLanguages] = useState<IUserLocalizationSettings>();
+    const backend = useBackendStrict();
+
+    const { status } = useCancelablePromise(
+        {
+            promise: isEnabled
+                ? () => backend.organization(organizationId).users().getUserLocalizationSettings(userId)
+                : null,
+            onSuccess: (languages) => setLanguages(languages),
+        },
+        [backend, userId, organizationId, isEnabled],
+    );
+
+    const reloadLanguages = useCallback(() => {
+        backend
+            .organization(organizationId)
+            .users()
+            .getUserLocalizationSettings(userId)
+            .then(setLanguages)
+            .catch((error) => console.error("Reload of user languages failed", error));
+    }, [backend, organizationId, userId]);
+
+    return {
+        languages,
+        setLanguages,
+        reloadLanguages,
+        isLoading: status === "loading",
+        isError: status === "error",
+    };
+};
+
+export const useLanguageStatistics = (organizationId: string, isEnabled: boolean) => {
+    const backend = useBackendStrict();
+
+    const { result, status } = useCancelablePromise(
+        {
+            promise: isEnabled
+                ? () => backend.organization(organizationId).localization().getStatistics()
+                : null,
+        },
+        [backend, organizationId, isEnabled],
+    );
+
+    return {
+        statistics: result,
         isLoading: status === "loading",
     };
 };

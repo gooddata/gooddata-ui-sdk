@@ -1,14 +1,20 @@
 // (C) 2023-2026 GoodData Corporation
 
+import { v4 as uuidv4 } from "uuid";
+
 import { ActionsUtilities } from "@gooddata/api-client-tiger";
 import {
     EntitiesApi_CreateEntityUserGroups,
+    EntitiesApi_CreateEntityUserSettings,
     EntitiesApi_CreateEntityUsers,
+    EntitiesApi_DeleteEntityUserSettings,
+    EntitiesApi_GetAllEntitiesUserSettings,
     EntitiesApi_GetAllEntitiesUsers,
     EntitiesApi_GetEntityUserGroups,
     EntitiesApi_GetEntityUsers,
     EntitiesApi_PatchEntityUserGroups,
     EntitiesApi_PatchEntityUsers,
+    EntitiesApi_UpdateEntityUserSettings,
 } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import {
     UserManagementApi_AddGroupMembers,
@@ -24,6 +30,8 @@ import {
     type IOrganizationUserService,
     type IOrganizationUsersQuery,
     type IOrganizationUsersQueryResult,
+    type IUserLocalizationSettings,
+    type LocalizationSettingType,
 } from "@gooddata/sdk-backend-spi";
 import {
     type IOrganizationUser,
@@ -32,8 +40,11 @@ import {
     type IUserGroup,
 } from "@gooddata/sdk-model";
 
+import { unwrapSettingContent } from "../../convertors/fromBackend/SettingsConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 import { rsqlQuote } from "../../utils/rsql.js";
+import { buildListClause } from "../common/filtering.js";
+import { invalidateSettingsResponses } from "../settings/responseCacheCoherence.js";
 
 import {
     convertEntityUserToOrganizationUser,
@@ -44,6 +55,12 @@ import {
     convertUser,
     convertUserGroup,
 } from "./fromBackend/userConvertor.js";
+
+const LOCALIZATION_SETTING_TYPES: LocalizationSettingType[] = ["LOCALE", "METADATA_LOCALE", "DATA_LOCALE"];
+
+function isLocalizationSettingType(type: string | undefined): type is LocalizationSettingType {
+    return LOCALIZATION_SETTING_TYPES.some((settingType) => settingType === type);
+}
 
 export class OrganizationUsersService implements IOrganizationUserService {
     constructor(public readonly authCall: TigerAuthenticatedCallGuard) {}
@@ -257,6 +274,76 @@ export class OrganizationUsersService implements IOrganizationUserService {
                 }),
             );
         });
+    };
+
+    public getUserLocalizationSettings = async (userId: string): Promise<IUserLocalizationSettings> => {
+        const response = await this.authCall((client) =>
+            EntitiesApi_GetAllEntitiesUserSettings(client.axios, client.basePath, {
+                userId,
+                filter: buildListClause("type", "in", LOCALIZATION_SETTING_TYPES),
+            }),
+        );
+        return response.data.data.reduce<IUserLocalizationSettings>((settings, setting) => {
+            const type = setting.attributes?.type;
+            const value = unwrapSettingContent(setting.attributes?.content);
+            return isLocalizationSettingType(type) &&
+                settings[type] === undefined &&
+                typeof value === "string" &&
+                value
+                ? { ...settings, [type]: value }
+                : settings;
+        }, {});
+    };
+
+    public setUserLocalizationSetting = async (
+        userId: string,
+        type: LocalizationSettingType,
+        value: string | undefined,
+    ): Promise<void> => {
+        const existing = await this.authCall((client) =>
+            EntitiesApi_GetAllEntitiesUserSettings(client.axios, client.basePath, {
+                userId,
+                filter: `type==${type}`,
+            }),
+        );
+        const current = existing.data.data[0];
+        try {
+            await this.authCall(async (client) => {
+                if (value === undefined) {
+                    for (const setting of existing.data.data) {
+                        await EntitiesApi_DeleteEntityUserSettings(client.axios, client.basePath, {
+                            userId,
+                            id: setting.id,
+                        });
+                    }
+                    return;
+                }
+                const id = current?.id ?? uuidv4();
+                const jsonApiUserSettingInDocument = {
+                    data: { type: "userSetting" as const, id, attributes: { type, content: { value } } },
+                };
+                if (current) {
+                    await EntitiesApi_UpdateEntityUserSettings(client.axios, client.basePath, {
+                        id,
+                        userId,
+                        jsonApiUserSettingInDocument,
+                    });
+                    for (const duplicate of existing.data.data.slice(1)) {
+                        await EntitiesApi_DeleteEntityUserSettings(client.axios, client.basePath, {
+                            userId,
+                            id: duplicate.id,
+                        });
+                    }
+                } else {
+                    await EntitiesApi_CreateEntityUserSettings(client.axios, client.basePath, {
+                        userId,
+                        jsonApiUserSettingInDocument,
+                    });
+                }
+            });
+        } finally {
+            await invalidateSettingsResponses(this.authCall);
+        }
     };
 }
 

@@ -21,6 +21,8 @@
     "gd.gen-ai.global-unsupported-model": "不支援此模型",
     "gd.gen-ai.global-unsupported-model.description": "AI 助理需要 GPT-5.2 或以上版本。請聯絡您的管理員以更新模型。",
     "gd.gen-ai.global-unsupported-model.button-change-model": "更改 LLM 模型",
+    "gd.gen-ai.visualization.error.no_data": "<b>沒有可用的資料。</b>變更資料或篩選器。",
+    "gd.gen-ai.visualization.error.negative_values": "<b>可視化中發現負值。</b>變更資料。",
     "gd.gen-ai.visualization.error.forecast": "<b>未收到預測：</b> {error}",
     "gd.gen-ai.visualization.error.clustering": "<b>未收到分群：</b> {error}",
     "gd.gen-ai.visualization.error.data_too_large": "<b>資料過大。</b> 請套用篩選器以減少資料。",

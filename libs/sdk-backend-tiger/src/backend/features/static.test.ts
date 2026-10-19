@@ -75,4 +75,12 @@ describe("static features", () => {
             enableGeoSatelliteBasemapOption: true,
         });
     });
+
+    it("maps the SPSS file storage flag", () => {
+        const results = getStaticFeatures(
+            createFeatures({ [TigerFeaturesNames.EnableSavFileStorage]: "TRUE" }),
+        );
+
+        expect(results).toEqual({ enableSavFileStorage: true });
+    });
 });

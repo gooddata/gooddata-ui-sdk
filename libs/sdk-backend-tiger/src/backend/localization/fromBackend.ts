@@ -6,6 +6,8 @@ import {
     type LocalizationDefault,
     type LocalizationResolvedValue,
     type LocalizationSettingUsage,
+    type LocalizationStatistics,
+    type LocalizationStatisticsLocale,
     type LocalizationUsage,
     type LocalizationUsageUsers,
     type LocalizationUsageWorkspaces,
@@ -15,6 +17,8 @@ import {
     type ILocalizationDefault,
     type ILocalizationResolvedValue,
     type ILocalizationSettingUsage,
+    type ILocalizationStatistics,
+    type ILocalizationTranslatedLocale,
     type ILocalizationUsage,
     type ILocalizationUsageCount,
     type ILocalizationUsageUsersPage,
@@ -109,5 +113,16 @@ export function convertLocalizationUsageUsers(page: LocalizationUsageUsers): ILo
             source: user.source,
             bySetting: convertBySetting(user.bySetting, convertUserValue),
         })),
+    };
+}
+
+function convertTranslatedLocale(locale: LocalizationStatisticsLocale): ILocalizationTranslatedLocale {
+    return { locale: locale.locale };
+}
+
+export function convertLocalizationStatistics(statistics: LocalizationStatistics): ILocalizationStatistics {
+    return {
+        metadata: { locales: statistics.metadata.locales.map(convertTranslatedLocale) },
+        data: { locales: statistics.data.locales.map(convertTranslatedLocale) },
     };
 }

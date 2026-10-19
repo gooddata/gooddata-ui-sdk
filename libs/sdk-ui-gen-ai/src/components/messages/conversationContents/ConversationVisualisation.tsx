@@ -131,6 +131,7 @@ export type ConversationVisualisationProps = {
     agGridToken?: string;
     isTable?: boolean;
     onVisualisationError?: (error: GoodDataSdkError) => void;
+    onVisualisationSuccess?: () => void;
     onDrillFired?: (
         data: {
             keyDriverData: IDashboardKeyDriverCombinationItem[];
@@ -153,6 +154,7 @@ export function ConversationVisualisation({
     agGridToken,
     isTable,
     onVisualisationError,
+    onVisualisationSuccess,
     onDrillFired,
     enableDrilling = true,
     enableChangeAnalysis = false,
@@ -226,6 +228,7 @@ export function ConversationVisualisation({
         if (!visualization) {
             return;
         }
+        onVisualisationSuccess?.();
         dispatch(
             saveVisualisationRenderStatusAction({
                 visualizationId: visualization.insight.identifier,
@@ -233,7 +236,7 @@ export function ConversationVisualisation({
                 status: "SUCCESSFUL",
             }),
         );
-    }, [dispatch, visualization, message.localId]);
+    }, [dispatch, visualization, message.localId, onVisualisationSuccess]);
     const handlerDrill = useCallback(
         (event: IDrillEvent) => {
             storeKdaReturnFocusFromDrillContext(event.drillContext);

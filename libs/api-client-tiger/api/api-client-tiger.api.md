@@ -116,6 +116,7 @@ export class ActionsApi extends MetadataBaseApi implements ActionsApiInterface {
     manageVisualizationPermissions(requestParameters: ActionsApiManageVisualizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageWorkspacePermissions(requestParameters: ActionsApiManageWorkspacePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     metricPermissions(requestParameters: ActionsApiMetricPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<MetricPermissions>;
+    organizationLocalizationStatistics(options?: AxiosRequestConfig): AxiosPromise<LocalizationStatistics>;
     organizationLocalizationUsage(options?: AxiosRequestConfig): AxiosPromise<LocalizationUsage>;
     organizationLocalizationUsageUsers(requestParameters?: ActionsApiOrganizationLocalizationUsageUsersRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationUsageUsers>;
     organizationLocalizationUsageWorkspaces(requestParameters?: ActionsApiOrganizationLocalizationUsageWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationUsageWorkspaces>;
@@ -317,6 +318,11 @@ export interface ActionsApiAnalyzeCsvRequest {
 }
 
 // @public
+export interface ActionsApiAnalyzeSavRequest {
+    readonly analyzeSavRequest: AnalyzeSavRequest;
+}
+
+// @public
 export interface ActionsApiAnomalyDetectionRequest {
     readonly anomalyDetectionRequest: AnomalyDetectionRequest;
     readonly resultId: string;
@@ -476,12 +482,6 @@ export interface ActionsApiCancelExecutionsRequest {
 // @public
 export interface ActionsApiCancelFlowsRequest {
     readonly afmCancelTokens: AfmCancelTokens;
-    readonly workspaceId: string;
-}
-
-// @public
-export interface ActionsApiCancelWorkflow1Request {
-    readonly runId: string;
     readonly workspaceId: string;
 }
 
@@ -656,12 +656,6 @@ export interface ActionsApiForecastResultRequest {
 }
 
 // @public
-export interface ActionsApiGenerateDashboardSummary1Request {
-    readonly dashboardSummaryRequestDto: DashboardSummaryRequestDto;
-    readonly workspaceId: string;
-}
-
-// @public
 export interface ActionsApiGenerateDashboardSummaryRequest {
     readonly workflowDashboardSummaryRequestDto: WorkflowDashboardSummaryRequestDto;
     readonly workspaceId: string;
@@ -670,12 +664,6 @@ export interface ActionsApiGenerateDashboardSummaryRequest {
 // @public
 export interface ActionsApiGenerateDescriptionRequest {
     readonly generateDescriptionRequest: GenerateDescriptionRequest;
-    readonly workspaceId: string;
-}
-
-// @public
-export interface ActionsApiGenerateKnowledgeRecommendationsRequest {
-    readonly knowledgeRecommendationsRequestDto: KnowledgeRecommendationsRequestDto;
     readonly workspaceId: string;
 }
 
@@ -720,12 +708,6 @@ export interface ActionsApiGetTranslationTagsRequest {
 }
 
 // @public
-export interface ActionsApiGetWorkflowStatus1Request {
-    readonly runId: string;
-    readonly workspaceId: string;
-}
-
-// @public
 export interface ActionsApiGetWorkflowStatusRequest {
     readonly runId: string;
     readonly workspaceId: string;
@@ -741,6 +723,12 @@ export interface ActionsApiImportCsvRequest {
 export interface ActionsApiImportCustomGeoCollectionRequest {
     readonly collectionId: string;
     readonly importGeoCollectionRequest: ImportGeoCollectionRequest;
+}
+
+// @public
+export interface ActionsApiImportSavRequest {
+    readonly dataSourceId: string;
+    readonly importSavRequest: ImportSavRequest;
 }
 
 // @public
@@ -789,6 +777,7 @@ export interface ActionsApiInterface {
     manageVisualizationPermissions(requestParameters: ActionsApiManageVisualizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageWorkspacePermissions(requestParameters: ActionsApiManageWorkspacePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     metricPermissions(requestParameters: ActionsApiMetricPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<MetricPermissions>;
+    organizationLocalizationStatistics(options?: AxiosRequestConfig): AxiosPromise<LocalizationStatistics>;
     organizationLocalizationUsage(options?: AxiosRequestConfig): AxiosPromise<LocalizationUsage>;
     organizationLocalizationUsageUsers(requestParameters: ActionsApiOrganizationLocalizationUsageUsersRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationUsageUsers>;
     organizationLocalizationUsageWorkspaces(requestParameters: ActionsApiOrganizationLocalizationUsageWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationUsageWorkspaces>;
@@ -1233,13 +1222,6 @@ export interface ActionsApiUnsubscribeSelectedWorkspaceAutomationsRequest {
 
 // @public
 export interface ActionsApiUnsubscribeWorkspaceAutomationsRequest {
-    readonly workspaceId: string;
-}
-
-// @public
-export interface ActionsApiUserFeedbackRequest {
-    readonly feedbackRequestDto: FeedbackRequestDto;
-    readonly runId: string;
     readonly workspaceId: string;
 }
 
@@ -1723,10 +1705,6 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     cancelWorkflow(requestParameters: ActionsApiCancelWorkflowRequest, options?: AxiosRequestConfig): AxiosPromise<{
         [key: string]: string;
     }>;
-    // (undocumented)
-    cancelWorkflow1(requestParameters: ActionsApiCancelWorkflow1Request, options?: AxiosRequestConfig): AxiosPromise<{
-        [key: string]: string;
-    }>;
     changeAnalysis(requestParameters: ActionsApiChangeAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<ChangeAnalysisResponse>;
     changeAnalysisResult(requestParameters: ActionsApiChangeAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<ChangeAnalysisResult>;
     clustering(requestParameters: ActionsApiClusteringRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
@@ -1742,18 +1720,12 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     forecastResult(requestParameters: ActionsApiForecastResultRequest, options?: AxiosRequestConfig): AxiosPromise<ForecastResult>;
     // (undocumented)
     generateDashboardSummary(requestParameters: ActionsApiGenerateDashboardSummaryRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowDashboardSummaryResponseDto>;
-    // (undocumented)
-    generateDashboardSummary1(requestParameters: ActionsApiGenerateDashboardSummary1Request, options?: AxiosRequestConfig): AxiosPromise<DashboardSummaryResponseDto>;
     generateDescription(requestParameters: ActionsApiGenerateDescriptionRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateDescriptionResponse>;
-    // (undocumented)
-    generateKnowledgeRecommendations(requestParameters: ActionsApiGenerateKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<KnowledgeRecommendationsResponseDto>;
     generateTitle(requestParameters: ActionsApiGenerateTitleRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateTitleResponse>;
     getQualityIssues(requestParameters: ActionsApiGetQualityIssuesRequest, options?: AxiosRequestConfig): AxiosPromise<AfmGetQualityIssuesResponse>;
     getQualityIssuesCalculationStatus(requestParameters: AfmActionsApiGetQualityIssuesCalculationStatusRequest, options?: AxiosRequestConfig): AxiosPromise<AfmQualityIssuesCalculationStatusResponse>;
     // (undocumented)
     getWorkflowStatus(requestParameters: ActionsApiGetWorkflowStatusRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowStatusResponseDto>;
-    // (undocumented)
-    getWorkflowStatus1(requestParameters: ActionsApiGetWorkflowStatus1Request, options?: AxiosRequestConfig): AxiosPromise<WorkflowStatusResponseDto>;
     keyDriverAnalysis(requestParameters: ActionsApiKeyDriverAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResponse>;
     keyDriverAnalysisResult(requestParameters: ActionsApiKeyDriverAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResult>;
     listFlowOperations(requestParameters: ActionsApiListFlowOperationsRequest, options?: AxiosRequestConfig): AxiosPromise<FlowOperations>;
@@ -1774,10 +1746,6 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     testLlmProviderById(requestParameters: ActionsApiTestLlmProviderByIdRequest, options?: AxiosRequestConfig): AxiosPromise<TestLlmProviderResponse>;
     trendingObjects(requestParameters: ActionsApiTrendingObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<TrendingObjectsResult>;
     triggerQualityIssuesCalculation(requestParameters: ActionsApiTriggerQualityIssuesCalculationRequest, options?: AxiosRequestConfig): AxiosPromise<AfmTriggerQualityIssuesCalculationResponse>;
-    // (undocumented)
-    userFeedback(requestParameters: ActionsApiUserFeedbackRequest, options?: AxiosRequestConfig): AxiosPromise<{
-        [key: string]: string;
-    }>;
     // @deprecated
     validateLLMEndpoint(options?: AxiosRequestConfig): AxiosPromise<void>;
     // @deprecated
@@ -1810,10 +1778,6 @@ export interface AfmActionsApiInterface {
     cancelWorkflow(requestParameters: ActionsApiCancelWorkflowRequest, options?: AxiosRequestConfig): AxiosPromise<{
         [key: string]: string;
     }>;
-    // (undocumented)
-    cancelWorkflow1(requestParameters: ActionsApiCancelWorkflow1Request, options?: AxiosRequestConfig): AxiosPromise<{
-        [key: string]: string;
-    }>;
     changeAnalysis(requestParameters: ActionsApiChangeAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<ChangeAnalysisResponse>;
     changeAnalysisResult(requestParameters: ActionsApiChangeAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<ChangeAnalysisResult>;
     clustering(requestParameters: ActionsApiClusteringRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
@@ -1829,18 +1793,12 @@ export interface AfmActionsApiInterface {
     forecastResult(requestParameters: ActionsApiForecastResultRequest, options?: AxiosRequestConfig): AxiosPromise<ForecastResult>;
     // (undocumented)
     generateDashboardSummary(requestParameters: ActionsApiGenerateDashboardSummaryRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowDashboardSummaryResponseDto>;
-    // (undocumented)
-    generateDashboardSummary1(requestParameters: ActionsApiGenerateDashboardSummary1Request, options?: AxiosRequestConfig): AxiosPromise<DashboardSummaryResponseDto>;
     generateDescription(requestParameters: ActionsApiGenerateDescriptionRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateDescriptionResponse>;
-    // (undocumented)
-    generateKnowledgeRecommendations(requestParameters: ActionsApiGenerateKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<KnowledgeRecommendationsResponseDto>;
     generateTitle(requestParameters: ActionsApiGenerateTitleRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateTitleResponse>;
     getQualityIssues(requestParameters: ActionsApiGetQualityIssuesRequest, options?: AxiosRequestConfig): AxiosPromise<AfmGetQualityIssuesResponse>;
     getQualityIssuesCalculationStatus(requestParameters: AfmActionsApiGetQualityIssuesCalculationStatusRequest, options?: AxiosRequestConfig): AxiosPromise<AfmQualityIssuesCalculationStatusResponse>;
     // (undocumented)
     getWorkflowStatus(requestParameters: ActionsApiGetWorkflowStatusRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowStatusResponseDto>;
-    // (undocumented)
-    getWorkflowStatus1(requestParameters: ActionsApiGetWorkflowStatus1Request, options?: AxiosRequestConfig): AxiosPromise<WorkflowStatusResponseDto>;
     keyDriverAnalysis(requestParameters: ActionsApiKeyDriverAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResponse>;
     keyDriverAnalysisResult(requestParameters: ActionsApiKeyDriverAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResult>;
     listFlowOperations(requestParameters: ActionsApiListFlowOperationsRequest, options?: AxiosRequestConfig): AxiosPromise<FlowOperations>;
@@ -1861,10 +1819,6 @@ export interface AfmActionsApiInterface {
     testLlmProviderById(requestParameters: ActionsApiTestLlmProviderByIdRequest, options?: AxiosRequestConfig): AxiosPromise<TestLlmProviderResponse>;
     trendingObjects(requestParameters: ActionsApiTrendingObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<TrendingObjectsResult>;
     triggerQualityIssuesCalculation(requestParameters: ActionsApiTriggerQualityIssuesCalculationRequest, options?: AxiosRequestConfig): AxiosPromise<AfmTriggerQualityIssuesCalculationResponse>;
-    // (undocumented)
-    userFeedback(requestParameters: ActionsApiUserFeedbackRequest, options?: AxiosRequestConfig): AxiosPromise<{
-        [key: string]: string;
-    }>;
     // @deprecated
     validateLLMEndpoint(options?: AxiosRequestConfig): AxiosPromise<void>;
     // @deprecated
@@ -3746,7 +3700,10 @@ export interface AiBy1 {
 // @public
 export interface AiCatalogSearchDetail {
     'category'?: AiCatalogSearchDetailCategoryEnum;
+    'compatibleWith'?: Array<string>;
     'found'?: Array<AiSearchedGroup>;
+    // (undocumented)
+    'limit'?: number | null;
     'query'?: Array<string>;
     'requestedTypes'?: Array<string>;
     'used'?: Array<AiCatalogSearchMatch>;
@@ -4414,6 +4371,13 @@ export type AiContent = ({
 } & AiFunctionCallContent) | ({
     type: 'toolResult';
 } & AiFunctionResultContent);
+
+// @public
+export type AiContent1 = ({
+    type: 'clarifyingAnswers';
+} & AiSendClarifyingAnswersContent) | ({
+    type: 'text';
+} & AiSendMessageContent);
 
 // @public (undocumented)
 export interface AiConversationFeedbackRequest {
@@ -7580,6 +7544,25 @@ export const AiSelectionType: {
 export type AiSelectionType = typeof AiSelectionType[keyof typeof AiSelectionType];
 
 // @public (undocumented)
+export interface AiSendClarifyingAnswer {
+    // (undocumented)
+    'answer': AiSendSingleChoiceAnswer;
+    'questionIndex': number;
+    'questionText': string;
+}
+
+// @public
+export interface AiSendClarifyingAnswersContent {
+    'answers': Array<AiSendClarifyingAnswer>;
+    'questionsItemId': string;
+    // (undocumented)
+    'type': AiSendClarifyingAnswersContentTypeEnum;
+}
+
+// @public (undocumented)
+export type AiSendClarifyingAnswersContentTypeEnum = 'clarifyingAnswers';
+
+// @public (undocumented)
 export interface AiSendMessageContent {
     // (undocumented)
     'text': string;
@@ -7593,7 +7576,7 @@ export type AiSendMessageContentTypeEnum = 'text';
 // @public (undocumented)
 export interface AiSendMessageItem {
     // (undocumented)
-    'content': AiSendMessageContent;
+    'content': AiContent1;
     // (undocumented)
     'role': AiSendMessageItemRoleEnum;
 }
@@ -7634,6 +7617,17 @@ export interface AiSendMessageSearchOptions {
     // (undocumented)
     'searchLimit'?: number | null;
 }
+
+// @public (undocumented)
+export interface AiSendSingleChoiceAnswer {
+    'optionIndex': number;
+    'optionText': string;
+    // (undocumented)
+    'type': AiSendSingleChoiceAnswerTypeEnum;
+}
+
+// @public (undocumented)
+export type AiSendSingleChoiceAnswerTypeEnum = 'singleChoice';
 
 // @public
 export const AiSensitivity: {
@@ -10187,6 +10181,44 @@ export interface AnalyzeCsvResponseConfig {
     'readOptions'?: CsvReadOptions;
 }
 
+// @public
+export interface AnalyzeSavRequest {
+    'analyzeRequests': Array<AnalyzeSavRequestItem>;
+}
+
+// @public
+export interface AnalyzeSavRequestItem {
+    // (undocumented)
+    'config'?: AnalyzeSavRequestItemConfig;
+    'location': string;
+}
+
+// @public
+export interface AnalyzeSavRequestItemConfig {
+    'resultRows'?: number;
+}
+
+// @public
+export interface AnalyzeSavResponse {
+    'columns': Array<AnalyzeSavResponseColumn>;
+    'location': string;
+    'previewData': Array<Array<object>>;
+}
+
+// @public
+export interface AnalyzeSavResponseColumn {
+    'label'?: string;
+    'name': string;
+    'type': string;
+    'valueLabels'?: Array<AnalyzeSavResponseValueLabel>;
+}
+
+// @public
+export interface AnalyzeSavResponseValueLabel {
+    'label': string;
+    'value': object;
+}
+
 // @public (undocumented)
 export interface AnomalyDetection {
     // (undocumented)
@@ -10960,6 +10992,7 @@ export interface AttributeHeaderAttributeHeader {
     // (undocumented)
     'attribute': RestApiIdentifier;
     'attributeName': string;
+    'dataType'?: AttributeHeaderAttributeHeaderDataTypeEnum;
     // (undocumented)
     'format'?: AttributeFormat;
     // (undocumented)
@@ -10969,10 +11002,14 @@ export interface AttributeHeaderAttributeHeader {
     'label': RestApiIdentifier;
     'labelName': string;
     'localIdentifier': string;
+    'numberFormat'?: string;
     // (undocumented)
     'primaryLabel': RestApiIdentifier;
     'valueType'?: AttributeHeaderAttributeHeaderValueTypeEnum;
 }
+
+// @public (undocumented)
+export type AttributeHeaderAttributeHeaderDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
 
 // @public (undocumented)
 export type AttributeHeaderAttributeHeaderGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
@@ -15866,38 +15903,6 @@ interface DashboardSummaryAiSummarizeVisualizationsRequest {
 export { DashboardSummaryAiSummarizeVisualizationsRequest }
 export { DashboardSummaryAiSummarizeVisualizationsRequest as GenAiApiSummarizeVisualizationsRequestParameters }
 
-// @public (undocumented)
-export interface DashboardSummaryRequestDto {
-    // (undocumented)
-    'aiModel'?: string;
-    // (undocumented)
-    'customUserPrompt'?: string;
-    // (undocumented)
-    'dashboardId': string;
-    // (undocumented)
-    'dryRun'?: boolean;
-    // (undocumented)
-    'gooddataHost'?: string;
-    // (undocumented)
-    'gooddataToken'?: string;
-    // (undocumented)
-    'keyMetricIds'?: Array<string>;
-    // (undocumented)
-    'referenceQuarter'?: string;
-    // (undocumented)
-    'temperature'?: number;
-}
-
-// @public (undocumented)
-export interface DashboardSummaryResponseDto {
-    // (undocumented)
-    'message': string;
-    // (undocumented)
-    'runId': string;
-    // (undocumented)
-    'status': string;
-}
-
 // @public
 export interface DashboardTabularExportRequestV2 {
     'dashboardFiltersOverride'?: Array<DashboardFilter>;
@@ -16934,7 +16939,7 @@ export interface DeclarativeAgent {
 }
 
 // @public (undocumented)
-export type DeclarativeAgentCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge' | 'dashboard_builder' | 'dashboard_editor' | 'report_builder';
+export type DeclarativeAgentCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge' | 'dashboard_builder' | 'dashboard_editor' | 'report_builder' | 'document_builder';
 
 // @public
 export interface DeclarativeAgents {
@@ -17609,12 +17614,36 @@ export interface DeclarativeMetric {
     'modifiedAt'?: string | null;
     // (undocumented)
     'modifiedBy'?: DeclarativeUserIdentifier;
+    'permissions'?: Array<DeclarativeMetricPermissionsInner> | null;
     'tags'?: Array<string>;
     'title': string;
 }
 
 // @public (undocumented)
 export type DeclarativeMetricCertificationEnum = 'CERTIFIED';
+
+// @public
+export interface DeclarativeMetricPermissionForAssignee {
+    // (undocumented)
+    'assignee': AssigneeIdentifier;
+    'name': DeclarativeMetricPermissionForAssigneeNameEnum;
+}
+
+// @public (undocumented)
+export type DeclarativeMetricPermissionForAssigneeNameEnum = 'EDIT' | 'SHARE' | 'VIEW';
+
+// @public
+export interface DeclarativeMetricPermissionForAssigneeRule {
+    // (undocumented)
+    'assigneeRule': AssigneeRule;
+    'name': DeclarativeMetricPermissionForAssigneeRuleNameEnum;
+}
+
+// @public (undocumented)
+export type DeclarativeMetricPermissionForAssigneeRuleNameEnum = 'EDIT' | 'SHARE' | 'VIEW';
+
+// @public
+export type DeclarativeMetricPermissionsInner = DeclarativeMetricPermissionForAssignee | DeclarativeMetricPermissionForAssigneeRule;
 
 // @public
 export interface DeclarativeModel {
@@ -18006,12 +18035,36 @@ export interface DeclarativeVisualizationObject {
     'modifiedAt'?: string | null;
     // (undocumented)
     'modifiedBy'?: DeclarativeUserIdentifier;
+    'permissions'?: Array<DeclarativeVisualizationObjectPermissionsInner> | null;
     'tags'?: Array<string>;
     'title': string;
 }
 
 // @public (undocumented)
 export type DeclarativeVisualizationObjectCertificationEnum = 'CERTIFIED';
+
+// @public
+export interface DeclarativeVisualizationObjectPermissionForAssignee {
+    // (undocumented)
+    'assignee': AssigneeIdentifier;
+    'name': DeclarativeVisualizationObjectPermissionForAssigneeNameEnum;
+}
+
+// @public (undocumented)
+export type DeclarativeVisualizationObjectPermissionForAssigneeNameEnum = 'EDIT' | 'SHARE' | 'VIEW';
+
+// @public
+export interface DeclarativeVisualizationObjectPermissionForAssigneeRule {
+    // (undocumented)
+    'assigneeRule': AssigneeRule;
+    'name': DeclarativeVisualizationObjectPermissionForAssigneeRuleNameEnum;
+}
+
+// @public (undocumented)
+export type DeclarativeVisualizationObjectPermissionForAssigneeRuleNameEnum = 'EDIT' | 'SHARE' | 'VIEW';
+
+// @public
+export type DeclarativeVisualizationObjectPermissionsInner = DeclarativeVisualizationObjectPermissionForAssignee | DeclarativeVisualizationObjectPermissionForAssigneeRule;
 
 // @public
 export interface DeclarativeWorkspace {
@@ -18319,15 +18372,20 @@ export type ElementsRequestTypeEnum = 'label' | 'computedAttribute';
 // @public
 export interface ElementsResponse {
     'cacheId'?: string;
+    'dataType'?: ElementsResponseDataTypeEnum;
     'elements': Array<Element_2>;
     // (undocumented)
     'format'?: AttributeFormat;
     'granularity'?: ElementsResponseGranularityEnum;
+    'numberFormat'?: string;
     // (undocumented)
     'paging': Paging;
     // (undocumented)
     'primaryLabel': RestApiIdentifier;
 }
+
+// @public (undocumented)
+export type ElementsResponseDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
 
 // @public (undocumented)
 export type ElementsResponseGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
@@ -25537,15 +25595,6 @@ export type FeatureContext = {
     dataCenter?: string;
 };
 
-// @public (undocumented)
-export interface FeedbackRequestDto {
-    // (undocumented)
-    'sentiment': FeedbackRequestDtoSentimentEnum;
-}
-
-// @public (undocumented)
-export type FeedbackRequestDtoSentimentEnum = 'POSITIVE' | 'NEGATIVE';
-
 // @public
 export interface FileFlowInput {
     'dataSourceId': string;
@@ -26255,7 +26304,7 @@ export interface GdStorageFile {
 }
 
 // @public (undocumented)
-export type GdStorageFileTypeEnum = 'CSV';
+export type GdStorageFileTypeEnum = 'CSV' | 'SAV';
 
 // @public
 export function GenAiApi_AiChat(axios: AxiosInstance, basePath: string, requestParameters: ActionsApiAiChatRequest, options?: AxiosRequestConfig, configuration?: LabelElementsConfiguration): AxiosPromise<void>;
@@ -27247,6 +27296,29 @@ export interface ImportGeoCollectionRequest {
 
 // @public
 export interface ImportGeoCollectionResponse {
+    'version': number;
+}
+
+// @public
+export interface ImportSavRequest {
+    'tables': Array<ImportSavRequestTable>;
+}
+
+// @public
+export interface ImportSavRequestTable {
+    'name': string;
+    // (undocumented)
+    'source': ImportSavRequestTableSource;
+}
+
+// @public
+export interface ImportSavRequestTableSource {
+    'location': string;
+}
+
+// @public
+export interface ImportSavResponse {
+    'name': string;
     'version': number;
 }
 
@@ -28299,7 +28371,7 @@ export interface JsonApiAgentInAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiAgentInAttributesCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge' | 'dashboard_builder' | 'dashboard_editor' | 'report_builder';
+export type JsonApiAgentInAttributesCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge' | 'dashboard_builder' | 'dashboard_editor' | 'report_builder' | 'document_builder';
 
 // @public
 export interface JsonApiAgentInAttributesInstructionsInner {
@@ -28373,7 +28445,7 @@ export interface JsonApiAgentOutAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiAgentOutAttributesCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge' | 'dashboard_builder' | 'dashboard_editor' | 'report_builder';
+export type JsonApiAgentOutAttributesCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge' | 'dashboard_builder' | 'dashboard_editor' | 'report_builder' | 'document_builder';
 
 // @public
 export interface JsonApiAgentOutAttributesInstructionsInner {
@@ -28505,7 +28577,7 @@ export interface JsonApiAgentPatchAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiAgentPatchAttributesCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge' | 'dashboard_builder' | 'dashboard_editor' | 'report_builder';
+export type JsonApiAgentPatchAttributesCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge' | 'dashboard_builder' | 'dashboard_editor' | 'report_builder' | 'document_builder';
 
 // @public
 export interface JsonApiAgentPatchAttributesInstructionsInner {
@@ -40151,58 +40223,6 @@ export interface KnowledgeRecommendationControllerApiUpdateEntityKnowledgeRecomm
     readonly workspaceId: string;
 }
 
-// @public (undocumented)
-export interface KnowledgeRecommendationsRequestDto {
-    // (undocumented)
-    'aiModel'?: string;
-    // (undocumented)
-    'analyticalDashboardId'?: string;
-    // (undocumented)
-    'analyzedValue'?: number;
-    // (undocumented)
-    'comparisonType': KnowledgeRecommendationsRequestDtoComparisonTypeEnum;
-    // (undocumented)
-    'direction'?: KnowledgeRecommendationsRequestDtoDirectionEnum;
-    // (undocumented)
-    'dryRun'?: boolean;
-    // (undocumented)
-    'gooddataHost'?: string;
-    // (undocumented)
-    'gooddataToken'?: string;
-    // (undocumented)
-    'limit'?: number;
-    // (undocumented)
-    'maxTokens'?: number;
-    // (undocumented)
-    'metricId': string;
-    // (undocumented)
-    'minScore'?: number;
-    // (undocumented)
-    'referenceValue'?: number;
-    // (undocumented)
-    'temperature'?: number;
-    // (undocumented)
-    'widgetId'?: string;
-    // (undocumented)
-    'widgetName'?: string;
-}
-
-// @public (undocumented)
-export type KnowledgeRecommendationsRequestDtoComparisonTypeEnum = 'MONTH' | 'QUARTER' | 'YEAR';
-
-// @public (undocumented)
-export type KnowledgeRecommendationsRequestDtoDirectionEnum = 'INCREASED' | 'DECREASED';
-
-// @public (undocumented)
-export interface KnowledgeRecommendationsResponseDto {
-    // (undocumented)
-    'message': string;
-    // (undocumented)
-    'runId': string;
-    // (undocumented)
-    'status': string;
-}
-
 // @public
 export class LabelControllerApi extends MetadataBaseApi implements LabelControllerApiInterface {
     getAllEntitiesLabels(requestParameters: LabelControllerApiGetAllEntitiesLabelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLabelOutList>;
@@ -41396,6 +41416,12 @@ export interface LocalizationCount {
     'total': number;
 }
 
+// @public
+export interface LocalizationDataStatistics {
+    // (undocumented)
+    'locales': Array<LocalizationStatisticsLocale>;
+}
+
 // @public (undocumented)
 export interface LocalizationDefault {
     // (undocumented)
@@ -41415,6 +41441,12 @@ export interface LocalizationDefaults {
 
 // @public (undocumented)
 export type LocalizationDefaultSourceEnum = 'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT';
+
+// @public
+export interface LocalizationMetadataStatistics {
+    // (undocumented)
+    'locales': Array<LocalizationStatisticsLocale>;
+}
 
 // @public (undocumented)
 export interface LocalizationResolvedValue {
@@ -41469,6 +41501,19 @@ export interface LocalizationSourceCounts {
     'USER'?: number;
     // (undocumented)
     'WORKSPACE'?: number;
+}
+
+// @public (undocumented)
+export interface LocalizationStatistics {
+    // (undocumented)
+    'data': LocalizationDataStatistics;
+    // (undocumented)
+    'metadata': LocalizationMetadataStatistics;
+}
+
+// @public (undocumented)
+export interface LocalizationStatisticsLocale {
+    'locale': string;
 }
 
 // @public (undocumented)
@@ -44691,12 +44736,14 @@ export type RestrictedObjectTypeEnum = 'analyticalDashboard' | 'attribute' | 'at
 // @public
 export interface ResultActionsApiInterface {
     analyzeCsv(requestParameters: ActionsApiAnalyzeCsvRequest, options?: AxiosRequestConfig): AxiosPromise<Array<AnalyzeCsvResponse>>;
+    analyzeSav(requestParameters: ActionsApiAnalyzeSavRequest, options?: AxiosRequestConfig): AxiosPromise<Array<AnalyzeSavResponse>>;
     collectCacheUsage(options?: AxiosRequestConfig): AxiosPromise<CacheUsageData>;
     convertGeoFile(requestParameters: ActionsApiConvertGeoFileRequest, options?: AxiosRequestConfig): AxiosPromise<ConvertGeoFileResponse>;
     customGeoCollectionStagingUpload(requestParameters: ActionsApiCustomGeoCollectionStagingUploadRequest, options?: AxiosRequestConfig): AxiosPromise<UploadGeoCollectionFileResponse>;
     deleteFiles(requestParameters: ActionsApiDeleteFilesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     importCsv(requestParameters: ActionsApiImportCsvRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ImportCsvResponse>>;
     importCustomGeoCollection(requestParameters: ActionsApiImportCustomGeoCollectionRequest, options?: AxiosRequestConfig): AxiosPromise<ImportGeoCollectionResponse>;
+    importSav(requestParameters: ActionsApiImportSavRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ImportSavResponse>>;
     listFiles(requestParameters: ActionsApiListFilesRequest, options?: AxiosRequestConfig): AxiosPromise<Array<GdStorageFile>>;
     readCsvFileManifests(requestParameters: ActionsApiReadCsvFileManifestsRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ReadCsvFileManifestsResponse>>;
     stagingUpload(requestParameters: ActionsApiStagingUploadRequest, options?: AxiosRequestConfig): AxiosPromise<UploadFileResponse>;

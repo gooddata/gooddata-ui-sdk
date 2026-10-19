@@ -19,17 +19,19 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 
 import { type IChatConversationVisualisationContent } from "@gooddata/sdk-backend-spi";
-import { type IDashboardAttributeFilter, type IFilter } from "@gooddata/sdk-model";
+import { type IDashboardAttributeFilter, type IFilter, insightVisualizationType } from "@gooddata/sdk-model";
 import {
     type IDrillEvent,
     isClusteringNotReceived,
     isDataTooLargeToCompute,
     isDataTooLargeToDisplay,
     isForecastNotReceived,
+    isNegativeValues,
     isNoDataSdkError,
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 import { type IDashboardKeyDriverCombinationItem } from "@gooddata/sdk-ui-dashboard";
+import { canConvertToTable } from "@gooddata/sdk-ui-ext";
 import {
     Dropdown,
     type IAlignPoint,
@@ -157,10 +159,14 @@ export function ConversationVisualizationContent({
 
     const containerRef = useRef<HTMLDivElement>(null);
 
-    const [hasVisFatal, setVisFatal] = useState(false);
-    const [visError, setVisError] = useState<Error | null>(null);
-
     const [isTable, setIsTable] = useState(false);
+    const visualizationId = visualization.insight.identifier;
+    const [visError, setVisError] = useState<{
+        error: Error;
+        isFatal: boolean;
+        visualizationId: string;
+        isTable: boolean;
+    } | null>(null);
     const moreButtonDescId = useId();
 
     const [drillState, setDrillState] = useState<{
@@ -183,24 +189,28 @@ export function ConversationVisualizationContent({
 
     const onVisualizationError = useCallback(
         (error: Error) => {
-            // Already have error
-            if (visError) {
-                return;
-            }
-
             // Ignore some specific errors
             const isFatal = !(
+                isNegativeValues(error) ||
                 isNoDataSdkError(error) ||
                 isDataTooLargeToDisplay(error) ||
                 isDataTooLargeToCompute(error) ||
                 isForecastNotReceived(error) ||
                 isClusteringNotReceived(error)
             );
-            setVisError(error);
-            setVisFatal(isFatal);
+            setVisError({ error, isFatal, visualizationId, isTable });
         },
-        [visError],
+        [isTable, visualizationId],
     );
+    const onVisualizationSuccess = useCallback(() => {
+        setVisError((currentError) => {
+            return currentError?.visualizationId === visualizationId && currentError.isTable === isTable
+                ? null
+                : currentError;
+        });
+    }, [isTable, visualizationId]);
+    const activeVisError =
+        visError?.visualizationId === visualizationId && visError.isTable === isTable ? visError : null;
 
     const classNames = cx(
         "gd-gen-ai-chat__conversation__item__content",
@@ -224,7 +234,7 @@ export function ConversationVisualizationContent({
                         isVisualisationCheckLoading={visualisationCheckLoading}
                         isTable={isTable}
                         onTable={setIsTable}
-                        hasError={hasVisFatal}
+                        hasError={activeVisError?.isFatal ?? false}
                         moreButtonId={moreButtonDescId}
                         onSave={onSave}
                         onOpen={onOpen}
@@ -249,6 +259,7 @@ export function ConversationVisualizationContent({
                             enableDrilling={!scenario || scenario.isBaseline}
                             onDrillFired={setDrillState}
                             onVisualisationError={onVisualizationError}
+                            onVisualisationSuccess={onVisualizationSuccess}
                         />
                     ) : (
                         <VisualisationWrapper
@@ -266,12 +277,13 @@ export function ConversationVisualizationContent({
                             enableDrilling={!scenario || scenario.isBaseline}
                             onDrillFired={setDrillState}
                             onVisualisationError={onVisualizationError}
+                            onVisualisationSuccess={onVisualizationSuccess}
                         />
                     )}
                     <SaveDialog />
                 </Wrapper>
             </DrillState>
-            <VisualizationErrorReport error={visError} />
+            <VisualizationErrorReport error={activeVisError?.error} />
         </div>
     );
 }
@@ -353,6 +365,7 @@ function VisualisationMenu({
     menuItems,
 }: IVisualisationMenuProps) {
     const [isMenuButtonOpen, setMenuButtonOpen] = useState(false);
+    const type = insightVisualizationType(visualization);
 
     const config = useConfig();
     const intl = useIntl();
@@ -493,7 +506,7 @@ function VisualisationMenu({
                 active: isMenuButtonOpen,
             })}
         >
-            {!hasError && visualization?.insight.visualizationUrl === "local:table" ? null : (
+            {!hasError && !canConvertToTable(type) ? null : (
                 <div className={cx("gd-gen-ai-chat__conversation__visualization__table")}>
                     <UiTooltip
                         triggerBy={["focus", "hover"]}
@@ -593,6 +606,28 @@ function VisualizationErrorReport({ error }: IVisualizationErrorReportProps) {
 
     return (
         <>
+            {isNoDataSdkError(error) ? (
+                <div className={className}>
+                    <FormattedMessage
+                        id="gd.gen-ai.visualization.error.no_data"
+                        values={{
+                            b: (chunk) => <strong>{chunk}</strong>,
+                            error: error.message,
+                        }}
+                    />
+                </div>
+            ) : null}
+            {isNegativeValues(error) ? (
+                <div className={className}>
+                    <FormattedMessage
+                        id="gd.gen-ai.visualization.error.negative_values"
+                        values={{
+                            b: (chunk) => <strong>{chunk}</strong>,
+                            error: error.message,
+                        }}
+                    />
+                </div>
+            ) : null}
             {isForecastNotReceived(error) ? (
                 <div className={className}>
                     <FormattedMessage

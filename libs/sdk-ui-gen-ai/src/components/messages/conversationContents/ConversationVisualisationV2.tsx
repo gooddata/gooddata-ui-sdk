@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import { useIntl } from "react-intl";
 import { useDispatch } from "react-redux";
@@ -19,7 +19,15 @@ import {
     type ISeparators,
     isLocale,
 } from "@gooddata/sdk-model";
-import { type GoodDataSdkError, type IDrillEvent } from "@gooddata/sdk-ui";
+import {
+    ErrorCodes,
+    ErrorComponent,
+    type GoodDataSdkError,
+    type IDrillEvent,
+    type ILoadingState,
+    IntlWrapper as SdkUiIntlWrapper,
+    newErrorMapping,
+} from "@gooddata/sdk-ui";
 import {
     type IDashboardKeyDriverCombinationItem,
     getKdaKeyDriverCombinations,
@@ -48,6 +56,7 @@ const visualizationTooltipOptions = {
 
 const legendTooltipOptions = {
     legend: {
+        position: "top",
         responsive: "autoPositionWithPopup" as const,
     },
 };
@@ -57,6 +66,25 @@ const defaultsChartOptions = {
     enableReversedStacking: true,
     enableSeparateTotalLabels: true,
 };
+
+function VisualizationError({ error, locale }: { error: GoodDataSdkError; locale: string }) {
+    return (
+        <SdkUiIntlWrapper locale={locale}>
+            <VisualizationErrorContent error={error} />
+        </SdkUiIntlWrapper>
+    );
+}
+
+function VisualizationErrorContent({ error }: { error: GoodDataSdkError }) {
+    const intl = useIntl();
+    const errorMapping = useMemo(() => newErrorMapping(intl), [intl]);
+    const errorProps =
+        errorMapping[error.seType] ??
+        errorMapping[error.getMessage()] ??
+        errorMapping[ErrorCodes.UNKNOWN_ERROR];
+
+    return <ErrorComponent code={error.seType} {...errorProps} />;
+}
 
 function analyticsConfigFor(insight: IInsight["insight"]) {
     const controls = insight.properties["controls"];
@@ -90,6 +118,7 @@ export type ConversationVisualisationProps = {
     agGridToken?: string;
     isTable?: boolean;
     onVisualisationError?: (error: GoodDataSdkError) => void;
+    onVisualisationSuccess?: () => void;
     onDrillFired?: (
         data: {
             keyDriverData: IDashboardKeyDriverCombinationItem[];
@@ -112,6 +141,7 @@ export function ConversationVisualisation({
     agGridToken,
     isTable,
     onVisualisationError,
+    onVisualisationSuccess,
     onDrillFired,
     enableDrilling = true,
     enableChangeAnalysis = false,
@@ -122,6 +152,10 @@ export function ConversationVisualisation({
     const dispatch = useDispatch();
     const resolvedAgGridToken = useAgGridToken(agGridToken);
     const kpiTheme = useKpiTheme();
+    const [renderError, setRenderError] = useState<{
+        error: GoodDataSdkError;
+        insight: IInsight;
+    }>();
 
     const insight = useMemo(() => {
         const originalInsight = { insight: visualization.insight };
@@ -156,6 +190,8 @@ export function ConversationVisualisation({
             if (!visualization) {
                 return;
             }
+
+            setRenderError({ error, insight });
 
             // Error callback
             onVisualisationError?.(error);
@@ -198,12 +234,31 @@ export function ConversationVisualisation({
                     break;
             }
         },
-        [visualization, dispatch, onVisualisationError, message.localId],
+        [visualization, insight, dispatch, onVisualisationError, message.localId],
+    );
+    const handleLoadingChanged = useCallback(
+        (loadingState: ILoadingState) => {
+            if (renderError?.insight === insight) {
+                return;
+            }
+            if (!loadingState.isLoading && visualization?.insight?.visualizationUrl === "local:repeater") {
+                onVisualisationSuccess?.();
+                dispatch(
+                    saveVisualisationRenderStatusAction({
+                        visualizationId: visualization.insight.identifier,
+                        assistantMessageId: message.localId,
+                        status: "SUCCESSFUL",
+                    }),
+                );
+            }
+        },
+        [dispatch, renderError, insight, visualization, message.localId, onVisualisationSuccess],
     );
     const handleSuccess = useCallback(() => {
         if (!visualization) {
             return;
         }
+        onVisualisationSuccess?.();
         dispatch(
             saveVisualisationRenderStatusAction({
                 visualizationId: visualization.insight.identifier,
@@ -211,7 +266,7 @@ export function ConversationVisualisation({
                 status: "SUCCESSFUL",
             }),
         );
-    }, [dispatch, visualization, message.localId]);
+    }, [dispatch, visualization, message.localId, onVisualisationSuccess]);
     const handlerDrill = useCallback(
         (event: IDrillEvent) => {
             storeKdaReturnFocusFromDrillContext(event.drillContext);
@@ -233,17 +288,25 @@ export function ConversationVisualisation({
         [onDrillFired, enableSecondGranularities],
     );
 
+    const locale = isLocale(intl.locale) ? intl.locale : DefaultLocale;
+    const currentError = renderError?.insight === insight ? renderError.error : undefined;
+
+    if (currentError) {
+        return <VisualizationError error={currentError} locale={locale} />;
+    }
+
     return (
         <ScopedThemeProvider theme={kpiTheme}>
             <InsightRenderer
                 insight={insight}
-                locale={isLocale(intl.locale) ? intl.locale : DefaultLocale}
+                locale={locale}
                 settings={settings}
                 colorPalette={colorPalette}
                 config={config}
                 drillableItems={drillableItems}
                 onDrill={handlerDrill}
                 onError={handleSdkError}
+                onLoadingChanged={handleLoadingChanged}
                 onExportReady={handleSuccess}
                 execConfig={execConfig}
             />

@@ -96,6 +96,7 @@ export {
     type ActionsApiOrganizationLocalizationUsageWorkspacesRequest,
     ActionsApi_OrganizationLocalizationUsageUsers,
     type ActionsApiOrganizationLocalizationUsageUsersRequest,
+    ActionsApi_OrganizationLocalizationStatistics,
 } from "../../generated/metadata-json-api/index.js";
 
 // Execution Result API

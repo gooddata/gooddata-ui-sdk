@@ -3,6 +3,7 @@
 import { describe, expect, it } from "vitest";
 
 import {
+    convertLocalizationStatistics,
     convertLocalizationUsage,
     convertLocalizationUsageUsers,
     convertLocalizationUsageWorkspaces,
@@ -117,6 +118,20 @@ describe("convertLocalizationUsageUsers", () => {
                     bySetting: { LOCALE: { content: { value: "ko-KR" }, source: "USER" } },
                 },
             ],
+        });
+    });
+});
+
+describe("convertLocalizationStatistics", () => {
+    it("keeps the metadata and data languages apart", () => {
+        expect(
+            convertLocalizationStatistics({
+                metadata: { locales: [{ locale: "de-DE" }, { locale: "ja-JP" }] },
+                data: { locales: [] },
+            }),
+        ).toEqual({
+            metadata: { locales: [{ locale: "de-DE" }, { locale: "ja-JP" }] },
+            data: { locales: [] },
         });
     });
 });

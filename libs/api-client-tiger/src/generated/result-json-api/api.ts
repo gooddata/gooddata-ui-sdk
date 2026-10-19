@@ -110,6 +110,91 @@ export interface AnalyzeCsvResponseConfig {
 }
 
 /**
+ * Bulk SPSS (.sav) file analysis request.
+ */
+export interface AnalyzeSavRequest {
+    /**
+     * List of individual SPSS file analysis requests.
+     */
+    'analyzeRequests': Array<AnalyzeSavRequestItem>;
+}
+
+/**
+ * SPSS (.sav) file analysis request.
+ */
+export interface AnalyzeSavRequestItem {
+    'config'?: AnalyzeSavRequestItemConfig;
+    /**
+     * Location of the SPSS file to analyze.
+     */
+    'location': string;
+}
+
+/**
+ * SPSS (.sav) file analysis request config.
+ */
+export interface AnalyzeSavRequestItemConfig {
+    /**
+     * Number of rows to return as the preview of the file. The default is 100, the maximum is 1000.
+     */
+    'resultRows'?: number;
+}
+
+/**
+ * Describes the results of an analysis of a single SPSS (.sav) file.
+ */
+export interface AnalyzeSavResponse {
+    /**
+     * List of column metadata.
+     */
+    'columns': Array<AnalyzeSavResponseColumn>;
+    /**
+     * Location of the analyzed file in the source data source.
+     */
+    'location': string;
+    /**
+     * Preview of the first N rows of the file.
+     */
+    'previewData': Array<Array<object>>;
+}
+
+/**
+ * Describes a column of an SPSS file.
+ */
+export interface AnalyzeSavResponseColumn {
+    /**
+     * Label of the column, in a survey file usually the question text. Null if there is none.
+     */
+    'label'?: string;
+    /**
+     * Name of the column as specified in the file.
+     */
+    'name': string;
+    /**
+     * Type of the column (e.g. string, float64, date32).
+     */
+    'type': string;
+    /**
+     * Labels of the column values in file order. Null if there are none.
+     */
+    'valueLabels'?: Array<AnalyzeSavResponseValueLabel>;
+}
+
+/**
+ * Label of one value of an SPSS column.
+ */
+export interface AnalyzeSavResponseValueLabel {
+    /**
+     * The label of the value, in a survey file usually the answer text.
+     */
+    'label': string;
+    /**
+     * The value: a number in a numeric column, a string in a string column.
+     */
+    'value': object;
+}
+
+/**
  * Information about a period in time and how much cached data was removed.
  */
 export interface CacheRemovalInterval {
@@ -347,7 +432,7 @@ export interface GdStorageFile {
     'type': GdStorageFileTypeEnum;
 }
 
-export type GdStorageFileTypeEnum = 'CSV';
+export type GdStorageFileTypeEnum = 'CSV' | 'SAV';
 
 /**
  * GeoJSON Feature
@@ -451,6 +536,51 @@ export interface ImportGeoCollectionRequest {
 export interface ImportGeoCollectionResponse {
     /**
      * The version of the imported geo collection.
+     */
+    'version': number;
+}
+
+/**
+ * Request containing the information necessary to import one or more SPSS (.sav) files from the staging area.
+ */
+export interface ImportSavRequest {
+    /**
+     * Information about the individual tables.
+     */
+    'tables': Array<ImportSavRequestTable>;
+}
+
+/**
+ * Information about a particular table imported from an SPSS file.
+ */
+export interface ImportSavRequestTable {
+    /**
+     * Name of the table.
+     */
+    'name': string;
+    'source': ImportSavRequestTableSource;
+}
+
+/**
+ * Information about the SPSS source data of a particular table.
+ */
+export interface ImportSavRequestTableSource {
+    /**
+     * Location of the data in the staging area.
+     */
+    'location': string;
+}
+
+/**
+ * Response containing the information about the imported SPSS (.sav) file.
+ */
+export interface ImportSavResponse {
+    /**
+     * Name of the table the file was imported to.
+     */
+    'name': string;
+    /**
+     * Version the file was imported as.
      */
     'version': number;
 }
@@ -650,6 +780,64 @@ export async function ActionsApiAxiosParamCreator_AnalyzeCsv(
     localVarRequestOptions.data = needsSerialization
         ? JSON.stringify(analyzeCsvRequest !== undefined ? analyzeCsvRequest : {})
         : analyzeCsvRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * Reads the columns, their labels and the first rows of the SPSS (.sav) files at the given locations.
+ * @summary Analyze SPSS files
+ * @param {AnalyzeSavRequest} analyzeSavRequest 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_AnalyzeSav(
+    analyzeSavRequest: AnalyzeSavRequest, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'analyzeSavRequest' is not null or undefined
+    assertParamExists('analyzeSav', 'analyzeSavRequest', analyzeSavRequest)
+    const localVarPath = `/api/v1/actions/fileStorage/staging/analyzeSav`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof analyzeSavRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(analyzeSavRequest !== undefined ? analyzeSavRequest : {})
+        : analyzeSavRequest || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -873,7 +1061,7 @@ export async function ActionsApiAxiosParamCreator_DeleteFiles(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * Import the CSV files at the given locations in the staging area to the final location.
+ * Import the CSV files at the given locations in the staging area to the final location. A table that holds an SPSS file cannot take a CSV file.
  * @summary Import CSV
  * @param {string} dataSourceId 
  * @param {ImportCsvRequest} importCsvRequest 
@@ -987,6 +1175,68 @@ export async function ActionsApiAxiosParamCreator_ImportCustomGeoCollection(
     localVarRequestOptions.data = needsSerialization
         ? JSON.stringify(importGeoCollectionRequest !== undefined ? importGeoCollectionRequest : {})
         : importGeoCollectionRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * Import the SPSS (.sav) files at the given locations in the staging area to the final location. A table that holds a CSV file cannot take an SPSS file.
+ * @summary Import SPSS files
+ * @param {string} dataSourceId 
+ * @param {ImportSavRequest} importSavRequest 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_ImportSav(
+    dataSourceId: string, importSavRequest: ImportSavRequest, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'dataSourceId' is not null or undefined
+    assertParamExists('importSav', 'dataSourceId', dataSourceId)
+    // verify required parameter 'importSavRequest' is not null or undefined
+    assertParamExists('importSav', 'importSavRequest', importSavRequest)
+    const localVarPath = `/api/v1/actions/fileStorage/dataSources/{dataSourceId}/importSav`
+        .replace(`{${"dataSourceId"}}`, encodeURIComponent(String(dataSourceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof importSavRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(importSavRequest !== undefined ? importSavRequest : {})
+        : importSavRequest || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -1183,6 +1433,32 @@ export async function ActionsApi_AnalyzeCsv(
 
 // ActionsApi Api FP
 /**
+ * Reads the columns, their labels and the first rows of the SPSS (.sav) files at the given locations.
+ * @summary Analyze SPSS files
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiAnalyzeSavRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_AnalyzeSav(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiAnalyzeSavRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<Array<AnalyzeSavResponse>> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_AnalyzeSav(
+        requestParameters.analyzeSavRequest, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
  * Get the detailed data about how much cache your organization is currently using, broken down by individual workspaces.
  * @summary Collect data about the current cache usage
  * @param {AxiosInstance} axios Axios instance.
@@ -1286,7 +1562,7 @@ export async function ActionsApi_DeleteFiles(
 
 // ActionsApi Api FP
 /**
- * Import the CSV files at the given locations in the staging area to the final location.
+ * Import the CSV files at the given locations in the staging area to the final location. A table that holds an SPSS file cannot take a CSV file.
  * @summary Import CSV
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -1329,6 +1605,32 @@ export async function ActionsApi_ImportCustomGeoCollection(
 ): AxiosPromise<ImportGeoCollectionResponse> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ImportCustomGeoCollection(
         requestParameters.collectionId, requestParameters.importGeoCollectionRequest, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
+ * Import the SPSS (.sav) files at the given locations in the staging area to the final location. A table that holds a CSV file cannot take an SPSS file.
+ * @summary Import SPSS files
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiImportSavRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_ImportSav(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiImportSavRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<Array<ImportSavResponse>> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ImportSav(
+        requestParameters.dataSourceId, requestParameters.importSavRequest, 
         options || {},
         configuration,
     );
@@ -1431,6 +1733,16 @@ export interface ActionsApiInterface {
     analyzeCsv(requestParameters: ActionsApiAnalyzeCsvRequest, options?: AxiosRequestConfig): AxiosPromise<Array<AnalyzeCsvResponse>>;
 
     /**
+     * Reads the columns, their labels and the first rows of the SPSS (.sav) files at the given locations.
+     * @summary Analyze SPSS files
+     * @param {ActionsApiAnalyzeSavRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    analyzeSav(requestParameters: ActionsApiAnalyzeSavRequest, options?: AxiosRequestConfig): AxiosPromise<Array<AnalyzeSavResponse>>;
+
+    /**
      * Get the detailed data about how much cache your organization is currently using, broken down by individual workspaces.
      * @summary Collect data about the current cache usage
      * @param {*} [options] Override http request option.
@@ -1470,7 +1782,7 @@ export interface ActionsApiInterface {
     deleteFiles(requestParameters: ActionsApiDeleteFilesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
-     * Import the CSV files at the given locations in the staging area to the final location.
+     * Import the CSV files at the given locations in the staging area to the final location. A table that holds an SPSS file cannot take a CSV file.
      * @summary Import CSV
      * @param {ActionsApiImportCsvRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1488,6 +1800,16 @@ export interface ActionsApiInterface {
      * @memberof ActionsApiInterface
      */
     importCustomGeoCollection(requestParameters: ActionsApiImportCustomGeoCollectionRequest, options?: AxiosRequestConfig): AxiosPromise<ImportGeoCollectionResponse>;
+
+    /**
+     * Import the SPSS (.sav) files at the given locations in the staging area to the final location. A table that holds a CSV file cannot take an SPSS file.
+     * @summary Import SPSS files
+     * @param {ActionsApiImportSavRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    importSav(requestParameters: ActionsApiImportSavRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ImportSavResponse>>;
 
     /**
      * List all the files in the given data source.
@@ -1533,6 +1855,20 @@ export interface ActionsApiAnalyzeCsvRequest {
      * @memberof ActionsApiAnalyzeCsv
      */
     readonly analyzeCsvRequest: AnalyzeCsvRequest
+}
+
+/**
+ * Request parameters for analyzeSav operation in ActionsApi.
+ * @export
+ * @interface ActionsApiAnalyzeSavRequest
+ */
+export interface ActionsApiAnalyzeSavRequest {
+    /**
+     * 
+     * @type {AnalyzeSavRequest}
+     * @memberof ActionsApiAnalyzeSav
+     */
+    readonly analyzeSavRequest: AnalyzeSavRequest
 }
 
 /**
@@ -1627,6 +1963,27 @@ export interface ActionsApiImportCustomGeoCollectionRequest {
 }
 
 /**
+ * Request parameters for importSav operation in ActionsApi.
+ * @export
+ * @interface ActionsApiImportSavRequest
+ */
+export interface ActionsApiImportSavRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionsApiImportSav
+     */
+    readonly dataSourceId: string
+
+    /**
+     * 
+     * @type {ImportSavRequest}
+     * @memberof ActionsApiImportSav
+     */
+    readonly importSavRequest: ImportSavRequest
+}
+
+/**
  * Request parameters for listFiles operation in ActionsApi.
  * @export
  * @interface ActionsApiListFilesRequest
@@ -1695,6 +2052,18 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
+     * Reads the columns, their labels and the first rows of the SPSS (.sav) files at the given locations.
+     * @summary Analyze SPSS files
+     * @param {ActionsApiAnalyzeSavRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public analyzeSav(requestParameters: ActionsApiAnalyzeSavRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_AnalyzeSav(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
      * Get the detailed data about how much cache your organization is currently using, broken down by individual workspaces.
      * @summary Collect data about the current cache usage
      * @param {*} [options] Override http request option.
@@ -1742,7 +2111,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * Import the CSV files at the given locations in the staging area to the final location.
+     * Import the CSV files at the given locations in the staging area to the final location. A table that holds an SPSS file cannot take a CSV file.
      * @summary Import CSV
      * @param {ActionsApiImportCsvRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1763,6 +2132,18 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      */
     public importCustomGeoCollection(requestParameters: ActionsApiImportCustomGeoCollectionRequest, options?: AxiosRequestConfig) {
         return ActionsApi_ImportCustomGeoCollection(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Import the SPSS (.sav) files at the given locations in the staging area to the final location. A table that holds a CSV file cannot take an SPSS file.
+     * @summary Import SPSS files
+     * @param {ActionsApiImportSavRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public importSav(requestParameters: ActionsApiImportSavRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_ImportSav(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -1965,6 +2346,64 @@ export async function DataSourceFilesAnalysisApiAxiosParamCreator_AnalyzeCsv(
 }
 
 
+// DataSourceFilesAnalysisApi FP - DataSourceFilesAnalysisApiAxiosParamCreator
+/**
+ * Reads the columns, their labels and the first rows of the SPSS (.sav) files at the given locations.
+ * @summary Analyze SPSS files
+ * @param {AnalyzeSavRequest} analyzeSavRequest 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DataSourceFilesAnalysisApiAxiosParamCreator_AnalyzeSav(
+    analyzeSavRequest: AnalyzeSavRequest, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'analyzeSavRequest' is not null or undefined
+    assertParamExists('analyzeSav', 'analyzeSavRequest', analyzeSavRequest)
+    const localVarPath = `/api/v1/actions/fileStorage/staging/analyzeSav`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof analyzeSavRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(analyzeSavRequest !== undefined ? analyzeSavRequest : {})
+        : analyzeSavRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
 
 // DataSourceFilesAnalysisApi Api FP
 /**
@@ -1992,6 +2431,32 @@ export async function DataSourceFilesAnalysisApi_AnalyzeCsv(
 }
 
 
+// DataSourceFilesAnalysisApi Api FP
+/**
+ * Reads the columns, their labels and the first rows of the SPSS (.sav) files at the given locations.
+ * @summary Analyze SPSS files
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {DataSourceFilesAnalysisApiAnalyzeSavRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DataSourceFilesAnalysisApi_AnalyzeSav(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: DataSourceFilesAnalysisApiAnalyzeSavRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<Array<AnalyzeSavResponse>> {
+    const localVarAxiosArgs = await DataSourceFilesAnalysisApiAxiosParamCreator_AnalyzeSav(
+        requestParameters.analyzeSavRequest, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
 /**
  * DataSourceFilesAnalysisApi - interface
  * @export
@@ -2008,6 +2473,16 @@ export interface DataSourceFilesAnalysisApiInterface {
      */
     analyzeCsv(requestParameters: DataSourceFilesAnalysisApiAnalyzeCsvRequest, options?: AxiosRequestConfig): AxiosPromise<Array<AnalyzeCsvResponse>>;
 
+    /**
+     * Reads the columns, their labels and the first rows of the SPSS (.sav) files at the given locations.
+     * @summary Analyze SPSS files
+     * @param {DataSourceFilesAnalysisApiAnalyzeSavRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DataSourceFilesAnalysisApiInterface
+     */
+    analyzeSav(requestParameters: DataSourceFilesAnalysisApiAnalyzeSavRequest, options?: AxiosRequestConfig): AxiosPromise<Array<AnalyzeSavResponse>>;
+
 }
 
 /**
@@ -2022,6 +2497,20 @@ export interface DataSourceFilesAnalysisApiAnalyzeCsvRequest {
      * @memberof DataSourceFilesAnalysisApiAnalyzeCsv
      */
     readonly analyzeCsvRequest: AnalyzeCsvRequest
+}
+
+/**
+ * Request parameters for analyzeSav operation in DataSourceFilesAnalysisApi.
+ * @export
+ * @interface DataSourceFilesAnalysisApiAnalyzeSavRequest
+ */
+export interface DataSourceFilesAnalysisApiAnalyzeSavRequest {
+    /**
+     * 
+     * @type {AnalyzeSavRequest}
+     * @memberof DataSourceFilesAnalysisApiAnalyzeSav
+     */
+    readonly analyzeSavRequest: AnalyzeSavRequest
 }
 
 /**
@@ -2041,6 +2530,18 @@ export class DataSourceFilesAnalysisApi extends BaseAPI implements DataSourceFil
      */
     public analyzeCsv(requestParameters: DataSourceFilesAnalysisApiAnalyzeCsvRequest, options?: AxiosRequestConfig) {
         return DataSourceFilesAnalysisApi_AnalyzeCsv(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Reads the columns, their labels and the first rows of the SPSS (.sav) files at the given locations.
+     * @summary Analyze SPSS files
+     * @param {DataSourceFilesAnalysisApiAnalyzeSavRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DataSourceFilesAnalysisApi
+     */
+    public analyzeSav(requestParameters: DataSourceFilesAnalysisApiAnalyzeSavRequest, options?: AxiosRequestConfig) {
+        return DataSourceFilesAnalysisApi_AnalyzeSav(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 }
 
@@ -2196,7 +2697,7 @@ export class DataSourceFilesDeletionApi extends BaseAPI implements DataSourceFil
 
 // DataSourceFilesImportApi FP - DataSourceFilesImportApiAxiosParamCreator
 /**
- * Import the CSV files at the given locations in the staging area to the final location.
+ * Import the CSV files at the given locations in the staging area to the final location. A table that holds an SPSS file cannot take a CSV file.
  * @summary Import CSV
  * @param {string} dataSourceId 
  * @param {ImportCsvRequest} importCsvRequest 
@@ -2256,10 +2757,72 @@ export async function DataSourceFilesImportApiAxiosParamCreator_ImportCsv(
 }
 
 
+// DataSourceFilesImportApi FP - DataSourceFilesImportApiAxiosParamCreator
+/**
+ * Import the SPSS (.sav) files at the given locations in the staging area to the final location. A table that holds a CSV file cannot take an SPSS file.
+ * @summary Import SPSS files
+ * @param {string} dataSourceId 
+ * @param {ImportSavRequest} importSavRequest 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DataSourceFilesImportApiAxiosParamCreator_ImportSav(
+    dataSourceId: string, importSavRequest: ImportSavRequest, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'dataSourceId' is not null or undefined
+    assertParamExists('importSav', 'dataSourceId', dataSourceId)
+    // verify required parameter 'importSavRequest' is not null or undefined
+    assertParamExists('importSav', 'importSavRequest', importSavRequest)
+    const localVarPath = `/api/v1/actions/fileStorage/dataSources/{dataSourceId}/importSav`
+        .replace(`{${"dataSourceId"}}`, encodeURIComponent(String(dataSourceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof importSavRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(importSavRequest !== undefined ? importSavRequest : {})
+        : importSavRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
 
 // DataSourceFilesImportApi Api FP
 /**
- * Import the CSV files at the given locations in the staging area to the final location.
+ * Import the CSV files at the given locations in the staging area to the final location. A table that holds an SPSS file cannot take a CSV file.
  * @summary Import CSV
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -2283,6 +2846,32 @@ export async function DataSourceFilesImportApi_ImportCsv(
 }
 
 
+// DataSourceFilesImportApi Api FP
+/**
+ * Import the SPSS (.sav) files at the given locations in the staging area to the final location. A table that holds a CSV file cannot take an SPSS file.
+ * @summary Import SPSS files
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {DataSourceFilesImportApiImportSavRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DataSourceFilesImportApi_ImportSav(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: DataSourceFilesImportApiImportSavRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<Array<ImportSavResponse>> {
+    const localVarAxiosArgs = await DataSourceFilesImportApiAxiosParamCreator_ImportSav(
+        requestParameters.dataSourceId, requestParameters.importSavRequest, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
 /**
  * DataSourceFilesImportApi - interface
  * @export
@@ -2290,7 +2879,7 @@ export async function DataSourceFilesImportApi_ImportCsv(
  */
 export interface DataSourceFilesImportApiInterface {
     /**
-     * Import the CSV files at the given locations in the staging area to the final location.
+     * Import the CSV files at the given locations in the staging area to the final location. A table that holds an SPSS file cannot take a CSV file.
      * @summary Import CSV
      * @param {DataSourceFilesImportApiImportCsvRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2298,6 +2887,16 @@ export interface DataSourceFilesImportApiInterface {
      * @memberof DataSourceFilesImportApiInterface
      */
     importCsv(requestParameters: DataSourceFilesImportApiImportCsvRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ImportCsvResponse>>;
+
+    /**
+     * Import the SPSS (.sav) files at the given locations in the staging area to the final location. A table that holds a CSV file cannot take an SPSS file.
+     * @summary Import SPSS files
+     * @param {DataSourceFilesImportApiImportSavRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DataSourceFilesImportApiInterface
+     */
+    importSav(requestParameters: DataSourceFilesImportApiImportSavRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ImportSavResponse>>;
 
 }
 
@@ -2323,6 +2922,27 @@ export interface DataSourceFilesImportApiImportCsvRequest {
 }
 
 /**
+ * Request parameters for importSav operation in DataSourceFilesImportApi.
+ * @export
+ * @interface DataSourceFilesImportApiImportSavRequest
+ */
+export interface DataSourceFilesImportApiImportSavRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof DataSourceFilesImportApiImportSav
+     */
+    readonly dataSourceId: string
+
+    /**
+     * 
+     * @type {ImportSavRequest}
+     * @memberof DataSourceFilesImportApiImportSav
+     */
+    readonly importSavRequest: ImportSavRequest
+}
+
+/**
  * DataSourceFilesImportApi - object-oriented interface
  * @export
  * @class DataSourceFilesImportApi
@@ -2330,7 +2950,7 @@ export interface DataSourceFilesImportApiImportCsvRequest {
  */
 export class DataSourceFilesImportApi extends BaseAPI implements DataSourceFilesImportApiInterface {
     /**
-     * Import the CSV files at the given locations in the staging area to the final location.
+     * Import the CSV files at the given locations in the staging area to the final location. A table that holds an SPSS file cannot take a CSV file.
      * @summary Import CSV
      * @param {DataSourceFilesImportApiImportCsvRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2339,6 +2959,18 @@ export class DataSourceFilesImportApi extends BaseAPI implements DataSourceFiles
      */
     public importCsv(requestParameters: DataSourceFilesImportApiImportCsvRequest, options?: AxiosRequestConfig) {
         return DataSourceFilesImportApi_ImportCsv(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Import the SPSS (.sav) files at the given locations in the staging area to the final location. A table that holds a CSV file cannot take an SPSS file.
+     * @summary Import SPSS files
+     * @param {DataSourceFilesImportApiImportSavRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DataSourceFilesImportApi
+     */
+    public importSav(requestParameters: DataSourceFilesImportApiImportSavRequest, options?: AxiosRequestConfig) {
+        return DataSourceFilesImportApi_ImportSav(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 }
 

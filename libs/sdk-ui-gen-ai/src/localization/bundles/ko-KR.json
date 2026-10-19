@@ -21,6 +21,8 @@
     "gd.gen-ai.global-unsupported-model": "지원되지 않는 모델",
     "gd.gen-ai.global-unsupported-model.description": "AI Assistant를 사용하려면 GPT-5.2 이상이 필요합니다. 관리자에게 문의하여 모델을 업데이트하세요.",
     "gd.gen-ai.global-unsupported-model.button-change-model": "LLM 모델 변경",
+    "gd.gen-ai.visualization.error.no_data": "<b>사용 가능한 데이터가 없습니다.</b> 데이터 또는 필터를 변경하세요.",
+    "gd.gen-ai.visualization.error.negative_values": "<b>시각화에서 음수 값이 발견되었습니다.</b> 데이터를 변경하세요.",
     "gd.gen-ai.visualization.error.forecast": "<b>예측을 받지 못함:</b> {error}",
     "gd.gen-ai.visualization.error.clustering": "<b>클러스터링을 받지 못함:</b> {error}",
     "gd.gen-ai.visualization.error.data_too_large": "<b>데이터가 너무 큽니다.</b> 필터를 적용하여 데이터를 줄이도록 요청하세요.",

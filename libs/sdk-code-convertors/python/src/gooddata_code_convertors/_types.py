@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: d9210f9a6587451f1b46c1a461f26efd8e26a35c3103c82be6ad2a457dd7b8ed
+# schema-hash: 52db43276615e2f90fac570c9c8b308d512ff91dac93d08876a5d9e0b5843960
 
 from __future__ import annotations
 
@@ -1653,6 +1653,13 @@ class PublisherContainerStyleV2(TypedDict):
     text_color: NotRequired[PublisherColorValueV2]
     horizontal_align: NotRequired[Literal['left', 'center', 'right', 'justify']]
     vertical_align: NotRequired[PublisherVerticalAlignV2]
+    font_size: NotRequired[PublisherPxV2]
+    font_weight: NotRequired[float]
+    font_style: NotRequired[Literal['normal', 'italic']]
+    line_height: NotRequired[float]
+    letter_spacing: NotRequired[float]
+    text_transform: NotRequired[Literal['none', 'uppercase', 'lowercase', 'capitalize']]
+    text_overflow: NotRequired[Literal['shrink', 'clip', 'ellipsis']]
     gap: NotRequired[PublisherGapValueV2]
 
 
@@ -1880,6 +1887,13 @@ class PublisherPageStyleV2(TypedDict):
     text_color: NotRequired[PublisherColorValueV2]
     horizontal_align: NotRequired[Literal['left', 'center', 'right', 'justify']]
     vertical_align: NotRequired[PublisherVerticalAlignV2]
+    font_size: NotRequired[PublisherPxV2]
+    font_weight: NotRequired[float]
+    font_style: NotRequired[Literal['normal', 'italic']]
+    line_height: NotRequired[float]
+    letter_spacing: NotRequired[float]
+    text_transform: NotRequired[Literal['none', 'uppercase', 'lowercase', 'capitalize']]
+    text_overflow: NotRequired[Literal['shrink', 'clip', 'ellipsis']]
     gap: NotRequired[PublisherGapValueV2]
 
 
