@@ -40,6 +40,7 @@ import {
 } from "@gooddata/sdk-ui-pivot";
 import {
     CorePivotTableNext,
+    type IColumnSizing,
     type ICorePivotTableNextProps,
     type PivotTableNextConfig,
     type PivotTableNextConfigWithConditionalFormatting,
@@ -487,7 +488,15 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
                 : "top";
         const columnHeadersPosition: ColumnHeadersPosition =
             customVisualizationConfig?.columnHeadersPosition ?? columnHeadersPositionFromInsight;
-        const growToFit = this.environment === DASHBOARDS_ENVIRONMENT;
+        const customColumnSizing: IColumnSizing | undefined = customVisualizationConfig?.columnSizing;
+        const columnSizing: IColumnSizing = {
+            // Use effective insight properties from the current render payload.
+            // In dashboards, widget-level properties are already merged into `insight`.
+            columnWidths:
+                customColumnSizing?.columnWidths ?? getColumnWidthsFromProperties(insightProperties(insight)),
+            defaultWidth: customColumnSizing?.defaultWidth ?? "autoresizeAll",
+            growToFit: customColumnSizing?.growToFit ?? this.environment === DASHBOARDS_ENVIRONMENT,
+        };
         const isInEditMode = config?.isInEditMode;
         const pagination = getPaginationFromProperties(insightProperties(insight));
         const enableSemanticConditionalFormatting = isSemanticConditionalFormattingEnabled(this.settings);
@@ -496,13 +505,7 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
             ...customVisualizationConfig,
             measureGroupDimension,
             columnHeadersPosition,
-            columnSizing: {
-                // Use effective insight properties from the current render payload.
-                // In dashboards, widget-level properties are already merged into `insight`.
-                columnWidths: getColumnWidthsFromProperties(insightProperties(insight)),
-                defaultWidth: "autoresizeAll",
-                growToFit,
-            },
+            columnSizing,
             textWrapping: getTextWrappingFromProperties(insightProperties(insight)),
             grandTotalsPosition: getGrandTotalsPositionFromProperties(insightProperties(insight)),
             pagination,

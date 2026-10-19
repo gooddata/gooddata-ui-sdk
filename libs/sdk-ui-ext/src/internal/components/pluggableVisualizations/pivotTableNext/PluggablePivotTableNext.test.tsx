@@ -3,12 +3,15 @@
 import { describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { newBucket, newInsightDefinition, newTotal } from "@gooddata/sdk-model";
+import { newBucket, newInsightDefinition, newMeasure, newTotal } from "@gooddata/sdk-model";
+import { type VisualizationEnvironment } from "@gooddata/sdk-ui";
+import { type IColumnSizing, type ICorePivotTableNextProps } from "@gooddata/sdk-ui-pivot/next";
 
-import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
+import { ANALYTICAL_ENVIRONMENT, DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
 import { type IVisConstruct } from "../../../interfaces/Visualization.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../utils/translations.js";
 import { type ICfTargetData } from "../../configurationControls/conditionalFormatting/conditionalFormattingModel.js";
+import { getLastRenderEl } from "../pluggableVisualizations.test.helpers.js";
 
 import { PluggablePivotTableNext, createPivotTableNextConfig } from "./PluggablePivotTableNext.js";
 
@@ -18,7 +21,10 @@ describe("PluggablePivotTableNext", () => {
     const mockConfigElement = document.createElement("div");
     const backend = dummyBackend();
 
-    function createComponent(pushData: (data: unknown) => void = () => {}): PluggablePivotTableNext {
+    function createComponent(
+        pushData: (data: unknown) => void = () => {},
+        props: Partial<IVisConstruct> = {},
+    ): PluggablePivotTableNext {
         return new PluggablePivotTableNext({
             projectId: "PROJECTID",
             backend,
@@ -34,8 +40,63 @@ describe("PluggablePivotTableNext", () => {
                 onLoadingChanged: () => {},
             },
             messages,
+            ...props,
         } as unknown as IVisConstruct);
     }
+
+    describe("columnSizing (via update)", () => {
+        const executionFactory = backend.workspace("PROJECTID").execution();
+        const measure = newMeasure("m1", (m) => m.localId("m1"));
+        const singleMeasureInsight = newInsightDefinition("local:table", (b) =>
+            b.buckets([newBucket("measures", measure)]),
+        );
+
+        function renderColumnSizing(
+            environment: VisualizationEnvironment,
+            customVisualizationConfig?: unknown,
+        ): IColumnSizing | undefined {
+            const renderFun = vi.fn();
+            const visualization = createComponent(undefined, { environment, renderFun });
+
+            visualization.update(
+                { messages, custom: {}, customVisualizationConfig },
+                singleMeasureInsight,
+                {},
+                executionFactory,
+            );
+
+            const renderEl = getLastRenderEl<ICorePivotTableNextProps>(renderFun, mockElement);
+            return renderEl?.props.config?.columnSizing;
+        }
+
+        it("lets the InsightView config turn growToFit off on dashboards", () => {
+            const config = { columnSizing: { growToFit: false } };
+
+            expect(renderColumnSizing(DASHBOARDS_ENVIRONMENT, config)).toEqual({
+                columnWidths: undefined,
+                defaultWidth: "autoresizeAll",
+                growToFit: false,
+            });
+        });
+
+        it("keeps the defaults for column sizing keys the InsightView config leaves undefined", () => {
+            const config = { columnSizing: { defaultWidth: "viewport", growToFit: undefined } };
+
+            expect(renderColumnSizing(DASHBOARDS_ENVIRONMENT, config)).toEqual({
+                columnWidths: undefined,
+                defaultWidth: "viewport",
+                growToFit: true,
+            });
+        });
+
+        it("grows to fit on dashboards when there is no InsightView config", () => {
+            expect(renderColumnSizing(DASHBOARDS_ENVIRONMENT)?.growToFit).toBe(true);
+        });
+
+        it("does not grow to fit outside dashboards when there is no InsightView config", () => {
+            expect(renderColumnSizing(ANALYTICAL_ENVIRONMENT)?.growToFit).toBe(false);
+        });
+    });
 
     describe("handleLoadingChanged", () => {
         it("keeps semantic-layer rules across a loading transition, only clearing titles", () => {
