@@ -1,6 +1,31 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Wed, 14 Oct 2026 06:23:37 GMT and should not be manually modified.
+This log was last generated on Mon, 19 Oct 2026 10:58:30 GMT and should not be manually modified.
+
+## 11.63.0
+
+Mon, 19 Oct 2026 10:58:30 GMT
+
+### Updates
+
+- sdk-code-schemas, sdk-code-convertors: Add the v2 Publisher as-code schemas and converters
+- sdk-model, sdk-backend-tiger: `AgentCustomSkill` accepts `document_builder`.
+- sdk-model, sdk-code-schemas: Hold the v2 Publisher validator to the backend rules
+- sdk-backend-tiger: add internal dateAttributeIdToSdkGranularity, which resolves the granularity of a date attribute or label from its identifier.
+- sdk-ui-ext: InsightView no longer overrides the columnSizing config (such as growToFit: false) of a table rendered by the new pivot table.
+- sdk-ui-kit: A clicked async table row becomes the active row, so keyboard navigation and returning focus continue from it.
+- sdk-ui-kit: The sort icon of a right-aligned async table column no longer shifts its header label on hover.
+- sdk-backend-spi: Localization usage workspace rows carry the parent and origin workspace names.
+- api-client-tiger, sdk-backend-tiger: The organization localization usage and its workspaces list come from the backend localization endpoints.
+- api-client-tiger, sdk-backend-tiger: The languages with translations in the organization come from the backend localization statistics endpoint. api-client-tiger drops the types of the removed AI agent workflow endpoints.
+- api-client-tiger, sdk-backend-tiger: The people behind the organization localization usage come from the backend localization endpoint.
+- sdk-ui-pluggable-host: The platform context provider test no longer depends on the order the test files run in.
+- sdk-backend-spi: Localization services report the workspaces and people that miss a translation or do not use an available one, and the usage lists can filter by it.
+- sdk-backend-tiger: Workspace search quotes the search text in its filter, so a name with an apostrophe or a quote no longer breaks the query.
+- sdk-ui-gen-ai: Clicking the Search field in the context chip dialog no longer moves focus to the prompt.
+- sdk-backend-spi, sdk-backend-tiger: Read and change the interface, metadata and data language a user set for themselves. sdk-ui-ext: The user detail dialog shows and edits these languages when localization is enabled.
+- sdk-ui-gen-ai: Handle visualization errors with enhanced error UI and messaging.
+- sdk-ui-dashboard: Visualizations can be deleted from the edit mode visualization list behind the enableDashboardVisualizationDelete setting.
 
 ## 11.62.0
 
