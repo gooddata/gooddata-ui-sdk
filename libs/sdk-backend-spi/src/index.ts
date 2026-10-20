@@ -30,6 +30,7 @@ export type { UnavailableReferenceReason } from "./workspace/dashboards/unavaila
 
 export type { IUserService } from "./user/index.js";
 export type { IUserSettingsService } from "./user/settings/index.js";
+export type { IUserApiTokensService } from "./user/apiTokens/index.js";
 
 export type {
     IPreparedExecutionOptions,
@@ -195,6 +196,7 @@ export {
     type IChatConversationMultipartPart,
     type IChatConversationToolCallContent,
     type IChatConversationTextContent,
+    type IChatConversationClarifyingAnswersContent,
     type IChatConversationClarifyingQuestionsContent,
     type IChatConversationToolResultContent,
     type IChatConversationVisualisationContent,
@@ -209,6 +211,9 @@ export {
     type IChatSuggestion,
     type IChatSuggestions,
     type IAlertProposal,
+    type UserTextQuestionItem,
+    type UserClarificationQuestionsItem,
+    type UserQuestionItem,
     isChatConversationError,
     isChatConversationItem,
     isChatConversationCatalogSearchDetail,
@@ -290,6 +295,7 @@ export type {
     IAnalyticalWorkspace,
     IWorkspacesQuery,
     IWorkspacesQueryFactory,
+    IWorkspaceDefinition,
     IWorkspacesQueryResult,
     IWorkspacesQueryFilter,
     IWorkspacesQueryOptions,
@@ -453,6 +459,7 @@ export type {
 export type { IOrganizationNotificationChannelService } from "./organization/notificationChannels/index.js";
 export type { IOrganizationGeoCollectionsService } from "./organization/geoCollections/index.js";
 export type { IOrganizationIpAllowlistService } from "./organization/ipAllowlists/index.js";
+export type { IOrganizationCspDirectivesService } from "./organization/cspDirectives/index.js";
 export type {
     LocalizationSettingType,
     LocalizationUsageSource,

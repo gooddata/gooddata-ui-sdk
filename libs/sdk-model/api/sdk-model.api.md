@@ -1338,6 +1338,18 @@ export interface IAnthropicProviderConfig {
     type: "anthropic";
 }
 
+// @alpha
+export interface IApiToken {
+    // (undocumented)
+    id: string;
+}
+
+// @alpha
+export interface IApiTokenWithSecret extends IApiToken {
+    // (undocumented)
+    bearerToken: string;
+}
+
 // @public
 export interface IArbitraryAttributeFilter {
     // (undocumented)
@@ -2050,6 +2062,12 @@ export interface IConditionOr<T> {
 // @public
 export interface ICrossFiltering extends IDrill {
     type: "crossFiltering";
+}
+
+// @alpha
+export interface ICspDirective {
+    id: string;
+    sources: string[];
 }
 
 // @beta (undocumented)
@@ -3334,6 +3352,20 @@ export interface IGenAIChatRouting {
 }
 
 // @alpha
+export interface IGenAiClarifyingAnswer {
+    answer: IGenAiClarifyingAnswerItem;
+    questionIndex: number;
+    questionText: string;
+}
+
+// @alpha
+export interface IGenAiClarifyingAnswerItem {
+    optionIndex: number;
+    optionText: string;
+    type: "singleChoice";
+}
+
+// @alpha
 export interface IGenAiClarifyingChoiceOption {
     text: string;
 }
@@ -4597,6 +4629,8 @@ export interface IOrganizationAssignee {
 
 // @public
 export interface IOrganizationDescriptor {
+    // @alpha
+    allowedOrigins?: string[];
     // (undocumented)
     bootstrapUser?: ObjRef;
     // (undocumented)
@@ -4619,6 +4653,8 @@ export interface IOrganizationDescriptor {
 
 // @public
 export interface IOrganizationDescriptorUpdate {
+    // @alpha (undocumented)
+    allowedOrigins?: string[];
     // @deprecated (undocumented)
     earlyAccess?: string | null;
     // (undocumented)
@@ -4751,6 +4787,13 @@ export interface IPermanentSettings {
     timezone?: string;
     weekStart?: WeekStart;
     whiteLabeling?: IWhiteLabeling;
+}
+
+// @alpha
+export interface IPlatformUsage {
+    count?: number;
+    // (undocumented)
+    name: PlatformUsageName;
 }
 
 // @alpha
@@ -8073,6 +8116,19 @@ export interface IUserGroupDataFilterDefinition extends IUserDataFilterDefinitio
 // @alpha
 export type IUserGroupWorkspaceAccessGrantee = IWorkspaceAccess & IGranularUserGroupAccessGrantee;
 
+// @alpha
+export interface IUserInvitation {
+    // (undocumented)
+    email: string;
+    // (undocumented)
+    firstName?: string;
+    forceSend?: boolean;
+    // (undocumented)
+    lastName?: string;
+    // (undocumented)
+    userId: string;
+}
+
 // @public
 export interface IUserSettings extends ISettings {
     locale: string;
@@ -8828,6 +8884,9 @@ export type PermissionSource = "direct" | "indirect";
 
 // @public
 export type PlatformEdition = "free" | "growth" | "enterprise";
+
+// @alpha
+export type PlatformUsageName = "UserCount" | "WorkspaceCount" | "AiWorkspaceCount";
 
 // @alpha
 export type PluggableApplicationMeta = IPluggableApplicationMetaV1;

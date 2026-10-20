@@ -6,7 +6,7 @@ import { basename } from "path";
 
 import { test } from "@playwright/test";
 
-import { registerFeatureHubMock } from "../feature-hub/mock.js";
+import { initialRegisterFeatureHubMock } from "../feature-hub/mock.js";
 import { registerGoodmockHooks } from "../goodmock/playwright.js";
 
 import {
@@ -144,9 +144,9 @@ export function createTest<
             specNameFiles.set(specName, location.file);
 
             internals.describe(type, location, title, pwDetails, () => {
-                testInstance.beforeEach(async ({ page }) => {
-                    await registerFeatureHubMock(page, options.featureHubFeatures);
-                });
+                if (options.featureHubFeatures) {
+                    initialRegisterFeatureHubMock(testInstance, options.featureHubFeatures);
+                }
 
                 if (options.goodmock) {
                     registerGoodmockHooks(testInstance, options.goodmock, specName);

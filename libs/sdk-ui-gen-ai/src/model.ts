@@ -140,11 +140,14 @@ export type IChatConversationMultipartLocalPart = IChatConversationMultipartPart
  * Make a new conversation item with local ID.
  * @internal
  */
-export const makeConversationItem = (item: IChatConversationItem): IChatConversationLocalItem => ({
+export const makeConversationItem = (
+    item: IChatConversationItem,
+    filled = true,
+): IChatConversationLocalItem => ({
     ...item,
     localId: uuidv4(),
     complete: true,
-    filled: true,
+    filled,
 });
 
 /**

@@ -119,6 +119,14 @@
         "text": "You don’t have access to the chatbot. Contact your administrator to request access.",
         "crowdinContext": "User instruction on how to request access to the AI chatbot"
     },
+    "gd.gen-ai.conversationContents.clarifyingAnswers.missing-error": {
+        "text": "<b>No clarifying questions found.</b> Try asking again.",
+        "crowdinContext": "Error message when no clarifying questions are found."
+    },
+    "gd.gen-ai.conversationContents.clarifyingAnswers.skipped": {
+        "text": "[Skipped]",
+        "crowdinContext": "User instruction shown when a clarifying answer is skipped"
+    },
     "gd.gen-ai.input-placeholder": {
         "text": "Ask here…",
         "crowdinContext": "Placeholder text in the input field where users type their questions to the AI chatbot"

@@ -90,7 +90,7 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
         if (message.role !== "user") {
             return;
         }
-        if (message.content.type !== "text") {
+        if (message.content.type !== "text" && message.content.type !== "clarifyingAnswers") {
             return;
         }
 
@@ -136,7 +136,10 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
                     : undefined,
             );
             const updated: IChatConversation = yield call(api.update.bind(api), created.id, {
-                title: generateTitleFromQuestion(message.content.text),
+                title:
+                    message.content.type === "text"
+                        ? generateTitleFromQuestion(message.content.text)
+                        : undefined,
             });
             //save
             conversation = {
@@ -212,7 +215,7 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
             .genAI()
             .getChatConversations()
             .getConversationThread(conversation.id)
-            .query(message.content.text);
+            .query(message.content);
 
         // evaluateUserMessage may create additional assistant messages if the stream contains
         // multiple interaction IDs. It returns the last message that needs to be completed.

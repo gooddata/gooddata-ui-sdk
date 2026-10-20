@@ -40,6 +40,7 @@ import {
 } from "../../../model/commands/tabs.js";
 import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectIsAddTabButtonHidden } from "../../../model/store/config/configSelectors.js";
+import { selectCanCreateAnalyticalDashboard } from "../../../model/store/permissions/permissionsSelectors.js";
 import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../../../model/store/tabs/tabsSelectors.js";
 import { type ITabState } from "../../../model/store/tabs/tabsState.js";
@@ -223,6 +224,7 @@ export function DashboardTabs({
     const intl = useIntl();
     const isEditMode = useDashboardSelector(selectIsInEditMode);
     const hideAddTabButton = useDashboardSelector(selectIsAddTabButtonHidden);
+    const canCreateAnalyticalDashboard = useDashboardSelector(selectCanCreateAnalyticalDashboard);
     const dispatch = useDashboardDispatch();
 
     const ACCESSIBILITY_CONFIG = useMemo(
@@ -234,7 +236,8 @@ export function DashboardTabs({
         [intl],
     );
 
-    const isCreateEnabled = isEditMode && !hideAddTabButton;
+    // Each new tab gets its own filter context object, and creating it requires a workspace-level permission.
+    const isCreateEnabled = isEditMode && !hideAddTabButton && canCreateAnalyticalDashboard;
 
     const handleCreateTab = useCallback(() => {
         dispatch(createDashboardTab());

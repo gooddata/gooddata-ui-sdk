@@ -21,6 +21,8 @@
     "gd.gen-ai.global-unsupported-model": "Mallia ei tueta",
     "gd.gen-ai.global-unsupported-model.description": "AI Assistant edellyttää GPT-5.2-versiota tai uudempaa. Ota yhteyttä järjestelmänvalvojaan mallin päivittämiseksi.",
     "gd.gen-ai.global-unsupported-model.button-change-model": "Vaihda LLM-malli",
+    "gd.gen-ai.visualization.error.no_data": "<b>Tietoja ei ole saatavilla.</b> Muuta tietoja tai suodattimia.",
+    "gd.gen-ai.visualization.error.negative_values": "<b>Visualisoinnista löytyi negatiivisia arvoja.</b> Muuta tietoja.",
     "gd.gen-ai.visualization.error.forecast": "<b>Ennustetta ei vastaanotettu:</b> {error}",
     "gd.gen-ai.visualization.error.clustering": "<b>Klusterointia ei vastaanotettu:</b> {error}",
     "gd.gen-ai.visualization.error.data_too_large": "<b>Dataa on liikaa.</b> Pyydä vähentämään dataa käyttämällä suodattimia.",

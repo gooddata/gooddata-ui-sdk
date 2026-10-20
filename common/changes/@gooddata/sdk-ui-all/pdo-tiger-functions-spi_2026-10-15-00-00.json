@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-backend-spi: Add organization CSP directives, platform usage, user invitations, current user API tokens, workspace creation and deletion. sdk-backend-tiger: Deprecate TigerSpecificFunctions; it will be removed in the next major version.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

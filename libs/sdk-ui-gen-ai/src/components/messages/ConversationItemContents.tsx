@@ -7,12 +7,15 @@ import {
     type TextContentObject,
 } from "../../model.js";
 import { useCustomization } from "../CustomizationContext.js";
+import type { IChatMessagesGroup } from "../utils/groupUtility.js";
 
+import { ConversationClarifyingAnswersContent } from "./conversationContents/ConversationClarifyingAnswersContent.js";
 import { ConversationToolCallContent } from "./conversationContents/ConversationToolCallContent.js";
 import { ConversationToolResultContent } from "./conversationContents/ConversationToolResultContent.js";
 
 type ConversationItemContentsProps = {
     message: IChatConversationLocalItem;
+    groups: IChatMessagesGroup[];
     references: TextContentObject[];
     role: "user" | "assistant" | "tool";
     isLoading: boolean;
@@ -21,6 +24,7 @@ type ConversationItemContentsProps = {
 
 export function ConversationItemContents({
     message,
+    groups,
     references,
     isLoading,
     isLast,
@@ -63,6 +67,19 @@ export function ConversationItemContents({
                 message={message}
                 parts={content.parts ?? []}
                 references={references}
+                isLast={isLast}
+            />
+        );
+    }
+
+    if (content.type === "clarifyingAnswers") {
+        return (
+            <ConversationClarifyingAnswersContent
+                useMarkdown
+                groups={groups}
+                message={message}
+                answers={content.answers}
+                objects={[...(content.objects ?? []), ...references]}
                 isLast={isLast}
             />
         );

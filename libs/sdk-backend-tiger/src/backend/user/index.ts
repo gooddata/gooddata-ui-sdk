@@ -4,12 +4,17 @@ import {
     ProfileApi_GetCurrent,
     ProfileApi_GetCurrentWithDetails,
 } from "@gooddata/api-client-tiger/endpoints/profile";
-import { type IUserService, type IUserSettingsService } from "@gooddata/sdk-backend-spi";
+import {
+    type IUserApiTokensService,
+    type IUserService,
+    type IUserSettingsService,
+} from "@gooddata/sdk-backend-spi";
 import { type IUser } from "@gooddata/sdk-model";
 
 import { convertUser } from "../../convertors/fromBackend/UsersConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 
+import { TigerUserApiTokensService } from "./apiTokens.js";
 import { TigerUserSettingsService } from "./settings.js";
 
 export class TigerUserService implements IUserService {
@@ -29,5 +34,9 @@ export class TigerUserService implements IUserService {
         return this.authCall(async (client) => {
             return convertUser(await ProfileApi_GetCurrentWithDetails(client.axios));
         });
+    }
+
+    public apiTokens(): IUserApiTokensService {
+        return new TigerUserApiTokensService(this.authCall);
     }
 }

@@ -153,7 +153,7 @@ export type TigerBackendConfig = {
  */
 type TigerSpecificFunctionsSubscription = {
     /**
-     * @deprecated - use internal_backendSpecificFunctions instead
+     * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
      */
     onTigerSpecificFunctionsReady?: (functions: TigerSpecificFunctions) => void;
     onContractExpired?: (tier: string) => void;

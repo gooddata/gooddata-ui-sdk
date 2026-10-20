@@ -12,11 +12,17 @@ import {
     toPluggableApplicationWorkspacePermissions,
 } from "@gooddata/sdk-model";
 import {
+    DefaultApplicationId,
     type IOrganizationPermissions,
     type IPlatformContext,
 } from "@gooddata/sdk-pluggable-application-model";
 
 const SUPPORTED_API_VERSION = "1.0";
+
+const EXPORTING_APPLICATION_IDS: ReadonlySet<string> = new Set([
+    DefaultApplicationId.DASHBOARDS,
+    "gdc-publisher",
+]);
 
 let registeredLocalApplications: LocalPluggableApplicationsRegistry | undefined;
 
@@ -232,6 +238,10 @@ function filterByScope(
  * BASE_UI_ACCESS is a platform-wide organization permission that gates visibility of all
  * standard (local) applications. Remote applications are not subject to this check because
  * they are registered explicitly by the tenant and are expected to manage their own access.
+ *
+ * In export mode the applications that render exports stay available: the export browser renders as
+ * the user who requested the export, who may lack BASE_UI_ACCESS, and the export URL would otherwise
+ * match nothing.
  */
 function filterLocalByBaseUiAccess(
     localApps: PluggableApplicationRegistryItem[],
@@ -240,7 +250,13 @@ function filterLocalByBaseUiAccess(
     if (!ctx.userSettings.restrictBaseUi) {
         return localApps;
     }
-    return ctx.organizationPermissions?.hasBaseUiAccess ? localApps : [];
+    if (ctx.organizationPermissions?.hasBaseUiAccess) {
+        return localApps;
+    }
+    if (ctx.isExportMode === true) {
+        return localApps.filter((app) => EXPORTING_APPLICATION_IDS.has(app.id));
+    }
+    return [];
 }
 
 interface IResolveApplicationsOptions {
@@ -277,7 +293,7 @@ interface IResolveApplicationsOptions {
  *
  * Processing steps (in order):
  * 1. Filter local apps by allowedStandardApplications list (if provided in remote registry)
- * 2. Filter local apps by BASE_UI_ACCESS organization permission (if restrictBaseUi is set)
+ * 2. Filter local apps by BASE_UI_ACCESS organization permission (if restrictBaseUi is set; export mode keeps the exporting apps)
  * 3. Merge local and remote applications - local apps are added first, duplicates (by ID) are skipped with console.error
  * 4. Apply overrides from the remote registry to the merged list
  * 5. Filter out disabled applications (isEnabled: false)

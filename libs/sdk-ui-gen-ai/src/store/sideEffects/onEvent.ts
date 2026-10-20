@@ -45,6 +45,7 @@ import {
     visualizationErrorAction,
 } from "../messages/messagesSlice.js";
 
+import { convertToChatClarificationAnswers } from "./converters/toChatClarificationAnswers.js";
 import { convertToChatClarificationQuestions } from "./converters/toChatClarificationQuestions.js";
 
 export function* onEvent() {
@@ -279,25 +280,37 @@ function* onClearThread(_action: ReturnType<typeof clearThreadAction>) {
     });
 }
 
-function* onNewMessage({ payload: message }: ReturnType<typeof newMessageAction>) {
+export function* onNewMessage({ payload: message }: ReturnType<typeof newMessageAction>) {
     if (message.role !== "user") {
         return;
     }
 
     const messageContent = message.content as IChatConversationLocalContent;
-    if (messageContent.type !== "text") {
+    if (messageContent.type !== "text" && messageContent.type !== "clarifyingAnswers") {
         return;
     }
 
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
     const threadId: string | undefined = yield select(threadIdSelector);
 
-    eventDispatcher.dispatch({
-        type: "chatUserMessage",
-        threadId,
-        question: messageContent.text,
-        objects: messageContent.objects ?? [],
-    });
+    switch (messageContent.type) {
+        case "text":
+            eventDispatcher.dispatch({
+                type: "chatUserMessage",
+                threadId,
+                question: messageContent.text,
+                objects: messageContent.objects ?? [],
+            });
+            break;
+        case "clarifyingAnswers":
+            eventDispatcher.dispatch({
+                type: "chatUserAnswers",
+                threadId,
+                interactionId: messageContent.questionsItemId,
+                answers: convertToChatClarificationAnswers(messageContent.answers),
+            });
+            break;
+    }
 }
 
 export function* onEvaluateMessageComplete({

@@ -111,49 +111,49 @@ export function createTigerAuthenticationUrl(backend: IAnalyticalBackend, authen
 // @internal @deprecated
 export function createTigerSpecificFunctionsProxy(initialImplementation?: TigerSpecificFunctions): ITigerSpecificFunctionsProxyResult;
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export type DataSourceDefinition = JsonApiDataSourceInDocument;
 
 // @internal
 export function dateAttributeIdToSdkGranularity(identifier: string): DateAttributeGranularity | undefined;
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export type DeclarativeAnalyticsModel = DeclarativeAnalytics;
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export type DeclarativeLogicalModel = DeclarativeModel;
 
 export { DeclarativeModel }
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export type DependentEntitiesGraphRequest = DependentEntitiesRequest;
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export type DependentEntitiesGraphResponse = DependentEntitiesResponse;
 
 export { GdStorageFile }
 
 export { GenerateLdmRequest }
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export type GenerateLogicalModelRequest = GenerateLdmRequest;
 
 // @internal
 export function getIdOrigin(id: string): IOriginInfoWithId;
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export interface IApiToken {
     // (undocumented)
     id: string;
 }
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export interface IApiTokenExtended extends IApiToken {
     // (undocumented)
     bearerToken: string | undefined;
 }
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export interface ICSPDirective {
     // (undocumented)
     attributes: {
@@ -163,7 +163,7 @@ export interface ICSPDirective {
     id: string;
 }
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export interface ICustomApplicationSetting {
     applicationName: string;
     content: {
@@ -173,7 +173,7 @@ export interface ICustomApplicationSetting {
     id: string;
 }
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export interface IDataSourceApiResult {
     // (undocumented)
     data?: IDataSourceConnectionInfo;
@@ -181,13 +181,13 @@ export interface IDataSourceApiResult {
     errorMessage?: string;
 }
 
-// @internal
+// @internal @deprecated
 export type IDataSourceCacheRetention = JsonApiDataSourceInAttributesCacheRetention;
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export type IDataSourceCacheStrategy = JsonApiDataSourceInAttributesCacheStrategyEnum;
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export interface IDataSourceConnectionInfo {
     // (undocumented)
     authenticationType?: JsonApiDataSourceOutAttributesAuthenticationTypeEnum | null;
@@ -219,10 +219,10 @@ export interface IDataSourceConnectionInfo {
     username?: string;
 }
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export type IDataSourceDateTimeSemantics = JsonApiDataSourceInAttributesDateTimeSemanticsEnum;
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export interface IDataSourceDeletedResponse {
     // (undocumented)
     errorMessage?: string;
@@ -230,7 +230,7 @@ export interface IDataSourceDeletedResponse {
     successful?: boolean;
 }
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export interface IDataSourcePatchRequest {
     // (undocumented)
     authenticationType?: JsonApiDataSourceOutAttributesAuthenticationTypeEnum | null;
@@ -267,10 +267,10 @@ export interface IDataSourcePatchRequest {
     username?: string;
 }
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export type IDataSourcePermission = "MANAGE" | "USE";
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export interface IDataSourceTestConnectionRequest {
     // (undocumented)
     authenticationType?: TestDefinitionRequestAuthenticationTypeEnum | null;
@@ -298,7 +298,7 @@ export interface IDataSourceTestConnectionRequest {
     username?: string;
 }
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export interface IDataSourceTestConnectionResponse {
     // (undocumented)
     error?: string;
@@ -306,10 +306,10 @@ export interface IDataSourceTestConnectionResponse {
     successful: boolean;
 }
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export type IDataSourceType = JsonApiDataSourceInAttributesTypeEnum;
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export interface IDataSourceUpsertRequest {
     // (undocumented)
     authenticationType?: JsonApiDataSourceOutAttributesAuthenticationTypeEnum | null;
@@ -346,7 +346,7 @@ export interface IDataSourceUpsertRequest {
     username?: string;
 }
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export interface IEntitlement {
     // (undocumented)
     expiry?: string;
@@ -356,7 +356,7 @@ export interface IEntitlement {
     value?: string;
 }
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export interface IInvitationUserResponse {
     // (undocumented)
     errorMessage?: string;
@@ -372,7 +372,7 @@ export { ImportSavRequest }
 
 export { ImportSavResponse }
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export type INotificationChannel = Omit<JsonApiNotificationChannelOut, "type">;
 
 export { Invitation }
@@ -393,7 +393,7 @@ export interface IRedirectToTigerAuthenticationParams {
     externalProviderId: string;
 }
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export interface IScanRequest {
     // (undocumented)
     scanTables: boolean;
@@ -437,10 +437,10 @@ export type JwtIsAboutToExpireHandler = (setJwt: SetJwtCallback) => void;
 // @alpha (undocumented)
 export const objectTypeToTigerIdType: { [objectType in TigerCompatibleObjectType]: TigerObjectType; };
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export type OrganizationPermission = JsonApiOrganizationOutMetaPermissionsEnum;
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export type PutWorkspaceLayoutRequest = LayoutApiPutWorkspaceLayoutRequest;
 
 export { ReadCsvFileManifestsResponse }
@@ -451,10 +451,10 @@ export function redirectToTigerAuthentication(context: IAuthenticationContext, e
 // @public
 export type RedirectToTigerAuthenticationHandler = (context: IAuthenticationContext, error: NotAuthenticated) => void;
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export type ScanResult = ScanResultPdm;
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export type ScanSqlResult = ScanSqlResponse;
 
 // @alpha
@@ -506,7 +506,7 @@ export type TigerMetadataType = "analyticalDashboard" | "visualizationObject" | 
 // @public
 export type TigerObjectType = TigerAfmType | TigerMetadataType;
 
-// @internal
+// @internal @deprecated
 export type TigerSpecificFunctions = {
     isCommunityEdition?: () => Promise<boolean>;
     isOrganizationAdmin?: () => Promise<boolean>;
@@ -597,25 +597,25 @@ export function toAfmExecution(def: IExecutionDefinition): AfmExecution;
 
 export { UploadFileResponse }
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export type WorkspaceDataFilter = JsonApiWorkspaceDataFilterInDocument;
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export type WorkspaceDataFilterResult = JsonApiWorkspaceDataFilterOutDocument;
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export type WorkspaceDataFilterSetting = JsonApiWorkspaceDataFilterSettingInDocument;
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export type WorkspaceDataFilterSettingResult = JsonApiWorkspaceDataFilterSettingOutDocument;
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export type WorkspaceDataFiltersLayout = DeclarativeWorkspaceDataFilters;
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export type WorkspaceDefinition = JsonApiWorkspaceInDocument;
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export type WorkspaceEntitiesDatasets = JsonApiDatasetOutList;
 
 ```

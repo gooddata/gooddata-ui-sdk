@@ -2,6 +2,7 @@
 
 import { type IntlShape } from "react-intl";
 
+import { type IChatConversationItem } from "@gooddata/sdk-backend-spi";
 import {
     type GenAIObjectReferenceType,
     type IAttributeOrMeasure,
@@ -255,7 +256,9 @@ export function convertGenAiTypeToReferenceType(type: IGenAIContextObject["type"
     }
 }
 
-export function isClarificationQuestionsItem(item: IChatConversationLocalItem | undefined) {
+export function isClarificationQuestionsItem(
+    item: IChatConversationLocalItem | IChatConversationItem | undefined,
+) {
     return (
         item?.content?.type === "multipart" &&
         item.content.parts.some((part) => part.type === "clarifyingQuestions")

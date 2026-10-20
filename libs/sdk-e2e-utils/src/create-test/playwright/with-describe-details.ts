@@ -24,7 +24,7 @@ function peekOrEmpty<T extends Record<string, unknown>>(stack: T[]): T | Record<
 /** Push merged awp/flags onto stacks, register the beforeEach hooks, call fn, pop. */
 export function withDescribeDetails(
     testInstance: PlaywrightTestInstance,
-    defaultFeatures: IFeatureHubFeature[],
+    defaultFeatures: IFeatureHubFeature[] | undefined,
     awpStack: WindowProperties[],
     flagsStack: FeatureFlags[],
     details: ITestDetails<TestConditionsValueConstraint> | undefined,
@@ -46,7 +46,7 @@ export function withDescribeDetails(
         injectWindowProperties(testInstance, mergedAwp);
     }
     if (ff) {
-        injectFeatureFlags(testInstance, defaultFeatures, mergedFlags);
+        injectFeatureFlags(testInstance, requireDefaultFeatures(defaultFeatures, "a describe"), mergedFlags);
     }
     try {
         fn();
@@ -64,7 +64,7 @@ export function withDescribeDetails(
  */
 export function withTestDetails(
     testInstance: PlaywrightTestInstance,
-    defaultFeatures: IFeatureHubFeature[],
+    defaultFeatures: IFeatureHubFeature[] | undefined,
     awpStack: WindowProperties[],
     flagsStack: FeatureFlags[],
     location: IPlaywrightLocation,
@@ -78,6 +78,7 @@ export function withTestDetails(
     }
     const mergedAwp = awp ? { ...peekOrEmpty(awpStack), ...awp } : peekOrEmpty(awpStack);
     const mergedFlags = ff ? { ...peekOrEmpty(flagsStack), ...ff } : peekOrEmpty(flagsStack);
+    const features = ff ? requireDefaultFeatures(defaultFeatures, `test("${title}")`) : undefined;
 
     testInstance.beforeEach(async ({ page }, testInfo) => {
         // A beforeEach applies to every test in its describe; only act for this test. Title is part
@@ -93,10 +94,25 @@ export function withTestDetails(
         if (awp) {
             await addWindowPropertiesInitScript(page, mergedAwp);
         }
-        if (ff) {
-            await applyFeatureFlags(page, defaultFeatures, mergedFlags);
+        if (features) {
+            await applyFeatureFlags(page, features, mergedFlags);
         }
     });
+}
+
+/** `featureFlags` are served on top of the FeatureHub mock, so they need `featureHubFeatures` to merge onto. */
+function requireDefaultFeatures(
+    defaultFeatures: IFeatureHubFeature[] | undefined,
+    where: string,
+): IFeatureHubFeature[] {
+    if (!defaultFeatures) {
+        throw new Error(
+            `@gooddata/sdk-e2e-utils: ${where} sets \`featureFlags\`, but this createTest() has no ` +
+                "`featureHubFeatures`. Flags are served on top of the FeatureHub mock, so pass " +
+                "`featureHubFeatures` to createTest() or drop `featureFlags` here.",
+        );
+    }
+    return defaultFeatures;
 }
 
 /** Inject additional window properties via a single addInitScript. */

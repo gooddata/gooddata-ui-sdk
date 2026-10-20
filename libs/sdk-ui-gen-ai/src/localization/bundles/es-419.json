@@ -22,7 +22,7 @@
     "gd.gen-ai.global-unsupported-model.description": "El Asistente de IA requiere GPT-5.2 o una versión superior. Comuníquese con su administrador para actualizar el modelo.",
     "gd.gen-ai.global-unsupported-model.button-change-model": "Cambiar modelo LLM",
     "gd.gen-ai.visualization.error.no_data": "<b>No hay datos disponibles.</b> Cambie los datos o los filtros.",
-    "gd.gen-ai.visualization.error.negative_values": "<b>Se han encontrado valores negativos en la visualización.</b> Cambie los datos.",
+    "gd.gen-ai.visualization.error.negative_values": "<b>Se encontraron valores negativos en la visualización.</b> Cambie los datos.",
     "gd.gen-ai.visualization.error.forecast": "<b>Pronóstico no recibido:</b> {error}",
     "gd.gen-ai.visualization.error.clustering": "<b>Agrupación no recibida:</b> {error}",
     "gd.gen-ai.visualization.error.data_too_large": "<b>Los datos son demasiado grandes.</b> Solicite reducir los datos aplicando filtros.",

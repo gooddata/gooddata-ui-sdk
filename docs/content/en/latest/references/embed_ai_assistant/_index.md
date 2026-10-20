@@ -280,6 +280,7 @@ Here is a list of the relevant events:
 | `ChatContextChangeEvent`              | `isChatContextChangeEvent`              | Assistant context changed                      |
 | `ChatDefinitionReceivedEvent`         | `isChatDefinitionReceivedEvent`         | Dashboard or visualization definition received |
 | `ChatClarificationQuestionsEvent`     | `isChatClarificationQuestionsEvent`     | Clarification questions presented or resolved  |
+| `ChatUserAnswersEvent`                | `isChatUserAnswersEvent`                | User submitted clarification answers           |
 
 #### onLinkClick
 
@@ -400,6 +401,49 @@ import {
                 } else {
                     console.log("Clarification answers submitted:", event.responses);
                 }
+            },
+        },
+    ]}
+/>;
+```
+
+#### chatUserAnswers
+
+This event is triggered when the user submits answers to clarification questions. The `answers` array contains
+only answered questions, so skipped questions are omitted and the array is empty if the user skips every question.
+
+Clarification answer turns emit `chatUserAnswers` instead of `chatUserMessage`. To count all user turns, handle
+both event types.
+
+| Property      | Type                        | Description                                                            |
+| ------------- | --------------------------- | ---------------------------------------------------------------------- |
+| type          | `chatUserAnswers`           | Event type identifier.                                                 |
+| threadId      | `string`                    | (Optional) ID of the conversation thread.                              |
+| interactionId | `string`                    | ID of the clarification questions interaction these answers belong to. |
+| answers       | `ChatClarificationAnswer[]` | Structured answers in the order defined by `questionIndex`.            |
+
+Each `ChatClarificationAnswer` contains the question and the selected option:
+
+| Property           | Type           | Description                                    |
+| ------------------ | -------------- | ---------------------------------------------- |
+| questionIndex      | `number`       | Zero-based index of the question.              |
+| questionText       | `string`       | Question text as presented to the user.        |
+| answer.type        | `singleChoice` | Answer type identifier.                        |
+| answer.optionIndex | `number`       | Zero-based index of the selected option.       |
+| answer.optionText  | `string`       | Selected option text as presented to the user. |
+
+```tsx
+import { GenAIAssistant, type ChatUserAnswersEvent, isChatUserAnswersEvent } from "@gooddata/sdk-ui-gen-ai";
+
+<GenAIAssistant
+    eventHandlers={[
+        {
+            eval: isChatUserAnswersEvent,
+            handler: (event: ChatUserAnswersEvent) => {
+                console.log("Clarification interaction:", event.interactionId);
+                event.answers.forEach(({ questionText, answer }) => {
+                    console.log(`${questionText}: ${answer.optionText}`);
+                });
             },
         },
     ]}

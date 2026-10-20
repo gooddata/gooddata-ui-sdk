@@ -223,6 +223,12 @@ export const findTargetOption = (
 /** Date-eligible target: the option carries execution-resolved date metadata. */
 export const isDateTarget = (option: ITargetOption | undefined): boolean => option?.date !== undefined;
 
+/** Without a target option, infers from the rule's values; ALL/IS_EMPTY-only rules then read as non-date. */
+export const isDateRule = (rule: IConditionalFormattingRule, option: ITargetOption | undefined): boolean =>
+    option
+        ? isDateTarget(option)
+        : rule.conditions.some((condition) => isDateConditionValue(condition.value));
+
 /** @internal */
 export const targetLocalId = (target: ConditionalFormattingTarget): string =>
     target.kind === "measure" ? target.measureIdentifier : target.attributeIdentifier;
@@ -573,12 +579,8 @@ export const ruleWithTarget = (
     previous: ITargetOption | undefined,
 ): IConditionalFormattingRule => {
     const nextIsDate = isDateTarget(next);
-    // `previous` is undefined when retargeting an invalid rule (target already left the insight);
-    // sniff the rule's own values instead, so stale date values can't leak onto a non-date target.
-    // Shapes the sniff can't classify (ALL/IS_EMPTY-only) are valid in both families anyway.
-    const wasDate = previous
-        ? isDateTarget(previous)
-        : rule.conditions.some((condition) => isDateConditionValue(condition.value));
+    // Misreading an orphaned ALL/IS_EMPTY-only rule is harmless here: both families accept them.
+    const wasDate = isDateRule(rule, previous);
     if (next.target.kind !== rule.target.kind || nextIsDate !== wasDate) {
         const validOperators = new Set(operatorsForTarget(next.target.kind, nextIsDate));
         return {

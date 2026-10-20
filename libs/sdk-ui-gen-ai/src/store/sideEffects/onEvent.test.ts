@@ -3,18 +3,24 @@
 import { runSaga } from "redux-saga";
 import { describe, expect, it, vi } from "vitest";
 
-import { type IChatConversationLocalContent, type IChatConversationLocalItem } from "../../model.js";
+import {
+    type IChatConversationLocalContent,
+    type IChatConversationLocalItem,
+    makeUserItem,
+} from "../../model.js";
 import { type ChatEvent } from "../events.js";
 import {
     evaluateMessageCompleteAction,
     evaluateMessageStreamingAction,
     filledFormAction,
+    newMessageAction,
 } from "../messages/messagesSlice.js";
 
 import {
     onClarificationQuestionsAnswered,
     onEvaluateMessageComplete,
     onEvaluateMessageStreaming,
+    onNewMessage,
 } from "./onEvent.js";
 
 vi.mock("../messages/messagesSelectors.js", () => ({
@@ -55,6 +61,52 @@ const state: TestState = {
 };
 
 describe("clarification question events", () => {
+    it("emits structured user answers", async () => {
+        const dispatch = vi.fn<(event: ChatEvent) => void>();
+        const answers = [
+            {
+                questionIndex: 0,
+                questionText: "Which region?",
+                answer: {
+                    type: "singleChoice" as const,
+                    optionIndex: 1,
+                    optionText: "West",
+                },
+            },
+            {
+                questionIndex: 2,
+                questionText: "Which year?",
+                answer: {
+                    type: "singleChoice" as const,
+                    optionIndex: 0,
+                    optionText: "2026",
+                },
+            },
+        ];
+
+        await runSaga(
+            {
+                context: { eventDispatcher: { dispatch } },
+                getState: () => state,
+            },
+            onNewMessage,
+            newMessageAction(
+                makeUserItem({
+                    type: "clarifyingAnswers",
+                    questionsItemId: clarificationMessage.id,
+                    answers,
+                }),
+            ),
+        ).toPromise();
+
+        expect(dispatch).toHaveBeenCalledWith({
+            type: "chatUserAnswers",
+            threadId: "thread-id",
+            interactionId: "interaction-id",
+            answers,
+        });
+    });
+
     it("emits presentation before an answer and does not emit it again on completion", async () => {
         const dispatch = vi.fn<(event: ChatEvent) => void>();
         const sagaOptions = {

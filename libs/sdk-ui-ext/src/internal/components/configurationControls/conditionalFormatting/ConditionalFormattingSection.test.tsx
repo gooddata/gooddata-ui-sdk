@@ -116,6 +116,22 @@ describe("ConditionalFormattingSection — date metadata readiness", () => {
         renderSection({}, orphaned);
         expect(screen.getByText("Column not found")).toBeInTheDocument();
     });
+
+    it("keeps the date icon on a date rule whose target left the insight", () => {
+        const config = dateRuleConfig("2023-12-01");
+        const orphaned: IConditionalFormatting = {
+            ...config,
+            rules: config.rules.map((rule) => ({
+                ...rule,
+                target: { kind: "attribute", attributeIdentifier: "gone" },
+            })),
+        };
+        renderSection(monthMeta, orphaned);
+        expect(screen.getByText("Column not found")).toBeInTheDocument();
+        const icon = screen.getByTitle("Edit rule").querySelector(".gd-cf-type-icon");
+        expect(icon).toHaveClass("gd-icon-date");
+        expect(icon).not.toHaveClass("gd-icon-attribute");
+    });
 });
 
 describe("ConditionalFormattingSection — Add-rule dialog target picker", () => {

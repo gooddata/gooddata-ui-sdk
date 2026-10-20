@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-pluggable-host: In export mode, users without the BASE_UI_ACCESS permission keep the Dashboards and Publisher applications, so the exports they request render as they did in the standalone Dashboards application, which never checked this permission.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

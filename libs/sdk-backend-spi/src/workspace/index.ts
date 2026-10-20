@@ -233,6 +233,13 @@ export interface IAnalyticalWorkspace {
      * @alpha
      */
     localization(): IWorkspaceLocalizationService;
+
+    /**
+     * Delete the workspace.
+     *
+     * @alpha
+     */
+    delete(): Promise<void>;
 }
 
 /**
@@ -310,6 +317,29 @@ export interface IWorkspacesQueryFactory {
      * @public
      */
     forCurrentUser(): IWorkspacesQuery;
+
+    /**
+     * Creates a new workspace.
+     *
+     * @param definition - definition of the workspace
+     * @returns descriptor of the created workspace
+     * @alpha
+     */
+    createWorkspace(definition: IWorkspaceDefinition): Promise<IWorkspaceDescriptor>;
+}
+
+/**
+ * Definition of a new workspace.
+ *
+ * @alpha
+ */
+export interface IWorkspaceDefinition {
+    id: string;
+    title: string;
+    /**
+     * Identifier of the parent workspace. The new workspace inherits its content.
+     */
+    parentWorkspace?: string;
 }
 
 /**

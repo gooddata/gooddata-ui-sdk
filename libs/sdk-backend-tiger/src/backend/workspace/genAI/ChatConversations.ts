@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import {
     type AiConversationItemResponse,
     type AiInteractionStepResponse,
+    type AiSendMessageItem,
     type AiSendMessageRequest,
     type AiUserContextReport,
     type AiUserContextWidgetDescriptor,
@@ -39,6 +40,7 @@ import {
     type IChatConversationThread,
     type IChatConversationThreadQuery,
     type IChatConversations,
+    type UserQuestionItem,
 } from "@gooddata/sdk-backend-spi";
 import { declarativeDashboardToYaml, publisherDocumentDefinitionToYaml } from "@gooddata/sdk-code-convertors";
 import {
@@ -368,7 +370,7 @@ export class ConversationThread implements IChatConversationThread {
     /**
      * Queries the conversation thread.
      */
-    query(userMessage: string): IChatConversationThreadQuery {
+    query(userMessage: UserQuestionItem): IChatConversationThreadQuery {
         const conversationId = this.conversationId;
         if (!conversationId) {
             throw new Error("Conversation ID is not set");
@@ -389,7 +391,7 @@ export class ConversationThread implements IChatConversationThread {
 export type ChatConversationThreadQueryConfig = {
     workspaceId: string;
     conversationId: string;
-    userQuestion: string;
+    userQuestion: UserQuestionItem;
     limitSearch?: number;
     limitCreate?: number;
     includeTags?: string[];
@@ -469,6 +471,9 @@ export class ChatConversationThreadQuery implements IChatConversationThreadQuery
         // This method can be simplified once we upgrade to Axios >=1.7.
         const { authCall, requestParameters } = this;
 
+        // Convert user question to AI message content
+        const item: AiSendMessageItem["content"] = mapUserRequest(requestParameters.userQuestion);
+
         let lastLoaded = 0;
         let responseTraceId: string | undefined;
         // Generate a stream of string from server, as XHR delivers data in chunks.
@@ -484,10 +489,7 @@ export class ChatConversationThreadQuery implements IChatConversationThreadQuery
                             aiSendMessageRequest: {
                                 item: {
                                     role: "user",
-                                    content: {
-                                        type: "text",
-                                        text: requestParameters.userQuestion,
-                                    },
+                                    content: item,
                                 },
                                 options: {
                                     search: {
@@ -546,6 +548,30 @@ export class ChatConversationThreadQuery implements IChatConversationThreadQuery
             .pipeThrough(
                 new ServerSentEventsDataConverter(this.dateNormalizer, history, () => responseTraceId),
             );
+    }
+}
+
+function mapUserRequest(item: UserQuestionItem): AiSendMessageItem["content"] {
+    if (typeof item === "string") {
+        return {
+            type: "text",
+            text: item,
+        };
+    }
+    switch (item.type) {
+        case "text":
+            return {
+                type: "text",
+                text: item.text,
+            };
+        case "clarifyingAnswers":
+            return {
+                type: "clarifyingAnswers",
+                answers: item.answers,
+                questionsItemId: item.questionsItemId,
+            };
+        default:
+            throw new Error(`Unknown user request type: ${JSON.stringify(item)}`);
     }
 }
 

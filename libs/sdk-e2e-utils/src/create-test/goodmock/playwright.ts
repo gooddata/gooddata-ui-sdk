@@ -1,15 +1,15 @@
 // (C) 2026 GoodData Corporation
 
-import { type test } from "@playwright/test";
+import type { PlaywrightTestInstance } from "../playwright/playwright-types.js";
 
 import { loadMappings, resetMappings, startRecording } from "./admin.js";
 import { GoodmockMode, goodmockMode as getGoodmockMode } from "./mode.js";
 import { snapshotAndSaveRecording } from "./snapshot/snapshot-and-save-recording.js";
-import { type IGoodmockOptions } from "./types.js";
+import type { IGoodmockOptions } from "./types.js";
 
 /** Goodmock lifecycle hooks */
 export function registerGoodmockHooks(
-    testInstance: typeof test,
+    testInstance: PlaywrightTestInstance,
     gm: IGoodmockOptions,
     specName: string,
 ): void {

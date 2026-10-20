@@ -7,11 +7,15 @@ import {
     type EntitiesApiGetAllEntitiesWorkspacesRequest,
     type JsonApiWorkspaceOutList,
 } from "@gooddata/api-client-tiger";
-import { EntitiesApi_GetAllEntitiesWorkspaces } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
+import {
+    EntitiesApi_CreateEntityWorkspaces,
+    EntitiesApi_GetAllEntitiesWorkspaces,
+} from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
     type IAnalyticalWorkspace,
     type IPagedResource,
+    type IWorkspaceDefinition,
     type IWorkspaceDescriptor,
     type IWorkspacesQuery,
     type IWorkspacesQueryFactory,
@@ -55,6 +59,28 @@ export class TigerWorkspaceQueryFactory implements IWorkspacesQueryFactory {
             this.dateStringifier,
             this.dateNormalizer,
         );
+    }
+
+    public async createWorkspace({
+        id,
+        title,
+        parentWorkspace,
+    }: IWorkspaceDefinition): Promise<IWorkspaceDescriptor> {
+        const result = await this.authCall((client) =>
+            EntitiesApi_CreateEntityWorkspaces(client.axios, client.basePath, {
+                jsonApiWorkspaceInDocument: {
+                    data: {
+                        id,
+                        type: "workspace",
+                        attributes: { name: title },
+                        relationships: parentWorkspace
+                            ? { parent: { data: { id: parentWorkspace, type: "workspace" } } }
+                            : undefined,
+                    },
+                },
+            }),
+        );
+        return workspaceConverter(result.data.data, []);
     }
 }
 

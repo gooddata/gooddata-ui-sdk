@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-kit, sdk-ui-filters, sdk-ui-pluggable-host: Native buttons and inputs in overlays use the page font instead of the browser default font.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

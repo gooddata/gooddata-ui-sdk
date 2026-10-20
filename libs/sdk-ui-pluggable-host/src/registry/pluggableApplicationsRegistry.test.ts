@@ -900,6 +900,26 @@ describe("resolveApplications", () => {
                 expect(result).toHaveLength(0);
             });
 
+            it("keeps only the exporting apps in export mode when BASE_UI_ACCESS is missing", () => {
+                const local = [
+                    externalApp({ id: "gdc-dashboards", menuOrder: 1 }),
+                    externalApp({ id: "gdc-publisher", menuOrder: 2 }),
+                    externalApp({ id: "gdc-analytical-designer", menuOrder: 3 }),
+                ];
+                const result = resolveApplications({
+                    localApps: local,
+                    remoteRegistry: undefined,
+                    ctx: ctxWith({
+                        userSettings: { restrictBaseUi: true },
+                        organizationPermissions: { hasBaseUiAccess: false },
+                        isExportMode: true,
+                    }),
+                    scope: "workspace",
+                });
+
+                expect(result.map((a) => a.id)).toEqual(["gdc-dashboards", "gdc-publisher"]);
+            });
+
             it("shows local apps when BASE_UI_ACCESS is true", () => {
                 const local = [
                     externalApp({ id: "a", menuOrder: 1 }),

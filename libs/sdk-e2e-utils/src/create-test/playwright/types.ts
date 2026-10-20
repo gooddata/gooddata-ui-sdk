@@ -102,9 +102,9 @@ export interface ITestConditions<TestConditionsValue extends TestConditionsValue
  * @internal
  */
 export interface ICustomCreateTestOptions<TestConditionsValue extends TestConditionsValueConstraint = never> {
-    featureHubFeatures: IFeatureHubFeature[];
-    goodmock?: IGoodmockOptions;
-    testConditions?: ITestConditions<TestConditionsValue>;
+    featureHubFeatures?: IFeatureHubFeature[] | undefined;
+    goodmock?: IGoodmockOptions | undefined;
+    testConditions?: ITestConditions<TestConditionsValue> | undefined;
 }
 
 /**

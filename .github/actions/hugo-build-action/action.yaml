@@ -19,7 +19,7 @@ runs:
         - name: Setup Hugo
           uses: peaceiris/actions-hugo@v3.2.1
           with:
-              hugo-version: "0.168.0"
+              hugo-version: "0.110.0"
               extended: true
         - name: Install dependencies
           working-directory: ${{ inputs.working-directory }}

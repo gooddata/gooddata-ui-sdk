@@ -77,6 +77,7 @@ export function AssistantItemComponent({ message, groups, isLast }: AssistantIte
             <ConversationItemContents
                 role="assistant"
                 message={message}
+                groups={groups}
                 references={references}
                 isLoading={messageState === "loading"}
                 isLast={isLast}

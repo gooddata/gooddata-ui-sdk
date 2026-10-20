@@ -3,6 +3,7 @@
 import { v4 as uuidv4 } from "uuid";
 
 import { ActionsUtilities } from "@gooddata/api-client-tiger";
+import { ActionsApi_ProcessInvitation } from "@gooddata/api-client-tiger/endpoints/actions";
 import {
     EntitiesApi_CreateEntityUserGroups,
     EntitiesApi_CreateEntityUserSettings,
@@ -32,12 +33,14 @@ import {
     type IOrganizationUsersQueryResult,
     type IUserLocalizationSettings,
     type LocalizationSettingType,
+    UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
 import {
     type IOrganizationUser,
     type IOrganizationUserGroup,
     type IUser,
     type IUserGroup,
+    type IUserInvitation,
 } from "@gooddata/sdk-model";
 
 import { unwrapSettingContent } from "../../convertors/fromBackend/SettingsConverter.js";
@@ -344,6 +347,19 @@ export class OrganizationUsersService implements IOrganizationUserService {
         } finally {
             await invalidateSettingsResponses(this.authCall);
         }
+    };
+
+    public inviteUser = async (invitation: IUserInvitation): Promise<void> => {
+        return this.authCall(async (client) => {
+            const response = await ActionsApi_ProcessInvitation(client.axios, client.basePath, {
+                invitation,
+            });
+            if (response.status !== 204) {
+                throw new UnexpectedError(
+                    `The backend did not accept the invitation of ${invitation.email}.`,
+                );
+            }
+        });
     };
 }
 

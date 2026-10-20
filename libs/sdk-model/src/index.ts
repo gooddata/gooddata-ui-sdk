@@ -1316,7 +1316,12 @@ export {
     WorkspaceAccessSourceValue,
     DataSourceAccessSourceValue,
     isAssignedWorkspacePermission,
+    type PlatformUsageName,
+    type IPlatformUsage,
+    type IUserInvitation,
 } from "./organization/index.js";
+export type { ICspDirective } from "./cspDirectives/index.js";
+export type { IApiToken, IApiTokenWithSecret } from "./apiTokens/index.js";
 export type { IEntitlementsName, IEntitlementDescriptor } from "./entitlements/index.js";
 export type { DataSourceType, IDataSourceIdentifierDescriptor } from "./dataSources/index.js";
 
@@ -1486,6 +1491,8 @@ export type {
     IGenAiClarifyingChoiceOption,
     IGenAiClarifyingQuestion,
     IGenAiSingleChoiceControl,
+    IGenAiClarifyingAnswer,
+    IGenAiClarifyingAnswerItem,
 } from "./genAI/clarifyingQuestions.js";
 
 export type {

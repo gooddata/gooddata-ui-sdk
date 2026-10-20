@@ -15,7 +15,6 @@ import { ConversationClarifyingQuestionsContent } from "./ConversationClarifying
 import { ConversationDashboardContent } from "./ConversationDashboardContent.js";
 import { ConversationPublisherDocumentContent } from "./ConversationPublisherDocumentContent.js";
 import { ConversationSearchContent } from "./ConversationSearchContent.js";
-import { ConversationTextContent } from "./ConversationTextContent.js";
 import { ConversationWhatIfContent } from "./ConversationWhatIfContent.js";
 
 export type ConversationMultipartContentProps = {
@@ -32,7 +31,11 @@ export function ConversationMultipartContent({
     isLast,
 }: ConversationMultipartContentProps) {
     const intl = useIntl();
-    const { ConversationKdaContentComponent, ConversationVisualizationContentComponent } = useCustomization();
+    const {
+        ConversationKdaContentComponent,
+        ConversationVisualizationContentComponent,
+        MessageTextContentComponent,
+    } = useCustomization();
     const whatIf = loadWhatIfScenarios(parts);
 
     return (
@@ -40,8 +43,7 @@ export function ConversationMultipartContent({
             {parts?.map((part: IChatConversationMultipartLocalPart, index) => {
                 if (part.type === "text") {
                     return (
-                        <ConversationTextContent
-                            useMarkdown
+                        <MessageTextContentComponent
                             key={index}
                             text={part.text}
                             objects={[...(part.objects ?? []), ...references]}

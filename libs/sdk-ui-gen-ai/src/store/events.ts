@@ -237,6 +237,57 @@ export const isChatUserMessageEvent = (event: ChatEvent): event is ChatUserMessa
 };
 
 /**
+ * An answer submitted for a clarification question.
+ *
+ * @public
+ */
+export type ChatClarificationAnswer = {
+    /**
+     * Zero-based index of the question.
+     */
+    questionIndex: number;
+    /**
+     * Text of the question as presented to the user.
+     */
+    questionText: string;
+    /**
+     * Selected answer.
+     */
+    answer: {
+        /**
+         * Type of the answer.
+         */
+        type: "singleChoice";
+        /**
+         * Zero-based index of the selected option.
+         */
+        optionIndex: number;
+        /**
+         * Text of the selected option as presented to the user.
+         */
+        optionText: string;
+    };
+};
+
+/**
+ * A chat user answers event.
+ * @public
+ */
+export type ChatUserAnswersEvent = BaseEvent & {
+    type: "chatUserAnswers";
+    interactionId: string;
+    answers: ChatClarificationAnswer[];
+};
+
+/**
+ * Type guard for the ChatUserAnswersEvent.
+ * @public
+ */
+export const isChatUserAnswersEvent = (event: ChatEvent): event is ChatUserAnswersEvent => {
+    return event.type === "chatUserAnswers";
+};
+
+/**
  * A chat assistant message event.
  * @public
  */
@@ -534,6 +585,7 @@ export type ChatEvent =
     | ChatConversationRenamedSuccessEvent
     | ChatConversationRenamedErrorEvent
     | ChatUserMessageEvent
+    | ChatUserAnswersEvent
     | ChatAgentChangeEvent
     | ChatAssistantMessageEvent
     | ChatFeedbackEvent

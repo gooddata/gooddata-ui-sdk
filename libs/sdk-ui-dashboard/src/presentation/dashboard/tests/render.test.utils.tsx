@@ -37,10 +37,10 @@ export function render(jsx: ReactNode, options: ISetupOptions = {}): RenderResul
     const preloadedState = merge(
         cloneDeep(configureStore({ reducer: createDashboardRootReducer() }).getState()),
         /**
-         * Setting empty config is needed here because otherwise an `Invariant Violation: attempting to access
-         * uninitialized config state` error from `configSelectors.ts` in tests appears.
+         * Setting empty config and permissions is needed here because otherwise an `Invariant Violation:
+         * attempting to access uninitialized ... state` error from the respective selectors in tests appears.
          */
-        { config: { config: {} } },
+        { config: { config: {} }, permissions: { permissions: {} } },
         state,
     );
 

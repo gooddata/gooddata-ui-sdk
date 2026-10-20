@@ -21,6 +21,8 @@
     "gd.gen-ai.global-unsupported-model": "Модель не підтримується",
     "gd.gen-ai.global-unsupported-model.description": "Для AI Assistant потрібен GPT-5.2 або новіша версія. Зверніться до адміністратора, щоб оновити модель.",
     "gd.gen-ai.global-unsupported-model.button-change-model": "Змінити модель LLM",
+    "gd.gen-ai.visualization.error.no_data": "<b>Немає доступних даних.</b> Змініть дані або фільтри.",
+    "gd.gen-ai.visualization.error.negative_values": "<b>У візуалізації знайдено від’ємні значення.</b> Змініть дані.",
     "gd.gen-ai.visualization.error.forecast": "<b>Прогноз не отримано:</b> {error}",
     "gd.gen-ai.visualization.error.clustering": "<b>Кластеризацію не отримано:</b> {error}",
     "gd.gen-ai.visualization.error.data_too_large": "<b>Дані завеликі.</b> Попросіть зменшити обсяг даних, застосувавши фільтри.",

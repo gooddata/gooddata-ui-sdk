@@ -8,7 +8,7 @@ import { type IGenAiClarifyingQuestion } from "@gooddata/sdk-model";
 import { makeLinearKeyboardNavigation, useUiAutofocusConnectors } from "@gooddata/sdk-ui-kit";
 
 import { type IChatConversationLocalItem, type TextContentObject, makeUserItem } from "../../../model.js";
-import { filledFormAction, newMessageAction, refocusInput } from "../../../store/messages/messagesSlice.js";
+import { filledFormAction, newMessageAction } from "../../../store/messages/messagesSlice.js";
 
 export const SKIP_BUTTON_ID = "skip-button";
 
@@ -24,7 +24,9 @@ export function useConversationClarifyingQuestions(props: IUseConversationClarif
     const dispatch = useDispatch();
 
     const [question, setQuestion] = useState<IGenAiClarifyingQuestion>(questions[0]);
-    const [answers, setAnswers] = useState<Record<string, string>>({});
+    const [answers, setAnswers] = useState<
+        { question: string; answer: string; optionIndex: number; questionIndex: number }[]
+    >([]);
     const [index, setIndex] = useState(0);
 
     const ref = useUiAutofocusConnectors<HTMLDivElement>({
@@ -32,44 +34,62 @@ export function useConversationClarifyingQuestions(props: IUseConversationClarif
     });
 
     const onFinishAnswers = useCallback(
-        (newAnswers: Record<string, string>) => {
-            const entries = Object.entries(newAnswers);
+        (newAnswers: { question: string; answer: string; optionIndex: number; questionIndex: number }[]) => {
             dispatch(
                 filledFormAction({
                     assistantMessageId: message.localId,
-                    responses: newAnswers,
+                    responses: newAnswers.reduce(
+                        (acc, { question, answer }) => {
+                            acc[question] = answer;
+                            return acc;
+                        },
+                        {} as Record<string, string>,
+                    ),
                 }),
             );
-            if (entries.length > 0) {
-                dispatch(
-                    newMessageAction(
-                        makeUserItem({
-                            type: "text",
-                            text: entries.map(([key, value]) => `**${key}**\n\n${value}`).join("\n\n"),
-                            objects,
+            dispatch(
+                newMessageAction(
+                    makeUserItem({
+                        type: "clarifyingAnswers",
+                        questionsItemId: message.id,
+                        answers: newAnswers.map(({ question, answer, questionIndex, optionIndex }) => {
+                            return {
+                                questionText: question,
+                                questionIndex,
+                                answer: {
+                                    optionIndex,
+                                    optionText: answer,
+                                    type: "singleChoice",
+                                },
+                            };
                         }),
-                    ),
-                );
-            } else {
-                dispatch(refocusInput());
-            }
+                        objects,
+                    }),
+                ),
+            );
         },
-        [objects, dispatch, message.localId],
+        [objects, dispatch, message.localId, message.id],
     );
 
     const onSelectOption = useCallback(
         (question: IGenAiClarifyingQuestion, option: number) => {
-            const newAnswers = {
+            const index = questions.indexOf(question);
+
+            const newAnswers = [
                 ...answers,
                 ...(option === -1
-                    ? {}
-                    : {
-                          [question.text]: question.control.options[option].text,
-                      }),
-            };
+                    ? []
+                    : [
+                          {
+                              question: question.text,
+                              answer: question.control.options[option].text,
+                              optionIndex: option,
+                              questionIndex: index,
+                          },
+                      ]),
+            ];
             setAnswers(newAnswers);
 
-            const index = questions.indexOf(question);
             const nextQuestion = questions[index + 1];
             if (nextQuestion) {
                 setQuestion(nextQuestion);

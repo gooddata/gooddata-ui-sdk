@@ -149,6 +149,7 @@ import { convertApiError } from "../utils/errorHandling.js";
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export interface IApiToken {
     id: string;
@@ -156,6 +157,7 @@ export interface IApiToken {
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export interface IApiTokenExtended extends IApiToken {
     bearerToken: string | undefined;
@@ -163,6 +165,7 @@ export interface IApiTokenExtended extends IApiToken {
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export interface IScanRequest {
     scanTables: boolean;
@@ -175,11 +178,13 @@ export interface IScanRequest {
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export type ScanResult = ScanResultPdm;
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export interface IEntitlement {
     id: string;
@@ -189,11 +194,13 @@ export interface IEntitlement {
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export type IDataSourceType = JsonApiDataSourceInAttributesTypeEnum;
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export type IDataSourceCacheStrategy = JsonApiDataSourceInAttributesCacheStrategyEnum;
 
@@ -207,21 +214,25 @@ export type IDataSourceCacheStrategy = JsonApiDataSourceInAttributesCacheStrateg
  *   ISO-8601 duration string that is passed through as-is, parsing and formatting is up to the caller.
  *
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export type IDataSourceCacheRetention = JsonApiDataSourceInAttributesCacheRetention;
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export type IDataSourceDateTimeSemantics = JsonApiDataSourceInAttributesDateTimeSemanticsEnum;
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export type IDataSourcePermission = "MANAGE" | "USE";
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export interface IDataSourceConnectionInfo {
     id: string;
@@ -242,6 +253,7 @@ export interface IDataSourceConnectionInfo {
 
 /**
  *@internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export interface IDataSourceApiResult {
     data?: IDataSourceConnectionInfo;
@@ -250,6 +262,7 @@ export interface IDataSourceApiResult {
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export interface IDataSourceUpsertRequest {
     id: string;
@@ -276,6 +289,7 @@ export interface IDataSourceUpsertRequest {
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export interface IDataSourcePatchRequest {
     id: string;
@@ -303,6 +317,7 @@ export interface IDataSourcePatchRequest {
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export interface IDataSourceTestConnectionRequest {
     password?: string;
@@ -321,6 +336,7 @@ export interface IDataSourceTestConnectionRequest {
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export interface IDataSourceTestConnectionResponse {
     successful: boolean;
@@ -329,6 +345,7 @@ export interface IDataSourceTestConnectionResponse {
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export interface IDataSourceDeletedResponse {
     successful?: boolean;
@@ -337,6 +354,7 @@ export interface IDataSourceDeletedResponse {
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export interface IInvitationUserResponse {
     successful?: boolean;
@@ -345,6 +363,7 @@ export interface IInvitationUserResponse {
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export interface ICSPDirective {
     id: string;
@@ -359,11 +378,13 @@ export interface ICSPDirective {
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export type INotificationChannel = Omit<JsonApiNotificationChannelOut, "type">;
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export interface ICustomApplicationSetting {
     id: string;
@@ -381,81 +402,97 @@ export interface ICustomApplicationSetting {
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export type OrganizationPermission = JsonApiOrganizationOutMetaPermissionsEnum;
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export type GenerateLogicalModelRequest = GenerateLdmRequest;
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export type DeclarativeLogicalModel = DeclarativeModel;
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export type DeclarativeAnalyticsModel = DeclarativeAnalytics;
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export type PutWorkspaceLayoutRequest = LayoutApiPutWorkspaceLayoutRequest;
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export type DataSourceDefinition = JsonApiDataSourceInDocument;
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export type WorkspaceDefinition = JsonApiWorkspaceInDocument;
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export type DependentEntitiesGraphRequest = DependentEntitiesRequest;
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export type DependentEntitiesGraphResponse = DependentEntitiesResponse;
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export type WorkspaceDataFiltersLayout = DeclarativeWorkspaceDataFilters;
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export type WorkspaceDataFilterResult = JsonApiWorkspaceDataFilterOutDocument;
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export type WorkspaceDataFilterSettingResult = JsonApiWorkspaceDataFilterSettingOutDocument;
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export type WorkspaceDataFilter = JsonApiWorkspaceDataFilterInDocument;
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export type WorkspaceDataFilterSetting = JsonApiWorkspaceDataFilterSettingInDocument;
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export type ScanSqlResult = ScanSqlResponse;
 
 /**
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export type WorkspaceEntitiesDatasets = JsonApiDatasetOutList;
 
@@ -466,6 +503,7 @@ export type WorkspaceEntitiesDatasets = JsonApiDatasetOutList;
  * Do not use parameters or return values from \@gooddata/api-client-tiger.
  *
  * @internal
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export type TigerSpecificFunctions = {
     isCommunityEdition?: () => Promise<boolean>;
