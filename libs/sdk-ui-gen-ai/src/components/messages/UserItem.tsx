@@ -35,6 +35,7 @@ export function UserItemComponent({ message, isLast, groups }: UserItemProps) {
             </span>
             <ConversationItemContents
                 role="user"
+                groups={groups}
                 message={message}
                 references={references}
                 isLoading={messageState === "loading"}

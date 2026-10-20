@@ -20,6 +20,12 @@ export interface IOrganizationDescriptor {
     identityProviderType?: string;
     region?: string;
     dataCenter?: string;
+    /**
+     * Origins that can embed the organization content or call its API from a browser (CORS).
+     *
+     * @alpha
+     */
+    allowedOrigins?: string[];
 }
 
 /**
@@ -36,6 +42,10 @@ export interface IOrganizationDescriptorUpdate {
      */
     earlyAccess?: string | null;
     earlyAccessValues?: string[] | null;
+    /**
+     * @alpha
+     */
+    allowedOrigins?: string[];
 }
 
 /**
@@ -217,4 +227,40 @@ export type OrganizationPermissionAssignment =
 export interface IOrganizationPermissionAssignment {
     assigneeIdentifier: IOrganizationAssignee;
     permissions: OrganizationPermissionAssignment[];
+}
+
+/**
+ * Name of a measured platform usage item.
+ *
+ * @alpha
+ */
+export type PlatformUsageName = "UserCount" | "WorkspaceCount" | "AiWorkspaceCount";
+
+/**
+ * Current usage of a platform resource that the organization license can limit.
+ *
+ * @alpha
+ */
+export interface IPlatformUsage {
+    name: PlatformUsageName;
+    /**
+     * The backend can omit the count.
+     */
+    count?: number;
+}
+
+/**
+ * Invitation of a user to the organization.
+ *
+ * @alpha
+ */
+export interface IUserInvitation {
+    userId: string;
+    email: string;
+    firstName?: string;
+    lastName?: string;
+    /**
+     * Send the invitation email again even if a pending invitation exists.
+     */
+    forceSend?: boolean;
 }

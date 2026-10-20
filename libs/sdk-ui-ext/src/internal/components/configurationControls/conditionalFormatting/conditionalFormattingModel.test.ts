@@ -33,6 +33,7 @@ import {
     buildTargetOptions,
     displayToRawNumber,
     isCustomTarget,
+    isDateRule,
     isPercentFormat,
     isRuleComplete,
     isSuppressedTarget,
@@ -831,6 +832,32 @@ describe("date conditions (model)", () => {
         // "Is on" maps onto the attribute "Is" — the operator survives, the date value cannot.
         expect(toPlain.conditions[0].operator).toBe("EQUAL_TO");
         expect(toPlain.conditions[0].value).toEqual({ kind: "literal", value: "" });
+    });
+
+    it("isDateRule follows the target option, or the rule's values once the target is gone", () => {
+        const dateRule = attributeRule([condition("EQUAL_TO", decemberValue)]);
+        expect(isDateRule(dateRule, dateOption("GDC.time.month"))).toBe(true);
+        expect(isDateRule(dateRule, plainAttributeOption)).toBe(false);
+        expect(isDateRule(dateRule, undefined)).toBe(true);
+        expect(
+            isDateRule(
+                attributeRule([
+                    condition("ALL", { kind: "none" }),
+                    condition("EQUAL_TO", {
+                        kind: "relativeDate",
+                        granularity: "GDC.time.month",
+                        from: 0,
+                        to: 0,
+                    }),
+                ]),
+                undefined,
+            ),
+        ).toBe(true);
+        expect(
+            isDateRule(attributeRule([condition("CONTAINS", { kind: "literal", value: "x" })]), undefined),
+        ).toBe(false);
+        // Known limit: nothing to infer from.
+        expect(isDateRule(attributeRule([condition("ALL", { kind: "none" })]), undefined)).toBe(false);
     });
 
     it("ruleWithTarget infers date-ness from the conditions when the previous target is gone (invalid rule)", () => {

@@ -28,6 +28,7 @@ import {
     buildTargetOptions,
     findTargetOption,
     isCustomTarget,
+    isDateRule,
     isDateTarget,
     isRuleComplete,
     isSuppressedTarget,
@@ -111,7 +112,7 @@ function RuleChip({ rule, option, invalid, editable, labels, slot, onEdit, onDel
                 disabled={!editable}
             >
                 <span
-                    className={`gd-cf-type-icon ${targetIcon(rule.target.kind, isDateTarget(option))}`}
+                    className={`gd-cf-type-icon ${targetIcon(rule.target.kind, isDateRule(rule, option))}`}
                     aria-hidden="true"
                 />
                 <span className="gd-cf-rule__title">

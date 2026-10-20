@@ -1,6 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
 import type { JsonApiIdentityProviderOutWithLinks } from "@gooddata/api-client-tiger";
+import { ActionsApi_AllPlatformUsage } from "@gooddata/api-client-tiger/endpoints/actions";
 import {
     EntitiesApi_GetEntityOrganizations,
     EntitiesApi_PatchEntityOrganizations,
@@ -10,6 +11,7 @@ import {
     type IOrganization,
     type IOrganizationAgentsService,
     type IOrganizationAutomationService,
+    type IOrganizationCspDirectivesService,
     type IOrganizationExportTemplatesService,
     type IOrganizationGenAIService,
     type IOrganizationIpAllowlistService,
@@ -24,13 +26,19 @@ import {
     type IOrganizations,
     type ISecuritySettingsService,
 } from "@gooddata/sdk-backend-spi";
-import { type IOrganizationDescriptor, type IOrganizationDescriptorUpdate, idRef } from "@gooddata/sdk-model";
+import {
+    type IOrganizationDescriptor,
+    type IOrganizationDescriptorUpdate,
+    type IPlatformUsage,
+    idRef,
+} from "@gooddata/sdk-model";
 
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 import { TigerOrganizationLocalizationService } from "../localization/index.js";
 
 import { OrganizationAgentsService } from "./agents.js";
 import { TigerOrganizationAutomationService } from "./automations/index.js";
+import { OrganizationCspDirectivesService } from "./cspDirectives.js";
 import { OrganizationExportTemplatesService } from "./exportTemplates.js";
 import { TigerOrganizationGenAIService } from "./genAI/index.js";
 import { OrganizationIpAllowlistService } from "./ipAllowlists.js";
@@ -70,10 +78,8 @@ export class TigerOrganization implements IOrganization {
 
             // oxlint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
             const organizationName = result.data.data.attributes?.name!;
-            // oxlint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-            const bootstrapUser = result.data.data?.relationships?.bootstrapUser?.data!;
-            // oxlint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-            const bootstrapUserGroup = result.data.data?.relationships?.bootstrapUserGroup?.data!;
+            const bootstrapUser = result.data.data?.relationships?.bootstrapUser?.data;
+            const bootstrapUserGroup = result.data.data?.relationships?.bootstrapUserGroup?.data;
 
             // Get the identity provider from included data using the relationship reference
             const identityProvider = result.data.data?.relationships?.identityProvider?.data;
@@ -90,13 +96,16 @@ export class TigerOrganization implements IOrganization {
             return {
                 id: this.organizationId,
                 title: organizationName,
-                bootstrapUser: idRef(bootstrapUser.id, bootstrapUser.type),
-                bootstrapUserGroup: idRef(bootstrapUserGroup.id, bootstrapUserGroup.type),
+                bootstrapUser: bootstrapUser ? idRef(bootstrapUser.id, bootstrapUser.type) : undefined,
+                bootstrapUserGroup: bootstrapUserGroup
+                    ? idRef(bootstrapUserGroup.id, bootstrapUserGroup.type)
+                    : undefined,
                 earlyAccess: result.data.data.attributes?.earlyAccess ?? undefined,
                 earlyAccessValues: result.data.data.attributes?.earlyAccessValues ?? undefined,
                 identityProviderType,
                 region: result.data.data.attributes?.region ?? undefined,
                 dataCenter: result.data.data.attributes?.dataCenter ?? undefined,
+                allowedOrigins: result.data.data.attributes?.allowedOrigins ?? [],
             };
         }
 
@@ -126,6 +135,7 @@ export class TigerOrganization implements IOrganization {
                             // but backend expects them in case we want to delete the value
                             earlyAccess: descriptor.earlyAccess as string | undefined,
                             earlyAccessValues: descriptor.earlyAccessValues as string[] | undefined,
+                            allowedOrigins: descriptor.allowedOrigins,
                         },
                     },
                 },
@@ -135,20 +145,21 @@ export class TigerOrganization implements IOrganization {
         const resultData = result.data.data;
         // oxlint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
         const organizationName = resultData.attributes?.name!;
-        // oxlint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-        const bootstrapUser = resultData.relationships?.bootstrapUser?.data!;
-        // oxlint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-        const bootstrapUserGroup = resultData.relationships?.bootstrapUserGroup?.data!;
+        const bootstrapUser = resultData.relationships?.bootstrapUser?.data;
+        const bootstrapUserGroup = resultData.relationships?.bootstrapUserGroup?.data;
         const earlyAccess = resultData.attributes?.earlyAccess ?? undefined;
         const earlyAccessValues = resultData.attributes?.earlyAccessValues ?? undefined;
 
         return {
             id: this.organizationId,
             title: organizationName,
-            bootstrapUser: idRef(bootstrapUser.id, bootstrapUser.type),
-            bootstrapUserGroup: idRef(bootstrapUserGroup.id, bootstrapUserGroup.type),
+            bootstrapUser: bootstrapUser ? idRef(bootstrapUser.id, bootstrapUser.type) : undefined,
+            bootstrapUserGroup: bootstrapUserGroup
+                ? idRef(bootstrapUserGroup.id, bootstrapUserGroup.type)
+                : undefined,
             earlyAccess,
             earlyAccessValues,
+            allowedOrigins: resultData.attributes?.allowedOrigins ?? [],
         };
     }
 
@@ -206,6 +217,17 @@ export class TigerOrganization implements IOrganization {
 
     public localization(): IOrganizationLocalizationService {
         return new TigerOrganizationLocalizationService(this.authCall);
+    }
+
+    public cspDirectives(): IOrganizationCspDirectivesService {
+        return new OrganizationCspDirectivesService(this.authCall);
+    }
+
+    public getPlatformUsage(): Promise<IPlatformUsage[]> {
+        return this.authCall(async (client) => {
+            const result = await ActionsApi_AllPlatformUsage(client.axios, client.basePath);
+            return result.data.map(({ name, count }) => ({ name, count }));
+        });
     }
 }
 

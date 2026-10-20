@@ -264,4 +264,8 @@ export class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
     public localization(): IWorkspaceLocalizationService {
         return this.decorated.localization();
     }
+
+    public delete(): Promise<void> {
+        return this.decorated.delete();
+    }
 }

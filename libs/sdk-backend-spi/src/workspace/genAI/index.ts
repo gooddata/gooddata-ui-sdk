@@ -14,6 +14,7 @@ import type {
     IDashboard,
     IFilter,
     IGenAIUserContext,
+    IGenAiClarifyingAnswer,
     IGenAiClarifyingQuestion,
     IInsight,
     IMeasure,
@@ -1161,6 +1162,7 @@ export function isChatConversationCatalogSearchDetail(
  */
 export type IChatConversationContent =
     | IChatConversationTextContent
+    | IChatConversationClarifyingAnswersContent
     | IChatConversationReasoningContent
     | IChatConversationMultipartContent
     | IChatConversationToolCallContent
@@ -1207,6 +1209,16 @@ export function isChatConversationTextContent(
 export type IChatConversationClarifyingQuestionsContent = {
     type: "clarifyingQuestions";
     questions: IGenAiClarifyingQuestion[];
+};
+
+/**
+ * GenAI Chat Conversation clarifying answers content
+ * @internal
+ */
+export type IChatConversationClarifyingAnswersContent = {
+    type: "clarifyingAnswers";
+    questionsItemId: string;
+    answers: IGenAiClarifyingAnswer[];
 };
 
 /**
@@ -1622,6 +1634,32 @@ export type IChatSuggestions = {
 };
 
 /**
+ * Represents a user question item, which can be either a text question or a clarification question.
+ * @internal
+ */
+export type UserTextQuestionItem = {
+    type: "text";
+    text: string;
+};
+
+/**
+ * Represents a user clarification question item, which includes the ID of the original question item
+ * and a list of answers with associated option indices, option texts, and question indices.
+ * @internal
+ */
+export type UserClarificationQuestionsItem = {
+    type: "clarifyingAnswers";
+    questionsItemId: string;
+    answers: IGenAiClarifyingAnswer[];
+};
+
+/**
+ * Represents a user question item, which can be either a text question or a clarification question.
+ * @internal
+ */
+export type UserQuestionItem = UserTextQuestionItem | UserClarificationQuestionsItem | string;
+
+/**
  * Chatbot conversations thread.
  * @internal
  */
@@ -1664,7 +1702,7 @@ export interface IChatConversationThread {
     /**
      * Add a user message to the chat thread.
      */
-    query(userMessage: string): IChatConversationThreadQuery;
+    query(userMessage: UserQuestionItem): IChatConversationThreadQuery;
 }
 
 /**

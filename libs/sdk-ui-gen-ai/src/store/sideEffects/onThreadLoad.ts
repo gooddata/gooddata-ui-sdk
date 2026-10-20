@@ -15,6 +15,7 @@ import {
     type IChatConversationLocalItem,
     makeConversationItem,
 } from "../../model.js";
+import { isClarificationQuestionsItem } from "../../utils.js";
 import {
     conversationMessagesByIdSelector,
     conversationSelector,
@@ -194,11 +195,16 @@ function* fetchCurrentConversation() {
             selectedConversation.localId,
         );
 
-        const items = resultsItems.map((item) => {
-            return makeConversationItem({
-                ...item,
-                content: convertToLocalContent(item.content),
-            });
+        const items = resultsItems.map((item, i, arr) => {
+            const isClarification = isClarificationQuestionsItem(item);
+            const filled = isClarification ? arr.length - 1 !== i : true;
+            return makeConversationItem(
+                {
+                    ...item,
+                    content: convertToLocalContent(item.content),
+                },
+                filled,
+            );
         });
 
         yield put(

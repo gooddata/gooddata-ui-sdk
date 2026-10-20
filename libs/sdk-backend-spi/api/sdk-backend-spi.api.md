@@ -26,6 +26,8 @@ import { IAgentSkill } from '@gooddata/sdk-model';
 import { IAiRateLimit } from '@gooddata/sdk-model';
 import { IAlertDefault } from '@gooddata/sdk-model';
 import type { IAllowedRelationshipType } from '@gooddata/sdk-model';
+import { IApiToken } from '@gooddata/sdk-model';
+import { IApiTokenWithSecret } from '@gooddata/sdk-model';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeElement } from '@gooddata/sdk-model';
@@ -52,6 +54,7 @@ import { IColorPaletteMetadataObject } from '@gooddata/sdk-model';
 import type { IComputedAttributeMetadataObject } from '@gooddata/sdk-model';
 import type { IComputedAttributeMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { IConditionalFormatting } from '@gooddata/sdk-model';
+import { ICspDirective } from '@gooddata/sdk-model';
 import type { IDashboard } from '@gooddata/sdk-model';
 import type { IDashboardAttributeFilterConfig } from '@gooddata/sdk-model';
 import type { IDashboardBase } from '@gooddata/sdk-model';
@@ -93,6 +96,7 @@ import { IFilter } from '@gooddata/sdk-model';
 import type { IFilterContext } from '@gooddata/sdk-model';
 import type { IFilterContextDefinition } from '@gooddata/sdk-model';
 import { IFiscalYear } from '@gooddata/sdk-model';
+import type { IGenAiClarifyingAnswer } from '@gooddata/sdk-model';
 import type { IGenAiClarifyingQuestion } from '@gooddata/sdk-model';
 import type { IGenAIUserContext } from '@gooddata/sdk-model';
 import { IGeoCollection } from '@gooddata/sdk-model';
@@ -135,6 +139,7 @@ import { IOrganizationUser } from '@gooddata/sdk-model';
 import { IOrganizationUserGroup } from '@gooddata/sdk-model';
 import { IParameterMetadataObject } from '@gooddata/sdk-model';
 import { IParameterMetadataObjectDefinition } from '@gooddata/sdk-model';
+import { IPlatformUsage } from '@gooddata/sdk-model';
 import { IPublisherDocument } from '@gooddata/sdk-model';
 import { IPublisherDocumentDefinition } from '@gooddata/sdk-model';
 import { IPublisherDocumentTemplate } from '@gooddata/sdk-model';
@@ -161,6 +166,7 @@ import { IThemeMetadataObject } from '@gooddata/sdk-model';
 import type { IUnavailableReference } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
 import { IUserGroup } from '@gooddata/sdk-model';
+import { IUserInvitation } from '@gooddata/sdk-model';
 import { IUserSettings } from '@gooddata/sdk-model';
 import { IUserWorkspaceSettings } from '@gooddata/sdk-model';
 import type { IVisualizationClass } from '@gooddata/sdk-model';
@@ -402,6 +408,8 @@ export interface IAnalyticalWorkspace {
     dataFilters(): IDataFiltersService;
     datasets(): IWorkspaceDatasetsService;
     dateFilterConfigs(): IDateFilterConfigsQuery;
+    // @alpha
+    delete(): Promise<void>;
     execution(): IExecutionFactory;
     // @alpha
     exportDefinitions(): IWorkspaceExportDefinitionsService;
@@ -771,6 +779,13 @@ export type IChatConversationCatalogSearchMatch = {
 };
 
 // @internal
+export type IChatConversationClarifyingAnswersContent = {
+    type: "clarifyingAnswers";
+    questionsItemId: string;
+    answers: IGenAiClarifyingAnswer[];
+};
+
+// @internal
 export type IChatConversationClarifyingQuestionsContent = {
     type: "clarifyingQuestions";
     questions: IGenAiClarifyingQuestion[];
@@ -785,7 +800,7 @@ export type IChatConversationComposeAnswerDetail = {
 };
 
 // @internal
-export type IChatConversationContent = IChatConversationTextContent | IChatConversationReasoningContent | IChatConversationMultipartContent | IChatConversationToolCallContent | IChatConversationToolResultContent;
+export type IChatConversationContent = IChatConversationTextContent | IChatConversationClarifyingAnswersContent | IChatConversationReasoningContent | IChatConversationMultipartContent | IChatConversationToolCallContent | IChatConversationToolResultContent;
 
 // @internal
 export type IChatConversationCreateOptions = {
@@ -975,7 +990,7 @@ export interface IChatConversationThread {
     loadHistory(options?: {
         signal?: AbortSignal;
     }): Promise<IChatConversationItem[]>;
-    query(userMessage: string): IChatConversationThreadQuery;
+    query(userMessage: UserQuestionItem): IChatConversationThreadQuery;
     resaveDashboard(dashboardId: string, newDashboardId: string): Promise<void>;
     resavePublisherDocument(documentRef: string, savedDocumentId: string): Promise<void>;
     resaveVisualisation(oldVisualizationId: string, newVisualizationId: string): Promise<void>;
@@ -2337,11 +2352,15 @@ export interface IOrganization {
     agents(): IOrganizationAgentsService;
     // @alpha
     automations(): IOrganizationAutomationService;
+    // @alpha
+    cspDirectives(): IOrganizationCspDirectivesService;
     // @beta
     exportTemplates(): IOrganizationExportTemplatesService;
     // @alpha
     genAI(): IOrganizationGenAIService;
     getDescriptor(includeAdditionalDetails?: boolean): Promise<IOrganizationDescriptor>;
+    // @alpha
+    getPlatformUsage(): Promise<IPlatformUsage[]>;
     // @alpha
     ipAllowlists(): IOrganizationIpAllowlistService;
     llmProviders(): IOrganizationLlmProvidersService;
@@ -2437,6 +2456,15 @@ export interface IOrganizationAutomationsQuery {
 
 // @alpha
 export type IOrganizationAutomationsQueryResult = IPagedResource<IAutomationMetadataObject>;
+
+// @alpha
+export interface IOrganizationCspDirectivesService {
+    create(directive: ICspDirective): Promise<ICspDirective>;
+    delete(id: string): Promise<void>;
+    get(id: string): Promise<ICspDirective>;
+    getAll(): Promise<ICspDirective[]>;
+    update(directive: ICspDirective): Promise<ICspDirective>;
+}
 
 // @beta
 export interface IOrganizationExportTemplatesService {
@@ -2657,6 +2685,7 @@ export interface IOrganizationUserService {
     getUsersOfUserGroup(userGroupId: string): Promise<IUser[]>;
     getUsersQuery(): IOrganizationUsersQuery;
     getUsersSummary(): Promise<IOrganizationUser[]>;
+    inviteUser(invitation: IUserInvitation): Promise<void>;
     removeUsersFromUserGroups(userIds: string[], userGroupIds: string[]): Promise<void>;
     setUserLocalizationSetting(userId: string, type: LocalizationSettingType, value: string | undefined): Promise<void>;
     updateUser(user: IUser): Promise<void>;
@@ -3014,10 +3043,19 @@ export interface IUpsertKnowledgeDocumentRequest {
 }
 
 // @alpha
+export interface IUserApiTokensService {
+    create(id: string): Promise<IApiTokenWithSecret>;
+    delete(id: string): Promise<void>;
+    getAll(): Promise<IApiToken[]>;
+}
+
+// @alpha
 export type IUserLocalizationSettings = Partial<Record<LocalizationSettingType, string>>;
 
 // @public
 export interface IUserService {
+    // @alpha
+    apiTokens(): IUserApiTokensService;
     getUser(): Promise<IUser>;
     getUserWithDetails(): Promise<IUser>;
     settings(): IUserSettingsService;
@@ -3282,6 +3320,15 @@ export interface IWorkspaceDatasetsService {
     updateDatasetMeta(dataSet: Partial<IMetadataObjectBase> & IMetadataObjectIdentity): Promise<IDataSetMetadataObject>;
 }
 
+// @alpha
+export interface IWorkspaceDefinition {
+    // (undocumented)
+    id: string;
+    parentWorkspace?: string;
+    // (undocumented)
+    title: string;
+}
+
 // @public
 export interface IWorkspaceDescriptor {
     childWorkspacesCount?: number;
@@ -3527,6 +3574,8 @@ export interface IWorkspacesQuery {
 
 // @public
 export interface IWorkspacesQueryFactory {
+    // @alpha
+    createWorkspace(definition: IWorkspaceDefinition): Promise<IWorkspaceDescriptor>;
     forCurrentUser(): IWorkspacesQuery;
     forUser(userId: string): IWorkspacesQuery;
 }
@@ -3705,6 +3754,22 @@ export class UnexpectedResponseError extends AnalyticalBackendError {
     // (undocumented)
     readonly traceId: string | undefined;
 }
+
+// @internal
+export type UserClarificationQuestionsItem = {
+    type: "clarifyingAnswers";
+    questionsItemId: string;
+    answers: IGenAiClarifyingAnswer[];
+};
+
+// @internal
+export type UserQuestionItem = UserTextQuestionItem | UserClarificationQuestionsItem | string;
+
+// @internal
+export type UserTextQuestionItem = {
+    type: "text";
+    text: string;
+};
 
 // @public
 export type ValidationContext = "CORS" | "UI_EVENT" | "DRILL_TO_URI";

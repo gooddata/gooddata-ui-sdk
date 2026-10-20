@@ -65,6 +65,26 @@ describe("DashboardTabsWrapper", () => {
         expect(screen.queryByDisplayValue("Tab 2")).not.toBeInTheDocument();
     });
 
+    it("should show add tab button in edit mode when user can create dashboards", () => {
+        setup({
+            renderMode: { renderMode: "edit" },
+            permissions: { permissions: { canCreateAnalyticalDashboard: true } },
+            tabs: tabsState(),
+        });
+
+        expect(screen.getByTestId("s-tab-add-new")).toBeInTheDocument();
+    });
+
+    it("should hide add tab button in edit mode when user cannot create dashboards", () => {
+        setup({
+            renderMode: { renderMode: "edit" },
+            permissions: { permissions: { canCreateAnalyticalDashboard: false } },
+            tabs: tabsState(),
+        });
+
+        expect(screen.queryByTestId("s-tab-add-new")).not.toBeInTheDocument();
+    });
+
     it("should return focus back to original tab after tab renaming", async () => {
         const { user } = setup({ renderMode: { renderMode: "edit" }, tabs: tabsState() });
 

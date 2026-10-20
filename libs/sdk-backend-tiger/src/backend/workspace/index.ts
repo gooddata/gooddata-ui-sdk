@@ -2,6 +2,7 @@
 
 import { ActionsApi_InheritedEntityPrefixes } from "@gooddata/api-client-tiger/endpoints/actions";
 import {
+    EntitiesApi_DeleteEntityWorkspaces,
     EntitiesApi_GetEntityWorkspaces,
     EntitiesApi_PatchEntityWorkspaces,
 } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
@@ -262,5 +263,11 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
 
     public localization(): IWorkspaceLocalizationService {
         return new TigerWorkspaceLocalizationService(this.authCall, this.workspace);
+    }
+
+    public async delete(): Promise<void> {
+        await this.authCall((client) =>
+            EntitiesApi_DeleteEntityWorkspaces(client.axios, client.basePath, { id: this.workspace }),
+        );
     }
 }

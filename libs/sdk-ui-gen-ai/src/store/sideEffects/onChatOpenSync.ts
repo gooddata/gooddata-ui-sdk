@@ -14,6 +14,7 @@ import {
     type IChatConversationLocalItem,
     makeConversationItem,
 } from "../../model.js";
+import { isClarificationQuestionsItem } from "../../utils.js";
 import {
     asyncProcessSelector,
     conversationMessagesSelector,
@@ -215,10 +216,16 @@ function* fetchConversationItems(conversationId: string) {
 
     const results: IChatConversationItem[] = yield call(loadHistory);
 
-    return results.map((item) =>
-        makeConversationItem({
-            ...item,
-            content: convertToLocalContent(item.content),
-        }),
-    );
+    return results.map((item, i, arr) => {
+        const isClarification = isClarificationQuestionsItem(item);
+        const filled = isClarification ? arr.length - 1 !== i : true;
+
+        return makeConversationItem(
+            {
+                ...item,
+                content: convertToLocalContent(item.content),
+            },
+            filled,
+        );
+    });
 }

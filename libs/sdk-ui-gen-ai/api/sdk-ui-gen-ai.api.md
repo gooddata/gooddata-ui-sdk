@@ -62,6 +62,17 @@ export type ChatAssistantMessageEvent = BaseEvent & {
 };
 
 // @public
+export type ChatClarificationAnswer = {
+    questionIndex: number;
+    questionText: string;
+    answer: {
+        type: "singleChoice";
+        optionIndex: number;
+        optionText: string;
+    };
+};
+
+// @public
 export type ChatClarificationQuestion = {
     text: string;
     control: {
@@ -173,7 +184,7 @@ export type ChatDefinitionReceivedEvent = BaseEvent & {
 } & Partial<IAiAssistantPublisherDocumentDefinition>;
 
 // @public
-export type ChatEvent = ChatOpenedEvent | ChatClosedEvent | ChatResetEvent | ChatModeChangeEvent | ChatConversationPinnedEvent | ChatConversationPinErrorEvent | ChatConversationDeleteEvent | ChatConversationDeletedSuccessEvent | ChatConversationDeletedErrorEvent | ChatConversationRenameEvent | ChatConversationRenamedSuccessEvent | ChatConversationRenamedErrorEvent | ChatUserMessageEvent | ChatAgentChangeEvent | ChatAssistantMessageEvent | ChatFeedbackEvent | ChatFeedbackErrorEvent | ChatContextChangeEvent | ChatCopyToClipboardEvent | ChatVisualizationErrorEvent | ChatSaveVisualizationErrorEvent | ChatSaveVisualizationSuccessEvent | ChatConversationChangedEvent | ChatDefinitionReceivedEvent | ChatClarificationQuestionsEvent;
+export type ChatEvent = ChatOpenedEvent | ChatClosedEvent | ChatResetEvent | ChatModeChangeEvent | ChatConversationPinnedEvent | ChatConversationPinErrorEvent | ChatConversationDeleteEvent | ChatConversationDeletedSuccessEvent | ChatConversationDeletedErrorEvent | ChatConversationRenameEvent | ChatConversationRenamedSuccessEvent | ChatConversationRenamedErrorEvent | ChatUserMessageEvent | ChatUserAnswersEvent | ChatAgentChangeEvent | ChatAssistantMessageEvent | ChatFeedbackEvent | ChatFeedbackErrorEvent | ChatContextChangeEvent | ChatCopyToClipboardEvent | ChatVisualizationErrorEvent | ChatSaveVisualizationErrorEvent | ChatSaveVisualizationSuccessEvent | ChatConversationChangedEvent | ChatDefinitionReceivedEvent | ChatClarificationQuestionsEvent;
 
 // @public
 export type ChatEventHandler<TEvent extends ChatEvent = any> = {
@@ -223,6 +234,13 @@ export type ChatSaveVisualizationErrorEvent = BaseEvent & {
 export type ChatSaveVisualizationSuccessEvent = BaseEvent & {
     type: "chatSaveVisualizationSuccess";
     savedVisualizationId: string;
+};
+
+// @public
+export type ChatUserAnswersEvent = BaseEvent & {
+    type: "chatUserAnswers";
+    interactionId: string;
+    answers: ChatClarificationAnswer[];
 };
 
 // @public
@@ -782,6 +800,9 @@ export const isChatSaveVisualizationErrorEvent: (event: ChatEvent) => event is C
 
 // @public
 export const isChatSaveVisualizationSuccessEvent: (event: ChatEvent) => event is ChatSaveVisualizationSuccessEvent;
+
+// @public
+export const isChatUserAnswersEvent: (event: ChatEvent) => event is ChatUserAnswersEvent;
 
 // @public
 export const isChatUserMessageEvent: (event: ChatEvent) => event is ChatUserMessageEvent;

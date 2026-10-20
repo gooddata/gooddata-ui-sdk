@@ -19,6 +19,7 @@ import {
     type AiMultipartContentPartsInner,
     type AiSearchObject,
     type AiSearchRelationship,
+    type AiSendClarifyingAnswersContent,
     type AiSuggestions,
     type AiVisualizationReferences,
     type AiWhatIfScenario,
@@ -182,13 +183,19 @@ function convertChatConversationFeedbackFromBackend(
 }
 
 function convertChatConversationContentFromBackend(
-    content: AiContent,
+    content: AiContent | AiSendClarifyingAnswersContent,
     history: IChatConversationItem[],
     dateNormalizer: DateNormalizer,
     locale?: FormattingLocale,
     timezone?: string,
 ): IChatConversationContent | undefined {
     switch (content.type) {
+        case "clarifyingAnswers":
+            return {
+                type: "clarifyingAnswers",
+                questionsItemId: content.questionsItemId,
+                answers: content.answers,
+            };
         case "text":
             return {
                 type: "text",

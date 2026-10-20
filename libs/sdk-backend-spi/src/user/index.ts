@@ -1,6 +1,8 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import { type IUser } from "@gooddata/sdk-model";
 
+import { type IUserApiTokensService } from "./apiTokens/index.js";
 import { type IUserSettingsService } from "./settings/index.js";
 
 /**
@@ -25,4 +27,11 @@ export interface IUserService {
      * Returns currently authenticated user with details
      */
     getUserWithDetails(): Promise<IUser>;
+
+    /**
+     * Returns service that can be used to manage API tokens of the user.
+     *
+     * @alpha
+     */
+    apiTokens(): IUserApiTokensService;
 }

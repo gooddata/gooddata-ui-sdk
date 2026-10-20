@@ -8,7 +8,7 @@ import { type TigerSpecificFunctions } from "./tigerSpecificFunctions.js";
  * (`updateImplementation`).
  *
  * @internal
- * @deprecated Tiger-specific functions are legacy and will be removed.
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export interface ITigerSpecificFunctionsProxyResult {
     /**
@@ -35,7 +35,7 @@ export interface ITigerSpecificFunctionsProxyResult {
  * underlying {@link TigerSpecificFunctions} implementation.
  *
  * @internal
- * @deprecated Tiger-specific functions are legacy and will be removed.
+ * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export function createTigerSpecificFunctionsProxy(
     initialImplementation?: TigerSpecificFunctions,

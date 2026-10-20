@@ -60,8 +60,10 @@ export {
     type ChatModeChangeEvent,
     type ChatAgentChangeEvent,
     type ChatContextChangeEvent,
+    type ChatClarificationAnswer,
     type ChatClarificationQuestion,
     type ChatClarificationQuestionsEvent,
+    type ChatUserAnswersEvent,
     isChatAssistantMessageEvent,
     isChatUserMessageEvent,
     isChatClosedEvent,
@@ -87,6 +89,7 @@ export {
     isChatAgentChangeEvent,
     isChatContextChangeEvent,
     isChatClarificationQuestionsEvent,
+    isChatUserAnswersEvent,
 } from "./store/events.js";
 
 export {

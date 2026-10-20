@@ -78,6 +78,7 @@ import {
     type IOrganization,
     type IOrganizationAgentsService,
     type IOrganizationAutomationService,
+    type IOrganizationCspDirectivesService,
     type IOrganizationExportTemplatesService,
     type IOrganizationGenAIService,
     type IOrganizationIpAllowlistService,
@@ -213,6 +214,7 @@ import {
     type IOrganizationDescriptor,
     type IParameterMetadataObject,
     type IParameterMetadataObjectDefinition,
+    type IPlatformUsage,
     type IRelativeDateFilter,
     type IScheduledMail,
     type IScheduledMailDefinition,
@@ -613,6 +615,9 @@ function dummyWorkspace(
         },
         publisher(): IWorkspacePublisherService {
             return publisherService;
+        },
+        delete(): Promise<void> {
+            return Promise.resolve();
         },
         localization(): IWorkspaceLocalizationService {
             return dummyLocalizationService();
@@ -1231,6 +1236,7 @@ class DummyOrganization implements IOrganization {
             removeUsersFromUserGroups: () => Promise.resolve(),
             updateUser: () => Promise.resolve(),
             updateUserGroup: () => Promise.resolve(),
+            inviteUser: () => Promise.resolve(),
         };
     }
 
@@ -1370,6 +1376,20 @@ class DummyOrganization implements IOrganization {
 
     public localization(): IOrganizationLocalizationService {
         return dummyLocalizationService();
+    }
+
+    public cspDirectives(): IOrganizationCspDirectivesService {
+        return {
+            getAll: () => Promise.resolve([]),
+            get: (id) => Promise.resolve({ id, sources: [] }),
+            create: (directive) => Promise.resolve(directive),
+            update: (directive) => Promise.resolve(directive),
+            delete: () => Promise.resolve(),
+        };
+    }
+
+    public getPlatformUsage(): Promise<IPlatformUsage[]> {
+        return Promise.resolve([]);
     }
 }
 

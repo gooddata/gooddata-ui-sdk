@@ -21,6 +21,8 @@
     "gd.gen-ai.global-unsupported-model": "Model desteklenmiyor",
     "gd.gen-ai.global-unsupported-model.description": "AI Asistanı, GPT-5.2 veya daha yüksek bir sürüm gerektirir. Modeli güncellemek için yöneticinizle iletişime geçin.",
     "gd.gen-ai.global-unsupported-model.button-change-model": "LLM modelini değiştir",
+    "gd.gen-ai.visualization.error.no_data": "<b>Kullanılabilir veri yok.</b> Verileri veya filtreleri değiştirin.",
+    "gd.gen-ai.visualization.error.negative_values": "<b>Görselleştirmede negatif değerler bulundu.</b> Verileri değiştirin.",
     "gd.gen-ai.visualization.error.forecast": "<b>Tahmin alınmadı:</b> {error}",
     "gd.gen-ai.visualization.error.clustering": "<b>Kümeleme alınmadı:</b> {error}",
     "gd.gen-ai.visualization.error.data_too_large": "<b>Veri çok büyük.</b> Filtre uygulayarak veriyi azaltmayı isteyin.",

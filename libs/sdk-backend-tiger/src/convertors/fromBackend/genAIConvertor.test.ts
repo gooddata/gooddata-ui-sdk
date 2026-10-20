@@ -1303,6 +1303,49 @@ describe("genAIConvertor", () => {
     });
 
     describe("convertChatConversationItemFromBackend content types and metadata", () => {
+        it("converts clarifying answers content", () => {
+            const item = {
+                conversationId: "conv-1",
+                itemIndex: 0,
+                itemId: "item-1",
+                role: "user",
+                createdAt: "2024-01-01T00:00:00Z",
+                content: {
+                    type: "clarifyingAnswers",
+                    questionsItemId: "questions-item-1",
+                    answers: [
+                        {
+                            questionIndex: 0,
+                            questionText: "Which metric do you mean?",
+                            answer: {
+                                type: "singleChoice",
+                                optionIndex: 1,
+                                optionText: "Gross Profit",
+                            },
+                        },
+                    ],
+                },
+            } as unknown as AiConversationItemResponse;
+
+            const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+
+            expect(converted.content).toEqual({
+                type: "clarifyingAnswers",
+                questionsItemId: "questions-item-1",
+                answers: [
+                    {
+                        questionIndex: 0,
+                        questionText: "Which metric do you mean?",
+                        answer: {
+                            type: "singleChoice",
+                            optionIndex: 1,
+                            optionText: "Gross Profit",
+                        },
+                    },
+                ],
+            });
+        });
+
         it("converts reasoning content", () => {
             const item: AiConversationItemResponse = {
                 conversationId: "conv-1",

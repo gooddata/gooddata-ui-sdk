@@ -190,4 +190,8 @@ export class CustomWorkspace implements IAnalyticalWorkspace {
     public localization(): IWorkspaceLocalizationService {
         throw new NotSupported("localization is not supported");
     }
+
+    public delete(): Promise<void> {
+        throw new NotSupported("workspace deletion is not supported");
+    }
 }

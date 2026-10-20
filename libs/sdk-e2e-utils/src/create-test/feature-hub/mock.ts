@@ -2,6 +2,8 @@
 
 import type { Page } from "@playwright/test";
 
+import type { PlaywrightTestInstance } from "../playwright/playwright-types.js";
+
 import type { IFeatureHubEnvironment, IFeatureHubFeature } from "./types.js";
 
 const FEATURE_HUB_ROUTE = "**/features*";
@@ -23,7 +25,7 @@ export function makeFeatureHubResponse(features: IFeatureHubFeature[]): IFeature
  * describe's `beforeEach` already called `page.goto`) would leave the app running on the previous
  * features, which fails in confusing ways. Fail fast instead.
  */
-export async function registerFeatureHubMock(page: Page, features: IFeatureHubFeature[]): Promise<void> {
+async function registerFeatureHubMock(page: Page, features: IFeatureHubFeature[]) {
     if (page.url() !== "about:blank") {
         throw new Error(
             `@gooddata/sdk-e2e-utils: FeatureHub mock registered after the page navigated to "${page.url()}". ` +
@@ -44,8 +46,17 @@ export async function registerFeatureHubMock(page: Page, features: IFeatureHubFe
     });
 }
 
+export function initialRegisterFeatureHubMock(
+    testInstance: PlaywrightTestInstance,
+    features: IFeatureHubFeature[],
+) {
+    testInstance.beforeEach(async ({ page }) => {
+        await registerFeatureHubMock(page, features);
+    });
+}
+
 /** Remove the FeatureHub mock registered by {@link registerFeatureHubMock}. */
-export async function unregisterFeatureHubMock(page: Page): Promise<void> {
+export async function unregisterFeatureHubMock(page: Page) {
     await page.unroute(FEATURE_HUB_ROUTE);
 }
 

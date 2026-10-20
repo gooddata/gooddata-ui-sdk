@@ -21,6 +21,8 @@
     "gd.gen-ai.global-unsupported-model": "ไม่รองรับโมเดล",
     "gd.gen-ai.global-unsupported-model.description": "AI Assistant ต้องใช้ GPT-5.2 หรือสูงกว่า โปรดติดต่อผู้ดูแลระบบของคุณเพื่ออัปเดตโมเดล.",
     "gd.gen-ai.global-unsupported-model.button-change-model": "เปลี่ยนโมเดล LLM",
+    "gd.gen-ai.visualization.error.no_data": "<b>ไม่มีข้อมูล</b> เปลี่ยนข้อมูลหรือตัวกรอง",
+    "gd.gen-ai.visualization.error.negative_values": "<b>พบค่าติดลบในการแสดงภาพข้อมูล</b> เปลี่ยนข้อมูล",
     "gd.gen-ai.visualization.error.forecast": "<b>ไม่ได้รับการคาดการณ์:</b> {error}",
     "gd.gen-ai.visualization.error.clustering": "<b>ไม่ได้รับการจัดกลุ่ม:</b> {error}",
     "gd.gen-ai.visualization.error.data_too_large": "<b>ข้อมูลมีขนาดใหญ่เกินไป.</b> ขอให้ลดข้อมูลโดยใช้ตัวกรอง",

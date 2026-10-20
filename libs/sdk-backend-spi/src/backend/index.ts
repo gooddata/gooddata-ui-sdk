@@ -204,7 +204,7 @@ export interface IAnalyticalBackend {
      * For the Tiger backend the concrete type is `TigerSpecificFunctions` from `@gooddata/sdk-backend-tiger`.
      *
      * @internal
-     * @deprecated Will be removed once all callers migrate to proper SDK APIs.
+     * @deprecated Will be removed in the next major version. Use the services of IAnalyticalBackend instead.
      */
     readonly internal_backendSpecificFunctions?: unknown;
 }

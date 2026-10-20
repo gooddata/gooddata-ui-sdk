@@ -73,6 +73,7 @@ import {
     type IColorPalette,
     type IColorPaletteDefinition,
     type IColorPaletteMetadataObject,
+    type ICspDirective,
     type IIpAllowlistDefinition,
     type ILlmProvider,
     type IMetricFormatOverrideSetting,
@@ -636,6 +637,9 @@ function recordedWorkspace(
         localization(): IWorkspaceLocalizationService {
             return recordedLocalizationService();
         },
+        delete(): Promise<void> {
+            return Promise.resolve();
+        },
     };
 }
 
@@ -866,6 +870,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 removeUsersFromUserGroups: () => Promise.resolve(),
                 updateUser: () => Promise.resolve(),
                 updateUserGroup: () => Promise.resolve(),
+                inviteUser: () => Promise.resolve(),
             };
         },
         automations: () => {
@@ -974,6 +979,18 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 delete: () => Promise.resolve(),
             };
         },
+        cspDirectives() {
+            return {
+                getAll: () => Promise.resolve([]),
+                get: (id: string) => Promise.resolve({ id, sources: [] }),
+                create: (directive: ICspDirective) => Promise.resolve(directive),
+                update: (directive: ICspDirective) => Promise.resolve(directive),
+                delete: () => Promise.resolve(),
+            };
+        },
+        getPlatformUsage() {
+            return Promise.resolve([]);
+        },
         localization() {
             return recordedLocalizationService();
         },
@@ -1029,6 +1046,13 @@ function recordedUserService(implConfig: RecordedBackendConfig): IUserService {
                     lastName: "",
                 },
             );
+        },
+        apiTokens() {
+            return {
+                getAll: () => Promise.resolve([]),
+                create: (id: string) => Promise.resolve({ id, bearerToken: "" }),
+                delete: () => Promise.resolve(),
+            };
         },
         settings(): IUserSettingsService {
             return {

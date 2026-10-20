@@ -14,3 +14,9 @@ body {
     margin: 0;
     padding: 0;
 }
+
+/* Browsers give form controls their own font. :where() keeps component rules winning. */
+:where(button, input, optgroup, select, textarea) {
+    font: inherit;
+    color: inherit;
+}

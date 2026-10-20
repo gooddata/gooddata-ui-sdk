@@ -1,11 +1,16 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { type IOrganizationDescriptor, type IOrganizationDescriptorUpdate } from "@gooddata/sdk-model";
+import {
+    type IOrganizationDescriptor,
+    type IOrganizationDescriptorUpdate,
+    type IPlatformUsage,
+} from "@gooddata/sdk-model";
 
 import { type IOrganizationLocalizationService } from "../localization/index.js";
 
 import { type IOrganizationAgentsService } from "./agents/index.js";
 import { type IOrganizationAutomationService } from "./automations/index.js";
+import { type IOrganizationCspDirectivesService } from "./cspDirectives/index.js";
 import { type IOrganizationExportTemplatesService } from "./exportTemplates/index.js";
 import { type IOrganizationGenAIService } from "./genAI/index.js";
 import { type IOrganizationIpAllowlistService } from "./ipAllowlists/index.js";
@@ -125,6 +130,20 @@ export interface IOrganization {
      * @alpha
      */
     localization(): IOrganizationLocalizationService;
+
+    /**
+     * Returns service that can be used to manage Content Security Policy directives of the organization.
+     *
+     * @alpha
+     */
+    cspDirectives(): IOrganizationCspDirectivesService;
+
+    /**
+     * Returns current usage of the platform resources that the organization license can limit.
+     *
+     * @alpha
+     */
+    getPlatformUsage(): Promise<IPlatformUsage[]>;
 }
 
 /**

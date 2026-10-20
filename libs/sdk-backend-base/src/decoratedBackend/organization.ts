@@ -4,6 +4,7 @@ import {
     type IOrganization,
     type IOrganizationAgentsService,
     type IOrganizationAutomationService,
+    type IOrganizationCspDirectivesService,
     type IOrganizationExportTemplatesService,
     type IOrganizationGenAIService,
     type IOrganizationIpAllowlistService,
@@ -17,7 +18,11 @@ import {
     type IOrganizationUserService,
     type ISecuritySettingsService,
 } from "@gooddata/sdk-backend-spi";
-import { type IOrganizationDescriptor, type IOrganizationDescriptorUpdate } from "@gooddata/sdk-model";
+import {
+    type IOrganizationDescriptor,
+    type IOrganizationDescriptorUpdate,
+    type IPlatformUsage,
+} from "@gooddata/sdk-model";
 
 import { type DecoratorFactories } from "./types.js";
 
@@ -106,5 +111,13 @@ export class OrganizationDecorator implements IOrganization {
 
     public localization(): IOrganizationLocalizationService {
         return this.decorated.localization();
+    }
+
+    public cspDirectives(): IOrganizationCspDirectivesService {
+        return this.decorated.cspDirectives();
+    }
+
+    public getPlatformUsage(): Promise<IPlatformUsage[]> {
+        return this.decorated.getPlatformUsage();
     }
 }

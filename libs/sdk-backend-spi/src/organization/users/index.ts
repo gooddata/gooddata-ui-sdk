@@ -5,6 +5,7 @@ import {
     type IOrganizationUserGroup,
     type IUser,
     type IUserGroup,
+    type IUserInvitation,
 } from "@gooddata/sdk-model";
 
 import { type IPagedResource } from "../../common/paging.js";
@@ -204,6 +205,14 @@ export interface IOrganizationUserService {
         type: LocalizationSettingType,
         value: string | undefined,
     ): Promise<void>;
+
+    /**
+     * Invite a user to the organization. The backend sends the invitation email.
+     *
+     * @param invitation - details of the invited user
+     * @returns promise that rejects when the backend does not accept the invitation
+     */
+    inviteUser(invitation: IUserInvitation): Promise<void>;
 }
 
 /**

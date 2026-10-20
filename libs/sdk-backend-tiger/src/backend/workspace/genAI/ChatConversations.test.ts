@@ -130,6 +130,42 @@ describe("ChatConversationThreadQuery.stream", () => {
         vi.restoreAllMocks();
     });
 
+    it("should send clarifying answers as structured message content", async () => {
+        vi.mocked(GenAiApi_PostMessages).mockResolvedValue({
+            headers: {},
+            data: {},
+        } as unknown as Awaited<AxiosPromise>);
+        const clarifyingAnswers = {
+            type: "clarifyingAnswers" as const,
+            questionsItemId: "questions-item-id",
+            answers: [
+                {
+                    questionIndex: 1,
+                    questionText: "Which region?",
+                    answer: {
+                        type: "singleChoice" as const,
+                        optionIndex: 0,
+                        optionText: "East",
+                    },
+                },
+            ],
+        };
+        const query = new ChatConversationThreadQuery(authCall, dateNormalizer, {
+            workspaceId: "workspace",
+            conversationId: "conversation",
+            userQuestion: clarifyingAnswers,
+        });
+
+        const reader = query.stream([]).getReader();
+        await reader.read();
+
+        const request = vi.mocked(GenAiApi_PostMessages).mock.calls[0][2];
+        expect(request.aiSendMessageRequest.item).toEqual({
+            role: "user",
+            content: clarifyingAnswers,
+        });
+    });
+
     it("should include x-gdc-trace-id from response headers in stream errors", async () => {
         vi.mocked(GenAiApi_PostMessages).mockImplementation((_, __, ___, options) => {
             options?.onDownloadProgress?.({

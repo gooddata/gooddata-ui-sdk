@@ -10,8 +10,10 @@
     border: none;
     border-top: 1px solid variables.$gd-border-color;
     border-bottom: 1px solid variables.$gd-border-color;
+    font-family: inherit;
     font-size: list.nth(map.get(variables.$gd-typo, font-sizes), 4);
     text-align: left;
     font-weight: bold;
+    color: inherit;
     background: variables.$gd-color-white;
 }
